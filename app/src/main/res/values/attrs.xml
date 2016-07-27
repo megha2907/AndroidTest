@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SwipeFlingAdapterView">
+        <attr name="SwipeFlingStyle" format="reference" />
+        <attr name="rotation_degrees" format="float" />
+        <attr name="min_adapter_stack" format="integer" />
+        <attr name="max_visible" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomTabLayout">
+        <attr name="unselected_typeface" format="enum">
+            <enum name="montserrat_ultra_light" value="0" />
+            <enum name="montserrat" value="1" />
+            <enum name="montserrat_semi_bold" value="2" />
+            <enum name="roboto_light" value="3" />
+            <enum name="roboto_light_italic" value="4" />
+            <enum name="roboto" value="5" />
+            <enum name="roboto_condensed" value="6" />
+            <enum name="roboto_condensed_bold" value="7" />
+            <enum name="roboto_medium" value="8" />
+            <enum name="georgia" value="9" />
+            <enum name="georgia_bold" value="10" />
+        </attr>
+        <attr name="selected_typeface" format="enum">
+            <enum name="montserrat_ultra_light" value="0" />
+            <enum name="montserrat" value="1" />
+            <enum name="montserrat_semi_bold" value="2" />
+            <enum name="roboto_light" value="3" />
+            <enum name="roboto_light_italic" value="4" />
+            <enum name="roboto" value="5" />
+            <enum name="roboto_condensed" value="6" />
+            <enum name="roboto_condensed_bold" value="7" />
+            <enum name="roboto_medium" value="8" />
+            <enum name="georgia" value="9" />
+            <enum name="georgia_bold" value="10" />
+        </attr>
+        <attr name="unselected_textSize" format="dimension" />
+        <attr name="selected_textSize" format="dimension" />
+    </declare-styleable>
+
+    <!-- Circular Progress Bar -->
+    <declare-styleable name="circularProgressBar">
+
+        <!-- our custom attribute -->
+        <attr name="max" format="integer" />
+        <attr name="bgColor" format="color" />
+        <attr name="progressColor" format="color" />
+        <attr name="bgStrokeWidth" format="dimension" />
+        <attr name="progressStrokeWidth" format="dimension" />
+        <attr name="diameter" format="dimension" />
+        <attr name="showProgressText" format="boolean" />
+
+        <!-- Std stuff -->
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="android:layout_margin" />
+    </declare-styleable>
+
+</resources>

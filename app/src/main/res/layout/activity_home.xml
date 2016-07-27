@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/home_ll_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/alto"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/home_ibtn_feed"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:alpha="0.3"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="onClickTab"
+            android:padding="@dimen/dp_15"
+            android:src="@drawable/feed" />
+
+        <ImageButton
+            android:id="@+id/home_ibtn_play"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:alpha="0.3"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="onClickTab"
+            android:padding="@dimen/dp_15"
+            android:src="@drawable/play" />
+
+        <ImageButton
+            android:id="@+id/home_ibtn_profile"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:alpha="0.3"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="onClickTab"
+            android:padding="@dimen/dp_15"
+            android:src="@drawable/user_default" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/home_fl_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/home_ll_tabs" />
+
+</RelativeLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/admin_members_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_horizontal"
+        android:text="Members"
+        android:textAllCaps="false"
+        android:textSize="@dimen/dp_25"
+        android:textStyle="bold" />
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/admin_members_btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="onClick"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:textSize="@dimen/dp_20" />
+
+    <FrameLayout
+        android:id="@+id/admin_members_fl_members_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/admin_members_tv_title"
+        android:layout_marginTop="@dimen/dp_10" />
+
+</RelativeLayout>

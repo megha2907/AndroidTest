@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/feed_row_tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/dp_10"
+        android:text="Date"
+        android:background="@color/scorpion"
+        android:textColor="@color/pink_swan"
+        android:textSize="@dimen/dp_16" />
+
+    <LinearLayout
+        android:id="@+id/feed_row_ll_tour_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+</LinearLayout>

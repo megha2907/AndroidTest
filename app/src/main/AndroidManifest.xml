@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="in.sportscafe.scgame">
+
+    <!-- To access the internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- To get the status of internet -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Start MoEngage Permissions-->
+    <!-- If you have specified applicationId in build.gradle file then replace [YOUR_PACKAGE_NAME] with applicationId-->
+    <permission
+        android:name="in.sportscafe.scgame.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="in.sportscafe.scgame.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- End MoEngage Permissions -->
+
+    <application
+        android:name=".ScGame"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".module.test.TestActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".module.home.HomeActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".module.getstart.GetStartActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".module.user.login.LogInActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.user.myprofile.edit.EditProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name=".module.user.sportselection.SportSelectionActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.play.prediction.PredictionActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.play.myresults.MyResultsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name=".module.user.points.PointsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.user.group.newgroup.NewGroupActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.user.group.admin.adminmembers.AdminMembersActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.user.group.groupinfo.GroupInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name=".module.user.group.members.MembersActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.user.group.joingroup.JoinGroupActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <!-- Start MoEngage -->
+        <activity
+            android:name="com.moengage.addon.inbox.MoEInboxActivity"
+            android:label="Notification" >
+        </activity>
+        <!-- MOENGAGE RECEIVER FOR RECEIVING INSTALLATION INTENT -->
+        <receiver android:name="com.moe.pushlibrary.InstallReceiver">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- MOENGAGE RECEIVER FOR RECEIVING APP UPDATE INTENT -->
+        <receiver android:name="com.moe.pushlibrary.AppUpdateReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+
+                <data
+                    android:path="in.sportscafe.scgame"
+                    android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <!-- The underlying content provider -->
+        <provider
+            android:name="com.moe.pushlibrary.providers.MoEProvider"
+            android:authorities="in.sportscafe.scgame.moengage.provider"
+            android:exported="false" />
+
+        <!-- MANDATORY FIELD: APP ID AS SEEN ON MOENGAGE DASHBOARD APP SETTINGS PAGE -->
+        <meta-data
+            android:name="APP_ID"
+            android:value="V0DAIR1IY0NI6RQH190Z5KOH" />
+
+        <!-- MANDATORY FIELD: SENDER ID , i.e. THE PROJECT NUMBER AS MENTIONED ON GOOGLE CLOUD CONSOLE PROJECTS PAGE -->
+        <meta-data
+            android:name="SENDER_ID"
+            android:value="id:93923683436" />
+
+        <!-- MANDATORY FIELD: THE NOTIFICATION SMALL ICON WHICH WILL BE USED TO SET TO NOTIFICATIONS POSTED -->
+        <meta-data
+            android:name="NOTIFICATION_ICON"
+            android:value="@drawable/white_notification_icon" />
+
+        <!-- MANDATORY FIELD: THE NOTIFICATION LARGE ICON WHICH WILL BE USED TO SET TO NOTIFICATIONS POSTED -->
+        <meta-data
+            android:name="NOTIFICATION_LARGE_ICON"
+            android:value="@drawable/notification_large_icon" />
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="in.sportscafe.scgame" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.moengage.worker.MoEGCMListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.moengage.receiver.MoEInstanceIDListener"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <!-- OPTIONAL FIELD: THE NOTIFICATION TYPE WHICH WILL BE USED, SINGLE OR MULTIPLE. DEFAULT BEHAVIOR IS SINGLE -->
+        <meta-data
+            android:name="NOTIFICATION_TYPE"
+            android:value="@integer/notification_type_multiple" />
+
+        <!-- OPTIONAL FIELD: THE NOTIFICATION TONE THAT WILL BE USED. IF NOT SET WILL PLAY THE DEFAULT SOUND -->
+        <!--
+            <meta-data
+            android:name="NOTIFICATION_TONE"
+            android:value="@raw/tring" />
+        -->
+        <!-- End MoEngage -->
+    </application>
+
+</manifest>

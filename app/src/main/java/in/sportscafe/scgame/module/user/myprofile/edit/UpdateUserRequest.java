@@ -1,0 +1,48 @@
+package in.sportscafe.scgame.module.user.myprofile.edit;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * Created by Jeeva on 13/7/16.
+ */
+public class UpdateUserRequest {
+
+    @JsonProperty("user_id")
+    private String userId;
+
+    @JsonProperty("user_name")
+    private String userName;
+
+    @JsonProperty("user_photo")
+    private String userPhoto;
+
+    @JsonProperty("user_id")
+    public String getUserId() {
+        return userId;
+    }
+
+    @JsonProperty("user_id")
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    @JsonProperty("user_name")
+    public String getUserName() {
+        return userName;
+    }
+
+    @JsonProperty("user_name")
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    @JsonProperty("user_photo")
+    public String getUserPhoto() {
+        return userPhoto;
+    }
+
+    @JsonProperty("user_photo")
+    public void setUserPhoto(String userPhoto) {
+        this.userPhoto = userPhoto;
+    }
+}

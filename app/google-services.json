@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "93923683436",
+    "project_id": "sportscafe-api"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93923683436:android:de0566b96a73b5d5",
+        "android_client_info": {
+          "package_name": "in.sportscafe.scgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93923683436-dooj48eie2epga07n6t0odat24rq9tje.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.sportscafe.scgame",
+            "certificate_hash": "5A5C81B9932DBEFE0137E6C9019FB10D575DB54C"
+          }
+        },
+        {
+          "client_id": "93923683436-0e0bkm6459105nthip0thu9dve75s1hc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxi1QOEb-cxCR1RUdACatuTCOdG0sWBSM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

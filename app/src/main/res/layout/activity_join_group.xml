@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gallery">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/edit_tv_edit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center_horizontal"
+            android:text="Add Group"
+            android:textAllCaps="false"
+            android:textSize="@dimen/dp_25"
+            android:textStyle="bold" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/join_group_btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onClick"
+            android:text="Back"
+            android:textAllCaps="false"
+            android:textSize="@dimen/dp_20" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/join_group_tv_join_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_60"
+            android:gravity="center_horizontal"
+            android:text="To join an existing group,\nenter the group code below"
+            android:textSize="@dimen/dp_18"
+            android:textStyle="bold" />
+
+        <com.jeeva.android.widgets.customfont.CustomEditText
+            android:id="@+id/join_group_et_group_code"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/join_group_tv_join_hint"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:gravity="center_horizontal"
+            android:hint="Enter group code here"
+            android:inputType="text"
+            android:maxLength="50"
+            android:textSize="@dimen/dp_14" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/join_group_btn_join"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/join_group_et_group_code"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:onClick="onClick"
+            android:text="Join"
+            android:textAllCaps="false" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/join_group_tv_create_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/join_group_btn_join"
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_60"
+            android:gravity="center_horizontal"
+            android:text="Or to create a new group of\nyour own click below"
+            android:textSize="@dimen/dp_18"
+            android:textStyle="bold" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/join_group_btn_new_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/join_group_tv_create_hint"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:onClick="onClick"
+            android:text="Create New Group"
+            android:textAllCaps="false" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/join_group_ll_join_done"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_50"
+        android:background="@color/gallery"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/dp_20"
+            android:gravity="center_horizontal"
+            android:text="Your request to join the group has been sent to the group admin for approval. You will be notified, Once the admin accept your request."
+            android:textSize="@dimen/dp_18" />
+
+    </LinearLayout>
+</RelativeLayout>

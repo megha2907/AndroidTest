@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <in.sportscafe.scgame.module.common.CustomTabLayout
+        android:id="@+id/tab_tl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabBackground="@color/haveLockBlue"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/alto"
+        app:tabIndicatorHeight="@dimen/dp_5"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/gallery"
+        app:unselected_typeface="roboto_light"
+        app:selected_typeface="roboto"
+        app:unselected_textSize="@dimen/dp_12"
+        app:selected_textSize="@dimen/dp_13" />
+
+    <in.sportscafe.scgame.module.common.CustomViewPager
+        android:id="@+id/tab_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

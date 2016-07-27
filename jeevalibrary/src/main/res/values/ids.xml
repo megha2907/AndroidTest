@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- InApp view-->
+    <item name="content" type="id" />
+
+    <!-- Dynamic grid view -->
+    <item name="dgv_wobble_tag" type="id" />
+
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Dialog non fade background style-->
+    <style name="DialogNonFadeBg" parent="android:Theme">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+</resources>

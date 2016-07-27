@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/edit_tv_edit_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_horizontal"
+        android:text="Edit\nProfile"
+        android:textAllCaps="false"
+        android:textSize="@dimen/dp_25"
+        android:textStyle="bold" />
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/edit_btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="onClick"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        android:textSize="@dimen/dp_20" />
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/edit_btn_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="onClick"
+        android:text="Done"
+        android:textAllCaps="false"
+        android:textSize="@dimen/dp_20" />
+
+    <com.jeeva.android.widgets.customfont.CustomEditText
+        android:id="@+id/edit_et_name"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_tv_edit_title"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:maxLength="50" />
+
+    <!--<com.jeeva.android.widgets.customfont.CustomEditText
+        android:id="@+id/edit_et_username"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_et_name"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_10"
+        android:hint="UserName"
+        android:inputType="textPersonName"
+        android:maxLength="50"
+        android:visibility="gone"/>-->
+
+    <com.jeeva.android.widgets.customfont.CustomEditText
+        android:id="@+id/edit_et_nickname"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_et_name"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:hint="Nickname"
+        android:inputType="textPersonName"
+        android:maxLength="50" />
+
+    <!--<com.jeeva.android.widgets.customfont.CustomEditText
+        android:id="@+id/edit_et_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_et_name"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="top"
+        android:hint="About"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:maxLength="50" />-->
+
+    <com.jeeva.android.widgets.HmImageView
+        android:id="@+id/edit_iv_user_image"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:layout_below="@id/edit_tv_edit_title"
+        android:layout_margin="@dimen/dp_20"
+        android:layout_toRightOf="@id/edit_et_name"
+        android:src="@drawable/user_default" />
+
+
+</RelativeLayout>
