@@ -57,4 +57,18 @@
         <attr name="android:layout_margin" />
     </declare-styleable>
 
+    <attr name="typeface" format="enum">
+        <enum name="montserrat_ultra_light" value="0" />
+        <enum name="montserrat" value="1" />
+        <enum name="montserrat_semi_bold" value="2" />
+        <enum name="roboto_light" value="3" />
+        <enum name="roboto_light_italic" value="4" />
+        <enum name="roboto" value="5" />
+        <enum name="roboto_condensed" value="6" />
+        <enum name="roboto_condensed_bold" value="7" />
+        <enum name="roboto_medium" value="8" />
+        <enum name="georgia" value="9" />
+        <enum name="georgia_bold" value="10" />
+    </attr>
+
 </resources>
