@@ -15,7 +15,6 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
@@ -85,19 +84,14 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
                 })
                 .build();
 
-        SignInButton signInButton = (SignInButton) findViewById(R.id.activity_login_btn_google);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setScopes(gso.getScopeArray());
     }
 
     @Override
     public void initViews() {
         //Setting Button click listeners
-        findViewById(R.id.activity_login_btn_facebook).setOnClickListener(this);
+        findViewById(R.id.login_btn_fb).setOnClickListener(this);
 
-        findViewById(R.id.activity_login_btn_google).setOnClickListener(this);
-
-        findViewById(R.id.activity_login_btn_skip).setOnClickListener(this);
+        findViewById(R.id.login_btn_google).setOnClickListener(this);
     }
 
     @Override
@@ -128,14 +122,11 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.activity_login_btn_facebook:
+            case R.id.login_btn_fb:
                 mLogInPresenter.onClickFacebook();
                 break;
-            case R.id.activity_login_btn_google:
+            case R.id.login_btn_google:
                 mLogInPresenter.onClickGoogle();
-                break;
-            case R.id.activity_login_btn_skip:
-                mLogInPresenter.onClickSkip();
                 break;
         }
     }

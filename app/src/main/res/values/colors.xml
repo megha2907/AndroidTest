@@ -7,6 +7,7 @@
     <color name="alto">#D8D8D8</color>
     <color name="silver_chalice">#AAAAAA</color>
     <color name="black">#000000</color>
+    <color name="chambray">#3B5999</color>
     <color name="chathamsBlue">#194586</color>
     <color name="gallery">#EBEBEB</color>
     <color name="haveLockBlue">#4A90E2</color>
@@ -15,4 +16,6 @@
     <color name="orange">#FF681F</color>
     <color name="pink_swan">#C2BABA</color>
     <color name="scorpion">#656161</color>
+
+    <color name="valencia">#D44837</color>
 </resources>

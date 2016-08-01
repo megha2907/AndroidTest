@@ -40,7 +40,7 @@ public class ScGame extends Application {
         // Assigning the ScGame instance
         sScGame = ScGame.this;
 
-//        initCustomFonts();
+        initCustomFonts();
 
         initDataHandlers();
 
