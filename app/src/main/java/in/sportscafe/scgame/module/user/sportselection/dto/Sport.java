@@ -14,6 +14,7 @@ public class Sport implements Serializable {
 
     @JsonProperty("sports_id")
     private int id;
+    private int state;
 
     @JsonProperty("sports_name")
     private String name;
@@ -55,10 +56,46 @@ public class Sport implements Serializable {
             case 3:
                 return R.drawable.tennis_menu_icon;
             case 10:
-                return R.drawable.wrestling_menu_icon;
+                return R.drawable.table_tennis_menu_icon;
             default:
                 return R.drawable.ic_launcher;
         }
+    }
+
+    @JsonIgnore
+    public int getSelectedImageResource() {
+        switch (id) {
+            case 5:
+                return R.drawable.badminton_menu_colored_icon;
+            case 8:
+                return R.drawable.boxing_menu_colored_icon;
+            case 1:
+                return R.drawable.cricket_menu_colored_icon;
+            case 4:
+                return R.drawable.football_menu_colored_icon;
+            case 2:
+                return R.drawable.hockey_menu_colored_icon;
+            case 6:
+                return R.drawable.kabaddi_menu_icon;
+            case 7:
+                return R.drawable.basketball_menu_colored_icon;
+            case 3:
+                return R.drawable.tennis_menu_colored_icon;
+            case 10:
+                return R.drawable.table_tennis_menu_colored_icon;
+            default:
+                return R.drawable.ic_launcher;
+        }
+    }
+
+    @JsonIgnore
+    public int getState() {
+        return state;
+    }
+
+    @JsonIgnore
+    public void setState(int state) {
+        this.state = state;
     }
 
     @JsonProperty("sports_name")

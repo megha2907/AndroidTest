@@ -4,11 +4,13 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@drawable/sport_bg_selector"
     android:paddingBottom="@dimen/dp_5"
     android:paddingLeft="@dimen/dp_5"
     android:paddingRight="@dimen/dp_5"
-    android:paddingTop="@dimen/dp_10">
+    android:paddingTop="@dimen/dp_10"
+    android:background="@color/white"
+
+    >
 
     <ImageView
         android:id="@+id/sport_row_iv_sport_image"
@@ -16,13 +18,19 @@
         android:layout_height="@dimen/dp_60"
         android:layout_marginBottom="@dimen/dp_5"
         android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20" />
+        android:layout_marginRight="@dimen/dp_20"
+        android:src="@drawable/archery_icon"
+        android:alpha="0.6"
+        android:onClick="onItemClick"
+       />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/sport_row_tv_sport_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tennis"
-        android:textSize="@dimen/dp_18" />
+        android:text="Archery"
+        android:textSize="@dimen/dp_14"
+        android:textColor="@color/black"
+        android:alpha="0.6"/>
 
 </LinearLayout>
