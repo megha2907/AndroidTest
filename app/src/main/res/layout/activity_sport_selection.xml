@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,12 +23,13 @@
         android:layout_alignParentRight="true"
         android:background="@color/colorPrimary"
         android:onClick="onClick"
-        android:text="Next"
+        android:text="@string/next"
         android:textAllCaps="false"
         android:textSize="@dimen/dp_18"
         android:textColor="@color/white"
         android:layout_marginTop="@dimen/dp_12"
-        android:layout_marginRight="@dimen/dp_10"/>
+        android:layout_marginRight="@dimen/dp_10"
+        app:typeface="roboto_condensed"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,48 +43,23 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp_16"
             android:gravity="center_horizontal"
-            android:text=" Add Sports"
+            android:text="@string/addsport"
             android:textAllCaps="false"
             android:textSize="@dimen/dp_20"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            app:typeface="roboto_condensed"/>
 
 
-
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
-
-
-            <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                <!--android:id="@+id/select_sports_text"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:layout_marginTop="@dimen/dp_25"-->
-                <!--android:text="Select Sports"-->
-                <!--android:textSize="@dimen/dp_16" />-->
-
-
-            <!--<View-->
-            <!--android:layout_width="@dimen/dp_100"-->
-            <!--android:layout_height="@dimen/dp_0.7"-->
-            <!--android:layout_marginRight="@dimen/dp_10"-->
-            <!--android:layout_marginTop="@dimen/dp_37"-->
-            <!--android:layout_toLeftOf="@+id/select_sports_text"-->
-            <!--android:alpha="0.5"-->
-            <!--android:background="@color/black"-->
-                <!--/>-->
-
-        <!--<View-->
-            <!--android:layout_width="@dimen/dp_100"-->
-            <!--android:layout_height="@dimen/dp_0.7"-->
-            <!--android:layout_marginLeft="@dimen/dp_10"-->
-            <!--android:layout_marginTop="@dimen/dp_37"-->
-            <!--android:layout_toRightOf="@+id/select_sports_text"-->
-            <!--android:alpha="0.5"-->
-            <!--android:background="@color/black" />-->
-
-        <!--</RelativeLayout>-->
+            <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0.7"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_toLeftOf="@+id/select_sports_text"
+            android:alpha="0.5"
+            android:background="@color/black"
+                />
 
 
         <android.support.v7.widget.RecyclerView
@@ -92,7 +69,7 @@
             android:layout_weight="1"
             android:clipToPadding="false"
             android:padding="@dimen/dp_20"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="10dp"/>
 
     </LinearLayout>
 

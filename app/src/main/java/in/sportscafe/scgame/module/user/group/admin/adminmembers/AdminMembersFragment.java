@@ -3,6 +3,8 @@ package in.sportscafe.scgame.module.user.group.admin.adminmembers;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.scgame.module.common.AbstractTabFragment;
 import in.sportscafe.scgame.module.user.group.admin.approve.ApproveFragment;
 import in.sportscafe.scgame.module.user.group.members.MembersFragment;
@@ -21,6 +23,7 @@ public class AdminMembersFragment extends AbstractTabFragment implements Approve
         Bundle bundle = new Bundle();
         bundle.putLong(BundleKeys.GROUP_ID, groupId);
 
+        Log.i("bundleininstance",bundle.toString());
         AdminMembersFragment fragment = new AdminMembersFragment();
         fragment.setArguments(bundle);
         return fragment;

@@ -14,7 +14,8 @@
         android:text="Create Group"
         android:textAllCaps="false"
         android:textSize="@dimen/dp_25"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/new_group_btn_cancel"
@@ -58,7 +59,9 @@
         android:hint="Group Name"
         android:inputType="textPersonName"
         android:maxLength="50"
-        android:textSize="@dimen/dp_18" />
+        android:textSize="@dimen/dp_18"
+        android:imeOptions="actionDone"
+      />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/new_group_tv_sport_hint"
@@ -71,14 +74,23 @@
         android:text="Next, add one or more sports to this group"
         android:textSize="@dimen/dp_18"
         android:textStyle="bold" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/new_group_tv_sport_hint"
+    android:focusable="true">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/new_group_rcv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/new_group_tv_sport_hint"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:padding="@dimen/dp_10" />
+        android:padding="@dimen/dp_10"
+        android:clickable="true"
+        android:focusable="true"
+        android:descendantFocusability="beforeDescendants"/>
+
+</LinearLayout>
 
 </RelativeLayout>

@@ -90,7 +90,7 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
     }
 
     private void showFeed() {
-        onClickTab(findViewById(R.id.home_ibtn_feed));
+        onClickTab(findViewById(R.id.home_ibtn_play));
     }
 
     private void navigateToLogIn() {

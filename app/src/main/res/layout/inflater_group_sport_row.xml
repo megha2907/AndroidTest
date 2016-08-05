@@ -18,6 +18,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:button="@drawable/done_selector"
-        android:checked="true" />
+        android:checked="true"
+        android:focusable="false"
+        android:clickable="false"
+        android:focusableInTouchMode="false" />
 
 </RelativeLayout>

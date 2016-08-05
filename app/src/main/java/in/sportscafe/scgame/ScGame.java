@@ -20,12 +20,14 @@ import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.customfont.CustomFont;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.utils.MoEHelperConstants;
+import com.moengage.push.PushManager;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
+import in.sportscafe.scgame.module.notifications.CustomPushNotification;
 import in.sportscafe.scgame.module.offline.PredictionDataHandler;
 import in.sportscafe.scgame.webservice.MyWebService;
 
@@ -46,19 +48,15 @@ public class ScGame extends Application {
 
         // Assigning the ScGame instance
         sScGame = ScGame.this;
-
         initCustomFonts();
-
         initDataHandlers();
-
         // Initializing MyWebService
         MyWebService.getInstance().init();
-
         // Instantiating the volley
         Volley.getInstance().initVolley(getApplicationContext());
-
         sendInstallOrUpdateToMoEngage();
-
+        //Moengage custom Notification
+        PushManager.getInstance(getApplicationContext()).setMessageListener(new CustomPushNotification());
 
     }
 
@@ -75,6 +73,7 @@ public class ScGame extends Application {
             MoEHelper moEHelper = MoEHelper.getInstance(getApplicationContext());
             moEHelper.setExistingUser(previousAppVersionCode != 0);
             dataHandler.setPreviousAppVersionCode(currentAppVersionCode);
+
         }
     }
 
