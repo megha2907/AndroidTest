@@ -66,6 +66,9 @@ public class SportSelectionActivity extends ScGameActivity implements SportSelec
             case R.id.sport_selection_btn_next:
                 mSportSelectionPresenter.onClickNext();
                 break;
+            case R.id.sport_selection_btn_back:
+                finish();
+                break;
         }
     }
 }

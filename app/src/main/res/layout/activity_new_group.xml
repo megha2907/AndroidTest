@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -13,18 +14,22 @@
         android:gravity="center_horizontal"
         android:text="Create Group"
         android:textAllCaps="false"
-        android:textSize="@dimen/dp_25"
-        android:textStyle="bold" />
+        android:textSize="@dimen/dp_23"
+        app:typeface="roboto_condensed"
+        android:textColor="@color/colorPrimary"
+        />
 
-    <com.jeeva.android.widgets.customfont.CustomButton
+    <ImageButton
         android:id="@+id/new_group_btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@drawable/back_button_icon"
         android:onClick="onClick"
         android:text="Cancel"
         android:textAllCaps="false"
-        android:textSize="@dimen/dp_20" />
+        android:textSize="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginLeft="@dimen/dp_8"/>
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/new_group_btn_done"
@@ -37,48 +42,85 @@
         android:textAllCaps="false"
         android:textSize="@dimen/dp_20" />
 
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/new_group_tv_create_hint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_60"
-        android:text="Add a group name Eg. My Family, My Office"
-        android:textSize="@dimen/dp_18"
-        android:textStyle="bold" />
+    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
+        <!--android:id="@+id/new_group_tv_create_hint"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/dp_20"-->
+        <!--android:layout_marginRight="@dimen/dp_40"-->
+        <!--android:layout_marginTop="@dimen/dp_60"-->
+        <!--android:text="Add a group name Eg. My Family, My Office"-->
+        <!--android:textSize="@dimen/dp_18"-->
+        <!--android:textStyle="bold" />-->
 
     <com.jeeva.android.widgets.customfont.CustomEditText
         android:id="@+id/new_group_et_group_name"
         android:layout_width="@dimen/dp_200"
         android:layout_height="wrap_content"
-        android:layout_below="@id/new_group_tv_create_hint"
         android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_60"
         android:hint="Group Name"
         android:inputType="textPersonName"
         android:maxLength="50"
-        android:textSize="@dimen/dp_18" />
+        android:textSize="@dimen/dp_18"
+        android:imeOptions="actionDone"
+      />
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl1"
+    android:layout_below="@+id/new_group_et_group_name"
+    android:layout_marginTop="@dimen/dp_20"    >
+
 
     <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/new_group_tv_sport_hint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/new_group_et_group_name"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_20"
-        android:text="Next, add one or more sports to this group"
-        android:textSize="@dimen/dp_18"
-        android:textStyle="bold" />
+    android:id="@+id/new_group_tv_sport_hint"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="@dimen/dp_10"
+    android:text="@string/addsport"
+    android:textSize="@dimen/dp_16"
+    app:typeface="roboto_condensed"    />
+
+
+    <View
+    android:layout_width="@dimen/dp_100"
+    android:layout_height="@dimen/dp_0.7"
+    android:layout_marginRight="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_20"
+    android:layout_toLeftOf="@+id/new_group_tv_sport_hint"
+    android:alpha="0.5"
+    android:background="@color/black"
+    />
+
+    <View
+    android:layout_width="@dimen/dp_100"
+    android:layout_height="@dimen/dp_0.7"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_20"
+    android:layout_toRightOf="@+id/new_group_tv_sport_hint"
+    android:alpha="0.5"
+    android:background="@color/black" />
+
+    </RelativeLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/rl1"
+    android:focusable="true"
+    android:layout_marginTop="@dimen/dp_10">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/new_group_rcv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/new_group_tv_sport_hint"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:padding="@dimen/dp_10" />
+        android:padding="@dimen/dp_10"
+        android:descendantFocusability="beforeDescendants"/>
+
+</LinearLayout>
 
 </RelativeLayout>

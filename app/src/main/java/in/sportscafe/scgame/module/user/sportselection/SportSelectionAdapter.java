@@ -1,6 +1,7 @@
 package in.sportscafe.scgame.module.user.sportselection;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
 public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.ViewHolder> {
 
     private List<Integer> mSelectedSportsIdList;
+
 
     public SportSelectionAdapter(Context context, List<Integer> selectedSportsIdList) {
         super(context);
@@ -40,11 +42,18 @@ public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.
         Sport sport = getItem(position);
 
         holder.id = sport.getId();
-
         holder.mTvSport.setText(sport.getName());
-        holder.mIvSport.setImageResource(sport.getImageResource());
 
-        holder.mMainView.setSelected(mSelectedSportsIdList.contains(sport.getId()));
+        if (mSelectedSportsIdList.contains((sport.getId()))) {
+            holder.mMainView.setBackgroundResource(R.drawable.sports_selection_shape);
+            holder.mTvSport.setAlpha((float) 0.9);
+            holder.mIvSport.setImageResource(sport.getSelectedImageResource());
+        } else {
+            holder.mMainView.setBackgroundColor(Color.TRANSPARENT);
+            holder.mIvSport.setImageResource(sport.getImageResource());
+        }
+
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -62,18 +71,22 @@ public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.
             mMainView = V;
             mIvSport = (ImageView) V.findViewById(R.id.sport_row_iv_sport_image);
             mTvSport = (TextView) V.findViewById(R.id.sport_row_tv_sport_name);
+
             V.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if(mSelectedSportsIdList.contains(id)) {
+
+            if (mSelectedSportsIdList.contains(id)) {
                 mSelectedSportsIdList.remove(mSelectedSportsIdList.indexOf(id));
             } else {
                 mSelectedSportsIdList.add(id);
             }
             notifyDataSetChanged();
         }
+
+
     }
 
     public List<Integer> getSelectedSportList() {

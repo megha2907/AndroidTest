@@ -13,7 +13,7 @@ public class PreferenceRequest {
     @JsonProperty("user_id")
     private String userId;
 
-    @JsonProperty("sport_preferences")
+    @JsonProperty("sports_preferences")
     private List<Integer> sportPreferences = new ArrayList<Integer>();
 
     public PreferenceRequest(String userId) {
@@ -39,7 +39,7 @@ public class PreferenceRequest {
     /**
      * @return The sportPreferences
      */
-    @JsonProperty("sport_preferences")
+    @JsonProperty("sports_preferences")
     public List<Integer> getSportPreferences() {
         return sportPreferences;
     }
@@ -47,7 +47,7 @@ public class PreferenceRequest {
     /**
      * @param sportPreferences The sport_preferences
      */
-    @JsonProperty("sport_preferences")
+    @JsonProperty("sports_preferences")
     public void setSportPreferences(List<Integer> sportPreferences) {
         this.sportPreferences = sportPreferences;
     }

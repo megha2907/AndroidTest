@@ -25,35 +25,39 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
 
     @Override
     public void onCreateFeed() {
+        mFeedView.setAdapter(mFeedModel.getAdapter());
+    }
+
+    @Override
+    public void onRefresh() {
         getFeedDetails();
     }
 
     private void getFeedDetails() {
-        mFeedView.showProgressbar();
         mFeedModel.getFeeds();
     }
 
     @Override
     public void onSuccessFeeds(FeedAdapter feedAdapter, int movePosition) {
-        mFeedView.dismissProgressbar();
-        mFeedView.setAdapter(feedAdapter, movePosition);
+        mFeedView.moveAdapterPosition(movePosition);
+        mFeedView.dismissSwipeRefresh();
     }
 
     @Override
     public void onFailedFeeds(String message) {
-        mFeedView.dismissProgressbar();
+        mFeedView.dismissSwipeRefresh();
         showAlertMessage(message);
     }
 
     @Override
     public void onNoInternet() {
-        mFeedView.dismissProgressbar();
+        mFeedView.dismissSwipeRefresh();
         showAlertMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
     public void onEmpty() {
-        mFeedView.dismissProgressbar();
+        mFeedView.dismissSwipeRefresh();
         mFeedView.showInAppMessage(Constants.Alerts.NO_FEEDS_FOUND);
     }
 
@@ -71,4 +75,6 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
                     }
                 });
     }
+
+
 }

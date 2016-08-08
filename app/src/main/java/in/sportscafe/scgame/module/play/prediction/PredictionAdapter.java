@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
+import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,7 @@ import in.sportscafe.scgame.module.common.CircularProgressBar;
 import in.sportscafe.scgame.module.common.CountDownTimer;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
 
-public class PredictionAdapter extends ArrayAdapter<Question> {
+public class PredictionAdapter extends ArrayAdapter<Question> implements View.OnClickListener {
 
     private static final int ONE_SECOND_IN_MS = 1000;
 
@@ -87,6 +89,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         mViewHolderList.add(viewHolder);
 
+
         Question question = getItem(position);
 
 //        viewHolder.tvQuestionNumber.setText((position + 1 + mInitialCount - getCount()) + "/" + mInitialCount);
@@ -103,7 +106,19 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         viewHolder.ivRightOption.setImageUrl(question.getQuestionImage2(),
                 Volley.getInstance().getImageLoader(), false);
 
+        viewHolder.btnquestionValue.setText("2X");
+
+        viewHolder.btnquestionValue.setOnClickListener(this);
+
+
         return convertView;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+
+
     }
 
     class PredictionTimer extends CountDownTimer {
@@ -164,6 +179,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         HmImageView ivRightOption;
 
+        CustomButton btnquestionValue;
+
         public ViewHolder(View rootView) {
             cpbTimer = (CircularProgressBar) rootView.findViewById(R.id.swipe_card_cpb_timer);
             tvQuestionNumber = (TextView) rootView.findViewById(R.id.swipe_card_tv_question_number);
@@ -173,6 +190,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             tvRightOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_right);
             ivLeftOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_left);
             ivRightOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_right);
+            btnquestionValue = (CustomButton) rootView.findViewById(R.id.swipe_card_question_value);
         }
     }
 }

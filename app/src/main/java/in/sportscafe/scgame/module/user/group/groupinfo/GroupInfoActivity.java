@@ -2,6 +2,7 @@ package in.sportscafe.scgame.module.user.group.groupinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -70,8 +71,7 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
 
         this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_rcv);
         this.mRvSportSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
-        this.mRvSportSelection.setLayoutManager(new LinearLayoutManager(
-                this, LinearLayoutManager.VERTICAL, false));
+        this.mRvSportSelection.setLayoutManager(new GridLayoutManager(this, 3));
         this.mRvSportSelection.setHasFixedSize(true);
 
         this.mGroupInfoPresenter = GroupInfoPresenterImpl.newInstance(this);

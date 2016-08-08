@@ -90,4 +90,6 @@ public class GetStartActivity extends ScGameActivity {
             }
         }).getAllSportsFromServer();
     }
+
+
 }

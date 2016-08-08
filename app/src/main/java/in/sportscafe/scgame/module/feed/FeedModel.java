@@ -5,5 +5,7 @@ package in.sportscafe.scgame.module.feed;
  */
 public interface FeedModel {
 
+    FeedAdapter getAdapter();
+
     void getFeeds();
 }

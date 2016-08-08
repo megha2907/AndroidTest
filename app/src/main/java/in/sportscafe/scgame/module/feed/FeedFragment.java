@@ -2,6 +2,7 @@ package in.sportscafe.scgame.module.feed;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,11 +15,13 @@ import in.sportscafe.scgame.module.common.ScGameFragment;
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class FeedFragment extends ScGameFragment implements FeedView {
+public class FeedFragment extends ScGameFragment implements FeedView, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView mRcvFeed;
 
     private FeedPresenter mFeedPresenter;
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Nullable
     @Override
@@ -35,13 +38,38 @@ public class FeedFragment extends ScGameFragment implements FeedView {
                 LinearLayoutManager.VERTICAL, false));
         this.mRcvFeed.setHasFixedSize(true);
 
+        this.mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swifeRefresh);
+        this.mSwipeRefreshLayout.setOnRefreshListener(this);
+
         this.mFeedPresenter = FeedPresenterImpl.newInstance(this);
         this.mFeedPresenter.onCreateFeed();
+
+        this.mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                onRefresh();
+            }
+        });
     }
 
     @Override
-    public void setAdapter(FeedAdapter feedAdapter, int movePosition) {
+    public void setAdapter(FeedAdapter feedAdapter) {
         mRcvFeed.setAdapter(feedAdapter);
+    }
+
+    @Override
+    public void moveAdapterPosition(int movePosition) {
         mRcvFeed.getLayoutManager().scrollToPosition(movePosition);
+    }
+
+    @Override
+    public void dismissSwipeRefresh() {
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        mFeedPresenter.onRefresh();
     }
 }

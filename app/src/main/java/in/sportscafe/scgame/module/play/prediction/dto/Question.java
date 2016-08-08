@@ -43,6 +43,9 @@ public class Question implements Serializable {
     @JsonProperty("answer")
     private String answerId;
 
+    @JsonProperty("question_value")
+    private String questionValue;
+
     @JsonIgnore
     private int questionTime = 30;
 
@@ -238,5 +241,15 @@ public class Question implements Serializable {
     @JsonProperty("questionNumber")
     public void setQuestionNumber(int questionNumber) {
         this.questionNumber = questionNumber;
+    }
+
+    @JsonProperty("question_value")
+    public String getQuestionValue() {
+        return questionValue;
+    }
+
+    @JsonProperty("question_value")
+    public void setQuestionValue(String questionValue) {
+        this.questionValue = questionValue;
     }
 }

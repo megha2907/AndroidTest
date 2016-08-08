@@ -2,6 +2,7 @@ package in.sportscafe.scgame.module.user.group.newgroup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -32,8 +33,7 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
 
         this.mRvSportSelection = (RecyclerView) findViewById(R.id.new_group_rcv);
         this.mRvSportSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
-        this.mRvSportSelection.setLayoutManager(new LinearLayoutManager(
-                this, LinearLayoutManager.VERTICAL, false));
+        this.mRvSportSelection.setLayoutManager(new GridLayoutManager(this, 3));
         this.mRvSportSelection.setHasFixedSize(true);
 
         this.mNewGroupPresenter = NewGroupPresenterImpl.newInstance(this);
