@@ -7,8 +7,9 @@ import com.jeeva.android.InAppView;
  */
 public interface FeedView extends InAppView {
 
-    void setAdapter(FeedAdapter feedAdapter, int movePosition);
+    void setAdapter(FeedAdapter feedAdapter);
+
+    void moveAdapterPosition(int movePosition);
 
     void dismissSwipeRefresh();
-
 }

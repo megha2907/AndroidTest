@@ -41,7 +41,13 @@ public class FeedModelImpl implements FeedModel {
     }
 
     @Override
+    public FeedAdapter getAdapter() {
+        return mFeedAdapter = new FeedAdapter(mFeedModelListener.getContext());
+    }
+
+    @Override
     public void getFeeds() {
+        mFeedAdapter.clear();
         if(ScGame.getInstance().hasNetworkConnection()) {
             callFeedListApi();
         } else {
@@ -74,7 +80,6 @@ public class FeedModelImpl implements FeedModel {
     }
 
     private void handleMatches(List<Match> matchList) {
-        mFeedAdapter = new FeedAdapter(mFeedModelListener.getContext());
         mFeedAdapter.addAll(getFeedList(matchList));
         mFeedModelListener.onSuccessFeeds(mFeedAdapter, mClosestDatePosition);
     }

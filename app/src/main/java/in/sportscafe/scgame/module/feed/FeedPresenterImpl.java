@@ -1,7 +1,6 @@
 package in.sportscafe.scgame.module.feed;
 
 import android.content.Context;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import in.sportscafe.scgame.Constants;
@@ -26,6 +25,11 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
 
     @Override
     public void onCreateFeed() {
+        mFeedView.setAdapter(mFeedModel.getAdapter());
+    }
+
+    @Override
+    public void onRefresh() {
         getFeedDetails();
     }
 
@@ -35,7 +39,7 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
 
     @Override
     public void onSuccessFeeds(FeedAdapter feedAdapter, int movePosition) {
-        mFeedView.setAdapter(feedAdapter, movePosition);
+        mFeedView.moveAdapterPosition(movePosition);
         mFeedView.dismissSwipeRefresh();
     }
 
