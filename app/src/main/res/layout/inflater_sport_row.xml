@@ -21,6 +21,7 @@
         android:layout_marginRight="@dimen/dp_20"
         android:alpha="0.6" />
 
+
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/sport_row_tv_sport_name"
         android:layout_width="wrap_content"

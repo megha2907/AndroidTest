@@ -25,7 +25,7 @@ import in.sportscafe.scgame.module.user.myprofile.dto.GroupsDetailResponse;
 public class CustomPushNotification extends PushMessageListener {
 
     private static final String EXTRA_CUSTOM_PAYLOAD = "ex_self_silent_update";
-    private static final String EXTRA_MY_NOTIFICATION = "group_request";
+    private static final String EXTRA_MY_NOTIFICATION = "group_info";
     public static final int NOTIFICATION_ID = 1;
 
     @Override
@@ -67,8 +67,8 @@ public class CustomPushNotification extends PushMessageListener {
 
             // Use NotificationCompat.Builder to set up our notification.
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            builder.setSmallIcon(R.drawable.ic_launcher);
-            builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
+            builder.setSmallIcon(R.drawable.white_notification_icon);
+            builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.white_notification_icon));
             builder.setContentTitle(title);
             builder.setContentText(contenttext);
             builder.setContentIntent(pendingIntent);
