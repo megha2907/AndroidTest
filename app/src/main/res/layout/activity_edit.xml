@@ -45,7 +45,8 @@
         android:layout_marginLeft="@dimen/dp_30"
         android:hint="Name"
         android:inputType="textPersonName"
-        android:maxLength="50" />
+        android:maxLength="50"
+        android:imeOptions="actionNext"/>
 
     <!--<com.jeeva.android.widgets.customfont.CustomEditText
         android:id="@+id/edit_et_username"

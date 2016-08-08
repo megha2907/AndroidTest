@@ -32,7 +32,9 @@
         android:layout_margin="@dimen/dp_10"
         android:background="@drawable/black_rnd_rect_alto_fill"
         android:hint="Search for tournaments, matches..."
-        android:paddingLeft="@dimen/dp_10" />
+        android:paddingLeft="@dimen/dp_10"
+        android:singleLine="true"
+        android:imeOptions="actionDone"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_results_rv"

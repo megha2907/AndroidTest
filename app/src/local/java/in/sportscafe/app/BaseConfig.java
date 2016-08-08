@@ -8,5 +8,5 @@ package in.sportscafe.app;
 public class BaseConfig {
 
     //    public static final String API_BASE_URL = "http://10.0.3.2:4020/v1/game/";
-    public static final String API_BASE_URL = "https://api.sportscafe.in/v1/game/";
+    public static final String API_BASE_URL = "https://api-stage.sportscafe.in/v1/game/";
 }

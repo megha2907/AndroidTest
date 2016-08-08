@@ -2,12 +2,15 @@ package in.sportscafe.scgame.module.user.points;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.jeeva.android.Log;
 
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
@@ -53,6 +56,7 @@ public class PointsActivity extends ScGameActivity implements PointsView, View.O
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mPointsPresenter.onSportItemSelected(position);
+
             }
 
             @Override
@@ -113,6 +117,7 @@ public class PointsActivity extends ScGameActivity implements PointsView, View.O
     public void setSportAdapter(ArrayAdapter<Sport> sportAdapter, int initialSportPosition) {
         mSpSport.setAdapter(sportAdapter);
         mSpSport.setSelection(initialSportPosition);
+        //Log.i("initialSportPosition",String.valueOf(mSpSport.getSelectedItem()));
     }
 
     public void onBack(View view) {

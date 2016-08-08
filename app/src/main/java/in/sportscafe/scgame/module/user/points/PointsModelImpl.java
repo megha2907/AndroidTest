@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 
+import com.jeeva.android.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,6 +101,7 @@ public class PointsModelImpl implements PointsModel {
     @Override
     public int getInitialSportPosition() {
         return mSportsListMap.get(mSelectedGroupId).indexOf(new Sport(mSelectedSportId));
+
     }
 
     @Override
@@ -132,7 +135,7 @@ public class PointsModelImpl implements PointsModel {
     public void onSportSelected(int position) {
         if(mInitialSetDone) {
             if (mUserInput) {
-                mSelectedSportId = mSportsListMap.get(mSelectedGroupId).get(position).getId();
+                mSelectedSportId =mSportsListMap.get(mSelectedGroupId).get(position).getId();
                 refreshLeaderBoard();
             }
             mUserInput = true;

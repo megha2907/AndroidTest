@@ -14,11 +14,18 @@
         android:textSize="@dimen/dp_25"
         android:textStyle="bold" />
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swifeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_below="@id/feed_tv_title">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/feed_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/feed_tv_title"
-        android:layout_marginTop="@dimen/dp_20" />
+        />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

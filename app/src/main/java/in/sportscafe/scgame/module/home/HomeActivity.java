@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameActivity;
@@ -37,21 +39,22 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
     public void onClickTab(View view) {
         feedShowing = false;
 
-        switch (view.getId()) {
-            case R.id.home_ibtn_feed:
-                feedShowing = true;
-                loadFragment(new FeedFragment());
-                break;
-            case R.id.home_ibtn_play:
-                loadFragment(new PlayFragment());
-                break;
-            case R.id.home_ibtn_profile:
-                if(null == ScGameDataHandler.getInstance().getUserId()) {
-                    navigateToLogIn();
-                    return;
-                }
-                loadFragment(new ProfileFragment());
-                break;
+          switch (view.getId()) {
+              case R.id.home_ibtn_feed:
+                  feedShowing = true;
+                  loadFragment(new FeedFragment());
+                  break;
+              case R.id.home_ibtn_play:
+                  loadFragment(new PlayFragment());
+                  break;
+              case R.id.home_ibtn_profile:
+                  if (null == ScGameDataHandler.getInstance().getUserId()) {
+                      navigateToLogIn();
+                      return;
+                  }
+                  loadFragment(new ProfileFragment());
+                  break;
+
         }
 
         if(null != mSelectedTab) {

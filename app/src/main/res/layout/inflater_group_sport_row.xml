@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="@dimen/dp_10">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_5"
+    android:paddingLeft="@dimen/dp_5"
+    android:paddingRight="@dimen/dp_5"
+    android:paddingTop="@dimen/dp_10"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
+
+    >
+
+    <ImageView
+        android:id="@+id/group_sport_row_image_sport"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:src="@drawable/archery_icon"
+        android:alpha="0.6"
+        />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/group_sport_row_tv_sport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cricket"
-        android:textSize="@dimen/dp_20" />
+        android:text="Archery"
+        android:textSize="@dimen/dp_14"
+        android:textColor="@color/black"
+        android:alpha="0.6"
+        app:typeface="roboto_condensed"/>
 
-    <CheckBox
-        android:id="@+id/group_sport_row_cb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:button="@drawable/done_selector"
-        android:checked="true"
-        android:focusable="false"
-        android:clickable="false"
-        android:focusableInTouchMode="false" />
-
-</RelativeLayout>
+</LinearLayout>

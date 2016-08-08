@@ -22,6 +22,8 @@ public class Answer {
     @JsonProperty("answer_time")
     private String answerTime;
 
+
+
     public Answer() {
     }
 
@@ -83,4 +85,6 @@ public class Answer {
     public void setAnswerTime(String answerTime) {
         this.answerTime = answerTime;
     }
+
+
 }
