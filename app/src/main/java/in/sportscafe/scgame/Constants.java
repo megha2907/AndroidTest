@@ -22,6 +22,7 @@ public interface Constants {
         String USER_ID = "userId";
         String LOGGED_USER = "loggedUser";
         String COOKIE = "cookie";
+        String NUMBER_OF_POWERUPS = "numberofpowerups";
     }
 
     interface Alerts {

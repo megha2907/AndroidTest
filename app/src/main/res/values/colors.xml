@@ -16,6 +16,6 @@
     <color name="orange">#FF681F</color>
     <color name="pink_swan">#C2BABA</color>
     <color name="scorpion">#656161</color>
-
     <color name="valencia">#D44837</color>
+    <color name="powerup_color">#ffad33</color>
 </resources>

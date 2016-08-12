@@ -1,6 +1,10 @@
 package in.sportscafe.scgame.module.user.login.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jeeva.android.Log;
+
+import java.util.HashMap;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -33,6 +37,12 @@ public class UserInfo {
 
     @JsonProperty("user_points")
     private Long points;
+
+//    @JsonProperty("user_info")
+//    private String userPowerupInfo;
+
+    @JsonProperty("user_info")
+    private PowerUpInfo powerUpInfo;
 
     /**
      * @return The id
@@ -165,4 +175,20 @@ public class UserInfo {
     public void setPoints(Long points) {
         this.points = points;
     }
+
+    @JsonProperty("user_info")
+    public PowerUpInfo getUserInfo() {
+        return powerUpInfo;
+    }
+
+    @JsonProperty("user_info")
+    public void setUserInfo(PowerUpInfo powerUpInfo) {
+        this.powerUpInfo = powerUpInfo;
+    }
+
+    @JsonIgnore
+    public HashMap<String, Integer> getPowerUps() {
+        return powerUpInfo.powerUps;
+    }
+
 }

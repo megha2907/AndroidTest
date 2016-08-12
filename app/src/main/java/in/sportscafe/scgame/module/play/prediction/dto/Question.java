@@ -52,6 +52,11 @@ public class Question implements Serializable {
     @JsonIgnore
     private int questionNumber;
 
+   @JsonIgnore
+    private String powerUpId;
+
+
+
     /**
      * @return The questionId
      */
@@ -252,4 +257,18 @@ public class Question implements Serializable {
     public void setQuestionValue(String questionValue) {
         this.questionValue = questionValue;
     }
+
+    @JsonIgnore
+    public String getPowerUpId() {
+        return powerUpId;
+    }
+
+    @JsonIgnore
+    public void setPowerUpId(String powerUpId) {
+        this.powerUpId = powerUpId;
+    }
+
+
+
+
 }

@@ -54,6 +54,7 @@ public class CustomPushNotification extends PushMessageListener {
     public NotificationCompat.Builder onCreateNotification(Context context, Bundle extras,
                                                            ConfigurationProvider provider) {
         if (extras.containsKey(EXTRA_MY_NOTIFICATION)) {
+            Log.i("hello","going inside create notification");
             String title = MoEngageNotificationUtils.getNotificationTitleIfAny(extras);
             String contenttext = MoEngageNotificationUtils.getNotificationContentTextIfAny(extras);
             String groupId = extras.getString(Constants.BundleKeys.GROUP_ID);

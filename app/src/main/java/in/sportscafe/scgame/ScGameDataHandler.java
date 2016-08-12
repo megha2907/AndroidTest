@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.jeeva.android.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +71,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
 
     public List<Sport> getAllSports() {
         String allSportsString = getSharedStringData(SharedKeys.ALL_SPORTS);
+        Log.i("allsportstring",allSportsString + "");
         if (null == allSportsString || allSportsString.isEmpty()) {
             return new ArrayList<>();
         }
@@ -193,10 +195,20 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         setSharedStringData(SharedKeys.COOKIE, cookie);
     }
 
+    public int getNumberofPowerups() {
+        return getSharedIntData(SharedKeys.NUMBER_OF_POWERUPS,0);
+    }
+
+    public void setNumberofPowerups(int numberofpowerups) {
+        setSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, numberofpowerups);
+    }
+
     @Override
     public void clearAll() {
-        List<Sport> allSports = getAllSports();
+        Log.i("clearall","cleared");
         super.clearAll();
+        List<Sport> allSports = getAllSports();
+
 
         if(!allSports.isEmpty()) {
             setAllSports(allSports);

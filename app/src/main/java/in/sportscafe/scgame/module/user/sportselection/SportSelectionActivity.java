@@ -32,7 +32,6 @@ public class SportSelectionActivity extends ScGameActivity implements SportSelec
         this.mRvSportSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
         this.mRvSportSelection.setLayoutManager(new GridLayoutManager(this, 3));
         this.mRvSportSelection.setHasFixedSize(true);
-
         this.mSportSelectionPresenter = SportSelectionPresenterImpl.newInstance(this);
         this.mSportSelectionPresenter.onCreateSportSelection(getIntent().getExtras());
     }

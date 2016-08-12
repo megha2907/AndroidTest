@@ -23,7 +23,7 @@ public class SportsModelImpl implements SportsModel {
         this.mSportsModelListener = modelListener;
         mScGameDataHandler = ScGameDataHandler.getInstance();
 
-        fillInitialSports();
+//        fillInitialSports();
     }
 
     public static SportsModel newInstance(SportsModelListener modelListener) {

@@ -52,6 +52,7 @@ public class ScGame extends Application {
         //Moengage custom Notification
         PushManager.getInstance(getApplicationContext()).setMessageListener(new CustomPushNotification());
 
+
     }
 
     /**

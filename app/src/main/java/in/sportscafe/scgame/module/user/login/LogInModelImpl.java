@@ -133,8 +133,9 @@ public class LogInModelImpl implements LogInModel {
         scGameDataHandler.setLoggedInUser(true);
         scGameDataHandler.setUserId(userInfo.getId().toString());
         scGameDataHandler.setCookie(userInfo.getCookie());
-
+        scGameDataHandler.setNumberofPowerups(userInfo.getPowerUps().get("2x"));
         userInfo.setPoints(100L);
+        Log.i("powerups", String.valueOf(userInfo.getPowerUps().get("2x")));
         scGameDataHandler.setUserInfo(userInfo);
 //        mLogInModelListener.onLoginCompleted();
         getUserPreference();
