@@ -156,6 +156,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
     }
 
     public void setGrpInfoMap(Map<Long, GroupInfo> grpInfoMap) {
+
         List<GroupInfo> grpInfoListObject = new ArrayList<>();
         Set<Long> keys = grpInfoMap.keySet();
         for (Long key : keys) {
@@ -166,6 +167,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
 
     public Map<Long, GroupInfo> getGrpInfoMap() {
         String grpInfoList = getSharedStringData(SharedKeys.GRP_INFOS);
+        Log.i("groupinfo",grpInfoList.toString());
         if (null == grpInfoList || grpInfoList.isEmpty()) {
             return new HashMap<>();
         }
@@ -185,6 +187,12 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
             groupInfoMap.put(groupInfo.getId(), groupInfo);
         }
         return groupInfoMap;
+    }
+
+    public void addNewGroup(GroupInfo newGroupInfo) {
+        Map<Long, GroupInfo> grpInfoMap = getGrpInfoMap();
+        grpInfoMap.put(newGroupInfo.getId(), newGroupInfo);
+        setGrpInfoMap(grpInfoMap);
     }
 
     public String getCookie() {

@@ -121,6 +121,15 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                 .setText(question.getQuestionText());
 
         TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
+        TextView powerupUsed = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_powerup_used);
+
+        String powerupused=question.getAnswerPowerUpId();
+        if (powerupused.equals(null)){
+            powerupUsed.setVisibility(View.INVISIBLE);
+        }
+        else {
+            powerupUsed.setText(question.getAnswerPowerUpId());
+        }
 
         int answerId = Integer.parseInt(question.getAnswerId());
 

@@ -22,8 +22,6 @@ public class AdminMembersFragment extends AbstractTabFragment implements Approve
     public static AdminMembersFragment newInstance(Long groupId) {
         Bundle bundle = new Bundle();
         bundle.putLong(BundleKeys.GROUP_ID, groupId);
-
-        Log.i("bundleininstance",bundle.toString());
         AdminMembersFragment fragment = new AdminMembersFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -32,7 +30,7 @@ public class AdminMembersFragment extends AbstractTabFragment implements Approve
     @Override
     public ViewPagerAdapter getAdapter() {
         long groupId = getArguments().getLong(BundleKeys.GROUP_ID);
-
+        Log.i("bundleininstance", String.valueOf(groupId));
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         pagerAdapter.addFragment(mMembersFragment = MembersFragment.newInstance(groupId), "Group Members");
         pagerAdapter.addFragment(ApproveFragment.newInstance(groupId, this), "Pending Requests");

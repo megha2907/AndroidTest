@@ -46,6 +46,9 @@ public class Question implements Serializable {
     @JsonProperty("question_value")
     private String questionValue;
 
+    @JsonProperty("powerup_id")
+    private String AnswerPowerUpId;
+
     @JsonIgnore
     private int questionTime = 30;
 
@@ -227,6 +230,22 @@ public class Question implements Serializable {
         this.answerId = answerId;
     }
 
+
+    /**
+     * @return The answerPowerUpId
+     */
+    @JsonProperty("powerup_id")
+    public String getAnswerPowerUpId() {
+        return AnswerPowerUpId;
+    }
+
+    /**
+     * @param AnswerPowerUpId The answerPowerUpId
+     */
+    @JsonProperty("powerup_id")
+    public void setAnswerPowerUpId(String AnswerPowerUpId ) {
+        this.AnswerPowerUpId = AnswerPowerUpId;
+    }
 
     @JsonProperty("questionTime")
     public int getQuestionTime() {
