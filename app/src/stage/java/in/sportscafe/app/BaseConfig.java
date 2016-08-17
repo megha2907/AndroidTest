@@ -7,7 +7,7 @@ package in.sportscafe.app;
  */
 public class BaseConfig {
 
-    public static final String API_BASE_URL = "https://stage01.sportscafe.in";
+    public static final String API_BASE_URL = "https://api-stage.sportscafe.in/v1/game/";
 
     public static final String IMAGE_BASE_URL = "https://d22lvl9g4trg1l.cloudfront.net/img/es3";
 }

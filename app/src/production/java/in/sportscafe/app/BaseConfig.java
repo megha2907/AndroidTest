@@ -9,5 +9,5 @@ public class BaseConfig {
 
 //    public static final String API_BASE_URL = "https://sportscafe.in";
 
-    public static final String API_BASE_URL = "https://api-stage01.sportscafe.in/v1/game/";
+    public static final String API_BASE_URL = "https://api.sportscafe.in/v1/game/";
 }

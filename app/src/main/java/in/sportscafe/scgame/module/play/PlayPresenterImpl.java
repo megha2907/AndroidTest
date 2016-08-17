@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.scgame.Constants;
 
 /**

@@ -142,10 +142,11 @@ public class PredictionModelImpl implements PredictionModel,
                 question.getMatchId(),
                 question.getQuestionId(),
                 String.valueOf(answerId),
-                TimeUtils.getCurrentTime(DateFormats.FORMAT_DATE_T_TIME_ZONE, DateFormats.GMT)
+                TimeUtils.getCurrentTime(DateFormats.FORMAT_DATE_T_TIME_ZONE, DateFormats.GMT),
+                question.getPowerUpId()
+
         );
         PredictionDataHandler.getInstance().savePrediction(answer);
-
         postAnswerToServer(answer);
     }
 

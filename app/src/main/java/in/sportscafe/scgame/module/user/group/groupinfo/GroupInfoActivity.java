@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.common.SpacesItemDecoration;
@@ -76,6 +78,7 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
 
         this.mGroupInfoPresenter = GroupInfoPresenterImpl.newInstance(this);
         this.mGroupInfoPresenter.onCreateGroupInfo(getIntent().getExtras());
+
     }
 
     @Override

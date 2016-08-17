@@ -1,6 +1,7 @@
 package in.sportscafe.scgame.module.play.prediction.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jeeva.android.Log;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -22,17 +23,20 @@ public class Answer {
     @JsonProperty("answer_time")
     private String answerTime;
 
+    @JsonProperty("powerup_id")
+    private String powerUpId;
 
 
     public Answer() {
     }
 
-    public Answer(String userId, Integer matchId, Integer questionId, String answerId, String answerTime) {
+    public Answer(String userId, Integer matchId, Integer questionId, String answerId, String answerTime, String powerUpId) {
         this.userId = userId;
         this.matchId = matchId;
         this.questionId = questionId;
         this.answerId = answerId;
         this.answerTime = answerTime;
+        this.powerUpId = powerUpId;
     }
 
     @JsonProperty("user_id")
@@ -85,6 +89,7 @@ public class Answer {
     public void setAnswerTime(String answerTime) {
         this.answerTime = answerTime;
     }
+
 
 
 }

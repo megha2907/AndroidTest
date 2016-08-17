@@ -1,5 +1,7 @@
 package in.sportscafe.scgame.module.play.prediction;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ApiResponse;

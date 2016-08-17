@@ -114,6 +114,8 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
+            int statusCode = result.getStatus().getStatusCode();
+            Log.i("status", String.valueOf(statusCode));
         } else {
             mLogInPresenter.onActivityResult(requestCode, resultCode, data);
         }

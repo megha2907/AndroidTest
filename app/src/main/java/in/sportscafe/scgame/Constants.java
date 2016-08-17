@@ -9,6 +9,12 @@ public interface Constants {
     }
 
     interface NotificationKeys {
+
+        String GROUP_ID = "group_id";
+        String JOIN_GROUP_REQUEST = "join_group_request";
+        String APPROVED_GROUP_REQUEST = "approved_group_request";
+        String RESULTS_LEADERBOARD = "results_leaderboard";
+
     }
 
     interface SharedKeys {
@@ -22,6 +28,7 @@ public interface Constants {
         String USER_ID = "userId";
         String LOGGED_USER = "loggedUser";
         String COOKIE = "cookie";
+        String NUMBER_OF_POWERUPS = "numberofpowerups";
     }
 
     interface Alerts {
