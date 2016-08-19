@@ -18,11 +18,15 @@ import in.sportscafe.scgame.module.offline.PredictionDataHandler;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
 import in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView;
 
-public class PredictionActivity extends ScGameActivity implements PredictionView, View.OnClickListener {
+public class PredictionActivity extends ScGameActivity implements PredictionView, View.OnClickListener, View.OnTouchListener, View.OnDragListener,PredictionAdapter.OnPredictionTimerListener {
 
     private SwipeFlingAdapterView mSwipeFlingAdapterView;
 
     private PredictionPresenter mPredictionPresenter;
+    private boolean powerUpApplied = false;
+
+    private PredictionModel mPredictionModel;
+    CustomButton btnpowerUpCount;
 
 
 
@@ -42,6 +46,22 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
 
         this.mPredictionPresenter = PredictionPresenterImpl.newInstance(this);
         this.mPredictionPresenter.onCreatePrediction(getIntent().getExtras());
+
+
+        CustomButton btnquestionValue = (CustomButton)findViewById(R.id.swipe_card_question_value);
+        btnpowerUpCount = (CustomButton) findViewById(R.id.swipe_card_tv_powerup_count);
+
+        btnquestionValue.setOnTouchListener(this);
+        mSwipeFlingAdapterView.setOnDragListener(this);
+
+        int powerUps = ScGameDataHandler.getInstance().getNumberofPowerups();
+        btnpowerUpCount.setText(String.valueOf(powerUps));
+
+        if (powerUps < 1) {
+            powerUpApplied = true;
+        }
+
+
     }
 
     @Override
@@ -54,53 +74,48 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
         ((TextView) findViewById(R.id.prediction_tv_contest_name)).setText(contestName);
     }
 
-//    @Override
-//    public void OnclickPowerup(View view) {
-//        CustomButton btnquestionValue = (CustomButton) view.findViewById(R.id.swipe_card_question_value);
-//        CustomButton btnpowerUpCount = (CustomButton) view.findViewById(R.id.swipe_card_tv_powerup_count);
-//        SwipeFlingAdapterView swipeview = (SwipeFlingAdapterView) view.findViewById(R.id.activity_prediction_swipe);
-//        btnquestionValue.setOnTouchListener(this);
-//        swipeview.setOnDragListener(this);
-//
-//    }
 
-//    private boolean powerUpApplied = false;
-//
-//    @Override
-//    public boolean onTouch(View v, MotionEvent arg1) {
-//        if(!powerUpApplied) {
-//            ClipData data = ClipData.newPlainText("", "");
-//            View.DragShadowBuilder shadow = new View.DragShadowBuilder(v);
-//            v.startDrag(data, shadow, null, 0);
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean onDrag(View view, DragEvent dragEvent) {
-//        final int action = dragEvent.getAction();
-//        switch(action) {
-//
-//            case DragEvent.ACTION_DRAG_STARTED:
-//                break;
-//
-//            case DragEvent.ACTION_DRAG_EXITED:
-//                break;
-//
-//            case DragEvent.ACTION_DRAG_ENTERED:
-//                break;
-//
-//            case DragEvent.ACTION_DROP:
-//                break;
-//
-//            case DragEvent.ACTION_DRAG_ENDED:
-//                if(!powerUpApplied) {
-//
-//                }
-//                break;
-//        }
-//        return true;
-//    }
+    @Override
+    public boolean onTouch(View v, MotionEvent arg1) {
+        if(!powerUpApplied) {
+            ClipData data = ClipData.newPlainText("", "");
+            View.DragShadowBuilder shadow = new View.DragShadowBuilder(v);
+            v.startDrag(data, shadow, null, 0);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onDrag(View view, DragEvent dragEvent) {
+        final int action = dragEvent.getAction();
+        switch(action) {
+
+            case DragEvent.ACTION_DRAG_STARTED:
+                break;
+
+            case DragEvent.ACTION_DRAG_EXITED:
+                break;
+
+            case DragEvent.ACTION_DRAG_ENTERED:
+                break;
+
+            case DragEvent.ACTION_DROP:
+                break;
+
+            case DragEvent.ACTION_DRAG_ENDED:
+                if(!powerUpApplied) {
+                    if (ScGameDataHandler.getInstance().getNumberofPowerups() > 0) {
+                        powerUpApplied = true;
+                        mPredictionPresenter.onPowerUp();
+                        ScGameDataHandler.getInstance().setNumberofPowerups(ScGameDataHandler.getInstance().getNumberofPowerups() - 1);
+                        String UpdatedPowerUps = String.valueOf(ScGameDataHandler.getInstance().getNumberofPowerups());
+                        btnpowerUpCount.setText(UpdatedPowerUps);
+                    }
+                }
+                break;
+        }
+        return true;
+    }
 
 
     @Override
@@ -114,6 +129,7 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
     public void hidePass() {
         findViewById(R.id.prediction_btn_pass).setVisibility(View.INVISIBLE);
     }
+
 
     @Override
     public void showNoNegativeAlert() {
@@ -150,6 +166,17 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
                 mSwipeFlingAdapterView.getTopCardListener().selectBottom();
                 break;
         }
+    }
+
+
+    @Override
+    public void onTimeUp() {
+
+    }
+
+    @Override
+    public void dismisspowerup() {
+        powerUpApplied=false;
     }
 
 

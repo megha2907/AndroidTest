@@ -8,7 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 
+import com.moe.pushlibrary.MoEHelper;
+import com.moe.pushlibrary.PayloadBuilder;
+
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.common.SpacesItemDecoration;
 
@@ -61,6 +65,10 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
                 break;
             case R.id.new_group_btn_done:
                 mNewGroupPresenter.onClickDone(getTrimmedText(mEtGroupName));
+                PayloadBuilder builder = new PayloadBuilder();
+                builder.putAttrString("GroupName", getTrimmedText(mEtGroupName))
+                        .putAttrString("UserID", ScGameDataHandler.getInstance().getUserId());
+                MoEHelper.getInstance(getContext()).trackEvent("CREATE GROUP-ONCLICK", builder.build());
                 break;
         }
     }

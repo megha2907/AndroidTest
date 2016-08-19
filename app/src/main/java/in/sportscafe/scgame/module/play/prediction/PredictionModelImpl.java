@@ -68,6 +68,12 @@ public class PredictionModelImpl implements PredictionModel,
     }
 
     @Override
+    public void UpdatePowerups() {
+        mPredictionAdapter.UpdatePowerup();
+        mPredictionAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public String getTournamentName() {
         return mMyResult.getTournamentName();
     }
@@ -86,6 +92,8 @@ public class PredictionModelImpl implements PredictionModel,
         mPredictionAdapter.stopTimer();
         mPredictionAdapter.remove(dataObject);
         mPredictionAdapter.notifyDataSetChanged();
+        mPredictionModelListener.dismisspowerupapplied();
+
     }
 
     @Override
@@ -171,6 +179,7 @@ public class PredictionModelImpl implements PredictionModel,
         mPredictionModelListener.onTimeUp();
     }
 
+
     public interface OnPredictionModelListener {
 
         Context getContext();
@@ -185,5 +194,8 @@ public class PredictionModelImpl implements PredictionModel,
         void onShowingPassedQuestions();
 
         void onTimeUp();
+
+        void dismisspowerupapplied();
+
     }
 }

@@ -8,8 +8,11 @@ import android.widget.TextView;
 
 import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
+import com.moe.pushlibrary.MoEHelper;
+import com.moe.pushlibrary.PayloadBuilder;
 
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupPerson;
 
@@ -19,6 +22,7 @@ import in.sportscafe.scgame.module.user.myprofile.dto.GroupPerson;
 public class ApproveAdapter extends Adapter<GroupPerson, ApproveAdapter.ViewHolder> {
 
     private OnApproveOptionListener mApproveOptionListener;
+    Context context;
 
     public ApproveAdapter(Context context, OnApproveOptionListener listener) {
         super(context);
@@ -32,7 +36,9 @@ public class ApproveAdapter extends Adapter<GroupPerson, ApproveAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
         return new ViewHolder(getLayoutInflater().inflate(R.layout.inflater_approve_row, parent, false));
+
     }
 
     @Override
@@ -70,9 +76,20 @@ public class ApproveAdapter extends Adapter<GroupPerson, ApproveAdapter.ViewHold
             switch (view.getId()) {
                 case R.id.approve_iv_accept:
                     mApproveOptionListener.onAccept(mPosition);
+                    GroupPerson groupPerson = getItem(getAdapterPosition());
+                    PayloadBuilder builder = new PayloadBuilder();
+                    builder.putAttrInt("group_personID", groupPerson.getId())
+                            .putAttrString("admin_userID", ScGameDataHandler.getInstance().getUserId());
+                    MoEHelper.getInstance(context).trackEvent("REQUEST ACCEPTED", builder.build());
+
                     break;
                 case R.id.approve_iv_reject:
                     mApproveOptionListener.onReject(mPosition);
+                    GroupPerson groupPerson2 = getItem(getAdapterPosition());
+                    PayloadBuilder builder2 = new PayloadBuilder();
+                    builder2.putAttrInt("group_personID", groupPerson2.getId())
+                            .putAttrString("admin_userID", ScGameDataHandler.getInstance().getUserId());
+                    MoEHelper.getInstance(context).trackEvent("REQUEST REJECTED", builder2.build());
                     break;
             }
         }
