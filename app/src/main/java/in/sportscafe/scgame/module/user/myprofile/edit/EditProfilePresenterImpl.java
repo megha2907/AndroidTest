@@ -29,11 +29,15 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
         mEditProfileView.setName(userInfo.getUserName());
         mEditProfileView.setProfileImage(userInfo.getPhoto());
+        if(userInfo.getUserNickName()!= null){
+            mEditProfileView.setNickName(userInfo.getUserNickName());
+        }
+
     }
 
     @Override
-    public void onClickDone(String name, String about) {
-        mEditProfileModel.updateProfile(name, about);
+    public void onClickDone(String name, String nickname) {
+        mEditProfileModel.updateProfile(name, nickname);
     }
 
     @Override
@@ -57,6 +61,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     @Override
     public void onNameEmpty() {
         mEditProfileView.showMessage(Constants.Alerts.NAME_EMPTY);
+    }
+
+    @Override
+    public void onNickNameEmpty() {
+        mEditProfileView.showMessage(Constants.Alerts.NICKNAME_EMPTY);
     }
 
     @Override

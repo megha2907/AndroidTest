@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.feed.dto.Tournament;
 import in.sportscafe.scgame.module.feed.dto.Match;
 import in.sportscafe.scgame.module.home.HomeActivity;
+import in.sportscafe.scgame.module.home.OnHomeActionListener;
 import in.sportscafe.scgame.utils.ViewUtils;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 
@@ -28,12 +31,15 @@ import in.sportscafe.scgame.utils.timeutils.TimeUtils;
  */
 public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
+    private OnHomeActionListener mOnHomeActionListener;
+
     private AlertDialog mAlertDialog;
     private Context mcon;
 
-    public FeedAdapter(Context context) {
+    public FeedAdapter(Context context, OnHomeActionListener listener) {
         super(context);
         mcon = context;
+        this.mOnHomeActionListener = listener;
     }
 
     @Override
@@ -176,7 +182,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            mcon.startActivity(new Intent(mcon, HomeActivity.class));
+            mOnHomeActionListener.onClickPlay();
         }
     }
 

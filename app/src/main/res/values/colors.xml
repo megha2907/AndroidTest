@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#272731</color>
+    <color name="colorPrimaryDark">#00000C</color>
+    <color name="colorAccent">#C95140</color>
 
     <color name="alto">#D8D8D8</color>
     <color name="silver_chalice">#AAAAAA</color>
-    <color name="black">#000000</color>
+    <color name="dark_grey">#272731</color>
+    <color name="black">#00000C</color>
     <color name="chambray">#3B5999</color>
     <color name="chathamsBlue">#194586</color>
     <color name="gallery">#EBEBEB</color>
     <color name="haveLockBlue">#4A90E2</color>
     <color name="lima">#7ED321</color>
-    <color name="monza">#D0021B</color>
+    <color name="monza">#c94646</color>
     <color name="orange">#FF681F</color>
     <color name="pink_swan">#C2BABA</color>
     <color name="scorpion">#656161</color>
     <color name="valencia">#D44837</color>
     <color name="powerup_color">#ffad33</color>
+    <color name="btn_powerup_screen_color">#538ECA</color>
+    <color name="btn_powerup_count_screen_color">#D3D5D4</color>
+
+    <color name="btncolor">#C95140</color>
+    <color name="colorMedium">#181820</color>
 </resources>

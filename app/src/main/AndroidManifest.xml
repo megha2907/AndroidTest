@@ -59,6 +59,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.user.powerups.PowerUpActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".module.play.prediction.PredictionActivity"
             android:screenOrientation="portrait" />
 

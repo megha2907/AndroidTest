@@ -68,8 +68,8 @@ public class PredictionModelImpl implements PredictionModel,
     }
 
     @Override
-    public void UpdatePowerups() {
-        mPredictionAdapter.UpdatePowerup();
+    public void updatePowerUps() {
+        mPredictionAdapter.updatePowerUp();
         mPredictionAdapter.notifyDataSetChanged();
     }
 
@@ -92,7 +92,7 @@ public class PredictionModelImpl implements PredictionModel,
         mPredictionAdapter.stopTimer();
         mPredictionAdapter.remove(dataObject);
         mPredictionAdapter.notifyDataSetChanged();
-        mPredictionModelListener.dismisspowerupapplied();
+        mPredictionModelListener.dismissPowerUpApplied();
 
     }
 
@@ -195,7 +195,7 @@ public class PredictionModelImpl implements PredictionModel,
 
         void onTimeUp();
 
-        void dismisspowerupapplied();
+        void dismissPowerUpApplied();
 
     }
 }

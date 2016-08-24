@@ -60,4 +60,5 @@ dependencies {
     compile 'com.moengage:moe-android-sdk:6.0.29'
     compile 'com.moengage:addon-inbox:2.7.0'
     compile 'com.google.android.gms:play-services-gcm:8.3.0'
+    compile 'com.pkmmte.view:circularimageview:1.1'
 }

@@ -15,6 +15,7 @@ import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.feed.dto.Match;
 import in.sportscafe.scgame.module.feed.dto.MatchesResponse;
 import in.sportscafe.scgame.module.feed.dto.Tournament;
+import in.sportscafe.scgame.module.home.OnHomeActionListener;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
@@ -41,8 +42,8 @@ public class FeedModelImpl implements FeedModel {
     }
 
     @Override
-    public FeedAdapter getAdapter() {
-        return mFeedAdapter = new FeedAdapter(mFeedModelListener.getContext());
+    public FeedAdapter getAdapter(OnHomeActionListener listener) {
+        return mFeedAdapter = new FeedAdapter(mFeedModelListener.getContext(), listener);
     }
 
     @Override

@@ -24,8 +24,8 @@
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/swipe_card_tv_powerup_count"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="@dimen/dp_28"
+        android:layout_height="@dimen/dp_28"
         android:gravity="center"
         android:textSize="@dimen/dp_14"
         android:textColor="@color/white"

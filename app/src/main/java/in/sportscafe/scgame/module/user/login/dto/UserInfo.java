@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jeeva.android.Log;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -37,6 +38,9 @@ public class UserInfo {
 
     @JsonProperty("user_points")
     private Long points;
+
+    @JsonProperty("user_nick")
+    private String userNickName;
 
 //    @JsonProperty("user_info")
 //    private String userPowerupInfo;
@@ -186,9 +190,20 @@ public class UserInfo {
         this.powerUpInfo = powerUpInfo;
     }
 
+    @JsonProperty("user_nick")
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    @JsonProperty("user_nick")
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
+    }
+
     @JsonIgnore
     public HashMap<String, Integer> getPowerUps() {
         return powerUpInfo.powerUps;
+
     }
 
 }

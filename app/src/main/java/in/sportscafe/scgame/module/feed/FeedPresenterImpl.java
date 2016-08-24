@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import in.sportscafe.scgame.Constants;
+import in.sportscafe.scgame.module.home.OnHomeActionListener;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -24,8 +25,8 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
     }
 
     @Override
-    public void onCreateFeed() {
-        mFeedView.setAdapter(mFeedModel.getAdapter());
+    public void onCreateFeed(OnHomeActionListener listener) {
+        mFeedView.setAdapter(mFeedModel.getAdapter(listener));
     }
 
     @Override

@@ -193,7 +193,7 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
 //        return true;
 //    }
 
-    public void UpdatePowerup() {
+    public void updatePowerUp() {
 
                 mViewHolderList.get(0).rlquestion.setTag(getItem(0));
                 Question question = (Question) mViewHolderList.get(0).rlquestion.getTag();

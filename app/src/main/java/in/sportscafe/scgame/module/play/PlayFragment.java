@@ -54,8 +54,6 @@ public class PlayFragment extends ScGameFragment implements PlayView, View.OnCli
         mBtnSkip.setOnClickListener(this);
 
         findViewById(R.id.play_btn_back).setOnClickListener(this);
-        findViewById(R.id.play_btn_back).setVisibility(View.GONE);
-
 
         this.mPlayPresenter = PlayPresenterImpl.newInstance(this);
         this.mPlayPresenter.onCreatePlay();

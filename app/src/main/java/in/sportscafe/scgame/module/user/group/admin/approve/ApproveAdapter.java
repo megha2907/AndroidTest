@@ -11,6 +11,7 @@ import com.jeeva.android.widgets.HmImageView;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.PayloadBuilder;
 
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.Adapter;
@@ -78,18 +79,18 @@ public class ApproveAdapter extends Adapter<GroupPerson, ApproveAdapter.ViewHold
                     mApproveOptionListener.onAccept(mPosition);
                     GroupPerson groupPerson = getItem(getAdapterPosition());
                     PayloadBuilder builder = new PayloadBuilder();
-                    builder.putAttrInt("group_personID", groupPerson.getId())
-                            .putAttrString("admin_userID", ScGameDataHandler.getInstance().getUserId());
-                    MoEHelper.getInstance(context).trackEvent("REQUEST ACCEPTED", builder.build());
+                    builder.putAttrInt(Constants.NotificationKeys.GROUP_PERSONID, groupPerson.getId())
+                            .putAttrString(Constants.NotificationKeys.ADMIN_USERID, ScGameDataHandler.getInstance().getUserId());
+                    MoEHelper.getInstance(context).trackEvent(Constants.NotificationKeys.REQUEST_ACCEPTED, builder.build());
 
                     break;
                 case R.id.approve_iv_reject:
                     mApproveOptionListener.onReject(mPosition);
                     GroupPerson groupPerson2 = getItem(getAdapterPosition());
                     PayloadBuilder builder2 = new PayloadBuilder();
-                    builder2.putAttrInt("group_personID", groupPerson2.getId())
-                            .putAttrString("admin_userID", ScGameDataHandler.getInstance().getUserId());
-                    MoEHelper.getInstance(context).trackEvent("REQUEST REJECTED", builder2.build());
+                    builder2.putAttrInt(Constants.NotificationKeys.GROUP_PERSONID, groupPerson2.getId())
+                            .putAttrString(Constants.NotificationKeys.ADMIN_USERID, ScGameDataHandler.getInstance().getUserId());
+                    MoEHelper.getInstance(context).trackEvent(Constants.NotificationKeys.REQUEST_REJECTED, builder2.build());
                     break;
             }
         }

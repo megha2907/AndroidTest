@@ -6,6 +6,7 @@ import android.view.View;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
+import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummary;
 
 /**
@@ -16,6 +17,8 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     private ProfileView mProfileView;
 
     private ProfileModel mProfileModel;
+
+    private GroupInfo mGroupInfo;
 
     private ProfilePresenterImpl(ProfileView profileView) {
         this.mProfileView = profileView;
@@ -35,6 +38,20 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     @Override
     public void onGetSportsSelectionResult() {
         mProfileView.setSportsFollowedCount(ScGameDataHandler.getInstance().getFavoriteSportsIdList().size());
+    }
+
+    @Override
+    public void onGetGroupCount() {
+        if (null == ScGameDataHandler.getInstance().getGrpInfoMap() || ScGameDataHandler.getInstance().getGrpInfoMap().isEmpty()) {
+            mProfileView.setGroupsCount(0);
+        } else {
+            mProfileView.setGroupsCount(ScGameDataHandler.getInstance().getGrpInfoMap().size());
+        }
+    }
+
+    @Override
+    public void onGetPowerUpsCount() {
+        mProfileView.setPowerUpsCount(ScGameDataHandler.getInstance().getNumberofPowerups());
     }
 
     @Override
@@ -71,6 +88,8 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
         mProfileView.setName(userInfo.getUserName());
         mProfileView.setProfileImage(userInfo.getPhoto());
         onGetSportsSelectionResult();
+        onGetGroupCount();
+        onGetPowerUpsCount();
     }
 
     @Override

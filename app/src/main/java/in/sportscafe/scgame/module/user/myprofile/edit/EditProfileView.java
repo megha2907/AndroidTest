@@ -13,7 +13,7 @@ public interface EditProfileView extends View {
 
 //    void setUserName(String userName);
 
-    void setAbout(String about);
+    void setNickName(String nickname);
 
     void close();
 

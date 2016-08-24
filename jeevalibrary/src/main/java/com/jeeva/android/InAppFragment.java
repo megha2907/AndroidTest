@@ -44,6 +44,7 @@ public class InAppFragment extends BaseFragment {
 
         ((ViewGroup) getView()).addView(mRlInApp, new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
     }
 
     public void showInAppMessage(String message) {

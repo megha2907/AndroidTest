@@ -29,7 +29,7 @@ public interface PredictionView extends View {
 
     void swipeCardToTop();
 
-    void dismisspowerup();
+    void dismissPowerUp();
 
 
 

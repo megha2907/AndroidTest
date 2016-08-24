@@ -63,7 +63,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
 
     public void onPowerUp() {
-        mPredictionModel.UpdatePowerups();
+        mPredictionModel.updatePowerUps();
     }
 
     @Override
@@ -73,7 +73,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
 
     @Override
-    public void dismisspowerupapplied() {
-        mPredictionView.dismisspowerup();
+    public void dismissPowerUpApplied() {
+        mPredictionView.dismissPowerUp();
     }
 }

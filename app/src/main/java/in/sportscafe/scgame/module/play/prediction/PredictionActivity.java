@@ -2,11 +2,9 @@ package in.sportscafe.scgame.module.play.prediction;
 
 import android.content.ClipData;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.customfont.CustomButton;
@@ -14,7 +12,6 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameActivity;
-import in.sportscafe.scgame.module.offline.PredictionDataHandler;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
 import in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView;
 
@@ -23,7 +20,7 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
     private SwipeFlingAdapterView mSwipeFlingAdapterView;
 
     private PredictionPresenter mPredictionPresenter;
-    private boolean powerUpApplied = false;
+    private boolean mpowerUpApplied = false;
 
     private PredictionModel mPredictionModel;
     CustomButton btnpowerUpCount;
@@ -58,7 +55,7 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
         btnpowerUpCount.setText(String.valueOf(powerUps));
 
         if (powerUps < 1) {
-            powerUpApplied = true;
+            mpowerUpApplied = true;
         }
 
 
@@ -77,7 +74,7 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
 
     @Override
     public boolean onTouch(View v, MotionEvent arg1) {
-        if(!powerUpApplied) {
+        if(!mpowerUpApplied) {
             ClipData data = ClipData.newPlainText("", "");
             View.DragShadowBuilder shadow = new View.DragShadowBuilder(v);
             v.startDrag(data, shadow, null, 0);
@@ -103,9 +100,9 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
                 break;
 
             case DragEvent.ACTION_DRAG_ENDED:
-                if(!powerUpApplied) {
+                if(!mpowerUpApplied) {
                     if (ScGameDataHandler.getInstance().getNumberofPowerups() > 0) {
-                        powerUpApplied = true;
+                        mpowerUpApplied = true;
                         mPredictionPresenter.onPowerUp();
                         ScGameDataHandler.getInstance().setNumberofPowerups(ScGameDataHandler.getInstance().getNumberofPowerups() - 1);
                         String UpdatedPowerUps = String.valueOf(ScGameDataHandler.getInstance().getNumberofPowerups());
@@ -175,8 +172,8 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
     }
 
     @Override
-    public void dismisspowerup() {
-        powerUpApplied=false;
+    public void dismissPowerUp() {
+        mpowerUpApplied=false;
     }
 
 

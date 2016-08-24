@@ -91,12 +91,13 @@ public class ScGame extends Application {
      */
     private void initCustomFonts() {
         CustomFont.getInstance().init(
-                "fonts/montserrat/Montserrat-UltraLight.otf", "fonts/montserrat/Montserrat-Regular.otf",
-                "fonts/montserrat/Montserrat-SemiBold.otf", "fonts/roboto/Roboto-Light.ttf",
+           "fonts/roboto/Roboto-Light.ttf",
                 "fonts/roboto/Roboto-LightItalic.ttf", "fonts/roboto/Roboto-Regular.ttf",
                 "fonts/roboto/RobotoCondensed-Regular.ttf", "fonts/roboto/RobotoCondensed-Bold.ttf",
-                "fonts/roboto/Roboto-Medium.ttf",
-                "fonts/georgia/Georgia.ttf", "fonts/georgia/Georgia-Bold.ttf"
+                "fonts/roboto/Roboto-Medium.ttf", "fonts/lato/Lato-Bold.ttf", "fonts/lato/Lato-Hairline.ttf"
+                , "fonts/lato/Lato-Heavy.ttf", "fonts/lato/Lato-Light.ttf", "fonts/lato/Lato-Medium.ttf",
+                "fonts/lato/Lato-Regular.ttf", "fonts/lato/Lato-Semibold.ttf"
+                , "fonts/lato/Lato-Thin.ttf"
         );
     }
 
