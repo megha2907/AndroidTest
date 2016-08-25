@@ -28,9 +28,10 @@ import in.sportscafe.scgame.module.common.CircularProgressBar;
 import in.sportscafe.scgame.module.common.CountDownTimer;
 import in.sportscafe.scgame.module.play.prediction.dto.Answer;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
+import in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 
-public class PredictionAdapter extends ArrayAdapter<Question> implements View.OnTouchListener, View.OnDragListener {
+public class PredictionAdapter extends ArrayAdapter<Question>  {
 
     private static final int ONE_SECOND_IN_MS = 1000;
 
@@ -83,7 +84,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> implements View.On
     public void remove(Question object) {
         super.remove(object);
         mViewHolderList.remove(0);
-        powerUpApplied = false;
+       // powerUpApplied = false;
     }
 
     @Override
@@ -116,82 +117,94 @@ public class PredictionAdapter extends ArrayAdapter<Question> implements View.On
         viewHolder.ivRightOption.setImageUrl(question.getQuestionImage2(),
                 Volley.getInstance().getImageLoader(), false);
 
-        viewHolder.btnquestionValue.setText("2X");
+     //   viewHolder.btnquestionValue.setText("2X");
 
-        viewHolder.btnquestionValue.setOnTouchListener(this);
-        viewHolder.rlquestion.setOnDragListener(this);
+      //  viewHolder.btnquestionValue.setOnTouchListener(this);
+    //    viewHolder.rlquestion.setOnDragListener(this);
         question.setPowerUpId("null");
 
-        int powerUps = ScGameDataHandler.getInstance().getNumberofPowerups();
-        viewHolder.btnpowerUpCount.setText(String.valueOf(powerUps));
+//        int powerUps = ScGameDataHandler.getInstance().getNumberofPowerups();
+//        viewHolder.btnpowerUpCount.setText(String.valueOf(powerUps));
 
-        if (powerUps < 1) {
-            powerUpApplied = true;
-        }
+//        if (powerUps < 1) {
+//            powerUpApplied = true;
+//        }
 
         return convertView;
     }
+//
+//    private boolean powerUpApplied = false;
+//
+//    @Override
+//    public boolean onTouch(View v, MotionEvent arg1) {
+//        if(!powerUpApplied) {
+//            ClipData data = ClipData.newPlainText("", "");
+//            View.DragShadowBuilder shadow = new View.DragShadowBuilder(v);
+//            v.startDrag(data, shadow, null, 0);
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onDrag(View view, DragEvent dragEvent) {
+//        final int action = dragEvent.getAction();
+//        switch(action) {
+//
+//            case DragEvent.ACTION_DRAG_STARTED:
+//                break;
+//
+//            case DragEvent.ACTION_DRAG_EXITED:
+//                break;
+//
+//            case DragEvent.ACTION_DRAG_ENTERED:
+//                break;
+//
+//            case DragEvent.ACTION_DROP:
+//                break;
+//
+//            case DragEvent.ACTION_DRAG_ENDED:
+//                if(!powerUpApplied) {
+//
+//                    if (ScGameDataHandler.getInstance().getNumberofPowerups() > 0) {
+//                    powerUpApplied = true;
+//                    mViewHolderList.get(0).rlquestion.setTag(getItem(0));
+//                    Question question = (Question) mViewHolderList.get(0).rlquestion.getTag();
+//                    question.setPowerUpId("2x");
+//
+//                    mViewHolderList.get(0).rlquestion.setBackgroundColor(
+//                            ContextCompat.getColor(getContext(), R.color.powerup_color));
+//                    mViewHolderList.get(0).tvpowerUptext.setVisibility(view.VISIBLE);
+//
+//                    ScGameDataHandler.getInstance().setNumberofPowerups(ScGameDataHandler.getInstance().getNumberofPowerups() - 1);
+//                    String UpdatedPowerUps = String.valueOf(ScGameDataHandler.getInstance().getNumberofPowerups());
+//
+//                    if (mViewHolderList.size() == 1) {
+//                        mViewHolderList.get(0).btnpowerUpCount.setText(UpdatedPowerUps);
+//
+//                    } else {
+//                        mViewHolderList.get(0).btnpowerUpCount.setText(UpdatedPowerUps);
+//                        mViewHolderList.get(1).btnpowerUpCount.setText(UpdatedPowerUps);
+//                    }
+//
+//                    }
+//                }
+//                break;
+//        }
+//        return true;
+//    }
 
-    private boolean powerUpApplied = false;
+    public void updatePowerUp() {
 
-    @Override
-    public boolean onTouch(View v, MotionEvent arg1) {
-        if(!powerUpApplied) {
-            ClipData data = ClipData.newPlainText("", "");
-            View.DragShadowBuilder shadow = new View.DragShadowBuilder(v);
-            v.startDrag(data, shadow, null, 0);
-        }
-        return false;
+                mViewHolderList.get(0).rlquestion.setTag(getItem(0));
+                Question question = (Question) mViewHolderList.get(0).rlquestion.getTag();
+                question.setPowerUpId("2x");
+
+                mViewHolderList.get(0).rlquestion.setBackgroundColor(
+                        ContextCompat.getColor(getContext(), R.color.powerup_color));
+                mViewHolderList.get(0).tvpowerUptext.setVisibility(View.VISIBLE);
+
+
     }
-
-    @Override
-    public boolean onDrag(View view, DragEvent dragEvent) {
-        final int action = dragEvent.getAction();
-        switch(action) {
-
-            case DragEvent.ACTION_DRAG_STARTED:
-                break;
-
-            case DragEvent.ACTION_DRAG_EXITED:
-                break;
-
-            case DragEvent.ACTION_DRAG_ENTERED:
-                break;
-
-            case DragEvent.ACTION_DROP:
-                break;
-
-            case DragEvent.ACTION_DRAG_ENDED:
-                if(!powerUpApplied) {
-
-                    if (ScGameDataHandler.getInstance().getNumberofPowerups() > 0) {
-                    powerUpApplied = true;
-                    mViewHolderList.get(0).rlquestion.setTag(getItem(0));
-                    Question question = (Question) mViewHolderList.get(0).rlquestion.getTag();
-                    question.setPowerUpId("2x");
-
-                    mViewHolderList.get(0).rlquestion.setBackgroundColor(
-                            ContextCompat.getColor(getContext(), R.color.powerup_color));
-                    mViewHolderList.get(0).tvpowerUptext.setVisibility(view.VISIBLE);
-
-                    ScGameDataHandler.getInstance().setNumberofPowerups(ScGameDataHandler.getInstance().getNumberofPowerups() - 1);
-                    String UpdatedPowerUps = String.valueOf(ScGameDataHandler.getInstance().getNumberofPowerups());
-
-                    if (mViewHolderList.size() == 1) {
-                        mViewHolderList.get(0).btnpowerUpCount.setText(UpdatedPowerUps);
-
-                    } else {
-                        mViewHolderList.get(0).btnpowerUpCount.setText(UpdatedPowerUps);
-                        mViewHolderList.get(1).btnpowerUpCount.setText(UpdatedPowerUps);
-                    }
-
-                    }
-                }
-                break;
-        }
-        return true;
-    }
-
 
     public interface OnPredictionTimerListener {
 
@@ -233,8 +246,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> implements View.On
             tvRightOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_right);
             ivLeftOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_left);
             ivRightOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_right);
-            btnquestionValue = (CustomButton) rootView.findViewById(R.id.swipe_card_question_value);
-            btnpowerUpCount = (CustomButton) rootView.findViewById(R.id.swipe_card_tv_powerup_count);
+           // btnquestionValue = (CustomButton) rootView.findViewById(R.id.swipe_card_question_value);
+          //  btnpowerUpCount = (CustomButton) rootView.findViewById(R.id.swipe_card_tv_powerup_count);
             rlquestion = (RelativeLayout) rootView.findViewById(R.id.swipe_relative_layout_question);
             tvpowerUptext = (TextView) rootView.findViewById(R.id.swipe_card_tv_powerup);
         }

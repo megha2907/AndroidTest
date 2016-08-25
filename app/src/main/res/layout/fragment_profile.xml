@@ -1,123 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/profile_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_iv_image"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_10"
         android:ellipsize="end"
         android:gravity="center_horizontal"
         android:maxLines="1"
         android:maxWidth="@dimen/dp_150"
-        android:text="klajdlkfjalskdfjalksdfjjklasdfkajfs"
+        android:text="Deepanshi Bajaj"
         android:textAllCaps="false"
-        android:textSize="@dimen/dp_18"
-        android:textStyle="bold" />
+        android:textColor="@color/silver_chalice"
+        android:textSize="@dimen/dp_19"
+        android:textStyle="bold"
+        app:typeface="lato_medium" />
 
-    <com.jeeva.android.widgets.customfont.CustomButton
-        android:id="@+id/profile_btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:text="Back"
-        android:textAllCaps="false"
-        android:textSize="@dimen/dp_20" />
 
-    <com.jeeva.android.widgets.customfont.CustomButton
+    <ImageButton
         android:id="@+id/profile_btn_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="?android:attr/selectableItemBackground"
-        android:text="Edit"
-        android:textAllCaps="false"
-        android:textSize="@dimen/dp_20" />
+        android:layout_below="@+id/profile_iv_image"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toRightOf="@+id/profile_tv_title"
+        android:background="@android:color/transparent"
+        android:src="@drawable/edit_profile_icon"
 
-    <com.jeeva.android.widgets.HmImageView
+        />
+
+    <in.sportscafe.scgame.module.common.RoundImage
         android:id="@+id/profile_iv_image"
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_80"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_40"
         android:src="@drawable/user_default" />
 
-    <com.jeeva.android.widgets.customfont.CustomButton
-        android:id="@+id/profile_btn_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profile_iv_image"
-        android:layout_centerHorizontal="true"
-        android:background="?android:attr/selectableItemBackground"
-        android:text="Logout"
-        android:textAllCaps="false"
-        android:textSize="@dimen/dp_20" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/profile_ll_sports_followed_parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/profile_iv_image"
+        android:layout_alignTop="@+id/profile_iv_image"
         android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_80"
-        android:layout_toLeftOf="@id/profile_iv_image"
-        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_toRightOf="@+id/profile_iv_image"
         android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/profile_add_sports_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/add_group_sports_icon" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/profile_tv_sports_folld"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textSize="@dimen/dp_15" />
+            android:layout_below="@+id/profile_add_sports_button"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="5"
+            android:textColor="@color/silver_chalice"
+            android:textSize="@dimen/dp_15"
+            app:typeface="lato_regular" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/profile_tv_label_tournaments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_8"
-            android:gravity="center_horizontal"
-            android:text="Sports Followed" />
+            android:layout_below="@+id/profile_add_sports_button"
+            android:layout_marginLeft="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toRightOf="@+id/profile_tv_sports_folld"
+            android:text="Sports"
+            android:textColor="@color/silver_chalice"
+            android:textSize="@dimen/dp_15"
+            app:typeface="lato_regular" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/profile_groups_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/profile_iv_image"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_toLeftOf="@+id/profile_iv_image"
+        android:orientation="vertical">
+
+
+        <ImageButton
+            android:id="@+id/profile_add_group_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/add_group_sports_icon" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/profile_number_of_groups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_add_group_button"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="5"
+            android:textColor="@color/silver_chalice"
+            android:textSize="@dimen/dp_15"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/profile_add_group_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_add_group_button"
+            android:layout_marginLeft="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toRightOf="@+id/profile_number_of_groups"
+            android:text="Groups"
+            android:textColor="@color/silver_chalice"
+            android:textSize="@dimen/dp_15"
+            app:typeface="lato_regular" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/profile_ll_points_parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/profile_ll_sports_followed_parent"
-        android:layout_alignTop="@id/profile_ll_sports_followed_parent"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_toRightOf="@id/profile_iv_image"
+        android:layout_below="@+id/profile_tv_title"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_15"
         android:gravity="center_horizontal"
         android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/points_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/points_icon" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/profile_tv_points"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_0"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:textSize="@dimen/dp_15" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/points_icon"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="5"
+            android:textColor="@color/silver_chalice"
+            android:textSize="@dimen/dp_15"
+            app:typeface="lato_regular" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/profile_tv_label_point"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Points" />
+            android:layout_below="@+id/points_icon"
+            android:layout_marginLeft="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toRightOf="@+id/profile_tv_points"
+            android:text="Points"
+            android:textColor="@color/silver_chalice"
+            android:textSize="@dimen/dp_15"
+            app:typeface="lato_regular" />
 
-    </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/profile_ll_powerups_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_tv_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_15"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/powerups_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/powerup_icon" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/profile_tv_powerups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/powerups_icon"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="5"
+            android:textColor="@color/silver_chalice"
+            android:textSize="@dimen/dp_15"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/profile_tv_label_powerups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/powerups_icon"
+            android:layout_marginLeft="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toRightOf="@+id/profile_tv_powerups"
+            android:text="Power Ups"
+            android:textColor="@color/silver_chalice"
+            android:textSize="@dimen/dp_15"
+            app:typeface="lato_regular" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/profile_ll_badge_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/profile_tv_title"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_15"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/badge_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/badge_icon" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/profile_tv_badges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/badge_icon"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="5"
+            android:textColor="@color/silver_chalice"
+            android:textSize="@dimen/dp_15"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/profile_tv_label_badges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/badge_icon"
+            android:layout_marginLeft="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toRightOf="@+id/profile_tv_badges"
+            android:text="Badges"
+            android:textColor="@color/silver_chalice"
+            android:textSize="@dimen/dp_15"
+            app:typeface="lato_regular" />
+
+    </RelativeLayout>
+
 
     <FrameLayout
         android:id="@+id/profile_fl_my_positions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/profile_btn_logout" />
+        android:layout_below="@id/profile_ll_points_parent"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@color/black" />
+
 
 </RelativeLayout>

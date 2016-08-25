@@ -8,4 +8,6 @@ import android.os.Bundle;
 public interface PredictionPresenter {
 
     void onCreatePrediction(Bundle bundle);
+
+    void onPowerUp();
 }

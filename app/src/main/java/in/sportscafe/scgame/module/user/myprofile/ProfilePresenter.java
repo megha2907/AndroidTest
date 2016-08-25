@@ -9,6 +9,10 @@ public interface ProfilePresenter {
 
     void onGetSportsSelectionResult();
 
+    void onGetGroupCount();
+
+    void onGetPowerUpsCount();
+
     void onEditProfileDone();
 
     void onGroupDetailsUpdated();

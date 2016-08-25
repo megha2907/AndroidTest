@@ -26,8 +26,8 @@ public class MyPositionFragment extends AbstractTabFragment {
         LbSummary lbSummary = (LbSummary) getArguments().getSerializable(KEY_LB_SUMMARY);
 
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        pagerAdapter.addFragment(MyGlobalFragment.newInstance(lbSummary.getGlobal()), "GLOBAL");
-        pagerAdapter.addFragment(MyLeaguesFragment.newInstance(lbSummary.getGroups()), "MY GROUPS");
+        pagerAdapter.addFragment(MyLeaguesFragment.newInstance(lbSummary.getGroups()), "My Groups");
+        pagerAdapter.addFragment(MyGlobalFragment.newInstance(lbSummary.getGlobal()), "Global");
         return pagerAdapter;
     }
 }

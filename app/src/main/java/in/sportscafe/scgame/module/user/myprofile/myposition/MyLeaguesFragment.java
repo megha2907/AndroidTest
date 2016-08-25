@@ -35,8 +35,6 @@ public class MyLeaguesFragment extends ScGameFragment implements MyPositionLayou
 
     private static final int CODE_GROUP_INFO = 23;
 
-    private static final int CODE_NEW_GROUP = 24;
-
     private static final String KEY_GROUP_SUMMARY_LIST = "keyGroupSummaryList";
 
     public static MyLeaguesFragment newInstance(List<GroupSummary> groupSummaryList) {
@@ -53,7 +51,6 @@ public class MyLeaguesFragment extends ScGameFragment implements MyPositionLayou
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View convertView = inflater.inflate(R.layout.fragment_my_leagues, container, false);
-        convertView.findViewById(R.id.my_leagues_btn_new_group).setOnClickListener(this);
         return convertView;
     }
 
@@ -139,9 +136,6 @@ public class MyLeaguesFragment extends ScGameFragment implements MyPositionLayou
 
                 navigateToGroupInfo(bundle);
                 break;
-            case R.id.my_leagues_btn_new_group:
-                navigateToNewGroup();
-                break;
         }
     }
 
@@ -157,8 +151,5 @@ public class MyLeaguesFragment extends ScGameFragment implements MyPositionLayou
         startActivity(intent);
     }
 
-    private void navigateToNewGroup() {
-        Intent intent = new Intent(getContext(), JoinGroupActivity.class);
-        startActivityForResult(intent, CODE_NEW_GROUP);
-    }
+
 }

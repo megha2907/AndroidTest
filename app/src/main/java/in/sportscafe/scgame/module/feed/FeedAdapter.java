@@ -2,12 +2,15 @@ package in.sportscafe.scgame.module.feed;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.jeeva.android.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,8 @@ import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.feed.dto.Tournament;
 import in.sportscafe.scgame.module.feed.dto.Match;
+import in.sportscafe.scgame.module.home.HomeActivity;
+import in.sportscafe.scgame.module.home.OnHomeActionListener;
 import in.sportscafe.scgame.utils.ViewUtils;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 
@@ -26,10 +31,15 @@ import in.sportscafe.scgame.utils.timeutils.TimeUtils;
  */
 public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
-    private AlertDialog mAlertDialog;
+    private OnHomeActionListener mOnHomeActionListener;
 
-    public FeedAdapter(Context context) {
+    private AlertDialog mAlertDialog;
+    private Context mcon;
+
+    public FeedAdapter(Context context, OnHomeActionListener listener) {
         super(context);
+        mcon = context;
+        this.mOnHomeActionListener = listener;
     }
 
     @Override
@@ -141,7 +151,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         }
     }
 
-    class ScheduleViewHolder extends RecyclerView.ViewHolder {
+    class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView mTvMatchStage;
 
@@ -167,6 +177,12 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mTvPartyBScore = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_score);
             mTvMatchResult = (TextView) V.findViewById(R.id.schedule_row_tv_match_result);
             mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_start_time);
+            V.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mOnHomeActionListener.onClickPlay();
         }
     }
 

@@ -14,6 +14,7 @@ import java.util.Set;
 
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
+import in.sportscafe.scgame.module.user.powerups.PowerUp;
 import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
 import in.sportscafe.scgame.webservice.MyWebService;
 
@@ -71,7 +72,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
 
     public List<Sport> getAllSports() {
         String allSportsString = getSharedStringData(SharedKeys.ALL_SPORTS);
-        Log.i("allsportstring",allSportsString + "");
+        Log.i("allsportstring", allSportsString + "");
         if (null == allSportsString || allSportsString.isEmpty()) {
             return new ArrayList<>();
         }
@@ -89,6 +90,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
 
         return allSportsMap;
     }
+
 
     public void setAllSports(List<Sport> newSports) {
         setAllSports(MyWebService.getInstance().getJsonStringFromObject(newSports));
@@ -143,7 +145,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
 
         List<Sport> glbFollowedSports = new ArrayList<>();
         for (Integer sportId : favoriteSportsIdList) {
-            if(allSportsMap.containsKey(sportId)) {
+            if (allSportsMap.containsKey(sportId)) {
                 glbFollowedSports.add(allSportsMap.get(sportId));
             }
         }
@@ -165,9 +167,9 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         setGrpInfoList(grpInfoListObject);
     }
 
+
     public Map<Long, GroupInfo> getGrpInfoMap() {
         String grpInfoList = getSharedStringData(SharedKeys.GRP_INFOS);
-        Log.i("groupinfo",grpInfoList.toString());
         if (null == grpInfoList || grpInfoList.isEmpty()) {
             return new HashMap<>();
         }
@@ -175,7 +177,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         List<GroupInfo> grpInfoListObject = MyWebService.getInstance().getObjectFromJson(grpInfoList,
                 new TypeReference<List<GroupInfo>>() {
                 });
-        if(null == grpInfoListObject) {
+        if (null == grpInfoListObject) {
             grpInfoListObject = new ArrayList<>();
 
             GroupInfo groupInfo = MyWebService.getInstance().getObjectFromJson(grpInfoList, GroupInfo.class);
@@ -204,21 +206,31 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
     }
 
     public int getNumberofPowerups() {
-        return getSharedIntData(SharedKeys.NUMBER_OF_POWERUPS,0);
+        return getSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, 0);
     }
 
     public void setNumberofPowerups(int numberofpowerups) {
         setSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, numberofpowerups);
     }
 
+    public List<PowerUp> getPowerUpList() {
+
+        List<PowerUp> powerUpList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : getUserInfo().getPowerUps().entrySet())
+        {
+            powerUpList.add(new PowerUp(entry.getKey(), entry.getValue()));
+        }
+        return powerUpList;
+    }
+
+
     @Override
     public void clearAll() {
-        Log.i("clearall","cleared");
         super.clearAll();
         List<Sport> allSports = getAllSports();
 
 
-        if(!allSports.isEmpty()) {
+        if (!allSports.isEmpty()) {
             setAllSports(allSports);
             setInitialSportsAvailable(true);
         }

@@ -11,17 +11,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jeeva.android.volley.Volley;
-import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.common.ScGameFragment;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 import in.sportscafe.scgame.module.play.myresults.MyResultsActivity;
+import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.scgame.module.user.myprofile.myposition.MyPositionFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummary;
+import in.sportscafe.scgame.module.user.powerups.PowerUpActivity;
 import in.sportscafe.scgame.module.user.sportselection.SportSelectionActivity;
 
 /**
@@ -32,6 +34,8 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
     private static final int SPORTS_SELECTION_CODE = 34;
 
     private static final int EDIT_PROFILE_CODE = 35;
+
+    private static final int CODE_NEW_GROUP = 24;
 
     private ProfilePresenter mProfilePresenter;
 
@@ -65,10 +69,12 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
     }
 
     private void setClickListeners() {
-        findViewById(R.id.profile_btn_back).setOnClickListener(this);
+       // findViewById(R.id.profile_btn_back).setOnClickListener(this);
         findViewById(R.id.profile_btn_edit).setOnClickListener(this);
-        findViewById(R.id.profile_btn_logout).setOnClickListener(this);
+       // findViewById(R.id.profile_btn_logout).setOnClickListener(this);
+        findViewById(R.id.profile_groups_parent).setOnClickListener(this);
         findViewById(R.id.profile_ll_points_parent).setOnClickListener(this);
+        findViewById(R.id.profile_ll_powerups_parent).setOnClickListener(this);
         findViewById(R.id.profile_ll_sports_followed_parent).setOnClickListener(this);
     }
 
@@ -79,7 +85,7 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
 
     @Override
     public void setProfileImage(String imageUrl) {
-        ((HmImageView) findViewById(R.id.profile_iv_image)).setImageUrl(
+        ((RoundImage) findViewById(R.id.profile_iv_image)).setImageUrl(
                 imageUrl,
                 Volley.getInstance().getImageLoader(),
                 false
@@ -90,6 +96,18 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
     public void setSportsFollowedCount(int sportsFollowedCount) {
         ((TextView) findViewById(R.id.profile_tv_sports_folld)).setText(String.valueOf(sportsFollowedCount));
     }
+
+    @Override
+    public void setGroupsCount(int GroupsCount) {
+        ((TextView) findViewById(R.id.profile_number_of_groups)).setText(String.valueOf(GroupsCount));
+    }
+
+
+    @Override
+    public void setPowerUpsCount(int PowerUpsCount) {
+        ((TextView) findViewById(R.id.profile_tv_powerups)).setText(String.valueOf(PowerUpsCount));
+    }
+
 
     @Override
     public void setPoints(long points) {
@@ -110,6 +128,12 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
     }
 
     @Override
+    public void navigateToPowerUpScreen() {
+        Intent intent = new Intent(getContext(), PowerUpActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.profile_ll_points_parent:
@@ -118,15 +142,21 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
             case R.id.profile_ll_sports_followed_parent:
                 navigateToSportSelection();
                 break;
-            case R.id.profile_btn_back:
-                mHomeActionListener.onClickBack();
-                break;
+//            case R.id.profile_btn_back:
+//                mHomeActionListener.onClickBack();
+//                break;
             case R.id.profile_btn_edit:
                 navigateToEditProfile();
                 break;
-            case R.id.profile_btn_logout:
-                mProfilePresenter.onClickLogout();
+            case R.id.profile_groups_parent:
+                navigateToNewGroup();
                 break;
+            case R.id.profile_ll_powerups_parent:
+                navigateToPowerUpScreen();
+                break;
+//            case R.id.profile_btn_logout:
+//                mProfilePresenter.onClickLogout();
+//                break;
         }
     }
 
@@ -144,6 +174,10 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
         startActivityForResult(new Intent(getContext(), EditProfileActivity.class), EDIT_PROFILE_CODE);
     }
 
+    private void navigateToNewGroup() {
+        Intent intent = new Intent(getContext(), JoinGroupActivity.class);
+        startActivityForResult(intent, CODE_NEW_GROUP);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

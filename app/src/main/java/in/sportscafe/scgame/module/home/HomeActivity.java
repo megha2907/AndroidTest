@@ -84,6 +84,11 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
     }
 
     @Override
+    public void onClickPlay() {
+        showFeed();
+    }
+
+    @Override
     public void onBackPressed() {
         if(feedShowing) {
             super.onBackPressed();
@@ -99,5 +104,14 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
     private void navigateToLogIn() {
         Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(intent.getStringExtra("startplay").equals("play")){
+            Log.i("intent","play");
+            onClickTab(findViewById(R.id.home_ibtn_play));
+        }
     }
 }

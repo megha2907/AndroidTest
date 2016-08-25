@@ -61,8 +61,19 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         mPredictionView.showMessage(Constants.Alerts.PASSED_QUESTION_ALERT);
     }
 
+
+    public void onPowerUp() {
+        mPredictionModel.updatePowerUps();
+    }
+
     @Override
     public void onTimeUp() {
         mPredictionView.swipeCardToTop();
+    }
+
+
+    @Override
+    public void dismissPowerUpApplied() {
+        mPredictionView.dismissPowerUp();
     }
 }

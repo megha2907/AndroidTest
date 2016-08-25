@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
@@ -174,7 +175,7 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
     public void onStart() {
         super.onStart();
 //        signOut();
-        /*OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
             // and the GoogleSignInResult will be available instantly.
@@ -194,7 +195,7 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
                     handleSignInResult(googleSignInResult);
                 }
             });
-        }*/
+        }
     }
 
     private void handleSignInResult(GoogleSignInResult result) {

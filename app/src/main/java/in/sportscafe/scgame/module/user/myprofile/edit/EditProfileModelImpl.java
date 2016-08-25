@@ -28,25 +28,30 @@ public class EditProfileModelImpl implements EditProfileModel {
     }
 
     @Override
-    public void updateProfile(String name, String about) {
+    public void updateProfile(String name, String nickname) {
         if(name.isEmpty()) {
             mEditProfileListener.onNameEmpty();
+            return;
+        }
+        else if(nickname.isEmpty()){
+            mEditProfileListener.onNickNameEmpty();
             return;
         }
 
         if(ScGame.getInstance().hasNetworkConnection()) {
             mEditProfileListener.onUpdating();
-            callUpdateUserApi(name);
+            callUpdateUserApi(name,nickname);
         } else {
             mEditProfileListener.onNoInternet();
         }
     }
 
-    private void callUpdateUserApi(final String name) {
+    private void callUpdateUserApi(final String name,final String nickname) {
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
         updateUserRequest.setUserId(mUserInfo.getId() + "");
         updateUserRequest.setUserName(name);
         updateUserRequest.setUserPhoto(mUserInfo.getPhoto());
+        updateUserRequest.setUserNickName(nickname);
 
         MyWebService.getInstance().getUpdateUserRequest(updateUserRequest).enqueue(
                 new ScGameCallBack<ApiResponse>() {
@@ -54,6 +59,7 @@ public class EditProfileModelImpl implements EditProfileModel {
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         if(response.isSuccessful()) {
                             mUserInfo.setUserName(name);
+                            mUserInfo.setUserNickName(nickname);
                             ScGameDataHandler.getInstance().setUserInfo(mUserInfo);
 
                             mEditProfileListener.onEditSuccess();
@@ -79,6 +85,8 @@ public class EditProfileModelImpl implements EditProfileModel {
         void onEditFailed(String message);
 
         void onNameEmpty();
+
+        void onNickNameEmpty();
 
         void onNoInternet();
     }

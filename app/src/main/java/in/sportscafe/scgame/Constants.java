@@ -14,6 +14,10 @@ public interface Constants {
         String JOIN_GROUP_REQUEST = "join_group_request";
         String APPROVED_GROUP_REQUEST = "approved_group_request";
         String RESULTS_LEADERBOARD = "results_leaderboard";
+        String GROUP_PERSONID = "group_personID";
+        String ADMIN_USERID = "admin_userID";
+        String REQUEST_ACCEPTED = "REQUEST ACCEPTED";
+        String REQUEST_REJECTED = "REQUEST REJECTED";
 
     }
 
@@ -50,6 +54,7 @@ public interface Constants {
         String NO_LEADERBOARD = "No points found";
         String EDIT_PROFILE_FAILED = "Profile update failed. Try again.";
         String NAME_EMPTY = "Please enter name";
+        String NICKNAME_EMPTY = "Please enter nickname";
         String USERNAME_EMPTY = "Please enter username";
         String NO_QUESTIONS_FOUND = "No questions found";
         String NO_FEEDS_FOUND = "No feeds found";

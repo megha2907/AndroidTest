@@ -44,6 +44,9 @@ public class MyPositionLayout extends FrameLayout {
         ((TextView) findViewById(R.id.my_position_row_tv_sport))
                 .setText(mRankSummary.getSportName());
 
+        ((ImageView) findViewById(R.id.my_position_row_img_sport))
+                .setImageResource(mRankSummary.getSportImage());
+
         ImageView ivRankStatus = (ImageView) findViewById(R.id.my_position_row_iv_rank_status);
         if(null == mRankSummary.getRankChange()) {
             ivRankStatus.setVisibility(View.INVISIBLE);

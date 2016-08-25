@@ -1,5 +1,6 @@
 package in.sportscafe.scgame.module.user.myprofile.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -253,4 +254,6 @@ public class GroupInfo implements Serializable {
     public String toString() {
         return name;
     }
+
+
 }

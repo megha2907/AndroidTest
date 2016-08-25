@@ -15,9 +15,15 @@ public interface ProfileView extends InAppView {
 
     void setSportsFollowedCount(int sportsFollowedCount);
 
+    void setGroupsCount(int GroupsCount);
+
+    void setPowerUpsCount(int PowerUpsCount);
+
     void setPoints(long points);
 
     void initMyPosition(LbSummary lbSummary);
 
     void navigateToLogIn();
+
+    void navigateToPowerUpScreen();
 }

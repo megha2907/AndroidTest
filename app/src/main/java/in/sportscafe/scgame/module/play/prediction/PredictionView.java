@@ -28,4 +28,9 @@ public interface PredictionView extends View {
     void navigateToResult(Bundle bundle);
 
     void swipeCardToTop();
+
+    void dismissPowerUp();
+
+
+
 }

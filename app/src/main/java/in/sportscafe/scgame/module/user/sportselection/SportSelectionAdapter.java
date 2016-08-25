@@ -21,7 +21,6 @@ public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.
 
     private List<Integer> mSelectedSportsIdList;
 
-
     public SportSelectionAdapter(Context context, List<Integer> selectedSportsIdList) {
         super(context);
         this.mSelectedSportsIdList = selectedSportsIdList;
@@ -52,6 +51,7 @@ public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.
             holder.mMainView.setBackgroundColor(Color.TRANSPARENT);
             holder.mIvSport.setImageResource(sport.getImageResource());
         }
+
 
 
     }

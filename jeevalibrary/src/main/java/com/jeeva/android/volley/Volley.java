@@ -30,6 +30,8 @@ public class Volley {
         return mRequestQueue;
     }
 
+
+
     public ImageLoader getImageLoader() {
         if (mImageLoader == null) {
             mImageLoader = new ImageLoader(this.mRequestQueue,
@@ -80,4 +82,5 @@ public class Volley {
         return new StringBuilder(url.length() + 12).append("#W").append(maxWidth)
                 .append("#H").append(maxHeight).append(url).toString();
     }
+
 }

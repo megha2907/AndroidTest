@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.common.ScGameActivity;
+import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -17,6 +20,7 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
         View.OnClickListener {
 
     private EditText mEtName;
+    private UserInfo mUserInfo;
 
 //    private EditText mEtUserName;
 
@@ -54,7 +58,7 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
 
     @Override
     public void setProfileImage(String imageUrl) {
-        ((HmImageView) findViewById(R.id.edit_iv_user_image)).setImageUrl(
+        ((RoundImage) findViewById(R.id.edit_iv_user_image)).setImageUrl(
                 imageUrl,
                 Volley.getInstance().getImageLoader(),
                 false
@@ -72,8 +76,8 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
     }*/
 
     @Override
-    public void setAbout(String about) {
-        mEtNickName.setText(about);
+    public void setNickName(String nickname) {
+        mEtNickName.setText(nickname);
     }
 
     @Override

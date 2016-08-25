@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameFragment;
+import in.sportscafe.scgame.module.home.OnHomeActionListener;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -42,7 +43,7 @@ public class FeedFragment extends ScGameFragment implements FeedView, SwipeRefre
         this.mSwipeRefreshLayout.setOnRefreshListener(this);
 
         this.mFeedPresenter = FeedPresenterImpl.newInstance(this);
-        this.mFeedPresenter.onCreateFeed();
+        this.mFeedPresenter.onCreateFeed((OnHomeActionListener) getActivity());
 
         this.mSwipeRefreshLayout.post(new Runnable() {
             @Override

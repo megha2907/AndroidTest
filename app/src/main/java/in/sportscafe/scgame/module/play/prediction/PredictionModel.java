@@ -12,4 +12,7 @@ public interface PredictionModel {
     String getTournamentName();
 
     String getContestName();
+
+    void updatePowerUps();
+
 }

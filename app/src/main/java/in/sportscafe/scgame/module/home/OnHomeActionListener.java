@@ -7,4 +7,5 @@ public interface OnHomeActionListener {
 
     void onClickBack();
 
+    void onClickPlay();
 }
