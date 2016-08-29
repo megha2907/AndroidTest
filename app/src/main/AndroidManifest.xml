@@ -33,7 +33,8 @@
 
         <activity
             android:name=".module.home.HomeActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
 
         <activity
             android:name=".module.getstart.GetStartActivity"
@@ -60,6 +61,10 @@
 
         <activity
             android:name=".module.user.powerups.PowerUpActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.user.badges.BadgeActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -110,7 +115,13 @@
         <!-- Start MoEngage -->
         <activity
             android:name="com.moengage.addon.inbox.MoEInboxActivity"
-            android:label="Notification" >
+            android:label="Notification"
+            android:parentActivityName=".module.home.HomeActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".module.home.HomeActivity" />
+
         </activity>
         <!-- MOENGAGE RECEIVER FOR RECEIVING INSTALLATION INTENT -->
         <receiver android:name="com.moe.pushlibrary.InstallReceiver">

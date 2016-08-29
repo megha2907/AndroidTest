@@ -32,12 +32,6 @@ public class ScGameActivity extends InAppActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        mHelper.onPause(this);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         mHelper.onResume(this);

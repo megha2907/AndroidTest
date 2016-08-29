@@ -16,12 +16,14 @@ import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.customfont.CustomFont;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.utils.MoEHelperConstants;
+import com.moengage.addon.inbox.InboxManager;
 import com.moengage.push.PushManager;
 
 import java.util.Arrays;
 import java.util.List;
 
-import in.sportscafe.scgame.module.notifications.CustomPushNotification;
+import in.sportscafe.scgame.module.notifications.NotificationCustom;
+import in.sportscafe.scgame.module.notifications.NotificationInboxAdapter;
 import in.sportscafe.scgame.module.offline.PredictionDataHandler;
 import in.sportscafe.scgame.webservice.MyWebService;
 
@@ -50,7 +52,8 @@ public class ScGame extends Application {
         Volley.getInstance().initVolley(getApplicationContext());
         sendInstallOrUpdateToMoEngage();
         //Moengage custom Notification
-        PushManager.getInstance(getApplicationContext()).setMessageListener(new CustomPushNotification());
+        PushManager.getInstance().setMessageListener(new NotificationCustom());
+        InboxManager.getInstance().setInboxAdapter(new NotificationInboxAdapter());
 
 
     }

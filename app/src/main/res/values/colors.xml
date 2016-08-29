@@ -24,4 +24,6 @@
 
     <color name="btncolor">#C95140</color>
     <color name="colorMedium">#181820</color>
+    <color name="textcolorlight">#86858D</color>
+
 </resources>
