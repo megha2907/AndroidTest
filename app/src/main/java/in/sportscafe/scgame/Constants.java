@@ -33,6 +33,7 @@ public interface Constants {
         String LOGGED_USER = "loggedUser";
         String COOKIE = "cookie";
         String NUMBER_OF_POWERUPS = "numberofpowerups";
+        String ALL_BADGES = "allbadges";
     }
 
     interface Alerts {

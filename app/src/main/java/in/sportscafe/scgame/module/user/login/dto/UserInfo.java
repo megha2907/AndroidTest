@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jeeva.android.Log;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import in.sportscafe.scgame.module.user.badges.Badge;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -202,8 +205,14 @@ public class UserInfo {
 
     @JsonIgnore
     public HashMap<String, Integer> getPowerUps() {
-        return powerUpInfo.powerUps;
+        return powerUpInfo.getPowerUps();
 
+    }
+
+    @JsonIgnore
+    public List<String> getBadges()
+    {
+        return powerUpInfo.getBadges();
     }
 
 }

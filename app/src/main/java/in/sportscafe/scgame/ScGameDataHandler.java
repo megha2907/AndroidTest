@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import in.sportscafe.scgame.module.user.badges.Badge;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.powerups.PowerUp;
@@ -221,6 +222,10 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
             powerUpList.add(new PowerUp(entry.getKey(), entry.getValue()));
         }
         return powerUpList;
+    }
+
+    public List<String> getBadgeList() {
+        return getUserInfo().getBadges();
     }
 
 

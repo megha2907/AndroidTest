@@ -19,6 +19,7 @@ import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.play.myresults.MyResultsActivity;
+import in.sportscafe.scgame.module.test.TestActivity;
 import in.sportscafe.scgame.module.user.group.admin.adminmembers.AdminMembersActivity;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
@@ -27,7 +28,7 @@ import in.sportscafe.scgame.webservice.MyWebService;
 /**
  * Created by deepanshi on 5/8/16.
  */
-public class CustomPushNotification extends PushMessageListener {
+public class NotificationCustom extends PushMessageListener {
 
     public static final int NOTIFICATION_ID = 1;
     private static final String EXTRA_CUSTOM_PAYLOAD = "ex_self_silent_update";
@@ -40,6 +41,7 @@ public class CustomPushNotification extends PushMessageListener {
     protected void onPostNotificationReceived(Context context, Bundle extras) {
         super.onPostNotificationReceived(context, extras);
         //Update your own notification inbox
+        Log.i("extras in notification",extras.toString());
     }
 
     @Override
@@ -73,14 +75,15 @@ public class CustomPushNotification extends PushMessageListener {
                 String groupInfoStr = extras.getString("group_info");
                 Log.i("newGroupInfo", groupInfoStr);
                 GroupInfo groupInfo = MyWebService.getInstance().getObjectFromJson(groupInfoStr, GroupInfo.class);
-                if(null != groupInfo) {
+                if(null != groupInfo)
+                {    Log.i("goiing inside", "scdata");
                     ScGameDataHandler.getInstance().addNewGroup(groupInfo);
                 }
-
-                serviceIntent = new Intent(context, AdminMembersActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putLong(Constants.BundleKeys.GROUP_ID, Long.parseLong(groupId));
+                serviceIntent = new Intent(context, TestActivity.class);
                 serviceIntent.putExtras(bundle);
+                Log.i("groupId",groupId);
 
             } else if (extras.containsKey(EXTRA_APPROVED_GROUP_REQUEST)) {
 
@@ -110,6 +113,8 @@ public class CustomPushNotification extends PushMessageListener {
             builder.setContentText(contenttext);
             builder.setContentIntent(pendingIntent);
             builder.setAutoCancel(true);
+            builder.build();
+
 
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
             notificationManager.notify(NOTIFICATION_ID, builder.build());

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -72,10 +71,10 @@ dependencies {
     compile project(':jeevalibrary')
     // To track the events, in-app messaging and geo fencing
     // To push the notification from server to application
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.google.android.gms:play-services-auth:8.3.0'
-    compile 'com.moengage:moe-android-sdk:6.0.29'
-    compile 'com.moengage:addon-inbox:2.7.0'
-    compile 'com.google.android.gms:play-services-gcm:8.3.0'
-    compile 'com.pkmmte.view:circularimageview:1.1'
+    compile 'com.google.android.gms:play-services-auth:9.4.0'
+    compile 'com.moengage:moe-android-sdk:7.0.06'
+    compile 'com.moengage:addon-inbox:2.8.0'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
+    compile 'com.github.nirhart:parallaxscroll:1.0'
 }
+apply plugin: 'com.google.gms.google-services'

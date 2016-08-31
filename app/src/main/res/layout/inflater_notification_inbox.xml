@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/gradient_bg"
+    android:descendantFocusability="blocksDescendants"
+    android:paddingLeft="@dimen/dp_20"
+    android:paddingRight="@dimen/dp_20">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/title"
+            android:gravity="left"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/dp_15"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/dp_25"
+            />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_marginRight="15dp"
+            android:gravity="right"
+            android:layout_weight=".3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_marginBottom="@dimen/dp_25"
+        android:id="@+id/message"
+        android:textColor="@color/textcolorlight"
+        />
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:id="@+id/couponAction"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_code"
+            android:text="label code"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="left"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"/>
+
+        <TextView
+            android:id="@+id/code"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/label_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@android:color/black"
+            android:layout_height="wrap_content" android:id="@+id/btnCopy"
+            android:text="btn label copy"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.7"
+        android:background="@color/colorMedium"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dp_5"
+        />
+
+</LinearLayout>

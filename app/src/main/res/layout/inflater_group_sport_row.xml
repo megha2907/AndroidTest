@@ -14,8 +14,8 @@
 
     <ImageView
         android:id="@+id/group_sport_row_image_sport"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_60"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
         android:layout_marginBottom="@dimen/dp_5"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
@@ -28,7 +28,7 @@
         android:alpha="0.6"
         android:text="Archery"
         android:textColor="@color/black"
-        android:textSize="@dimen/dp_14"
+        android:textSize="@dimen/dp_12"
         app:typeface="roboto_condensed" />
 
 </LinearLayout>

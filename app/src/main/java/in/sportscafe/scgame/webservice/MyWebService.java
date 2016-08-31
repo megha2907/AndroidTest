@@ -19,6 +19,7 @@ import in.sportscafe.scgame.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.scgame.module.user.login.dto.LogInRequest;
 import in.sportscafe.scgame.module.user.login.dto.LogInResponse;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupsDetailResponse;
+import in.sportscafe.scgame.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.scgame.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummaryResponse;
 import in.sportscafe.scgame.module.user.sportselection.dto.AllSports;
@@ -50,6 +51,10 @@ public class MyWebService extends AbstractWebService<ScGameService> {
 
     public Call<ApiResponse> getUpdateUserRequest(UpdateUserRequest request) {
         return mScGameService.updateUser(request);
+    }
+
+    public Call<UserInfoResponse> getUserInfoRequest(String userId) {
+        return mScGameService.getUserInfo(userId);
     }
 
     public Call<AllSports> getAllSportsRequest() {

@@ -17,7 +17,6 @@
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_34"
         android:background="@drawable/powerup_screen_btn_bg"
-        android:onClick="onClick"
         android:text="2X"
         android:textAllCaps="false"
         android:textSize="@dimen/dp_14"

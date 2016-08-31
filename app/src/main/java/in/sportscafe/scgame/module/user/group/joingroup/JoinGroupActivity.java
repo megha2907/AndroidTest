@@ -1,9 +1,13 @@
 package in.sportscafe.scgame.module.user.group.joingroup;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.PayloadBuilder;
@@ -28,6 +32,9 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
 
     private JoinGroupPresenter mJoinGroupPresenter;
 
+    private Toolbar mtoolbar;
+    private TextView mTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +44,7 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
 
         this.mJoinGroupPresenter = JoinGroupPresenterImpl.newInstance(this);
         this.mJoinGroupPresenter.onCreateJoinGroup();
+        initToolBar();
     }
 
     @Override
@@ -80,9 +88,29 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
             case R.id.join_group_btn_new_group:
                 mJoinGroupPresenter.onClickCreateGroup();
                 break;
-            case R.id.join_group_btn_back:
-                onBackPressed();
-                break;
+//            case R.id.join_group_btn_back:
+//                onBackPressed();
+//                break;
         }
+    }
+
+    public void initToolBar() {
+        Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Regular.ttf");
+        mtoolbar = (Toolbar) findViewById(R.id.join_group_toolbar);
+        mTitle = (TextView) mtoolbar.findViewById(R.id.toolbar_title);
+        mTitle.setText("Add Group");
+        mTitle.setTypeface(tftitle);
+        setSupportActionBar(mtoolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        mtoolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                }
+
+        );
     }
 }
