@@ -8,7 +8,7 @@ import android.widget.Button;
 import com.jeeva.android.R;
 
 
-public class CustomButton extends Button {
+public class CustomButton extends Button{
 
     public CustomButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -34,16 +35,20 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
 
     private ImageButton mIBtnEditName;
 
-    private TextView mTvMembersCount;
+    private TextView mEtMembersCount;
 
     private RecyclerView mRvSportSelection;
 
     private GroupInfoPresenter mGroupInfoPresenter;
 
+    private Toolbar mtoolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_info);
+
+        initToolBar();
 
         findViewById(R.id.group_info_ll_share).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -69,7 +74,7 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
 
         mIBtnEditName = (ImageButton) findViewById(R.id.group_info_btn_edit_name);
 
-        mTvMembersCount = (TextView) findViewById(R.id.group_info_tv_members_count);
+        mEtMembersCount = (EditText) findViewById(R.id.group_info_et_label_members);
 
         this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_rcv);
         this.mRvSportSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
@@ -84,16 +89,13 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.group_info_btn_back:
-                onBackPressed();
-                break;
             /*case R.id.group_info_btn_delete_group:
                 mGroupInfoPresenter.onClickDeleteGroup();
                 break;*/
             case R.id.group_info_btn_leave_group:
                 mGroupInfoPresenter.onClickLeaveGroup();
                 break;
-            case R.id.group_info_ll_members:
+            case R.id.group_info_btn_edit_members:
                 mGroupInfoPresenter.onClickMembers();
                 break;
             case R.id.group_info_ll_share:
@@ -113,7 +115,7 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
 
     @Override
     public void setMembersSize(int size) {
-        mTvMembersCount.setText(String.valueOf(size));
+        mEtMembersCount.setText(String.valueOf(size));
     }
 
     @Override
@@ -124,7 +126,7 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     @Override
     public void setGroupCode(String groupCode) {
         TextView textView = (TextView) findViewById(R.id.group_info_tv_share_code);
-        textView.setText(String.format("To add members, share the code %s with them", groupCode));
+        textView.setText(groupCode);
     }
 
     @Override
@@ -171,5 +173,21 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     @Override
     public void setSuccessResult() {
         setResult(RESULT_OK);
+    }
+
+    public void initToolBar() {
+        mtoolbar = (Toolbar) findViewById(R.id.group_info_toolbar);
+        mtoolbar.setTitle("Group Info");
+        setSupportActionBar(mtoolbar);
+        mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        mtoolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                }
+
+        );
     }
 }

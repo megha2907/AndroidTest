@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +17,20 @@ import com.jeeva.android.volley.Volley;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.module.common.AbstractTabFragment;
+import in.sportscafe.scgame.module.common.CustomViewPager;
 import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.common.ScGameFragment;
+import in.sportscafe.scgame.module.common.Settings;
+import in.sportscafe.scgame.module.common.ViewPagerAdapter;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 import in.sportscafe.scgame.module.play.myresults.MyResultsActivity;
 import in.sportscafe.scgame.module.user.badges.BadgeActivity;
 import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
+import in.sportscafe.scgame.module.user.myprofile.myposition.MyGlobalFragment;
+import in.sportscafe.scgame.module.user.myprofile.myposition.MyLeaguesFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.MyPositionFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummary;
 import in.sportscafe.scgame.module.user.powerups.PowerUpActivity;
@@ -129,8 +137,25 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
 
     @Override
     public void initMyPosition(LbSummary lbSummary) {
+        CustomViewPager mMostViewedPager = (CustomViewPager) findViewById(R.id.tab_vp);
+        setupViewPager(mMostViewedPager, lbSummary);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
+        tabLayout.setupWithViewPager(mMostViewedPager);/*
         getChildFragmentManager().beginTransaction().replace(R.id.profile_fl_my_positions,
-                MyPositionFragment.newInstance(lbSummary)).commit();
+                MyPositionFragment.newInstance(lbSummary)).commit();*/
+    }
+
+    private void setupViewPager(ViewPager viewPager, LbSummary lbSummary) {
+        viewPager.setAdapter(getAdapter(lbSummary));
+    }
+
+    private ViewPagerAdapter getAdapter(LbSummary lbSummary) {
+
+        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        pagerAdapter.addFragment(MyLeaguesFragment.newInstance(lbSummary.getGroups()), "My Groups");
+        pagerAdapter.addFragment(MyGlobalFragment.newInstance(lbSummary.getGlobal()), "Global");
+        return pagerAdapter;
     }
 
     @Override
@@ -178,13 +203,17 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
                 navigateToBadgeScreen();
                 break;
             case R.id.profile_btn_logout:
-                mProfilePresenter.onClickLogout();
+                navigateToSettings();
                 break;
         }
     }
 
     private void navigateToMyResults() {
         startActivity(new Intent(getContext(), MyResultsActivity.class));
+    }
+
+    private void navigateToSettings() {
+        startActivity(new Intent(getContext(), Settings.class));
     }
 
     private void navigateToSportSelection() {

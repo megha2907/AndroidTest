@@ -30,4 +30,5 @@ public class MyPositionFragment extends AbstractTabFragment {
         pagerAdapter.addFragment(MyGlobalFragment.newInstance(lbSummary.getGlobal()), "Global");
         return pagerAdapter;
     }
+
 }

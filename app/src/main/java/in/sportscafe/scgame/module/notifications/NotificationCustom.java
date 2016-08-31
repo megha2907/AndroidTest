@@ -115,6 +115,7 @@ public class NotificationCustom extends PushMessageListener {
             builder.setAutoCancel(true);
             builder.build();
 
+
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
             notificationManager.notify(NOTIFICATION_ID, builder.build());
 //TODO check why is it not giving groupinfo with return builder

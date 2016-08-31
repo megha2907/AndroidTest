@@ -4,33 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/admin_members_tv_title"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_10"
-        android:gravity="center_horizontal"
-        android:text="Members"
-        android:textAllCaps="false"
-        android:textSize="@dimen/dp_25"
-        android:textStyle="bold" />
-
-    <com.jeeva.android.widgets.customfont.CustomButton
-        android:id="@+id/admin_members_btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:onClick="onClick"
-        android:text="Back"
-        android:textAllCaps="false"
-        android:textSize="@dimen/dp_20" />
+        android:background="@color/colorMedium"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:elevation="4dp"
+        android:id="@+id/admin_members_toolbar"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_title"
+            android:textSize="@dimen/dp_20"
+            android:textColor="@color/white"/>
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/admin_members_fl_members_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/admin_members_tv_title"
-        android:layout_marginTop="@dimen/dp_10" />
+        android:layout_below="@id/admin_members_toolbar" />
 
 </RelativeLayout>

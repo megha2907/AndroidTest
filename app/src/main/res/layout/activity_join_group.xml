@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gallery">
+    android:background="@drawable/gradient_bg">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorMedium"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:elevation="4dp"
+        android:id="@+id/join_group_toolbar"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/toolbar_title"
+        android:textSize="@dimen/dp_20"
+        android:textColor="@color/white"/>
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/edit_tv_edit_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_10"
-            android:gravity="center_horizontal"
-            android:text="Add Group"
-            android:textAllCaps="false"
-            android:textSize="@dimen/dp_25"
-            android:textStyle="bold" />
-
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/join_group_btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClick"
-            android:text="Back"
-            android:textAllCaps="false"
-            android:textSize="@dimen/dp_20" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/join_group_tv_join_hint"
@@ -37,36 +33,88 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_40"
             android:layout_marginRight="@dimen/dp_40"
-            android:layout_marginTop="@dimen/dp_60"
+            android:layout_marginTop="@dimen/dp_100"
             android:gravity="center_horizontal"
             android:text="To join an existing group,\nenter the group code below"
-            android:textSize="@dimen/dp_18"
-            android:textStyle="bold" />
+            android:textSize="@dimen/dp_16"
+            android:textColor="@color/white"
+            />
 
         <com.jeeva.android.widgets.customfont.CustomEditText
             android:id="@+id/join_group_et_group_code"
-            android:layout_width="@dimen/dp_200"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/join_group_tv_join_hint"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_20"
             android:gravity="center_horizontal"
-            android:hint="Enter group code here"
             android:inputType="text"
             android:maxLength="50"
-            android:textSize="@dimen/dp_14" />
+            android:textSize="@dimen/dp_18"
+            android:backgroundTint="@color/white"
+            android:layout_marginLeft="@dimen/dp_100"
+            android:textColor="@color/white"
+            />
 
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/join_group_btn_join"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_46"
             android:layout_below="@id/join_group_et_group_code"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
             android:onClick="onClick"
-            android:text="Join"
-            android:textAllCaps="false" />
+            android:text="JOIN"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_15"
+            android:background="@drawable/powerup_screen_btn_bg"
+            android:textStyle="bold"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl1"
+            android:layout_below="@+id/join_group_btn_join"
+            android:layout_marginTop="@dimen/dp_20"
+            >
+
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/new_group_tv_sport_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="or"
+                android:textSize="@dimen/dp_16"
+                app:typeface="roboto_condensed"
+                android:textColor="@color/white"
+                android:layout_marginBottom="@dimen/dp_10"/>
+
+
+            <View
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="@dimen/dp_0.7"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_23"
+                android:layout_toLeftOf="@+id/new_group_tv_sport_hint"
+                android:alpha="0.5"
+                android:background="@color/white"
+                />
+
+            <View
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="@dimen/dp_0.7"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_23"
+                android:layout_toRightOf="@+id/new_group_tv_sport_hint"
+                android:alpha="0.5"
+                android:background="@color/white" />
+
+        </RelativeLayout>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/join_group_tv_create_hint"
@@ -75,22 +123,26 @@
             android:layout_below="@id/join_group_btn_join"
             android:layout_marginLeft="@dimen/dp_40"
             android:layout_marginRight="@dimen/dp_40"
-            android:layout_marginTop="@dimen/dp_60"
+            android:layout_marginTop="@dimen/dp_80"
             android:gravity="center_horizontal"
-            android:text="Or to create a new group of\nyour own click below"
-            android:textSize="@dimen/dp_18"
-            android:textStyle="bold" />
+            android:text="Create your own Group"
+            android:textSize="@dimen/dp_16"
+            android:textColor="@color/white" />
 
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/join_group_btn_new_group"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp_200"
             android:layout_height="wrap_content"
             android:layout_below="@id/join_group_tv_create_hint"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
             android:onClick="onClick"
-            android:text="Create New Group"
-            android:textAllCaps="false" />
+            android:text="CREATE NEW GROUP"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_15"
+            android:background="@drawable/powerup_screen_btn_bg"
+            android:textStyle="bold"/>
     </RelativeLayout>
 
     <LinearLayout

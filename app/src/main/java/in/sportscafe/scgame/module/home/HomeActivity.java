@@ -62,16 +62,18 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
 
           switch (view.getId()) {
               case R.id.home_ibtn_feed:
+                  mtoolbar.setVisibility(View.VISIBLE);
                   feedShowing = true;
                    mTitle.setText("Notifications");
                   loadFragment(new NotificationInboxFragment());
                   break;
               case R.id.home_ibtn_play:
+                  mtoolbar.setVisibility(View.VISIBLE);
                   mTitle.setText("Feed");
                   loadFragment(new PlayFragment());
                   break;
               case R.id.home_ibtn_profile:
-                  mTitle.setText("Profile");
+                  mtoolbar.setVisibility(View.GONE);
                   if (null == ScGameDataHandler.getInstance().getUserId()) {
                       navigateToLogIn();
                       return;

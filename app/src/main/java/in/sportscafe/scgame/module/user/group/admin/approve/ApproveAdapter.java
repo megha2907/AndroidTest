@@ -15,6 +15,7 @@ import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.Adapter;
+import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupPerson;
 
 /**
@@ -57,7 +58,7 @@ public class ApproveAdapter extends Adapter<GroupPerson, ApproveAdapter.ViewHold
 
         int mPosition;
 
-        HmImageView mIvPhoto;
+        RoundImage mIvPhoto;
 
         TextView mTvName;
 
@@ -65,7 +66,7 @@ public class ApproveAdapter extends Adapter<GroupPerson, ApproveAdapter.ViewHold
 
         public ViewHolder(View V) {
             super(V);
-            mIvPhoto = (HmImageView) V.findViewById(R.id.approve_iv_photo);
+            mIvPhoto = (RoundImage) V.findViewById(R.id.approve_iv_photo);
             mTvName = (TextView) V.findViewById(R.id.approve_tv_name);
             mTvEmail = (TextView) V.findViewById(R.id.approve_tv_email);
             V.findViewById(R.id.approve_iv_accept).setOnClickListener(this);

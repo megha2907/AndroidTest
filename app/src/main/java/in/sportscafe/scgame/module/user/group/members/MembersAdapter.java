@@ -15,6 +15,7 @@ import java.util.List;
 
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
+import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.scgame.utils.ViewUtils;
 
@@ -63,7 +64,7 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
 
         int mPosition;
 
-        HmImageView mIvPhoto;
+        RoundImage mIvPhoto;
 
         TextView mTvName;
 
@@ -73,7 +74,7 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
 
         public ViewHolder(View V) {
             super(V);
-            mIvPhoto = (HmImageView) V.findViewById(R.id.members_iv_photo);
+            mIvPhoto = (RoundImage) V.findViewById(R.id.members_iv_photo);
             mTvName = (TextView) V.findViewById(R.id.members_tv_name);
             mTvEmail = (TextView) V.findViewById(R.id.members_tv_email);
             mTvAdminLabel = (TextView) V.findViewById(R.id.members_tv_admin_label);
