@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/no_notification_icon"
+            android:layout_above="@+id/view2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_20" />
+
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/st1_no_notification"
+            android:textSize="@dimen/dp_18"
+            android:textStyle="bold"
+            android:textColor="@color/alto"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/view2"
+            android:layout_marginBottom="@dimen/dp_5"/>
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/st2_no_notification"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/textcolorlight"
+            android:layout_below="@+id/view2"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/view" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/play_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:text="PLAY NOW"
+            android:textAllCaps="false"
+            android:textSize="@dimen/dp_18"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dp_20"
+            app:typeface="lato_regular"
+            />
+
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -8,4 +8,6 @@ public interface OnHomeActionListener {
     void onClickBack();
 
     void onClickPlay();
+
+    void getUserInfoFromServer();
 }

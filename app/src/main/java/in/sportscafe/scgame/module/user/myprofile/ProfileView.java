@@ -26,4 +26,6 @@ public interface ProfileView extends InAppView {
     void navigateToLogIn();
 
     void navigateToPowerUpScreen();
+
+    void navigateToBadgeScreen();
 }
