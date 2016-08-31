@@ -1,23 +1,38 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    def versionPropsFile = file('../version.properties')
+
+    if (versionPropsFile.canRead()) {
+        def Properties versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionPropsFile))
+        def vCode = versionProps['VERSION_CODE'].toInteger()
+        def vName = versionProps['VERSION_NAME']
+        println "Building versionCode:" + vCode + " and versionName:" + vName
+
+        defaultConfig {
+            applicationId "in.sportscafe.scgame"
+            minSdkVersion 16
+            targetSdkVersion 23
+            versionCode vCode
+            versionName vName
+        }
+    } else {
+        throw new GradleException("Could not read version.properties!")
+    }
+
     signingConfigs {
         releasekey {
             keyAlias 'scgame'
             keyPassword 'scgame'
-            storeFile file('/home/deepanshi/code/scgame/app/scgame.jks')
+            storeFile file('scgame.jks')
             storePassword 'scgame'
         }
     }
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
-    defaultConfig {
-        applicationId "in.sportscafe.scgame"
-        minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
-    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -29,6 +44,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/NOTICE'
@@ -36,6 +52,7 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
     }
+
     productFlavors {
         local {
             resValue "string", "app_name", "ScGame Local"
