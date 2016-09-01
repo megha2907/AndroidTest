@@ -41,10 +41,9 @@ node {
     }
     def DIR = (sh(returnStdout: true, script: 'pwd')).trim()
     def FILE_PATH = "${DIR}/app/build/outputs/apk"
-    def FILE_NAME = "app-production-release.apk"
-    def SOURCE_FILE = "${FILE_PATH}/${FILE_NAME}"
+    def SOURCE_FILE_PROD = "${FILE_PATH}/app-production-release.apk"
     def UPLOAD_PATH = "scgame/${VER}"
-    echo "SOURCE_FILE: ${SOURCE_FILE} and UPLOAD_PATH: ${UPLOAD_PATH}"
+    echo "SOURCE_FILE: ${SOURCE_FILE_PROD} and UPLOAD_PATH: ${UPLOAD_PATH}"
 
     stage 'Building'
     env.ANDROID_HOME="/mnt/disk1/data/android/sdk"
@@ -54,16 +53,20 @@ node {
     stage 'Upload to S3'
     build job: 'upload_to_s3', wait: false, parameters: [
             string(name: 'FILE_PATH', value: FILE_PATH),
-            string(name: 'FILE_NAME', value: FILE_NAME),
+            string(name: 'FILE_NAME', value: "app-*-release.apk"),
             string(name: 'UPLOAD_PATH', value: UPLOAD_PATH)
     ]
-    def S3_PATH = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/${FILE_NAME}"
-    slackSend channel: "#auto-jenkins", color: "good", message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *scgame | <${S3_PATH}| Download ${VER}>*"
+    def S3_PATH_DEV = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-dev-release.apk"
+    def S3_PATH_STAGE = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-stage-release.apk"
+    def S3_PATH_PROD = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-production-release.apk"
+    slackSend channel: "#auto-jenkins",
+      color: "good",
+      message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *scgame | Download ${VER} <${S3_PATH_DEV}|Dev> <${S3_PATH_STAGE}|Stage> <${S3_PATH_PROD}|Prod>*"
 
     stage 'Upload to Google Play'
     if(BRANCH_NAME == 'master') {
         build job: 'upload_to_playstore', wait: false, parameters: [
-                string(name: 'APK_PATH', value: (SOURCE_FILE))
+                string(name: 'APK_PATH', value: (SOURCE_FILE_PROD))
         ]
     } else {
         echo "Not a master branch release hence not uploading to Play Store."
