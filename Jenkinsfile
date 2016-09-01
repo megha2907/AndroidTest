@@ -1,7 +1,9 @@
 #!/usr/bin/env groovy
 node {
+  try {
+
     stage 'Checkout'
-    slackSend channel: "#auto-jenkins", color: "good", message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _Build Started:_ *${env.BUILD_TAG}* `${env.BRANCH_NAME}`"
+    slackSend channel: "#auto-jenkins", color: "good", message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _Building:_ *${env.BUILD_TAG}* `${env.BRANCH_NAME}`"
     deleteDir()
     checkout scm
 
@@ -71,5 +73,12 @@ node {
     } else {
         echo "Not a master branch release hence not uploading to Play Store."
     }
-}
 
+  } catch (err) {
+      currentBuild.result = "FAILURE"
+      slackSend channel: "#auto-jenkins",
+          color: "danger",
+          message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _FAILED Building:_ *${env.BUILD_TAG}* `${env.BRANCH_NAME}`"
+      throw err
+  }
+}
