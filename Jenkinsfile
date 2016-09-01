@@ -53,7 +53,7 @@ node {
     stage 'Upload to S3'
     build job: 'upload_to_s3', wait: false, parameters: [
             string(name: 'FILE_PATH', value: FILE_PATH),
-            string(name: 'FILE_NAME', value: "app-*-release.apk"),
+            string(name: 'FILE_NAME', value: "*-release.apk"),
             string(name: 'UPLOAD_PATH', value: UPLOAD_PATH)
     ]
     def S3_PATH_DEV = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-dev-release.apk"
@@ -61,7 +61,7 @@ node {
     def S3_PATH_PROD = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-production-release.apk"
     slackSend channel: "#auto-jenkins",
       color: "good",
-      message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *scgame | Download ${VER} <${S3_PATH_DEV}|Dev> <${S3_PATH_STAGE}|Stage> <${S3_PATH_PROD}|Prod>*"
+      message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *scgame | Download ${VER} <${S3_PATH_DEV}|Dev>,<${S3_PATH_STAGE}|Stage>,<${S3_PATH_PROD}|Prod>*"
 
     stage 'Upload to Google Play'
     if(BRANCH_NAME == 'master') {
