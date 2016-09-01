@@ -10,7 +10,7 @@ import in.sportscafe.app.BaseConfig;
  */
 public class Config extends BaseConfig {
 
-    public static final String IMAGE_BASE_URL = "https://d22lvl9g4trg1l.cloudfront.net/img/es3";
+    public static final String IMAGE_BASE_URL = "https://cdn-images.spcafe.in/img/es3";
 
     public static final String KEY_IMAGE_FILL = "-cfill";
 

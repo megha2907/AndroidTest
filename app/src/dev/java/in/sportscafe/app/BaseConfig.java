@@ -6,5 +6,5 @@ package in.sportscafe.app;
  * It is going to have only the dynamic variant which is used in our applicaiton
  */
 public class BaseConfig {
-    public static final String API_BASE_URL = "https://api.sportscafe.in/v1/game/";
+    public static final String API_BASE_URL = "https://api-dev.sportscafe.in/v1/game/";
 }
