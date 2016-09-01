@@ -63,6 +63,9 @@ android {
         production {
             resValue "string", "app_name", "ScGame"
         }
+        dev {
+            resValue "string", "app_name", "ScGame Dev"
+        }
     }
 }
 

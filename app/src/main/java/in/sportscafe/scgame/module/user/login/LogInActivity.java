@@ -34,7 +34,7 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
 
     private static final int RC_SIGN_IN = 9001;
 
-    private static final String SERVER_CLIENT_ID = "93923683436-0e0bkm6459105nthip0thu9dve75s1hc.apps.googleusercontent.com";
+    private static final String SERVER_CLIENT_ID = "576361348926-e2r40l9sich5du63slc9aicv22iic2ff.apps.googleusercontent.com";
 
     private static final String CLIENT_ID_SCOPE = "audience:server:client_id:" + SERVER_CLIENT_ID;
 
