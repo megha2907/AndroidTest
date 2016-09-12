@@ -82,7 +82,11 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         View scheduleView = getLayoutInflater().inflate(R.layout.inflater_schedule_row, parent, false);
         ScheduleViewHolder holder = new ScheduleViewHolder(scheduleView);
 
-        holder.mTvMatchStage.setText(match.getStage());
+        if(null == match.getStage()) {
+            holder.mTvMatchStage.setVisibility(View.GONE);
+        } else {
+            holder.mTvMatchStage.setText(match.getStage());
+        }
 
         String[] parties = match.getParties().split(" vs ");
         holder.mTvPartyAName.setText(parties[0]);
@@ -90,8 +94,6 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         if (null == match.getResult()) {
             holder.mTvMatchResult.setVisibility(View.GONE);
-            holder.mTvPartyAScore.setVisibility(View.GONE);
-            holder.mTvPartyBScore.setVisibility(View.GONE);
             holder.mTvStartTime.setVisibility(View.VISIBLE);
 
             holder.mTvStartTime.setText(TimeUtils.getFormattedDateString(
@@ -99,8 +101,6 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT));
         } else {
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
-            holder.mTvPartyAScore.setVisibility(View.VISIBLE);
-            holder.mTvPartyBScore.setVisibility(View.VISIBLE);
             holder.mTvStartTime.setVisibility(View.GONE);
 
             holder.mTvMatchResult.setText(match.getResult());
@@ -172,9 +172,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
             mTvMatchStage = (TextView) V.findViewById(R.id.schedule_row_tv_match_stage);
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
-            mTvPartyAScore = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_score);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
-            mTvPartyBScore = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_score);
             mTvMatchResult = (TextView) V.findViewById(R.id.schedule_row_tv_match_result);
             mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_start_time);
             V.setOnClickListener(this);

@@ -13,6 +13,8 @@ public interface GroupInfoView extends View {
 
     void setGroupName(String groupName);
 
+    void setGroupIcon(String groupIcon);
+
     void setMembersSize(int size);
 
     void setAdapter(GrpSportSelectionAdapter adapter);

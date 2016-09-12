@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.customfont.CustomButton;
@@ -23,7 +25,9 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
     private boolean mpowerUpApplied = false;
 
     private PredictionModel mPredictionModel;
+
     CustomButton btnpowerUpCount;
+    RelativeLayout rlPowerUp;
 
 
 
@@ -45,6 +49,7 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
         this.mPredictionPresenter.onCreatePrediction(getIntent().getExtras());
 
 
+        //rlPowerUp = (RelativeLayout) findViewById(R.id.rl_powerup);
         CustomButton btnquestionValue = (CustomButton)findViewById(R.id.swipe_card_question_value);
         btnpowerUpCount = (CustomButton) findViewById(R.id.swipe_card_tv_powerup_count);
 

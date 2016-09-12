@@ -69,7 +69,7 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
                   break;
               case R.id.home_ibtn_play:
                   mtoolbar.setVisibility(View.VISIBLE);
-                  mTitle.setText("Feed");
+                  mTitle.setText("Play");
                   loadFragment(new PlayFragment());
                   break;
               case R.id.home_ibtn_profile:

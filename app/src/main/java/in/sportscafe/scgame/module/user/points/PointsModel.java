@@ -28,11 +28,5 @@ public interface PointsModel {
 
     void onSportSelected(int position);
 
-    void onWeekSelected();
-
-    void onMonthSelected();
-
-    void onAllTimeSelected();
-
     void refreshLeaderBoard();
 }

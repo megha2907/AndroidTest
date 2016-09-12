@@ -7,7 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,8 +93,6 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
         if (null == match.getResult()) {
             holder.mTvMatchResult.setVisibility(View.GONE);
-            holder.mTvPartyAScore.setVisibility(View.GONE);
-            holder.mTvPartyBScore.setVisibility(View.GONE);
             holder.mTvStartTime.setVisibility(View.VISIBLE);
 
             holder.mTvStartTime.setText(TimeUtils.getFormattedDateString(
@@ -99,8 +100,6 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                     Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT));
         } else {
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
-            holder.mTvPartyAScore.setVisibility(View.VISIBLE);
-            holder.mTvPartyBScore.setVisibility(View.VISIBLE);
             holder.mTvStartTime.setVisibility(View.GONE);
 
             holder.mTvMatchResult.setText(match.getResult());
@@ -121,11 +120,13 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                 .setText(question.getQuestionText());
 
         TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
-        TextView powerupUsed = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_powerup_used);
+        CustomButton powerupUsed = (CustomButton) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
+        RelativeLayout powerup = (RelativeLayout) convertView.findViewById(R.id.my_predictions_row_rl);
 
         String powerupused=question.getAnswerPowerUpId();
         if (powerupused.equals("null")){
-            powerupUsed.setVisibility(View.INVISIBLE);
+            powerupUsed.setVisibility(View.GONE);
+            powerup.setVisibility(View.GONE);
         }
         else {
             powerupUsed.setText(question.getAnswerPowerUpId());
@@ -134,7 +135,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         int answerId = Integer.parseInt(question.getAnswerId());
 
         if (answerId == 0) {
-            tvAnswer.setText("-");
+            tvAnswer.setText("---");
             setTextColor(tvAnswer, R.color.black);
         } else {
             if (answerId == 1) {
@@ -222,9 +223,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
             mTvMatchStage = (TextView) V.findViewById(R.id.schedule_row_tv_match_stage);
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
-            mTvPartyAScore = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_score);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
-            mTvPartyBScore = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_score);
             mTvMatchResult = (TextView) V.findViewById(R.id.schedule_row_tv_match_result);
             mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_start_time);
             mLlPredictionsParent = (LinearLayout) V.findViewById(R.id.my_results_row_ll_predictions);

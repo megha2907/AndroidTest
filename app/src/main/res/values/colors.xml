@@ -19,14 +19,15 @@
     <color name="scorpion">#656161</color>
     <color name="valencia">#D44837</color>
     <color name="powerup_color">#ffad33</color>
-    <color name="btn_powerup_screen_color">#3a76e3</color>
+    <color name="btn_powerup_screen_color">#45ADE4</color>
     <color name="btn_powerup_count_screen_color">#D3D5D4</color>
 
-    <color name="greencolor">#62bc51</color>
+    <color name="greencolor">#1BB248</color>
     <color name="btncolor">#C95140</color>
-    <color name="colorMedium">#181820</color>
+    <color name="colorMedium">#25232D</color>
+    <color name="colorBackground">#25232D</color>
     <color name="textcolorlight">#86858D</color>
-    <color name="colorBrown">#2c2b33</color>
+    <color name="colorBrown">#2A2832</color>
     <color name="colorGrey">#26252d</color>
 
 </resources>

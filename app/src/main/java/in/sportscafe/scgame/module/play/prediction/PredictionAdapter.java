@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.DragEvent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
@@ -200,8 +202,11 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
                 question.setPowerUpId("2x");
 
                 mViewHolderList.get(0).rlquestion.setBackgroundColor(
-                        ContextCompat.getColor(getContext(), R.color.powerup_color));
-                mViewHolderList.get(0).tvpowerUptext.setVisibility(View.VISIBLE);
+                        ContextCompat.getColor(getContext(), R.color.alto));
+
+                Toast toast =Toast.makeText(getContext(), "2x Power Up applied", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
 
 
     }

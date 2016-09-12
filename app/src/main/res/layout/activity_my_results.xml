@@ -2,44 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
-    <com.jeeva.android.widgets.customfont.CustomButton
-        android:id="@+id/my_results_btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:onClick="onBack"
-        android:text="Back"
-        android:textAllCaps="false"
-        android:textSize="@dimen/dp_20" />
-
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/my_results_tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/dp_10"
-        android:text="My Results"
-        android:textSize="@dimen/dp_25"
-        android:textStyle="bold" />
-
-    <com.jeeva.android.widgets.customfont.CustomEditText
-        android:id="@+id/my_results_et_search"
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
-        android:layout_below="@id/my_results_tv_title"
-        android:layout_margin="@dimen/dp_10"
-        android:background="@drawable/black_rnd_rect_alto_fill"
-        android:hint="Search for tournaments, matches..."
-        android:paddingLeft="@dimen/dp_10"
-        android:singleLine="true"
-        android:imeOptions="actionDone"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorMedium"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:elevation="4dp"
+        android:id="@+id/my_results_toolbar"
+        >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:id="@+id/toolbar_title"
+        android:textSize="@dimen/dp_20"
+        android:textColor="@color/white"/>
+    </android.support.v7.widget.Toolbar>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_results_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/my_results_et_search" />
+        android:layout_below="@id/my_results_toolbar" />
 
 </RelativeLayout>

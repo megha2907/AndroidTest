@@ -17,12 +17,12 @@
         android:padding="@dimen/dp_15"
         >
 
-        <ImageButton
+        <Button
             android:id="@+id/league_row_circle_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:src="@drawable/circle_icon" />
+            android:layout_width="@dimen/dp_27"
+            android:layout_height="@dimen/dp_27"
+            android:background="@drawable/powerups_count_bg"
+            android:textColor="@color/white"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/league_row_tv_name"
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
-            android:src="@drawable/feed" />
+            android:src="@drawable/groupsettings" />
 
     </LinearLayout>
 

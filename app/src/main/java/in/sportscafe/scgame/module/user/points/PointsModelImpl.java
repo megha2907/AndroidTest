@@ -1,8 +1,10 @@
 package in.sportscafe.scgame.module.user.points;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.jeeva.android.Log;
 
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.user.leaderboard.LeaderBoardResponse;
@@ -83,12 +86,12 @@ public class PointsModelImpl implements PointsModel {
             return null;
         }
 
-        return new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, mGroupsList);
+        return new ArrayAdapter<>(context, R.layout.spinner_list_item, mGroupsList);
     }
 
     @Override
     public ArrayAdapter<Sport> getSportsAdapter(Context context) {
-        mSportAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1);
+        mSportAdapter = new ArrayAdapter<>(context, R.layout.spinner_list_item);
         updateSportsAdapter();
         return mSportAdapter;
     }
@@ -143,65 +146,19 @@ public class PointsModelImpl implements PointsModel {
     }
 
     @Override
-    public void onWeekSelected() {
-        mSelectedPeriod = LeaderBoardPeriods.WEEK;
-        refreshLeaderBoard();
-    }
-
-    @Override
-    public void onMonthSelected() {
-        mSelectedPeriod = LeaderBoardPeriods.MONTH;
-        refreshLeaderBoard();
-    }
-
-    @Override
-    public void onAllTimeSelected() {
-        mSelectedPeriod = LeaderBoardPeriods.ALL_TIME;
-        refreshLeaderBoard();
-    }
-
-    @Override
     public void refreshLeaderBoard() {
-        mPointsModelListener.onGetLeaderBoardData(new ArrayList<LeaderBoard>());
-        if(ScGame.getInstance().hasNetworkConnection()) {
-            mPointsModelListener.onGettingLeaderBoard();
-            callLbDetailApi(mSelectedGroupId, mSelectedSportId, mSelectedPeriod);
-        } else {
-            mPointsModelListener.onNoInternet();
-        }
-    }
 
-    private void callLbDetailApi(Long groupId, Integer sportId, String rankPeriod) {
-        MyWebService.getInstance().getLeaderBoardDetailRequest(
-                groupId, sportId, rankPeriod
-        ).enqueue(new ScGameCallBack<LeaderBoardResponse>() {
-            @Override
-            public void onResponse(Call<LeaderBoardResponse> call, Response<LeaderBoardResponse> response) {
-                if(response.isSuccessful()) {
-                    List<LeaderBoard> leaderBoardList = response.body().getLeaderBoardList();
-                    if(null == leaderBoardList || leaderBoardList.isEmpty()) {
-                        mPointsModelListener.onEmpty();
-                        return;
-                    }
-
-                    mPointsModelListener.onGetLeaderBoardData(leaderBoardList);
-                } else {
-                    mPointsModelListener.onFailureLeaderBoard(response.message());
-                }
-            }
-        });
+        Bundle bundle = new Bundle();
+        bundle.putLong("GroupId",mSelectedGroupId);
+        bundle.putInt("SportId",mSelectedSportId);
+        mPointsModelListener.onSelectionChanged(bundle);
     }
 
     public interface OnPointsModelListener {
 
-        void onGettingLeaderBoard();
-
-        void onFailureLeaderBoard(String message);
-
-        void onGetLeaderBoardData(List<LeaderBoard> leaderBoardList);
-
-        void onEmpty();
 
         void onNoInternet();
+
+        void onSelectionChanged(Bundle bundle);
     }
 }

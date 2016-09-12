@@ -13,5 +13,5 @@ public interface LeaderBoardPresenter {
 
     void onCreateLeaderBoard(Bundle bundle);
 
-    void update(List<LeaderBoard> leaderBoardList);
+    void update(Bundle bundle);
 }

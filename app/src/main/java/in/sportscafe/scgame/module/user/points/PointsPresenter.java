@@ -7,15 +7,10 @@ import android.os.Bundle;
  */
 public interface PointsPresenter {
 
-    void onCreatePoints(OnLeaderBoardUpdateListener listener, Bundle bundle);
+    void onCreatePoints(Bundle bundle);
 
     void onGroupItemSelected(int position);
 
     void onSportItemSelected(int position);
 
-    void onWeekClicked();
-
-    void onMonthClicked();
-
-    void onAllTimeClicked();
 }

@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -28,7 +31,13 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
 
     private static final int CODE_GROUP_INFO = 2;
 
-    private EditText mEtGroupCode;
+    private EditText mEtGroupCode1;
+    private EditText mEtGroupCode2;
+    private EditText mEtGroupCode3;
+    private EditText mEtGroupCode4;
+    private EditText mEtGroupCode5;
+
+    private String mGroupCode;
 
     private JoinGroupPresenter mJoinGroupPresenter;
 
@@ -40,11 +49,128 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_group);
 
-        this.mEtGroupCode = (EditText) findViewById(R.id.join_group_et_group_code);
+        this.mEtGroupCode1 = (EditText) findViewById(R.id.join_group_et_group_code_char_one);
+        this.mEtGroupCode2 = (EditText) findViewById(R.id.join_group_et_group_code_char_two);
+        this.mEtGroupCode3 = (EditText) findViewById(R.id.join_group_et_group_code_char_three);
+        this.mEtGroupCode4 = (EditText) findViewById(R.id.join_group_et_group_code_char_four);
+        this.mEtGroupCode5 = (EditText) findViewById(R.id.join_group_et_group_code_char_five);
 
         this.mJoinGroupPresenter = JoinGroupPresenterImpl.newInstance(this);
         this.mJoinGroupPresenter.onCreateJoinGroup();
         initToolBar();
+
+        mEtGroupCode1.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start,int before, int count)
+            {
+                // TODO Auto-generated method stub
+                if(mEtGroupCode1.getText().toString().length()==1)     //size as per your requirement
+                {
+                    mEtGroupCode2.requestFocus();
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+        });
+
+        mEtGroupCode2.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start,int before, int count)
+            {
+                // TODO Auto-generated method stub
+                if(mEtGroupCode2.getText().toString().length()==1)     //size as per your requirement
+                {
+                    mEtGroupCode3.requestFocus();
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+        });
+
+
+        mEtGroupCode3.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start,int before, int count)
+            {
+                // TODO Auto-generated method stub
+                if(mEtGroupCode3.getText().toString().length()==1)     //size as per your requirement
+                {
+                    mEtGroupCode4.requestFocus();
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+        });
+
+        mEtGroupCode4.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start,int before, int count)
+            {
+                // TODO Auto-generated method stub
+                if(mEtGroupCode4.getText().toString().length()==1)     //size as per your requirement
+                {
+                    mEtGroupCode5.requestFocus();
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+        });
+
+
+        mEtGroupCode5.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start,int before, int count)
+            {
+                // TODO Auto-generated method stub
+                if(mEtGroupCode5.getText().toString().length()==1)     //size as per your requirement
+                {
+                    mEtGroupCode5.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+        });
+
     }
 
     @Override
@@ -78,10 +204,16 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
             case R.id.join_group_btn_join:
-                mJoinGroupPresenter.onClickJoin(getTrimmedText(mEtGroupCode));
+                mGroupCode=getTrimmedText(mEtGroupCode1)+getTrimmedText(mEtGroupCode2)
+                        +getTrimmedText(mEtGroupCode3)
+                        +getTrimmedText(mEtGroupCode4)
+                        +getTrimmedText(mEtGroupCode5);
+
+                mJoinGroupPresenter.onClickJoin(mGroupCode);
                 PayloadBuilder builder = new PayloadBuilder();
-                builder.putAttrString("GroupCode", getTrimmedText(mEtGroupCode))
+                builder.putAttrString("GroupCode", mGroupCode)
                         .putAttrString("UserID", ScGameDataHandler.getInstance().getUserId());
                 MoEHelper.getInstance(getContext()).trackEvent("JOIN GROUP-ONCLICK", builder.build());
                 break;

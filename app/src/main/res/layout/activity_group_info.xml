@@ -29,15 +29,17 @@
         <RelativeLayout
             android:id="@+id/group_info_rl1"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_180"
-            android:background="@color/colorBrown"
+            android:layout_height="@dimen/dp_140"
             >
 
-        <ImageView
+        <Button
             android:id="@+id/group_info_iv_user_image"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
-            android:src="@drawable/user_default"
+            android:text="G"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_40"
+            android:background="@drawable/powerups_count_bg"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"/>
 
@@ -180,7 +182,7 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/textcolorlight"
+                android:textColor="@color/greencolor"
                 android:textSize="@dimen/dp_20" />
 
         </RelativeLayout>
@@ -216,7 +218,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/group_info_tv_label_sports"
             android:clipToPadding="false"
-            android:layout_margin="@dimen/dp_20"/>
+            android:layout_margin="@dimen/dp_10"/>
 
         <!--<com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/group_info_btn_delete_group"

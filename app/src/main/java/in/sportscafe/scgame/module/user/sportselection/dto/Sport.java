@@ -39,7 +39,7 @@ public class Sport implements Serializable {
     @JsonIgnore
     public int getImageResource() {
         switch (id) {
-            case 5:
+            case 6:
                 return R.drawable.badminton_menu_icon;
             case 8:
                 return R.drawable.boxing_menu_icon;
@@ -49,7 +49,7 @@ public class Sport implements Serializable {
                 return R.drawable.football_menu_icon;
             case 2:
                 return R.drawable.hockey_menu_icon;
-            case 6:
+            case 5:
                 return R.drawable.kabaddi_menu_icon;
             case 7:
                 return R.drawable.basketball_menu_icon;
@@ -65,7 +65,7 @@ public class Sport implements Serializable {
     @JsonIgnore
     public int getSelectedImageResource() {
         switch (id) {
-            case 5:
+            case 6:
                 return R.drawable.badminton_menu_colored_icon;
             case 8:
                 return R.drawable.boxing_menu_colored_icon;
@@ -75,7 +75,7 @@ public class Sport implements Serializable {
                 return R.drawable.football_menu_colored_icon;
             case 2:
                 return R.drawable.hockey_menu_colored_icon;
-            case 6:
+            case 5:
                 return R.drawable.kabaddi_menu_icon;
             case 7:
                 return R.drawable.basketball_menu_colored_icon;

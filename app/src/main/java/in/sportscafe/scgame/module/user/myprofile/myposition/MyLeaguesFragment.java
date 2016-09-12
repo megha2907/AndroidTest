@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -104,6 +105,9 @@ public class MyLeaguesFragment extends ScGameFragment implements MyPositionLayou
 
         ((TextView) convertView.findViewById(R.id.league_row_tv_name))
                 .setText(groupSummary.getGroupName());
+
+        ((Button) convertView.findViewById(R.id.league_row_circle_icon))
+                .setText(groupSummary.getGroupName().substring(0,1));
 
         convertView.findViewById(R.id.league_row_ibtn_options).setTag(groupSummary);
 

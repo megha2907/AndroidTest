@@ -9,8 +9,9 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="colorControlNormal">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/white</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="android:spinnerStyle">@style/mySpinnerItemStyle</item>
     </style>
 
     <style name="TextLabel" parent="TextAppearance.AppCompat">
@@ -21,6 +22,11 @@
         <item name="colorAccent">@color/textcolorlight</item>
         <item name="colorControlNormal">@color/textcolorlight</item>
         <item name="colorControlActivated">@color/textcolorlight</item>
+    </style>
+
+
+    <style name="mySpinnerItemStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

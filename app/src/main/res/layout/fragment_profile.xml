@@ -100,7 +100,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/add_group_sports_icon" />
+                        android:src="@drawable/add_group_sports_icon"
+                        android:clickable="false"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/profile_tv_sports_folld"
@@ -110,7 +111,8 @@
                         android:layout_marginTop="@dimen/dp_5"
                         android:text="5"
                         android:textColor="@color/textcolorlight"
-                        android:textSize="@dimen/dp_15" />
+                        android:textSize="@dimen/dp_15"
+                        android:clickable="false"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/profile_tv_label_tournaments"
@@ -123,19 +125,22 @@
                         android:text="Sports"
                         android:textColor="@color/textcolorlight"
                         android:textSize="@dimen/dp_15"
-                        app:typeface="lato_regular" />
+                        app:typeface="lato_regular"
+                        android:clickable="false"/>
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/profile_groups_parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
                     android:layout_alignTop="@+id/profile_iv_image"
                     android:layout_marginRight="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_15"
                     android:layout_toLeftOf="@+id/profile_iv_image"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
 
 
                     <ImageButton
@@ -145,7 +150,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/add_group_sports_icon" />
+                        android:src="@drawable/add_group_sports_icon"
+                        android:clickable="false"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/profile_number_of_groups"
@@ -156,7 +162,8 @@
                         android:text="5"
                         android:textColor="@color/textcolorlight"
                         android:textSize="@dimen/dp_15"
-                        app:typeface="lato_regular" />
+                        app:typeface="lato_regular"
+                        android:clickable="false"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/profile_add_group_text"
@@ -169,7 +176,8 @@
                         android:text="Groups"
                         android:textColor="@color/textcolorlight"
                         android:textSize="@dimen/dp_15"
-                        app:typeface="lato_regular" />
+                        app:typeface="lato_regular"
+                        android:clickable="false"/>
 
 
                 </RelativeLayout>
@@ -191,7 +199,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/points_icon" />
+                        android:src="@drawable/points_icon"
+                        android:clickable="false"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/profile_tv_points"
@@ -199,10 +208,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/points_icon"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="5"
                         android:textColor="@color/textcolorlight"
                         android:textSize="@dimen/dp_15"
-                        app:typeface="lato_regular" />
+                        app:typeface="lato_regular"
+                        android:clickable="false"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/profile_tv_label_point"
@@ -215,7 +224,8 @@
                         android:text="Points"
                         android:textColor="@color/textcolorlight"
                         android:textSize="@dimen/dp_15"
-                        app:typeface="lato_regular" />
+                        app:typeface="lato_regular"
+                        android:clickable="false"/>
 
                 </RelativeLayout>
 
@@ -231,12 +241,14 @@
 
                     <ImageButton
                         android:id="@+id/powerups_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dp_23"
+                        android:layout_height="@dimen/dp_23"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/powerup_icon" />
+                        android:background="@drawable/powerup_screen_btn_bg"
+                        android:src="@drawable/powerup_white_icon"
+                        android:clickable="false"
+                        android:scaleType="centerInside"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/profile_tv_powerups"
@@ -244,10 +256,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/powerups_icon"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="5"
                         android:textColor="@color/textcolorlight"
                         android:textSize="@dimen/dp_15"
-                        app:typeface="lato_regular" />
+                        app:typeface="lato_regular"
+                        android:clickable="false"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/profile_tv_label_powerups"
@@ -260,7 +272,8 @@
                         android:text="Power Ups"
                         android:textColor="@color/textcolorlight"
                         android:textSize="@dimen/dp_15"
-                        app:typeface="lato_regular" />
+                        app:typeface="lato_regular"
+                        android:clickable="false"/>
 
                 </RelativeLayout>
 
@@ -273,6 +286,7 @@
                     android:layout_below="@+id/profile_iv_image"
                     android:layout_marginRight="@dimen/dp_30"
                     android:layout_marginTop="@dimen/dp_25"
+                    android:layout_marginBottom="@dimen/dp_20"
                     android:orientation="vertical">
 
                     <ImageButton
@@ -282,7 +296,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/badge_icon" />
+                        android:src="@drawable/badge_icon"
+                        android:clickable="false"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/profile_tv_badges"
@@ -292,7 +307,8 @@
                         android:layout_marginTop="@dimen/dp_5"
                         android:textColor="@color/textcolorlight"
                         android:textSize="@dimen/dp_15"
-                        app:typeface="lato_regular" />
+                        app:typeface="lato_regular"
+                        android:clickable="false"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/profile_tv_label_badges"
@@ -306,8 +322,14 @@
                         android:textColor="@color/textcolorlight"
                         android:textSize="@dimen/dp_15"
                         app:typeface="lato_regular"
+                        android:clickable="false"
                         />
                 </RelativeLayout>
+
+            </RelativeLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab_tl"
                 android:layout_width="match_parent"
@@ -325,12 +347,11 @@
                 app:tabTextColor="@color/silver_chalice"
                 app:unselected_textSize="@dimen/dp_12"
                 app:unselected_typeface="lato_hairline"
+                app:layout_scrollFlags="enterAlwaysCollapsed"
+                android:layout_gravity="bottom"
                 android:layout_below="@+id/profile_ll_points_parent"
-                android:layout_marginTop="@dimen/dp_20"
                 />
-            </RelativeLayout>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
 

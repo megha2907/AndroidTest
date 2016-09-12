@@ -4,7 +4,7 @@
     android:id="@+id/content"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/gradient_bg">
+    android:background="@color/colorBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -52,12 +52,13 @@
             android:id="@+id/play_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_button"
+            android:background="@drawable/powerup_screen_btn_bg"
             android:text="PLAY NOW"
             android:textAllCaps="false"
             android:textSize="@dimen/dp_18"
             android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/dp_20"
+            android:layout_margin="@dimen/dp_50"
+            android:textColor="@color/white"
             app:typeface="lato_regular"
             />
 

@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorBackground"
+    android:layout_marginBottom="@dimen/dp_10">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/feed_row_tv_date"
@@ -11,7 +13,7 @@
         android:gravity="center_horizontal"
         android:padding="@dimen/dp_10"
         android:text="Date"
-        android:background="@color/scorpion"
+        android:background="@color/colorBackground"
         android:textColor="@color/pink_swan"
         android:textSize="@dimen/dp_16" />
 
@@ -19,6 +21,7 @@
         android:id="@+id/feed_row_ll_tour_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+       />
 
 </LinearLayout>

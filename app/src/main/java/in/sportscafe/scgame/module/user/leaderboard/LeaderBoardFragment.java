@@ -18,12 +18,23 @@ import in.sportscafe.scgame.module.user.points.OnLeaderBoardUpdateListener;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class LeaderBoardFragment extends ScGameFragment implements LeaderBoardView,
-        OnLeaderBoardUpdateListener {
+public class LeaderBoardFragment extends ScGameFragment implements LeaderBoardView {
 
     private RecyclerView mRvLeaderBoard;
 
     private LeaderBoardPresenter mLeaderBoardPresenter;
+
+    private static final String KEY_TIME = "Time";
+
+
+    public static LeaderBoardFragment newInstance(String time) {
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_TIME, time);
+
+        LeaderBoardFragment fragment = new LeaderBoardFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -49,9 +60,7 @@ public class LeaderBoardFragment extends ScGameFragment implements LeaderBoardVi
         mRvLeaderBoard.setAdapter(leaderBoardAdapter);
     }
 
-    @Override
-    public void updateLeaderBoard(List<LeaderBoard> leaderBoardList) {
-        mLeaderBoardPresenter.update(leaderBoardList);
+    public void refreshLeaderBoard(Bundle bundle) {
+        mLeaderBoardPresenter.update(bundle);
     }
-
 }
