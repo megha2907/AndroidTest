@@ -1,11 +1,14 @@
-package in.sportscafe.scgame.module.feed.dto;
+package in.sportscafe.scgame.module.TournamentFeed.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.scgame.module.feed.dto.Match;
+
 /**
- * Created by Jeeva on 24/6/16.
+ * Created by deepanshi on 9/28/16.
  */
+
 public class Tournament {
 
     private Integer tournamentId;

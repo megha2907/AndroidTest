@@ -1,5 +1,7 @@
 package in.sportscafe.scgame.module.feed;
 
+import android.os.Bundle;
+
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 
 /**
@@ -7,7 +9,7 @@ import in.sportscafe.scgame.module.home.OnHomeActionListener;
  */
 public interface FeedPresenter {
 
-    void onCreateFeed(OnHomeActionListener listener);
+    void onCreateFeed(Bundle bundle);
 
     void onRefresh();
 }

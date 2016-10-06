@@ -11,15 +11,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.common.ScGameFragment;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 import in.sportscafe.scgame.module.play.matchstatus.MatchStatusFragment;
-import in.sportscafe.scgame.module.play.prediction.AllDoneFragment;
 
 /**
  * Created by Jeeva on 14/7/16.
  */
-public class PlayFragment extends ScGameFragment implements PlayView, View.OnClickListener {
+public class PlayActivity extends ScGameActivity implements PlayView, View.OnClickListener {
 
     public static final int PLAY_REQUEST_CODE = 23;
 
@@ -30,25 +30,9 @@ public class PlayFragment extends ScGameFragment implements PlayView, View.OnCli
     private PlayPresenter mPlayPresenter;
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (context instanceof OnHomeActionListener) {
-            mHomeActionListener = (OnHomeActionListener) context;
-        } else {
-            throw new IllegalArgumentException("The base class should implement the OnHomeActionListener");
-        }
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_play, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_play);
 
         this.mBtnSkip = (Button) findViewById(R.id.play_btn_skip);
         mBtnSkip.setOnClickListener(this);
@@ -69,22 +53,22 @@ public class PlayFragment extends ScGameFragment implements PlayView, View.OnCli
         mBtnSkip.setVisibility(View.GONE);
     }
 
-    @Override
-    public void navigateToAllDone() {
-        loadFragment(new AllDoneFragment());
-    }
+//    @Override
+//    public void navigateToAllDone() {
+//        loadFragment(new AllDoneFragment());
+//    }
 
-    @Override
-    public void navigateMatchStatus(Bundle bundle) {
-        MatchStatusFragment matchStatusFragment = new MatchStatusFragment();
-        matchStatusFragment.setArguments(bundle);
-        loadFragment(matchStatusFragment);
-    }
-
-    private void loadFragment(Fragment fragment) {
-        getChildFragmentManager().beginTransaction().replace(R.id.play_fl_container,
-                fragment).commitAllowingStateLoss();
-    }
+//    @Override
+//    public void navigateMatchStatus(Bundle bundle) {
+//        MatchStatusFragment matchStatusFragment = new MatchStatusFragment();
+//        matchStatusFragment.setArguments(bundle);
+//        loadFragment(matchStatusFragment);
+//    }
+//
+//    private void loadFragment(Fragment fragment) {
+//        getChildFragmentManager().beginTransaction().replace(R.id.play_fl_container,
+//                fragment).commitAllowingStateLoss();
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

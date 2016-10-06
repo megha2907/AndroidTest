@@ -40,6 +40,11 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
     }
 
     @Override
+    public void onSuccessTournamentInfo() {
+        mNewGroupView.dismissProgressbar();
+    }
+
+    @Override
     public void onEmptyGroupName() {
         mNewGroupView.dismissProgressbar();
         mNewGroupView.showMessage(Constants.Alerts.EMPTY_GROUP_NAME);

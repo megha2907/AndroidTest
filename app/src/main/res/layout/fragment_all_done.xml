@@ -47,5 +47,23 @@
             android:layout_marginBottom="@dimen/dp_50"
             android:src="@drawable/alldone_icon" />
 
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/go_to_timeline_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/powerup_screen_btn_bg"
+            android:onClick="onClick"
+            android:text="BACK TO TIMELINE"
+            android:textAllCaps="false"
+            android:textSize="@dimen/dp_18"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dp_60"
+            android:layout_marginRight="@dimen/dp_60"
+            android:layout_marginBottom="@dimen/dp_40"
+            app:typeface="lato_regular"
+            android:textColor="@color/white"
+            />
+
+
     </RelativeLayout>
 </RelativeLayout>

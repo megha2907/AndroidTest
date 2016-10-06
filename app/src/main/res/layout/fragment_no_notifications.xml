@@ -56,7 +56,7 @@
             android:text="PLAY NOW"
             android:textAllCaps="false"
             android:textSize="@dimen/dp_18"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/view"
             android:layout_margin="@dimen/dp_50"
             android:textColor="@color/white"
             app:typeface="lato_regular"

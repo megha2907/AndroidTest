@@ -52,9 +52,9 @@ public class PlayPresenterImpl implements PlayPresenter, PlayModelImpl.OnPlayMod
         if(null != mPredictionView.getContext()) {
             if (mPredictionModel.isNextContest()) {
                 Bundle bundle = mPredictionModel.getNextContestQuestions();
-                mPredictionView.navigateMatchStatus(bundle);
+               // mPredictionView.navigateMatchStatus(bundle);
             } else {
-                mPredictionView.navigateToAllDone();
+               //mPredictionView.navigateToAllDone();
                 mPredictionView.hideSkip();
             }
         }
@@ -80,7 +80,7 @@ public class PlayPresenterImpl implements PlayPresenter, PlayModelImpl.OnPlayMod
     @Override
     public void onNoQuestions() {
         mPredictionView.dismissProgressbar();
-        mPredictionView.navigateToAllDone();
+        //mPredictionView.navigateToAllDone();
     }
 
     @Override

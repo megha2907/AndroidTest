@@ -28,6 +28,7 @@ public class MyPositionFragment extends AbstractTabFragment {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         pagerAdapter.addFragment(MyLeaguesFragment.newInstance(lbSummary.getGroups()), "My Groups");
         pagerAdapter.addFragment(MyGlobalFragment.newInstance(lbSummary.getGlobal()), "Global");
+        pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getGlobal()), "Challenges");
         return pagerAdapter;
     }
 

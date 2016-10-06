@@ -7,7 +7,8 @@ import android.content.Context;
  */
 public interface NewGroupModel {
 
-    GrpSportSelectionAdapter getAdapter(Context context);
+    GrpTournamentSelectionAdapter getAdapter(Context context);
 
     void createGroup(String groupName);
+
 }

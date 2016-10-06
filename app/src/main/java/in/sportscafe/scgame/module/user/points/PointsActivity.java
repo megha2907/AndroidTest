@@ -3,12 +3,10 @@ package in.sportscafe.scgame.module.user.points;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,21 +15,14 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
-
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.CustomViewPager;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.common.ViewPagerAdapter;
-import in.sportscafe.scgame.module.user.group.admin.approve.ApproveFragment;
-import in.sportscafe.scgame.module.user.group.members.MembersFragment;
+import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
-import in.sportscafe.scgame.module.user.myprofile.myposition.MyGlobalFragment;
-import in.sportscafe.scgame.module.user.myprofile.myposition.MyLeaguesFragment;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummary;
-import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -192,7 +183,7 @@ public class PointsActivity extends ScGameActivity implements PointsView, View.O
     }
 
     @Override
-    public void setSportAdapter(ArrayAdapter<Sport> sportAdapter, int initialSportPosition) {
+    public void setSportAdapter(ArrayAdapter<TournamentInfo> sportAdapter, int initialSportPosition) {
         mSpSport.setAdapter(sportAdapter);
         mSpSport.setSelection(initialSportPosition);
         //Log.i("initialSportPosition",String.valueOf(mSpSport.getSelectedItem()));

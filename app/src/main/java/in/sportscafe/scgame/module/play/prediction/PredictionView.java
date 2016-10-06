@@ -1,7 +1,9 @@
 package in.sportscafe.scgame.module.play.prediction;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.jeeva.android.InAppView;
 import com.jeeva.android.View;
 
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
@@ -10,7 +12,7 @@ import in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView;
 /**
  * Created by Jeeva on 20/5/16.
  */
-public interface PredictionView extends View {
+public interface PredictionView extends InAppView {
 
     void setTournamentName(String tournamentName);
 
@@ -31,6 +33,5 @@ public interface PredictionView extends View {
 
     void dismissPowerUp();
 
-
-
+    void navigateToAllDone(Bundle bundle);
 }

@@ -16,8 +16,8 @@ public class NewGroupRequest {
     @JsonProperty("group_name")
     private String groupName;
 
-    @JsonProperty("sports_preferences")
-    private List<Integer> followedSports = new ArrayList<Integer>();
+    @JsonProperty("group_tournaments")
+    private List<Integer> followedTournaments = new ArrayList<Integer>();
 
     @JsonProperty("group_created_by")
     public String getGroupCreatedBy() {
@@ -39,13 +39,13 @@ public class NewGroupRequest {
         this.groupName = groupName;
     }
 
-    @JsonProperty("sports_preferences")
-    public List<Integer> getFollowedSports() {
-        return followedSports;
+    @JsonProperty("group_tournaments")
+    public List<Integer> getfollowedTournaments() {
+        return followedTournaments;
     }
 
-    @JsonProperty("sports_preferences")
-    public void setFollowedSports(List<Integer> followedSports) {
-        this.followedSports = followedSports;
+    @JsonProperty("group_tournaments")
+    public void setfollowedTournaments(List<Integer> followedTournaments) {
+        this.followedTournaments = followedTournaments;
     }
 }

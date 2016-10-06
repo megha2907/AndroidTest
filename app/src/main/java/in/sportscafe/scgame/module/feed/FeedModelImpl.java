@@ -1,6 +1,9 @@
 package in.sportscafe.scgame.module.feed;
 
 import android.content.Context;
+import android.os.Bundle;
+
+import com.jeeva.android.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +17,7 @@ import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.feed.dto.Match;
 import in.sportscafe.scgame.module.feed.dto.MatchesResponse;
-import in.sportscafe.scgame.module.feed.dto.Tournament;
+import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 import in.sportscafe.scgame.webservice.MyWebService;
@@ -33,6 +36,8 @@ public class FeedModelImpl implements FeedModel {
 
     private OnFeedModelListener mFeedModelListener;
 
+    private Integer tourId;
+
     private FeedModelImpl(OnFeedModelListener listener) {
         this.mFeedModelListener = listener;
     }
@@ -42,22 +47,28 @@ public class FeedModelImpl implements FeedModel {
     }
 
     @Override
-    public FeedAdapter getAdapter(OnHomeActionListener listener) {
-        return mFeedAdapter = new FeedAdapter(mFeedModelListener.getContext(), listener);
+    public void init(Bundle bundle) {
+
+         tourId = bundle.getInt(Constants.BundleKeys.TOURNAMENT_ID);
+    }
+
+    @Override
+    public FeedAdapter getAdapter() {
+        return mFeedAdapter = new FeedAdapter(mFeedModelListener.getContext());
     }
 
     @Override
     public void getFeeds() {
         mFeedAdapter.clear();
         if(ScGame.getInstance().hasNetworkConnection()) {
-            callFeedListApi();
+            callFeedListApi(tourId);
         } else {
             mFeedModelListener.onNoInternet();
         }
     }
 
-    private void callFeedListApi() {
-        MyWebService.getInstance().getMatches().enqueue(new ScGameCallBack<MatchesResponse>() {
+    private void callFeedListApi(Integer tourId) {
+        MyWebService.getInstance().getMatches(tourId).enqueue(new ScGameCallBack<MatchesResponse>() {
             @Override
             public void onResponse(Call<MatchesResponse> call, Response<MatchesResponse> response) {
                 if(null == mFeedModelListener.getContext()) {
@@ -74,6 +85,7 @@ public class FeedModelImpl implements FeedModel {
 
                     handleMatches(matchList);
                 } else {
+
                     mFeedModelListener.onFailedFeeds(response.message());
                 }
             }

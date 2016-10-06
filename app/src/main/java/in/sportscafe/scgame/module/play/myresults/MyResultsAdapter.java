@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.volley.Volley;
+import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.feed.dto.Match;
-import in.sportscafe.scgame.module.feed.dto.Tournament;
+import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
 import in.sportscafe.scgame.utils.ViewUtils;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
@@ -78,7 +80,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     }
 
     private View getMyResultView(Match match, ViewGroup parent) {
-        View myResultView = getLayoutInflater().inflate(R.layout.inflater_schedule_row, parent, false);
+        View myResultView = getLayoutInflater().inflate(R.layout.inflater_schedule_match_results_row, parent, false);
         MyResultViewHolder holder = new MyResultViewHolder(myResultView);
 
         if(null == match.getStage()) {
@@ -87,22 +89,50 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             holder.mTvMatchStage.setText(match.getStage());
         }
 
-        String[] parties = match.getParties().split(" vs ");
-        holder.mTvPartyAName.setText(parties[0]);
-        holder.mTvPartyBName.setText(parties[1]);
+        holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
+        holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
 
-        if (null == match.getResult()) {
+        holder.mIvPartyAPhoto.setImageUrl(
+                match.getParties().get(0).getPartyImageUrl(),
+                Volley.getInstance().getImageLoader(),
+                false
+        );
+
+        holder.mIvPartyBPhoto.setImageUrl(
+                match.getParties().get(1).getPartyImageUrl(),
+                Volley.getInstance().getImageLoader(),
+                false
+        );
+
+        if (null == match.getResult() || match.getResult().isEmpty()) {
             holder.mTvMatchResult.setVisibility(View.GONE);
-            holder.mTvStartTime.setVisibility(View.VISIBLE);
-
-            holder.mTvStartTime.setText(TimeUtils.getFormattedDateString(
-                    match.getStartTime(), Constants.DateFormats.HH_MM_AA,
-                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT));
+//            holder.mTvStartTime.setVisibility(View.VISIBLE);
+//
+//            holder.mTvStartTime.setText(TimeUtils.getFormattedDateString(
+//                    match.getStartTime(), Constants.DateFormats.HH_MM_AA,
+//                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT));
         } else {
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
-            holder.mTvStartTime.setVisibility(View.GONE);
+//            holder.mTvStartTime.setVisibility(View.GONE);
 
             holder.mTvMatchResult.setText(match.getResult());
+        }
+
+        if (match.getMatchPoints()==0)
+        {
+            holder.mBtnMatchPoints.setVisibility(View.GONE);
+            holder.mTvResultCorrectCount.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
+            holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
+            holder.mViewResult.setVisibility(View.VISIBLE);
+            holder.mTvResultWait.setVisibility(View.GONE);
+
+            holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
+            holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
+
         }
 
         List<Question> questions = match.getQuestions();
@@ -218,6 +248,14 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
         LinearLayout mLlPredictionsParent;
 
+        TextView mTvResultCorrectCount;
+        CustomButton mBtnMatchPoints;
+        View mViewResult;
+
+        HmImageView mIvPartyAPhoto;
+        TextView mTvResultWait;
+        HmImageView mIvPartyBPhoto;
+
         public MyResultViewHolder(View V) {
             super(V);
 
@@ -225,8 +263,14 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
             mTvMatchResult = (TextView) V.findViewById(R.id.schedule_row_tv_match_result);
-            mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_start_time);
+            mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_match_time);
+            mIvPartyAPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_left);
+            mIvPartyBPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_right);
+            mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
+            mBtnMatchPoints=(CustomButton) V.findViewById(R.id.schedule_row_btn_points);
+            mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlPredictionsParent = (LinearLayout) V.findViewById(R.id.my_results_row_ll_predictions);
+            mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
         }
     }
 

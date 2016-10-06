@@ -9,7 +9,7 @@ import com.jeeva.android.View;
  */
 public interface NewGroupView extends View {
 
-    void setAdapter(GrpSportSelectionAdapter adapter);
+    void setAdapter(GrpTournamentSelectionAdapter adapter);
 
     void setSuccessBack(Bundle bundle);
 }

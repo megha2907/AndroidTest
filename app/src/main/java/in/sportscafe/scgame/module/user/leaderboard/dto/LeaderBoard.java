@@ -13,6 +13,9 @@ public class LeaderBoard {
     @JsonProperty("user_name")
     private String userName;
 
+    @JsonProperty("user_photo")
+    private String userPhoto;
+
     @JsonProperty("rank")
     private Integer rank;
 
@@ -46,6 +49,17 @@ public class LeaderBoard {
     @JsonProperty("user_name")
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+
+    @JsonProperty("user_photo")
+    public String getUserPhoto() {
+        return userPhoto;
+    }
+
+    @JsonProperty("user_photo")
+    public void setUserPhoto(String userPhoto) {
+        this.userPhoto = userPhoto;
     }
 
     /**

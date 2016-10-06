@@ -23,6 +23,7 @@
     <color name="btn_powerup_count_screen_color">#D3D5D4</color>
 
     <color name="greencolor">#1BB248</color>
+    <color name="yellowcolor">#ffad33</color>
     <color name="btncolor">#C95140</color>
     <color name="colorMedium">#25232D</color>
     <color name="colorBackground">#25232D</color>

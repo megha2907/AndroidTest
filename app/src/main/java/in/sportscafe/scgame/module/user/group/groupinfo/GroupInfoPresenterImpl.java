@@ -98,7 +98,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     }
 
     @Override
-    public void onGroupSportUpdateSuccess() {
+    public void onGroupTournamentUpdateSuccess() {
         mGroupInfoView.setSuccessResult();
     }
 

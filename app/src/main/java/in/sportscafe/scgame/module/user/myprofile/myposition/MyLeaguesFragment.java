@@ -20,13 +20,12 @@ import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameFragment;
+import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupInfoActivity;
-import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.RankSummary;
 import in.sportscafe.scgame.module.user.points.PointsActivity;
-import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
 
 /**
  * Created by Jeeva on 13/6/16.
@@ -89,9 +88,9 @@ public class MyLeaguesFragment extends ScGameFragment implements MyPositionLayou
                 groupSummary = new GroupSummary(groupId, groupInfo.getName());
             }
 
-            for (Sport sport : groupInfo.getFollowedSports()) {
-                if(!grpSportKeys.contains(groupId + "" + sport.getId())) {
-                    groupSummary.addRank(new RankSummary(sport.getId(), sport.getName()));
+            for (TournamentInfo tournamentInfo : groupInfo.getFollowedTournaments()) {
+                if(!grpSportKeys.contains(groupId + "" + tournamentInfo.getTournamentId())) {
+                    groupSummary.addRank(new RankSummary(tournamentInfo.getTournamentId(), tournamentInfo.getTournamentName()));
                 }
             }
 

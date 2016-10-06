@@ -8,11 +8,11 @@ import java.util.List;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGameDataHandler;
+import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.user.group.LeaveGroupModelImpl;
-import in.sportscafe.scgame.module.user.group.newgroup.GrpSportSelectionAdapter;
+import in.sportscafe.scgame.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupPerson;
-import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -23,11 +23,11 @@ public class GroupInfoModelImpl implements GroupInfoModel {
 
     private GroupInfo mGroupInfo;
 
-    private GrpSportSelectionAdapter mSportSelectionAdapter;
+    private GrpTournamentSelectionAdapter mGrpTournamentSelectionAdapter;
 
     private OnGroupInfoModelListener mGroupInfoModelListener;
 
-    private GrpSportUpdateModelImpl mGrpSportUpdateModel;
+    private GrpTournamentUpdateModelImpl mGrpTournamentUpdateModel;
 
     private GrpNameUpdateModelImpl mGrpNameUpdateModel;
 
@@ -55,15 +55,15 @@ public class GroupInfoModelImpl implements GroupInfoModel {
             }
         }
 
-        this.mGrpSportUpdateModel = new GrpSportUpdateModelImpl(mGroupInfo.getId(),
-                new GrpSportUpdateModelImpl.OnGrpSportUpdateModelListener() {
+        this.mGrpTournamentUpdateModel = new GrpTournamentUpdateModelImpl(mGroupInfo.getId(),
+                new GrpTournamentUpdateModelImpl.OnGrpTournamentUpdateModelListener() {
                     @Override
-                    public void onSuccessGrpSportUpdate() {
-                        mGroupInfoModelListener.onGroupSportUpdateSuccess();
+                    public void onSuccessGrpTournamentUpdate() {
+                        mGroupInfoModelListener.onGroupTournamentUpdateSuccess();
                     }
 
                     @Override
-                    public void onFailedGrpSportUpdate(String message) {}
+                    public void onFailedGrpTournamentUpdate(String message) {}
 
                     @Override
                     public void onNoInternet() {}
@@ -108,35 +108,35 @@ public class GroupInfoModelImpl implements GroupInfoModel {
     }
 
     @Override
-    public GrpSportSelectionAdapter getAdapter(Context context) {
-        List<Sport> followedSports = mGroupInfo.getFollowedSports();
+    public GrpTournamentSelectionAdapter getAdapter(Context context) {
+        List<TournamentInfo> followedTournaments = mGroupInfo.getFollowedTournaments();
 
-        List<Integer> mFollowedSportsIdList = new ArrayList<>();
-        for (Sport sport : followedSports) {
-            mFollowedSportsIdList.add(sport.getId());
+        List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
+        for (TournamentInfo tournamentInfo : followedTournaments) {
+            mFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
         }
 
-        this.mSportSelectionAdapter = new GrpSportSelectionAdapter(context,
-                mFollowedSportsIdList, new GrpSportSelectionAdapter.OnGrpSportChangedListener() {
+        this.mGrpTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context,
+                mFollowedTournamentsIdList, new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
 
             @Override
-            public boolean onGrpSportSelected(boolean addNewSport, int existingSportsCount) {
-                return mAdmin && (addNewSport || existingSportsCount > 1);
+            public boolean onGrpTournamentSelected(boolean addNewTournament, int existingTournamentCount) {
+                return mAdmin && (addNewTournament || existingTournamentCount > 1);
             }
 
             @Override
-            public void onGrpSportChanged(List<Integer> selectedSportIdList) {
-                mGrpSportUpdateModel.updateGrpSports(selectedSportIdList);
+            public void onGrpTournamentChanged(List<Integer> selectedTournamentsIdList) {
+                mGrpTournamentUpdateModel.updateGrpTournaments(selectedTournamentsIdList);
             }
 
         });
 
         if(amAdmin()) {
-            this.mSportSelectionAdapter.addAll(ScGameDataHandler.getInstance().getAllSports());
+            this.mGrpTournamentSelectionAdapter.addAll(ScGameDataHandler.getInstance().getTournaments());
         } else {
-            this.mSportSelectionAdapter.addAll(followedSports);
+            this.mGrpTournamentSelectionAdapter.addAll(followedTournaments);
         }
-        return mSportSelectionAdapter;
+        return mGrpTournamentSelectionAdapter;
     }
 
     @Override
@@ -197,7 +197,7 @@ public class GroupInfoModelImpl implements GroupInfoModel {
 
         void onNoInternet();
 
-        void onGroupSportUpdateSuccess();
+        void onGroupTournamentUpdateSuccess();
 
         void onLeaveGroupSuccess();
 

@@ -1,6 +1,7 @@
 package in.sportscafe.scgame.module.feed;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 
 import in.sportscafe.scgame.Constants;
@@ -25,8 +26,9 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
     }
 
     @Override
-    public void onCreateFeed(OnHomeActionListener listener) {
-        mFeedView.setAdapter(mFeedModel.getAdapter(listener));
+    public void onCreateFeed(Bundle bundle) {
+        mFeedModel.init(bundle);
+        mFeedView.setAdapter(mFeedModel.getAdapter());
     }
 
     @Override

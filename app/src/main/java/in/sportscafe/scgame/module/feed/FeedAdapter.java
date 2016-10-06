@@ -3,27 +3,36 @@ package in.sportscafe.scgame.module.feed;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
+import com.jeeva.android.volley.Volley;
+import com.jeeva.android.widgets.HmImageView;
+import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.feed.dto.Feed;
-import in.sportscafe.scgame.module.feed.dto.Tournament;
+import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.feed.dto.Match;
-import in.sportscafe.scgame.module.home.HomeActivity;
-import in.sportscafe.scgame.module.home.OnHomeActionListener;
+import in.sportscafe.scgame.module.play.PlayActivity;
+import in.sportscafe.scgame.module.play.prediction.PredictionActivity;
 import in.sportscafe.scgame.utils.ViewUtils;
+import in.sportscafe.scgame.utils.timeutils.TimeAgo;
+import in.sportscafe.scgame.utils.timeutils.TimeUnit;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 
 /**
@@ -31,15 +40,13 @@ import in.sportscafe.scgame.utils.timeutils.TimeUtils;
  */
 public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
-    private OnHomeActionListener mOnHomeActionListener;
-
     private AlertDialog mAlertDialog;
     private Context mcon;
+    private List<Match> mMyResultList = new ArrayList<>();
 
-    public FeedAdapter(Context context, OnHomeActionListener listener) {
+    public FeedAdapter(Context context) {
         super(context);
         mcon = context;
-        this.mOnHomeActionListener = listener;
     }
 
     @Override
@@ -60,11 +67,11 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         holder.mTvDate.setText(TimeUtils.getDateStringFromMs(feed.getDate(), "d'th' MMM"));
         holder.mLlTourParent.removeAllViews();
         for (Tournament tournament : feed.getTournaments()) {
-            holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent));
+            holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent,position));
         }
     }
 
-    private View getTourView(Tournament tournament, ViewGroup parent) {
+    private View getTourView(Tournament tournament, ViewGroup parent,int position) {
         View tourView = getLayoutInflater().inflate(R.layout.inflater_tour_row, parent, false);
         TourViewHolder holder = new TourViewHolder(tourView);
 
@@ -72,15 +79,47 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         holder.mLlScheduleParent.removeAllViews();
         for (Match match : tournament.getMatches()) {
-            holder.mLlScheduleParent.addView(getScheduleView(match, holder.mLlScheduleParent));
+            holder.mLlScheduleParent.addView(getScheduleView(match, holder.mLlScheduleParent,position));
         }
 
         return tourView;
     }
 
-    private View getScheduleView(Match match, ViewGroup parent) {
+    private View getScheduleView(Match match, ViewGroup parent,int position) {
         View scheduleView = getLayoutInflater().inflate(R.layout.inflater_schedule_row, parent, false);
         ScheduleViewHolder holder = new ScheduleViewHolder(scheduleView);
+
+        if( null == match.getParties())
+        {
+            holder.mTvPartyAName.setVisibility(View.GONE);
+            holder.mTvPartyBName.setVisibility(View.GONE);
+            holder.mIvPartyAPhoto.setVisibility(View.GONE);
+            holder.mIvPartyBPhoto.setVisibility(View.GONE);
+            holder.mBtnVs.setVisibility(View.GONE);
+            holder.mTvMatchStage.setVisibility(View.GONE);
+            holder.mRlMatchStageParent.setVisibility(View.GONE);
+            holder.mTvStartTime.setVisibility(View.GONE);
+            holder.mViewResult.setVisibility(View.GONE);
+
+        }
+        else
+        {
+            holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
+            holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
+
+            holder.mIvPartyAPhoto.setImageUrl(
+                    match.getParties().get(0).getPartyImageUrl(),
+                    Volley.getInstance().getImageLoader(),
+                    false
+            );
+
+            holder.mIvPartyBPhoto.setImageUrl(
+                    match.getParties().get(1).getPartyImageUrl(),
+                    Volley.getInstance().getImageLoader(),
+                    false
+            );
+        }
+
 
         if(null == match.getStage()) {
             holder.mTvMatchStage.setVisibility(View.GONE);
@@ -88,26 +127,94 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mTvMatchStage.setText(match.getStage());
         }
 
-        String[] parties = match.getParties().split(" vs ");
-        holder.mTvPartyAName.setText(parties[0]);
-        holder.mTvPartyBName.setText(parties[1]);
 
-        if (null == match.getResult()) {
+        if (null == match.getResult() || match.getResult().isEmpty()) {
             holder.mTvMatchResult.setVisibility(View.GONE);
-            holder.mTvStartTime.setVisibility(View.VISIBLE);
-
             holder.mTvStartTime.setText(TimeUtils.getFormattedDateString(
                     match.getStartTime(), Constants.DateFormats.HH_MM_AA,
                     Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT));
         } else {
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
-            holder.mTvStartTime.setVisibility(View.GONE);
-
             holder.mTvMatchResult.setText(match.getResult());
         }
 
+
+
+        if(match.getMatchQuestionCount()==0)
+        {
+            holder.mBtnPlayMatch.setVisibility(View.GONE);
+        }
+        else if(match.getisAttempted()==true)
+        {
+            holder.mTvMatchResult.setVisibility(View.GONE);
+            holder.mBtnPlayMatch.setVisibility(View.GONE);
+            holder.mTvResultWait.setVisibility(View.VISIBLE);
+            holder.mViewResult.setVisibility(View.VISIBLE);
+            holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
+        }
+        else
+        {
+            holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
+            holder.mBtnPlayMatch.setTag(match);
+        }
+
+
+        if (match.getMatchPoints()==0)
+        {
+            holder.mBtnMatchPoints.setVisibility(View.GONE);
+            holder.mTvResultCorrectCount.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
+            holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
+            holder.mViewResult.setVisibility(View.VISIBLE);
+            holder.mTvResultWait.setVisibility(View.GONE);
+
+            holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
+            holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
+
+        }
+
+
+        Calendar c = Calendar.getInstance();
+        Long formattedCurrentDate = c.getTimeInMillis();
+        String date = TimeUtils.getFormattedDateString(
+                match.getStartTime(),
+                Constants.DateFormats.DD_MM_YYYY,
+                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                Constants.DateFormats.GMT
+        );
+
+        Long formattedstartDate = TimeUtils.getMillisecondsFromDateString(
+                date,
+                Constants.DateFormats.DD_MM_YYYY,
+                Constants.DateFormats.GMT
+        );
+         TimeAgo timeAgo = TimeUtils.calcTimeAgo(formattedCurrentDate,formattedstartDate);
+
+
+         if(match.getMatchQuestionCount()==0 && match.getParties() != null && timeAgo.timeDiff > 0 && timeAgo.timeUnit != TimeUnit.MILLISECOND && timeAgo.timeUnit != TimeUnit.SECOND)
+         {
+             holder.mTvResultWait.setVisibility(View.VISIBLE);
+             holder.mTvResultWait.setText("Coming up");
+             holder.mViewResult.setVisibility(View.GONE);
+         }
+
         return scheduleView;
     }
+
+
+
+    private View getMatchCommentary(Match match2, ViewGroup parent) {
+        View MatchCommentary = getLayoutInflater().inflate(R.layout.inflater_match_commentary_row, parent, false);
+        MatchCommentaryHolder holder = new MatchCommentaryHolder(MatchCommentary);
+
+        holder.mTvMatchCommentary.setText(match2.getVenue()); //// TODO: 9/22/16 change to match commentry
+        
+        return MatchCommentary;
+    }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -165,7 +272,28 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         TextView mTvMatchResult;
 
+        TextView mTvResultCorrectCount;
+
+        TextView mTvResultWait;
+
         TextView mTvStartTime;
+
+        HmImageView mIvPartyAPhoto;
+
+        HmImageView mIvPartyBPhoto;
+
+        Button mBtnVs;
+
+        CustomButton mBtnMatchPoints;
+
+        CustomButton mBtnPlayMatch;
+
+        View mViewResult;
+
+        LinearLayout mLlMatchCommentaryParent;
+
+        RelativeLayout mRlMatchStageParent;
+
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -174,13 +302,42 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
             mTvMatchResult = (TextView) V.findViewById(R.id.schedule_row_tv_match_result);
-            mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_start_time);
-            V.setOnClickListener(this);
+            mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_match_time);
+            mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
+            mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
+            mIvPartyAPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_left);
+            mIvPartyBPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_right);
+            mBtnVs=(Button) V.findViewById(R.id.schedule_row_btn_vs);
+            mBtnPlayMatch=(CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
+            mBtnMatchPoints=(CustomButton) V.findViewById(R.id.schedule_row_btn_points);
+            mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
+            mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
+            mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
+            mBtnPlayMatch.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            mOnHomeActionListener.onClickPlay();
+//            mOnHomeActionListener.onClickPlay();
+
+            Match match = (Match)view.getTag();
+            Intent intent =  new Intent(mcon, PredictionActivity.class);
+            Bundle mBundle = new Bundle();
+            mBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
+            intent.putExtras(mBundle);
+            mcon.startActivity(intent);
+        }
+    }
+
+    class MatchCommentaryHolder extends RecyclerView.ViewHolder {
+
+        TextView mTvMatchCommentary;
+
+        public MatchCommentaryHolder(View V) {
+            super(V);
+
+            mTvMatchCommentary = (TextView) V.findViewById(R.id.match_commentary_tv);
+
         }
     }
 

@@ -17,5 +17,9 @@ public interface MatchStatusView extends InAppView {
 
     void setContestName(String contestName);
 
+    void setTournamentImageTeam1(String tournamentImageTeam1);
+
+    void setTournamentImageTeam2(String tournamentImageTeam2);
+
     void navigateToPrediction(Bundle bundle);
 }

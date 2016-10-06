@@ -23,6 +23,7 @@ import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.user.group.admin.adminmembers.AdminMembersActivity;
 import in.sportscafe.scgame.module.user.group.members.MembersActivity;
 import in.sportscafe.scgame.module.user.group.newgroup.GrpSportSelectionAdapter;
+import in.sportscafe.scgame.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -129,7 +130,7 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     }
 
     @Override
-    public void setAdapter(GrpSportSelectionAdapter adapter) {
+    public void setAdapter(GrpTournamentSelectionAdapter adapter) {
         this.mRvSportSelection.setAdapter(adapter);
     }
 

@@ -4,12 +4,14 @@ import in.sportscafe.scgame.Config;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ApiResponse;
 import in.sportscafe.scgame.module.feed.dto.MatchesResponse;
+import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.scgame.module.play.myresults.MyResultsResponse;
 import in.sportscafe.scgame.module.play.prediction.dto.Answer;
 import in.sportscafe.scgame.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.scgame.module.user.group.admin.approve.ApproveRequest;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupSportUpdateRequest;
+import in.sportscafe.scgame.module.user.group.groupinfo.GroupTournamentUpdateRequest;
 import in.sportscafe.scgame.module.user.group.members.AddGroupRequest;
 import in.sportscafe.scgame.module.user.group.members.AdminRequest;
 import in.sportscafe.scgame.module.user.group.members.MembersRequest;
@@ -19,12 +21,15 @@ import in.sportscafe.scgame.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.scgame.module.user.login.dto.LogInRequest;
 import in.sportscafe.scgame.module.user.login.dto.LogInResponse;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupsDetailResponse;
+import in.sportscafe.scgame.module.user.myprofile.dto.Result;
 import in.sportscafe.scgame.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.scgame.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummaryResponse;
 import in.sportscafe.scgame.module.user.sportselection.dto.AllSports;
 import in.sportscafe.scgame.module.user.sportselection.dto.PreferenceRequest;
 import in.sportscafe.scgame.module.user.sportselection.dto.UserSports;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 
 /**
@@ -53,6 +58,11 @@ public class MyWebService extends AbstractWebService<ScGameService> {
         return mScGameService.updateUser(request);
     }
 
+    public Call<Result> getUpdateUserProfilePhotoRequest(MultipartBody.Part file,RequestBody filepath,RequestBody filename) {
+        return mScGameService.uploadImage(file,filepath,filename);
+    }
+
+
     public Call<UserInfoResponse> getUserInfoRequest(String userId) {
         return mScGameService.getUserInfo(userId);
     }
@@ -69,12 +79,20 @@ public class MyWebService extends AbstractWebService<ScGameService> {
         return mScGameService.getUserSports(ScGameDataHandler.getInstance().getUserId());
     }
 
-    public Call<MatchesResponse> getMatches() {
-        return mScGameService.getMatches(ScGameDataHandler.getInstance().getUserId());
+    public Call<MatchesResponse> getMatches(Integer tourId) {
+        return mScGameService.getMatches(ScGameDataHandler.getInstance().getUserId(),tourId);
     }
 
-    public Call<QuestionsResponse> getAllQuestions() {
-        return mScGameService.getQuestions(ScGameDataHandler.getInstance().getUserId());
+    public Call<MatchesResponse> getMatchResults(Boolean isAttempted , Boolean WithoutCommentary) {
+        return mScGameService.getMatchResults(ScGameDataHandler.getInstance().getUserId(),isAttempted,WithoutCommentary);
+    }
+
+    public Call<QuestionsResponse> getAllQuestions(Integer matchId) {
+        return mScGameService.getQuestions(ScGameDataHandler.getInstance().getUserId(),matchId);
+    }
+
+    public Call<TournamentsResponse> getTournaments(boolean isCurrent) {
+        return mScGameService.getTournaments(ScGameDataHandler.getInstance().getUserId(),isCurrent);
     }
 
     public Call<ApiResponse> getPostAnswerRequest(Answer answer) {
@@ -112,9 +130,9 @@ public class MyWebService extends AbstractWebService<ScGameService> {
         return mScGameService.leaveGroup(request);
     }
 
-    public Call<MyResultsResponse> getMyResultsRequest(Integer offset, Integer limit) {
+    public Call<MyResultsResponse> getMyResultsRequest(Integer MatchId) {
         return mScGameService.getMyResults(ScGameDataHandler.getInstance().getUserId(),
-                offset, limit);
+               MatchId);
     }
 
     public Call<LbSummaryResponse> getLeaderBoardSummary() {
@@ -129,6 +147,10 @@ public class MyWebService extends AbstractWebService<ScGameService> {
 
     public Call<ApiResponse> getGrpSportUpdateRequest(GroupSportUpdateRequest request) {
         return mScGameService.updateGroupSport(request);
+    }
+
+    public Call<ApiResponse> getGrpTournamentUpdateRequest(GroupTournamentUpdateRequest request) {
+        return mScGameService.updateGroupTournament(request);
     }
 
     public Call<ApiResponse> getGrpNameUpdateRequest(GroupNameUpdateRequest request) {

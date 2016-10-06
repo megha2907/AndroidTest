@@ -15,7 +15,7 @@
         >
 
 
-        <in.sportscafe.scgame.module.common.RoundImage
+        <ImageView
             android:id="@+id/edit_iv_user_image"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
@@ -23,7 +23,10 @@
             android:layout_marginTop="@dimen/dp_60"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/dp_60"
+            android:onClick="showImagePopup"
             />
+
+
 
     </RelativeLayout>
 

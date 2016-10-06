@@ -8,10 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jeeva.android.volley.Volley;
+import com.jeeva.android.widgets.HmImageView;
+
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameFragment;
-import in.sportscafe.scgame.module.play.PlayFragment;
+import in.sportscafe.scgame.module.play.PlayActivity;
 import in.sportscafe.scgame.module.play.prediction.PredictionActivity;
 import in.sportscafe.scgame.utils.timeutils.TimeAgo;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
@@ -83,10 +86,30 @@ public class MatchStatusFragment extends ScGameFragment implements MatchStatusVi
     }
 
     @Override
+    public void setTournamentImageTeam1(String tournamentImageTeam1) {
+        HmImageView mIvPartyAPhoto=(HmImageView) findViewById(R.id.swipe_card_iv_left);
+        mIvPartyAPhoto.setImageUrl(
+                tournamentImageTeam1,
+                Volley.getInstance().getImageLoader(),
+                false
+        );
+    }
+
+    @Override
+    public void setTournamentImageTeam2(String tournamentImageTeam2) {
+        HmImageView mIvPartyBPhoto=(HmImageView) findViewById(R.id.swipe_card_iv_right);
+        mIvPartyBPhoto.setImageUrl(
+                tournamentImageTeam2,
+                Volley.getInstance().getImageLoader(),
+                false
+        );
+    }
+
+    @Override
     public void navigateToPrediction(Bundle bundle) {
         Intent intent = new Intent(getContext(), PredictionActivity.class);
         intent.putExtras(bundle);
-        startActivityForResult(intent, PlayFragment.PLAY_REQUEST_CODE);
+        startActivityForResult(intent, PlayActivity.PLAY_REQUEST_CODE);
     }
 
     @Override

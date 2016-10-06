@@ -1,16 +1,19 @@
 package in.sportscafe.scgame.module.user.myprofile.myposition.dto;
 
+import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import in.sportscafe.scgame.R;
 
 /**
  * Created by Jeeva on 11/7/16.
  */
-public class RankSummary implements Serializable {
+public class RankSummary implements Serializable, ParentListItem {
 
     @JsonProperty("sports_id")
     private Integer sportId;
@@ -26,6 +29,12 @@ public class RankSummary implements Serializable {
 
     @JsonProperty("user_points")
     private Long userPoints;
+
+//    @JsonProperty("tour_summary_list")
+//    private List<TourSummary> tourSummaryList;
+
+    @JsonIgnore
+    private List<RankSummary> tourSummaryList;
 
     @JsonIgnore
     private Long groupId;
@@ -88,6 +97,28 @@ public class RankSummary implements Serializable {
         this.userPoints = userPoints;
     }
 
+//   // @JsonProperty("tour_summary_list")
+//    public List<TourSummary> getTourSummaryList() {
+//        return tourSummaryList;
+//    }
+//
+//   // @JsonProperty("tour_summary_list")
+//    public void setTourSummaryList(List<TourSummary> tourSummaryList) {
+//        this.tourSummaryList = tourSummaryList;
+//    }
+
+
+    @JsonIgnore
+    public List<RankSummary> getSummaryList() {
+        return tourSummaryList;
+    }
+
+    @JsonIgnore
+    public void setSummaryList(List<RankSummary> tourSummaryList) {
+        this.tourSummaryList = tourSummaryList;
+    }
+
+
     @JsonIgnore
     public Long getGroupId() {
         return groupId;
@@ -122,5 +153,16 @@ public class RankSummary implements Serializable {
             default:
                 return R.drawable.ic_launcher;
         }
+    }
+
+    @Override
+    public List<?> getChildItemList() {
+        return tourSummaryList;
+        //return new ArrayList<>();
+    }
+
+    @Override
+    public boolean isInitiallyExpanded() {
+        return false;
     }
 }

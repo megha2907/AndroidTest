@@ -25,7 +25,7 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
 
     private EditText mEtGroupName;
 
-    private RecyclerView mRvSportSelection;
+    private RecyclerView mRvTournamentSelection;
 
     private NewGroupPresenter mNewGroupPresenter;
 
@@ -40,9 +40,9 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
 
         this.mEtGroupName = (EditText) findViewById(R.id.new_group_et_group_name);
 
-        this.mRvSportSelection = (RecyclerView) findViewById(R.id.new_group_rcv);
-        this.mRvSportSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
-        this.mRvSportSelection.setLayoutManager(new GridLayoutManager(this, 3));
+        this.mRvTournamentSelection = (RecyclerView) findViewById(R.id.new_group_rcv);
+        this.mRvTournamentSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
+        this.mRvTournamentSelection.setLayoutManager(new GridLayoutManager(this, 3));
 
         this.mNewGroupPresenter = NewGroupPresenterImpl.newInstance(this);
         this.mNewGroupPresenter.onCreateNewGroup();
@@ -51,8 +51,8 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
     }
 
     @Override
-    public void setAdapter(GrpSportSelectionAdapter adapter) {
-        this.mRvSportSelection.setAdapter(adapter);
+    public void setAdapter(GrpTournamentSelectionAdapter adapter) {
+        this.mRvTournamentSelection.setAdapter(adapter);
     }
 
     @Override

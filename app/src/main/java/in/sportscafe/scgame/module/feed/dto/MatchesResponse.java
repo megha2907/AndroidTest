@@ -1,6 +1,7 @@
 package in.sportscafe.scgame.module.feed.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jeeva.android.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class MatchesResponse {
 
     @JsonProperty("data")
     private List<Match> matches = new ArrayList<>();
+
 
     @JsonProperty("data")
     public List<Match> getMatches() {

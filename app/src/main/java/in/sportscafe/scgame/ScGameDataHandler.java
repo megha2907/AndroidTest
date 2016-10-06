@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import in.sportscafe.scgame.module.user.badges.Badge;
+import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.powerups.PowerUp;
@@ -226,6 +226,37 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
 
     public List<String> getBadgeList() {
         return getUserInfo().getBadges();
+    }
+
+
+    public List<TournamentInfo> getTournaments() {
+        String allTournamentsString = getSharedStringData(SharedKeys.ALL_TOURNAMENTS);
+        Log.i("allTournamentsString", allTournamentsString + "");
+        if (null == allTournamentsString || allTournamentsString.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return MyWebService.getInstance().getObjectFromJson(allTournamentsString,
+                new TypeReference<List<TournamentInfo>>() {
+                });
+    }
+
+    public Map<Integer, TournamentInfo> getTournamentsMap() {
+        Map<Integer, TournamentInfo> tournamentMap = new HashMap<>();
+
+        for (TournamentInfo tournamentInfo : getTournaments()) {
+            tournamentMap.put(tournamentInfo.getTournamentId(), tournamentInfo);
+        }
+
+        return tournamentMap;
+    }
+
+
+    public void setTournaments(List<TournamentInfo> newTournaments) {
+        setTournaments(MyWebService.getInstance().getJsonStringFromObject(newTournaments));
+    }
+
+    public void setTournaments(String tournaments) {
+        setSharedStringData(SharedKeys.ALL_TOURNAMENTS, tournaments);
     }
 
 

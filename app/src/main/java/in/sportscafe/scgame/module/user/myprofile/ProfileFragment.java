@@ -25,10 +25,12 @@ import in.sportscafe.scgame.module.common.Settings;
 import in.sportscafe.scgame.module.common.ViewPagerAdapter;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 import in.sportscafe.scgame.module.play.myresults.MyResultsActivity;
+import in.sportscafe.scgame.module.play.myresultstimeline.MyResultsTimelineActivity;
 import in.sportscafe.scgame.module.user.badges.BadgeActivity;
 import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
+import in.sportscafe.scgame.module.user.myprofile.myposition.ChallengesFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.MyGlobalFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.MyLeaguesFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.MyPositionFragment;
@@ -154,7 +156,8 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
 
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         pagerAdapter.addFragment(MyLeaguesFragment.newInstance(lbSummary.getGroups()), "My Groups");
-        pagerAdapter.addFragment(MyGlobalFragment.newInstance(lbSummary.getGlobal()), "Global");
+        pagerAdapter.addFragment(MyGlobalFragment.newInstance(lbSummary.getGlobal()), "Sports");
+        pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getGlobal()), "Challenges");
         return pagerAdapter;
     }
 
@@ -209,7 +212,7 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
     }
 
     private void navigateToMyResults() {
-        startActivity(new Intent(getContext(), MyResultsActivity.class));
+        startActivity(new Intent(getContext(), MyResultsTimelineActivity.class));
     }
 
     private void navigateToSettings() {

@@ -74,6 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity implements com.jeev
         return textView.getText().toString().trim();
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

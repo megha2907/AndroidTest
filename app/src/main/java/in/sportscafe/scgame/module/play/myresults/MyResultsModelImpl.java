@@ -15,7 +15,7 @@ import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.feed.dto.Match;
-import in.sportscafe.scgame.module.feed.dto.Tournament;
+import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
@@ -54,6 +54,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private void loadMyResults(int offset) {
         if(ScGame.getInstance().hasNetworkConnection()) {
+            Log.i("call","callMyResultsApi");
             callMyResultsApi(offset);
         } else {
             mResultsModelListener.onNoInternet();
@@ -62,7 +63,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private void callMyResultsApi(final int offset) {
         isLoading = true;
-        MyWebService.getInstance().getMyResultsRequest(offset, LIMIT).enqueue(
+        MyWebService.getInstance().getMyResultsRequest(5).enqueue(
                 new ScGameCallBack<MyResultsResponse>() {
                     @Override
                     public void onResponse(Call<MyResultsResponse> call, Response<MyResultsResponse> response) {

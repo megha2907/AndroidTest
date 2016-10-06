@@ -8,24 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
-
-import java.util.List;
-
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
+import in.sportscafe.scgame.module.TournamentFeed.TournamentFeedFragment;
 import in.sportscafe.scgame.module.common.ScGameActivity;
-import in.sportscafe.scgame.module.feed.FeedFragment;
 import in.sportscafe.scgame.module.notifications.NotificationInboxFragment;
-import in.sportscafe.scgame.module.play.PlayFragment;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.ProfileFragment;
 import in.sportscafe.scgame.module.user.myprofile.dto.UserInfoResponse;
-import in.sportscafe.scgame.module.user.sportselection.dto.AllSports;
-import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
-import in.sportscafe.scgame.module.user.sportselection.dto.UserSports;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
 import retrofit2.Call;
@@ -69,8 +61,8 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
                   break;
               case R.id.home_ibtn_play:
                   mtoolbar.setVisibility(View.VISIBLE);
-                  mTitle.setText("Play");
-                  loadFragment(new PlayFragment());
+                  mTitle.setText("Tournaments");
+                  loadFragment(new TournamentFeedFragment());
                   break;
               case R.id.home_ibtn_profile:
                   mtoolbar.setVisibility(View.GONE);

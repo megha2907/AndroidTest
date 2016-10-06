@@ -15,6 +15,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 public class RoundImage  extends HmImageView  {
@@ -33,7 +34,7 @@ public class RoundImage  extends HmImageView  {
                      return;
               }
 
-              if (getWidth() == 0 || getHeight() == 0) {
+              if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
                      return;
               }
               Bitmap b = getBitmap();

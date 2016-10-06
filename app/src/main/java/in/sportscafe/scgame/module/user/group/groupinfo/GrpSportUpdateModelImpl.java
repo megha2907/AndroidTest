@@ -65,7 +65,7 @@ public class GrpSportUpdateModelImpl {
         }
 
         Map<Long, GroupInfo> grpInfoMap = ScGameDataHandler.getInstance().getGrpInfoMap();
-        grpInfoMap.get(mGroupId).setFollowedSports(followedSports);
+       // grpInfoMap.get(mGroupId).setFollowedTournaments(followedSports);
         ScGameDataHandler.getInstance().setGrpInfoMap(grpInfoMap);
 
         mGrpSportUpdateModelListener.onSuccessGrpSportUpdate();
