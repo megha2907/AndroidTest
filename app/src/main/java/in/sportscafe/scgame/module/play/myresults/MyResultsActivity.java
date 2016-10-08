@@ -50,7 +50,7 @@ public class MyResultsActivity extends ScGameActivity implements MyResultsView {
         this.mRvMyResults.setHasFixedSize(true);
 
         this.mResultsPresenter = MyResultPresenterImpl.newInstance(this);
-        this.mResultsPresenter.onCreateMyResults();
+        this.mResultsPresenter.onCreateMyResults(getIntent().getExtras());
 
 
     }
@@ -68,7 +68,7 @@ public class MyResultsActivity extends ScGameActivity implements MyResultsView {
         Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Regular.ttf");
         mtoolbar = (Toolbar) findViewById(R.id.my_results_toolbar);
         mTitle = (TextView) mtoolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("My Results");
+        mTitle.setText("Match Result");
         mTitle.setTypeface(tftitle);
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

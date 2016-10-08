@@ -10,11 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import in.sportscafe.scgame.Constants;
@@ -51,15 +53,13 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(getLayoutInflater().inflate(R.layout.inflater_feed_row, parent, false));
+        return new ViewHolder(getLayoutInflater().inflate(R.layout.inflater_feed_match_result_row, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Feed feed = getItem(position);
         holder.mPosition = position;
-
-        holder.mTvDate.setText(TimeUtils.getDateStringFromMs(feed.getDate(), "d'th' MMM"));
         for (Tournament tournament : feed.getTournaments()) {
             holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent));
         }
@@ -149,9 +149,22 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_question))
                 .setText(question.getQuestionText());
 
+
         TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
         CustomButton powerupUsed = (CustomButton) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
         RelativeLayout powerup = (RelativeLayout) convertView.findViewById(R.id.my_predictions_row_rl);
+
+        View vWrongAnswer = (View) convertView.findViewById(R.id.my_predictions_row_v_answer_line);
+        TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
+
+        TextView tvCorrectAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
+
+        if (question.getAnswerPoints().equals(0))
+        {
+            setTextColor(tvAnswerPoints, R.color.textcolorlight);
+        }
+
+        tvAnswerPoints.setText(question.getAnswerPoints() + " Points");
 
         String powerupused=question.getAnswerPowerUpId();
         if (powerupused.equals("null")){
@@ -165,8 +178,17 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         int answerId = Integer.parseInt(question.getAnswerId());
 
         if (answerId == 0) {
-            tvAnswer.setText("---");
-            setTextColor(tvAnswer, R.color.black);
+            tvAnswer.setText("Not Attempted");
+            setTextColor(tvAnswer, R.color.monza);
+
+            if (question.getQuestionAnswer() == 1) {
+                tvCorrectAnswer.setText(question.getQuestionOption1());
+            } else {
+                tvCorrectAnswer.setText(question.getQuestionOption2());
+            }
+
+            tvAnswerPoints.setText("---");
+
         } else {
             if (answerId == 1) {
                 tvAnswer.setText(question.getQuestionOption1());
@@ -180,6 +202,15 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                 setTextColor(tvAnswer, R.color.lima);
             } else {
                 setTextColor(tvAnswer, R.color.monza);
+                vWrongAnswer.setVisibility(View.VISIBLE);
+                tvCorrectAnswer.setVisibility(View.VISIBLE);
+
+                if (question.getQuestionAnswer() == 1) {
+                    tvCorrectAnswer.setText(question.getQuestionOption1());
+                } else {
+                    tvCorrectAnswer.setText(question.getQuestionOption2());
+                }
+
             }
         }
 

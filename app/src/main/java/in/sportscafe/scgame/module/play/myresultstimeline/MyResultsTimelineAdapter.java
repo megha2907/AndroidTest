@@ -173,6 +173,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             holder.mTvResultWait.setVisibility(View.GONE);
 
             holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
+            holder.mBtnMatchPoints.setTag(match.getId());
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
 
         }
@@ -320,21 +321,28 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
         @Override
         public void onClick(View view) {
-//            mOnHomeActionListener.onClickPlay();
 
             switch (view.getId()) {
 
                 case R.id.schedule_row_btn_playmatch:
+
                     Match match = (Match)view.getTag();
-                    Intent intent =  new Intent(mcon, PredictionActivity.class);
                     Bundle mBundle = new Bundle();
                     mBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
+
+                    Intent intent =  new Intent(mcon, PredictionActivity.class);
                     intent.putExtras(mBundle);
                     mcon.startActivity(intent);
                     break;
 
                 case R.id.schedule_row_btn_points:
+
+                    Integer matchId = (Integer) view.getTag();
+                    Bundle mBundle2 = new Bundle();
+                    mBundle2.putInt(Constants.BundleKeys.MATCH_ID, matchId);
+
                     Intent mintent =  new Intent(mcon, MyResultsActivity.class);
+                    mintent.putExtras(mBundle2);
                     mcon.startActivity(mintent);
                     break;
             }

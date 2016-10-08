@@ -29,6 +29,7 @@ import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.feed.dto.Match;
 import in.sportscafe.scgame.module.play.PlayActivity;
+import in.sportscafe.scgame.module.play.myresults.MyResultsActivity;
 import in.sportscafe.scgame.module.play.prediction.PredictionActivity;
 import in.sportscafe.scgame.utils.ViewUtils;
 import in.sportscafe.scgame.utils.timeutils.TimeAgo;
@@ -172,6 +173,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mTvResultWait.setVisibility(View.GONE);
 
             holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
+            holder.mBtnMatchPoints.setTag(match.getId());
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
 
         }
@@ -314,18 +316,38 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
             mBtnPlayMatch.setOnClickListener(this);
+            mBtnMatchPoints.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-//            mOnHomeActionListener.onClickPlay();
 
-            Match match = (Match)view.getTag();
-            Intent intent =  new Intent(mcon, PredictionActivity.class);
-            Bundle mBundle = new Bundle();
-            mBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
-            intent.putExtras(mBundle);
-            mcon.startActivity(intent);
+            switch (view.getId()) {
+
+                case R.id.schedule_row_btn_playmatch:
+
+                    Match match = (Match)view.getTag();
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
+
+                    Intent intent =  new Intent(mcon, PredictionActivity.class);
+                    intent.putExtras(mBundle);
+                    mcon.startActivity(intent);
+                    break;
+
+                case R.id.schedule_row_btn_points:
+
+                    Integer matchId = (Integer) view.getTag();
+                    Bundle mBundle2 = new Bundle();
+                    mBundle2.putInt(Constants.BundleKeys.MATCH_ID, matchId);
+
+                    Intent mintent =  new Intent(mcon, MyResultsActivity.class);
+                    mintent.putExtras(mBundle2);
+                    mcon.startActivity(mintent);
+                    break;
+            }
+
+
         }
     }
 

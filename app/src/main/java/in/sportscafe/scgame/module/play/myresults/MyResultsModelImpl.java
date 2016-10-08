@@ -1,6 +1,7 @@
 package in.sportscafe.scgame.module.play.myresults;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
@@ -31,6 +32,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private static final int LIMIT = 5;
 
+    private  int matchId;
+
     private boolean isLoading = false;
 
     private boolean hasMoreItems = true;
@@ -45,6 +48,12 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     public static MyResultsModel newInstance(OnMyResultsModelListener listener) {
         return new MyResultsModelImpl(listener);
+    }
+
+    @Override
+    public void init(Bundle bundle) {
+        matchId = bundle.getInt(Constants.BundleKeys.MATCH_ID);
+        Log.i("matchId",String.valueOf(matchId));
     }
 
     @Override
@@ -63,7 +72,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private void callMyResultsApi(final int offset) {
         isLoading = true;
-        MyWebService.getInstance().getMyResultsRequest(5).enqueue(
+        MyWebService.getInstance().getMyResultsRequest(matchId).enqueue(
                 new ScGameCallBack<MyResultsResponse>() {
                     @Override
                     public void onResponse(Call<MyResultsResponse> call, Response<MyResultsResponse> response) {
