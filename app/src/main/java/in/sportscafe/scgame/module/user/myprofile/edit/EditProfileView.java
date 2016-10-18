@@ -18,4 +18,5 @@ public interface EditProfileView extends View {
     void close();
 
     void setSuccessResult();
+
 }

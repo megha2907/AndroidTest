@@ -13,7 +13,7 @@ public interface PlayView extends InAppView {
 
     void hideSkip();
 
-    void navigateToAllDone();
-
-    void navigateMatchStatus(Bundle bundle);
+//    void navigateToAllDone();
+//
+//    void navigateMatchStatus(Bundle bundle);
 }

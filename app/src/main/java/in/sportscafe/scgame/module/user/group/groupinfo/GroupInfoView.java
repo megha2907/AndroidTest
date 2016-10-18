@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.jeeva.android.View;
 
 import in.sportscafe.scgame.module.user.group.newgroup.GrpSportSelectionAdapter;
+import in.sportscafe.scgame.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -13,9 +14,11 @@ public interface GroupInfoView extends View {
 
     void setGroupName(String groupName);
 
+    void setGroupIcon(String groupIcon);
+
     void setMembersSize(int size);
 
-    void setAdapter(GrpSportSelectionAdapter adapter);
+    void setAdapter(GrpTournamentSelectionAdapter adapter);
 
     void setGroupCode(String groupCode);
 

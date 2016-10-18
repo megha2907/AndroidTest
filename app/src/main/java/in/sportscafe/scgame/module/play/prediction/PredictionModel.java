@@ -13,6 +13,8 @@ public interface PredictionModel {
 
     String getContestName();
 
+    void getAllQuestions();
+
     void updatePowerUps();
 
 }

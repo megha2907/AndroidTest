@@ -3,13 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/splash" />
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
     <android.support.v4.widget.Space
         android:id="@+id/login_center_space"

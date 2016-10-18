@@ -7,9 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+import com.jeeva.android.volley.Volley;
+import com.jeeva.android.widgets.HmImageView;
+import com.jeeva.android.widgets.customfont.CustomButton;
+
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import in.sportscafe.scgame.Constants;
@@ -17,7 +24,7 @@ import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.feed.dto.Match;
-import in.sportscafe.scgame.module.feed.dto.Tournament;
+import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
 import in.sportscafe.scgame.utils.ViewUtils;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
@@ -46,15 +53,13 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(getLayoutInflater().inflate(R.layout.inflater_feed_row, parent, false));
+        return new ViewHolder(getLayoutInflater().inflate(R.layout.inflater_feed_match_result_row, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Feed feed = getItem(position);
         holder.mPosition = position;
-
-        holder.mTvDate.setText(TimeUtils.getDateStringFromMs(feed.getDate(), "d'th' MMM"));
         for (Tournament tournament : feed.getTournaments()) {
             holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent));
         }
@@ -75,7 +80,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     }
 
     private View getMyResultView(Match match, ViewGroup parent) {
-        View myResultView = getLayoutInflater().inflate(R.layout.inflater_schedule_row, parent, false);
+        View myResultView = getLayoutInflater().inflate(R.layout.inflater_schedule_match_results_row, parent, false);
         MyResultViewHolder holder = new MyResultViewHolder(myResultView);
 
         if(null == match.getStage()) {
@@ -84,26 +89,50 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             holder.mTvMatchStage.setText(match.getStage());
         }
 
-        String[] parties = match.getParties().split(" vs ");
-        holder.mTvPartyAName.setText(parties[0]);
-        holder.mTvPartyBName.setText(parties[1]);
+        holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
+        holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
 
-        if (null == match.getResult()) {
+        holder.mIvPartyAPhoto.setImageUrl(
+                match.getParties().get(0).getPartyImageUrl(),
+                Volley.getInstance().getImageLoader(),
+                false
+        );
+
+        holder.mIvPartyBPhoto.setImageUrl(
+                match.getParties().get(1).getPartyImageUrl(),
+                Volley.getInstance().getImageLoader(),
+                false
+        );
+
+        if (null == match.getResult() || match.getResult().isEmpty()) {
             holder.mTvMatchResult.setVisibility(View.GONE);
-            holder.mTvPartyAScore.setVisibility(View.GONE);
-            holder.mTvPartyBScore.setVisibility(View.GONE);
-            holder.mTvStartTime.setVisibility(View.VISIBLE);
-
-            holder.mTvStartTime.setText(TimeUtils.getFormattedDateString(
-                    match.getStartTime(), Constants.DateFormats.HH_MM_AA,
-                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT));
+//            holder.mTvStartTime.setVisibility(View.VISIBLE);
+//
+//            holder.mTvStartTime.setText(TimeUtils.getFormattedDateString(
+//                    match.getStartTime(), Constants.DateFormats.HH_MM_AA,
+//                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT));
         } else {
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
-            holder.mTvPartyAScore.setVisibility(View.VISIBLE);
-            holder.mTvPartyBScore.setVisibility(View.VISIBLE);
-            holder.mTvStartTime.setVisibility(View.GONE);
+//            holder.mTvStartTime.setVisibility(View.GONE);
 
             holder.mTvMatchResult.setText(match.getResult());
+        }
+
+        if (match.getMatchPoints()==0)
+        {
+            holder.mBtnMatchPoints.setVisibility(View.GONE);
+            holder.mTvResultCorrectCount.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
+            holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
+            holder.mViewResult.setVisibility(View.VISIBLE);
+            holder.mTvResultWait.setVisibility(View.GONE);
+
+            holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
+            holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
+
         }
 
         List<Question> questions = match.getQuestions();
@@ -120,12 +149,27 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_question))
                 .setText(question.getQuestionText());
 
+
         TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
-        TextView powerupUsed = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_powerup_used);
+        CustomButton powerupUsed = (CustomButton) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
+        RelativeLayout powerup = (RelativeLayout) convertView.findViewById(R.id.my_predictions_row_rl);
+
+        View vWrongAnswer = (View) convertView.findViewById(R.id.my_predictions_row_v_answer_line);
+        TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
+
+        TextView tvCorrectAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
+
+        if (question.getAnswerPoints().equals(0))
+        {
+            setTextColor(tvAnswerPoints, R.color.textcolorlight);
+        }
+
+        tvAnswerPoints.setText(question.getAnswerPoints() + " Points");
 
         String powerupused=question.getAnswerPowerUpId();
         if (powerupused.equals("null")){
-            powerupUsed.setVisibility(View.INVISIBLE);
+            powerupUsed.setVisibility(View.GONE);
+            powerup.setVisibility(View.GONE);
         }
         else {
             powerupUsed.setText(question.getAnswerPowerUpId());
@@ -134,8 +178,17 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         int answerId = Integer.parseInt(question.getAnswerId());
 
         if (answerId == 0) {
-            tvAnswer.setText("-");
-            setTextColor(tvAnswer, R.color.black);
+            tvAnswer.setText("Not Attempted");
+            setTextColor(tvAnswer, R.color.monza);
+
+            if (question.getQuestionAnswer() == 1) {
+                tvCorrectAnswer.setText(question.getQuestionOption1());
+            } else {
+                tvCorrectAnswer.setText(question.getQuestionOption2());
+            }
+
+            tvAnswerPoints.setText("---");
+
         } else {
             if (answerId == 1) {
                 tvAnswer.setText(question.getQuestionOption1());
@@ -149,6 +202,15 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                 setTextColor(tvAnswer, R.color.lima);
             } else {
                 setTextColor(tvAnswer, R.color.monza);
+                vWrongAnswer.setVisibility(View.VISIBLE);
+                tvCorrectAnswer.setVisibility(View.VISIBLE);
+
+                if (question.getQuestionAnswer() == 1) {
+                    tvCorrectAnswer.setText(question.getQuestionOption1());
+                } else {
+                    tvCorrectAnswer.setText(question.getQuestionOption2());
+                }
+
             }
         }
 
@@ -217,17 +279,29 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
         LinearLayout mLlPredictionsParent;
 
+        TextView mTvResultCorrectCount;
+        CustomButton mBtnMatchPoints;
+        View mViewResult;
+
+        HmImageView mIvPartyAPhoto;
+        TextView mTvResultWait;
+        HmImageView mIvPartyBPhoto;
+
         public MyResultViewHolder(View V) {
             super(V);
 
             mTvMatchStage = (TextView) V.findViewById(R.id.schedule_row_tv_match_stage);
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
-            mTvPartyAScore = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_score);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
-            mTvPartyBScore = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_score);
             mTvMatchResult = (TextView) V.findViewById(R.id.schedule_row_tv_match_result);
-            mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_start_time);
+            mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_match_time);
+            mIvPartyAPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_left);
+            mIvPartyBPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_right);
+            mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
+            mBtnMatchPoints=(CustomButton) V.findViewById(R.id.schedule_row_btn_points);
+            mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlPredictionsParent = (LinearLayout) V.findViewById(R.id.my_results_row_ll_predictions);
+            mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
         }
     }
 

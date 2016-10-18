@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.user.group.admin.adminmembers.AdminMembersActivity;
 import in.sportscafe.scgame.module.user.group.members.MembersActivity;
 import in.sportscafe.scgame.module.user.group.newgroup.GrpSportSelectionAdapter;
+import in.sportscafe.scgame.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -37,9 +39,13 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
 
     private TextView mEtMembersCount;
 
+    private Button mBtnGroupIcon;
+
     private RecyclerView mRvSportSelection;
 
     private GroupInfoPresenter mGroupInfoPresenter;
+
+    private LinearLayoutManager mlinearLayoutManagerVertical;
 
     private Toolbar mtoolbar;
 
@@ -80,7 +86,6 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
         this.mRvSportSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
         this.mRvSportSelection.setLayoutManager(new GridLayoutManager(this, 3));
         this.mRvSportSelection.setHasFixedSize(true);
-
         this.mGroupInfoPresenter = GroupInfoPresenterImpl.newInstance(this);
         this.mGroupInfoPresenter.onCreateGroupInfo(getIntent().getExtras());
 
@@ -92,9 +97,9 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
             /*case R.id.group_info_btn_delete_group:
                 mGroupInfoPresenter.onClickDeleteGroup();
                 break;*/
-            case R.id.group_info_btn_leave_group:
-                mGroupInfoPresenter.onClickLeaveGroup();
-                break;
+//            case R.id.group_info_btn_leave_group:
+//                mGroupInfoPresenter.onClickLeaveGroup();
+//                break;
             case R.id.group_info_btn_edit_members:
                 mGroupInfoPresenter.onClickMembers();
                 break;
@@ -114,12 +119,18 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     }
 
     @Override
+    public void setGroupIcon(String groupIcon) {
+        mBtnGroupIcon = (Button) findViewById(R.id.group_info_iv_user_image);
+        mBtnGroupIcon.setText(groupIcon);
+    }
+
+    @Override
     public void setMembersSize(int size) {
         mEtMembersCount.setText(String.valueOf(size));
     }
 
     @Override
-    public void setAdapter(GrpSportSelectionAdapter adapter) {
+    public void setAdapter(GrpTournamentSelectionAdapter adapter) {
         this.mRvSportSelection.setAdapter(adapter);
     }
 

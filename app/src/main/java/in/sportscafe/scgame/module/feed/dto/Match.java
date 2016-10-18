@@ -1,6 +1,8 @@
 package in.sportscafe.scgame.module.feed.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jeeva.android.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,8 +30,9 @@ public class Match implements Serializable {
     @JsonProperty("match_venue")
     private String venue;
 
+
     @JsonProperty("match_parties")
-    private String parties;
+    private List<Parties> parties = new ArrayList<>();
 
     @JsonProperty("match_starttime")
     private String startTime;
@@ -40,8 +43,20 @@ public class Match implements Serializable {
     @JsonProperty("match_result")
     private String result;
 
-    @JsonProperty("match_questions_live")
-    private boolean questionsLive;
+    @JsonProperty("match_question_count")
+    private Integer matchQuestionCount;
+
+    @JsonProperty("match_points")
+    private Integer matchPoints;
+
+    @JsonProperty("correct_count")
+    private Integer correctCount;
+
+    @JsonProperty("is_attempted")
+    private boolean isAttempted;
+
+//    @JsonProperty("match_commentary")
+//    private String matchCommentary;
 
     @JsonProperty("questions")
     private List<Question> questions = new ArrayList<>();
@@ -141,9 +156,20 @@ public class Match implements Serializable {
      * @return
      * The parties
      */
+//    @JsonProperty("match_parties")
+//    public String getParties() {
+//        return parties;
+//    }
+
+
     @JsonProperty("match_parties")
-    public String getParties() {
+    public List<Parties> getParties() {
         return parties;
+    }
+
+    @JsonProperty("match_parties")
+    public void setParties(List<Parties> parties) {
+        this.parties = parties;
     }
 
     /**
@@ -151,10 +177,6 @@ public class Match implements Serializable {
      * @param parties
      * The match_parties
      */
-    @JsonProperty("match_parties")
-    public void setParties(String parties) {
-        this.parties = parties;
-    }
 
     /**
      *
@@ -221,19 +243,19 @@ public class Match implements Serializable {
      * @return
      * The questionsLive
      */
-    @JsonProperty("match_questions_live")
-    public boolean getQuestionsLive() {
-        return questionsLive;
+    @JsonProperty("is_attempted")
+    public boolean getisAttempted() {
+        return isAttempted;
     }
 
     /**
      *
-     * @param questionsLive
+     * @param isAttempted
      * The match_questions_live
      */
-    @JsonProperty("match_questions_live")
-    public void setQuestionsLive(boolean questionsLive) {
-        this.questionsLive = questionsLive;
+    @JsonProperty("is_attempted")
+    public void setisAttemoted(boolean isAttempted) {
+        this.isAttempted = isAttempted;
     }
 
     @JsonProperty("questions")
@@ -245,4 +267,49 @@ public class Match implements Serializable {
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
+
+    @JsonProperty("match_question_count")
+    public Integer getMatchQuestionCount() {
+        return matchQuestionCount;
+    }
+
+    @JsonProperty("match_question_count")
+    public void setMatchQuestionCount(int matchQuestionCount) {
+        this.matchQuestionCount = matchQuestionCount;
+    }
+
+    @JsonProperty("match_points")
+    public Integer getMatchPoints() {
+        return matchPoints;
+    }
+
+    @JsonProperty("match_points")
+    public void setMatchPoints(int matchPoints) {
+        this.matchPoints = matchPoints;
+    }
+
+    @JsonProperty("correct_count")
+    public Integer getCorrectCount() {
+        return correctCount;
+    }
+
+    @JsonProperty("correct_count")
+    public void setCorrectCount(Integer correctCount) {
+        this.correctCount = correctCount;
+    }
+
+//
+//    @JsonProperty("match_commentary")
+//    public String getMatchCommentary() {
+//        return matchCommentary;
+//    }
+//
+//    @JsonProperty("match_commentary")
+//    public void setMatchCommentary(String matchCommentary) {
+//        this.matchCommentary = matchCommentary;
+//    }
+
+
+
+
 }

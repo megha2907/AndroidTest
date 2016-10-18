@@ -30,9 +30,11 @@ public class MatchStatusPresenterImpl implements MatchStatusPresenter {
 
     private void populateMatchDetails(Match matchDetails) {
         mMatchStatusView.setTournament(matchDetails.getTournamentName());
-        mMatchStatusView.setContestName(matchDetails.getParties());
+        mMatchStatusView.setContestName(matchDetails.getParties().get(0).getPartyName()+"  vs  "+matchDetails.getParties().get(1).getPartyName());
         mMatchStatusView.setStartTime(matchDetails.getStartTime());
         mMatchStatusView.setTimeLeft(matchDetails.getStartTime());
+        mMatchStatusView.setTournamentImageTeam1(matchDetails.getParties().get(0).getPartyImageUrl());
+        mMatchStatusView.setTournamentImageTeam2(matchDetails.getParties().get(1).getPartyImageUrl());
     }
 
     @Override

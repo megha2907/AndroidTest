@@ -3,6 +3,8 @@ package in.sportscafe.scgame.module.feed.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
+
 /**
  * Created by Jeeva on 24/6/16.
  */
@@ -10,7 +12,7 @@ public class Feed {
 
     private long date;
 
-    private List<Tournament> tournaments = new ArrayList<>();
+    private List<Tournament> tournament = new ArrayList<>();
 
     public Feed() {
     }
@@ -28,14 +30,14 @@ public class Feed {
     }
 
     public List<Tournament> getTournaments() {
-        return tournaments;
+        return tournament;
     }
 
-    public void setTournaments(List<Tournament> tournaments) {
-        this.tournaments = tournaments;
+    public void setTournaments(List<Tournament> Tournaments) {
+        this.tournament = Tournaments;
     }
 
-    public void addTournament(Tournament tournament) {
-        tournaments.add(tournament);
+    public void addTournament(Tournament Tournament) {
+        tournament.add(Tournament);
     }
 }

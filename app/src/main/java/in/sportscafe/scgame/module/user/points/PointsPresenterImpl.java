@@ -3,10 +3,13 @@ package in.sportscafe.scgame.module.user.points;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.List;
-
 import in.sportscafe.scgame.Constants;
-import in.sportscafe.scgame.module.user.leaderboard.dto.LeaderBoard;
+import in.sportscafe.scgame.module.common.ViewPagerAdapter;
+import in.sportscafe.scgame.module.user.leaderboard.LeaderBoardFragment;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.BaseSummary;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.ChallengesTourSummary;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupsTourSummary;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.TourSummary;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -17,11 +20,9 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
 
     private PointsModel mPointsModel;
 
-    private OnLeaderBoardUpdateListener mLeaderBoardUpdateListener;
-
     private PointsPresenterImpl(PointsView pointsView) {
         this.mPointsView = pointsView;
-        this.mPointsModel = PointsModelImpl.newInstance(this);
+        this.mPointsModel = PointsModelImpl.newInstance(this, mPointsView.getActivity().getSupportFragmentManager());
     }
 
     public static PointsPresenterImpl newInstance(PointsView pointsView) {
@@ -29,77 +30,48 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     }
 
     @Override
-    public void onCreatePoints(OnLeaderBoardUpdateListener listener, Bundle bundle) {
-        this.mLeaderBoardUpdateListener = listener;
-
+    public void onCreatePoints(Bundle bundle) {
         mPointsModel.init(bundle);
-
-        mPointsView.setGroupAdapter(mPointsModel.getGroupAdapter(mPointsView.getContext()),
-                mPointsModel.getInitialGroupPosition());
-        mPointsView.setSportAdapter(mPointsModel.getSportsAdapter(mPointsView.getContext()),
-                mPointsModel.getInitialSportPosition());
-
-        onAllTimeClicked();
-
-        mPointsModel.setInitialSetDone();
+        mPointsView.setName(mPointsModel.getName());
+        refreshLb();
     }
 
     @Override
-    public void onGroupItemSelected(int position) {
-        mPointsModel.onGroupSelected(position);
+    public void onNoInternet() {
+        showAlertMsg(Constants.Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
-    public void onSportItemSelected(int position) {
-        mPointsModel.onSportSelected(position);
+    public void onFailureLeaderBoard(String message) {
+        showAlertMsg(message);
     }
 
-    @Override
-    public void onWeekClicked() {
-        mPointsModel.onWeekSelected();
+    private void showAlertMsg(String message) {
+        mPointsView.dismissProgressbar();
+        mPointsView.showMessage(message, "RETRY", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refreshLb();
+            }
+        });
     }
 
-    @Override
-    public void onMonthClicked() {
-        mPointsModel.onMonthSelected();
-    }
-
-    @Override
-    public void onAllTimeClicked() {
-        mPointsModel.onAllTimeSelected();
-    }
-
-    @Override
-    public void onGettingLeaderBoard() {
+    private void refreshLb() {
         mPointsView.showProgressbar();
+        mPointsModel.refreshLeaderBoard();
+    }
+
+    @Override
+    public void onSuccessLeaderBoard() {
+        mPointsView.dismissProgressbar();
+        mPointsView.initMyPosition(mPointsModel.getAdapter(), mPointsModel.getSelectedPosition());
     }
 
     @Override
     public void onEmpty() {
         mPointsView.dismissProgressbar();
-        mPointsView.showInAppMessage(Constants.Alerts.NO_LEADERBOARD);
+        mPointsView.showInAppMessage("Empty LeaderBoard");
+
     }
 
-    @Override
-    public void onFailureLeaderBoard(String message) {
-        mPointsView.dismissProgressbar();
-        mPointsView.showInAppMessage(message);
-    }
-
-    @Override
-    public void onNoInternet() {
-        mPointsView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION,
-                "RETRY", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mPointsModel.refreshLeaderBoard();
-                    }
-                });
-    }
-
-    @Override
-    public void onGetLeaderBoardData(List<LeaderBoard> leaderBoardList) {
-        mPointsView.dismissProgressbar();
-        mLeaderBoardUpdateListener.updateLeaderBoard(leaderBoardList);
-    }
 }

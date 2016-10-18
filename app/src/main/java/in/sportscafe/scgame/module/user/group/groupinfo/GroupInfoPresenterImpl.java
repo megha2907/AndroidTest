@@ -30,6 +30,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
         GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
         mGroupInfoView.setGroupName(groupInfo.getName());
+        mGroupInfoView.setGroupIcon(groupInfo.getName().substring(0,1));
         mGroupInfoView.setMembersSize(mGroupInfoModel.getMembersCount());
         mGroupInfoView.setAdapter(mGroupInfoModel.getAdapter(mGroupInfoView.getContext()));
         mGroupInfoView.setGroupCode(groupInfo.getGroupCode());
@@ -65,6 +66,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     public void onDoneGroupName(String groupName) {
         mGroupInfoView.showProgressbar();
         mGroupInfoModel.updateGroupName(groupName);
+        mGroupInfoView.setGroupIcon(groupName.substring(0,1));
     }
 
     @Override
@@ -96,7 +98,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     }
 
     @Override
-    public void onGroupSportUpdateSuccess() {
+    public void onGroupTournamentUpdateSuccess() {
         mGroupInfoView.setSuccessResult();
     }
 

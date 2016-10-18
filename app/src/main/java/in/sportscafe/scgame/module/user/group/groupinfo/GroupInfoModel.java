@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import in.sportscafe.scgame.module.user.group.newgroup.GrpSportSelectionAdapter;
+import in.sportscafe.scgame.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 
 /**
@@ -19,7 +20,7 @@ public interface GroupInfoModel {
 
     int getMembersCount();
 
-    GrpSportSelectionAdapter getAdapter(Context context);
+    GrpTournamentSelectionAdapter getAdapter(Context context);
 
     Bundle getGroupIdBundle();
 

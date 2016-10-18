@@ -28,6 +28,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup.LayoutParams;
@@ -37,6 +38,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.jeeva.android.Log;
+import com.jeeva.android.R;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Handles fetching an image from a URL as well as the life-cycle of the
@@ -99,7 +105,7 @@ public class HmImageView extends ImageView {
     private String formatUrl(String url) {
         // Todo format should be removed after fixed the url space issue's
         if(null != url) {
-            url = url.replaceAll(" ", "%20");
+            //url = url.replaceAll(" ", "%20");
         }
         return url;
     }
@@ -171,7 +177,18 @@ public class HmImageView extends ImageView {
             }
 
             if (mPath) {
-                setImageBitmap(BitmapFactory.decodeFile(mUrl));
+//                Bitmap bitmap= null;
+//                try {
+//                    Log.i("path",String.valueOf(mPath));
+//                    //String path = String.valueOf(mPath).replace("/file:","");
+//                    bitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(Uri.fromFile(new File(mUrl))));
+//                    setImageBitmap(bitmap);
+////                    setImageResource(R.drawable.com_facebook_button_icon);
+//                    Log.i("after","setImageBitmap");
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+              setImageBitmap(BitmapFactory.decodeFile(mUrl));
                 return;
             }
 
@@ -250,7 +267,7 @@ public class HmImageView extends ImageView {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable) drawable).getBitmap();
         }
-        int w = getWidth();
+//        int w = getWidth();
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);

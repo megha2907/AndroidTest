@@ -17,21 +17,20 @@ import com.jeeva.android.volley.Volley;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.module.common.AbstractTabFragment;
 import in.sportscafe.scgame.module.common.CustomViewPager;
 import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.common.ScGameFragment;
 import in.sportscafe.scgame.module.common.Settings;
 import in.sportscafe.scgame.module.common.ViewPagerAdapter;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
-import in.sportscafe.scgame.module.play.myresults.MyResultsActivity;
+import in.sportscafe.scgame.module.play.myresultstimeline.MyResultsTimelineActivity;
 import in.sportscafe.scgame.module.user.badges.BadgeActivity;
 import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
-import in.sportscafe.scgame.module.user.myprofile.myposition.MyGlobalFragment;
-import in.sportscafe.scgame.module.user.myprofile.myposition.MyLeaguesFragment;
-import in.sportscafe.scgame.module.user.myprofile.myposition.MyPositionFragment;
+import in.sportscafe.scgame.module.user.myprofile.myposition.challenges.ChallengesFragment;
+import in.sportscafe.scgame.module.user.myprofile.myposition.groups.GroupsFragment;
+import in.sportscafe.scgame.module.user.myprofile.myposition.sports.SportsFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummary;
 import in.sportscafe.scgame.module.user.powerups.PowerUpActivity;
 import in.sportscafe.scgame.module.user.sportselection.SportSelectionActivity;
@@ -153,8 +152,9 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
     private ViewPagerAdapter getAdapter(LbSummary lbSummary) {
 
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        pagerAdapter.addFragment(MyLeaguesFragment.newInstance(lbSummary.getGroups()), "My Groups");
-        pagerAdapter.addFragment(MyGlobalFragment.newInstance(lbSummary.getGlobal()), "Global");
+        pagerAdapter.addFragment(SportsFragment.newInstance(lbSummary.getSports()), "Sports");
+        pagerAdapter.addFragment(GroupsFragment.newInstance(lbSummary.getGroups()), "Groups");
+        pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getChallenges()), "Challenges");
         return pagerAdapter;
     }
 
@@ -209,7 +209,7 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
     }
 
     private void navigateToMyResults() {
-        startActivity(new Intent(getContext(), MyResultsActivity.class));
+        startActivity(new Intent(getContext(), MyResultsTimelineActivity.class));
     }
 
     private void navigateToSettings() {

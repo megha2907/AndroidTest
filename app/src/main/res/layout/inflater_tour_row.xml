@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    >
+
 
     <LinearLayout
+        android:id="@+id/tour_row_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/tour_bg"
+        android:background="@color/colorMedium"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/tour_row_tv_tour_name"
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="@dimen/dp_10"
-            android:text="Indian Premier League" />
+            android:padding="@dimen/dp_7"
+            android:text="Indian Premier League"
+            android:gravity="left"
+            android:layout_marginLeft="@dimen/dp_50"
+            android:textColor="@color/pink_swan"/>
 
         <ImageButton
             android:id="@+id/tour_row_ibtn_options"
@@ -26,17 +32,18 @@
             android:background="?attr/selectableItemBackground"
             android:onClick="onClick"
             android:padding="@dimen/dp_10"
-            android:src="@drawable/feed" />
+            android:src="@drawable/groupsettings"
+            android:visibility="gone"/>
 
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/tour_row_ll_schedule_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:showDividers="middle"
-        android:dividerPadding="@dimen/dp_10"
-        android:divider="@drawable/black_divider"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:layout_below="@+id/tour_row_ll"/>
 
-</LinearLayout>
+
+</RelativeLayout>

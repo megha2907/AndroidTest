@@ -4,39 +4,11 @@
     android:id="@+id/backgroundone"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:clickable="false"
 
     >
 
-    <!--<com.jeeva.android.widgets.customfont.CustomButton-->
-        <!--android:id="@+id/swipe_card_question_value"-->
-        <!--android:layout_width="@dimen/dp_50"-->
-        <!--android:layout_height="@dimen/dp_40"-->
-        <!--android:layout_weight="1"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:text="2X"-->
-        <!--android:textSize="@dimen/dp_18"-->
-        <!--android:src="@drawable/ic_launcher"-->
-        <!--android:layout_marginRight="@dimen/dp_30"-->
-        <!--android:background="@color/powerup_color"-->
-        <!--android:layout_marginTop="@dimen/dp_15"-->
-        <!--android:textColor="@color/white"-->
-        <!--app:typeface="roboto_condensed"/>-->
-
-    <!--<com.jeeva.android.widgets.customfont.CustomButton-->
-        <!--android:id="@+id/swipe_card_tv_powerup_count"-->
-        <!--android:layout_width="28dp"-->
-        <!--android:layout_height="28dp"-->
-        <!--android:gravity="center"-->
-        <!--android:textSize="@dimen/dp_14"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:background="@drawable/powerups_count_bg"-->
-        <!--app:typeface="roboto_light"-->
-        <!--android:layout_marginTop="@dimen/dp_40"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginRight="@dimen/dp_15"-->
-
-        <!--/>-->
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -78,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/dp_18"
-            android:background="@drawable/swipe_card_shape"
+            android:background="@drawable/prediction_swipe_card_shape"
             android:elevation="@dimen/dp_2">
 
             <RelativeLayout
@@ -92,11 +64,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1/4"
-                    android:textSize="@dimen/dp_20"
+                    android:textSize="@dimen/dp_18"
                     android:textStyle="bold"
                     android:layout_marginTop="@dimen/dp_20"
                     android:layout_marginLeft="@dimen/dp_20"
-                    app:typeface="roboto_condensed"/>
+                    app:typeface="lato_bold"/>
 
                 <in.sportscafe.scgame.module.common.CircularProgressBar
                     android:id="@+id/swipe_card_cpb_timer"
@@ -111,11 +83,12 @@
                     app:diameter="@dimen/dp_40"
                     app:progressColor="@color/haveLockBlue"
                     app:progressStrokeWidth="3dp"
-                    app:showProgressText="true" />
+                    app:showProgressText="true"
+                    android:visibility="gone"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/swipe_card_tv_powerup"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/swipe_card_cpb_timer"
                     android:layout_centerHorizontal="true"
@@ -142,42 +115,71 @@
                     android:layout_marginRight="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_10"
                     android:gravity="center_horizontal"
-                    android:text="Question"
+                    android:text="Who will hit more Aces today ?"
                     android:textSize="@dimen/dp_18"
-                    android:textStyle="bold"
-                    app:typeface="roboto_condensed"/>
+                    app:typeface="lato_bold"
+                    android:textColor="@color/black"/>
+
+            <RelativeLayout
+                android:id="@+id/image_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/swipe_card_tv_context">
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:id="@+id/button"
+                    android:background="@drawable/vs_button_bg"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:alpha="0.4"
+                    android:text="VS"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_16"
+                    android:textStyle="bold"/>
 
                 <LinearLayout
-                    android:id="@+id/image_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="@dimen/dp_1"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:orientation="horizontal">
+
 
                     <com.jeeva.android.widgets.HmImageView
                         android:id="@+id/swipe_card_iv_left"
                         android:layout_width="@dimen/dp_0"
-                        android:layout_height="@dimen/dp_120"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/dp_140"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_launcher" />
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_launcher"
+                        android:layout_alignParentLeft="true"
+                        />
 
                     <com.jeeva.android.widgets.HmImageView
                         android:id="@+id/swipe_card_iv_right"
                         android:layout_width="@dimen/dp_0"
-                        android:layout_height="@dimen/dp_120"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/dp_140"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_launcher" />
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_launcher"
+                        android:paddingLeft="@dimen/dp_1"/>
+
                 </LinearLayout>
+
+
+            </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/name_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@id/image_layout"
-                    android:orientation="horizontal">
+                    android:layout_below="@id/image_layout"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/swipe_card_tv_left"
@@ -185,8 +187,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:textSize="@dimen/dp_15"
-                        app:typeface="roboto_condensed"/>
+                        android:textSize="@dimen/dp_20"
+                        app:typeface="lato_bold"
+                        android:text="RODGER FEDRER"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/black"
+                        android:layout_marginRight="@dimen/dp_10"
+                        />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/swipe_card_tv_right"
@@ -194,8 +201,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:textSize="@dimen/dp_15"
-                        app:typeface="roboto_condensed"/>
+                        android:textSize="@dimen/dp_20"
+                        app:typeface="lato_bold"
+                        android:text="RODGER FEDRER"
+                        android:textColor="@color/black"
+                        android:layout_marginRight="@dimen/dp_10"/>
 
                 </LinearLayout>
 
@@ -203,15 +213,14 @@
                     android:id="@+id/swipe_card_tv_context"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/name_layout"
                     android:layout_below="@id/swipe_card_tv_question"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/dp_10"
                     android:layout_marginLeft="@dimen/dp_20"
                     android:layout_marginRight="@dimen/dp_20"
-                    android:text="hello\nhello\nhello\nhello\nhello\nhello\nhello\nhello\nhello\nhello\nhello\nhello\n1\n2\n3\n4"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/textcolorlight"
+                    android:text="Federer has been sublime form hitting no less than 20 acres on his path to semifinals."
                     android:textSize="@dimen/dp_13"
-                    app:typeface="roboto_condensed"/>
+                    app:typeface="lato_regular"/>
             </RelativeLayout>
         </FrameLayout>
 

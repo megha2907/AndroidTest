@@ -52,15 +52,15 @@ public class GrpSportSelectionAdapter extends Adapter<Sport, GrpSportSelectionAd
 
         holder.id = sport.getId();
 
-        holder.mTvSport.setText(sport.getName());
+     //   holder.mTvSport.setText(sport.getName());
         //holder.mCbSport.setChecked(mSelectedSportsIdList.contains(sport.getId()));
 
         if (mSelectedSportsIdList.contains((sport.getId()))) {
-            holder.mMainView.setBackgroundResource(R.drawable.sports_selection_shape);
-            holder.mTvSport.setAlpha((float) 0.9);
+           // holder.mMainView.setBackgroundResource(R.drawable.sports_selection_shape);
+//            holder.mTvSport.setAlpha((float) 0.9);
             holder.mIvSport.setImageResource(sport.getSelectedImageResource());
         } else {
-            holder.mMainView.setBackgroundColor(Color.TRANSPARENT);
+//            holder.mMainView.setBackgroundColor(Color.TRANSPARENT);
             holder.mIvSport.setImageResource(sport.getImageResource());
         }
 
@@ -80,7 +80,7 @@ public class GrpSportSelectionAdapter extends Adapter<Sport, GrpSportSelectionAd
             super(V);
             mMainView = V;
             mIvSport = (ImageView) V.findViewById(R.id.group_sport_row_image_sport);
-            mTvSport = (TextView) V.findViewById(R.id.group_sport_row_tv_sport);
+//            mTvSport = (TextView) V.findViewById(R.id.group_sport_row_tv_sport);
             V.setOnClickListener(this);
         }
 

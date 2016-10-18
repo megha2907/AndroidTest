@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
@@ -24,9 +25,13 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
 
     private EditText mEtGroupName;
 
-    private RecyclerView mRvSportSelection;
+    private RecyclerView mRvTournamentSelection;
 
     private NewGroupPresenter mNewGroupPresenter;
+
+    private LinearLayoutManager mlinearLayoutManagerVertical;
+
+    private Toolbar mtoolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +40,19 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
 
         this.mEtGroupName = (EditText) findViewById(R.id.new_group_et_group_name);
 
-        this.mRvSportSelection = (RecyclerView) findViewById(R.id.new_group_rcv);
-        this.mRvSportSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
-        this.mRvSportSelection.setLayoutManager(new GridLayoutManager(this, 3));
-        this.mRvSportSelection.setHasFixedSize(true);
+        this.mRvTournamentSelection = (RecyclerView) findViewById(R.id.new_group_rcv);
+        this.mRvTournamentSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
+        this.mRvTournamentSelection.setLayoutManager(new GridLayoutManager(this, 3));
 
         this.mNewGroupPresenter = NewGroupPresenterImpl.newInstance(this);
         this.mNewGroupPresenter.onCreateNewGroup();
+
+        initToolBar();
     }
 
     @Override
-    public void setAdapter(GrpSportSelectionAdapter adapter) {
-        this.mRvSportSelection.setAdapter(adapter);
+    public void setAdapter(GrpTournamentSelectionAdapter adapter) {
+        this.mRvTournamentSelection.setAdapter(adapter);
     }
 
     @Override
@@ -60,9 +66,6 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.new_group_btn_cancel:
-                onBackPressed();
-                break;
             case R.id.new_group_btn_done:
                 mNewGroupPresenter.onClickDone(getTrimmedText(mEtGroupName));
                 PayloadBuilder builder = new PayloadBuilder();
@@ -71,5 +74,21 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
                 MoEHelper.getInstance(getContext()).trackEvent("CREATE GROUP-ONCLICK", builder.build());
                 break;
         }
+    }
+
+    public void initToolBar() {
+        mtoolbar = (Toolbar) findViewById(R.id.new_group_toolbar);
+        mtoolbar.setTitle("Create Group");
+        setSupportActionBar(mtoolbar);
+        mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        mtoolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                }
+
+        );
     }
 }

@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -41,6 +43,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     }
 
     @Override
+    public void onProfilePhotoDone(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+        mEditProfileModel.updateProfilePhoto(file, filepath,filename);
+    }
+
+    @Override
     public void onUpdating() {
         mEditProfileView.showProgressbar();
     }
@@ -49,7 +56,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     public void onEditSuccess() {
         mEditProfileView.dismissProgressbar();
         mEditProfileView.setSuccessResult();
-        mEditProfileView.close();
+        //mEditProfileView.close();
     }
 
     @Override
@@ -61,6 +68,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     @Override
     public void onNameEmpty() {
         mEditProfileView.showMessage(Constants.Alerts.NAME_EMPTY);
+    }
+
+    @Override
+    public void onProfileImagePathNull() {
+        mEditProfileView.showMessage(Constants.Alerts.IMAGE_FILEPATH_EMPTY);
     }
 
     @Override

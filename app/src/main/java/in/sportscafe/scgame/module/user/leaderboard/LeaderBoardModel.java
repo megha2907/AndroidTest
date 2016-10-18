@@ -16,5 +16,5 @@ public interface LeaderBoardModel {
 
     LeaderBoardAdapter getAdapter(Context context);
 
-    void refreshLeaderBoard(List<LeaderBoard> leaderBoardList);
+    void refreshLeaderBoard(Bundle bundle);
 }

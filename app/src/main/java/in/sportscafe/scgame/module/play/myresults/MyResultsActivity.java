@@ -1,9 +1,12 @@
 package in.sportscafe.scgame.module.play.myresults;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
@@ -17,10 +20,16 @@ public class MyResultsActivity extends ScGameActivity implements MyResultsView {
 
     private MyResultsPresenter mResultsPresenter;
 
+
+    private Toolbar mtoolbar;
+    private TextView mTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_results);
+
+        initToolBar();
 
         this.mRvMyResults = (RecyclerView) findViewById(R.id.my_results_rv);
 
@@ -41,7 +50,9 @@ public class MyResultsActivity extends ScGameActivity implements MyResultsView {
         this.mRvMyResults.setHasFixedSize(true);
 
         this.mResultsPresenter = MyResultPresenterImpl.newInstance(this);
-        this.mResultsPresenter.onCreateMyResults();
+        this.mResultsPresenter.onCreateMyResults(getIntent().getExtras());
+
+
     }
 
     @Override
@@ -51,5 +62,25 @@ public class MyResultsActivity extends ScGameActivity implements MyResultsView {
 
     public void onBack(View view) {
         onBackPressed();
+    }
+
+    public void initToolBar() {
+        Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Regular.ttf");
+        mtoolbar = (Toolbar) findViewById(R.id.my_results_toolbar);
+        mTitle = (TextView) mtoolbar.findViewById(R.id.toolbar_title);
+        mTitle.setText("Match Result");
+        mTitle.setTypeface(tftitle);
+        setSupportActionBar(mtoolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        mtoolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                }
+
+        );
     }
 }

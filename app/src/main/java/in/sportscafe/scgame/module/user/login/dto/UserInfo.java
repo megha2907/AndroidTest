@@ -110,7 +110,7 @@ public class UserInfo {
     /**
      * @param photo The user_photo
      */
-    @JsonProperty("user_photo")
+    @JsonIgnore
     public void setPhoto(String photo) {
         this.photo = photo;
     }

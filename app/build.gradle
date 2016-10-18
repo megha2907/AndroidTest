@@ -55,10 +55,10 @@ android {
 
     productFlavors {
         local {
-            resValue "string", "app_name", "ScGame Local"
+            resValue "string", "app_name", "ScGame"
         }
         stage {
-            resValue "string", "app_name", "ScGame Stage"
+            resValue "string", "app_name", "ScGame"
         }
         production {
             resValue "string", "app_name", "ScGame"
@@ -80,5 +80,8 @@ dependencies {
     compile 'com.moengage:addon-inbox:2.8.0'
     compile 'com.google.android.gms:play-services-gcm:9.4.0'
     compile 'com.github.nirhart:parallaxscroll:1.0'
+    compile 'com.bignerdranch.android:expandablerecyclerview:2.1.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
 }
 apply plugin: 'com.google.gms.google-services'

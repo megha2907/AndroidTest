@@ -1,6 +1,7 @@
 package in.sportscafe.scgame.module.play.myresults;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
@@ -15,7 +16,7 @@ import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.feed.dto.Match;
-import in.sportscafe.scgame.module.feed.dto.Tournament;
+import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
@@ -30,6 +31,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     private static final int PAGINATION_START_AT = 5;
 
     private static final int LIMIT = 5;
+
+    private  int matchId;
 
     private boolean isLoading = false;
 
@@ -48,12 +51,19 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     @Override
+    public void init(Bundle bundle) {
+        matchId = bundle.getInt(Constants.BundleKeys.MATCH_ID);
+        Log.i("matchId",String.valueOf(matchId));
+    }
+
+    @Override
     public void getMyResultsData(Context context) {
         loadMyResults(0);
     }
 
     private void loadMyResults(int offset) {
         if(ScGame.getInstance().hasNetworkConnection()) {
+            Log.i("call","callMyResultsApi");
             callMyResultsApi(offset);
         } else {
             mResultsModelListener.onNoInternet();
@@ -62,7 +72,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private void callMyResultsApi(final int offset) {
         isLoading = true;
-        MyWebService.getInstance().getMyResultsRequest(offset, LIMIT).enqueue(
+        MyWebService.getInstance().getMyResultsRequest(matchId).enqueue(
                 new ScGameCallBack<MyResultsResponse>() {
                     @Override
                     public void onResponse(Call<MyResultsResponse> call, Response<MyResultsResponse> response) {

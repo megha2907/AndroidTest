@@ -1,6 +1,7 @@
 package in.sportscafe.scgame.module.play.myresults;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 
 import in.sportscafe.scgame.Constants;
@@ -24,7 +25,8 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
-    public void onCreateMyResults() {
+    public void onCreateMyResults(Bundle bundle) {
+        mResultsModel.init(bundle);
         getResultDetails();
     }
 

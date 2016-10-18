@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp_15"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_10"
+    android:background="@color/colorMedium">
+
+    <in.sportscafe.scgame.module.common.RoundImage
+        android:id="@+id/groups_child_view_tournaments_iv_photo"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:src="@drawable/user_default" />
+
+
+    <TextView android:id="@+id/groups_child_view_tournaments_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dp_15"
+        android:text="RI GAME"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:textColor="@color/silver_chalice"
+        android:layout_marginTop="@dimen/dp_8"/>
+
+    <ImageView
+        android:id="@+id/groups_child_view_tournaments_rank_status"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_40"
+        android:src="@drawable/status_arrow_down"
+        android:layout_toLeftOf="@+id/groups_child_view_tournaments_tv_rank"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_7"
+        />
+
+    <TextView android:id="@+id/groups_child_view_tournaments_tv_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dp_15"
+        android:text="1st"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textColor="@color/silver_chalice"
+        android:layout_marginTop="@dimen/dp_7"/>
+
+</RelativeLayout>

@@ -2,6 +2,9 @@ package in.sportscafe.scgame.module.play.prediction;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+
+import com.jeeva.android.Log;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
@@ -48,6 +51,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         mPredictionView.navigateToResult(bundle);
     }
 
+    private void getAllQuestions() {
+        mPredictionView.showProgressbar();
+        mPredictionModel.getAllQuestions();
+    }
+
     @Override
     public void onShowingLastQuestion() {
         mPredictionView.hidePass();
@@ -67,10 +75,38 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onTimeUp() {
-        mPredictionView.swipeCardToTop();
+    public void onSuccessQuestions() {
+        mPredictionView.dismissProgressbar();
+        //populateNextMatch();
     }
 
+    @Override
+    public void onFailedQuestions(String message) {
+        mPredictionView.dismissProgressbar();
+        showAlertMessage(message);
+    }
+
+    @Override
+    public void onNoQuestions() {
+        mPredictionView.dismissProgressbar();
+    }
+
+    @Override
+    public void onNoInternet() {
+        mPredictionView.dismissProgressbar();
+        showAlertMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+    }
+
+
+    private void showAlertMessage(String message) {
+        mPredictionView.showMessage(message, "RETRY",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getAllQuestions();
+                    }
+                });
+    }
 
     @Override
     public void dismissPowerUpApplied() {

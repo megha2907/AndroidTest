@@ -18,8 +18,14 @@ public class GroupSummary implements Serializable {
     @JsonProperty("group_name")
     private String groupName;
 
-    @JsonProperty("alltime")
-    private List<RankSummary> ranks = new ArrayList<>();
+    @JsonProperty("rank")
+    private Integer OverallRank;
+
+    @JsonProperty("rank_change")
+    private Integer OverallRankChange;
+
+    @JsonProperty("tournaments")
+    private List<GroupsTourSummary> tourSummaryList;
 
     public GroupSummary(Long groupId, String groupName) {
         this.groupId = groupId;
@@ -49,18 +55,39 @@ public class GroupSummary implements Serializable {
         this.groupName = groupName;
     }
 
-    @JsonProperty("ranks")
-    public List<RankSummary> getRanks() {
-        return ranks;
+    @JsonProperty("rank")
+    public Integer getOverallRank() {
+        return OverallRank;
     }
 
-    @JsonProperty("ranks")
-    public void setRanks(List<RankSummary> ranks) {
-        this.ranks = ranks;
+    @JsonProperty("rank")
+    public void setOverallRank(Integer overallRank) {
+        OverallRank = overallRank;
+    }
+
+    @JsonProperty("rank_change")
+    public Integer getOverallRankChange() {
+        return OverallRankChange;
+    }
+
+    @JsonProperty("rank_change")
+    public void setOverallRankChange(Integer overallRankChange) {
+        OverallRankChange = overallRankChange;
+    }
+
+    @JsonProperty("tournaments")
+    public List<GroupsTourSummary> getTourSummaryList() {
+        return tourSummaryList;
+    }
+
+    @JsonProperty("tournaments")
+    public void setTourSummaryList(List<GroupsTourSummary> tourSummaryList) {
+        this.tourSummaryList = tourSummaryList;
     }
 
     @JsonIgnore
-    public void addRank(RankSummary rankSummary) {
-        ranks.add(rankSummary);
+    public void addRank(GroupsTourSummary tourSummary) {
+        tourSummaryList.add(tourSummary);
     }
+
 }

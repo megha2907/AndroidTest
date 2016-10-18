@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameFragment;
 import in.sportscafe.scgame.module.user.leaderboard.dto.LeaderBoard;
@@ -18,12 +19,21 @@ import in.sportscafe.scgame.module.user.points.OnLeaderBoardUpdateListener;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class LeaderBoardFragment extends ScGameFragment implements LeaderBoardView,
-        OnLeaderBoardUpdateListener {
+public class LeaderBoardFragment extends ScGameFragment implements LeaderBoardView {
 
     private RecyclerView mRvLeaderBoard;
 
     private LeaderBoardPresenter mLeaderBoardPresenter;
+
+
+    public static LeaderBoardFragment newInstance(LeaderBoard leaderBoard) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.BundleKeys.LEADERBOARD_LIST, leaderBoard);
+
+        LeaderBoardFragment fragment = new LeaderBoardFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -49,9 +59,7 @@ public class LeaderBoardFragment extends ScGameFragment implements LeaderBoardVi
         mRvLeaderBoard.setAdapter(leaderBoardAdapter);
     }
 
-    @Override
-    public void updateLeaderBoard(List<LeaderBoard> leaderBoardList) {
-        mLeaderBoardPresenter.update(leaderBoardList);
+    public void refreshLeaderBoard(Bundle bundle) {
+        mLeaderBoardPresenter.update(bundle);
     }
-
 }

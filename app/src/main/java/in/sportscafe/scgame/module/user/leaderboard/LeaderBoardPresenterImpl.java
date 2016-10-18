@@ -1,15 +1,15 @@
 package in.sportscafe.scgame.module.user.leaderboard;
 
 import android.os.Bundle;
+import android.view.View;
 
-import java.util.List;
+import in.sportscafe.scgame.Constants;
 
-import in.sportscafe.scgame.module.user.leaderboard.dto.LeaderBoard;
 
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class LeaderBoardPresenterImpl implements LeaderBoardPresenter {
+public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoardModelImpl.OnLeaderBoardModelListener {
     
     private LeaderBoardView mLeaderBoardView;
     
@@ -17,7 +17,7 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter {
 
     private LeaderBoardPresenterImpl(LeaderBoardView leaderBoardView) {
         this.mLeaderBoardView = leaderBoardView;
-        this.mLeaderBoardModel = LeaderBoardModelImpl.newInstance();
+        this.mLeaderBoardModel = LeaderBoardModelImpl.newInstance(this);
     }
 
     public static LeaderBoardPresenter newInstance(LeaderBoardView leaderBoardView) {
@@ -26,14 +26,17 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter {
 
     @Override
     public void onCreateLeaderBoard(Bundle bundle) {
+        mLeaderBoardView.setLeaderBoardAdapter(mLeaderBoardModel.getAdapter(mLeaderBoardView.getContext()));
         mLeaderBoardModel.init(bundle);
-
-        mLeaderBoardView.setLeaderBoardAdapter(mLeaderBoardModel
-                .getAdapter(mLeaderBoardView.getContext()));
     }
 
     @Override
-    public void update(List<LeaderBoard> leaderBoardList) {
-        mLeaderBoardModel.refreshLeaderBoard(leaderBoardList);
+    public void update(Bundle bundle) {
+        mLeaderBoardModel.refreshLeaderBoard(bundle);
+    }
+
+    @Override
+    public void onEmpty() {
+        mLeaderBoardView.showInAppMessage("Empty LeaderBoard");
     }
 }

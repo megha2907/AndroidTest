@@ -1,13 +1,12 @@
 package in.sportscafe.scgame.module.user.myprofile.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
+import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -41,8 +40,8 @@ public class GroupInfo implements Serializable {
     @JsonProperty("group_members")
     private List<GroupPerson> members = new ArrayList<>();
 
-    @JsonProperty("followed_sports")
-    private List<Sport> followedSports = new ArrayList<>();
+    @JsonProperty("group_tournaments")
+    private List<TournamentInfo> followedTournaments = new ArrayList<>();
 
     @JsonProperty("group_code")
     private String groupCode;
@@ -224,14 +223,14 @@ public class GroupInfo implements Serializable {
         this.members = members;
     }
 
-    @JsonProperty("followed_sports")
-    public List<Sport> getFollowedSports() {
-        return followedSports;
+    @JsonProperty("group_tournaments")
+    public List<TournamentInfo> getFollowedTournaments() {
+        return followedTournaments;
     }
 
-    @JsonProperty("followed_sports")
-    public void setFollowedSports(List<Sport> followedSports) {
-        this.followedSports = followedSports;
+    @JsonProperty("group_tournaments")
+    public void setFollowedTournaments(List<TournamentInfo> followedTournaments) {
+        this.followedTournaments = followedTournaments;
     }
 
     @JsonProperty("group_code")

@@ -3,7 +3,9 @@ package in.sportscafe.scgame.module.user.myprofile.myposition;
 import android.os.Bundle;
 
 import in.sportscafe.scgame.module.common.AbstractTabFragment;
+import in.sportscafe.scgame.module.user.myprofile.myposition.challenges.ChallengesFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummary;
+import in.sportscafe.scgame.module.user.myprofile.myposition.sports.SportsFragment;
 
 /**
  * Created by Jeeva on 14/6/16.
@@ -27,7 +29,8 @@ public class MyPositionFragment extends AbstractTabFragment {
 
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         pagerAdapter.addFragment(MyLeaguesFragment.newInstance(lbSummary.getGroups()), "My Groups");
-        pagerAdapter.addFragment(MyGlobalFragment.newInstance(lbSummary.getGlobal()), "Global");
+        pagerAdapter.addFragment(SportsFragment.newInstance(lbSummary.getSports()), "Sports");
+        pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getChallenges()), "Challenges");
         return pagerAdapter;
     }
 

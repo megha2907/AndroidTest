@@ -7,21 +7,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+import com.jeeva.android.volley.Volley;
+
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
+import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.user.leaderboard.dto.LeaderBoard;
+import in.sportscafe.scgame.module.user.leaderboard.dto.UserLeaderBoard;
 
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class LeaderBoardAdapter extends Adapter<LeaderBoard, LeaderBoardAdapter.ViewHolder> {
+public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdapter.ViewHolder> {
 
     public LeaderBoardAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public LeaderBoard getItem(int position) {
+    public UserLeaderBoard getItem(int position) {
         return super.getItem(position);
     }
 
@@ -32,19 +37,28 @@ public class LeaderBoardAdapter extends Adapter<LeaderBoard, LeaderBoardAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        LeaderBoard leaderBoard = getItem(position);
+        UserLeaderBoard userLeaderBoard = getItem(position);
 
-        if(leaderBoard.getRankChange() < 0) {
+        Log.i("userleaderboardadapter",getItem(0).getUserName());
+
+        if(userLeaderBoard.getRankChange() < 0) {
             holder.mIvStatus.setImageResource(R.drawable.status_arrow_down);
         } else {
             holder.mIvStatus.setImageResource(R.drawable.status_arrow_up);
         }
 
-        holder.mTvRank.setText(String.valueOf(leaderBoard.getRank()));
+        holder.mTvRank.setText(String.valueOf(userLeaderBoard.getRank()));
 
-        holder.mTvName.setText(leaderBoard.getUserName());
+        holder.mTvName.setText(userLeaderBoard.getUserName());
 
-        holder.mTvPoints.setText(String.valueOf(leaderBoard.getPoints()));
+        holder.mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
+
+        String imageUrl=userLeaderBoard.getUserPhoto();
+        holder.mIvUser.setImageUrl(
+                imageUrl,
+                Volley.getInstance().getImageLoader(),
+                false
+        );
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -53,7 +67,7 @@ public class LeaderBoardAdapter extends Adapter<LeaderBoard, LeaderBoardAdapter.
 
         TextView mTvRank;
 
-        ImageView mIvUser;
+        RoundImage mIvUser;
 
         TextView mTvName;
 
@@ -64,7 +78,7 @@ public class LeaderBoardAdapter extends Adapter<LeaderBoard, LeaderBoardAdapter.
 
             mIvStatus = (ImageView) V.findViewById(R.id.leaderboard_row_iv_status);
             mTvRank = (TextView) V.findViewById(R.id.leaderboard_row_tv_rank);
-            mIvUser = (ImageView) V.findViewById(R.id.leaderboard_row_iv_user_img);
+            mIvUser = (RoundImage) V.findViewById(R.id.leaderboard_row_iv_user_img);
             mTvName = (TextView) V.findViewById(R.id.leaderboard_row_tv_user_name);
             mTvPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_points);
 

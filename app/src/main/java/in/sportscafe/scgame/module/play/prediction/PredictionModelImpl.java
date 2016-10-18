@@ -5,15 +5,25 @@ import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import in.sportscafe.scgame.Constants;
+import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.feed.dto.Match;
 import in.sportscafe.scgame.module.offline.PredictionDataHandler;
 import in.sportscafe.scgame.module.play.prediction.dto.Answer;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
+import in.sportscafe.scgame.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
+import in.sportscafe.scgame.webservice.MyWebService;
+import in.sportscafe.scgame.webservice.ScGameCallBack;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import static in.sportscafe.scgame.Constants.BundleKeys;
 import static in.sportscafe.scgame.Constants.DateFormats;
@@ -22,15 +32,22 @@ import static in.sportscafe.scgame.Constants.DateFormats;
  * Created by Jeeva on 20/5/16.
  */
 public class PredictionModelImpl implements PredictionModel,
-        SwipeFlingAdapterView.OnSwipeListener<Question>,PredictionAdapter.OnPredictionTimerListener {
+        SwipeFlingAdapterView.OnSwipeListener<Question> {
 
     private PredictionAdapter mPredictionAdapter;
 
     private OnPredictionModelListener mPredictionModelListener;
 
+
+    private Map<Integer, Match> mMatchMap = new HashMap<>();
+
+    private List<Match> mMyResultList = new ArrayList<>();
+
     private Match mMyResult;
 
     private int mTotalCount;
+
+    private Integer matchId;
 
     private int mRemainingTime;
 
@@ -46,16 +63,81 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void saveData(Bundle bundle) {
-        mMyResult = (Match) bundle.getSerializable(BundleKeys.CONTEST_QUESTIONS);
 
-        populateAdapterData(mMyResult.getQuestions());
+        //matchId = bundle.getInt(Constants.BundleKeys.MATCH_ID);
+        mMyResult = (Match) bundle.getSerializable(BundleKeys.MATCH_LIST);
+        matchId = mMyResult.getId();
+        Log.i("tournamentname",mMyResult.getTournamentName());
+
+        //populateAdapterData(mMyResult.getQuestions());
+
+        getAllQuestions();
     }
+
+
+    @Override
+    public void getAllQuestions() {
+        if (ScGame.getInstance().hasNetworkConnection()) {
+            callAllQuestionsApi(matchId);
+        } else {
+            mPredictionModelListener.onNoInternet();
+        }
+    }
+
+    private void callAllQuestionsApi(Integer matchId) {
+        MyWebService.getInstance().getAllQuestions(matchId).enqueue(new ScGameCallBack<QuestionsResponse>() {
+            @Override
+            public void onResponse(Call<QuestionsResponse> call, Response<QuestionsResponse> response) {
+                if (null == mPredictionModelListener.getContext()) {
+                    return;
+                }
+
+                if (response.isSuccessful()) {
+                    List<Question> allQuestions = response.body().getQuestions();
+
+                    if (null == allQuestions || allQuestions.isEmpty()) {
+                        mPredictionModelListener.onNoQuestions();
+                    }
+
+                    handleAllQuestionsResponse(allQuestions);
+                } else {
+                    mPredictionModelListener.onFailedQuestions(response.message());
+                }
+            }
+        });
+    }
+
+    private void handleAllQuestionsResponse(List<Question> questionList) {
+        Map<Integer, Match> myResultMap = new HashMap<>();
+
+        Integer matchId;
+        Match myResult;
+        for (Question question : questionList) {
+            matchId = question.getMatchId();
+
+            if (myResultMap.containsKey(matchId)) {
+                myResult = myResultMap.get(matchId);
+            } else {
+                myResult = mMatchMap.get(matchId);
+                mMyResultList.add(mMyResult);
+                myResultMap.put(matchId, myResult);
+            }
+
+            mMyResult.getQuestions().add(question);
+        }
+
+        mPredictionModelListener.onSuccessQuestions();
+        myResult = mMyResultList.get(0);
+        populateAdapterData(myResult.getQuestions());
+
+    }
+
 
     private void populateAdapterData(List<Question> questionList) {
         mTotalCount = questionList.size();
 
         mPredictionAdapter = new PredictionAdapter(mPredictionModelListener.getContext(),
-                this, mTotalCount);
+                 mTotalCount);
         mPredictionModelListener.onGetAdapter(mPredictionAdapter, this);
 
         int count = 1;
@@ -80,16 +162,16 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public String getContestName() {
-        return mMyResult.getParties();
+        return String.valueOf(mMyResult.getParties().get(0).getPartyName()+"  vs  "+mMyResult.getParties().get(1).getPartyName());
     }
 
     @Override
     public void removeFirstObjectInAdapter(Question dataObject) {
-        mRemainingTime = mPredictionAdapter.getRemainingTime();
-        Log.d("Remaining Time", mRemainingTime + " seconds");
+       // mRemainingTime = mPredictionAdapter.getRemainingTime();
+       // Log.d("Remaining Time", mRemainingTime + " seconds");
 
         mTotalCount--;
-        mPredictionAdapter.stopTimer();
+       // mPredictionAdapter.stopTimer();
         mPredictionAdapter.remove(dataObject);
         mPredictionAdapter.notifyDataSetChanged();
         mPredictionModelListener.dismissPowerUpApplied();
@@ -113,7 +195,7 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void onBottomSwipe(Question dataObject) {
-        dataObject.setQuestionTime(mRemainingTime);
+        //dataObject.setQuestionTime(mRemainingTime);
         mPredictionAdapter.add(dataObject);
     }
 
@@ -123,6 +205,8 @@ public class PredictionModelImpl implements PredictionModel,
             PredictionDataHandler.getInstance().saveMyResult(mMyResult);
 
             Bundle bundle = new Bundle();
+            bundle.putInt(Constants.BundleKeys.TOURNAMENT_ID, mMyResult.getTournamentId());
+            bundle.putString(Constants.BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
             mPredictionModelListener.onSuccessCompletion(bundle);
             return;
         }
@@ -136,7 +220,7 @@ public class PredictionModelImpl implements PredictionModel,
             mPredictionModelListener.onShowingPassedQuestions();
         }
 
-        mPredictionAdapter.startTimer();
+       // mPredictionAdapter.startTimer();
     }
 
     @Override
@@ -173,11 +257,11 @@ public class PredictionModelImpl implements PredictionModel,
             public void onFailed(String message) {}
         }).postAnswer(answer);
     }
-
-    @Override
-    public void onTimeUp() {
-        mPredictionModelListener.onTimeUp();
-    }
+//
+//    @Override
+//    public void onTimeUp() {
+//        mPredictionModelListener.onTimeUp();
+//    }
 
 
     public interface OnPredictionModelListener {
@@ -193,9 +277,16 @@ public class PredictionModelImpl implements PredictionModel,
 
         void onShowingPassedQuestions();
 
-        void onTimeUp();
+//        void onTimeUp();
 
         void dismissPowerUpApplied();
 
+        void onNoInternet();
+
+        void onSuccessQuestions();
+
+        void onFailedQuestions(String message);
+
+        void onNoQuestions();
     }
 }

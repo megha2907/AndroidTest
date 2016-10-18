@@ -62,6 +62,7 @@
     <dimen name="dp_75">75dp</dimen>
     <dimen name="dp_76">76dp</dimen>
     <dimen name="dp_80">80dp</dimen>
+    <dimen name="dp_85">85dp</dimen>
     <dimen name="dp_90">90dp</dimen>
     <dimen name="dp_93">93dp</dimen>
     <dimen name="dp_96">96dp</dimen>

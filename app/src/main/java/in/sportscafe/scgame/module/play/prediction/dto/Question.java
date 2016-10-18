@@ -49,6 +49,9 @@ public class Question implements Serializable {
     @JsonProperty("powerup_id")
     private String AnswerPowerUpId;
 
+    @JsonProperty("user_answer_points")
+    private Integer answerPoints;
+
     @JsonIgnore
     private int questionTime = 30;
 
@@ -287,7 +290,15 @@ public class Question implements Serializable {
         this.powerUpId = powerUpId;
     }
 
+    @JsonProperty("user_answer_points")
+    public Integer getAnswerPoints() {
+        return answerPoints;
+    }
 
+    @JsonProperty("user_answer_points")
+    public void setAnswerPoints(Integer answerPoints) {
+        this.answerPoints = answerPoints;
+    }
 
 
 }

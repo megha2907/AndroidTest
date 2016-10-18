@@ -1,21 +1,28 @@
 package in.sportscafe.scgame.module.play.prediction;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.customfont.CustomButton;
+
+import java.nio.BufferUnderflowException;
 
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameActivity;
+import in.sportscafe.scgame.module.feed.FeedActivity;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
 import in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView;
 
-public class PredictionActivity extends ScGameActivity implements PredictionView, View.OnClickListener, View.OnTouchListener, View.OnDragListener,PredictionAdapter.OnPredictionTimerListener {
+public class PredictionActivity extends ScGameActivity implements PredictionView, View.OnClickListener, View.OnTouchListener, View.OnDragListener {
 
     private SwipeFlingAdapterView mSwipeFlingAdapterView;
 
@@ -23,7 +30,9 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
     private boolean mpowerUpApplied = false;
 
     private PredictionModel mPredictionModel;
+
     CustomButton btnpowerUpCount;
+    RelativeLayout rlPowerUp;
 
 
 
@@ -45,6 +54,7 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
         this.mPredictionPresenter.onCreatePrediction(getIntent().getExtras());
 
 
+        //rlPowerUp = (RelativeLayout) findViewById(R.id.rl_powerup);
         CustomButton btnquestionValue = (CustomButton)findViewById(R.id.swipe_card_question_value);
         btnpowerUpCount = (CustomButton) findViewById(R.id.swipe_card_tv_powerup_count);
 
@@ -146,7 +156,7 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
 
     @Override
     public void navigateToResult(Bundle bundle) {
-        onBackPressed();
+        navigateToAllDone(bundle);
     }
 
     @Override
@@ -166,14 +176,22 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
     }
 
 
-    @Override
-    public void onTimeUp() {
 
-    }
+//    @Override
+//    public void onTimeUp() {
+//
+//    }
 
     @Override
     public void dismissPowerUp() {
         mpowerUpApplied=false;
+    }
+
+    @Override
+    public void navigateToAllDone(Bundle bundle) {
+        Intent i = new Intent(getApplicationContext(), FeedActivity.class);
+        i.putExtras(bundle);
+        startActivity(i);
     }
 
 

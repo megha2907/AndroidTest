@@ -1,8 +1,8 @@
 <resources>
     <string name="facebook_app_id">1717269841858265</string>
     <string name="google_client_id">93923683436-0e0bkm6459105nthip0thu9dve75s1hc.apps.googleusercontent.com</string>
-    <string name="addsport">Add Sports</string>
-    <string name="next">Next</string>
+    <string name="addsport">Pick your Tournament and \n enjoy the game</string>
+    <string name="next">NEXT</string>
     <string name="st1_no_notification">No notifications yet!!!</string>
     <string name="st2_no_notification">Come back again &amp; check \n for notifications</string>
 </resources>

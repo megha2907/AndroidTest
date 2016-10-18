@@ -3,6 +3,8 @@ package in.sportscafe.scgame.module.play;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.jeeva.android.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +32,10 @@ public class PlayModelImpl implements PlayModel {
 
     private OnPlayModelListener mPlayModelListener;
 
+    int tourId=1;
+
+    Integer matchId;
+
     public PlayModelImpl(OnPlayModelListener listener) {
         this.mPlayModelListener = listener;
     }
@@ -41,20 +47,21 @@ public class PlayModelImpl implements PlayModel {
     @Override
     public void getAllQuestions() {
         if (ScGame.getInstance().hasNetworkConnection()) {
-            callMatchesApi();
+            callMatchesApi(tourId);
         } else {
             mPlayModelListener.onNoInternet();
         }
     }
 
-    private void callMatchesApi() {
-        MyWebService.getInstance().getMatches().enqueue(new ScGameCallBack<MatchesResponse>() {
+    private void callMatchesApi(Integer tourId) {
+        MyWebService.getInstance().getMatches(tourId).enqueue(new ScGameCallBack<MatchesResponse>() {
             @Override
             public void onResponse(Call<MatchesResponse> call, Response<MatchesResponse> response) {
                 if (response.isSuccessful()) {
                     List<Match> matchList = response.body().getMatches();
 
                     if (null == matchList || matchList.isEmpty()) {
+                        Log.i("matchList","onNoQuestions");
                         mPlayModelListener.onNoQuestions();
                         return;
                     }
@@ -72,11 +79,11 @@ public class PlayModelImpl implements PlayModel {
             mMatchMap.put(match.getId(), match);
         }
 
-        callAllQuestionsApi();
+        callAllQuestionsApi(matchId);
     }
 
-    private void callAllQuestionsApi() {
-        MyWebService.getInstance().getAllQuestions().enqueue(new ScGameCallBack<QuestionsResponse>() {
+    private void callAllQuestionsApi(Integer matchId) {
+        MyWebService.getInstance().getAllQuestions(matchId).enqueue(new ScGameCallBack<QuestionsResponse>() {
             @Override
             public void onResponse(Call<QuestionsResponse> call, Response<QuestionsResponse> response) {
                 if (null == mPlayModelListener.getContext()) {

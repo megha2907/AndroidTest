@@ -33,4 +33,6 @@ public interface View {
     LayoutInflater getLayoutInflater();
 
     String getTrimmedText(TextView textView);
+
+
 }

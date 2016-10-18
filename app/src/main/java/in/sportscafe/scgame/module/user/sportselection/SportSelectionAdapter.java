@@ -44,11 +44,8 @@ public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.
         holder.mTvSport.setText(sport.getName());
 
         if (mSelectedSportsIdList.contains((sport.getId()))) {
-            holder.mMainView.setBackgroundResource(R.drawable.sports_selection_shape);
-            holder.mTvSport.setAlpha((float) 0.9);
             holder.mIvSport.setImageResource(sport.getSelectedImageResource());
         } else {
-            holder.mMainView.setBackgroundColor(Color.TRANSPARENT);
             holder.mIvSport.setImageResource(sport.getImageResource());
         }
 

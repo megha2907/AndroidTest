@@ -3,9 +3,6 @@ package in.sportscafe.scgame.module.user.group.newgroup;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.moe.pushlibrary.MoEHelper;
-import com.moe.pushlibrary.PayloadBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +10,8 @@ import java.util.Map;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
+import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
@@ -24,12 +23,15 @@ import retrofit2.Response;
  */
 public class NewGroupModelImpl implements NewGroupModel {
 
-    private GrpSportSelectionAdapter mSportSelectionAdapter;
+    private GrpTournamentSelectionAdapter mTournamentSelectionAdapter;
 
     private OnNewGroupModelListener mNewGroupModelListener;
 
+    private ScGameDataHandler mScGameDataHandler;
+
     private NewGroupModelImpl(OnNewGroupModelListener listener) {
         this.mNewGroupModelListener = listener;
+        mScGameDataHandler = ScGameDataHandler.getInstance();
     }
 
     public static NewGroupModel newInstance(OnNewGroupModelListener listener) {
@@ -37,10 +39,13 @@ public class NewGroupModelImpl implements NewGroupModel {
     }
 
     @Override
-    public GrpSportSelectionAdapter getAdapter(Context context) {
-        this.mSportSelectionAdapter = new GrpSportSelectionAdapter(context, new ArrayList<Integer>());
-        this.mSportSelectionAdapter.addAll(ScGameDataHandler.getInstance().getAllSports());
-        return mSportSelectionAdapter;
+    public GrpTournamentSelectionAdapter getAdapter(Context context) {
+
+        getAllTournamentsfromServer();
+
+        this.mTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context, new ArrayList<Integer>());
+        this.mTournamentSelectionAdapter.addAll(ScGameDataHandler.getInstance().getTournaments());
+        return mTournamentSelectionAdapter;
     }
 
     @Override
@@ -50,8 +55,8 @@ public class NewGroupModelImpl implements NewGroupModel {
             return;
         }
 
-        List<Integer> selectedSports = mSportSelectionAdapter.getSelectedSportList();
-        if(null == selectedSports || selectedSports.isEmpty()) {
+        List<Integer> SelectedTournament = mTournamentSelectionAdapter.getSelectedTournamentList();
+        if(null == SelectedTournament || SelectedTournament.isEmpty()) {
             mNewGroupModelListener.onNoSportSelected();
             return;
         } else {
@@ -59,13 +64,48 @@ public class NewGroupModelImpl implements NewGroupModel {
                 NewGroupRequest newGroupRequest = new NewGroupRequest();
                 newGroupRequest.setGroupCreatedBy(ScGameDataHandler.getInstance().getUserId());
                 newGroupRequest.setGroupName(groupName);
-                newGroupRequest.setFollowedSports(selectedSports);
+                newGroupRequest.setfollowedTournaments(SelectedTournament);
                 callNewGroupApi(newGroupRequest);
             } else {
                 mNewGroupModelListener.onNoInternet();
             }
         }
     }
+
+    private void getAllTournamentsfromServer() {
+        if(ScGame.getInstance().hasNetworkConnection()) {
+            MyWebService.getInstance().getTournaments(true).enqueue(
+                    new ScGameCallBack<TournamentsResponse>() {
+                        @Override
+                        public void onResponse(Call<TournamentsResponse> call, Response<TournamentsResponse> response) {
+                            if(response.isSuccessful()) {
+                                List<TournamentInfo> newTournamentInfo = response.body().getTournamentInfos();
+
+                                if(null != newTournamentInfo && newTournamentInfo.size() > 0) {
+                                    List<TournamentInfo> oldTournamentList = mScGameDataHandler.getTournaments();
+                                    oldTournamentList.clear();
+                                    for (TournamentInfo tournamentInfo : newTournamentInfo) {
+                                        if(!oldTournamentList.contains(tournamentInfo)) {
+                                            oldTournamentList.add(tournamentInfo);
+                                        }
+                                    }
+
+                                    mScGameDataHandler.setTournaments(oldTournamentList);
+
+                                    mNewGroupModelListener.onSuccessTournamentInfo();
+                                }
+
+                            } else {
+                                mNewGroupModelListener.onFailed(response.message());
+                            }
+                        }
+                    }
+            );
+        } else {
+            mNewGroupModelListener.onNoInternet();
+        }
+    }
+
 
     private void callNewGroupApi(NewGroupRequest newGroupRequest) {
         MyWebService.getInstance().getNewGroupRequest(newGroupRequest).enqueue(
@@ -96,6 +136,8 @@ public class NewGroupModelImpl implements NewGroupModel {
     public interface OnNewGroupModelListener {
 
         void onSuccess(Bundle bundle);
+
+        void onSuccessTournamentInfo();
 
         void onEmptyGroupName();
 

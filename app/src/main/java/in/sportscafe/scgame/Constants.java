@@ -24,6 +24,7 @@ public interface Constants {
     interface SharedKeys {
         String PREVIOUS_APP_VERSION_CODE = "previousAppVersionCode";
         String ALL_SPORTS = "allSports";
+        String ALL_TOURNAMENTS = "allTournaments";
         String FAVORITE_SPORTS = "favoriteSports";
         String INITIAL_SPORTS_AVAILABLE = "initialSportsAvailable";
         String GRP_INFOS = "grpInfos";
@@ -69,6 +70,16 @@ public interface Constants {
         String LOGIN_CANCELLED = "Facebook login cancelled";
         String LEAVE_GROUP_SUCCESS = "You have been removed from the group successfully";
         String CANNOT_LEAVE_GROUP = "Make anyone in the group as Admin, If you want to leave the group";
+        String PERMISSION_QUIT_TEXT ="Exit App";
+        String PERMISSION_HELP ="Help";
+        String PERMISSION_SETTINGS ="Setting";
+        String PERMISSION_HELP_TEXT = "The permission is missing.\\n\\nTo grant this permission click on Settings, then Permissions and turn the permission on.\\n\\nThen click back twice to return to the app";
+        String IMAGE_UPLOAD_TEXT="Select Image to Upload";
+        String IMAGE_RESELECT="Click on Image to Reselect";
+        String IMAGE_UNABLE_TO_LOAD="Unable to Load Image";
+        String IMAGE_UNABLE_TO_PICK="Unable to Pick Image";
+        String IMAGE_UPLOADING="Uploading.. Wait for a while...";
+        String IMAGE_FILEPATH_EMPTY = "Please Select Image";
     }
 
     interface BundleKeys {
@@ -80,6 +91,13 @@ public interface Constants {
         String SPORT_ID = "sportId";
         String MATCH_LIST = "matchList";
         String FROM_PROFILE = "fromProfile";
+        String TOURNAMENT_ID = "tour_id";
+        String CHALLENGE_ID = "challengeId";
+        String MATCH_ID = "matchId";
+        String TOURNAMENT_NAME = "tourName";
+        String TOURNAMENT_SUMMARY = "tourSummary";
+        String LEADERBOARD_KEY = "leaderboardKey";
+        String LEADERBOARD_LIST = "leaderboardList";
     }
 
     interface ParcelableKeys {
