@@ -11,27 +11,19 @@ import java.util.List;
  */
 public class LbSummary implements Serializable {
 
-    @JsonProperty("tournament_count")
-    private Integer tourCount;
 
     @JsonProperty("total_points")
     private Integer totalPoints;
 
-    @JsonProperty("global")
-    private GroupSummary global;
-
     @JsonProperty("groups")
     private List<GroupSummary> groups = new ArrayList<>();
 
-    @JsonProperty("tournament_count")
-    public Integer getTourCount() {
-        return tourCount;
-    }
+    @JsonProperty("sports")
+    private List<SportSummary> sports = new ArrayList<>();
 
-    @JsonProperty("tournament_count")
-    public void setTourCount(Integer tourCount) {
-        this.tourCount = tourCount;
-    }
+    @JsonProperty("challenges")
+    private List<ChallengesSummary> challenges = new ArrayList<>();
+
 
     @JsonProperty("total_points")
     public Integer getTotalPoints() {
@@ -43,16 +35,6 @@ public class LbSummary implements Serializable {
         this.totalPoints = totalPoints;
     }
 
-    @JsonProperty("global")
-    public GroupSummary getGlobal() {
-        return global;
-    }
-
-    @JsonProperty("global")
-    public void setGlobal(GroupSummary global) {
-        this.global = global;
-    }
-
     @JsonProperty("groups")
     public List<GroupSummary> getGroups() {
         return groups;
@@ -61,5 +43,25 @@ public class LbSummary implements Serializable {
     @JsonProperty("groups")
     public void setGroups(List<GroupSummary> groups) {
         this.groups = groups;
+    }
+
+    @JsonProperty("sports")
+    public List<SportSummary> getSports() {
+        return sports;
+    }
+
+    @JsonProperty("sports")
+    public void setSports(List<SportSummary> sports) {
+        this.sports = sports;
+    }
+
+    @JsonProperty("challenges")
+    public List<ChallengesSummary> getChallenges() {
+        return challenges;
+    }
+
+    @JsonProperty("challenges")
+    public void setChallenges(List<ChallengesSummary> challenges) {
+        this.challenges = challenges;
     }
 }

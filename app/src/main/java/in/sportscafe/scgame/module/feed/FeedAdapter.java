@@ -141,25 +141,6 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
 
 
-        if(match.getMatchQuestionCount()==0)
-        {
-            holder.mBtnPlayMatch.setVisibility(View.GONE);
-        }
-        else if(match.getisAttempted()==true)
-        {
-            holder.mTvMatchResult.setVisibility(View.GONE);
-            holder.mBtnPlayMatch.setVisibility(View.GONE);
-            holder.mTvResultWait.setVisibility(View.VISIBLE);
-            holder.mViewResult.setVisibility(View.VISIBLE);
-            holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
-        }
-        else
-        {
-            holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
-            holder.mBtnPlayMatch.setTag(match);
-        }
-
-
         if (match.getMatchPoints()==0)
         {
             holder.mBtnMatchPoints.setVisibility(View.GONE);
@@ -193,8 +174,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                 Constants.DateFormats.DD_MM_YYYY,
                 Constants.DateFormats.GMT
         );
-         TimeAgo timeAgo = TimeUtils.calcTimeAgo(formattedCurrentDate,formattedstartDate);
 
+
+         TimeAgo timeAgo = TimeUtils.calcTimeAgo(formattedCurrentDate,formattedstartDate);
 
          if(match.getMatchQuestionCount()==0 && match.getParties() != null && timeAgo.timeDiff > 0 && timeAgo.timeUnit != TimeUnit.MILLISECOND && timeAgo.timeUnit != TimeUnit.SECOND)
          {
@@ -202,6 +184,24 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
              holder.mTvResultWait.setText("Coming up");
              holder.mViewResult.setVisibility(View.GONE);
          }
+
+        if(match.getMatchQuestionCount()==0)
+        {
+            holder.mBtnPlayMatch.setVisibility(View.GONE);
+        }
+        else if(match.getisAttempted()==true)
+        {
+            holder.mTvMatchResult.setVisibility(View.GONE);
+            holder.mBtnPlayMatch.setVisibility(View.GONE);
+            holder.mTvResultWait.setVisibility(View.VISIBLE);
+            holder.mViewResult.setVisibility(View.VISIBLE);
+            holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
+        }
+        else
+        {
+            holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
+            holder.mBtnPlayMatch.setTag(match);
+        }
 
         return scheduleView;
     }

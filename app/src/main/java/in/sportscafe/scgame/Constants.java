@@ -92,8 +92,12 @@ public interface Constants {
         String MATCH_LIST = "matchList";
         String FROM_PROFILE = "fromProfile";
         String TOURNAMENT_ID = "tour_id";
+        String CHALLENGE_ID = "challengeId";
         String MATCH_ID = "matchId";
         String TOURNAMENT_NAME = "tourName";
+        String TOURNAMENT_SUMMARY = "tourSummary";
+        String LEADERBOARD_KEY = "leaderboardKey";
+        String LEADERBOARD_LIST = "leaderboardList";
     }
 
     interface ParcelableKeys {

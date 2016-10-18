@@ -8,9 +8,4 @@ import android.os.Bundle;
 public interface PointsPresenter {
 
     void onCreatePoints(Bundle bundle);
-
-    void onGroupItemSelected(int position);
-
-    void onSportItemSelected(int position);
-
 }

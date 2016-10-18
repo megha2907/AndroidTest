@@ -29,7 +29,7 @@ public class ProfileModelImpl implements ProfileModel {
 
     @Override
     public void getProfileDetails() {
-        getGrpList();
+        getLbSummary();
     }
 
     @Override

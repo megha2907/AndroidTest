@@ -64,7 +64,7 @@ public class FeedActivity extends ScGameActivity implements FeedView, SwipeRefre
 
     @Override
     public void moveAdapterPosition(int movePosition) {
-        mRcvFeed.getLayoutManager().scrollToPosition(0);
+        mRcvFeed.getLayoutManager().scrollToPosition(movePosition);
     }
 
     @Override

@@ -39,6 +39,10 @@ public abstract class Adapter<T, VH extends RecyclerView.ViewHolder> extends Rec
         notifyDataSetChanged();
     }
 
+    public void add(T item) {
+        add(item, mItems.size());
+    }
+
     public void add(T item, int position) {
         mItems.add(position, item);
         notifyItemInserted(position);

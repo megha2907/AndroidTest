@@ -3,9 +3,16 @@ package in.sportscafe.scgame.module.user.leaderboard;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.jeeva.android.Log;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.module.user.leaderboard.dto.LeaderBoard;
+import in.sportscafe.scgame.module.user.leaderboard.dto.UserLeaderBoard;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.SportSummary;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.TourSummary;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
 import retrofit2.Call;
@@ -20,8 +27,6 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     private OnLeaderBoardModelListener onLeaderBoardModelListener;
 
-    private String mRankPeriod;
-
     private LeaderBoardModelImpl(OnLeaderBoardModelListener listener) {
         onLeaderBoardModelListener=listener;
     }
@@ -32,55 +37,36 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     @Override
     public void init(Bundle bundle) {
-        mRankPeriod=bundle.getString("Time");
+        refreshLeaderBoard(bundle);
+        checkEmpty();
+    }
+
+    private void checkEmpty() {
+        if(mLeaderBoardAdapter.getItemCount() == 0) {
+            onLeaderBoardModelListener.onEmpty();
+        }
     }
 
     @Override
     public LeaderBoardAdapter getAdapter(Context context) {
-        mLeaderBoardAdapter = new LeaderBoardAdapter(context);
-        return mLeaderBoardAdapter;
+        return mLeaderBoardAdapter = new LeaderBoardAdapter(context);
     }
 
     @Override
     public void refreshLeaderBoard(Bundle bundle) {
         mLeaderBoardAdapter.clear();
+
+        LeaderBoard leaderBoard = (LeaderBoard) bundle.getSerializable(Constants.BundleKeys.LEADERBOARD_LIST);
+        for (UserLeaderBoard userLeaderBoard : leaderBoard.getUserLeaderBoardList()) {
+            mLeaderBoardAdapter.add(userLeaderBoard);
+        }
+
         mLeaderBoardAdapter.notifyDataSetChanged();
-        callLbDetailApi(bundle.getLong("GroupId"),bundle.getInt("SportId"));
     }
 
-    private void callLbDetailApi(Long groupId, Integer sportId) {
-        MyWebService.getInstance().getLeaderBoardDetailRequest(
-                groupId, sportId, mRankPeriod
-        ).enqueue(new ScGameCallBack<LeaderBoardResponse>() {
-            @Override
-            public void onResponse(Call<LeaderBoardResponse> call, Response<LeaderBoardResponse> response) {
-                if(response.isSuccessful()) {
-                    List<LeaderBoard> leaderBoardList = response.body().getLeaderBoardList();
-                    if(null == leaderBoardList || leaderBoardList.isEmpty()) {
-                        onLeaderBoardModelListener.onEmpty();
-                        return;
-                    }
-                    mLeaderBoardAdapter.addAll(leaderBoardList);
-                    mLeaderBoardAdapter.notifyDataSetChanged();
-                    onLeaderBoardModelListener.onSuccessLeaderBoard();
-
-
-                } else {
-                    onLeaderBoardModelListener.onFailureLeaderBoard(response.message());
-                }
-            }
-        });
-    }
 
     public interface OnLeaderBoardModelListener {
 
-
-        void onFailureLeaderBoard(String message);
-
-        void onSuccessLeaderBoard();
-
         void onEmpty();
-
-        void onNoInternet();
     }
 }

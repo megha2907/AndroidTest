@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Jeeva on 11/7/16.
+ * Created by deepanshi on 10/9/16.
  */
-public class GroupSummary implements Serializable {
+public class ChallengesSummary implements Serializable {
 
-    @JsonProperty("group_id")
-    private Long groupId;
+    @JsonProperty("challenge_id")
+    private Integer challengeId;
 
-    @JsonProperty("group_name")
-    private String groupName;
+    @JsonProperty("challenge_name")
+    private String challengeName;
 
     @JsonProperty("rank")
     private Integer OverallRank;
@@ -25,34 +25,34 @@ public class GroupSummary implements Serializable {
     private Integer OverallRankChange;
 
     @JsonProperty("tournaments")
-    private List<GroupsTourSummary> tourSummaryList;
+    private List<ChallengesTourSummary> tourSummaryList;
 
-    public GroupSummary(Long groupId, String groupName) {
-        this.groupId = groupId;
-        this.groupName = groupName;
+
+    public ChallengesSummary(Integer challengeId) {
+        this.challengeId = challengeId;
     }
 
-    public GroupSummary() {
+    public ChallengesSummary() {
     }
 
-    @JsonProperty("groupId")
-    public Long getGroupId() {
-        return groupId;
+    @JsonProperty("challenge_id")
+    public Integer getChallengeId() {
+        return challengeId;
     }
 
-    @JsonProperty("groupId")
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+    @JsonProperty("challenge_id")
+    public void setChallengeId(Integer challengeId) {
+        this.challengeId = challengeId;
     }
 
-    @JsonProperty("groupName")
-    public String getGroupName() {
-        return groupName;
+    @JsonProperty("challenge_name")
+    public String getChallengeName() {
+        return challengeName;
     }
 
-    @JsonProperty("groupName")
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    @JsonProperty("challenge_name")
+    public void setChallengeName(String challengeName) {
+        this.challengeName = challengeName;
     }
 
     @JsonProperty("rank")
@@ -76,18 +76,14 @@ public class GroupSummary implements Serializable {
     }
 
     @JsonProperty("tournaments")
-    public List<GroupsTourSummary> getTourSummaryList() {
+    public List<ChallengesTourSummary> getTourSummaryList() {
         return tourSummaryList;
     }
 
     @JsonProperty("tournaments")
-    public void setTourSummaryList(List<GroupsTourSummary> tourSummaryList) {
+    public void setTourSummaryList(List<ChallengesTourSummary> tourSummaryList) {
         this.tourSummaryList = tourSummaryList;
     }
 
-    @JsonIgnore
-    public void addRank(GroupsTourSummary tourSummary) {
-        tourSummaryList.add(tourSummary);
-    }
 
 }

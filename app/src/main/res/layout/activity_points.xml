@@ -60,23 +60,35 @@
             android:layout_toRightOf="@+id/points_group_icon"
             android:layout_marginTop="@dimen/dp_15">
 
-        <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/points_sp_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-            style="@style/mySpinnerItemStyle"
-            android:popupBackground="@android:color/white"
-            />
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/points_sp_name"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_30"
+                android:text="CRICKET"
+                android:textSize="@dimen/dp_18"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                app:typeface="lato_bold"/>
+
+        <!--<android.support.v7.widget.AppCompatSpinner-->
+        <!--android:id="@+id/points_sp_group"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+            <!--style="@style/mySpinnerItemStyle"-->
+            <!--android:popupBackground="@android:color/white"-->
+            <!--/>-->
 
         <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/points_sp_sport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-            android:layout_below="@+id/points_sp_group"
+            android:layout_below="@+id/points_sp_name"
             style="@style/mySpinnerItemStyle"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_marginBottom="@dimen/dp_20"
             android:popupBackground="@android:color/white"
+            android:visibility="gone"
         />
 
         </RelativeLayout>
@@ -89,17 +101,17 @@
                 app:layout_collapseMode="pin"
                 app:selected_textSize="@dimen/dp_14"
                 app:selected_typeface="lato_bold"
-                app:tabBackground="@color/colorMedium"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/white"
                 app:tabIndicatorHeight="@dimen/dp_2"
-                app:tabMode="fixed"
+                app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextColor="@color/silver_chalice"
                 app:unselected_textSize="@dimen/dp_12"
                 app:unselected_typeface="lato_hairline"
                 android:layout_gravity="center_horizontal|top"
                 android:layout_below="@+id/points_rl2"
+                android:layout_marginTop="@dimen/dp_10"
                />
 
         </RelativeLayout>

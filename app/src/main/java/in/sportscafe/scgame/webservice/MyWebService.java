@@ -139,10 +139,9 @@ public class MyWebService extends AbstractWebService<ScGameService> {
         return mScGameService.getLeaderBoardSummary(ScGameDataHandler.getInstance().getUserId());
     }
 
-    public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Long groupId,
-                                                                 Integer sportsId,
-                                                                 String rankPeriod) {
-        return mScGameService.getLeaderBoardDetail(groupId, sportsId, rankPeriod);
+    public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Integer sportsId,Integer groupId,
+                                                                 Integer challengeId) {
+        return mScGameService.getLeaderBoardDetail(sportsId, groupId, challengeId);
     }
 
     public Call<ApiResponse> getGrpSportUpdateRequest(GroupSportUpdateRequest request) {

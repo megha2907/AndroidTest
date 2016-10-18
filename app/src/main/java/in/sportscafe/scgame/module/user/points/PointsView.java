@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import com.jeeva.android.InAppView;
 
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.common.ViewPagerAdapter;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 
 /**
@@ -13,11 +14,7 @@ import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
  */
 public interface PointsView extends InAppView {
 
-    void setGroupAdapter(ArrayAdapter<GroupInfo> groupAdapter, int initialGroupPosition);
+    void setName(String name);
 
-    void setSportAdapter(ArrayAdapter<TournamentInfo> sportAdapter, int initialSportPosition);
-
-    void initMyPosition();
-
-    void refreshLeaderBoard(Bundle bundle);
+    void initMyPosition(ViewPagerAdapter adapter, int selectedPosition);
 }

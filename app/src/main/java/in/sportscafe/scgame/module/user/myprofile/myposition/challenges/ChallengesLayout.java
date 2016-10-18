@@ -1,4 +1,4 @@
-package in.sportscafe.scgame.module.user.myprofile.myposition;
+package in.sportscafe.scgame.module.user.myprofile.myposition.challenges;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,20 +10,23 @@ import android.widget.TextView;
 import com.jeeva.android.Log;
 
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.ChallengesSummary;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.ChallengesTourSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.RankSummary;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.TourSummary;
 
 /**
- * Created by Jeeva on 13/6/16.
+ * Created by Deepanshi on 13/10/16.
  */
 public class ChallengesLayout extends FrameLayout {
 
-    private RankSummary mRankSummary;
+    private ChallengesTourSummary mtourSummary;
 
     private OnRankClickListener mOnRankClickListener;
 
-    public ChallengesLayout(Context context, RankSummary rankSummary, OnRankClickListener myPositionClickListener) {
+    public ChallengesLayout(Context context, ChallengesTourSummary tourSummary, OnRankClickListener myPositionClickListener) {
         super(context);
-        this.mRankSummary = rankSummary;
+        this.mtourSummary = tourSummary;
         mOnRankClickListener = myPositionClickListener;
         init();
     }
@@ -34,7 +37,7 @@ public class ChallengesLayout extends FrameLayout {
             @Override
             public void onClick(View view) {
                 if(null != mOnRankClickListener) {
-                    mOnRankClickListener.onClickRank(mRankSummary);
+                    mOnRankClickListener.onClickRank(mtourSummary);
                 }
             }
         });
@@ -47,25 +50,25 @@ public class ChallengesLayout extends FrameLayout {
 //                .setText(mRankSummary.getSportName());
 
         ImageView ivRankStatus = (ImageView) findViewById(R.id.challenges_row_iv_rank_status);
-        if(null == mRankSummary.getRankChange()) {
+        if(null == mtourSummary.getRankChange()) {
             ivRankStatus.setVisibility(View.INVISIBLE);
-        } else if(mRankSummary.getRankChange() < 0) {
+        } else if(mtourSummary.getRankChange() < 0) {
             ivRankStatus.setImageResource(R.drawable.status_arrow_down);
         } else {
             ivRankStatus.setImageResource(R.drawable.status_arrow_up);
         }
 
         TextView tvRank =(TextView) findViewById(R.id.challenges_row_tv_rank);
-        if(null == mRankSummary.getRank()) {
+        if(null == mtourSummary.getRank()) {
             tvRank.setVisibility(INVISIBLE);
             findViewById(R.id.challenges_tv_rank_label).setVisibility(INVISIBLE);
         } else {
-            tvRank.setText(String.valueOf(mRankSummary.getRank()));
+            tvRank.setText(String.valueOf(mtourSummary.getRank()));
         }
     }
 
     public interface OnRankClickListener {
 
-        void onClickRank(RankSummary rankSummary);
+        void onClickRank(ChallengesTourSummary tourSummary);
     }
 }

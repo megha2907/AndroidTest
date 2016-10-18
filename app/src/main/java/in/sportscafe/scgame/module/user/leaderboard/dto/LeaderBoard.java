@@ -2,105 +2,126 @@ package in.sportscafe.scgame.module.user.leaderboard.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+import java.util.List;
+
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupsTourSummary;
+
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class LeaderBoard {
+public class LeaderBoard implements Serializable {
 
-    @JsonProperty("user_id")
-    private Integer userId;
+    @JsonProperty("sports_id")
+    private Integer sportsId;
 
-    @JsonProperty("user_name")
-    private String userName;
+    @JsonProperty("challenge_id")
+    private Integer challengeId;
 
-    @JsonProperty("user_photo")
-    private String userPhoto;
+    @JsonProperty("group_id")
+    private Long groupId;
 
-    @JsonProperty("rank")
-    private Integer rank;
+    @JsonProperty("sports_name")
+    private String sportsName;
 
-    @JsonProperty("rank_change")
-    private Integer rankChange;
+    @JsonProperty("tournament_id")
+    private Integer tournamentId;
 
-    @JsonProperty("user_points")
-    private Long points;
+    @JsonProperty("tournament_name")
+    private String tournamentName;
+
+    @JsonProperty("tournament_img_url")
+    private String tournamentImageUrl;
+
+    @JsonProperty("users")
+    private List<UserLeaderBoard> userLeaderBoardList;
+
 
     /**
-     * @return The userId
+     * @return The sportsId
      */
-    @JsonProperty("user_id")
-    public Integer getUserId() {
-        return userId;
-    }
-
-    /**
-     * @param userId The user_id
-     */
-    @JsonProperty("user_id")
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    @JsonProperty("user_name")
-    public String getUserName() {
-        return userName;
-    }
-
-    @JsonProperty("user_name")
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-
-    @JsonProperty("user_photo")
-    public String getUserPhoto() {
-        return userPhoto;
-    }
-
-    @JsonProperty("user_photo")
-    public void setUserPhoto(String userPhoto) {
-        this.userPhoto = userPhoto;
+    @JsonProperty("sports_id")
+    public Integer getSportsId() {
+        return sportsId;
     }
 
     /**
-     * @return The rank
+     * @param sportsId The user_id
      */
-    @JsonProperty("rank")
-    public Integer getRank() {
-        return rank;
+    @JsonProperty("sports_id")
+    public void setSportsId(Integer sportsId) {
+        this.sportsId = sportsId;
     }
 
-    /**
-     * @param rank The rank
-     */
-    @JsonProperty("rank")
-    public void setRank(Integer rank) {
-        this.rank = rank;
+    @JsonProperty("tournament_id")
+    public Integer getTournamentId() {
+        return tournamentId;
     }
 
-    /**
-     * @return The rankChange
-     */
-    @JsonProperty("rank_change")
-    public Integer getRankChange() {
-        return rankChange;
+    @JsonProperty("tournament_id")
+    public void setTournamentId(Integer tournamentId) {
+        this.tournamentId = tournamentId;
     }
 
-    /**
-     * @param rankChange The rank_change
-     */
-    @JsonProperty("rank_change")
-    public void setRankChange(Integer rankChange) {
-        this.rankChange = rankChange;
+    @JsonProperty("tournament_name")
+    public String getTournamentName() {
+        return tournamentName;
     }
 
-    @JsonProperty("user_points")
-    public Long getPoints() {
-        return points;
+    @JsonProperty("tournament_name")
+    public void setTournamentName(String tournamentName) {
+        this.tournamentName = tournamentName;
     }
 
-    @JsonProperty("user_points")
-    public void setPoints(Long points) {
-        this.points = points;
+    @JsonProperty("tournament_img_url")
+    public String getTournamentImageUrl() {
+        return tournamentImageUrl;
     }
+
+    @JsonProperty("tournament_img_url")
+    public void setTournamentImageUrl(String tournamentImageUrl) {
+        this.tournamentImageUrl = tournamentImageUrl;
+    }
+
+
+    @JsonProperty("sports_name")
+    public String getSportsName() {
+        return sportsName;
+    }
+
+    @JsonProperty("sports_name")
+    public void setSportsName(String sportsName) {
+        this.sportsName = sportsName;
+    }
+
+    @JsonProperty("array_agg")
+    public List<UserLeaderBoard> getUserLeaderBoardList() {
+        return userLeaderBoardList;
+    }
+
+    @JsonProperty("array_agg")
+    public void setUserLeaderBoardList(List<UserLeaderBoard> userLeaderBoardList) {
+        this.userLeaderBoardList = userLeaderBoardList;
+    }
+
+    @JsonProperty("challenge_id")
+    public Integer getChallengeId() {
+        return challengeId;
+    }
+
+    @JsonProperty("challenge_id")
+    public void setChallengeId(Integer challengeId) {
+        this.challengeId = challengeId;
+    }
+
+    @JsonProperty("group_id")
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    @JsonProperty("group_id")
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
 }

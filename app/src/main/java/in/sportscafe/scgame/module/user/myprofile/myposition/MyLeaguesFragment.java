@@ -24,13 +24,16 @@ import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupSummary;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupsTourSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.RankSummary;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.SportSummary;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.TourSummary;
 import in.sportscafe.scgame.module.user.points.PointsActivity;
 
 /**
  * Created by Jeeva on 13/6/16.
  */
-public class MyLeaguesFragment extends ScGameFragment implements MyPositionLayout.OnRankClickListener,
+public class MyLeaguesFragment extends ScGameFragment implements MyGroupPositionLayout.OnRankClickListener,
         View.OnClickListener {
 
     private static final int CODE_GROUP_INFO = 23;
@@ -69,8 +72,8 @@ public class MyLeaguesFragment extends ScGameFragment implements MyPositionLayou
         List<String> grpSportKeys = new ArrayList<>();
         for (GroupSummary groupSummary : groupSummaryList) {
             grpSummaryMap.put(groupSummary.getGroupId(), groupSummary);
-            for (RankSummary rankSummary : groupSummary.getRanks()) {
-                grpSportKeys.add(groupSummary.getGroupId() + "" + rankSummary.getSportId());
+           for (GroupsTourSummary tourSummary : groupSummary.getTourSummaryList()) {
+                grpSportKeys.add(groupSummary.getGroupId() + "" + tourSummary.getTournamentId());
             }
         }
 
@@ -90,7 +93,7 @@ public class MyLeaguesFragment extends ScGameFragment implements MyPositionLayou
 
             for (TournamentInfo tournamentInfo : groupInfo.getFollowedTournaments()) {
                 if(!grpSportKeys.contains(groupId + "" + tournamentInfo.getTournamentId())) {
-                    groupSummary.addRank(new RankSummary(tournamentInfo.getTournamentId(), tournamentInfo.getTournamentName()));
+                    //groupSummary.addRank(new GroupsTourSummary(tournamentInfo.getTournamentId(), tournamentInfo.getTournamentName(),tournamentInfo.getTournamentName(),tournamentInfo.getSportsName(),tournamentInfo.getTournamentId(),tournamentInfo.getTournamentId(),tournamentInfo.getTournamentId(),tournamentInfo.getTournamentId(),tournamentInfo.getTournamentId()));
                 }
             }
 
@@ -109,23 +112,23 @@ public class MyLeaguesFragment extends ScGameFragment implements MyPositionLayou
                 .setText(groupSummary.getGroupName().substring(0,1));
 
         convertView.findViewById(R.id.league_row_ibtn_options).setTag(groupSummary);
-
-        List<RankSummary> ranks = groupSummary.getRanks();
-        if (null != ranks) {
-            LinearLayout llMyPositionParent = (LinearLayout) convertView.findViewById(R.id.league_row_ll_positions);
-            for (RankSummary rankSummary : ranks) {
-                rankSummary.setGroupId(groupSummary.getGroupId());
-                llMyPositionParent.addView(new MyPositionLayout(getContext(), rankSummary, this));
-            }
-        }
+//
+//        List<RankSummary> ranks = groupSummary.getRanks();
+//        if (null != ranks) {
+//            LinearLayout llMyPositionParent = (LinearLayout) convertView.findViewById(R.id.league_row_ll_positions);
+//            for (RankSummary rankSummary : ranks) {
+//                rankSummary.setGroupId(groupSummary.getGroupId());
+//                llMyPositionParent.addView(new MyPositionLayout(getContext(), rankSummary, this));
+//            }
+//        }
         return convertView;
     }
 
     @Override
-    public void onClickRank(RankSummary rankSummary) {
+    public void onClickRank(GroupsTourSummary tourSummary,GroupSummary groupSummary) {
         Bundle bundle = new Bundle();
-        bundle.putLong(Constants.BundleKeys.GROUP_ID, rankSummary.getGroupId());
-        bundle.putInt(Constants.BundleKeys.SPORT_ID, rankSummary.getSportId());
+        bundle.putLong(Constants.BundleKeys.GROUP_ID, groupSummary.getGroupId());
+        bundle.putInt(Constants.BundleKeys.SPORT_ID, tourSummary.getTournamentId());
 
         navigateToPointsActivity(bundle);
     }

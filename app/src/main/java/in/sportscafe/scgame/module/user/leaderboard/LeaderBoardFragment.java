@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameFragment;
 import in.sportscafe.scgame.module.user.leaderboard.dto.LeaderBoard;
@@ -24,12 +25,10 @@ public class LeaderBoardFragment extends ScGameFragment implements LeaderBoardVi
 
     private LeaderBoardPresenter mLeaderBoardPresenter;
 
-    private static final String KEY_TIME = "Time";
 
-
-    public static LeaderBoardFragment newInstance(String time) {
+    public static LeaderBoardFragment newInstance(LeaderBoard leaderBoard) {
         Bundle bundle = new Bundle();
-        bundle.putString(KEY_TIME, time);
+        bundle.putSerializable(Constants.BundleKeys.LEADERBOARD_LIST, leaderBoard);
 
         LeaderBoardFragment fragment = new LeaderBoardFragment();
         fragment.setArguments(bundle);

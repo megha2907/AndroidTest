@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
+
 /**
  * Created by Jeeva on 24/6/16.
  */
@@ -26,6 +28,13 @@ public class TournamentInfo implements Serializable{
 
     @JsonProperty("count_unplayed")
     private String CountsUnplayed;
+
+    public TournamentInfo() {
+    }
+
+    public TournamentInfo(int tournamentId) {
+        this.tournamentId = tournamentId;
+    }
 
 
     @JsonProperty("tournament_id")
@@ -78,7 +87,16 @@ public class TournamentInfo implements Serializable{
         CountsUnplayed = countsUnplayed;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        TournamentInfo tournamentInfo = (TournamentInfo) o;
+        return tournamentId == tournamentInfo.getTournamentId();
+    }
 
+    @Override
+    public String toString() {
+        return tournamentName;
+    }
 
 
 }

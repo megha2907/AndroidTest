@@ -113,9 +113,9 @@ public interface ScGameService {
     Call<LbSummaryResponse> getLeaderBoardSummary(@Path("userId") String userId);
 
     @GET("leaderboard/detail")
-    Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("group_id") Long groupId,
-                                                   @Query("sports_id") Integer sportId,
-                                                   @Query("user_rank_period") String rankPeriod);
+    Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("sports_id") Integer sportId,
+                                                   @Query("group_id") Integer groupId,
+                                                   @Query("challenge_id") Integer challengeId);
 
     @PUT("groups/sports")
     Call<ApiResponse> updateGroupSport(@Body GroupSportUpdateRequest request);

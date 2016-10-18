@@ -48,16 +48,6 @@ public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFee
     @Override
     public TournamentFeedAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = getLayoutInflater().inflate(R.layout.inflater_tournament_feed_row, parent, false);
-        view.setOnClickListener(new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-
-
-            }
-
-    });
-
         return new TournamentFeedAdapter.ViewHolder(view);
     }
 
@@ -68,7 +58,15 @@ public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFee
 
         holder.mTvTournamentName.setText(tournamentInfo.getTournamentName());
 
-        holder.mBtnTournamentUnplayedCount.setText(tournamentInfo.getCountsUnplayed());
+        if (tournamentInfo.getCountsUnplayed().equals("0")){
+
+            holder.mBtnTournamentUnplayedCount.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.mBtnTournamentUnplayedCount.setText(tournamentInfo.getCountsUnplayed());
+        }
+
 
         holder.mIvTournamentImage.setImageUrl(
                 tournamentInfo.getTournamentPhoto(),
