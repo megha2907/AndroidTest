@@ -15,5 +15,9 @@ public interface SportSelectionView extends View {
 
     void navigateToHome();
 
+    void navigateToEditProfile();
+
     void goBackWithSuccessResult();
+
+    void showToast();
 }

@@ -80,6 +80,11 @@ public class PointsModelImpl implements PointsModel {
     }
 
     @Override
+    public String getIcon() {
+        return mBaseSummary.getPhoto();
+    }
+
+    @Override
     public ViewPagerAdapter getAdapter() {
         return mViewPagerAdapter;
     }

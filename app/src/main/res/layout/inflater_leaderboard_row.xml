@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_60"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:background="@color/colorGrey">
 
-    <ImageView
-        android:id="@+id/leaderboard_row_iv_status"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:layout_weight="0.5"
-        android:src="@drawable/status_arrow_down"
- />
+    <View
+        android:id="@+id/leaderboard_row_view_user"
+        android:layout_width="@dimen/dp_3"
+        android:layout_height="fill_parent"
+        android:background="@color/btn_powerup_screen_color"
+        android:visibility="gone"/>
+
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/leaderboard_row_tv_rank"
@@ -22,14 +22,26 @@
         android:layout_weight="1"
         android:text="9"
         android:layout_marginLeft="@dimen/dp_15"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:typeface="lato_regular"/>
+
+    <ImageView
+        android:id="@+id/leaderboard_row_iv_status"
+        android:layout_width="@dimen/dp_5"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_1"
+        android:layout_weight="0.5"
+        android:src="@drawable/status_arrow_down"
+ />
+
 
     <in.sportscafe.scgame.module.common.RoundImage
         android:id="@+id/leaderboard_row_iv_user_img"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
-        android:src="@drawable/user_default"
-        android:layout_marginLeft="@dimen/dp_5"/>
+        android:src="@drawable/placeholder_icon"
+        android:layout_marginLeft="@dimen/dp_15"/>
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/leaderboard_row_tv_user_name"
@@ -39,7 +51,21 @@
         android:layout_marginLeft="@dimen/dp_15"
         android:layout_weight="8"
         android:text="Jeevanandham"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:typeface="lato_regular"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/leaderboard_row_tv_played"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_weight="1.5"
+        android:text="3"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:typeface="lato_regular"/>
 
     <ImageView
         android:id="@+id/leaderboard_row_iv_credits_img"
@@ -54,8 +80,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_3"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:text="9000"
-        android:textColor="@color/white"/>
+        android:textColor="@color/goldenyellowcolor"
+        android:textSize="@dimen/dp_14"
+        app:typeface="lato_regular"/>
 
 </LinearLayout>

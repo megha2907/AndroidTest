@@ -9,9 +9,13 @@ public interface ProfilePresenter {
 
     void onGetSportsSelectionResult();
 
+    void onGetUpdatedNumberofGroups();
+
     void onGetGroupCount();
 
     void onGetPowerUpsCount();
+
+    void onGetBadgesCount();
 
     void onEditProfileDone();
 

@@ -17,4 +17,6 @@ public interface PointsView extends InAppView {
     void setName(String name);
 
     void initMyPosition(ViewPagerAdapter adapter, int selectedPosition);
+
+    void setIcon(String icon);
 }

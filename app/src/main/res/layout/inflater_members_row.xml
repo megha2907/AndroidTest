@@ -30,18 +30,8 @@
         android:layout_toRightOf="@id/members_iv_photo"
         android:maxLines="1"
         android:textSize="@dimen/dp_18"
+        android:layout_centerVertical="true"
         android:textColor="@color/white"/>
 
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/members_tv_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/members_tv_name"
-        android:layout_marginTop="@dimen/dp_3"
-        android:layout_toLeftOf="@id/members_tv_admin_label"
-        android:layout_toRightOf="@id/members_iv_photo"
-        android:maxLines="1"
-        android:textSize="@dimen/dp_13"
-        android:textColor="@color/white"/>
 
 </RelativeLayout>

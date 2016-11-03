@@ -2,10 +2,13 @@ package in.sportscafe.scgame.module.user.sportselection;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,9 +23,11 @@ import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
 public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.ViewHolder> {
 
     private List<Integer> mSelectedSportsIdList;
+    private Context mContext;
 
     public SportSelectionAdapter(Context context, List<Integer> selectedSportsIdList) {
         super(context);
+        mContext=context;
         this.mSelectedSportsIdList = selectedSportsIdList;
     }
 
@@ -43,10 +48,16 @@ public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.
         holder.id = sport.getId();
         holder.mTvSport.setText(sport.getName());
 
-        if (mSelectedSportsIdList.contains((sport.getId()))) {
+        if (mSelectedSportsIdList.contains((sport.getId())))
+        {
+            holder.mTvSport.setTextColor(ContextCompat.getColor(mContext, R.color.btn_powerup_screen_color));
             holder.mIvSport.setImageResource(sport.getSelectedImageResource());
+            holder.mRlSport.setBackgroundResource(R.drawable.sport_colored_card_bg);
+
         } else {
             holder.mIvSport.setImageResource(sport.getImageResource());
+            holder.mTvSport.setTextColor(ContextCompat.getColor(mContext, R.color.textcolorlight));
+            holder.mRlSport.setBackgroundResource(R.drawable.card_bg);
         }
 
 
@@ -59,6 +70,8 @@ public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.
 
         View mMainView;
 
+        RelativeLayout mRlSport;
+
         ImageView mIvSport;
 
         TextView mTvSport;
@@ -66,6 +79,7 @@ public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
+            mRlSport=(RelativeLayout) V.findViewById(R.id.sport_row_rl);
             mIvSport = (ImageView) V.findViewById(R.id.sport_row_iv_sport_image);
             mTvSport = (TextView) V.findViewById(R.id.sport_row_tv_sport_name);
 

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_below="@+id/feed_row_space"
-        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_30"
         >
 
     </LinearLayout>

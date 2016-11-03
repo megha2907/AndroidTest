@@ -58,7 +58,7 @@ public class TournamentFeedModelImpl implements TournamentFeedModel {
 
     private void getAllTournamentsfromServer() {
         if(ScGame.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getTournaments(true).enqueue(
+            MyWebService.getInstance().getTournaments(false).enqueue(
                     new ScGameCallBack<TournamentsResponse>() {
                         @Override
                         public void onResponse(Call<TournamentsResponse> call, Response<TournamentsResponse> response) {
@@ -78,6 +78,10 @@ public class TournamentFeedModelImpl implements TournamentFeedModel {
                                     mTournamentFeedAdapter.addAll(ScGameDataHandler.getInstance().getTournaments());
 
                                     mTournamentFeedModelListener.onSuccessFeeds();
+                                }
+                                else
+                                {
+                                    mTournamentFeedModelListener.onFailedFeeds(response.message());
                                 }
 
                             } else {

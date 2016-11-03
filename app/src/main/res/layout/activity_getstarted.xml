@@ -10,12 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_5"
         android:gravity="center_horizontal"
-        android:layout_centerVertical="true"
-        android:text="Time to show you \n have a sixth sense for the sport"
-        android:textSize="@dimen/dp_20"
-        android:textColor="@color/white"/>
+        android:layout_below="@+id/imageView3"
+        android:text="Preview Version"
+        android:textSize="@dimen/dp_18"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        android:id="@+id/customTextView" />
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/activity_getstarted_btn_login"
@@ -23,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_40"
+        android:layout_marginBottom="@dimen/dp_100"
         android:layout_marginTop="@dimen/dp_10"
         android:background="?android:attr/selectableItemBackground"
         android:text="Already have an account? Login"
@@ -38,17 +40,26 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/activity_getstarted_btn_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/powerup_screen_btn_bg"
         android:paddingBottom="@dimen/dp_15"
         android:paddingLeft="@dimen/dp_30"
         android:paddingRight="@dimen/dp_30"
-        android:layout_marginRight="@dimen/dp_120"
+        android:layout_marginRight="@dimen/dp_140"
         android:paddingTop="@dimen/dp_15"
         android:text="GET STARTED"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/dp_20"
         app:typeface="lato_regular"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sportscafe_logo"
+        android:layout_marginTop="@dimen/dp_100"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/imageView3" />
 
 </RelativeLayout>

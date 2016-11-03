@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,16 +104,17 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
 
 
         Question question = getItem(position);
-        viewHolder.tvQuestionNumber.setText(question.getQuestionNumber() + "/" + mInitialCount);
+       //
+        //viewHolder.tvQuestionNumber.setText(question.getQuestionNumber() + "/" + mInitialCount);
 
         viewHolder.tvQuestion.setText(question.getQuestionText());
         viewHolder.tvContext.setText(question.getQuestionContext());
 
-        viewHolder.tvLeftOption.setText(question.getQuestionOption1());
+        //viewHolder.tvLeftOption.setText(question.getQuestionOption1());
         viewHolder.ivLeftOption.setImageUrl(question.getQuestionImage1(),
                 Volley.getInstance().getImageLoader(), false);
 
-        viewHolder.tvRightOption.setText(question.getQuestionOption2());
+        //viewHolder.tvRightOption.setText(question.getQuestionOption2());
         viewHolder.ivRightOption.setImageUrl(question.getQuestionImage2(),
                 Volley.getInstance().getImageLoader(), false);
         question.setPowerUpId("null");
@@ -126,12 +128,18 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
                 Question question = (Question) mViewHolderList.get(0).rlquestion.getTag();
                 question.setPowerUpId("2x");
 
-                mViewHolderList.get(0).rlquestion.setBackgroundColor(
+        mViewHolderList.get(0).rlquestion.setBackgroundColor(
                         ContextCompat.getColor(getContext(), R.color.alto));
 
-                Toast toast =Toast.makeText(getContext(), "2x Power Up applied", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
+
+//        Toast toast =Toast.makeText(getContext(), "2x Power Up applied", Toast.LENGTH_SHORT);
+//        toast.setGravity(Gravity.CENTER, 0, 0);
+//        toast.show();
+
+         mViewHolderList.get(0).btnpowerupicon.setVisibility(View.VISIBLE);
+
+
+
 
 
     }
@@ -161,19 +169,19 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
 
         RelativeLayout rlquestion;
 
-        TextView tvpowerUptext;
+        CustomButton btnpowerupicon;
 
         public ViewHolder(View rootView) {
-            cpbTimer = (CircularProgressBar) rootView.findViewById(R.id.swipe_card_cpb_timer);
-            tvQuestionNumber = (TextView) rootView.findViewById(R.id.swipe_card_tv_question_number);
+//            cpbTimer = (CircularProgressBar) rootView.findViewById(R.id.swipe_card_cpb_timer);
+//            tvQuestionNumber = (TextView) rootView.findViewById(R.id.swipe_card_tv_question_number);
             tvQuestion = (TextView) rootView.findViewById(R.id.swipe_card_tv_question);
             tvContext = (TextView) rootView.findViewById(R.id.swipe_card_tv_context);
-            tvLeftOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_left);
-            tvRightOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_right);
+//            tvLeftOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_left);
+//            tvRightOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_right);
             ivLeftOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_left);
             ivRightOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_right);
             rlquestion = (RelativeLayout) rootView.findViewById(R.id.swipe_relative_layout_question);
-            tvpowerUptext = (TextView) rootView.findViewById(R.id.swipe_card_tv_powerup);
+            btnpowerupicon = (CustomButton) rootView.findViewById(R.id.swipe_card_powerup_icon);
         }
     }
 

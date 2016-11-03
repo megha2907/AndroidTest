@@ -58,15 +58,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFee
 
         holder.mTvTournamentName.setText(tournamentInfo.getTournamentName());
 
-        if (tournamentInfo.getCountsUnplayed().equals("0")){
-
-            holder.mBtnTournamentUnplayedCount.setVisibility(View.GONE);
-        }
-        else
-        {
-            holder.mBtnTournamentUnplayedCount.setText(tournamentInfo.getCountsUnplayed());
-        }
-
+        holder.mTvTournamentUnplayedCount.setText(tournamentInfo.getTournamentSubtext());
 
         holder.mIvTournamentImage.setImageUrl(
                 tournamentInfo.getTournamentPhoto(),
@@ -85,7 +77,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFee
         View mMainView;
         TextView mTvTournamentName;
         HmImageView mIvTournamentImage;
-        CustomButton mBtnTournamentUnplayedCount;
+        TextView mTvTournamentUnplayedCount;
 
 
         public ViewHolder(View V) {
@@ -93,7 +85,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFee
             mMainView = V;
             mTvTournamentName = (TextView) V.findViewById(R.id.tournament_tv_tournamentName);
             mIvTournamentImage = (HmImageView) V.findViewById(R.id.tournament_iv_tournamentImage);
-            mBtnTournamentUnplayedCount = (CustomButton) V.findViewById(R.id.tournament_btn_count_unplayed);
+            mTvTournamentUnplayedCount = (TextView) V.findViewById(R.id.tournament_btn_count_unplayed);
 
             V.setOnClickListener(this);
         }

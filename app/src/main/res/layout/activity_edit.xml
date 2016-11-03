@@ -4,25 +4,34 @@
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="@color/black">
 
     <RelativeLayout
         android:id="@+id/rl1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_200"
         android:layout_alignParentTop="true"
-        android:background="@drawable/gradient_bg"
+        android:background="@color/colorBackground"
         >
 
 
         <ImageView
             android:id="@+id/edit_iv_user_image"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_100"
-            android:src="@drawable/user_default"
-            android:layout_marginTop="@dimen/dp_60"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dp_60"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/placeholder_icon"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:onClick="showImagePopup"
+            android:alpha="0.8"
+            />
+
+        <ImageView
+            android:id="@+id/edit_iv_camera_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/camera_icon"
+            android:layout_centerInParent="true"
             android:onClick="showImagePopup"
             />
 
@@ -30,17 +39,6 @@
 
     </RelativeLayout>
 
-    <com.jeeva.android.widgets.customfont.CustomButton
-        android:id="@+id/edit_btn_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        android:onClick="onClick"
-        android:text="CANCEL"
-        android:textAllCaps="false"
-        android:textSize="@dimen/dp_16"
-        android:textColor="@color/silver_chalice"
-        app:typeface="lato_hairline"/>
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/edit_btn_done"
@@ -61,65 +59,45 @@
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_edit_et_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_below="@id/rl1"
-        app:theme="@style/TextLabel">
-
-    <com.jeeva.android.widgets.customfont.CustomEditText
-        android:id="@+id/edit_et_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:hint="NAME"
-        android:textColorHint="@color/silver_chalice"
-        android:inputType="textPersonName"
-        android:textColor="@color/white"
-        android:maxLength="50"
-        android:imeOptions="actionNext"
-        android:backgroundTint="@color/silver_chalice"
-        app:typeface="lato_regular"
-        />
-    </android.support.design.widget.TextInputLayout>
-
-    <!--<com.jeeva.android.widgets.customfont.CustomEditText
-        android:id="@+id/edit_et_username"
-        android:layout_width="@dimen/dp_200"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edit_et_name"
-        android:layout_marginLeft="@dimen/dp_30"
-        android:layout_marginTop="@dimen/dp_10"
-        android:hint="UserName"
-        android:inputType="textPersonName"
-        android:maxLength="50"
-        android:visibility="gone"/>-->
-
-    <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_edit_et_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_below="@id/input_layout_edit_et_name"
-        app:theme="@style/TextLabel">
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_below="@+id/edit_tv"
+        app:theme="@style/TextLabel"
+        app:errorTextAppearance="@style/error_appearance">
 
     <com.jeeva.android.widgets.customfont.CustomEditText
         android:id="@+id/edit_et_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:hint="NICKNAME"
+        android:hint="Username"
         android:inputType="textPersonName"
         android:maxLength="50"
         android:textColor="@color/white"
-        android:backgroundTint="@color/silver_chalice"
-        android:textColorHint="@color/silver_chalice"
+        android:backgroundTint="@color/white"
+        android:textColorHint="@color/white"
         app:typeface="lato_regular"
+        android:textSize="@dimen/dp_16"
         />
     </android.support.design.widget.TextInputLayout>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/edit_tv"
+        android:text="Please update your profile information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl1"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/textcolorlight"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textSize="@dimen/dp_16"
+        />
 
     <!--<com.jeeva.android.widgets.customfont.CustomEditText
         android:id="@+id/edit_et_about"

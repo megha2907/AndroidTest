@@ -4,7 +4,27 @@
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="@color/black">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sportscafe_logo"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/sportscafe_logo"
+        android:layout_marginTop="@dimen/dp_80"
+     />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/login_label_pregame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sportscafe_logo"
+        android:text="PreGAME"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_18"
+        app:typeface="lato_regular"
+        android:layout_centerHorizontal="true"/>
 
     <android.support.v4.widget.Space
         android:id="@+id/login_center_space"
@@ -18,120 +38,82 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/login_center_space"
         android:layout_centerHorizontal="true"
-        android:text="Sign Up With"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_40"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:text="Sign in and join the action!"
         android:textColor="@color/white"
-        android:textSize="@dimen/dp_14"
-        app:typeface="montserrat" />
+        android:textSize="@dimen/dp_16"
+        app:typeface="lato_regular" />
 
-    <View
-        android:layout_width="@dimen/dp_90"
-        android:layout_height="@dimen/dp_0.7"
-        android:layout_alignTop="@+id/login_label_sign_up"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_8"
-        android:layout_toLeftOf="@+id/login_label_sign_up"
-        android:alpha="0.6"
-        android:background="@color/white" />
 
-    <View
-        android:layout_width="@dimen/dp_90"
-        android:layout_height="@dimen/dp_0.7"
-        android:layout_alignTop="@+id/login_label_sign_up"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_8"
-        android:layout_toRightOf="@+id/login_label_sign_up"
-        android:alpha="0.6"
-        android:background="@color/white" />
-
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/login_label_for_sports"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/login_label_sign_up"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_120"
-        android:text="For Sports"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dp_28"
-        app:typeface="montserrat" />
-
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/login_label_sixth_sense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/login_label_for_sports"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_3"
-        android:text="Show off your sixth sense"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dp_14"
-        app:typeface="montserrat" />
 
     <RelativeLayout
         android:id="@+id/login_btn_fb"
-        android:layout_width="@dimen/dp_280"
-        android:layout_height="@dimen/dp_40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/login_center_space"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/chambray_round_rect_fill">
+        android:background="@drawable/facebook_sc_icon">
 
         <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_25"
             android:src="@drawable/fb_login_icon" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Facebook"
+            android:text="Sign in with Facebook"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_16"
-            app:typeface="roboto" />
+            app:typeface="lato_regular" />
+
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/login_btn_google"
-        android:layout_width="@dimen/dp_280"
-        android:layout_height="@dimen/dp_40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/login_btn_fb"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_20"
-        android:background="@drawable/valencia_round_rect_fill">
+        android:layout_marginTop="@dimen/dp_15"
+        android:background="@drawable/google_sc_icon">
 
         <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginLeft="@dimen/dp_25"
             android:src="@drawable/gplus_login_icon" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Google Account"
+            android:text="Sign in with Google+"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_16"
-            app:typeface="roboto" />
+            app:typeface="lato_regular" />
 
     </RelativeLayout>
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login_btn_google"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_20"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_20"
-        android:text="We will never post anything without your permission"
-        android:textColor="@color/white"
+        android:text="By continuing, you agree to our Terms and Privacy Policy"
+        android:textColor="@color/textcolorlight"
         android:textSize="@dimen/dp_12"
-        app:typeface="roboto" />
+        app:typeface="lato_regular" />
 
 </RelativeLayout>

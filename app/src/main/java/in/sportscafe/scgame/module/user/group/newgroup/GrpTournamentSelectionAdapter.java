@@ -2,26 +2,30 @@ package in.sportscafe.scgame.module.user.group.newgroup;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
 
 /**
  * Created by rb on 30/11/15.
  */
 public class GrpTournamentSelectionAdapter extends Adapter<TournamentInfo, GrpTournamentSelectionAdapter.ViewHolder> {
 
-    private Context context;
+    private Context mcontext;
 
     private List<Integer> mSelectedTournamentsIdList;
 
@@ -29,13 +33,14 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentInfo, GrpTo
 
     public GrpTournamentSelectionAdapter(Context context, List<Integer> SelectedTournamentsIdList) {
         super(context);
+        mcontext=context;
         this.mSelectedTournamentsIdList = SelectedTournamentsIdList;
-        this.context=context;
     }
 
     public GrpTournamentSelectionAdapter(Context context, List<Integer> SelectedTournamentsIdList,
                                          OnGrpTournamentChangedListener listener) {
         super(context);
+        mcontext=context;
         this.mSelectedTournamentsIdList = SelectedTournamentsIdList;
         this.mChangedListener = listener;
     }
@@ -54,21 +59,33 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentInfo, GrpTo
     public void onBindViewHolder(ViewHolder holder, int position) {
         TournamentInfo tournamentInfo = getItem(position);
 
-        holder.id = tournamentInfo.getTournamentId();
-        holder.mTvSport.setText(tournamentInfo.getTournamentName());
+//        for (Sport sport: ScGameDataHandler.getInstance().getAllSports()){
+//
+//            if (sport.getName().equals(tournamentInfo.getSportsName())){
+//                holder.mIvSport.setBackgroundResource(sport.getImageResource());
+//            }
+//        }
 
-        Picasso.with(context)
+        Log.i("isnide","bindviewholder");
+
+        holder.id = tournamentInfo.getTournamentId();
+        holder.mTvTournament.setText(tournamentInfo.getTournamentName());
+        holder.mTvSport.setText(tournamentInfo.getSportsName());
+
+        Picasso.with(mcontext)
                 .load(tournamentInfo.getTournamentPhoto())
-                .into(holder.mIvSport);
+                .placeholder(R.drawable.placeholder_icon)
+                .into(holder.mIvTournament);
+
 
         if (mSelectedTournamentsIdList.contains((tournamentInfo.getTournamentId()))) {
-             holder.mMainView.setBackgroundResource(R.drawable.sports_selection_shape);
-             holder.mTvSport.setTextColor(Color.BLACK);
-             holder.mTvSport.setAlpha((float) 0.9);
+             holder.mIvSelectedIcon.setBackgroundResource(R.drawable.tick_icon);
+             holder.mTvTournament.setTextColor(mcontext.getResources().getColor(R.color.btn_powerup_screen_color));
+             holder.mTvTournament.setAlpha((float) 0.9);
 
         } else {
-            holder.mMainView.setBackgroundColor(Color.TRANSPARENT);
-            holder.mTvSport.setTextColor(Color.WHITE);
+            holder.mTvTournament.setTextColor(Color.WHITE);
+            holder.mIvSelectedIcon.setBackgroundResource(R.drawable.add_icon);
         }
 
     }
@@ -80,14 +97,18 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentInfo, GrpTo
         View mMainView;
 
         // CheckBox mCbSport;
-        ImageView mIvSport;
         TextView mTvSport;
+        ImageView mIvTournament;
+        ImageView mIvSelectedIcon;
+        TextView mTvTournament;
 
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
-            mIvSport = (ImageView) V.findViewById(R.id.group_sport_row_image_sport);
-            mTvSport = (TextView) V.findViewById(R.id.group_sport_row_tv_sport);
+            mIvTournament = (ImageView) V.findViewById(R.id.group_sport_row_image_tournament);
+            mTvSport = (TextView) V.findViewById(R.id.group_sport_row_tv_sport_name);
+            mIvSelectedIcon = (ImageView) V.findViewById(R.id.group_sport_row_selected_icon);
+            mTvTournament = (TextView) V.findViewById(R.id.group_sport_row_tv_tournament_name);
             V.setOnClickListener(this);
         }
 
@@ -101,7 +122,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentInfo, GrpTo
                 } else {
                     mSelectedTournamentsIdList.add(id);
                 }
-                notifyDataSetChanged();
+                notifyItemChanged(getAdapterPosition());
 
                 if(null != mChangedListener) {
                     mChangedListener.onGrpTournamentChanged(mSelectedTournamentsIdList);

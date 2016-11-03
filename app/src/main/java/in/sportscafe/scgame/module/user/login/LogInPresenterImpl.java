@@ -63,7 +63,7 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
         if(mLogInModel.isPreferenceDone()) {
             mLogInView.navigateToHome();
         } else {
-            mLogInView.navigateToSports();
+            mLogInView.navigateToEditProfile();
         }
     }
 

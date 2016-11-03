@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.common.SpacesItemDecoration;
 import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
+import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
 
 /**
  * Created by Jeeva on 27/5/16.
@@ -22,6 +26,8 @@ public class SportSelectionActivity extends ScGameActivity implements SportSelec
     private RecyclerView mRvSportSelection;
 
     private SportSelectionPresenter mSportSelectionPresenter;
+
+    private Bundle mbundle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +40,8 @@ public class SportSelectionActivity extends ScGameActivity implements SportSelec
         this.mRvSportSelection.setHasFixedSize(true);
         this.mSportSelectionPresenter = SportSelectionPresenterImpl.newInstance(this);
         this.mSportSelectionPresenter.onCreateSportSelection(getIntent().getExtras());
+
+        mbundle = getIntent().getExtras();
     }
 
     @Override
@@ -54,10 +62,28 @@ public class SportSelectionActivity extends ScGameActivity implements SportSelec
     }
 
     @Override
+    public void navigateToEditProfile() {
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+
+    @Override
     public void goBackWithSuccessResult() {
         setResult(RESULT_OK);
         onBackPressed();
     }
+
+    @Override
+    public void showToast() {
+        Toast toast =Toast.makeText(getContext(), Constants.Alerts.EMPTY_SPORT_SELECTION, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -66,7 +92,12 @@ public class SportSelectionActivity extends ScGameActivity implements SportSelec
                 mSportSelectionPresenter.onClickNext();
                 break;
             case R.id.sport_selection_btn_back:
-                finish();
+                if(null != mbundle && mbundle.containsKey(Constants.BundleKeys.FROM_PROFILE)) {
+                    goBackWithSuccessResult();
+                }
+                else {
+                    navigateToEditProfile();
+                }
                 break;
         }
     }

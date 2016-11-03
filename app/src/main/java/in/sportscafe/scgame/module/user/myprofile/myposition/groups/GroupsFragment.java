@@ -89,7 +89,7 @@ public class GroupsFragment extends ScGameFragment implements GroupsLayout.OnRan
                 newTourSummary = new GroupsTourSummary(oldTourSummary.getTournamentId(), oldTourSummary.getTournamentName(),
                         oldTourSummary.getTournamentImageUrl(), oldTourSummary.getRank() ,oldTourSummary.getRankChange(),
                         groupSummary.getOverallRank(),groupSummary.getOverallRankChange(),groupSummary.getGroupId(),
-                        groupSummary.getGroupName());
+                        groupSummary.getGroupName(),oldTourSummary.getGroupIcon());
                 newTourSummary.setSummaryList(tempTourSummaryList);
 
                 tempTourSummaryList.add(newTourSummary);

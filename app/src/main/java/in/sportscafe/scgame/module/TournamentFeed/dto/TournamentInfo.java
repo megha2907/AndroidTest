@@ -29,6 +29,9 @@ public class TournamentInfo implements Serializable{
     @JsonProperty("count_unplayed")
     private String CountsUnplayed;
 
+    @JsonProperty("tournament_subtext")
+    private String tournamentSubtext;
+
     public TournamentInfo() {
     }
 
@@ -85,6 +88,16 @@ public class TournamentInfo implements Serializable{
     @JsonProperty("count_unplayed")
     public void setCountsUnplayed(String countsUnplayed) {
         CountsUnplayed = countsUnplayed;
+    }
+
+    @JsonProperty("tournament_subtext")
+    public String getTournamentSubtext() {
+        return tournamentSubtext;
+    }
+
+    @JsonProperty("tournament_subtext")
+    public void setTournamentSubtext(String tournamentSubtext) {
+        this.tournamentSubtext = tournamentSubtext;
     }
 
     @Override

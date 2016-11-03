@@ -12,18 +12,37 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
+import com.jeeva.android.volley.Volley;
+import com.jeeva.android.widgets.customfont.CustomButton;
+import com.jeeva.android.widgets.customfont.CustomTextView;
+import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.ScGame;
+import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.common.SpacesItemDecoration;
 import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.user.group.admin.adminmembers.AdminMembersActivity;
+import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
+import in.sportscafe.scgame.module.user.group.allgroups.AllGroupsActivity;
+import in.sportscafe.scgame.module.user.group.editgroupinfo.EditGroupInfoActivity;
 import in.sportscafe.scgame.module.user.group.members.MembersActivity;
 import in.sportscafe.scgame.module.user.group.newgroup.GrpSportSelectionAdapter;
 import in.sportscafe.scgame.module.user.group.newgroup.GrpTournamentSelectionAdapter;
+import in.sportscafe.scgame.module.user.login.dto.UserInfo;
+import in.sportscafe.scgame.module.user.myprofile.dto.UserInfoResponse;
+import in.sportscafe.scgame.webservice.MyWebService;
+import in.sportscafe.scgame.webservice.ScGameCallBack;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -31,15 +50,19 @@ import in.sportscafe.scgame.module.user.group.newgroup.GrpTournamentSelectionAda
 public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
         View.OnClickListener {
 
+    private static final int CODE_GROUP_INFO = 10;
+
     private static final int CODE_ADMIN_MEMBERS = 3;
 
     private EditText mEtGroupName;
 
-    private ImageButton mIBtnEditName;
+    private ImageButton mIBtnEditProfile;
+
+    private TextView mTvGroupName;
 
     private TextView mEtMembersCount;
 
-    private Button mBtnGroupIcon;
+    private ImageView mIvGroupIcon;
 
     private RecyclerView mRvSportSelection;
 
@@ -49,11 +72,14 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
 
     private Toolbar mtoolbar;
 
+    private Bundle mBundle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_info);
 
+        getUserInfoFromServer();
         initToolBar();
 
         findViewById(R.id.group_info_ll_share).setOnLongClickListener(new View.OnLongClickListener() {
@@ -65,79 +91,99 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
             }
         });
 
-        mEtGroupName = (EditText) findViewById(R.id.group_info_et_name);
-        mEtGroupName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_DONE
-                        || event.getAction() == KeyEvent.ACTION_DOWN
-                        && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    mGroupInfoPresenter.onDoneGroupName(getTrimmedText(mEtGroupName));
-                }
-                return true;
-            }
-        });
-
-        mIBtnEditName = (ImageButton) findViewById(R.id.group_info_btn_edit_name);
-
-        mEtMembersCount = (EditText) findViewById(R.id.group_info_et_label_members);
+        mEtMembersCount = (TextView) findViewById(R.id.group_info_tv_edit_members);
 
         this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_rcv);
-        this.mRvSportSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
-        this.mRvSportSelection.setLayoutManager(new GridLayoutManager(this, 3));
+        this.mRvSportSelection.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false));
         this.mRvSportSelection.setHasFixedSize(true);
         this.mGroupInfoPresenter = GroupInfoPresenterImpl.newInstance(this);
         this.mGroupInfoPresenter.onCreateGroupInfo(getIntent().getExtras());
 
+        mBundle=getIntent().getExtras();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            /*case R.id.group_info_btn_delete_group:
-                mGroupInfoPresenter.onClickDeleteGroup();
-                break;*/
-//            case R.id.group_info_btn_leave_group:
-//                mGroupInfoPresenter.onClickLeaveGroup();
-//                break;
-            case R.id.group_info_btn_edit_members:
+
+            case R.id.edit_profile_btn:
+                navigatetoEditGroupInfoActivity();
+                break;
+
+            case R.id.group_info_tv_edit_members:
                 mGroupInfoPresenter.onClickMembers();
                 break;
             case R.id.group_info_ll_share:
                 mGroupInfoPresenter.onClickShareCode();
                 break;
-            case R.id.group_info_btn_edit_name:
-                mEtGroupName.setEnabled(true);
-                mIBtnEditName.setVisibility(View.GONE);
-                break;
+
         }
+    }
+
+    private void navigatetoEditGroupInfoActivity() {
+
+        Intent intent =  new Intent(this, EditGroupInfoActivity.class);
+        Bundle mBundleNew = new Bundle();
+        mBundleNew.putString(Constants.BundleKeys.GROUP_ID, mBundle.getString(Constants.BundleKeys.GROUP_ID));
+        mBundleNew.putString(Constants.BundleKeys.GROUP_NAME, mBundle.getString(Constants.BundleKeys.GROUP_NAME));
+        intent.putExtras(mBundleNew);
+        startActivityForResult(intent,CODE_GROUP_INFO);
     }
 
     @Override
     public void setGroupName(String groupName) {
-        mEtGroupName.setText(groupName);
+
+        if (null==groupName||groupName.isEmpty())
+        {
+            mTvGroupName.setText("Group Info");
+        }
+        else
+        {
+            Log.i("SETGROUPNAMEtitle",groupName);
+            mTvGroupName.setText(groupName);
+        }
     }
 
     @Override
-    public void setGroupIcon(String groupIcon) {
-        mBtnGroupIcon = (Button) findViewById(R.id.group_info_iv_user_image);
-        mBtnGroupIcon.setText(groupIcon);
+    public void setGroupIcon(String groupPhotoUrl) {
+        mIvGroupIcon = (ImageView) findViewById(R.id.group_iv_user_image);
+
+        if (null==groupPhotoUrl) {
+
+            mIvGroupIcon.setBackgroundResource(R.drawable.placeholder_icon);
+        }
+        else
+        {
+            Picasso.with(this)
+                    .load(groupPhotoUrl)
+                    .into(mIvGroupIcon);
+        }
+
     }
 
     @Override
     public void setMembersSize(int size) {
-        mEtMembersCount.setText(String.valueOf(size));
+
+        if (size==1){
+            mEtMembersCount.setText(String.valueOf(size)+" Member");
+        }
+        else
+        {
+            mEtMembersCount.setText(String.valueOf(size)+" Members");
+        }
     }
 
     @Override
-    public void setAdapter(GrpTournamentSelectionAdapter adapter) {
+    public void setAdapter(GroupTournamentAdapter adapter) {
         this.mRvSportSelection.setAdapter(adapter);
     }
 
     @Override
     public void setGroupCode(String groupCode) {
-        TextView textView = (TextView) findViewById(R.id.group_info_tv_share_code);
-        textView.setText(groupCode);
+        CustomButton groupCodebtn = (CustomButton) findViewById(R.id.group_info_ll_share);
+        groupCodebtn.setVisibility(View.VISIBLE);
+        groupCodebtn.setTag(groupCode);
     }
 
     @Override
@@ -148,7 +194,6 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     @Override
     public void disableEdit() {
         mEtGroupName.setEnabled(false);
-        mIBtnEditName.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -168,8 +213,8 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     @Override
     public void navigateToHome() {
         Intent intent = new Intent(getContext(), HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -179,6 +224,9 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
         if(RESULT_OK == resultCode && CODE_ADMIN_MEMBERS == requestCode) {
             mGroupInfoPresenter.onGetMemberResult();
         }
+        else if(CODE_GROUP_INFO == requestCode) {
+            mGroupInfoPresenter.onCreateGroupInfo(mBundle);
+        }
     }
 
     @Override
@@ -186,19 +234,69 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
         setResult(RESULT_OK);
     }
 
+    @Override
+    public void goBackWithSuccessResult() {
+        setResult(RESULT_OK);
+        onBackPressed();
+    }
+
     public void initToolBar() {
         mtoolbar = (Toolbar) findViewById(R.id.group_info_toolbar);
-        mtoolbar.setTitle("Group Info");
+        mIBtnEditProfile = (ImageButton) mtoolbar.findViewById(R.id.edit_profile_btn);
+        mTvGroupName=(TextView)mtoolbar.findViewById(R.id.group_name);
         setSupportActionBar(mtoolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
         mtoolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        finish();
+                        goBackWithSuccessResult();
                     }
                 }
 
         );
+    }
+
+    private void navigateToAllGroups() {
+        Intent intent = new Intent(this, AllGroupsActivity.class);
+        startActivity(intent);
+    }
+
+
+    private void getUserInfoFromServer() {
+        if (ScGame.getInstance().hasNetworkConnection()) {
+            MyWebService.getInstance().getUserInfoRequest(ScGameDataHandler.getInstance().getUserId()).enqueue(
+                    new ScGameCallBack<UserInfoResponse>() {
+                        @Override
+                        public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
+                            if (response.isSuccessful()) {
+                                UserInfo updatedUserInfo = response.body().getUserInfo();
+
+                                if (null != updatedUserInfo) {
+
+                                    ScGameDataHandler.getInstance().setUserInfo(updatedUserInfo);
+                                    ScGameDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
+                                    ScGameDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
+
+
+                                    List<AllGroups> newAllGroups = updatedUserInfo.getAllGroups();
+                                    if (null != newAllGroups && newAllGroups.size() > 0) {
+                                        List<AllGroups> oldAllGroupsList = ScGameDataHandler.getInstance().getAllGroups();
+                                        oldAllGroupsList.clear();
+                                        for (AllGroups allGroups : newAllGroups) {
+                                            if (!oldAllGroupsList.contains(allGroups)) {
+                                                oldAllGroupsList.add(allGroups);
+                                            }
+                                        }
+                                        ScGameDataHandler.getInstance().setAllGroups(oldAllGroupsList);
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+            );
+        }
     }
 }

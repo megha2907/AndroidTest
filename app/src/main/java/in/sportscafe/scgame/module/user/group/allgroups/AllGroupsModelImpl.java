@@ -30,10 +30,16 @@ public class AllGroupsModelImpl implements AllGroupsModel{
     @Override
     public RecyclerView.Adapter getAllGroupsAdapter(Context context) {
 
-//        mAllGroupsAdapter = new AllGroupsAdapter(context,
-//                mScGameDataHandler.getFavoriteSportsIdList());
+        if(mScGameDataHandler.getAllGroups().isEmpty()){
+
+            mAllGroupsModelListener.onAllGroupsEmpty();
+        }
+
+        mAllGroupsAdapter = new AllGroupsAdapter(context,
+                mScGameDataHandler.getAllGroups());
         return mAllGroupsAdapter;
     }
+
 
 
     public interface AllGroupsModelListener {
@@ -41,5 +47,7 @@ public class AllGroupsModelImpl implements AllGroupsModel{
         void onNoInternet();
 
         void onFailed(String message);
+
+        void onAllGroupsEmpty();
     }
 }

@@ -15,6 +15,9 @@ public class BaseSummary implements Serializable, ParentListItem {
     @JsonIgnore
     private String name;
 
+    @JsonIgnore
+    private String photo;
+
     @JsonProperty("tournament_id")
     private Integer tournamentId;
 
@@ -45,8 +48,9 @@ public class BaseSummary implements Serializable, ParentListItem {
     public BaseSummary() {
     }
 
-    public BaseSummary(String name, Integer tournamentId, String tournamentName, String tournamentImageUrl, Integer rank, Integer rankChange, Integer overallRank, Integer overallRankChange) {
+    public BaseSummary(String name,String photo, Integer tournamentId, String tournamentName, String tournamentImageUrl, Integer rank, Integer rankChange, Integer overallRank, Integer overallRankChange) {
         this.name = name;
+        this.photo = photo;
         this.tournamentId = tournamentId;
         this.tournamentName = tournamentName;
         this.tournamentImageUrl=tournamentImageUrl;
@@ -64,6 +68,16 @@ public class BaseSummary implements Serializable, ParentListItem {
     @JsonIgnore
     public void setName(String name) {
         this.name = name;
+    }
+
+    @JsonIgnore
+    public String getPhoto() {
+        return photo;
+    }
+
+    @JsonIgnore
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     @JsonProperty("tournament_id")

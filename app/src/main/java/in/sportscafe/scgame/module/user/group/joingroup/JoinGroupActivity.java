@@ -239,7 +239,7 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        finish();
+                        onBackPressed();
                     }
                 }
 

@@ -34,4 +34,14 @@ public interface PredictionView extends InAppView {
     void dismissPowerUp();
 
     void navigateToAllDone(Bundle bundle);
+
+    void setLeftOption(String questionOption1);
+
+    void setRightOption(String questionOption2);
+
+    void setMatchStage(String matchStage);
+
+    void setTournamentPhoto(String tournamentPhoto);
+
+    void setNumberofCards(int itemsInAdapter);
 }

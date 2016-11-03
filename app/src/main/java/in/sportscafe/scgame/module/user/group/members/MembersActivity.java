@@ -27,7 +27,7 @@ public class MembersActivity extends ScGameActivity {
                 .beginTransaction()
                 .replace(R.id.admin_members_fl_members_holder,
                         MembersFragment.newInstance(getIntent()
-                                .getLongExtra(Constants.BundleKeys.GROUP_ID, -1)))
+                                .getStringExtra(Constants.BundleKeys.GROUP_ID)))
                 .commit();
 
         initToolBar();

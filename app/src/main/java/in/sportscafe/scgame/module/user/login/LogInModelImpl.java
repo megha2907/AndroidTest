@@ -2,8 +2,8 @@ package in.sportscafe.scgame.module.user.login;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
 import com.jeeva.android.facebook.user.FacebookProfile;
 import com.jeeva.android.facebook.user.GetProfileModelImpl;
@@ -90,6 +90,7 @@ public class LogInModelImpl implements LogInModel {
 
     @Override
     public boolean isPreferenceDone() {
+        Log.d(TAG, ScGameDataHandler.getInstance().getFavoriteSportsIdList() + "");
         return ScGameDataHandler.getInstance().getFavoriteSportsIdList().size() > 0;
     }
 
@@ -134,11 +135,16 @@ public class LogInModelImpl implements LogInModel {
         scGameDataHandler.setUserId(userInfo.getId().toString());
         scGameDataHandler.setCookie(userInfo.getCookie());
         scGameDataHandler.setNumberofPowerups(userInfo.getPowerUps().get("2x"));
+        scGameDataHandler.setNumberofBadges(userInfo.getBadges().size());
         userInfo.setPoints(100L);
         Log.i("powerups", String.valueOf(userInfo.getPowerUps().get("2x")));
         scGameDataHandler.setUserInfo(userInfo);
-//        mLogInModelListener.onLoginCompleted();
-        getUserPreference();
+
+
+        scGameDataHandler.setFavoriteSportsIdList(userInfo.getUserSports());
+
+        mLogInModelListener.onLoginCompleted();
+//        getUserPreference();
     }
 
     private void getUserPreference() {

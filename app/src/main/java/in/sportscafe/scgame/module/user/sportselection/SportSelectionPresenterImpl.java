@@ -1,6 +1,8 @@
 package in.sportscafe.scgame.module.user.sportselection;
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import in.sportscafe.scgame.Constants;
 
@@ -56,7 +58,7 @@ public class SportSelectionPresenterImpl implements SportSelectionPresenter, Spo
     @Override
     public void onEmptySelection() {
         mSportSelectionView.dismissProgressbar();
-        mSportSelectionView.showMessage(Constants.Alerts.EMPTY_SPORT_SELECTION);
+        mSportSelectionView.showToast();
     }
 
     @Override

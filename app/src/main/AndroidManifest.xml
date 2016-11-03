@@ -103,6 +103,11 @@
 
         <activity
             android:name=".module.user.group.newgroup.NewGroupActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+
+        <activity
+            android:name=".module.user.group.allgroups.AllGroupsActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -111,6 +116,11 @@
 
         <activity
             android:name=".module.user.group.groupinfo.GroupInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name=".module.user.group.editgroupinfo.EditGroupInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
@@ -180,7 +190,7 @@
         <!-- MANDATORY FIELD: SENDER ID , i.e. THE PROJECT NUMBER AS MENTIONED ON GOOGLE CLOUD CONSOLE PROJECTS PAGE -->
         <meta-data
             android:name="SENDER_ID"
-            android:value="id:93923683436" />
+            android:value="id:576361348926" />
 
         <!-- MANDATORY FIELD: THE NOTIFICATION SMALL ICON WHICH WILL BE USED TO SET TO NOTIFICATIONS POSTED -->
         <meta-data

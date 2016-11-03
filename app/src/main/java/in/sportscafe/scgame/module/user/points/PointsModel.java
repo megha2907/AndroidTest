@@ -18,6 +18,8 @@ public interface PointsModel {
 
     String getName();
 
+    String getIcon();
+
     ViewPagerAdapter getAdapter();
 
     void refreshLeaderBoard();

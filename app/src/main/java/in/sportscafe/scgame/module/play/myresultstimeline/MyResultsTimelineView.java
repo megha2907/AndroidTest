@@ -13,4 +13,5 @@ public interface MyResultsTimelineView extends InAppView {
     void moveAdapterPosition(int movePosition);
 
     void dismissSwipeRefresh();
+
 }
