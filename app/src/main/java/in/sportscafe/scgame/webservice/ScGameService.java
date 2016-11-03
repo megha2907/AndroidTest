@@ -125,4 +125,7 @@ public interface ScGameService {
 
     @PUT("groups")
     Call<ApiResponse> updateGroupName(@Body GroupNameUpdateRequest request);
+
+    @GET("users/{user_id}/groups/{group_id}/info")
+    Call<GroupSummaryResponse> getGroupSummary(@Path("user_id") String userId,@Path("group_id") Integer groupId);
 }

@@ -25,18 +25,19 @@ public class GrpNameUpdateModelImpl {
         this.mGrpNameUpdateModelListener = listener;
     }
 
-    public void updateGrpName(String name) {
+    public void updateGrpName(String name,String photo) {
         if (ScGame.getInstance().hasNetworkConnection()) {
-            callGrpNameUpdateApi(name);
+            callGrpNameUpdateApi(name,photo);
         } else {
             mGrpNameUpdateModelListener.onNoInternet();
         }
     }
 
-    private void callGrpNameUpdateApi(final String name) {
+    private void callGrpNameUpdateApi(final String name,String photo) {
         GroupNameUpdateRequest groupNameUpdateRequest = new GroupNameUpdateRequest();
         groupNameUpdateRequest.setAdminId(ScGameDataHandler.getInstance().getUserId());
         groupNameUpdateRequest.setGroupId(mGroupId);
+        groupNameUpdateRequest.setGroupPhoto(photo);
         groupNameUpdateRequest.setGroupName(name);
 
         MyWebService.getInstance().getGrpNameUpdateRequest(groupNameUpdateRequest).enqueue(

@@ -26,7 +26,7 @@ public class AdminMembersActivity extends ScGameActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.admin_members_fl_members_holder,
-                AdminMembersFragment.newInstance(getIntent().getLongExtra(BundleKeys.GROUP_ID, -1)))
+                AdminMembersFragment.newInstance(getIntent().getStringExtra(BundleKeys.GROUP_ID)))
                 .commit();
 
         initToolBar();

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import com.jeeva.android.Log;
+import java.util.List;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
@@ -33,6 +33,8 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         mPredictionModel.saveData(bundle);
         mPredictionView.setTournamentName(mPredictionModel.getTournamentName());
         mPredictionView.setContestName(mPredictionModel.getContestName());
+        mPredictionView.setMatchStage(mPredictionModel.getMatchStage());
+        mPredictionView.setTournamentPhoto(mPredictionModel.getTournamentPhoto());
     }
 
     @Override
@@ -59,14 +61,14 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onShowingLastQuestion() {
         mPredictionView.hidePass();
-        mPredictionView.showLastQuestionAlert();
+        //mPredictionView.showLastQuestionAlert();
     }
 
     @Override
     public void onShowingPassedQuestions() {
         mPredictionView.hidePass();
-        mPredictionView.showNoNegativeAlert();
-        mPredictionView.showMessage(Constants.Alerts.PASSED_QUESTION_ALERT);
+        //mPredictionView.showNoNegativeAlert();
+        //mPredictionView.showMessage(Constants.Alerts.PASSED_QUESTION_ALERT);
     }
 
 
@@ -75,10 +77,24 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onSuccessQuestions() {
+    public void onSuccessQuestions(List<Question> questionList) {
         mPredictionView.dismissProgressbar();
+       // onSetQuestionOption(questionList);
         //populateNextMatch();
     }
+
+
+    @Override
+    public void onSetQuestionOption(List<Question> questionList) {
+
+        for (Question question : questionList) {
+            mPredictionView.setLeftOption(question.getQuestionOption1());
+            mPredictionView.setRightOption(question.getQuestionOption2());
+
+        }
+
+    }
+
 
     @Override
     public void onFailedQuestions(String message) {
@@ -89,7 +105,23 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onNoQuestions() {
         mPredictionView.dismissProgressbar();
+        showAlertMessage(Constants.Alerts.NO_QUESTIONS);
     }
+
+    @Override
+    public void onQuestionChanged(Question item) {
+
+        mPredictionView.setLeftOption(item.getQuestionOption1());
+        mPredictionView.setRightOption(item.getQuestionOption2());
+
+    }
+
+    @Override
+    public void getNumberofCards(int itemsInAdapter) {
+
+        mPredictionView.setNumberofCards(itemsInAdapter);
+    }
+
 
     @Override
     public void onNoInternet() {

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
@@ -38,5 +40,22 @@
         android:layout_toEndOf="@+id/version_code"
         android:layout_marginLeft="@dimen/dp_5"
         android:textColor="@color/white"/>
+
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/settings_btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/powerup_screen_btn_bg"
+        android:onClick="onClick"
+        android:text="LOGOUT"
+        android:textAllCaps="false"
+        android:textSize="@dimen/dp_18"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_100"
+        android:layout_marginRight="@dimen/dp_100"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:textColor="@color/white"
+        />
 
 </RelativeLayout>

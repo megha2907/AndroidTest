@@ -12,6 +12,9 @@ public class GroupNameUpdateRequest extends AdminRequest {
     @JsonProperty("group_name")
     private String groupName;
 
+    @JsonProperty("group_img_url")
+    private String groupPhoto;
+
     @JsonProperty("group_name")
     public String getGroupName() {
         return groupName;
@@ -20,5 +23,15 @@ public class GroupNameUpdateRequest extends AdminRequest {
     @JsonProperty("group_name")
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    @JsonProperty("group_img_url")
+    public String getGroupPhoto() {
+        return groupPhoto;
+    }
+
+    @JsonProperty("group_img_url")
+    public void setGroupPhoto(String groupPhoto) {
+        this.groupPhoto = groupPhoto;
     }
 }

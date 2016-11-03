@@ -1,6 +1,8 @@
 package in.sportscafe.scgame.module.user.myprofile.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jeeva.android.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +20,9 @@ public class GroupInfo implements Serializable {
 
     @JsonProperty("group_name")
     private String name;
+
+    @JsonProperty("group_img_url")
+    private String photo;
 
     @JsonProperty("group_created_by")
     private Integer createdBy;
@@ -40,7 +45,7 @@ public class GroupInfo implements Serializable {
     @JsonProperty("group_members")
     private List<GroupPerson> members = new ArrayList<>();
 
-    @JsonProperty("group_tournaments")
+    @JsonProperty("group_tournaments_exp")
     private List<TournamentInfo> followedTournaments = new ArrayList<>();
 
     @JsonProperty("group_code")
@@ -223,12 +228,12 @@ public class GroupInfo implements Serializable {
         this.members = members;
     }
 
-    @JsonProperty("group_tournaments")
+    @JsonProperty("group_tournaments_exp")
     public List<TournamentInfo> getFollowedTournaments() {
         return followedTournaments;
     }
 
-    @JsonProperty("group_tournaments")
+    @JsonProperty("group_tournaments_exp")
     public void setFollowedTournaments(List<TournamentInfo> followedTournaments) {
         this.followedTournaments = followedTournaments;
     }
@@ -241,6 +246,16 @@ public class GroupInfo implements Serializable {
     @JsonProperty("group_code")
     public void setGroupCode(String groupCode) {
         this.groupCode = groupCode;
+    }
+
+    @JsonProperty("group_img_url")
+    public String getPhoto() {
+        return photo;
+    }
+
+    @JsonIgnore
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     @Override

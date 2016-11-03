@@ -95,11 +95,13 @@ public class PredictionModelImpl implements PredictionModel,
                 if (response.isSuccessful()) {
                     List<Question> allQuestions = response.body().getQuestions();
 
-                    if (null == allQuestions || allQuestions.isEmpty()) {
+                    if (null == allQuestions || allQuestions.isEmpty() || allQuestions.size() < 0) {
                         mPredictionModelListener.onNoQuestions();
+                        Log.i("null","questions");
                     }
-
-                    handleAllQuestionsResponse(allQuestions);
+                    else {
+                        handleAllQuestionsResponse(allQuestions);
+                    }
                 } else {
                     mPredictionModelListener.onFailedQuestions(response.message());
                 }
@@ -126,7 +128,7 @@ public class PredictionModelImpl implements PredictionModel,
             mMyResult.getQuestions().add(question);
         }
 
-        mPredictionModelListener.onSuccessQuestions();
+        mPredictionModelListener.onSuccessQuestions(questionList);
         myResult = mMyResultList.get(0);
         populateAdapterData(myResult.getQuestions());
 
@@ -158,6 +160,16 @@ public class PredictionModelImpl implements PredictionModel,
     @Override
     public String getTournamentName() {
         return mMyResult.getTournamentName();
+    }
+
+    @Override
+    public String getMatchStage() {
+        return mMyResult.getStage();
+    }
+
+    @Override
+    public String getTournamentPhoto() {
+        return mMyResult.getTournamentPhoto();
     }
 
     @Override
@@ -201,6 +213,7 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
+
         if(itemsInAdapter == 0) {
             PredictionDataHandler.getInstance().saveMyResult(mMyResult);
 
@@ -219,6 +232,9 @@ public class PredictionModelImpl implements PredictionModel,
             mTotalCount = mPredictionAdapter.getCount();
             mPredictionModelListener.onShowingPassedQuestions();
         }
+
+        mPredictionModelListener.onQuestionChanged(mPredictionAdapter.getItem(0));
+        mPredictionModelListener.getNumberofCards(itemsInAdapter);
 
        // mPredictionAdapter.startTimer();
     }
@@ -283,10 +299,14 @@ public class PredictionModelImpl implements PredictionModel,
 
         void onNoInternet();
 
-        void onSuccessQuestions();
+        void onSuccessQuestions(List<Question> questionList);
 
         void onFailedQuestions(String message);
 
         void onNoQuestions();
+
+        void onQuestionChanged(Question item);
+
+        void getNumberofCards(int itemsInAdapter);
     }
 }

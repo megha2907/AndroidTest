@@ -11,6 +11,10 @@ public interface PredictionModel {
 
     String getTournamentName();
 
+    String getMatchStage();
+
+    String getTournamentPhoto();
+
     String getContestName();
 
     void getAllQuestions();

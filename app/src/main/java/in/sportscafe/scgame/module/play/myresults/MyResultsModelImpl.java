@@ -52,7 +52,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public void init(Bundle bundle) {
-        matchId = bundle.getInt(Constants.BundleKeys.MATCH_ID);
+        String match_id = bundle.getString(Constants.BundleKeys.MATCH_ID);
+        matchId= Integer.parseInt(match_id);
         Log.i("matchId",String.valueOf(matchId));
     }
 

@@ -20,6 +20,7 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
 
     private PointsModel mPointsModel;
 
+
     private PointsPresenterImpl(PointsView pointsView) {
         this.mPointsView = pointsView;
         this.mPointsModel = PointsModelImpl.newInstance(this, mPointsView.getActivity().getSupportFragmentManager());
@@ -33,6 +34,7 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     public void onCreatePoints(Bundle bundle) {
         mPointsModel.init(bundle);
         mPointsView.setName(mPointsModel.getName());
+        mPointsView.setIcon(mPointsModel.getIcon());
         refreshLb();
     }
 

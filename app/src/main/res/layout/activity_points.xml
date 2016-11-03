@@ -36,22 +36,22 @@
             android:background="@drawable/back_icon_grey"
             android:onClick="onClick"
             android:layout_marginTop="@dimen/dp_30"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_20"
             />
 
-        <Button
-            android:id="@+id/points_group_icon"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
-            android:background="@drawable/powerups_count_bg"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_20"
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_toRightOf="@+id/points_back_icon"
-            android:text="G"
-           />
+
+                <ImageView
+                    android:id="@+id/points_group_icon"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/placeholder_icon"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_toRightOf="@+id/points_back_icon"
+                    android:scaleType="fitXY"
+                   />
 
         <RelativeLayout
             android:id="@+id/points_rl2"
@@ -102,7 +102,7 @@
                 app:selected_textSize="@dimen/dp_14"
                 app:selected_typeface="lato_bold"
                 app:tabGravity="fill"
-                app:tabIndicatorColor="@color/white"
+                app:tabIndicatorColor="@color/tabcolor"
                 app:tabIndicatorHeight="@dimen/dp_2"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/white"
@@ -114,7 +114,50 @@
                 android:layout_marginTop="@dimen/dp_10"
                />
 
-        </RelativeLayout>
+                <TableRow
+                    android:id="@+id/points_tr_column"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/points_tab_tl"
+                    android:layout_marginTop="@dimen/dp_10">
+
+                    <TextView
+                        android:id="@+id/points_tv_pos"
+                        android:text="pos"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:padding="@dimen/dp_10"
+                        android:gravity="left"/>
+
+                    <TextView
+                        android:id="@+id/points_tv_player"
+                        android:text="Player"
+                        android:layout_weight="0.65"
+                        android:textColor="@color/white"
+                        android:padding="@dimen/dp_10"
+                        android:gravity="left"/>
+
+                    <TextView
+                        android:id="@+id/points_tv_played"
+                        android:text="pld"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:padding="@dimen/dp_10"
+                        android:gravity="left"/>
+
+
+                    <TextView
+                        android:id="@+id/points_tv_points"
+                        android:text="pts"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:padding="@dimen/dp_10"
+                        android:gravity="left"/>
+
+                </TableRow>
+
+
+            </RelativeLayout>
 
 
 

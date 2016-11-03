@@ -56,7 +56,6 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
 
         holder.mIvPhoto.setImageUrl(groupPerson.getPhoto(), Volley.getInstance().getImageLoader(), false);
         holder.mTvName.setText(groupPerson.getUserName());
-        holder.mTvEmail.setText(groupPerson.getEmail());
         holder.mTvAdminLabel.setVisibility(groupPerson.isAdmin() ? View.VISIBLE : View.GONE);
     }
 
@@ -68,15 +67,12 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
 
         TextView mTvName;
 
-        TextView mTvEmail;
-
         TextView mTvAdminLabel;
 
         public ViewHolder(View V) {
             super(V);
             mIvPhoto = (RoundImage) V.findViewById(R.id.members_iv_photo);
             mTvName = (TextView) V.findViewById(R.id.members_tv_name);
-            mTvEmail = (TextView) V.findViewById(R.id.members_tv_email);
             mTvAdminLabel = (TextView) V.findViewById(R.id.members_tv_admin_label);
             V.setOnClickListener(this);
         }

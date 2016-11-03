@@ -14,21 +14,22 @@ public interface GroupInfoModel {
 
     void init(Bundle bundle);
 
+    void updateGroupMembers(GroupInfo groupInfo);
+
     boolean amAdmin();
 
     GroupInfo getGroupInfo();
 
     int getMembersCount();
 
-    GrpTournamentSelectionAdapter getAdapter(Context context);
-
     Bundle getGroupIdBundle();
 
-    void updateGroupName(String groupName);
 
     String getShareCodeContent();
 
     void refreshGroupInfo();
 
     void leaveGroup();
+
+    GroupTournamentAdapter getAdapter(Context context);
 }

@@ -1,6 +1,9 @@
 package in.sportscafe.scgame.module.user.myprofile.edit;
 
 import android.os.Bundle;
+import android.util.EventLog;
+
+import com.jeeva.android.Log;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
@@ -16,6 +19,10 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     private EditProfileModel mEditProfileModel;
 
+    private int EDIT_PROFILE_CODE;
+
+    private String screen;
+
     private EditProfilePresenterImpl(EditProfileView editProfileView) {
         this.mEditProfileView = editProfileView;
         this.mEditProfileModel = EditProfileModelImpl.newInstance(this);
@@ -27,9 +34,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     @Override
     public void onCreateEditProfile(Bundle bundle) {
+
+        screen=bundle.getString("screen");
+
         UserInfo userInfo = mEditProfileModel.getUserInfo();
 
-        mEditProfileView.setName(userInfo.getUserName());
         mEditProfileView.setProfileImage(userInfo.getPhoto());
         if(userInfo.getUserNickName()!= null){
             mEditProfileView.setNickName(userInfo.getUserNickName());
@@ -38,8 +47,15 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     }
 
     @Override
-    public void onClickDone(String name, String nickname) {
-        mEditProfileModel.updateProfile(name, nickname);
+    public void onClickDone(String nickname) {
+
+        if(nickname.equals("")){
+            mEditProfileView.setNicknameEmpty();
+        }
+        else
+        {
+            mEditProfileModel.updateProfile(nickname);
+        }
     }
 
     @Override
@@ -56,8 +72,21 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     public void onEditSuccess() {
         mEditProfileView.dismissProgressbar();
         mEditProfileView.setSuccessResult();
-        //mEditProfileView.close();
+
+        if (screen.equals(Constants.BundleKeys.HOME_SCREEN))
+        {
+            mEditProfileView.navigateToHome();
+        }
+        else {
+            mEditProfileView.navigateToSportsSelection();
+        }
     }
+
+    @Override
+    public void onPhotoUpdate() {
+        mEditProfileView.dismissProgressbar();
+    }
+
 
     @Override
     public void onEditFailed(String message) {
@@ -84,5 +113,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     public void onNoInternet() {
         mEditProfileView.dismissProgressbar();
         mEditProfileView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+    }
+
+    @Override
+    public void onUserNameConflict() {
+        mEditProfileView.dismissProgressbar();
+        mEditProfileView.setNicknameConflict();
     }
 }

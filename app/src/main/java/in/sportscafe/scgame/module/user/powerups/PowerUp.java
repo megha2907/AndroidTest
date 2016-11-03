@@ -5,24 +5,26 @@ package in.sportscafe.scgame.module.user.powerups;
  */
 public class PowerUp {
 
-    private String name;
+    private String id;
+
+    private String desc;
 
     private int count;
 
     public PowerUp() {
     }
 
-    public PowerUp(String name, int count) {
-        this.name = name;
+    public PowerUp(String id, int count) {
+        this.id = id;
         this.count = count;
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getCount() {
@@ -31,5 +33,16 @@ public class PowerUp {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getDesc() {
+        if(id=="2x"){
+            desc="Double your returns when you are confident about a prediction";
+        }
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }

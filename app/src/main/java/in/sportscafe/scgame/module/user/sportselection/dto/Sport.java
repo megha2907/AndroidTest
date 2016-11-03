@@ -42,7 +42,7 @@ public class Sport implements Serializable {
             case 6:
                 return R.drawable.badminton_menu_icon;
             case 8:
-                return R.drawable.boxing_menu_icon;
+                return R.drawable.basketball_menu_icon;
             case 1:
                 return R.drawable.cricket_menu_icon;
             case 4:
@@ -52,11 +52,11 @@ public class Sport implements Serializable {
             case 5:
                 return R.drawable.kabaddi_menu_icon;
             case 7:
-                return R.drawable.basketball_menu_icon;
+                return R.drawable.table_tennis_menu_icon;
             case 3:
                 return R.drawable.tennis_menu_icon;
-            case 10:
-                return R.drawable.table_tennis_menu_icon;
+            case 9:
+                return R.drawable.frisbee_menu_icon;
             default:
                 return R.drawable.ic_launcher;
         }
@@ -68,7 +68,7 @@ public class Sport implements Serializable {
             case 6:
                 return R.drawable.badminton_menu_colored_icon;
             case 8:
-                return R.drawable.boxing_menu_colored_icon;
+                return R.drawable.basketball_menu_colored_icon;
             case 1:
                 return R.drawable.cricket_menu_colored_icon;
             case 4:
@@ -76,13 +76,13 @@ public class Sport implements Serializable {
             case 2:
                 return R.drawable.hockey_menu_colored_icon;
             case 5:
-                return R.drawable.kabaddi_menu_icon;
+                return R.drawable.kabaddi_menu_colored_icon;
             case 7:
-                return R.drawable.basketball_menu_colored_icon;
+                return R.drawable.table_tennis_menu_colored_icon;
             case 3:
                 return R.drawable.tennis_menu_colored_icon;
-            case 10:
-                return R.drawable.table_tennis_menu_colored_icon;
+            case 9:
+                return R.drawable.frisbee_menu_colored_icon;
             default:
                 return R.drawable.ic_launcher;
         }

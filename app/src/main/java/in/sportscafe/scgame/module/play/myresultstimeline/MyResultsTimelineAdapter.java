@@ -137,6 +137,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
         } else {
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
             holder.mTvMatchResult.setText(match.getResult());
+            holder.mBtnPlayMatch.setVisibility(View.GONE);
         }
 
 
@@ -339,7 +340,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
                     Integer matchId = (Integer) view.getTag();
                     Bundle mBundle2 = new Bundle();
-                    mBundle2.putInt(Constants.BundleKeys.MATCH_ID, matchId);
+                    mBundle2.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId));
 
                     Intent mintent =  new Intent(mcon, MyResultsActivity.class);
                     mintent.putExtras(mBundle2);

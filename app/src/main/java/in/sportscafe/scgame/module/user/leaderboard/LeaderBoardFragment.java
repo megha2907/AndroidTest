@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,12 @@ public class LeaderBoardFragment extends ScGameFragment implements LeaderBoardVi
     @Override
     public void setLeaderBoardAdapter(LeaderBoardAdapter leaderBoardAdapter) {
         mRvLeaderBoard.setAdapter(leaderBoardAdapter);
+    }
+
+    @Override
+    public void moveAdapterPosition(int movePosition) {
+        Log.i("moveadapter",String.valueOf(movePosition));
+        mRvLeaderBoard.getLayoutManager().scrollToPosition(movePosition);
     }
 
     public void refreshLeaderBoard(Bundle bundle) {

@@ -46,4 +46,9 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
         mAllGroupsView.dismissProgressbar();
         mAllGroupsView.showMessage(message);
     }
+
+    @Override
+    public void onAllGroupsEmpty() {
+            mAllGroupsView.showGroupsEmpty();
+        }
 }

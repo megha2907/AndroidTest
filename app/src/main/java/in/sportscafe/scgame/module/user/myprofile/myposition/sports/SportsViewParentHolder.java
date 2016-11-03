@@ -60,7 +60,7 @@ public class SportsViewParentHolder extends ParentViewHolder {
             }
 
             if(null == tourSummary.getRank()) {
-                mSportsOverallRankTextView.setVisibility(View.INVISIBLE);
+                mSportsOverallRankTextView.setText("-");
             } else {
                 mSportsOverallRankTextView.setText(String.valueOf(tourSummary.getOverallRank()));
             }

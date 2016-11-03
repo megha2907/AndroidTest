@@ -46,4 +46,9 @@ public class BadgePresenterImpl implements BadgePresenter, BadgeModelImpl.BadgeM
         mBadgeView.dismissProgressbar();
         mBadgeView.showMessage(message);
     }
+
+    @Override
+    public void onBadgesEmpty() {
+        mBadgeView.showBadgesEmpty();
+    }
 }

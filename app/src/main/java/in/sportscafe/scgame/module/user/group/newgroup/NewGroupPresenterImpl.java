@@ -3,6 +3,8 @@ package in.sportscafe.scgame.module.user.group.newgroup;
 import android.os.Bundle;
 
 import in.sportscafe.scgame.Constants;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * Created by Jeeva on 1/7/16.
@@ -31,6 +33,11 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
     public void onClickDone(String groupName) {
         mNewGroupView.showProgressbar();
         mNewGroupModel.createGroup(groupName);
+    }
+
+    @Override
+    public void onGroupPhotoDone(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+        mNewGroupModel.updateGroupPhoto(file, filepath,filename);
     }
 
     @Override
@@ -66,5 +73,30 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
     public void onFailed(String message) {
         mNewGroupView.dismissProgressbar();
         mNewGroupView.showMessage(message);
+    }
+
+    @Override
+    public void onGroupImagePathNull() {
+        mNewGroupView.showMessage(Constants.Alerts.IMAGE_FILEPATH_EMPTY);
+    }
+
+    @Override
+    public void onUpdating() {
+        mNewGroupView.showProgressbar();
+    }
+
+    @Override
+    public void onEditFailed(String message) {
+        mNewGroupView.dismissProgressbar();
+        mNewGroupView.showMessage(message);
+
+    }
+
+    @Override
+    public void onPhotoUpdate(String groupPhoto) {
+
+        mNewGroupView.dismissProgressbar();
+        mNewGroupView.setGroupImage(groupPhoto);
+
     }
 }

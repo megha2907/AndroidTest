@@ -59,11 +59,19 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/dividercolor"
+        android:layout_gravity="bottom"
+        />
+
 
     <LinearLayout
         android:id="@+id/league_row_ll_positions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+      />
 
 </LinearLayout>

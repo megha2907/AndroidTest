@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.powerups.PowerUp;
@@ -55,6 +56,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         setSharedIntData(SharedKeys.PREVIOUS_APP_VERSION_CODE, versionCode);
     }
 
+    //CHECK IS LOGGED IN USER
     public void setLoggedInUser(boolean loggedInUser) {
         setSharedBooleanData(SharedKeys.LOGGED_USER, loggedInUser);
     }
@@ -71,6 +73,8 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         setSharedBooleanData(SharedKeys.INITIAL_SPORTS_AVAILABLE, initialSportsAvailable);
     }
 
+
+    //ALL SPORTS
     public List<Sport> getAllSports() {
         String allSportsString = getSharedStringData(SharedKeys.ALL_SPORTS);
         Log.i("allsportstring", allSportsString + "");
@@ -92,7 +96,6 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         return allSportsMap;
     }
 
-
     public void setAllSports(List<Sport> newSports) {
         setAllSports(MyWebService.getInstance().getJsonStringFromObject(newSports));
     }
@@ -101,30 +104,38 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         setSharedStringData(SharedKeys.ALL_SPORTS, allSports);
     }
 
+
+
+    //SPORTS FOLLOWING
     public List<Integer> getFavoriteSportsIdList() {
         String favoriteSportsString = getSharedStringData(SharedKeys.FAVORITE_SPORTS);
         if (null == favoriteSportsString || favoriteSportsString.isEmpty()) {
             return new ArrayList<>();
         }
+        Log.d("ScGameDataHandler", favoriteSportsString);
         return MyWebService.getInstance().getObjectFromJson(favoriteSportsString,
                 new TypeReference<List<Integer>>() {
                 });
     }
 
     public void setFavoriteSportsIdList(List<Integer> favoriteSportsIdList) {
+        Log.d("ScGameDataHandler", favoriteSportsIdList.toString());
         setSharedStringData(SharedKeys.FAVORITE_SPORTS,
                 MyWebService.getInstance().getJsonStringFromObject(favoriteSportsIdList));
     }
 
+
+    //USER ID
     public void setUserId(String userId) {
         setSharedStringData(SharedKeys.USER_ID, userId);
     }
 
     public String getUserId() {
-//        return "1";
         return getSharedStringData(SharedKeys.USER_ID);
     }
 
+
+    //USER INFO
     public void setUserInfo(UserInfo userInfo) {
         ScGame.getInstance().setUserEmail(userInfo.getEmail());
         setSharedStringData(SharedKeys.USER_INFO,
@@ -138,6 +149,8 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         }
         return MyWebService.getInstance().getObjectFromJson(userInfo, UserInfo.class);
     }
+
+
 
     public List<Sport> getGlbFollowedSports() {
         List<Integer> favoriteSportsIdList = getFavoriteSportsIdList();
@@ -154,6 +167,8 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         return glbFollowedSports;
     }
 
+
+    //GROUPS INFO
     public void setGrpInfoList(List<GroupInfo> grpInfoList) {
         setSharedStringData(SharedKeys.GRP_INFOS, MyWebService.getInstance().getJsonStringFromObject(grpInfoList));
     }
@@ -198,6 +213,8 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         setGrpInfoMap(grpInfoMap);
     }
 
+
+    //COOKIE
     public String getCookie() {
         return getSharedStringData(SharedKeys.COOKIE);
     }
@@ -206,14 +223,9 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         setSharedStringData(SharedKeys.COOKIE, cookie);
     }
 
-    public int getNumberofPowerups() {
-        return getSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, 0);
-    }
 
-    public void setNumberofPowerups(int numberofpowerups) {
-        setSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, numberofpowerups);
-    }
 
+    //POWERUPS
     public List<PowerUp> getPowerUpList() {
 
         List<PowerUp> powerUpList = new ArrayList<>();
@@ -224,11 +236,29 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         return powerUpList;
     }
 
+    public int getNumberofPowerups() {
+        return getSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, 0);
+    }
+
+    public void setNumberofPowerups(int numberofbadges) {
+        setSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, numberofbadges);
+    }
+
+    //BADGES
     public List<String> getBadgeList() {
         return getUserInfo().getBadges();
     }
 
+    public int getNumberofBadges() {
+        return getSharedIntData(SharedKeys.NUMBER_OF_BADGES, 0);
+    }
 
+    public void setNumberofBadges(int numberofbadges) {
+        setSharedIntData(SharedKeys.NUMBER_OF_BADGES, numberofbadges);
+    }
+
+
+    //TOURNAMENTS
     public List<TournamentInfo> getTournaments() {
         String allTournamentsString = getSharedStringData(SharedKeys.ALL_TOURNAMENTS);
         Log.i("allTournamentsString", allTournamentsString + "");
@@ -258,6 +288,75 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
     public void setTournaments(String tournaments) {
         setSharedStringData(SharedKeys.ALL_TOURNAMENTS, tournaments);
     }
+
+
+
+    //ALL GROUPS INFO
+    public List<AllGroups> getAllGroups() {
+        String allGroupssString = getSharedStringData(SharedKeys.ALL_GROUPS);
+        Log.i("allGroupssString", allGroupssString + "");
+        if (null == allGroupssString || allGroupssString.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return MyWebService.getInstance().getObjectFromJson(allGroupssString,
+                new TypeReference<List<AllGroups>>() {
+                });
+    }
+
+    public Map<Integer, AllGroups> getAllGroupsMap() {
+        Map<Integer, AllGroups> allGroupsMap = new HashMap<>();
+
+        for (AllGroups allGroups : getAllGroups()) {
+            allGroupsMap.put(allGroups.getGroupId(), allGroups);
+        }
+
+        return allGroupsMap;
+    }
+
+
+    public void setAllGroups(List<AllGroups> newAllGroups) {
+        setAllGroups(MyWebService.getInstance().getJsonStringFromObject(newAllGroups));
+    }
+
+    public void setAllGroups(String allGroups) {
+        setSharedStringData(SharedKeys.ALL_GROUPS, allGroups);
+    }
+
+    //SELECTED GROUP TOURNAMENTS
+
+    public void setSelectedTournaments(List<TournamentInfo> selectedTournaments) {
+        setSelectedTournaments(MyWebService.getInstance().getJsonStringFromObject(selectedTournaments));
+    }
+
+    public void setSelectedTournaments(String selectedTournaments) {
+        setSharedStringData(SharedKeys.SELECTED_TOURNAMENTS, selectedTournaments);
+    }
+
+    public List<TournamentInfo> getSelectedTournaments() {
+        String selectedTournaments = getSharedStringData(SharedKeys.SELECTED_TOURNAMENTS);
+        Log.i("selectedTournaments", selectedTournaments);
+
+        if (null == selectedTournaments || selectedTournaments.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return MyWebService.getInstance().getObjectFromJson(selectedTournaments,
+                new TypeReference<List<TournamentInfo>>() {
+                });
+    }
+
+
+
+    public int getNumberofGroups() {
+        return getSharedIntData(SharedKeys.NUMBER_OF_GROUPS, 0);
+    }
+
+    public void setNumberofGroups(int numberofgroups) {
+        setSharedIntData(SharedKeys.NUMBER_OF_GROUPS, numberofgroups);
+    }
+
+
+
+
 
 
     @Override

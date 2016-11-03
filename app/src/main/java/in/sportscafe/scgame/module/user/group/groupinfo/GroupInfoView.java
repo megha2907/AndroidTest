@@ -18,7 +18,7 @@ public interface GroupInfoView extends View {
 
     void setMembersSize(int size);
 
-    void setAdapter(GrpTournamentSelectionAdapter adapter);
+    void setAdapter(GroupTournamentAdapter adapter);
 
     void setGroupCode(String groupCode);
 
@@ -33,4 +33,6 @@ public interface GroupInfoView extends View {
     void navigateToHome();
 
     void setSuccessResult();
+
+    void goBackWithSuccessResult();
 }

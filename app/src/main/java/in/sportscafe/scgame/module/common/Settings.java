@@ -1,29 +1,43 @@
 package in.sportscafe.scgame.module.common;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.jeeva.android.Log;
+import com.jeeva.android.widgets.customfont.CustomButton;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.ScGameDataHandler;
+import in.sportscafe.scgame.module.getstart.GetStartActivity;
+import in.sportscafe.scgame.module.user.login.LogInActivity;
 
 /**
  * Created by deepanshi on 31/8/16.
  */
-public class Settings extends AppCompatActivity {
+public class Settings extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mtoolbar;
+    private CustomButton mBtnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        mBtnLogout=(CustomButton)findViewById(R.id.settings_btn_logout);
+        mBtnLogout.setOnClickListener(this);
 
         initToolBar();
 
@@ -55,5 +69,21 @@ public class Settings extends AppCompatActivity {
                 }
 
         );
+    }
+
+    @Override
+    public void onClick(View v) {
+        onClickLogout();
+    }
+
+    private void onClickLogout() {
+        ScGameDataHandler.getInstance().clearAll();
+        navigateToLogIn();
+    }
+
+    private void navigateToLogIn() {
+        Intent intent = new Intent(getApplicationContext(), GetStartActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

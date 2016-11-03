@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameFragment;
 import in.sportscafe.scgame.module.common.SpacesItemDecoration;
@@ -29,7 +30,10 @@ public class MembersFragment extends ScGameFragment implements MembersView {
 
     private MembersPresenter mMembersPresenter;
 
-    public static MembersFragment newInstance(long groupId) {
+    public static MembersFragment newInstance(String groupid) {
+
+        Long groupId = Long.parseLong(groupid);
+
         Bundle bundle = new Bundle();
         bundle.putLong(KEY_GROUP_ID, groupId);
 

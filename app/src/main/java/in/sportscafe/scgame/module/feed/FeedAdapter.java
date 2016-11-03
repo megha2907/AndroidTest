@@ -3,12 +3,16 @@ package in.sportscafe.scgame.module.feed;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +24,7 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import in.sportscafe.scgame.Constants;
@@ -90,7 +95,11 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         View scheduleView = getLayoutInflater().inflate(R.layout.inflater_schedule_row, parent, false);
         ScheduleViewHolder holder = new ScheduleViewHolder(scheduleView);
 
-        if( null == match.getParties())
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        llp.setMargins(10, 30, 10, 20); // llp.setMargins(left, top, right, bottom);
+        llp.gravity = Gravity.CENTER;
+
+        if( null == match.getParties() || match.getParties().isEmpty()) //SHOW MATCH COMMENTARY
         {
             holder.mTvPartyAName.setVisibility(View.GONE);
             holder.mTvPartyBName.setVisibility(View.GONE);
@@ -101,10 +110,13 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mRlMatchStageParent.setVisibility(View.GONE);
             holder.mTvStartTime.setVisibility(View.GONE);
             holder.mViewResult.setVisibility(View.GONE);
+            holder.mLlMatch.setBackgroundColor(Color.TRANSPARENT);
+            holder.mIbfeedDotIcon.setImageResource(R.drawable.feed_dot_grey_icon);
+            holder.mTvMatchResult.setGravity(Gravity.LEFT);
 
         }
         else
-        {
+        {   //ELSE SHOW MATCH PARTIES
             holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
             holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
 
@@ -122,26 +134,31 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         }
 
 
-        if(null == match.getStage()) {
+        if(null == match.getStage()|| match.getStage().isEmpty()) {
             holder.mTvMatchStage.setVisibility(View.GONE);
         } else {
             holder.mTvMatchStage.setText(match.getStage());
         }
 
 
+        //FOR MATCH RESULT
         if (null == match.getResult() || match.getResult().isEmpty()) {
             holder.mTvMatchResult.setVisibility(View.GONE);
             holder.mTvStartTime.setText(TimeUtils.getFormattedDateString(
                     match.getStartTime(), Constants.DateFormats.HH_MM_AA,
                     Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT));
         } else {
+
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
             holder.mTvMatchResult.setText(match.getResult());
+            holder.mTvMatchResult.setLayoutParams(llp);
+            holder.mBtnPlayMatch.setVisibility(View.GONE);
+
         }
 
 
 
-        if (match.getMatchPoints()==0)
+        if (match.getMatchPoints()==0) //FOR MATCH POINTS
         {
             holder.mBtnMatchPoints.setVisibility(View.GONE);
             holder.mTvResultCorrectCount.setVisibility(View.GONE);
@@ -160,47 +177,63 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         }
 
 
+
+
         Calendar c = Calendar.getInstance();
         Long formattedCurrentDate = c.getTimeInMillis();
-        String date = TimeUtils.getFormattedDateString(
+        Date date = TimeUtils.getDateFromDateString(
                 match.getStartTime(),
-                Constants.DateFormats.DD_MM_YYYY,
                 Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
                 Constants.DateFormats.GMT
         );
 
-        Long formattedstartDate = TimeUtils.getMillisecondsFromDateString(
-                date,
-                Constants.DateFormats.DD_MM_YYYY,
-                Constants.DateFormats.GMT
-        );
+        TimeAgo timeAgo = TimeUtils.calcTimeAgo(formattedCurrentDate, date.getTime());
+
+        Log.i("formattedCurrentDate",String.valueOf(formattedCurrentDate));
+        Log.i("formattedstartDate",String.valueOf(date.getTime()));
 
 
-         TimeAgo timeAgo = TimeUtils.calcTimeAgo(formattedCurrentDate,formattedstartDate);
-
-         if(match.getMatchQuestionCount()==0 && match.getParties() != null && timeAgo.timeDiff > 0 && timeAgo.timeUnit != TimeUnit.MILLISECOND && timeAgo.timeUnit != TimeUnit.SECOND)
+        // FOR COMING UP MATCHES CHECK IF MATCH TIME IS GREATER THAN THE CURRENT TIME
+       if(match.getMatchQuestionCount()==0 && match.getParties() != null && timeAgo.timeDiff > 0 && timeAgo.timeUnit != TimeUnit.MILLISECOND && timeAgo.timeUnit != TimeUnit.SECOND)
          {
              holder.mTvResultWait.setVisibility(View.VISIBLE);
              holder.mTvResultWait.setText("Coming up");
              holder.mViewResult.setVisibility(View.GONE);
          }
 
+
+
         if(match.getMatchQuestionCount()==0)
         {
             holder.mBtnPlayMatch.setVisibility(View.GONE);
         }
-        else if(match.getisAttempted()==true)
+        else if(match.getisAttempted()==true && (null == match.getResult() || match.getResult().isEmpty())) //AFTER MATCH IS PLAYED & MATCH RESULT IS NOT PUBLISHED
         {
             holder.mTvMatchResult.setVisibility(View.GONE);
             holder.mBtnPlayMatch.setVisibility(View.GONE);
             holder.mTvResultWait.setVisibility(View.VISIBLE);
             holder.mViewResult.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
+
         }
         else
-        {
+        {   //ELSE PLAY BTN VISIBLE
             holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
             holder.mBtnPlayMatch.setTag(match);
+
+        }
+
+
+        if(match.getMatchQuestionCount()!=null && timeAgo.timeDiff < 0 ) // CHECK IF MATCH START TIME < CURRENT TIME THEN NO PLAY BTN
+        {
+            holder.mBtnPlayMatch.setVisibility(View.GONE);
+
+        }
+
+
+        if (holder.mBtnPlayMatch.getVisibility()==View.VISIBLE) // IF PLAY BTN VISIBLE THEN SHOW PINK DOT
+        {
+            holder.mIbfeedDotIcon.setImageResource(R.drawable.feed_dot_pink_icon);
         }
 
         return scheduleView;
@@ -296,6 +329,11 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         RelativeLayout mRlMatchStageParent;
 
+        LinearLayout mLlMatch;
+
+
+        ImageButton mIbfeedDotIcon;
+
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -311,7 +349,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mIvPartyBPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_right);
             mBtnVs=(Button) V.findViewById(R.id.schedule_row_btn_vs);
             mBtnPlayMatch=(CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
+            mIbfeedDotIcon=(ImageButton) V.findViewById(R.id.feed_dot_icon);
             mBtnMatchPoints=(CustomButton) V.findViewById(R.id.schedule_row_btn_points);
+            mLlMatch = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
             mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
@@ -339,7 +379,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
                     Integer matchId = (Integer) view.getTag();
                     Bundle mBundle2 = new Bundle();
-                    mBundle2.putInt(Constants.BundleKeys.MATCH_ID, matchId);
+                    mBundle2.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId));
 
                     Intent mintent =  new Intent(mcon, MyResultsActivity.class);
                     mintent.putExtras(mBundle2);

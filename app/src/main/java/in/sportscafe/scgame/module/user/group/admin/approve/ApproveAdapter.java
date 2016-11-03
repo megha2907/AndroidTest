@@ -51,7 +51,6 @@ public class ApproveAdapter extends Adapter<GroupPerson, ApproveAdapter.ViewHold
 
         holder.mIvPhoto.setImageUrl(groupPerson.getPhoto(), Volley.getInstance().getImageLoader(), false);
         holder.mTvName.setText(groupPerson.getUserName());
-        holder.mTvEmail.setText(groupPerson.getEmail());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

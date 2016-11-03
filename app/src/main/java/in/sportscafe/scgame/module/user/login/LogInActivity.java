@@ -23,9 +23,11 @@ import com.google.android.gms.common.api.Status;
 
 import java.io.IOException;
 
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.home.HomeActivity;
+import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.scgame.module.user.sportselection.SportSelectionActivity;
 
 public class LogInActivity extends ScGameActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
@@ -34,7 +36,7 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
 
     private static final int RC_SIGN_IN = 9001;
 
-    private static final String SERVER_CLIENT_ID = "576361348926-e2r40l9sich5du63slc9aicv22iic2ff.apps.googleusercontent.com";
+    private static final String SERVER_CLIENT_ID = "576361348926-es13lv6saf0cfr6olbfhojltsptoi3o7.apps.googleusercontent.com";
 
     private static final String CLIENT_ID_SCOPE = "audience:server:client_id:" + SERVER_CLIENT_ID;
 
@@ -48,6 +50,8 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
 
     private ProgressDialog mProgressDialog;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,7 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
 
         mLogInPresenter = LogInPresenterImpl.newInstance(LogInActivity.this);
         mLogInPresenter.onCreateLogIn(getIntent().getExtras());
+
     }
 
     private void initGoogle() {
@@ -68,6 +73,7 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
                 .requestScopes(new Scope("https://www.googleapis.com/auth/plus.login"))
                 .requestIdToken(SERVER_CLIENT_ID)
                 .build();
+
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
@@ -105,6 +111,19 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
     @Override
     public void navigateToSports() {
         Intent intent = new Intent(this, SportSelectionActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+        public void navigateToEditProfile() {
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
+        intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -174,28 +193,28 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
     @Override
     public void onStart() {
         super.onStart();
-//        signOut();
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
-        if (opr.isDone()) {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-            // and the GoogleSignInResult will be available instantly.
-            Log.d(TAG, "Got cached sign-in");
-            GoogleSignInResult result = opr.get();
-            handleSignInResult(result);
-        } else {
-            // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
-
-            showProgressDialog();
-            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
-                    hideProgressDialog();
-                    handleSignInResult(googleSignInResult);
-                }
-            });
-        }
+       // signOut();
+//        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+//        if (opr.isDone()) {
+//            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+//            // and the GoogleSignInResult will be available instantly.
+//            Log.d(TAG, "Got cached sign-in");
+//            GoogleSignInResult result = opr.get();
+//            handleSignInResult(result);
+//        } else {
+//            // If the user has not previously signed in on this device or the sign-in has expired,
+//            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+//            // single sign-on will occur in this branch.
+//
+//            showProgressDialog();
+//            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+//                @Override
+//                public void onResult(GoogleSignInResult googleSignInResult) {
+//                    hideProgressDialog();
+//                    handleSignInResult(googleSignInResult);
+//                }
+//            });
+//        }
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
@@ -222,7 +241,8 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
         signOut();
     }
 
-    private void signOut() {
+    @Override
+    public void signOut() {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override

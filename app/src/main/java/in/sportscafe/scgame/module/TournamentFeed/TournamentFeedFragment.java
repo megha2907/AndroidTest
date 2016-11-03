@@ -1,16 +1,22 @@
 package in.sportscafe.scgame.module.TournamentFeed;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameFragment;
+import in.sportscafe.scgame.module.common.SpacesItemDecoration;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 
 /**
@@ -24,6 +30,12 @@ public class TournamentFeedFragment extends ScGameFragment implements Tournament
     private TournamentFeedPresenter mtournamentFeedPresenter;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    private Toolbar mtoolbar;
+
+    private TextView mTitle;
+
+    private ImageView mLogo;
 
     @Nullable
     @Override
@@ -53,6 +65,8 @@ public class TournamentFeedFragment extends ScGameFragment implements Tournament
                 onRefresh();
             }
         });
+
+        initToolBar();
     }
 
     @Override
@@ -74,4 +88,12 @@ public class TournamentFeedFragment extends ScGameFragment implements Tournament
     public void onRefresh() {
         mtournamentFeedPresenter.onRefresh();
     }
+
+    public void initToolBar() {
+        mtoolbar = (Toolbar) findViewById(R.id.tournament_toolbar);
+        mLogo = (ImageView) mtoolbar.findViewById(R.id.toolbar_logo);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mtoolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
 }

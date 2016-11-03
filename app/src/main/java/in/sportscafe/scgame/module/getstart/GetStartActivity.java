@@ -9,6 +9,7 @@ import com.moe.pushlibrary.PayloadBuilder;
 
 import java.util.Date;
 
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameActivity;
@@ -26,6 +27,7 @@ public class GetStartActivity extends ScGameActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getstarted);
+
 
         if (ScGameDataHandler.getInstance().getFavoriteSportsIdList().size() > 0) {
             navigateToHome();
@@ -67,7 +69,11 @@ public class GetStartActivity extends ScGameActivity {
     }
 
     private void navigateToSportSelection() {
-        startActivity(new Intent(this, SportSelectionActivity.class));
+        Intent intent = new Intent(this, SportSelectionActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void navigateToLogin() {

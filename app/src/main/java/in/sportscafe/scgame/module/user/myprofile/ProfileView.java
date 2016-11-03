@@ -2,6 +2,8 @@ package in.sportscafe.scgame.module.user.myprofile;
 
 import com.jeeva.android.InAppView;
 
+import java.util.List;
+
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummary;
 
 /**
@@ -28,4 +30,6 @@ public interface ProfileView extends InAppView {
     void navigateToPowerUpScreen();
 
     void navigateToBadgeScreen();
+
+    void setBadgesCount(int badgesCount);
 }

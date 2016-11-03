@@ -12,10 +12,7 @@ public class GroupPerson implements Serializable {
     @JsonProperty("user_id")
     private Integer id;
 
-    @JsonProperty("user_email")
-    private String email;
-
-    @JsonProperty("user_name")
+    @JsonProperty("user_nick")
     private String userName;
 
     @JsonProperty("user_photo")
@@ -40,22 +37,12 @@ public class GroupPerson implements Serializable {
         this.id = id;
     }
 
-    @JsonProperty("user_email")
-    public String getEmail() {
-        return email;
-    }
-
-    @JsonProperty("user_email")
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @JsonProperty("user_name")
+    @JsonProperty("user_nick")
     public String getUserName() {
         return userName;
     }
 
-    @JsonProperty("user_name")
+    @JsonProperty("user_nick")
     public void setUserName(String userName) {
         this.userName = userName;
     }

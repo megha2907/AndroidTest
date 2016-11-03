@@ -5,21 +5,34 @@
 
     >
 
-    <ListView
-        android:id="@+id/MOEInboxList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:background="@color/colorPrimaryDark"/>
-
-    <TextView
-        android:id="@+id/emptyBox"
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:text="@string/moe_notification_center_empty"
-        android:textSize="16sp"
-        android:visibility="gone"/>
+        android:background="@color/colorMedium"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:elevation="4dp"
+        android:id="@+id/tournament_toolbar"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_title"
+            android:textSize="@dimen/dp_20"
+            android:textColor="@color/white"
+            android:text="Notifications"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/inbox_holder"
+        android:layout_below="@+id/tournament_toolbar"
+        android:background="@color/black">
+
+    </FrameLayout>
 
 </RelativeLayout>

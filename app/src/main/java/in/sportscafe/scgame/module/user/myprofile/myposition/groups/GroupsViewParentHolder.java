@@ -50,7 +50,7 @@ public class GroupsViewParentHolder extends ParentViewHolder {
         }
 
         if(null == tourSummary.getRank()) {
-            mGroupsOverallRankTextView.setVisibility(View.INVISIBLE);
+            mGroupsOverallRankTextView.setText("-");
         } else {
             mGroupsOverallRankTextView.setText(String.valueOf(tourSummary.getOverallRank()));
         }

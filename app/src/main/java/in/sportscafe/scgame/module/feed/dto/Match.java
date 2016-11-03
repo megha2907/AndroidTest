@@ -24,6 +24,9 @@ public class Match implements Serializable {
     @JsonProperty("tournament_name")
     private String tournamentName;
 
+    @JsonProperty("tournament_img_url")
+    private String tournamentPhoto;
+
     @JsonProperty("match_stage")
     private String stage;
 
@@ -296,6 +299,16 @@ public class Match implements Serializable {
     @JsonProperty("correct_count")
     public void setCorrectCount(Integer correctCount) {
         this.correctCount = correctCount;
+    }
+
+    @JsonProperty("tournament_img_url")
+    public String getTournamentPhoto() {
+        return tournamentPhoto;
+    }
+
+    @JsonProperty("tournament_img_url")
+    public void setTournamentPhoto(String tournamentPhoto) {
+        this.tournamentPhoto = tournamentPhoto;
     }
 
 //

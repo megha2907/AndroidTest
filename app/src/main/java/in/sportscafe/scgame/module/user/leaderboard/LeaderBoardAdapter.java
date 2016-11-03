@@ -1,6 +1,7 @@
 package in.sportscafe.scgame.module.user.leaderboard;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
 
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.user.leaderboard.dto.LeaderBoard;
@@ -21,8 +23,11 @@ import in.sportscafe.scgame.module.user.leaderboard.dto.UserLeaderBoard;
  */
 public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdapter.ViewHolder> {
 
+    private Context mcontext;
+
     public LeaderBoardAdapter(Context context) {
         super(context);
+        mcontext=context;
     }
 
     @Override
@@ -39,6 +44,8 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
         UserLeaderBoard userLeaderBoard = getItem(position);
 
+
+
         Log.i("userleaderboardadapter",getItem(0).getUserName());
 
         if(userLeaderBoard.getRankChange() < 0) {
@@ -47,7 +54,11 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             holder.mIvStatus.setImageResource(R.drawable.status_arrow_up);
         }
 
-        holder.mTvRank.setText(String.valueOf(userLeaderBoard.getRank()));
+        if(null == userLeaderBoard.getRank()) {
+            holder.mTvRank.setText("-");
+        } else {
+            holder.mTvRank.setText(String.valueOf(userLeaderBoard.getRank()));
+        }
 
         holder.mTvName.setText(userLeaderBoard.getUserName());
 
@@ -59,6 +70,16 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
                 Volley.getInstance().getImageLoader(),
                 false
         );
+
+        if (ScGameDataHandler.getInstance().getUserId().equals(String.valueOf(userLeaderBoard.getUserId()))){
+
+            holder.mTvName.setTextColor(ContextCompat.getColor(mcontext, R.color.btn_powerup_screen_color));
+            holder.mTvPoints.setTextColor(ContextCompat.getColor(mcontext, R.color.btn_powerup_screen_color));
+            holder.mTvPlayed.setTextColor(ContextCompat.getColor(mcontext, R.color.btn_powerup_screen_color));
+            holder.mViewUserLine.setVisibility(View.VISIBLE);
+
+        }
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -73,6 +94,10 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
 
         TextView mTvPoints;
 
+        TextView mTvPlayed;
+
+        View mViewUserLine;
+
         public ViewHolder(View V) {
             super(V);
 
@@ -81,6 +106,9 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             mIvUser = (RoundImage) V.findViewById(R.id.leaderboard_row_iv_user_img);
             mTvName = (TextView) V.findViewById(R.id.leaderboard_row_tv_user_name);
             mTvPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_points);
+            mTvPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_points);
+            mTvPlayed= (TextView) V.findViewById(R.id.leaderboard_row_tv_played);
+            mViewUserLine = (View) V.findViewById(R.id.leaderboard_row_view_user);
 
             V.setOnClickListener(new View.OnClickListener() {
                 @Override
