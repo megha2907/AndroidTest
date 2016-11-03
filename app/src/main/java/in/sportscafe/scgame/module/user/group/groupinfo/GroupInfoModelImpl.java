@@ -3,16 +3,27 @@ package in.sportscafe.scgame.module.user.group.groupinfo;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.jeeva.android.Log;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.user.group.LeaveGroupModelImpl;
+import in.sportscafe.scgame.module.user.group.allgroups.AllGroupsAdapter;
 import in.sportscafe.scgame.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupPerson;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupSummary;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummaryResponse;
+import in.sportscafe.scgame.webservice.GroupSummaryResponse;
+import in.sportscafe.scgame.webservice.MyWebService;
+import in.sportscafe.scgame.webservice.ScGameCallBack;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -23,7 +34,7 @@ public class GroupInfoModelImpl implements GroupInfoModel {
 
     private GroupInfo mGroupInfo;
 
-    private GrpTournamentSelectionAdapter mGrpTournamentSelectionAdapter;
+    private GroupTournamentAdapter mGrpTournamentAdapter;
 
     private OnGroupInfoModelListener mGroupInfoModelListener;
 
@@ -41,11 +52,19 @@ public class GroupInfoModelImpl implements GroupInfoModel {
 
     @Override
     public void init(Bundle bundle) {
-        Long groupId = bundle.getLong(Constants.BundleKeys.GROUP_ID);
-        this.mGroupInfo = ScGameDataHandler.getInstance().getGrpInfoMap().get(groupId);
+
+        Long groupId = Long.parseLong(bundle.getString(Constants.BundleKeys.GROUP_ID));
+
+        getGroupSummary(groupId.intValue());
+       // this.mGroupInfo = ScGameDataHandler.getInstance().getGrpInfoMap().get(groupId);
+
+    }
+
+    @Override
+    public void updateGroupMembers(GroupInfo groupInfo){
 
         String myId = ScGameDataHandler.getInstance().getUserId();
-        List<GroupPerson> groupMembers = mGroupInfo.getMembers();
+        List<GroupPerson> groupMembers = groupInfo.getMembers();
 
         for (GroupPerson groupPerson : groupMembers) {
             if (myId.compareTo(groupPerson.getId().toString()) == 0
@@ -55,35 +74,43 @@ public class GroupInfoModelImpl implements GroupInfoModel {
             }
         }
 
-        this.mGrpTournamentUpdateModel = new GrpTournamentUpdateModelImpl(mGroupInfo.getId(),
-                new GrpTournamentUpdateModelImpl.OnGrpTournamentUpdateModelListener() {
+
+    }
+
+
+    private void getGroupSummary(Integer GroupId) {
+        MyWebService.getInstance().getGroupSummaryRequest(GroupId).enqueue(
+                new ScGameCallBack<GroupSummaryResponse>() {
                     @Override
-                    public void onSuccessGrpTournamentUpdate() {
-                        mGroupInfoModelListener.onGroupTournamentUpdateSuccess();
+                    public void onResponse(Call<GroupSummaryResponse> call, Response<GroupSummaryResponse> response) {
+                        if(response.isSuccessful()) {
+                            Log.i("inside","responsesuccess");
+
+                            ScGameDataHandler scGameDataHandler = ScGameDataHandler.getInstance();
+
+                            GroupInfo groupInfo = response.body().getGroupInfo();
+
+                            Map<Long, GroupInfo> grpInfoMap = scGameDataHandler.getGrpInfoMap();
+                            grpInfoMap.put(groupInfo.getId(), groupInfo);
+
+                            scGameDataHandler.setGrpInfoMap(grpInfoMap);
+                            scGameDataHandler.setSelectedTournaments(groupInfo.getFollowedTournaments());
+                            Log.i("groupinfotournaments", String.valueOf(groupInfo.getFollowedTournaments().get(0).getCountsUnplayed()));
+
+                            groupInfo.setMembers(groupInfo.getMembers());
+
+                            mGroupInfo = groupInfo;
+
+                            mGroupInfoModelListener.onGetGroupSummarySuccess(groupInfo);
+
+
+                        } else {
+                            Log.i("inside","responsefailed");
+                            mGroupInfoModelListener.onGetGroupSummaryFailed(response.message());
+                        }
                     }
-
-                    @Override
-                    public void onFailedGrpTournamentUpdate(String message) {}
-
-                    @Override
-                    public void onNoInternet() {}
-                });
-
-        this.mGrpNameUpdateModel = new GrpNameUpdateModelImpl(mGroupInfo.getId(),
-                new GrpNameUpdateModelImpl.OnGrpNameUpdateModelListener() {
-                    @Override
-                    public void onSuccessGrpNameUpdate() {
-                        mGroupInfoModelListener.onGroupNameUpdateSuccess();
-                    }
-
-                    @Override
-                    public void onFailedGrpNameUpdate(String message) {}
-
-                    @Override
-                    public void onNoInternet() {
-                        mGroupInfoModelListener.onNoInternet();
-                    }
-                });
+                }
+        );
     }
 
     @Override
@@ -107,61 +134,19 @@ public class GroupInfoModelImpl implements GroupInfoModel {
         return membersCount;
     }
 
-    @Override
-    public GrpTournamentSelectionAdapter getAdapter(Context context) {
-        List<TournamentInfo> followedTournaments = mGroupInfo.getFollowedTournaments();
-
-        List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
-        for (TournamentInfo tournamentInfo : followedTournaments) {
-            mFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
-        }
-
-        this.mGrpTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context,
-                mFollowedTournamentsIdList, new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
-
-            @Override
-            public boolean onGrpTournamentSelected(boolean addNewTournament, int existingTournamentCount) {
-                return mAdmin && (addNewTournament || existingTournamentCount > 1);
-            }
-
-            @Override
-            public void onGrpTournamentChanged(List<Integer> selectedTournamentsIdList) {
-                mGrpTournamentUpdateModel.updateGrpTournaments(selectedTournamentsIdList);
-            }
-
-        });
-
-        if(amAdmin()) {
-            this.mGrpTournamentSelectionAdapter.addAll(ScGameDataHandler.getInstance().getTournaments());
-        } else {
-            this.mGrpTournamentSelectionAdapter.addAll(followedTournaments);
-        }
-        return mGrpTournamentSelectionAdapter;
-    }
 
     @Override
     public Bundle getGroupIdBundle() {
         Bundle bundle = new Bundle();
-        bundle.putLong(Constants.BundleKeys.GROUP_ID, mGroupInfo.getId());
+        bundle.putString(Constants.BundleKeys.GROUP_ID, String.valueOf(mGroupInfo.getId()));
         return bundle;
-    }
-
-    @Override
-    public void updateGroupName(String groupName) {
-        if (groupName.isEmpty()) {
-            mGroupInfoModelListener.onGroupNameEmpty();
-            return;
-        }
-
-        mGrpNameUpdateModel.updateGrpName(groupName);
     }
 
     @Override
     public String getShareCodeContent() {
         return "Group Code: " + mGroupInfo.getGroupCode() + "\n\n" +
                 "If you want to join in the '" + mGroupInfo.getName() +
-                "' group, Use the above code in the join group page in the application. " +
-                "\n\nIf you don't have the application, use this link";
+                "' group, Use the above code in the join group page in the application. ";
     }
 
     @Override
@@ -189,6 +174,21 @@ public class GroupInfoModelImpl implements GroupInfoModel {
         }).leaveGroup(mAdmin, mGroupInfo.getId());
     }
 
+    @Override
+    public GroupTournamentAdapter getAdapter(Context context) {
+
+        if(ScGameDataHandler.getInstance().getSelectedTournaments().isEmpty()){
+
+            mGroupInfoModelListener.onEmptyList();
+        }
+
+
+        mGrpTournamentAdapter = new GroupTournamentAdapter(context,
+                ScGameDataHandler.getInstance().getSelectedTournaments());
+        return mGrpTournamentAdapter;
+    }
+
+
     public interface OnGroupInfoModelListener {
 
         void onGroupNameUpdateSuccess();
@@ -202,5 +202,13 @@ public class GroupInfoModelImpl implements GroupInfoModel {
         void onLeaveGroupSuccess();
 
         void onFailed(String message);
+
+        void onGetGroupSummarySuccess(GroupInfo grpInfoList);
+
+        void onGetGroupSummaryFailed(String message);
+
+        Context getContext();
+
+        void onEmptyList();
     }
 }

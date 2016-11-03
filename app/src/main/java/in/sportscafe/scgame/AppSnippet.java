@@ -76,4 +76,17 @@ public class AppSnippet implements Constants {
         }
         return data;
     }
+
+    public static String getClassName(Class<?> classType) {
+        String className = classType.getSimpleName();
+        return className.substring(className.lastIndexOf(".") + 1);
+    }
+
+    public static void closeApp() {
+        try {
+            System.exit(1);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+    }
 }

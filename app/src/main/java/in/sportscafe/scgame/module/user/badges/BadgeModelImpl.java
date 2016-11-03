@@ -27,6 +27,12 @@ public class BadgeModelImpl implements BadgeModel {
     @Override
     public RecyclerView.Adapter getBadgeAdapter(Context context) {
 
+        if(mScGameDataHandler.getBadgeList().isEmpty()){
+
+            mBadgeModelListener.onBadgesEmpty();
+        }
+
+
         mBadgeAdapter = new BadgeAdapter(context,
                 mScGameDataHandler.getBadgeList());
         return mBadgeAdapter;
@@ -38,5 +44,7 @@ public class BadgeModelImpl implements BadgeModel {
         void onNoInternet();
 
         void onFailed(String message);
+
+        void onBadgesEmpty();
     }
 }

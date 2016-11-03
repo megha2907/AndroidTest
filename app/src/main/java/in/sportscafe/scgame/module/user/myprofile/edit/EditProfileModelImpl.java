@@ -36,19 +36,16 @@ public class EditProfileModelImpl implements EditProfileModel {
     }
 
     @Override
-    public void updateProfile(String name, String nickname) {
-        if(name.isEmpty()) {
-            mEditProfileListener.onNameEmpty();
-            return;
-        }
-        else if(nickname.isEmpty()){
+    public void updateProfile(String nickname) {
+
+        if(nickname.isEmpty()){
             mEditProfileListener.onNickNameEmpty();
             return;
         }
 
         if(ScGame.getInstance().hasNetworkConnection()) {
             mEditProfileListener.onUpdating();
-            callUpdateUserApi(name,nickname);
+            callUpdateUserApi(nickname);
         } else {
             mEditProfileListener.onNoInternet();
         }
@@ -77,7 +74,7 @@ public class EditProfileModelImpl implements EditProfileModel {
 
                 if (response.isSuccessful()) {
                     mUserInfo.setPhoto(response.body().getResult());
-                    mEditProfileListener.onEditSuccess();
+                    mEditProfileListener.onPhotoUpdate();
                 } else {
                     mEditProfileListener.onEditFailed(response.message());
                 }
@@ -87,10 +84,9 @@ public class EditProfileModelImpl implements EditProfileModel {
 
     }
 
-    private void callUpdateUserApi(final String name,final String nickname) {
+    private void callUpdateUserApi(final String nickname) {
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
         updateUserRequest.setUserId(mUserInfo.getId() + "");
-        updateUserRequest.setUserName(name);
         updateUserRequest.setUserPhoto(mUserInfo.getPhoto());
         updateUserRequest.setUserNickName(nickname);
 
@@ -99,11 +95,17 @@ public class EditProfileModelImpl implements EditProfileModel {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         if(response.isSuccessful()) {
-                            mUserInfo.setUserName(name);
-                            mUserInfo.setUserNickName(nickname);
-                            ScGameDataHandler.getInstance().setUserInfo(mUserInfo);
 
-                            mEditProfileListener.onEditSuccess();
+                            if (response.body().getMessage().equals("user_nick conflict"))
+                            {
+                                mEditProfileListener.onUserNameConflict();
+                            }
+                            else {
+                                mUserInfo.setUserNickName(nickname);
+                                ScGameDataHandler.getInstance().setUserInfo(mUserInfo);
+
+                                mEditProfileListener.onEditSuccess();
+                              }
                         } else {
                             mEditProfileListener.onEditFailed(response.message());
                         }
@@ -126,6 +128,8 @@ public class EditProfileModelImpl implements EditProfileModel {
 
         void onEditSuccess();
 
+        void onPhotoUpdate();
+
         void onEditFailed(String message);
 
         void onNameEmpty();
@@ -135,5 +139,7 @@ public class EditProfileModelImpl implements EditProfileModel {
         void onNickNameEmpty();
 
         void onNoInternet();
+
+        void onUserNameConflict();
     }
 }

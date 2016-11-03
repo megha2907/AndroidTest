@@ -92,7 +92,7 @@ public class SportsFragment extends ScGameFragment implements SportsLayout.OnRan
                     newTourSummary = new TourSummary(oldTourSummary.getTournamentId(),
                             oldTourSummary.getTournamentName(),oldTourSummary.getTournamentImageUrl(),oldTourSummary.getRank(),
                             oldTourSummary.getRankChange(),sportSummary.getOverallRank(),
-                            sportSummary.getOverallRankChange(),sportSummary.getSportsId(),sportSummary.getSportsName());
+                            sportSummary.getOverallRankChange(),sportSummary.getSportsId(),sportSummary.getSportsName(),oldTourSummary.getSportPhoto());
                     newTourSummary.setSummaryList(tempTourSummaryList);
                     tempTourSummaryList.add(newTourSummary);
 

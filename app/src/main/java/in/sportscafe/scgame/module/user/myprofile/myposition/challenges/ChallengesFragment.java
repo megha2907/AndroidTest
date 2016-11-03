@@ -68,7 +68,7 @@ public class ChallengesFragment extends ScGameFragment implements ChallengesLayo
             for (ChallengesTourSummary oldTourSummary : challengesSummary.getTourSummaryList()) {
                 newTourSummary = new ChallengesTourSummary(oldTourSummary.getTournamentId(), oldTourSummary.getTournamentName(),oldTourSummary.getTournamentImageUrl(),
                         oldTourSummary.getRank(), oldTourSummary.getRankChange(), challengesSummary.getOverallRank(),
-                        challengesSummary.getOverallRankChange(), challengesSummary.getChallengeId(), challengesSummary.getChallengeName());
+                        challengesSummary.getOverallRankChange(), challengesSummary.getChallengeId(), challengesSummary.getChallengeName(),oldTourSummary.getChallengePhoto());
                 newTourSummary.setSummaryList(tempTourSummaryList);
                 tempTourSummaryList.add(newTourSummary);
                 myLeagueParent.addView(getLeagueView(myLeagueParent, newTourSummary));

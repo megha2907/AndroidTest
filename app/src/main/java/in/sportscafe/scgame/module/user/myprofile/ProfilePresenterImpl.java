@@ -3,6 +3,8 @@ package in.sportscafe.scgame.module.user.myprofile;
 import android.content.Context;
 import android.view.View;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
@@ -41,17 +43,29 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     }
 
     @Override
+    public void onGetUpdatedNumberofGroups() {
+
+        Log.i("onGetUpdatedNumberofGroups","onGetUpdatedNumberofGroups");
+        mProfileView.setGroupsCount(ScGameDataHandler.getInstance().getNumberofGroups());
+    }
+
+    @Override
     public void onGetGroupCount() {
-        if (null == ScGameDataHandler.getInstance().getGrpInfoMap() || ScGameDataHandler.getInstance().getGrpInfoMap().isEmpty()) {
+        if (null == ScGameDataHandler.getInstance().getAllGroups() || ScGameDataHandler.getInstance().getAllGroups().isEmpty()) {
             mProfileView.setGroupsCount(0);
         } else {
-            mProfileView.setGroupsCount(ScGameDataHandler.getInstance().getGrpInfoMap().size());
+            mProfileView.setGroupsCount(ScGameDataHandler.getInstance().getNumberofGroups());
         }
     }
 
     @Override
     public void onGetPowerUpsCount() {
         mProfileView.setPowerUpsCount(ScGameDataHandler.getInstance().getNumberofPowerups());
+    }
+
+    @Override
+    public void onGetBadgesCount() {
+        mProfileView.setBadgesCount(ScGameDataHandler.getInstance().getNumberofBadges());
     }
 
     @Override
@@ -85,11 +99,12 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
 
     private void populateUserInfo() {
         UserInfo userInfo = mProfileModel.getUserInfo();
-        mProfileView.setName(userInfo.getUserName());
+        mProfileView.setName(userInfo.getUserNickName());
         mProfileView.setProfileImage(userInfo.getPhoto());
         onGetSportsSelectionResult();
         onGetGroupCount();
         onGetPowerUpsCount();
+        onGetBadgesCount();
     }
 
     @Override

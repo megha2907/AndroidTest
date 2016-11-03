@@ -7,7 +7,6 @@ package in.sportscafe.scgame.module.TournamentFeed;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,13 @@ import android.widget.TextView;
 import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
-import com.jeeva.android.widgets.customfont.CustomButton;
 
-import in.sportscafe.scgame.Constants;
+import in.sportscafe.scgame.Constants.AnalyticsActions;
+import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.common.Adapter;
-import in.sportscafe.scgame.module.common.Settings;
 import in.sportscafe.scgame.module.feed.FeedActivity;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 
@@ -31,12 +30,8 @@ public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFee
 
     private OnHomeActionListener mOnHomeActionListener;
 
-    private AlertDialog mAlertDialog;
-    private Context mcon;
-
     public TournamentFeedAdapter(Context context, OnHomeActionListener listener) {
         super(context);
-        mcon = context;
         this.mOnHomeActionListener = listener;
     }
 
@@ -58,15 +53,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFee
 
         holder.mTvTournamentName.setText(tournamentInfo.getTournamentName());
 
-        if (tournamentInfo.getCountsUnplayed().equals("0")){
-
-            holder.mBtnTournamentUnplayedCount.setVisibility(View.GONE);
-        }
-        else
-        {
-            holder.mBtnTournamentUnplayedCount.setText(tournamentInfo.getCountsUnplayed());
-        }
-
+        holder.mTvTournamentUnplayedCount.setText(tournamentInfo.getTournamentSubtext());
 
         holder.mIvTournamentImage.setImageUrl(
                 tournamentInfo.getTournamentPhoto(),
@@ -85,7 +72,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFee
         View mMainView;
         TextView mTvTournamentName;
         HmImageView mIvTournamentImage;
-        CustomButton mBtnTournamentUnplayedCount;
+        TextView mTvTournamentUnplayedCount;
 
 
         public ViewHolder(View V) {
@@ -93,30 +80,28 @@ public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFee
             mMainView = V;
             mTvTournamentName = (TextView) V.findViewById(R.id.tournament_tv_tournamentName);
             mIvTournamentImage = (HmImageView) V.findViewById(R.id.tournament_iv_tournamentImage);
-            mBtnTournamentUnplayedCount = (CustomButton) V.findViewById(R.id.tournament_btn_count_unplayed);
+            mTvTournamentUnplayedCount = (TextView) V.findViewById(R.id.tournament_btn_count_unplayed);
 
             V.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View v) {
-
+        public void onClick(View view) {
             TournamentInfo tournamentInfo = getItem(getAdapterPosition());
 
             Integer tournamentId = tournamentInfo.getTournamentId();
-            Log.i("tournamentid", tournamentInfo.getTournamentId().toString());
+            Log.i("tournamentId", tournamentInfo.getTournamentId().toString());
 
-            Intent intent =  new Intent(mcon, FeedActivity.class);
-            Bundle mBundle = new Bundle();
-            mBundle.putInt(Constants.BundleKeys.TOURNAMENT_ID, tournamentId);
-            mBundle.putString(Constants.BundleKeys.TOURNAMENT_NAME, tournamentInfo.getTournamentName());
-            intent.putExtras(mBundle);
-            mcon.startActivity(intent);
+            Bundle bundle = new Bundle();
+            bundle.putInt(BundleKeys.TOURNAMENT_ID, tournamentId);
+            bundle.putString(BundleKeys.TOURNAMENT_NAME, tournamentInfo.getTournamentName());
 
+            Intent intent =  new Intent(view.getContext(), FeedActivity.class);
+            intent.putExtras(bundle);
+            view.getContext().startActivity(intent);
+
+            ScGameAnalytics.getInstance().trackFeed(AnalyticsActions.TOURNAMENT,
+                    tournamentInfo.getTournamentName());
         }
-
     }
-
-
-
 }

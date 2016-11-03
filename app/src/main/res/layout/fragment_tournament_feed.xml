@@ -5,10 +5,31 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorMedium"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:elevation="4dp"
+        android:id="@+id/tournament_toolbar"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_logo"
+            android:src="@drawable/sportscafe_logo"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swifeRefresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tournament_toolbar"
+        android:layout_marginTop="@dimen/dp_15"
         >
 
 
@@ -16,6 +37,8 @@
             android:id="@+id/tournament_feed_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
+
 
             />
 

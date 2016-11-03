@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
@@ -39,6 +40,13 @@ public class BadgeActivity extends ScGameActivity implements BadgeView{
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
         this.mRvBadge.setAdapter(adapter);
+    }
+
+    @Override
+    public void showBadgesEmpty() {
+
+        TextView noBadges= (TextView)findViewById(R.id.no_badges);
+        noBadges.setVisibility(View.VISIBLE);
     }
 
 

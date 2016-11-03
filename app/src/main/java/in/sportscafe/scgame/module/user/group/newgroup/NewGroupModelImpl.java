@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,9 +13,13 @@ import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentsResponse;
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
+import in.sportscafe.scgame.module.user.myprofile.dto.Result;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -28,6 +33,8 @@ public class NewGroupModelImpl implements NewGroupModel {
     private OnNewGroupModelListener mNewGroupModelListener;
 
     private ScGameDataHandler mScGameDataHandler;
+
+    private String mgroupPhoto;
 
     private NewGroupModelImpl(OnNewGroupModelListener listener) {
         this.mNewGroupModelListener = listener;
@@ -65,11 +72,46 @@ public class NewGroupModelImpl implements NewGroupModel {
                 newGroupRequest.setGroupCreatedBy(ScGameDataHandler.getInstance().getUserId());
                 newGroupRequest.setGroupName(groupName);
                 newGroupRequest.setfollowedTournaments(SelectedTournament);
+                newGroupRequest.setGroupPhoto(mgroupPhoto);
                 callNewGroupApi(newGroupRequest);
             } else {
                 mNewGroupModelListener.onNoInternet();
             }
         }
+    }
+
+    @Override
+    public void updateGroupPhoto(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+
+        if(filepath.equals(null)) {
+            mNewGroupModelListener.onGroupImagePathNull();
+            return;
+        }
+        if(ScGame.getInstance().hasNetworkConnection()) {
+            mNewGroupModelListener.onUpdating();
+            callUpdateGroupPhotoApi(file,filepath,filename);
+        } else {
+            mNewGroupModelListener.onNoInternet();
+        }
+    }
+
+
+    private void callUpdateGroupPhotoApi(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+
+        MyWebService.getInstance().getUpdateGroupPhotoRequest(file,filepath,filename).enqueue(new ScGameCallBack<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+
+                if (response.isSuccessful()) {
+                    mgroupPhoto = response.body().getResult();
+                    mNewGroupModelListener.onPhotoUpdate(mgroupPhoto);
+                } else {
+                    mNewGroupModelListener.onEditFailed(response.message());
+                }
+            }
+
+        });
+
     }
 
     private void getAllTournamentsfromServer() {
@@ -123,7 +165,8 @@ public class NewGroupModelImpl implements NewGroupModel {
                             scGameDataHandler.setGrpInfoMap(grpInfoMap);
 
                             Bundle bundle = new Bundle();
-                            bundle.putLong(Constants.BundleKeys.GROUP_ID, groupInfo.getId());
+                            bundle.putString(Constants.BundleKeys.GROUP_ID, String.valueOf(groupInfo.getId()));
+                            bundle.putString(Constants.BundleKeys.GROUP_NAME, groupInfo.getName());
                             mNewGroupModelListener.onSuccess(bundle);
                         } else {
                             mNewGroupModelListener.onFailed(response.message());
@@ -131,6 +174,12 @@ public class NewGroupModelImpl implements NewGroupModel {
                     }
                 }
         );
+
+        Map<String, String> values = new HashMap<>();
+        values.put("GroupName", newGroupRequest.getGroupName());
+        values.put("UserID", ScGameDataHandler.getInstance().getUserId());
+
+        ScGameAnalytics.getInstance().trackOtherEvents("CREATE GROUP-ONCLICK", values);
     }
 
     public interface OnNewGroupModelListener {
@@ -146,5 +195,13 @@ public class NewGroupModelImpl implements NewGroupModel {
         void onNoInternet();
 
         void onFailed(String message);
+
+        void onGroupImagePathNull();
+
+        void onUpdating();
+
+        void onEditFailed(String message);
+
+        void onPhotoUpdate(String groupPhoto);
     }
 }

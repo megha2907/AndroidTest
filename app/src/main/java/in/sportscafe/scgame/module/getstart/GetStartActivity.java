@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.moe.pushlibrary.PayloadBuilder;
-
-import java.util.Date;
-
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameActivity;
@@ -26,6 +23,7 @@ public class GetStartActivity extends ScGameActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getstarted);
+
 
         if (ScGameDataHandler.getInstance().getFavoriteSportsIdList().size() > 0) {
             navigateToHome();
@@ -53,21 +51,17 @@ public class GetStartActivity extends ScGameActivity {
         });
     }
 
-    private void trackClick(String text, String componentName) {
-        PayloadBuilder builder = new PayloadBuilder();
-        builder.putAttrString("text", text)
-                .putAttrString("componentName", componentName)
-                .putAttrDate("clickDate", new Date());
-        getMoeHelper().trackEvent("Click", builder.build());
-    }
-
     private void navigateToHome() {
         startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
 
     private void navigateToSportSelection() {
-        startActivity(new Intent(this, SportSelectionActivity.class));
+        Intent intent = new Intent(this, SportSelectionActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void navigateToLogin() {

@@ -8,11 +8,15 @@ public interface LogInView extends View {
 
     void initViews();
 
+    void navigateToEditProfile();
+
     void signIn(Intent intent);
 
     void navigateToHome();
 
     void navigateToSports();
+
+    void signOut();
 
     void showProgressDialog();
 

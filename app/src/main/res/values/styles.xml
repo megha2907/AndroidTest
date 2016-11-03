@@ -14,14 +14,19 @@
         <item name="android:spinnerStyle">@style/mySpinnerItemStyle</item>
     </style>
 
-    <style name="TextLabel" parent="TextAppearance.AppCompat">
+    <style name="TextLabel" parent="Widget.Design.TextInputLayout">
         <!-- Hint color and label color in FALSE state -->
         <item name="android:textColorHint">@color/textcolorlight</item>
-        <item name="android:textSize">@dimen/dp_18</item>
+        <item name="android:textSize">@dimen/dp_12</item>
         <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
         <item name="colorAccent">@color/textcolorlight</item>
         <item name="colorControlNormal">@color/textcolorlight</item>
         <item name="colorControlActivated">@color/textcolorlight</item>
+    </style>
+
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/monza</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
 

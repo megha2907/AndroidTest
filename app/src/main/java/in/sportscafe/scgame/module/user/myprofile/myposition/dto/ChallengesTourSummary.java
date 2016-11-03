@@ -16,10 +16,11 @@ public class ChallengesTourSummary extends BaseSummary implements Serializable {
     public ChallengesTourSummary() {
     }
 
-    public ChallengesTourSummary(Integer tournamentId, String tournamentName, String tournamentImageUrl, Integer rank, Integer rankChange, Integer overallRank, Integer overallRankChange, Integer challengeId, String challengeName) {
-        super(challengeName, tournamentId, tournamentName, tournamentImageUrl, rank, rankChange, overallRank, overallRankChange);
+    public ChallengesTourSummary(Integer tournamentId, String tournamentName, String tournamentImageUrl, Integer rank, Integer rankChange, Integer overallRank, Integer overallRankChange, Integer challengeId, String challengeName,String challengePhoto) {
+        super(challengePhoto,challengeName, tournamentId, tournamentName, tournamentImageUrl, rank, rankChange, overallRank, overallRankChange);
         this.challengeId = challengeId;
         this.challengeName = challengeName;
+        this.challengePhoto = challengePhoto;
     }
 
     @JsonProperty("challenge_id")
@@ -27,6 +28,9 @@ public class ChallengesTourSummary extends BaseSummary implements Serializable {
 
     @JsonProperty("challenge_name")
     private String challengeName;
+
+    @JsonIgnore
+    private String challengePhoto;
 
     @JsonProperty("challenge_id")
     public Integer getChallengeId() {
@@ -47,4 +51,15 @@ public class ChallengesTourSummary extends BaseSummary implements Serializable {
     public void setChallengeName(String challengeName) {
         this.challengeName = challengeName;
     }
+
+    @JsonIgnore
+    public String getChallengePhoto() {
+        return challengePhoto;
+    }
+
+    @JsonIgnore
+    public void setChallengePhoto(String challengePhoto) {
+        this.challengePhoto = challengePhoto;
+    }
+
 }

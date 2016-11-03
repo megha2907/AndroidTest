@@ -12,7 +12,8 @@ public interface EditProfilePresenter {
 
     void onCreateEditProfile(Bundle bundle);
 
-    void onClickDone(String name, String about);
+    void onClickDone(String about);
 
     void onProfilePhotoDone(MultipartBody.Part file, RequestBody filepath, RequestBody filename);
+
 }

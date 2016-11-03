@@ -156,4 +156,13 @@ public class MyWebService extends AbstractWebService<ScGameService> {
         return mScGameService.updateGroupName(request);
     }
 
+    public Call<GroupSummaryResponse> getGroupSummaryRequest(Integer groupId) {
+
+        return mScGameService.getGroupSummary(ScGameDataHandler.getInstance().getUserId(),groupId);
+
+    }
+
+    public Call<Result> getUpdateGroupPhotoRequest(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+        return mScGameService.uploadImage(file,filepath,filename);
+    }
 }

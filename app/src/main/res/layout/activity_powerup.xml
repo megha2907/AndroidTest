@@ -4,7 +4,7 @@
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/black">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -26,25 +26,27 @@
             android:layout_marginTop="10dp"
             android:layout_below="@+id/powerup_toolbar"
             android:layout_above="@+id/powerup_btn_earn_more"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/black"
             />
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/powerup_btn_earn_more"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_button"
+        android:background="@drawable/powerup_screen_btn_bg"
         android:onClick="onClick"
+        android:textColor="@color/white"
         android:text="EARN MORE"
         android:textAllCaps="false"
         android:textSize="@dimen/dp_18"
         android:layout_below="@+id/input_layout_edit_et_nickname"
         android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_70"
+        android:layout_marginRight="@dimen/dp_70"
         app:typeface="lato_medium"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp_20"
+        android:visibility="gone"
         />
 
 

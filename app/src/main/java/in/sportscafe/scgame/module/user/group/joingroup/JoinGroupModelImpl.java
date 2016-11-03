@@ -1,6 +1,11 @@
 package in.sportscafe.scgame.module.user.group.joingroup;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import in.sportscafe.scgame.ScGame;
+import in.sportscafe.scgame.ScGameDataHandler;
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.common.ApiResponse;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
@@ -49,6 +54,13 @@ public class JoinGroupModelImpl implements JoinGroupModel {
                     }
                 }
         );
+
+
+        Map<String, String> values = new HashMap<>();
+        values.put("GroupCode", groupCode);
+        values.put("UserID", ScGameDataHandler.getInstance().getUserId());
+
+        ScGameAnalytics.getInstance().trackOtherEvents("JOIN GROUP-ONCLICK", values);
     }
 
     public interface OnJoinGroupModelListener {

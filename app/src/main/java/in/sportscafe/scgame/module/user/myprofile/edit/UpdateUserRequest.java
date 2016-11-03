@@ -10,9 +10,6 @@ public class UpdateUserRequest {
     @JsonProperty("user_id")
     private String userId;
 
-    @JsonProperty("user_name")
-    private String userName;
-
     @JsonProperty("user_photo")
     private String userPhoto;
 
@@ -27,16 +24,6 @@ public class UpdateUserRequest {
     @JsonProperty("user_id")
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    @JsonProperty("user_name")
-    public String getUserName() {
-        return userName;
-    }
-
-    @JsonProperty("user_name")
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     @JsonProperty("user_photo")

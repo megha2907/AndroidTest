@@ -1,7 +1,6 @@
 package in.sportscafe.scgame.webservice;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -78,9 +77,7 @@ public abstract class AbstractWebService<T> {
     public <T> String getJsonStringFromObject(T object) {
         try {
             return mObjectMapper.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
-            ExceptionTracker.track(e);
-        } catch (IOException e) {
+        } catch (Exception e) {
             ExceptionTracker.track(e);
         }
         return null;
@@ -89,7 +86,7 @@ public abstract class AbstractWebService<T> {
     public <T> T getObjectFromJson(String json, Class<T> classType) {
         try {
             return mObjectMapper.readValue(json, classType);
-        } catch (IOException e) {
+        } catch (Exception e) {
             ExceptionTracker.track(e);
         }
         return null;
@@ -98,8 +95,6 @@ public abstract class AbstractWebService<T> {
     public <T> T getObjectFromJson(String json, CollectionType classType) {
         try {
             return mObjectMapper.readValue(json, classType);
-        } catch (IOException e) {
-            ExceptionTracker.track(e);
         } catch (Exception e) {
             ExceptionTracker.track(e);
         }
@@ -109,8 +104,6 @@ public abstract class AbstractWebService<T> {
     public <T> T getObjectFromJson(String json, TypeReference<T> typeReference) {
         try {
             return mObjectMapper.readValue(json, typeReference);
-        } catch (IOException e) {
-            ExceptionTracker.track(e);
         } catch (Exception e) {
             ExceptionTracker.track(e);
         }

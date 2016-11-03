@@ -7,7 +7,7 @@
     <color name="alto">#D8D8D8</color>
     <color name="silver_chalice">#AAAAAA</color>
     <color name="dark_grey">#272731</color>
-    <color name="black">#00000C</color>
+    <color name="black">#19181C</color>
     <color name="chambray">#3B5999</color>
     <color name="chathamsBlue">#194586</color>
     <color name="gallery">#EBEBEB</color>
@@ -19,16 +19,22 @@
     <color name="scorpion">#656161</color>
     <color name="valencia">#D44837</color>
     <color name="powerup_color">#ffad33</color>
-    <color name="btn_powerup_screen_color">#45ADE4</color>
+    <color name="btn_powerup_screen_color">#00A0FF</color>
     <color name="btn_powerup_count_screen_color">#D3D5D4</color>
 
-    <color name="greencolor">#1BB248</color>
-    <color name="yellowcolor">#ffad33</color>
-    <color name="btncolor">#C95140</color>
+    <color name="greencolor">#00D35D</color>
+    <color name="tabcolor">#FD3353</color>
+    <color name="browncolor">#98681C</color>
+    <color name="yellowcolor">#FFDB00</color>
+    <color name="goldenyellowcolor">#ECC11B</color>
+    <color name="btncolor">#FF0047</color>
     <color name="colorMedium">#25232D</color>
     <color name="colorBackground">#25232D</color>
     <color name="textcolorlight">#86858D</color>
+    <color name="dividercolor">#2A2A2A</color>
+    <color name="linecolor">#505050</color>
     <color name="colorBrown">#2A2832</color>
     <color name="colorGrey">#26252d</color>
+    <color name="invitepeoplebtncolor">#00DB58</color>
 
 </resources>

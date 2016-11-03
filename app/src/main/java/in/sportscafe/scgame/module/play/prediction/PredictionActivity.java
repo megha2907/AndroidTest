@@ -3,6 +3,7 @@ package in.sportscafe.scgame.module.play.prediction;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,7 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
+import com.jeeva.android.volley.Volley;
+import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
+import com.jeeva.android.widgets.customfont.CustomTextView;
 
 import java.nio.BufferUnderflowException;
 
@@ -55,7 +59,7 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
 
 
         //rlPowerUp = (RelativeLayout) findViewById(R.id.rl_powerup);
-        CustomButton btnquestionValue = (CustomButton)findViewById(R.id.swipe_card_question_value);
+        CustomButton btnquestionValue = (CustomButton) findViewById(R.id.swipe_card_question_value);
         btnpowerUpCount = (CustomButton) findViewById(R.id.swipe_card_tv_powerup_count);
 
         btnquestionValue.setOnTouchListener(this);
@@ -135,6 +139,7 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
     @Override
     public void hidePass() {
         findViewById(R.id.prediction_btn_pass).setVisibility(View.INVISIBLE);
+        findViewById(R.id.downnarrow).setVisibility(View.INVISIBLE);
     }
 
 
@@ -192,6 +197,47 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
         Intent i = new Intent(getApplicationContext(), FeedActivity.class);
         i.putExtras(bundle);
         startActivity(i);
+    }
+
+    @Override
+    public void setLeftOption(String questionOption1) {
+
+        ((CustomTextView) findViewById(R.id.swipe_card_tv_left)).setText(questionOption1);
+
+    }
+
+    @Override
+    public void setRightOption(String questionOption2) {
+
+        ((CustomTextView) findViewById(R.id.swipe_card_tv_right)).setText(questionOption2);
+
+    }
+
+    @Override
+    public void setMatchStage(String matchStage) {
+
+        ((CustomTextView) findViewById(R.id.prediction_tv_tournament_match_stage)).setText(matchStage);
+    }
+
+    @Override
+    public void setTournamentPhoto(String tournamentPhoto) {
+
+        ((HmImageView) findViewById(R.id.prediction_iv_tournament_photo)).setImageUrl(tournamentPhoto,
+                Volley.getInstance().getImageLoader(), false);
+
+    }
+
+    @Override
+    public void setNumberofCards(int itemsInAdapter) {
+
+        if (itemsInAdapter==1){
+            ((CustomTextView) findViewById(R.id.prediction_tv_number_of_cards)).setText(String.valueOf(itemsInAdapter)+" card left");
+        }
+        else {
+            ((CustomTextView) findViewById(R.id.prediction_tv_number_of_cards)).setText(String.valueOf(itemsInAdapter)+" cards left");
+        }
+
+
     }
 
 

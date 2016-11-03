@@ -2,6 +2,7 @@ package in.sportscafe.scgame.module.notifications;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.moengage.addon.inbox.InboxManager;
@@ -17,6 +18,7 @@ public class NotificationInboxHolder extends InboxManager.ViewHolder{
     public String code;
     public TextView timeStamp;
     public TextView couponCode;
+    public ImageView notificationIcon;
     public Button copyCode;
     public View couponAction;
 

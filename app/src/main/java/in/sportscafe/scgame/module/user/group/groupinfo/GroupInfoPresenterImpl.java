@@ -1,9 +1,15 @@
 package in.sportscafe.scgame.module.user.group.groupinfo;
 
+import android.content.Context;
 import android.os.Bundle;
+
+import com.jeeva.android.Log;
+
+import java.util.List;
 
 import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
+import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 
 /**
@@ -26,30 +32,26 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     @Override
     public void onCreateGroupInfo(Bundle bundle) {
+        mGroupInfoView.setGroupName(bundle.getString(Constants.BundleKeys.GROUP_NAME));
+        mGroupInfoView.showProgressbar();
         mGroupInfoModel.init(bundle);
 
-        GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
+    }
+
+
+    private void onUpdateGroupInfo(GroupInfo groupInfo){
+
         mGroupInfoView.setGroupName(groupInfo.getName());
-        mGroupInfoView.setGroupIcon(groupInfo.getName().substring(0,1));
+        mGroupInfoView.setGroupIcon(groupInfo.getPhoto());
         mGroupInfoView.setMembersSize(mGroupInfoModel.getMembersCount());
         mGroupInfoView.setAdapter(mGroupInfoModel.getAdapter(mGroupInfoView.getContext()));
         mGroupInfoView.setGroupCode(groupInfo.getGroupCode());
 
-        if(mGroupInfoModel.amAdmin()) {
-            mGroupInfoView.showDeleteGroup();
-            mGroupInfoView.disableEdit();
-        }
-    }
+//        if(mGroupInfoModel.amAdmin()) {
+//            mGroupInfoView.showDeleteGroup();
+//           // mGroupInfoView.disableEdit();
+//        }
 
-    @Override
-    public void onClickDeleteGroup() {
-
-    }
-
-    @Override
-    public void onClickLeaveGroup() {
-        mGroupInfoView.showProgressbar();
-        mGroupInfoModel.leaveGroup();
     }
 
     @Override
@@ -62,12 +64,6 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
         }
     }
 
-    @Override
-    public void onDoneGroupName(String groupName) {
-        mGroupInfoView.showProgressbar();
-        mGroupInfoModel.updateGroupName(groupName);
-        mGroupInfoView.setGroupIcon(groupName.substring(0,1));
-    }
 
     @Override
     public void onClickShareCode() {
@@ -111,6 +107,37 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     @Override
     public void onFailed(String message) {
+        mGroupInfoView.dismissProgressbar();
+        showAlert(message);
+
+    }
+
+    private void showAlert(String message) {
+
+        }
+
+
+    @Override
+    public void onGetGroupSummarySuccess(GroupInfo groupInfo) {
+        Log.i("inside","onGetGroupSummarySuccess");
+        mGroupInfoView.dismissProgressbar();
+        mGroupInfoModel.updateGroupMembers(groupInfo);
+        onUpdateGroupInfo(groupInfo);
+
+    }
+
+    @Override
+    public void onGetGroupSummaryFailed(String message) {
+
+    }
+
+    @Override
+    public Context getContext() {
+        return mGroupInfoView.getContext();
+    }
+
+    @Override
+    public void onEmptyList() {
 
     }
 
@@ -118,7 +145,6 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     public void onGroupNameUpdateSuccess() {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.disableEdit();
-
         mGroupInfoView.setSuccessResult();
     }
 }

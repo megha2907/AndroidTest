@@ -19,4 +19,5 @@ public class LbSummaryResponse {
     public void setLbSummary(LbSummary lbSummary) {
         this.lbSummary = lbSummary;
     }
+
 }

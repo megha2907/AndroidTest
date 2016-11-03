@@ -12,4 +12,6 @@ public interface NewGroupView extends View {
     void setAdapter(GrpTournamentSelectionAdapter adapter);
 
     void setSuccessBack(Bundle bundle);
+
+    void setGroupImage(String imageUrl);
 }

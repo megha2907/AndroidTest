@@ -79,7 +79,7 @@ public class GrpSportSelectionAdapter extends Adapter<Sport, GrpSportSelectionAd
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
-            mIvSport = (ImageView) V.findViewById(R.id.group_sport_row_image_sport);
+            mIvSport = (ImageView) V.findViewById(R.id.group_sport_row_image_tournament);
 //            mTvSport = (TextView) V.findViewById(R.id.group_sport_row_tv_sport);
             V.setOnClickListener(this);
         }

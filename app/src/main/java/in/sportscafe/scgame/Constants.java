@@ -12,6 +12,8 @@ public interface Constants {
 
         String GROUP_ID = "group_id";
         String JOIN_GROUP_REQUEST = "join_group_request";
+        String DAILY_NOTIFICATION_REQUEST = "daily_notification";
+        String HOURLY_NOTIFICATION_REQUEST = "hourly_notification";
         String APPROVED_GROUP_REQUEST = "approved_group_request";
         String RESULTS_LEADERBOARD = "results_leaderboard";
         String GROUP_PERSONID = "group_personID";
@@ -25,6 +27,8 @@ public interface Constants {
         String PREVIOUS_APP_VERSION_CODE = "previousAppVersionCode";
         String ALL_SPORTS = "allSports";
         String ALL_TOURNAMENTS = "allTournaments";
+        String ALL_GROUPS = "allGroups";
+        String SELECTED_TOURNAMENTS = "selectedTournaments";
         String FAVORITE_SPORTS = "favoriteSports";
         String INITIAL_SPORTS_AVAILABLE = "initialSportsAvailable";
         String GRP_INFOS = "grpInfos";
@@ -34,12 +38,15 @@ public interface Constants {
         String LOGGED_USER = "loggedUser";
         String COOKIE = "cookie";
         String NUMBER_OF_POWERUPS = "numberofpowerups";
+        String NUMBER_OF_BADGES = "numberofbadges";
+        String NUMBER_OF_GROUPS = "numberofgroups";
         String ALL_BADGES = "allbadges";
     }
 
     interface Alerts {
 //        String NO_NETWORK_CONNECTION = "No internet connection available";
         String NO_NETWORK_CONNECTION = "Check your internet connection and try again";
+        String NO_QUESTIONS = "No Questions Found";
         String DATA_NOT_FOUND = "There is problem in your internet connection";
         String JSON_PARSING = "There is problem in your internet connection";
         String TIME_OUT = "There is problem in your internet connection";
@@ -51,12 +58,13 @@ public interface Constants {
         String NO_RESULTS_FOUND = "No results found";
         String NO_WHATSAPP = "Whatsapp have not been installed";
         String LOGIN_FAILED = "Login failed";
-        String EMPTY_SPORT_SELECTION = "Select atleast one of your favorite sport";
+        String EMPTY_SPORT_SELECTION = "Please pick atleast one Sport";
         String PASSED_QUESTION_ALERT = "Now it's time to predict for all the passed questions";
         String NO_LEADERBOARD = "No points found";
         String EDIT_PROFILE_FAILED = "Profile update failed. Try again.";
         String NAME_EMPTY = "Please enter name";
         String NICKNAME_EMPTY = "Please enter nickname";
+        String NICKNAME_CONFLICT = "Oops , this username is already taken";
         String USERNAME_EMPTY = "Please enter username";
         String NO_QUESTIONS_FOUND = "No questions found";
         String NO_FEEDS_FOUND = "No feeds found";
@@ -87,17 +95,20 @@ public interface Constants {
         String CONTEST_NAME = "contestName";
         String GROUP_INFO = "groupInfo";
         String MY_POSITION_LIST = "myPositionList";
-        String GROUP_ID = "groupId";
+        String GROUP_ID = "group_id";
+        String GROUP_NAME = "group_name";
         String SPORT_ID = "sportId";
         String MATCH_LIST = "matchList";
         String FROM_PROFILE = "fromProfile";
         String TOURNAMENT_ID = "tour_id";
         String CHALLENGE_ID = "challengeId";
-        String MATCH_ID = "matchId";
+        String MATCH_ID = "match_id";
         String TOURNAMENT_NAME = "tourName";
         String TOURNAMENT_SUMMARY = "tourSummary";
         String LEADERBOARD_KEY = "leaderboardKey";
         String LEADERBOARD_LIST = "leaderboardList";
+        String HOME_SCREEN = "homeScreen";
+        String LOGIN_SCREEN = "loginScreen";
     }
 
     interface ParcelableKeys {
@@ -128,5 +139,30 @@ public interface Constants {
         String ALL_TIME = "alltime";
         String MONTH = "monthly";
         String WEEK = "weekly";
+    }
+
+    interface AnalyticsCategory {
+        String LOGIN = "Login";
+        String LOGOUT = "Logout";
+        String EDIT_PROFILE = "Edit Profile";
+        String USER_PROFILE = "User Profile";
+        String NEW_GROUP = "New Group";
+        String FEED = "Feed";
+    }
+
+    interface AnalyticsActions {
+        String FACEBOOK = "Facebook";
+        String GOOGLE_PLUS = "Google Plus";
+        String PHOTO = "Photo";
+        String OTHERS = "Others";
+        String TABS = "Tabs";
+        String TOURNAMENT = "Tournament";
+    }
+
+    interface AnalyticsLabels {
+        String GALLERY = "Gallery";
+        String CAMERA = "Camera";
+        String UPDATE = "Update";
+        String DONE = "Done";
     }
 }

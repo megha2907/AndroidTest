@@ -16,10 +16,11 @@ public class TourSummary extends BaseSummary implements Serializable {
     public TourSummary() {
     }
 
-    public TourSummary(Integer tournamentId, String tournamentName, String tournamentImageUrl, Integer rank, Integer rankChange, Integer overallRank, Integer overallRankChange, Integer sportId, String sportName) {
-        super(sportName, tournamentId, tournamentName, tournamentImageUrl, rank, rankChange, overallRank, overallRankChange);
+    public TourSummary(Integer tournamentId, String tournamentName, String tournamentImageUrl, Integer rank, Integer rankChange, Integer overallRank, Integer overallRankChange, Integer sportId, String sportName,String sportPhoto) {
+        super(sportName,sportPhoto, tournamentId, tournamentName, tournamentImageUrl, rank, rankChange, overallRank, overallRankChange);
         this.sportId = sportId;
         this.sportName = sportName;
+        this.sportPhoto = sportPhoto;
     }
 
     @JsonProperty("sports_id")
@@ -27,6 +28,9 @@ public class TourSummary extends BaseSummary implements Serializable {
 
     @JsonProperty("sports_name")
     private String sportName;
+
+    @JsonIgnore
+    private String sportPhoto;
 
     @JsonProperty("sports_id")
     public Integer getSportId() {
@@ -47,6 +51,17 @@ public class TourSummary extends BaseSummary implements Serializable {
     public void setSportName(String sportName) {
         this.sportName = sportName;
     }
+
+    @JsonIgnore
+    public String getSportPhoto() {
+        return sportPhoto;
+    }
+
+    @JsonIgnore
+    public void setSportPhoto(String sportPhoto) {
+        this.sportPhoto = sportPhoto;
+    }
+
 
 
 

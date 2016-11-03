@@ -16,6 +16,9 @@ public class NewGroupRequest {
     @JsonProperty("group_name")
     private String groupName;
 
+    @JsonProperty("group_img_url")
+    private String groupPhoto;
+
     @JsonProperty("group_tournaments")
     private List<Integer> followedTournaments = new ArrayList<Integer>();
 
@@ -47,5 +50,15 @@ public class NewGroupRequest {
     @JsonProperty("group_tournaments")
     public void setfollowedTournaments(List<Integer> followedTournaments) {
         this.followedTournaments = followedTournaments;
+    }
+
+    @JsonProperty("group_img_url")
+    public String getGroupPhoto() {
+        return groupPhoto;
+    }
+
+    @JsonProperty("group_img_url")
+    public void setGroupPhoto(String groupPhoto) {
+        this.groupPhoto = groupPhoto;
     }
 }

@@ -10,4 +10,6 @@ import com.jeeva.android.View;
 public interface BadgeView extends View {
 
     void setAdapter(RecyclerView.Adapter adapter);
+
+    void showBadgesEmpty();
 }

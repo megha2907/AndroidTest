@@ -9,7 +9,7 @@ import okhttp3.RequestBody;
  */
 public interface EditProfileModel {
 
-    void updateProfile(String name, String about);
+    void updateProfile(String about);
 
     void updateProfilePhoto(MultipartBody.Part file, RequestBody filepath, RequestBody filename);
 

@@ -198,7 +198,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
             if (null == question.getQuestionAnswer()) {
                 setTextColor(tvAnswer, R.color.silver_chalice);
-            } else if (answerId == question.getQuestionAnswer()) {
+            } else if (question.getQuestionAnswer()== 0 || answerId == question.getQuestionAnswer()) {
                 setTextColor(tvAnswer, R.color.lima);
             } else {
                 setTextColor(tvAnswer, R.color.monza);

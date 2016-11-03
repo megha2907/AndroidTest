@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import in.sportscafe.scgame.Constants;
+import in.sportscafe.scgame.Constants.AnalyticsActions;
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 
 public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInModelListener {
 
@@ -29,11 +31,15 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
     @Override
     public void onClickFacebook() {
         mLogInModel.triggerFacebook();
+
+        ScGameAnalytics.getInstance().trackLogIn(AnalyticsActions.FACEBOOK);
     }
 
     @Override
     public void onClickGoogle() {
         mLogInView.signIn(null);
+
+        ScGameAnalytics.getInstance().trackLogIn(AnalyticsActions.GOOGLE_PLUS);
     }
 
     @Override
@@ -63,7 +69,7 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
         if(mLogInModel.isPreferenceDone()) {
             mLogInView.navigateToHome();
         } else {
-            mLogInView.navigateToSports();
+            mLogInView.navigateToEditProfile();
         }
     }
 

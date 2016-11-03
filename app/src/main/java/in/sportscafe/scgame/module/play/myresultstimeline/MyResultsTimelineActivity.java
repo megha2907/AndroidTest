@@ -72,6 +72,7 @@ public class MyResultsTimelineActivity extends ScGameActivity implements MyResul
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
+
     @Override
     public void onRefresh() {
         myResultsTimelinePresenter.onRefresh();
@@ -86,18 +87,11 @@ public class MyResultsTimelineActivity extends ScGameActivity implements MyResul
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(i);
+                        finish();
                     }
                 }
 
         );
     }
 
-    @Override
-    public void onBackPressed(){
-
-        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(i);
-    }
 }

@@ -4,11 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jeeva.android.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.scgame.module.user.badges.Badge;
+import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupsTourSummary;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -45,8 +48,14 @@ public class UserInfo {
     @JsonProperty("user_nick")
     private String userNickName;
 
+    @JsonProperty("sports_preferences")
+    private List<Integer> userSports = new ArrayList<>();
+
 //    @JsonProperty("user_info")
 //    private String userPowerupInfo;
+
+    @JsonProperty("user_groups")
+    private  List<AllGroups> allGroups = new ArrayList<>();
 
     @JsonProperty("user_info")
     private PowerUpInfo powerUpInfo;
@@ -202,6 +211,32 @@ public class UserInfo {
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
     }
+
+    @JsonProperty("sports_preferences")
+    public List<Integer> getUserSports() {
+        if(null == userSports) {
+            userSports = new ArrayList<>();
+        }
+        return userSports;
+    }
+
+
+    @JsonProperty("sports_preferences")
+    public void setUserSports(List<Integer> userSports) {
+        this.userSports = userSports;
+    }
+
+
+    @JsonProperty("user_groups")
+    public List<AllGroups> getAllGroups() {
+        return allGroups;
+    }
+
+    @JsonProperty("user_groups")
+    public void setAllGroups(List<AllGroups> allGroups) {
+        this.allGroups = allGroups;
+    }
+
 
     @JsonIgnore
     public HashMap<String, Integer> getPowerUps() {

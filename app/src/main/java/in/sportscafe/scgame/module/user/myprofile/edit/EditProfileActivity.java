@@ -2,53 +2,37 @@ package in.sportscafe.scgame.module.user.myprofile.edit;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.jeeva.android.Log;
-import com.jeeva.android.volley.Volley;
-import com.jeeva.android.widgets.HmImageView;
 import com.squareup.picasso.Picasso;
-//import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.FileInputStream;
 
-import in.sportscafe.app.BaseConfig;
-import in.sportscafe.scgame.Config;
 import in.sportscafe.scgame.Constants;
+import in.sportscafe.scgame.Constants.AnalyticsActions;
+import in.sportscafe.scgame.Constants.AnalyticsLabels;
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.ScGameDataHandler;
-import in.sportscafe.scgame.module.common.ApiResponse;
-import in.sportscafe.scgame.module.common.RoundImage;
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.common.ScGameActivity;
+import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.permission.PermissionsActivity;
 import in.sportscafe.scgame.module.permission.PermissionsChecker;
-import in.sportscafe.scgame.module.user.login.dto.UserInfo;
-import in.sportscafe.scgame.module.user.myprofile.dto.Result;
-import in.sportscafe.scgame.webservice.MyWebService;
-import in.sportscafe.scgame.webservice.ScGameCallBack;
-import in.sportscafe.scgame.webservice.ScGameService;
+import in.sportscafe.scgame.module.user.sportselection.SportSelectionActivity;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Response;
+
+//import com.squareup.picasso.Picasso;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -63,6 +47,7 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
     PermissionsChecker checker;
     private String imagePath;
     private EditText mEtNickName;
+    private TextInputLayout mTilNickName;
     private ImageView mIvProfileImage;
     private EditProfilePresenter mEditProfilePresenter;
 
@@ -74,7 +59,7 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
 
         checker = new PermissionsChecker(this);
 
-        mEtName = (EditText) findViewById(R.id.edit_et_name);
+        mTilNickName = (TextInputLayout) findViewById(R.id.input_layout_edit_et_nickname);
         mEtNickName = (EditText) findViewById(R.id.edit_et_nickname);
         mIvProfileImage = (ImageView) findViewById(R.id.edit_iv_user_image);
 
@@ -85,12 +70,8 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.edit_btn_cancel:
-                close();
-                break;
             case R.id.edit_btn_done:
                 mEditProfilePresenter.onClickDone(
-                        getTrimmedText(mEtName),
                         getTrimmedText(mEtNickName)
 
                 );
@@ -105,16 +86,6 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
         Picasso.with(this)
                 .load(imageUrl)
                 .into(mIvProfileImage);
-//        mIvProfileImage.setImageUrl(
-//                imageUrl,
-//                Volley.getInstance().getImageLoader(),
-//                false
-//        );
-    }
-
-    @Override
-    public void setName(String name) {
-        mEtName.setText(name);
     }
 
 
@@ -133,6 +104,30 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
         setResult(RESULT_OK);
     }
 
+    @Override
+    public void navigateToHome() {
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
+    }
+
+    @Override
+    public void navigateToSportsSelection() {
+        startActivity(new Intent(this, SportSelectionActivity.class));
+        finish();
+    }
+
+    @Override
+    public void setNicknameEmpty() {
+        mTilNickName.setErrorEnabled(true);
+        mTilNickName.setError(Constants.Alerts.NICKNAME_EMPTY);
+    }
+
+
+    @Override
+    public void setNicknameConflict() {
+        mTilNickName.setErrorEnabled(true);
+        mTilNickName.setError(Constants.Alerts.NICKNAME_CONFLICT);
+    }
 
     public void showImagePopup(View view) {
         if (checker.lacksPermissions(PERMISSIONS_READ_STORAGE)) {
@@ -176,8 +171,6 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
 
                     Picasso.with(getApplicationContext()).load(new File(imagePath))
                             .into(mIvProfileImage);
-                    Toast.makeText(getActivity(), Constants.Alerts.IMAGE_RESELECT,
-                            Toast.LENGTH_SHORT).show();
                     cursor.close();
 
                     if (!TextUtils.isEmpty(imagePath)) {
@@ -185,6 +178,8 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
                     }
 
                     mIvProfileImage.setVisibility(View.VISIBLE);
+
+                    ScGameAnalytics.getInstance().trackEditProfile(AnalyticsActions.PHOTO, AnalyticsLabels.GALLERY);
                 } else {
 
                     mIvProfileImage.setVisibility(View.GONE);

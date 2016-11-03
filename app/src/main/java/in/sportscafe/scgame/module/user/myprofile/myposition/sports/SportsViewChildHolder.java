@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
+import com.jeeva.android.widgets.HmImageView;
 
 import java.io.Serializable;
 
@@ -36,7 +37,7 @@ public class SportsViewChildHolder extends ChildViewHolder{
     private TextView mTournamentNameTextView;
     private TextView mTournamentRankTextView1;
     private ImageView mTournamentRankStatus;
-    private RoundImage mTournamentPhotoImageView;
+    private HmImageView mTournamentPhotoImageView;
     private  View mChildView;
 
 
@@ -46,7 +47,7 @@ public class SportsViewChildHolder extends ChildViewHolder{
         mTournamentNameTextView = (TextView) itemView.findViewById(R.id.myglobal_tournaments_tv);
         mTournamentRankTextView1 = (TextView) itemView.findViewById(R.id.myglobal_tournaments_tv_ranks);
         mTournamentRankStatus = (ImageView) itemView.findViewById(R.id.myglobal_tournaments_rank_status);
-        mTournamentPhotoImageView =(RoundImage) itemView.findViewById(R.id.myglobal_tournaments_iv_photo);
+        mTournamentPhotoImageView =(HmImageView) itemView.findViewById(R.id.myglobal_tournaments_iv_photo);
     }
 
     public void bind(BaseSummary tourSummary) {
@@ -68,7 +69,7 @@ public class SportsViewChildHolder extends ChildViewHolder{
         }
 
         if(null == tourSummary.getRank()) {
-            mTournamentRankTextView1.setVisibility(View.INVISIBLE);
+            mTournamentRankTextView1.setText("-");
         } else {
             mTournamentRankTextView1.setText(String.valueOf(tourSummary.getRank()));
         }
@@ -81,7 +82,9 @@ public class SportsViewChildHolder extends ChildViewHolder{
                 Bundle bundle = new Bundle();
                 bundle.putString(Constants.BundleKeys.LEADERBOARD_KEY, "sport");
                 bundle.putSerializable(Constants.BundleKeys.TOURNAMENT_SUMMARY,(TourSummary) v.getTag());
+                bundle.putInt(Constants.BundleKeys.GROUP_ID,0);
                 bundle.putInt(Constants.BundleKeys.SPORT_ID,tourSummary.getSportId());
+                bundle.putInt(Constants.BundleKeys.CHALLENGE_ID,0);
                 Intent intent =  new Intent(v.getContext(), PointsActivity.class);
                 intent.putExtras(bundle);
                 v.getContext().startActivity(intent);
