@@ -147,6 +147,17 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
+        <!-- Start Fabric -->
+        <!-- Api key which is mandatory to uniquely identify our app -->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="66dc8b5ddc3cab78b5935c8254c264658064977d" />
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="66dc8b5ddc3cab78b5935c8254c264658064977d" />
+
+        <!-- End Fabric -->
+
         <!-- Start MoEngage -->
         <activity
             android:name="com.moengage.addon.inbox.MoEInboxActivity"
@@ -241,6 +252,41 @@
             android:value="@raw/tring" />
         -->
         <!-- End MoEngage -->
+
+        <!-- Start Google Analytics -->
+
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!--
+             Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
+             installation campaign reporting
+        -->
+        <receiver
+            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!-- End Google Analytics -->
     </application>
 
 </manifest>

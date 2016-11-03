@@ -19,9 +19,11 @@ import com.jeeva.android.volley.Volley;
 import java.util.List;
 
 import in.sportscafe.scgame.Constants;
+import in.sportscafe.scgame.Constants.AnalyticsActions;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.common.CustomViewPager;
 import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.common.ScGameFragment;
@@ -32,15 +34,14 @@ import in.sportscafe.scgame.module.play.myresultstimeline.MyResultsTimelineActiv
 import in.sportscafe.scgame.module.user.badges.BadgeActivity;
 import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
 import in.sportscafe.scgame.module.user.group.allgroups.AllGroupsActivity;
-import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.scgame.module.user.myprofile.myposition.challenges.ChallengesFragment;
+import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.groups.GroupsFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.sports.SportsFragment;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummary;
 import in.sportscafe.scgame.module.user.powerups.PowerUpActivity;
 import in.sportscafe.scgame.module.user.sportselection.SportSelectionActivity;
 import in.sportscafe.scgame.webservice.MyWebService;
@@ -65,7 +66,7 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
 
     private OnHomeActionListener mHomeActionListener;
 
-    private Typeface tf;
+    private ViewPager mViewPager;
 
     @Override
     public void onAttach(Context context) {
@@ -165,21 +166,28 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
 
     @Override
     public void initMyPosition(LbSummary lbSummary) {
-        CustomViewPager mMostViewedPager = (CustomViewPager) findViewById(R.id.tab_vp);
-        setupViewPager(mMostViewedPager, lbSummary);
+        mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
+        mViewPager.setAdapter(getAdapter(lbSummary));
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                ScGameAnalytics.getInstance().trackUserProfile(AnalyticsActions.TABS,
+                        mViewPager.getAdapter().getPageTitle(position).toString());
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
-        tabLayout.setupWithViewPager(mMostViewedPager);/*
-        getChildFragmentManager().beginTransaction().replace(R.id.profile_fl_my_positions,
-                MyPositionFragment.newInstance(lbSummary)).commit();*/
-    }
-
-    private void setupViewPager(ViewPager viewPager, LbSummary lbSummary) {
-        viewPager.setAdapter(getAdapter(lbSummary));
+        tabLayout.setupWithViewPager(mViewPager);
     }
 
     private ViewPagerAdapter getAdapter(LbSummary lbSummary) {
-
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         pagerAdapter.addFragment(SportsFragment.newInstance(lbSummary.getSports()), "Sports");
         pagerAdapter.addFragment(GroupsFragment.newInstance(lbSummary.getGroups()), "Groups");

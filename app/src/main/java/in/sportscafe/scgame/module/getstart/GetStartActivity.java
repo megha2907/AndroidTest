@@ -5,10 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.moe.pushlibrary.PayloadBuilder;
-
-import java.util.Date;
-
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
@@ -53,14 +49,6 @@ public class GetStartActivity extends ScGameActivity {
                 navigateToLogin();
             }
         });
-    }
-
-    private void trackClick(String text, String componentName) {
-        PayloadBuilder builder = new PayloadBuilder();
-        builder.putAttrString("text", text)
-                .putAttrString("componentName", componentName)
-                .putAttrDate("clickDate", new Date());
-        getMoeHelper().trackEvent("Click", builder.build());
     }
 
     private void navigateToHome() {

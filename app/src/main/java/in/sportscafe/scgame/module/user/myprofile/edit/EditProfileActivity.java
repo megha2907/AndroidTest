@@ -2,56 +2,37 @@ package in.sportscafe.scgame.module.user.myprofile.edit;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.jeeva.android.Log;
-import com.jeeva.android.volley.Volley;
-import com.jeeva.android.widgets.HmImageView;
 import com.squareup.picasso.Picasso;
-//import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.FileInputStream;
 
-import in.sportscafe.app.BaseConfig;
-import in.sportscafe.scgame.Config;
 import in.sportscafe.scgame.Constants;
+import in.sportscafe.scgame.Constants.AnalyticsActions;
+import in.sportscafe.scgame.Constants.AnalyticsLabels;
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.ScGameDataHandler;
-import in.sportscafe.scgame.module.common.ApiResponse;
-import in.sportscafe.scgame.module.common.RoundImage;
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.permission.PermissionsActivity;
 import in.sportscafe.scgame.module.permission.PermissionsChecker;
-import in.sportscafe.scgame.module.user.login.dto.UserInfo;
-import in.sportscafe.scgame.module.user.myprofile.dto.Result;
 import in.sportscafe.scgame.module.user.sportselection.SportSelectionActivity;
-import in.sportscafe.scgame.webservice.MyWebService;
-import in.sportscafe.scgame.webservice.ScGameCallBack;
-import in.sportscafe.scgame.webservice.ScGameService;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Response;
+
+//import com.squareup.picasso.Picasso;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -197,6 +178,8 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
                     }
 
                     mIvProfileImage.setVisibility(View.VISIBLE);
+
+                    ScGameAnalytics.getInstance().trackEditProfile(AnalyticsActions.PHOTO, AnalyticsLabels.GALLERY);
                 } else {
 
                     mIvProfileImage.setVisibility(View.GONE);

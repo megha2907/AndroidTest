@@ -140,4 +140,29 @@ public interface Constants {
         String MONTH = "monthly";
         String WEEK = "weekly";
     }
+
+    interface AnalyticsCategory {
+        String LOGIN = "Login";
+        String LOGOUT = "Logout";
+        String EDIT_PROFILE = "Edit Profile";
+        String USER_PROFILE = "User Profile";
+        String NEW_GROUP = "New Group";
+        String FEED = "Feed";
+    }
+
+    interface AnalyticsActions {
+        String FACEBOOK = "Facebook";
+        String GOOGLE_PLUS = "Google Plus";
+        String PHOTO = "Photo";
+        String OTHERS = "Others";
+        String TABS = "Tabs";
+        String TOURNAMENT = "Tournament";
+    }
+
+    interface AnalyticsLabels {
+        String GALLERY = "Gallery";
+        String CAMERA = "Camera";
+        String UPDATE = "Update";
+        String DONE = "Done";
+    }
 }

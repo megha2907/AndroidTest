@@ -6,10 +6,10 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.provider.Settings;
 import android.support.multidex.MultiDex;
-import android.telephony.TelephonyManager;
 
+import com.crashlytics.android.Crashlytics;
+import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.facebook.FacebookHandler;
 import com.jeeva.android.facebook.user.FacebookPermission;
 import com.jeeva.android.volley.Volley;
@@ -22,15 +22,21 @@ import com.moengage.push.PushManager;
 import java.util.Arrays;
 import java.util.List;
 
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
+import in.sportscafe.scgame.module.crash.ScGameUncaughtExceptionHandler;
 import in.sportscafe.scgame.module.notifications.NotificationCustom;
 import in.sportscafe.scgame.module.notifications.NotificationInboxAdapter;
 import in.sportscafe.scgame.module.offline.PredictionDataHandler;
 import in.sportscafe.scgame.webservice.MyWebService;
+import io.fabric.sdk.android.Fabric;
+import io.fabric.sdk.android.Kit;
 
 /**
  * Created by Jeeva on 14/3/16.
  */
 public class ScGame extends Application {
+
+    private static final boolean mDebuggable = BuildConfig.DEBUG;
 
     private static ScGame sScGame;
 
@@ -44,24 +50,73 @@ public class ScGame extends Application {
 
         // Assigning the ScGame instance
         sScGame = ScGame.this;
-        initCustomFonts();
+
+        // Initializing the SportsCafe Uncaught Exception handler
+        initCrashHandler(mDebuggable);
+
+        // Initializing all the data handlers
         initDataHandlers();
+
         // Initializing MyWebService
         MyWebService.getInstance().init();
+
         // Instantiating the volley
         Volley.getInstance().initVolley(getApplicationContext());
-        sendInstallOrUpdateToMoEngage();
-        //Moengage custom Notification
+
+        // Initializing custom fonts
+        initCustomFonts();
+
+        // Initializing the SportsCafe analytics
+        ScGameAnalytics.getInstance().init(getApplicationContext(), mDebuggable);
+
+        // Here we are helping moEngage to track install/update count
+        doInstallOrUpdateChanges();
+
+        //For customizing the notification which is received from mo-engage
         PushManager.getInstance().setMessageListener(new NotificationCustom());
+
+        // For notification inbox
         InboxManager.getInstance().setInboxAdapter(new NotificationInboxAdapter());
-
-
     }
 
-    /**
-     * Here we are helping moEngage to track install/update count
-     */
-    private void sendInstallOrUpdateToMoEngage() {
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+
+        if(mDebuggable) {
+            MultiDex.install(this);
+        }
+    }
+
+    private void initCrashHandler(boolean debuggable) {
+
+        // It is to show the crash page, If the application is crashed
+        Thread.setDefaultUncaughtExceptionHandler(new ScGameUncaughtExceptionHandler());
+
+        if(!debuggable) {
+            // Initializing the Crashlytics using fabric
+            Fabric.with(this, new Kit[] {new Crashlytics()});
+        }
+    }
+
+    private void initDataHandlers() {
+        Context context = getApplicationContext();
+        ScGameDataHandler.getInstance().init(context);
+        PredictionDataHandler.getInstance().init(context);
+    }
+
+    private void initCustomFonts() {
+        CustomFont.getInstance().init(
+                "fonts/roboto/Roboto-Light.ttf", "fonts/roboto/Roboto-LightItalic.ttf",
+                "fonts/roboto/Roboto-Regular.ttf", "fonts/roboto/RobotoCondensed-Regular.ttf",
+                "fonts/roboto/RobotoCondensed-Bold.ttf", "fonts/roboto/Roboto-Medium.ttf",
+                "fonts/lato/Lato-Bold.ttf", "fonts/lato/Lato-Hairline.ttf",
+                "fonts/lato/Lato-Heavy.ttf", "fonts/lato/Lato-Light.ttf", "fonts/lato/Lato-Medium.ttf",
+                "fonts/lato/Lato-Regular.ttf", "fonts/lato/Lato-Semibold.ttf", "fonts/lato/Lato-Thin.ttf"
+        );
+    }
+
+    private void doInstallOrUpdateChanges() {
         ScGameDataHandler dataHandler = ScGameDataHandler.getInstance();
 
         int previousAppVersionCode = dataHandler.getPreviousAppVersionCode();
@@ -83,41 +138,11 @@ public class ScGame extends Application {
         return Arrays.asList(FacebookPermission.EMAIL);
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }
-
-    /**
-     * Initializing custom fonts
-     */
-    private void initCustomFonts() {
-        CustomFont.getInstance().init(
-           "fonts/roboto/Roboto-Light.ttf",
-                "fonts/roboto/Roboto-LightItalic.ttf", "fonts/roboto/Roboto-Regular.ttf",
-                "fonts/roboto/RobotoCondensed-Regular.ttf", "fonts/roboto/RobotoCondensed-Bold.ttf",
-                "fonts/roboto/Roboto-Medium.ttf", "fonts/lato/Lato-Bold.ttf", "fonts/lato/Lato-Hairline.ttf"
-                , "fonts/lato/Lato-Heavy.ttf", "fonts/lato/Lato-Light.ttf", "fonts/lato/Lato-Medium.ttf",
-                "fonts/lato/Lato-Regular.ttf", "fonts/lato/Lato-Semibold.ttf"
-                , "fonts/lato/Lato-Thin.ttf"
-        );
-    }
-
-    /**
-     * Initializing all the data handlers
-     */
-    private void initDataHandlers() {
-        Context context = getApplicationContext();
-        ScGameDataHandler.getInstance().init(context);
-        PredictionDataHandler.getInstance().init(context);
-    }
-
     public int getAppVersionCode() {
         try {
             return getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            ExceptionTracker.track(e);
         }
         return -1;
     }
@@ -126,22 +151,9 @@ public class ScGame extends Application {
         try {
             return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            ExceptionTracker.track(e);
         }
         return "";
-    }
-
-    public TelephonyManager getTelephonyManager() {
-        return (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-    }
-
-    public String getDeviceId() {
-        String myAndroidDeviceId = getTelephonyManager().getDeviceId();
-        if (myAndroidDeviceId != null) {
-            return myAndroidDeviceId;
-        } else {
-            return Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        }
     }
 
     /**
@@ -150,26 +162,9 @@ public class ScGame extends Application {
      * @return true if the connection is available otherwise false
      */
     public boolean hasNetworkConnection() {
-
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        boolean valid = false;
-
-        NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiNetwork != null && wifiNetwork.isConnectedOrConnecting()) {
-            valid = true;
-        }
-
-        NetworkInfo mobileNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (mobileNetwork != null && mobileNetwork.isConnectedOrConnecting()) {
-            valid = true;
-        }
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
-            valid = true;
-        }
-
-        return valid;
+        NetworkInfo activeNetwork = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE))
+                .getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
     @Override
@@ -191,6 +186,5 @@ public class ScGame extends Application {
 
         Volley.getInstance().invalidateAll();
     }
-
 
 }

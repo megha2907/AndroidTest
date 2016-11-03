@@ -7,21 +7,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
-import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.getstart.GetStartActivity;
-import in.sportscafe.scgame.module.user.login.LogInActivity;
 
 /**
  * Created by deepanshi on 31/8/16.
@@ -79,6 +72,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     private void onClickLogout() {
         ScGameDataHandler.getInstance().clearAll();
         navigateToLogIn();
+
+        ScGameAnalytics.getInstance().trackLogOut();
     }
 
     private void navigateToLogIn() {

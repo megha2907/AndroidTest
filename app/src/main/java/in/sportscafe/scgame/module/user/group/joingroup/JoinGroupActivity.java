@@ -7,16 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.moe.pushlibrary.MoEHelper;
-import com.moe.pushlibrary.PayloadBuilder;
-
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.scgame.module.user.group.newgroup.NewGroupActivity;
@@ -212,10 +207,6 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
                         +getTrimmedText(mEtGroupCode5);
 
                 mJoinGroupPresenter.onClickJoin(mGroupCode);
-                PayloadBuilder builder = new PayloadBuilder();
-                builder.putAttrString("GroupCode", mGroupCode)
-                        .putAttrString("UserID", ScGameDataHandler.getInstance().getUserId());
-                MoEHelper.getInstance(getContext()).trackEvent("JOIN GROUP-ONCLICK", builder.build());
                 break;
             case R.id.join_group_btn_new_group:
                 mJoinGroupPresenter.onClickCreateGroup();

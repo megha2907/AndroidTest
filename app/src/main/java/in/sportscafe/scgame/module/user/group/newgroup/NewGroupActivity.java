@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,17 +16,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.moe.pushlibrary.MoEHelper;
-import com.moe.pushlibrary.PayloadBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
 import in.sportscafe.scgame.Constants;
+import in.sportscafe.scgame.Constants.AnalyticsActions;
+import in.sportscafe.scgame.Constants.AnalyticsLabels;
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.ScGameDataHandler;
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.common.ScGameActivity;
-import in.sportscafe.scgame.module.common.SpacesItemDecoration;
 import in.sportscafe.scgame.module.permission.PermissionsActivity;
 import in.sportscafe.scgame.module.permission.PermissionsChecker;
 import okhttp3.MediaType;
@@ -99,10 +97,6 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
         switch (view.getId()) {
             case R.id.new_group_btn_done:
                 mNewGroupPresenter.onClickDone(getTrimmedText(mEtGroupName));
-                PayloadBuilder builder = new PayloadBuilder();
-                builder.putAttrString("GroupName", getTrimmedText(mEtGroupName))
-                        .putAttrString("UserID", ScGameDataHandler.getInstance().getUserId());
-                MoEHelper.getInstance(getContext()).trackEvent("CREATE GROUP-ONCLICK", builder.build());
                 break;
         }
     }
@@ -186,6 +180,8 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
                         }
 
                         mIvGroupImage.setVisibility(View.VISIBLE);
+
+                        ScGameAnalytics.getInstance().trackNewGroup(AnalyticsActions.PHOTO, AnalyticsLabels.GALLERY);
                     } else {
 
                         mIvGroupImage.setVisibility(View.GONE);

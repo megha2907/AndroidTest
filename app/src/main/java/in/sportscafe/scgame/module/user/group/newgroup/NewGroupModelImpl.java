@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentsResponse;
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.Result;
 import in.sportscafe.scgame.webservice.MyWebService;
@@ -172,6 +174,12 @@ public class NewGroupModelImpl implements NewGroupModel {
                     }
                 }
         );
+
+        Map<String, String> values = new HashMap<>();
+        values.put("GroupName", newGroupRequest.getGroupName());
+        values.put("UserID", ScGameDataHandler.getInstance().getUserId());
+
+        ScGameAnalytics.getInstance().trackOtherEvents("CREATE GROUP-ONCLICK", values);
     }
 
     public interface OnNewGroupModelListener {

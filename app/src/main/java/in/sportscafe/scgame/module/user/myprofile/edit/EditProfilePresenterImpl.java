@@ -1,11 +1,11 @@
 package in.sportscafe.scgame.module.user.myprofile.edit;
 
 import android.os.Bundle;
-import android.util.EventLog;
-
-import com.jeeva.android.Log;
 
 import in.sportscafe.scgame.Constants;
+import in.sportscafe.scgame.Constants.AnalyticsActions;
+import in.sportscafe.scgame.Constants.AnalyticsLabels;
+import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -34,28 +34,25 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     @Override
     public void onCreateEditProfile(Bundle bundle) {
-
-        screen=bundle.getString("screen");
+        screen = bundle.getString("screen");
 
         UserInfo userInfo = mEditProfileModel.getUserInfo();
 
         mEditProfileView.setProfileImage(userInfo.getPhoto());
-        if(userInfo.getUserNickName()!= null){
+        if (userInfo.getUserNickName() != null) {
             mEditProfileView.setNickName(userInfo.getUserNickName());
         }
-
     }
 
     @Override
     public void onClickDone(String nickname) {
-
-        if(nickname.equals("")){
+        if (nickname.equals("")) {
             mEditProfileView.setNicknameEmpty();
-        }
-        else
-        {
+        } else {
             mEditProfileModel.updateProfile(nickname);
         }
+
+        ScGameAnalytics.getInstance().trackEditProfile(AnalyticsActions.OTHERS, AnalyticsLabels.UPDATE);
     }
 
     @Override
