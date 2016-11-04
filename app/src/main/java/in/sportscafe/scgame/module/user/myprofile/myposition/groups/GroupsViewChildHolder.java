@@ -12,6 +12,7 @@ import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.BaseSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupsTourSummary;
@@ -58,10 +59,12 @@ public class GroupsViewChildHolder extends ChildViewHolder {
             mTournamentRankStatus.setImageResource(R.drawable.status_arrow_up);
         }
 
+
         if(null == groupsTourSummary.getRank()) {
             mTournamentRankTextView.setText("-");
         } else {
-            mTournamentRankTextView.setText(String.valueOf(groupsTourSummary.getRank()));
+            String rank = Ordinal.ordinal(groupsTourSummary.getRank());
+            mTournamentRankTextView.setText(rank);
         }
 
         mChildView.setTag(groupsTourSummary);

@@ -29,7 +29,7 @@ import in.sportscafe.scgame.module.user.group.groupinfo.GroupInfoActivity;
 public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHolder> {
 
     private Context mcon;
-    private static final int CODE_GROUP_INFO = 10;
+    private static final int CODE_GROUP_INFO = 11;
 
     public AllGroupsAdapter(Context context, List<AllGroups> AllGroupsList) {
         super(context);

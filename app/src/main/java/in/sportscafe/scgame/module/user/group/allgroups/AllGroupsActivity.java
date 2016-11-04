@@ -42,7 +42,7 @@ public class AllGroupsActivity extends ScGameActivity implements AllGroupsView ,
 
     private TextView mTvEmptyGroups;
 
-    private static final int CODE_GROUP_INFO = 10;
+    private static final int CODE_GROUP_INFO = 11;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

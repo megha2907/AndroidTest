@@ -15,6 +15,7 @@ import com.jeeva.android.Log;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.feed.FeedActivity;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.BaseSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.RankSummary;
@@ -59,10 +60,12 @@ public class SportsViewParentHolder extends ParentViewHolder {
                 mSportsOverallRankStatus.setImageResource(R.drawable.status_arrow_up);
             }
 
+
             if(null == tourSummary.getRank()) {
                 mSportsOverallRankTextView.setText("-");
             } else {
-                mSportsOverallRankTextView.setText(String.valueOf(tourSummary.getOverallRank()));
+                String rank = Ordinal.ordinal(tourSummary.getRank());
+                mSportsOverallRankTextView.setText(rank);
             }
         }
 

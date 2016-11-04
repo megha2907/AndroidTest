@@ -15,9 +15,9 @@
         android:id="@+id/powerup_btn"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
-        android:background="@drawable/powerup_colored_icon"
         android:layout_marginLeft="@dimen/dp_25"
-        android:layout_marginTop="@dimen/dp_10"/>
+        android:layout_marginTop="@dimen/dp_10"
+       />
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/powerup_btn_powerup_count"

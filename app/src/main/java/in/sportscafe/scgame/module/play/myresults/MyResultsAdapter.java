@@ -172,7 +172,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             powerup.setVisibility(View.GONE);
         }
         else {
-            powerupUsed.setText(question.getAnswerPowerUpId());
+            powerupUsed.setVisibility(View.VISIBLE);
         }
 
         int answerId = Integer.parseInt(question.getAnswerId());

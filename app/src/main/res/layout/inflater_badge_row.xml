@@ -9,14 +9,12 @@
     android:background="@color/black"
     >
 
-    <com.jeeva.android.widgets.HmImageView
+    <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/badge_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/badge_grey_icon"
-        app:typeface="lato_medium"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
         android:layout_marginLeft="@dimen/dp_25"
-        android:layout_marginTop="@dimen/dp_10"/>
+       />
 
 
     <com.jeeva.android.widgets.customfont.CustomTextView

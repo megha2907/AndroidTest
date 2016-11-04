@@ -31,12 +31,13 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
     @Override
     public void onCreateGroupInfo(Bundle bundle) {
 
-        mGroupInfoView.setGroupName(bundle.getString(Constants.BundleKeys.GROUP_NAME));
         mGroupInfoView.showProgressbar();
         mGroupInfoModel.init(bundle);
     }
 
     private void onUpdateGroupInfo(GroupInfo groupInfo){
+
+        mGroupInfoView.setGroupName(groupInfo.getName());
         mGroupInfoView.setAdapter(mGroupInfoModel.getAdapter(mGroupInfoView.getContext()));
 
     }
@@ -153,5 +154,6 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.disableEdit();
         mGroupInfoView.setSuccessResult();
+        mGroupInfoView.goBackWithSuccessResult();
     }
 }

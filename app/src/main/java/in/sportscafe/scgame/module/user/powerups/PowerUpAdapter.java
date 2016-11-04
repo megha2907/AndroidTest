@@ -38,8 +38,9 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
 
         PowerUp powerUp = getItem(position);
         holder.mBtnPowerUpCount.setText(String.valueOf(powerUp.getCount()));
-        holder.mTvPowerUpName.setText(powerUp.getId());
+        holder.mTvPowerUpName.setText(powerUp.getId()+" Powerup");
         holder.mTvPowerUpDesc.setText(powerUp.getDesc());
+        holder.mBtnPowerUp.setBackgroundResource(powerUp.getIcon());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder  {
@@ -54,12 +55,15 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
 
         CustomButton mBtnPowerUpCount;
 
+        CustomButton mBtnPowerUp;
+
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
             mTvPowerUpName = (TextView) V.findViewById(R.id.powerup_tv_1);
             mTvPowerUpDesc = (TextView) V.findViewById(R.id.powerup_tv_2);
             mBtnPowerUpCount = (CustomButton) V.findViewById(R.id.powerup_btn_powerup_count);
+            mBtnPowerUp = (CustomButton) V.findViewById(R.id.powerup_btn);
 
         }
 
