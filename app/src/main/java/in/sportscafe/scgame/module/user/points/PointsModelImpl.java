@@ -131,7 +131,10 @@ public class PointsModelImpl implements PointsModel {
             leaderBoard = leaderBoardList.get(i);
             mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());
 
-            if(tourId.equals(leaderBoard.getTournamentId())) {
+           if (null==tourId){
+               mSelectedPosition = 0;
+               }
+            else if(tourId.equals(leaderBoard.getTournamentId())) {
                 mSelectedPosition = i;
             }
 

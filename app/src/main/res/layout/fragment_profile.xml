@@ -59,6 +59,7 @@
                             android:src="@drawable/edit_profile_icon"
                             android:alpha="0.8"
                            android:layout_centerVertical="true"
+                            android:padding="@dimen/dp_10"
                             />
 
                         <TextView
@@ -83,7 +84,8 @@
                             android:layout_centerVertical="true"
                             android:background="@android:color/transparent"
                             android:src="@drawable/settings_icon"
-                            android:alpha="0.6" />
+                            android:alpha="0.6"
+                            android:padding="@dimen/dp_10"/>
 
                     </RelativeLayout>
 

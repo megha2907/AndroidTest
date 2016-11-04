@@ -225,7 +225,7 @@ public class PredictionModelImpl implements PredictionModel,
         }
 
         if(itemsInAdapter == 1 && mTotalCount == 1) {
-            mPassEnabled = false;
+            //mPassEnabled = false;
             mPredictionModelListener.onShowingLastQuestion();
         } else if(mTotalCount == 0) {
             mPassEnabled = false;

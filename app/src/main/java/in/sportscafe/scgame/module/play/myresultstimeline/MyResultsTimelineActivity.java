@@ -80,7 +80,7 @@ public class MyResultsTimelineActivity extends ScGameActivity implements MyResul
 
     public void initToolBar() {
         mtoolbar = (Toolbar) findViewById(R.id.feed_toolbar);
-        mtoolbar.setTitle("My Results Timeline");
+        mtoolbar.setTitle("My Points");
         setSupportActionBar(mtoolbar);
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
         mtoolbar.setNavigationOnClickListener(

@@ -1,5 +1,7 @@
 package in.sportscafe.scgame.module.user.powerups;
 
+import in.sportscafe.scgame.R;
+
 /**
  * Created by deepanshi on 24/8/16.
  */
@@ -8,6 +10,8 @@ public class PowerUp {
     private String id;
 
     private String desc;
+
+    private int icon;
 
     private int count;
 
@@ -36,13 +40,29 @@ public class PowerUp {
     }
 
     public String getDesc() {
-        if(id=="2x"){
-            desc="Double your returns when you are confident about a prediction";
+        switch (id) {
+            case "2x":
+                desc="Double your returns when you are confident about a prediction";
+            default:
+                desc="Double your returns when you are confident about a prediction";
         }
         return desc;
     }
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public int getIcon() {
+        switch (id) {
+            case "2x":
+                return R.drawable.powerup_colored_icon;
+            default:
+                return R.drawable.placeholder_icon;
+        }
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 }

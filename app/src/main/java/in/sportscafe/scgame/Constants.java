@@ -67,7 +67,7 @@ public interface Constants {
         String NICKNAME_CONFLICT = "Oops , this username is already taken";
         String USERNAME_EMPTY = "Please enter username";
         String NO_QUESTIONS_FOUND = "No questions found";
-        String NO_FEEDS_FOUND = "No feeds found";
+        String NO_FEEDS_FOUND = "No upcoming matches";
         String JOIN_GROUP_SUCCESS = "Your request sent to the group admin for the approval";
         String INVALID_GROUP_CODE = "Invalid group code";
         String EMPTY_GROUP_NAME = "Please enter group name";

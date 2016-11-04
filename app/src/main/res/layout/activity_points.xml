@@ -33,10 +33,12 @@
             android:id="@+id/points_back_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/back_icon_grey"
             android:onClick="onClick"
-            android:layout_marginTop="@dimen/dp_30"
-            android:layout_marginLeft="@dimen/dp_20"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_icon_grey"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:padding="@dimen/dp_20"
             />
 
 
@@ -47,7 +49,7 @@
                     android:adjustViewBounds="true"
                     android:src="@drawable/placeholder_icon"
                     android:layout_marginRight="@dimen/dp_10"
-                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_20"
                     android:layout_toRightOf="@+id/points_back_icon"
                     android:scaleType="fitXY"
@@ -123,36 +125,38 @@
 
                     <TextView
                         android:id="@+id/points_tv_pos"
-                        android:text="pos"
+                        android:text="Pos"
                         android:layout_weight="1"
-                        android:textColor="@color/white"
-                        android:padding="@dimen/dp_10"
+                        android:textColor="@color/textcolorlight"
+                        android:layout_marginLeft="@dimen/dp_20"
                         android:gravity="left"/>
 
                     <TextView
                         android:id="@+id/points_tv_player"
                         android:text="Player"
                         android:layout_weight="0.65"
-                        android:textColor="@color/white"
+                        android:textColor="@color/textcolorlight"
                         android:padding="@dimen/dp_10"
                         android:gravity="left"/>
 
                     <TextView
                         android:id="@+id/points_tv_played"
-                        android:text="pld"
-                        android:layout_weight="1"
-                        android:textColor="@color/white"
+                        android:text="Played"
+                        android:layout_weight="0.9"
+                        android:textColor="@color/textcolorlight"
                         android:padding="@dimen/dp_10"
-                        android:gravity="left"/>
+                        android:gravity="left"
+                        android:layout_marginLeft="@dimen/dp_10"/>
 
 
                     <TextView
                         android:id="@+id/points_tv_points"
-                        android:text="pts"
-                        android:layout_weight="1"
-                        android:textColor="@color/white"
+                        android:text="Points"
+                        android:layout_weight="0.9"
+                        android:textColor="@color/textcolorlight"
                         android:padding="@dimen/dp_10"
-                        android:gravity="left"/>
+                        android:gravity="left"
+                        android:layout_marginLeft="@dimen/dp_0"/>
 
                 </TableRow>
 
