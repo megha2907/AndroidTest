@@ -42,12 +42,7 @@ public class SportSelectionModelImpl implements SportSelectionModel {
                     new SavePreferenceModelImpl.SavePreferenceModelListener() {
                 @Override
                 public void onSuccess() {
-                    saveLocally(selectedSports);
-                }
-
-                @Override
-                public void requireLogin() {
-                    saveLocally(selectedSports);
+                    mSportSelectionModelListener.onSelectedSportsSaved();
                 }
 
                 @Override
@@ -68,11 +63,6 @@ public class SportSelectionModelImpl implements SportSelectionModel {
     @Override
     public boolean isUserLoggedIn() {
         return mScGameDataHandler.isLoggedInUser();
-    }
-
-    private void saveLocally(List<Integer> selectedSports) {
-        mScGameDataHandler.setFavoriteSportsIdList(selectedSports);
-        mSportSelectionModelListener.onSelectedSportsSaved();
     }
 
     public interface SportSelectionModelListener {

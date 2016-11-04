@@ -23,28 +23,24 @@ public class SavePreferenceModelImpl {
     }
 
     public void savePreference(List<Integer> selectedSports) {
-        ScGameDataHandler scGameDataHandler = ScGameDataHandler.getInstance();
-        if(scGameDataHandler.isLoggedInUser()) {
-
-            if(ScGame.getInstance().hasNetworkConnection()) {
-                PreferenceRequest preferenceRequest = new PreferenceRequest(scGameDataHandler.getUserId());
-                preferenceRequest.setSportPreferences(selectedSports);
-
-                callPreferenceApi(preferenceRequest);
-            } else {
-                mSavePreferenceModelListener.onNoInternet();
-            }
+        if(ScGame.getInstance().hasNetworkConnection()) {
+            callPreferenceApi(selectedSports);
         } else {
-            mSavePreferenceModelListener.requireLogin();
+            mSavePreferenceModelListener.onNoInternet();
         }
     }
 
-    private void callPreferenceApi(PreferenceRequest preferenceRequest) {
+    private void callPreferenceApi(final List<Integer> selectedSports) {
+        PreferenceRequest preferenceRequest = new PreferenceRequest(
+                ScGameDataHandler.getInstance().getUserId());
+        preferenceRequest.setSportPreferences(selectedSports);
+
         MyWebService.getInstance().savePreferenceRequest(preferenceRequest).enqueue(
                 new ScGameCallBack<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         if(response.isSuccessful()) {
+                            ScGameDataHandler.getInstance().setFavoriteSportsIdList(selectedSports);
                             mSavePreferenceModelListener.onSuccess();
                         } else {
                             mSavePreferenceModelListener.onFailed(response.message());
@@ -56,8 +52,6 @@ public class SavePreferenceModelImpl {
     public interface SavePreferenceModelListener {
 
         void onSuccess();
-
-        void requireLogin();
 
         void onNoInternet();
 

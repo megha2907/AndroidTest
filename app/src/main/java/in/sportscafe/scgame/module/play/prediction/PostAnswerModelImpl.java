@@ -1,9 +1,6 @@
 package in.sportscafe.scgame.module.play.prediction;
 
-import com.jeeva.android.Log;
-
 import in.sportscafe.scgame.ScGame;
-import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ApiResponse;
 import in.sportscafe.scgame.module.play.prediction.dto.Answer;
 import in.sportscafe.scgame.webservice.MyWebService;
@@ -23,16 +20,10 @@ public class PostAnswerModelImpl {
     }
 
     public void postAnswer(Answer answer) {
-        ScGameDataHandler scGameDataHandler = ScGameDataHandler.getInstance();
-        if (scGameDataHandler.isLoggedInUser()) {
-
-            if (ScGame.getInstance().hasNetworkConnection()) {
-                callPostAnswerApi(answer);
-            } else {
-                mPostAnswerModelListener.onNoInternet();
-            }
+        if (ScGame.getInstance().hasNetworkConnection()) {
+            callPostAnswerApi(answer);
         } else {
-            mPostAnswerModelListener.requireLogIn();
+            mPostAnswerModelListener.onNoInternet();
         }
     }
 
@@ -56,8 +47,6 @@ public class PostAnswerModelImpl {
         void onSuccess();
 
         void onNoInternet();
-
-        void requireLogIn();
 
         void onFailed(String message);
     }

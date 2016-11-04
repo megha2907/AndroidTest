@@ -27,7 +27,6 @@ import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
-import in.sportscafe.scgame.module.user.sportselection.SportSelectionActivity;
 
 public class LogInActivity extends ScGameActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -103,16 +102,6 @@ public class LogInActivity extends ScGameActivity implements LogInView, View.OnC
     @Override
     public void navigateToHome() {
         Intent intent = new Intent(this, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
-    @Override
-    public void navigateToSports() {
-        Intent intent = new Intent(this, SportSelectionActivity.class);
-        Bundle bundle=new Bundle();
-        bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
-        intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
