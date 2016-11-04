@@ -110,6 +110,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mRlMatchStageParent.setVisibility(View.GONE);
             holder.mTvStartTime.setVisibility(View.GONE);
             holder.mViewResult.setVisibility(View.GONE);
+            holder.mRlMatchPoints.setVisibility(View.GONE);
             holder.mLlMatch.setBackgroundColor(Color.TRANSPARENT);
             holder.mIbfeedDotIcon.setImageResource(R.drawable.feed_dot_grey_icon);
             holder.mTvMatchResult.setGravity(Gravity.LEFT);
@@ -151,7 +152,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
             holder.mTvMatchResult.setText(match.getResult());
-            holder.mTvMatchResult.setLayoutParams(llp);
+            //holder.mTvMatchResult.setLayoutParams(llp);
             holder.mBtnPlayMatch.setVisibility(View.GONE);
 
         }
@@ -216,7 +217,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
 
         }
-        else
+        else if ((null == match.getResult() || match.getResult().isEmpty()))
         {   //ELSE PLAY BTN VISIBLE
             holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
             holder.mBtnPlayMatch.setTag(match);
@@ -331,6 +332,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         LinearLayout mLlMatch;
 
+        RelativeLayout mRlMatchPoints;
 
         ImageButton mIbfeedDotIcon;
 
@@ -355,6 +357,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
+            mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);
             mBtnPlayMatch.setOnClickListener(this);
             mBtnMatchPoints.setOnClickListener(this);
         }

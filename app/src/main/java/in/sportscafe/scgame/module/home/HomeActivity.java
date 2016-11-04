@@ -145,14 +145,14 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
         showFeed();
     }
 
-    @Override
-    public void onBackPressed() {
-        if(feedShowing) {
-            super.onBackPressed();
-        } else {
-            showFeed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if(feedShowing) {
+//            super.onBackPressed();
+//        } else {
+//            showFeed();
+//        }
+//    }
 
     private void showFeed() {
         onClickTab(findViewById(R.id.home_ibtn_feed));

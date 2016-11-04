@@ -38,6 +38,6 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoa
 
     @Override
     public void onEmpty() {
-        mLeaderBoardView.showInAppMessage("Empty LeaderBoard");
+        mLeaderBoardView.showInAppMessage("Your leaderboard will update here after a match you have played is over");
     }
 }

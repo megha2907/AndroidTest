@@ -4,9 +4,12 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
+import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
 
@@ -37,8 +40,31 @@ public class BadgeAdapter extends Adapter<String, BadgeAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         String badge = getItem(position);
-        holder.mTvBadgeName.setText(badge);
-        holder.mTvBadgeDesc.setText("You won"+" "+badge+" badge");
+        String[] parts = badge.split("\\$");
+
+        Log.i("parts", String.valueOf(parts));
+
+        String badge_id = parts[0];
+        String notif_title = parts[1];
+
+
+        switch (badge_id) {
+            case "accuracy_streak":
+                holder.mTvBadgeName.setText("Sharpshooter"+" - "+notif_title);
+                holder.mIvBadge.setBackgroundResource(R.drawable.notification_accuracy_badge);
+                holder.mTvBadgeDesc.setText("More than 80% accuracy in your last 5 matches in a sport");
+                break;
+            case "table_topper":
+                holder.mTvBadgeName.setText("Table Topper"+" - "+notif_title);
+                holder.mIvBadge.setBackgroundResource(R.drawable.notification_topper_badge);
+                holder.mTvBadgeDesc.setText("Top 10 in a sport leaderboard (min. 25 people)");
+                break;
+            default:
+                holder.mIvBadge.setBackgroundResource(R.drawable.placeholder_icon);
+                holder.mTvBadgeDesc.setText("You won"+" "+badge_id+" badge");
+                break;
+        }
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder  {
@@ -49,7 +75,8 @@ public class BadgeAdapter extends Adapter<String, BadgeAdapter.ViewHolder> {
 
         TextView mTvBadgeDesc;
 
-        HmImageView mImBadge;
+        CustomButton mIvBadge;
+
 
 
         public ViewHolder(View V) {
@@ -57,7 +84,7 @@ public class BadgeAdapter extends Adapter<String, BadgeAdapter.ViewHolder> {
             mMainView = V;
             mTvBadgeName = (TextView) V.findViewById(R.id.badge_tv_name);
             mTvBadgeDesc = (TextView) V.findViewById(R.id.badge_tv_desc);
-            mImBadge = (HmImageView) V.findViewById(R.id.badge_iv);
+            mIvBadge = (CustomButton) V.findViewById(R.id.badge_iv);
 
         }
 
