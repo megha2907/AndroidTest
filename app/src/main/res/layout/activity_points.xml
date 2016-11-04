@@ -125,7 +125,7 @@
 
                     <TextView
                         android:id="@+id/points_tv_pos"
-                        android:text="pos"
+                        android:text="Pos"
                         android:layout_weight="1"
                         android:textColor="@color/textcolorlight"
                         android:layout_marginLeft="@dimen/dp_20"
@@ -133,7 +133,7 @@
 
                     <TextView
                         android:id="@+id/points_tv_player"
-                        android:text="player"
+                        android:text="Player"
                         android:layout_weight="0.65"
                         android:textColor="@color/textcolorlight"
                         android:padding="@dimen/dp_10"
@@ -141,8 +141,8 @@
 
                     <TextView
                         android:id="@+id/points_tv_played"
-                        android:text="pld"
-                        android:layout_weight="1"
+                        android:text="Played"
+                        android:layout_weight="0.9"
                         android:textColor="@color/textcolorlight"
                         android:padding="@dimen/dp_10"
                         android:gravity="left"
@@ -151,8 +151,8 @@
 
                     <TextView
                         android:id="@+id/points_tv_points"
-                        android:text="pts"
-                        android:layout_weight="1"
+                        android:text="Points"
+                        android:layout_weight="0.9"
                         android:textColor="@color/textcolorlight"
                         android:padding="@dimen/dp_10"
                         android:gravity="left"

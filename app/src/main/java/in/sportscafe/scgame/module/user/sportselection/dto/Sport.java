@@ -57,6 +57,8 @@ public class Sport implements Serializable {
                 return R.drawable.tennis_menu_icon;
             case 9:
                 return R.drawable.frisbee_menu_icon;
+            case 10:
+                return R.drawable.isb_menu_icon;
             default:
                 return R.drawable.ic_launcher;
         }
@@ -83,6 +85,8 @@ public class Sport implements Serializable {
                 return R.drawable.tennis_menu_colored_icon;
             case 9:
                 return R.drawable.frisbee_menu_colored_icon;
+            case 10:
+                return R.drawable.isb_menu_colored_icon;
             default:
                 return R.drawable.ic_launcher;
         }

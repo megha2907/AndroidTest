@@ -74,16 +74,16 @@ android {
 
     productFlavors {
         local {
-            resValue "string", "app_name", "ScGame"
+            resValue "string", "app_name", "Nostragamus"
         }
         stage {
-            resValue "string", "app_name", "ScGame"
+            resValue "string", "app_name", "Nostragamus"
         }
         production {
-            resValue "string", "app_name", "ScGame"
+            resValue "string", "app_name", "Nostragamus"
         }
         dev {
-            resValue "string", "app_name", "ScGame Dev"
+            resValue "string", "app_name", "Nostragamus Dev"
         }
     }
 }
