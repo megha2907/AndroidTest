@@ -20,6 +20,7 @@ import java.io.Serializable;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.feed.FeedActivity;
 import in.sportscafe.scgame.module.feed.dto.Match;
@@ -68,10 +69,12 @@ public class SportsViewChildHolder extends ChildViewHolder{
             mTournamentRankStatus.setImageResource(R.drawable.status_arrow_up);
         }
 
+
         if(null == tourSummary.getRank()) {
             mTournamentRankTextView1.setText("-");
         } else {
-            mTournamentRankTextView1.setText(String.valueOf(tourSummary.getRank()));
+            String rank = Ordinal.ordinal(tourSummary.getRank());
+            mTournamentRankTextView1.setText(rank);
         }
 
         mChildView.setTag(tourSummary);
@@ -91,5 +94,6 @@ public class SportsViewChildHolder extends ChildViewHolder{
             }
         });
     }
+
 
 }

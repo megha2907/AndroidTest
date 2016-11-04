@@ -161,6 +161,7 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
                         return;
                     }
                     Uri selectedImageUri = data.getData();
+
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                     Cursor cursor = getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);

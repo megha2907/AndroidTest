@@ -25,6 +25,9 @@ public class UserLeaderBoard implements Serializable {
     @JsonProperty("rank_change")
     private Integer rankChange;
 
+    @JsonProperty("count_played")
+    private Integer countPlayed;
+
     @JsonProperty("total_points")
     private Long points;
 
@@ -106,4 +109,16 @@ public class UserLeaderBoard implements Serializable {
     public void setPoints(Long points) {
         this.points = points;
     }
+
+
+    @JsonProperty("count_played")
+    public Integer getCountPlayed() {
+        return countPlayed;
+    }
+
+    @JsonProperty("count_played")
+    public void setCountPlayed(Integer countPlayed) {
+        this.countPlayed = countPlayed;
+    }
+
 }

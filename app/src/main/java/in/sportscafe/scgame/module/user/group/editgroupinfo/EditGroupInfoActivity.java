@@ -205,6 +205,7 @@ public class EditGroupInfoActivity extends ScGameActivity implements EditGroupIn
     public void goBackWithSuccessResult() {
         setResult(RESULT_OK);
         onBackPressed();
+        finish();
     }
 
 

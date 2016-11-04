@@ -14,6 +14,7 @@ import com.jeeva.android.volley.Volley;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.Adapter;
+import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.user.leaderboard.dto.LeaderBoard;
 import in.sportscafe.scgame.module.user.leaderboard.dto.UserLeaderBoard;
@@ -54,15 +55,19 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             holder.mIvStatus.setImageResource(R.drawable.status_arrow_up);
         }
 
+
         if(null == userLeaderBoard.getRank()) {
             holder.mTvRank.setText("-");
         } else {
-            holder.mTvRank.setText(String.valueOf(userLeaderBoard.getRank()));
+            String rank = Ordinal.ordinal(userLeaderBoard.getRank());
+            holder.mTvRank.setText(rank);
         }
 
         holder.mTvName.setText(userLeaderBoard.getUserName());
 
         holder.mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
+
+        holder.mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed()));
 
         String imageUrl=userLeaderBoard.getUserPhoto();
         holder.mIvUser.setImageUrl(

@@ -38,7 +38,7 @@
         android:layout_marginLeft="@dimen/dp_50"
         android:layout_marginTop="@dimen/dp_33"
         android:layout_alignBottom="@id/feed_row_space"
-        android:background="@color/textcolorlight"
+        android:background="@color/dividercolor"
         />
 
 

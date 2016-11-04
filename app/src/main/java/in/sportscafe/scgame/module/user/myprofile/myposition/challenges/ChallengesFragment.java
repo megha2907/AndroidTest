@@ -16,6 +16,7 @@ import java.util.List;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
+import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.common.ScGameFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.BaseSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.ChallengesSummary;
@@ -101,9 +102,10 @@ public class ChallengesFragment extends ScGameFragment implements ChallengesLayo
         }
 
         if (null == challengesTourSummary.getOverallRank()) {
-            mTournamentRankTextView.setVisibility(View.INVISIBLE);
+            mTournamentRankTextView.setText("-");
         } else {
-            mTournamentRankTextView.setText(String.valueOf(challengesTourSummary.getOverallRank()));
+            String rank = Ordinal.ordinal(challengesTourSummary.getRank());
+            mTournamentRankTextView.setText(rank);
         }
 
 
