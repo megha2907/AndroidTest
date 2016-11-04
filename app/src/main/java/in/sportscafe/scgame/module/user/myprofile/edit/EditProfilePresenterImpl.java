@@ -2,11 +2,15 @@ package in.sportscafe.scgame.module.user.myprofile.edit;
 
 import android.os.Bundle;
 
+import java.util.Arrays;
+
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.Constants.AnalyticsActions;
 import in.sportscafe.scgame.Constants.AnalyticsLabels;
 import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
+import in.sportscafe.scgame.module.user.preference.PreferenceManager;
+import in.sportscafe.scgame.module.user.preference.SavePreferenceModelImpl;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
@@ -75,8 +79,31 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
             mEditProfileView.navigateToHome();
         }
         else {
-            mEditProfileView.navigateToSportsSelection();
+//            mEditProfileView.navigateToSportsSelection();
+
+            // For ISB
+            autoSaveIsb();
         }
+    }
+
+    private void autoSaveIsb() {
+        new PreferenceManager().savePreference(Arrays.asList(new Integer[] {10}),
+                new SavePreferenceModelImpl.SavePreferenceModelListener() {
+            @Override
+            public void onSuccess() {
+                mEditProfileView.navigateToHome();
+            }
+
+            @Override
+            public void onNoInternet() {
+                onNoInternet();
+            }
+
+            @Override
+            public void onFailed(String message) {
+                onEditFailed(message);
+            }
+        });
     }
 
     @Override

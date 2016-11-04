@@ -14,8 +14,6 @@ public interface LogInView extends View {
 
     void navigateToHome();
 
-    void navigateToSports();
-
     void signOut();
 
     void showProgressDialog();

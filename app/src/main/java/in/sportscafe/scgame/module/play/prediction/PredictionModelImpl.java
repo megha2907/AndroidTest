@@ -267,9 +267,6 @@ public class PredictionModelImpl implements PredictionModel,
             public void onNoInternet() {}
 
             @Override
-            public void requireLogIn() {}
-
-            @Override
             public void onFailed(String message) {}
         }).postAnswer(answer);
     }

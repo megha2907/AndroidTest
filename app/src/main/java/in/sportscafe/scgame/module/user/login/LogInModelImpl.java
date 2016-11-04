@@ -14,8 +14,6 @@ import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.user.login.dto.LogInRequest;
 import in.sportscafe.scgame.module.user.login.dto.LogInResponse;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
-import in.sportscafe.scgame.module.user.preference.GetPreferenceModelImpl;
-import in.sportscafe.scgame.module.user.preference.PreferenceManager;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
 import retrofit2.Call;
@@ -140,35 +138,10 @@ public class LogInModelImpl implements LogInModel {
         Log.i("powerups", String.valueOf(userInfo.getPowerUps().get("2x")));
         scGameDataHandler.setUserInfo(userInfo);
 
-
+        // Getting the saved sports from server and saving it locally
         scGameDataHandler.setFavoriteSportsIdList(userInfo.getUserSports());
 
         mLogInModelListener.onLoginCompleted();
-//        getUserPreference();
-    }
-
-    private void getUserPreference() {
-        new PreferenceManager().getPreference(
-                new GetPreferenceModelImpl.GetPreferenceModelListener() {
-                    @Override
-                    public void onSuccess() {
-                        mLogInModelListener.onLoginCompleted();
-                    }
-
-                    @Override
-                    public void onNoInternet() {
-                        mLogInModelListener.onNoInternet();
-                    }
-
-                    @Override
-                    public void onFailed(int code, String message) {
-                        if (code == 404) {
-                            mLogInModelListener.onLoginCompleted();
-                        } else {
-                            mLogInModelListener.onLoginFailed();
-                        }
-                    }
-                });
     }
 
     public interface LogInModelListener {
