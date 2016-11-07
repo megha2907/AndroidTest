@@ -11,10 +11,10 @@ import android.widget.TextView;
 import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
 
+import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.Adapter;
-import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.user.leaderboard.dto.LeaderBoard;
 import in.sportscafe.scgame.module.user.leaderboard.dto.UserLeaderBoard;
@@ -59,7 +59,7 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         if(null == userLeaderBoard.getRank()) {
             holder.mTvRank.setText("-");
         } else {
-            String rank = Ordinal.ordinal(userLeaderBoard.getRank());
+            String rank = AppSnippet.ordinal(userLeaderBoard.getRank());
             holder.mTvRank.setText(rank);
         }
 

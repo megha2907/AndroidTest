@@ -27,10 +27,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
-import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.feed.dto.Match;
@@ -73,7 +73,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
 
         int date= Integer.parseInt(TimeUtils.getDateStringFromMs(feed.getDate(), "d"));
-        String newOrdinalDate= Ordinal.ordinal(date);
+        String newOrdinalDate= AppSnippet.ordinal(date);
         String month = TimeUtils.getDateStringFromMs(feed.getDate(), "MMM");
         String finalDate = newOrdinalDate + " " +month ;
 

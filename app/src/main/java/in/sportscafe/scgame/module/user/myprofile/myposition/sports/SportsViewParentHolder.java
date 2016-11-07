@@ -12,10 +12,10 @@ import android.widget.TextView;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.jeeva.android.Log;
 
+import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
-import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.feed.FeedActivity;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.BaseSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.RankSummary;
@@ -64,7 +64,7 @@ public class SportsViewParentHolder extends ParentViewHolder {
             if(null == tourSummary.getRank()) {
                 mSportsOverallRankTextView.setText("-");
             } else {
-                String rank = Ordinal.ordinal(tourSummary.getRank());
+                String rank = AppSnippet.ordinal(tourSummary.getRank());
                 mSportsOverallRankTextView.setText(rank);
             }
         }

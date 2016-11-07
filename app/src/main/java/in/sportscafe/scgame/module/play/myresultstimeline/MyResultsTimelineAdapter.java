@@ -22,14 +22,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
-import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.feed.dto.Match;
-import in.sportscafe.scgame.module.play.PlayActivity;
 import in.sportscafe.scgame.module.play.myresults.MyResultsActivity;
 import in.sportscafe.scgame.module.play.prediction.PredictionActivity;
 import in.sportscafe.scgame.utils.ViewUtils;
@@ -67,7 +66,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
         holder.mPosition = position;
 
         int date= Integer.parseInt(TimeUtils.getDateStringFromMs(feed.getDate(), "d"));
-        String newOrdinalDate= Ordinal.ordinal(date);
+        String newOrdinalDate= AppSnippet.ordinal(date);
         String month = TimeUtils.getDateStringFromMs(feed.getDate(), "MMM");
         String finalDate = newOrdinalDate + " " +month ;
 

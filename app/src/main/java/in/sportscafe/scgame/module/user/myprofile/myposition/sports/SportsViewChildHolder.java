@@ -17,10 +17,10 @@ import com.jeeva.android.widgets.HmImageView;
 
 import java.io.Serializable;
 
+import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
-import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.feed.FeedActivity;
 import in.sportscafe.scgame.module.feed.dto.Match;
@@ -73,7 +73,7 @@ public class SportsViewChildHolder extends ChildViewHolder{
         if(null == tourSummary.getRank()) {
             mTournamentRankTextView1.setText("-");
         } else {
-            String rank = Ordinal.ordinal(tourSummary.getRank());
+            String rank = AppSnippet.ordinal(tourSummary.getRank());
             mTournamentRankTextView1.setText(rank);
         }
 

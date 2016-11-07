@@ -10,9 +10,9 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 
+import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.BaseSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupsTourSummary;
@@ -63,7 +63,7 @@ public class GroupsViewChildHolder extends ChildViewHolder {
         if(null == groupsTourSummary.getRank()) {
             mTournamentRankTextView.setText("-");
         } else {
-            String rank = Ordinal.ordinal(groupsTourSummary.getRank());
+            String rank = AppSnippet.ordinal(groupsTourSummary.getRank());
             mTournamentRankTextView.setText(rank);
         }
 

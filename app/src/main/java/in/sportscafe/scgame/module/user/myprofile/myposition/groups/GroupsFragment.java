@@ -38,7 +38,6 @@ public class GroupsFragment extends ScGameFragment implements GroupsLayout.OnRan
 
     private GroupsAdapter mAdapter;
 
-    private  RecyclerView mrecyclerView;
 
     public static GroupsFragment newInstance(List<GroupSummary> groupSummaryList) {
         Bundle args = new Bundle();
@@ -60,7 +59,7 @@ public class GroupsFragment extends ScGameFragment implements GroupsLayout.OnRan
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mrecyclerView = (RecyclerView) findViewById(R.id.my_position_rv);
+        RecyclerView  mrecyclerView = (RecyclerView) findViewById(R.id.my_position_rv);
         mAdapter = new GroupsAdapter(getContext(), updateRank((List<GroupSummary>) getArguments().getSerializable(KEY_GROUP_SUMMARY)));
         mAdapter.setExpandCollapseListener(new ExpandableRecyclerAdapter.ExpandCollapseListener() {
             @Override

@@ -43,11 +43,8 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
     private AlertDialog mAlertDialog;
 
-    private Context mContext;
-
     public MyResultsAdapter(Context context) {
         super(context);
-        mContext = context;
     }
 
     public void setResultsActionListener(OnMyResultsActionListener mResultsActionListener) {
@@ -313,14 +310,14 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     @Override
     public void onClick(View v) {
 
-          onclickLeaderBoardbtn();
+          onclickLeaderBoardbtn(v);
 
     }
 
-    private void onclickLeaderBoardbtn() {
+    private void onclickLeaderBoardbtn(View view) {
 
-        Intent intent =  new Intent(mContext, HomeActivity.class);
-        ((Activity) mContext).startActivityForResult(intent,1);
+        Intent intent =  new Intent(view.getContext(), HomeActivity.class);
+        ((Activity) view.getContext()).startActivityForResult(intent,1);
 
     }
 

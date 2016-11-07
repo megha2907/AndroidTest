@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
                 android:orientation="vertical"
                 />
 
-            <TextView
+            <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/no_challenges_summary_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
                 android:layout_marginRight="@dimen/dp_60"
                 android:layout_marginLeft="@dimen/dp_60"
                 android:visibility="gone"
+                app:typeface="lato_regular"
                 android:textColor="@color/textcolorlight"/>
 
 
