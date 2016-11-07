@@ -99,5 +99,6 @@ public class FeedActivity extends ScGameActivity implements FeedView, SwipeRefre
 
         Intent i = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(i);
+        finish();
     }
 }

@@ -47,7 +47,6 @@ public class JoinGroupPresenterImpl implements JoinGroupPresenter, JoinGroupMode
     public void onSuccess() {
         mJoinGroupView.dismissProgressbar();
         mJoinGroupView.showMessage(Constants.Alerts.JOIN_GROUP_SUCCESS);
-
         mJoinGroupView.showJoinGroupSuccess();
     }
 

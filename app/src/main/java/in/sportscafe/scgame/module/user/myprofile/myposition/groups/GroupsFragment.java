@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.jeeva.android.Log;
@@ -37,9 +38,12 @@ public class GroupsFragment extends ScGameFragment implements GroupsLayout.OnRan
 
     private GroupsAdapter mAdapter;
 
+    private  RecyclerView mrecyclerView;
+
     public static GroupsFragment newInstance(List<GroupSummary> groupSummaryList) {
         Bundle args = new Bundle();
         args.putSerializable(KEY_GROUP_SUMMARY,(Serializable) groupSummaryList);
+
 
         GroupsFragment fragment = new GroupsFragment();
         fragment.setArguments(args);
@@ -56,7 +60,7 @@ public class GroupsFragment extends ScGameFragment implements GroupsLayout.OnRan
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_position_rv);
+        mrecyclerView = (RecyclerView) findViewById(R.id.my_position_rv);
         mAdapter = new GroupsAdapter(getContext(), updateRank((List<GroupSummary>) getArguments().getSerializable(KEY_GROUP_SUMMARY)));
         mAdapter.setExpandCollapseListener(new ExpandableRecyclerAdapter.ExpandCollapseListener() {
             @Override
@@ -69,12 +73,17 @@ public class GroupsFragment extends ScGameFragment implements GroupsLayout.OnRan
             }
         });
 
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
+        mrecyclerView.setAdapter(mAdapter);
+        mrecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
     }
 
     public List<BaseSummary> updateRank(List<GroupSummary> groupSummaryList) {
+        if(groupSummaryList.isEmpty()){
+            showGroupSummaryEmpty();
+        }
+
+
         if (null == groupSummaryList) {
             groupSummaryList = new ArrayList<>();
         }
@@ -101,6 +110,12 @@ public class GroupsFragment extends ScGameFragment implements GroupsLayout.OnRan
         }
 
         return tourSummaryList;
+    }
+
+    private void showGroupSummaryEmpty() {
+
+        TextView noSport= (TextView)findViewById(R.id.no_summary_tv);
+        noSport.setVisibility(View.VISIBLE);
     }
 
 

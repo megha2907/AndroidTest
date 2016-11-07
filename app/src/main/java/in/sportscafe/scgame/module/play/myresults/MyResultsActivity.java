@@ -1,5 +1,6 @@
 package in.sportscafe.scgame.module.play.myresults;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
+import in.sportscafe.scgame.module.home.OnHomeActionListener;
 
 /**
  * Created by Jeeva on 15/6/16.

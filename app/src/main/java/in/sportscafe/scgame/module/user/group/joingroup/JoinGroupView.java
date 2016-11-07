@@ -14,4 +14,6 @@ public interface JoinGroupView extends View {
     void navigateToGroupInfo(Bundle bundle);
 
     void showJoinGroupSuccess();
+
+    void navigateToAllGroups();
 }

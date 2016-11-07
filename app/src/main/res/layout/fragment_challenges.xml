@@ -22,6 +22,20 @@
                 android:orientation="vertical"
                 />
 
+            <TextView
+                android:id="@+id/no_challenges_summary_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_70"
+                android:layout_centerHorizontal="true"
+                android:text="Leaderboards will update here after a match you have predicted is over."
+                android:gravity="center"
+                android:layout_marginRight="@dimen/dp_60"
+                android:layout_marginLeft="@dimen/dp_60"
+                android:visibility="gone"
+                android:textColor="@color/textcolorlight"/>
+
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

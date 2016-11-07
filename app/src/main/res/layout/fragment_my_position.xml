@@ -8,20 +8,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="@dimen/dp_10"/>
+     
+    <TextView
+        android:id="@+id/no_summary_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_80"
+        android:layout_centerHorizontal="true"
+        android:text="Leaderboards will update here after a match you have predicted is over."
+        android:gravity="center"
+        android:layout_marginRight="@dimen/dp_60"
+        android:layout_marginLeft="@dimen/dp_60"
+        android:visibility="gone"
+        android:textColor="@color/textcolorlight"/>
 
-    <!--<android.support.v4.widget.NestedScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/my_position_parent"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_margin="@dimen/dp_10"-->
-        <!--android:orientation="vertical"-->
-        <!--android:background="@color/colorMedium"-->
-
-        <!--/>-->
-    <!--</android.support.v4.widget.NestedScrollView>-->
 
 </RelativeLayout>

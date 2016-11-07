@@ -128,10 +128,6 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
                 Question question = (Question) mViewHolderList.get(0).rlquestion.getTag();
                 question.setPowerUpId("2x");
 
-        mViewHolderList.get(0).rlquestion.setBackgroundColor(
-                        ContextCompat.getColor(getContext(), R.color.alto));
-
-
 //        Toast toast =Toast.makeText(getContext(), "2x Power Up applied", Toast.LENGTH_SHORT);
 //        toast.setGravity(Gravity.CENTER, 0, 0);
 //        toast.show();

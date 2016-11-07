@@ -157,7 +157,8 @@
                             android:text="VS"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dp_16"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"

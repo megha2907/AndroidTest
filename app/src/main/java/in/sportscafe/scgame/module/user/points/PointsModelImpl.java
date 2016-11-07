@@ -70,6 +70,7 @@ public class PointsModelImpl implements PointsModel {
     public void init(Bundle bundle) {
         mSelectedGroupId = bundle.getLong(BundleKeys.GROUP_ID);
         mSelectedSportId = bundle.getInt(BundleKeys.SPORT_ID);
+        Log.i("SPORTID",mSelectedSportId+"");
         mSelectedChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
         mBaseSummary = (BaseSummary) bundle.getSerializable(BundleKeys.TOURNAMENT_SUMMARY);
     }

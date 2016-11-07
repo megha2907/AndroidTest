@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
+import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
+import in.sportscafe.scgame.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.scgame.module.user.group.newgroup.NewGroupActivity;
 
@@ -25,6 +28,8 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
     private static final int CODE_NEW_GROUP = 1;
 
     private static final int CODE_GROUP_INFO = 2;
+
+    private static final int CODE_ALL_GROUP = 3;
 
     private EditText mEtGroupCode1;
     private EditText mEtGroupCode2;
@@ -182,8 +187,16 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
 
     @Override
     public void showJoinGroupSuccess() {
-        findViewById(R.id.join_group_ll_join_done).setVisibility(View.VISIBLE);
+        Toast.makeText(getActivity(), "Your request to join the group has been sent to the group admin for approval.",
+                Toast.LENGTH_SHORT).show();
+        navigateToAllGroups();
     }
+
+    @Override
+    public void navigateToAllGroups() {
+        startActivityForResult(new Intent(this, AllGroupsActivity.class), CODE_ALL_GROUP);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

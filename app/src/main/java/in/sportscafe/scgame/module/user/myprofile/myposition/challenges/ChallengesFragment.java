@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +56,11 @@ public class ChallengesFragment extends ScGameFragment implements ChallengesLayo
     }
 
     public List<BaseSummary> updateRank(List<ChallengesSummary> challengesSummaryList) {
+
+        if (challengesSummaryList.isEmpty()){
+            showChallengesSummaryEmpty();
+        }
+
         if (null == challengesSummaryList) {
             challengesSummaryList = new ArrayList<>();
         }
@@ -111,6 +118,13 @@ public class ChallengesFragment extends ScGameFragment implements ChallengesLayo
 
         return convertView;
     }
+
+    private void showChallengesSummaryEmpty() {
+
+        TextView noSport= (TextView)findViewById(R.id.no_challenges_summary_tv);
+        noSport.setVisibility(View.VISIBLE);
+    }
+
 
     @Override
     public void onClickRank(ChallengesTourSummary tourSummary) {
