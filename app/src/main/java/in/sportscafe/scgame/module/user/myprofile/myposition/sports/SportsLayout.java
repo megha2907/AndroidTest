@@ -69,6 +69,8 @@ public class SportsLayout extends FrameLayout {
 
     public interface OnRankClickListener {
 
+        void showSportSummaryEmpty();
+
         void onClickRank(TourSummary tourSummary);
     }
 }

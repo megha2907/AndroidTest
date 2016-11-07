@@ -10,13 +10,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.common.ScGameFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.BaseSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.ChallengesSummary;
@@ -54,6 +56,11 @@ public class ChallengesFragment extends ScGameFragment implements ChallengesLayo
     }
 
     public List<BaseSummary> updateRank(List<ChallengesSummary> challengesSummaryList) {
+
+        if (challengesSummaryList.isEmpty()){
+            showChallengesSummaryEmpty();
+        }
+
         if (null == challengesSummaryList) {
             challengesSummaryList = new ArrayList<>();
         }
@@ -104,13 +111,20 @@ public class ChallengesFragment extends ScGameFragment implements ChallengesLayo
         if (null == challengesTourSummary.getOverallRank()) {
             mTournamentRankTextView.setText("-");
         } else {
-            String rank = Ordinal.ordinal(challengesTourSummary.getRank());
+            String rank = AppSnippet.ordinal(challengesTourSummary.getRank());
             mTournamentRankTextView.setText(rank);
         }
 
 
         return convertView;
     }
+
+    private void showChallengesSummaryEmpty() {
+
+        TextView noSport= (TextView)findViewById(R.id.no_challenges_summary_tv);
+        noSport.setVisibility(View.VISIBLE);
+    }
+
 
     @Override
     public void onClickRank(ChallengesTourSummary tourSummary) {

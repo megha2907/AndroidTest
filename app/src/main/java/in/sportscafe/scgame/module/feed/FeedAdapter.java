@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
@@ -70,7 +71,13 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         Feed feed = getItem(position);
         holder.mPosition = position;
 
-        holder.mTvDate.setText(TimeUtils.getDateStringFromMs(feed.getDate(), "d'th' MMM"));
+
+        int date= Integer.parseInt(TimeUtils.getDateStringFromMs(feed.getDate(), "d"));
+        String newOrdinalDate= AppSnippet.ordinal(date);
+        String month = TimeUtils.getDateStringFromMs(feed.getDate(), "MMM");
+        String finalDate = newOrdinalDate + " " +month ;
+
+        holder.mTvDate.setText(finalDate);
         holder.mLlTourParent.removeAllViews();
         for (Tournament tournament : feed.getTournaments()) {
             holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent,position));

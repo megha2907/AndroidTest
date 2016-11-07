@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.jeeva.android.Log;
@@ -77,6 +78,11 @@ public class SportsFragment extends ScGameFragment implements SportsLayout.OnRan
 
     public List<BaseSummary> updateRank(List<SportSummary> sportSummaryList) {
 
+        if(sportSummaryList.isEmpty()){
+
+              showSportSummaryEmpty();
+        }
+
         if (null == sportSummaryList) {
             sportSummaryList = new ArrayList<>();
         }
@@ -107,6 +113,11 @@ public class SportsFragment extends ScGameFragment implements SportsLayout.OnRan
 
     }
 
+    @Override
+    public void showSportSummaryEmpty() {
+        TextView noSport= (TextView)findViewById(R.id.no_summary_tv);
+        noSport.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void onClickRank(TourSummary tourSummary) {

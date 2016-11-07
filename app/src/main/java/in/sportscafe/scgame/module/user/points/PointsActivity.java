@@ -45,19 +45,19 @@ public class PointsActivity extends ScGameActivity implements PointsView, View.O
 
     private PointsPresenter mPointsPresenter;
 
-    private Integer mSelectedSportId;
+    private int mSelectedSportId;
 
-//    private Bundle mbundle;
+     private Bundle mbundle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_points);
 
+        mbundle=getIntent().getExtras();
+
         PointsActivity.this.mPointsPresenter = PointsPresenterImpl.newInstance(PointsActivity.this);
         PointsActivity.this.mPointsPresenter.onCreatePoints( getIntent().getExtras());
-
-//        mbundle=getIntent().getExtras();
     }
 
     @Override
@@ -79,25 +79,24 @@ public class PointsActivity extends ScGameActivity implements PointsView, View.O
     @Override
     public void setIcon(String icon) {
 
-//        mSelectedSportId = mbundle.getInt(Constants.BundleKeys.SPORT_ID);
+        mSelectedSportId = mbundle.getInt(Constants.BundleKeys.SPORT_ID);
 
         ImageView pointsIcon= (ImageView) findViewById(R.id.points_group_icon);
 
-        if (null==icon || icon.isEmpty()) {
+        if (mSelectedSportId!=0) {
+            for (Sport sport : ScGameDataHandler.getInstance().getAllSports()) {
+                if (sport.getId() == mSelectedSportId) {
+                    Log.i("SPORTS","INSIDE");
+                    pointsIcon.setBackgroundResource(sport.getImageResource());
+                }
 
+            }
+        }
+        else if (null==icon || icon.isEmpty()) {
+            Log.i("NULL","INSIDE");
             pointsIcon.setImageDrawable(null);
             pointsIcon.setImageResource(R.drawable.placeholder_icon);
         }
-//        else if (mSelectedSportId!=0){
-//
-//            for (Sport sport: ScGameDataHandler.getInstance().getAllSports()){
-//                if (sport.getId()==mSelectedSportId){
-//
-//                }
-//                    pointsIcon.setBackgroundResource(sport.getImageResource());
-//                }
-//
-//            }
         else
         {
             Picasso.with(getApplicationContext())

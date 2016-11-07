@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 
+import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.module.common.Ordinal;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.BaseSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupsTourSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.TourSummary;
@@ -53,7 +53,7 @@ public class GroupsViewParentHolder extends ParentViewHolder {
         if(null == tourSummary.getRank()) {
             mGroupsOverallRankTextView.setText("-");
         } else {
-            String rank = Ordinal.ordinal(tourSummary.getRank());
+            String rank = AppSnippet.ordinal(tourSummary.getRank());
             mGroupsOverallRankTextView.setText(rank);
         }
 

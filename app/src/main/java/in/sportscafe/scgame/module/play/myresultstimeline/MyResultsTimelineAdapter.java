@@ -22,13 +22,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.feed.dto.Match;
-import in.sportscafe.scgame.module.play.PlayActivity;
 import in.sportscafe.scgame.module.play.myresults.MyResultsActivity;
 import in.sportscafe.scgame.module.play.prediction.PredictionActivity;
 import in.sportscafe.scgame.utils.ViewUtils;
@@ -65,7 +65,12 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
         Feed feed = getItem(position);
         holder.mPosition = position;
 
-        holder.mTvDate.setText(TimeUtils.getDateStringFromMs(feed.getDate(), "d'th' MMM"));
+        int date= Integer.parseInt(TimeUtils.getDateStringFromMs(feed.getDate(), "d"));
+        String newOrdinalDate= AppSnippet.ordinal(date);
+        String month = TimeUtils.getDateStringFromMs(feed.getDate(), "MMM");
+        String finalDate = newOrdinalDate + " " +month ;
+
+        holder.mTvDate.setText(finalDate);
         holder.mLlTourParent.removeAllViews();
         for (Tournament tournament : feed.getTournaments()) {
             holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent,position));
@@ -153,6 +158,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             holder.mTvResultWait.setVisibility(View.VISIBLE);
             holder.mViewResult.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
+            holder.mTvResultWait.setTag(match.getId());
         }
         else
         {
@@ -316,8 +322,11 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
+
+
             mBtnPlayMatch.setOnClickListener(this);
             mBtnMatchPoints.setOnClickListener(this);
+            mTvResultWait.setOnClickListener(this);
         }
 
         @Override
@@ -345,6 +354,17 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
                     Intent mintent =  new Intent(mcon, MyResultsActivity.class);
                     mintent.putExtras(mBundle2);
                     mcon.startActivity(mintent);
+                    break;
+
+                case R.id.schedule_row_tv_match_result_wait:
+
+                    Integer matchId2 = (Integer) view.getTag();
+                    Bundle mBundle3 = new Bundle();
+                    mBundle3.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId2));
+
+                    Intent mintent2 =  new Intent(mcon, MyResultsActivity.class);
+                    mintent2.putExtras(mBundle3);
+                    mcon.startActivity(mintent2);
                     break;
             }
 
