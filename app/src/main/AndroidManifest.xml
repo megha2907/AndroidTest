@@ -131,7 +131,17 @@
         <activity
             android:name=".module.user.group.joingroup.JoinGroupActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan">
+            <intent-filter>
+                <data
+                    android:host="outx.test-app.link"
+                    android:scheme="https" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".module.permission.PermissionsActivity"
@@ -287,6 +297,31 @@
             android:value="@integer/google_play_services_version" />
 
         <!-- End Google Analytics -->
+
+        <!-- Start Branch -->
+
+        <!-- Enable/Disable the test mode -->
+        <meta-data
+            android:name="io.branch.sdk.TestMode"
+            android:value="true" />
+
+        <!-- Live branch key -->
+        <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_live_eoqby1Qi8GeRDkGLb4tRqemjEDajI3q5" />
+
+        <!-- Test branch key -->
+        <meta-data
+            android:name="io.branch.sdk.BranchKey.test"
+            android:value="key_test_pfyhy6Sp0ViSymPQiXMmEonmuFpcM4Sn" />
+
+        <!-- To receive the install updates -->
+        <receiver android:name="io.branch.referral.InstallListener" android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        <!-- End Branch -->
     </application>
 
 </manifest>
