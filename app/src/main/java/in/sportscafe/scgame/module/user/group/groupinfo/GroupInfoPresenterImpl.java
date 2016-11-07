@@ -3,14 +3,17 @@ package in.sportscafe.scgame.module.user.group.groupinfo;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
-
-import java.util.List;
 
 import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
-import in.sportscafe.scgame.ScGameDataHandler;
+import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
+import io.branch.indexing.BranchUniversalObject;
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
+import io.branch.referral.util.LinkProperties;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -32,7 +35,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     @Override
     public void onCreateGroupInfo(Bundle bundle) {
-        mGroupInfoView.setGroupName(bundle.getString(Constants.BundleKeys.GROUP_NAME));
+        mGroupInfoView.setGroupName(bundle.getString(BundleKeys.GROUP_NAME));
         mGroupInfoView.showProgressbar();
         mGroupInfoModel.init(bundle);
 
@@ -67,7 +70,26 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     @Override
     public void onClickShareCode() {
-        AppSnippet.doGeneralShare(mGroupInfoView.getContext(), mGroupInfoModel.getShareCodeContent());
+        GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
+
+        BranchUniversalObject buo = new BranchUniversalObject()
+                .setTitle("Group Invitation")
+                .setContentDescription("Click this link, If you want to join in my \"" + groupInfo.getName() + "\" group." )
+                .setContentImageUrl("https://s-media-cache-ak0.pinimg.com/originals/da/45/24/da452441898ff6863ada4984b27bcbdc.jpg")
+                .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+                .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode());
+
+        buo.generateShortUrl(mGroupInfoView.getContext(), new LinkProperties(),
+                new Branch.BranchLinkCreateListener() {
+            @Override
+            public void onLinkCreate(String url, BranchError error) {
+                if(null == error) {
+                    AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url);
+                } else {
+                    ExceptionTracker.track(error.getMessage());
+                }
+            }
+        });
     }
 
     @Override

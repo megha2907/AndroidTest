@@ -109,6 +109,7 @@ public interface Constants {
         String LEADERBOARD_LIST = "leaderboardList";
         String HOME_SCREEN = "homeScreen";
         String LOGIN_SCREEN = "loginScreen";
+        String GROUP_CODE = "groupCode";
     }
 
     interface ParcelableKeys {
