@@ -1,5 +1,6 @@
 package in.sportscafe.scgame.module.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import java.util.List;
@@ -41,6 +43,8 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
 
     private static final float DISABLE_TAB_ALPHA = 1f;
 
+    private static final int CODE_PROFILE_ACTIVITY = 1;
+
     private View mSelectedTab;
 
     private boolean feedShowing = false;
@@ -57,18 +61,32 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
 
     private ImageButton mNotificationButton;
 
+    private Bundle mbundle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        getUserInfoFromServer();
         mHomeButton=(ImageButton)findViewById(R.id.home_ibtn_feed);
         mProfileButton=(ImageButton)findViewById(R.id.home_ibtn_profile);
         mNotificationButton=(ImageButton)findViewById(R.id.home_ibtn_notification);
 
-       // initToolBar();
-        showFeed();
-        getUserInfoFromServer();
+        //showFeed();
+
+        Intent intent = getIntent();
+        if (null==intent.getExtras()){
+            showFeed();
+        }
+        else if (intent.getExtras().getString("group").equals("openprofile")){
+            loadFragment(new ProfileFragment());
+        }
+        else {
+            showFeed();
+        }
+
+
     }
 
     public void onClickTab(View view) {
@@ -76,13 +94,7 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
 
           switch (view.getId()) {
               case R.id.home_ibtn_notification:
-
-                  //mtoolbar.setVisibility(View.VISIBLE);
                   feedShowing = true;
-//                  mTitle.setVisibility(View.VISIBLE);
-//                  mLogo.setVisibility(View.GONE);
-//                  mTitle.setText("Notifications");
-
                   mHomeButton.setSelected(false);
                   mProfileButton.setSelected(false);
                   mNotificationButton.setSelected(true);
@@ -90,10 +102,6 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
                   loadFragment(new NotificationInboxFragment());
                   break;
               case R.id.home_ibtn_feed:
-//                  mtoolbar.setVisibility(View.VISIBLE);
-//                  mLogo.setVisibility(View.VISIBLE);
-//                  mTitle.setVisibility(View.GONE);
-
                   mNotificationButton.setSelected(false);
                   mProfileButton.setSelected(false);
                   mHomeButton.setSelected(true);
@@ -101,8 +109,6 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
                   loadFragment(new TournamentFeedFragment());
                   break;
               case R.id.home_ibtn_profile:
-//                  mtoolbar.setVisibility(View.GONE);
-
                   mHomeButton.setSelected(false);
                   mNotificationButton.setSelected(false);
                   mProfileButton.setSelected(true);
@@ -145,15 +151,6 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
         showFeed();
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if(feedShowing) {
-//            super.onBackPressed();
-//        } else {
-//            showFeed();
-//        }
-//    }
-
     private void showFeed() {
         onClickTab(findViewById(R.id.home_ibtn_feed));
     }
@@ -178,21 +175,8 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
                                     ScGameDataHandler.getInstance().setUserInfo(updatedUserInfo);
                                     ScGameDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
                                     ScGameDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
-
-
-                                    List<AllGroups> newAllGroups = updatedUserInfo.getAllGroups();
-                                    if(null != newAllGroups && newAllGroups.size() > 0) {
-                                        List<AllGroups> oldAllGroupsList = ScGameDataHandler.getInstance().getAllGroups();
-                                        oldAllGroupsList.clear();
-                                        for (AllGroups allGroups : newAllGroups) {
-                                            if (!oldAllGroupsList.contains(allGroups)) {
-                                                oldAllGroupsList.add(allGroups);
-                                            }
-                                        }
-                                        ScGameDataHandler.getInstance().setAllGroups(oldAllGroupsList);
-                                        ScGameDataHandler.getInstance().setNumberofGroups(oldAllGroupsList.size());
-
-                                    }
+                                    ScGameDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());
+                                    Log.i("setNumberofGroups",updatedUserInfo.getNumberofgroups()+"");
                                 }
                             }
                         }
@@ -201,14 +185,18 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
         }
     }
 
-//    public void initToolBar() {
-//        Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Regular.ttf");
-//        mtoolbar = (Toolbar) findViewById(R.id.home_toolbar);
-//        mTitle = (TextView) mtoolbar.findViewById(R.id.toolbar_title);
-//        mLogo = (ImageView) mtoolbar.findViewById(R.id.toolbar_logo);
-//        mTitle.setTypeface(tftitle);
-//        setSupportActionBar(mtoolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-//    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(Activity.RESULT_OK == resultCode) {
+            Log.i("inside","resultCode");
+            if(CODE_PROFILE_ACTIVITY == requestCode) {
+                Log.i("inside","profile");
+                loadFragment(new ProfileFragment());
+            }
+        }
+    }
+
 
 }

@@ -8,6 +8,7 @@ import in.sportscafe.scgame.module.play.myresults.MyResultsResponse;
 import in.sportscafe.scgame.module.play.prediction.dto.Answer;
 import in.sportscafe.scgame.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.scgame.module.user.group.admin.approve.ApproveRequest;
+import in.sportscafe.scgame.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupSportUpdateRequest;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupTournamentUpdateRequest;
@@ -128,4 +129,7 @@ public interface ScGameService {
 
     @GET("users/{user_id}/groups/{group_id}/info")
     Call<GroupSummaryResponse> getGroupSummary(@Path("user_id") String userId,@Path("group_id") Integer groupId);
+
+    @GET("users/{user_id}/groups")
+    Call<AllGroupsResponse> getAllGroups(@Path("user_id") String userId);
 }

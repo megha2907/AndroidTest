@@ -2,9 +2,11 @@ package in.sportscafe.scgame.module.user.myprofile;
 
 import android.content.Context;
 
+import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.user.group.groupinfo.GrpListModelImpl;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
+import in.sportscafe.scgame.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummaryResponse;
 import in.sportscafe.scgame.webservice.MyWebService;
@@ -30,6 +32,7 @@ public class ProfileModelImpl implements ProfileModel {
     @Override
     public void getProfileDetails() {
         getLbSummary();
+        getUserInfoFromServer();
     }
 
     @Override
@@ -37,23 +40,26 @@ public class ProfileModelImpl implements ProfileModel {
         return ScGameDataHandler.getInstance().getUserInfo();
     }
 
-    private void getGrpList() {
-        new GrpListModelImpl(new GrpListModelImpl.OnGrpListModelListener() {
-            @Override
-            public void onSuccessGrpList() {
-                getLbSummary();
-            }
+    private void getUserInfoFromServer() {
+        if (ScGame.getInstance().hasNetworkConnection()) {
+            MyWebService.getInstance().getUserInfoRequest(ScGameDataHandler.getInstance().getUserId()).enqueue(
+                    new ScGameCallBack<UserInfoResponse>() {
+                        @Override
+                        public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
+                            if (response.isSuccessful()) {
+                                UserInfo updatedUserInfo = response.body().getUserInfo();
 
-            @Override
-            public void onFailedGrpList(String message) {
-                mProfileModelListener.onGetProfileFailed(message);
-            }
-
-            @Override
-            public void onNoInternet() {
-                mProfileModelListener.onNoInternet();
-            }
-        }).getGrpList();
+                                if (null != updatedUserInfo) {
+                                    ScGameDataHandler.getInstance().setUserInfo(updatedUserInfo);
+                                    ScGameDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
+                                    ScGameDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
+                                    ScGameDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());
+                                }
+                            }
+                        }
+                    }
+            );
+        }
     }
 
     private void getLbSummary() {

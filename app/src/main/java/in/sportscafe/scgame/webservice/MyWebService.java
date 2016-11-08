@@ -9,6 +9,7 @@ import in.sportscafe.scgame.module.play.myresults.MyResultsResponse;
 import in.sportscafe.scgame.module.play.prediction.dto.Answer;
 import in.sportscafe.scgame.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.scgame.module.user.group.admin.approve.ApproveRequest;
+import in.sportscafe.scgame.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupSportUpdateRequest;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupTournamentUpdateRequest;
@@ -157,8 +158,12 @@ public class MyWebService extends AbstractWebService<ScGameService> {
     }
 
     public Call<GroupSummaryResponse> getGroupSummaryRequest(Integer groupId) {
-
         return mScGameService.getGroupSummary(ScGameDataHandler.getInstance().getUserId(),groupId);
+    }
+
+    public Call<AllGroupsResponse> getAllGroupsRequest() {
+
+        return mScGameService.getAllGroups(ScGameDataHandler.getInstance().getUserId());
 
     }
 

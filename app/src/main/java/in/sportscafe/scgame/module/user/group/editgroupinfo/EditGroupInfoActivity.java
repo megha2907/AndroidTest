@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -299,15 +300,28 @@ public class EditGroupInfoActivity extends ScGameActivity implements EditGroupIn
                         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                         imagePath = cursor.getString(columnIndex);
 
-                        Picasso.with(getApplicationContext()).load(new File(imagePath))
-                                .into(mIvGroupImage);
-                        cursor.close();
+                        File file = new File(imagePath);
+                        long length = file.length() / 1024;
 
-                        if (!TextUtils.isEmpty(imagePath)) {
-                            uploadImage();
+                        if(length < 1024){
+                            if (!TextUtils.isEmpty(imagePath)) {
+                                uploadImage();
+                            }
+
+                            Picasso.with(getApplicationContext()).load(new File(imagePath))
+                                    .into(mIvGroupImage);
+                            cursor.close();
+
+                            mIvGroupImage.setVisibility(View.VISIBLE);
+
+                        }
+                        else
+                        {
+                            Toast toast =Toast.makeText(getContext(), "Image size is too large, please select an image with size <1MB", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
                         }
 
-                        mIvGroupImage.setVisibility(View.VISIBLE);
                     } else {
 
                         mIvGroupImage.setVisibility(View.GONE);

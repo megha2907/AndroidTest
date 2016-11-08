@@ -58,7 +58,7 @@ public interface Constants {
         String NO_RESULTS_FOUND = "No results found";
         String NO_WHATSAPP = "Whatsapp have not been installed";
         String LOGIN_FAILED = "Login failed";
-        String EMPTY_SPORT_SELECTION = "Please pick atleast one Sport";
+        String EMPTY_TOURNAMENT_SELECTION = "Please pick atleast one Tournament";
         String PASSED_QUESTION_ALERT = "Now it's time to predict for all the passed questions";
         String NO_LEADERBOARD = "No points found";
         String EDIT_PROFILE_FAILED = "Profile update failed. Try again.";

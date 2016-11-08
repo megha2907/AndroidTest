@@ -79,8 +79,7 @@ public class SportsFragment extends ScGameFragment implements SportsLayout.OnRan
     public List<BaseSummary> updateRank(List<SportSummary> sportSummaryList) {
 
         if(sportSummaryList.isEmpty()){
-
-              showSportSummaryEmpty();
+            showSportSummaryEmpty();
         }
 
         if (null == sportSummaryList) {
@@ -109,6 +108,11 @@ public class SportsFragment extends ScGameFragment implements SportsLayout.OnRan
                 newTourSummary=null;
 
             }
+
+        if(tourSummaryList.isEmpty()){
+            showSportSummaryEmpty();
+        }
+
         return tourSummaryList;
 
     }

@@ -12,9 +12,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeva.android.widgets.customfont.CustomButton;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 
@@ -50,6 +54,8 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
     private TextInputLayout mTilNickName;
     private ImageView mIvProfileImage;
     private EditProfilePresenter mEditProfilePresenter;
+    private TextView mTvUpdateProfile;
+    private CustomButton mBtnUpdateDone;
 
 
     @Override
@@ -60,8 +66,10 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
         checker = new PermissionsChecker(this);
 
         mTilNickName = (TextInputLayout) findViewById(R.id.input_layout_edit_et_nickname);
+        mTvUpdateProfile = (TextView) findViewById(R.id.edit_tv);
         mEtNickName = (EditText) findViewById(R.id.edit_et_nickname);
         mIvProfileImage = (ImageView) findViewById(R.id.edit_iv_user_image);
+        mBtnUpdateDone = (CustomButton) findViewById(R.id.edit_btn_done);
 
         this.mEditProfilePresenter = EditProfilePresenterImpl.newInstance(this);
         this.mEditProfilePresenter.onCreateEditProfile(getIntent().getExtras());
@@ -127,6 +135,18 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
     public void setNicknameConflict() {
         mTilNickName.setErrorEnabled(true);
         mTilNickName.setError(Constants.Alerts.NICKNAME_CONFLICT);
+    }
+
+    @Override
+    public void changeViewforProfile() {
+        mTvUpdateProfile.setText("Update your profile here");
+        mBtnUpdateDone.setText("UPDATE");
+    }
+
+    @Override
+    public void changeViewforLogin(String username) {
+        mTvUpdateProfile.setText("Welcome "+username+"\n"+"Let’s update your profile");
+        mBtnUpdateDone.setText("NEXT");
     }
 
     public void showImagePopup(View view) {

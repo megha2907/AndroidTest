@@ -60,7 +60,7 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
     @Override
     public void onNoSportSelected() {
         mNewGroupView.dismissProgressbar();
-        mNewGroupView.showMessage(Constants.Alerts.EMPTY_SPORT_SELECTION);
+        mNewGroupView.showMessage(Constants.Alerts.EMPTY_TOURNAMENT_SELECTION);
     }
 
     @Override

@@ -31,6 +31,8 @@ import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.play.prediction.PredictionActivity;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
+import in.sportscafe.scgame.module.user.leaderboardsummary.LeaderBoardSummaryActivity;
+import in.sportscafe.scgame.module.user.leaderboardsummary.LeaderBoardSummaryPresenter;
 import in.sportscafe.scgame.utils.ViewUtils;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 
@@ -42,6 +44,8 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     private OnMyResultsActionListener mResultsActionListener;
 
     private AlertDialog mAlertDialog;
+
+    private static final int CODE_PROFILE_ACTIVITY = 1;
 
     public MyResultsAdapter(Context context) {
         super(context);
@@ -167,6 +171,8 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question));
         }
 
+        holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard));
+
         return myResultView;
     }
 
@@ -189,6 +195,8 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         TextView mTvStartTime;
 
         LinearLayout mLlPredictionsParent;
+
+        LinearLayout mleaderboard;
 
         TextView mTvResultCorrectCount;
         CustomButton mBtnMatchPoints;
@@ -213,6 +221,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             mViewResult = (View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlPredictionsParent = (LinearLayout) V.findViewById(R.id.my_results_row_ll_predictions);
             mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
+            mleaderboard=(LinearLayout)V.findViewById(R.id.my_results_row_ll_leaderboardbtn);
         }
     }
 
@@ -230,7 +239,6 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         View vWrongAnswer = (View) convertView.findViewById(R.id.my_predictions_row_v_answer_line);
         TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
         TextView tvCorrectAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
-        LinearLayout leaderboard=(LinearLayout)convertView.findViewById(R.id.my_results_row_ll_leaderboardbtn);
 
         if (question.getAnswerPoints() != null) {
 
@@ -288,7 +296,6 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
             }
 
-            leaderboard.addView(getLeaderBoardView(leaderboard));
 
         }
 
@@ -316,8 +323,8 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
     private void onclickLeaderBoardbtn(View view) {
 
-        Intent intent =  new Intent(view.getContext(), HomeActivity.class);
-        ((Activity) view.getContext()).startActivityForResult(intent,1);
+        Intent intent =  new Intent(view.getContext(), LeaderBoardSummaryActivity.class);
+        view.getContext().startActivity(intent);
 
     }
 

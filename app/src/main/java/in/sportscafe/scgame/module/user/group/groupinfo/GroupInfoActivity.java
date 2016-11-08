@@ -54,6 +54,8 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
 
     private static final int CODE_ADMIN_MEMBERS = 3;
 
+    private static final int GROUPS_CODE = 20;
+
     private EditText mEtGroupName;
 
     private ImageButton mIBtnEditProfile;
@@ -79,7 +81,6 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_info);
 
-        getUserInfoFromServer();
         initToolBar();
 
         findViewById(R.id.group_info_ll_share).setOnLongClickListener(new View.OnLongClickListener() {
@@ -91,8 +92,6 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
             }
         });
 
-        mEtMembersCount = (TextView) findViewById(R.id.group_info_tv_edit_members);
-
         this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_rcv);
         this.mRvSportSelection.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
@@ -100,7 +99,7 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
         this.mGroupInfoPresenter = GroupInfoPresenterImpl.newInstance(this);
         this.mGroupInfoPresenter.onCreateGroupInfo(getIntent().getExtras());
 
-        mBundle=getIntent().getExtras();
+        mBundle = getIntent().getExtras();
     }
 
     @Override
@@ -123,24 +122,21 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
 
     private void navigatetoEditGroupInfoActivity() {
 
-        Intent intent =  new Intent(this, EditGroupInfoActivity.class);
+        Intent intent = new Intent(this, EditGroupInfoActivity.class);
         Bundle mBundleNew = new Bundle();
         mBundleNew.putString(Constants.BundleKeys.GROUP_ID, mBundle.getString(Constants.BundleKeys.GROUP_ID));
         mBundleNew.putString(Constants.BundleKeys.GROUP_NAME, mBundle.getString(Constants.BundleKeys.GROUP_NAME));
         intent.putExtras(mBundleNew);
-        startActivityForResult(intent,CODE_GROUP_INFO);
+        startActivityForResult(intent, CODE_GROUP_INFO);
     }
 
     @Override
     public void setGroupName(String groupName) {
 
-        if (null==groupName||groupName.isEmpty())
-        {
+        if (null == groupName || groupName.isEmpty()) {
             mTvGroupName.setText("Group Info");
-        }
-        else
-        {
-            Log.i("SETGROUPNAMEtitle",groupName);
+        } else {
+            Log.i("SETGROUPNAMEtitle", groupName);
             mTvGroupName.setText(groupName);
         }
     }
@@ -149,12 +145,10 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     public void setGroupIcon(String groupPhotoUrl) {
         mIvGroupIcon = (ImageView) findViewById(R.id.group_iv_user_image);
 
-        if (null==groupPhotoUrl) {
+        if (null == groupPhotoUrl) {
 
             mIvGroupIcon.setBackgroundResource(R.drawable.placeholder_icon);
-        }
-        else
-        {
+        } else {
             Picasso.with(this)
                     .load(groupPhotoUrl)
                     .into(mIvGroupIcon);
@@ -165,12 +159,16 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     @Override
     public void setMembersSize(int size) {
 
-        if (size==1){
-            mEtMembersCount.setText(String.valueOf(size)+" Member");
-        }
-        else
-        {
-            mEtMembersCount.setText(String.valueOf(size)+" Members");
+        mEtMembersCount = (TextView) findViewById(R.id.group_info_tv_edit_members);
+        mEtMembersCount.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow_group_info, 0);
+        View greyline = (View)findViewById(R.id.group_info_view);
+        greyline.setVisibility(View.VISIBLE);
+
+
+        if (size == 1) {
+            mEtMembersCount.setText(String.valueOf(size) + " Member");
+        } else {
+            mEtMembersCount.setText(String.valueOf(size) + " Members");
         }
     }
 
@@ -217,14 +215,14 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
         finish();
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(RESULT_OK == resultCode && CODE_ADMIN_MEMBERS == requestCode) {
+        if (RESULT_OK == resultCode && CODE_ADMIN_MEMBERS == requestCode) {
             mGroupInfoPresenter.onGetMemberResult();
-        }
-        else if(CODE_GROUP_INFO == requestCode) {
+        } else if (GROUPS_CODE == requestCode) {
             mGroupInfoPresenter.onCreateGroupInfo(mBundle);
         }
     }
@@ -243,7 +241,7 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     public void initToolBar() {
         mtoolbar = (Toolbar) findViewById(R.id.group_info_toolbar);
         mIBtnEditProfile = (ImageButton) mtoolbar.findViewById(R.id.edit_profile_btn);
-        mTvGroupName=(TextView)mtoolbar.findViewById(R.id.group_name);
+        mTvGroupName = (TextView) mtoolbar.findViewById(R.id.group_name);
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
@@ -251,7 +249,7 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goBackWithSuccessResult();
+                        navigateToAllGroups();
                     }
                 }
 
@@ -261,42 +259,6 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     private void navigateToAllGroups() {
         Intent intent = new Intent(this, AllGroupsActivity.class);
         startActivity(intent);
-    }
-
-
-    private void getUserInfoFromServer() {
-        if (ScGame.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getUserInfoRequest(ScGameDataHandler.getInstance().getUserId()).enqueue(
-                    new ScGameCallBack<UserInfoResponse>() {
-                        @Override
-                        public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
-                            if (response.isSuccessful()) {
-                                UserInfo updatedUserInfo = response.body().getUserInfo();
-
-                                if (null != updatedUserInfo) {
-
-                                    ScGameDataHandler.getInstance().setUserInfo(updatedUserInfo);
-                                    ScGameDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
-                                    ScGameDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
-
-
-                                    List<AllGroups> newAllGroups = updatedUserInfo.getAllGroups();
-                                    if (null != newAllGroups && newAllGroups.size() > 0) {
-                                        List<AllGroups> oldAllGroupsList = ScGameDataHandler.getInstance().getAllGroups();
-                                        oldAllGroupsList.clear();
-                                        for (AllGroups allGroups : newAllGroups) {
-                                            if (!oldAllGroupsList.contains(allGroups)) {
-                                                oldAllGroupsList.add(allGroups);
-                                            }
-                                        }
-                                        ScGameDataHandler.getInstance().setAllGroups(oldAllGroupsList);
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-            );
-        }
+        finish();
     }
 }

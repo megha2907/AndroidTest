@@ -108,6 +108,7 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
             mBundle.putString(Constants.BundleKeys.GROUP_NAME,allGroups.getGroupName());
             intent.putExtras(mBundle);
             ((Activity) mcon).startActivityForResult(intent,CODE_GROUP_INFO);
+            ((Activity) mcon).finish();
 
         }
     }

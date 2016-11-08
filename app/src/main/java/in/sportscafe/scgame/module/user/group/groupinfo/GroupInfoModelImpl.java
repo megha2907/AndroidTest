@@ -84,10 +84,7 @@ public class GroupInfoModelImpl implements GroupInfoModel {
                     @Override
                     public void onResponse(Call<GroupSummaryResponse> call, Response<GroupSummaryResponse> response) {
                         if(response.isSuccessful()) {
-                            Log.i("inside","responsesuccess");
-
                             ScGameDataHandler scGameDataHandler = ScGameDataHandler.getInstance();
-
                             GroupInfo groupInfo = response.body().getGroupInfo();
 
                             Map<Long, GroupInfo> grpInfoMap = scGameDataHandler.getGrpInfoMap();
@@ -95,17 +92,11 @@ public class GroupInfoModelImpl implements GroupInfoModel {
 
                             scGameDataHandler.setGrpInfoMap(grpInfoMap);
                             scGameDataHandler.setSelectedTournaments(groupInfo.getFollowedTournaments());
-                            Log.i("groupinfotournaments", String.valueOf(groupInfo.getFollowedTournaments().get(0).getCountsUnplayed()));
-
                             groupInfo.setMembers(groupInfo.getMembers());
 
                             mGroupInfo = groupInfo;
-
                             mGroupInfoModelListener.onGetGroupSummarySuccess(groupInfo);
-
-
                         } else {
-                            Log.i("inside","responsefailed");
                             mGroupInfoModelListener.onGetGroupSummaryFailed(response.message());
                         }
                     }

@@ -9,16 +9,8 @@
         android:layout_height="wrap_content"
         android:background="@color/colorMedium"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        android:elevation="4dp"
         android:id="@+id/admin_members_toolbar"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/toolbar_title"
-            android:textSize="@dimen/dp_20"
-            android:textColor="@color/white"/>
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout

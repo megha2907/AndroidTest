@@ -7,6 +7,7 @@ import java.util.Arrays;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.Constants.AnalyticsActions;
 import in.sportscafe.scgame.Constants.AnalyticsLabels;
+import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.preference.PreferenceManager;
@@ -38,10 +39,18 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     @Override
     public void onCreateEditProfile(Bundle bundle) {
+
         screen = bundle.getString("screen");
 
-        UserInfo userInfo = mEditProfileModel.getUserInfo();
+        if (screen.equals(Constants.BundleKeys.HOME_SCREEN))
+        {
+            mEditProfileView.changeViewforProfile();
+        }
+        else {
+            mEditProfileView.changeViewforLogin(ScGameDataHandler.getInstance().getUserInfo().getUserName());
+        }
 
+        UserInfo userInfo = mEditProfileModel.getUserInfo();
         mEditProfileView.setProfileImage(userInfo.getPhoto());
         if (userInfo.getUserNickName() != null) {
             mEditProfileView.setNickName(userInfo.getUserNickName());
@@ -79,10 +88,10 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
             mEditProfileView.navigateToHome();
         }
         else {
-//            mEditProfileView.navigateToSportsSelection();
+          mEditProfileView.navigateToSportsSelection();
 
             // For ISB
-            autoSaveIsb();
+           // autoSaveIsb();
         }
     }
 

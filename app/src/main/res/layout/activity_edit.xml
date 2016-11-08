@@ -10,8 +10,9 @@
         android:id="@+id/rl1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_200"
-        android:layout_alignParentTop="true"
         android:background="@color/colorBackground"
+        android:layout_below="@+id/edit_tv"
+        android:layout_marginTop="@dimen/dp_20"
         >
 
 
@@ -43,18 +44,20 @@
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/edit_btn_done"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/powerup_screen_btn_bg"
         android:onClick="onClick"
-        android:text="UPDATE"
+        android:text="@string/next"
         android:textAllCaps="false"
-        android:textSize="@dimen/dp_18"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/dp_60"
-        android:layout_marginRight="@dimen/dp_60"
-        android:layout_marginBottom="@dimen/dp_20"
-        app:typeface="lato_regular"
+        android:textSize="@dimen/dp_16"
         android:textColor="@color/white"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_10"
+        app:typeface="roboto_condensed"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dp_160"
        />
 
 
@@ -65,7 +68,7 @@
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
-        android:layout_below="@+id/edit_tv"
+        android:layout_below="@+id/rl1"
         app:theme="@style/TextLabel"
         app:errorTextAppearance="@style/error_appearance">
 
@@ -86,10 +89,8 @@
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/edit_tv"
-        android:text="Please update your profile information"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl1"
         android:layout_centerHorizontal="true"
         android:textColor="@color/textcolorlight"
         android:gravity="center"
@@ -97,6 +98,7 @@
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
         android:textSize="@dimen/dp_16"
+        app:typeface="lato_regular"
         />
 
     <!--<com.jeeva.android.widgets.customfont.CustomEditText

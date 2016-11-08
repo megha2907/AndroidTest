@@ -31,6 +31,8 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
 
     private static final int CODE_ALL_GROUP = 3;
 
+    private static final int GROUPS_CODE = 20;
+
     private EditText mEtGroupCode1;
     private EditText mEtGroupCode2;
     private EditText mEtGroupCode3;
@@ -175,14 +177,15 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
 
     @Override
     public void navigateToCreateGroup() {
-        startActivityForResult(new Intent(this, NewGroupActivity.class), CODE_NEW_GROUP);
+        startActivity(new Intent(this, NewGroupActivity.class));
+        finish();
     }
 
     @Override
     public void navigateToGroupInfo(Bundle bundle) {
         Intent intent = new Intent(this, GroupInfoActivity.class);
         intent.putExtras(bundle);
-        startActivityForResult(intent, CODE_GROUP_INFO);
+        startActivityForResult(intent, GROUPS_CODE);
     }
 
     @Override

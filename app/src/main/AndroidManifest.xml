@@ -81,6 +81,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.user.leaderboardsummary.LeaderBoardSummaryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".module.play.prediction.PredictionActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".module.play.prediction.AllDoneActivity"

@@ -16,6 +16,8 @@ public interface AllGroupsView extends View {
 
     void goBackWithSuccessResult();
 
+    void navigateToHomeActivity();
+
     void setAdapter(RecyclerView.Adapter adapter);
 
     void showGroupsEmpty();

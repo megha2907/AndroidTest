@@ -9,5 +9,7 @@ import android.support.v7.widget.RecyclerView;
 
 public interface AllGroupsModel {
 
+    void init();
+
     RecyclerView.Adapter getAllGroupsAdapter(Context context);
 }

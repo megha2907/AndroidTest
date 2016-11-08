@@ -13,16 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
-
-import java.util.List;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.Constants.AnalyticsActions;
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.ScGame;
-import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.common.CustomViewPager;
 import in.sportscafe.scgame.module.common.RoundImage;
@@ -32,11 +27,8 @@ import in.sportscafe.scgame.module.common.ViewPagerAdapter;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 import in.sportscafe.scgame.module.play.myresultstimeline.MyResultsTimelineActivity;
 import in.sportscafe.scgame.module.user.badges.BadgeActivity;
-import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
 import in.sportscafe.scgame.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
-import in.sportscafe.scgame.module.user.login.dto.UserInfo;
-import in.sportscafe.scgame.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.scgame.module.user.myprofile.myposition.challenges.ChallengesFragment;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummary;
@@ -44,10 +36,6 @@ import in.sportscafe.scgame.module.user.myprofile.myposition.groups.GroupsFragme
 import in.sportscafe.scgame.module.user.myprofile.myposition.sports.SportsFragment;
 import in.sportscafe.scgame.module.user.powerups.PowerUpActivity;
 import in.sportscafe.scgame.module.user.sportselection.SportSelectionActivity;
-import in.sportscafe.scgame.webservice.MyWebService;
-import in.sportscafe.scgame.webservice.ScGameCallBack;
-import retrofit2.Call;
-import retrofit2.Response;
 
 /**
  * Created by Jeeva on 14/6/16.
@@ -60,7 +48,9 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
 
     private static final int CODE_NEW_GROUP = 24;
 
-    private static final int ALL_GROUPS_CODE = 20;
+    private static final int GROUPS_CODE = 20;
+
+    private static final int GROUP_INFO_CODE = 10;
 
     private ProfilePresenter mProfilePresenter;
 
@@ -90,7 +80,6 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
         super.onActivityCreated(savedInstanceState);
 
         setClickListeners();
-        getUserInfoFromServer();
 
         this.mProfilePresenter = ProfilePresenterImpl.newInstance(this);
         this.mProfilePresenter.onCreateProfile();
@@ -98,7 +87,6 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
     }
 
     private void setClickListeners() {
-       // findViewById(R.id.profile_btn_back).setOnClickListener(this);
         findViewById(R.id.profile_btn_edit).setOnClickListener(this);
         findViewById(R.id.profile_btn_logout).setOnClickListener(this);
         findViewById(R.id.profile_groups_parent).setOnClickListener(this);
@@ -158,7 +146,6 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
         if (badgesCount==0){
             tvBadges.setText("0");
         }
-        Log.i("badgecount",badgesCount+"");
         tvBadges.setText(String.valueOf(badgesCount));
 
     }
@@ -224,9 +211,6 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
             case R.id.profile_ll_sports_followed_parent:
                 navigateToSportSelection();
                 break;
-//            case R.id.profile_btn_back:
-//                mHomeActionListener.onClickBack();
-//                break;
             case R.id.profile_btn_edit:
                 navigateToEditProfile();
                 break;
@@ -265,12 +249,11 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
         bundle.putString("screen",Constants.BundleKeys.HOME_SCREEN);
         intent.putExtras(bundle);
         startActivityForResult(intent, EDIT_PROFILE_CODE);
-        //startActivityForResult(new Intent(getContext(), EditProfileActivity.class), EDIT_PROFILE_CODE);
     }
 
     private void navigateToNewGroup() {
         Intent intent = new Intent(getContext(), AllGroupsActivity.class);
-        startActivityForResult(intent, ALL_GROUPS_CODE);
+        startActivityForResult(intent, GROUPS_CODE);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -279,52 +262,17 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
             if(SPORTS_SELECTION_CODE == requestCode) {
                 mProfilePresenter.onGetSportsSelectionResult();
             }
-            if(ALL_GROUPS_CODE == requestCode) {
+            if(GROUPS_CODE == requestCode) {
                 mProfilePresenter.onGetUpdatedNumberofGroups();
+                mProfilePresenter.onCreateProfile();
             }
             else if(EDIT_PROFILE_CODE == requestCode) {
                 mProfilePresenter.onEditProfileDone();
-            } else {
+            }
+            else {
                 mProfilePresenter.onGroupDetailsUpdated();
             }
         }
     }
 
-    private void getUserInfoFromServer() {
-        if (ScGame.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getUserInfoRequest(ScGameDataHandler.getInstance().getUserId()).enqueue(
-                    new ScGameCallBack<UserInfoResponse>() {
-                        @Override
-                        public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
-                            if (response.isSuccessful()) {
-                                UserInfo updatedUserInfo = response.body().getUserInfo();
-
-                                if (null != updatedUserInfo) {
-
-                                    ScGameDataHandler.getInstance().setUserInfo(updatedUserInfo);
-                                    ScGameDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
-                                    ScGameDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
-
-
-                                    List<AllGroups> newAllGroups = updatedUserInfo.getAllGroups();
-                                    if (null != newAllGroups && newAllGroups.size() > 0) {
-                                        List<AllGroups> oldAllGroupsList = ScGameDataHandler.getInstance().getAllGroups();
-                                        oldAllGroupsList.clear();
-                                        for (AllGroups allGroups : newAllGroups) {
-                                            if (!oldAllGroupsList.contains(allGroups)) {
-                                                oldAllGroupsList.add(allGroups);
-                                            }
-                                        }
-                                        ScGameDataHandler.getInstance().setAllGroups(oldAllGroupsList);
-                                        ScGameDataHandler.getInstance().setNumberofGroups(oldAllGroupsList.size());
-
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-            );
-        }
-    }
 }
