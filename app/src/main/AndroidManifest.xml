@@ -32,7 +32,6 @@
         <activity
             android:name=".module.test.TestActivity"
             android:screenOrientation="portrait">
-
         </activity>
 
         <activity
@@ -132,6 +131,7 @@
             android:name=".module.user.group.joingroup.JoinGroupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan">
+
             <intent-filter>
                 <data
                     android:host="outx.test-app.link"
@@ -141,6 +141,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
+
+            <meta-data
+                android:name="io.branch.sdk.auto_link_path"
+                android:value="groupInvite" />
+
         </activity>
 
         <activity
@@ -179,12 +184,6 @@
                 android:value=".module.home.HomeActivity" />
 
         </activity>
-        <!-- MOENGAGE RECEIVER FOR RECEIVING INSTALLATION INTENT -->
-        <receiver android:name="com.moe.pushlibrary.InstallReceiver">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
 
         <!-- MOENGAGE RECEIVER FOR RECEIVING APP UPDATE INTENT -->
         <receiver android:name="com.moe.pushlibrary.AppUpdateReceiver">
@@ -278,18 +277,6 @@
             android:enabled="true"
             android:exported="false" />
 
-        <!--
-             Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
-             installation campaign reporting
-        -->
-        <receiver
-            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
 
         <meta-data
@@ -314,14 +301,14 @@
         <meta-data
             android:name="io.branch.sdk.BranchKey.test"
             android:value="key_test_pfyhy6Sp0ViSymPQiXMmEonmuFpcM4Sn" />
+        <!-- End Branch -->
 
         <!-- To receive the install updates -->
-        <receiver android:name="io.branch.referral.InstallListener" android:exported="true">
+        <receiver android:name=".module.common.CustomInstallListener" android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-        <!-- End Branch -->
     </application>
 
 </manifest>

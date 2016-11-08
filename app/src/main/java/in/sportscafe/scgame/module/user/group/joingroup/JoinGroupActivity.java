@@ -20,7 +20,6 @@ import org.json.JSONObject;
 import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
-import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
 import in.sportscafe.scgame.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.scgame.module.user.group.newgroup.NewGroupActivity;
