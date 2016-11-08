@@ -41,6 +41,7 @@ public interface Constants {
         String NUMBER_OF_BADGES = "numberofbadges";
         String NUMBER_OF_GROUPS = "numberofgroups";
         String ALL_BADGES = "allbadges";
+        String INSTALL_GROUP_CODE = "installGroupCode";
     }
 
     interface Alerts {

@@ -79,12 +79,15 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode());
 
-        buo.generateShortUrl(mGroupInfoView.getContext(), new LinkProperties(),
+        LinkProperties linkProperties = new LinkProperties()
+                .setFeature("invite");
+
+        buo.generateShortUrl(mGroupInfoView.getContext(), linkProperties,
                 new Branch.BranchLinkCreateListener() {
             @Override
             public void onLinkCreate(String url, BranchError error) {
                 if(null == error) {
-                    AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url);
+                    AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url + "?$deeplink_path=groupInvite");
                 } else {
                     ExceptionTracker.track(error.getMessage());
                 }

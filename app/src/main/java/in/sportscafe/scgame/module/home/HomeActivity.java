@@ -1,28 +1,24 @@
 package in.sportscafe.scgame.module.home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.jeeva.android.widgets.HmImageView;
 
 import java.util.List;
 
+import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.TournamentFeed.TournamentFeedFragment;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.notifications.NotificationInboxFragment;
 import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
+import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.ProfileFragment;
@@ -37,19 +33,7 @@ import retrofit2.Response;
  */
 public class HomeActivity extends ScGameActivity implements OnHomeActionListener {
 
-    private static final float ENABLE_TAB_ALPHA = 0.3f;
-
-    private static final float DISABLE_TAB_ALPHA = 1f;
-
     private View mSelectedTab;
-
-    private boolean feedShowing = false;
-
-    private Toolbar mtoolbar;
-
-    private TextView mTitle;
-
-    private ImageView mLogo;
 
     private ImageButton mHomeButton;
 
@@ -62,61 +46,77 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mHomeButton=(ImageButton)findViewById(R.id.home_ibtn_feed);
-        mProfileButton=(ImageButton)findViewById(R.id.home_ibtn_profile);
-        mNotificationButton=(ImageButton)findViewById(R.id.home_ibtn_notification);
+        mHomeButton = (ImageButton) findViewById(R.id.home_ibtn_feed);
+        mProfileButton = (ImageButton) findViewById(R.id.home_ibtn_profile);
+        mNotificationButton = (ImageButton) findViewById(R.id.home_ibtn_notification);
 
-       // initToolBar();
         showFeed();
         getUserInfoFromServer();
+
+        checkGroupCode();
+    }
+
+    private void checkGroupCode() {
+        String groupCode = ScGameDataHandler.getInstance().getInstallGroupCode();
+        if(null != groupCode) {
+            ScGameDataHandler.getInstance().setInstallGroupCode(null);
+
+            showJoinGroupAlert(groupCode);
+        }
+    }
+
+    private void showJoinGroupAlert(final String groupCode) {
+        new AlertDialog.Builder(this)
+                .setTitle("Join Group")
+                .setMessage("You got one group invitation, do you want to join in that group?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        navigateToJoinGroup(groupCode);
+                    }
+                })
+                .setNegativeButton("No", null)
+                .setCancelable(false)
+                .create().show();
+    }
+
+    private void navigateToJoinGroup(String groupCode) {
+        Intent intent = new Intent(this, JoinGroupActivity.class);
+        intent.putExtra(BundleKeys.GROUP_CODE, groupCode);
+        startActivity(intent);
     }
 
     public void onClickTab(View view) {
-        feedShowing = false;
+        switch (view.getId()) {
+            case R.id.home_ibtn_notification:
+                mHomeButton.setSelected(false);
+                mProfileButton.setSelected(false);
+                mNotificationButton.setSelected(true);
 
-          switch (view.getId()) {
-              case R.id.home_ibtn_notification:
+                loadFragment(new NotificationInboxFragment());
+                break;
+            case R.id.home_ibtn_feed:
+                mNotificationButton.setSelected(false);
+                mProfileButton.setSelected(false);
+                mHomeButton.setSelected(true);
 
-                  //mtoolbar.setVisibility(View.VISIBLE);
-                  feedShowing = true;
-//                  mTitle.setVisibility(View.VISIBLE);
-//                  mLogo.setVisibility(View.GONE);
-//                  mTitle.setText("Notifications");
+                loadFragment(new TournamentFeedFragment());
+                break;
+            case R.id.home_ibtn_profile:
+                mHomeButton.setSelected(false);
+                mNotificationButton.setSelected(false);
+                mProfileButton.setSelected(true);
 
-                  mHomeButton.setSelected(false);
-                  mProfileButton.setSelected(false);
-                  mNotificationButton.setSelected(true);
-
-                  loadFragment(new NotificationInboxFragment());
-                  break;
-              case R.id.home_ibtn_feed:
-//                  mtoolbar.setVisibility(View.VISIBLE);
-//                  mLogo.setVisibility(View.VISIBLE);
-//                  mTitle.setVisibility(View.GONE);
-
-                  mNotificationButton.setSelected(false);
-                  mProfileButton.setSelected(false);
-                  mHomeButton.setSelected(true);
-
-                  loadFragment(new TournamentFeedFragment());
-                  break;
-              case R.id.home_ibtn_profile:
-//                  mtoolbar.setVisibility(View.GONE);
-
-                  mHomeButton.setSelected(false);
-                  mNotificationButton.setSelected(false);
-                  mProfileButton.setSelected(true);
-
-                  if (null == ScGameDataHandler.getInstance().getUserId()) {
-                      navigateToLogIn();
-                      return;
-                  }
-                  loadFragment(new ProfileFragment());
-                  break;
+                if (null == ScGameDataHandler.getInstance().getUserId()) {
+                    navigateToLogIn();
+                    return;
+                }
+                loadFragment(new ProfileFragment());
+                break;
 
         }
 
-        if(null != mSelectedTab) {
+        if (null != mSelectedTab) {
             setTabEnabled(mSelectedTab, true);
 
         }
@@ -126,7 +126,7 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
 
     private void setTabEnabled(View tabView, boolean enabled) {
         tabView.setEnabled(enabled);
-        if(enabled) {
+        if (enabled) {
         } else {
         }
     }
@@ -145,15 +145,6 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
         showFeed();
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if(feedShowing) {
-//            super.onBackPressed();
-//        } else {
-//            showFeed();
-//        }
-//    }
-
     private void showFeed() {
         onClickTab(findViewById(R.id.home_ibtn_feed));
     }
@@ -165,15 +156,15 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
 
     @Override
     public void getUserInfoFromServer() {
-        if(ScGame.getInstance().hasNetworkConnection()) {
+        if (ScGame.getInstance().hasNetworkConnection()) {
             MyWebService.getInstance().getUserInfoRequest(ScGameDataHandler.getInstance().getUserId()).enqueue(
                     new ScGameCallBack<UserInfoResponse>() {
                         @Override
                         public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
-                            if(response.isSuccessful()) {
+                            if (response.isSuccessful()) {
                                 UserInfo updatedUserInfo = response.body().getUserInfo();
 
-                                if(null != updatedUserInfo) {
+                                if (null != updatedUserInfo) {
 
                                     ScGameDataHandler.getInstance().setUserInfo(updatedUserInfo);
                                     ScGameDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
@@ -181,7 +172,7 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
 
 
                                     List<AllGroups> newAllGroups = updatedUserInfo.getAllGroups();
-                                    if(null != newAllGroups && newAllGroups.size() > 0) {
+                                    if (null != newAllGroups && newAllGroups.size() > 0) {
                                         List<AllGroups> oldAllGroupsList = ScGameDataHandler.getInstance().getAllGroups();
                                         oldAllGroupsList.clear();
                                         for (AllGroups allGroups : newAllGroups) {
@@ -196,19 +187,8 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
                                 }
                             }
                         }
-                        }
+                    }
             );
         }
     }
-
-//    public void initToolBar() {
-//        Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Regular.ttf");
-//        mtoolbar = (Toolbar) findViewById(R.id.home_toolbar);
-//        mTitle = (TextView) mtoolbar.findViewById(R.id.toolbar_title);
-//        mLogo = (ImageView) mtoolbar.findViewById(R.id.toolbar_logo);
-//        mTitle.setTypeface(tftitle);
-//        setSupportActionBar(mtoolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-//    }
-
 }
