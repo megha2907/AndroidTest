@@ -37,6 +37,15 @@
         <activity
             android:name=".module.home.HomeActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <data
+                    android:host="outx.test-app.link"
+                    android:scheme="https" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -135,16 +144,6 @@
             android:name=".module.user.group.joingroup.JoinGroupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan">
-
-            <intent-filter>
-                <data
-                    android:host="outx.test-app.link"
-                    android:scheme="https" />
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
 
             <meta-data
                 android:name="io.branch.sdk.auto_link_path"

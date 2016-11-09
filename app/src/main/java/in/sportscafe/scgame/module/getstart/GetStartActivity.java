@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.jeeva.android.Log;
-
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
@@ -31,15 +29,13 @@ public class GetStartActivity extends ScGameActivity {
             navigateToHome();
             return;
         } else if (ScGameDataHandler.getInstance().isLoggedInUser()) {
-            if (null==ScGameDataHandler.getInstance().getUserInfo().getUserNickName()) {
+            if (null == ScGameDataHandler.getInstance().getUserInfo().getUserNickName()) {
                 navigateToEditProfile();
                 return;
-            }
-             else {
+            } else {
                 navigateToSportSelection();
                 return;
-                 }
-
+            }
         }
 
         getUpdatedSports();
