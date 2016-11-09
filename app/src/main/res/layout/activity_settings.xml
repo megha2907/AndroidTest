@@ -44,16 +44,15 @@
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/settings_btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/blue_button_width"
+        android:layout_height="@dimen/blue_button_height"
         android:background="@drawable/powerup_screen_btn_bg"
         android:onClick="onClick"
         android:text="LOGOUT"
         android:textAllCaps="false"
-        android:textSize="@dimen/dp_18"
+        android:textSize="@dimen/blue_button_text"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/dp_100"
-        android:layout_marginRight="@dimen/dp_100"
         android:layout_marginBottom="@dimen/dp_50"
         android:textColor="@color/white"
         />
