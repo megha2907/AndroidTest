@@ -12,7 +12,7 @@ public class AllGroups implements Serializable {
 
 
     @JsonProperty("group_id")
-    private Integer groupId;
+    private Long groupId;
 
     @JsonProperty("group_name")
     private String groupName;
@@ -24,12 +24,12 @@ public class AllGroups implements Serializable {
     private Integer countGroupMembers;
 
     @JsonProperty("group_id")
-    public Integer getGroupId() {
+    public Long getGroupId() {
         return groupId;
     }
 
     @JsonProperty("group_id")
-    public void setGroupId(Integer groupId) {
+    public void setGroupId(Long groupId) {
         this.groupId = groupId;
     }
 

@@ -303,8 +303,20 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
                 });
     }
 
-    public Map<Integer, AllGroups> getAllGroupsMap() {
-        Map<Integer, AllGroups> allGroupsMap = new HashMap<>();
+
+    public void setAllGroupsMap(Map<Long, AllGroups> allGroupsMap) {
+
+        List<AllGroups> allGroupsListObject = new ArrayList<>();
+        Set<Long> keys = allGroupsMap.keySet();
+        for (Long key : keys) {
+            allGroupsListObject.add(allGroupsMap.get(key));
+        }
+        setAllGroups(allGroupsListObject);
+    }
+
+
+    public Map<Long, AllGroups> getAllGroupsMap() {
+        Map<Long, AllGroups> allGroupsMap = new HashMap<>();
 
         for (AllGroups allGroups : getAllGroups()) {
             allGroupsMap.put(allGroups.getGroupId(), allGroups);

@@ -17,7 +17,6 @@ import static in.sportscafe.scgame.Constants.BundleKeys;
 public class AdminMembersActivity extends ScGameActivity {
 
     private Toolbar mtoolbar;
-    private TextView mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +32,9 @@ public class AdminMembersActivity extends ScGameActivity {
     }
 
     public void initToolBar() {
-        Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Regular.ttf");
         mtoolbar = (Toolbar) findViewById(R.id.admin_members_toolbar);
-        mTitle = (TextView) mtoolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("Members");
-        mTitle.setTypeface(tftitle);
+        mtoolbar.setTitle("Members");
         setSupportActionBar(mtoolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
         mtoolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {

@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
+import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.scgame.module.user.sportselection.SportSelectionActivity;
 import in.sportscafe.scgame.module.user.sportselection.SportsModelImpl;
 
@@ -24,13 +27,19 @@ public class GetStartActivity extends ScGameActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getstarted);
 
-
         if (ScGameDataHandler.getInstance().getFavoriteSportsIdList().size() > 0) {
             navigateToHome();
             return;
         } else if (ScGameDataHandler.getInstance().isLoggedInUser()) {
-            navigateToSportSelection();
-            return;
+            if (null==ScGameDataHandler.getInstance().getUserInfo().getUserNickName()) {
+                navigateToEditProfile();
+                return;
+            }
+             else {
+                navigateToSportSelection();
+                return;
+                 }
+
         }
 
         getUpdatedSports();
@@ -55,6 +64,15 @@ public class GetStartActivity extends ScGameActivity {
         startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
+
+    private void navigateToEditProfile() {
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
 
     private void navigateToSportSelection() {
         Intent intent = new Intent(this, SportSelectionActivity.class);

@@ -11,11 +11,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.jeeva.android.Log;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -28,6 +30,7 @@ import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.permission.PermissionsActivity;
 import in.sportscafe.scgame.module.permission.PermissionsChecker;
+import in.sportscafe.scgame.module.user.group.groupinfo.GroupInfoActivity;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -86,10 +89,10 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
 
     @Override
     public void setSuccessBack(Bundle bundle) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(this, GroupInfoActivity.class);
         intent.putExtras(bundle);
-        setResult(RESULT_OK, intent);
-        onBackPressed();
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -172,15 +175,27 @@ public class NewGroupActivity extends ScGameActivity implements NewGroupView,
                         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                         imagePath = cursor.getString(columnIndex);
 
-                        Picasso.with(getApplicationContext()).load(new File(imagePath))
-                                .into(mIvGroupImage);
-                        cursor.close();
+                        File file = new File(imagePath);
+                        long length = file.length() / 1024;
 
-                        if (!TextUtils.isEmpty(imagePath)) {
-                            uploadImage();
+                        if(length < 1024){
+                            if (!TextUtils.isEmpty(imagePath)) {
+                                uploadImage();
+                            }
+
+                            Picasso.with(getApplicationContext()).load(new File(imagePath))
+                                    .into(mIvGroupImage);
+                            cursor.close();
+
+                            mIvGroupImage.setVisibility(View.VISIBLE);
+
                         }
-
-                        mIvGroupImage.setVisibility(View.VISIBLE);
+                        else
+                        {
+                            Toast toast =Toast.makeText(getContext(), "Image size is too large, please select an image with size <1MB", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
 
                         ScGameAnalytics.getInstance().trackNewGroup(AnalyticsActions.PHOTO, AnalyticsLabels.GALLERY);
                     } else {

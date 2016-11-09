@@ -25,6 +25,12 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
     }
 
     @Override
+    public void onCreateAllGroups() {
+        mAllGroupsView.showProgressbar();
+        mAllGroupsModel.init();
+    }
+
+    @Override
     public void onCreateAllGroupsAdapter() {
         mAllGroupsView.setAdapter(mAllGroupsModel
                 .getAllGroupsAdapter(mAllGroupsView.getContext()));
@@ -51,4 +57,16 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
     public void onAllGroupsEmpty() {
             mAllGroupsView.showGroupsEmpty();
         }
+
+    @Override
+    public void ongetAllGroupsSuccess() {
+        mAllGroupsView.dismissProgressbar();
+        onCreateAllGroupsAdapter();
+    }
+
+    @Override
+    public void ongetAllGroupsFailed(String message) {
+        mAllGroupsView.dismissProgressbar();
+        mAllGroupsView.showMessage(message);
+    }
 }

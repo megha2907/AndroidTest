@@ -7,6 +7,8 @@ package in.sportscafe.scgame.module.user.group.allgroups;
 public interface AllGroupsPresenter {
 
 
+    void onCreateAllGroups();
+
     void onCreateAllGroupsAdapter();
 
     void onClickNext();

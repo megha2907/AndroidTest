@@ -44,18 +44,19 @@ public class AllGroupsActivity extends ScGameActivity implements AllGroupsView ,
 
     private static final int CODE_GROUP_INFO = 11;
 
+    private static final int GROUPS_CODE = 20;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_groups);
 
-        getUserInfoFromServer();
         this.mRvAllGroups = (RecyclerView) findViewById(R.id.all_groups_rcv);
         this.mRvAllGroups.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
         this.mRvAllGroups.setHasFixedSize(true);
         this.mAllGroupsPresenter = AllGroupsPresenterImpl.newInstance(this);
-        this.mAllGroupsPresenter.onCreateAllGroupsAdapter();
+        this.mAllGroupsPresenter.onCreateAllGroups();
         initToolBar();
 
     }
@@ -86,6 +87,15 @@ public class AllGroupsActivity extends ScGameActivity implements AllGroupsView ,
     }
 
     @Override
+    public void navigateToHomeActivity() {
+        Intent homeintent = new Intent(this, HomeActivity.class);
+        homeintent.putExtra("group", "openprofile");
+        startActivity(homeintent);
+        finish();
+    }
+
+
+    @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
         this.mRvAllGroups.setAdapter(adapter);
     }
@@ -105,8 +115,7 @@ public class AllGroupsActivity extends ScGameActivity implements AllGroupsView ,
         super.onActivityResult(requestCode, resultCode, data);
         if(Activity.RESULT_OK == resultCode) {
             if(CODE_GROUP_INFO == requestCode) {
-                getUserInfoFromServer();
-                mAllGroupsPresenter.onCreateAllGroupsAdapter();
+                mAllGroupsPresenter.onCreateAllGroups();
             }
         }
     }
@@ -115,55 +124,16 @@ public class AllGroupsActivity extends ScGameActivity implements AllGroupsView ,
     public void initToolBar() {
         mtoolbar = (Toolbar) findViewById(R.id.all_groups_toolbar);
         mtoolbar.setTitle("All Groups");
-
         setSupportActionBar(mtoolbar);
-
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
         mtoolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goBackWithSuccessResult();
+                        navigateToHomeActivity();
                     }
                 }
 
         );
-    }
-
-    private void getUserInfoFromServer() {
-        if (ScGame.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getUserInfoRequest(ScGameDataHandler.getInstance().getUserId()).enqueue(
-                    new ScGameCallBack<UserInfoResponse>() {
-                        @Override
-                        public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
-                            if (response.isSuccessful()) {
-                                UserInfo updatedUserInfo = response.body().getUserInfo();
-
-                                if (null != updatedUserInfo) {
-
-                                    List<AllGroups> newAllGroups = updatedUserInfo.getAllGroups();
-                                    if (null != newAllGroups && newAllGroups.size() > 0) {
-                                        List<AllGroups> oldAllGroupsList = ScGameDataHandler.getInstance().getAllGroups();
-                                        oldAllGroupsList.clear();
-                                        for (AllGroups allGroups : newAllGroups) {
-                                            if (!oldAllGroupsList.contains(allGroups)) {
-                                                oldAllGroupsList.add(allGroups);
-                                            }
-                                        }
-                                        ScGameDataHandler.getInstance().setAllGroups(oldAllGroupsList);
-                                        ScGameDataHandler.getInstance().setNumberofGroups(oldAllGroupsList.size());
-
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-            );
-        }
-    }
-
-    private void navigateToHome() {
-        startActivity(new Intent(this, HomeActivity.class));
     }
 }

@@ -44,14 +44,12 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
 
     @Override
     public void onGetUpdatedNumberofGroups() {
-
-        Log.i("onGetUpdatedNumberofGroups","onGetUpdatedNumberofGroups");
         mProfileView.setGroupsCount(ScGameDataHandler.getInstance().getNumberofGroups());
     }
 
     @Override
     public void onGetGroupCount() {
-        if (null == ScGameDataHandler.getInstance().getAllGroups() || ScGameDataHandler.getInstance().getAllGroups().isEmpty()) {
+        if (ScGameDataHandler.getInstance().getNumberofGroups()==0) {
             mProfileView.setGroupsCount(0);
         } else {
             mProfileView.setGroupsCount(ScGameDataHandler.getInstance().getNumberofGroups());
@@ -92,7 +90,6 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     @Override
     public void onGetProfileSuccess(LbSummary lbSummary) {
         mProfileView.dismissProgressbar();
-
         mProfileView.setPoints(lbSummary.getTotalPoints());
         mProfileView.initMyPosition(lbSummary);
     }

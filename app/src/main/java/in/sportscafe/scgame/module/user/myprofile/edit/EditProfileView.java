@@ -26,4 +26,8 @@ public interface EditProfileView extends View {
     void setNicknameEmpty();
 
     void setNicknameConflict();
+
+    void changeViewforProfile();
+
+    void changeViewforLogin(String UserName);
 }

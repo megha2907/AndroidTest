@@ -78,10 +78,10 @@ public class GroupsFragment extends ScGameFragment implements GroupsLayout.OnRan
     }
 
     public List<BaseSummary> updateRank(List<GroupSummary> groupSummaryList) {
-        if(groupSummaryList.isEmpty()){
+
+        if(groupSummaryList.isEmpty()) {
             showGroupSummaryEmpty();
         }
-
 
         if (null == groupSummaryList) {
             groupSummaryList = new ArrayList<>();
@@ -106,6 +106,10 @@ public class GroupsFragment extends ScGameFragment implements GroupsLayout.OnRan
                 tourSummaryList.add(newTourSummary);
             }
             newTourSummary=null;
+        }
+
+        if(tourSummaryList.isEmpty()){
+            showGroupSummaryEmpty();
         }
 
         return tourSummaryList;

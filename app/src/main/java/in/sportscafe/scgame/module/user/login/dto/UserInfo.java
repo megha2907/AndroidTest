@@ -54,8 +54,8 @@ public class UserInfo {
 //    @JsonProperty("user_info")
 //    private String userPowerupInfo;
 
-    @JsonProperty("user_groups")
-    private  List<AllGroups> allGroups = new ArrayList<>();
+    @JsonProperty("count_groups")
+    private Integer numberofgroups;
 
     @JsonProperty("user_info")
     private PowerUpInfo powerUpInfo;
@@ -221,20 +221,19 @@ public class UserInfo {
     }
 
 
+    @JsonProperty("count_groups")
+    public Integer getNumberofgroups() {
+        return numberofgroups;
+    }
+
+    @JsonProperty("count_groups")
+    public void setNumberofgroups(Integer numberofgroups) {
+        this.numberofgroups = numberofgroups;
+    }
+
     @JsonProperty("sports_preferences")
     public void setUserSports(List<Integer> userSports) {
         this.userSports = userSports;
-    }
-
-
-    @JsonProperty("user_groups")
-    public List<AllGroups> getAllGroups() {
-        return allGroups;
-    }
-
-    @JsonProperty("user_groups")
-    public void setAllGroups(List<AllGroups> allGroups) {
-        this.allGroups = allGroups;
     }
 
 

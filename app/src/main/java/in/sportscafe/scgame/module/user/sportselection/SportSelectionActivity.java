@@ -79,7 +79,7 @@ public class SportSelectionActivity extends ScGameActivity implements SportSelec
 
     @Override
     public void showToast() {
-        Toast toast =Toast.makeText(getContext(), Constants.Alerts.EMPTY_SPORT_SELECTION, Toast.LENGTH_SHORT);
+        Toast toast =Toast.makeText(getContext(), Constants.Alerts.EMPTY_TOURNAMENT_SELECTION, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }

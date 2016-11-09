@@ -144,7 +144,6 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     @Override
     public void onGetGroupSummarySuccess(GroupInfo groupInfo) {
-        Log.i("inside","onGetGroupSummarySuccess");
         mGroupInfoView.dismissProgressbar();
         mGroupInfoModel.updateGroupMembers(groupInfo);
         onUpdateGroupInfo(groupInfo);
@@ -153,7 +152,8 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     @Override
     public void onGetGroupSummaryFailed(String message) {
-
+        mGroupInfoView.dismissProgressbar();
+        mGroupInfoView.showMessage(message);
     }
 
     @Override

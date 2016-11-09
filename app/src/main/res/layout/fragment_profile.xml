@@ -112,7 +112,7 @@
                     android:layout_marginTop="@dimen/dp_15"
                     android:layout_toRightOf="@+id/profile_iv_image"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
