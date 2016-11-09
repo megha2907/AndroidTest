@@ -71,16 +71,17 @@
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/play_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/blue_button_width"
+                android:layout_height="@dimen/blue_button_height"
                 android:background="@drawable/powerup_screen_btn_bg"
                 android:text="PLAY NOW"
                 android:textAllCaps="false"
-                android:textSize="@dimen/dp_18"
+                android:textSize="@dimen/blue_button_text"
                 android:layout_below="@+id/view"
                 android:layout_margin="@dimen/dp_50"
                 android:textColor="@color/white"
                 app:typeface="lato_regular"
+                android:layout_centerHorizontal="true"
                 />
 
 
