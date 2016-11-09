@@ -68,7 +68,7 @@ public class ScGame extends Application {
         initCustomFonts();
 
         // Initializing the SportsCafe analytics
-        ScGameAnalytics.getInstance().init(getApplicationContext(), mDebuggable);
+        ScGameAnalytics.getInstance().init(getApplicationContext(), mDebuggable).autoTrack(this);
 
         // Here we are helping moEngage to track install/update count
         doInstallOrUpdateChanges();
@@ -99,7 +99,7 @@ public class ScGame extends Application {
 
         if(!debuggable) {
             // Initializing the Crashlytics using fabric
-            //Fabric.with(this, new Kit[] {new Crashlytics()});
+            Fabric.with(this, new Kit[] {new Crashlytics()});
         }
     }
 

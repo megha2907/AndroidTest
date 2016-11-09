@@ -1,6 +1,7 @@
 package in.sportscafe.scgame.module.analytics;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.moe.pushlibrary.PayloadBuilder;
 
 import java.util.Map;
 
+import in.sportscafe.scgame.BuildConfig;
 import in.sportscafe.scgame.Constants.AnalyticsCategory;
 import in.sportscafe.scgame.R;
 
@@ -41,7 +43,7 @@ public class ScGameAnalytics {
 
     private MoEHelper mMoEHelper;
 
-    public void init(Context context, boolean optOut) {
+    public ScGameAnalytics init(Context context, boolean optOut) {
         GoogleAnalytics ga = GoogleAnalytics.getInstance(context);
         ga.setAppOptOut(optOut);
 
@@ -52,7 +54,12 @@ public class ScGameAnalytics {
 
             // Initializing the MoEngage
             this.mMoEHelper = MoEHelper.getInstance(context);
+
+            // Tracking flavor
+            trackFlavor();
         }
+
+        return this;
     }
 
     /**
@@ -114,37 +121,37 @@ public class ScGameAnalytics {
 
     public void onStart(Activity activity) {
         if(null != mMoEHelper) {
-            mMoEHelper.onStart(activity);
+//            mMoEHelper.onStart(activity);
         }
     }
 
     public void onStop(Activity activity) {
         if(null != mMoEHelper) {
-            mMoEHelper.onStart(activity);
+//            mMoEHelper.onStart(activity);
         }
     }
 
     public void onResume(Activity activity) {
         if(null != mMoEHelper) {
-            mMoEHelper.onResume(activity);
+//            mMoEHelper.onResume(activity);
         }
     }
 
     public void onSaveInstanceState(Bundle outState) {
         if(null != mMoEHelper) {
-            mMoEHelper.onSaveInstanceState(outState);
+//            mMoEHelper.onSaveInstanceState(outState);
         }
     }
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         if(null != mMoEHelper) {
-            mMoEHelper.onRestoreInstanceState(savedInstanceState);
+//            mMoEHelper.onRestoreInstanceState(savedInstanceState);
         }
     }
 
     public void onNewIntent(Activity activity, Intent intent) {
         if(null != mMoEHelper) {
-            mMoEHelper.onNewIntent(activity, intent);
+//            mMoEHelper.onNewIntent(activity, intent);
         }
     }
 
@@ -214,5 +221,17 @@ public class ScGameAnalytics {
 
         mTracker.send(gaEventBuilder.build());
         mMoEHelper.trackEvent(category, values);
+    }
+
+    private void trackFlavor() {
+        if(!BuildConfig.FLAVOR.equalsIgnoreCase("production")) {
+            track(AnalyticsCategory.FLAVOR, null, BuildConfig.FLAVOR, null);
+        }
+    }
+
+    public void autoTrack(Application application) {
+        if(null != mMoEHelper) {
+            mMoEHelper.autoIntegrate(application);
+        }
     }
 }
