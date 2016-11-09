@@ -29,7 +29,7 @@ public class ChallengesTourSummary extends BaseSummary implements Serializable {
     @JsonProperty("challenge_name")
     private String challengeName;
 
-    @JsonIgnore
+    @JsonProperty("challenge_img_url")
     private String challengePhoto;
 
     @JsonProperty("challenge_id")
@@ -52,12 +52,12 @@ public class ChallengesTourSummary extends BaseSummary implements Serializable {
         this.challengeName = challengeName;
     }
 
-    @JsonIgnore
+    @JsonProperty("challenge_img_url")
     public String getChallengePhoto() {
         return challengePhoto;
     }
 
-    @JsonIgnore
+    @JsonProperty("challenge_img_url")
     public void setChallengePhoto(String challengePhoto) {
         this.challengePhoto = challengePhoto;
     }

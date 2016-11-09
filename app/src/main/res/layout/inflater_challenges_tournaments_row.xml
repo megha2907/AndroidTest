@@ -15,12 +15,11 @@
         android:padding="@dimen/dp_15"
         >
 
-        <Button
-            android:id="@+id/challenges_tournaments_row_cup_icon"
-            android:layout_width="@dimen/dp_27"
-            android:layout_height="@dimen/dp_27"
-            android:background="@drawable/tournament_cup_icon"
-            android:textColor="@color/white"/>
+        <com.jeeva.android.widgets.HmImageView
+            android:id="@+id/challenges_tournaments_row_iv_photo"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_38"
+            android:src="@drawable/placeholder_icon" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/challenges_tournaments_row_tv_name"

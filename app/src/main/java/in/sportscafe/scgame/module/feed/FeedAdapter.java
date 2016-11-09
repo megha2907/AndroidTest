@@ -222,6 +222,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mTvResultWait.setVisibility(View.VISIBLE);
             holder.mViewResult.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
+            holder.mTvResultWait.setTag(match.getId());
 
         }
         else if ((null == match.getResult() || match.getResult().isEmpty()))
@@ -365,8 +366,10 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);
+
             mBtnPlayMatch.setOnClickListener(this);
             mBtnMatchPoints.setOnClickListener(this);
+            mTvResultWait.setOnClickListener(this);
         }
 
         @Override
@@ -395,6 +398,18 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     mintent.putExtras(mBundle2);
                     mcon.startActivity(mintent);
                     break;
+
+                case R.id.schedule_row_tv_match_result_wait:
+
+                    Integer matchId2 = (Integer) view.getTag();
+                    Bundle mBundle3 = new Bundle();
+                    mBundle3.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId2));
+
+                    Intent mintent2 =  new Intent(mcon, MyResultsActivity.class);
+                    mintent2.putExtras(mBundle3);
+                    mcon.startActivity(mintent2);
+                    break;
+
             }
 
 

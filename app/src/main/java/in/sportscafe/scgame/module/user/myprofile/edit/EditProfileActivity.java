@@ -8,13 +8,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.squareup.picasso.Picasso;
 
@@ -70,9 +73,34 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
         mEtNickName = (EditText) findViewById(R.id.edit_et_nickname);
         mIvProfileImage = (ImageView) findViewById(R.id.edit_iv_user_image);
         mBtnUpdateDone = (CustomButton) findViewById(R.id.edit_btn_done);
+        initListener();
 
         this.mEditProfilePresenter = EditProfilePresenterImpl.newInstance(this);
         this.mEditProfilePresenter.onCreateEditProfile(getIntent().getExtras());
+    }
+
+
+    private void initListener() {
+        mEtNickName.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //size as per your requirement
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable arg0) {
+                String s=arg0.toString();
+                if(!s.equals(s.toLowerCase()))
+                {
+                    s=s.toLowerCase();
+                    mEtNickName.setText(s);
+                    mEtNickName.setSelection(mEtNickName.getText().length());
+                }
+            }
+        });
     }
 
     @Override
@@ -110,6 +138,7 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
     @Override
     public void setSuccessResult() {
         setResult(RESULT_OK);
+        finish();
     }
 
     @Override
@@ -147,6 +176,12 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
     public void changeViewforLogin(String username) {
         mTvUpdateProfile.setText("Welcome "+username+"\n"+"Let’s update your profile.");
         mBtnUpdateDone.setText("NEXT");
+    }
+
+    @Override
+    public void setNicknameNotValid() {
+        mTilNickName.setErrorEnabled(true);
+        mTilNickName.setError(Constants.Alerts.NICKNAME_NOT_VALID);
     }
 
     public void showImagePopup(View view) {

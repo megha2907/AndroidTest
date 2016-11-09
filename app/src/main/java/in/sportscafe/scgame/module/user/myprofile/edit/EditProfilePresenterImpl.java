@@ -81,11 +81,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     @Override
     public void onEditSuccess() {
         mEditProfileView.dismissProgressbar();
-        mEditProfileView.setSuccessResult();
 
         if (screen.equals(Constants.BundleKeys.HOME_SCREEN))
         {
-            mEditProfileView.navigateToHome();
+            //mEditProfileView.navigateToHome();
+            mEditProfileView.setSuccessResult();
         }
         else {
           mEditProfileView.navigateToSportsSelection();
@@ -152,5 +152,10 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     public void onUserNameConflict() {
         mEditProfileView.dismissProgressbar();
         mEditProfileView.setNicknameConflict();
+    }
+
+    @Override
+    public void onNickNameValidation() {
+        mEditProfileView.setNicknameNotValid();
     }
 }

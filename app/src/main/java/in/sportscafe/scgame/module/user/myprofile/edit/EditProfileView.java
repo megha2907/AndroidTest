@@ -30,4 +30,6 @@ public interface EditProfileView extends View {
     void changeViewforProfile();
 
     void changeViewforLogin(String UserName);
+
+    void setNicknameNotValid();
 }

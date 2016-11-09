@@ -151,7 +151,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
         {
             holder.mBtnPlayMatch.setVisibility(View.GONE);
         }
-        else if(match.getisAttempted()==true)
+        else if(match.getisAttempted()==true && (null == match.getResult() || match.getResult().isEmpty()))
         {
             holder.mTvMatchResult.setVisibility(View.GONE);
             holder.mBtnPlayMatch.setVisibility(View.GONE);
@@ -160,10 +160,11 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
             holder.mTvResultWait.setTag(match.getId());
         }
-        else
-        {
+        else if ((null == match.getResult() || match.getResult().isEmpty()))
+        {   //ELSE PLAY BTN VISIBLE
             holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
             holder.mBtnPlayMatch.setTag(match);
+
         }
 
 
@@ -241,7 +242,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
         }
     }
 
-    class TourViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class TourViewHolder extends RecyclerView.ViewHolder {
 
         TextView mTvTournamentName;
 
@@ -252,19 +253,9 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
             mTvTournamentName = (TextView) V.findViewById(R.id.tour_row_tv_tour_name);
             mLlScheduleParent = (LinearLayout) V.findViewById(R.id.tour_row_ll_schedule_parent);
-
-            V.findViewById(R.id.tour_row_ibtn_options).setOnClickListener(this);
-            V.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.tour_row_ibtn_options:
-                    showOptions(view.getContext());
-                    break;
-            }
-        }
+
     }
 
     class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -385,24 +376,4 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
         }
     }
 
-    private void showOptions(Context context) {
-        if (null == mAlertDialog) {
-            mAlertDialog = ViewUtils.getDialogList(context, getOptions(),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            mAlertDialog.dismiss();
-                        }
-                    });
-        }
-        mAlertDialog.show();
-    }
-
-    private List<String> getOptions() {
-        List<String> options = new ArrayList<>();
-        options.add("Option 1");
-        options.add("Option 2");
-        options.add("Option 3");
-        return options;
-    }
 }
