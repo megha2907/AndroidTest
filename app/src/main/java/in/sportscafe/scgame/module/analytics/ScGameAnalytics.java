@@ -13,6 +13,7 @@ import com.moe.pushlibrary.PayloadBuilder;
 
 import java.util.Map;
 
+import in.sportscafe.scgame.BuildConfig;
 import in.sportscafe.scgame.Constants.AnalyticsCategory;
 import in.sportscafe.scgame.R;
 
@@ -52,6 +53,9 @@ public class ScGameAnalytics {
 
             // Initializing the MoEngage
             this.mMoEHelper = MoEHelper.getInstance(context);
+
+            // Tracking flavor
+            trackFlavor();
         }
     }
 
@@ -214,5 +218,11 @@ public class ScGameAnalytics {
 
         mTracker.send(gaEventBuilder.build());
         mMoEHelper.trackEvent(category, values);
+    }
+
+    private void trackFlavor() {
+        if(!BuildConfig.FLAVOR.equalsIgnoreCase("production")) {
+            track(AnalyticsCategory.FLAVOR, null, BuildConfig.FLAVOR, null);
+        }
     }
 }

@@ -48,14 +48,6 @@ public class GetStartActivity extends ScGameActivity {
             @Override
             public void onClick(View view) {
                 navigateToLogin();
-//                trackClick("GetStarted", "Button");
-            }
-        });
-
-        findViewById(R.id.activity_getstarted_btn_login).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToLogin();
             }
         });
     }

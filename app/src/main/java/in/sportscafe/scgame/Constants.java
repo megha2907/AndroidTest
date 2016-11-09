@@ -150,6 +150,7 @@ public interface Constants {
         String USER_PROFILE = "User Profile";
         String NEW_GROUP = "New Group";
         String FEED = "Feed";
+        String FLAVOR = "Flavor";
     }
 
     interface AnalyticsActions {
