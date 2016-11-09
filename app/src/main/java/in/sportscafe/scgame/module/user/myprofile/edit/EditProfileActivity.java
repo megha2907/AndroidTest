@@ -139,13 +139,13 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
 
     @Override
     public void changeViewforProfile() {
-        mTvUpdateProfile.setText("Update your profile here");
+        mTvUpdateProfile.setText("Update your profile here.");
         mBtnUpdateDone.setText("UPDATE");
     }
 
     @Override
     public void changeViewforLogin(String username) {
-        mTvUpdateProfile.setText("Welcome "+username+"\n"+"Let’s update your profile");
+        mTvUpdateProfile.setText("Welcome "+username+"\n"+"Let’s update your profile.");
         mBtnUpdateDone.setText("NEXT");
     }
 
