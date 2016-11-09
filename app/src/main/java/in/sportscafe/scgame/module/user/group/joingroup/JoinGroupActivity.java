@@ -96,6 +96,12 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
         }, getIntent().getData(), this);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
     private void initListener() {
         mEtGroupCode1.addTextChangedListener(new TextWatcher() {
 

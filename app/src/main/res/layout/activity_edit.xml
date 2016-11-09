@@ -77,13 +77,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Username"
-        android:inputType="textPersonName"
         android:maxLength="50"
         android:textColor="@color/white"
         android:backgroundTint="@color/white"
         android:textColorHint="@color/white"
         app:typeface="lato_regular"
         android:textSize="@dimen/dp_16"
+        android:textAllCaps="false"
         />
     </android.support.design.widget.TextInputLayout>
 

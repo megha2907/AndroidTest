@@ -94,6 +94,7 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
         findViewById(R.id.profile_ll_powerups_parent).setOnClickListener(this);
         findViewById(R.id.profile_ll_sports_followed_parent).setOnClickListener(this);
         findViewById(R.id.profile_ll_badge_parent).setOnClickListener(this);
+        findViewById(R.id.profile_iv_image).setOnClickListener(this);
     }
 
     @Override
@@ -212,6 +213,9 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
                 navigateToSportSelection();
                 break;
             case R.id.profile_btn_edit:
+                navigateToEditProfile();
+                break;
+            case R.id.profile_iv_image:
                 navigateToEditProfile();
                 break;
             case R.id.profile_groups_parent:
