@@ -366,6 +366,13 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         setSharedIntData(SharedKeys.NUMBER_OF_GROUPS, numberofgroups);
     }
 
+    public void setInstallGroupCode(String installGroupCode) {
+        setSharedStringData(SharedKeys.INSTALL_GROUP_CODE, installGroupCode);
+    }
+
+    public String getInstallGroupCode() {
+        return getSharedStringData(SharedKeys.INSTALL_GROUP_CODE);
+    }
 
     @Override
     public void clearAll() {

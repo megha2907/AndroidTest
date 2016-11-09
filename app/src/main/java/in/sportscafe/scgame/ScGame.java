@@ -28,6 +28,7 @@ import in.sportscafe.scgame.module.notifications.NotificationCustom;
 import in.sportscafe.scgame.module.notifications.NotificationInboxAdapter;
 import in.sportscafe.scgame.module.offline.PredictionDataHandler;
 import in.sportscafe.scgame.webservice.MyWebService;
+import io.branch.referral.Branch;
 import io.fabric.sdk.android.Fabric;
 import io.fabric.sdk.android.Kit;
 
@@ -77,6 +78,9 @@ public class ScGame extends Application {
 
         // For notification inbox
         InboxManager.getInstance().setInboxAdapter(new NotificationInboxAdapter());
+
+        // Initializing the Branch
+        Branch.getAutoInstance(this);
     }
 
     @Override

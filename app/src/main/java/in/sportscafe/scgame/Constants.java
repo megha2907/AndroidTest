@@ -41,6 +41,7 @@ public interface Constants {
         String NUMBER_OF_BADGES = "numberofbadges";
         String NUMBER_OF_GROUPS = "numberofgroups";
         String ALL_BADGES = "allbadges";
+        String INSTALL_GROUP_CODE = "installGroupCode";
     }
 
     interface Alerts {
@@ -109,6 +110,7 @@ public interface Constants {
         String LEADERBOARD_LIST = "leaderboardList";
         String HOME_SCREEN = "homeScreen";
         String LOGIN_SCREEN = "loginScreen";
+        String GROUP_CODE = "groupCode";
     }
 
     interface ParcelableKeys {

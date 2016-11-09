@@ -1,13 +1,12 @@
 package in.sportscafe.scgame.module.home;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,14 +16,15 @@ import com.jeeva.android.widgets.HmImageView;
 
 import java.util.List;
 
+import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.TournamentFeed.TournamentFeedFragment;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.notifications.NotificationInboxFragment;
 import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
+import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.ProfileFragment;
@@ -39,29 +39,15 @@ import retrofit2.Response;
  */
 public class HomeActivity extends ScGameActivity implements OnHomeActionListener {
 
-    private static final float ENABLE_TAB_ALPHA = 0.3f;
-
-    private static final float DISABLE_TAB_ALPHA = 1f;
-
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
     private View mSelectedTab;
-
-    private boolean feedShowing = false;
-
-    private Toolbar mtoolbar;
-
-    private TextView mTitle;
-
-    private ImageView mLogo;
 
     private ImageButton mHomeButton;
 
     private ImageButton mProfileButton;
 
     private ImageButton mNotificationButton;
-
-    private Bundle mbundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +72,12 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
             showFeed();
         }
 
-
+        checkGroupCode();
     }
 
     public void onClickTab(View view) {
-        feedShowing = false;
-
           switch (view.getId()) {
               case R.id.home_ibtn_notification:
-                  feedShowing = true;
                   mHomeButton.setSelected(false);
                   mProfileButton.setSelected(false);
                   mNotificationButton.setSelected(true);
@@ -119,22 +102,37 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
                   }
                   loadFragment(new ProfileFragment());
                   break;
-
-        }
-
-        if(null != mSelectedTab) {
-            setTabEnabled(mSelectedTab, true);
-
-        }
-        mSelectedTab = view;
-        setTabEnabled(mSelectedTab, false);
+          }
     }
 
-    private void setTabEnabled(View tabView, boolean enabled) {
-        tabView.setEnabled(enabled);
-        if(enabled) {
-        } else {
+    private void checkGroupCode() {
+        String groupCode = ScGameDataHandler.getInstance().getInstallGroupCode();
+        if(null != groupCode) {
+            ScGameDataHandler.getInstance().setInstallGroupCode(null);
+
+            showJoinGroupAlert(groupCode);
         }
+    }
+
+    private void showJoinGroupAlert(final String groupCode) {
+        new AlertDialog.Builder(this)
+                .setTitle("Join Group")
+                .setMessage("You got one group invitation, do you want to join in that group?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        navigateToJoinGroup(groupCode);
+                    }
+                })
+                .setNegativeButton("No", null)
+                .setCancelable(false)
+                .create().show();
+    }
+
+    private void navigateToJoinGroup(String groupCode) {
+        Intent intent = new Intent(this, JoinGroupActivity.class);
+        intent.putExtra(BundleKeys.GROUP_CODE, groupCode);
+        startActivity(intent);
     }
 
     private void loadFragment(Fragment fragment) {
@@ -162,15 +160,15 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
 
     @Override
     public void getUserInfoFromServer() {
-        if(ScGame.getInstance().hasNetworkConnection()) {
+        if (ScGame.getInstance().hasNetworkConnection()) {
             MyWebService.getInstance().getUserInfoRequest(ScGameDataHandler.getInstance().getUserId()).enqueue(
                     new ScGameCallBack<UserInfoResponse>() {
                         @Override
                         public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
-                            if(response.isSuccessful()) {
+                            if (response.isSuccessful()) {
                                 UserInfo updatedUserInfo = response.body().getUserInfo();
 
-                                if(null != updatedUserInfo) {
+                                if (null != updatedUserInfo) {
 
                                     ScGameDataHandler.getInstance().setUserInfo(updatedUserInfo);
                                     ScGameDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
@@ -180,7 +178,7 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
                                 }
                             }
                         }
-                        }
+                    }
             );
         }
     }
@@ -197,6 +195,4 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
             }
         }
     }
-
-
 }
