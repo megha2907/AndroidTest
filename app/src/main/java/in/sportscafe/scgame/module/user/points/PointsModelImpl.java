@@ -72,6 +72,7 @@ public class PointsModelImpl implements PointsModel {
         mSelectedSportId = bundle.getInt(BundleKeys.SPORT_ID);
         mSelectedChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
         mBaseSummary = (BaseSummary) bundle.getSerializable(BundleKeys.TOURNAMENT_SUMMARY);
+        Log.i("challenges",mBaseSummary.getName());
     }
 
     @Override
@@ -123,7 +124,9 @@ public class PointsModelImpl implements PointsModel {
     }
 
     private void refreshAdapter(List<LeaderBoard> leaderBoardList) {
+
         Integer tourId = mBaseSummary.getTournamentId();
+
 
         Log.d("PointsModelImpl", "Selected Summary --> " + tourId);
         LeaderBoard leaderBoard;
@@ -131,9 +134,15 @@ public class PointsModelImpl implements PointsModel {
             leaderBoard = leaderBoardList.get(i);
             mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());
 
+           //if match not played change tab to overall
            if (null==tourId){
-               mSelectedPosition = 0;
+                 mSelectedPosition = 0;
                }
+           //for challenges change tab to overall
+           else if (mSelectedChallengeId!=0){
+               mSelectedPosition = 0;
+           }
+           //for match played change tab to tournament
             else if(tourId.equals(leaderBoard.getTournamentId())) {
                 mSelectedPosition = i;
             }

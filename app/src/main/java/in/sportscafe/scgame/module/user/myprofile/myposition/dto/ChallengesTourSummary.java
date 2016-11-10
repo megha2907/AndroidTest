@@ -17,7 +17,7 @@ public class ChallengesTourSummary extends BaseSummary implements Serializable {
     }
 
     public ChallengesTourSummary(Integer tournamentId, String tournamentName, String tournamentImageUrl, Integer rank, Integer rankChange, Integer overallRank, Integer overallRankChange, Integer challengeId, String challengeName,String challengePhoto) {
-        super(challengePhoto,challengeName, tournamentId, tournamentName, tournamentImageUrl, rank, rankChange, overallRank, overallRankChange);
+        super(challengeName,challengePhoto, tournamentId, tournamentName, tournamentImageUrl, rank, rankChange, overallRank, overallRankChange);
         this.challengeId = challengeId;
         this.challengeName = challengeName;
         this.challengePhoto = challengePhoto;

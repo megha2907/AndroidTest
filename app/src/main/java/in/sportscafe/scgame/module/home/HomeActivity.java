@@ -26,6 +26,7 @@ import in.sportscafe.scgame.module.notifications.NotificationInboxFragment;
 import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
 import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
+import in.sportscafe.scgame.module.user.login.dto.PowerUpInfo;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.ProfileFragment;
 import in.sportscafe.scgame.module.user.myprofile.dto.UserInfoResponse;
@@ -43,29 +44,51 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
 
     private View mSelectedTab;
 
-    private ImageButton mHomeButton;
+    private ImageView mHomeButton;
 
-    private ImageButton mProfileButton;
+    private ImageView mProfileButton;
 
-    private ImageButton mNotificationButton;
+    private ImageView mNotificationButton;
+
+    private TextView mHomeTv;
+
+    private TextView mProfileTv;
+
+    private TextView mNotificationTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        getUserInfoFromServer();
-        mHomeButton=(ImageButton)findViewById(R.id.home_ibtn_feed);
-        mProfileButton=(ImageButton)findViewById(R.id.home_ibtn_profile);
-        mNotificationButton=(ImageButton)findViewById(R.id.home_ibtn_notification);
+        if (null == ScGameDataHandler.getInstance().getUserId()) {
+            navigateToLogIn();
+            return;
+        }
 
-        //showFeed();
+        getUserInfoFromServer();
+        mHomeButton=(ImageView)findViewById(R.id.home_ibtn_feed);
+        mProfileButton=(ImageView)findViewById(R.id.home_ibtn_profile);
+        mNotificationButton=(ImageView)findViewById(R.id.home_ibtn_notification);
+
+        mHomeTv=(TextView)findViewById(R.id.home_tv_feed);
+        mProfileTv=(TextView)findViewById(R.id.home_tv_profile);
+        mNotificationTv=(TextView)findViewById(R.id.home_tv_notification);
 
         Intent intent = getIntent();
         if (null==intent.getExtras()){
             showFeed();
         }
         else if (intent.getExtras().getString("group").equals("openprofile")){
+
+            mHomeButton.setSelected(false);
+            mNotificationButton.setSelected(false);
+            mProfileButton.setSelected(true);
+
+            mHomeTv.setSelected(false);
+            mNotificationTv.setSelected(false);
+            mProfileTv.setSelected(true);
+
             loadFragment(new ProfileFragment());
         }
         else {
@@ -77,24 +100,41 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
 
     public void onClickTab(View view) {
           switch (view.getId()) {
-              case R.id.home_ibtn_notification:
+              case R.id.home_rl_notification:
+
                   mHomeButton.setSelected(false);
                   mProfileButton.setSelected(false);
                   mNotificationButton.setSelected(true);
 
+                  mHomeTv.setSelected(false);
+                  mProfileTv.setSelected(false);
+                  mNotificationTv.setSelected(true);
+
                   loadFragment(new NotificationInboxFragment());
                   break;
-              case R.id.home_ibtn_feed:
+
+              case R.id.home_rl_feed:
+
                   mNotificationButton.setSelected(false);
                   mProfileButton.setSelected(false);
                   mHomeButton.setSelected(true);
 
+                  mNotificationTv.setSelected(false);
+                  mProfileTv.setSelected(false);
+                  mHomeTv.setSelected(true);
+
                   loadFragment(new TournamentFeedFragment());
                   break;
-              case R.id.home_ibtn_profile:
-                  mHomeButton.setSelected(false);
+
+              case R.id.home_rl_profile:
+
+                mHomeButton.setSelected(false);
                   mNotificationButton.setSelected(false);
                   mProfileButton.setSelected(true);
+
+                  mHomeTv.setSelected(false);
+                  mNotificationTv.setSelected(false);
+                  mProfileTv.setSelected(true);
 
                   if (null == ScGameDataHandler.getInstance().getUserId()) {
                       navigateToLogIn();
@@ -150,7 +190,7 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
     }
 
     private void showFeed() {
-        onClickTab(findViewById(R.id.home_ibtn_feed));
+        onClickTab(findViewById(R.id.home_rl_feed));
     }
 
     private void navigateToLogIn() {
@@ -171,10 +211,12 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
                                 if (null != updatedUserInfo) {
 
                                     ScGameDataHandler.getInstance().setUserInfo(updatedUserInfo);
-                                    ScGameDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
+                                    if(null != updatedUserInfo)
+                                    {
+                                        ScGameDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
+                                    }
                                     ScGameDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
                                     ScGameDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());
-                                    Log.i("setNumberofGroups",updatedUserInfo.getNumberofgroups()+"");
                                 }
                             }
                         }
