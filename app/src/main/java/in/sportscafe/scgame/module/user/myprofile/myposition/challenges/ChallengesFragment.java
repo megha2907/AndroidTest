@@ -103,13 +103,13 @@ public class ChallengesFragment extends ScGameFragment implements ChallengesLayo
         ImageView mTournamentRankStatus = (ImageView) convertView.findViewById(R.id.challenges_tournaments_row_rank_status);
         HmImageView mTournamentPhotoImageView=(HmImageView) convertView.findViewById(R.id.challenges_tournaments_row_iv_photo);
 
-        if(null==challengesTourSummary.getTournamentImageUrl()){
+        if(null==challengesTourSummary.getChallengePhoto()){
             mTournamentPhotoImageView.setImageResource(R.drawable.tournament_cup_icon);
         }
         else {
 
             mTournamentPhotoImageView.setImageUrl(
-                    challengesTourSummary.getTournamentImageUrl(),
+                    challengesTourSummary.getChallengePhoto(),
                     Volley.getInstance().getImageLoader(),
                     false
             );

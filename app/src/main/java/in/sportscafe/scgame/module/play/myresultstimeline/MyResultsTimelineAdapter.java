@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -183,6 +184,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
             holder.mBtnMatchPoints.setTag(match.getId());
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
+            holder.mIvMatchPointsRightArrow.setVisibility(View.VISIBLE);
 
         }
 
@@ -294,6 +296,8 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
         RelativeLayout mRlMatchStageParent;
 
+        ImageView mIvMatchPointsRightArrow;
+
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -313,6 +317,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
+            mIvMatchPointsRightArrow = (ImageView) V.findViewById(R.id.schedule_row_iv_match_points_right_arrow);
 
 
             mBtnPlayMatch.setOnClickListener(this);

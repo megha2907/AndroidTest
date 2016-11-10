@@ -147,6 +147,8 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             holder.mTvResultWait.setVisibility(View.VISIBLE);
             holder.mViewResult.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setText(match.getMatchQuestionCount() + " predictions made, waiting for results");
+            holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
         } else {
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
             holder.mTvMatchResult.setText(match.getResult());

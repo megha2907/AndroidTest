@@ -181,6 +181,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
             holder.mBtnMatchPoints.setTag(match.getId());
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
+            holder.mIvMatchPointsRightArrow.setVisibility(View.VISIBLE);
 
         }
 
@@ -344,6 +345,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         ImageButton mIbfeedDotIcon;
 
+        ImageView mIvMatchPointsRightArrow;
+
+
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -366,6 +370,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);
+            mIvMatchPointsRightArrow = (ImageView) V.findViewById(R.id.schedule_row_iv_match_points_right_arrow);
 
             mBtnPlayMatch.setOnClickListener(this);
             mBtnMatchPoints.setOnClickListener(this);

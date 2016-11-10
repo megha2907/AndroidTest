@@ -42,8 +42,6 @@ public class BadgeAdapter extends Adapter<String, BadgeAdapter.ViewHolder> {
         String badge = getItem(position);
         String[] parts = badge.split("\\$");
 
-        Log.i("parts", String.valueOf(parts));
-
         String badge_id = parts[0];
         String notif_title = parts[1];
 
