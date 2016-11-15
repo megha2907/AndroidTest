@@ -1,6 +1,7 @@
-package in.sportscafe.scgame.module.TournamentFeed;
+package in.sportscafe.scgame.module.tournamentFeed;
 
-import in.sportscafe.scgame.module.feed.FeedAdapter;
+import android.os.Bundle;
+
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 
 /**
@@ -11,5 +12,7 @@ public interface TournamentFeedModel {
 
     TournamentFeedAdapter getAdapter(OnHomeActionListener listener);
 
-    void getFeeds();
+    void init(Bundle bundle);
+
+    void getTournamentFeed(Bundle bundle);
 }

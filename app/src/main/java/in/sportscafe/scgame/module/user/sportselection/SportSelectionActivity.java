@@ -9,6 +9,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.jeeva.android.widgets.customfont.CustomButton;
+
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
@@ -82,6 +84,18 @@ public class SportSelectionActivity extends ScGameActivity implements SportSelec
         Toast toast =Toast.makeText(getContext(), Constants.Alerts.EMPTY_TOURNAMENT_SELECTION, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+    }
+
+    @Override
+    public void changeViewforProfile() {
+        CustomButton sportSelectionbtn= (CustomButton) findViewById (R.id.sport_selection_btn_next);
+        sportSelectionbtn.setText("UPDATE");
+    }
+
+    @Override
+    public void changeViewforLogin() {
+        CustomButton sportSelectionbtn= (CustomButton) findViewById (R.id.sport_selection_btn_next);
+        sportSelectionbtn.setText("NEXT");
     }
 
 

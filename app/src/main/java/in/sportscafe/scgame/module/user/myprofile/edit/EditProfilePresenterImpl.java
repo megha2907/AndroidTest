@@ -2,6 +2,8 @@ package in.sportscafe.scgame.module.user.myprofile.edit;
 
 import android.os.Bundle;
 
+import com.jeeva.android.Log;
+
 import java.util.Arrays;
 
 import in.sportscafe.scgame.Constants;
@@ -90,6 +92,8 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
         else {
           mEditProfileView.navigateToSportsSelection();
 
+          //  autoSaveAllSports();
+
             // For ISB
            // autoSaveIsb();
         }
@@ -99,7 +103,8 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
         new PreferenceManager().savePreference(Arrays.asList(new Integer[] {10}),
                 new SavePreferenceModelImpl.SavePreferenceModelListener() {
             @Override
-            public void onSuccess() {
+            public void onSuccess()
+            {
                 mEditProfileView.navigateToHome();
             }
 
@@ -113,6 +118,29 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
                 onEditFailed(message);
             }
         });
+    }
+
+
+    private void autoSaveAllSports() {
+        new PreferenceManager().savePreference(Arrays.asList(new Integer[] {1,2,3,4,5,6,7,8,9,10}),
+                new SavePreferenceModelImpl.SavePreferenceModelListener() {
+                    @Override
+                    public void onSuccess()
+                    {
+                        Log.i("selected","inside");
+                        mEditProfileView.navigateToHome();
+                    }
+
+                    @Override
+                    public void onNoInternet() {
+                        onNoInternet();
+                    }
+
+                    @Override
+                    public void onFailed(String message) {
+                        onEditFailed(message);
+                    }
+                });
     }
 
     @Override

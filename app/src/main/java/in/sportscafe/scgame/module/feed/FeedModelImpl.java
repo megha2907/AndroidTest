@@ -3,8 +3,6 @@ package in.sportscafe.scgame.module.feed;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.jeeva.android.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,8 +15,7 @@ import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.feed.dto.Match;
 import in.sportscafe.scgame.module.feed.dto.MatchesResponse;
-import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
-import in.sportscafe.scgame.module.home.OnHomeActionListener;
+import in.sportscafe.scgame.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;

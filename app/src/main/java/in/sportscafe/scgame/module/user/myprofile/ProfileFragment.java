@@ -235,6 +235,7 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
 
     private void navigateToMyResults() {
         startActivity(new Intent(getContext(), MyResultsTimelineActivity.class));
+        getActivity().finish();
     }
 
     private void navigateToSettings() {

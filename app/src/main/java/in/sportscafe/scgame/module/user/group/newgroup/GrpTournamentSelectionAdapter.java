@@ -2,7 +2,6 @@ package in.sportscafe.scgame.module.user.group.newgroup;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +14,13 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.Adapter;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
-import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedInfo;
 
 /**
  * Created by rb on 30/11/15.
  */
-public class GrpTournamentSelectionAdapter extends Adapter<TournamentInfo, GrpTournamentSelectionAdapter.ViewHolder> {
+public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, GrpTournamentSelectionAdapter.ViewHolder> {
 
     private Context mcontext;
 
@@ -46,7 +43,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentInfo, GrpTo
     }
 
     @Override
-    public TournamentInfo getItem(int position) {
+    public TournamentFeedInfo getItem(int position) {
         return super.getItem(position);
     }
 
@@ -57,7 +54,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentInfo, GrpTo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        TournamentInfo tournamentInfo = getItem(position);
+        TournamentFeedInfo tournamentInfo = getItem(position);
 
 //        for (Sport sport: ScGameDataHandler.getInstance().getAllSports()){
 //

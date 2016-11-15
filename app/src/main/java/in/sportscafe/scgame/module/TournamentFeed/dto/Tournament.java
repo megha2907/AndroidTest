@@ -1,4 +1,4 @@
-package in.sportscafe.scgame.module.TournamentFeed.dto;
+package in.sportscafe.scgame.module.tournamentFeed.dto;
 
 import java.util.ArrayList;
 import java.util.List;

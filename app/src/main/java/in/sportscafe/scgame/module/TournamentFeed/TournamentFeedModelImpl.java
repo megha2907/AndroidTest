@@ -1,20 +1,24 @@
-package in.sportscafe.scgame.module.TournamentFeed;
+package in.sportscafe.scgame.module.tournamentFeed;
 
 /**
  * Created by deepanshi on 9/29/16.
  */
 
 import android.content.Context;
+import android.os.Bundle;
 
-import java.util.ArrayList;
+import com.jeeva.android.Log;
+
 import java.util.List;
 
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentsResponse;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
-import in.sportscafe.scgame.module.user.group.newgroup.GrpTournamentSelectionAdapter;
+import in.sportscafe.scgame.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
 import retrofit2.Call;
@@ -23,20 +27,18 @@ import retrofit2.Response;
 
 public class TournamentFeedModelImpl implements TournamentFeedModel {
 
-    private int mClosestDatePosition = 0;
-
     private TournamentFeedAdapter mTournamentFeedAdapter;
 
-    private TournamentFeedModelImpl.OnTournamentFeedModelListener mTournamentFeedModelListener;
+    private OnTournamentFeedModelListener mTournamentFeedModelListener;
 
     private ScGameDataHandler mScGameDataHandler;
 
-    private TournamentFeedModelImpl(TournamentFeedModelImpl.OnTournamentFeedModelListener listener) {
+    private TournamentFeedModelImpl(OnTournamentFeedModelListener listener) {
         this.mTournamentFeedModelListener = listener;
         mScGameDataHandler = ScGameDataHandler.getInstance();
     }
 
-    public static TournamentFeedModel newInstance(TournamentFeedModelImpl.OnTournamentFeedModelListener listener) {
+    public static TournamentFeedModel newInstance(OnTournamentFeedModelListener listener) {
         return new TournamentFeedModelImpl(listener);
     }
 
@@ -47,61 +49,30 @@ public class TournamentFeedModelImpl implements TournamentFeedModel {
     }
 
     @Override
-    public void getFeeds() {
-        mTournamentFeedAdapter.clear();
-        if(ScGame.getInstance().hasNetworkConnection()) {
-            getAllTournamentsfromServer();
-        } else {
-            mTournamentFeedModelListener.onNoInternet();
+    public void init(Bundle bundle) {
+        getTournamentFeed(bundle);
+        checkEmpty();
+    }
+
+    private void checkEmpty() {
+        if(mTournamentFeedAdapter.getItemCount() == 0) {
+            mTournamentFeedModelListener.onEmpty();
         }
     }
 
-    private void getAllTournamentsfromServer() {
-        if(ScGame.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getTournaments(false).enqueue(
-                    new ScGameCallBack<TournamentsResponse>() {
-                        @Override
-                        public void onResponse(Call<TournamentsResponse> call, Response<TournamentsResponse> response) {
-                            if(response.isSuccessful()) {
-                                List<TournamentInfo> newTournamentInfo = response.body().getTournamentInfos();
+    @Override
+    public void getTournamentFeed(Bundle bundle) {
 
-                                if(null != newTournamentInfo && newTournamentInfo.size() > 0) {
-                                    List<TournamentInfo> oldTournamentList = mScGameDataHandler.getTournaments();
-                                    oldTournamentList.clear();
-                                    for (TournamentInfo tournamentInfo : newTournamentInfo) {
-                                        if(!oldTournamentList.contains(tournamentInfo)) {
-                                            oldTournamentList.add(tournamentInfo);
-                                        }
-                                    }
+        TournamentInfo tournamentInfo = (TournamentInfo) bundle.getSerializable(Constants.BundleKeys.TOURNAMENT_LIST);
+        for (TournamentFeedInfo tournamentFeedInfo : tournamentInfo.getTournamentFeedInfoList()) {
+            mTournamentFeedAdapter.add(tournamentFeedInfo);
 
-                                    mScGameDataHandler.setTournaments(oldTournamentList);
-                                    mTournamentFeedAdapter.addAll(ScGameDataHandler.getInstance().getTournaments());
-
-                                    mTournamentFeedModelListener.onSuccessFeeds();
-                                }
-                                else
-                                {
-                                    mTournamentFeedModelListener.onFailedFeeds(response.message());
-                                }
-
-                            } else {
-                                mTournamentFeedModelListener.onFailedFeeds(response.message());
-                            }
-                        }
-                    }
-            );
-        } else {
-            mTournamentFeedModelListener.onNoInternet();
         }
+        mTournamentFeedAdapter.notifyDataSetChanged();
+
     }
 
     public interface OnTournamentFeedModelListener {
-
-        void onSuccessFeeds();
-
-        void onFailedFeeds(String message);
-
-        void onNoInternet();
 
         void onEmpty();
 

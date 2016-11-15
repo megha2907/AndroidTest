@@ -18,6 +18,7 @@ public interface Constants {
         String RESULTS_LEADERBOARD = "results_leaderboard";
         String GROUP_PERSONID = "group_personID";
         String ADMIN_USERID = "admin_userID";
+        String BADGE_REQUEST = "badges";
         String REQUEST_ACCEPTED = "REQUEST ACCEPTED";
         String REQUEST_REJECTED = "REQUEST REJECTED";
 
@@ -101,6 +102,7 @@ public interface Constants {
         String GROUP_ID = "group_id";
         String GROUP_NAME = "group_name";
         String SPORT_ID = "sportId";
+        String SPORT_LIST = "sportList";
         String MATCH_LIST = "matchList";
         String FROM_PROFILE = "fromProfile";
         String TOURNAMENT_ID = "tour_id";
@@ -108,6 +110,7 @@ public interface Constants {
         String MATCH_ID = "match_id";
         String TOURNAMENT_NAME = "tourName";
         String TOURNAMENT_SUMMARY = "tourSummary";
+        String TOURNAMENT_LIST = "tournamentList";
         String LEADERBOARD_KEY = "leaderboardKey";
         String LEADERBOARD_LIST = "leaderboardList";
         String HOME_SCREEN = "homeScreen";

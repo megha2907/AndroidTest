@@ -50,12 +50,12 @@ public class BadgeAdapter extends Adapter<String, BadgeAdapter.ViewHolder> {
             case "accuracy_streak":
                 holder.mTvBadgeName.setText("Sharpshooter"+" - "+notif_title);
                 holder.mIvBadge.setBackgroundResource(R.drawable.notification_accuracy_badge);
-                holder.mTvBadgeDesc.setText("More than 80% accuracy in your last 5 matches in a sport");
+                holder.mTvBadgeDesc.setText("More than 80% accuracy in your last 5 matches");
                 break;
             case "table_topper":
                 holder.mTvBadgeName.setText("Table Topper"+" - "+notif_title);
                 holder.mIvBadge.setBackgroundResource(R.drawable.notification_topper_badge);
-                holder.mTvBadgeDesc.setText("Top 10 in a sport leaderboard (min. 25 people)");
+                holder.mTvBadgeDesc.setText("Top 5 in this leaderboard");
                 break;
             default:
                 holder.mIvBadge.setBackgroundResource(R.drawable.placeholder_icon);

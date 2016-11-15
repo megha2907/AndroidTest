@@ -1,6 +1,5 @@
-package in.sportscafe.scgame.module.TournamentFeed;
+package in.sportscafe.scgame.module.tournamentFeed;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,16 +13,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameFragment;
-import in.sportscafe.scgame.module.common.SpacesItemDecoration;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentInfo;
 
 /**
  * Created by deepanshi on 9/29/16.
  */
 
-public class TournamentFeedFragment extends ScGameFragment implements TournamentFeedView, SwipeRefreshLayout.OnRefreshListener {
+public class TournamentFeedFragment extends ScGameFragment implements TournamentFeedView {
 
     private RecyclerView mRcvTournamentFeed;
 
@@ -36,6 +39,15 @@ public class TournamentFeedFragment extends ScGameFragment implements Tournament
     private TextView mTitle;
 
     private ImageView mLogo;
+
+    public static TournamentFeedFragment newInstance(TournamentInfo tournamentInfo) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.BundleKeys.TOURNAMENT_LIST, tournamentInfo);
+
+        TournamentFeedFragment fragment = new TournamentFeedFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -52,21 +64,20 @@ public class TournamentFeedFragment extends ScGameFragment implements Tournament
                 LinearLayoutManager.VERTICAL, false));
         this.mRcvTournamentFeed.setHasFixedSize(true);
 
-        this.mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swifeRefresh);
-        this.mSwipeRefreshLayout.setOnRefreshListener(this);
-
         this.mtournamentFeedPresenter = TournamentFeedPresenterImpl.newInstance(this);
-        this.mtournamentFeedPresenter.onCreateFeed((OnHomeActionListener) getActivity());
+        this.mtournamentFeedPresenter.onCreateFeed((OnHomeActionListener) getActivity(),getArguments());
 
-        this.mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                onRefresh();
-            }
-        });
+//        this.mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swifeRefresh);
+//        this.mSwipeRefreshLayout.setOnRefreshListener(this);
 
-        initToolBar();
+//        this.mSwipeRefreshLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mSwipeRefreshLayout.setRefreshing(false);
+//                onRefresh();
+//            }
+//        });
+
     }
 
     @Override
@@ -79,21 +90,15 @@ public class TournamentFeedFragment extends ScGameFragment implements Tournament
         mRcvTournamentFeed.getLayoutManager().scrollToPosition(movePosition);
     }
 
-    @Override
-    public void dismissSwipeRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
+//    @Override
+//    public void dismissSwipeRefresh() {
+//        mSwipeRefreshLayout.setRefreshing(false);
+//    }
 
-    @Override
-    public void onRefresh() {
-        mtournamentFeedPresenter.onRefresh();
-    }
+//    @Override
+//    public void onRefresh() {
+//        mtournamentFeedPresenter.onRefresh();
+//    }
 
-    public void initToolBar() {
-        mtoolbar = (Toolbar) findViewById(R.id.tournament_toolbar);
-        mLogo = (ImageView) mtoolbar.findViewById(R.id.toolbar_logo);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mtoolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
 
 }

@@ -1,5 +1,7 @@
 package in.sportscafe.scgame.module.user.preference;
 
+import com.jeeva.android.Log;
+
 import java.util.List;
 
 /**
@@ -8,6 +10,7 @@ import java.util.List;
 public class PreferenceManager {
 
     public void savePreference(List<Integer> selectedSports, SavePreferenceModelImpl.SavePreferenceModelListener listener) {
+        Log.i("selectedsports",selectedSports.toString());
         new SavePreferenceModelImpl(listener).savePreference(selectedSports);
     }
 }

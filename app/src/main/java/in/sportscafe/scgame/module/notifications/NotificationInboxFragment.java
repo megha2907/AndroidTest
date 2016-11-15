@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.customfont.CustomButton;
+import com.moe.pushlibrary.providers.MoEDataContract;
 import com.moengage.addon.inbox.InboxFragment;
 
 import in.sportscafe.scgame.R;
@@ -62,7 +63,6 @@ public class NotificationInboxFragment extends InboxFragment implements View.OnC
         listView.setDividerHeight(0);
         listView.setDivider(getResources().getDrawable(android.R.color.transparent));
         listView.setBackgroundResource(R.drawable.gradient_bg);
-
 
     }
 

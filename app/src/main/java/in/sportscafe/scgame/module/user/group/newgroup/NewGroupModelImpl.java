@@ -11,8 +11,9 @@ import java.util.Map;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentsResponse;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedResponse;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.Result;
@@ -116,17 +117,17 @@ public class NewGroupModelImpl implements NewGroupModel {
 
     private void getAllTournamentsfromServer() {
         if(ScGame.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getTournaments(true).enqueue(
-                    new ScGameCallBack<TournamentsResponse>() {
+            MyWebService.getInstance().getCurrentTournaments(true).enqueue(
+                    new ScGameCallBack<TournamentFeedResponse>() {
                         @Override
-                        public void onResponse(Call<TournamentsResponse> call, Response<TournamentsResponse> response) {
+                        public void onResponse(Call<TournamentFeedResponse> call, Response<TournamentFeedResponse> response) {
                             if(response.isSuccessful()) {
-                                List<TournamentInfo> newTournamentInfo = response.body().getTournamentInfos();
+                                List<TournamentFeedInfo> newTournamentInfo = response.body().getTournamentInfos();
 
                                 if(null != newTournamentInfo && newTournamentInfo.size() > 0) {
-                                    List<TournamentInfo> oldTournamentList = mScGameDataHandler.getTournaments();
+                                    List<TournamentFeedInfo> oldTournamentList = mScGameDataHandler.getTournaments();
                                     oldTournamentList.clear();
-                                    for (TournamentInfo tournamentInfo : newTournamentInfo) {
+                                    for (TournamentFeedInfo tournamentInfo : newTournamentInfo) {
                                         if(!oldTournamentList.contains(tournamentInfo)) {
                                             oldTournamentList.add(tournamentInfo);
                                         }

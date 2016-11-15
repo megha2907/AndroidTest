@@ -1,115 +1,62 @@
-package in.sportscafe.scgame.module.TournamentFeed.dto;
+package in.sportscafe.scgame.module.tournamentFeed.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
+import in.sportscafe.scgame.module.user.leaderboard.dto.UserLeaderBoard;
 
 /**
- * Created by Jeeva on 24/6/16.
+ * Created by deepanshi on 11/14/16.
  */
+
 public class TournamentInfo implements Serializable{
 
-    @JsonProperty("tournament_id")
-    private Integer tournamentId;
-
-    @JsonProperty("tournament_name")
-    private String tournamentName;
-
-
-    @JsonProperty("tournament_img_url")
-    private String tournamentPhoto;
+    @JsonProperty("sports_id")
+    private Integer sportsId;
 
     @JsonProperty("sports_name")
-    private String SportsName;
+    private String sportsName;
 
-    @JsonProperty("count_unplayed")
-    private String CountsUnplayed;
+    @JsonProperty("tournaments")
+    private List<TournamentFeedInfo> tournamentFeedInfoList;
 
-    @JsonProperty("tournament_subtext")
-    private String tournamentSubtext;
-
-    public TournamentInfo() {
+    /**
+     * @return The sportsId
+     */
+    @JsonProperty("sports_id")
+    public Integer getSportsId() {
+        return sportsId;
     }
 
-    public TournamentInfo(int tournamentId) {
-        this.tournamentId = tournamentId;
-    }
-
-
-    @JsonProperty("tournament_id")
-    public Integer getTournamentId() {
-        return tournamentId;
-    }
-
-    @JsonProperty("tournament_id")
-    public void setTournamentId(Integer tournamentId) {
-        this.tournamentId = tournamentId;
-    }
-
-    @JsonProperty("tournament_name")
-    public String getTournamentName() {
-        return tournamentName;
-    }
-
-    @JsonProperty("tournament_name")
-    public void setTournamentName(String tournamentName) {
-        this.tournamentName = tournamentName;
-    }
-
-    @JsonProperty("tournament_img_url")
-    public String getTournamentPhoto() {
-        return tournamentPhoto;
-    }
-
-    @JsonProperty("tournament_img_url")
-    public void setTournamentPhoto(String tournamentPhoto) {
-        this.tournamentPhoto = tournamentPhoto;
+    /**
+     * @param sportsId The user_id
+     */
+    @JsonProperty("sports_id")
+    public void setSportsId(Integer sportsId) {
+        this.sportsId = sportsId;
     }
 
     @JsonProperty("sports_name")
     public String getSportsName() {
-        return SportsName;
+        return sportsName;
     }
 
     @JsonProperty("sports_name")
     public void setSportsName(String sportsName) {
-        SportsName = sportsName;
+        this.sportsName = sportsName;
     }
 
-    @JsonProperty("count_unplayed")
-    public String getCountsUnplayed() {
-        return CountsUnplayed;
+
+    @JsonProperty("tournaments")
+    public List<TournamentFeedInfo> getTournamentFeedInfoList() {
+        return tournamentFeedInfoList;
     }
 
-    @JsonProperty("count_unplayed")
-    public void setCountsUnplayed(String countsUnplayed) {
-        CountsUnplayed = countsUnplayed;
+    @JsonProperty("tournaments")
+    public void setTournamentFeedInfoList(List<TournamentFeedInfo> tournamentFeedInfoList) {
+        this.tournamentFeedInfoList = tournamentFeedInfoList;
     }
-
-    @JsonProperty("tournament_subtext")
-    public String getTournamentSubtext() {
-        return tournamentSubtext;
-    }
-
-    @JsonProperty("tournament_subtext")
-    public void setTournamentSubtext(String tournamentSubtext) {
-        this.tournamentSubtext = tournamentSubtext;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        TournamentInfo tournamentInfo = (TournamentInfo) o;
-        return tournamentId == tournamentInfo.getTournamentId();
-    }
-
-    @Override
-    public String toString() {
-        return tournamentName;
-    }
-
 
 }

@@ -1,5 +1,6 @@
 package in.sportscafe.scgame.module.user.badges;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
+import in.sportscafe.scgame.module.home.HomeActivity;
 
 /**
  * Created by Deepanshi on 23/8/16.
@@ -59,10 +61,17 @@ public class BadgeActivity extends ScGameActivity implements BadgeView{
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        finish();
+                        gotoHomeActivity();
                     }
                 }
 
         );
+    }
+
+    private void gotoHomeActivity() {
+        Intent homeintent = new Intent(this, HomeActivity.class);
+        homeintent.putExtra("badges", "openprofile");
+        startActivity(homeintent);
+        finish();
     }
 }

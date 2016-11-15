@@ -1,10 +1,7 @@
 package in.sportscafe.scgame.module.play.myresults;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,28 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
-import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
-import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.feed.dto.Match;
-import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
-import in.sportscafe.scgame.module.home.HomeActivity;
-import in.sportscafe.scgame.module.play.prediction.PredictionActivity;
+import in.sportscafe.scgame.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
 import in.sportscafe.scgame.module.user.leaderboardsummary.LeaderBoardSummaryActivity;
-import in.sportscafe.scgame.module.user.leaderboardsummary.LeaderBoardSummaryPresenter;
-import in.sportscafe.scgame.utils.ViewUtils;
-import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 
 /**
  * Created by Jeeva on 15/6/16.

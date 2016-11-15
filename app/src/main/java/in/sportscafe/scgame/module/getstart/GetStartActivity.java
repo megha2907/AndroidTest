@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.jeeva.android.Log;
+
+import java.util.Arrays;
+
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
@@ -12,6 +16,8 @@ import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
+import in.sportscafe.scgame.module.user.preference.PreferenceManager;
+import in.sportscafe.scgame.module.user.preference.SavePreferenceModelImpl;
 import in.sportscafe.scgame.module.user.sportselection.SportSelectionActivity;
 import in.sportscafe.scgame.module.user.sportselection.SportsModelImpl;
 
@@ -26,13 +32,17 @@ public class GetStartActivity extends ScGameActivity {
         setContentView(R.layout.activity_getstarted);
 
         if (ScGameDataHandler.getInstance().getFavoriteSportsIdList().size() > 0) {
+//            if (ScGameDataHandler.getInstance().getFavoriteSportsIdList().contains(10)){
+//                autoSaveAllSports();
+//            }
             navigateToHome();
             return;
         } else if (ScGameDataHandler.getInstance().isLoggedInUser()) {
             if (null == ScGameDataHandler.getInstance().getUserInfo().getUserNickName()) {
                 navigateToEditProfile();
                 return;
-            } else {
+            }
+            else {
                 navigateToSportSelection();
                 return;
             }
@@ -47,6 +57,25 @@ public class GetStartActivity extends ScGameActivity {
             }
         });
     }
+
+//    private void autoSaveAllSports() {
+//        new PreferenceManager().savePreference(Arrays.asList(new Integer[] {1,2,3,4,5,6,7,8,9,10}),
+//                new SavePreferenceModelImpl.SavePreferenceModelListener() {
+//                    @Override
+//                    public void onSuccess()
+//                    {
+//                    }
+//
+//                    @Override
+//                    public void onNoInternet() {
+//                        onNoInternet();
+//                    }
+//
+//                    @Override
+//                    public void onFailed(String message) {
+//                    }
+//                });
+//    }
 
     private void navigateToHome() {
         startActivity(new Intent(this, HomeActivity.class));

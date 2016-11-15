@@ -48,7 +48,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp_14"
             android:gravity="center_horizontal"
-            android:text="Choose your favourite sports"
+            android:text="Follow your favourite sports"
             android:textAllCaps="false"
             android:textSize="@dimen/dp_16"
             android:textColor="@color/textcolorlight"

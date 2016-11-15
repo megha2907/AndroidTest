@@ -1,6 +1,7 @@
 package in.sportscafe.scgame.module.play.myresults;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
+import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
+import in.sportscafe.scgame.module.play.myresultstimeline.MyResultsTimelineActivity;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -79,10 +82,16 @@ public class MyResultsActivity extends ScGameActivity implements MyResultsView {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        finish();
+                        gotoMyResultsTimeline();
                     }
                 }
 
         );
+    }
+
+    private void gotoMyResultsTimeline() {
+        Intent intent = new Intent(this, MyResultsTimelineActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
