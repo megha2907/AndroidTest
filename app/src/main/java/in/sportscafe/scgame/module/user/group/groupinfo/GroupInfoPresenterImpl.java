@@ -2,6 +2,7 @@ package in.sportscafe.scgame.module.user.group.groupinfo;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
@@ -70,29 +71,31 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     @Override
     public void onClickShareCode() {
-        GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
+        //GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
 
-        BranchUniversalObject buo = new BranchUniversalObject()
-                .setTitle("Group Invitation")
-                .setContentDescription("Click this link, If you want to join in my \"" + groupInfo.getName() + "\" group." )
-                .setContentImageUrl("https://s-media-cache-ak0.pinimg.com/originals/da/45/24/da452441898ff6863ada4984b27bcbdc.jpg")
-                .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
-                .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode());
+        AppSnippet.doGeneralShare(mGroupInfoView.getContext(), mGroupInfoModel.getShareCodeContent());
 
-        LinkProperties linkProperties = new LinkProperties()
-                .setFeature("invite");
-
-        buo.generateShortUrl(mGroupInfoView.getContext(), linkProperties,
-                new Branch.BranchLinkCreateListener() {
-            @Override
-            public void onLinkCreate(String url, BranchError error) {
-                if(null == error) {
-                    AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url + "?$deeplink_path=groupInvite");
-                } else {
-                    ExceptionTracker.track(error.getMessage());
-                }
-            }
-        });
+//        BranchUniversalObject buo = new BranchUniversalObject()
+//                .setTitle("Group Invitation")
+//                .setContentDescription("To join my group " + groupInfo.getName() + ", use group code "+ groupInfo.getGroupCode() )
+//                .setContentImageUrl("https://s-media-cache-ak0.pinimg.com/originals/da/45/24/da452441898ff6863ada4984b27bcbdc.jpg")
+//                .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+//                .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode());
+//
+//        LinkProperties linkProperties = new LinkProperties()
+//                .setFeature("invite");
+//
+//        buo.generateShortUrl(mGroupInfoView.getContext(), linkProperties,
+//                new Branch.BranchLinkCreateListener() {
+//            @Override
+//            public void onLinkCreate(String url, BranchError error) {
+//                if(null == error) {
+//                    AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url + "?$deeplink_path=groupInvite");
+//                } else {
+//                    ExceptionTracker.track(error.getMessage());
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -124,6 +127,11 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     }
 
     @Override
+    public void onLeaveGroup() {
+        mGroupInfoModel.leaveGroup();
+    }
+
+    @Override
     public void onLeaveGroupSuccess() {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.showMessage(Constants.Alerts.LEAVE_GROUP_SUCCESS);
@@ -137,7 +145,8 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     }
 
-    private void showAlert(String message) {
+       private void showAlert(String message) {
+        Toast.makeText(mGroupInfoView.getContext(), message, Toast.LENGTH_SHORT).show();
 
         }
 

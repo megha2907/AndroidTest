@@ -3,30 +3,28 @@ package in.sportscafe.scgame.module.home;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
-import com.jeeva.android.widgets.HmImageView;
-
-import java.util.List;
+import com.jeeva.android.widgets.customfont.CustomButton;
+import com.moe.pushlibrary.providers.MoEDataContract;
 
 import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
-import in.sportscafe.scgame.module.TournamentFeed.TournamentFeedFragment;
+import in.sportscafe.scgame.module.tournament.TournamentFragment;
+import in.sportscafe.scgame.module.tournamentFeed.TournamentFeedFragment;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.notifications.NotificationInboxFragment;
-import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
 import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
-import in.sportscafe.scgame.module.user.login.dto.PowerUpInfo;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.ProfileFragment;
 import in.sportscafe.scgame.module.user.myprofile.dto.UserInfoResponse;
@@ -79,7 +77,7 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
         if (null==intent.getExtras()){
             showFeed();
         }
-        else if (intent.getExtras().getString("group").equals("openprofile")){
+        else if (intent.getExtras().containsKey("group")||intent.getExtras().containsKey("results")||intent.getExtras().containsKey("badges")){
 
             mHomeButton.setSelected(false);
             mNotificationButton.setSelected(false);
@@ -96,6 +94,32 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
         }
 
         checkGroupCode();
+
+        getunReadNotificationCount();
+
+    }
+
+    private void getunReadNotificationCount() {
+
+        Cursor cur = getContext().getContentResolver().query(
+                MoEDataContract.MessageEntity.getContentUri(getApplicationContext()),
+                MoEDataContract.MessageEntity.PROJECTION, MoEDataContract.MessageEntity.MSG_CLICKED + " = ?",
+                new String[] { "0" }, MoEDataContract.MessageEntity.DEFAULT_SORT_ORDER);
+
+        int unReadCount = 0;
+        if (null != cur) {
+            unReadCount = cur.getCount();
+            cur.close();
+        }
+
+        CustomButton notificationCount = (CustomButton)findViewById(R.id.home_ibtn_notification_count);
+
+        if (unReadCount==0){
+            notificationCount.setVisibility(View.GONE);
+        } else{
+            notificationCount.setVisibility(View.VISIBLE);
+            notificationCount.setText(String.valueOf(unReadCount));
+        }
     }
 
     public void onClickTab(View view) {
@@ -123,7 +147,7 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
                   mProfileTv.setSelected(false);
                   mHomeTv.setSelected(true);
 
-                  loadFragment(new TournamentFeedFragment());
+                  loadFragment(new TournamentFragment());
                   break;
 
               case R.id.home_rl_profile:

@@ -24,18 +24,18 @@
             android:textColor="@android:color/white"/>
 
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:id="@+id/edit_profile_btn"
-            android:textSize="@dimen/dp_16"
-            android:textColor="@color/textcolorlight"
-            android:onClick="onClick"
-            android:background="@drawable/edit_profile_icon"
-            android:textAllCaps="false"
-            android:layout_marginRight="@dimen/dp_20"
-            />
+        <!--<ImageButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:id="@+id/edit_profile_btn"-->
+            <!--android:textSize="@dimen/dp_16"-->
+            <!--android:textColor="@color/textcolorlight"-->
+            <!--android:onClick="onClick"-->
+            <!--android:background="@drawable/edit_profile_icon"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:layout_marginRight="@dimen/dp_20"-->
+            <!--/>-->
 
         </android.support.v7.widget.Toolbar>
 

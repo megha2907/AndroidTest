@@ -320,6 +320,7 @@
                 app:layout_scrollFlags="enterAlwaysCollapsed"
                 android:layout_gravity="bottom"
                 android:layout_below="@+id/profile_ll_points_parent"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                 />
 
     </android.support.design.widget.AppBarLayout>

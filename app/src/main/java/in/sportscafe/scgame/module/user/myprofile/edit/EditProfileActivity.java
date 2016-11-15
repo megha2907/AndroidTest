@@ -11,6 +11,7 @@ import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -224,15 +225,27 @@ public class EditProfileActivity extends ScGameActivity implements EditProfileVi
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     imagePath = cursor.getString(columnIndex);
 
-                    Picasso.with(getApplicationContext()).load(new File(imagePath))
-                            .into(mIvProfileImage);
-                    cursor.close();
+                    File file = new File(imagePath);
+                    long length = file.length() / 1024;
 
-                    if (!TextUtils.isEmpty(imagePath)) {
-                        uploadImage();
+                    if(length < 1024){
+                        if (!TextUtils.isEmpty(imagePath)) {
+                            uploadImage();
+                        }
+
+                        Picasso.with(getApplicationContext()).load(new File(imagePath))
+                                .into(mIvProfileImage);
+                        cursor.close();
+
+                        mIvProfileImage.setVisibility(View.VISIBLE);
+
                     }
-
-                    mIvProfileImage.setVisibility(View.VISIBLE);
+                    else
+                    {
+                        Toast toast =Toast.makeText(getContext(), "Image size is too large, please select an image with size <1MB", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
 
                     ScGameAnalytics.getInstance().trackEditProfile(AnalyticsActions.PHOTO, AnalyticsLabels.GALLERY);
                 } else {

@@ -20,14 +20,11 @@ import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameFragment;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupsTourSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.RankSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.SportSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.TourSummary;
 import in.sportscafe.scgame.module.user.points.PointsActivity;
 
 /**
@@ -91,7 +88,7 @@ public class MyLeaguesFragment extends ScGameFragment implements MyGroupPosition
                 groupSummary = new GroupSummary(groupId, groupInfo.getName());
             }
 
-            for (TournamentInfo tournamentInfo : groupInfo.getFollowedTournaments()) {
+            for (TournamentFeedInfo tournamentInfo : groupInfo.getFollowedTournaments()) {
                 if(!grpSportKeys.contains(groupId + "" + tournamentInfo.getTournamentId())) {
                     //groupSummary.addRank(new GroupsTourSummary(tournamentInfo.getTournamentId(), tournamentInfo.getTournamentName(),tournamentInfo.getTournamentName(),tournamentInfo.getSportsName(),tournamentInfo.getTournamentId(),tournamentInfo.getTournamentId(),tournamentInfo.getTournamentId(),tournamentInfo.getTournamentId(),tournamentInfo.getTournamentId()));
                 }

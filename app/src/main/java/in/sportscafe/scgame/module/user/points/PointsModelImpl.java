@@ -1,40 +1,23 @@
 package in.sportscafe.scgame.module.user.points;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.widget.ArrayAdapter;
 
 import com.jeeva.android.Log;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import in.sportscafe.scgame.Constants;
-import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.ScGameDataHandler;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.common.ViewPagerAdapter;
 import in.sportscafe.scgame.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.scgame.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.scgame.module.user.leaderboard.dto.LeaderBoard;
-import in.sportscafe.scgame.module.user.leaderboard.dto.UserLeaderBoard;
-import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.BaseSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.ChallengesTourSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupsTourSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.TourSummary;
-import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
 
 import static in.sportscafe.scgame.Constants.BundleKeys;
-import static in.sportscafe.scgame.Constants.LeaderBoardPeriods;
 
 /**
  * Created by Jeeva on 10/6/16.

@@ -59,7 +59,7 @@ public class LeaveGroupModelImpl {
                         if(response.isSuccessful()) {
                             mLeaveGroupModelListener.onSuccessLeaveGroup();
                         } else {
-                            mLeaveGroupModelListener.onFailedLeaveGroup(response.message());
+                            mLeaveGroupModelListener.onFailedLeaveGroup(Constants.Alerts.CANNOT_LEAVE_GROUP);
                         }
                     }
                 }

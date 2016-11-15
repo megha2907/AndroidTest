@@ -22,4 +22,6 @@ public interface GroupInfoPresenter {
     void onLongClickShareCode();
 
     void onGetMemberResult();
+
+    void onLeaveGroup();
 }

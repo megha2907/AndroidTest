@@ -87,11 +87,18 @@ public class MyResultsTimelineActivity extends ScGameActivity implements MyResul
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        finish();
+                        gotoHomeActivity();
                     }
                 }
 
         );
+    }
+
+    private void gotoHomeActivity() {
+        Intent homeintent = new Intent(this, HomeActivity.class);
+        homeintent.putExtra("results", "openprofile");
+        startActivity(homeintent);
+        finish();
     }
 
 }

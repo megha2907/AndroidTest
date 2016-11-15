@@ -20,4 +20,8 @@ public interface SportSelectionView extends View {
     void goBackWithSuccessResult();
 
     void showToast();
+
+    void changeViewforProfile();
+
+    void changeViewforLogin();
 }
