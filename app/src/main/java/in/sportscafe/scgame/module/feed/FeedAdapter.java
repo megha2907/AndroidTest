@@ -387,9 +387,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     Bundle mBundle = new Bundle();
                     mBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
 
-                    Intent intent =  new Intent(mcon, PredictionActivity.class);
+                    Intent intent =  new Intent(view.getContext(), PredictionActivity.class);
                     intent.putExtras(mBundle);
-                    mcon.startActivity(intent);
+                    view.getContext().startActivity(intent);
                     break;
 
                 case R.id.schedule_row_btn_points:
@@ -398,9 +398,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     Bundle mBundle2 = new Bundle();
                     mBundle2.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId));
 
-                    Intent mintent =  new Intent(mcon, MyResultsActivity.class);
+                    Intent mintent =  new Intent(view.getContext(), MyResultsActivity.class);
                     mintent.putExtras(mBundle2);
-                    mcon.startActivity(mintent);
+                    view.getContext().startActivity(mintent);
                     break;
 
                 case R.id.schedule_row_tv_match_result_wait:
@@ -409,9 +409,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     Bundle mBundle3 = new Bundle();
                     mBundle3.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId2));
 
-                    Intent mintent2 =  new Intent(mcon, MyResultsActivity.class);
+                    Intent mintent2 =  new Intent(view.getContext(), MyResultsActivity.class);
                     mintent2.putExtras(mBundle3);
-                    mcon.startActivity(mintent2);
+                    view.getContext().startActivity(mintent2);
                     break;
 
             }
