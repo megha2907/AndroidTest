@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#25232D</color>
     <color name="colorPrimaryDark">#00000C</color>
-    <color name="colorAccent">#C95140</color>
+    <color name="colorAccent">#25232D</color>
 
     <color name="alto">#D8D8D8</color>
     <color name="silver_chalice">#AAAAAA</color>

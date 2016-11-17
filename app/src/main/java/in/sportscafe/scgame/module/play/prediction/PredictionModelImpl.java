@@ -18,6 +18,7 @@ import in.sportscafe.scgame.module.offline.PredictionDataHandler;
 import in.sportscafe.scgame.module.play.prediction.dto.Answer;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
 import in.sportscafe.scgame.module.play.prediction.dto.QuestionsResponse;
+import in.sportscafe.scgame.module.play.tindercard.FlingCardListener;
 import in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 import in.sportscafe.scgame.webservice.MyWebService;
@@ -38,7 +39,6 @@ public class PredictionModelImpl implements PredictionModel,
 
     private OnPredictionModelListener mPredictionModelListener;
 
-
     private Map<Integer, Match> mMatchMap = new HashMap<>();
 
     private List<Match> mMyResultList = new ArrayList<>();
@@ -52,6 +52,7 @@ public class PredictionModelImpl implements PredictionModel,
     private int mRemainingTime;
 
     private boolean mPassEnabled = true;
+
 
     public PredictionModelImpl(OnPredictionModelListener predictionModelListener) {
         this.mPredictionModelListener = predictionModelListener;
@@ -73,7 +74,6 @@ public class PredictionModelImpl implements PredictionModel,
 
         getAllQuestions();
     }
-
 
     @Override
     public void getAllQuestions() {
@@ -141,7 +141,6 @@ public class PredictionModelImpl implements PredictionModel,
         mPredictionAdapter = new PredictionAdapter(mPredictionModelListener.getContext(),
                  mTotalCount);
         mPredictionModelListener.onGetAdapter(mPredictionAdapter, this);
-
         int count = 1;
         for (Question question : questionList) {
             question.setQuestionNumber(count++);
@@ -155,6 +154,11 @@ public class PredictionModelImpl implements PredictionModel,
     public void updatePowerUps() {
         mPredictionAdapter.updatePowerUp();
         mPredictionAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setFlingCardListener(FlingCardListener flingCardListener) {
+        mPredictionAdapter.setFlingCardListener(flingCardListener);
     }
 
     @Override
@@ -225,16 +229,15 @@ public class PredictionModelImpl implements PredictionModel,
         }
 
         if(itemsInAdapter == 1 && mTotalCount == 1) {
-            //mPassEnabled = false;
+            mPassEnabled = false;
             mPredictionModelListener.onShowingLastQuestion();
         } else if(mTotalCount == 0) {
-            mPassEnabled = false;
             mTotalCount = mPredictionAdapter.getCount();
-            mPredictionModelListener.onShowingPassedQuestions();
         }
 
         mPredictionModelListener.onQuestionChanged(mPredictionAdapter.getItem(0));
         mPredictionModelListener.getNumberofCards(itemsInAdapter);
+
 
        // mPredictionAdapter.startTimer();
     }

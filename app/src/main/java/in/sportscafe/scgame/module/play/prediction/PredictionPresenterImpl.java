@@ -8,6 +8,7 @@ import java.util.List;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
+import in.sportscafe.scgame.module.play.tindercard.FlingCardListener;
 import in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView;
 
 /**
@@ -17,10 +18,13 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     private PredictionView mPredictionView;
 
+    private FlingCardListener mFlingCardListener;
+
     private PredictionModel mPredictionModel;
 
     public PredictionPresenterImpl(PredictionView predictionView) {
         this.mPredictionView = predictionView;
+        this.mFlingCardListener = mFlingCardListener;
         this.mPredictionModel = PredictionModelImpl.newInstance(this);
     }
 
@@ -95,6 +99,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     }
 
+    @Override
+    public void setFlingListener(FlingCardListener topCardListener) {
+        mPredictionModel.setFlingCardListener(topCardListener);
+    }
+
 
     @Override
     public void onFailedQuestions(String message) {
@@ -118,7 +127,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void getNumberofCards(int itemsInAdapter) {
-
         mPredictionView.setNumberofCards(itemsInAdapter);
     }
 

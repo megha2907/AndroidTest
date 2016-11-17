@@ -2,6 +2,8 @@ package in.sportscafe.scgame.module.play.prediction;
 
 import android.os.Bundle;
 
+import in.sportscafe.scgame.module.play.tindercard.FlingCardListener;
+
 /**
  * Created by Jeeva on 20/5/16.
  */
@@ -21,4 +23,5 @@ public interface PredictionModel {
 
     void updatePowerUps();
 
+    void setFlingCardListener(FlingCardListener flingCardListener);
 }

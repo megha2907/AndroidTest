@@ -5,6 +5,7 @@ import android.os.Bundle;
 import java.util.List;
 
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
+import in.sportscafe.scgame.module.play.tindercard.FlingCardListener;
 
 /**
  * Created by Jeeva on 20/5/16.
@@ -16,4 +17,6 @@ public interface PredictionPresenter {
     void onPowerUp();
 
     void onSetQuestionOption(List<Question> questionList);
+
+    void setFlingListener(FlingCardListener topCardListener);
 }

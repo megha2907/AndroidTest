@@ -71,6 +71,9 @@
             android:name=".module.common.Settings"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".module.common.WebViewActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".module.feed.FeedActivity"

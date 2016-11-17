@@ -24,6 +24,7 @@ import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.feed.FeedActivity;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
+import in.sportscafe.scgame.module.play.tindercard.FlingCardListener;
 import in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView;
 
 public class PredictionActivity extends ScGameActivity implements PredictionView, View.OnClickListener, View.OnTouchListener, View.OnDragListener {
@@ -54,9 +55,6 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
             }
         });
 
-        this.mPredictionPresenter = PredictionPresenterImpl.newInstance(this);
-        this.mPredictionPresenter.onCreatePrediction(getIntent().getExtras());
-
 
         //rlPowerUp = (RelativeLayout) findViewById(R.id.rl_powerup);
         CustomButton btnquestionValue = (CustomButton) findViewById(R.id.swipe_card_question_value);
@@ -72,6 +70,8 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
             mpowerUpApplied = true;
         }
 
+        this.mPredictionPresenter = PredictionPresenterImpl.newInstance(this);
+        this.mPredictionPresenter.onCreatePrediction(getIntent().getExtras());
 
     }
 
@@ -134,7 +134,20 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
                            SwipeFlingAdapterView.OnSwipeListener<Question> swipeListener) {
         mSwipeFlingAdapterView.setAdapter(predictionAdapter);
         mSwipeFlingAdapterView.setSwipeListener(swipeListener);
+
+        invokeCardListener();
     }
+
+    private void invokeCardListener() {
+
+        mSwipeFlingAdapterView.post(new Runnable() {
+            @Override
+            public void run() {
+                mPredictionPresenter.setFlingListener(mSwipeFlingAdapterView.getTopCardListener());
+            }
+        });
+    }
+
 
     @Override
     public void hidePass() {
@@ -177,6 +190,12 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
             case R.id.prediction_btn_pass:
                 mSwipeFlingAdapterView.getTopCardListener().selectBottom();
                 break;
+            case R.id.swipe_card_tv_left:
+                mSwipeFlingAdapterView.getTopCardListener().selectLeft();
+                break;
+            case R.id.swipe_card_tv_right:
+                mSwipeFlingAdapterView.getTopCardListener().selectRight();
+                break;
         }
     }
 
@@ -201,16 +220,17 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
 
     @Override
     public void setLeftOption(String questionOption1) {
+        TextView swipeleftv = (TextView) findViewById(R.id.swipe_card_tv_left);
+        swipeleftv.setText(questionOption1);
 
-        ((CustomTextView) findViewById(R.id.swipe_card_tv_left)).setText(questionOption1);
+        invokeCardListener();
 
     }
 
     @Override
     public void setRightOption(String questionOption2) {
-
-        ((CustomTextView) findViewById(R.id.swipe_card_tv_right)).setText(questionOption2);
-
+        TextView swiperighttv = (TextView) findViewById(R.id.swipe_card_tv_right);
+        swiperighttv.setText(questionOption2);
     }
 
     @Override
@@ -239,6 +259,5 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
 
 
     }
-
 
 }

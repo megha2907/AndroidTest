@@ -45,17 +45,16 @@ public class BadgeAdapter extends Adapter<String, BadgeAdapter.ViewHolder> {
         String badge_id = parts[0];
         String notif_title = parts[1];
 
-
         switch (badge_id) {
             case "accuracy_streak":
                 holder.mTvBadgeName.setText("Sharpshooter"+" - "+notif_title);
                 holder.mIvBadge.setBackgroundResource(R.drawable.notification_accuracy_badge);
-                holder.mTvBadgeDesc.setText("More than 80% accuracy in your last 5 matches");
+                holder.mTvBadgeDesc.setText(R.string.accuracy_streak);
                 break;
             case "table_topper":
                 holder.mTvBadgeName.setText("Table Topper"+" - "+notif_title);
                 holder.mIvBadge.setBackgroundResource(R.drawable.notification_topper_badge);
-                holder.mTvBadgeDesc.setText("Top 5 in this leaderboard");
+                holder.mTvBadgeDesc.setText(R.string.table_topper);
                 break;
             default:
                 holder.mIvBadge.setBackgroundResource(R.drawable.placeholder_icon);

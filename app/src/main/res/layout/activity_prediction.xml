@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
+    <in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView
+        android:id="@+id/activity_prediction_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:rotation_degrees="15.5" />
+
     <!--<RelativeLayout-->
         <!--android:id="@+id/rl_powerup"-->
         <!--android:layout_width="@dimen/dp_100"-->
@@ -127,8 +133,8 @@
             android:layout_toLeftOf="@id/schedule_row_btn_vs"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_centerInParent="true"
-
-
+            android:onClick="onClick"
+            android:clickable="true"
             />
 
         <com.jeeva.android.widgets.HmImageView
@@ -154,6 +160,8 @@
             android:gravity="right"
             android:textSize="@dimen/dp_16"
             android:layout_centerInParent="true"
+            android:onClick="onClick"
+            android:clickable="true"
 
             />
 
@@ -194,7 +202,7 @@
         android:layout_above="@+id/prediction_btn_pass"
         android:background="@android:color/transparent"/>
 
-    <com.jeeva.android.widgets.customfont.CustomTextView
+    <TextView
         android:id="@+id/prediction_btn_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -207,7 +215,8 @@
         android:textSize="@dimen/dp_15"
         android:textColor="@color/textcolorlight"
         android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginBottom="@dimen/dp_5"/>
+        android:layout_marginBottom="@dimen/dp_5"
+        android:clickable="true"/>
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/prediction_tv_message"
@@ -221,12 +230,6 @@
         android:text="Last question!"
         android:textColor="@color/white"
         android:visibility="gone"/>
-
-    <in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView
-        android:id="@+id/activity_prediction_swipe"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:rotation_degrees="15.5" />
 
 
 

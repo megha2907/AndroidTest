@@ -49,6 +49,7 @@ public interface Constants {
 //        String NO_NETWORK_CONNECTION = "No internet connection available";
         String NO_NETWORK_CONNECTION = "Check your internet connection and try again";
         String NO_QUESTIONS = "No Questions Found";
+        String NO_TOURNAMENTS = "No Tournaments Found";
         String DATA_NOT_FOUND = "There is problem in your internet connection";
         String JSON_PARSING = "There is problem in your internet connection";
         String TIME_OUT = "There is problem in your internet connection";
