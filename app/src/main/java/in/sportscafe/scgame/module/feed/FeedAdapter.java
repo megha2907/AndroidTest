@@ -413,7 +413,6 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     mintent2.putExtras(mBundle3);
                     view.getContext().startActivity(mintent2);
                     break;
-
             }
 
 

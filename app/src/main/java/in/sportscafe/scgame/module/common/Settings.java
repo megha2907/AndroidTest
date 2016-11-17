@@ -153,7 +153,6 @@ public class Settings extends AppCompatActivity {
         );
     }
 
-
     private void navigateToEditProfile() {
         Intent intent=new Intent(this,EditProfileActivity.class);
         Bundle bundle=new Bundle();
