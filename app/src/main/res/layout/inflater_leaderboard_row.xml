@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:background="@color/colorGrey">
+    android:background="@color/black">
 
     <View
         android:id="@+id/leaderboard_row_view_user"

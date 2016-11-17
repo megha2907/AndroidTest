@@ -174,7 +174,8 @@
                                 android:layout_alignParentLeft="true"
                                 android:layout_weight="1"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/placeholder_icon" />
+                                android:src="@drawable/placeholder_icon"
+                               />
 
                             <com.jeeva.android.widgets.HmImageView
                                 android:id="@+id/swipe_card_iv_right"
@@ -183,7 +184,8 @@
                                 android:layout_weight="1"
                                 android:paddingLeft="@dimen/dp_1"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/placeholder_icon" />
+                                android:src="@drawable/placeholder_icon"
+                              />
 
                         </LinearLayout>
 

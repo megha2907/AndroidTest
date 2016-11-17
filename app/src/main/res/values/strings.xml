@@ -5,4 +5,6 @@
     <string name="next">NEXT</string>
     <string name="st1_no_notification">No notifications yet!!!</string>
     <string name="st2_no_notification">Come back again &amp; check \n for notifications</string>
+    <string name="accuracy_streak">More than 80% accuracy in your last 5 matches</string>
+    <string name="table_topper">Top 5 in this leaderboard</string>
 </resources>

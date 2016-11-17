@@ -36,21 +36,16 @@
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/activity_getstarted_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/blue_button_width"
+        android:layout_height="@dimen/blue_button_height"
         android:layout_above="@id/activity_getstarted_btn_login"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/powerup_screen_btn_bg"
-        android:paddingBottom="@dimen/dp_15"
-        android:paddingLeft="@dimen/dp_30"
-        android:paddingRight="@dimen/dp_30"
-        android:layout_marginRight="@dimen/dp_140"
-        android:paddingTop="@dimen/dp_15"
         android:text="GET STARTED"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="@dimen/dp_20"
+        android:textSize="@dimen/blue_button_text"
         app:typeface="lato_regular"/>
 
     <ImageView

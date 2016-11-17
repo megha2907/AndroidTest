@@ -7,12 +7,11 @@ import com.jeeva.android.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.scgame.module.user.group.LeaveGroupModelImpl;
 import in.sportscafe.scgame.module.user.group.groupinfo.GrpNameUpdateModelImpl;
 import in.sportscafe.scgame.module.user.group.groupinfo.GrpTournamentUpdateModelImpl;
@@ -195,10 +194,10 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
 
     @Override
     public GrpTournamentSelectionAdapter getAdapter(Context context) {
-        List<TournamentInfo> followedTournaments = mGroupInfo.getFollowedTournaments();
+        List<TournamentFeedInfo> followedTournaments = mGroupInfo.getFollowedTournaments();
 
         List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
-        for (TournamentInfo tournamentInfo : followedTournaments) {
+        for (TournamentFeedInfo tournamentInfo : followedTournaments) {
             mFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
         }
 

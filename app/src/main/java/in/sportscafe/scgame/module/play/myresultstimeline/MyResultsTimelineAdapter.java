@@ -1,7 +1,6 @@
 package in.sportscafe.scgame.module.play.myresultstimeline;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -9,11 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
@@ -27,11 +26,10 @@ import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.feed.dto.Feed;
-import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
+import in.sportscafe.scgame.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.feed.dto.Match;
 import in.sportscafe.scgame.module.play.myresults.MyResultsActivity;
 import in.sportscafe.scgame.module.play.prediction.PredictionActivity;
-import in.sportscafe.scgame.utils.ViewUtils;
 import in.sportscafe.scgame.utils.timeutils.TimeAgo;
 import in.sportscafe.scgame.utils.timeutils.TimeUnit;
 import in.sportscafe.scgame.utils.timeutils.TimeUtils;
@@ -151,7 +149,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
         {
             holder.mBtnPlayMatch.setVisibility(View.GONE);
         }
-        else if(match.getisAttempted()==true)
+        else if(match.getisAttempted()==true && (null == match.getResult() || match.getResult().isEmpty()))
         {
             holder.mTvMatchResult.setVisibility(View.GONE);
             holder.mBtnPlayMatch.setVisibility(View.GONE);
@@ -160,10 +158,11 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
             holder.mTvResultWait.setTag(match.getId());
         }
-        else
-        {
+        else if ((null == match.getResult() || match.getResult().isEmpty()))
+        {   //ELSE PLAY BTN VISIBLE
             holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
             holder.mBtnPlayMatch.setTag(match);
+
         }
 
 
@@ -182,6 +181,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
             holder.mBtnMatchPoints.setTag(match.getId());
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
+            holder.mIvMatchPointsRightArrow.setVisibility(View.VISIBLE);
 
         }
 
@@ -241,7 +241,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
         }
     }
 
-    class TourViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class TourViewHolder extends RecyclerView.ViewHolder {
 
         TextView mTvTournamentName;
 
@@ -252,19 +252,9 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
             mTvTournamentName = (TextView) V.findViewById(R.id.tour_row_tv_tour_name);
             mLlScheduleParent = (LinearLayout) V.findViewById(R.id.tour_row_ll_schedule_parent);
-
-            V.findViewById(R.id.tour_row_ibtn_options).setOnClickListener(this);
-            V.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.tour_row_ibtn_options:
-                    showOptions(view.getContext());
-                    break;
-            }
-        }
+
     }
 
     class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -303,6 +293,8 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
         RelativeLayout mRlMatchStageParent;
 
+        ImageView mIvMatchPointsRightArrow;
+
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -322,6 +314,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
+            mIvMatchPointsRightArrow = (ImageView) V.findViewById(R.id.schedule_row_iv_match_points_right_arrow);
 
 
             mBtnPlayMatch.setOnClickListener(this);
@@ -385,24 +378,4 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
         }
     }
 
-    private void showOptions(Context context) {
-        if (null == mAlertDialog) {
-            mAlertDialog = ViewUtils.getDialogList(context, getOptions(),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            mAlertDialog.dismiss();
-                        }
-                    });
-        }
-        mAlertDialog.show();
-    }
-
-    private List<String> getOptions() {
-        List<String> options = new ArrayList<>();
-        options.add("Option 1");
-        options.add("Option 2");
-        options.add("Option 3");
-        return options;
-    }
 }

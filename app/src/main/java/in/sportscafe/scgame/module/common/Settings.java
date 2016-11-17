@@ -7,32 +7,125 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.customfont.CustomButton;
+import com.moe.pushlibrary.MoEHelper;
 
+import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.getstart.GetStartActivity;
+import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
 
 /**
  * Created by deepanshi on 31/8/16.
  */
-public class Settings extends AppCompatActivity implements View.OnClickListener {
+public class Settings extends AppCompatActivity {
 
     private Toolbar mtoolbar;
-    private CustomButton mBtnLogout;
+
+    private static final int EDIT_PROFILE_CODE = 35;
+
+    private String[] account = {"Edit Profile", "Logout", "Hourly Notifications", "Daily Notifications"};
+    private String[] support = {"Report a Problem"};
+    private String[] about = {"About Sportscafe" , "Terms of Service", "Privacy Policy"};
+
+    private ListView accountListView;
+    private ListView supportListView;
+    private ListView aboutListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        mBtnLogout=(CustomButton)findViewById(R.id.settings_btn_logout);
-        mBtnLogout.setOnClickListener(this);
+        accountListView = (ListView) findViewById(R.id.settings_account_lv);
+        supportListView = (ListView) findViewById(R.id.settings_support_lv);
+        aboutListView = (ListView) findViewById(R.id.settings_about_lv);
+
+        accountListView.setAdapter(new ArrayAdapter<String>(this, R.layout.inflater_settings_list_row, account));
+        supportListView.setAdapter(new ArrayAdapter<String>(this, R.layout.inflater_settings_list_row, support));
+        aboutListView.setAdapter(new ArrayAdapter<String>(this, R.layout.inflater_settings_list_row, about));
+
+        setDynamicHeight(accountListView);
+        setDynamicHeight(supportListView);
+        setDynamicHeight(aboutListView);
 
         initToolBar();
+        getAppVersion();
+
+        accountListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                switch(position){
+                    case 0:
+                        navigateToEditProfile();
+                        break;
+                    case 1:
+                        onClickLogout();
+                        break;
+                }
+
+            }
+        });
+
+
+        supportListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                switch(position){
+                    case 0:
+                        navigateToWebView("https://sportscafe.in/contactus","Report a Problem");
+                        break;
+                }
+
+            }
+        });
+
+        aboutListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                switch(position){
+                    case 0:
+                        navigateToWebView("https://sportscafe.in/aboutus","About Sportscafe");
+                        break;
+                    case 1:
+                        navigateToWebView("https://sportscafe.in/termsandconditions","Terms of Service");
+                        break;
+                    case 2:
+                        navigateToWebView("https://sportscafe.in/privacy","Privacy Policy");
+                        break;
+                }
+
+            }
+        });
+
+
+
+    }
+
+    private void navigateToWebView(String url, String heading) {
+
+        Intent intent=new Intent(Settings.this,WebViewActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("url", url);
+        bundle.putString("heading", heading);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+    }
+
+    private void getAppVersion() {
 
         PackageInfo pInfo = null;
         try {
@@ -42,10 +135,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         }
 
         String versionName = pInfo.versionName;
-
-        TextView versioncode=(TextView)findViewById(R.id.version_code_number);
-        versioncode.setText(versionName);
-
     }
 
     public void initToolBar() {
@@ -64,16 +153,22 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         );
     }
 
-    @Override
-    public void onClick(View v) {
-        onClickLogout();
+    private void navigateToEditProfile() {
+        Intent intent=new Intent(this,EditProfileActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("screen", Constants.BundleKeys.HOME_SCREEN);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, EDIT_PROFILE_CODE);
     }
+
 
     private void onClickLogout() {
         ScGameDataHandler.getInstance().clearAll();
         navigateToLogIn();
 
         ScGameAnalytics.getInstance().trackLogOut();
+        MoEHelper.getInstance(getApplicationContext()).logoutUser();
+
     }
 
     private void navigateToLogIn() {
@@ -81,4 +176,26 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+
+    public static void setDynamicHeight(ListView listView) {
+        ListAdapter adapter = listView.getAdapter();
+        //check adapter if null
+        if (adapter == null) {
+            return;
+        }
+        int height = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View listItem = adapter.getView(i, null, listView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            height += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams layoutParams = listView.getLayoutParams();
+        layoutParams.height = height + (listView.getDividerHeight() * (adapter.getCount() - 1));
+        listView.setLayoutParams(layoutParams);
+        listView.requestLayout();
+    }
+
+
 }

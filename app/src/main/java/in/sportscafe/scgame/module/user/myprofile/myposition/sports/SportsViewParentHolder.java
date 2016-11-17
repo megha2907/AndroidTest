@@ -1,27 +1,17 @@
 package in.sportscafe.scgame.module.user.myprofile.myposition.sports;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
-import com.jeeva.android.Log;
 
 import in.sportscafe.scgame.AppSnippet;
-import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
-import in.sportscafe.scgame.module.feed.FeedActivity;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.BaseSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.RankSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.SportSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.TourSummary;
-import in.sportscafe.scgame.module.user.points.PointsActivity;
 
 /**
  * Created by deepanshi on 9/21/16.

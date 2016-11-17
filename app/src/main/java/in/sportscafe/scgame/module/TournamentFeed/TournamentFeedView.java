@@ -1,4 +1,4 @@
-package in.sportscafe.scgame.module.TournamentFeed;
+package in.sportscafe.scgame.module.tournamentFeed;
 
 import com.jeeva.android.InAppView;
 
@@ -13,5 +13,5 @@ public interface TournamentFeedView extends InAppView {
 
     void moveAdapterPosition(int movePosition);
 
-    void dismissSwipeRefresh();
+//    void dismissSwipeRefresh();
 }

@@ -32,9 +32,8 @@ import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.feed.dto.Feed;
-import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
+import in.sportscafe.scgame.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.scgame.module.feed.dto.Match;
-import in.sportscafe.scgame.module.play.PlayActivity;
 import in.sportscafe.scgame.module.play.myresults.MyResultsActivity;
 import in.sportscafe.scgame.module.play.prediction.PredictionActivity;
 import in.sportscafe.scgame.utils.ViewUtils;
@@ -181,6 +180,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
             holder.mBtnMatchPoints.setTag(match.getId());
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
+            holder.mIvMatchPointsRightArrow.setVisibility(View.VISIBLE);
 
         }
 
@@ -222,6 +222,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mTvResultWait.setVisibility(View.VISIBLE);
             holder.mViewResult.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
+            holder.mTvResultWait.setTag(match.getId());
 
         }
         else if ((null == match.getResult() || match.getResult().isEmpty()))
@@ -343,6 +344,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         ImageButton mIbfeedDotIcon;
 
+        ImageView mIvMatchPointsRightArrow;
+
+
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -365,8 +369,11 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);
+            mIvMatchPointsRightArrow = (ImageView) V.findViewById(R.id.schedule_row_iv_match_points_right_arrow);
+
             mBtnPlayMatch.setOnClickListener(this);
             mBtnMatchPoints.setOnClickListener(this);
+            mTvResultWait.setOnClickListener(this);
         }
 
         @Override
@@ -380,9 +387,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     Bundle mBundle = new Bundle();
                     mBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
 
-                    Intent intent =  new Intent(mcon, PredictionActivity.class);
+                    Intent intent =  new Intent(view.getContext(), PredictionActivity.class);
                     intent.putExtras(mBundle);
-                    mcon.startActivity(intent);
+                    view.getContext().startActivity(intent);
                     break;
 
                 case R.id.schedule_row_btn_points:
@@ -391,9 +398,20 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     Bundle mBundle2 = new Bundle();
                     mBundle2.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId));
 
-                    Intent mintent =  new Intent(mcon, MyResultsActivity.class);
+                    Intent mintent =  new Intent(view.getContext(), MyResultsActivity.class);
                     mintent.putExtras(mBundle2);
-                    mcon.startActivity(mintent);
+                    view.getContext().startActivity(mintent);
+                    break;
+
+                case R.id.schedule_row_tv_match_result_wait:
+
+                    Integer matchId2 = (Integer) view.getTag();
+                    Bundle mBundle3 = new Bundle();
+                    mBundle3.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId2));
+
+                    Intent mintent2 =  new Intent(view.getContext(), MyResultsActivity.class);
+                    mintent2.putExtras(mBundle3);
+                    view.getContext().startActivity(mintent2);
                     break;
             }
 

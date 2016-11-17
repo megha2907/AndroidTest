@@ -23,6 +23,7 @@
         app:unselected_textSize="@dimen/dp_15"
         app:unselected_typeface="lato_hairline"
         android:layout_below="@+id/profile_ll_points_parent"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         />
 
     <in.sportscafe.scgame.module.common.CustomViewPager

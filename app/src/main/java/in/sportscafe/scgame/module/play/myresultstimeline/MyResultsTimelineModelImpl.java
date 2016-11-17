@@ -1,7 +1,6 @@
 package in.sportscafe.scgame.module.play.myresultstimeline;
 
 import android.content.Context;
-import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +11,7 @@ import java.util.Map;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGame;
-import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
+import in.sportscafe.scgame.module.tournamentFeed.dto.Tournament;
 
 import in.sportscafe.scgame.module.feed.dto.Feed;
 import in.sportscafe.scgame.module.feed.dto.Match;

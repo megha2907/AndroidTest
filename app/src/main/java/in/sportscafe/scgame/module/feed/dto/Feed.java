@@ -3,7 +3,7 @@ package in.sportscafe.scgame.module.feed.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.sportscafe.scgame.module.TournamentFeed.dto.Tournament;
+import in.sportscafe.scgame.module.tournamentFeed.dto.Tournament;
 
 /**
  * Created by Jeeva on 24/6/16.

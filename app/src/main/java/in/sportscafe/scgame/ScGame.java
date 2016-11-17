@@ -99,7 +99,7 @@ public class ScGame extends Application {
 
         if(!debuggable) {
             // Initializing the Crashlytics using fabric
-            Fabric.with(this, new Kit[] {new Crashlytics()});
+           Fabric.with(this, new Kit[] {new Crashlytics()});
         }
     }
 
