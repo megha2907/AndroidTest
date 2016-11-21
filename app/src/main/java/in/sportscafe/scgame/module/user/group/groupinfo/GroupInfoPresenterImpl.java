@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.jeeva.android.ExceptionTracker;
-import com.jeeva.android.Log;
 
 import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
@@ -71,31 +70,32 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     @Override
     public void onClickShareCode() {
-        //GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
+        GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
 
-        AppSnippet.doGeneralShare(mGroupInfoView.getContext(), mGroupInfoModel.getShareCodeContent());
+        BranchUniversalObject buo = new BranchUniversalObject()
+                .setTitle("Group Invitation")
+                .setContentDescription("Click this link, If you want to join in my &quot;" + groupInfo.getName() + "&quot; group." )
+                .setContentImageUrl("https://s-media-cache-ak0.pinimg.com/originals/da/45/24/da452441898ff6863ada4984b27bcbdc.jpg")
+                .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+                .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode())
+                .addContentMetadata(BundleKeys.GROUP_NAME, groupInfo.getName());
 
-//        BranchUniversalObject buo = new BranchUniversalObject()
-//                .setTitle("Group Invitation")
-//                .setContentDescription("To join my group " + groupInfo.getName() + ", use group code "+ groupInfo.getGroupCode() )
-//                .setContentImageUrl("https://s-media-cache-ak0.pinimg.com/originals/da/45/24/da452441898ff6863ada4984b27bcbdc.jpg")
-//                .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
-//                .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode());
-//
-//        LinkProperties linkProperties = new LinkProperties()
-//                .setFeature("invite");
-//
-//        buo.generateShortUrl(mGroupInfoView.getContext(), linkProperties,
-//                new Branch.BranchLinkCreateListener() {
-//            @Override
-//            public void onLinkCreate(String url, BranchError error) {
-//                if(null == error) {
-//                    AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url + "?$deeplink_path=groupInvite");
-//                } else {
-//                    ExceptionTracker.track(error.getMessage());
-//                }
-//            }
-//        });
+        LinkProperties linkProperties = new LinkProperties()
+                .addTag("inviteGroup")
+                .setFeature("inviteGroup")
+                .addControlParameter("$android_deeplink_path", "group/invite/");
+
+        buo.generateShortUrl(mGroupInfoView.getContext(), linkProperties,
+                new Branch.BranchLinkCreateListener() {
+            @Override
+            public void onLinkCreate(String url, BranchError error) {
+                if(null == error) {
+                    AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url);
+                } else {
+                    ExceptionTracker.track(error.getMessage());
+                }
+            }
+        });
     }
 
     @Override
