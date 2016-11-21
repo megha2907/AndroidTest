@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,6 +160,10 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
             holder.mTvMatchResult.setText(match.getResult());
+//            holder.mTvMatchResult.setSingleLine(false);
+//            holder.mTvMatchResult.setEllipsize(TextUtils.TruncateAt.END);
+//            int n = 2; // the exact number of lines you want to display
+//            holder.mTvMatchResult.setLines(n);
             //holder.mTvMatchResult.setLayoutParams(llp);
             holder.mBtnPlayMatch.setVisibility(View.GONE);
 

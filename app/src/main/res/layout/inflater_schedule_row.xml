@@ -176,8 +176,6 @@
             android:gravity="center"
             android:lineSpacingExtra="@dimen/dp_2"
             android:textSize="@dimen/dp_13"
-            android:ellipsize="end"
-            android:maxLines="3"
             />
 
 
