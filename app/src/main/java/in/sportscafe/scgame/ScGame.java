@@ -116,7 +116,8 @@ public class ScGame extends Application {
                 "fonts/roboto/RobotoCondensed-Bold.ttf", "fonts/roboto/Roboto-Medium.ttf",
                 "fonts/lato/Lato-Bold.ttf", "fonts/lato/Lato-Hairline.ttf",
                 "fonts/lato/Lato-Heavy.ttf", "fonts/lato/Lato-Light.ttf", "fonts/lato/Lato-Medium.ttf",
-                "fonts/lato/Lato-Regular.ttf", "fonts/lato/Lato-Semibold.ttf", "fonts/lato/Lato-Thin.ttf"
+                "fonts/lato/Lato-Regular.ttf", "fonts/lato/Lato-Semibold.ttf", "fonts/lato/Lato-Thin.ttf",
+                "fonts/lato/Lato-Black.ttf"
         );
     }
 

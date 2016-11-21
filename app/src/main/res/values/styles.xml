@@ -60,4 +60,8 @@
         <item name="colorControlHighlight">@color/colorMedium</item>
     </style>
 
+    <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

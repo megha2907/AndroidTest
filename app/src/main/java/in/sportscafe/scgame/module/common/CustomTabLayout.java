@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.customfont.CustomFont;
+
 import in.sportscafe.scgame.R;
 
 public class CustomTabLayout extends TabLayout {
@@ -35,12 +37,12 @@ public class CustomTabLayout extends TabLayout {
 
     private void init(Context context, AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomTabLayout);
-        /*mUnSelTabFont = CustomFont.getInstance().getTypeFace(context,
+        mUnSelTabFont = CustomFont.getInstance().getTypeFace(context,
                 a.getInt(R.styleable.CustomTabLayout_unselected_typeface, -1));
         mSelTabFont = CustomFont.getInstance().getTypeFace(context,
-                a.getInt(R.styleable.CustomTabLayout_selected_typeface, -1));*/
-        mUnSelTextSize = a.getDimensionPixelSize(R.styleable.CustomTabLayout_unselected_textSize, 10);
-        mSelTextSize = a.getDimensionPixelSize(R.styleable.CustomTabLayout_selected_textSize, 10);
+                a.getInt(R.styleable.CustomTabLayout_selected_typeface, -1));
+        mUnSelTextSize = a.getDimensionPixelSize(R.styleable.CustomTabLayout_unselected_textSize, 14);
+        mSelTextSize = a.getDimensionPixelSize(R.styleable.CustomTabLayout_selected_textSize, 22);
     }
 
     @Override
@@ -92,11 +94,11 @@ public class CustomTabLayout extends TabLayout {
                     textView = (TextView) tabViewChild;
 
                     // Todo Have to update when the fonts are choosen
-//                    textView.setTypeface(mSelTabFont, Typeface.NORMAL);
+                    textView.setTypeface(mSelTabFont, Typeface.NORMAL);
                     textView.setTextSize(mSelTextSize);
                 } else{
                     textView = (TextView) tabViewChild;
-//                    textView.setTypeface(mUnSelTabFont, Typeface.NORMAL);
+                    textView.setTypeface(mUnSelTabFont, Typeface.NORMAL);
                     textView.setTextSize(mUnSelTextSize);
                 }
                 break;

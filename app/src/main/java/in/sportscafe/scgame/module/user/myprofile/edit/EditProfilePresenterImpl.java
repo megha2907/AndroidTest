@@ -90,9 +90,9 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
             mEditProfileView.setSuccessResult();
         }
         else {
-          mEditProfileView.navigateToSportsSelection();
+          //mEditProfileView.navigateToSportsSelection();
 
-          //  autoSaveAllSports();
+            autoSaveAllSports();
 
             // For ISB
            // autoSaveIsb();

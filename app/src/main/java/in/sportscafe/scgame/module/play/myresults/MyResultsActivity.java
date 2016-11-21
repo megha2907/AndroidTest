@@ -94,4 +94,5 @@ public class MyResultsActivity extends ScGameActivity implements MyResultsView {
         startActivity(intent);
         finish();
     }
+    
 }

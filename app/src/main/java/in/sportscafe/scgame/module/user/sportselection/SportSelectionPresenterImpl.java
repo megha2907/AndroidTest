@@ -70,7 +70,9 @@ public class SportSelectionPresenterImpl implements SportSelectionPresenter, Spo
     @Override
     public void onEmptySelection() {
         mSportSelectionView.dismissProgressbar();
-        mSportSelectionView.showToast();
+        Toast toast =Toast.makeText(mSportSelectionView.getContext(), Constants.Alerts.EMPTY_SPORT_SELECTION, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override

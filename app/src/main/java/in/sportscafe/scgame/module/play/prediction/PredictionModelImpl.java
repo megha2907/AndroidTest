@@ -47,6 +47,8 @@ public class PredictionModelImpl implements PredictionModel,
 
     private int mTotalCount;
 
+    private int minitialCount;
+
     private Integer matchId;
 
     private int mRemainingTime;
@@ -137,6 +139,7 @@ public class PredictionModelImpl implements PredictionModel,
 
     private void populateAdapterData(List<Question> questionList) {
         mTotalCount = questionList.size();
+        minitialCount=questionList.size();
 
         mPredictionAdapter = new PredictionAdapter(mPredictionModelListener.getContext(),
                  mTotalCount);
@@ -234,10 +237,10 @@ public class PredictionModelImpl implements PredictionModel,
         } else if(mTotalCount == 0) {
             mTotalCount = mPredictionAdapter.getCount();
         }
+        ;
 
-        mPredictionModelListener.onQuestionChanged(mPredictionAdapter.getItem(0));
-        mPredictionModelListener.getNumberofCards(itemsInAdapter);
-
+        mPredictionModelListener.onQuestionChanged(mPredictionAdapter.getItem(0),minitialCount);
+        mPredictionAdapter.changeCardViewBackground();
 
        // mPredictionAdapter.startTimer();
     }
@@ -305,8 +308,6 @@ public class PredictionModelImpl implements PredictionModel,
 
         void onNoQuestions();
 
-        void onQuestionChanged(Question item);
-
-        void getNumberofCards(int itemsInAdapter);
+        void onQuestionChanged(Question item, int minitialCount);
     }
 }
