@@ -7,12 +7,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
@@ -54,6 +60,8 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
         });
 
 
+
+
         //rlPowerUp = (RelativeLayout) findViewById(R.id.rl_powerup);
         CustomButton btnquestionValue = (CustomButton) findViewById(R.id.swipe_card_question_value);
         btnpowerUpCount = (CustomButton) findViewById(R.id.swipe_card_tv_powerup_count);
@@ -72,23 +80,104 @@ public class PredictionActivity extends ScGameActivity implements PredictionView
             mpowerUpApplied = true;
         }
 
-       ImageView rightArrow =  (ImageView) findViewById(R.id.swipe_card_iv_right_arrow);
-        ImageView rightArrow2 =  (ImageView) findViewById(R.id.swipe_card_iv_right_arrow2);
-        ImageView rightArrow3 =  (ImageView) findViewById(R.id.swipe_card_iv_right_arrow3);
-      //  Animation myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        Animation myFadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.arrow1);
-        Animation arrow2Animation = AnimationUtils.loadAnimation(this, R.anim.arrow2);
-        Animation arrow3Animation = AnimationUtils.loadAnimation(this, R.anim.arrow3);
-       // rightArrow.startAnimation(myFadeInAnimation);
-        rightArrow.startAnimation(myFadeOutAnimation);
-        rightArrow2.startAnimation(arrow2Animation);
-        rightArrow3.startAnimation(arrow3Animation);
+       final ImageView rightArrow =  (ImageView) findViewById(R.id.swipe_card_iv_right_arrow);
+        final ImageView rightArrow2 =  (ImageView) findViewById(R.id.swipe_card_iv_right_arrow2);
+        final ImageView rightArrow3 =  (ImageView) findViewById(R.id.swipe_card_iv_right_arrow3);
+
+
+        final Animation arrow1Animation = createArrowAnimation(1000,1,0);
+        arrow1Animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                Log.i("PredictionActivity", "First anim starts");
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                Log.i("PredictionActivity", "First anim repeats");
+                rightArrow.setVisibility(View.GONE);
+                /*arrow1Animation.setDuration(2000);
+                arrow1Animation.setStartOffset(1000);*/
+
+            }
+        });
+        final Animation arrow2Animation = createArrowAnimation(1000,1,0);
+        arrow2Animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                rightArrow2.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                rightArrow2.setVisibility(View.GONE);
+
+            }
+        });
+        final Animation arrow3Animation = createArrowAnimation(1000,1,0);
+        arrow3Animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                rightArrow3.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                rightArrow3.setVisibility(View.GONE);
+
+            }
+        });
+
+        rightArrow.startAnimation(arrow1Animation);
+
+        rightArrow2.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                rightArrow2.startAnimation(arrow2Animation);
+            }
+        }, 500);
+
+        rightArrow3.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                rightArrow3.startAnimation(arrow3Animation);
+            }
+        }, 1000);
 
         this.mPredictionPresenter = PredictionPresenterImpl.newInstance(this);
         this.mPredictionPresenter.onCreatePrediction(getIntent().getExtras());
 
     }
 
+    private Animation createArrowAnimation(int duration, float fromAlpha, float toAlpha){
+
+//        AnimationSet animationSet = new AnimationSet(true);
+
+        /*TranslateAnimation translateAnimation=new TranslateAnimation(fromXDelta,toXDelta,fromYDelta,toYDelta);
+        translateAnimation.setDuration(duration);
+        translateAnimation.setStartOffset(startoffset);
+        translateAnimation.setRepeatCount(Animation.INFINITE);
+        animationSet.addAnimation(translateAnimation);*/
+
+        AlphaAnimation alphaAnimation=new AlphaAnimation(fromAlpha,toAlpha);
+        alphaAnimation.setDuration(duration);
+//        alphaAnimation.setRepeatCount(Animation.INFINITE);
+//        animationSet.addAnimation(alphaAnimation);
+
+        return alphaAnimation;
+    }
     @Override
     public void setTournamentName(String tournamentName) {
         ((TextView) findViewById(R.id.prediction_tv_tournament)).setText(tournamentName);

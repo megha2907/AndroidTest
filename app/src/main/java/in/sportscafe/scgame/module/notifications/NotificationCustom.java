@@ -80,7 +80,7 @@ public class NotificationCustom extends PushMessageListener {
             extras.putString(MoEHelperConstants.GCM_EXTRA_ACTIVITY_NAME,
                     "in.sportscafe.scgame.module.play.myresults.MyResultsActivity");
         }
-        if (extras.containsKey(EXTRA_BADGE_REQUEST)) {
+        else if (extras.containsKey(EXTRA_BADGE_REQUEST)) {
             extras.putString(MoEHelperConstants.GCM_EXTRA_ACTIVITY_NAME,
                     "in.sportscafe.scgame.module.user.badges.BadgeActivity");
         }
