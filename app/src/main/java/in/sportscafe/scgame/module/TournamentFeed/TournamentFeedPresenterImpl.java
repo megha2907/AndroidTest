@@ -1,19 +1,19 @@
-package in.sportscafe.scgame.module.TournamentFeed;
+package in.sportscafe.scgame.module.tournamentFeed;
 
 /**
  * Created by deepanshi on 9/29/16.
  */
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
+
+import com.jeeva.android.Log;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 
 
-/**
- * Created by Jeeva on 15/6/16.
- */
 public class TournamentFeedPresenterImpl implements TournamentFeedPresenter, TournamentFeedModelImpl.OnTournamentFeedModelListener {
 
     private TournamentFeedView mTournamentFeedView;
@@ -30,40 +30,20 @@ public class TournamentFeedPresenterImpl implements TournamentFeedPresenter, Tou
     }
 
     @Override
-    public void onCreateFeed(OnHomeActionListener listener) {
+    public void onCreateFeed(OnHomeActionListener listener,Bundle bundle) {
         mTournamentFeedView.setAdapter(mTournamentFeedModel.getAdapter(listener));
+        mTournamentFeedModel.init(bundle);
     }
+
 
     @Override
-    public void onRefresh() {
-        getFeedDetails();
+    public void update(Bundle bundle) {
+        mTournamentFeedModel.getTournamentFeed(bundle);
     }
 
-    private void getFeedDetails() {
-        mTournamentFeedModel.getFeeds();
-    }
-
-    @Override
-    public void onSuccessFeeds() {
-        //mTournamentFeedView.moveAdapterPosition(movePosition);
-        mTournamentFeedView.dismissSwipeRefresh();
-    }
-
-    @Override
-    public void onFailedFeeds(String message) {
-        mTournamentFeedView.dismissSwipeRefresh();
-        showAlertMessage(message);
-    }
-
-    @Override
-    public void onNoInternet() {
-        mTournamentFeedView.dismissSwipeRefresh();
-        showAlertMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
-    }
 
     @Override
     public void onEmpty() {
-        mTournamentFeedView.dismissSwipeRefresh();
         mTournamentFeedView.showInAppMessage(Constants.Alerts.NO_FEEDS_FOUND);
     }
 
@@ -72,15 +52,6 @@ public class TournamentFeedPresenterImpl implements TournamentFeedPresenter, Tou
         return mTournamentFeedView.getContext();
     }
 
-    private void showAlertMessage(String message) {
-        mTournamentFeedView.showMessage(message, "RETRY",
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getFeedDetails();
-                    }
-                });
-    }
 
 
 }

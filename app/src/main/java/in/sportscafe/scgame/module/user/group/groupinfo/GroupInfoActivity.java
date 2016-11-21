@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -106,9 +108,9 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
     public void onClick(View view) {
         switch (view.getId()) {
 
-            case R.id.edit_profile_btn:
-                navigatetoEditGroupInfoActivity();
-                break;
+//            case R.id.edit_profile_btn:
+//                navigatetoEditGroupInfoActivity();
+//                break;
 
             case R.id.group_info_tv_edit_members:
                 mGroupInfoPresenter.onClickMembers();
@@ -136,7 +138,6 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
         if (null == groupName || groupName.isEmpty()) {
             mTvGroupName.setText("Group Info");
         } else {
-            Log.i("SETGROUPNAMEtitle", groupName);
             mTvGroupName.setText(groupName);
         }
     }
@@ -186,7 +187,7 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
 
     @Override
     public void showDeleteGroup() {
-//        findViewById(R.id.group_info_btn_delete_group).setVisibility(View.VISIBLE);
+       // findViewById(R.id.group_info_btn_delete_group).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -240,7 +241,7 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
 
     public void initToolBar() {
         mtoolbar = (Toolbar) findViewById(R.id.group_info_toolbar);
-        mIBtnEditProfile = (ImageButton) mtoolbar.findViewById(R.id.edit_profile_btn);
+//        mIBtnEditProfile = (ImageButton) mtoolbar.findViewById(R.id.edit_profile_btn);
         mTvGroupName = (TextView) mtoolbar.findViewById(R.id.group_name);
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -260,5 +261,27 @@ public class GroupInfoActivity extends ScGameActivity implements GroupInfoView,
         Intent intent = new Intent(this, AllGroupsActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.edit_group_btn:
+                navigatetoEditGroupInfoActivity();
+                break;
+            case R.id.leave_group_btn:
+                 mGroupInfoPresenter.onLeaveGroup();
+                break;
+        }
+        return true;
     }
 }

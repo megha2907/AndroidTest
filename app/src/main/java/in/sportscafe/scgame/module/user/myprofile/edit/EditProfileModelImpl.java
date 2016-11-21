@@ -42,6 +42,11 @@ public class EditProfileModelImpl implements EditProfileModel {
             mEditProfileListener.onNickNameEmpty();
             return;
         }
+        else if (nickname.length() < 3 || nickname.length() > 15)
+        {
+            mEditProfileListener.onNickNameValidation();
+            return;
+        }
 
         if(ScGame.getInstance().hasNetworkConnection()) {
             mEditProfileListener.onUpdating();
@@ -141,5 +146,7 @@ public class EditProfileModelImpl implements EditProfileModel {
         void onNoInternet();
 
         void onUserNameConflict();
+
+        void onNickNameValidation();
     }
 }

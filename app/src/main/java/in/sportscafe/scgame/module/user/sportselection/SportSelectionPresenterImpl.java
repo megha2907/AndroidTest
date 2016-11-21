@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import in.sportscafe.scgame.Constants;
+import in.sportscafe.scgame.ScGameDataHandler;
 
 /**
  * Created by Jeeva on 27/5/16.
@@ -30,7 +31,18 @@ public class SportSelectionPresenterImpl implements SportSelectionPresenter, Spo
     public void onCreateSportSelection(Bundle bundle) {
         if(null != bundle && bundle.containsKey(Constants.BundleKeys.FROM_PROFILE)) {
             this.mFromProfile = bundle.getBoolean(Constants.BundleKeys.FROM_PROFILE);
+
+            if (bundle.getBoolean(Constants.BundleKeys.FROM_PROFILE))
+            {
+                mSportSelectionView.changeViewforProfile();
+            }
+            else {
+
+                mSportSelectionView.changeViewforLogin();
+            }
+
         }
+
         mSportSelectionView.setAdapter(mSportSelectionModel
                 .getSportsSelectionAdapter(mSportSelectionView.getContext()));
     }
@@ -58,7 +70,9 @@ public class SportSelectionPresenterImpl implements SportSelectionPresenter, Spo
     @Override
     public void onEmptySelection() {
         mSportSelectionView.dismissProgressbar();
-        mSportSelectionView.showToast();
+        Toast toast =Toast.makeText(mSportSelectionView.getContext(), Constants.Alerts.EMPTY_SPORT_SELECTION, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override

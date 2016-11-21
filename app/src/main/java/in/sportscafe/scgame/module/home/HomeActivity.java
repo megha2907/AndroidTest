@@ -3,21 +3,25 @@ package in.sportscafe.scgame.module.home;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jeeva.android.Log;
+import com.jeeva.android.widgets.customfont.CustomButton;
+import com.moe.pushlibrary.providers.MoEDataContract;
 
 import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
-import in.sportscafe.scgame.module.TournamentFeed.TournamentFeedFragment;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.notifications.NotificationInboxFragment;
+import in.sportscafe.scgame.module.tournament.TournamentFragment;
 import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
@@ -37,29 +41,51 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
 
     private View mSelectedTab;
 
-    private ImageButton mHomeButton;
+    private ImageView mHomeButton;
 
-    private ImageButton mProfileButton;
+    private ImageView mProfileButton;
 
-    private ImageButton mNotificationButton;
+    private ImageView mNotificationButton;
+
+    private TextView mHomeTv;
+
+    private TextView mProfileTv;
+
+    private TextView mNotificationTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        getUserInfoFromServer();
-        mHomeButton=(ImageButton)findViewById(R.id.home_ibtn_feed);
-        mProfileButton=(ImageButton)findViewById(R.id.home_ibtn_profile);
-        mNotificationButton=(ImageButton)findViewById(R.id.home_ibtn_notification);
+        if (null == ScGameDataHandler.getInstance().getUserId()) {
+            navigateToLogIn();
+            return;
+        }
 
-        //showFeed();
+        getUserInfoFromServer();
+        mHomeButton=(ImageView)findViewById(R.id.home_ibtn_feed);
+        mProfileButton=(ImageView)findViewById(R.id.home_ibtn_profile);
+        mNotificationButton=(ImageView)findViewById(R.id.home_ibtn_notification);
+
+        mHomeTv=(TextView)findViewById(R.id.home_tv_feed);
+        mProfileTv=(TextView)findViewById(R.id.home_tv_profile);
+        mNotificationTv=(TextView)findViewById(R.id.home_tv_notification);
 
         Intent intent = getIntent();
         if (null==intent.getExtras()){
             showFeed();
         }
-        else if (intent.getExtras().getString("group").equals("openprofile")){
+        else if (intent.getExtras().containsKey("group")||intent.getExtras().containsKey("results")||intent.getExtras().containsKey("badges")){
+
+            mHomeButton.setSelected(false);
+            mNotificationButton.setSelected(false);
+            mProfileButton.setSelected(true);
+
+            mHomeTv.setSelected(false);
+            mNotificationTv.setSelected(false);
+            mProfileTv.setSelected(true);
+
             loadFragment(new ProfileFragment());
         }
         else {
@@ -67,28 +93,71 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
         }
 
         checkGroupCode();
+
+        getunReadNotificationCount();
+
+    }
+
+    private void getunReadNotificationCount() {
+
+        Cursor cur = getContext().getContentResolver().query(
+                MoEDataContract.MessageEntity.getContentUri(getApplicationContext()),
+                MoEDataContract.MessageEntity.PROJECTION, MoEDataContract.MessageEntity.MSG_CLICKED + " = ?",
+                new String[] { "0" }, MoEDataContract.MessageEntity.DEFAULT_SORT_ORDER);
+
+        int unReadCount = 0;
+        if (null != cur) {
+            unReadCount = cur.getCount();
+            cur.close();
+        }
+
+        CustomButton notificationCount = (CustomButton)findViewById(R.id.home_ibtn_notification_count);
+
+        if (unReadCount==0){
+            notificationCount.setVisibility(View.GONE);
+        } else{
+            notificationCount.setVisibility(View.VISIBLE);
+            notificationCount.setText(String.valueOf(unReadCount));
+        }
     }
 
     public void onClickTab(View view) {
           switch (view.getId()) {
-              case R.id.home_ibtn_notification:
+              case R.id.home_rl_notification:
+
                   mHomeButton.setSelected(false);
                   mProfileButton.setSelected(false);
                   mNotificationButton.setSelected(true);
 
+                  mHomeTv.setSelected(false);
+                  mProfileTv.setSelected(false);
+                  mNotificationTv.setSelected(true);
+
                   loadFragment(new NotificationInboxFragment());
                   break;
-              case R.id.home_ibtn_feed:
+
+              case R.id.home_rl_feed:
+
                   mNotificationButton.setSelected(false);
                   mProfileButton.setSelected(false);
                   mHomeButton.setSelected(true);
 
-                  loadFragment(new TournamentFeedFragment());
+                  mNotificationTv.setSelected(false);
+                  mProfileTv.setSelected(false);
+                  mHomeTv.setSelected(true);
+
+                  loadFragment(new TournamentFragment());
                   break;
-              case R.id.home_ibtn_profile:
-                  mHomeButton.setSelected(false);
+
+              case R.id.home_rl_profile:
+
+                mHomeButton.setSelected(false);
                   mNotificationButton.setSelected(false);
                   mProfileButton.setSelected(true);
+
+                  mHomeTv.setSelected(false);
+                  mNotificationTv.setSelected(false);
+                  mProfileTv.setSelected(true);
 
                   if (null == ScGameDataHandler.getInstance().getUserId()) {
                       navigateToLogIn();
@@ -144,7 +213,7 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
     }
 
     private void showFeed() {
-        onClickTab(findViewById(R.id.home_ibtn_feed));
+        onClickTab(findViewById(R.id.home_rl_feed));
     }
 
     private void navigateToLogIn() {
@@ -165,10 +234,12 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
                                 if (null != updatedUserInfo) {
 
                                     ScGameDataHandler.getInstance().setUserInfo(updatedUserInfo);
-                                    ScGameDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
+                                    if(null != updatedUserInfo)
+                                    {
+                                        ScGameDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
+                                    }
                                     ScGameDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
                                     ScGameDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());
-                                    Log.i("setNumberofGroups",updatedUserInfo.getNumberofgroups()+"");
                                 }
                             }
                         }

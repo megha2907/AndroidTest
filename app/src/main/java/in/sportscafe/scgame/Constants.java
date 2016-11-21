@@ -18,6 +18,7 @@ public interface Constants {
         String RESULTS_LEADERBOARD = "results_leaderboard";
         String GROUP_PERSONID = "group_personID";
         String ADMIN_USERID = "admin_userID";
+        String BADGE_REQUEST = "badges";
         String REQUEST_ACCEPTED = "REQUEST ACCEPTED";
         String REQUEST_REJECTED = "REQUEST REJECTED";
 
@@ -49,6 +50,7 @@ public interface Constants {
 //        String NO_NETWORK_CONNECTION = "No internet connection available";
         String NO_NETWORK_CONNECTION = "Check your internet connection and try again";
         String NO_QUESTIONS = "No Questions Found";
+        String NO_TOURNAMENTS = "No Tournaments Found";
         String DATA_NOT_FOUND = "There is problem in your internet connection";
         String JSON_PARSING = "There is problem in your internet connection";
         String TIME_OUT = "There is problem in your internet connection";
@@ -61,15 +63,19 @@ public interface Constants {
         String NO_WHATSAPP = "Whatsapp have not been installed";
         String LOGIN_FAILED = "Login failed";
         String EMPTY_TOURNAMENT_SELECTION = "Please pick atleast one Tournament";
+        String EMPTY_SPORT_SELECTION = "Please pick atleast one Sport";
         String PASSED_QUESTION_ALERT = "Now it's time to predict for all the passed questions";
         String NO_LEADERBOARD = "No points found";
         String EDIT_PROFILE_FAILED = "Profile update failed. Try again.";
         String NAME_EMPTY = "Please enter name";
         String NICKNAME_EMPTY = "Please enter nickname";
+        String NICKNAME_NOT_VALID = "Username should be between 3 and 15 characters long";
+        String NICKNAME_NO_UPPERCASE = "Oops ,Please use lowercase";
         String NICKNAME_CONFLICT = "Oops , this username is already taken";
         String USERNAME_EMPTY = "Please enter username";
         String NO_QUESTIONS_FOUND = "No questions found";
-        String NO_FEEDS_FOUND = "No upcoming matches";
+        String NO_FEEDS_FOUND = "No upcoming matches.";
+        String NO_RESULTS = "No Results yet.";
         String JOIN_GROUP_SUCCESS = "Your request sent to the group admin for the approval";
         String INVALID_GROUP_CODE = "Invalid group code";
         String EMPTY_GROUP_NAME = "Please enter group name";
@@ -100,6 +106,7 @@ public interface Constants {
         String GROUP_ID = "group_id";
         String GROUP_NAME = "group_name";
         String SPORT_ID = "sportId";
+        String SPORT_LIST = "sportList";
         String MATCH_LIST = "matchList";
         String FROM_PROFILE = "fromProfile";
         String TOURNAMENT_ID = "tour_id";
@@ -107,6 +114,7 @@ public interface Constants {
         String MATCH_ID = "match_id";
         String TOURNAMENT_NAME = "tourName";
         String TOURNAMENT_SUMMARY = "tourSummary";
+        String TOURNAMENT_LIST = "tournamentList";
         String LEADERBOARD_KEY = "leaderboardKey";
         String LEADERBOARD_LIST = "leaderboardList";
         String HOME_SCREEN = "homeScreen";

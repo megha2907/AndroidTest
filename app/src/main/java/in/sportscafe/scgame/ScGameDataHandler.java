@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.scgame.module.user.group.allgroups.AllGroups;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
@@ -259,21 +259,21 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
 
 
     //TOURNAMENTS
-    public List<TournamentInfo> getTournaments() {
+    public List<TournamentFeedInfo> getTournaments() {
         String allTournamentsString = getSharedStringData(SharedKeys.ALL_TOURNAMENTS);
         Log.i("allTournamentsString", allTournamentsString + "");
         if (null == allTournamentsString || allTournamentsString.isEmpty()) {
             return new ArrayList<>();
         }
         return MyWebService.getInstance().getObjectFromJson(allTournamentsString,
-                new TypeReference<List<TournamentInfo>>() {
+                new TypeReference<List<TournamentFeedInfo>>() {
                 });
     }
 
-    public Map<Integer, TournamentInfo> getTournamentsMap() {
-        Map<Integer, TournamentInfo> tournamentMap = new HashMap<>();
+    public Map<Integer, TournamentFeedInfo> getTournamentsMap() {
+        Map<Integer, TournamentFeedInfo> tournamentMap = new HashMap<>();
 
-        for (TournamentInfo tournamentInfo : getTournaments()) {
+        for (TournamentFeedInfo tournamentInfo : getTournaments()) {
             tournamentMap.put(tournamentInfo.getTournamentId(), tournamentInfo);
         }
 
@@ -281,7 +281,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
     }
 
 
-    public void setTournaments(List<TournamentInfo> newTournaments) {
+    public void setTournaments(List<TournamentFeedInfo> newTournaments) {
         setTournaments(MyWebService.getInstance().getJsonStringFromObject(newTournaments));
     }
 
@@ -336,7 +336,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
 
     //SELECTED GROUP TOURNAMENTS
 
-    public void setSelectedTournaments(List<TournamentInfo> selectedTournaments) {
+    public void setSelectedTournaments(List<TournamentFeedInfo> selectedTournaments) {
         setSelectedTournaments(MyWebService.getInstance().getJsonStringFromObject(selectedTournaments));
     }
 
@@ -344,7 +344,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
         setSharedStringData(SharedKeys.SELECTED_TOURNAMENTS, selectedTournaments);
     }
 
-    public List<TournamentInfo> getSelectedTournaments() {
+    public List<TournamentFeedInfo> getSelectedTournaments() {
         String selectedTournaments = getSharedStringData(SharedKeys.SELECTED_TOURNAMENTS);
         Log.i("selectedTournaments", selectedTournaments);
 
@@ -352,7 +352,7 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
             return new ArrayList<>();
         }
         return MyWebService.getInstance().getObjectFromJson(selectedTournaments,
-                new TypeReference<List<TournamentInfo>>() {
+                new TypeReference<List<TournamentFeedInfo>>() {
                 });
     }
 

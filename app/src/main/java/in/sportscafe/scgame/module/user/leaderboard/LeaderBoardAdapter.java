@@ -46,9 +46,6 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         UserLeaderBoard userLeaderBoard = getItem(position);
 
 
-
-        Log.i("userleaderboardadapter",getItem(0).getUserName());
-
         if(userLeaderBoard.getRankChange() < 0) {
             holder.mIvStatus.setImageResource(R.drawable.status_arrow_down);
         } else {

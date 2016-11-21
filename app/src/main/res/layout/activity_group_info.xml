@@ -14,28 +14,15 @@
         android:id="@+id/group_info_toolbar"
         >
 
-        <TextView
+        <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_25"
             android:textSize="@dimen/dp_20"
             android:text="Group"
+            app:typeface="lato_regular"
             android:textColor="@android:color/white"/>
-
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:id="@+id/edit_profile_btn"
-            android:textSize="@dimen/dp_16"
-            android:textColor="@color/textcolorlight"
-            android:onClick="onClick"
-            android:background="@drawable/edit_profile_icon"
-            android:textAllCaps="false"
-            android:layout_marginRight="@dimen/dp_20"
-            />
 
         </android.support.v7.widget.Toolbar>
 
@@ -95,7 +82,7 @@
                 android:clickable="true"
                 android:duplicateParentState="true"
                 android:drawablePadding="@dimen/dp_10"
-
+                app:typeface="lato_regular"
                 />
 
             <com.jeeva.android.widgets.customfont.CustomButton

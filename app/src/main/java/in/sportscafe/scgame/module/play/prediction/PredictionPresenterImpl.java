@@ -8,6 +8,7 @@ import java.util.List;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
+import in.sportscafe.scgame.module.play.tindercard.FlingCardListener;
 import in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView;
 
 /**
@@ -17,10 +18,13 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     private PredictionView mPredictionView;
 
+    private FlingCardListener mFlingCardListener;
+
     private PredictionModel mPredictionModel;
 
     public PredictionPresenterImpl(PredictionView predictionView) {
         this.mPredictionView = predictionView;
+        this.mFlingCardListener = mFlingCardListener;
         this.mPredictionModel = PredictionModelImpl.newInstance(this);
     }
 
@@ -33,7 +37,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         mPredictionModel.saveData(bundle);
         mPredictionView.setTournamentName(mPredictionModel.getTournamentName());
         mPredictionView.setContestName(mPredictionModel.getContestName());
-        mPredictionView.setMatchStage(mPredictionModel.getMatchStage());
+       // mPredictionView.setMatchStage(mPredictionModel.getMatchStage());
         mPredictionView.setTournamentPhoto(mPredictionModel.getTournamentPhoto());
     }
 
@@ -90,9 +94,14 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         for (Question question : questionList) {
             mPredictionView.setLeftOption(question.getQuestionOption1());
             mPredictionView.setRightOption(question.getQuestionOption2());
-
+           // mPredictionView.setNumberofCards(question.getQuestionNumber(),questionList.size());
         }
 
+    }
+
+    @Override
+    public void setFlingListener(FlingCardListener topCardListener) {
+        mPredictionModel.setFlingCardListener(topCardListener);
     }
 
 
@@ -109,19 +118,13 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onQuestionChanged(Question item) {
+    public void onQuestionChanged(Question item, int minitialCount) {
 
         mPredictionView.setLeftOption(item.getQuestionOption1());
         mPredictionView.setRightOption(item.getQuestionOption2());
+        mPredictionView.setNumberofCards(item.getQuestionNumber(),minitialCount);
 
     }
-
-    @Override
-    public void getNumberofCards(int itemsInAdapter) {
-
-        mPredictionView.setNumberofCards(itemsInAdapter);
-    }
-
 
     @Override
     public void onNoInternet() {

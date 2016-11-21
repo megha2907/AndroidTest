@@ -75,7 +75,7 @@ public class NotificationInboxAdapter extends InboxManager.InboxAdapter<Notifica
             {
                 holder.notificationIcon.setImageResource(R.drawable.notification_cards);
             }
-            else if (notification_icon.equals("accuracy_badge"))
+            else if (notification_icon.equals("accuracy_streak"))
             {
                 holder.notificationIcon.setImageResource(R.drawable.notification_accuracy_badge);
             }
@@ -87,7 +87,7 @@ public class NotificationInboxAdapter extends InboxManager.InboxAdapter<Notifica
             {
                 holder.notificationIcon.setImageResource(R.drawable.notification_points);
             }
-            else if(notification_icon.equals("topper_badge"))
+            else if(notification_icon.equals("table_topper"))
             {
                holder.notificationIcon.setImageResource(R.drawable.notification_topper_badge);
             }

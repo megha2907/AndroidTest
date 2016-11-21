@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
+import com.jeeva.android.volley.Volley;
+import com.jeeva.android.widgets.HmImageView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -99,6 +101,19 @@ public class ChallengesFragment extends ScGameFragment implements ChallengesLayo
 
         TextView mTournamentRankTextView = (TextView) convertView.findViewById(R.id.challenges_tournaments_row_overall_rank);
         ImageView mTournamentRankStatus = (ImageView) convertView.findViewById(R.id.challenges_tournaments_row_rank_status);
+        HmImageView mTournamentPhotoImageView=(HmImageView) convertView.findViewById(R.id.challenges_tournaments_row_iv_photo);
+
+        if(null==challengesTourSummary.getChallengePhoto()){
+            mTournamentPhotoImageView.setImageResource(R.drawable.tournament_cup_icon);
+        }
+        else {
+
+            mTournamentPhotoImageView.setImageUrl(
+                    challengesTourSummary.getChallengePhoto(),
+                    Volley.getInstance().getImageLoader(),
+                    false
+            );
+        }
 
         if (null == challengesTourSummary.getOverallRankChange()) {
             mTournamentRankStatus.setVisibility(View.INVISIBLE);

@@ -2,6 +2,7 @@ package in.sportscafe.scgame.module.user.group.groupinfo;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.jeeva.android.ExceptionTracker;
 
@@ -73,7 +74,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
         BranchUniversalObject buo = new BranchUniversalObject()
                 .setTitle("Group Invitation")
-                .setContentDescription("Click this link, If you want to join in my \"" + groupInfo.getName() + "\" group." )
+                .setContentDescription("Click this link, If you want to join in my &quot;" + groupInfo.getName() + "&quot; group." )
                 .setContentImageUrl("https://s-media-cache-ak0.pinimg.com/originals/da/45/24/da452441898ff6863ada4984b27bcbdc.jpg")
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode())
@@ -126,6 +127,11 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     }
 
     @Override
+    public void onLeaveGroup() {
+        mGroupInfoModel.leaveGroup();
+    }
+
+    @Override
     public void onLeaveGroupSuccess() {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.showMessage(Constants.Alerts.LEAVE_GROUP_SUCCESS);
@@ -139,7 +145,8 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     }
 
-    private void showAlert(String message) {
+       private void showAlert(String message) {
+        Toast.makeText(mGroupInfoView.getContext(), message, Toast.LENGTH_SHORT).show();
 
         }
 

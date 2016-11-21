@@ -3,22 +3,14 @@ package in.sportscafe.scgame.module.user.group.groupinfo;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.jeeva.android.Log;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.ScGameDataHandler;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.scgame.module.user.group.LeaveGroupModelImpl;
-import in.sportscafe.scgame.module.user.group.allgroups.AllGroupsAdapter;
-import in.sportscafe.scgame.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupPerson;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.GroupSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.LbSummaryResponse;
 import in.sportscafe.scgame.webservice.GroupSummaryResponse;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
@@ -135,9 +127,8 @@ public class GroupInfoModelImpl implements GroupInfoModel {
 
     @Override
     public String getShareCodeContent() {
-        return "Group Code: " + mGroupInfo.getGroupCode() + "\n\n" +
-                "If you want to join in the '" + mGroupInfo.getName() +
-                "' group, Use the above code in the join group page in the application. ";
+        return "To join my group " + mGroupInfo.getName() +
+                " , use group code "+ mGroupInfo.getGroupCode();
     }
 
     @Override

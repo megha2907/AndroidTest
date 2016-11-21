@@ -16,13 +16,13 @@
 
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/leaderboard_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/blue_button_width"
+            android:layout_height="@dimen/blue_button_height"
             android:background="@drawable/powerup_screen_btn_bg"
             android:onClick="onClick"
             android:text="VIEW LEADERBOARD"
             android:textAllCaps="false"
-            android:textSize="@dimen/dp_16"
+            android:textSize="@dimen/blue_button_text"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/dp_60"
             android:layout_marginRight="@dimen/dp_60"

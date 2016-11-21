@@ -60,7 +60,7 @@ public class MyResultsTimelinePresenterImpl implements MyResultsTimelinePresente
     @Override
     public void onEmpty() {
         myResultsTimelineView.dismissSwipeRefresh();
-        myResultsTimelineView.showInAppMessage(Constants.Alerts.NO_FEEDS_FOUND);
+        myResultsTimelineView.showInAppMessage(Constants.Alerts.NO_RESULTS);
     }
 
     @Override

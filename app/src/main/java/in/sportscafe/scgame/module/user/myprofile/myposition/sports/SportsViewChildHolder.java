@@ -11,26 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
-import com.jeeva.android.Log;
 import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
-
-import java.io.Serializable;
 
 import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
-import in.sportscafe.scgame.module.common.RoundImage;
-import in.sportscafe.scgame.module.feed.FeedActivity;
-import in.sportscafe.scgame.module.feed.dto.Match;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.BaseSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.RankSummary;
-import in.sportscafe.scgame.module.user.myprofile.myposition.dto.SportSummary;
 import in.sportscafe.scgame.module.user.myprofile.myposition.dto.TourSummary;
 import in.sportscafe.scgame.module.user.points.PointsActivity;
-
-import static android.content.ContentValues.TAG;
 
 
 public class SportsViewChildHolder extends ChildViewHolder{

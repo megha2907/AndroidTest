@@ -2,13 +2,12 @@ package in.sportscafe.scgame.module.user.myprofile.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jeeva.android.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedInfo;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -46,7 +45,7 @@ public class GroupInfo implements Serializable {
     private List<GroupPerson> members = new ArrayList<>();
 
     @JsonProperty("group_tournaments_exp")
-    private List<TournamentInfo> followedTournaments = new ArrayList<>();
+    private List<TournamentFeedInfo> followedTournaments = new ArrayList<>();
 
     @JsonProperty("group_code")
     private String groupCode;
@@ -229,12 +228,12 @@ public class GroupInfo implements Serializable {
     }
 
     @JsonProperty("group_tournaments_exp")
-    public List<TournamentInfo> getFollowedTournaments() {
+    public List<TournamentFeedInfo> getFollowedTournaments() {
         return followedTournaments;
     }
 
     @JsonProperty("group_tournaments_exp")
-    public void setFollowedTournaments(List<TournamentInfo> followedTournaments) {
+    public void setFollowedTournaments(List<TournamentFeedInfo> followedTournaments) {
         this.followedTournaments = followedTournaments;
     }
 

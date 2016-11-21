@@ -142,7 +142,8 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:text="TOURNAMENTS"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dp_12" />
+                android:textSize="@dimen/dp_12"
+                app:typeface="lato_regular"/>
 
 
             <android.support.v7.widget.RecyclerView

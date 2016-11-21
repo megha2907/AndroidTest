@@ -4,7 +4,8 @@ import in.sportscafe.scgame.Config;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ApiResponse;
 import in.sportscafe.scgame.module.feed.dto.MatchesResponse;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentsResponse;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedResponse;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.scgame.module.play.myresults.MyResultsResponse;
 import in.sportscafe.scgame.module.play.prediction.dto.Answer;
 import in.sportscafe.scgame.module.play.prediction.dto.QuestionsResponse;
@@ -92,8 +93,12 @@ public class MyWebService extends AbstractWebService<ScGameService> {
         return mScGameService.getQuestions(ScGameDataHandler.getInstance().getUserId(),matchId);
     }
 
-    public Call<TournamentsResponse> getTournaments(boolean isCurrent) {
-        return mScGameService.getTournaments(ScGameDataHandler.getInstance().getUserId(),isCurrent);
+    public Call<TournamentsResponse> getTournaments(boolean isCurrent,boolean groupbySport) {
+        return mScGameService.getTournaments(ScGameDataHandler.getInstance().getUserId(),isCurrent,groupbySport);
+    }
+
+    public Call<TournamentFeedResponse> getCurrentTournaments(boolean isCurrent) {
+        return mScGameService.getCurrentTournaments(ScGameDataHandler.getInstance().getUserId(),isCurrent);
     }
 
     public Call<ApiResponse> getPostAnswerRequest(Answer answer) {

@@ -1,4 +1,4 @@
-package in.sportscafe.scgame.module.TournamentFeed;
+package in.sportscafe.scgame.module.tournamentFeed;
 
 /**
  * Created by deepanshi on 9/29/16.
@@ -19,14 +19,14 @@ import com.jeeva.android.widgets.HmImageView;
 import in.sportscafe.scgame.Constants.AnalyticsActions;
 import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.R;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.common.Adapter;
 import in.sportscafe.scgame.module.feed.FeedActivity;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 
 
-public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFeedAdapter.ViewHolder> {
+public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, TournamentFeedAdapter.ViewHolder> {
 
     private OnHomeActionListener mOnHomeActionListener;
 
@@ -36,19 +36,19 @@ public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFee
     }
 
     @Override
-    public TournamentInfo getItem(int position) {
+    public TournamentFeedInfo getItem(int position) {
         return super.getItem(position);
     }
 
     @Override
-    public TournamentFeedAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = getLayoutInflater().inflate(R.layout.inflater_tournament_feed_row, parent, false);
-        return new TournamentFeedAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(TournamentFeedAdapter.ViewHolder holder, int position) {
-        TournamentInfo tournamentInfo = getItem(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        TournamentFeedInfo tournamentInfo = getItem(position);
         holder.mPosition = position;
 
         holder.mTvTournamentName.setText(tournamentInfo.getTournamentName());
@@ -87,7 +87,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentInfo, TournamentFee
 
         @Override
         public void onClick(View view) {
-            TournamentInfo tournamentInfo = getItem(getAdapterPosition());
+            TournamentFeedInfo tournamentInfo = getItem(getAdapterPosition());
 
             Integer tournamentId = tournamentInfo.getTournamentId();
             Log.i("tournamentId", tournamentInfo.getTournamentId().toString());

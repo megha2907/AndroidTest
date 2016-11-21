@@ -1,11 +1,9 @@
-package in.sportscafe.scgame.module.TournamentFeed.dto;
+package in.sportscafe.scgame.module.tournamentFeed.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
 
 /**
  * Created by deepanshi on 9/28/16.

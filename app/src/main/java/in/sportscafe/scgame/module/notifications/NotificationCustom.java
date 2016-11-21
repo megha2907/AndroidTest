@@ -32,6 +32,7 @@ import in.sportscafe.scgame.webservice.MyWebService;
 public class NotificationCustom extends PushMessageListener {
 
     public static final int NOTIFICATION_ID = 1;
+    private static final String EXTRA_BADGE_REQUEST = Constants.NotificationKeys.BADGE_REQUEST;
     private static final String EXTRA_JOIN_GROUP_REQUEST = Constants.NotificationKeys.JOIN_GROUP_REQUEST;
     private static final String EXTRA_APPROVED_GROUP_REQUEST = Constants.NotificationKeys.APPROVED_GROUP_REQUEST;
     private static final String EXTRA_RESULTS_LEADERBOARD = Constants.NotificationKeys.RESULTS_LEADERBOARD;
@@ -78,6 +79,10 @@ public class NotificationCustom extends PushMessageListener {
         } else if (extras.containsKey(EXTRA_RESULTS_LEADERBOARD)) { // sending match id
             extras.putString(MoEHelperConstants.GCM_EXTRA_ACTIVITY_NAME,
                     "in.sportscafe.scgame.module.play.myresults.MyResultsActivity");
+        }
+        else if (extras.containsKey(EXTRA_BADGE_REQUEST)) {
+            extras.putString(MoEHelperConstants.GCM_EXTRA_ACTIVITY_NAME,
+                    "in.sportscafe.scgame.module.user.badges.BadgeActivity");
         }
 
         return super.onCreateNotification(context, extras, provider);

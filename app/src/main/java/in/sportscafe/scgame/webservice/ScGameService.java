@@ -3,7 +3,8 @@ package in.sportscafe.scgame.webservice;
 
 import in.sportscafe.scgame.module.common.ApiResponse;
 import in.sportscafe.scgame.module.feed.dto.MatchesResponse;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentsResponse;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedResponse;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.scgame.module.play.myresults.MyResultsResponse;
 import in.sportscafe.scgame.module.play.prediction.dto.Answer;
 import in.sportscafe.scgame.module.play.prediction.dto.QuestionsResponse;
@@ -68,7 +69,10 @@ public interface ScGameService {
     Call<QuestionsResponse> getQuestions(@Path("userId") String userId,@Query("match_id") int matchId);
 
     @GET("users/{user_id}/tournaments")
-    Call<TournamentsResponse> getTournaments(@Path("user_id") String userId, @Query("is_current") boolean isCurrent);
+    Call<TournamentsResponse> getTournaments(@Path("user_id") String userId, @Query("is_current") boolean isCurrent,@Query("group_by_sport") boolean groupbySport);
+
+    @GET("users/{user_id}/tournaments")
+    Call<TournamentFeedResponse> getCurrentTournaments(@Path("user_id") String userId, @Query("is_current") boolean isCurrent);
 
     @GET("users/{userId}/groups/info")
     Call<GroupsDetailResponse> getGroupDetails(@Path("userId") String userId);

@@ -7,7 +7,7 @@ import java.util.Map;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ApiResponse;
-import in.sportscafe.scgame.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.webservice.MyWebService;
 import in.sportscafe.scgame.webservice.ScGameCallBack;
@@ -58,8 +58,8 @@ public class GrpTournamentUpdateModelImpl {
     }
 
     private void handleGrpTournamentUpdateResponse(List<Integer> selectedTournaments) {
-        Map<Integer, TournamentInfo> allTournamentsMap = ScGameDataHandler.getInstance().getTournamentsMap();
-        List<TournamentInfo> followedtournaments = new ArrayList<>();
+        Map<Integer, TournamentFeedInfo> allTournamentsMap = ScGameDataHandler.getInstance().getTournamentsMap();
+        List<TournamentFeedInfo> followedtournaments = new ArrayList<>();
 
         for(Integer TournamentId : selectedTournaments) {
             followedtournaments.add(allTournamentsMap.get(TournamentId));

@@ -110,5 +110,8 @@ dependencies {
     compile ('io.branch.sdk.android:library:2.+') {
         exclude module: 'answers-shim'
     }
+
+    // To compat for new material designs
+    compile 'com.android.support:cardview-v7:24.2.1'
 }
 apply plugin: 'com.google.gms.google-services'

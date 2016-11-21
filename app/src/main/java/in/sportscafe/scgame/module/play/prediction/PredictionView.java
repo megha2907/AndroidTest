@@ -7,6 +7,7 @@ import com.jeeva.android.InAppView;
 import com.jeeva.android.View;
 
 import in.sportscafe.scgame.module.play.prediction.dto.Question;
+import in.sportscafe.scgame.module.play.tindercard.FlingCardListener;
 import in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView;
 
 /**
@@ -16,10 +17,13 @@ public interface PredictionView extends InAppView {
 
     void setTournamentName(String tournamentName);
 
+    void setRightArrowAnimation();
+
     void setContestName(String contestName);
 
     void setAdapter(PredictionAdapter predictionAdapter,
                     SwipeFlingAdapterView.OnSwipeListener<Question> swipeListener);
+
 
     void hidePass();
 
@@ -43,5 +47,5 @@ public interface PredictionView extends InAppView {
 
     void setTournamentPhoto(String tournamentPhoto);
 
-    void setNumberofCards(int itemsInAdapter);
+    void setNumberofCards(int itemsInAdapter, int initialCount);
 }
