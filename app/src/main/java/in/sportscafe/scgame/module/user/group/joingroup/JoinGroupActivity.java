@@ -3,7 +3,6 @@ package in.sportscafe.scgame.module.user.group.joingroup;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -219,9 +218,18 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
     }
 
     @Override
-    public void onBackPressed() {
-        TaskStackBuilder.create(this).addNextIntentWithParentStack(new Intent(this, HomeActivity.class))
-                    .startActivities();
+    public void goBack() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public void goToHome() {
+        startActivity(new Intent(this, HomeActivity.class));
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        mJoinGroupPresenter.onBack();
     }
 }

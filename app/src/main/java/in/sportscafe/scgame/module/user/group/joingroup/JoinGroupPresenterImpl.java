@@ -44,6 +44,15 @@ public class JoinGroupPresenterImpl implements JoinGroupPresenter, JoinGroupMode
     }
 
     @Override
+    public void onBack() {
+        if(mJoinGroupModel.hadGroupCode()) {
+            mJoinGroupView.goToHome();
+        } else {
+            mJoinGroupView.goBack();
+        }
+    }
+
+    @Override
     public void onSuccess() {
         mJoinGroupView.dismissProgressbar();
         mJoinGroupView.showMessage(Constants.Alerts.JOIN_GROUP_SUCCESS);

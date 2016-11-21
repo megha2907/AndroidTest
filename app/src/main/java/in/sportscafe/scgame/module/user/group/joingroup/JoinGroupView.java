@@ -18,4 +18,8 @@ public interface JoinGroupView extends View {
     void navigateToAllGroups();
 
     void populateGroupCode(String groupCode);
+
+    void goBack();
+
+    void goToHome();
 }

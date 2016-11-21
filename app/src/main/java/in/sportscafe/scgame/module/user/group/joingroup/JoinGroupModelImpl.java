@@ -20,6 +20,8 @@ import retrofit2.Response;
  */
 public class JoinGroupModelImpl implements JoinGroupModel {
 
+    private String mGroupCode;
+
     private OnJoinGroupModelListener mJoinGroupModelListener;
 
     private JoinGroupModelImpl(OnJoinGroupModelListener listener) {
@@ -33,9 +35,9 @@ public class JoinGroupModelImpl implements JoinGroupModel {
     @Override
     public void init(Bundle bundle) {
         if(null != bundle && bundle.containsKey(BundleKeys.GROUP_CODE)) {
-            String groupCode = bundle.getString(BundleKeys.GROUP_CODE);
-            if(isValidGroupCode(groupCode)) {
-                mJoinGroupModelListener.onGetGroupCode(groupCode);
+            mGroupCode = bundle.getString(BundleKeys.GROUP_CODE);
+            if(isValidGroupCode(mGroupCode)) {
+                mJoinGroupModelListener.onGetGroupCode(mGroupCode);
             }
         }
     }
@@ -51,6 +53,11 @@ public class JoinGroupModelImpl implements JoinGroupModel {
         } else {
             mJoinGroupModelListener.onInvalidGroupCode();
         }
+    }
+
+    @Override
+    public boolean hadGroupCode() {
+        return null != mGroupCode;
     }
 
     private boolean isValidGroupCode(String groupCode) {
