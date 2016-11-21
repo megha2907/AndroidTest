@@ -7,7 +7,7 @@ import android.os.Bundle;
  */
 public interface JoinGroupPresenter {
 
-    void onCreateJoinGroup();
+    void onCreateJoinGroup(Bundle bundle);
 
     void onClickJoin(String groupCode);
 

@@ -23,8 +23,8 @@ public class JoinGroupPresenterImpl implements JoinGroupPresenter, JoinGroupMode
     }
 
     @Override
-    public void onCreateJoinGroup() {
-
+    public void onCreateJoinGroup(Bundle bundle) {
+        mJoinGroupModel.init(bundle);
     }
 
     @Override
@@ -66,5 +66,10 @@ public class JoinGroupPresenterImpl implements JoinGroupPresenter, JoinGroupMode
     public void onFailed(String message) {
         mJoinGroupView.dismissProgressbar();
         mJoinGroupView.showMessage(message);
+    }
+
+    @Override
+    public void onGetGroupCode(String groupCode) {
+        mJoinGroupView.populateGroupCode(groupCode);
     }
 }

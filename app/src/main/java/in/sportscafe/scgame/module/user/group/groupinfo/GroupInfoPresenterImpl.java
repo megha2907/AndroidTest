@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.jeeva.android.ExceptionTracker;
-import com.jeeva.android.Log;
 
 import in.sportscafe.scgame.AppSnippet;
 import in.sportscafe.scgame.Constants;
@@ -77,17 +76,20 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
                 .setContentDescription("Click this link, If you want to join in my \"" + groupInfo.getName() + "\" group." )
                 .setContentImageUrl("https://s-media-cache-ak0.pinimg.com/originals/da/45/24/da452441898ff6863ada4984b27bcbdc.jpg")
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
-                .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode());
+                .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode())
+                .addContentMetadata(BundleKeys.GROUP_NAME, groupInfo.getName());
 
         LinkProperties linkProperties = new LinkProperties()
-                .setFeature("invite");
+                .addTag("inviteGroup")
+                .setFeature("inviteGroup")
+                .addControlParameter("$android_deeplink_path", "group/invite/");
 
         buo.generateShortUrl(mGroupInfoView.getContext(), linkProperties,
                 new Branch.BranchLinkCreateListener() {
             @Override
             public void onLinkCreate(String url, BranchError error) {
                 if(null == error) {
-                    AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url + "?$deeplink_path=groupInvite");
+                    AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url);
                 } else {
                     ExceptionTracker.track(error.getMessage());
                 }

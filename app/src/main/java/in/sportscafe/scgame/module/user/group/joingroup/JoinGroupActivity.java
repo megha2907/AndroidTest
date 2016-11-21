@@ -3,6 +3,7 @@ package in.sportscafe.scgame.module.user.group.joingroup;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,19 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeeva.android.ExceptionTracker;
-import com.jeeva.android.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.module.common.ScGameActivity;
+import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.scgame.module.user.group.newgroup.NewGroupActivity;
-import io.branch.referral.Branch;
-import io.branch.referral.BranchError;
 
 /**
  * Created by Jeeva on 1/7/16.
@@ -61,7 +56,7 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
         initViews();
 
         this.mJoinGroupPresenter = JoinGroupPresenterImpl.newInstance(this);
-        this.mJoinGroupPresenter.onCreateJoinGroup();
+        this.mJoinGroupPresenter.onCreateJoinGroup(getIntent().getExtras());
     }
 
     private void initViews() {
@@ -70,30 +65,8 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
         this.mEtGroupCode3 = (EditText) findViewById(R.id.join_group_et_group_code_char_three);
         this.mEtGroupCode4 = (EditText) findViewById(R.id.join_group_et_group_code_char_four);
         this.mEtGroupCode5 = (EditText) findViewById(R.id.join_group_et_group_code_char_five);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        Branch.getInstance().initSession(new Branch.BranchReferralInitListener() {
-            @Override
-            public void onInitFinished(JSONObject referringParams, BranchError error) {
-                if (error == null) {
-                    if(referringParams.has(BundleKeys.GROUP_CODE)) {
-                        try {
-                            populateGroupCode(referringParams.getString(BundleKeys.GROUP_CODE));
-                        } catch (JSONException e) {
-                            ExceptionTracker.track(e);
-                        }
-                    }
-                } else {
-                    Log.i(TAG, error.getMessage());
-                }
-
-                initListener();
-            }
-        }, getIntent().getData(), this);
+        initListener();
     }
 
     private void initListener() {
@@ -225,12 +198,24 @@ public class JoinGroupActivity extends ScGameActivity implements JoinGroupView,
         );
     }
 
-    private void populateGroupCode(String groupCode) {
-        String[] codeSplitter = groupCode.split("");
-        mEtGroupCode1.setText(codeSplitter[1]);
-        mEtGroupCode2.setText(codeSplitter[2]);
-        mEtGroupCode3.setText(codeSplitter[3]);
-        mEtGroupCode4.setText(codeSplitter[4]);
-        mEtGroupCode5.setText(codeSplitter[5]);
+    @Override
+    public void populateGroupCode(String groupCode) {
+        try {
+            String[] codeSplitter = groupCode.split("");
+            mEtGroupCode1.setText(codeSplitter[1]);
+            mEtGroupCode2.setText(codeSplitter[2]);
+            mEtGroupCode3.setText(codeSplitter[3]);
+            mEtGroupCode4.setText(codeSplitter[4]);
+            mEtGroupCode5.setText(codeSplitter[5]);
+        } catch (Exception e) {
+            ExceptionTracker.track(e);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        TaskStackBuilder.create(this).addNextIntentWithParentStack(new Intent(this, HomeActivity.class))
+                    .startActivities();
+        finish();
     }
 }

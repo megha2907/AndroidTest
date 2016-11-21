@@ -1,8 +1,11 @@
 package in.sportscafe.scgame.module.user.group.joingroup;
 
+import android.os.Bundle;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
@@ -28,17 +31,30 @@ public class JoinGroupModelImpl implements JoinGroupModel {
     }
 
     @Override
-    public void joinGroup(String groupCode) {
-        if(groupCode.isEmpty() || groupCode.length() < 5) {
-            mJoinGroupModelListener.onInvalidGroupCode();
-            return;
+    public void init(Bundle bundle) {
+        if(null != bundle && bundle.containsKey(BundleKeys.GROUP_CODE)) {
+            String groupCode = bundle.getString(BundleKeys.GROUP_CODE);
+            if(isValidGroupCode(groupCode)) {
+                mJoinGroupModelListener.onGetGroupCode(groupCode);
+            }
         }
+    }
 
-        if(ScGame.getInstance().hasNetworkConnection()) {
-            callJoinGroupApi(groupCode);
+    @Override
+    public void joinGroup(String groupCode) {
+        if(isValidGroupCode(groupCode)) {
+            if (ScGame.getInstance().hasNetworkConnection()) {
+                callJoinGroupApi(groupCode);
+            } else {
+                mJoinGroupModelListener.onNoInternet();
+            }
         } else {
-            mJoinGroupModelListener.onNoInternet();
+            mJoinGroupModelListener.onInvalidGroupCode();
         }
+    }
+
+    private boolean isValidGroupCode(String groupCode) {
+        return groupCode.length() == 5;
     }
 
     private void callJoinGroupApi(String groupCode) {
@@ -72,5 +88,7 @@ public class JoinGroupModelImpl implements JoinGroupModel {
         void onNoInternet();
 
         void onFailed(String message);
+
+        void onGetGroupCode(String groupCode);
     }
 }
