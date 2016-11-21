@@ -35,34 +35,45 @@
         </activity>
 
         <activity
-            android:name=".module.home.HomeActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <data
-                    android:host="outx.test-app.link"
-                    android:scheme="https" />
-                <action android:name="android.intent.action.VIEW" />
+            android:name=".module.splash.SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent"
+            android:launchMode="singleTask" >
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <data android:scheme="nostragamus" />
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
-        </activity>
 
-        <activity
-            android:name=".module.getstart.Splash"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+            <!-- AppLink config -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- <data android:scheme="https" android:host="bnc.lt" android:pathPrefix="/your_app_id_obtained form Branch dash board " /> -->
+                <data android:scheme="https" android:host="outx.test-app.link" />
             </intent-filter>
+
         </activity>
 
         <activity
             android:name=".module.getstart.GetStartActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".module.home.HomeActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance">
+        </activity>
 
         <activity
             android:name=".module.user.login.LogInActivity"
@@ -152,12 +163,8 @@
         <activity
             android:name=".module.user.group.joingroup.JoinGroupActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-
-            <meta-data
-                android:name="io.branch.sdk.auto_link_path"
-                android:value="groupInvite" />
-
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:parentActivityName=".module.user.group.groupinfo.GroupInfoActivity">
         </activity>
 
         <activity

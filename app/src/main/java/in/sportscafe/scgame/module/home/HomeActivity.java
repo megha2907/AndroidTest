@@ -19,10 +19,9 @@ import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGame;
 import in.sportscafe.scgame.ScGameDataHandler;
-import in.sportscafe.scgame.module.tournament.TournamentFragment;
-import in.sportscafe.scgame.module.tournamentFeed.TournamentFeedFragment;
 import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.notifications.NotificationInboxFragment;
+import in.sportscafe.scgame.module.tournament.TournamentFragment;
 import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.login.dto.UserInfo;
@@ -174,21 +173,21 @@ public class HomeActivity extends ScGameActivity implements OnHomeActionListener
         if(null != groupCode) {
             ScGameDataHandler.getInstance().setInstallGroupCode(null);
 
-            showJoinGroupAlert(groupCode);
+            showJoinGroupAlert(groupCode, ScGameDataHandler.getInstance().getInstallGroupName());
         }
     }
 
-    private void showJoinGroupAlert(final String groupCode) {
+    private void showJoinGroupAlert(final String groupCode, String groupName) {
         new AlertDialog.Builder(this)
-                .setTitle("Join Group")
-                .setMessage("You got one group invitation, do you want to join in that group?")
+                .setTitle("Group Invitation")
+                .setMessage("You clicked on a group invitation link from \"" + groupName + "\" group, Would you like to proceed with joining this group?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         navigateToJoinGroup(groupCode);
                     }
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton("No, thanks", null)
                 .setCancelable(false)
                 .create().show();
     }

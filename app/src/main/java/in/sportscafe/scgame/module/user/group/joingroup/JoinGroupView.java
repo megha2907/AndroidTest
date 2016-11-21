@@ -16,4 +16,6 @@ public interface JoinGroupView extends View {
     void showJoinGroupSuccess();
 
     void navigateToAllGroups();
+
+    void populateGroupCode(String groupCode);
 }
