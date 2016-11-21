@@ -51,6 +51,7 @@
         <activity
             android:name=".module.getstart.Splash"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

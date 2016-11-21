@@ -52,7 +52,6 @@ public class NewGroupModelImpl implements NewGroupModel {
         getAllTournamentsfromServer();
 
         this.mTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context, new ArrayList<Integer>());
-        this.mTournamentSelectionAdapter.addAll(ScGameDataHandler.getInstance().getTournaments());
         return mTournamentSelectionAdapter;
     }
 
@@ -134,6 +133,7 @@ public class NewGroupModelImpl implements NewGroupModel {
                                     }
 
                                     mScGameDataHandler.setTournaments(oldTournamentList);
+                                    mTournamentSelectionAdapter.addAll(ScGameDataHandler.getInstance().getTournaments());
 
                                     mNewGroupModelListener.onSuccessTournamentInfo();
                                 }

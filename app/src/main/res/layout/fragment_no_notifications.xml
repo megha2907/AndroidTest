@@ -55,7 +55,8 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:id="@+id/view2"
-                android:layout_marginBottom="@dimen/dp_5"/>
+                android:layout_marginBottom="@dimen/dp_5"
+                app:typeface="lato_bold"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
@@ -67,7 +68,8 @@
                 android:textColor="@color/textcolorlight"
                 android:layout_below="@+id/view2"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/view" />
+                android:id="@+id/view"
+                app:typeface="lato_regular"/>
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/play_btn"

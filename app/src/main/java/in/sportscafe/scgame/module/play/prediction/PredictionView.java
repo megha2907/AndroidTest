@@ -17,6 +17,8 @@ public interface PredictionView extends InAppView {
 
     void setTournamentName(String tournamentName);
 
+    void setRightArrowAnimation();
+
     void setContestName(String contestName);
 
     void setAdapter(PredictionAdapter predictionAdapter,
@@ -45,5 +47,5 @@ public interface PredictionView extends InAppView {
 
     void setTournamentPhoto(String tournamentPhoto);
 
-    void setNumberofCards(int itemsInAdapter);
+    void setNumberofCards(int itemsInAdapter, int initialCount);
 }

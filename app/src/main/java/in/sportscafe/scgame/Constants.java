@@ -62,6 +62,7 @@ public interface Constants {
         String NO_WHATSAPP = "Whatsapp have not been installed";
         String LOGIN_FAILED = "Login failed";
         String EMPTY_TOURNAMENT_SELECTION = "Please pick atleast one Tournament";
+        String EMPTY_SPORT_SELECTION = "Please pick atleast one Sport";
         String PASSED_QUESTION_ALERT = "Now it's time to predict for all the passed questions";
         String NO_LEADERBOARD = "No points found";
         String EDIT_PROFILE_FAILED = "Profile update failed. Try again.";
@@ -72,7 +73,8 @@ public interface Constants {
         String NICKNAME_CONFLICT = "Oops , this username is already taken";
         String USERNAME_EMPTY = "Please enter username";
         String NO_QUESTIONS_FOUND = "No questions found";
-        String NO_FEEDS_FOUND = "No upcoming matches";
+        String NO_FEEDS_FOUND = "No upcoming matches.";
+        String NO_RESULTS = "No Results yet.";
         String JOIN_GROUP_SUCCESS = "Your request sent to the group admin for the approval";
         String INVALID_GROUP_CODE = "Invalid group code";
         String EMPTY_GROUP_NAME = "Please enter group name";

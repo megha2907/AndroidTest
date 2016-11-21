@@ -19,7 +19,7 @@
         android:src="@drawable/splash_screen_human"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_120"
         />
 
     <ImageView

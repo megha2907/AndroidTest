@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#25232D</color>
-    <color name="colorPrimaryDark">#00000C</color>
-    <color name="colorAccent">#25232D</color>
+    <color name="colorPrimary">#202020</color>
+    <color name="colorPrimaryDark">#161616</color>
+    <color name="colorAccent">#202020</color>
+    <color name="black">#151515</color>
+    <color name="colorMedium">#202020</color>
+    <color name="colorBackground">#202020</color>
 
     <color name="alto">#D8D8D8</color>
     <color name="silver_chalice">#AAAAAA</color>
     <color name="dark_grey">#272731</color>
-    <color name="black">#19181C</color>
     <color name="chambray">#3B5999</color>
     <color name="chathamsBlue">#194586</color>
     <color name="gallery">#EBEBEB</color>
@@ -28,8 +30,6 @@
     <color name="yellowcolor">#FFDB00</color>
     <color name="goldenyellowcolor">#ECC11B</color>
     <color name="btncolor">#FF0047</color>
-    <color name="colorMedium">#25232D</color>
-    <color name="colorBackground">#25232D</color>
     <color name="textcolorlight">#86858D</color>
     <color name="dividercolor">#2A2A2A</color>
     <color name="linecolor">#505050</color>

@@ -4,76 +4,93 @@
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="@drawable/play_screen_bg">
+
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:alpha="0.95"
+    />
+
 
     <in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView
+
         android:id="@+id/activity_prediction_swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:rotation_degrees="15.5" />
 
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/rl_powerup"-->
-        <!--android:layout_width="@dimen/dp_100"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:clickable="true"-->
-        <!--android:focusable="true"-->
-        <!--android:focusableInTouchMode="true"-->
-       <!--&gt;-->
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/play_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        android:background="@color/colorMedium"
+        android:alpha="0.8"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+          >
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/swipe_card_question_value"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
         android:layout_alignParentRight="true"
         android:textSize="@dimen/dp_15"
-        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_22"
         android:background="@drawable/powerup_icon"
-        android:layout_marginTop="@dimen/dp_15"
         android:textColor="@color/black"
+        android:layout_centerVertical="true"
         />
 
 
-
-    <!--</RelativeLayout>-->
-
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/swipe_card_tv_powerup_count"
-        android:layout_width="@dimen/dp_23"
-        android:layout_height="@dimen/dp_23"
+        android:layout_width="@dimen/dp_18"
+        android:layout_height="@dimen/dp_18"
         android:gravity="center"
         android:textSize="@dimen/dp_11"
         android:textColor="@color/white"
-        android:background="@drawable/powerups_count_bg"
+        android:background="@drawable/notification_count_bg"
         app:typeface="roboto_light"
-        android:layout_marginTop="@dimen/dp_45"
+        android:layout_marginTop="@dimen/dp_30"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_25"
+        android:layout_marginRight="@dimen/dp_16"
 
         />
 
     <com.jeeva.android.widgets.HmImageView
         android:id="@+id/prediction_iv_tournament_photo"
-        android:layout_width="@dimen/dp_45"
-        android:layout_height="@dimen/dp_45"
-        android:src="@drawable/placeholder_icon"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_15"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:src="@drawable/wimbledown"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:adjustViewBounds="true"
+        android:layout_centerVertical="true"
      />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/prediction_iv_tournament_photo"
+                android:layout_toLeftOf="@+id/swipe_card_question_value"
+                android:layout_centerVertical="true">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/prediction_tv_tournament"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_1"
         android:layout_marginRight="@dimen/dp_20"
         android:textSize="@dimen/dp_16"
+        app:typeface="roboto_condensed_bold"
         android:textColor="@color/white"
-        android:layout_toRightOf="@+id/prediction_iv_tournament_photo"
-        android:layout_toLeftOf="@+id/swipe_card_question_value"
+        android:text="TT TEST TOURNAMENT"
         />
 
 
@@ -81,20 +98,36 @@
         android:id="@+id/prediction_tv_tournament_match_stage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_1"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_20"
-        android:textSize="@dimen/dp_15"
-        android:textColor="@color/textcolorlight"
-        android:layout_toRightOf="@+id/prediction_iv_tournament_photo"
+        android:textSize="@dimen/dp_16"
+        android:textColor="@color/white"
+        app:typeface="roboto_condensed"
+        android:alpha="0.7"
+        android:text="TT match"
         android:layout_below="@+id/prediction_tv_tournament"
         />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:alpha="0.05"
+                app:contentInsetStart="0dp"
+                app:contentInsetLeft="0dp"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:id="@+id/image_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/prediction_btn_pass"
+        android:layout_above="@+id/downnarrow"
+        android:layout_marginBottom="@dimen/dp_18"
         >
 
         <Button
@@ -123,10 +156,11 @@
             android:id="@+id/swipe_card_tv_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dp_16"
+            android:textSize="@dimen/dp_14"
             android:textColor="@color/white"
             android:gravity="left"
-            app:typeface="lato_bold"
+            app:typeface="lato_black"
+            android:alpha="0.7"
             android:layout_marginRight="@dimen/dp_5"
             android:layout_marginLeft="@dimen/dp_8"
             android:layout_toRightOf="@id/swipe_card_iv_left"
@@ -137,15 +171,34 @@
             android:clickable="true"
             />
 
-        <com.jeeva.android.widgets.HmImageView
-            android:id="@+id/swipe_card_iv_right"
+        <ImageView
+            android:id="@+id/swipe_card_iv_right_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:background="@drawable/right_arrow_icon"
+            android:src="@drawable/right_arrow_play"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_45"
             android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/swipe_card_iv_right_arrow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right_arrow_play"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_35"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/swipe_card_iv_right_arrow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right_arrow_play"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_25"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/swipe_card_tv_right"
@@ -155,10 +208,11 @@
             android:layout_marginRight="@dimen/dp_8"
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_toRightOf="@id/schedule_row_btn_vs"
-            android:layout_toLeftOf="@id/swipe_card_iv_right"
-            app:typeface="lato_bold"
+            android:layout_toLeftOf="@id/swipe_card_iv_right_arrow"
+            app:typeface="lato_black"
             android:gravity="right"
-            android:textSize="@dimen/dp_16"
+            android:alpha="0.7"
+            android:textSize="@dimen/dp_14"
             android:layout_centerInParent="true"
             android:onClick="onClick"
             android:clickable="true"
@@ -174,22 +228,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_20"
-        android:layout_below="@id/prediction_tv_tournament"
-        android:textSize="@dimen/dp_15"
-        app:typeface="lato_regular"
+        android:layout_below="@id/play_toolbar"
+        android:textSize="@dimen/dp_16"
+        app:typeface="roboto_condensed"
         android:textColor="@color/white"
+        android:alpha="0.7"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_50"/>
+        android:layout_marginTop="@dimen/dp_20"
+        android:visibility="gone"/>
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/prediction_tv_number_of_cards"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_16"
         android:layout_below="@id/prediction_tv_contest_name"
-        android:textSize="@dimen/dp_15"
-        app:typeface="lato_regular"
-        android:textColor="@color/textcolorlight"
+        android:textSize="@dimen/dp_16"
+        app:typeface="roboto_condensed"
+        android:textColor="@color/white"
+        android:alpha="0.7"
         android:layout_centerHorizontal="true"
        />
 
@@ -199,24 +257,27 @@
         android:id="@+id/downnarrow"
         android:layout_centerHorizontal="true"
         android:src="@drawable/down_arrow_icon"
-        android:layout_above="@+id/prediction_btn_pass"
-        android:background="@android:color/transparent"/>
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_5"/>
 
-    <TextView
+    <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/prediction_btn_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="?android:attr/selectableItemBackground"
         android:onClick="onClick"
         android:text="Shuffle"
         android:textAllCaps="false"
-        android:textSize="@dimen/dp_15"
-        android:textColor="@color/textcolorlight"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginBottom="@dimen/dp_5"
-        android:clickable="true"/>
+        android:textSize="@dimen/dp_14"
+        android:alpha="0.5"
+        android:textColor="@color/white"
+        android:layout_above="@+id/downnarrow"
+        android:clickable="true"
+        app:typeface="roboto_condensed"
+        />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/prediction_tv_message"
@@ -230,7 +291,4 @@
         android:text="Last question!"
         android:textColor="@color/white"
         android:visibility="gone"/>
-
-
-
 </RelativeLayout>
