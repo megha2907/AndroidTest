@@ -22,7 +22,7 @@ import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
 import in.sportscafe.scgame.module.common.CustomViewPager;
 import in.sportscafe.scgame.module.common.RoundImage;
 import in.sportscafe.scgame.module.common.ScGameFragment;
-import in.sportscafe.scgame.module.common.Settings;
+import in.sportscafe.scgame.module.settings.SettingsActivity;
 import in.sportscafe.scgame.module.common.ViewPagerAdapter;
 import in.sportscafe.scgame.module.home.OnHomeActionListener;
 import in.sportscafe.scgame.module.play.myresultstimeline.MyResultsTimelineActivity;
@@ -239,7 +239,7 @@ public class ProfileFragment extends ScGameFragment implements ProfileView, View
     }
 
     private void navigateToSettings() {
-        startActivity(new Intent(getContext(), Settings.class));
+        startActivity(new Intent(getContext(), SettingsActivity.class));
     }
 
     private void navigateToSportSelection() {

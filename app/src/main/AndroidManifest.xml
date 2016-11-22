@@ -79,7 +79,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.common.Settings"
+            android:name=".module.settings.SettingsActivity"
             android:screenOrientation="portrait" />
 
         <activity

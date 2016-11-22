@@ -44,6 +44,12 @@ public interface Constants {
         String ALL_BADGES = "allbadges";
         String INSTALL_GROUP_CODE = "installGroupCode";
         String INSTALL_GROUP_NAME = "installGroupName";
+        String NORMAL_UPDATE_VERSION = "normalUpdateVersion";
+        String FORCE_UPDATE_VERSION = "forceUpdateVersion";
+        String NORMAL_UPDATE_ENABLED = "normalUpdateEnabled";
+        String NORMAL_UPDATE_MESSAGE = "normalUpdateMessage";
+        String FORCE_UPDATE_MESSAGE = "forceUpdateMessage";
+        String NORMAL_UPDATE_SHOWN_TIME = "normalUpdateShownTime";
     }
 
     interface Alerts {
@@ -160,6 +166,7 @@ public interface Constants {
         String NEW_GROUP = "New Group";
         String FEED = "Feed";
         String FLAVOR = "Flavor";
+        String APP_UPDATE = "App Update";
     }
 
     interface AnalyticsActions {

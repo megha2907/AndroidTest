@@ -4,11 +4,12 @@ import in.sportscafe.scgame.Config;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.common.ApiResponse;
 import in.sportscafe.scgame.module.feed.dto.MatchesResponse;
-import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedResponse;
-import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.scgame.module.play.myresults.MyResultsResponse;
 import in.sportscafe.scgame.module.play.prediction.dto.Answer;
 import in.sportscafe.scgame.module.play.prediction.dto.QuestionsResponse;
+import in.sportscafe.scgame.module.settings.app.dto.AppSettingsResponse;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedResponse;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.scgame.module.user.group.admin.approve.ApproveRequest;
 import in.sportscafe.scgame.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupNameUpdateRequest;
@@ -174,5 +175,9 @@ public class MyWebService extends AbstractWebService<ScGameService> {
 
     public Call<Result> getUpdateGroupPhotoRequest(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
         return mScGameService.uploadImage(file,filepath,filename);
+    }
+
+    public Call<AppSettingsResponse> getAppSettingsRequest(String uniqueId) {
+        return mScGameService.getAppSettings(uniqueId);
     }
 }

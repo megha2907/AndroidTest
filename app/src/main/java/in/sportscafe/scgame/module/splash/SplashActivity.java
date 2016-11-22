@@ -11,6 +11,7 @@ import java.util.HashMap;
 import in.sportscafe.scgame.Constants.BundleKeys;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.getstart.GetStartActivity;
+import in.sportscafe.scgame.module.settings.app.AppSettingsModelImpl;
 import in.sportscafe.scgame.module.user.group.joingroup.JoinGroupActivity;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
@@ -22,6 +23,9 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // To get the updated app settings like version details
+        AppSettingsModelImpl.newInstance().getAppSettings();
     }
 
     @Override

@@ -3,8 +3,6 @@ package in.sportscafe.scgame.module.analytics;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
@@ -119,40 +117,14 @@ public class ScGameAnalytics {
         track(AnalyticsCategory.FEED, type, name, null);
     }
 
-    public void onStart(Activity activity) {
-        if(null != mMoEHelper) {
-//            mMoEHelper.onStart(activity);
-        }
-    }
-
-    public void onStop(Activity activity) {
-        if(null != mMoEHelper) {
-//            mMoEHelper.onStart(activity);
-        }
-    }
-
-    public void onResume(Activity activity) {
-        if(null != mMoEHelper) {
-//            mMoEHelper.onResume(activity);
-        }
-    }
-
-    public void onSaveInstanceState(Bundle outState) {
-        if(null != mMoEHelper) {
-//            mMoEHelper.onSaveInstanceState(outState);
-        }
-    }
-
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        if(null != mMoEHelper) {
-//            mMoEHelper.onRestoreInstanceState(savedInstanceState);
-        }
-    }
-
-    public void onNewIntent(Activity activity, Intent intent) {
-        if(null != mMoEHelper) {
-//            mMoEHelper.onNewIntent(activity, intent);
-        }
+    /**
+     * track normal updates
+     *
+     * @param updateType - normal or force
+     * @param value    - 0 or 1
+     */
+    public void trackUpdate(String updateType, long value) {
+        track(AnalyticsCategory.APP_UPDATE, updateType, null, value);
     }
 
     public void startFragmentTrack(Activity activity, String fragmentName) {

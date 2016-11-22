@@ -1,4 +1,4 @@
-package in.sportscafe.scgame.module.common;
+package in.sportscafe.scgame.module.settings;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -12,22 +12,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.jeeva.android.widgets.customfont.CustomButton;
 import com.moe.pushlibrary.MoEHelper;
 
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
 import in.sportscafe.scgame.module.analytics.ScGameAnalytics;
+import in.sportscafe.scgame.module.common.WebViewActivity;
 import in.sportscafe.scgame.module.getstart.GetStartActivity;
 import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
 
 /**
  * Created by deepanshi on 31/8/16.
  */
-public class Settings extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     private Toolbar mtoolbar;
 
@@ -116,7 +115,7 @@ public class Settings extends AppCompatActivity {
 
     private void navigateToWebView(String url, String heading) {
 
-        Intent intent=new Intent(Settings.this,WebViewActivity.class);
+        Intent intent=new Intent(SettingsActivity.this,WebViewActivity.class);
         Bundle bundle=new Bundle();
         bundle.putString("url", url);
         bundle.putString("heading", heading);

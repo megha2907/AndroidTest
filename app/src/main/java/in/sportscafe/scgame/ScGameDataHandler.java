@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.jeeva.android.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import in.sportscafe.scgame.module.user.login.dto.UserInfo;
 import in.sportscafe.scgame.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.scgame.module.user.powerups.PowerUp;
 import in.sportscafe.scgame.module.user.sportselection.dto.Sport;
+import in.sportscafe.scgame.utils.timeutils.TimeUtils;
 import in.sportscafe.scgame.webservice.MyWebService;
 
 /**
@@ -62,11 +64,11 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
     }
 
     public boolean isLoggedInUser() {
-        return getSharedBooleanData(SharedKeys.LOGGED_USER);
+        return getSharedBooleanData(SharedKeys.LOGGED_USER, false);
     }
 
     public boolean isInitialSportsAvailable() {
-        return getSharedBooleanData(SharedKeys.INITIAL_SPORTS_AVAILABLE);
+        return getSharedBooleanData(SharedKeys.INITIAL_SPORTS_AVAILABLE, false);
     }
 
     public void setInitialSportsAvailable(boolean initialSportsAvailable) {
@@ -380,6 +382,64 @@ public class ScGameDataHandler extends AbstractDataHandler implements Constants 
 
     public String getInstallGroupName() {
         return getSharedStringData(SharedKeys.INSTALL_GROUP_NAME);
+    }
+
+    public int getNormalUpdateVersion() {
+        return getSharedIntData(SharedKeys.NORMAL_UPDATE_VERSION, -1);
+    }
+
+    public void setNormalUpdateVersion(int version) {
+        setSharedIntData(SharedKeys.NORMAL_UPDATE_VERSION, version);
+    }
+
+    public String getNormalUpdateMessage() {
+        return getSharedStringData(SharedKeys.NORMAL_UPDATE_MESSAGE);
+    }
+
+    public void setNormalUpdateMessage(String message) {
+        setSharedStringData(SharedKeys.NORMAL_UPDATE_MESSAGE, message);
+    }
+
+    public Integer getForceUpdateVersion() {
+        return getSharedIntData(SharedKeys.FORCE_UPDATE_VERSION, -1);
+    }
+
+    public void setForceUpdateVersion(int version) {
+        setSharedIntData(SharedKeys.FORCE_UPDATE_VERSION, version);
+    }
+
+    public String getForceUpdateMessage() {
+        return getSharedStringData(SharedKeys.FORCE_UPDATE_MESSAGE);
+    }
+
+    public void setForceUpdateMessage(String message) {
+        setSharedStringData(SharedKeys.FORCE_UPDATE_MESSAGE, message);
+    }
+
+    public void setNormalUpdateEnabled(boolean enabled) {
+        setSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, enabled);
+    }
+
+    public boolean isNormalUpdateEnabled() {
+        if(getSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, true)) {
+            long currentTimeMs = Calendar.getInstance().getTimeInMillis();
+            long updateShownTimeMs = getNormalUpdateShownTime();
+            if(updateShownTimeMs == -1
+                    || TimeUtils.getDaysDifference(currentTimeMs - updateShownTimeMs) > 0) {
+                setNormalUpdateShownTime(currentTimeMs);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private long getNormalUpdateShownTime() {
+        return getSharedLongData(SharedKeys.NORMAL_UPDATE_SHOWN_TIME, -1);
+    }
+
+    private void setNormalUpdateShownTime(long normalUpdateShownTime) {
+        setSharedLongData(SharedKeys.NORMAL_UPDATE_SHOWN_TIME, normalUpdateShownTime);
     }
 
     @Override

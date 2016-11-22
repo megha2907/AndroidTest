@@ -3,11 +3,12 @@ package in.sportscafe.scgame.webservice;
 
 import in.sportscafe.scgame.module.common.ApiResponse;
 import in.sportscafe.scgame.module.feed.dto.MatchesResponse;
-import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedResponse;
-import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.scgame.module.play.myresults.MyResultsResponse;
 import in.sportscafe.scgame.module.play.prediction.dto.Answer;
 import in.sportscafe.scgame.module.play.prediction.dto.QuestionsResponse;
+import in.sportscafe.scgame.module.settings.app.dto.AppSettingsResponse;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentFeedResponse;
+import in.sportscafe.scgame.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.scgame.module.user.group.admin.approve.ApproveRequest;
 import in.sportscafe.scgame.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.scgame.module.user.group.groupinfo.GroupNameUpdateRequest;
@@ -47,93 +48,93 @@ import retrofit2.http.Query;
  */
 public interface ScGameService {
 
-    @GET("sports")
+    @GET("v1/game/sports")
     Call<AllSports> getAllSports();
 
-    @GET("users/{userId}/sports")
+    @GET("v1/game/users/{userId}/sports")
     Call<UserSports> getUserSports(@Path("userId") String userId);
 
-    @GET("users/{userId}")
+    @GET("v1/game/users/{userId}")
     Call<UserInfoResponse> getUserInfo(@Path("userId") String userId);
 
-//    @GET("users/{userId}/matches")
-//    Call<MatchesResponse> getMatches(@Path("userId") String userId,@Query("tour_id") int tournamentId);
-
-    @GET("users/{userId}/matches")
+    @GET("v1/game/users/{userId}/matches")
     Call<MatchesResponse> getMatches(@Path("userId") String userId,@Query("tour_id") int tourId);
 
-    @GET("users/{userId}/matches")
+    @GET("v1/game/users/{userId}/matches")
     Call<MatchesResponse> getMatchResults(@Path("userId") String userId,@Query("is_attempted") Boolean isAttempted ,@Query("without_commentary") Boolean WithoutCommentary);
 
-    @GET("users/{userId}/questions")
+    @GET("v1/game/users/{userId}/questions")
     Call<QuestionsResponse> getQuestions(@Path("userId") String userId,@Query("match_id") int matchId);
 
-    @GET("users/{user_id}/tournaments")
+    @GET("v1/game/users/{user_id}/tournaments")
     Call<TournamentsResponse> getTournaments(@Path("user_id") String userId, @Query("is_current") boolean isCurrent,@Query("group_by_sport") boolean groupbySport);
 
-    @GET("users/{user_id}/tournaments")
+    @GET("v1/game/users/{user_id}/tournaments")
     Call<TournamentFeedResponse> getCurrentTournaments(@Path("user_id") String userId, @Query("is_current") boolean isCurrent);
 
-    @GET("users/{userId}/groups/info")
+    @GET("v1/game/users/{userId}/groups/info")
     Call<GroupsDetailResponse> getGroupDetails(@Path("userId") String userId);
 
-    @POST("users/login")
+    @POST("v1/game/users/login")
     Call<LogInResponse> loginUser(@Body LogInRequest logInRequest);
 
-    @PUT("users")
+    @PUT("v1/game/users")
     Call<ApiResponse> updateUser(@Body UpdateUserRequest request);
 
     @Multipart
-    @POST("/v1/utility/addFileToS3")
+    @POST("v1/utility/addFileToS3")
     Call<Result> uploadImage(@Part MultipartBody.Part file, @Part("filePath") RequestBody filepath, @Part("fileName") RequestBody filename);
 
-    @POST("users/answer")
+    @POST("v1/game/users/answer")
     Call<ApiResponse> saveAnswer(@Body Answer answer);
 
-    @PUT("users/sports/preference")
+    @PUT("v1/game/users/sports/preference")
     Call<ApiResponse> savePreference(@Body PreferenceRequest request);
 
-    @POST("groups")
+    @POST("v1/game/groups")
     Call<NewGroupResponse> createNewGroup(@Body NewGroupRequest request);
 
-    @HTTP(method = "DELETE", path = "groups/users", hasBody = true)
+    @HTTP(method = "DELETE", path = "v1/game/groups/users", hasBody = true)
     Call<ApiResponse> removePerson(@Body AdminRequest request);
 
-    @PUT("groups/admins")
+    @PUT("v1/game/groups/admins")
     Call<ApiResponse> makeAdmin(@Body AdminRequest request);
 
-    @POST("groups/users")
+    @POST("v1/game/groups/users")
     Call<ApiResponse> joinGroup(@Body AddGroupRequest memberRequest);
 
-    @PUT("groups/users")
+    @PUT("v1/game/groups/users")
     Call<ApiResponse> approveUser(@Body ApproveRequest request);
 
-    @HTTP(method = "DELETE", path = "users/groups", hasBody = true)
+    @HTTP(method = "DELETE", path = "v1/game/users/groups", hasBody = true)
     Call<ApiResponse> leaveGroup(@Body MembersRequest request);
 
-    @GET("users/{userId}/results")
+    @GET("v1/game/users/{userId}/results")
     Call<MyResultsResponse> getMyResults(@Path("userId") String userId,@Query("match_id") Integer matchId);
 
-    @GET("users/{userId}/leaderboard/summary")
+    @GET("v1/game/users/{userId}/leaderboard/summary")
     Call<LbSummaryResponse> getLeaderBoardSummary(@Path("userId") String userId);
 
-    @GET("leaderboard/detail")
+    @GET("v1/game/leaderboard/detail")
     Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("sports_id") Integer sportId,
                                                    @Query("group_id") Integer groupId,
                                                    @Query("challenge_id") Integer challengeId);
 
-    @PUT("groups/sports")
+    @PUT("v1/game/groups/sports")
     Call<ApiResponse> updateGroupSport(@Body GroupSportUpdateRequest request);
 
-    @PUT("groups/tournaments")
+    @PUT("v1/game/groups/tournaments")
     Call<ApiResponse> updateGroupTournament(@Body GroupTournamentUpdateRequest request);
 
-    @PUT("groups")
+    @PUT("v1/game/groups")
     Call<ApiResponse> updateGroupName(@Body GroupNameUpdateRequest request);
 
-    @GET("users/{user_id}/groups/{group_id}/info")
+    @GET("v1/game/users/{user_id}/groups/{group_id}/info")
     Call<GroupSummaryResponse> getGroupSummary(@Path("user_id") String userId,@Path("group_id") Integer groupId);
 
-    @GET("users/{user_id}/groups")
+    @GET("v1/game/users/{user_id}/groups")
     Call<AllGroupsResponse> getAllGroups(@Path("user_id") String userId);
+
+    @GET("v1/setting/getSettingsBody")
+    Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId);
 }

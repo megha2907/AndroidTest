@@ -5,4 +5,5 @@
 
     <dimen name="dp_37">37dp</dimen>
     <dimen name="dp_280">280dp</dimen>
+    <dimen name="dp_320">320dp</dimen>
 </resources>
