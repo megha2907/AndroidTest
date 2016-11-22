@@ -6,7 +6,16 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v7.app.AlertDialog;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -101,5 +110,53 @@ public class AppSnippet implements Constants {
                 return i + sufixes[i % 10];
 
         }
+    }
+
+    public static Spanned formatHtml(String message) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            return Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            return Html.fromHtml(message);
+        }
+    }
+
+    public static AlertDialog getAlertDialog(Context context, String title, String message,
+                                             String positiveButton, View.OnClickListener positiveListener,
+                                             String negativeButton, View.OnClickListener negativeListener,
+                                             CompoundButton.OnCheckedChangeListener dontShowListener) {
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.custom_dialog_layout, null);
+
+        ((TextView) dialogView.findViewById(R.id.dialog_tv_title)).setText(title);
+
+        ((TextView) dialogView.findViewById(R.id.dialog_tv_message)).setText(formatHtml(message));
+
+        Button button = (Button) dialogView.findViewById(R.id.dialog_btn_positive);
+        button.setText(positiveButton);
+        button.setOnClickListener(positiveListener);
+
+        button = (Button) dialogView.findViewById(R.id.dialog_btn_negative);
+        if(null != positiveButton) {
+            button.setText(negativeButton);
+        } else {
+            button.setVisibility(View.GONE);
+        }
+
+        if(null != negativeListener) {
+            button.setOnClickListener(negativeListener);
+        }
+
+        CheckBox checkBox = (CheckBox) dialogView.findViewById(R.id.dialog_tv_show_again);
+        if(null != dontShowListener) {
+            checkBox.setOnCheckedChangeListener(dontShowListener);
+        } else {
+            checkBox.setVisibility(View.GONE);
+        }
+
+        return new AlertDialog.Builder(context).setView(dialogView).create();
+    }
+
+    public static AlertDialog getAlertDialog(Context context, String title, String message,
+                                             String positiveButton, View.OnClickListener positiveListener) {
+        return getAlertDialog(context, title, message, positiveButton, positiveListener, null, null, null);
     }
 }

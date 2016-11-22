@@ -36,5 +36,7 @@
     <color name="colorBrown">#2A2832</color>
     <color name="colorGrey">#26252d</color>
     <color name="invitepeoplebtncolor">#00DB58</color>
+    <color name="curious_blue">#29ABE2</color>
+    <color name="black_60">#99000000</color>
 
 </resources>

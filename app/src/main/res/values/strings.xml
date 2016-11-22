@@ -1,4 +1,5 @@
 <resources>
+    <string name="play_store_url">https://play.google.com/store/apps/details?id=in.sportscafe.scgame</string>
     <string name="facebook_app_id">1717269841858265</string>
     <string name="google_client_id">93923683436-0e0bkm6459105nthip0thu9dve75s1hc.apps.googleusercontent.com</string>
     <string name="addsport">Pick your Tournament and \n enjoy the game</string>
@@ -7,4 +8,11 @@
     <string name="st2_no_notification">Come back again &amp; check \n for notifications</string>
     <string name="accuracy_streak">More than 80% accuracy in your last 5 matches</string>
     <string name="table_topper">Top 5 in this leaderboard</string>
+
+    <!-- Start App update -->
+    <string name="new_version_title">New Version Available!</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="do_not_show_again">Do not show again</string>
+    <!-- End App update -->
 </resources>

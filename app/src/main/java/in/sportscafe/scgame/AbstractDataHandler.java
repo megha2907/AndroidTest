@@ -10,57 +10,35 @@ public abstract class AbstractDataHandler implements Constants {
     public abstract SharedPreferences getSharedPreferences();
 
     public void setSharedIntData(String key, int value) {
-        SharedPreferences.Editor editor = getEditor();
-        editor.putInt(key, value);
-        editor.commit();
+        getEditor().putInt(key, value).apply();
     }
 
-    public int getSharedIntData(String key) {
-        return getSharedPreferences().getInt(key, -1);
-    }
-
-    public int getSharedIntData(String key, int defValue) {
-        return getSharedPreferences().getInt(key, defValue);
+    public int getSharedIntData(String key, int defVal) {
+        return getSharedPreferences().getInt(key, defVal);
     }
 
     public void setSharedStringData(String key, String value) {
-        SharedPreferences.Editor editor = getEditor();
-        editor.putString(key, value);
-        editor.commit();
+        getEditor().putString(key, value).apply();
     }
 
     public String getSharedStringData(String key) {
         return getSharedPreferences().getString(key, null);
     }
 
-    public long getSharedLongData(String key) {
-        return getSharedPreferences().getLong(key, -1);
+    public void setSharedLongData(String key, long value) {
+        getEditor().putLong(key, value).apply();
     }
 
-    public void setSharedLongData(String key, long value) {
-        SharedPreferences.Editor editor = getEditor();
-        editor.putLong(key, value);
-        editor.commit();
+    public long getSharedLongData(String key, long defVal) {
+        return getSharedPreferences().getLong(key, defVal);
     }
 
     public void setSharedBooleanData(String key, boolean value) {
-        SharedPreferences.Editor editor = getEditor();
-        editor.putBoolean(key, value);
-        editor.commit();
+        getEditor().putBoolean(key, value).apply();
     }
 
-    public boolean getSharedBooleanData(String key) {
-        return getSharedPreferences().getBoolean(key, false);
-    }
-
-    public void setSharedFloatData(String key, float value) {
-        SharedPreferences.Editor editor = getEditor();
-        editor.putFloat(key, value);
-        editor.commit();
-    }
-
-    public float getSharedFloatData(String key) {
-        return getSharedPreferences().getFloat(key, -1);
+    public boolean getSharedBooleanData(String key, boolean defVal) {
+        return getSharedPreferences().getBoolean(key, defVal);
     }
 
     public boolean isKeyShared(String key) {
@@ -72,11 +50,13 @@ public abstract class AbstractDataHandler implements Constants {
     }
 
     public void clearData(String key) {
-//        getEditor().remove(key).commit();
+        if(isKeyShared(key)) {
+            getEditor().remove(key).apply();
+        }
     }
 
     public void clearAll() {
-        getEditor().clear().commit();
+        getEditor().clear().apply();
     }
 
 }

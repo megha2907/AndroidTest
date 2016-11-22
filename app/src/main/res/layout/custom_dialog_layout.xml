@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dp_0"
+        app:cardElevation="@dimen/dp_3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_10">
+
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/dialog_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_16"
+                app:typeface="roboto_condensed" />
+
+            <in.sportscafe.scgame.module.common.MaxHeightScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                app:maxHeight="@dimen/dp_320">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/dialog_tv_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="1.2"
+                    android:textColor="@color/black_60"
+                    android:textSize="@dimen/dp_15"
+                    app:typeface="lato_regular" />
+            </in.sportscafe.scgame.module.common.MaxHeightScrollView>
+
+
+            <com.jeeva.android.widgets.customfont.CustomCheckbox
+                android:id="@+id/dialog_tv_show_again"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:text="@string/do_not_show_again"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_15"
+                app:typeface="lato_regular" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/dialog_btn_negative"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_40"
+                    android:background="?attr/selectableItemBackground"
+                    android:textAllCaps="true"
+                    android:textColor="@color/curious_blue"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="roboto_condensed_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/dialog_btn_positive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@color/curious_blue"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="roboto_condensed_bold" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

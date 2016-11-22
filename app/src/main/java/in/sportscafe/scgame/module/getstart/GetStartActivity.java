@@ -1,30 +1,24 @@
 package in.sportscafe.scgame.module.getstart;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.jeeva.android.Log;
-
-import java.util.Arrays;
-
 import in.sportscafe.scgame.Constants;
 import in.sportscafe.scgame.R;
 import in.sportscafe.scgame.ScGameDataHandler;
-import in.sportscafe.scgame.module.common.ScGameActivity;
 import in.sportscafe.scgame.module.home.HomeActivity;
 import in.sportscafe.scgame.module.user.login.LogInActivity;
 import in.sportscafe.scgame.module.user.myprofile.edit.EditProfileActivity;
-import in.sportscafe.scgame.module.user.preference.PreferenceManager;
-import in.sportscafe.scgame.module.user.preference.SavePreferenceModelImpl;
 import in.sportscafe.scgame.module.user.sportselection.SportSelectionActivity;
 import in.sportscafe.scgame.module.user.sportselection.SportsModelImpl;
 
 /**
  * Created by Jeeva on 27/5/16.
  */
-public class GetStartActivity extends ScGameActivity {
+public class GetStartActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

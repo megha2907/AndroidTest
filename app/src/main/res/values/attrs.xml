@@ -84,4 +84,8 @@
         <enum name="lato_black" value="14" />
     </attr>
 
+    <declare-styleable name="MaxHeightScrollView">
+        <attr name="maxHeight" format="dimension" />
+    </declare-styleable>
+
 </resources>
