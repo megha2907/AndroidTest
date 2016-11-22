@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,6 +160,10 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
             holder.mTvMatchResult.setText(match.getResult());
+//            holder.mTvMatchResult.setSingleLine(false);
+//            holder.mTvMatchResult.setEllipsize(TextUtils.TruncateAt.END);
+//            int n = 2; // the exact number of lines you want to display
+//            holder.mTvMatchResult.setLines(n);
             //holder.mTvMatchResult.setLayoutParams(llp);
             holder.mBtnPlayMatch.setVisibility(View.GONE);
 
@@ -180,7 +186,19 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
             holder.mBtnMatchPoints.setTag(match.getId());
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
-            holder.mIvMatchPointsRightArrow.setVisibility(View.VISIBLE);
+
+//            if (null!= match.getWinnerPartyId()){
+//
+//                if (match.getWinnerPartyId().equals(match.getParties().get(0).getPartyId())){
+//                    holder.mTvPartyAName.setTypeface(null,Typeface.BOLD);
+//                      holder.mTvPartyAName.setTextColor(Color.WHITE);
+//                }
+//                else if(match.getWinnerPartyId().equals(match.getParties().get(1).getPartyId())){
+//                    holder.mTvPartyBName.setTypeface(null,Typeface.BOLD);
+//                      holder.mTvPartyBName.setTextColor(Color.WHITE);
+//                }
+//
+//            }
 
         }
 
@@ -242,7 +260,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         if (holder.mBtnPlayMatch.getVisibility()==View.VISIBLE) // IF PLAY BTN VISIBLE THEN SHOW PINK DOT
         {
-            holder.mIbfeedDotIcon.setImageResource(R.drawable.feed_dot_pink_icon);
+            holder.mIbfeedDotIcon.setImageResource(R.drawable.feed_dot_grey_icon);
         }
 
         return scheduleView;
@@ -344,8 +362,6 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         ImageButton mIbfeedDotIcon;
 
-        ImageView mIvMatchPointsRightArrow;
-
 
 
         public ScheduleViewHolder(View V) {
@@ -369,7 +385,6 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);
-            mIvMatchPointsRightArrow = (ImageView) V.findViewById(R.id.schedule_row_iv_match_points_right_arrow);
 
             mBtnPlayMatch.setOnClickListener(this);
             mBtnMatchPoints.setOnClickListener(this);

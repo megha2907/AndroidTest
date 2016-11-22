@@ -4,5 +4,7 @@
     <gradient android:startColor="@color/btncolor"
         android:endColor="@color/btncolor"
         android:angle="270" />
-    <corners android:radius="@dimen/dp_20" />
+    <corners
+        android:radius="@dimen/dp_20" />
+
 </shape>

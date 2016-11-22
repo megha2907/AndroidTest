@@ -33,7 +33,6 @@ public class Match implements Serializable {
     @JsonProperty("match_venue")
     private String venue;
 
-
     @JsonProperty("match_parties")
     private List<Parties> parties = new ArrayList<>();
 
@@ -57,6 +56,9 @@ public class Match implements Serializable {
 
     @JsonProperty("is_attempted")
     private boolean isAttempted;
+
+    @JsonProperty("winner_party_id")
+    private Integer winnerPartyId;
 
 //    @JsonProperty("match_commentary")
 //    private String matchCommentary;
@@ -322,6 +324,15 @@ public class Match implements Serializable {
 //        this.matchCommentary = matchCommentary;
 //    }
 
+    @JsonProperty("winner_party_id")
+    public Integer getWinnerPartyId() {
+        return winnerPartyId;
+    }
+
+    @JsonProperty("winner_party_id")
+    public void setWinnerPartyId(Integer winnerPartyId) {
+        this.winnerPartyId = winnerPartyId;
+    }
 
 
 

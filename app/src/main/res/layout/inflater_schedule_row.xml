@@ -8,26 +8,15 @@
 
 
 
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/schedule_row_ll"
-        android:orientation="vertical"
-        android:background="@drawable/swipe_card_shape"
-        android:layout_marginLeft="@dimen/dp_75"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10">
-
-
-
     <RelativeLayout
         android:id="@+id/schedule_row_rl_match_stage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@color/colorBackground"
+        android:background="@color/black"
+        android:layout_marginLeft="@dimen/dp_75"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         >
 
         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -35,22 +24,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:padding="@dimen/dp_10"
-            android:text="Matchhhh"
-            android:layout_marginLeft="@dimen/dp_10"
+            app:typeface="roboto_condensed"
+            android:paddingTop="@dimen/dp_6"
+            android:paddingBottom="@dimen/dp_6"
+            android:layout_marginLeft="@dimen/dp_2"
             android:layout_centerVertical="true"
-            android:textColor="@color/silver_chalice"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/dp_12" />
+            android:textColor="@color/white"
+            android:alpha="0.6"
+            android:textSize="@dimen/dp_14"
+            />
 
 
     </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_row_ll"
+        android:orientation="vertical"
+        android:layout_below="@+id/schedule_row_rl_match_stage"
+        android:background="@drawable/swipe_card_shape"
+        android:layout_marginLeft="@dimen/dp_75"
+        android:layout_marginRight="@dimen/dp_10"
+        >
+
+
+
 
     <RelativeLayout
         android:id="@+id/image_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/swipe_card_tv_context"
+        android:layout_marginTop="@dimen/dp_20"
         >
 
         <Button
@@ -83,17 +90,20 @@
             android:id="@+id/schedule_row_tv_party_a_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dp_14"
+            android:textSize="@dimen/dp_16"
             android:textColor="@color/white"
+            android:alpha="0.7"
             android:text="Pakistan"
             android:gravity="left"
-            app:typeface="lato_bold"
+            app:typeface="roboto_condensed"
             android:layout_marginRight="@dimen/dp_2"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_toRightOf="@id/swipe_card_iv_left"
             android:layout_toLeftOf="@id/schedule_row_btn_vs"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:maxLines="2"
       />
 
             <com.jeeva.android.widgets.HmImageView
@@ -116,11 +126,14 @@
             android:layout_marginLeft="@dimen/dp_2"
             android:layout_toRightOf="@id/schedule_row_btn_vs"
             android:layout_toLeftOf="@id/swipe_card_iv_right"
-            app:typeface="lato_bold"
-            android:textSize="@dimen/dp_14"
+            app:typeface="roboto_condensed"
+            android:textSize="@dimen/dp_16"
             android:gravity="right"
+            android:alpha="0.7"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:maxLines="2"
             />
 
 
@@ -128,19 +141,22 @@
 
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/schedule_row_btn_playmatch"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_35"
-            android:background="@drawable/play_btn_bg"
+            android:layout_width="@dimen/dp_90"
+            android:layout_height="@dimen/dp_36"
+            android:background="@drawable/shadow_effect"
+            android:textAlignment="gravity"
             android:onClick="onClick"
             android:text="PLAY"
             android:textAllCaps="false"
-            android:textSize="@dimen/dp_15"
+            android:textSize="@dimen/dp_14"
             android:layout_below="@+id/schedule_row_btn_vs"
             android:layout_gravity="center"
+            android:gravity="center"
             android:layout_marginTop="@dimen/dp_10"
-            app:typeface="lato_regular"
+            app:typeface="roboto_condensed"
             android:textColor="@color/white"
             android:visibility="gone"
+            android:paddingTop="@dimen/dp_7"
 
             />
 
@@ -152,13 +168,14 @@
             android:visibility="gone"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_gravity="center"
-            android:textColor="@color/silver_chalice"
+            android:textColor="@color/white"
+            android:alpha="0.7"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
             app:typeface="lato_regular"
             android:gravity="center"
             android:lineSpacingExtra="@dimen/dp_2"
-            android:textSize="@dimen/dp_12"
+            android:textSize="@dimen/dp_13"
             />
 
 
@@ -203,20 +220,21 @@
 
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/schedule_row_btn_points"
-            android:layout_width="@dimen/dp_80"
-            android:layout_height="@dimen/dp_35"
-            android:background="@android:color/transparent"
+            android:layout_width="@dimen/dp_90"
+            android:layout_height="@dimen/dp_36"
+            android:background="@drawable/btn_points_bg"
             android:onClick="onClick"
             android:text="60 Points"
             android:textAllCaps="false"
-            android:textSize="@dimen/dp_15"
+            android:textSize="@dimen/dp_14"
             android:layout_alignParentRight="true"
-            app:typeface="lato_regular"
-            android:textColor="@color/yellowcolor"
+            app:typeface="roboto_condensed"
+            android:textColor="@color/linecolor"
             android:layout_marginRight="@dimen/dp_20"
             android:visibility="gone"
             android:layout_marginBottom="@dimen/dp_5"
             android:layout_centerVertical="true"
+            android:padding="@dimen/dp_0"
            />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -226,25 +244,17 @@
             android:layout_toLeftOf="@+id/schedule_row_btn_points"
             android:textColor="@color/yellowcolor"
             android:text="YOU GOT 3/5 QUESTIONS CORRECT"
-            app:typeface="lato_regular"
+            app:typeface="roboto_condensed"
             android:gravity="left"
-            android:textSize="@dimen/dp_13"
+            android:textSize="@dimen/dp_14"
             android:layout_marginRight="@dimen/dp_20"
             android:layout_marginLeft="@dimen/dp_14"
             android:visibility="gone"
             android:maxLines="2"
             android:layout_centerVertical="true"
+            android:paddingTop="@dimen/dp_6"
             />
 
-            <ImageView
-                android:id="@+id/schedule_row_iv_match_points_right_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/right_arrow_points_icon"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dp_15"
-                android:visibility="gone"/>
 
         </RelativeLayout>
 
@@ -311,7 +321,9 @@
         android:gravity="right"
         android:layout_marginLeft="@dimen/dp_4"
         android:layout_marginTop="@dimen/dp_14"
-        android:textColor="@color/silver_chalice"
+        android:textColor="@color/white"
+        android:alpha="0.6"
+        android:textAllCaps="false"
         />
 
 </RelativeLayout>

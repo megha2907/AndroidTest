@@ -181,7 +181,19 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
             holder.mBtnMatchPoints.setTag(match.getId());
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
-            holder.mIvMatchPointsRightArrow.setVisibility(View.VISIBLE);
+
+            //            if (null!= match.getWinnerPartyId()){
+//
+//                if (match.getWinnerPartyId().equals(match.getParties().get(0).getPartyId())){
+//                    holder.mTvPartyAName.setTypeface(null,Typeface.BOLD);
+//                      holder.mTvPartyAName.setTextColor(Color.WHITE);
+//                }
+//                else if(match.getWinnerPartyId().equals(match.getParties().get(1).getPartyId())){
+//                    holder.mTvPartyBName.setTypeface(null,Typeface.BOLD);
+//                      holder.mTvPartyBName.setTextColor(Color.WHITE);
+//                }
+//
+//            }
 
         }
 
@@ -293,7 +305,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
         RelativeLayout mRlMatchStageParent;
 
-        ImageView mIvMatchPointsRightArrow;
+
 
 
         public ScheduleViewHolder(View V) {
@@ -314,7 +326,6 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
-            mIvMatchPointsRightArrow = (ImageView) V.findViewById(R.id.schedule_row_iv_match_points_right_arrow);
 
 
             mBtnPlayMatch.setOnClickListener(this);

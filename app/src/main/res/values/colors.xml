@@ -27,12 +27,12 @@
     <color name="greencolor">#00D35D</color>
     <color name="tabcolor">#FD3353</color>
     <color name="browncolor">#98681C</color>
-    <color name="yellowcolor">#FFDB00</color>
+    <color name="yellowcolor">#F8DA01</color>
     <color name="goldenyellowcolor">#ECC11B</color>
-    <color name="btncolor">#FF0047</color>
+    <color name="btncolor">#2d81f8</color>
     <color name="textcolorlight">#86858D</color>
     <color name="dividercolor">#2A2A2A</color>
-    <color name="linecolor">#505050</color>
+    <color name="linecolor">#303030</color>
     <color name="colorBrown">#2A2832</color>
     <color name="colorGrey">#26252d</color>
     <color name="invitepeoplebtncolor">#00DB58</color>

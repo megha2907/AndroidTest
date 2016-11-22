@@ -11,7 +11,13 @@
         android:background="@color/colorBackground"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
-       />
+       >
+        <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--/>-->
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swifeRefresh"
