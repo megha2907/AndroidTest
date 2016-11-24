@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"
+        android:background="@color/colorBackground"
+        android:layout_below="@+id/edit_tv"
+        android:layout_marginTop="@dimen/dp_20"
+        >
+
+
+        <ImageView
+            android:id="@+id/edit_iv_user_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/placeholder_icon"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:onClick="showImagePopup"
+            android:alpha="0.8"
+            />
+
+        <ImageView
+            android:id="@+id/edit_iv_camera_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/camera_icon"
+            android:layout_centerInParent="true"
+            android:onClick="showImagePopup"
+            />
+
+
+
+    </RelativeLayout>
+
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/edit_btn_done"
+        android:layout_width="@dimen/blue_button_width"
+        android:layout_height="@dimen/blue_button_height"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/powerup_screen_btn_bg"
+        android:onClick="onClick"
+        android:text="@string/next"
+        android:textAllCaps="false"
+        android:textSize="@dimen/blue_button_text"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/dp_12"
+        app:typeface="roboto_condensed"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_centerHorizontal="true"
+       />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_edit_et_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_below="@+id/rl1"
+        app:theme="@style/TextLabel"
+        app:errorTextAppearance="@style/error_appearance">
+
+    <com.jeeva.android.widgets.customfont.CustomEditText
+        android:id="@+id/edit_et_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:maxLength="15"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/white"
+        android:textColorHint="@color/white"
+        app:typeface="lato_regular"
+        android:textSize="@dimen/dp_16"
+        android:textAllCaps="false"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
+        />
+    </android.support.design.widget.TextInputLayout>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/edit_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/textcolorlight"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textSize="@dimen/dp_16"
+        app:typeface="lato_regular"
+        />
+
+    <!--<com.jeeva.android.widgets.customfont.CustomEditText
+        android:id="@+id/edit_et_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_et_name"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="top"
+        android:hint="About"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:maxLength="50" />-->
+
+
+
+</RelativeLayout>

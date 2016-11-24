@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#202020</color>
+    <color name="colorPrimaryDark">#161616</color>
+    <color name="colorAccent">#202020</color>
+    <color name="black">#151515</color>
+    <color name="colorMedium">#202020</color>
+    <color name="colorBackground">#202020</color>
+
+    <color name="alto">#D8D8D8</color>
+    <color name="silver_chalice">#AAAAAA</color>
+    <color name="dark_grey">#272731</color>
+    <color name="chambray">#3B5999</color>
+    <color name="chathamsBlue">#194586</color>
+    <color name="gallery">#EBEBEB</color>
+    <color name="haveLockBlue">#4A90E2</color>
+    <color name="lima">#7ED321</color>
+    <color name="monza">#c94646</color>
+    <color name="orange">#FF681F</color>
+    <color name="pink_swan">#C2BABA</color>
+    <color name="scorpion">#656161</color>
+    <color name="valencia">#D44837</color>
+    <color name="powerup_color">#ffad33</color>
+    <color name="btn_powerup_screen_color">#00A0FF</color>
+    <color name="btn_powerup_count_screen_color">#D3D5D4</color>
+
+    <color name="greencolor">#00D35D</color>
+    <color name="tabcolor">#FD3353</color>
+    <color name="browncolor">#98681C</color>
+    <color name="yellowcolor">#F8DA01</color>
+    <color name="goldenyellowcolor">#ECC11B</color>
+    <color name="btncolor">#2d81f8</color>
+    <color name="textcolorlight">#86858D</color>
+    <color name="dividercolor">#2A2A2A</color>
+    <color name="linecolor">#303030</color>
+    <color name="colorBrown">#2A2832</color>
+    <color name="colorGrey">#26252d</color>
+    <color name="invitepeoplebtncolor">#00DB58</color>
+    <color name="curious_blue">#29ABE2</color>
+    <color name="black_60">#99000000</color>
+
+</resources>

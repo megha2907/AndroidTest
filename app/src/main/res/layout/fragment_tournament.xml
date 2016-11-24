@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorMedium"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:id="@+id/tournament_toolbar"
+        android:elevation="@dimen/dp_4"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/dp_140"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/toolbar_logo"
+            android:src="@drawable/sportscafe_logo"
+
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+                <in.sportscafe.scgame.module.common.CustomTabLayout
+                    android:id="@+id/tournament_tab_tl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorMedium"
+                    app:layout_collapseMode="pin"
+                    app:selected_textSize="@dimen/dp_16"
+                    app:selected_typeface="roboto_condensed_bold"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/tabcolor"
+                    app:tabIndicatorHeight="@dimen/dp_4"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextColor="@color/silver_chalice"
+                    app:unselected_textSize="@dimen/dp_14"
+                    app:unselected_typeface="roboto_condensed"
+                    android:layout_gravity="center_horizontal|top"
+                    android:layout_below="@+id/tournament_toolbar"
+                    app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+                    android:elevation="@dimen/dp_4"
+                    />
+
+
+    <in.sportscafe.scgame.module.common.CustomViewPager
+        android:id="@+id/tournament_tab_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_below="@+id/tournament_tab_tl"/>
+
+</RelativeLayout>

@@ -1,0 +1,114 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*--------------------added by VS-------------------*/
+
+.hidden{visibility:hidden;opacity:0;}
+.visible{visibility:inherit;opacity:inherit;}
+.tran-100{-webkit-transition: all 100ms ease-in-out;-moz-transition: all 100ms ease-in-out;-ms-transition: all 100ms ease-in-out;-o-transition: all 100ms ease-in-out;transition: all 100ms ease-in-out;}
+.tran-300{-webkit-transition: all 300ms ease-in-out;-moz-transition: all 300ms ease-in-out;-ms-transition: all 300ms ease-in-out;-o-transition: all 300ms ease-in-out;transition: all 300ms ease-in-out;}
+.tran-500{-webkit-transition: all 500ms ease-in-out;-moz-transition: all 500ms ease-in-out;-ms-transition: all 500ms ease-in-out;-o-transition: all 500ms ease-in-out;transition: all 500ms ease-in-out;}
+.tran-800{-webkit-transition: all 800ms ease-in-out;-moz-transition: all 800ms ease-in-out;-ms-transition: all 800ms ease-in-out;-o-transition: all 800ms ease-in-out;transition: all 800ms ease-in-out;}
+.tran-1000{-webkit-transition: all 1000ms ease-in-out;-moz-transition: all 1000ms ease-in-out;-ms-transition: all 1000ms ease-in-out;-o-transition: all 1000ms ease-in-out;transition: all 1000ms ease-in-out;}
+.tran-1200{-webkit-transition: all 1200ms ease-in-out;-moz-transition: all 1200ms ease-in-out;-ms-transition: all 1200ms ease-in-out;-o-transition: all 1200ms ease-in-out;transition: all 1200ms ease-in-out;}
+.tran-1500{-webkit-transition: all 1500ms ease-in-out;-moz-transition: all 1500ms ease-in-out;-ms-transition: all 1500ms ease-in-out;-o-transition: all 1500ms ease-in-out;transition: all 1500ms ease-in-out;}
+.tran-2000{-webkit-transition: all 2000ms ease-in-out;-moz-transition: all 2000ms ease-in-out;-ms-transition: all 2000ms ease-in-out;-o-transition: all 2000ms ease-in-out;transition: all 2000ms ease-in-out;}
+
+button,input{-webkit-appearance:none;}input{background-color:transparent;}
+button,input,div{outline:none;}
+a{color: inherit;text-decoration: none;}
+/*links in paragraphs*/
+p a{color:#EE7600;;}p a:hover{text-decoration: underline;}
+
+body{
+	background-color:#FFFFFF;color:#444;
+	font-family: 'Helvetica';
+	letter-spacing:0.01em;line-height: 1.5em;
+	font-size:14px;
+}
+button{padding:5px;background-color: #22638a;color:white;border:none;outline:none;margin:5px;border-radius:3px;min-width:100px;}button.negBtn{background:none;color:#22638a;text-decoration: underline;}
+input{padding:5px;outline:none;border:1px solid #CCC;border-radius:3px;font-size:110%;}
+input:invalid {border: 1px solid #ec0707;}
+input:valid {border: 1px solid #666;}
+input:read-only{background-color:#EEE}
+
+#loading{position:fixed;top:0;left:0;height:100%;width:100%;background-color: rgba(34,99,138,0.8);}
+	#loading>div{position:absolute;top:0;left:0;right:0;bottom:0;width:100px;height:100px;margin:auto;font-size:200%;color:white;}
+#menu{text-align: center;}
+#codeLabel{text-align:center;font-size:10px;}
+#title{margin-top:30px;text-align: center;font-size:150%;}
+#con{width:70%;margin:50px auto;}
+	#summary{}
+	#summary>table{width:100%;}
+	#details{}
+		.sectionTopbar{margin-bottom:30px;}
+			.sectionTopbar>div{color:#22638a;font-size:140%;font-weight:bold;text-transform: uppercase;}
+			.sectionTopbar>button{float:right;}
+		.inpCon{display:inline-block;vertical-align:bottom;width:50%;margin-bottom:5px;}
+			.inpCon>div{font-size:10px;}
+			.inpCon>input{width:80%;}
+		.resCon{border-top:1px solid #AAA;margin:20px 0;padding:20px 40px;}
+			#resultInput{width:50%;margin:0 auto 5px;display:block;}
+			.resCon input{width:70%;margin-bottom:5px;font-size:10px;}
+			.questCon{border-top:1px solid #CCC;padding:15px 50px;position:relative;}
+				.qResInp{position:absolute;bottom:25px;right:10px;width:80px !important;}
+				.qPointsInp{position:absolute;top:15px;left:5px;width:40px !important;}
+				.questDelBtn{position:absolute;top:10px;right:10px;}
+				.qOptCon{width:50%;display:inline-block;vertical-align:top;}
+				.qImg1,.qImg2{width:60px;height:60px;position: absolute;bottom:0;top:0;margin:auto;background-color:red;}.qImg1{right:100%;}.qImg2{left:100%;}
+
+
+#secretCode{font-size:120%;padding:5px;}
+
+
+/*table styling*/
+table {
+  border-collapse: collapse;
+}
+
+td, th {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  text-align: left;
+}

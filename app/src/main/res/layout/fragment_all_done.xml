@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/colorBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/done_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_50"
+            android:text="All Done"
+            android:textSize="@dimen/dp_23"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            app:typeface="lato_bold"
+            />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/dp_15"
+            android:gravity="center_horizontal"
+            android:text="That's it for upcoming matches. Now sit tight and wait for the action to happen. We will let you know what happens."
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/white"
+            android:layout_below="@+id/done_text1"
+            app:typeface="lato_regular"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:layout_alignBottom="@+id/done_text1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_50"
+            android:src="@drawable/alldone_icon" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/go_to_timeline_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/powerup_screen_btn_bg"
+            android:onClick="onClick"
+            android:text="BACK TO TIMELINE"
+            android:textAllCaps="false"
+            android:textSize="@dimen/dp_18"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dp_60"
+            android:layout_marginRight="@dimen/dp_60"
+            android:layout_marginBottom="@dimen/dp_40"
+            app:typeface="lato_regular"
+            android:textColor="@color/white"
+            />
+
+
+    </RelativeLayout>
+</RelativeLayout>

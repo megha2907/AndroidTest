@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/my_results_row_rl_party_a"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_10">
+
+        <View
+            android:id="@+id/my_results_row_v_party_a"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dp_50" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/my_results_row_tv_party_a_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/my_results_row_v_party_a"
+            android:text="RCB" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/my_results_row_tv_party_a_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/my_results_row_v_party_a"
+            android:text="123/2 (20.0)" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/my_results_row_rl_party_b"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/my_results_row_v_party_b"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dp_50" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/my_results_row_tv_party_b_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/my_results_row_v_party_b"
+            android:text="CSK" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/my_results_row_tv_party_b_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/my_results_row_v_party_b"
+            android:text="124/2 (19.0)" />
+
+    </RelativeLayout>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/my_results_row_tv_match_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="CSK won by 8 wickets" />
+
+    <LinearLayout
+        android:id="@+id/my_results_row_ll_predictions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/black_divider"
+        android:orientation="vertical"
+        android:showDividers="end|beginning">
+
+    </LinearLayout>
+
+</LinearLayout>

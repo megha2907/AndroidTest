@@ -1,0 +1,117 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.21.5'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
+
+    def versionPropsFile = file('../version.properties')
+
+    if (versionPropsFile.canRead()) {
+        def Properties versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionPropsFile))
+        def vCode = versionProps['VERSION_CODE'].toInteger()
+        def vName = versionProps['VERSION_NAME']
+        println "Building versionCode:" + vCode + " and versionName:" + vName
+
+        defaultConfig {
+            applicationId "in.sportscafe.scgame"
+            minSdkVersion 19
+            targetSdkVersion 23
+            versionCode vCode
+            versionName vName
+        }
+    } else {
+        throw new GradleException("Could not read version.properties!")
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'scgame'
+            keyPassword 'scgame'
+            storeFile file('scgame.jks')
+            storePassword 'scgame'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+    }
+
+    productFlavors {
+        local {
+            resValue "string", "app_name", "Nostragamus"
+        }
+        stage {
+            resValue "string", "app_name", "Nostragamus"
+        }
+        production {
+            resValue "string", "app_name", "Nostragamus"
+        }
+        dev {
+            resValue "string", "app_name", "Nostragamus Dev"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile project(':jeevalibrary')
+    // To track the events, in-app messaging and geo fencing
+    // To push the notification from server to application
+    compile 'com.google.android.gms:play-services-auth:9.4.0'
+    compile 'com.moengage:moe-android-sdk:7.2.01'
+    compile 'com.moengage:addon-inbox:2.8.0'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
+    compile 'com.github.nirhart:parallaxscroll:1.0'
+    compile 'com.bignerdranch.android:expandablerecyclerview:2.1.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    // To track the install counts, events, crashes and acquisition
+    compile 'com.google.android.gms:play-services-analytics:9.4.0'
+    // To track the fatal and non-fatal errors from the application
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
+    compile ('io.branch.sdk.android:library:2.+') {
+        exclude module: 'answers-shim'
+    }
+
+    // To compat for new material designs
+    compile 'com.android.support:cardview-v7:24.2.1'
+}
+apply plugin: 'com.google.gms.google-services'

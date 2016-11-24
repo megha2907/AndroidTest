@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp_15"
+    android:background="@color/colorMedium">
+
+    <ImageView
+        android:id="@+id/my_position_row_img_sport"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_15"
+        android:src="@drawable/cricket_menu_colored_icon" />
+
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/my_position_row_tv_sport"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Cricket"
+        android:textColor="@color/silver_chalice"
+        app:typeface="lato_bold"/>
+
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/my_position_row_tv_rank_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rank:"
+        android:textAllCaps="true"
+        android:textColor="@color/silver_chalice"
+        app:typeface="lato_bold"
+        android:layout_marginLeft="@dimen/dp_10"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/my_position_row_tv_rank"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:text="9"
+        android:textColor="@color/silver_chalice"
+        app:typeface="lato_bold"/>
+
+    <ImageView
+        android:id="@+id/my_position_row_iv_rank_status"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_10"
+        android:src="@drawable/status_arrow_down" />
+
+
+</LinearLayout>

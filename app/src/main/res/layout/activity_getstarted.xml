@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_5"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/imageView3"
+        android:text="Preview Version"
+        android:textSize="@dimen/dp_18"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        android:id="@+id/customTextView" />
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/activity_getstarted_btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_100"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="Already have an account? Login"
+        android:textAllCaps="false"
+        android:textSize="@dimen/dp_16"
+        android:visibility="invisible"
+        android:textColor="@color/white"/>
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/activity_getstarted_btn"
+        android:layout_width="@dimen/blue_button_width"
+        android:layout_height="@dimen/blue_button_height"
+        android:layout_above="@id/activity_getstarted_btn_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/powerup_screen_btn_bg"
+        android:text="GET STARTED"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/blue_button_text"
+        app:typeface="lato_regular"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sportscafe_logo"
+        android:layout_marginTop="@dimen/dp_100"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/imageView3" />
+
+</RelativeLayout>

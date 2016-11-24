@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SwipeFlingAdapterView">
+        <attr name="SwipeFlingStyle" format="reference" />
+        <attr name="rotation_degrees" format="float" />
+        <attr name="min_adapter_stack" format="integer" />
+        <attr name="max_visible" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomTabLayout">
+        <attr name="unselected_typeface" format="enum">
+            <enum name="roboto_light" value="0" />
+            <enum name="roboto_light_italic" value="1" />
+            <enum name="roboto" value="2" />
+            <enum name="roboto_condensed" value="3" />
+            <enum name="roboto_condensed_bold" value="4" />
+            <enum name="roboto_medium" value="5" />
+            <enum name="lato_bold" value="6" />
+            <enum name="lato_hairline" value="7" />
+            <enum name="lato_heavy" value="8" />
+            <enum name="lato_light" value="9" />
+            <enum name="lato_medium" value="10" />
+            <enum name="lato_regular" value="11" />
+            <enum name="lato_semibold" value="12" />
+            <enum name="lato_thin" value="13" />
+            <enum name="lato_black" value="14" />
+        </attr>
+        <attr name="selected_typeface" format="enum">
+            <enum name="roboto_light" value="0" />
+            <enum name="roboto_light_italic" value="1" />
+            <enum name="roboto" value="2" />
+            <enum name="roboto_condensed" value="3" />
+            <enum name="roboto_condensed_bold" value="4" />
+            <enum name="roboto_medium" value="5" />
+            <enum name="lato_bold" value="6" />
+            <enum name="lato_hairline" value="7" />
+            <enum name="lato_heavy" value="8" />
+            <enum name="lato_light" value="9" />
+            <enum name="lato_medium" value="10" />
+            <enum name="lato_regular" value="11" />
+            <enum name="lato_semibold" value="12" />
+            <enum name="lato_thin" value="13" />
+            <enum name="lato_black" value="14" />
+        </attr>
+        <attr name="unselected_textSize" format="dimension" />
+        <attr name="selected_textSize" format="dimension" />
+        <attr name="tab_SelectedBackground" format="color" />
+    </declare-styleable>
+
+    <!-- Circular Progress Bar -->
+    <declare-styleable name="circularProgressBar">
+
+        <!-- our custom attribute -->
+        <attr name="max" format="integer" />
+        <attr name="bgColor" format="color" />
+        <attr name="progressColor" format="color" />
+        <attr name="bgStrokeWidth" format="dimension" />
+        <attr name="progressStrokeWidth" format="dimension" />
+        <attr name="diameter" format="dimension" />
+        <attr name="showProgressText" format="boolean" />
+
+        <!-- Std stuff -->
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="android:layout_margin" />
+    </declare-styleable>
+
+    <attr name="typeface" format="enum">
+        <enum name="roboto_light" value="0" />
+        <enum name="roboto_light_italic" value="1" />
+        <enum name="roboto" value="2" />
+        <enum name="roboto_condensed" value="3" />
+        <enum name="roboto_condensed_bold" value="4" />
+        <enum name="roboto_medium" value="5" />
+        <enum name="lato_bold" value="6" />
+        <enum name="lato_hairline" value="7" />
+        <enum name="lato_heavy" value="8" />
+        <enum name="lato_light" value="9" />
+        <enum name="lato_medium" value="10" />
+        <enum name="lato_regular" value="11" />
+        <enum name="lato_semibold" value="12" />
+        <enum name="lato_thin" value="13" />
+        <enum name="lato_black" value="14" />
+    </attr>
+
+    <declare-styleable name="MaxHeightScrollView">
+        <attr name="maxHeight" format="dimension" />
+    </declare-styleable>
+
+</resources>

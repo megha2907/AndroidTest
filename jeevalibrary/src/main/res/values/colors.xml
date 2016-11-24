@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="persian_green">#009688</color>
+    <color name="sycamore">#A4923B</color>
+    <color name="white">#ffffff</color>
+    <color name="aluminium">#1AA9ACB6</color>
+    <color name="bright_turquoise">#18C0F1</color>
+    <color name="bright_turquoise_start">#37DBF8</color>
+    <color name="bright_turquoise_end">#37DBF8</color>
+    <color name="dusty_gray">#c2c2c2</color>
+    <color name="java">#14A7D1</color>
+    <color name="cerulean">#11B0DE</color>
+    <color name="nil">#00ffffff</color>
+</resources>
