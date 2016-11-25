@@ -50,6 +50,7 @@ public interface Constants {
         String NORMAL_UPDATE_MESSAGE = "normalUpdateMessage";
         String FORCE_UPDATE_MESSAGE = "forceUpdateMessage";
         String NORMAL_UPDATE_SHOWN_TIME = "normalUpdateShownTime";
+        String INITIAL_FORM_SHOWN = "initialFormShown";
     }
 
     interface Alerts {
@@ -126,6 +127,7 @@ public interface Constants {
         String HOME_SCREEN = "homeScreen";
         String LOGIN_SCREEN = "loginScreen";
         String GROUP_CODE = "groupCode";
+        String FEEDBACK_FORM_URL = "feedbackFormUrl";
     }
 
     interface ParcelableKeys {

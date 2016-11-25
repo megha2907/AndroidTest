@@ -33,6 +33,7 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
      * Variable to hold the sharedPreference data
      */
     private SharedPreferences mSharedPreferences;
+    private boolean initialFeedbackFormShown;
 
     private NostragamusDataHandler() {
     }
@@ -450,5 +451,13 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
             setAllSports(allSports);
             setInitialSportsAvailable(true);
         }
+    }
+
+    public boolean isInitialFeedbackFormShown() {
+        return getSharedBooleanData(SharedKeys.INITIAL_FORM_SHOWN, false);
+    }
+
+    public void setInitialFeedbackFormShown(boolean formShown) {
+        setSharedBooleanData(SharedKeys.INITIAL_FORM_SHOWN, formShown);
     }
 }

@@ -30,7 +30,7 @@ public class AppSettingsModelImpl implements AppSettingsModel {
     }
 
     private void callAppSettingsApi() {
-        MyWebService.getInstance().getAppSettingsRequest("app_settings").enqueue(
+        MyWebService.getInstance().getAppSettingsRequest("nostragamus_settings").enqueue(
                 new NostragamusCallBack<AppSettingsResponse>() {
                     @Override
                     public void onResponse(Call<AppSettingsResponse> call, Response<AppSettingsResponse> response) {
