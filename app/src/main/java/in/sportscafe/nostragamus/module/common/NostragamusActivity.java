@@ -32,7 +32,7 @@ public class NostragamusActivity extends InAppActivity {
         super.onCreate(savedInstanceState);
 
         // Checking the version code to request update or force update the application
-//        checkAnyUpdate(); // Todo enable it later
+        checkAnyUpdate(); // Todo enable it later
     }
 
     private void checkAnyUpdate() {

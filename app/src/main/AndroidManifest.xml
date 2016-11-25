@@ -171,6 +171,12 @@
             android:label="@string/app_name" />
 
         <activity
+            android:name="in.sportscafe.nostragamus.module.feedback.GoogleFormActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+        <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"

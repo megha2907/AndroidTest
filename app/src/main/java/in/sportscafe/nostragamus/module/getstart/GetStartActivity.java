@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.feedback.GoogleFormActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
@@ -20,11 +21,23 @@ import in.sportscafe.nostragamus.module.user.sportselection.SportsModelImpl;
  */
 public class GetStartActivity extends Activity {
 
+    private static final int GOOGLE_FORM_CODE = 90;
+
+    private static final String GOOGLE_FORM_LINK = "https://docs.google.com/a/sportscafe.in/forms/d/e/1FAIpQLScFyPxEFIeCe1Yg3xiV_BhxKTDKDCm0PuzltgLPXz7iwWexLg/viewform?c=0&w=1";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getstarted);
 
+        if (NostragamusDataHandler.getInstance().isInitialFeedbackFormShown()) {
+            handleGetStart();
+        } else {
+            navigateToForm();
+        }
+    }
+
+    private void handleGetStart() {
         if (NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size() > 0) {
 //            if (ScGameDataHandler.getInstance().getFavoriteSportsIdList().contains(10)){
 //                autoSaveAllSports();
@@ -50,6 +63,21 @@ public class GetStartActivity extends Activity {
                 navigateToLogin();
             }
         });
+    }
+
+    private void navigateToForm() {
+        Intent intent = new Intent(this, GoogleFormActivity.class);
+        intent.putExtra(BundleKeys.FEEDBACK_FORM_URL, GOOGLE_FORM_LINK);
+        startActivityForResult(intent, GOOGLE_FORM_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(GOOGLE_FORM_CODE == requestCode) {
+            handleGetStart();
+        }
     }
 
 //    private void autoSaveAllSports() {
@@ -79,7 +107,7 @@ public class GetStartActivity extends Activity {
     private void navigateToEditProfile() {
         Intent intent = new Intent(this, EditProfileActivity.class);
         Bundle bundle=new Bundle();
-        bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
+        bundle.putString("screen", BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -88,7 +116,7 @@ public class GetStartActivity extends Activity {
     private void navigateToSportSelection() {
         Intent intent = new Intent(this, SportSelectionActivity.class);
         Bundle bundle=new Bundle();
-        bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
+        bundle.putString("screen", BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);
         startActivity(intent);
     }
