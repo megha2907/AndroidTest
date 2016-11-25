@@ -34,8 +34,8 @@ node {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'scdep-github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
             sh('''git config --global user.name "scdep"; git config --global user.email "admin+scdep@sportscafe.in"''')
             sh("git add version.properties; git commit -m \"Version ${VER}\"; git tag -afm \"${VER}\" ${VER}")
-            sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sportscafe/scgame.git HEAD:master')
-            sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sportscafe/scgame.git HEAD:master --tags')
+            sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sportscafe/nostragamus.git HEAD:master')
+            sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sportscafe/nostragamus.git HEAD:master --tags')
         }
     } else {
         VER = BUILD_TAG
@@ -44,7 +44,7 @@ node {
     def DIR = (sh(returnStdout: true, script: 'pwd')).trim()
     def FILE_PATH = "${DIR}/app/build/outputs/apk"
     def SOURCE_FILE_PROD = "${FILE_PATH}/app-production-release.apk"
-    def UPLOAD_PATH = "scgame/${VER}"
+    def UPLOAD_PATH = "nostragamus/${VER}"
     echo "SOURCE_FILE: ${SOURCE_FILE_PROD} and UPLOAD_PATH: ${UPLOAD_PATH}"
 
     stage 'Building'
@@ -63,7 +63,7 @@ node {
     def S3_PATH_PROD = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-production-release.apk"
     slackSend channel: "#auto-jenkins",
       color: "good",
-      message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *scgame | Download ${VER} <${S3_PATH_DEV}|Dev>,<${S3_PATH_STAGE}|Stage>,<${S3_PATH_PROD}|Prod>*"
+      message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *nostragamus | Download ${VER} <${S3_PATH_DEV}|Dev>,<${S3_PATH_STAGE}|Stage>,<${S3_PATH_PROD}|Prod>*"
 
     stage 'Upload to Google Play'
     if(BRANCH_NAME == 'master') {

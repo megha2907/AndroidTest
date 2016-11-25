@@ -1,7 +1,12 @@
 <resources>
-    <string name="play_store_url">https://play.google.com/store/apps/details?id=in.sportscafe.scgame</string>
+    <string name="play_store_url">https://play.google.com/store/apps/details?id=in.sportscafe.nostragamus</string>
     <string name="facebook_app_id">1717269841858265</string>
-    <string name="google_client_id">93923683436-0e0bkm6459105nthip0thu9dve75s1hc.apps.googleusercontent.com</string>
+    <string name="oauth_server_id">576361348926-es13lv6saf0cfr6olbfhojltsptoi3o7.apps.googleusercontent.com</string>
+    <string name="fabric_api_key">66dc8b5ddc3cab78b5935c8254c264658064977d</string>
+    <string name="branch_io_live_key">key_live_eoqby1Qi8GeRDkGLb4tRqemjEDajI3q5</string>
+    <string name="branch_io_test_key">key_test_pfyhy6Sp0ViSymPQiXMmEonmuFpcM4Sn</string>
+    <string name="moengage_app_id">Z3HNKJCO9QYTYXWGRKU4KEQR</string>
+    <string name="gcm_sender_id">id:576361348926</string>
     <string name="addsport">Pick your Tournament and \n enjoy the game</string>
     <string name="next">NEXT</string>
     <string name="st1_no_notification">No notifications yet!!!</string>

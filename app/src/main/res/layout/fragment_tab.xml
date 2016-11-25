@@ -26,7 +26,7 @@
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         />
 
-    <in.sportscafe.scgame.module.common.CustomViewPager
+    <in.sportscafe.nostragamus.module.common.CustomViewPager
         android:id="@+id/tab_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

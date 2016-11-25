@@ -6,18 +6,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:576361348926:android:de0566b96a73b5d5",
+        "mobilesdk_app_id": "1:576361348926:android:3c3bd6e49df59227",
         "android_client_info": {
-          "package_name": "in.sportscafe.scgame"
+          "package_name": "in.sportscafe.nostragamus"
         }
       },
       "oauth_client": [
         {
-          "client_id": "576361348926-e2r40l9sich5du63slc9aicv22iic2ff.apps.googleusercontent.com",
+          "client_id": "576361348926-847ac8uu96ugrgqomo7antp9olg5jo52.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "in.sportscafe.scgame",
-            "certificate_hash": "D54851AF086A990CEFCEEFA96DFF833C021D6906"
+            "package_name": "in.sportscafe.nostragamus",
+            "certificate_hash": "B3EDAE127F97CC504C7EC8ACDF057358557CBC9C"
           }
         },
         {
@@ -27,7 +27,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDlx9THo_Luvb9ldGDznisfFX3rTks85HQ"
+          "current_key": "AIzaSyBBumYUYYWTJmMs8gGL87Ad_GQj4VraZis"
         }
       ],
       "services": {
