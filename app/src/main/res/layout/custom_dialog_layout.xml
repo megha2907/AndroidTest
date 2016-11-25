@@ -30,7 +30,7 @@
                 android:textSize="@dimen/dp_16"
                 app:typeface="roboto_condensed" />
 
-            <in.sportscafe.scgame.module.common.MaxHeightScrollView
+            <in.sportscafe.nostragamus.module.common.MaxHeightScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_10"
@@ -44,7 +44,7 @@
                     android:textColor="@color/black_60"
                     android:textSize="@dimen/dp_15"
                     app:typeface="lato_regular" />
-            </in.sportscafe.scgame.module.common.MaxHeightScrollView>
+            </in.sportscafe.nostragamus.module.common.MaxHeightScrollView>
 
 
             <com.jeeva.android.widgets.customfont.CustomCheckbox

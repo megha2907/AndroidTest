@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="in.sportscafe.scgame">
+    package="in.sportscafe.nostragamus">
 
     <!-- To access the internet -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,10 +11,10 @@
     <!-- Start MoEngage Permissions-->
     <!-- If you have specified applicationId in build.gradle file then replace [YOUR_PACKAGE_NAME] with applicationId-->
     <permission
-        android:name="in.sportscafe.scgame.permission.C2D_MESSAGE"
+        android:name="in.sportscafe.nostragamus.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="in.sportscafe.scgame.permission.C2D_MESSAGE" />
+    <uses-permission android:name="in.sportscafe.nostragamus.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -24,18 +24,18 @@
     <!-- End MoEngage Permissions -->
 
     <application
-        android:name=".ScGame"
+        android:name="in.sportscafe.nostragamus.Nostragamus"
         android:allowBackup="true"
         android:icon="@drawable/launcher_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".module.test.TestActivity"
+            android:name="in.sportscafe.nostragamus.module.test.TestActivity"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".module.splash.SplashActivity"
+            android:name="in.sportscafe.nostragamus.module.splash.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent"
@@ -65,109 +65,109 @@
         </activity>
 
         <activity
-            android:name=".module.getstart.GetStartActivity"
+            android:name="in.sportscafe.nostragamus.module.getstart.GetStartActivity"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".module.home.HomeActivity"
+            android:name="in.sportscafe.nostragamus.module.home.HomeActivity"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".module.user.login.LogInActivity"
+            android:name="in.sportscafe.nostragamus.module.user.login.LogInActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.settings.SettingsActivity"
+            android:name="in.sportscafe.nostragamus.module.settings.SettingsActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.common.WebViewActivity"
+            android:name="in.sportscafe.nostragamus.module.common.WebViewActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".module.feed.FeedActivity"
+            android:name="in.sportscafe.nostragamus.module.feed.FeedActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.user.myprofile.edit.EditProfileActivity"
+            android:name="in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name=".module.user.sportselection.SportSelectionActivity"
+            android:name="in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.user.powerups.PowerUpActivity"
+            android:name="in.sportscafe.nostragamus.module.user.powerups.PowerUpActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.user.badges.BadgeActivity"
+            android:name="in.sportscafe.nostragamus.module.user.badges.BadgeActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.user.leaderboardsummary.LeaderBoardSummaryActivity"
+            android:name="in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.play.prediction.PredictionActivity"
+            android:name="in.sportscafe.nostragamus.module.play.prediction.PredictionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".module.play.prediction.AllDoneActivity"
+        <activity android:name="in.sportscafe.nostragamus.module.play.prediction.AllDoneActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.play.myresults.MyResultsActivity"
+            android:name="in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
 
         <activity
-            android:name=".module.play.myresultstimeline.MyResultsTimelineActivity"
+            android:name="in.sportscafe.nostragamus.module.play.myresultstimeline.MyResultsTimelineActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name=".module.user.points.PointsActivity"
+            android:name="in.sportscafe.nostragamus.module.user.points.PointsActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.user.group.newgroup.NewGroupActivity"
+            android:name="in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
 
         <activity
-            android:name=".module.user.group.allgroups.AllGroupsActivity"
+            android:name="in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.user.group.admin.adminmembers.AdminMembersActivity"
+            android:name="in.sportscafe.nostragamus.module.user.group.admin.adminmembers.AdminMembersActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.user.group.groupinfo.GroupInfoActivity"
+            android:name="in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name=".module.user.group.editgroupinfo.EditGroupInfoActivity"
+            android:name="in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name=".module.user.group.members.MembersActivity"
+            android:name="in.sportscafe.nostragamus.module.user.group.members.MembersActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.user.group.joingroup.JoinGroupActivity"
+            android:name="in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"
-            android:parentActivityName=".module.user.group.groupinfo.GroupInfoActivity">
+            android:parentActivityName="in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity">
         </activity>
 
         <activity
-            android:name=".module.permission.PermissionsActivity"
+            android:name="in.sportscafe.nostragamus.module.permission.PermissionsActivity"
             android:label="@string/app_name" />
 
         <activity
@@ -180,26 +180,15 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <!-- Start Fabric -->
-        <!-- Api key which is mandatory to uniquely identify our app -->
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="66dc8b5ddc3cab78b5935c8254c264658064977d" />
-        <meta-data
-            android:name="com.crashlytics.ApiKey"
-            android:value="66dc8b5ddc3cab78b5935c8254c264658064977d" />
-
-        <!-- End Fabric -->
-
         <!-- Start MoEngage -->
         <activity
             android:name="com.moengage.addon.inbox.MoEInboxActivity"
             android:label="Notification"
-            android:parentActivityName=".module.home.HomeActivity" >
+            android:parentActivityName="in.sportscafe.nostragamus.module.home.HomeActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".module.home.HomeActivity" />
+                android:value="in.sportscafe.nostragamus.module.home.HomeActivity" />
 
         </activity>
 
@@ -209,7 +198,7 @@
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
 
                 <data
-                    android:path="in.sportscafe.scgame"
+                    android:path="in.sportscafe.nostragamus"
                     android:scheme="package" />
             </intent-filter>
         </receiver>
@@ -217,18 +206,18 @@
         <!-- The underlying content provider -->
         <provider
             android:name="com.moe.pushlibrary.providers.MoEProvider"
-            android:authorities="in.sportscafe.scgame.moengage.provider"
+            android:authorities="in.sportscafe.nostragamus.moengage.provider"
             android:exported="false" />
 
         <!-- MANDATORY FIELD: APP ID AS SEEN ON MOENGAGE DASHBOARD APP SETTINGS PAGE -->
         <meta-data
             android:name="APP_ID"
-            android:value="V0DAIR1IY0NI6RQH190Z5KOH" />
+            android:value="@string/moengage_app_id" />
 
         <!-- MANDATORY FIELD: SENDER ID , i.e. THE PROJECT NUMBER AS MENTIONED ON GOOGLE CLOUD CONSOLE PROJECTS PAGE -->
         <meta-data
             android:name="SENDER_ID"
-            android:value="id:576361348926" />
+            android:value="@string/gcm_sender_id" />
 
         <!-- MANDATORY FIELD: THE NOTIFICATION SMALL ICON WHICH WILL BE USED TO SET TO NOTIFICATIONS POSTED -->
         <meta-data
@@ -247,7 +236,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="in.sportscafe.scgame" />
+                <category android:name="in.sportscafe.nostragamus" />
             </intent-filter>
         </receiver>
 
@@ -313,16 +302,23 @@
         <!-- Live branch key -->
         <meta-data
             android:name="io.branch.sdk.BranchKey"
-            android:value="key_live_eoqby1Qi8GeRDkGLb4tRqemjEDajI3q5" />
+            android:value="@string/branch_io_live_key" />
 
         <!-- Test branch key -->
         <meta-data
             android:name="io.branch.sdk.BranchKey.test"
-            android:value="key_test_pfyhy6Sp0ViSymPQiXMmEonmuFpcM4Sn" />
+            android:value="@string/branch_io_test_key" />
         <!-- End Branch -->
 
+        <!-- Start Fabric -->
+        <!-- Api key which is mandatory to uniquely identify our app -->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="66dc8b5ddc3cab78b5935c8254c264658064977d" />
+        <!-- End Fabric -->
+
         <!-- To receive the install updates -->
-        <receiver android:name=".module.common.CustomInstallListener" android:exported="true">
+        <receiver android:name="in.sportscafe.nostragamus.module.common.CustomInstallListener" android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>

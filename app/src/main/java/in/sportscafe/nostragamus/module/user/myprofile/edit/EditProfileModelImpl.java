@@ -1,0 +1,147 @@
+package in.sportscafe.nostragamus.module.user.myprofile.edit;
+
+import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
+import in.sportscafe.nostragamus.webservice.MyWebService;
+import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Response;
+
+/**
+ * Created by Jeeva on 12/6/16.
+ */
+public class EditProfileModelImpl implements EditProfileModel {
+
+    private UserInfo mUserInfo;
+
+    private OnEditProfileListener mEditProfileListener;
+
+    private EditProfileModelImpl(OnEditProfileListener listener) {
+        this.mEditProfileListener = listener;
+        this.mUserInfo = NostragamusDataHandler.getInstance().getUserInfo();
+    }
+
+    public static EditProfileModel newInstance(OnEditProfileListener listener) {
+        return new EditProfileModelImpl(listener);
+    }
+
+    @Override
+    public void updateProfile(String nickname) {
+
+        if(nickname.isEmpty()){
+            mEditProfileListener.onNickNameEmpty();
+            return;
+        }
+        else if (nickname.length() < 3 || nickname.length() > 15)
+        {
+            mEditProfileListener.onNickNameValidation();
+            return;
+        }
+
+        if(Nostragamus.getInstance().hasNetworkConnection()) {
+            mEditProfileListener.onUpdating();
+            callUpdateUserApi(nickname);
+        } else {
+            mEditProfileListener.onNoInternet();
+        }
+    }
+
+
+    @Override
+    public void updateProfilePhoto(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+        if(filepath.equals(null)) {
+            mEditProfileListener.onProfileImagePathNull();
+            return;
+        }
+        if(Nostragamus.getInstance().hasNetworkConnection()) {
+            mEditProfileListener.onUpdating();
+            callUpdateUserProfilePhotoApi(file,filepath,filename);
+        } else {
+            mEditProfileListener.onNoInternet();
+        }
+    }
+
+    private void callUpdateUserProfilePhotoApi(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+
+        MyWebService.getInstance().getUpdateUserProfilePhotoRequest(file,filepath,filename).enqueue(new NostragamusCallBack<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+
+                if (response.isSuccessful()) {
+                    mUserInfo.setPhoto(response.body().getResult());
+                    mEditProfileListener.onPhotoUpdate();
+                } else {
+                    mEditProfileListener.onEditFailed(response.message());
+                }
+            }
+
+        });
+
+    }
+
+    private void callUpdateUserApi(final String nickname) {
+        UpdateUserRequest updateUserRequest = new UpdateUserRequest();
+        updateUserRequest.setUserId(mUserInfo.getId() + "");
+        updateUserRequest.setUserPhoto(mUserInfo.getPhoto());
+        updateUserRequest.setUserNickName(nickname);
+
+        MyWebService.getInstance().getUpdateUserRequest(updateUserRequest).enqueue(
+                new NostragamusCallBack<ApiResponse>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        if(response.isSuccessful()) {
+
+                            if (response.body().getMessage().equals("user_nick conflict"))
+                            {
+                                mEditProfileListener.onUserNameConflict();
+                            }
+                            else {
+                                mUserInfo.setUserNickName(nickname);
+                                NostragamusDataHandler.getInstance().setUserInfo(mUserInfo);
+
+                                mEditProfileListener.onEditSuccess();
+                              }
+                        } else {
+                            mEditProfileListener.onEditFailed(response.message());
+                        }
+                    }
+                }
+        );
+    }
+
+
+
+
+    @Override
+    public UserInfo getUserInfo() {
+        return mUserInfo;
+    }
+
+    public interface OnEditProfileListener {
+
+        void onUpdating();
+
+        void onEditSuccess();
+
+        void onPhotoUpdate();
+
+        void onEditFailed(String message);
+
+        void onNameEmpty();
+
+        void onProfileImagePathNull();
+
+        void onNickNameEmpty();
+
+        void onNoInternet();
+
+        void onUserNameConflict();
+
+        void onNickNameValidation();
+    }
+}

@@ -26,7 +26,7 @@
 
     </android.support.v7.widget.Toolbar>
 
-                <in.sportscafe.scgame.module.common.CustomTabLayout
+                <in.sportscafe.nostragamus.module.common.CustomTabLayout
                     android:id="@+id/tournament_tab_tl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                     />
 
 
-    <in.sportscafe.scgame.module.common.CustomViewPager
+    <in.sportscafe.nostragamus.module.common.CustomViewPager
         android:id="@+id/tournament_tab_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

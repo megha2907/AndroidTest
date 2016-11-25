@@ -90,7 +90,7 @@
 
                     </RelativeLayout>
 
-                <in.sportscafe.scgame.module.common.RoundImage
+                <in.sportscafe.nostragamus.module.common.RoundImage
                     android:id="@+id/profile_iv_image"
                     android:layout_width="@dimen/dp_80"
                     android:layout_height="@dimen/dp_80"
@@ -334,7 +334,7 @@
 
 
 
-    <in.sportscafe.scgame.module.common.CustomViewPager
+    <in.sportscafe.nostragamus.module.common.CustomViewPager
         android:id="@+id/tab_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

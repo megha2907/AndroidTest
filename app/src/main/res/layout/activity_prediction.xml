@@ -15,7 +15,7 @@
     />
 
 
-    <in.sportscafe.scgame.module.play.tindercard.SwipeFlingAdapterView
+    <in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView
 
         android:id="@+id/activity_prediction_swipe"
         android:layout_width="match_parent"
