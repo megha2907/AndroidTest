@@ -7,7 +7,6 @@ import android.os.Bundle;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.webservice.MyWebService;
 
 public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInModelListener {
 
@@ -66,8 +65,6 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
     @Override
     public void onLoginCompleted() {
         mLogInView.hideProgressDialog();
-        // Initializing MyWebService
-        MyWebService.getInstance().init();
 
         if(mLogInModel.isPreferenceDone()) {
             mLogInView.navigateToEditProfile();
