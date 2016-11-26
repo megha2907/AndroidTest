@@ -170,6 +170,7 @@
             android:layout_centerInParent="true"
             android:onClick="onClick"
             android:clickable="true"
+            android:padding="@dimen/dp_10"
             />
 
         <ImageView
@@ -218,7 +219,7 @@
             android:layout_centerInParent="true"
             android:onClick="onClick"
             android:clickable="true"
-
+            android:padding="@dimen/dp_10"
             />
 
 
@@ -279,6 +280,7 @@
         android:layout_above="@+id/downnarrow"
         android:clickable="true"
         app:typeface="roboto_condensed"
+        android:padding="@dimen/dp_10"
         />
 
     <com.jeeva.android.widgets.customfont.CustomTextView

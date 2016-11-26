@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.settings.app.AppSettingsModelImpl;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
@@ -23,6 +24,7 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
 
         // To get the updated app settings like version details
         AppSettingsModelImpl.newInstance().getAppSettings();

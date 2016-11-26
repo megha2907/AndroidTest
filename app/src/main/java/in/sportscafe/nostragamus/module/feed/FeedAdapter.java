@@ -246,6 +246,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         {
             holder.mTvResultWait.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setText("Coming up");
+            holder.mTvResultWait.setClickable(false);
             holder.mViewResult.setVisibility(View.GONE);
         }
 
