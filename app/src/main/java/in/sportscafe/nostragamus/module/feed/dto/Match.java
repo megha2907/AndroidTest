@@ -12,7 +12,6 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
  * Created by Jeeva on 10/6/16.
  */
 public class Match implements Serializable {
-
     @JsonProperty("match_id")
     private Integer id;
 
@@ -43,6 +42,9 @@ public class Match implements Serializable {
     @JsonProperty("match_result")
     private String result;
 
+    @JsonProperty("match_result_desc")
+    private String resultdesc;
+
     @JsonProperty("match_question_count")
     private Integer matchQuestionCount;
 
@@ -55,7 +57,7 @@ public class Match implements Serializable {
     @JsonProperty("is_attempted")
     private boolean isAttempted;
 
-    @JsonProperty("winner_party_id")
+    @JsonProperty("match_winner_id")
     private Integer winnerPartyId;
 
 //    @JsonProperty("match_commentary")
@@ -322,14 +324,24 @@ public class Match implements Serializable {
 //        this.matchCommentary = matchCommentary;
 //    }
 
-    @JsonProperty("winner_party_id")
+    @JsonProperty("match_winner_id")
     public Integer getWinnerPartyId() {
         return winnerPartyId;
     }
 
-    @JsonProperty("winner_party_id")
+    @JsonProperty("match_winner_id")
     public void setWinnerPartyId(Integer winnerPartyId) {
         this.winnerPartyId = winnerPartyId;
+    }
+
+    @JsonProperty("match_result_desc")
+    public String getResultdesc() {
+        return resultdesc;
+    }
+
+    @JsonProperty("match_result_desc")
+    public void setResultdesc(String resultdesc) {
+        this.resultdesc = resultdesc;
     }
 
 

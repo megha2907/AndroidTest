@@ -50,7 +50,9 @@ public class ProfileModelImpl implements ProfileModel {
 
                                 if (null != updatedUserInfo) {
                                     NostragamusDataHandler.getInstance().setUserInfo(updatedUserInfo);
-                                    NostragamusDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
+                                    NostragamusDataHandler.getInstance().setNumberof2xPowerups(updatedUserInfo.getPowerUps().get("2x"));
+                                    NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(updatedUserInfo.getPowerUps().get("no_negs"));
+                                    NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(updatedUserInfo.getPowerUps().get("player_poll"));
                                     NostragamusDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
                                     NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());
                                 }

@@ -11,12 +11,13 @@
 
 
 
-    <com.jeeva.android.widgets.customfont.CustomButton
+    <ImageButton
         android:id="@+id/powerup_btn"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
         android:layout_marginLeft="@dimen/dp_25"
         android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/powerups_count_bg"
        />
 
     <com.jeeva.android.widgets.customfont.CustomButton
@@ -26,7 +27,7 @@
         android:gravity="center"
         android:textSize="@dimen/dp_12"
         android:textColor="@color/white"
-        android:background="@drawable/powerups_count_bg"
+        android:background="@drawable/notification_count_bg"
         app:typeface="roboto_light"
         android:text="2"
         android:layout_marginTop="@dimen/dp_35"

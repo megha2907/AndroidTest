@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.customfont.CustomButton;
@@ -40,7 +41,7 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
         holder.mBtnPowerUpCount.setText(String.valueOf(powerUp.getCount()));
         holder.mTvPowerUpName.setText(powerUp.getId()+" Powerup");
         holder.mTvPowerUpDesc.setText(powerUp.getDesc());
-        holder.mBtnPowerUp.setBackgroundResource(powerUp.getIcon());
+        holder.mBtnPowerUp.setImageResource(powerUp.getIcon());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder  {
@@ -55,7 +56,7 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
 
         CustomButton mBtnPowerUpCount;
 
-        CustomButton mBtnPowerUp;
+        ImageButton mBtnPowerUp;
 
         public ViewHolder(View V) {
             super(V);
@@ -63,7 +64,7 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
             mTvPowerUpName = (TextView) V.findViewById(R.id.powerup_tv_1);
             mTvPowerUpDesc = (TextView) V.findViewById(R.id.powerup_tv_2);
             mBtnPowerUpCount = (CustomButton) V.findViewById(R.id.powerup_btn_powerup_count);
-            mBtnPowerUp = (CustomButton) V.findViewById(R.id.powerup_btn);
+            mBtnPowerUp = (ImageButton) V.findViewById(R.id.powerup_btn);
 
         }
 

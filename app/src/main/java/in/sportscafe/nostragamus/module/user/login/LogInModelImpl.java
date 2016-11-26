@@ -132,7 +132,9 @@ public class LogInModelImpl implements LogInModel {
         nostragamusDataHandler.setLoggedInUser(true);
         nostragamusDataHandler.setUserId(userInfo.getId().toString());
         nostragamusDataHandler.setCookie(userInfo.getCookie());
-        nostragamusDataHandler.setNumberofPowerups(userInfo.getPowerUps().get("2x"));
+        nostragamusDataHandler.setNumberof2xPowerups(userInfo.getPowerUps().get("2x"));
+        nostragamusDataHandler.setNumberofNonegsPowerups(userInfo.getPowerUps().get("no_negs"));
+        nostragamusDataHandler.setNumberofAudiencePollPowerups(userInfo.getPowerUps().get("player_poll"));
         nostragamusDataHandler.setNumberofBadges(userInfo.getBadges().size());
         userInfo.setPoints(100L);
         Log.i("powerups", String.valueOf(userInfo.getPowerUps().get("2x")));

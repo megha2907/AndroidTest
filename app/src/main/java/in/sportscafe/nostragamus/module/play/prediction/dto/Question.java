@@ -52,13 +52,22 @@ public class Question implements Serializable {
     @JsonProperty("user_answer_points")
     private Integer answerPoints;
 
+    @JsonProperty("user_answer_points")
+    private Integer questionPoints;
+
+    @JsonProperty("question_points")
+    private Integer questionPositivePoints;
+
+    @JsonProperty("question_neg_points")
+    private Integer questionNegativePoints;
+
     @JsonIgnore
     private int questionTime = 30;
 
     @JsonIgnore
     private int questionNumber;
 
-   @JsonIgnore
+    @JsonIgnore
     private String powerUpId;
 
 
@@ -298,6 +307,26 @@ public class Question implements Serializable {
     @JsonProperty("user_answer_points")
     public void setAnswerPoints(Integer answerPoints) {
         this.answerPoints = answerPoints;
+    }
+
+    @JsonProperty("question_points")
+    public Integer getQuestionPositivePoints() {
+        return questionPositivePoints;
+    }
+
+    @JsonProperty("question_points")
+    public void setQuestionPositivePoints(Integer questionPositivePoints) {
+        this.questionPositivePoints = questionPositivePoints;
+    }
+
+    @JsonProperty("question_neg_points")
+    public Integer getQuestionNegativePoints() {
+        return questionNegativePoints;
+    }
+
+    @JsonProperty("question_neg_points")
+    public void setQuestionNegativePoints(Integer questionNegativePoints) {
+        this.questionNegativePoints = questionNegativePoints;
     }
 
 

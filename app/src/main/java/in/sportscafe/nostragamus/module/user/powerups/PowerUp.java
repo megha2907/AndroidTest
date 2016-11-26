@@ -56,7 +56,11 @@ public class PowerUp {
     public int getIcon() {
         switch (id) {
             case "2x":
-                return R.drawable.powerup_colored_icon;
+                return R.drawable.powerup_2x_white;
+            case "no_negs":
+                return R.drawable.powerup_nonegs_white;
+            case "player_poll":
+                return R.drawable.powerup_audience_poll_white;
             default:
                 return R.drawable.placeholder_icon;
         }

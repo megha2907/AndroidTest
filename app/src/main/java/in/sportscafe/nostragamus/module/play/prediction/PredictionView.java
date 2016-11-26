@@ -34,6 +34,9 @@ public interface PredictionView extends InAppView {
 
     void dismissPowerUp();
 
+
+    void updateAudiencePollPowerup();
+
     void navigateToAllDone(Bundle bundle);
 
     void setLeftOption(String questionOption1);
@@ -45,4 +48,6 @@ public interface PredictionView extends InAppView {
     void setTournamentPhoto(String tournamentPhoto);
 
     void setNumberofCards(int itemsInAdapter, int initialCount);
+
+    void setNumberofPowerups(int numberof2xPowerups, int numberofAudiencePollPowerups, int numberofNonegsPowerups);
 }

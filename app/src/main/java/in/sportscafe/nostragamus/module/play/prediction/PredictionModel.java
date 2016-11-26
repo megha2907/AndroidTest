@@ -21,7 +21,7 @@ public interface PredictionModel {
 
     void getAllQuestions();
 
-    void updatePowerUps();
+    void updatePowerUps(String powerup);
 
     void setFlingCardListener(FlingCardListener flingCardListener);
 }

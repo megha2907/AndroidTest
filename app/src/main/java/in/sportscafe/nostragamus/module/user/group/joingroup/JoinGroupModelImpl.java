@@ -10,6 +10,8 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroup;
+import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroupResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -66,11 +68,15 @@ public class JoinGroupModelImpl implements JoinGroupModel {
 
     private void callJoinGroupApi(String groupCode) {
         MyWebService.getInstance().getJoinGroupRequest(groupCode).enqueue(
-                new NostragamusCallBack<ApiResponse>() {
+                new NostragamusCallBack<JoinGroupResponse>() {
                     @Override
-                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    public void onResponse(Call<JoinGroupResponse> call, Response<JoinGroupResponse> response) {
                         if(response.isSuccessful()) {
-                            mJoinGroupModelListener.onSuccess();
+
+                            JoinGroup joinGroup = response.body().getJoinGroup();
+                            Long groupId = joinGroup.getGroupId();
+                            mJoinGroupModelListener.onSuccess(groupId);
+
                         } else {
                             mJoinGroupModelListener.onFailed(response.message());
                         }
@@ -88,7 +94,7 @@ public class JoinGroupModelImpl implements JoinGroupModel {
 
     public interface OnJoinGroupModelListener {
 
-        void onSuccess();
+        void onSuccess(Long GroupId);
 
         void onInvalidGroupCode();
 

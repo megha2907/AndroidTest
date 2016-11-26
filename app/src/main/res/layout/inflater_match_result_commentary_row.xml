@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/schedule_row_tv_match_result_commentary_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_3"
+            android:layout_gravity="left"
+            android:textColor="@color/white"
+            android:layout_marginRight="@dimen/dp_10"
+            app:typeface="roboto_condensed"
+            android:gravity="left"
+            android:textSize="@dimen/dp_14"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text="sdhjsahdsadadsadad"
+            />
+
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/schedule_row_tv_match_result_commentary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_1"
+            android:layout_gravity="left"
+            android:textColor="@color/silver_chalice"
+            android:layout_marginRight="@dimen/dp_10"
+            app:typeface="lato_regular"
+            android:gravity="left"
+            android:textSize="@dimen/dp_13"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text="sdhjsahdsadadsadad"
+            />
+
+
+</LinearLayout>

@@ -5,8 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +33,11 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
+
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -44,6 +47,7 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
  * Created by Jeeva on 15/6/16.
  */
 public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
+
 
     private AlertDialog mAlertDialog;
     private Context mcon;
@@ -117,9 +121,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mViewResult.setVisibility(View.GONE);
             holder.mRlMatchPoints.setVisibility(View.GONE);
             holder.mLlMatch.setBackgroundColor(Color.TRANSPARENT);
-            holder.mIbfeedDotIcon.setImageResource(R.drawable.feed_dot_grey_icon);
+            holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_grey_button_with_shadow);
             holder.mTvMatchResult.setGravity(Gravity.LEFT);
-
+            holder.mLlMatch.setVisibility(View.GONE);
         }
         else
         {   //ELSE SHOW MATCH PARTIES
@@ -156,13 +160,33 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         } else {
 
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
-            holder.mTvMatchResult.setText(match.getResult());
+            holder.mTvMatchResult.setText(Html.fromHtml(match.getResult()));
 //            holder.mTvMatchResult.setSingleLine(false);
 //            holder.mTvMatchResult.setEllipsize(TextUtils.TruncateAt.END);
 //            int n = 2; // the exact number of lines you want to display
 //            holder.mTvMatchResult.setLines(n);
-            //holder.mTvMatchResult.setLayoutParams(llp);
+            holder.mTvMatchResult.setLayoutParams(llp);
             holder.mBtnPlayMatch.setVisibility(View.GONE);
+
+            if (null!= match.getWinnerPartyId()){
+
+                if (match.getWinnerPartyId()==(match.getParties().get(0).getPartyId())){
+                    //holder.mTvPartyAName.setTypeface(null,Typeface.BOLD);
+                    holder.mTvPartyAName.setTextColor(ContextCompat.getColor(scheduleView.getContext(), R.color.white));
+                    holder.mTvPartyBName.setTextColor(ContextCompat.getColor(scheduleView.getContext(), R.color.textcolorlight));
+                }
+                else if(match.getWinnerPartyId()==(match.getParties().get(1).getPartyId())){
+                    //holder.mTvPartyBName.setTypeface(null,Typeface.BOLD);
+                    holder.mTvPartyBName.setTextColor(ContextCompat.getColor(scheduleView.getContext(), R.color.white));
+                    holder.mTvPartyAName.setTextColor(ContextCompat.getColor(scheduleView.getContext(), R.color.textcolorlight));
+                }
+
+            }
+
+            if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()){
+                holder.mMatchResultCommentary.setVisibility(View.VISIBLE);
+                holder.mMatchResultCommentary.addView(getResultCommentaryView(holder.mMatchResultCommentary,match));
+            }
 
         }
 
@@ -177,6 +201,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         {
             holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
             holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
+            holder.mRlMatchPoints.setVisibility(View.VISIBLE);
             holder.mViewResult.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setVisibility(View.GONE);
 
@@ -184,18 +209,22 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mBtnMatchPoints.setTag(match.getId());
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
 
-//            if (null!= match.getWinnerPartyId()){
-//
-//                if (match.getWinnerPartyId().equals(match.getParties().get(0).getPartyId())){
-//                    holder.mTvPartyAName.setTypeface(null,Typeface.BOLD);
-//                      holder.mTvPartyAName.setTextColor(Color.WHITE);
-//                }
-//                else if(match.getWinnerPartyId().equals(match.getParties().get(1).getPartyId())){
-//                    holder.mTvPartyBName.setTypeface(null,Typeface.BOLD);
-//                      holder.mTvPartyBName.setTextColor(Color.WHITE);
-//                }
-//
-//            }
+
+            float percent = (match.getCorrectCount() * 100.0f) / match.getMatchQuestionCount();
+
+            if (percent < 40.0){
+                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_red_button_with_shadow);
+            }
+            else if (percent >= 40.0 && percent <= 60.0){
+                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_blue_button_with_shadow);
+            }
+            else if (percent > 60.0){
+                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_green_button_with_shadow);
+            }
+            else {
+                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_grey_button_with_shadow);
+            }
+
 
         }
 
@@ -212,18 +241,13 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         TimeAgo timeAgo = TimeUtils.calcTimeAgo(formattedCurrentDate, date.getTime());
 
-        Log.i("formattedCurrentDate",String.valueOf(formattedCurrentDate));
-        Log.i("formattedstartDate",String.valueOf(date.getTime()));
-
-
         // FOR COMING UP MATCHES CHECK IF MATCH TIME IS GREATER THAN THE CURRENT TIME
-       if(match.getMatchQuestionCount()==0 && match.getParties() != null && timeAgo.timeDiff > 0 && timeAgo.timeUnit != TimeUnit.MILLISECOND && timeAgo.timeUnit != TimeUnit.SECOND)
-         {
-             holder.mTvResultWait.setVisibility(View.VISIBLE);
-             holder.mTvResultWait.setText("Coming up");
-             holder.mViewResult.setVisibility(View.GONE);
-         }
-
+        if(match.getMatchQuestionCount()==0 && match.getParties() != null && timeAgo.timeDiff > 0 && timeAgo.timeUnit != TimeUnit.MILLISECOND && timeAgo.timeUnit != TimeUnit.SECOND)
+        {
+            holder.mTvResultWait.setVisibility(View.VISIBLE);
+            holder.mTvResultWait.setText("Coming up");
+            holder.mViewResult.setVisibility(View.GONE);
+        }
 
 
         if(match.getMatchQuestionCount()==0)
@@ -257,7 +281,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         if (holder.mBtnPlayMatch.getVisibility()==View.VISIBLE) // IF PLAY BTN VISIBLE THEN SHOW PINK DOT
         {
-            holder.mIbfeedDotIcon.setImageResource(R.drawable.feed_dot_grey_icon);
+            holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_grey_button_with_shadow);
         }
 
         return scheduleView;
@@ -270,7 +294,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         MatchCommentaryHolder holder = new MatchCommentaryHolder(MatchCommentary);
 
         holder.mTvMatchCommentary.setText(match2.getVenue()); //// TODO: 9/22/16 change to match commentry
-        
+
         return MatchCommentary;
     }
 
@@ -317,6 +341,35 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         }
     }
 
+    private View getResultCommentaryView(ViewGroup parent,Match match) {
+
+
+        View resultCommentaryView = getLayoutInflater().inflate(R.layout.inflater_match_result_commentary_row, parent, false);
+
+        TextView tvcommentary = (TextView) resultCommentaryView.findViewById(R.id.schedule_row_tv_match_result_commentary);
+
+        TextView tvcommentarytitle = (TextView) resultCommentaryView.findViewById(R.id.schedule_row_tv_match_result_commentary_title);
+
+        if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()) {
+            tvcommentary.setVisibility(View.VISIBLE);
+            tvcommentary.setText(Html.fromHtml(match.getResultdesc()));
+
+            if (match.getMatchPoints()==0) {
+                tvcommentarytitle.setVisibility(View.VISIBLE);
+                tvcommentarytitle.setText(Html.fromHtml(match.getResult()));
+            }
+            else {
+                tvcommentarytitle.setVisibility(View.GONE);
+            }
+
+            if (!match.getStage().equals("Commentary")){
+                tvcommentarytitle.setVisibility(View.GONE);
+            }
+        }
+
+        return resultCommentaryView;
+    }
+
     class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView mTvMatchStage;
@@ -328,6 +381,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         TextView mTvPartyBName;
 
         TextView mTvPartyBScore;
+
+        TextView mTvMatchResultCommentary;
+
 
         TextView mTvMatchResult;
 
@@ -357,7 +413,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         RelativeLayout mRlMatchPoints;
 
-        ImageButton mIbfeedDotIcon;
+        Button mIbfeedDotIcon;
+
+        LinearLayout mMatchResultCommentary;
 
 
 
@@ -368,6 +426,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
             mTvMatchResult = (TextView) V.findViewById(R.id.schedule_row_tv_match_result);
+            mTvMatchResultCommentary = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_commentary);
             mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_match_time);
             mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
             mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
@@ -375,13 +434,14 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mIvPartyBPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_right);
             mBtnVs=(Button) V.findViewById(R.id.schedule_row_btn_vs);
             mBtnPlayMatch=(CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
-            mIbfeedDotIcon=(ImageButton) V.findViewById(R.id.feed_dot_icon);
+            mIbfeedDotIcon=(Button) V.findViewById(R.id.feed_dot_icon);
             mBtnMatchPoints=(CustomButton) V.findViewById(R.id.schedule_row_btn_points);
             mLlMatch = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
             mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);
+            mMatchResultCommentary = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
 
             mBtnPlayMatch.setOnClickListener(this);
             mBtnMatchPoints.setOnClickListener(this);
@@ -409,7 +469,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     Integer matchId = (Integer) view.getTag();
                     Bundle mBundle2 = new Bundle();
                     mBundle2.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId));
-
+                    mBundle2.putString("screen","feed");
                     Intent mintent =  new Intent(view.getContext(), MyResultsActivity.class);
                     mintent.putExtras(mBundle2);
                     view.getContext().startActivity(mintent);
@@ -420,7 +480,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     Integer matchId2 = (Integer) view.getTag();
                     Bundle mBundle3 = new Bundle();
                     mBundle3.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId2));
-
+                    mBundle3.putString("screen","feed");
                     Intent mintent2 =  new Intent(view.getContext(), MyResultsActivity.class);
                     mintent2.putExtras(mBundle3);
                     view.getContext().startActivity(mintent2);
