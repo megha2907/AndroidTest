@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.jeeva.android.ExceptionTracker;
-import com.jeeva.android.Log;
 import com.jeeva.android.converter.JacksonConverterFactory;
 
 import java.io.IOException;
@@ -55,20 +54,19 @@ public abstract class AbstractWebService<T> {
         // add logging as last interceptor
         httpClient.addInterceptor(logging);  // <-- this is the important line!
 
-        if(null == NostragamusDataHandler.getInstance().getCookie()){
+        httpClient.addNetworkInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request.Builder builder = chain.request().newBuilder();
 
-        }else {
-            httpClient.addNetworkInterceptor(new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Request request = chain.request().newBuilder()
-                            .addHeader("Authorization",
-                                    NostragamusDataHandler.getInstance().getCookie())
-                            .build();
-                    return chain.proceed(request);
+                String cookie = NostragamusDataHandler.getInstance().getCookie();
+                if(null != cookie) {
+                    builder.addHeader("Authorization", cookie);
                 }
-            });
-        }
+
+                return chain.proceed(builder.build());
+            }
+        });
 
         return httpClient.build();
     }
