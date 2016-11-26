@@ -32,7 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private static final int EDIT_PROFILE_CODE = 35;
 
-    private String[] account = {"Edit Profile", "Logout", "Hourly Notifications", "Daily Notifications"};
+    private String[] account = {"Edit Profile", "Logout"};
     private String[] support = {"Report a Problem"};
     private String[] about = {"About Sportscafe" , "Terms of Service", "Privacy Policy"};
 
