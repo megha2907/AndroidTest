@@ -2,16 +2,20 @@ package in.sportscafe.nostragamus.module.user.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -25,6 +29,7 @@ import java.io.IOException;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.TermsConditions;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
@@ -44,6 +49,13 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
     private ProgressDialog mProgressDialog;
 
+    private String personName;
+    private String personEmail;
+    private String personId;
+    private String persongender;
+    private String profileUrl;
+    private String personPhoto;
+
 
 
     @Override
@@ -53,6 +65,9 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         //Activity fullscreen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
+
+        TextView termstv = (TextView)findViewById(R.id.terms_tv);
+        termstv.setText(Html.fromHtml(getString(R.string.termspolicy)));
 
         initGoogle();
 
@@ -118,6 +133,18 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
+
+            if(null!=result.getSignInAccount()){
+                GoogleSignInAccount acct = result.getSignInAccount();
+                personName = acct.getDisplayName();
+                personEmail = acct.getEmail();
+                personId = acct.getId();
+                persongender = "";
+                profileUrl="";
+                personPhoto = String.valueOf(acct.getPhotoUrl());
+
+            }
+
             int statusCode = result.getStatus().getStatusCode();
             Log.i("status", String.valueOf(statusCode));
         } else {
@@ -134,7 +161,14 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
             case R.id.login_btn_google:
                 mLogInPresenter.onClickGoogle();
                 break;
+            case R.id.terms_tv:
+                gotoTermsConditions();
+                break;
         }
+    }
+
+    public void gotoTermsConditions(){
+        startActivity(new Intent(this, TermsConditions.class));
     }
 
     private void getGoogleAccessToken(final String email) {
@@ -166,7 +200,10 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
             protected void onPostExecute(String token) {
                 if (null != token) {
                     Log.d("GPlus Token", token);
-                    mLogInPresenter.onSuccessGoogleToken(token);
+                    mLogInPresenter.onSuccessGoogleToken(token,
+                            personId,personName,
+                            persongender,profileUrl,
+                            personEmail,personPhoto);
                 }
             }
 
@@ -207,6 +244,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
             if (result.isSuccess()) {
                 // Signed in successfully, show authenticated UI.
                 getGoogleAccessToken(result.getSignInAccount().getEmail());
+
             }
         }
     }

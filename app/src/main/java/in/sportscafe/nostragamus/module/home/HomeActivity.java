@@ -72,6 +72,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             return;
         }
 
+        Log.i("cookie",NostragamusDataHandler.getInstance().getCookie());
+
         getUserInfoFromServer();
         mHomeButton=(ImageView)findViewById(R.id.home_ibtn_feed);
         mProfileButton=(ImageView)findViewById(R.id.home_ibtn_profile);

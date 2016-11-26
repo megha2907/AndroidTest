@@ -42,9 +42,19 @@ public class PowerUp {
     public String getDesc() {
         switch (id) {
             case "2x":
+                id = "2x";
                 desc="Double your returns when you are confident about a prediction";
+                break;
+            case "no_negs":
+                id = "No Negative Points";
+                desc="Avoid being penalised for an incorrect prediction";
+                break;
+            case "player_poll":
+                id = "Player Poll";
+                desc="Peak into how other Nostragamus players have predicted";
+                break;
             default:
-                desc="Double your returns when you are confident about a prediction";
+                desc="";
         }
         return desc;
     }

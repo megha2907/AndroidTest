@@ -5,15 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class LogInResponse {
 
     @JsonProperty("data")
-    private UserInfo userInfo;
+    private UserLoginInResponse userLoginInResponse;
 
     @JsonProperty("data")
-    public UserInfo getUserInfo() {
-        return userInfo;
+    public UserLoginInResponse getUserLoginInResponse() {
+        return userLoginInResponse;
     }
 
     @JsonProperty("data")
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
+    public void setUserLoginInResponse(UserLoginInResponse userLoginInResponse) {
+        this.userLoginInResponse = userLoginInResponse;
     }
 }

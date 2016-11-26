@@ -51,7 +51,7 @@ public class UserInfo {
     @JsonProperty("count_groups")
     private Integer numberofgroups;
 
-    @JsonProperty("user_info")
+    @JsonProperty("info")
     private PowerUpInfo powerUpInfo;
 
     /**
@@ -186,12 +186,12 @@ public class UserInfo {
         this.points = points;
     }
 
-    @JsonProperty("user_info")
+    @JsonProperty("info")
     public PowerUpInfo getUserInfo() {
         return powerUpInfo;
     }
 
-    @JsonProperty("user_info")
+    @JsonProperty("info")
     public void setUserInfo(PowerUpInfo powerUpInfo) {
         this.powerUpInfo = powerUpInfo;
     }

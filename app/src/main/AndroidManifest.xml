@@ -75,6 +75,11 @@
         </activity>
 
         <activity
+            android:name="in.sportscafe.nostragamus.module.common.TermsConditions"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name="in.sportscafe.nostragamus.module.user.login.LogInActivity"
             android:screenOrientation="portrait" />
 

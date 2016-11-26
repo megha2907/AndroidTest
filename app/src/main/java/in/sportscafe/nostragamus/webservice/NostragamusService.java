@@ -78,7 +78,7 @@ public interface NostragamusService {
     @GET("v1/game/users/{userId}/groups/info")
     Call<GroupsDetailResponse> getGroupDetails(@Path("userId") String userId);
 
-    @POST("v1/game/users/login")
+    @POST("/v2/game/login")
     Call<LogInResponse> loginUser(@Body LogInRequest logInRequest);
 
     @PUT("v1/game/users")

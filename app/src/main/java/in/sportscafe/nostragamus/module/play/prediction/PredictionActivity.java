@@ -338,6 +338,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                         String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberof2xPowerups());
                         btn2xpowerUpCount.setText(UpdatedPowerUps);
 
+                        animateFAB();
+
 //                        powerup2xFab.setClickable(false);
 //                        powerupAudiencePollFab.setClickable(false);
 //                        powerupNonegsFab.setClickable(false);
@@ -358,6 +360,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                         String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups());
                         btnAudiencePollCount.setText(UpdatedPowerUps);
 
+                        animateFAB();
+
 //                        powerup2xFab.setClickable(false);
 //                        powerupAudiencePollFab.setClickable(false);
 //                        powerupNonegsFab.setClickable(false);
@@ -375,6 +379,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                         NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups() - 1);
                         String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups());
                         btnNonegsCount.setText(UpdatedPowerUps);
+
+                        animateFAB();
 
 //                        powerup2xFab.setClickable(false);
 //                        powerupAudiencePollFab.setClickable(false);

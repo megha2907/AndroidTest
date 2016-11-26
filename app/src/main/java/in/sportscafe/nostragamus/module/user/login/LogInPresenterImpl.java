@@ -7,6 +7,7 @@ import android.os.Bundle;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.webservice.MyWebService;
 
 public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInModelListener {
 
@@ -43,8 +44,8 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
     }
 
     @Override
-    public void onSuccessGoogleToken(String token) {
-        mLogInModel.onLoggedInGoogle(token);
+    public void onSuccessGoogleToken(String token, String personId, String personName, String persongender, String profileUrl, String personEmail, String personPhoto) {
+        mLogInModel.onLoggedInGoogle(token,personId,personName,persongender,profileUrl,personEmail,personPhoto);
     }
 
     @Override
@@ -65,6 +66,8 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
     @Override
     public void onLoginCompleted() {
         mLogInView.hideProgressDialog();
+        // Initializing MyWebService
+        MyWebService.getInstance().init();
 
         if(mLogInModel.isPreferenceDone()) {
             mLogInView.navigateToHome();

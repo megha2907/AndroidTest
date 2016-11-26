@@ -65,10 +65,10 @@ public class GetStartActivity extends Activity {
         findViewById(R.id.activity_getstarted_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // navigateToLogin();
-                NostragamusDataHandler.getInstance().setUserId("1");
-                                autoSaveAllSports();
-                                navigateToHome();
+                navigateToLogin();
+//                NostragamusDataHandler.getInstance().setUserId("1");
+//                                autoSaveAllSports();
+//                                navigateToHome();
             }
         });
     }
