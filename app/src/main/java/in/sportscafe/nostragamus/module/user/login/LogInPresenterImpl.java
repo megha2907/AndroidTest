@@ -70,7 +70,7 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
         MyWebService.getInstance().init();
 
         if(mLogInModel.isPreferenceDone()) {
-            mLogInView.navigateToHome();
+            mLogInView.navigateToEditProfile();
         } else {
             mLogInView.navigateToEditProfile();
         }

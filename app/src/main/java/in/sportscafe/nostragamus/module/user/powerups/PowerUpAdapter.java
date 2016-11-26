@@ -39,9 +39,30 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
 
         PowerUp powerUp = getItem(position);
         holder.mBtnPowerUpCount.setText(String.valueOf(powerUp.getCount()));
-        holder.mTvPowerUpName.setText(powerUp.getId()+" Powerup");
-        holder.mTvPowerUpDesc.setText(powerUp.getDesc());
-        holder.mBtnPowerUp.setImageResource(powerUp.getIcon());
+
+        switch (powerUp.getId()) {
+            case "2x":
+                holder.mTvPowerUpName.setText("2x");
+                holder.mBtnPowerUp.setImageResource(R.drawable.powerup_2x_white);
+                holder.mTvPowerUpDesc.setText("Double your returns when you are confident about a prediction");
+                break;
+            case "no_negs":
+                holder.mTvPowerUpName.setText("No Negative Points");
+                holder.mBtnPowerUp.setImageResource(R.drawable.powerup_nonegs_white);
+                holder.mTvPowerUpDesc.setText("Avoid being penalised for an incorrect prediction");
+                break;
+            case "player_poll":
+                holder.mTvPowerUpName.setText("Player Poll");
+                holder.mBtnPowerUp.setImageResource(R.drawable.powerup_audience_poll_white);
+                holder.mTvPowerUpDesc.setText("Peak into how other Nostragamus players have predicted");
+                break;
+            default:
+                holder.mTvPowerUpName.setText("2x");
+                holder.mBtnPowerUp.setImageResource(R.drawable.powerup_nonegs_white);
+                holder.mTvPowerUpDesc.setText("Double your returns when you are confident about a prediction");
+                break;
+        }
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder  {
