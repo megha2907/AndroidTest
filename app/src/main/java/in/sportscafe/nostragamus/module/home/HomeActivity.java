@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -53,6 +56,12 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private TextView mNotificationTv;
 
+    private RelativeLayout mHomeRl;
+
+    private RelativeLayout mProfileRl;
+
+    private RelativeLayout mNotificationRl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +72,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             return;
         }
 
+        Log.i("cookie",NostragamusDataHandler.getInstance().getCookie());
+
         getUserInfoFromServer();
         mHomeButton=(ImageView)findViewById(R.id.home_ibtn_feed);
         mProfileButton=(ImageView)findViewById(R.id.home_ibtn_profile);
@@ -71,6 +82,10 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         mHomeTv=(TextView)findViewById(R.id.home_tv_feed);
         mProfileTv=(TextView)findViewById(R.id.home_tv_profile);
         mNotificationTv=(TextView)findViewById(R.id.home_tv_notification);
+
+        mHomeRl=(RelativeLayout) findViewById(R.id.home_rl_feed);
+        mProfileRl=(RelativeLayout) findViewById(R.id.home_rl_profile);
+        mNotificationRl=(RelativeLayout) findViewById(R.id.home_rl_notification);
 
         Intent intent = getIntent();
         if (null==intent.getExtras()){
@@ -85,6 +100,12 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             mHomeTv.setSelected(false);
             mNotificationTv.setSelected(false);
             mProfileTv.setSelected(true);
+
+            mProfileRl.setBackgroundColor(Color.BLACK);
+            mProfileRl.getBackground().setAlpha(40);
+
+            mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+            mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
 
             loadFragment(new ProfileFragment());
         }
@@ -133,6 +154,12 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mProfileTv.setSelected(false);
                   mNotificationTv.setSelected(true);
 
+                  mNotificationRl.setBackgroundColor(Color.BLACK);
+                  mNotificationRl.getBackground().setAlpha(40);
+
+                  mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mProfileRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+
                   loadFragment(new NotificationInboxFragment());
                   break;
 
@@ -146,6 +173,12 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mProfileTv.setSelected(false);
                   mHomeTv.setSelected(true);
 
+                  mHomeRl.setBackgroundColor(Color.BLACK);
+                  mHomeRl.getBackground().setAlpha(40);
+
+                  mProfileRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+
                   loadFragment(new TournamentFragment());
                   break;
 
@@ -158,6 +191,13 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mHomeTv.setSelected(false);
                   mNotificationTv.setSelected(false);
                   mProfileTv.setSelected(true);
+
+
+                  mProfileRl.setBackgroundColor(Color.BLACK);
+                  mProfileRl.getBackground().setAlpha(40);
+
+                  mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
 
                   if (null == NostragamusDataHandler.getInstance().getUserId()) {
                       navigateToLogIn();
@@ -236,7 +276,9 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                                     NostragamusDataHandler.getInstance().setUserInfo(updatedUserInfo);
                                     if(null != updatedUserInfo)
                                     {
-                                        NostragamusDataHandler.getInstance().setNumberofPowerups(updatedUserInfo.getPowerUps().get("2x"));
+                                        NostragamusDataHandler.getInstance().setNumberof2xPowerups(updatedUserInfo.getPowerUps().get("2x"));
+                                        NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(updatedUserInfo.getPowerUps().get("no_negs"));
+                                        NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(updatedUserInfo.getPowerUps().get("player_poll"));
                                     }
                                     NostragamusDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
                                     NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());

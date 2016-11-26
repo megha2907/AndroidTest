@@ -3,8 +3,11 @@ package in.sportscafe.nostragamus.module.getstart;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.NetworkOnMainThreadException;
 import android.support.annotation.Nullable;
 import android.view.View;
+
+import java.util.Arrays;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -13,6 +16,8 @@ import in.sportscafe.nostragamus.module.feedback.GoogleFormActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
+import in.sportscafe.nostragamus.module.user.preference.PreferenceManager;
+import in.sportscafe.nostragamus.module.user.preference.SavePreferenceModelImpl;
 import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity;
 import in.sportscafe.nostragamus.module.user.sportselection.SportsModelImpl;
 
@@ -61,6 +66,9 @@ public class GetStartActivity extends Activity {
             @Override
             public void onClick(View view) {
                 navigateToLogin();
+//                NostragamusDataHandler.getInstance().setUserId("1");
+//                                autoSaveAllSports();
+//                                navigateToHome();
             }
         });
     }
@@ -80,24 +88,24 @@ public class GetStartActivity extends Activity {
         }
     }
 
-//    private void autoSaveAllSports() {
-//        new PreferenceManager().savePreference(Arrays.asList(new Integer[] {1,2,3,4,5,6,7,8,9,10}),
-//                new SavePreferenceModelImpl.SavePreferenceModelListener() {
-//                    @Override
-//                    public void onSuccess()
-//                    {
-//                    }
-//
-//                    @Override
-//                    public void onNoInternet() {
-//                        onNoInternet();
-//                    }
-//
-//                    @Override
-//                    public void onFailed(String message) {
-//                    }
-//                });
-//    }
+    private void autoSaveAllSports() {
+        new PreferenceManager().savePreference(Arrays.asList(new Integer[] {1,2,3,4,5,6,7,8,9,10}),
+                new SavePreferenceModelImpl.SavePreferenceModelListener() {
+                    @Override
+                    public void onSuccess()
+                    {
+                    }
+
+                    @Override
+                    public void onNoInternet() {
+                        onNoInternet();
+                    }
+
+                    @Override
+                    public void onFailed(String message) {
+                    }
+                });
+    }
 
     private void navigateToHome() {
         startActivity(new Intent(this, HomeActivity.class));

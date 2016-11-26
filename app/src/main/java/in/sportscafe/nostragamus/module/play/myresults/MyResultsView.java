@@ -8,4 +8,6 @@ import com.jeeva.android.InAppView;
 public interface MyResultsView extends InAppView {
 
     void setAdapter(MyResultsAdapter myResultsAdapter);
+
+    void goBack();
 }

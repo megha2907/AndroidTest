@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.jeeva.android.ExceptionTracker;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
@@ -146,10 +147,8 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
     }
 
     @Override
-    public void showJoinGroupSuccess() {
-        Toast.makeText(getActivity(), "Your request to join the group has been sent to the group admin for approval.",
-                Toast.LENGTH_SHORT).show();
-        navigateToAllGroups();
+    public void showJoinGroupSuccess(Long groupId) {
+        navigateToGroupInfo(groupId);
     }
 
     @Override
@@ -157,6 +156,15 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
         startActivityForResult(new Intent(this, AllGroupsActivity.class), CODE_ALL_GROUP);
     }
 
+    @Override
+    public void navigateToGroupInfo(Long groupId) {
+        Intent intent = new Intent(this, GroupInfoActivity.class);
+        Bundle mbundle = new Bundle();
+        mbundle.putLong(Constants.BundleKeys.GROUP_ID,groupId);
+        intent.putExtras(mbundle);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

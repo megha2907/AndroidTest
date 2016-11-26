@@ -9,11 +9,15 @@ import com.jeeva.android.facebook.user.FacebookProfile;
 import com.jeeva.android.facebook.user.GetProfileModelImpl;
 import com.jeeva.android.facebook.user.UserModelImpl;
 
+import java.math.BigInteger;
+
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
+import in.sportscafe.nostragamus.module.user.login.dto.UserLoginInResponse;
+import in.sportscafe.nostragamus.module.user.login.dto.UserProfile;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -21,9 +25,9 @@ import retrofit2.Response;
 
 public class LogInModelImpl implements LogInModel {
 
-    private static final String PROVIDER_FB = "fb";
+    private static final String PROVIDER_FB = "facebook";
 
-    private static final String PROVIDER_GOOGLE = "gplus";
+    private static final String PROVIDER_GOOGLE = "google";
 
     private final String TAG = "LogInModelImpl";
 
@@ -56,9 +60,10 @@ public class LogInModelImpl implements LogInModel {
     }
 
     @Override
-    public void onLoggedInGoogle(String token) {
+    public void onLoggedInGoogle(String token, String personId, String personName, String persongender, String profileUrl,
+                                 String personEmail, String personPhoto) {
         mLogInModelListener.onGettingProfile();
-        callNostragamusLoginApi(PROVIDER_GOOGLE, token);
+        callNostragamusLoginApi(PROVIDER_GOOGLE,token,personId,personName,persongender,profileUrl,personEmail,personPhoto);
     }
 
     private void loginWithFacebook() {
@@ -97,7 +102,10 @@ public class LogInModelImpl implements LogInModel {
         mFacebookHandler.getProfile(new GetProfileModelImpl.GetProfileModelListener() {
             @Override
             public void onGetProfileSuccess(FacebookProfile facebookProfile) {
-                callNostragamusLoginApi(PROVIDER_FB, facebookProfile.getAccessToken());
+                callNostragamusLoginApi(PROVIDER_FB, facebookProfile.getAccessToken(),
+                        facebookProfile.getId(),facebookProfile.getFirst_name(),
+                        facebookProfile.getGender(),"https://facebook.com/"+facebookProfile.getId(),
+                        facebookProfile.getEmail(),facebookProfile.getProfilePictureUrl(350,350));
                 Log.d(TAG, MyWebService.getInstance().getJsonStringFromObject(facebookProfile));
             }
 
@@ -108,17 +116,41 @@ public class LogInModelImpl implements LogInModel {
         });
     }
 
-    private void callNostragamusLoginApi(String provider, String accessToken) {
+    private void callNostragamusLoginApi(String provider, String accessToken,String id , String username,
+                                         String gender, String profileUrl, String email,String photo) {
+
         LogInRequest logInRequest = new LogInRequest();
-        logInRequest.setAccessPovider(provider);
         logInRequest.setAccessToken(accessToken);
+        logInRequest.setRefreshToken("");
+
+//        List<String> emails = new ArrayList<>();
+//        emails.add(email);
+//        Emails newemail = new Emails();
+//        newemail.setEmail(emails);
+//
+//        List<String> photos = new ArrayList<>();
+//        photos.add(photo);
+//        Photos newphotos = new Photos();
+//        newphotos.setPhoto(photos);
+
+        UserProfile userProfile = new UserProfile();
+        userProfile.setId(id);
+        userProfile.setUserName(username);
+        userProfile.setDisplayName(username);
+        userProfile.setGender(gender);
+        userProfile.setProfileUrl(profileUrl);
+        userProfile.setProvider(provider);
+        userProfile.setEmails(email);
+        userProfile.setPhotos(photo);
+
+        logInRequest.setUserProfile(userProfile);
 
         MyWebService.getInstance().getLogInRequest(logInRequest).enqueue(
                 new NostragamusCallBack<LogInResponse>() {
                     @Override
                     public void onResponse(Call<LogInResponse> call, Response<LogInResponse> response) {
                         if (response.isSuccessful()) {
-                            handleLoginResponse(response.body().getUserInfo());
+                            handleLoginResponse(response.body().getUserLoginInResponse());
                         } else {
                             mLogInModelListener.onLoginFailed();
                         }
@@ -126,13 +158,18 @@ public class LogInModelImpl implements LogInModel {
                 });
     }
 
-    private void handleLoginResponse(UserInfo userInfo) {
+    private void handleLoginResponse(UserLoginInResponse userLoginInResponse) {
+
+        UserInfo userInfo = userLoginInResponse.getUserInfo();
+
         NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
 
         nostragamusDataHandler.setLoggedInUser(true);
         nostragamusDataHandler.setUserId(userInfo.getId().toString());
-        nostragamusDataHandler.setCookie(userInfo.getCookie());
-        nostragamusDataHandler.setNumberofPowerups(userInfo.getPowerUps().get("2x"));
+        nostragamusDataHandler.setCookie(userLoginInResponse.getJwtToken());
+        nostragamusDataHandler.setNumberof2xPowerups(userInfo.getPowerUps().get("2x"));
+        nostragamusDataHandler.setNumberofNonegsPowerups(userInfo.getPowerUps().get("no_negs"));
+        nostragamusDataHandler.setNumberofAudiencePollPowerups(userInfo.getPowerUps().get("player_poll"));
         nostragamusDataHandler.setNumberofBadges(userInfo.getBadges().size());
         userInfo.setPoints(100L);
         Log.i("powerups", String.valueOf(userInfo.getPowerUps().get("2x")));

@@ -25,6 +25,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     private Toolbar mtoolbar;
     private TextView mTitle;
+    private boolean goback = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +81,20 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        gotoMyResultsTimeline();
+                        if (goback == true) {
+                            onBackPressed();
+                        } else {
+                            gotoMyResultsTimeline();
+                        }
                     }
                 }
 
         );
+    }
+
+    @Override
+        public void goBack(){
+        goback=true;
     }
 
     private void gotoMyResultsTimeline() {
@@ -91,5 +102,5 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         startActivity(intent);
         finish();
     }
-    
+
 }

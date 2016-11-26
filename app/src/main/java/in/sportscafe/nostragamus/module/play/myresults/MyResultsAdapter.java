@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -152,7 +153,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             holder.mTvResultWait.setVisibility(View.GONE);
 
             holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
-            holder.mTvResultCorrectCount.setText("You got " + match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " questions correct");
+            holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Correct");
 
         }
 
@@ -161,7 +162,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question));
         }
 
-        holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard));
+        holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard,match));
 
         return myResultView;
     }
@@ -226,9 +227,11 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
         CustomButton powerupUsed = (CustomButton) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
         RelativeLayout powerup = (RelativeLayout) convertView.findViewById(R.id.my_predictions_row_rl);
-        View vWrongAnswer = (View) convertView.findViewById(R.id.my_predictions_row_v_answer_line);
         TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
-        TextView tvCorrectAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
+        TextView tvotheroption = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
+
+        tvAnswer.setCompoundDrawablePadding(10);
+        tvotheroption.setCompoundDrawablePadding(10);
 
         if (question.getAnswerPoints() != null) {
 
@@ -236,7 +239,13 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                 setTextColor(tvAnswerPoints, R.color.textcolorlight);
             }
 
-            tvAnswerPoints.setText(question.getAnswerPoints() + " Points");
+            if (question.getAnswerPoints() > 0){
+                tvAnswerPoints.setText("+" + question.getAnswerPoints() + " Points");
+            }
+            else {
+                tvAnswerPoints.setText(question.getAnswerPoints() + " Points");
+            }
+
 
         }
 
@@ -252,36 +261,81 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
         if (answerId == 0) {
             tvAnswer.setText("Not Attempted");
-            setTextColor(tvAnswer, R.color.monza);
+            setTextColor(tvAnswer, R.color.tabcolor);
 
             if (question.getQuestionAnswer() == 1) {
-                tvCorrectAnswer.setText(question.getQuestionOption1());
+                tvotheroption.setText(question.getQuestionOption1());
             } else {
-                tvCorrectAnswer.setText(question.getQuestionOption2());
+                tvotheroption.setText(question.getQuestionOption2());
             }
 
             tvAnswerPoints.setText("---");
 
         } else {
+
             if (answerId == 1) {
                 tvAnswer.setText(question.getQuestionOption1());
             } else {
                 tvAnswer.setText(question.getQuestionOption2());
             }
 
+
             if (null == question.getQuestionAnswer()) {
-                setTextColor(tvAnswer, R.color.orange);
-            } else if (question.getQuestionAnswer() == 0 || answerId == question.getQuestionAnswer()) {
-                setTextColor(tvAnswer, R.color.lima);
-            } else {
-                setTextColor(tvAnswer, R.color.monza);
-                vWrongAnswer.setVisibility(View.VISIBLE);
-                tvCorrectAnswer.setVisibility(View.VISIBLE);
+                setTextColor(tvAnswer, R.color.white);
+            }
+            else if (answerId == question.getQuestionAnswer()) {
+
+                Log.i("answer","correct answer");
+
+                //if your answer = correct answer
+                setTextColor(tvAnswer, R.color.greencolor);
+                tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
+                tvotheroption.setVisibility(View.VISIBLE);
+                tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
 
                 if (question.getQuestionAnswer() == 1) {
-                    tvCorrectAnswer.setText(question.getQuestionOption1());
+                    tvotheroption.setText(question.getQuestionOption2());
+                    setTextColor(tvotheroption, R.color.textcolorlight);
                 } else {
-                    tvCorrectAnswer.setText(question.getQuestionOption2());
+                    tvotheroption.setText(question.getQuestionOption1());
+                    setTextColor(tvotheroption, R.color.textcolorlight);
+                }
+
+            }  // if your answer & other option both are correct
+            else if(question.getQuestionAnswer() == 0){
+
+                Log.i("answer","both correct");
+
+                tvotheroption.setVisibility(View.VISIBLE);
+                if (question.getQuestionAnswer() == 1) {
+                    tvotheroption.setText(question.getQuestionOption1());
+                    setTextColor(tvotheroption, R.color.textcolorlight);
+                } else {
+                    tvotheroption.setText(question.getQuestionOption2());
+                    setTextColor(tvotheroption, R.color.textcolorlight);
+                }
+                tvotheroption.setVisibility(View.VISIBLE);
+                tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
+                tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
+                setTextColor(tvAnswer, R.color.greencolor);
+
+            }  // if your answer is incorrect and other option is correct
+            else {
+
+                Log.i("answer","not correct");
+
+                setTextColor(tvAnswer, R.color.tabcolor);
+                tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
+
+
+                tvotheroption.setVisibility(View.VISIBLE);
+                setTextColor(tvotheroption, R.color.textcolorlight);
+                tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
+
+                if (question.getQuestionAnswer() == 1) {
+                    tvotheroption.setText(question.getQuestionOption1());
+                } else {
+                    tvotheroption.setText(question.getQuestionOption2());
                 }
 
             }
@@ -292,8 +346,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         return convertView;
     }
 
-
-    private View getLeaderBoardView(ViewGroup parent) {
+    private View getLeaderBoardView(ViewGroup parent,Match match) {
 
 
         View leaderboardView = getLayoutInflater().inflate(R.layout.inflater_leaderboard_btn_row, parent, false);
@@ -301,13 +354,20 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         CustomButton leaderBoardbtn = (CustomButton) leaderboardView.findViewById(R.id.leaderboard_btn);
         leaderBoardbtn.setOnClickListener(this);
 
+        TextView tvcommentary = (TextView) leaderboardView.findViewById(R.id.schedule_row_tv_match_result_commentary);
+
+        if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()){
+            tvcommentary.setVisibility(View.VISIBLE);
+            tvcommentary.setText(match.getResultdesc());
+        }
+
         return leaderboardView;
     }
 
     @Override
     public void onClick(View v) {
 
-          onclickLeaderBoardbtn(v);
+        onclickLeaderBoardbtn(v);
 
     }
 

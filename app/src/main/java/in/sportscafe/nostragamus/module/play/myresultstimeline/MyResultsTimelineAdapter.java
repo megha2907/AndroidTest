@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.play.myresultstimeline;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -175,24 +177,41 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
             holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
             holder.mViewResult.setVisibility(View.VISIBLE);
+            holder.mRlMatchPoints.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setVisibility(View.GONE);
 
             holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
             holder.mBtnMatchPoints.setTag(match.getId());
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
 
-            //            if (null!= match.getWinnerPartyId()){
-//
-//                if (match.getWinnerPartyId().equals(match.getParties().get(0).getPartyId())){
-//                    holder.mTvPartyAName.setTypeface(null,Typeface.BOLD);
-//                      holder.mTvPartyAName.setTextColor(Color.WHITE);
-//                }
-//                else if(match.getWinnerPartyId().equals(match.getParties().get(1).getPartyId())){
-//                    holder.mTvPartyBName.setTypeface(null,Typeface.BOLD);
-//                      holder.mTvPartyBName.setTextColor(Color.WHITE);
-//                }
-//
-//            }
+            if (null != match.getWinnerPartyId()) {
+
+                if (match.getWinnerPartyId().equals(match.getParties().get(0).getPartyId())) {
+                    holder.mTvPartyAName.setTypeface(null, Typeface.BOLD);
+                    holder.mTvPartyAName.setTextColor(Color.WHITE);
+                } else if (match.getWinnerPartyId().equals(match.getParties().get(1).getPartyId())) {
+                    holder.mTvPartyBName.setTypeface(null, Typeface.BOLD);
+                    holder.mTvPartyBName.setTextColor(Color.WHITE);
+                }
+
+            }
+
+            float percent = (match.getCorrectCount() * 100.0f) / match.getMatchQuestionCount();
+
+            if (percent < 40.0){
+                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_red_button_with_shadow);
+            }
+            else if (percent >= 40.0 && percent <= 60.0){
+                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_blue_button_with_shadow);
+            }
+            else if (percent > 60.0){
+                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_green_button_with_shadow);
+            }
+            else {
+                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_grey_button_with_shadow);
+            }
+
+
 
         }
 
@@ -304,6 +323,9 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
         RelativeLayout mRlMatchStageParent;
 
+        Button mIbfeedDotIcon;
+
+        RelativeLayout mRlMatchPoints;
 
 
 
@@ -325,6 +347,8 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
+            mIbfeedDotIcon=(Button) V.findViewById(R.id.feed_dot_icon);
+            mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);
 
 
             mBtnPlayMatch.setOnClickListener(this);

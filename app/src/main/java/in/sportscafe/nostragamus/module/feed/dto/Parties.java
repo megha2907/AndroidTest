@@ -14,18 +14,18 @@ public class Parties implements Serializable {
     private String partyName;
 
     @JsonProperty("party_id")
-    private String partyId;
+    private int partyId;
 
     @JsonProperty("party_img_url")
     private String partyImageUrl;
 
     @JsonProperty("party_id")
-    public String getPartyId() {
+    public int getPartyId() {
         return partyId;
     }
 
     @JsonProperty("party_id")
-    public void setPartyId(String partyId) {
+    public void setPartyId(int partyId) {
         this.partyId = partyId;
     }
 

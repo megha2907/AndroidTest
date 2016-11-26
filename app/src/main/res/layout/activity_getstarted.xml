@@ -42,11 +42,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/powerup_screen_btn_bg"
-        android:text="GET STARTED"
+        android:text="Get Started"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/blue_button_text"
-        app:typeface="lato_regular"/>
+        app:typeface="roboto_condensed"
+        />
 
     <ImageView
         android:layout_width="wrap_content"

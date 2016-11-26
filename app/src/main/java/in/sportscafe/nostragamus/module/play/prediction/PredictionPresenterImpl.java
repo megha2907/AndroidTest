@@ -7,6 +7,7 @@ import android.view.View;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
@@ -37,7 +38,10 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         mPredictionModel.saveData(bundle);
         mPredictionView.setTournamentName(mPredictionModel.getTournamentName());
         mPredictionView.setContestName(mPredictionModel.getContestName());
-       // mPredictionView.setMatchStage(mPredictionModel.getMatchStage());
+        mPredictionView.setNumberofPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups(),
+                NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups(),
+                NostragamusDataHandler.getInstance().getNumberofNonegsPowerups());
+        // mPredictionView.setMatchStage(mPredictionModel.getMatchStage());
         mPredictionView.setTournamentPhoto(mPredictionModel.getTournamentPhoto());
     }
 
@@ -76,14 +80,14 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
 
-    public void onPowerUp() {
-        mPredictionModel.updatePowerUps();
+    public void onPowerUp(String powerup) {
+        mPredictionModel.updatePowerUps(powerup);
     }
 
     @Override
     public void onSuccessQuestions(List<Question> questionList) {
         mPredictionView.dismissProgressbar();
-       // onSetQuestionOption(questionList);
+        // onSetQuestionOption(questionList);
         //populateNextMatch();
     }
 
@@ -94,7 +98,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         for (Question question : questionList) {
             mPredictionView.setLeftOption(question.getQuestionOption1());
             mPredictionView.setRightOption(question.getQuestionOption2());
-           // mPredictionView.setNumberofCards(question.getQuestionNumber(),questionList.size());
+            // mPredictionView.setNumberofCards(question.getQuestionNumber(),questionList.size());
         }
 
     }
@@ -124,6 +128,19 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         mPredictionView.setRightOption(item.getQuestionOption2());
         mPredictionView.setNumberofCards(item.getQuestionNumber(),minitialCount);
 
+    }
+
+    @Override
+    public void onFailedAudiencePollResponse(String message) {
+        mPredictionView.dismissProgressbar();
+        mPredictionView.dismissPowerUp();
+        mPredictionView.updateAudiencePollPowerup();
+        mPredictionView.showMessage(Constants.Alerts.AUDIENCE_POLL_FAIL);
+    }
+
+    @Override
+    public void onSuccessAudiencePollResponse() {
+        mPredictionView.dismissProgressbar();
     }
 
     @Override

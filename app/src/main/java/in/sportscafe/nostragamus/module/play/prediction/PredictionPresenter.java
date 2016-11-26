@@ -14,7 +14,7 @@ public interface PredictionPresenter {
 
     void onCreatePrediction(Bundle bundle);
 
-    void onPowerUp();
+    void onPowerUp(String powerup);
 
     void onSetQuestionOption(List<Question> questionList);
 

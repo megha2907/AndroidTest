@@ -6,6 +6,8 @@ import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
+import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
+import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
@@ -15,6 +17,7 @@ import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsRespon
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupSportUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
+import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroupResponse;
 import in.sportscafe.nostragamus.module.user.group.members.AddGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.members.AdminRequest;
 import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
@@ -110,7 +113,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getGroupDetails(NostragamusDataHandler.getInstance().getUserId());
     }
 
-    public Call<ApiResponse> getJoinGroupRequest(String groupCode) {
+    public Call<JoinGroupResponse> getJoinGroupRequest(String groupCode) {
         AddGroupRequest memberRequest = new AddGroupRequest();
         memberRequest.setGroupCode(groupCode);
         memberRequest.setUserId(NostragamusDataHandler.getInstance().getUserId());
@@ -180,4 +183,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<AppSettingsResponse> getAppSettingsRequest(String uniqueId) {
         return mNostragamusService.getAppSettings(uniqueId);
     }
+
+    public Call<AudiencePollResponse> getAudiencePoll(AudiencePollRequest request) {
+        return mNostragamusService.getAudiencePoll(request);
+    }
+
 }

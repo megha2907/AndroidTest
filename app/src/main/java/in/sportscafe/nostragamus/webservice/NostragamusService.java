@@ -5,6 +5,8 @@ import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
+import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
+import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
@@ -14,6 +16,7 @@ import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsRespon
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupSportUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
+import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroupResponse;
 import in.sportscafe.nostragamus.module.user.group.members.AddGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.members.AdminRequest;
 import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
@@ -75,7 +78,7 @@ public interface NostragamusService {
     @GET("v1/game/users/{userId}/groups/info")
     Call<GroupsDetailResponse> getGroupDetails(@Path("userId") String userId);
 
-    @POST("v1/game/users/login")
+    @POST("/v2/game/login")
     Call<LogInResponse> loginUser(@Body LogInRequest logInRequest);
 
     @PUT("v1/game/users")
@@ -101,7 +104,7 @@ public interface NostragamusService {
     Call<ApiResponse> makeAdmin(@Body AdminRequest request);
 
     @POST("v1/game/groups/users")
-    Call<ApiResponse> joinGroup(@Body AddGroupRequest memberRequest);
+    Call<JoinGroupResponse> joinGroup(@Body AddGroupRequest memberRequest);
 
     @PUT("v1/game/groups/users")
     Call<ApiResponse> approveUser(@Body ApproveRequest request);
@@ -137,4 +140,7 @@ public interface NostragamusService {
 
     @GET("v1/setting/getSettingsBody")
     Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId);
+
+    @POST("users/poll")
+    Call<AudiencePollResponse> getAudiencePoll(@Body AudiencePollRequest request);
 }

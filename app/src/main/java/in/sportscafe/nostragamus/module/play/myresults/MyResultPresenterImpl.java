@@ -28,6 +28,12 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     public void onCreateMyResults(Bundle bundle) {
         mResultsModel.init(bundle);
         getResultDetails();
+
+        if (bundle.containsKey("screen"))
+        {
+            mResultsView.goBack();
+        }
+
     }
 
     @Override

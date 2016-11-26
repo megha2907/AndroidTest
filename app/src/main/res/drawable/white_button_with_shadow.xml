@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="false">
+        <layer-list>
+            <!-- SHADOW -->
+            <item>
+                <shape>
+                    <solid android:color="@color/blackopacity"/>
+                    <corners android:radius="@dimen/dp_2"/>
+                </shape>
+            </item>
+            <!-- BUTTON -->
+            <item android:bottom="@dimen/dp_1">
+                <shape>
+                    <padding android:bottom="@dimen/dp_5"/>
+                    <gradient
+                        android:startColor="@color/white"
+                        android:endColor="@color/white"
+                        android:angle="270" />
+                    <corners
+                        android:radius="@dimen/dp_2"/>
+                    <padding
+                        android:left="@dimen/dp_0"
+                        android:top="@dimen/dp_0"
+                        android:right="@dimen/dp_0"
+                        android:bottom="@dimen/dp_0"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>

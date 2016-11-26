@@ -39,6 +39,8 @@ public interface Constants {
         String LOGGED_USER = "loggedUser";
         String COOKIE = "cookie";
         String NUMBER_OF_POWERUPS = "numberofpowerups";
+        String NUMBER_OF_NONEGS_POWERUPS = "numberofnonegspowerups";
+        String NUMBER_OF_AUDIENCE_POLL_POWERUPS = "numberofaudiencepollpowerups";
         String NUMBER_OF_BADGES = "numberofbadges";
         String NUMBER_OF_GROUPS = "numberofgroups";
         String ALL_BADGES = "allbadges";
@@ -57,7 +59,7 @@ public interface Constants {
 //        String NO_NETWORK_CONNECTION = "No internet connection available";
         String NO_NETWORK_CONNECTION = "Check your internet connection and try again";
         String NO_QUESTIONS = "No Questions Found";
-        String NO_TOURNAMENTS = "No Tournaments Found";
+        String NO_TOURNAMENTS = "No Tournaments , Please choose any other sport.";
         String DATA_NOT_FOUND = "There is problem in your internet connection";
         String JSON_PARSING = "There is problem in your internet connection";
         String TIME_OUT = "There is problem in your internet connection";
@@ -103,6 +105,7 @@ public interface Constants {
         String IMAGE_UNABLE_TO_PICK="Unable to Pick Image";
         String IMAGE_UPLOADING="Uploading.. Wait for a while...";
         String IMAGE_FILEPATH_EMPTY = "Please Select Image";
+        String AUDIENCE_POLL_FAIL = "Not enough responses for a meaningful poll, you can try after some time";
     }
 
     interface BundleKeys {
@@ -128,6 +131,7 @@ public interface Constants {
         String LOGIN_SCREEN = "loginScreen";
         String GROUP_CODE = "groupCode";
         String FEEDBACK_FORM_URL = "feedbackFormUrl";
+        String FEED_SCREEN = "feedScreen";
     }
 
     interface ParcelableKeys {

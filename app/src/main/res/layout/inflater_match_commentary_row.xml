@@ -5,21 +5,22 @@
     android:orientation="vertical"
     android:layout_marginTop="@dimen/dp_10"
     android:layout_marginBottom="@dimen/dp_30"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:visibility="gone">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/swipe_card_shape"
         android:id="@+id/match_commentary_ll">
-    <TextView
-        android:id="@+id/match_commentary_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/dp_20"
-        android:text="Live cricket scores and commentary from around the world, updated real-time, from ESPN ... Sep 22, 2016 - 12th Match at KSCA Rajnagar Stadium, Hubballi."/>
-     </LinearLayout>
+        <TextView
+            android:id="@+id/match_commentary_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/dp_20"
+            android:text="Live cricket scores and commentary from around the world, updated real-time, from ESPN ... Sep 22, 2016 - 12th Match at KSCA Rajnagar Stadium, Hubballi."/>
+    </LinearLayout>
 
     <android.support.v4.widget.Space
         android:id="@+id/space"

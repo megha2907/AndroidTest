@@ -59,13 +59,13 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedIntData(SharedKeys.PREVIOUS_APP_VERSION_CODE, versionCode);
     }
 
+    public boolean isLoggedInUser() {
+        return getSharedBooleanData(SharedKeys.LOGGED_USER, false);
+    }
+
     //CHECK IS LOGGED IN USER
     public void setLoggedInUser(boolean loggedInUser) {
         setSharedBooleanData(SharedKeys.LOGGED_USER, loggedInUser);
-    }
-
-    public boolean isLoggedInUser() {
-        return getSharedBooleanData(SharedKeys.LOGGED_USER, false);
     }
 
     public boolean isInitialSportsAvailable() {
@@ -89,6 +89,10 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
                 });
     }
 
+    public void setAllSports(String allSports) {
+        setSharedStringData(SharedKeys.ALL_SPORTS, allSports);
+    }
+
     public Map<Integer, Sport> getAllSportsMap() {
         Map<Integer, Sport> allSportsMap = new HashMap<>();
 
@@ -102,12 +106,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public void setAllSports(List<Sport> newSports) {
         setAllSports(MyWebService.getInstance().getJsonStringFromObject(newSports));
     }
-
-    public void setAllSports(String allSports) {
-        setSharedStringData(SharedKeys.ALL_SPORTS, allSports);
-    }
-
-
 
     //SPORTS FOLLOWING
     public List<Integer> getFavoriteSportsIdList() {
@@ -125,22 +123,13 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
                 MyWebService.getInstance().getJsonStringFromObject(favoriteSportsIdList));
     }
 
-
-    //USER ID
-    public void setUserId(String userId) {
-        setSharedStringData(SharedKeys.USER_ID, userId);
-    }
-
     public String getUserId() {
         return getSharedStringData(SharedKeys.USER_ID);
     }
 
-
-    //USER INFO
-    public void setUserInfo(UserInfo userInfo) {
-        Nostragamus.getInstance().setUserEmail(userInfo.getEmail());
-        setSharedStringData(SharedKeys.USER_INFO,
-                MyWebService.getInstance().getJsonStringFromObject(userInfo));
+    //USER ID
+    public void setUserId(String userId) {
+        setSharedStringData(SharedKeys.USER_ID, userId);
     }
 
     public UserInfo getUserInfo() {
@@ -151,7 +140,12 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return MyWebService.getInstance().getObjectFromJson(userInfo, UserInfo.class);
     }
 
-
+    //USER INFO
+    public void setUserInfo(UserInfo userInfo) {
+        Nostragamus.getInstance().setUserEmail(userInfo.getEmail());
+        setSharedStringData(SharedKeys.USER_INFO,
+                MyWebService.getInstance().getJsonStringFromObject(userInfo));
+    }
 
     public List<Sport> getGlbFollowedSports() {
         List<Integer> favoriteSportsIdList = getFavoriteSportsIdList();
@@ -173,17 +167,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public void setGrpInfoList(List<GroupInfo> grpInfoList) {
         setSharedStringData(SharedKeys.GRP_INFOS, MyWebService.getInstance().getJsonStringFromObject(grpInfoList));
     }
-
-    public void setGrpInfoMap(Map<Long, GroupInfo> grpInfoMap) {
-
-        List<GroupInfo> grpInfoListObject = new ArrayList<>();
-        Set<Long> keys = grpInfoMap.keySet();
-        for (Long key : keys) {
-            grpInfoListObject.add(grpInfoMap.get(key));
-        }
-        setGrpInfoList(grpInfoListObject);
-    }
-
 
     public Map<Long, GroupInfo> getGrpInfoMap() {
         String grpInfoList = getSharedStringData(SharedKeys.GRP_INFOS);
@@ -208,6 +191,16 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return groupInfoMap;
     }
 
+    public void setGrpInfoMap(Map<Long, GroupInfo> grpInfoMap) {
+
+        List<GroupInfo> grpInfoListObject = new ArrayList<>();
+        Set<Long> keys = grpInfoMap.keySet();
+        for (Long key : keys) {
+            grpInfoListObject.add(grpInfoMap.get(key));
+        }
+        setGrpInfoList(grpInfoListObject);
+    }
+
     public void addNewGroup(GroupInfo newGroupInfo) {
         Map<Long, GroupInfo> grpInfoMap = getGrpInfoMap();
         grpInfoMap.put(newGroupInfo.getId(), newGroupInfo);
@@ -225,24 +218,39 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     }
 
 
-
     //POWERUPS
     public List<PowerUp> getPowerUpList() {
 
         List<PowerUp> powerUpList = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : getUserInfo().getPowerUps().entrySet())
-        {
+        for (Map.Entry<String, Integer> entry : getUserInfo().getPowerUps().entrySet()) {
             powerUpList.add(new PowerUp(entry.getKey(), entry.getValue()));
         }
         return powerUpList;
     }
 
-    public int getNumberofPowerups() {
+    public int getNumberof2xPowerups() {
         return getSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, 0);
     }
 
-    public void setNumberofPowerups(int numberofbadges) {
-        setSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, numberofbadges);
+    public void setNumberof2xPowerups(int numberofPowerups) {
+        setSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, numberofPowerups);
+    }
+
+    public int getNumberofNonegsPowerups() {
+        return getSharedIntData(SharedKeys.NUMBER_OF_NONEGS_POWERUPS, 0);
+    }
+
+    public void setNumberofNonegsPowerups(int numberofNonegsPowerups) {
+        setSharedIntData(SharedKeys.NUMBER_OF_NONEGS_POWERUPS, numberofNonegsPowerups);
+    }
+
+    public int getNumberofAudiencePollPowerups() {
+        return getSharedIntData(SharedKeys.NUMBER_OF_AUDIENCE_POLL_POWERUPS, 0);
+    }
+
+    public void setNumberofAudiencePollPowerups(int numberofAudiencePollPowerups) {
+
+        setSharedIntData(SharedKeys.NUMBER_OF_AUDIENCE_POLL_POWERUPS, numberofAudiencePollPowerups);
     }
 
     //BADGES
@@ -271,6 +279,10 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
                 });
     }
 
+    public void setTournaments(String tournaments) {
+        setSharedStringData(SharedKeys.ALL_TOURNAMENTS, tournaments);
+    }
+
     public Map<Integer, TournamentFeedInfo> getTournamentsMap() {
         Map<Integer, TournamentFeedInfo> tournamentMap = new HashMap<>();
 
@@ -281,16 +293,9 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return tournamentMap;
     }
 
-
     public void setTournaments(List<TournamentFeedInfo> newTournaments) {
         setTournaments(MyWebService.getInstance().getJsonStringFromObject(newTournaments));
     }
-
-    public void setTournaments(String tournaments) {
-        setSharedStringData(SharedKeys.ALL_TOURNAMENTS, tournaments);
-    }
-
-
 
     //ALL GROUPS INFO
     public List<AllGroups> getAllGroups() {
@@ -304,17 +309,9 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
                 });
     }
 
-
-    public void setAllGroupsMap(Map<Long, AllGroups> allGroupsMap) {
-
-        List<AllGroups> allGroupsListObject = new ArrayList<>();
-        Set<Long> keys = allGroupsMap.keySet();
-        for (Long key : keys) {
-            allGroupsListObject.add(allGroupsMap.get(key));
-        }
-        setAllGroups(allGroupsListObject);
+    public void setAllGroups(String allGroups) {
+        setSharedStringData(SharedKeys.ALL_GROUPS, allGroups);
     }
-
 
     public Map<Long, AllGroups> getAllGroupsMap() {
         Map<Long, AllGroups> allGroupsMap = new HashMap<>();
@@ -326,23 +323,24 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return allGroupsMap;
     }
 
+    public void setAllGroupsMap(Map<Long, AllGroups> allGroupsMap) {
+
+        List<AllGroups> allGroupsListObject = new ArrayList<>();
+        Set<Long> keys = allGroupsMap.keySet();
+        for (Long key : keys) {
+            allGroupsListObject.add(allGroupsMap.get(key));
+        }
+        setAllGroups(allGroupsListObject);
+    }
 
     public void setAllGroups(List<AllGroups> newAllGroups) {
         setAllGroups(MyWebService.getInstance().getJsonStringFromObject(newAllGroups));
-    }
-
-    public void setAllGroups(String allGroups) {
-        setSharedStringData(SharedKeys.ALL_GROUPS, allGroups);
     }
 
     //SELECTED GROUP TOURNAMENTS
 
     public void setSelectedTournaments(List<TournamentFeedInfo> selectedTournaments) {
         setSelectedTournaments(MyWebService.getInstance().getJsonStringFromObject(selectedTournaments));
-    }
-
-    public void setSelectedTournaments(String selectedTournaments) {
-        setSharedStringData(SharedKeys.SELECTED_TOURNAMENTS, selectedTournaments);
     }
 
     public List<TournamentFeedInfo> getSelectedTournaments() {
@@ -357,7 +355,9 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
                 });
     }
 
-
+    public void setSelectedTournaments(String selectedTournaments) {
+        setSharedStringData(SharedKeys.SELECTED_TOURNAMENTS, selectedTournaments);
+    }
 
     public int getNumberofGroups() {
         return getSharedIntData(SharedKeys.NUMBER_OF_GROUPS, 0);
@@ -367,20 +367,20 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedIntData(SharedKeys.NUMBER_OF_GROUPS, numberofgroups);
     }
 
-    public void setInstallGroupCode(String installGroupCode) {
-        setSharedStringData(SharedKeys.INSTALL_GROUP_CODE, installGroupCode);
-    }
-
     public String getInstallGroupCode() {
         return getSharedStringData(SharedKeys.INSTALL_GROUP_CODE);
     }
 
-    public void setInstallGroupName(String installGroupName) {
-        setSharedStringData(SharedKeys.INSTALL_GROUP_NAME, installGroupName);
+    public void setInstallGroupCode(String installGroupCode) {
+        setSharedStringData(SharedKeys.INSTALL_GROUP_CODE, installGroupCode);
     }
 
     public String getInstallGroupName() {
         return getSharedStringData(SharedKeys.INSTALL_GROUP_NAME);
+    }
+
+    public void setInstallGroupName(String installGroupName) {
+        setSharedStringData(SharedKeys.INSTALL_GROUP_NAME, installGroupName);
     }
 
     public int getNormalUpdateVersion() {
@@ -415,15 +415,11 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(SharedKeys.FORCE_UPDATE_MESSAGE, message);
     }
 
-    public void setNormalUpdateEnabled(boolean enabled) {
-        setSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, enabled);
-    }
-
     public boolean isNormalUpdateEnabled() {
-        if(getSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, true)) {
+        if (getSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, true)) {
             long currentTimeMs = Calendar.getInstance().getTimeInMillis();
             long updateShownTimeMs = getNormalUpdateShownTime();
-            if(updateShownTimeMs == -1
+            if (updateShownTimeMs == -1
                     || TimeUtils.getDaysDifference(currentTimeMs - updateShownTimeMs) > 0) {
                 setNormalUpdateShownTime(currentTimeMs);
                 return true;
@@ -431,6 +427,10 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         }
 
         return false;
+    }
+
+    public void setNormalUpdateEnabled(boolean enabled) {
+        setSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, enabled);
     }
 
     private long getNormalUpdateShownTime() {
