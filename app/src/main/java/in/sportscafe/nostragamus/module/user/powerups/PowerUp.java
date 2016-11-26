@@ -67,6 +67,7 @@ public class PowerUp {
         switch (id) {
             case "2x":
                 return R.drawable.powerup_2x_white;
+
             case "no_negs":
                 return R.drawable.powerup_nonegs_white;
             case "player_poll":

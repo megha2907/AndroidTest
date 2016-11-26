@@ -67,7 +67,7 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
         mLogInView.hideProgressDialog();
 
         if(mLogInModel.isPreferenceDone()) {
-            mLogInView.navigateToHome();
+            mLogInView.navigateToEditProfile();
         } else {
             mLogInView.navigateToEditProfile();
         }
