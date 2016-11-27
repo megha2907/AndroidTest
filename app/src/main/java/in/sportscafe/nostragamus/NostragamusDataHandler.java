@@ -443,10 +443,11 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     @Override
     public void clearAll() {
-        super.clearAll();
+        boolean formShown = isInitialFeedbackFormShown();
         List<Sport> allSports = getAllSports();
+        super.clearAll();
 
-
+        setInitialFeedbackFormShown(formShown);
         if (!allSports.isEmpty()) {
             setAllSports(allSports);
             setInitialSportsAvailable(true);
