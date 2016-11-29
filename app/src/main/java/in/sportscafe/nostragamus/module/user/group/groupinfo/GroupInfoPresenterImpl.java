@@ -145,11 +145,15 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     }
 
-       private void showAlert(String message) {
+    @Override
+    public void gotoAllGroupsScreen() {
+        mGroupInfoView.navigateToAllGroups();
+    }
+
+    private void showAlert(String message) {
         Toast.makeText(mGroupInfoView.getContext(), message, Toast.LENGTH_SHORT).show();
 
         }
-
 
     @Override
     public void onGetGroupSummarySuccess(GroupInfo groupInfo) {

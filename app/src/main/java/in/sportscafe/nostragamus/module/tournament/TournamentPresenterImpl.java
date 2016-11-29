@@ -40,7 +40,9 @@ public class TournamentPresenterImpl implements TournamentPresenter, TournamentM
     @Override
     public void onSuccessFeeds() {
         mtournamentView.dismissProgressbar();
-        mtournamentView.initMyPosition(mTournamentModel.getAdapter(), mTournamentModel.getSelectedPosition());
+        if (null != mtournamentView.getContext()) {
+            mtournamentView.initMyPosition(mTournamentModel.getAdapter(), mTournamentModel.getSelectedPosition());
+        }
     }
 
     @Override

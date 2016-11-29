@@ -46,7 +46,10 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
     @Override
     public void remove(Question object) {
         super.remove(object);
-        mViewHolderList.remove(0);
+
+        if (mViewHolderList.size() > 0){
+            mViewHolderList.remove(0);
+        }
     }
 
     @Override
@@ -80,6 +83,7 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
             viewHolder.tvquestionPositivePoints.setText("+"+question.getQuestionPositivePoints());
             viewHolder.tvquestionNegativePoints.setText("  |  "+question.getQuestionNegativePoints());
             viewHolder.tvquestionNegativePoints.setTag(question.getQuestionNegativePoints());
+            viewHolder.tvquestionPositivePoints.setTag(question.getQuestionPositivePoints());
         }
         else if (question.getQuestionNegativePoints()==0){
             viewHolder.tvquestionNegativePoints.setVisibility(View.GONE);
@@ -124,7 +128,7 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
         mViewHolderList.get(0).btnpowerupicon.setImageResource(R.drawable.powerup_2x_white);
         mViewHolderList.get(0).btnpowerupicon.setVisibility(View.VISIBLE);
 
-        Integer positivevalue = Integer.parseInt(mViewHolderList.get(0).tvquestionPositivePoints.getText().toString());
+        Integer positivevalue = (Integer) mViewHolderList.get(0).tvquestionPositivePoints.getTag();
         Integer Value = 2 * positivevalue;
 
         Integer negativevalue = (Integer) mViewHolderList.get(0).tvquestionNegativePoints.getTag();
@@ -136,7 +140,6 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
     }
 
     public void updateNonegsPowerUp() {
-        Log.i("inside","nonegs");
         mViewHolderList.get(0).rlquestion.setTag(getItem(0));
         Question question = (Question) mViewHolderList.get(0).rlquestion.getTag();
         question.setPowerUpId("no_negs");

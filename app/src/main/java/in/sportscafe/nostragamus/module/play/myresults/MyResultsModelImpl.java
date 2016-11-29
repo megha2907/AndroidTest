@@ -52,9 +52,17 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public void init(Bundle bundle) {
-        String match_id = bundle.getString(Constants.BundleKeys.MATCH_ID);
-        matchId= Integer.parseInt(match_id);
-        Log.i("matchId",String.valueOf(matchId));
+        
+        if(null != bundle.getString(Constants.BundleKeys.MATCH_ID))
+        {
+            String match_id = bundle.getString(Constants.BundleKeys.MATCH_ID);
+            matchId= Integer.parseInt(match_id);
+        }
+        else
+        {
+            mResultsModelListener.onFailedMyResults(Constants.Alerts.RESULTS_INFO_ERROR);
+            mResultsModelListener.gotoResultsTimeline();
+        }
     }
 
     @Override
@@ -221,5 +229,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         void onEmpty();
 
         Context getContext();
+
+        void gotoResultsTimeline();
     }
 }

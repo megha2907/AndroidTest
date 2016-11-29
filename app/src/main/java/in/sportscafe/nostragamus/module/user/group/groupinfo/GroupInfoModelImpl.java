@@ -45,10 +45,14 @@ public class GroupInfoModelImpl implements GroupInfoModel {
     @Override
     public void init(Bundle bundle) {
 
-        Long groupId = Long.parseLong(bundle.getString(Constants.BundleKeys.GROUP_ID));
-
-        getGroupSummary(groupId.intValue());
-       // this.mGroupInfo = ScGameDataHandler.getInstance().getGrpInfoMap().get(groupId);
+        if(null != bundle.getString((Constants.BundleKeys.GROUP_ID))){
+            Long groupId = Long.parseLong(bundle.getString(Constants.BundleKeys.GROUP_ID));
+            getGroupSummary(groupId.intValue());
+        } else
+        {
+            mGroupInfoModelListener.onFailed(Constants.Alerts.GROUP_INFO_ERROR);
+            mGroupInfoModelListener.gotoAllGroupsScreen();
+        }
 
     }
 
@@ -184,6 +188,8 @@ public class GroupInfoModelImpl implements GroupInfoModel {
         void onLeaveGroupSuccess();
 
         void onFailed(String message);
+
+        void gotoAllGroupsScreen();
 
         void onGetGroupSummarySuccess(GroupInfo grpInfoList);
 

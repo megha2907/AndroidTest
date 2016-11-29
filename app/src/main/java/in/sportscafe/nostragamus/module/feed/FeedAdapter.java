@@ -248,6 +248,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mTvResultWait.setText("Coming up");
             holder.mTvResultWait.setClickable(false);
             holder.mViewResult.setVisibility(View.GONE);
+            holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
 
 
