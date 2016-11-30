@@ -144,6 +144,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
+    public void onNegativePowerUpApplied() {
+        mPredictionView.notifyTopView();
+    }
+
+    @Override
     public void onNoInternet() {
         mPredictionView.dismissProgressbar();
         showAlertMessage(Constants.Alerts.NO_NETWORK_CONNECTION);

@@ -180,6 +180,7 @@ public class PredictionModelImpl implements PredictionModel,
             callAudiencePollApi(audiencePollRequest);
         }
         mPredictionAdapter.notifyDataSetChanged();
+        mPredictionModelListener.onNegativePowerUpApplied();
     }
 
     private void callAudiencePollApi(AudiencePollRequest request) {
@@ -287,7 +288,7 @@ public class PredictionModelImpl implements PredictionModel,
         } else if(mTotalCount == 0) {
             mTotalCount = mPredictionAdapter.getCount();
         }
-        ;
+
 
         mPredictionModelListener.onQuestionChanged(mPredictionAdapter.getItem(0),minitialCount);
         mPredictionAdapter.changeCardViewBackground();
@@ -363,5 +364,7 @@ public class PredictionModelImpl implements PredictionModel,
         void onFailedAudiencePollResponse(String message);
 
         void onSuccessAudiencePollResponse();
+
+        void onNegativePowerUpApplied();
     }
 }

@@ -62,73 +62,87 @@
 
             <Button
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="@dimen/dp_28"
-                android:layout_height="@dimen/dp_28"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
                 android:id="@+id/schedule_row_btn_vs"
                 android:background="@drawable/vs_button_bg"
                 android:layout_centerHorizontal="true"
                 android:alpha="0.4"
                 android:text="VS"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dp_8"
+                android:textColor="@color/colorMedium"
+                android:textSize="@dimen/dp_12"
                 android:textStyle="bold"
-                android:layout_centerVertical="true"
+
                 />
+             <LinearLayout
+                android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical"
+                 android:layout_toLeftOf="@id/schedule_row_btn_vs"
+                 android:layout_alignParentLeft="true">
 
             <com.jeeva.android.widgets.HmImageView
                 android:id="@+id/swipe_card_iv_left"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:scaleType="centerCrop"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_centerVertical="true"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:scaleType="fitXY"
+                android:layout_gravity="center"
+                android:src="@drawable/placeholder_icon"
+                android:layout_marginBottom="@dimen/dp_10"
                 />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/schedule_row_tv_party_a_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dp_16"
+                android:textSize="@dimen/dp_14"
                 android:textColor="@color/white"
-                android:text="Pakistan bhhhhhhhhhhhhhjvfh"
-                android:gravity="left"
+                android:text="Atletico de Kolkata"
+                android:gravity="center"
                 app:typeface="roboto_condensed"
                 android:layout_marginRight="@dimen/dp_2"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_toRightOf="@id/swipe_card_iv_left"
-                android:layout_toLeftOf="@id/schedule_row_btn_vs"
-                android:layout_centerVertical="true"
+                android:layout_below="@id/swipe_card_iv_left"
+                android:layout_gravity="center"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:textAllCaps="false"
                 />
+
+                 </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/schedule_row_btn_vs"
+            android:orientation="vertical"
+          >
 
             <com.jeeva.android.widgets.HmImageView
                 android:id="@+id/swipe_card_iv_right"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:scaleType="centerCrop"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/dp_10"
-                android:layout_centerVertical="true"/>
+                android:scaleType="fitXY"
+                android:layout_gravity="center"
+                android:src="@drawable/placeholder_icon"
+                android:layout_marginBottom="@dimen/dp_10"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/schedule_row_tv_party_b_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:text="South Africa"
-                android:layout_marginRight="@dimen/dp_10"
-                android:layout_marginLeft="@dimen/dp_2"
-                android:layout_toRightOf="@id/schedule_row_btn_vs"
-                android:layout_toLeftOf="@id/swipe_card_iv_right"
+                android:text="Atletico de Kolkata"
+                android:layout_below="@id/swipe_card_iv_right"
+                android:layout_gravity="center"
                 app:typeface="roboto_condensed"
-                android:textSize="@dimen/dp_16"
-                android:gravity="right"
-                android:layout_centerVertical="true"
+                android:textSize="@dimen/dp_14"
+                android:gravity="center"
                 android:ellipsize="end"
                 android:maxLines="3"
+                android:textAllCaps="false"
                 />
+            </LinearLayout>
 
 
         </RelativeLayout>

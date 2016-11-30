@@ -84,6 +84,18 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
         }
     }
 
+    public void refreshTopLayout() {
+        removeAllViewsInLayout();
+
+        addViewToFrame(0);
+
+        if(mAdapter.getCount() > 1) {
+            addViewToFrame(1);
+        }
+
+        setTopView();
+    }
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);

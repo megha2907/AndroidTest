@@ -482,6 +482,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     }
 
+    @Override
+    public void notifyTopView() {
+        mSwipeFlingAdapterView.refreshTopLayout();
+    }
+
     public void animateFAB(){
 
         if(isFabOpen){

@@ -239,10 +239,9 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                 setTextColor(tvAnswerPoints, R.color.textcolorlight);
             }
 
-            if (question.getAnswerPoints() > 0){
+            if (question.getAnswerPoints() > 0) {
                 tvAnswerPoints.setText("+" + question.getAnswerPoints() + " Points");
-            }
-            else {
+            } else {
                 tvAnswerPoints.setText(question.getAnswerPoints() + " Points");
             }
 
@@ -250,10 +249,18 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         }
 
         String powerupused = question.getAnswerPowerUpId();
+
         if (powerupused.equals("null")) {
             powerupUsed.setVisibility(View.GONE);
             powerup.setVisibility(View.GONE);
-        } else {
+        } else if (powerupused.equals("player_poll")) {
+            powerupUsed.setBackgroundResource(R.drawable.powerup_audience_poll);
+            powerupUsed.setVisibility(View.VISIBLE);
+        } else if (powerupused.equals("2x")) {
+            powerupUsed.setBackgroundResource(R.drawable.powerup_icon);
+            powerupUsed.setVisibility(View.VISIBLE);
+        } else if (powerupused.equals("no_negs")) {
+            powerupUsed.setBackgroundResource(R.drawable.powerup_nonegs);
             powerupUsed.setVisibility(View.VISIBLE);
         }
 

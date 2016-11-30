@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/prediction_iv_tournament_photo"
-                android:layout_toLeftOf="@+id/swipe_card_question_value"
+                android:layout_marginRight="@dimen/dp_40"
                 android:layout_centerVertical="true">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -318,7 +318,8 @@
             android:layout_gravity="right"
             android:text="10"
             android:onClick="onClick"
-            android:paddingTop="@dimen/dp_2"
+            android:gravity="center"
+            android:paddingRight="@dimen/dp_1"
             />
 
         <android.support.design.widget.FloatingActionButton
@@ -377,7 +378,8 @@
             android:layout_gravity="right"
             android:text="10"
             android:visibility="invisible"
-            android:paddingTop="@dimen/dp_2"
+            android:gravity="center"
+            android:paddingRight="@dimen/dp_1"
             />
 
     </FrameLayout>
@@ -399,7 +401,8 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/fab_main"
             android:visibility="invisible"
-            app:elevation="0dp"
+            app:elevation="6dp"
+            app:borderWidth="0dp"
             app:backgroundTint="@color/colorMedium"
             android:src="@drawable/powerup_icon"
             android:scaleType="center"
@@ -418,8 +421,9 @@
             android:layout_marginTop="@dimen/dp_52"
             android:layout_marginRight="@dimen/dp_14"
             android:layout_gravity="right"
-            android:paddingTop="@dimen/dp_2"
-            android:text="10"
+            android:paddingRight="@dimen/dp_1"
+            android:gravity="center"
+            android:text="3"
             />
 
     </FrameLayout>
@@ -431,6 +435,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="@dimen/dp_16"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_18"
+        android:clipToPadding="false"
         >
 
     <android.support.design.widget.FloatingActionButton
@@ -439,10 +445,8 @@
         android:layout_height="@dimen/dp_48"
         android:layout_gravity="bottom|end"
         app:backgroundTint="@color/blackopacity"
+        app:borderWidth="0dp"
         app:elevation="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_18"
-        android:layout_centerVertical="true"
         android:src="@drawable/powerup_main_icon_white"
         android:scaleType="center"
         />
