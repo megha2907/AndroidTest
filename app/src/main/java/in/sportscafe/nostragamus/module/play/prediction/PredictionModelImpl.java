@@ -56,6 +56,8 @@ public class PredictionModelImpl implements PredictionModel,
 
     private int mRemainingTime;
 
+    private String sportName;
+
     private boolean mPassEnabled = true;
 
 
@@ -70,12 +72,12 @@ public class PredictionModelImpl implements PredictionModel,
     @Override
     public void saveData(Bundle bundle) {
 
-        //matchId = bundle.getInt(Constants.BundleKeys.MATCH_ID);
         mMyResult = (Match) bundle.getSerializable(BundleKeys.MATCH_LIST);
         matchId = mMyResult.getId();
-        Log.i("tournamentname",mMyResult.getTournamentName());
 
-        //populateAdapterData(mMyResult.getQuestions());
+        if(null != bundle.getString(BundleKeys.SPORT_NAME)){
+          mPredictionModelListener.changePlayCardBackground(bundle.getString(BundleKeys.SPORT_NAME));
+        }
 
         getAllQuestions();
     }
@@ -212,7 +214,7 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void setFlingCardListener(FlingCardListener flingCardListener) {
-        mPredictionAdapter.setFlingCardListener(flingCardListener);
+//        mPredictionAdapter.setFlingCardListener(flingCardListener);
     }
 
     @Override
@@ -291,7 +293,7 @@ public class PredictionModelImpl implements PredictionModel,
 
 
         mPredictionModelListener.onQuestionChanged(mPredictionAdapter.getItem(0),minitialCount);
-        mPredictionAdapter.changeCardViewBackground();
+//        mPredictionAdapter.changeCardViewBackground();
 
         // mPredictionAdapter.startTimer();
     }
@@ -366,5 +368,7 @@ public class PredictionModelImpl implements PredictionModel,
         void onSuccessAudiencePollResponse();
 
         void onNegativePowerUpApplied();
+
+        void changePlayCardBackground(String sportName);
     }
 }

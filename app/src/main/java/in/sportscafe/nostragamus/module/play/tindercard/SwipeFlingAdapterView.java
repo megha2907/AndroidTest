@@ -85,15 +85,24 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
     }
 
     public void refreshTopLayout() {
-        removeAllViewsInLayout();
+
+        boolean oneLastItem= mAdapter.getCount() == 1;
+
+        if(oneLastItem){
+            removeViewInLayout(mActiveCard);
+        }else {
+            removeAllViewsInLayout();
+        }
 
         addViewToFrame(0);
 
-        if(mAdapter.getCount() > 1) {
+        if (!oneLastItem){
             addViewToFrame(1);
         }
 
         setTopView();
+
+
     }
 
     @Override

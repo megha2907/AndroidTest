@@ -29,16 +29,8 @@ import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 
 public class PredictionAdapter extends ArrayAdapter<Question>  {
 
-    private static final int ONE_SECOND_IN_MS = 1000;
-
     private LayoutInflater mLayoutInflater;
-
     private int mInitialCount;
-    private FlingCardListener mFlingCardListener;
-    private int questionlineCount;
-    private int contextlineCount;
-
-    private List<ViewHolder> mViewHolderList = new ArrayList<>();
 
     public PredictionAdapter(Context context, int count) {
         super(context, android.R.layout.simple_list_item_1);
@@ -50,25 +42,13 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
     @Override
     public void remove(Question object) {
         super.remove(object);
-
-        if (mViewHolderList.size() > 0){
-            mViewHolderList.remove(0);
-        }
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ViewHolder viewHolder;
-        if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.inflater_swipe_card_row, parent, false);
-            viewHolder = new ViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
-
-        mViewHolderList.add(viewHolder);
-
+        convertView = mLayoutInflater.inflate(R.layout.inflater_swipe_card_row, parent, false);
+        final ViewHolder viewHolder = new ViewHolder(convertView);
+        convertView.setTag(viewHolder);
 
         Question question = getItem(position);
 
@@ -78,8 +58,6 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
                 Volley.getInstance().getImageLoader(), false);
         viewHolder.ivRightOption.setImageUrl(question.getQuestionImage2(),
                 Volley.getInstance().getImageLoader(), false);
-
-        viewHolder.view1.setTag(question);
 
         if (question.getQuestionPositivePoints() == 0) {
             viewHolder.tvquestionPositivePoints.setVisibility(View.GONE);
@@ -98,6 +76,7 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
             viewHolder.tvquestionNegativePoints.setTag(question.getQuestionNegativePoints());
             viewHolder.tvquestionNegativePoints.setVisibility(View.VISIBLE);
         }
+
 
         if(question.getPowerUpId().equalsIgnoreCase("no_negs")) {
             viewHolder.btnpowerupicon.setImageResource(R.drawable.powerup_nonegs_white);
@@ -119,10 +98,27 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
         }
 
 
+        if (mInitialCount== question.getQuestionNumber()){
+            viewHolder.cardbg.setVisibility(View.INVISIBLE);
+        }
+        else if (mInitialCount-1==question.getQuestionNumber()){
+            viewHolder.view1.setVisibility(View.VISIBLE);
+        }
+        else if (mInitialCount-2==question.getQuestionNumber()){
+            viewHolder.view1.setVisibility(View.VISIBLE);
+            viewHolder.view2.setVisibility(View.VISIBLE);
+        }
+        else {
+            viewHolder.view1.setVisibility(View.VISIBLE);
+            viewHolder.view2.setVisibility(View.VISIBLE);
+            viewHolder.view3.setVisibility(View.VISIBLE);
+        }
+
+
         viewHolder.tvQuestion.post(new Runnable() {
             @Override
             public void run() {
-                questionlineCount = viewHolder.tvQuestion.getLineCount();
+                int questionlineCount = viewHolder.tvQuestion.getLineCount();
 
                 if (questionlineCount==3){
                     viewHolder.tvContext.setMaxLines(3);
@@ -144,53 +140,31 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
 
 
 
-
         return convertView;
     }
 
-    public void changeCardViewBackground(){
-
-        Question question = (Question) mViewHolderList.get(0).view1.getTag();
-
-        if (mInitialCount== question.getQuestionNumber()){
-            mViewHolderList.get(0).cardbg.setVisibility(View.INVISIBLE);
-        }
-        else if (mInitialCount-1==question.getQuestionNumber()){
-            mViewHolderList.get(0).view1.setVisibility(View.VISIBLE);
-        }
-        else if (mInitialCount-2==question.getQuestionNumber()){
-            mViewHolderList.get(0).view1.setVisibility(View.VISIBLE);
-            mViewHolderList.get(0).view2.setVisibility(View.VISIBLE);
-        }
-        else {
-            mViewHolderList.get(0).view1.setVisibility(View.VISIBLE);
-            mViewHolderList.get(0).view2.setVisibility(View.VISIBLE);
-            mViewHolderList.get(0).view3.setVisibility(View.VISIBLE);
-        }
-
-    }
+//    public void changeCardViewBackground(){
+//
+//        Question question = getItem(0);
+//
+//    }
 
 
     public void update2xPowerUp() {
-
-        Log.i("inside","2x");
-        mViewHolderList.get(0).rlquestion.setTag(getItem(0));
-        Question question = (Question) mViewHolderList.get(0).rlquestion.getTag();
+        Question question = getItem(0);
         question.setPowerUpId("2x");
         question.setQuestionPositivePoints(2 * question.getQuestionPositivePoints());
         question.setQuestionNegativePoints(2 * question.getQuestionNegativePoints());
     }
 
     public void updateNonegsPowerUp() {
-        mViewHolderList.get(0).rlquestion.setTag(getItem(0));
-        Question question = (Question) mViewHolderList.get(0).rlquestion.getTag();
+        Question question = getItem(0);
         question.setPowerUpId("no_negs");
         question.setQuestionNegativePoints(0);
     }
 
     public void updateAudiencePollPowerUp(String answer1percentage,String answer2percentage) {
-        mViewHolderList.get(0).rlquestion.setTag(getItem(0));
-        Question question = (Question) mViewHolderList.get(0).rlquestion.getTag();
+        Question question = getItem(0);
         question.setPowerUpId("player_poll");
         question.setOption1AudPollPer(answer1percentage);
         question.setOption2AudPollPer(answer2percentage);
@@ -199,28 +173,6 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
     public Question getTopQuestion(){
         return getItem(0);
     }
-
-//    @Override
-//    public void onClick(View v) {
-//
-//        switch (v.getId()) {
-//
-//            case R.id.swipe_card_iv_left:
-//                mFlingCardListener.selectLeft();
-//                break;
-//
-//            case R.id.swipe_card_iv_right:
-//                mFlingCardListener.selectRight();
-//                break;
-//
-//
-//        }
-//    }
-
-    public void setFlingCardListener(FlingCardListener flingCardListener) {
-        mFlingCardListener = flingCardListener;
-    }
-
 
     static class ViewHolder {
 
@@ -275,8 +227,5 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
             cardViewpoints=(CardView)rootView.findViewById(R.id.points_cardview);
         }
     }
-
-
-
 
 }

@@ -52,10 +52,12 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
     private AlertDialog mAlertDialog;
     private Context mcon;
     private List<Match> mMyResultList = new ArrayList<>();
+    private String sportname;
 
-    public FeedAdapter(Context context) {
+    public FeedAdapter(Context context, String sportName) {
         super(context);
         mcon = context;
+        sportname = sportName;
     }
 
     @Override
@@ -461,6 +463,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     Match match = (Match)view.getTag();
                     Bundle mBundle = new Bundle();
                     mBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
+                    mBundle.putString(Constants.BundleKeys.SPORT_NAME,sportname);
 
                     Intent intent =  new Intent(view.getContext(), PredictionActivity.class);
                     intent.putExtras(mBundle);

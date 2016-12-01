@@ -245,7 +245,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_1"
         android:layout_below="@id/prediction_tv_contest_name"
         android:textSize="@dimen/dp_16"
         app:typeface="roboto_condensed"

@@ -95,6 +95,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
             Bundle bundle = new Bundle();
             bundle.putInt(BundleKeys.TOURNAMENT_ID, tournamentId);
             bundle.putString(BundleKeys.TOURNAMENT_NAME, tournamentInfo.getTournamentName());
+            bundle.putString(BundleKeys.SPORT_NAME, tournamentInfo.getSportsName());
 
             Intent intent =  new Intent(view.getContext(), FeedActivity.class);
             intent.putExtras(bundle);

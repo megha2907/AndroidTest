@@ -118,6 +118,7 @@ public interface Constants {
         String GROUP_ID = "group_id";
         String GROUP_NAME = "group_name";
         String SPORT_ID = "sportId";
+        String SPORT_NAME = "sportName";
         String SPORT_LIST = "sportList";
         String MATCH_LIST = "matchList";
         String FROM_PROFILE = "fromProfile";

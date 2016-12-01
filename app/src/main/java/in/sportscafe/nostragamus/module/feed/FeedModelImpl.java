@@ -35,6 +35,8 @@ public class FeedModelImpl implements FeedModel {
 
     private Integer tourId;
 
+    private String sportName;
+
     private FeedModelImpl(OnFeedModelListener listener) {
         this.mFeedModelListener = listener;
     }
@@ -47,11 +49,12 @@ public class FeedModelImpl implements FeedModel {
     public void init(Bundle bundle) {
 
          tourId = bundle.getInt(Constants.BundleKeys.TOURNAMENT_ID);
+        sportName = bundle.getString(Constants.BundleKeys.SPORT_NAME);
     }
 
     @Override
     public FeedAdapter getAdapter() {
-        return mFeedAdapter = new FeedAdapter(mFeedModelListener.getContext());
+        return mFeedAdapter = new FeedAdapter(mFeedModelListener.getContext(),sportName);
     }
 
     @Override

@@ -46,6 +46,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     private Boolean isFabOpen = false;
     private FloatingActionButton powerupMainFab,powerup2xFab,powerupAudiencePollFab,powerupNonegsFab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
+    private RelativeLayout mplayBg;
 
 
 
@@ -70,6 +71,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mtoolbar.setPadding(0,0,0,0);
         setSupportActionBar(mtoolbar);
 
+
         //POWERUPFAB ICONS
         btn2xpowerUpCount=(CustomButton)findViewById(R.id.powerup_2x_count);
         btnAudiencePollCount=(CustomButton)findViewById(R.id.powerup_audience_poll_count);
@@ -86,6 +88,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         powerup2xFab.setOnClickListener(this);
         powerupAudiencePollFab.setOnClickListener(this);
         powerupNonegsFab.setOnClickListener(this);
+
+        mplayBg=(RelativeLayout) findViewById(R.id.content);
 
         this.mPredictionPresenter = PredictionPresenterImpl.newInstance(this);
         this.mPredictionPresenter.onCreatePrediction(getIntent().getExtras());
@@ -486,6 +490,19 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     public void notifyTopView() {
         mSwipeFlingAdapterView.refreshTopLayout();
     }
+
+    @Override
+    public void changeBackgroundImage(String sportName) {
+
+        if(sportName.equalsIgnoreCase("Cricket")){
+            mplayBg.setBackgroundResource(R.drawable.play_cricket_bg);
+        }else if(sportName.equalsIgnoreCase("Badminton")){
+            mplayBg.setBackgroundResource(R.drawable.play_badminton_bg);
+        }else if(sportName.equalsIgnoreCase("Football")){
+            mplayBg.setBackgroundResource(R.drawable.play_football_bg);
+        }
+    }
+
 
     public void animateFAB(){
 
