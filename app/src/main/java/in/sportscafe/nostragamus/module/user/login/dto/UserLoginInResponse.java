@@ -6,39 +6,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by deepanshi on 11/26/16.
  */
 
-public class UserLoginInResponse {
+public class UserLoginInResponse extends JwtToken {
 
-    @JsonProperty("expiry")
-    private Integer expiry;
-
-    @JsonProperty("jwt_token")
-    private String jwtToken;
 
     @JsonProperty("new_user")
     private boolean newUser;
 
     @JsonProperty("user")
     private UserInfo userInfo;
-
-    @JsonProperty("expiry")
-    public Integer getExpiry() {
-        return expiry;
-    }
-
-    @JsonProperty("expiry")
-    public void setExpiry(Integer expiry) {
-        this.expiry = expiry;
-    }
-
-    @JsonProperty("jwt_token")
-    public String getJwtToken() {
-        return jwtToken;
-    }
-
-    @JsonProperty("jwt_token")
-    public void setJwtToken(String jwtToken) {
-        this.jwtToken = jwtToken;
-    }
 
     @JsonProperty("new_user")
     public boolean isNewUser() {

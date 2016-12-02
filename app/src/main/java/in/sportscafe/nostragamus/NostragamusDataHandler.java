@@ -15,6 +15,7 @@ import java.util.Set;
 
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
+import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
@@ -208,13 +209,18 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     }
 
 
-    //COOKIE
-    public String getCookie() {
-        return getSharedStringData(SharedKeys.COOKIE);
+    //JWT TOKEN
+    public void setJwtToken(JwtToken jwtToken) {
+        setSharedStringData(SharedKeys.ACCESS_TOKEN, jwtToken.getToken());
+        setSharedLongData(SharedKeys.TOKEN_EXPIRY, jwtToken.getExpiry());
     }
 
-    public void setCookie(String cookie) {
-        setSharedStringData(SharedKeys.COOKIE, cookie);
+    public String getAccessToken() {
+        return getSharedStringData(SharedKeys.ACCESS_TOKEN);
+    }
+
+    public Long getTokenExpiry() {
+        return getSharedLongData(SharedKeys.TOKEN_EXPIRY, 0);
     }
 
 

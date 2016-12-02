@@ -95,6 +95,7 @@ public class PredictionModelImpl implements PredictionModel,
         MyWebService.getInstance().getAllQuestions(matchId).enqueue(new NostragamusCallBack<QuestionsResponse>() {
             @Override
             public void onResponse(Call<QuestionsResponse> call, Response<QuestionsResponse> response) {
+                super.onResponse(call, response);
                 if (null == mPredictionModelListener.getContext()) {
                     return;
                 }
@@ -190,6 +191,7 @@ public class PredictionModelImpl implements PredictionModel,
         MyWebService.getInstance().getAudiencePoll(request).enqueue(new NostragamusCallBack<AudiencePollResponse>() {
             @Override
             public void onResponse(Call<AudiencePollResponse> call, Response<AudiencePollResponse> response) {
+                super.onResponse(call, response);
 
                 if (response.isSuccessful()) {
 
@@ -201,6 +203,8 @@ public class PredictionModelImpl implements PredictionModel,
                         String answer1Percentage = audiencePoll.get(0).getAnswerPercentage();
                         String answer2Percentage = audiencePoll.get(1).getAnswerPercentage();
                         mPredictionAdapter.updateAudiencePollPowerUp(answer1Percentage, answer2Percentage);
+                        mPredictionAdapter.notifyDataSetChanged();
+                        mPredictionModelListener.onNegativePowerUpApplied();
                         mPredictionModelListener.onSuccessAudiencePollResponse();
                     }
 
@@ -247,6 +251,19 @@ public class PredictionModelImpl implements PredictionModel,
         mPredictionAdapter.remove(dataObject);
         mPredictionAdapter.notifyDataSetChanged();
         mPredictionModelListener.dismissPowerUpApplied();
+
+        if (dataObject.getPowerUpId().equalsIgnoreCase("2x")){
+
+            NostragamusDataHandler.getInstance().setNumberof2xPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups() - 1);
+
+        } else if(dataObject.getPowerUpId().equalsIgnoreCase("player_poll")) {
+
+            NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() - 1);
+        }
+        else if(dataObject.getPowerUpId().equalsIgnoreCase("no_negs")){
+
+            NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups() - 1);
+        }
 
     }
 

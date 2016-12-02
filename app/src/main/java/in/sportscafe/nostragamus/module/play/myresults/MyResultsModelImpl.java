@@ -85,6 +85,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 new NostragamusCallBack<MyResultsResponse>() {
                     @Override
                     public void onResponse(Call<MyResultsResponse> call, Response<MyResultsResponse> response) {
+                        super.onResponse(call, response);
                         if (response.isSuccessful()) {
                             Context context = mResultsModelListener.getContext();
                             if (null != context) {

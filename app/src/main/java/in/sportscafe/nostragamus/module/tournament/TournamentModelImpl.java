@@ -61,8 +61,7 @@ public class TournamentModelImpl implements TournamentModel {
                     new NostragamusCallBack<TournamentsResponse>() {
                         @Override
                         public void onResponse(Call<TournamentsResponse> call, Response<TournamentsResponse> response) {
-
-
+                            super.onResponse(call, response);
 
                             if (response.isSuccessful()) {
                                 List<TournamentInfo> newTournamentInfo = response.body().getTournamentInfos();

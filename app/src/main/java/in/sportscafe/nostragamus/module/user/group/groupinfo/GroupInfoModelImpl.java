@@ -79,6 +79,7 @@ public class GroupInfoModelImpl implements GroupInfoModel {
                 new NostragamusCallBack<GroupSummaryResponse>() {
                     @Override
                     public void onResponse(Call<GroupSummaryResponse> call, Response<GroupSummaryResponse> response) {
+                        super.onResponse(call, response);
                         if(response.isSuccessful()) {
                             NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
                             GroupInfo groupInfo = response.body().getGroupInfo();

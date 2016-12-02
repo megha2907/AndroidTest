@@ -331,28 +331,20 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 animateFAB();
                 break;
             case R.id.fab_2x:
-                Log.d("click", "fab_2x");
                 if(!m2xpowerUpApplied || !mAudiencePollpowerUpApplied || !mNonegspowerUpApplied) {
                     if (NostragamusDataHandler.getInstance().getNumberof2xPowerups() > 0) {
                         m2xpowerUpApplied = true;
                         mAudiencePollpowerUpApplied = true;
                         mNonegspowerUpApplied = true;
                         mPredictionPresenter.onPowerUp("2x");
-                        NostragamusDataHandler.getInstance().setNumberof2xPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups() - 1);
-                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberof2xPowerups());
+                       // NostragamusDataHandler.getInstance().setNumberof2xPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups() - 1);
+                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberof2xPowerups()-1);
                         btn2xpowerUpCount.setText(UpdatedPowerUps);
-
                         animateFAB();
-
-//                        powerup2xFab.setClickable(false);
-//                        powerupAudiencePollFab.setClickable(false);
-//                        powerupNonegsFab.setClickable(false);
-
                     }
                 }
                 break;
             case R.id.fab_audience_poll:
-                Log.d("click", "fab_audience_poll");
                 if(!mAudiencePollpowerUpApplied || !m2xpowerUpApplied || !mNonegspowerUpApplied) {
                     if (NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() > 0) {
                         showProgressbar();
@@ -360,35 +352,24 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                         mAudiencePollpowerUpApplied = true;
                         mNonegspowerUpApplied = true;
                         mPredictionPresenter.onPowerUp("player_poll");
-                        NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() - 1);
-                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups());
+                       // NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() - 1);
+                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups()-1);
                         btnAudiencePollCount.setText(UpdatedPowerUps);
-
                         animateFAB();
-
-//                        powerup2xFab.setClickable(false);
-//                        powerupAudiencePollFab.setClickable(false);
-//                        powerupNonegsFab.setClickable(false);
                     }
                 }
                 break;
             case R.id.fab_nonegs:
-                Log.d("click", "fab_nonegs");
                 if(!mNonegspowerUpApplied || !m2xpowerUpApplied || !mAudiencePollpowerUpApplied) {
                     if (NostragamusDataHandler.getInstance().getNumberofNonegsPowerups() > 0) {
                         m2xpowerUpApplied = true;
                         mAudiencePollpowerUpApplied = true;
                         mNonegspowerUpApplied = true;
                         mPredictionPresenter.onPowerUp("no_negs");
-                        NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups() - 1);
-                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups());
+                        //NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups() - 1);
+                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups()-1);
                         btnNonegsCount.setText(UpdatedPowerUps);
-
                         animateFAB();
-
-//                        powerup2xFab.setClickable(false);
-//                        powerupAudiencePollFab.setClickable(false);
-//                        powerupNonegsFab.setClickable(false);
                     }
                 }
                 break;
@@ -396,11 +377,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
 
-
-//    @Override
-//    public void onTimeUp() {
-//
-//    }
 
     @Override
     public void dismissPowerUp() {
@@ -519,7 +495,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             btnAudiencePollCount.setVisibility(View.GONE);
             btnNonegsCount.setVisibility(View.GONE);
             isFabOpen = false;
-            Log.d("click", "close");
 
         } else {
 
@@ -535,7 +510,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             btnAudiencePollCount.setVisibility(View.VISIBLE);
             btnNonegsCount.setVisibility(View.VISIBLE);
             isFabOpen = true;
-            Log.d("click","open");
 
         }
     }

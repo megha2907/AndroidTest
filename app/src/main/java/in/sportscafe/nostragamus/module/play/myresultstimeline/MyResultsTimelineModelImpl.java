@@ -64,6 +64,7 @@ public class MyResultsTimelineModelImpl implements MyResultsTimelineModel {
         MyWebService.getInstance().getMatchResults(true,true).enqueue(new NostragamusCallBack<MatchesResponse>() {
             @Override
             public void onResponse(Call<MatchesResponse> call, Response<MatchesResponse> response) {
+                super.onResponse(call, response);
                 if(null == mMyResultsTimelineModelListener.getContext()) {
                     return;
                 }

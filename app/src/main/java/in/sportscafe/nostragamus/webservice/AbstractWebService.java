@@ -59,9 +59,9 @@ public abstract class AbstractWebService<T> {
             public Response intercept(Chain chain) throws IOException {
                 Request.Builder builder = chain.request().newBuilder();
 
-                String cookie = NostragamusDataHandler.getInstance().getCookie();
-                if(null != cookie) {
-                    builder.addHeader("Authorization", cookie);
+                String token = NostragamusDataHandler.getInstance().getAccessToken();
+                if(null != token) {
+                    builder.addHeader("Authorization", token);
                 }
 
                 return chain.proceed(builder.build());

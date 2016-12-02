@@ -45,6 +45,7 @@ public class ProfileModelImpl implements ProfileModel {
                     new NostragamusCallBack<UserInfoResponse>() {
                         @Override
                         public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
+                            super.onResponse(call, response);
                             if (response.isSuccessful()) {
                                 UserInfo updatedUserInfo = response.body().getUserInfo();
 
@@ -68,6 +69,7 @@ public class ProfileModelImpl implements ProfileModel {
                 new NostragamusCallBack<LbSummaryResponse>() {
                     @Override
                     public void onResponse(Call<LbSummaryResponse> call, Response<LbSummaryResponse> response) {
+                        super.onResponse(call, response);
                         if(null == mProfileModelListener.getContext()) {
                             return;
                         }

@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.webservice;
 
+import java.lang.ref.Reference;
+
 import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
@@ -24,6 +26,7 @@ import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
+import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupsDetailResponse;
@@ -171,9 +174,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<AllGroupsResponse> getAllGroupsRequest() {
-
         return mNostragamusService.getAllGroups(NostragamusDataHandler.getInstance().getUserId());
-
     }
 
     public Call<Result> getUpdateGroupPhotoRequest(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
@@ -188,4 +189,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getAudiencePoll(request);
     }
 
+    public Call<JwtToken> getRefreshTokenRequest() {
+        return mNostragamusService.refreshAccessToken();
+    }
 }

@@ -34,6 +34,7 @@ public class AppSettingsModelImpl implements AppSettingsModel {
                 new NostragamusCallBack<AppSettingsResponse>() {
                     @Override
                     public void onResponse(Call<AppSettingsResponse> call, Response<AppSettingsResponse> response) {
+                        super.onResponse(call, response);
                         handleAppSettingsResponse(response);
                     }
                 }

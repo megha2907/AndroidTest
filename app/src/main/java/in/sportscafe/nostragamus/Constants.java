@@ -53,6 +53,8 @@ public interface Constants {
         String FORCE_UPDATE_MESSAGE = "forceUpdateMessage";
         String NORMAL_UPDATE_SHOWN_TIME = "normalUpdateShownTime";
         String INITIAL_FORM_SHOWN = "initialFormShown";
+        String ACCESS_TOKEN = "accessToken";
+        String TOKEN_EXPIRY = "tokenExpiry";
     }
 
     interface Alerts {

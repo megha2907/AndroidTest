@@ -71,6 +71,8 @@ public class FeedModelImpl implements FeedModel {
         MyWebService.getInstance().getMatches(tourId).enqueue(new NostragamusCallBack<MatchesResponse>() {
             @Override
             public void onResponse(Call<MatchesResponse> call, Response<MatchesResponse> response) {
+                super.onResponse(call, response);
+
                 if(null == mFeedModelListener.getContext()) {
                     return;
                 }

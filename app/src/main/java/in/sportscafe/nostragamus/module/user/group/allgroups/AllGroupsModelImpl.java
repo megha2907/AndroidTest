@@ -45,6 +45,7 @@ public class AllGroupsModelImpl implements AllGroupsModel{
                 new NostragamusCallBack<AllGroupsResponse>() {
                     @Override
                     public void onResponse(Call<AllGroupsResponse> call, Response<AllGroupsResponse> response) {
+                        super.onResponse(call, response);
                         if(response.isSuccessful()) {
 
                             List<AllGroups> newAllGroups = response.body().getAllGroups();
