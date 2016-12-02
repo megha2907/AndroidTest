@@ -84,4 +84,9 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     public Context getContext() {
         return mResultsView.getContext();
     }
+
+    @Override
+    public void gotoResultsTimeline() {
+        mResultsView.goBack();
+    }
 }

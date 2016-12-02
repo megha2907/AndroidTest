@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.squareup.picasso.Picasso;
 
@@ -56,6 +61,11 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     private Toolbar mtoolbar;
 
     private Bundle mBundle;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +91,9 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         this.mGroupInfoPresenter.onCreateGroupInfo(getIntent().getExtras());
 
         mBundle = getIntent().getExtras();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -141,7 +154,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
         mEtMembersCount = (TextView) findViewById(R.id.group_info_tv_edit_members);
         mEtMembersCount.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow_group_info, 0);
-        View greyline = (View)findViewById(R.id.group_info_view);
+        View greyline = (View) findViewById(R.id.group_info_view);
         greyline.setVisibility(View.VISIBLE);
 
 
@@ -166,7 +179,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     @Override
     public void showDeleteGroup() {
-       // findViewById(R.id.group_info_btn_delete_group).setVisibility(View.VISIBLE);
+        // findViewById(R.id.group_info_btn_delete_group).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -236,7 +249,8 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         );
     }
 
-    private void navigateToAllGroups() {
+    @Override
+    public void navigateToAllGroups() {
         Intent intent = new Intent(this, AllGroupsActivity.class);
         startActivity(intent);
         finish();
@@ -258,9 +272,45 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
                 navigatetoEditGroupInfoActivity();
                 break;
             case R.id.leave_group_btn:
-                 mGroupInfoPresenter.onLeaveGroup();
+                mGroupInfoPresenter.onLeaveGroup();
                 break;
         }
         return true;
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("GroupInfo Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }

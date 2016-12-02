@@ -71,6 +71,7 @@ public class EditProfileModelImpl implements EditProfileModel {
         MyWebService.getInstance().getUpdateUserProfilePhotoRequest(file,filepath,filename).enqueue(new NostragamusCallBack<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
+                super.onResponse(call, response);
 
                 if (response.isSuccessful()) {
                     mUserInfo.setPhoto(response.body().getResult());
@@ -94,6 +95,7 @@ public class EditProfileModelImpl implements EditProfileModel {
                 new NostragamusCallBack<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        super.onResponse(call, response);
                         if(response.isSuccessful()) {
 
                             if (response.body().getMessage().equals("user_nick conflict"))

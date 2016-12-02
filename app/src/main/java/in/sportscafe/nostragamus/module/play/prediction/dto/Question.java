@@ -68,9 +68,13 @@ public class Question implements Serializable {
     private int questionNumber;
 
     @JsonIgnore
-    private String powerUpId;
+    private String powerUpId = "null";
 
+    @JsonIgnore
+    private String option1AudPollPer;
 
+    @JsonIgnore
+    private String option2AudPollPer;
 
     /**
      * @return The questionId
@@ -328,6 +332,27 @@ public class Question implements Serializable {
     public void setQuestionNegativePoints(Integer questionNegativePoints) {
         this.questionNegativePoints = questionNegativePoints;
     }
+
+    @JsonIgnore
+    public String getOption1AudPollPer() {
+        return option1AudPollPer;
+    }
+
+    @JsonIgnore
+    public void setOption1AudPollPer(String option1AudPollPer) {
+        this.option1AudPollPer = option1AudPollPer;
+    }
+
+    @JsonIgnore
+    public String getOption2AudPollPer() {
+        return option2AudPollPer;
+    }
+
+    @JsonIgnore
+    public void setOption2AudPollPer(String option2AudPollPer) {
+        this.option2AudPollPer = option2AudPollPer;
+    }
+
 
 
 }

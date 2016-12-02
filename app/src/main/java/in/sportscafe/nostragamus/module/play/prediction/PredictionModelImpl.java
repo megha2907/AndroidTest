@@ -56,6 +56,8 @@ public class PredictionModelImpl implements PredictionModel,
 
     private int mRemainingTime;
 
+    private String sportName;
+
     private boolean mPassEnabled = true;
 
 
@@ -70,12 +72,12 @@ public class PredictionModelImpl implements PredictionModel,
     @Override
     public void saveData(Bundle bundle) {
 
-        //matchId = bundle.getInt(Constants.BundleKeys.MATCH_ID);
         mMyResult = (Match) bundle.getSerializable(BundleKeys.MATCH_LIST);
         matchId = mMyResult.getId();
-        Log.i("tournamentname",mMyResult.getTournamentName());
 
-        //populateAdapterData(mMyResult.getQuestions());
+        if(null != bundle.getString(BundleKeys.SPORT_NAME)){
+          mPredictionModelListener.changePlayCardBackground(bundle.getString(BundleKeys.SPORT_NAME));
+        }
 
         getAllQuestions();
     }
@@ -93,6 +95,7 @@ public class PredictionModelImpl implements PredictionModel,
         MyWebService.getInstance().getAllQuestions(matchId).enqueue(new NostragamusCallBack<QuestionsResponse>() {
             @Override
             public void onResponse(Call<QuestionsResponse> call, Response<QuestionsResponse> response) {
+                super.onResponse(call, response);
                 if (null == mPredictionModelListener.getContext()) {
                     return;
                 }
@@ -180,6 +183,7 @@ public class PredictionModelImpl implements PredictionModel,
             callAudiencePollApi(audiencePollRequest);
         }
         mPredictionAdapter.notifyDataSetChanged();
+        mPredictionModelListener.onNegativePowerUpApplied();
     }
 
     private void callAudiencePollApi(AudiencePollRequest request) {
@@ -187,6 +191,7 @@ public class PredictionModelImpl implements PredictionModel,
         MyWebService.getInstance().getAudiencePoll(request).enqueue(new NostragamusCallBack<AudiencePollResponse>() {
             @Override
             public void onResponse(Call<AudiencePollResponse> call, Response<AudiencePollResponse> response) {
+                super.onResponse(call, response);
 
                 if (response.isSuccessful()) {
 
@@ -198,6 +203,8 @@ public class PredictionModelImpl implements PredictionModel,
                         String answer1Percentage = audiencePoll.get(0).getAnswerPercentage();
                         String answer2Percentage = audiencePoll.get(1).getAnswerPercentage();
                         mPredictionAdapter.updateAudiencePollPowerUp(answer1Percentage, answer2Percentage);
+                        mPredictionAdapter.notifyDataSetChanged();
+                        mPredictionModelListener.onNegativePowerUpApplied();
                         mPredictionModelListener.onSuccessAudiencePollResponse();
                     }
 
@@ -211,7 +218,7 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void setFlingCardListener(FlingCardListener flingCardListener) {
-        mPredictionAdapter.setFlingCardListener(flingCardListener);
+//        mPredictionAdapter.setFlingCardListener(flingCardListener);
     }
 
     @Override
@@ -244,6 +251,19 @@ public class PredictionModelImpl implements PredictionModel,
         mPredictionAdapter.remove(dataObject);
         mPredictionAdapter.notifyDataSetChanged();
         mPredictionModelListener.dismissPowerUpApplied();
+
+        if (dataObject.getPowerUpId().equalsIgnoreCase("2x")){
+
+            NostragamusDataHandler.getInstance().setNumberof2xPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups() - 1);
+
+        } else if(dataObject.getPowerUpId().equalsIgnoreCase("player_poll")) {
+
+            NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() - 1);
+        }
+        else if(dataObject.getPowerUpId().equalsIgnoreCase("no_negs")){
+
+            NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups() - 1);
+        }
 
     }
 
@@ -287,10 +307,10 @@ public class PredictionModelImpl implements PredictionModel,
         } else if(mTotalCount == 0) {
             mTotalCount = mPredictionAdapter.getCount();
         }
-        ;
+
 
         mPredictionModelListener.onQuestionChanged(mPredictionAdapter.getItem(0),minitialCount);
-        mPredictionAdapter.changeCardViewBackground();
+//        mPredictionAdapter.changeCardViewBackground();
 
         // mPredictionAdapter.startTimer();
     }
@@ -363,5 +383,9 @@ public class PredictionModelImpl implements PredictionModel,
         void onFailedAudiencePollResponse(String message);
 
         void onSuccessAudiencePollResponse();
+
+        void onNegativePowerUpApplied();
+
+        void changePlayCardBackground(String sportName);
     }
 }

@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
+import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupsDetailResponse;
@@ -141,6 +142,9 @@ public interface NostragamusService {
     @GET("v1/setting/getSettingsBody")
     Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId);
 
-    @POST("users/poll")
+    @POST("v1/game/users/poll")
     Call<AudiencePollResponse> getAudiencePoll(@Body AudiencePollRequest request);
+
+    @GET("v2/user/refreshToken")
+    Call<JwtToken> refreshAccessToken();
 }

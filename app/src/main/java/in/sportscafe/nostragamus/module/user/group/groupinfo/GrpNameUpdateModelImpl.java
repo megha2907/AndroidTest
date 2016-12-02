@@ -44,6 +44,7 @@ public class GrpNameUpdateModelImpl {
                 new NostragamusCallBack<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        super.onResponse(call, response);
                         if (response.isSuccessful()) {
                             handleGrpNameUpdateResponse(name);
                         } else {

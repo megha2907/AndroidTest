@@ -32,4 +32,6 @@ public interface GroupInfoView extends View {
     void setSuccessResult();
 
     void goBackWithSuccessResult();
+
+    void navigateToAllGroups();
 }

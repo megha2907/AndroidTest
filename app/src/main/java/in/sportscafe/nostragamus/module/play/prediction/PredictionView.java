@@ -50,4 +50,8 @@ public interface PredictionView extends InAppView {
     void setNumberofCards(int itemsInAdapter, int initialCount);
 
     void setNumberofPowerups(int numberof2xPowerups, int numberofAudiencePollPowerups, int numberofNonegsPowerups);
+
+    void notifyTopView();
+
+    void changeBackgroundImage(String sportName);
 }

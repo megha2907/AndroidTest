@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -26,13 +27,17 @@ import com.moengage.push.PushManager;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.crash.NostragamusUncaughtExceptionHandler;
+import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.notifications.NotificationCustom;
 import in.sportscafe.nostragamus.module.notifications.NotificationInboxAdapter;
 import in.sportscafe.nostragamus.module.offline.PredictionDataHandler;
+import in.sportscafe.nostragamus.module.settings.app.AppSettingsModelImpl;
+import in.sportscafe.nostragamus.module.user.login.RefreshTokenModelImpl;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import io.branch.referral.Branch;
 import io.fabric.sdk.android.Fabric;
@@ -49,6 +54,8 @@ public class Nostragamus extends Application {
     public static Nostragamus getInstance() {
         return sNostragamus;
     }
+
+    private static final long ONE_HOUR_IN_MILLIS = 60 * 60 * 1000;
 
     @Override
     public void onCreate() {
@@ -196,6 +203,36 @@ public class Nostragamus extends Application {
         NostragamusDataHandler.getInstance().clearAll(); // clear all shared preference data
 
         Volley.getInstance().invalidateAll();
+    }
+
+    /**
+     * Periodic Api hits to get the updated data's
+     */
+
+    public void startPeriodJobs() {
+
+        Long expiryTimeInMs = NostragamusDataHandler.getInstance().getTokenExpiry();
+        if(expiryTimeInMs > 0) {
+            if(Calendar.getInstance().getTimeInMillis() >= expiryTimeInMs - ONE_HOUR_IN_MILLIS) {
+                RefreshTokenModelImpl.newInstance().refreshToken();
+            }
+        }
+
+        // Getting app settings
+        AppSettingsModelImpl.newInstance().getAppSettings();
+    }
+
+    public void logout() {
+            NostragamusDataHandler.getInstance().clearAll();
+            navigateToLogIn();
+            NostragamusAnalytics.getInstance().trackLogOut();
+            MoEHelper.getInstance(getApplicationContext()).logoutUser();
+        }
+
+    private void navigateToLogIn() {
+        Intent intent = new Intent(getApplicationContext(), GetStartActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 }

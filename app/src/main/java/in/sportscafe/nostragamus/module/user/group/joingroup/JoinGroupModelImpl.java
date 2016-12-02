@@ -71,6 +71,7 @@ public class JoinGroupModelImpl implements JoinGroupModel {
                 new NostragamusCallBack<JoinGroupResponse>() {
                     @Override
                     public void onResponse(Call<JoinGroupResponse> call, Response<JoinGroupResponse> response) {
+                        super.onResponse(call, response);
                         if(response.isSuccessful()) {
 
                             JoinGroup joinGroup = response.body().getJoinGroup();

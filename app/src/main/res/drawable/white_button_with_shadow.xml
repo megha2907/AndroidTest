@@ -5,12 +5,14 @@
             <!-- SHADOW -->
             <item>
                 <shape>
-                    <solid android:color="@color/blackopacity"/>
+                    <solid android:color="#44000000"/>
                     <corners android:radius="@dimen/dp_2"/>
                 </shape>
             </item>
             <!-- BUTTON -->
-            <item android:bottom="@dimen/dp_1">
+            <item
+
+                android:bottom="@dimen/dp_5">
                 <shape>
                     <padding android:bottom="@dimen/dp_5"/>
                     <gradient

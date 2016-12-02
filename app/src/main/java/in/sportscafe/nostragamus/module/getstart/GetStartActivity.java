@@ -33,7 +33,7 @@ public class GetStartActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_getstarted);
+       //setContentView(R.layout.activity_getstarted);
 
         if (NostragamusDataHandler.getInstance().isInitialFeedbackFormShown()) {
             handleGetStart();
@@ -59,18 +59,21 @@ public class GetStartActivity extends Activity {
                 return;
             }
         }
+        else {
+            navigateToLogin();
+        }
 
         getUpdatedSports();
 
-        findViewById(R.id.activity_getstarted_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navigateToLogin();
-//                NostragamusDataHandler.getInstance().setUserId("1");
-//                                autoSaveAllSports();
-//                                navigateToHome();
-            }
-        });
+//        findViewById(R.id.activity_getstarted_btn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                navigateToLogin();
+////                NostragamusDataHandler.getInstance().setUserId("1");
+////                                autoSaveAllSports();
+////                                navigateToHome();
+//            }
+//        });
     }
 
     private void navigateToForm() {

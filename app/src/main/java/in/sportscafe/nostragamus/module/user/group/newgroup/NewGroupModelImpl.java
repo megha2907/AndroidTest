@@ -100,7 +100,7 @@ public class NewGroupModelImpl implements NewGroupModel {
         MyWebService.getInstance().getUpdateGroupPhotoRequest(file,filepath,filename).enqueue(new NostragamusCallBack<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-
+                super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     mgroupPhoto = response.body().getResult();
                     mNewGroupModelListener.onPhotoUpdate(mgroupPhoto);
@@ -119,6 +119,7 @@ public class NewGroupModelImpl implements NewGroupModel {
                     new NostragamusCallBack<TournamentFeedResponse>() {
                         @Override
                         public void onResponse(Call<TournamentFeedResponse> call, Response<TournamentFeedResponse> response) {
+                            super.onResponse(call, response);
                             if(response.isSuccessful()) {
                                 List<TournamentFeedInfo> newTournamentInfo = response.body().getTournamentInfos();
 
@@ -154,6 +155,7 @@ public class NewGroupModelImpl implements NewGroupModel {
                 new NostragamusCallBack<NewGroupResponse>() {
                     @Override
                     public void onResponse(Call<NewGroupResponse> call, Response<NewGroupResponse> response) {
+                        super.onResponse(call, response);
                         if(response.isSuccessful()) {
                             NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
 

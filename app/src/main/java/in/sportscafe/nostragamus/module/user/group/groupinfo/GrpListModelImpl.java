@@ -40,6 +40,7 @@ public class GrpListModelImpl {
                 new NostragamusCallBack<GroupsDetailResponse>() {
             @Override
             public void onResponse(Call<GroupsDetailResponse> call, Response<GroupsDetailResponse> response) {
+                super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     List<GroupInfo> grpInfoList = response.body().getGroupsDetail();
 

@@ -89,6 +89,7 @@ public class PointsModelImpl implements PointsModel {
         ).enqueue(new NostragamusCallBack<LeaderBoardResponse>() {
             @Override
             public void onResponse(Call<LeaderBoardResponse> call, Response<LeaderBoardResponse> response) {
+                super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     List<LeaderBoard> leaderBoardList = response.body().getLeaderBoardList();
                     if (null == leaderBoardList || leaderBoardList.isEmpty()) {

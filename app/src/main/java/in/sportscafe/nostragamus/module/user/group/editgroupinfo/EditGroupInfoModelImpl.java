@@ -97,6 +97,7 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
         MyWebService.getInstance().getUpdateGroupPhotoRequest(file,filepath,filename).enqueue(new NostragamusCallBack<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
+                super.onResponse(call, response);
 
                 if (response.isSuccessful()) {
                     mGroupInfo.setPhoto(response.body().getResult());
@@ -151,6 +152,7 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
                 new NostragamusCallBack<GroupSummaryResponse>() {
                     @Override
                     public void onResponse(Call<GroupSummaryResponse> call, Response<GroupSummaryResponse> response) {
+                        super.onResponse(call, response);
                         if(response.isSuccessful()) {
 
                             GroupInfo groupInfo = response.body().getGroupInfo();

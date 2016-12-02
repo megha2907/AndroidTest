@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.webservice;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import okhttp3.MediaType;
 import okhttp3.Protocol;
 import okhttp3.Request;
@@ -14,6 +15,14 @@ import retrofit2.Response;
  * Created by Jeeva on 14/7/16.
  */
 public abstract class NostragamusCallBack<T> implements Callback<T> {
+
+    @Override
+    public void onResponse(Call<T> call, Response<T> response) {
+        // checking if it not authorized
+        if(response.code() == 401) {
+            Nostragamus.getInstance().logout();
+        }
+    }
 
     @Override
     public final void onFailure(Call<T> call, Throwable t) {

@@ -53,10 +53,14 @@ public interface Constants {
         String FORCE_UPDATE_MESSAGE = "forceUpdateMessage";
         String NORMAL_UPDATE_SHOWN_TIME = "normalUpdateShownTime";
         String INITIAL_FORM_SHOWN = "initialFormShown";
+        String ACCESS_TOKEN = "accessToken";
+        String TOKEN_EXPIRY = "tokenExpiry";
     }
 
     interface Alerts {
 //        String NO_NETWORK_CONNECTION = "No internet connection available";
+        String GROUP_INFO_ERROR = "There was a problem retrieving the Group Information.";
+        String RESULTS_INFO_ERROR = "There was a problem retrieving the Results Information.";
         String NO_NETWORK_CONNECTION = "Check your internet connection and try again";
         String NO_QUESTIONS = "No Questions Found";
         String NO_TOURNAMENTS = "No Tournaments , Please choose any other sport.";
@@ -116,6 +120,7 @@ public interface Constants {
         String GROUP_ID = "group_id";
         String GROUP_NAME = "group_name";
         String SPORT_ID = "sportId";
+        String SPORT_NAME = "sportName";
         String SPORT_LIST = "sportList";
         String MATCH_LIST = "matchList";
         String FROM_PROFILE = "fromProfile";

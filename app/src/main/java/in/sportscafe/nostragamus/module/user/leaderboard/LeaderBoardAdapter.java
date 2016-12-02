@@ -79,6 +79,12 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             holder.mViewUserLine.setVisibility(View.VISIBLE);
 
         }
+        else {
+            holder.mTvName.setTextColor(ContextCompat.getColor(mcontext, R.color.white));
+            holder.mTvPoints.setTextColor(ContextCompat.getColor(mcontext, R.color.yellowcolor));
+            holder.mTvPlayed.setTextColor(ContextCompat.getColor(mcontext, R.color.white));
+            holder.mViewUserLine.setVisibility(View.GONE);
+        }
 
     }
 

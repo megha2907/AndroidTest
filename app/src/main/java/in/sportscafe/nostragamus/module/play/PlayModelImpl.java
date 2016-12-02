@@ -57,6 +57,7 @@ public class PlayModelImpl implements PlayModel {
         MyWebService.getInstance().getMatches(tourId).enqueue(new NostragamusCallBack<MatchesResponse>() {
             @Override
             public void onResponse(Call<MatchesResponse> call, Response<MatchesResponse> response) {
+                super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     List<Match> matchList = response.body().getMatches();
 
@@ -86,6 +87,7 @@ public class PlayModelImpl implements PlayModel {
         MyWebService.getInstance().getAllQuestions(matchId).enqueue(new NostragamusCallBack<QuestionsResponse>() {
             @Override
             public void onResponse(Call<QuestionsResponse> call, Response<QuestionsResponse> response) {
+                super.onResponse(call, response);
                 if (null == mPlayModelListener.getContext()) {
                     return;
                 }

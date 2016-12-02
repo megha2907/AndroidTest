@@ -37,6 +37,7 @@ public class LeaderBoardSummaryModelImpl implements LeaderBoardSummaryModel {
                 new NostragamusCallBack<LbSummaryResponse>() {
                     @Override
                     public void onResponse(Call<LbSummaryResponse> call, Response<LbSummaryResponse> response) {
+                        super.onResponse(call, response);
                         if(null == onLeaderBoardModelListener.getContext()) {
                             return;
                         }

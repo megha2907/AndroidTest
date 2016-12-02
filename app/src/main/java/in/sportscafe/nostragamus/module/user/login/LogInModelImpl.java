@@ -166,7 +166,7 @@ public class LogInModelImpl implements LogInModel {
 
         nostragamusDataHandler.setLoggedInUser(true);
         nostragamusDataHandler.setUserId(userInfo.getId().toString());
-        nostragamusDataHandler.setCookie(userLoginInResponse.getJwtToken());
+        nostragamusDataHandler.setJwtToken(userLoginInResponse);
         nostragamusDataHandler.setNumberof2xPowerups(userInfo.getPowerUps().get("2x"));
         nostragamusDataHandler.setNumberofNonegsPowerups(userInfo.getPowerUps().get("no_negs"));
         nostragamusDataHandler.setNumberofAudiencePollPowerups(userInfo.getPowerUps().get("player_poll"));

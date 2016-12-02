@@ -72,8 +72,6 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             return;
         }
 
-        Log.i("cookie",NostragamusDataHandler.getInstance().getCookie());
-
         getUserInfoFromServer();
         mHomeButton=(ImageView)findViewById(R.id.home_ibtn_feed);
         mProfileButton=(ImageView)findViewById(R.id.home_ibtn_profile);
@@ -269,6 +267,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                         @Override
                         public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
                             if (response.isSuccessful()) {
+                                super.onResponse(call, response);
                                 UserInfo updatedUserInfo = response.body().getUserInfo();
 
                                 if (null != updatedUserInfo) {
@@ -295,9 +294,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(Activity.RESULT_OK == resultCode) {
-            Log.i("inside","resultCode");
             if(CODE_PROFILE_ACTIVITY == requestCode) {
-                Log.i("inside","profile");
                 loadFragment(new ProfileFragment());
             }
         }
