@@ -3,15 +3,12 @@ package in.sportscafe.nostragamus.module.getstart;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.NetworkOnMainThreadException;
 import android.support.annotation.Nullable;
-import android.view.View;
 
 import java.util.Arrays;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.feedback.GoogleFormActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -35,11 +32,11 @@ public class GetStartActivity extends Activity {
         super.onCreate(savedInstanceState);
        //setContentView(R.layout.activity_getstarted);
 
-        if (NostragamusDataHandler.getInstance().isInitialFeedbackFormShown()) {
+        /*if (NostragamusDataHandler.getInstance().isInitialFeedbackFormShown()) {*/
             handleGetStart();
-        } else {
+        /*} else {
             navigateToForm();
-        }
+        }*/
     }
 
     private void handleGetStart() {
