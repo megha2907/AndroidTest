@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.user.referral;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -22,7 +23,7 @@ import io.branch.referral.util.LinkProperties;
  * Created by deepanshi on 12/3/16.
  */
 
-public class ReferralActivity extends NostragamusActivity implements
+public class ReferralActivity extends AppCompatActivity implements
         View.OnClickListener {
 
 
@@ -50,7 +51,7 @@ public class ReferralActivity extends NostragamusActivity implements
         BranchUniversalObject buo = new BranchUniversalObject()
                 .setTitle("Refer a Friend")
                 .setContentDescription(NostragamusDataHandler.getInstance().getUserInfo().getUserName()+ " just invited you to play Nostragamus (beta), the coolest way to predict the latest happenings in the world of sports!" )
-                .setContentImageUrl("https://s-media-cache-ak0.pinimg.com/originals/da/45/24/da452441898ff6863ada4984b27bcbdc.jpg")
+                .setContentImageUrl("https://cdn-images.spcafe.in/img/es3/screact/game-app/game-logo.png")
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(Constants.BundleKeys.USER_ID, NostragamusDataHandler.getInstance().getUserId());
 
@@ -60,12 +61,12 @@ public class ReferralActivity extends NostragamusActivity implements
                 .setFeature("inviteApp")
                 .addControlParameter("$android_deeplink_path", "app/invite/");
 
-        buo.generateShortUrl(getContext(), linkProperties,
+        buo.generateShortUrl(this, linkProperties,
                 new Branch.BranchLinkCreateListener() {
                     @Override
                     public void onLinkCreate(String url, BranchError error) {
                         if(null == error) {
-                            AppSnippet.doGeneralShare(getContext(), url);
+                            AppSnippet.doGeneralShare(getApplicationContext(), url);
                         } else {
                             ExceptionTracker.track(error.getMessage());
                         }
