@@ -143,6 +143,13 @@ public class LogInModelImpl implements LogInModel {
         userProfile.setEmails(email);
         userProfile.setPhotos(photo);
 
+        if(null == NostragamusDataHandler.getInstance().getReferralUserId()){
+            userProfile.setUserReferralId("");
+        }else {
+            userProfile.setUserReferralId(NostragamusDataHandler.getInstance().getReferralUserId());
+        }
+
+
         logInRequest.setUserProfile(userProfile);
 
         MyWebService.getInstance().getLogInRequest(logInRequest).enqueue(

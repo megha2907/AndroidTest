@@ -47,9 +47,11 @@ public class SplashActivity extends Activity {
                     if (null != path) {
                         if (path.equalsIgnoreCase("group/invite/")) {
                             if(NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size() > 0) {
+                                NostragamusDataHandler.getInstance().setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
                                 navigateToJoinGroup(metadata.get(BundleKeys.GROUP_CODE));
                                 return;
                             } else if(path.equalsIgnoreCase("app/invite/")){
+                                NostragamusDataHandler.getInstance().setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
                                 navigateToGetStarted();
                             }
                             else {
