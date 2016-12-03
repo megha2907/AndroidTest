@@ -12,8 +12,6 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
@@ -53,7 +51,7 @@ public class ReferralActivity extends AppCompatActivity implements
                 .setContentDescription(NostragamusDataHandler.getInstance().getUserInfo().getUserName()+ " just invited you to play Nostragamus (beta), the coolest way to predict the latest happenings in the world of sports!" )
                 .setContentImageUrl("https://cdn-images.spcafe.in/img/es3/screact/game-app/game-logo.png")
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
-                .addContentMetadata(Constants.BundleKeys.USER_ID, NostragamusDataHandler.getInstance().getUserId());
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId());
 
 
         LinkProperties linkProperties = new LinkProperties()

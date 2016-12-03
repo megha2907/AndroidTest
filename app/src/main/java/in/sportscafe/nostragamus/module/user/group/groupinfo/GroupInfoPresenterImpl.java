@@ -80,7 +80,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode())
                 .addContentMetadata(BundleKeys.GROUP_NAME, groupInfo.getName())
-                .addContentMetadata(BundleKeys.USER_ID, NostragamusDataHandler.getInstance().getUserId());
+                .addContentMetadata(BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId());
 
 
         LinkProperties linkProperties = new LinkProperties()
