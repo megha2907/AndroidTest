@@ -114,7 +114,7 @@
                             android:layout_marginRight="@dimen/dp_32"
                             android:alpha="0.7"
                             android:gravity="center"
-                            android:text="Jeet Raval’s opening batting has helped NZ thwart art Pak's bowling in perfect conditions for swing.NZhhhhhvghvghvvhvSAAADASDhh thwart Pak's bowling in perfect conditions.."
+                            android:text=" swing.NZhhhhhvghvghvvhvdasdsadasdddadsdsdaddadadadaddaddasdasdasdasdasdasdasdasdsadsdadasdasdasdadadasdasdasdsadSAAADASDhh thwart Pak's bowling in perfect conditions.."
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/dp_15"
                             app:typeface="roboto_condensed" />
@@ -158,8 +158,9 @@
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_160"
+                            android:layout_height="@dimen/dp_165"
                             android:layout_centerHorizontal="true"
+                            android:layout_alignParentBottom="true"
                             >
 
                             <ImageButton
@@ -168,7 +169,7 @@
                                 android:layout_height="@dimen/dp_40"
                                 android:background="@drawable/powerups_count_bg"
                                 android:textColor="@color/black"
-                                android:visibility="invisible"
+                                android:visibility="visible"
                                 />
 
                         </RelativeLayout>

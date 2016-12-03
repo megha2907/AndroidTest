@@ -9,6 +9,7 @@ import com.jeeva.android.ExceptionTracker;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
@@ -75,10 +76,12 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
         BranchUniversalObject buo = new BranchUniversalObject()
                 .setTitle("Group Invitation")
                 .setContentDescription("Click this link, If you want to join in my &quot;" + groupInfo.getName() + "&quot; group." )
-                .setContentImageUrl("https://s-media-cache-ak0.pinimg.com/originals/da/45/24/da452441898ff6863ada4984b27bcbdc.jpg")
+                .setContentImageUrl("https://cdn-images.spcafe.in/img/es3/screact/game-app/game-logo.png")
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode())
-                .addContentMetadata(BundleKeys.GROUP_NAME, groupInfo.getName());
+                .addContentMetadata(BundleKeys.GROUP_NAME, groupInfo.getName())
+                .addContentMetadata(BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId());
+
 
         LinkProperties linkProperties = new LinkProperties()
                 .addTag("inviteGroup")

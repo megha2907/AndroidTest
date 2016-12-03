@@ -22,6 +22,7 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.WebViewActivity;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
+import in.sportscafe.nostragamus.module.user.referral.ReferralActivity;
 
 /**
  * Created by deepanshi on 31/8/16.
@@ -32,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private static final int EDIT_PROFILE_CODE = 35;
 
-    private String[] account = {"Edit Profile", "Logout"};
+    private String[] account = {"Edit Profile", "Logout" , "Refer a Friend"};
     private String[] support = {"Report a Problem"};
     private String[] about = {"About Sportscafe" , "Terms of Service", "Privacy Policy"};
 
@@ -70,6 +71,9 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case 1:
                         onClickLogout();
+                        break;
+                    case 2:
+                        navigateToReferFriend();
                         break;
                 }
 
@@ -111,6 +115,12 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void navigateToReferFriend() {
+
+        Intent intent=new Intent(this,ReferralActivity.class);
+        startActivity(intent);
     }
 
     private void navigateToWebView(String url, String heading) {
