@@ -79,6 +79,11 @@
         </activity>
 
         <activity
+            android:name="in.sportscafe.nostragamus.module.user.referral.ReferralActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name="in.sportscafe.nostragamus.module.user.login.LogInActivity"
             android:screenOrientation="portrait" />
 

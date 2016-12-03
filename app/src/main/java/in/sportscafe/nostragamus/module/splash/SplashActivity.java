@@ -49,7 +49,10 @@ public class SplashActivity extends Activity {
                             if(NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size() > 0) {
                                 navigateToJoinGroup(metadata.get(BundleKeys.GROUP_CODE));
                                 return;
-                            } else {
+                            } else if(path.equalsIgnoreCase("app/invite/")){
+                                navigateToGetStarted();
+                            }
+                            else {
                                 NostragamusDataHandler.getInstance().setInstallGroupCode(metadata.get(BundleKeys.GROUP_CODE));
                                 NostragamusDataHandler.getInstance().setInstallGroupName(metadata.get(BundleKeys.GROUP_NAME));
                             }

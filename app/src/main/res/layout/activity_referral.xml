@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorMedium"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:elevation="4dp"
+        android:id="@+id/refer_toolbar"
+        android:title="Refer Friends"
+        android:titleTextColor="@color/white"
+        >
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <ImageView
+        android:id="@+id/referral_image"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_150"
+        android:src="@drawable/referral_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_150"
+        />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/referral_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/referral_image"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="Invite your friends to try Nostragamus and you \n earn surprise powerups"
+        app:typeface="lato_regular"/>
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/referral_btn"
+        android:layout_width="@dimen/blue_button_width"
+        android:layout_height="@dimen/blue_button_height"
+        android:background="@drawable/powerup_screen_btn_bg"
+        android:onClick="onClick"
+        android:text="Refer a Friend"
+        android:textAllCaps="false"
+        android:textSize="@dimen/blue_button_text"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_10"
+        app:typeface="roboto_condensed"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/referral_text"
+        />
+
+</RelativeLayout>
