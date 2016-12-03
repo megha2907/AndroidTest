@@ -133,6 +133,15 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(SharedKeys.USER_ID, userId);
     }
 
+
+    public String getReferralUserId() {
+        return getSharedStringData(BundleKeys.USER_REFERRAL_ID);
+    }
+
+    public void setReferralUserId(String userReferralId) {
+        setSharedStringData(BundleKeys.USER_REFERRAL_ID, userReferralId);
+    }
+
     public UserInfo getUserInfo() {
         String userInfo = getSharedStringData(SharedKeys.USER_INFO);
         if (null == userInfo || userInfo.isEmpty()) {
@@ -258,6 +267,8 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
         setSharedIntData(SharedKeys.NUMBER_OF_AUDIENCE_POLL_POWERUPS, numberofAudiencePollPowerups);
     }
+
+
 
     //BADGES
     public List<String> getBadgeList() {

@@ -14,6 +14,9 @@ public class UserProfile {
     @JsonProperty("id")
     private String id;
 
+    @JsonProperty("user_referral_id")
+    private String userReferralId;
+
     @JsonProperty("username")
     private String userName;
 
@@ -140,6 +143,14 @@ public class UserProfile {
         this.photos = photos;
     }
 
+    @JsonProperty("user_referral_id")
+    public String getUserReferralId() {
+        return userReferralId;
+    }
 
+    @JsonProperty("user_referral_id")
+    public void setUserReferralId(String userReferralId) {
+        this.userReferralId = userReferralId;
+    }
 
 }
