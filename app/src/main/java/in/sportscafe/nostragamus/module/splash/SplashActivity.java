@@ -50,14 +50,22 @@ public class SplashActivity extends Activity {
                                 NostragamusDataHandler.getInstance().setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
                                 navigateToJoinGroup(metadata.get(BundleKeys.GROUP_CODE));
                                 return;
-                            } else if(path.equalsIgnoreCase("app/invite/")){
-                                Log.i("inside user_referral_id",metadata.get(BundleKeys.USER_REFERRAL_ID));
-                                NostragamusDataHandler.getInstance().setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
-                                navigateToGetStarted();
                             }
                             else {
                                 NostragamusDataHandler.getInstance().setInstallGroupCode(metadata.get(BundleKeys.GROUP_CODE));
                                 NostragamusDataHandler.getInstance().setInstallGroupName(metadata.get(BundleKeys.GROUP_NAME));
+                            }
+                            if(path.equalsIgnoreCase("app/invite/")){
+                                Log.i("inside user_referral_id",metadata.get(BundleKeys.USER_REFERRAL_ID));
+                                NostragamusDataHandler.getInstance().setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
+                                navigateToGetStarted();
+                                return;
+                            }
+                            else {
+                                Log.i("inside else user_referral_id",metadata.get(BundleKeys.USER_REFERRAL_ID));
+                                NostragamusDataHandler.getInstance().setInstallGroupCode(metadata.get(BundleKeys.GROUP_CODE));
+                                NostragamusDataHandler.getInstance().setInstallGroupName(metadata.get(BundleKeys.GROUP_NAME));
+                                NostragamusDataHandler.getInstance().setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
                             }
                         }
                     }
