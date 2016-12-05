@@ -63,6 +63,10 @@
 
         </activity>
 
+        <activity android:name=".module.feed.FeedWebView"
+                  android:screenOrientation="portrait">
+        </activity>
+
         <activity
             android:name="in.sportscafe.nostragamus.module.getstart.GetStartActivity"
             android:screenOrientation="portrait">

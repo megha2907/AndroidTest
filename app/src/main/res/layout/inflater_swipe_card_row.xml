@@ -233,7 +233,8 @@
         <RelativeLayout
             android:id="@+id/swipe_card_question_points_rl"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/swipe_card_question_positive_points"
@@ -242,7 +243,8 @@
                 android:background="@android:color/transparent"
                 android:text="+10"
                 android:textColor="@color/greencolor"
-                android:textSize="@dimen/dp_15" />
+                android:textSize="@dimen/dp_15"
+                />
 
             <View
                 android:id="@+id/swipe_card_question_points_line"
@@ -251,7 +253,8 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_toRightOf="@id/swipe_card_question_positive_points"
-                android:background="#cccccc" />
+                android:background="#cccccc"
+                />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/swipe_card_question_negative_points"
@@ -262,7 +265,6 @@
                 android:text="-10"
                 android:textColor="@color/tabcolor"
                 android:textSize="@dimen/dp_15"
-
                 />
 
         </RelativeLayout>

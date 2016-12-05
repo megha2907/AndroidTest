@@ -51,6 +51,7 @@ public class SplashActivity extends Activity {
                                 navigateToJoinGroup(metadata.get(BundleKeys.GROUP_CODE));
                                 return;
                             } else if(path.equalsIgnoreCase("app/invite/")){
+                                Log.i("inside user_referral_id",metadata.get(BundleKeys.USER_REFERRAL_ID));
                                 NostragamusDataHandler.getInstance().setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
                                 navigateToGetStarted();
                             }
