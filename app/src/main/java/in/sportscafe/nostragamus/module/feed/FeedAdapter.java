@@ -9,6 +9,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
+import android.text.util.Linkify;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -358,6 +365,21 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()) {
             tvcommentary.setVisibility(View.VISIBLE);
             tvcommentary.setText(Html.fromHtml(match.getResultdesc()));
+            tvcommentary.setMovementMethod(LinkMovementMethod.getInstance());
+
+            CharSequence text = tvcommentary.getText();
+            if(text instanceof Spannable){
+                int end = text.length();
+                Spannable sp = (Spannable)tvcommentary.getText();
+                URLSpan[] urls=sp.getSpans(0, end, URLSpan.class);
+                SpannableStringBuilder style=new SpannableStringBuilder(text);
+                style.clearSpans();//should clear old spans
+                for(URLSpan url : urls){
+                    LinkSpan click = new LinkSpan(url.getURL());
+                    style.setSpan(click,sp.getSpanStart(url),sp.getSpanEnd(url),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                tvcommentary.setText(style);
+            }
 
             if (match.getMatchPoints()==0) {
                 tvcommentarytitle.setVisibility(View.VISIBLE);
@@ -529,4 +551,24 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         options.add("Option 3");
         return options;
     }
+
+
+    private class LinkSpan extends URLSpan {
+        private LinkSpan(String url) {
+            super(url);
+        }
+
+        @Override
+        public void onClick(View view) {
+            String url = getURL();
+            if (url != null) {
+
+                view.getContext().startActivity(new Intent(view.getContext(),FeedWebView.class).putExtra("url",url));
+
+            }
+        }
+    }
+
+
 }
+

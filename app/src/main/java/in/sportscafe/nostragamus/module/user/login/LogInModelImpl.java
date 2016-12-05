@@ -143,10 +143,13 @@ public class LogInModelImpl implements LogInModel {
         userProfile.setEmails(email);
         userProfile.setPhotos(photo);
 
-        if(null == NostragamusDataHandler.getInstance().getReferralUserId()){
-            userProfile.setUserReferralId("");
-        }else {
+
+        if(null != NostragamusDataHandler.getInstance().getReferralUserId()){
+            Log.i("user_referral_id",NostragamusDataHandler.getInstance().getReferralUserId());
             userProfile.setUserReferralId(NostragamusDataHandler.getInstance().getReferralUserId());
+        }else {
+            Log.i("user_referral_id","null");
+            userProfile.setUserReferralId("");
         }
 
 

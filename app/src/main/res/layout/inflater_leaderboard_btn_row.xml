@@ -25,6 +25,7 @@
             android:gravity="left"
             android:textSize="@dimen/dp_13"
             android:visibility="gone"
+            android:textColorLink="#29abe2"
             />
 
     </LinearLayout>
@@ -53,7 +54,6 @@
             app:typeface="roboto_condensed"
             android:textColor="@color/white"
             android:paddingBottom="@dimen/dp_3"
-
             />
 
     </RelativeLayout>
