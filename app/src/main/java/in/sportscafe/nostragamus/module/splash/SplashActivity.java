@@ -62,7 +62,7 @@ public class SplashActivity extends Activity {
                                 return;
                             }
                             else {
-                                Log.i("inside else user_referral_id",metadata.get(BundleKeys.USER_REFERRAL_ID));
+                                Log.i("inside else user_referral_idd",metadata.get(BundleKeys.USER_REFERRAL_ID));
                                 NostragamusDataHandler.getInstance().setInstallGroupCode(metadata.get(BundleKeys.GROUP_CODE));
                                 NostragamusDataHandler.getInstance().setInstallGroupName(metadata.get(BundleKeys.GROUP_NAME));
                                 NostragamusDataHandler.getInstance().setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
