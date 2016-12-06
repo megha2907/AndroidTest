@@ -291,7 +291,9 @@
         android:id="@+id/space"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_25"
-        android:layout_below="@+id/schedule_row_ll_match_commentary_parent" />
+        android:layout_below="@+id/schedule_row_ll_match_commentary_parent"
+
+       />
 
 
     <Button

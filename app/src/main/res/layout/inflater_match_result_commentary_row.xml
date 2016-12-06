@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/black"
     >
 
 
@@ -20,7 +21,6 @@
             android:textSize="@dimen/dp_14"
             android:visibility="gone"
             android:layout_marginLeft="@dimen/dp_5"
-            android:text="sdhjsahdsadadsadad"
             android:textColorLink="#29abe2"
             />
 
@@ -38,7 +38,6 @@
             android:textSize="@dimen/dp_13"
             android:visibility="gone"
             android:layout_marginLeft="@dimen/dp_5"
-            android:text="sdhjsahdsadadsadad"
             android:textColorLink="#29abe2"
             />
 

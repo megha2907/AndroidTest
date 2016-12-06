@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v4.widget.Space;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -113,9 +115,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         View scheduleView = getLayoutInflater().inflate(R.layout.inflater_schedule_row, parent, false);
         ScheduleViewHolder holder = new ScheduleViewHolder(scheduleView);
 
-        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        llp.setMargins(10, 30, 10, 20); // llp.setMargins(left, top, right, bottom);
-        llp.gravity = Gravity.CENTER;
+//        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//        llp.setMargins(10, 30, 10, 20); // llp.setMargins(left, top, right, bottom);
+//        llp.gravity = Gravity.CENTER;
 
         if( null == match.getParties() || match.getParties().isEmpty()) //SHOW MATCH COMMENTARY
         {
@@ -174,7 +176,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 //            holder.mTvMatchResult.setEllipsize(TextUtils.TruncateAt.END);
 //            int n = 2; // the exact number of lines you want to display
 //            holder.mTvMatchResult.setLines(n);
-            holder.mTvMatchResult.setLayoutParams(llp);
+            //holder.mTvMatchResult.setLayoutParams(llp);
             holder.mBtnPlayMatch.setVisibility(View.GONE);
 
             if (null!= match.getWinnerPartyId()){
@@ -363,8 +365,10 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         TextView tvcommentarytitle = (TextView) resultCommentaryView.findViewById(R.id.schedule_row_tv_match_result_commentary_title);
 
         if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()) {
+
             tvcommentary.setVisibility(View.VISIBLE);
-            tvcommentary.setText(Html.fromHtml(match.getResultdesc()));
+
+            tvcommentary.setText(noTrailingwhiteLines(Html.fromHtml(match.getResultdesc().toString().replaceAll("&nbsp;",""))));
             tvcommentary.setMovementMethod(LinkMovementMethod.getInstance());
 
             CharSequence text = tvcommentary.getText();
@@ -444,7 +448,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         LinearLayout mMatchResultCommentary;
 
-
+        Space viewSpace;
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -469,6 +473,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);
             mMatchResultCommentary = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
+            viewSpace=(Space)V.findViewById(R.id.space);
 
             mBtnPlayMatch.setOnClickListener(this);
             mBtnMatchPoints.setOnClickListener(this);
@@ -569,6 +574,13 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         }
     }
 
+    private CharSequence noTrailingwhiteLines(CharSequence text) {
+
+        while (text.charAt(text.length() - 1) == '\n') {
+            text = text.subSequence(0, text.length() - 1);
+        }
+        return text;
+    }
 
 }
 

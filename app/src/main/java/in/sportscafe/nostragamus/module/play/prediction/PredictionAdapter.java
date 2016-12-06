@@ -19,6 +19,7 @@ import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.jeeva.android.widgets.customfont.CustomTextView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,7 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
         viewHolder.ivRightOption.setImageUrl(question.getQuestionImage2(),
                 Volley.getInstance().getImageLoader(), false);
 
+
         if (question.getQuestionPositivePoints() == 0) {
             viewHolder.tvquestionPositivePoints.setVisibility(View.GONE);
             viewHolder.cardViewpoints.setVisibility(View.GONE);
@@ -71,6 +73,7 @@ public class PredictionAdapter extends ArrayAdapter<Question>  {
         if (question.getQuestionNegativePoints() == 0) {
             viewHolder.tvquestionNegativePoints.setVisibility(View.GONE);
             viewHolder.viewPoints.setVisibility(View.GONE);
+            viewHolder.tvquestionPositivePoints.setPadding(32,0,32,0);
         } else {
             viewHolder.tvquestionNegativePoints.setText(""+question.getQuestionNegativePoints());
             viewHolder.tvquestionNegativePoints.setTag(question.getQuestionNegativePoints());
