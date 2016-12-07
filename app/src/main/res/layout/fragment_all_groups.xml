@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/all_groups_rcv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@color/black"
+        />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/all_groups_empty_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_above="@+id/all_groups_empty_btn"
+        android:text="You don't have any groups yet."
+        android:textColor="@color/textcolorlight"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:visibility="gone"/>
+
+
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/all_groups_empty_btn"
+        android:layout_width="@dimen/blue_button_width"
+        android:layout_height="@dimen/blue_button_height"
+        android:background="@drawable/powerup_screen_btn_bg"
+        android:onClick="onClick"
+        android:text="ADD GROUP"
+        android:textAllCaps="false"
+        android:textSize="@dimen/blue_button_text"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_10"
+        app:typeface="roboto_condensed"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+
+
+
+
+
+</RelativeLayout>
