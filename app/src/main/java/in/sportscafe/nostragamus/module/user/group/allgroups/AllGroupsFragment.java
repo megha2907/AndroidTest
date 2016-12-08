@@ -54,8 +54,6 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
         return fragment;
     }
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -31,6 +31,7 @@ import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.MyResultsTimelineActivity;
 import in.sportscafe.nostragamus.module.user.badges.BadgeActivity;
+import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -40,7 +41,9 @@ import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.groups.GroupsFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.sports.SportsFragment;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUpActivity;
+import in.sportscafe.nostragamus.module.user.powerups.PowerUpFragment;
 import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity;
+import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 
 /**
  * Created by Jeeva on 14/6/16.
@@ -196,7 +199,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         LinearLayout linearLayout = (LinearLayout)tabLayout.getChildAt(0);
         linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         GradientDrawable drawable = new GradientDrawable();
-        drawable.setColor(Color.GRAY);
+        drawable.setColor(getContext().getResources().getColor(R.color.profile_tab_line_color));
         drawable.setSize(1, 1);
         linearLayout.setDividerPadding(10);
         linearLayout.setDividerDrawable(drawable);
@@ -216,11 +219,11 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     private ViewPagerAdapter getAdapter(LbSummary lbSummary) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        pagerAdapter.addFragment(GroupsFragment.newInstance(lbSummary.getGroups()), powerUpsCount+"\n Powerups");
-//        pagerAdapter.addFragment(GroupsFragment.newInstance(lbSummary.getGroups()), groupsCount+ "\n Groups");
+        pagerAdapter.addFragment(PowerUpFragment.newInstance(), powerUpsCount+"\n Powerups");
         pagerAdapter.addFragment(AllGroupsFragment.newInstance(), groupsCount+ "\n Groups");
-        pagerAdapter.addFragment(SportsFragment.newInstance(lbSummary.getSports()), sportsFollowed + " \n Sports");
+        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(), sportsFollowed + " \n Sports");
         pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getChallenges()), "0  \n Challenges");
+        pagerAdapter.addFragment(BadgeFragment.newInstance(), badgeCount+"\n Badges");
         return pagerAdapter;
     }
 

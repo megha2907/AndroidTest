@@ -51,10 +51,10 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
 
         if (allGroups.getCountGroupMembers()==1){
 
-            holder.mTvGroupMembers.setText("("+ String.valueOf(allGroups.getCountGroupMembers())+" Member"+")");
+            holder.mTvGroupMembers.setText("("+ String.valueOf(allGroups.getCountGroupMembers())+")");
         }
         else {
-            holder.mTvGroupMembers.setText("("+String.valueOf(allGroups.getCountGroupMembers())+" Members"+")");
+            holder.mTvGroupMembers.setText("("+String.valueOf(allGroups.getCountGroupMembers())+")");
         }
 
         if (null==allGroups.getGroupPhoto() || allGroups.getGroupPhoto().isEmpty()) {

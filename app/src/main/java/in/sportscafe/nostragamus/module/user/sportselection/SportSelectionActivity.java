@@ -23,39 +23,39 @@ import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
  * Created by Jeeva on 27/5/16.
  */
 public class SportSelectionActivity extends NostragamusActivity implements SportSelectionView,
-        View.OnClickListener {
+    View.OnClickListener {
 
-    private RecyclerView mRvSportSelection;
+        private RecyclerView mRvSportSelection;
 
-    private SportSelectionPresenter mSportSelectionPresenter;
+        private SportSelectionPresenter mSportSelectionPresenter;
 
-    private Bundle mbundle;
+        private Bundle mbundle;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sport_selection);
+        @Override
+        protected void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_sport_selection);
 
-        this.mRvSportSelection = (RecyclerView) findViewById(R.id.sport_selection_rcv);
-        this.mRvSportSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
-        this.mRvSportSelection.setLayoutManager(new GridLayoutManager(this, 3));
-        this.mRvSportSelection.setHasFixedSize(true);
-        this.mSportSelectionPresenter = SportSelectionPresenterImpl.newInstance(this);
-        this.mSportSelectionPresenter.onCreateSportSelection(getIntent().getExtras());
+            this.mRvSportSelection = (RecyclerView) findViewById(R.id.sport_selection_rcv);
+            this.mRvSportSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
+            this.mRvSportSelection.setLayoutManager(new GridLayoutManager(this, 3));
+            this.mRvSportSelection.setHasFixedSize(true);
+            this.mSportSelectionPresenter = SportSelectionPresenterImpl.newInstance(this);
+            this.mSportSelectionPresenter.onCreateSportSelection(getIntent().getExtras());
 
-        mbundle = getIntent().getExtras();
-    }
+            mbundle = getIntent().getExtras();
+        }
 
-    @Override
-    public void setAdapter(RecyclerView.Adapter adapter) {
-        this.mRvSportSelection.setAdapter(adapter);
-    }
+        @Override
+        public void setAdapter(RecyclerView.Adapter adapter) {
+            this.mRvSportSelection.setAdapter(adapter);
+        }
 
-    @Override
-    public void navigateToLogin() {
-        startActivity(new Intent(this, LogInActivity.class));
-        finish();
-    }
+        @Override
+        public void navigateToLogin() {
+            startActivity(new Intent(this, LogInActivity.class));
+            finish();
+        }
 
     @Override
     public void navigateToHome() {
