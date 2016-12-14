@@ -4,6 +4,8 @@ package in.sportscafe.nostragamus.webservice;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
+import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupRequest;
+import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
@@ -147,4 +149,8 @@ public interface NostragamusService {
 
     @GET("v2/user/refreshToken")
     Call<JwtToken> refreshAccessToken();
+
+    @GET("/v2/game/applyResultsPowerups")
+    Call<ReplayPowerupResponse> getReplayPowerup(@Query("powerup_id") String powerupId,
+                                                 @Query("match_id") Integer matchId);
 }

@@ -10,10 +10,6 @@ import com.jeeva.android.View;
 
 public interface AllGroupsView extends View {
 
-    void navigateToJoinGroup();
-
-    void onClick(android.view.View view);
-
     void goBackWithSuccessResult();
 
     void navigateToHomeActivity();

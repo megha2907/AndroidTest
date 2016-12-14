@@ -3,6 +3,8 @@ package in.sportscafe.nostragamus.module.user.sportselection.profilesportselecti
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants;
 
 /**
@@ -15,15 +17,18 @@ public class ProfileSportSelectionPresenterImpl implements ProfileSportSelection
 
     private ProfileSportSelectionModel mSportSelectionModel;
 
+    private ProfileSportSelectionFragment.OnSportSelectionChangedListener mChangedListener;
+
     private boolean mFromProfile = false;
 
-    public ProfileSportSelectionPresenterImpl(ProfileSportSelectionView sportSelectionView) {
+    public ProfileSportSelectionPresenterImpl(ProfileSportSelectionView sportSelectionView,ProfileSportSelectionFragment.OnSportSelectionChangedListener listener) {
         this.mSportSelectionView = sportSelectionView;
         this.mSportSelectionModel = ProfileSportSelectionModelImpl.newInstance(this);
+        this.mChangedListener =listener;
     }
 
-    public static ProfileSportSelectionPresenter newInstance(ProfileSportSelectionView sportSelectionView) {
-        return new ProfileSportSelectionPresenterImpl(sportSelectionView);
+    public static ProfileSportSelectionPresenter newInstance(ProfileSportSelectionView sportSelectionView,ProfileSportSelectionFragment.OnSportSelectionChangedListener listener) {
+        return new ProfileSportSelectionPresenterImpl(sportSelectionView,listener);
     }
 
     @Override
@@ -61,5 +66,11 @@ public class ProfileSportSelectionPresenterImpl implements ProfileSportSelection
     public void onFailed(String message) {
         mSportSelectionView.dismissProgressbar();
         mSportSelectionView.showMessage(message);
+    }
+
+    @Override
+    public void setSportsCount(int size) {
+        Log.i("sportscount",size+"");
+        mChangedListener.setSportsCount(size);
     }
 }

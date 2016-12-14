@@ -12,6 +12,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
 import in.sportscafe.nostragamus.module.user.group.LeaveGroupModelImpl;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GrpNameUpdateModelImpl;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GrpTournamentUpdateModelImpl;
@@ -44,8 +45,11 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
 
     private GrpNameUpdateModelImpl mGrpNameUpdateModel;
 
+    private NostragamusDataHandler mNostragamusDataHandler;
+
     private EditGroupInfoModelImpl(OnEditGroupInfoModelListener listener) {
         this.mGroupInfoModelListener = listener;
+        mNostragamusDataHandler = NostragamusDataHandler.getInstance();
     }
 
     public static EditGroupInfoModel newInstance(OnEditGroupInfoModelListener listener) {
@@ -109,6 +113,42 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
 
         });
 
+    }
+
+    private void getAllTournamentsfromServer() {
+        if(Nostragamus.getInstance().hasNetworkConnection()) {
+            MyWebService.getInstance().getCurrentTournaments(true).enqueue(
+                    new NostragamusCallBack<TournamentFeedResponse>() {
+                        @Override
+                        public void onResponse(Call<TournamentFeedResponse> call, Response<TournamentFeedResponse> response) {
+                            super.onResponse(call, response);
+                            if(response.isSuccessful()) {
+                                List<TournamentFeedInfo> newTournamentInfo = response.body().getTournamentInfos();
+
+                                if(null != newTournamentInfo && newTournamentInfo.size() > 0) {
+                                    List<TournamentFeedInfo> oldTournamentList = mNostragamusDataHandler.getTournaments();
+                                    oldTournamentList.clear();
+                                    for (TournamentFeedInfo tournamentInfo : newTournamentInfo) {
+                                        if(!oldTournamentList.contains(tournamentInfo)) {
+                                            oldTournamentList.add(tournamentInfo);
+                                        }
+                                    }
+
+                                    mNostragamusDataHandler.setTournaments(oldTournamentList);
+                                    mGrpTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
+
+                                    mGroupInfoModelListener.onSuccessTournamentInfo();
+                                }
+
+                            } else {
+                                mGroupInfoModelListener.onFailed(response.message());
+                            }
+                        }
+                    }
+            );
+        } else {
+            mGroupInfoModelListener.onNoInternet();
+        }
     }
 
     @Override
@@ -196,6 +236,8 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
 
     @Override
     public GrpTournamentSelectionAdapter getAdapter(Context context) {
+
+        getAllTournamentsfromServer();
         List<TournamentFeedInfo> followedTournaments = mGroupInfo.getFollowedTournaments();
 
         List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
@@ -303,5 +345,7 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
         void onPhotoUpdate(String photo);
 
         void onEditFailed(String message);
+
+        void onSuccessTournamentInfo();
     }
 }

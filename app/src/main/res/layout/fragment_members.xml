@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_bg">
+    android:background="@color/black">
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/members_btn_leave_group"
@@ -24,7 +24,7 @@
         android:layout_above="@id/members_btn_leave_group"
         android:layout_alignParentTop="true"
         android:clipToPadding="false"
-        android:background="@drawable/gradient_bg"
+        android:background="@color/black"
         android:layout_marginTop="@dimen/dp_10"/>
 
 </RelativeLayout>

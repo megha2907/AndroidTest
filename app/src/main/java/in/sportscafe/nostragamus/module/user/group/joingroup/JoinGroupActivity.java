@@ -205,7 +205,7 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onBackPressed();
+                        goToHome();
                     }
                 }
         );
@@ -232,7 +232,9 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
 
     @Override
     public void goToHome() {
-        startActivity(new Intent(this, HomeActivity.class));
+        Intent homeintent = new Intent(this, HomeActivity.class);
+        homeintent.putExtra("group", "openprofile");
+        startActivity(homeintent);
         finish();
     }
 

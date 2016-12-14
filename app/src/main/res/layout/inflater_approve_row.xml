@@ -2,57 +2,58 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/dp_10"
-    android:background="@drawable/gradient_bg">
+    android:background="@color/black">
 
     <in.sportscafe.nostragamus.module.common.RoundImage
         android:id="@+id/approve_iv_photo"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginRight="@dimen/dp_20" />
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_10" />
 
-    <TextView
-        android:id="@+id/approve_iv_accept"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="?attr/selectableItemBackground"
-        android:padding="@dimen/dp_10"
-        android:text="Accept"
-        android:textColor="@color/greencolor"/>
 
-    <TextView
+    <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/approve_iv_reject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/approve_iv_accept"
         android:background="?attr/selectableItemBackground"
         android:padding="@dimen/dp_10"
         android:text="Reject"
-        android:textColor="@color/monza" />
+        android:layout_toRightOf="@+id/approve_iv_accept"
+        android:textColor="@color/textcolorlight"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:drawableLeft="@drawable/result_cross_icon"
+        android:drawablePadding="@dimen/dp_5"
+        app:typeface="roboto_condensed"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/approve_iv_accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/dp_10"
+        android:text="Accept"
+        android:layout_toRightOf="@+id/approve_tv_name"
+        android:textColor="@color/textcolorlight"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:drawableLeft="@drawable/result_tick_icon"
+        android:drawablePadding="@dimen/dp_5"
+        app:typeface="roboto_condensed"/>
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/approve_tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/approve_iv_reject"
-        android:layout_toRightOf="@id/approve_iv_photo"
-        android:maxLines="1"
-        android:textSize="@dimen/dp_20"
-        android:textColor="@color/white"/>
-
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/approve_tv_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/approve_tv_name"
-        android:layout_marginTop="@dimen/dp_3"
-        android:layout_toLeftOf="@id/approve_iv_reject"
         android:layout_toRightOf="@id/approve_iv_photo"
         android:maxLines="1"
         android:textSize="@dimen/dp_16"
-        android:textColor="@color/white"/>
+        android:layout_centerVertical="true"
+        android:textColor="@color/white"
+        android:text="deepanshi"
+        app:typeface="roboto_condensed"/>
+
 
 </RelativeLayout>

@@ -23,6 +23,9 @@ public class AllGroups implements Serializable {
     @JsonProperty("count_group_members")
     private Integer countGroupMembers;
 
+    @JsonProperty("no_of_tournaments")
+    private Integer tournamentsCount;
+
     @JsonProperty("group_id")
     public Long getGroupId() {
         return groupId;
@@ -62,6 +65,17 @@ public class AllGroups implements Serializable {
     public void setGroupPhoto(String groupPhoto) {
         this.groupPhoto = groupPhoto;
     }
+
+    @JsonProperty("no_of_tournaments")
+    public Integer getTournamentsCount() {
+        return tournamentsCount;
+    }
+
+    @JsonProperty("no_of_tournaments")
+    public void setTournamentsCount(Integer tournamentsCount) {
+        tournamentsCount = tournamentsCount;
+    }
+
 
 
 }

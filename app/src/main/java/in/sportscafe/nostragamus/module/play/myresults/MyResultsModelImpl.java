@@ -16,6 +16,10 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupRequest;
+import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
+import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
+import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -40,6 +44,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private MyResultsAdapter mResultAdapter;
 
+    private Match match;
+
     private OnMyResultsModelListener mResultsModelListener;
 
     private MyResultsModelImpl(OnMyResultsModelListener listener) {
@@ -53,7 +59,12 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     @Override
     public void init(Bundle bundle) {
         
-        if(null != bundle.getString(Constants.BundleKeys.MATCH_ID))
+        if(null != bundle.getSerializable(Constants.BundleKeys.MATCH_LIST))
+        {
+            match = (Match) bundle.getSerializable(Constants.BundleKeys.MATCH_LIST);
+            matchId = match.getId();
+        }
+        else if (null != bundle.getString(Constants.BundleKeys.MATCH_ID))
         {
             String match_id = bundle.getString(Constants.BundleKeys.MATCH_ID);
             matchId= Integer.parseInt(match_id);
@@ -162,6 +173,40 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         }
     }
 
+    @Override
+    public void callReplayPowerupApplied() {
+        if(Nostragamus.getInstance().hasNetworkConnection()) {
+
+            callReplayPowerupAppliedApi("match_replay",matchId);
+
+        } else {
+            mResultsModelListener.onNoInternet();
+        }
+    }
+
+    private void callReplayPowerupAppliedApi(String powerupId,Integer matchId) {
+
+        MyWebService.getInstance().getReplayPowerup(powerupId,matchId).enqueue(new NostragamusCallBack<ReplayPowerupResponse>() {
+            @Override
+            public void onResponse(Call<ReplayPowerupResponse> call, Response<ReplayPowerupResponse> response) {
+                super.onResponse(call, response);
+
+                if (response.isSuccessful()) {
+                    if (null==response.body().getResponse() || response.body().getResponse().equalsIgnoreCase("failure")){
+                        mResultsModelListener.onFailedReplayPowerupResponse();
+                    }
+                    else {
+                        mResultsModelListener.onSuccessReplayPowerupResponse(match);
+                    }
+
+                } else {
+                    mResultsModelListener.onFailedReplayPowerupResponse();
+                }
+            }
+        });
+
+    }
+
     private List<Feed> getCategorizedList(List<Match> matchList) {
         Map<String, Tournament> tourMap = new HashMap<>();
         Map<String, Feed> feedMap = new HashMap<>();
@@ -232,5 +277,9 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         Context getContext();
 
         void gotoResultsTimeline();
+
+        void onFailedReplayPowerupResponse();
+
+        void onSuccessReplayPowerupResponse(Match match);
     }
 }

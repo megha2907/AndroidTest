@@ -329,6 +329,23 @@
         android:paddingBottom="@dimen/dp_10"
         android:background="@color/black"/>
 
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/join_grp_btn"
+        android:layout_width="@dimen/blue_button_width"
+        android:layout_height="@dimen/blue_button_height"
+        android:background="@drawable/powerup_screen_btn_bg"
+        android:onClick="onClick"
+        android:text="CREATE NEW GROUP"
+        android:textAllCaps="false"
+        android:textSize="@dimen/blue_button_text"
+        android:textColor="@color/white"
+        android:layout_marginBottom="@dimen/dp_20"
+        app:typeface="roboto_condensed"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        />
+
+
 </android.support.design.widget.CoordinatorLayout>
 
     </RelativeLayout>

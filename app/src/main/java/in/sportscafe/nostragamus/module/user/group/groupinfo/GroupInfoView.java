@@ -34,4 +34,6 @@ public interface GroupInfoView extends View {
     void goBackWithSuccessResult();
 
     void navigateToAllGroups();
+
+    void navigateToHomeActivity();
 }

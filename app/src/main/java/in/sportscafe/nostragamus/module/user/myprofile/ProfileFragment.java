@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import in.sportscafe.nostragamus.module.user.badges.BadgeActivity;
 import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
+import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.challenges.ChallengesFragment;
@@ -44,11 +46,12 @@ import in.sportscafe.nostragamus.module.user.powerups.PowerUpActivity;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUpFragment;
 import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity;
 import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
+import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionModel;
 
 /**
  * Created by Jeeva on 14/6/16.
  */
-public class ProfileFragment extends NostragamusFragment implements ProfileView, View.OnClickListener {
+public class ProfileFragment extends NostragamusFragment implements ProfileView, ProfileSportSelectionFragment.OnSportSelectionChangedListener,View.OnClickListener {
 
     private static final int SPORTS_SELECTION_CODE = 34;
 
@@ -73,6 +76,10 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     private String groupsCount;
 
     private String badgeCount;
+
+    private ViewPagerAdapter mpagerAdapter;
+
+    private Boolean groupClicked=false;
 
     @Override
     public void onAttach(Context context) {
@@ -111,6 +118,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         //findViewById(R.id.profile_ll_sports_followed_parent).setOnClickListener(this);
         //findViewById(R.id.profile_ll_badge_parent).setOnClickListener(this);
         findViewById(R.id.profile_iv_image).setOnClickListener(this);
+        findViewById(R.id.join_grp_btn).setOnClickListener(this);
     }
 
     @Override
@@ -177,13 +185,22 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     @Override
     public void initMyPosition(LbSummary lbSummary) {
         mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
-        mViewPager.setAdapter(getAdapter(lbSummary));
+        mpagerAdapter = getAdapter(lbSummary);
+        mViewPager.setAdapter(mpagerAdapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 NostragamusAnalytics.getInstance().trackUserProfile(AnalyticsActions.TABS,
                         mViewPager.getAdapter().getPageTitle(position).toString());
+
+                Button createGroupbtn = (Button)findViewById(R.id.join_grp_btn);
+                if(position==1){
+                    createGroupbtn.setVisibility(View.VISIBLE);
+                }else {
+                    createGroupbtn.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
@@ -221,7 +238,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         pagerAdapter.addFragment(PowerUpFragment.newInstance(), powerUpsCount+"\n Powerups");
         pagerAdapter.addFragment(AllGroupsFragment.newInstance(), groupsCount+ "\n Groups");
-        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(), sportsFollowed + " \n Sports");
+        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), sportsFollowed + " \n Sports");
         pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getChallenges()), "0  \n Challenges");
         pagerAdapter.addFragment(BadgeFragment.newInstance(), badgeCount+"\n Badges");
         return pagerAdapter;
@@ -274,6 +291,9 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
             case R.id.profile_btn_logout:
                 navigateToSettings();
                 break;
+            case R.id.join_grp_btn:
+                navigateToJoinGroup();
+                break;
         }
     }
 
@@ -284,6 +304,11 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     private void navigateToSettings() {
         startActivity(new Intent(getContext(), SettingsActivity.class));
+    }
+
+    @Override
+    public void navigateToJoinGroup() {
+        startActivity(new Intent(getContext(), JoinGroupActivity.class));
     }
 
     private void navigateToSportSelection() {
@@ -324,4 +349,14 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         }
     }
 
+    @Override
+    public void setSportsCount(int sportsCount) {
+
+        if(sportsCount==1){
+            mpagerAdapter.updateTitle(2,sportsCount+ " \n Sport");
+        }
+        else {
+            mpagerAdapter.updateTitle(2,sportsCount+ " \n Sports");
+        }
+    }
 }

@@ -28,8 +28,12 @@ public class ProfileSportSelectionFragment extends NostragamusFragment implement
 
     private ProfileSportSelectionPresenter mSportSelectionPresenter;
 
-    public static ProfileSportSelectionFragment newInstance() {
+    private ProfileSportSelectionFragment.OnSportSelectionChangedListener mChangedListener;
+
+
+    public static ProfileSportSelectionFragment newInstance(ProfileSportSelectionFragment.OnSportSelectionChangedListener listener) {
         ProfileSportSelectionFragment fragment = new ProfileSportSelectionFragment();
+        fragment.mChangedListener=listener;
         return fragment;
     }
 
@@ -46,7 +50,7 @@ public class ProfileSportSelectionFragment extends NostragamusFragment implement
         this.mRvSportSelection.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         this.mRvSportSelection.setHasFixedSize(true);
-        this.mSportSelectionPresenter = ProfileSportSelectionPresenterImpl.newInstance(this);
+        this.mSportSelectionPresenter = ProfileSportSelectionPresenterImpl.newInstance(this,mChangedListener);
         this.mSportSelectionPresenter.onCreateSportSelection();
     }
 
@@ -61,4 +65,10 @@ public class ProfileSportSelectionFragment extends NostragamusFragment implement
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
+
+
+    public interface OnSportSelectionChangedListener {
+        void setSportsCount(int sportsCount);
+    }
+
 }

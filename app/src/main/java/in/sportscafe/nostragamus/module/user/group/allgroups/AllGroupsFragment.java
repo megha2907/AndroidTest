@@ -32,15 +32,11 @@ import static android.app.Activity.RESULT_OK;
  * Created by deepanshi on 12/7/16.
  */
 
-public class AllGroupsFragment extends NostragamusFragment implements AllGroupsView , View.OnClickListener {
+public class AllGroupsFragment extends NostragamusFragment implements AllGroupsView {
 
     private RecyclerView mRvAllGroups;
 
     private AllGroupsPresenter mAllGroupsPresenter;
-
-    private Toolbar mtoolbar;
-
-    private Button mbtnEmptyGroups;
 
     private TextView mTvEmptyGroups;
 
@@ -57,7 +53,8 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_all_groups, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_all_groups, container, false);
+        return rootView;
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -69,22 +66,6 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
         this.mAllGroupsPresenter = AllGroupsPresenterImpl.newInstance(this);
         this.mAllGroupsPresenter.onCreateAllGroups();
 
-    }
-
-    @Override
-    public void navigateToJoinGroup() {
-        startActivity(new Intent(getContext(), JoinGroupActivity.class));
-        getActivity().finish();
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.all_groups_empty_btn:
-                navigateToJoinGroup();
-                break;
-
-        }
     }
 
     @Override
@@ -109,8 +90,6 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
 
     @Override
     public void showGroupsEmpty() {
-        mbtnEmptyGroups = (Button)findViewById(R.id.all_groups_empty_btn);
-        mbtnEmptyGroups.setVisibility(View.VISIBLE);
 
         mTvEmptyGroups=(TextView)findViewById(R.id.all_groups_empty_tv);
         mTvEmptyGroups.setVisibility(View.VISIBLE);

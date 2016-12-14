@@ -217,7 +217,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mTvResultWait.setVisibility(View.GONE);
 
             holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
-            holder.mBtnMatchPoints.setTag(match.getId());
+            holder.mBtnMatchPoints.setTag(match);
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
 
 
@@ -275,7 +275,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mTvResultWait.setVisibility(View.VISIBLE);
             holder.mViewResult.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
-            holder.mTvResultWait.setTag(match.getId());
+            holder.mTvResultWait.setTag(match);
 
         }
         else if ((null == match.getResult() || match.getResult().isEmpty()))
@@ -499,9 +499,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
                 case R.id.schedule_row_btn_points:
 
-                    Integer matchId = (Integer) view.getTag();
+                    Match match2 = (Match) view.getTag();
                     Bundle mBundle2 = new Bundle();
-                    mBundle2.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId));
+                    mBundle2.putSerializable(Constants.BundleKeys.MATCH_LIST, match2);
                     mBundle2.putString("screen","feed");
                     Intent mintent =  new Intent(view.getContext(), MyResultsActivity.class);
                     mintent.putExtras(mBundle2);
@@ -510,9 +510,9 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
                 case R.id.schedule_row_tv_match_result_wait:
 
-                    Integer matchId2 = (Integer) view.getTag();
+                    Match match3 = (Match) view.getTag();
                     Bundle mBundle3 = new Bundle();
-                    mBundle3.putString(Constants.BundleKeys.MATCH_ID, String.valueOf(matchId2));
+                    mBundle3.putSerializable(Constants.BundleKeys.MATCH_LIST, match3);
                     mBundle3.putString("screen","feed");
                     Intent mintent2 =  new Intent(view.getContext(), MyResultsActivity.class);
                     mintent2.putExtras(mBundle3);

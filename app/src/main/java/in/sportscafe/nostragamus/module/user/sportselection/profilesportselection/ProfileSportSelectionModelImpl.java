@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.List;
 
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 import in.sportscafe.nostragamus.module.user.preference.PreferenceManager;
 import in.sportscafe.nostragamus.module.user.preference.SavePreferenceModelImpl;
 import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionAdapter;
@@ -34,7 +35,12 @@ public class ProfileSportSelectionModelImpl implements ProfileSportSelectionMode
     @Override
     public RecyclerView.Adapter getSportsSelectionAdapter(Context context) {
         mSportSelectionAdapter = new ProfileSportSelectionAdapter(context,
-                mNostragamusDataHandler.getFavoriteSportsIdList());
+                mNostragamusDataHandler.getFavoriteSportsIdList(), new ProfileSportSelectionAdapter.OnSportChangedListener() {
+            @Override
+            public void onOnSportChanged(List<Integer> selectedSportsIdList) {
+                saveSelectedSports();
+            }
+        });
         mSportSelectionAdapter.addAll(mNostragamusDataHandler.getAllSports());
         return mSportSelectionAdapter;
     }
@@ -48,6 +54,7 @@ public class ProfileSportSelectionModelImpl implements ProfileSportSelectionMode
                         @Override
                         public void onSuccess() {
                             mSportSelectionModelListener.onSelectedSportsSaved();
+                            mSportSelectionModelListener.setSportsCount(mNostragamusDataHandler.getFavoriteSportsIdList().size());
                         }
 
                         @Override
@@ -79,5 +86,7 @@ public class ProfileSportSelectionModelImpl implements ProfileSportSelectionMode
         void onNoInternet();
 
         void onFailed(String message);
+
+        void setSportsCount(int size);
     }
 }

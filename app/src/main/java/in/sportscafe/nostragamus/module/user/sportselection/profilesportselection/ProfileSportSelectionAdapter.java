@@ -13,6 +13,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
+import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionAdapter;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 
@@ -25,10 +26,13 @@ public class ProfileSportSelectionAdapter extends Adapter<Sport, ProfileSportSel
     private List<Integer> mSelectedSportsIdList;
     private Context mContext;
 
-    public ProfileSportSelectionAdapter(Context context, List<Integer> selectedSportsIdList) {
+    private ProfileSportSelectionAdapter.OnSportChangedListener mChangedListener;
+
+    public ProfileSportSelectionAdapter(Context context, List<Integer> selectedSportsIdList,OnSportChangedListener listener) {
         super(context);
         mContext=context;
         this.mSelectedSportsIdList = selectedSportsIdList;
+        this.mChangedListener = listener;
     }
 
     @Override
@@ -57,9 +61,6 @@ public class ProfileSportSelectionAdapter extends Adapter<Sport, ProfileSportSel
         {
             holder.mIvSelectedIcon.setBackgroundResource(R.drawable.profile_sport_icon);
         }
-
-
-
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -93,6 +94,10 @@ public class ProfileSportSelectionAdapter extends Adapter<Sport, ProfileSportSel
                 mSelectedSportsIdList.add(id);
             }
             notifyDataSetChanged();
+
+            if(null != mChangedListener) {
+                mChangedListener.onOnSportChanged(mSelectedSportsIdList);
+            }
         }
 
 
@@ -100,5 +105,9 @@ public class ProfileSportSelectionAdapter extends Adapter<Sport, ProfileSportSel
 
     public List<Integer> getSelectedSportList() {
         return mSelectedSportsIdList;
+    }
+
+    public interface OnSportChangedListener {
+        void onOnSportChanged(List<Integer> selectedSportsIdList);
     }
 }

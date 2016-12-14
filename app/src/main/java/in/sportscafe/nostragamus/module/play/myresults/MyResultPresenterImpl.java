@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.module.feed.dto.Match;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -39,6 +40,18 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void onArticleScroll(int firstVisibleItemPosition, int childCount, int itemCount) {
         mResultsModel.checkPagination(firstVisibleItemPosition, childCount, itemCount);
+    }
+
+    @Override
+    public void onPowerUp(String powerup) {
+        if(powerup.equalsIgnoreCase("match_replay")){
+            mResultsView.openDialog();
+        }
+    }
+
+    @Override
+    public void onReplayPowerupApplied() {
+        mResultsModel.callReplayPowerupApplied();
     }
 
     private void getResultDetails() {
@@ -88,5 +101,15 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void gotoResultsTimeline() {
         mResultsView.goBack();
+    }
+
+    @Override
+    public void onFailedReplayPowerupResponse() {
+        mResultsView.showMessage(Constants.Alerts.REPLAY_POWERUP_FAIL);
+    }
+
+    @Override
+    public void onSuccessReplayPowerupResponse(Match match) {
+        mResultsView.navigatetoPlay(match);
     }
 }

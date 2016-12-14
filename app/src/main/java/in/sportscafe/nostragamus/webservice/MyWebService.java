@@ -1,12 +1,12 @@
 package in.sportscafe.nostragamus.webservice;
 
-import java.lang.ref.Reference;
-
 import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
+import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupRequest;
+import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
@@ -191,5 +191,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<JwtToken> getRefreshTokenRequest() {
         return mNostragamusService.refreshAccessToken();
+    }
+
+    public Call<ReplayPowerupResponse> getReplayPowerup(String powerupId,Integer matchId) {
+        return mNostragamusService.getReplayPowerup(powerupId,matchId);
     }
 }

@@ -62,13 +62,11 @@ public class ApproveAdapter extends Adapter<GroupPerson, ApproveAdapter.ViewHold
 
         TextView mTvName;
 
-        TextView mTvEmail;
 
         public ViewHolder(View V) {
             super(V);
             mIvPhoto = (RoundImage) V.findViewById(R.id.approve_iv_photo);
             mTvName = (TextView) V.findViewById(R.id.approve_tv_name);
-            mTvEmail = (TextView) V.findViewById(R.id.approve_tv_email);
             V.findViewById(R.id.approve_iv_accept).setOnClickListener(this);
             V.findViewById(R.id.approve_iv_reject).setOnClickListener(this);
         }

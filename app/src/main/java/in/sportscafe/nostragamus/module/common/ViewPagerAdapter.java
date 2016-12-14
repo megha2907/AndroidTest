@@ -30,6 +30,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         mFragmentTitleList.add(title);
     }
 
+    public void updateTitle(int pos,String title){
+        mFragmentTitleList.set(pos, title);
+        notifyDataSetChanged();
+    }
+
     @Override
     public CharSequence getPageTitle(int position) {
         return mFragmentTitleList.get(position);

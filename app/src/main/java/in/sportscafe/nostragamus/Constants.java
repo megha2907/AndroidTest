@@ -41,6 +41,7 @@ public interface Constants {
         String NUMBER_OF_POWERUPS = "numberofpowerups";
         String NUMBER_OF_NONEGS_POWERUPS = "numberofnonegspowerups";
         String NUMBER_OF_AUDIENCE_POLL_POWERUPS = "numberofaudiencepollpowerups";
+        String NUMBER_OF_REPLAY_POWERUPS = "numberofreplaypowerups";
         String NUMBER_OF_BADGES = "numberofbadges";
         String NUMBER_OF_GROUPS = "numberofgroups";
         String ALL_BADGES = "allbadges";
@@ -110,6 +111,7 @@ public interface Constants {
         String IMAGE_UPLOADING="Uploading.. Wait for a while...";
         String IMAGE_FILEPATH_EMPTY = "Please Select Image";
         String AUDIENCE_POLL_FAIL = "Not enough responses for a meaningful poll, you can try after some time";
+        String REPLAY_POWERUP_FAIL = "Sorry some error occurred,Please try after some time";
     }
 
     interface BundleKeys {
