@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
@@ -34,8 +36,14 @@ public class PostAnswerModelImpl {
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         super.onResponse(call, response);
                         if (response.isSuccessful()) {
-                            mPostAnswerModelListener.onSuccess();
+                            if(response.body().getMessage().equals("Match has already started")){
+                                mPostAnswerModelListener.onFailed(response.body().getMessage());
+                            }else {
+                                mPostAnswerModelListener.onSuccess();
+                            Log.i("inside","onSuccess");
+                            }
                         } else {
+                            Log.i("inside","onFailed");
                             mPostAnswerModelListener.onFailed(response.message());
                         }
                     }

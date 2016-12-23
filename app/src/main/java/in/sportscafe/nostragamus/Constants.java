@@ -42,6 +42,7 @@ public interface Constants {
         String NUMBER_OF_NONEGS_POWERUPS = "numberofnonegspowerups";
         String NUMBER_OF_AUDIENCE_POLL_POWERUPS = "numberofaudiencepollpowerups";
         String NUMBER_OF_REPLAY_POWERUPS = "numberofreplaypowerups";
+        String NUMBER_OF_FLIP_POWERUPS = "numberofflippowerups";
         String NUMBER_OF_BADGES = "numberofbadges";
         String NUMBER_OF_GROUPS = "numberofgroups";
         String ALL_BADGES = "allbadges";
@@ -111,7 +112,11 @@ public interface Constants {
         String IMAGE_UPLOADING="Uploading.. Wait for a while...";
         String IMAGE_FILEPATH_EMPTY = "Please Select Image";
         String AUDIENCE_POLL_FAIL = "Not enough responses for a meaningful poll, you can try after some time";
-        String REPLAY_POWERUP_FAIL = "Sorry some error occurred,Please try after some time";
+        String POWERUP_FAIL = "Sorry some error occurred,Please try again";
+        String API_FAIL = "Sorry some error occurred,Please try again";
+        String MATCH_ALREADY_STARTED = "This match has already started!";
+        String FLIP_POWERUP_OVER = "You have used all your flip powerups!";
+        String REPLAY_POWERUP_OVER = "You have used all your replay powerups!";
     }
 
     interface BundleKeys {
@@ -140,6 +145,7 @@ public interface Constants {
         String GROUP_CODE = "groupCode";
         String FEEDBACK_FORM_URL = "feedbackFormUrl";
         String FEED_SCREEN = "feedScreen";
+        String PLAYER_ID = "playerId";
     }
 
     interface ParcelableKeys {

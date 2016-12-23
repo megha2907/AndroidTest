@@ -7,9 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Answer {
 
-    @JsonProperty("user_id")
-    private String userId;
-
     @JsonProperty("match_id")
     private Integer matchId;
 
@@ -29,8 +26,7 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(String userId, Integer matchId, Integer questionId, String answerId, String answerTime, String powerUpId) {
-        this.userId = userId;
+    public Answer(Integer matchId, Integer questionId, String answerId, String answerTime, String powerUpId) {
         this.matchId = matchId;
         this.questionId = questionId;
         this.answerId = answerId;
@@ -38,15 +34,6 @@ public class Answer {
         this.powerUpId = powerUpId;
     }
 
-    @JsonProperty("user_id")
-    public String getUserId() {
-        return userId;
-    }
-
-    @JsonProperty("user_id")
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     @JsonProperty("match_id")
     public Integer getMatchId() {

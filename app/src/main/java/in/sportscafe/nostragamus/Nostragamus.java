@@ -112,7 +112,7 @@ public class Nostragamus extends Application {
 
         if(!debuggable) {
             // Initializing the Crashlytics using fabric
-           Fabric.with(this, new Crashlytics());
+           //Fabric.with(this, new Crashlytics());
         }
     }
 

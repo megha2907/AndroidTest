@@ -15,7 +15,13 @@ public interface MyResultsView extends InAppView {
 
     void goBack();
 
-    void openDialog();
+    void setNumberofPowerups(int numberofReplayPowerups, int numberofFlipPowerups);
+
+    void setMatchDetails(Match match);
+
+    void openReplayDialog();
 
     void navigatetoPlay(Match match);
+
+    void openFlipDialog();
 }

@@ -276,6 +276,13 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedIntData(SharedKeys.NUMBER_OF_REPLAY_POWERUPS, numberofPowerups);
     }
 
+    public int getNumberofFlipPowerups() {
+        return getSharedIntData(SharedKeys.NUMBER_OF_FLIP_POWERUPS, 0);
+    }
+
+    public void setNumberofFlipPowerups(int numberofPowerups) {
+        setSharedIntData(SharedKeys.NUMBER_OF_FLIP_POWERUPS, numberofPowerups);
+    }
 
 
     //BADGES

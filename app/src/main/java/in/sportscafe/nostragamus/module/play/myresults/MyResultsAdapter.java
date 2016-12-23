@@ -1,12 +1,19 @@
 package in.sportscafe.nostragamus.module.play.myresults;
 
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,6 +43,10 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
+    private Boolean isShowFlipOptn = false;
+
+    private Boolean isFlipclicked = true;
+
     public MyResultsAdapter(Context context) {
         super(context);
     }
@@ -58,6 +69,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     public void onBindViewHolder(ViewHolder holder, int position) {
         Feed feed = getItem(position);
         holder.mPosition = position;
+        holder.mLlTourParent.removeAllViews();
         for (Tournament tournament : feed.getTournaments()) {
             holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent));
         }
@@ -75,6 +87,10 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         }
 
         return tourView;
+    }
+
+    public void showFlipOptnforQuestion() {
+        isShowFlipOptn = true;
     }
 
 
@@ -197,6 +213,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         TextView mTvResultWait;
         HmImageView mIvPartyBPhoto;
 
+
         public MyResultViewHolder(View V) {
             super(V);
 
@@ -217,18 +234,19 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     }
 
 
-    private View getMyPrediction(ViewGroup parent, Question question) {
+    private View getMyPrediction(ViewGroup parent, final Question question)   {
         View convertView = getLayoutInflater().inflate(R.layout.inflater_my_predictions_row, parent, false);
 
         ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_question))
                 .setText(question.getQuestionText());
 
 
-        TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
+        final TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
         CustomButton powerupUsed = (CustomButton) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
         RelativeLayout powerup = (RelativeLayout) convertView.findViewById(R.id.my_predictions_row_rl);
         TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
-        TextView tvotheroption = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
+        final TextView tvotheroption = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
+        final ImageView mFlipPowerUp = (ImageView) convertView.findViewById(R.id.powerup_flip);
 
         tvAnswer.setCompoundDrawablePadding(10);
         tvotheroption.setCompoundDrawablePadding(10);
@@ -245,7 +263,66 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                 tvAnswerPoints.setText(question.getAnswerPoints() + " Points");
             }
 
+        }else {
+            if(isShowFlipOptn==true){
+                mFlipPowerUp.setVisibility(View.VISIBLE);
+                ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(convertView.getContext(), R.animator.flip_anim);
+                anim.setTarget(mFlipPowerUp);
+                anim.setDuration(3000);
+                anim.setRepeatCount(ObjectAnimator.INFINITE);
+                anim.setRepeatMode(ObjectAnimator.REVERSE);
+                anim.start();
 
+                final int answerId = Integer.parseInt(question.getAnswerId());
+                if (answerId == 1) {
+                    tvotheroption.setText(question.getQuestionOption2());
+                } else {
+                    tvotheroption.setText(question.getQuestionOption1());
+                }
+
+
+                mFlipPowerUp.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+
+                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(v.getContext());
+                        alertDialogBuilder.setMessage("Are you sure, You want to apply Flip Powerup on this Question?");
+                        alertDialogBuilder.setPositiveButton("yes",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        if (answerId == 1) {
+                                            tvAnswer.setText(question.getQuestionOption2());
+                                            tvotheroption.setText(question.getQuestionOption1());
+                                        } else {
+                                            tvAnswer.setText(question.getQuestionOption1());
+                                            tvotheroption.setText(question.getQuestionOption2());
+                                        }
+
+                                    }
+                                });
+
+                        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+
+//                        if(isFlipclicked==true)
+//                        {
+//                            mFlipPowerUp.setEnabled(false);
+//                        }
+//                        isFlipclicked =false;
+//                        notifyDataSetChanged();
+                    }
+                });
+
+                tvotheroption.setVisibility(View.VISIBLE);
+                setTextColor(tvotheroption, R.color.textcolorlight);
+            }
         }
 
         String powerupused = question.getAnswerPowerUpId();
@@ -261,6 +338,12 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             powerupUsed.setVisibility(View.VISIBLE);
         } else if (powerupused.equals("no_negs")) {
             powerupUsed.setBackgroundResource(R.drawable.powerup_nonegs);
+            powerupUsed.setVisibility(View.VISIBLE);
+        }else if (powerupused.equals("answer_flip")) {
+            powerupUsed.setBackgroundResource(R.drawable.powerup_flip);
+            powerupUsed.setVisibility(View.VISIBLE);
+        } else if (powerupused.equals("match_replay")) {
+            powerupUsed.setBackgroundResource(R.drawable.replay_icon);
             powerupUsed.setVisibility(View.VISIBLE);
         }
 
@@ -352,6 +435,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
         return convertView;
     }
+
 
     private View getLeaderBoardView(ViewGroup parent,Match match) {
 

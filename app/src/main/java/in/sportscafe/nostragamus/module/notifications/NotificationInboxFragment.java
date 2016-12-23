@@ -1,24 +1,33 @@
 package in.sportscafe.nostragamus.module.notifications;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.moengage.addon.inbox.InboxFragment;
+import com.moengage.addon.inbox.InboxManager;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by deepanshi on 26/8/16.
@@ -61,7 +70,21 @@ public class NotificationInboxFragment extends InboxFragment implements View.OnC
         ListView listView = (ListView) getView().findViewById(R.id.MOEInboxList);
         listView.setDividerHeight(0);
         listView.setDivider(getResources().getDrawable(android.R.color.transparent));
-        listView.setBackgroundResource(R.drawable.gradient_bg);
+        listView.setBackgroundResource(R.color.black);
+        listView.setLongClickable(true);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, long id) {
+                // TODO Auto-generated method stub
+
+                Log.v("long clicked","pos: " + pos);
+                InboxManager.ViewHolder holder = (InboxManager.ViewHolder) arg1.getTag();
+                long notificationId =holder.inboxMessage._id;
+                Log.v("long clicked","notification: " + notificationId);
+                return true;
+            }
+        });
 
     }
 
@@ -100,4 +123,10 @@ public class NotificationInboxFragment extends InboxFragment implements View.OnC
         ((AppCompatActivity) getActivity()).setSupportActionBar(mtoolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
+    }
+
 }

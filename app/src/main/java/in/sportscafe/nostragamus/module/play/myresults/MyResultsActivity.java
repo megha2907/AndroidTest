@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -21,8 +22,10 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.MyResultsTimelineActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -45,6 +48,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     private Boolean isFabOpen = false;
     private FloatingActionButton powerupMainFab,powerupReplayFab,powerupFlipFab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
+
+    private Bundle matchBundle;
 
 
     @Override
@@ -70,6 +75,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         powerupReplayFab.setOnClickListener(this);
         powerupFlipFab.setOnClickListener(this);
 
+
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
 
@@ -88,6 +94,15 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
         this.mResultsPresenter = MyResultPresenterImpl.newInstance(this);
         this.mResultsPresenter.onCreateMyResults(getIntent().getExtras());
+
+        Bundle mbundle = new Bundle();
+        mbundle = getIntent().getExtras();
+        Match match = (Match) mbundle.getSerializable(Constants.BundleKeys.MATCH_LIST);
+        if (match.getMatchPoints()!=0){
+            powerupMainFab.setVisibility(View.GONE);
+        }else {
+            powerupMainFab.setVisibility(View.VISIBLE);
+        }
 
 
     }
@@ -146,31 +161,73 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
             case R.id.fab_replay:
                 if (!mFlippowerUpApplied || !mReplaypowerUpApplied ) {
-//                    if (NostragamusDataHandler.getInstance().getNumberof2xPowerups() > 0) {
+                    if (NostragamusDataHandler.getInstance().getNumberofReplayPowerups() > 0) {
                         mFlippowerUpApplied = true;
                         mReplaypowerUpApplied = true;
                         mResultsPresenter.onPowerUp("match_replay");
-                    //}
+                    }else {
+                        Toast toast = Toast.makeText(this,Constants.Alerts.REPLAY_POWERUP_OVER, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+                }
+            case R.id.fab_flip:
+                if (!mFlippowerUpApplied || !mReplaypowerUpApplied ) {
+                   if (NostragamusDataHandler.getInstance().getNumberofFlipPowerups() > 0) {
+                    mFlippowerUpApplied = true;
+                    mReplaypowerUpApplied = true;
+                    navigatetoFlipScreen();
+                   }else {
+                       Toast toast = Toast.makeText(this,Constants.Alerts.FLIP_POWERUP_OVER, Toast.LENGTH_LONG);
+                       toast.setGravity(Gravity.CENTER, 0, 0);
+                       toast.show();
+                   }
                 }
                 break;
 
         }
     }
 
+    private void navigatetoFlipScreen() {
+        Intent mintent =  new Intent(this, FlipActivity.class);
+        mintent.putExtras(matchBundle);
+        startActivity(mintent);
+    }
+
     @Override
-    public void openDialog(){
+    public void setNumberofPowerups(int numberofReplayPowerups, int numberofFlipPowerups) {
+
+        if (numberofReplayPowerups < 1) {
+            mReplaypowerUpApplied = true;
+        }
+        else if (numberofFlipPowerups < 1){
+            mFlippowerUpApplied=true;
+        }
+
+        btnReplayPowerUpCount.setText(String.valueOf(numberofReplayPowerups));
+        btnFlipPowerUpCount.setText(String.valueOf(numberofFlipPowerups));
+
+    }
+
+    @Override
+    public void setMatchDetails(Match match) {
+        matchBundle = new Bundle();
+        matchBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
+    }
+
+    @Override
+    public void openReplayDialog(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Are you sure, You want to apply Replay Powerup?");
                 alertDialogBuilder.setPositiveButton("yes",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                               // NostragamusDataHandler.getInstance().setNumberofReplayPowerups(NostragamusDataHandler.getInstance().getNumberofReplayPowerups() - 1);
-                                //String updatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofReplayPowerups() - 1);
-                                //btnReplayPowerUpCount.setText(updatedPowerUps);
+                                NostragamusDataHandler.getInstance().setNumberofReplayPowerups(NostragamusDataHandler.getInstance().getNumberofReplayPowerups() - 1);
+                                String updatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofReplayPowerups() - 1);
+                                btnReplayPowerUpCount.setText(updatedPowerUps);
                                 mResultsPresenter.onReplayPowerupApplied();
                                 animateFAB();
-                                Toast.makeText(MyResultsActivity.this,"You clicked yes button", Toast.LENGTH_LONG).show();
                             }
                         });
 
@@ -192,6 +249,14 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         Intent intent =  new Intent(this, PredictionActivity.class);
         intent.putExtras(mBundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void openFlipDialog() {
+        String flipPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofFlipPowerups());
+        btnFlipPowerUpCount.setText(flipPowerUps);
+        mResultsPresenter.onFlipPowerupApplied();
+        animateFAB();
     }
 
     public void animateFAB(){

@@ -35,8 +35,8 @@
             >
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_main"
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="@dimen/dp_40"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45"
                 android:layout_gravity="bottom|end"
                 app:backgroundTint="@color/blackopacity"
                 app:borderWidth="0dp"
@@ -72,8 +72,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_replay"
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_45"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
             android:layout_gravity="bottom|end"
             android:layout_marginRight="@dimen/dp_18"
             android:visibility="invisible"
@@ -83,7 +83,7 @@
             android:layout_below="@+id/fab_flip"
             android:src="@drawable/replay_icon"
             android:layout_marginTop="@dimen/dp_20"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             />
 
         <com.jeeva.android.widgets.customfont.CustomButton
@@ -116,8 +116,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_flip"
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_45"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
             android:layout_gravity="bottom|end"
             android:layout_marginRight="@dimen/dp_18"
             android:visibility="invisible"
@@ -125,9 +125,9 @@
             android:layout_alignParentRight="true"
             app:elevation="0dp"
             android:layout_below="@+id/fab_flip"
-            android:src="@drawable/flip_icon"
+            android:src="@drawable/powerup_flip"
             android:layout_marginTop="@dimen/dp_20"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             />
 
         <com.jeeva.android.widgets.customfont.CustomButton

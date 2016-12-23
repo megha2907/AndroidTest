@@ -1,6 +1,8 @@
 package in.sportscafe.nostragamus.module.user.leaderboard;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,11 +13,15 @@ import android.widget.TextView;
 import com.jeeva.android.volley.Volley;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.RoundImage;
+import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -41,6 +47,10 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
+
+
+
         UserLeaderBoard userLeaderBoard = getItem(position);
 
 
@@ -86,6 +96,8 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             holder.mViewUserLine.setVisibility(View.GONE);
         }
 
+
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -119,6 +131,13 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             V.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    String playerId = String.valueOf(getItem(getAdapterPosition()).getUserId());
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString(Constants.BundleKeys.PLAYER_ID,playerId);
+                    Intent mintent2 =  new Intent(view.getContext(), PlayerProfileActivity.class);
+                    mintent2.putExtras(mBundle);
+                    view.getContext().startActivity(mintent2);
 
                 }
             });

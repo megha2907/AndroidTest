@@ -5,7 +5,6 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
-import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupRequest;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
@@ -34,6 +33,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummaryResponse;
+import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.AllSports;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.PreferenceRequest;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.UserSports;
@@ -74,6 +74,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<UserInfoResponse> getUserInfoRequest(String userId) {
         return mNostragamusService.getUserInfo(userId);
+    }
+
+    public Call<PlayerInfoResponse> getPlayerInfoRequest(String playerId) {
+        return mNostragamusService.getPlayerInfo(playerId);
     }
 
     public Call<AllSports> getAllSportsRequest() {
@@ -145,7 +149,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<MyResultsResponse> getMyResultsRequest(Integer MatchId) {
         return mNostragamusService.getMyResults(NostragamusDataHandler.getInstance().getUserId(),
-               MatchId);
+                MatchId);
     }
 
     public Call<LbSummaryResponse> getLeaderBoardSummary() {
@@ -195,5 +199,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<ReplayPowerupResponse> getReplayPowerup(String powerupId,Integer matchId) {
         return mNostragamusService.getReplayPowerup(powerupId,matchId);
+    }
+
+    public Call<ReplayPowerupResponse> getFlipPowerup(String powerupId, Integer matchId, Integer questionId) {
+        return mNostragamusService.getFlipPowerup(powerupId,matchId,questionId);
     }
 }

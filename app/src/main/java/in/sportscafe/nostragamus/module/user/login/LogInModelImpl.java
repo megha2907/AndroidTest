@@ -180,6 +180,8 @@ public class LogInModelImpl implements LogInModel {
         nostragamusDataHandler.setNumberof2xPowerups(userInfo.getPowerUps().get("2x"));
         nostragamusDataHandler.setNumberofNonegsPowerups(userInfo.getPowerUps().get("no_negs"));
         nostragamusDataHandler.setNumberofAudiencePollPowerups(userInfo.getPowerUps().get("player_poll"));
+        nostragamusDataHandler.setNumberofReplayPowerups(userInfo.getPowerUps().get("match_replay"));
+        nostragamusDataHandler.setNumberofFlipPowerups(userInfo.getPowerUps().get("answer_flip"));
         nostragamusDataHandler.setNumberofBadges(userInfo.getBadges().size());
         userInfo.setPoints(100L);
         Log.i("powerups", String.valueOf(userInfo.getPowerUps().get("2x")));

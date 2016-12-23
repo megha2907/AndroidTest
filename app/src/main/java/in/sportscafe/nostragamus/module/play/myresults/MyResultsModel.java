@@ -15,4 +15,6 @@ public interface MyResultsModel {
     void checkPagination(int firstVisibleItemPosition, int childCount, int itemCount);
 
     void callReplayPowerupApplied();
+
+    void showFlipQuestion();
 }

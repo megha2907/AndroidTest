@@ -14,4 +14,7 @@ public interface MyResultsPresenter {
     void onPowerUp(String powerup);
 
     void onReplayPowerupApplied();
+
+    void onFlipPowerupApplied();
+
 }

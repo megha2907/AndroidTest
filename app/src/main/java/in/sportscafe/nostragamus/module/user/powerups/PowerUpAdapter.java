@@ -56,6 +56,16 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
                 holder.mBtnPowerUp.setImageResource(R.drawable.powerup_audience_poll);
                 holder.mTvPowerUpDesc.setText("Peak into how other Nostragamus players have predicted");
                 break;
+            case "answer_flip":
+                holder.mTvPowerUpName.setText("Flip Answer");
+                holder.mBtnPowerUp.setImageResource(R.drawable.powerup_flip);
+                holder.mTvPowerUpDesc.setText("Change your mind about a prediction you made before a match begins");
+                break;
+            case "match_replay":
+                holder.mTvPowerUpName.setText("Replay Match");
+                holder.mBtnPowerUp.setImageResource(R.drawable.replay_icon);
+                holder.mTvPowerUpDesc.setText("Forget all predictions made for a match so that you can play it again");
+                break;
 
         }
 

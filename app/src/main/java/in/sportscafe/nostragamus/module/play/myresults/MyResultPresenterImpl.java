@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 
 /**
@@ -29,6 +30,8 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     public void onCreateMyResults(Bundle bundle) {
         mResultsModel.init(bundle);
         getResultDetails();
+        mResultsView.setNumberofPowerups(NostragamusDataHandler.getInstance().getNumberofReplayPowerups(),
+                NostragamusDataHandler.getInstance().getNumberofFlipPowerups());
 
         if (bundle.containsKey("screen"))
         {
@@ -45,14 +48,27 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void onPowerUp(String powerup) {
         if(powerup.equalsIgnoreCase("match_replay")){
-            mResultsView.openDialog();
+            mResultsView.openReplayDialog();
+        }else if (powerup.equalsIgnoreCase("answer_flip")){
+            mResultsView.openFlipDialog();
         }
+    }
+
+    @Override
+    public void onsetMatchDetails(Match match) {
+        mResultsView.setMatchDetails(match);
     }
 
     @Override
     public void onReplayPowerupApplied() {
         mResultsModel.callReplayPowerupApplied();
     }
+
+    @Override
+    public void onFlipPowerupApplied() {
+        mResultsModel.showFlipQuestion();
+    }
+
 
     private void getResultDetails() {
         mResultsView.showProgressbar();
@@ -105,7 +121,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
 
     @Override
     public void onFailedReplayPowerupResponse() {
-        mResultsView.showMessage(Constants.Alerts.REPLAY_POWERUP_FAIL);
+        mResultsView.showMessage(Constants.Alerts.POWERUP_FAIL);
     }
 
     @Override
