@@ -3,20 +3,32 @@ package in.sportscafe.nostragamus.module.user.myprofile;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.volley.Volley;
 
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
@@ -27,7 +39,10 @@ import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.MyResultsTimelineActivity;
 import in.sportscafe.nostragamus.module.user.badges.BadgeActivity;
+import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
+import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
+import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.challenges.ChallengesFragment;
@@ -35,12 +50,15 @@ import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.groups.GroupsFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.sports.SportsFragment;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUpActivity;
+import in.sportscafe.nostragamus.module.user.powerups.PowerUpFragment;
 import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity;
+import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
+import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionModel;
 
 /**
  * Created by Jeeva on 14/6/16.
  */
-public class ProfileFragment extends NostragamusFragment implements ProfileView, View.OnClickListener {
+public class ProfileFragment extends NostragamusFragment implements ProfileView, ProfileSportSelectionFragment.OnSportSelectionChangedListener,View.OnClickListener {
 
     private static final int SPORTS_SELECTION_CODE = 34;
 
@@ -57,6 +75,18 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     private OnHomeActionListener mHomeActionListener;
 
     private ViewPager mViewPager;
+
+    private String sportsFollowed;
+
+    private String powerUpsCount;
+
+    private String groupsCount;
+
+    private String badgeCount;
+
+    private ViewPagerAdapter mpagerAdapter;
+
+    private Boolean groupClicked=false;
 
     @Override
     public void onAttach(Context context) {
@@ -89,12 +119,13 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     private void setClickListeners() {
         findViewById(R.id.profile_btn_edit).setOnClickListener(this);
         findViewById(R.id.profile_btn_logout).setOnClickListener(this);
-        findViewById(R.id.profile_groups_parent).setOnClickListener(this);
+        //findViewById(R.id.profile_groups_parent).setOnClickListener(this);
         findViewById(R.id.profile_ll_points_parent).setOnClickListener(this);
-        findViewById(R.id.profile_ll_powerups_parent).setOnClickListener(this);
-        findViewById(R.id.profile_ll_sports_followed_parent).setOnClickListener(this);
-        findViewById(R.id.profile_ll_badge_parent).setOnClickListener(this);
+        //findViewById(R.id.profile_ll_powerups_parent).setOnClickListener(this);
+        //findViewById(R.id.profile_ll_sports_followed_parent).setOnClickListener(this);
+        //findViewById(R.id.profile_ll_badge_parent).setOnClickListener(this);
         findViewById(R.id.profile_iv_image).setOnClickListener(this);
+        findViewById(R.id.join_grp_btn).setOnClickListener(this);
     }
 
     @Override
@@ -116,38 +147,199 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     @Override
     public void setSportsFollowedCount(int sportsFollowedCount) {
-        TextView tvsports=(TextView) findViewById(R.id.profile_tv_sports_folld);
-        tvsports.setText(String.valueOf(sportsFollowedCount));
+//        TextView tvsports=(TextView) findViewById(R.id.profile_tv_sports_folld);
+//        tvsports.setText(String.valueOf(sportsFollowedCount));
+        sportsFollowed = String.valueOf(sportsFollowedCount);
+
     }
 
     @Override
     public void setGroupsCount(int GroupsCount) {
-        TextView tvGroup=(TextView) findViewById(R.id.profile_number_of_groups);
-        tvGroup.setText(String.valueOf(GroupsCount));
+//        TextView tvGroup=(TextView) findViewById(R.id.profile_number_of_groups);
+//        tvGroup.setText(String.valueOf(GroupsCount));
+        groupsCount = String.valueOf(GroupsCount);
     }
 
 
     @Override
     public void setPowerUpsCount(int PowerUpsCount) {
-        TextView tvPowerUp=(TextView) findViewById(R.id.profile_tv_powerups);
-        tvPowerUp.setText(String.valueOf(PowerUpsCount));
+//        TextView tvPowerUp=(TextView) findViewById(R.id.profile_tv_powerups);
+//        tvPowerUp.setText(String.valueOf(PowerUpsCount));
+        powerUpsCount = String.valueOf(PowerUpsCount);
     }
 
 
     @Override
     public void setPoints(long points) {
         TextView tvPoints=(TextView) findViewById(R.id.profile_tv_points);
-        tvPoints.setText(String.valueOf(points));
+        tvPoints.setText(String.valueOf(points)+" Points");
     }
 
     @Override
     public void setBadgesCount(int badgesCount) {
 
-        TextView tvBadges=(TextView) findViewById(R.id.profile_tv_badges);
-        if (badgesCount==0){
-            tvBadges.setText("0");
+        List<String> badgeList = NostragamusDataHandler.getInstance().getBadgeList();
+
+        LinearLayout parent = (LinearLayout)findViewById(R.id.badges_ll);
+        RelativeLayout.LayoutParams layoutParams =
+                (RelativeLayout.LayoutParams)parent.getLayoutParams();
+        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        parent.setLayoutParams(layoutParams);
+
+        if(badgeList.size() <= 8) {
+
+            LinearLayout layout2 = new LinearLayout(getContext());
+            layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            parent.setOrientation(LinearLayout.VERTICAL);
+            parent.addView(layout2);
+            layout2.setGravity(Gravity.CENTER_HORIZONTAL);
+
+
+            for (int i = 0; i < badgeList.size(); i++) {
+                String[] parts = badgeList.get(i).split("\\$");
+
+                String badge_id = parts[0];
+
+                ImageView imageView = new ImageView(getContext());
+                imageView.setLayoutParams(new RelativeLayout.LayoutParams
+                        (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                imageView.getLayoutParams().height = 60;
+                imageView.getLayoutParams().width = 60;
+
+                switch (badge_id) {
+                    case "accuracy_streak":
+                        imageView.setBackgroundResource(R.drawable.notification_accuracy_badge);
+                        layout2.addView(imageView);
+                        break;
+                    case "table_topper":
+                        imageView.setBackgroundResource(R.drawable.notification_topper_badge);
+                        layout2.addView(imageView);
+                        break;
+                    default:
+                        imageView.setBackgroundResource(R.drawable.notification_topper_badge);
+                        layout2.addView(imageView);
+                        break;
+                }
+
+            }
+
+        }else if(badgeList.size()>8) {
+
+            LinearLayout layout2 = new LinearLayout(getContext());
+            layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            parent.setOrientation(LinearLayout.VERTICAL);
+            parent.addView(layout2);
+            layout2.setGravity(Gravity.CENTER_HORIZONTAL);
+
+            for (int i = 0; i < 8; i++) {
+                String[] parts = badgeList.get(i).split("\\$");
+
+                String badge_id = parts[0];
+
+                ImageView imageView = new ImageView(getContext());
+                imageView.setLayoutParams(new RelativeLayout.LayoutParams
+                        (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                imageView.getLayoutParams().height = 60;
+                imageView.getLayoutParams().width = 60;
+
+                switch (badge_id) {
+                    case "accuracy_streak":
+                        imageView.setBackgroundResource(R.drawable.notification_accuracy_badge);
+                        layout2.addView(imageView);
+                        break;
+                    case "table_topper":
+                        imageView.setBackgroundResource(R.drawable.notification_topper_badge);
+                        layout2.addView(imageView);
+                        break;
+                    default:
+                        imageView.setBackgroundResource(R.drawable.notification_topper_badge);
+                        layout2.addView(imageView);
+                        break;
+                }
+            }
+
+
+                LinearLayout layout3 = new LinearLayout(getContext());
+                layout3.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                parent.addView(layout3);
+                layout3.setGravity(Gravity.CENTER_HORIZONTAL);
+
+            if(badgeList.size()<=16){
+
+                for (int j = 8; j < badgeList.size(); j++) {
+
+                    ImageView imageView2 = new ImageView(getContext());
+                    imageView2.setLayoutParams(new RelativeLayout.LayoutParams
+                            (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    imageView2.getLayoutParams().height = 60;
+                    imageView2.getLayoutParams().width = 60;
+
+                    String[] part = badgeList.get(j).split("\\$");
+                    String badgeId = part[0];
+
+                    switch (badgeId) {
+                        case "accuracy_streak":
+                            imageView2.setBackgroundResource(R.drawable.notification_accuracy_badge);
+                            layout3.addView(imageView2);
+                            break;
+                        case "table_topper":
+                            imageView2.setBackgroundResource(R.drawable.notification_topper_badge);
+                            layout3.addView(imageView2);
+                            break;
+                        default:
+                            imageView2.setBackgroundResource(R.drawable.notification_topper_badge);
+                            layout3.addView(imageView2);
+                            break;
+                    }
+                }
+
+            }else if (badgeList.size()>16){
+
+                for (int j = 8; j < 16; j++) {
+
+                    ImageView imageView2 = new ImageView(getContext());
+                    imageView2.setLayoutParams(new RelativeLayout.LayoutParams
+                            (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    imageView2.getLayoutParams().height = 60;
+                    imageView2.getLayoutParams().width = 60;
+
+                    String[] part = badgeList.get(j).split("\\$");
+                    String badgeId = part[0];
+
+                    switch (badgeId) {
+                        case "accuracy_streak":
+                            imageView2.setBackgroundResource(R.drawable.notification_accuracy_badge);
+                            layout3.addView(imageView2);
+                            break;
+                        case "table_topper":
+                            imageView2.setBackgroundResource(R.drawable.notification_topper_badge);
+                            layout3.addView(imageView2);
+                            break;
+                        default:
+                            imageView2.setBackgroundResource(R.drawable.notification_topper_badge);
+                            layout3.addView(imageView2);
+                            break;
+                    }
+                }
+
+                TextView textview = new TextView(getContext());
+                RelativeLayout.LayoutParams lpTextView = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT);
+                textview.setLayoutParams(lpTextView);
+                textview.setPadding(5,10,5,5);
+                textview.setText("+ " + (badgeList.size()-16) + " More");
+                textview.setTextColor(Color.WHITE);
+                layout3.addView(textview);
+
+            }
+
         }
-        tvBadges.setText(String.valueOf(badgesCount));
+
+        if (badgesCount==0){
+            badgeCount = "0";
+        }
+        badgeCount = String.valueOf(badgesCount);
 
     }
 
@@ -155,13 +347,22 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     @Override
     public void initMyPosition(LbSummary lbSummary) {
         mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
-        mViewPager.setAdapter(getAdapter(lbSummary));
+        mpagerAdapter = getAdapter(lbSummary);
+        mViewPager.setAdapter(mpagerAdapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 NostragamusAnalytics.getInstance().trackUserProfile(AnalyticsActions.TABS,
                         mViewPager.getAdapter().getPageTitle(position).toString());
+
+                Button createGroupbtn = (Button)findViewById(R.id.join_grp_btn);
+                if(position==1){
+                    createGroupbtn.setVisibility(View.VISIBLE);
+                }else {
+                    createGroupbtn.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
@@ -173,13 +374,35 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
         tabLayout.setupWithViewPager(mViewPager);
+
+        LinearLayout linearLayout = (LinearLayout)tabLayout.getChildAt(0);
+        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setColor(getContext().getResources().getColor(R.color.profile_tab_line_color));
+        drawable.setSize(1, 1);
+        linearLayout.setDividerPadding(10);
+        linearLayout.setDividerDrawable(drawable);
+
+//        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+//            TabLayout.Tab tab = tabLayout.getTabAt(i);
+//            RelativeLayout relativeLayout = (RelativeLayout)
+//                    LayoutInflater.from(getContext()).inflate(R.layout.inflater_profile_tab_layout, tabLayout, false);
+//
+//            TextView tabTextView = (TextView) relativeLayout.findViewById(R.id.tab_title);
+//            tabTextView.setText(tab.getText());
+//            tab.setCustomView(relativeLayout);
+//            tab.select();
+//        }
+
     }
 
     private ViewPagerAdapter getAdapter(LbSummary lbSummary) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        pagerAdapter.addFragment(GroupsFragment.newInstance(lbSummary.getGroups()), "Groups");
-        pagerAdapter.addFragment(SportsFragment.newInstance(lbSummary.getSports()), "Sports");
-        pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getChallenges()), "Challenges");
+        pagerAdapter.addFragment(PowerUpFragment.newInstance(), powerUpsCount+"\n Powerups");
+        pagerAdapter.addFragment(AllGroupsFragment.newInstance(), groupsCount+ "\n Groups");
+        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), sportsFollowed + " \n Sports");
+        pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getChallenges()), "0  \n Challenges");
+        pagerAdapter.addFragment(BadgeFragment.newInstance(), badgeCount+"\n Badges");
         return pagerAdapter;
     }
 
@@ -209,26 +432,29 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
             case R.id.profile_ll_points_parent:
                 navigateToMyResults();
                 break;
-            case R.id.profile_ll_sports_followed_parent:
-                navigateToSportSelection();
-                break;
+//            case R.id.profile_ll_sports_followed_parent:
+//                navigateToSportSelection();
+//                break;
             case R.id.profile_btn_edit:
                 navigateToEditProfile();
                 break;
             case R.id.profile_iv_image:
                 navigateToEditProfile();
                 break;
-            case R.id.profile_groups_parent:
-                navigateToNewGroup();
-                break;
-            case R.id.profile_ll_powerups_parent:
-                navigateToPowerUpScreen();
-                break;
-            case R.id.profile_ll_badge_parent:
-                navigateToBadgeScreen();
-                break;
+//            case R.id.profile_groups_parent:
+//                navigateToNewGroup();
+//                break;
+//            case R.id.profile_ll_powerups_parent:
+//                navigateToPowerUpScreen();
+//                break;
+//            case R.id.profile_ll_badge_parent:
+//                navigateToBadgeScreen();
+//                break;
             case R.id.profile_btn_logout:
                 navigateToSettings();
+                break;
+            case R.id.join_grp_btn:
+                navigateToJoinGroup();
                 break;
         }
     }
@@ -240,6 +466,11 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     private void navigateToSettings() {
         startActivity(new Intent(getContext(), SettingsActivity.class));
+    }
+
+    @Override
+    public void navigateToJoinGroup() {
+        startActivity(new Intent(getContext(), JoinGroupActivity.class));
     }
 
     private void navigateToSportSelection() {
@@ -280,4 +511,14 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         }
     }
 
+    @Override
+    public void setSportsCount(int sportsCount) {
+
+        if(sportsCount==1){
+            mpagerAdapter.updateTitle(2,sportsCount+ " \n Sport");
+        }
+        else {
+            mpagerAdapter.updateTitle(2,sportsCount+ " \n Sports");
+        }
+    }
 }

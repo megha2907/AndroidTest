@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.feed.dto.Match;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -28,6 +30,8 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     public void onCreateMyResults(Bundle bundle) {
         mResultsModel.init(bundle);
         getResultDetails();
+        mResultsView.setNumberofPowerups(NostragamusDataHandler.getInstance().getNumberofReplayPowerups(),
+                NostragamusDataHandler.getInstance().getNumberofFlipPowerups());
 
         if (bundle.containsKey("screen"))
         {
@@ -40,6 +44,31 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     public void onArticleScroll(int firstVisibleItemPosition, int childCount, int itemCount) {
         mResultsModel.checkPagination(firstVisibleItemPosition, childCount, itemCount);
     }
+
+    @Override
+    public void onPowerUp(String powerup) {
+        if(powerup.equalsIgnoreCase("match_replay")){
+            mResultsView.openReplayDialog();
+        }else if (powerup.equalsIgnoreCase("answer_flip")){
+            mResultsView.openFlipDialog();
+        }
+    }
+
+    @Override
+    public void onsetMatchDetails(Match match) {
+        mResultsView.setMatchDetails(match);
+    }
+
+    @Override
+    public void onReplayPowerupApplied() {
+        mResultsModel.callReplayPowerupApplied();
+    }
+
+    @Override
+    public void onFlipPowerupApplied() {
+        mResultsModel.showFlipQuestion();
+    }
+
 
     private void getResultDetails() {
         mResultsView.showProgressbar();
@@ -88,5 +117,15 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void gotoResultsTimeline() {
         mResultsView.goBack();
+    }
+
+    @Override
+    public void onFailedReplayPowerupResponse() {
+        mResultsView.showMessage(Constants.Alerts.POWERUP_FAIL);
+    }
+
+    @Override
+    public void onSuccessReplayPowerupResponse(Match match) {
+        mResultsView.navigatetoPlay(match);
     }
 }

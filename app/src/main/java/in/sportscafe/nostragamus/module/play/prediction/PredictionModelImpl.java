@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.jeeva.android.Log;
 
@@ -60,6 +61,8 @@ public class PredictionModelImpl implements PredictionModel,
 
     private boolean mPassEnabled = true;
 
+    private Context context;
+
 
     public PredictionModelImpl(OnPredictionModelListener predictionModelListener) {
         this.mPredictionModelListener = predictionModelListener;
@@ -67,6 +70,10 @@ public class PredictionModelImpl implements PredictionModel,
 
     public static PredictionModel newInstance(OnPredictionModelListener predictionModelListener) {
         return new PredictionModelImpl(predictionModelListener);
+    }
+
+    public PredictionModelImpl(Context context){
+        this.context=context;
     }
 
     @Override
@@ -322,7 +329,6 @@ public class PredictionModelImpl implements PredictionModel,
 
     private void saveSinglePrediction(Question question, int answerId) {
         Answer answer = new Answer (
-                NostragamusDataHandler.getInstance().getUserId(),
                 question.getMatchId(),
                 question.getQuestionId(),
                 String.valueOf(answerId),
@@ -337,13 +343,17 @@ public class PredictionModelImpl implements PredictionModel,
     private void postAnswerToServer(Answer answer) {
         new PostAnswerModelImpl(new PostAnswerModelImpl.PostAnswerModelListener() {
             @Override
-            public void onSuccess() {}
+            public void onSuccess() {
+            }
 
             @Override
             public void onNoInternet() {}
 
             @Override
-            public void onFailed(String message) {}
+            public void onFailed(String message) {
+                mPredictionModelListener.onFailedPostAnswerToServer(message);
+
+            }
         }).postAnswer(answer);
     }
 //
@@ -387,5 +397,7 @@ public class PredictionModelImpl implements PredictionModel,
         void onNegativePowerUpApplied();
 
         void changePlayCardBackground(String sportName);
+
+        void onFailedPostAnswerToServer(String message);
     }
 }

@@ -9,9 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
@@ -48,7 +50,11 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     private TextView mTvGroupName;
 
-    private TextView mEtMembersCount;
+    private Button mBtnShareGroupCode;
+
+    private Button mBtnExitGroup;
+
+    private Button mBtnMembersCount;
 
     private ImageView mIvGroupIcon;
 
@@ -100,15 +106,18 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     public void onClick(View view) {
         switch (view.getId()) {
 
-//            case R.id.edit_profile_btn:
-//                navigatetoEditGroupInfoActivity();
-//                break;
+            case R.id.edit_group_btn:
+                navigatetoEditGroupInfoActivity();
+                break;
 
-            case R.id.group_info_tv_edit_members:
+            case R.id.group_info_btn_edit_members:
                 mGroupInfoPresenter.onClickMembers();
                 break;
             case R.id.group_info_ll_share:
                 mGroupInfoPresenter.onClickShareCode();
+                break;
+            case R.id.group_info_exit_group:
+                mGroupInfoPresenter.onLeaveGroup();
                 break;
 
         }
@@ -152,16 +161,23 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     @Override
     public void setMembersSize(int size) {
 
-        mEtMembersCount = (TextView) findViewById(R.id.group_info_tv_edit_members);
-        mEtMembersCount.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow_group_info, 0);
-        View greyline = (View) findViewById(R.id.group_info_view);
-        greyline.setVisibility(View.VISIBLE);
+        mBtnMembersCount = (Button) findViewById(R.id.group_info_btn_edit_members);
+
+        mBtnExitGroup= (Button) findViewById(R.id.group_info_exit_group);
+        mBtnExitGroup.setVisibility(View.VISIBLE);
+
+        RelativeLayout rlShareCode = (RelativeLayout)findViewById(R.id.group_info_ll_members);
+        rlShareCode.setVisibility(View.VISIBLE);
+        
+
+        TextView tournamentHeading = (TextView) findViewById(R.id.tournaments_tv);
+        tournamentHeading.setVisibility(View.VISIBLE);
 
 
         if (size == 1) {
-            mEtMembersCount.setText(String.valueOf(size) + " Member");
+            mBtnMembersCount.setText(String.valueOf(size) + " Member");
         } else {
-            mEtMembersCount.setText(String.valueOf(size) + " Members");
+            mBtnMembersCount.setText(String.valueOf(size) + " Members");
         }
     }
 
@@ -242,11 +258,17 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        navigateToAllGroups();
+                        navigateToHomeActivity();
                     }
                 }
 
         );
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        navigateToHomeActivity();
     }
 
     @Override
@@ -257,25 +279,11 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.edit_group_btn:
-                navigatetoEditGroupInfoActivity();
-                break;
-            case R.id.leave_group_btn:
-                mGroupInfoPresenter.onLeaveGroup();
-                break;
-        }
-        return true;
+    public void navigateToHomeActivity() {
+        Intent homeintent = new Intent(this, HomeActivity.class);
+        homeintent.putExtra("group", "openprofile");
+        startActivity(homeintent);
+        finish();
     }
 
     /**

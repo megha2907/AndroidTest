@@ -19,15 +19,13 @@ import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 /**
  * Created by Deepanshi on 23/8/16.
  */
-public class AllGroupsActivity extends NostragamusActivity implements AllGroupsView , View.OnClickListener{
+public class AllGroupsActivity extends NostragamusActivity implements AllGroupsView {
 
     private RecyclerView mRvAllGroups;
 
     private AllGroupsPresenter mAllGroupsPresenter;
 
     private Toolbar mtoolbar;
-
-    private Button mbtnEmptyGroups;
 
     private TextView mTvEmptyGroups;
 
@@ -48,25 +46,6 @@ public class AllGroupsActivity extends NostragamusActivity implements AllGroupsV
         this.mAllGroupsPresenter.onCreateAllGroups();
         initToolBar();
 
-    }
-
-    @Override
-    public void navigateToJoinGroup() {
-        startActivity(new Intent(this, JoinGroupActivity.class));
-        finish();
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.all_groups_join_group:
-                navigateToJoinGroup();
-                break;
-            case R.id.all_groups_empty_btn:
-                navigateToJoinGroup();
-                break;
-
-        }
     }
 
     @Override
@@ -91,9 +70,6 @@ public class AllGroupsActivity extends NostragamusActivity implements AllGroupsV
 
     @Override
     public void showGroupsEmpty() {
-        mbtnEmptyGroups = (Button)findViewById(R.id.all_groups_empty_btn);
-        mbtnEmptyGroups.setVisibility(View.VISIBLE);
-
         mTvEmptyGroups=(TextView)findViewById(R.id.all_groups_empty_tv);
         mTvEmptyGroups.setVisibility(View.VISIBLE);
 

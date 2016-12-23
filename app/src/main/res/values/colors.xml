@@ -45,5 +45,7 @@
     <color name="mainpowerupbg">#55202020</color>
     <color name="curious_blue">#29ABE2</color>
     <color name="black_60">#99000000</color>
+    <color name="profile_tab_color">#33000000</color>
+    <color name="profile_tab_line_color">#22ffffff</color>
 
 </resources>

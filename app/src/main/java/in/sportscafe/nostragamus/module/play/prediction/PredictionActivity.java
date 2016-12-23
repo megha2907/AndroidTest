@@ -479,6 +479,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         }
     }
 
+    @Override
+    public void goBack() {
+        finish();
+    }
+
 
     public void animateFAB(){
 

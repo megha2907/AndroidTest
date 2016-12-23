@@ -59,7 +59,6 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
 
     @Override
     public void moveAdapterPosition(int movePosition) {
-        Log.i("moveadapter",String.valueOf(movePosition));
         mRvLeaderBoard.getLayoutManager().scrollToPosition(movePosition);
     }
 

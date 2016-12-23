@@ -90,8 +90,6 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
             TournamentFeedInfo tournamentInfo = getItem(getAdapterPosition());
 
             Integer tournamentId = tournamentInfo.getTournamentId();
-            Log.i("tournamentId", tournamentInfo.getTournamentId().toString());
-
             Bundle bundle = new Bundle();
             bundle.putInt(BundleKeys.TOURNAMENT_ID, tournamentId);
             bundle.putString(BundleKeys.TOURNAMENT_NAME, tournamentInfo.getTournamentName());

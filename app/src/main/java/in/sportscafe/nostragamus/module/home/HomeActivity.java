@@ -26,6 +26,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.notifications.NotificationInboxFragment;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
+import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
@@ -50,17 +51,23 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private ImageView mNotificationButton;
 
+    private ImageView mLeaderBoardButton;
+
     private TextView mHomeTv;
 
     private TextView mProfileTv;
 
     private TextView mNotificationTv;
 
+    private TextView mLeaderBoardTv;
+
     private RelativeLayout mHomeRl;
 
     private RelativeLayout mProfileRl;
 
     private RelativeLayout mNotificationRl;
+
+    private RelativeLayout mLeaderBoardRl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +83,17 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         mHomeButton=(ImageView)findViewById(R.id.home_ibtn_feed);
         mProfileButton=(ImageView)findViewById(R.id.home_ibtn_profile);
         mNotificationButton=(ImageView)findViewById(R.id.home_ibtn_notification);
+        mLeaderBoardButton=(ImageView)findViewById(R.id.home_ibtn_leaderboard);
 
         mHomeTv=(TextView)findViewById(R.id.home_tv_feed);
         mProfileTv=(TextView)findViewById(R.id.home_tv_profile);
         mNotificationTv=(TextView)findViewById(R.id.home_tv_notification);
+        mLeaderBoardTv=(TextView)findViewById(R.id.home_tv_leaderboard);
 
         mHomeRl=(RelativeLayout) findViewById(R.id.home_rl_feed);
         mProfileRl=(RelativeLayout) findViewById(R.id.home_rl_profile);
         mNotificationRl=(RelativeLayout) findViewById(R.id.home_rl_notification);
+        mLeaderBoardRl=(RelativeLayout) findViewById(R.id.home_rl_leaderboard);
 
         Intent intent = getIntent();
         if (null==intent.getExtras()){
@@ -146,10 +156,12 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
                   mHomeButton.setSelected(false);
                   mProfileButton.setSelected(false);
+                  mLeaderBoardButton.setSelected(false);
                   mNotificationButton.setSelected(true);
 
                   mHomeTv.setSelected(false);
                   mProfileTv.setSelected(false);
+                  mLeaderBoardTv.setSelected(false);
                   mNotificationTv.setSelected(true);
 
                   mNotificationRl.setBackgroundColor(Color.BLACK);
@@ -157,6 +169,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
                   mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
                   mProfileRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
 
                   loadFragment(new NotificationInboxFragment());
                   break;
@@ -165,10 +178,12 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
                   mNotificationButton.setSelected(false);
                   mProfileButton.setSelected(false);
+                  mLeaderBoardButton.setSelected(false);
                   mHomeButton.setSelected(true);
 
                   mNotificationTv.setSelected(false);
                   mProfileTv.setSelected(false);
+                  mLeaderBoardTv.setSelected(false);
                   mHomeTv.setSelected(true);
 
                   mHomeRl.setBackgroundColor(Color.BLACK);
@@ -176,32 +191,57 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
                   mProfileRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
                   mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
 
                   loadFragment(new TournamentFragment());
                   break;
 
               case R.id.home_rl_profile:
 
-                mHomeButton.setSelected(false);
+                  mHomeButton.setSelected(false);
                   mNotificationButton.setSelected(false);
+                  mLeaderBoardButton.setSelected(false);
                   mProfileButton.setSelected(true);
 
                   mHomeTv.setSelected(false);
                   mNotificationTv.setSelected(false);
+                  mLeaderBoardTv.setSelected(false);
                   mProfileTv.setSelected(true);
-
 
                   mProfileRl.setBackgroundColor(Color.BLACK);
                   mProfileRl.getBackground().setAlpha(40);
 
                   mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
                   mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
 
                   if (null == NostragamusDataHandler.getInstance().getUserId()) {
                       navigateToLogIn();
                       return;
                   }
                   loadFragment(new ProfileFragment());
+                  break;
+
+              case R.id.home_rl_leaderboard:
+
+                  mNotificationButton.setSelected(false);
+                  mProfileButton.setSelected(false);
+                  mHomeButton.setSelected(false);
+                  mLeaderBoardButton.setSelected(true);
+
+                  mNotificationTv.setSelected(false);
+                  mProfileTv.setSelected(false);
+                  mHomeTv.setSelected(false);
+                  mLeaderBoardTv.setSelected(true);
+
+                  mLeaderBoardRl.setBackgroundColor(Color.BLACK);
+                  mLeaderBoardRl.getBackground().setAlpha(40);
+
+                  mProfileRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+
+                  loadFragment(new LeaderBoardSummaryFragment());
                   break;
           }
     }
@@ -278,6 +318,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                                         NostragamusDataHandler.getInstance().setNumberof2xPowerups(updatedUserInfo.getPowerUps().get("2x"));
                                         NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(updatedUserInfo.getPowerUps().get("no_negs"));
                                         NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(updatedUserInfo.getPowerUps().get("player_poll"));
+                                        NostragamusDataHandler.getInstance().setNumberofReplayPowerups(updatedUserInfo.getPowerUps().get("match_replay"));
+                                        NostragamusDataHandler.getInstance().setNumberofFlipPowerups(updatedUserInfo.getPowerUps().get("answer_flip"));
                                     }
                                     NostragamusDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
                                     NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());

@@ -30,4 +30,6 @@ public interface ProfileView extends InAppView {
     void navigateToBadgeScreen();
 
     void setBadgesCount(int badgesCount);
+
+    void navigateToJoinGroup();
 }

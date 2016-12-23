@@ -4,6 +4,7 @@ package in.sportscafe.nostragamus.webservice;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
+import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
@@ -31,6 +32,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummaryResponse;
+import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.AllSports;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.PreferenceRequest;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.UserSports;
@@ -51,6 +53,7 @@ import retrofit2.http.Query;
  * Created by Jeeva on 14/3/16.
  */
 public interface NostragamusService {
+
 
     @GET("v1/game/sports")
     Call<AllSports> getAllSports();
@@ -147,4 +150,14 @@ public interface NostragamusService {
 
     @GET("v2/user/refreshToken")
     Call<JwtToken> refreshAccessToken();
+
+    @GET("/v2/game/applyResultsPowerups")
+    Call<ReplayPowerupResponse> getReplayPowerup(@Query("powerup_id") String powerupId,
+                                                 @Query("match_id") Integer matchId);
+
+    @GET("/v2/game/applyResultsPowerups")
+    Call<ReplayPowerupResponse> getFlipPowerup(@Query("powerup_id") String powerupId,@Query("match_id") Integer matchId,@Query("question_id") Integer questionId);
+
+    @GET ("/v1/game/users/getPlayerProfile")
+    Call<PlayerInfoResponse> getPlayerInfo(@Query("player_user_id") String playerId);
 }

@@ -27,7 +27,7 @@ public class BadgeActivity extends NostragamusActivity implements BadgeView{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_badge);
+        setContentView(R.layout.fragment_badges);
 
         this.mRvBadge = (RecyclerView) findViewById(R.id.badge_rcv);
         this.mRvBadge.setLayoutManager(new LinearLayoutManager(this,

@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -151,6 +152,17 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void changePlayCardBackground(String sportName) {
         mPredictionView.changeBackgroundImage(sportName);
+    }
+
+    @Override
+    public void onFailedPostAnswerToServer(String message) {
+
+        if (message.equalsIgnoreCase("Match has already started")){
+            mPredictionView.showMessage(Constants.Alerts.MATCH_ALREADY_STARTED);
+        }else {
+            mPredictionView.showMessage(Constants.Alerts.API_FAIL);
+        }
+        mPredictionView.goBack();
     }
 
     @Override

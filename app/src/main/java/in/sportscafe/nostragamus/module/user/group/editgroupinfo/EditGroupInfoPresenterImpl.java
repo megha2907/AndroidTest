@@ -156,4 +156,9 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
         mGroupInfoView.setSuccessResult();
         mGroupInfoView.goBackWithSuccessResult();
     }
+
+    @Override
+    public void onSuccessTournamentInfo() {
+        mGroupInfoView.dismissProgressbar();
+    }
 }
