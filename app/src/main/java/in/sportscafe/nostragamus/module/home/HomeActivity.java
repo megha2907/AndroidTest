@@ -14,14 +14,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.moe.pushlibrary.providers.MoEDataContract;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.notifications.NotificationInboxFragment;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
@@ -164,12 +163,12 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mLeaderBoardTv.setSelected(false);
                   mNotificationTv.setSelected(true);
 
-                  mNotificationRl.setBackgroundColor(Color.BLACK);
+                  /*mNotificationRl.setBackgroundColor(Color.BLACK);
                   mNotificationRl.getBackground().setAlpha(40);
 
                   mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
                   mProfileRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
-                  mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));*/
 
                   loadFragment(new NotificationInboxFragment());
                   break;
@@ -186,12 +185,12 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mLeaderBoardTv.setSelected(false);
                   mHomeTv.setSelected(true);
 
-                  mHomeRl.setBackgroundColor(Color.BLACK);
+                  /*mHomeRl.setBackgroundColor(Color.BLACK);
                   mHomeRl.getBackground().setAlpha(40);
 
                   mProfileRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
                   mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
-                  mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));*/
 
                   loadFragment(new TournamentFragment());
                   break;
@@ -208,11 +207,11 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mLeaderBoardTv.setSelected(false);
                   mProfileTv.setSelected(true);
 
-                  mProfileRl.setBackgroundColor(Color.BLACK);
+                  /*mProfileRl.setBackgroundColor(Color.BLACK);
                   mProfileRl.getBackground().setAlpha(40);
 
                   mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
-                  mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));*/
                   mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
 
                   if (null == NostragamusDataHandler.getInstance().getUserId()) {
@@ -234,12 +233,12 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mHomeTv.setSelected(false);
                   mLeaderBoardTv.setSelected(true);
 
-                  mLeaderBoardRl.setBackgroundColor(Color.BLACK);
+                  /*mLeaderBoardRl.setBackgroundColor(Color.BLACK);
                   mLeaderBoardRl.getBackground().setAlpha(40);
 
                   mProfileRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
                   mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
-                  mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+                  mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));*/
 
                   loadFragment(new LeaderBoardSummaryFragment());
                   break;

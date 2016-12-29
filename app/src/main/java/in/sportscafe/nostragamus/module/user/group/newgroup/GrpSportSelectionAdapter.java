@@ -4,8 +4,9 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.jeeva.android.widgets.HmImageView;
 
 import java.util.List;
 
@@ -56,10 +57,10 @@ public class GrpSportSelectionAdapter extends Adapter<Sport, GrpSportSelectionAd
         if (mSelectedSportsIdList.contains((sport.getId()))) {
            // holder.mMainView.setBackgroundResource(R.drawable.sports_selection_shape);
 //            holder.mTvSport.setAlpha((float) 0.9);
-            holder.mIvSport.setImageResource(sport.getSelectedImageResource());
+            holder.mIvSport.setImageUrl(sport.getSelectedImageUrl());
         } else {
 //            holder.mMainView.setBackgroundColor(Color.TRANSPARENT);
-            holder.mIvSport.setImageResource(sport.getImageResource());
+            holder.mIvSport.setImageUrl(sport.getImageUrl());
         }
 
     }
@@ -71,13 +72,13 @@ public class GrpSportSelectionAdapter extends Adapter<Sport, GrpSportSelectionAd
         View mMainView;
 
        // CheckBox mCbSport;
-        ImageView mIvSport;
+        HmImageView mIvSport;
         TextView mTvSport;
 
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
-            mIvSport = (ImageView) V.findViewById(R.id.group_sport_row_image_tournament);
+            mIvSport = (HmImageView) V.findViewById(R.id.group_sport_row_image_tournament);
 //            mTvSport = (TextView) V.findViewById(R.id.group_sport_row_tv_sport);
             V.setOnClickListener(this);
         }

@@ -1,240 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:id="@+id/backgroundone"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="false"
     android:focusableInTouchMode="true">
 
-
     <FrameLayout
-        android:id="@+id/framelayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|top"
-        android:layout_marginBottom="@dimen/dp_70"
+        android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/dp_25"
-        android:layout_marginRight="@dimen/dp_25"
-        android:layout_marginTop="130dp"
-        android:background="@android:color/transparent">
-
+        android:layout_marginRight="@dimen/dp_25">
 
         <FrameLayout
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <View
+            <android.support.v7.widget.CardView
                 android:id="@+id/bg_view3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_height="@dimen/dp_320"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/dp_110"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:alpha="0.3"
-                android:background="@drawable/swipe_card_bg_shape"
-                android:elevation="@dimen/dp_2"
-                android:visibility="invisible" />
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/dp_4"
+                app:cardElevation="@dimen/dp_3">
 
-            <View
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/play_options_bg" />
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:id="@+id/bg_view2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/dp_26"
+                android:layout_height="@dimen/dp_320"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/dp_120"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:alpha="0.3"
-                android:background="@drawable/swipe_card_bg_shape"
-                android:elevation="@dimen/dp_2"
-                android:visibility="invisible" />
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/dp_4"
+                app:cardElevation="@dimen/dp_4">
 
-            <View
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/play_options_bg" />
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
                 android:id="@+id/bg_view1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/dp_35"
+                android:layout_height="@dimen/dp_320"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/dp_130"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:alpha="0.3"
-                android:background="@drawable/swipe_card_bg_shape"
-                android:elevation="@dimen/dp_2"
-                android:visibility="invisible" />
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/dp_4"
+                app:cardElevation="@dimen/dp_5">
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/play_options_bg" />
+            </android.support.v7.widget.CardView>
 
         </FrameLayout>
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_45"
+            android:layout_height="@dimen/dp_320"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/dp_140"
             app:cardBackgroundColor="@color/white"
-            card_view:cardCornerRadius="@dimen/dp_4">
+            app:cardCornerRadius="@dimen/dp_4"
+            app:cardElevation="@dimen/dp_6">
 
             <RelativeLayout
-                android:id="@+id/swipe_relative_layout_question"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal|top">
-
+                android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/swipe_linear_layout_parent"
+                    android:id="@+id/swipe_card_ll_option_labels"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp_25"
-                    android:orientation="vertical">
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/play_options_bg">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/swipe_card_tv_question"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/dp_32"
-                        android:layout_marginRight="@dimen/dp_32"
-                        android:alpha="0.5"
-                        android:gravity="center"
-                        android:text="Who will hit more Aces?"
-                        android:textColor="@android:color/black"
+                        android:id="@+id/swipe_card_tv_left"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="left|center_vertical"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/dp_16"
                         app:typeface="lato_black" />
 
-                    <LinearLayout
-                        android:id="@+id/swipe_linear_layout_context"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_5">
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/swipe_card_tv_context"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_32"
-                            android:layout_marginRight="@dimen/dp_32"
-                            android:alpha="0.7"
-                            android:gravity="center"
-                            android:text="adasdasdasdadadasdasdasdsadSAAADASDhh thwart Pak's bowling in perfect conditions.."
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/dp_15"
-                            app:typeface="roboto_condensed" />
-
-                    </LinearLayout>
-
-
-                    <RelativeLayout
-                        android:id="@+id/image_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true">
-
-
-                        <LinearLayout
-                            android:id="@+id/image_ll"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-
-                            <com.jeeva.android.widgets.HmImageView
-                                android:id="@+id/swipe_card_iv_left"
-                                android:layout_width="@dimen/dp_0"
-                                android:layout_height="@dimen/dp_145"
-                                android:layout_alignParentLeft="true"
-                                android:layout_weight="1"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/placeholder_icon" />
-
-                            <com.jeeva.android.widgets.HmImageView
-                                android:id="@+id/swipe_card_iv_right"
-                                android:layout_width="@dimen/dp_0"
-                                android:layout_height="@dimen/dp_145"
-                                android:layout_weight="1"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/placeholder_icon" />
-
-                        </LinearLayout>
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_165"
-                            android:layout_centerHorizontal="true"
-                            android:layout_alignParentBottom="true"
-                            >
-
-                            <ImageButton
-                                android:id="@+id/swipe_card_powerup_icon"
-                                android:layout_width="@dimen/dp_40"
-                                android:layout_height="@dimen/dp_40"
-                                android:background="@drawable/powerups_count_bg"
-                                android:textColor="@color/black"
-                                android:visibility="visible"
-                                />
-
-                        </RelativeLayout>
-
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_150"
-                            android:layout_alignParentBottom="true">
-
-                            <Button
-                                android:id="@+id/swipe_card_answer1_percentage"
-                                android:layout_width="@dimen/dp_80"
-                                android:layout_height="@dimen/dp_80"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="@dimen/dp_35"
-                                android:background="@drawable/round_black_button_with_shadow"
-                                android:text="72 %"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/dp_23"
-                                android:visibility="invisible" />
-
-                            <Button
-                                android:id="@+id/swipe_card_answer2_percentage"
-                                android:layout_width="@dimen/dp_80"
-                                android:layout_height="@dimen/dp_80"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="@dimen/dp_35"
-                                android:background="@drawable/round_black_button_with_shadow"
-                                android:text="28 %"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/dp_23"
-                                android:visibility="invisible" />
-
-
-                        </RelativeLayout>
-
-                    </RelativeLayout>
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/swipe_card_tv_right"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="right|center_vertical"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_16"
+                        app:typeface="lato_black" />
 
                 </LinearLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/swipe_card_tv_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_32"
+                    android:layout_marginRight="@dimen/dp_32"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:gravity="center"
+                    android:textColor="@color/black_50"
+                    android:textSize="@dimen/dp_16"
+                    app:typeface="lato_black" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/swipe_card_tv_context"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/swipe_card_tv_question"
+                    android:layout_marginLeft="@dimen/dp_32"
+                    android:layout_marginRight="@dimen/dp_32"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:gravity="center"
+                    android:textColor="@color/black_70"
+                    android:textSize="@dimen/dp_15"
+                    app:typeface="roboto_condensed" />
+
+                <LinearLayout
+                    android:id="@+id/swipe_card_ll_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/swipe_card_ll_option_labels"
+                    android:layout_below="@id/swipe_card_tv_context"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <com.jeeva.android.widgets.HmImageView
+                            android:id="@+id/swipe_card_iv_left"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            app:defaultImage="@drawable/placeholder_icon" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/swipe_card_tv_left_poll"
+                            android:layout_width="@dimen/dp_80"
+                            android:layout_height="@dimen/dp_80"
+                            android:layout_gravity="center"
+                            android:background="@drawable/round_black_button_with_shadow"
+                            android:gravity="center"
+                            android:text="72 %"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dp_23"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <com.jeeva.android.widgets.HmImageView
+                            android:id="@+id/swipe_card_iv_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            app:defaultImage="@drawable/placeholder_icon" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/swipe_card_answer2_percentage"
+                            android:layout_width="@dimen/dp_80"
+                            android:layout_height="@dimen/dp_80"
+                            android:layout_gravity="center"
+                            android:background="@drawable/round_black_button_with_shadow"
+                            android:gravity="center"
+                            android:text="28 %"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dp_23"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/swipe_card_powerup_icon"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_alignTop="@id/swipe_card_ll_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_dp_20"
+                    android:background="@drawable/powerups_count_bg"
+                    android:src="@drawable/powerup_nonegs_white"
+                    android:visibility="gone" />
 
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
     </FrameLayout>
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView
         android:id="@+id/points_cardview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_115"
-        card_view:cardBackgroundColor="@android:color/white"
-        card_view:cardCornerRadius="@dimen/dp_2"
-        card_view:cardElevation="@dimen/dp_4"
-        card_view:contentPadding="@dimen/dp_7">
+        android:layout_marginBottom="@dimen/dp_445"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="@dimen/dp_2"
+        app:cardElevation="@dimen/dp_4">
 
-
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/swipe_card_question_points_rl"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp_7"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingLeft="@dimen/dp_7"
+            android:paddingRight="@dimen/dp_7"
+            android:paddingTop="@dimen/dp_5">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/swipe_card_question_positive_points"
@@ -243,18 +258,16 @@
                 android:background="@android:color/transparent"
                 android:text="+10"
                 android:textColor="@color/greencolor"
-                android:textSize="@dimen/dp_15"
-                />
+                android:textSize="@dimen/dp_15" />
 
             <View
                 android:id="@+id/swipe_card_question_points_line"
                 android:layout_width="@dimen/dp_1"
                 android:layout_height="@dimen/dp_20"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_7"
+                android:layout_marginRight="@dimen/dp_7"
                 android:layout_toRightOf="@id/swipe_card_question_positive_points"
-                android:background="#cccccc"
-                />
+                android:background="#cccccc" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/swipe_card_question_negative_points"
@@ -264,10 +277,9 @@
                 android:background="@android:color/transparent"
                 android:text="-10"
                 android:textColor="@color/tabcolor"
-                android:textSize="@dimen/dp_15"
-                />
+                android:textSize="@dimen/dp_15" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 

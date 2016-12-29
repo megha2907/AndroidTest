@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jeeva.android.volley.Volley;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +48,7 @@ public class ApproveAdapter extends Adapter<GroupPerson, ApproveAdapter.ViewHold
 
         holder.mPosition = position;
 
-        holder.mIvPhoto.setImageUrl(groupPerson.getPhoto(), Volley.getInstance().getImageLoader(), false);
+        holder.mIvPhoto.setImageUrl(groupPerson.getPhoto());
         holder.mTvName.setText(groupPerson.getUserName());
     }
 

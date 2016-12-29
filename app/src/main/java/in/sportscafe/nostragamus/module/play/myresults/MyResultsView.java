@@ -1,7 +1,5 @@
 package in.sportscafe.nostragamus.module.play.myresults;
 
-import android.view.View;
-
 import com.jeeva.android.InAppView;
 
 import in.sportscafe.nostragamus.module.feed.dto.Match;
@@ -24,4 +22,6 @@ public interface MyResultsView extends InAppView {
     void navigatetoPlay(Match match);
 
     void openFlipDialog();
+
+    void showResultShare(String matchResult, int matchPoints);
 }

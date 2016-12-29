@@ -5,13 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.volley.Volley;
-
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -32,9 +28,8 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
-import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.settings.SettingsActivity;
+import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.MyResultsTimelineActivity;
@@ -45,15 +40,11 @@ import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.challenges.ChallengesFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.groups.GroupsFragment;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.sports.SportsFragment;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUpActivity;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUpFragment;
 import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity;
 import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
-import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionModel;
 
 /**
  * Created by Jeeva on 14/6/16.
@@ -139,9 +130,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     @Override
     public void setProfileImage(String imageUrl) {
         ((RoundImage) findViewById(R.id.profile_iv_image)).setImageUrl(
-                imageUrl,
-                Volley.getInstance().getImageLoader(),
-                false
+                imageUrl
         );
     }
 
@@ -401,7 +390,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         pagerAdapter.addFragment(PowerUpFragment.newInstance(), powerUpsCount+"\n Powerups");
         pagerAdapter.addFragment(AllGroupsFragment.newInstance(), groupsCount+ "\n Groups");
         pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), sportsFollowed + " \n Sports");
-        pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getChallenges()), "0  \n Challenges");
+//        pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getChallenges()), "0  \n Challenges");
         pagerAdapter.addFragment(BadgeFragment.newInstance(), badgeCount+"\n Badges");
         return pagerAdapter;
     }
@@ -465,7 +454,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     }
 
     private void navigateToSettings() {
-        startActivity(new Intent(getContext(), SettingsActivity.class));
+        startActivity(new Intent(getContext(), SportSelectionActivity.class));
     }
 
     @Override

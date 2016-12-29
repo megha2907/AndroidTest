@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    >
-
+    android:orientation="vertical">
 
 
     <RelativeLayout
@@ -13,42 +11,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@color/black"
         android:layout_marginLeft="@dimen/dp_75"
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_8"
-        >
+        android:background="@color/black">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/schedule_row_tv_match_stage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:typeface="roboto_condensed"
-            android:paddingTop="@dimen/dp_5"
-            android:paddingBottom="@dimen/dp_5"
-            android:layout_marginLeft="@dimen/dp_2"
             android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dp_2"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingTop="@dimen/dp_5"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_14"
-            />
+            app:typeface="roboto_condensed" />
 
 
     </RelativeLayout>
 
 
     <LinearLayout
+        android:id="@+id/schedule_row_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/schedule_row_ll"
-        android:orientation="vertical"
         android:layout_below="@+id/schedule_row_rl_match_stage"
-        android:background="@drawable/swipe_card_shape"
         android:layout_marginLeft="@dimen/dp_75"
         android:layout_marginRight="@dimen/dp_10"
-        >
-
-
+        android:background="@drawable/swipe_card_shape"
+        android:orientation="vertical">
 
 
         <RelativeLayout
@@ -56,93 +49,84 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/swipe_card_tv_context"
-            android:layout_marginTop="@dimen/feed_screen_spacing"
-            >
+            android:layout_marginTop="@dimen/feed_screen_spacing">
 
             <Button
+                android:id="@+id/schedule_row_btn_vs"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="@dimen/dp_32"
                 android:layout_height="@dimen/dp_32"
-                android:id="@+id/schedule_row_btn_vs"
-                android:background="@drawable/vs_button_bg"
                 android:layout_centerHorizontal="true"
                 android:alpha="0.4"
+                android:background="@drawable/vs_button_bg"
                 android:text="VS"
                 android:textColor="@color/colorMedium"
                 android:textSize="@dimen/dp_12"
                 android:textStyle="bold"
 
                 />
-             <LinearLayout
-                android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical"
-                 android:layout_toLeftOf="@id/schedule_row_btn_vs"
-                 android:layout_alignParentLeft="true">
 
-            <com.jeeva.android.widgets.HmImageView
-                android:id="@+id/swipe_card_iv_left"
-                android:layout_width="@dimen/dp_35"
-                android:layout_height="@dimen/dp_35"
-                android:scaleType="fitXY"
-                android:layout_gravity="center"
-                android:src="@drawable/placeholder_icon"
-                android:layout_marginBottom="@dimen/dp_10"
-                />
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/schedule_row_tv_party_a_name"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dp_14"
-                android:textColor="@color/white"
-                android:text="Atletico"
-                android:gravity="center"
-                app:typeface="roboto_condensed"
-                android:layout_marginRight="@dimen/dp_2"
-                android:layout_below="@id/swipe_card_iv_left"
-                android:layout_gravity="center"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textAllCaps="false"
-                android:paddingLeft="@dimen/dp_10"
-                />
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="@dimen/dp_5"
+                android:layout_toLeftOf="@id/schedule_row_btn_vs"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-                 </LinearLayout>
+                <com.jeeva.android.widgets.HmImageView
+                    android:id="@+id/swipe_card_iv_left"
+                    android:layout_width="@dimen/dp_35"
+                    android:layout_height="@dimen/dp_35"
+                    android:scaleType="fitXY"
+                    app:defaultImage="@drawable/placeholder_icon" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/schedule_row_btn_vs"
-            android:orientation="vertical"
-          >
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/schedule_row_tv_party_a_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="Atletico"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="roboto_condensed" />
 
-            <com.jeeva.android.widgets.HmImageView
-                android:id="@+id/swipe_card_iv_right"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:scaleType="fitXY"
-                android:layout_gravity="center"
-                android:src="@drawable/placeholder_icon"
-                android:layout_marginBottom="@dimen/dp_10"/>
+            </LinearLayout>
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/schedule_row_tv_party_b_name"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Atletico"
-                android:layout_below="@id/swipe_card_iv_right"
-                android:layout_gravity="center"
-                app:typeface="roboto_condensed"
-                android:textSize="@dimen/dp_14"
-                android:gravity="center"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:textAllCaps="false"
-                android:paddingRight="@dimen/dp_10"
-                />
+                android:layout_alignParentRight="true"
+                android:paddingRight="@dimen/dp_5"
+                android:layout_toRightOf="@id/schedule_row_btn_vs"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <com.jeeva.android.widgets.HmImageView
+                    android:id="@+id/swipe_card_iv_right"
+                    android:layout_width="@dimen/dp_35"
+                    android:layout_height="@dimen/dp_35"
+                    android:scaleType="fitXY"
+                    app:defaultImage="@drawable/placeholder_icon" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/schedule_row_tv_party_b_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="Atletico"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="roboto_condensed" />
             </LinearLayout>
 
 
@@ -152,70 +136,65 @@
             android:id="@+id/schedule_row_btn_playmatch"
             android:layout_width="@dimen/dp_90"
             android:layout_height="@dimen/dp_36"
-            android:background="@drawable/shadow_effect"
-            android:textAlignment="gravity"
-            android:onClick="onClick"
-            android:text="PLAY"
-            android:textAllCaps="false"
-            android:textSize="@dimen/dp_14"
             android:layout_below="@+id/image_layout"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_marginTop="@dimen/feed_screen_spacing"
-            app:typeface="roboto_condensed"
-            android:textColor="@color/white"
-            android:visibility="gone"
+            android:background="@drawable/shadow_effect"
+            android:gravity="center"
+            android:onClick="onClick"
             android:paddingTop="@dimen/dp_7"
-            />
+            android:text="PLAY"
+            android:textAlignment="gravity"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_14"
+            android:visibility="gone"
+            app:typeface="roboto_condensed" />
 
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/schedule_row_tv_match_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/feed_screen_spacing"
             android:layout_gravity="center"
-            android:textColor="@color/white"
-            android:alpha="0.7"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
-            app:typeface="lato_regular"
+            android:layout_marginTop="@dimen/feed_screen_spacing"
+            android:alpha="0.7"
             android:gravity="center"
             android:lineSpacingExtra="@dimen/dp_2"
+            android:textColor="@color/white"
             android:textSize="@dimen/dp_13"
-            />
-
+            android:visibility="gone"
+            app:typeface="lato_regular" />
 
 
         <View
             android:id="@+id/schedule_row_v_party_a"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_1"
-            android:background="@drawable/black_divider"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_marginTop="@dimen/feed_screen_spacing"
-            android:visibility="gone"
-            />
+            android:background="@drawable/black_divider"
+            android:visibility="gone" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/schedule_row_tv_match_result_wait"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/yellowcolor"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_5"
             android:layout_marginTop="@dimen/feed_screen_spacing"
-            android:text="4 PREDICTIONS MADE ,WAITING FOR RESULT"
-            app:typeface="lato_regular"
+            android:drawablePadding="@dimen/dp_8"
+            android:drawableRight="@drawable/right_arrow_points_icon"
             android:gravity="center"
+            android:text="4 PREDICTIONS MADE ,WAITING FOR RESULT"
+            android:textColor="@color/yellowcolor"
             android:textSize="@dimen/dp_13"
             android:visibility="gone"
-            android:drawableRight="@drawable/right_arrow_points_icon"
-            android:layout_marginRight="@dimen/dp_5"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:drawablePadding="@dimen/dp_8"
-            />
+            app:typeface="lato_regular" />
 
         <RelativeLayout
             android:id="@+id/rl_points"
@@ -223,44 +202,41 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/schedule_row_v_party_a"
             android:layout_marginTop="@dimen/feed_screen_spacing"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/schedule_row_btn_points"
                 android:layout_width="@dimen/dp_90"
                 android:layout_height="@dimen/dp_36"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_20"
                 android:background="@drawable/btn_points_bg"
                 android:onClick="onClick"
+                android:padding="@dimen/dp_0"
                 android:text="60 Points"
                 android:textAllCaps="false"
-                android:textSize="@dimen/dp_14"
-                android:layout_alignParentRight="true"
-                app:typeface="roboto_condensed"
                 android:textColor="@color/linecolor"
-                android:layout_marginRight="@dimen/dp_20"
+                android:textSize="@dimen/dp_14"
                 android:visibility="gone"
-                android:layout_centerVertical="true"
-                android:padding="@dimen/dp_0"
-                />
+                app:typeface="roboto_condensed" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/schedule_row_tv_match_correct_questions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/schedule_row_btn_points"
-                android:textColor="@color/yellowcolor"
-                android:text="YOU GOT 3/5 QUESTIONS CORRECT"
-                app:typeface="roboto_condensed"
-                android:gravity="left"
-                android:textSize="@dimen/dp_14"
-                android:layout_marginRight="@dimen/dp_20"
-                android:layout_marginLeft="@dimen/dp_14"
-                android:visibility="gone"
-                android:maxLines="2"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_14"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_toLeftOf="@+id/schedule_row_btn_points"
+                android:gravity="left"
+                android:maxLines="2"
                 android:paddingTop="@dimen/dp_6"
-                />
+                android:text="YOU GOT 3/5 QUESTIONS CORRECT"
+                android:textColor="@color/yellowcolor"
+                android:textSize="@dimen/dp_14"
+                android:visibility="gone"
+                app:typeface="roboto_condensed" />
 
         </RelativeLayout>
 
@@ -268,8 +244,7 @@
             android:id="@+id/my_results_row_ll_predictions"
             android:layout_width="match_parent"
             android:layout_height="@dimen/feed_screen_spacing"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
         </LinearLayout>
 
@@ -279,11 +254,11 @@
         android:id="@+id/schedule_row_ll_match_commentary_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@+id/schedule_row_ll"
-        android:visibility="visible"
         android:layout_marginLeft="@dimen/dp_75"
         android:layout_marginTop="@dimen/dp_10"
+        android:orientation="vertical"
+        android:visibility="visible"
 
         />
 
@@ -293,44 +268,42 @@
         android:layout_height="@dimen/dp_25"
         android:layout_below="@+id/schedule_row_ll_match_commentary_parent"
 
-       />
+        />
 
 
     <Button
         android:id="@+id/feed_dot_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="@dimen/dp_8"
         android:layout_marginLeft="@dimen/dp_35"
-        android:background="@drawable/round_grey_button_with_shadow"
-        />
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@drawable/round_grey_button_with_shadow" />
 
     <View
         android:id="@+id/view"
         android:layout_width="@dimen/dp_1"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/space"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/dp_50"
         android:layout_marginRight="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_46"
-        android:layout_alignBottom="@id/space"
         android:background="@color/dividercolor"
 
         />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/schedule_row_tv_match_time"
         android:layout_width="@dimen/dp_30"
         android:layout_height="wrap_content"
-        android:id="@+id/schedule_row_tv_match_time"
-        android:textSize="@dimen/dp_12"
-        android:gravity="center"
         android:layout_marginLeft="@dimen/dp_4"
         android:layout_marginTop="@dimen/dp_9"
-        android:textColor="@color/white"
         android:alpha="0.6"
-        android:textAllCaps="false"
-        app:typeface="roboto_condensed"
+        android:gravity="center"
         android:lineSpacingExtra="-4dp"
-        />
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_12"
+        app:typeface="roboto_condensed" />
 
 </RelativeLayout>

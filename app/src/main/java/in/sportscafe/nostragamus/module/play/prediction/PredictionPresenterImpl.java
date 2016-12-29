@@ -88,20 +88,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onSuccessQuestions(List<Question> questionList) {
         mPredictionView.dismissProgressbar();
-        // onSetQuestionOption(questionList);
-        //populateNextMatch();
-    }
-
-
-    @Override
-    public void onSetQuestionOption(List<Question> questionList) {
-
-        for (Question question : questionList) {
-            mPredictionView.setLeftOption(question.getQuestionOption1());
-            mPredictionView.setRightOption(question.getQuestionOption2());
-            // mPredictionView.setNumberofCards(question.getQuestionNumber(),questionList.size());
-        }
-
     }
 
     @Override
@@ -123,12 +109,9 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onQuestionChanged(Question item, int minitialCount) {
-
-        mPredictionView.setLeftOption(item.getQuestionOption1());
-        mPredictionView.setRightOption(item.getQuestionOption2());
-        mPredictionView.setNumberofCards(item.getQuestionNumber(),minitialCount);
-
+    public void onQuestionChanged(Question question, int minitialCount) {
+        mPredictionView.setNumberofCards(question.getQuestionNumber(),minitialCount);
+        mPredictionView.setNeitherOption(question.getQuestionOption3());
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;

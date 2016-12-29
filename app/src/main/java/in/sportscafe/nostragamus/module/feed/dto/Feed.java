@@ -3,7 +3,7 @@ package in.sportscafe.nostragamus.module.feed.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.Tournament;
 
 /**
  * Created by Jeeva on 24/6/16.

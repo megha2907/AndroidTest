@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
@@ -25,9 +24,9 @@ import java.util.List;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
@@ -113,15 +112,11 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
 
             holder.mIvPartyAPhoto.setImageUrl(
-                    match.getParties().get(0).getPartyImageUrl(),
-                    Volley.getInstance().getImageLoader(),
-                    false
+                    match.getParties().get(0).getPartyImageUrl()
             );
 
             holder.mIvPartyBPhoto.setImageUrl(
-                    match.getParties().get(1).getPartyImageUrl(),
-                    Volley.getInstance().getImageLoader(),
-                    false
+                    match.getParties().get(1).getPartyImageUrl()
             );
         }
 

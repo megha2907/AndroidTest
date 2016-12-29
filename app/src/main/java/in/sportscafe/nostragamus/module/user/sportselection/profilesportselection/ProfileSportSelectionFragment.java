@@ -1,21 +1,21 @@
 package in.sportscafe.nostragamus.module.user.sportselection.profilesportselection;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.animator.AnimationAdapter;
+import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.common.SpacesItemDecoration;
 
 
 /**
@@ -56,7 +56,15 @@ public class ProfileSportSelectionFragment extends NostragamusFragment implement
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        this.mRvSportSelection.setAdapter(adapter);
+        this.mRvSportSelection.setAdapter(getAnimationAdapter(adapter));
+    }
+
+    private AnimationAdapter getAnimationAdapter(RecyclerView.Adapter adapter) {
+        SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
+        animationAdapter.setFirstOnly(true);
+        animationAdapter.setDuration(750);
+        animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
+        return animationAdapter;
     }
 
     @Override

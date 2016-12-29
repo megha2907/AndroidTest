@@ -2,7 +2,6 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.jeeva.android.Log;
 
@@ -86,6 +85,7 @@ public class PredictionModelImpl implements PredictionModel,
           mPredictionModelListener.changePlayCardBackground(bundle.getString(BundleKeys.SPORT_NAME));
         }
 
+//        handleAllQuestionsResponse(mMyResult.getQuestions());
         getAllQuestions();
     }
 
@@ -132,9 +132,7 @@ public class PredictionModelImpl implements PredictionModel,
         for (Question question : questionList) {
             matchId = question.getMatchId();
 
-            if (myResultMap.containsKey(matchId)) {
-                myResult = myResultMap.get(matchId);
-            } else {
+            if (!myResultMap.containsKey(matchId)) {
                 myResult = mMatchMap.get(matchId);
                 mMyResultList.add(mMyResult);
                 myResultMap.put(matchId, myResult);
@@ -285,13 +283,13 @@ public class PredictionModelImpl implements PredictionModel,
     }
 
     @Override
-    public void onTopSwipe(Question dataObject) {
+    public void onBottomSwipe(Question dataObject) {
         saveSinglePrediction(dataObject, 0);
+//        mPredictionAdapter.add(dataObject);
     }
 
     @Override
-    public void onBottomSwipe(Question dataObject) {
-        //dataObject.setQuestionTime(mRemainingTime);
+    public void onTopSwipe(Question dataObject) {
         mPredictionAdapter.add(dataObject);
     }
 

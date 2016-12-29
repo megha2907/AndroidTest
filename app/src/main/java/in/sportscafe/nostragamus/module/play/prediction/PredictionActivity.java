@@ -1,28 +1,30 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
-import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.jeeva.android.widgets.customfont.CustomTextView;
 
-import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.Config.Sports;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.FeedActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -44,11 +46,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     private PredictionModel mPredictionModel;
     RelativeLayout rlPowerUp;
     private Boolean isFabOpen = false;
-    private FloatingActionButton powerupMainFab,powerup2xFab,powerupAudiencePollFab,powerupNonegsFab;
+    private ImageButton powerupMainFab;
+    private View powerup2xFab,powerupAudiencePollFab,powerupNonegsFab, fabContainer;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private RelativeLayout mplayBg;
 
-
+    private float offset1;
+    private float offset2;
+    private float offset3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +81,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         btn2xpowerUpCount=(CustomButton)findViewById(R.id.powerup_2x_count);
         btnAudiencePollCount=(CustomButton)findViewById(R.id.powerup_audience_poll_count);
         btnNonegsCount=(CustomButton)findViewById(R.id.powerup_nonegs_count);
-        powerupMainFab = (FloatingActionButton)findViewById(R.id.fab_main);
-        powerup2xFab = (FloatingActionButton)findViewById(R.id.fab_2x);
-        powerupAudiencePollFab = (FloatingActionButton)findViewById(R.id.fab_audience_poll);
-        powerupNonegsFab = (FloatingActionButton)findViewById(R.id.fab_nonegs);
+        powerupMainFab = (ImageButton) findViewById(R.id.fab_main);
+        fabContainer = findViewById(R.id.fab_container);
+        powerup2xFab = findViewById(R.id.fab_fl_2x);
+        powerupAudiencePollFab = findViewById(R.id.fab_fl_audience_poll);
+        powerupNonegsFab = findViewById(R.id.fab_fl_nonegs);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.powerup_fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.powerup_fab_rotate_forward);
@@ -90,6 +96,22 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         powerupNonegsFab.setOnClickListener(this);
 
         mplayBg=(RelativeLayout) findViewById(R.id.content);
+
+        fabContainer.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                fabContainer.getViewTreeObserver().removeOnPreDrawListener(this);
+                float mainY = powerupMainFab.getY();
+
+                offset1 = mainY - powerup2xFab.getY();
+                powerup2xFab.setTranslationY(offset1);
+                offset2 = mainY - powerupAudiencePollFab.getY();
+                powerupAudiencePollFab.setTranslationY(offset2);
+                offset3 = mainY - powerupNonegsFab.getY();
+                powerupNonegsFab.setTranslationY(offset3);
+                return true;
+            }
+        });
 
         this.mPredictionPresenter = PredictionPresenterImpl.newInstance(this);
         this.mPredictionPresenter.onCreatePrediction(getIntent().getExtras());
@@ -282,7 +304,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void hidePass() {
-        findViewById(R.id.prediction_btn_pass).setVisibility(View.INVISIBLE);
+        findViewById(R.id.prediction_btn_neither).setVisibility(View.INVISIBLE);
         findViewById(R.id.downnarrow).setVisibility(View.INVISIBLE);
     }
 
@@ -298,9 +320,9 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     private void showAlertMessage(String message) {
-        TextView textView = (TextView) findViewById(R.id.prediction_tv_message);
+        /*TextView textView = (TextView) findViewById(R.id.prediction_tv_message);
         textView.setText(message);
-        textView.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.VISIBLE);*/
     }
 
     @Override
@@ -318,7 +340,13 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.prediction_btn_pass:
+            case R.id.prediction_ibtn_back:
+                onBackPressed();
+                break;
+            case R.id.prediction_btn_shuffle:
+                mSwipeFlingAdapterView.getTopCardListener().selectTop();
+                break;
+            case R.id.prediction_btn_neither:
                 mSwipeFlingAdapterView.getTopCardListener().selectBottom();
                 break;
             case R.id.swipe_card_tv_left:
@@ -402,18 +430,16 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void setLeftOption(String questionOption1) {
-        TextView swipeleftv = (TextView) findViewById(R.id.swipe_card_tv_left);
-        swipeleftv.setText(questionOption1);
+    public void setNeitherOption(String neitherOption) {
+        int visibility = View.GONE;
+        if (!TextUtils.isEmpty(neitherOption)) {
+            visibility = View.VISIBLE;
+
+            TextView textView = (TextView) findViewById(R.id.prediction_btn_neither);
+            textView.setText(neitherOption);
+        }
+        findViewById(R.id.prediction_ll_neither).setVisibility(visibility);
         invokeCardListener();
-
-    }
-
-    @Override
-    public void setRightOption(String questionOption2) {
-        TextView swiperighttv = (TextView) findViewById(R.id.swipe_card_tv_right);
-        swiperighttv.setText(questionOption2);
-        //setRightArrowAnimation();
     }
 
     @Override
@@ -425,8 +451,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void setTournamentPhoto(String tournamentPhoto) {
 
-        ((HmImageView) findViewById(R.id.prediction_iv_tournament_photo)).setImageUrl(tournamentPhoto,
-                Volley.getInstance().getImageLoader(), false);
+        ((HmImageView) findViewById(R.id.prediction_iv_tournament_photo)).setImageUrl(tournamentPhoto
+        );
 
     }
 
@@ -469,28 +495,37 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void changeBackgroundImage(String sportName) {
-
-        if(sportName.equalsIgnoreCase("Cricket")){
-            mplayBg.setBackgroundResource(R.drawable.play_cricket_bg);
-        }else if(sportName.equalsIgnoreCase("Badminton")){
-            mplayBg.setBackgroundResource(R.drawable.play_badminton_bg);
-        }else if(sportName.equalsIgnoreCase("Football")){
-            mplayBg.setBackgroundResource(R.drawable.play_football_bg);
+        int bgRes;
+        switch (sportName.toLowerCase()) {
+            case Sports.CRICKET:
+                bgRes = R.drawable.play_cricket_bg;
+                break;
+            case Sports.BADMINTON:
+                bgRes = R.drawable.play_badminton_bg;
+                break;
+            case Sports.FOOTBALL:
+                bgRes = R.drawable.play_football_bg;
+                break;
+            case Sports.TENNIS:
+                bgRes = R.drawable.play_tennis_bg;
+                break;
+            default:
+                return;
         }
+
+        mplayBg.setBackgroundResource(bgRes);
     }
 
     @Override
     public void goBack() {
-        finish();
+        onBackPressed();
     }
 
 
     public void animateFAB(){
 
         if(isFabOpen){
-            powerupMainFab.startAnimation(rotate_backward);
-            powerupMainFab.setImageResource(R.drawable.powerup_main_icon_white);
-            powerup2xFab.startAnimation(fab_close);
+            /*powerup2xFab.startAnimation(fab_close);
             powerupAudiencePollFab.startAnimation(fab_close);
             powerupNonegsFab.startAnimation(fab_close);
             powerup2xFab.setClickable(false);
@@ -498,14 +533,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             powerupNonegsFab.setClickable(false);
             btn2xpowerUpCount.setVisibility(View.GONE);
             btnAudiencePollCount.setVisibility(View.GONE);
-            btnNonegsCount.setVisibility(View.GONE);
+            btnNonegsCount.setVisibility(View.GONE);*/
+            collapseFab();
+            powerupMainFab.startAnimation(rotate_backward);
+            powerupMainFab.setImageResource(R.drawable.powerup_main_icon_white);
             isFabOpen = false;
 
         } else {
-
-            powerupMainFab.startAnimation(rotate_forward);
-            powerupMainFab.setImageResource(R.drawable.powerup_main_icon);
-            powerup2xFab.startAnimation(fab_open);
+            /*powerup2xFab.startAnimation(fab_open);
             powerupAudiencePollFab.startAnimation(fab_open);
             powerupNonegsFab.startAnimation(fab_open);
             powerup2xFab.setClickable(true);
@@ -513,10 +548,86 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             powerupNonegsFab.setClickable(true);
             btn2xpowerUpCount.setVisibility(View.VISIBLE);
             btnAudiencePollCount.setVisibility(View.VISIBLE);
-            btnNonegsCount.setVisibility(View.VISIBLE);
+            btnNonegsCount.setVisibility(View.VISIBLE);*/
+            expandFab();
+            powerupMainFab.startAnimation(rotate_forward);
+            powerupMainFab.setImageResource(R.drawable.powerup_main_icon);
             isFabOpen = true;
 
         }
     }
 
+    private void collapseFab() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(createCollapseAnimator(powerup2xFab, offset1),
+                createCollapseAnimator(powerupAudiencePollFab, offset2),
+                createCollapseAnimator(powerupNonegsFab, offset3));
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                powerup2xFab.setVisibility(View.INVISIBLE);
+                powerupAudiencePollFab.setVisibility(View.INVISIBLE);
+                powerupNonegsFab.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animatorSet.start();
+    }
+
+    private void expandFab() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(createExpandAnimator(powerup2xFab, offset1),
+                createExpandAnimator(powerupAudiencePollFab, offset2),
+                createExpandAnimator(powerupNonegsFab, offset3));
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                powerup2xFab.setVisibility(View.VISIBLE);
+                powerupAudiencePollFab.setVisibility(View.VISIBLE);
+                powerupNonegsFab.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animatorSet.start();
+    }
+
+    private static final String TRANSLATION_Y = "translationY";
+
+    private Animator createCollapseAnimator(View view, float offset) {
+        return ObjectAnimator.ofFloat(view, TRANSLATION_Y, 0, offset)
+                .setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime));
+    }
+
+    private Animator createExpandAnimator(View view, float offset) {
+        return ObjectAnimator.ofFloat(view, TRANSLATION_Y, offset, 0)
+                .setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime));
+    }
 }

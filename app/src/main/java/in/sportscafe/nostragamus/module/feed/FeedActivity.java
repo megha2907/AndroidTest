@@ -7,9 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.animator.AnimationAdapter;
+import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 
@@ -59,7 +62,15 @@ public class FeedActivity extends NostragamusActivity implements FeedView, Swipe
 
     @Override
     public void setAdapter(FeedAdapter feedAdapter) {
-        mRcvFeed.setAdapter(feedAdapter);
+        mRcvFeed.setAdapter(getAnimationAdapter(feedAdapter));
+    }
+
+    private AnimationAdapter getAnimationAdapter(RecyclerView.Adapter adapter) {
+        SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
+        animationAdapter.setFirstOnly(true);
+        animationAdapter.setDuration(750);
+        animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
+        return animationAdapter;
     }
 
     @Override

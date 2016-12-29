@@ -73,7 +73,7 @@ public class TimeUtils {
         long daysDifference = getDaysDifference(milliSecondDiff);
 
         if (daysDifference <= 0) {
-            int[] splitTime = getTimeFromLongValue(milliSecondDiff);
+            long[] splitTime = getTimeFromLongValue(milliSecondDiff);
             if (splitTime[0] > 0) {
                 return new TimeAgo(splitTime[0], TimeUnit.HOUR);
             } else if (splitTime[1] > 0) {
@@ -99,12 +99,12 @@ public class TimeUtils {
         }
     }
 
-    public static int[] getTimeFromLongValue(long value) {
-        int milliseconds = (int) value % 1000;
-        int seconds = (int) (value / 1000) % 60;
-        int minutes = (int) ((value / (1000 * 60)) % 60);
-        int hours = (int) ((value / (1000 * 60 * 60)) % 24);
-        return new int[]{hours, minutes, seconds, milliseconds};
+    public static long[] getTimeFromLongValue(long value) {
+        long milliseconds = value % 1000;
+        long seconds = (value / 1000) % 60;
+        long minutes = (value / (1000 * 60)) % 60;
+        long hours = (value / (1000 * 60 * 60)) % 24;
+        return new long[]{hours, minutes, seconds, milliseconds};
     }
 
     public static int findYearDiff(long startTime, long endTime) {

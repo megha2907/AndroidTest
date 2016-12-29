@@ -34,6 +34,9 @@ public class Question implements Serializable {
     @JsonProperty("question_image_2")
     private String questionImage2;
 
+    @JsonProperty("question_option_3")
+    private String questionOption3;
+
     @JsonProperty("question_live")
     private boolean questionLive;
 
@@ -196,6 +199,22 @@ public class Question implements Serializable {
     @JsonProperty("question_image_2")
     public void setQuestionImage2(String questionImage2) {
         this.questionImage2 = questionImage2;
+    }
+
+    /**
+     * @return The questionOption3
+     */
+    @JsonProperty("question_option_3")
+    public String getQuestionOption3() {
+        return questionOption3;
+    }
+
+    /**
+     * @param questionOption3 The question_option_3
+     */
+    @JsonProperty("question_option_3")
+    public void setQuestionOption3(String questionOption3) {
+        this.questionOption3 = questionOption3;
     }
 
     /**

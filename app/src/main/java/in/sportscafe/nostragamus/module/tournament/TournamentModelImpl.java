@@ -6,10 +6,10 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.TournamentFeed.TournamentFeedFragment;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
-import in.sportscafe.nostragamus.module.tournamentFeed.TournamentFeedFragment;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;

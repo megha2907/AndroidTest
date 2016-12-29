@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
+import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -159,6 +160,13 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
             startingIndex++;
         }
     }*/
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (!isInEditMode()) {
+            super.onDraw(canvas);
+        }
+    }
 
     private void addViewToFrame(int position) {
         View newUnderChild = mAdapter.getView(position, null, this);

@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.tournamentFeed;
+package in.sportscafe.nostragamus.module.TournamentFeed;
 
 import com.jeeva.android.InAppView;
 

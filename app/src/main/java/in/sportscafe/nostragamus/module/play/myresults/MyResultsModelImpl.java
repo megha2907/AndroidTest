@@ -15,13 +15,10 @@ import java.util.Map;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
-
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
-import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
-import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -197,7 +194,17 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         mResultAdapter.notifyDataSetChanged();
     }
 
-    private void callReplayPowerupAppliedApi(String powerupId,Integer matchId) {
+    @Override
+    public String getMatchResult() {
+        return match.getCorrectCount() + "/" + match.getMatchQuestionCount();
+    }
+
+    @Override
+    public int getMatchPoints() {
+        return match.getMatchPoints();
+    }
+
+    private void callReplayPowerupAppliedApi(String powerupId, Integer matchId) {
 
         MyWebService.getInstance().getReplayPowerup(powerupId,matchId).enqueue(new NostragamusCallBack<ReplayPowerupResponse>() {
             @Override

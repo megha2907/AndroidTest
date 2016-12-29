@@ -3,7 +3,6 @@
     <color name="colorPrimary">#202020</color>
     <color name="colorPrimaryDark">#161616</color>
     <color name="colorAccent">#202020</color>
-    <color name="black">#151515</color>
     <color name="blackopacity">#454545</color>
     <color name="colorMedium">#202020</color>
     <color name="colorBackground">#202020</color>
@@ -44,8 +43,17 @@
     <color name="invitepeoplebtncolor">#00CE61</color>
     <color name="mainpowerupbg">#55202020</color>
     <color name="curious_blue">#29ABE2</color>
-    <color name="black_60">#99000000</color>
     <color name="profile_tab_color">#33000000</color>
     <color name="profile_tab_line_color">#22ffffff</color>
+
+    <color name="black">#151515</color>
+    <color name="black_10">#1A000000</color>
+    <color name="black_20">#33000000</color>
+    <color name="black_30">#4D000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="black_50">#80000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_70">#B3000000</color>
+    <color name="black_80">#CC000000</color>
 
 </resources>

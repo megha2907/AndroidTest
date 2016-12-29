@@ -5,9 +5,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.jeeva.android.widgets.HmImageView;
 
 import java.util.List;
 
@@ -49,11 +50,11 @@ public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.
         if (mSelectedSportsIdList.contains((sport.getId())))
         {
             holder.mTvSport.setTextColor(ContextCompat.getColor(mContext, R.color.btn_powerup_screen_color));
-            holder.mIvSport.setImageResource(sport.getSelectedImageResource());
+            holder.mIvSport.setImageUrl(sport.getSelectedImageUrl());
             holder.mRlSport.setBackgroundResource(R.drawable.sport_colored_card_bg);
 
         } else {
-            holder.mIvSport.setImageResource(sport.getImageResource());
+            holder.mIvSport.setImageUrl(sport.getImageUrl());
             holder.mTvSport.setTextColor(ContextCompat.getColor(mContext, R.color.textcolorlight));
             holder.mRlSport.setBackgroundResource(R.drawable.card_bg);
         }
@@ -70,7 +71,7 @@ public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.
 
         RelativeLayout mRlSport;
 
-        ImageView mIvSport;
+        HmImageView mIvSport;
 
         TextView mTvSport;
 
@@ -78,7 +79,7 @@ public class SportSelectionAdapter extends Adapter<Sport, SportSelectionAdapter.
             super(V);
             mMainView = V;
             mRlSport=(RelativeLayout) V.findViewById(R.id.sport_row_rl);
-            mIvSport = (ImageView) V.findViewById(R.id.sport_row_iv_sport_image);
+            mIvSport = (HmImageView) V.findViewById(R.id.sport_row_iv_sport_image);
             mTvSport = (TextView) V.findViewById(R.id.sport_row_tv_sport_name);
 
             V.setOnClickListener(this);

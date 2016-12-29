@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.webservice;
 
 import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedResponse;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
@@ -11,8 +13,6 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.group.admin.approve.ApproveRequest;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
@@ -104,7 +104,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getQuestions(NostragamusDataHandler.getInstance().getUserId(),matchId);
     }
 
-    public Call<TournamentsResponse> getTournaments(boolean isCurrent,boolean groupbySport) {
+    public Call<TournamentsResponse> getTournaments(boolean isCurrent, boolean groupbySport) {
         return mNostragamusService.getTournaments(NostragamusDataHandler.getInstance().getUserId(),isCurrent,groupbySport);
     }
 

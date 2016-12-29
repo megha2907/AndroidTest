@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.tournamentFeed.dto;
+package in.sportscafe.nostragamus.module.TournamentFeed.dto;
 
 import java.util.ArrayList;
 import java.util.List;

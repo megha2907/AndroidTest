@@ -1,10 +1,7 @@
 package in.sportscafe.nostragamus.module.play.myresults.flipPowerup;
 
-import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,20 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.volley.Volley;
-import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.play.myresults.MyResultsAdapter;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
-import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryActivity;
 
 /**
  * Created by deepanshi on 12/20/16.

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.ImageConfig;
 
 /**
  * Created by Jeeva on 27/5/16.
@@ -37,8 +37,9 @@ public class Sport implements Serializable {
     }
 
     @JsonIgnore
-    public int getImageResource() {
-        switch (id) {
+    public String getImageUrl() {
+        return ImageConfig.getSportImageUrl(100, 100, name.toLowerCase() + "w");
+        /*switch (id) {
             case 6:
                 return R.drawable.badminton_menu_icon;
             case 8:
@@ -61,12 +62,13 @@ public class Sport implements Serializable {
                 return R.drawable.isb_menu_icon;
             default:
                 return R.drawable.ic_launcher;
-        }
+        }*/
     }
 
     @JsonIgnore
-    public int getSelectedImageResource() {
-        switch (id) {
+    public String getSelectedImageUrl() {
+        return ImageConfig.getSportImageUrl(100, 100, name.toLowerCase() + "w");
+        /*switch (id) {
             case 6:
                 return R.drawable.badminton_menu_colored_icon;
             case 8:
@@ -89,7 +91,7 @@ public class Sport implements Serializable {
                 return R.drawable.isb_menu_colored_icon;
             default:
                 return R.drawable.ic_launcher;
-        }
+        }*/
     }
 
     @JsonIgnore

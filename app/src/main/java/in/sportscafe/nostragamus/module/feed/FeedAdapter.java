@@ -6,29 +6,23 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v4.widget.Space;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
-import android.text.util.Linkify;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
-import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
@@ -40,13 +34,12 @@ import java.util.List;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
-
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -132,7 +125,6 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mTvPartyBName.setVisibility(View.GONE);
             holder.mIvPartyAPhoto.setVisibility(View.GONE);
             holder.mIvPartyBPhoto.setVisibility(View.GONE);
-            holder.mBtnVs.setVisibility(View.GONE);
             holder.mTvMatchStage.setVisibility(View.GONE);
             holder.mRlMatchStageParent.setVisibility(View.GONE);
             holder.mTvStartTime.setVisibility(View.GONE);
@@ -149,15 +141,11 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
 
             holder.mIvPartyAPhoto.setImageUrl(
-                    match.getParties().get(0).getPartyImageUrl(),
-                    Volley.getInstance().getImageLoader(),
-                    false
+                    match.getParties().get(0).getPartyImageUrl()
             );
 
             holder.mIvPartyBPhoto.setImageUrl(
-                    match.getParties().get(1).getPartyImageUrl(),
-                    Volley.getInstance().getImageLoader(),
-                    false
+                    match.getParties().get(1).getPartyImageUrl()
             );
         }
 
@@ -454,7 +442,6 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
             mIvPartyAPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_left);
             mIvPartyBPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_right);
-            mBtnVs=(Button) V.findViewById(R.id.schedule_row_btn_vs);
             mBtnPlayMatch=(CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
             mIbfeedDotIcon=(Button) V.findViewById(R.id.feed_dot_icon);
             mBtnMatchPoints=(CustomButton) V.findViewById(R.id.schedule_row_btn_points);

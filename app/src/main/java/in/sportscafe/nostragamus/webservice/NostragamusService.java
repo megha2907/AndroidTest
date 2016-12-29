@@ -1,6 +1,8 @@
 package in.sportscafe.nostragamus.webservice;
 
 
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedResponse;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
@@ -10,8 +12,6 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.group.admin.approve.ApproveRequest;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
@@ -74,7 +74,7 @@ public interface NostragamusService {
     Call<QuestionsResponse> getQuestions(@Path("userId") String userId,@Query("match_id") int matchId);
 
     @GET("v1/game/users/{user_id}/tournaments")
-    Call<TournamentsResponse> getTournaments(@Path("user_id") String userId, @Query("is_current") boolean isCurrent,@Query("group_by_sport") boolean groupbySport);
+    Call<TournamentsResponse> getTournaments(@Path("user_id") String userId, @Query("is_current") boolean isCurrent, @Query("group_by_sport") boolean groupbySport);
 
     @GET("v1/game/users/{user_id}/tournaments")
     Call<TournamentFeedResponse> getCurrentTournaments(@Path("user_id") String userId, @Query("is_current") boolean isCurrent);
