@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.tournamentFeed;
+package in.sportscafe.nostragamus.module.TournamentFeed;
 
 /**
  * Created by deepanshi on 9/29/16.
@@ -12,14 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
-import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.FeedActivity;
@@ -51,15 +49,18 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
         TournamentFeedInfo tournamentInfo = getItem(position);
         holder.mPosition = position;
 
+        try {
         holder.mTvTournamentName.setText(tournamentInfo.getTournamentName());
 
         holder.mTvTournamentUnplayedCount.setText(tournamentInfo.getTournamentSubtext());
 
         holder.mIvTournamentImage.setImageUrl(
-                tournamentInfo.getTournamentPhoto(),
-                Volley.getInstance().getImageLoader(),
-                false
+                tournamentInfo.getTournamentPhoto()
         );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -9,7 +9,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <ImageView
+    <com.jeeva.android.widgets.HmImageView
         android:id="@+id/sport_row_iv_sport_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"

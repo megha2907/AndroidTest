@@ -57,6 +57,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void onsetMatchDetails(Match match) {
         mResultsView.setMatchDetails(match);
+        mResultsView.navigatetoPlay(match);
     }
 
     @Override
@@ -69,6 +70,10 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
         mResultsModel.showFlipQuestion();
     }
 
+    @Override
+    public void onClickFbShare() {
+        mResultsView.showResultShare(mResultsModel.getMatchResult(), mResultsModel.getMatchPoints());
+    }
 
     private void getResultDetails() {
         mResultsView.showProgressbar();

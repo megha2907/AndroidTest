@@ -4,15 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.animator.AnimationAdapter;
+import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 
 /**
  * Created by deepanshi on 12/8/16.
@@ -52,7 +52,15 @@ public class PowerUpFragment extends NostragamusFragment implements PowerUpView{
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        this.mRvPowerUp.setAdapter(adapter);
+        this.mRvPowerUp.setAdapter(getAnimationAdapter(adapter));
+    }
+
+    private AnimationAdapter getAnimationAdapter(RecyclerView.Adapter adapter) {
+        SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
+        animationAdapter.setFirstOnly(true);
+        animationAdapter.setDuration(750);
+        animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
+        return animationAdapter;
     }
 
 }

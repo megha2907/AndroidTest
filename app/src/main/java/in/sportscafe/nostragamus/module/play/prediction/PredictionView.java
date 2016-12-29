@@ -34,14 +34,11 @@ public interface PredictionView extends InAppView {
 
     void dismissPowerUp();
 
-
     void updateAudiencePollPowerup();
 
     void navigateToAllDone(Bundle bundle);
 
-    void setLeftOption(String questionOption1);
-
-    void setRightOption(String questionOption2);
+    void setNeitherOption(String neitherOption);
 
     void setMatchStage(String matchStage);
 

@@ -16,40 +16,62 @@
 package com.jeeva.android.widgets;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
+import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 import com.jeeva.android.R;
-
-import java.io.File;
-import java.io.FileNotFoundException;
+import com.jeeva.android.volley.Volley;
 
 /**
  * Handles fetching an image from a URL as well as the life-cycle of the
  * associated request.
  */
 public class HmImageView extends ImageView {
-    /** The URL of the network image to load */
+
+    private static final String TAG = "HmImageView";
+
+    public interface FillType {
+
+        int WIDTH = 1;
+
+        int HEIGHT = 2;
+    }
+
+    public interface CropType {
+
+        int LEFT = 1;
+
+        int TOP = 2;
+
+        int RIGHT = 4;
+
+        int BOTTOM = 8;
+    }
+
+    /**
+     * Current ImageContainer. (either in-flight or finished)
+     */
+    private ImageContainer mImageContainer;
+
+    /**
+     * The URL of the network image to load
+     */
     private String mUrl;
 
     /**
@@ -62,15 +84,21 @@ public class HmImageView extends ImageView {
      */
     private int mErrorImageId;
 
-    /** Local copy of the ImageLoader. */
-    private ImageLoader mImageLoader;
+    private boolean mShowAnimation = true;
 
-    /** Current ImageContainer. (either in-flight or finished) */
-    private ImageContainer mImageContainer;
+    private boolean mLoadImage = true;
 
-    private OnImageLoadListener mImageLoadListener;
+    private int mFillType = -1;
 
-    private Boolean mPath;
+    private int mCropType = -1;
+
+    private OnImageLoadedListener mImageLoadedListener;
+
+    private boolean mImageLoaded = false;
+
+    public interface OnImageLoadedListener {
+        void onImageLoaded();
+    }
 
     public HmImageView(Context context) {
         this(context, null);
@@ -82,60 +110,63 @@ public class HmImageView extends ImageView {
 
     public HmImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init(context, attrs);
     }
 
-    public void setImageUrl(String url, ImageLoader imageLoader,
-                            OnImageLoadListener imageLoadListener, Boolean path) {
-        mUrl = formatUrl(url);
-        mImageLoader = imageLoader;
-        mImageLoadListener = imageLoadListener;
-        mPath = path;
-        // The URL has potentially changed. See if we need to load it.
-        loadImageIfNecessary(false);
-    }
+    private void init(Context context, AttributeSet attrs) {
+        if(null != attrs) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HmImageView);
+            mDefaultImageId = a.getResourceId(R.styleable.HmImageView_defaultImage, 0);
+            mErrorImageId = a.getResourceId(R.styleable.HmImageView_errorImage, 0);
+            mShowAnimation = a.getBoolean(R.styleable.HmImageView_showAnimation, true);
+            mFillType = a.getInt(R.styleable.HmImageView_fillType, -1);
+            mCropType = a.getInt(R.styleable.HmImageView_cropType, -1);
 
-    public void setImageUrl(String url, ImageLoader imageLoader, Boolean path) {
-        mUrl = formatUrl(url);
-        mImageLoader = imageLoader;
-        mPath = path;
-        // The URL has potentially changed. See if we need to load it.
-        loadImageIfNecessary(false);
+            a.recycle();
+        }
     }
 
     private String formatUrl(String url) {
         // Todo format should be removed after fixed the url space issue's
-        if(null != url) {
-            //url = url.replaceAll(" ", "%20");
+        if (null != url) {
+            url = url.replaceAll(" ", "%20");
         }
+        Log.d(TAG, "Image url --> " + url);
         return url;
     }
 
-    public void setPath(boolean path) {
-        this.mPath = path;
+    public void setImageUrl(String url) {
+        mImageLoaded = false;
+
+        mUrl = formatUrl(url);
+        // The URL has potentially changed. See if we need to load it.
+        loadImageIfNecessary(false);
     }
 
-    /**
-     * Sets the default image resource ID to be used for this view until the attempt to load it
-     * completes.
-     */
-    public void setDefaultImageResId(int defaultImage) {
-        mDefaultImageId = defaultImage;
+    public String getImageUrl() {
+        return mUrl;
     }
 
-    /**
-     * Sets the error image resource ID to be used for this view in the event that the image
-     * requested fails to load.
-     */
-    public void setErrorImageResId(int errorImage) {
-        mErrorImageId = errorImage;
+    public void setImageLoadedListener(OnImageLoadedListener loadedListener) {
+        this.mImageLoadedListener = loadedListener;
+    }
+
+    public void setLoadImage(boolean loadImage) {
+        this.mLoadImage = loadImage;
+    }
+
+    public boolean isImageLoaded() {
+        return mImageLoaded;
     }
 
     /**
      * Loads the image for the view if it isn't already loaded.
+     *
      * @param isInLayoutPass True if this was invoked from a layout pass, false otherwise.
      */
     void loadImageIfNecessary(final boolean isInLayoutPass) {
-        if(null != mPath) {
+
+        if (mLoadImage) {
             int width = getWidth();
             int height = getHeight();
 
@@ -176,29 +207,13 @@ public class HmImageView extends ImageView {
                 }
             }
 
-            if (mPath) {
-//                Bitmap bitmap= null;
-//                try {
-//                    Log.i("path",String.valueOf(mPath));
-//                    //String path = String.valueOf(mPath).replace("/file:","");
-//                    bitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(Uri.fromFile(new File(mUrl))));
-//                    setImageBitmap(bitmap);
-////                    setImageResource(R.drawable.com_facebook_button_icon);
-//                    Log.i("after","setImageBitmap");
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-              setImageBitmap(BitmapFactory.decodeFile(mUrl));
-                return;
-            }
-
             // Calculate the max image width / height to use while ignoring WRAP_CONTENT dimens.
             int maxWidth = wrapWidth ? 0 : width;
             int maxHeight = wrapHeight ? 0 : height;
 
             // The pre-existing content of this view didn't match the current URL. Load the new image
             // from the network.
-            ImageContainer newContainer = mImageLoader.get(mUrl,
+            ImageContainer newContainer = Volley.getInstance().getImageLoader().get(mUrl,
                     new ImageListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
@@ -213,6 +228,8 @@ public class HmImageView extends ImageView {
                             // pass do not set the image immediately as it will trigger a requestLayout
                             // inside of a layout. Instead, defer setting the image by posting back to
                             // the main thread.
+                            Log.d("HmImageView", "isImmediate --> " + isImmediate + ", isInLayoutPass --> " + isInLayoutPass);
+
                             if (isImmediate && isInLayoutPass) {
                                 post(new Runnable() {
                                     @Override
@@ -223,12 +240,22 @@ public class HmImageView extends ImageView {
                                 return;
                             }
 
-                            if (response.getBitmap() != null) {
-                                setImageDrawable(new BitmapDrawable(getResources(), response.getBitmap()));
-                                if (null != mImageLoadListener) {
-                                    mImageLoadListener.onImageLoaded();
+                            Bitmap bitmap = response.getBitmap();
+                            if (null != bitmap) {
+
+                                if(mFillType != -1) {
+                                    bitmap = applyFillType(bitmap);
                                 }
+
+                                setImageDrawable(new BitmapDrawable(getResources(), bitmap));
+                                mImageLoaded = true;
+
+                                if(null != mImageLoadedListener) {
+                                    mImageLoadedListener.onImageLoaded();
+                                }
+
                             } else if (mDefaultImageId != 0) {
+
                                 setImageResource(mDefaultImageId);
                             }
                         }
@@ -236,7 +263,9 @@ public class HmImageView extends ImageView {
 
             // update the ImageContainer to be the new bitmap container.
             mImageContainer = newContainer;
-        }
+        } /*else {
+            setDefaultImageOrNull();
+        }*/
     }
 
     private void setDefaultImageOrNull() {
@@ -249,29 +278,67 @@ public class HmImageView extends ImageView {
 
     @Override
     public void setImageDrawable(Drawable drawable) {
-        TransitionDrawable td = new TransitionDrawable(new Drawable[]{
-                new ColorDrawable(getResources().getColor(android.R.color.transparent)),
-                drawable
-        });
-        super.setImageDrawable(td);
-        td.startTransition(500);
+        if (mShowAnimation) {
+            TransitionDrawable td = new TransitionDrawable(new Drawable[]{
+                    new ColorDrawable(getResources().getColor(android.R.color.transparent)),
+                    drawable
+            });
+            super.setImageDrawable(td);
+            td.startTransition(500);
+        } else super.setImageDrawable(drawable);
+        invalidate();
     }
 
     public Bitmap getBitmap() {
-        Drawable drawable = getDrawable();
+        try {
+            Drawable drawable = getDrawable();
 
-        if(null == drawable) {
-            return null;
+            if (null == drawable) {
+                return null;
+            }
+
+            if (drawable instanceof BitmapDrawable) {
+                return ((BitmapDrawable) drawable).getBitmap();
+            }
+
+            Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.draw(canvas);
+            return bitmap;
+        } catch (Exception e) {
+            ExceptionTracker.track(e);
         }
 
-        if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable) drawable).getBitmap();
+        return null;
+    }
+
+    private Bitmap applyFillType(Bitmap bitmap) {
+        Log.d(TAG, "Reached applyFillType");
+
+        float bitmapWidth = bitmap.getWidth();
+        float bitmapHeight = bitmap.getHeight();
+        float bitmapRatio = bitmapWidth / bitmapHeight;
+
+        Log.d(TAG, "Bitmap Specs, Width --> " + bitmapWidth + "  Height --> " + bitmapHeight + "  Ratio --> " + bitmapRatio);
+
+        int viewWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
+        int viewHeight = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
+
+        Log.d(TAG, "ImageView Specs, Width --> " + viewWidth + "  Height --> " + viewHeight);
+
+        if (viewWidth > 0 && viewHeight > 0) {
+            switch (mFillType) {
+                case FillType.WIDTH:
+                    Log.d(TAG, "Reached full width");
+                    return Bitmap.createScaledBitmap(bitmap, viewWidth, (int) (viewWidth / bitmapRatio), true);
+                case FillType.HEIGHT:
+                    Log.d(TAG, "Reached full height -- > " + getHeight());
+                    return Bitmap.createScaledBitmap(bitmap, (int) (viewHeight * bitmapRatio), viewHeight, true);
+            }
         }
-//        int w = getWidth();
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
-                Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.draw(canvas);
+
+        Log.d(TAG, "Both width and height should be greater than zero");
         return bitmap;
     }
 
@@ -279,6 +346,64 @@ public class HmImageView extends ImageView {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         loadImageIfNecessary(true);
+    }
+
+    @Override
+    protected boolean setFrame(int l, int t, int r, int b) {
+        if (getDrawable() == null || mCropType == -1)
+            return super.setFrame(l, t, r, b);
+
+        Matrix matrix = getImageMatrix();
+
+        int viewWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
+        int viewHeight = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
+        int drawableWidth = getDrawable().getIntrinsicWidth();
+        int drawableHeight = getDrawable().getIntrinsicHeight();
+
+        //Get the scale
+        float scale;
+        if (drawableWidth * viewHeight > drawableHeight * viewWidth) {
+            scale = (float) viewHeight / (float) drawableHeight;
+        } else {
+            scale = (float) viewWidth / (float) drawableWidth;
+        }
+
+        float left = 0;
+        float top = 0;
+        float right = drawableWidth;
+        float bottom = drawableHeight;
+
+        if(containsFlag(mCropType, CropType.LEFT)) {
+            right = viewWidth / scale;
+        }
+
+        if(containsFlag(mCropType, CropType.TOP)) {
+            bottom = viewHeight / scale;
+        }
+
+        if(containsFlag(mCropType, CropType.RIGHT)) {
+            left = drawableWidth - (viewWidth / scale);
+        }
+
+        if(containsFlag(mCropType, CropType.BOTTOM)) {
+            top = drawableHeight - (viewHeight / scale);
+        }
+
+        //Define the rect to take image portion from
+        RectF drawableRect = new RectF(left, top, right, bottom);
+//        RectF drawableRect = new RectF(0, 0, drawableWidth, (viewHeight / scale));
+
+
+        RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
+        matrix.setRectToRect(drawableRect, viewRect, Matrix.ScaleToFit.FILL);
+
+        setImageMatrix(matrix);
+
+        return super.setFrame(l, t, r, b);
+    }
+
+    private boolean containsFlag(int flagSet, int flag){
+        return (flagSet|flag) == flagSet;
     }
 
     @Override
@@ -298,43 +423,5 @@ public class HmImageView extends ImageView {
     protected void drawableStateChanged() {
         super.drawableStateChanged();
         invalidate();
-    }
-
-    public interface OnImageLoadListener {
-        void onImageLoaded();
-    }
-
-    public static Bitmap getRoundedCroppedBitmap(Bitmap bitmap, int radius) {
-        Bitmap finalBitmap;
-
-
-        if (bitmap.getWidth() != radius || bitmap.getHeight() != radius)
-            finalBitmap = Bitmap.createScaledBitmap(bitmap, radius, radius,
-                    false);
-
-        else
-            finalBitmap = bitmap;
-
-        Bitmap output = Bitmap.createBitmap(finalBitmap.getWidth(),
-                finalBitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
-
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, finalBitmap.getWidth(),
-                finalBitmap.getHeight());
-
-        paint.setAntiAlias(true);
-
-        paint.setFilterBitmap(true);
-        paint.setDither(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(Color.parseColor("#BAB399"));
-        canvas.drawCircle(finalBitmap.getWidth() / 2 + 0.8f,
-                finalBitmap.getHeight() / 2 + 0.6f,
-                finalBitmap.getWidth() / 2 + 0.1f, paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(finalBitmap, rect, rect, paint);
-
-        return output;
     }
 }

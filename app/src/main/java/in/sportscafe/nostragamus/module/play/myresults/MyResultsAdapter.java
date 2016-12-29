@@ -2,7 +2,6 @@ package in.sportscafe.nostragamus.module.play.myresults;
 
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,24 +10,21 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryActivity;
 
@@ -135,15 +131,11 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
 
         holder.mIvPartyAPhoto.setImageUrl(
-                match.getParties().get(0).getPartyImageUrl(),
-                Volley.getInstance().getImageLoader(),
-                false
+                match.getParties().get(0).getPartyImageUrl()
         );
 
         holder.mIvPartyBPhoto.setImageUrl(
-                match.getParties().get(1).getPartyImageUrl(),
-                Volley.getInstance().getImageLoader(),
-                false
+                match.getParties().get(1).getPartyImageUrl()
         );
 
 

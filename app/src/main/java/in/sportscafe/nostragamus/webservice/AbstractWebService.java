@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
 import com.jeeva.android.converter.JacksonConverterFactory;
 
 import java.io.IOException;
@@ -62,6 +63,7 @@ public abstract class AbstractWebService<T> {
                 String token = NostragamusDataHandler.getInstance().getAccessToken();
                 if(null != token) {
                     builder.addHeader("Authorization", token);
+                    Log.d("Authorization", token);
                 }
 
                 return chain.proceed(builder.build());

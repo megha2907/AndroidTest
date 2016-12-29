@@ -16,7 +16,5 @@ public interface PredictionPresenter {
 
     void onPowerUp(String powerup);
 
-    void onSetQuestionOption(List<Question> questionList);
-
     void setFlingListener(FlingCardListener topCardListener);
 }

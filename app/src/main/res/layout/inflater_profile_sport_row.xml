@@ -14,7 +14,7 @@
 
         >
 
-        <ImageView
+        <com.jeeva.android.widgets.HmImageView
             android:id="@+id/profile_sport_row_iv_sport_image"
             android:layout_width="@dimen/dp_35"
             android:layout_height="@dimen/dp_35"

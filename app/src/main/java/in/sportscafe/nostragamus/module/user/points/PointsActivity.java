@@ -4,15 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
+import com.jeeva.android.widgets.HmImageView;
 import com.squareup.picasso.Picasso;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
@@ -61,13 +61,13 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
         mSelectedSportId = mbundle.getInt(Constants.BundleKeys.SPORT_ID);
 
-        ImageView pointsIcon= (ImageView) findViewById(R.id.points_group_icon);
+        HmImageView pointsIcon= (HmImageView) findViewById(R.id.points_group_icon);
 
         if (mSelectedSportId!=0) {
             for (Sport sport : NostragamusDataHandler.getInstance().getAllSports()) {
                 if (sport.getId() == mSelectedSportId) {
                     Log.i("SPORTS","INSIDE");
-                    pointsIcon.setBackgroundResource(sport.getImageResource());
+                    pointsIcon.setImageUrl(sport.getImageUrl());
                 }
 
             }

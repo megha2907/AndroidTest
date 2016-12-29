@@ -1,7 +1,5 @@
 package in.sportscafe.nostragamus.module.crash;
 
-import in.sportscafe.nostragamus.AppSnippet;
-
 /**
  * Created by Jeeva on 8/8/16.
  */
@@ -21,6 +19,6 @@ public class NostragamusUncaughtExceptionHandler implements Thread.UncaughtExcep
         intent.putExtra(Constants.BundleKeys.SHOW_CRASH_REPORT, true);
         context.startActivity(intent);*/
 
-        AppSnippet.closeApp();
+//        AppSnippet.closeApp();
     }
 }

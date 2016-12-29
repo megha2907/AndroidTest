@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 
 import java.io.Serializable;
@@ -107,9 +106,7 @@ public class ChallengesFragment extends NostragamusFragment implements Challenge
         else {
 
             mTournamentPhotoImageView.setImageUrl(
-                    challengesTourSummary.getChallengePhoto(),
-                    Volley.getInstance().getImageLoader(),
-                    false
+                    challengesTourSummary.getChallengePhoto()
             );
         }
 

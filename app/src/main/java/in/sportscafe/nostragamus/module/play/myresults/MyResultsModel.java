@@ -17,4 +17,8 @@ public interface MyResultsModel {
     void callReplayPowerupApplied();
 
     void showFlipQuestion();
+
+    String getMatchResult();
+
+    int getMatchPoints();
 }

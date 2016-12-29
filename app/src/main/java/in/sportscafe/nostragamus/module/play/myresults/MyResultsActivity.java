@@ -3,7 +3,11 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,21 +15,29 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.animator.AnimationAdapter;
+import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.MyResultsTimelineActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -109,7 +121,15 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void setAdapter(MyResultsAdapter myResultsAdapter) {
-        mRvMyResults.setAdapter(myResultsAdapter);
+        mRvMyResults.setAdapter(getAnimationAdapter(myResultsAdapter));
+    }
+
+    private AnimationAdapter getAnimationAdapter(RecyclerView.Adapter adapter) {
+        SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
+        animationAdapter.setFirstOnly(true);
+        animationAdapter.setDuration(750);
+        animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
+        return animationAdapter;
     }
 
     public void onBack(View view) {
@@ -287,5 +307,58 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         }
     }
 
+    @Override
+    public void showResultShare(String matchResult, int matchPoints) {
+        Bitmap screenshot = ViewUtils.viewToBitmap(
+                mRvMyResults,
+                mRvMyResults.getWidth(),
+                mRvMyResults.computeVerticalScrollRange()
+        );
 
+        if(null != screenshot) {
+            Resources resources = getResources();
+            int delta = resources.getDimensionPixelSize(R.dimen.dp_10);
+
+            // cutting top part
+            screenshot = ViewUtils.cutPartOfBitmap(screenshot, new Rect(
+                    0,
+                    findViewById(R.id.schedule_row_ll).getTop() + delta,
+                    screenshot.getWidth(),
+                    findViewById(R.id.my_results_row_ll_predictions).getBottom() + delta)
+            );
+
+            final ViewGroup parent = (ViewGroup) findViewById(R.id.for_screenshot);
+            final View sharePhoto = getLayoutInflater().inflate(R.layout.inflater_my_result_share_holder, parent, false);
+            parent.addView(sharePhoto);
+
+            ((TextView) sharePhoto.findViewById(R.id.my_results_share_tv_content)).setText(String.format(
+                    resources.getString(R.string.fb_share_result_text),
+                    matchResult,
+                    matchPoints
+            ));
+
+            sharePhoto.findViewById(R.id.my_results_share_iv_screenshot)
+                    .setBackground(new BitmapDrawable(resources, screenshot));
+
+            sharePhoto.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    sharePhoto.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    Bitmap screenshot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
+
+                    File screenshotFile = ViewUtils.saveBitmap(screenshot);
+                    AppSnippet.doGeneralImageShare(MyResultsActivity.this, screenshotFile);
+
+                    parent.removeAllViews();
+                }
+            });
+
+        }
+    }
+
+
+    public void takeScreenshot(View view) {
+        mResultsPresenter.onClickFbShare();
+    }
 }

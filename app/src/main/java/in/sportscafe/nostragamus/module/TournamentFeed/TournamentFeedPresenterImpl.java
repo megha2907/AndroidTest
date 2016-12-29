@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.tournamentFeed;
+package in.sportscafe.nostragamus.module.TournamentFeed;
 
 /**
  * Created by deepanshi on 9/29/16.

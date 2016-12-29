@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
-import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -45,9 +44,7 @@ public class SportsViewChildHolder extends ChildViewHolder{
         mTournamentNameTextView.setText(tourSummary.getTournamentName());
 
         mTournamentPhotoImageView.setImageUrl(
-                tourSummary.getTournamentImageUrl(),
-                Volley.getInstance().getImageLoader(),
-                false
+                tourSummary.getTournamentImageUrl()
         );
 //
         if(null == tourSummary.getRankChange()) {

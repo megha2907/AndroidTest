@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.jeeva.android.volley.Volley;
+
 import java.util.List;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -53,9 +53,7 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     @Override
     public void setProfileImage(String imageUrl) {
         ((RoundImage) findViewById(R.id.player_profile_iv_image)).setImageUrl(
-                imageUrl,
-                Volley.getInstance().getImageLoader(),
-                false
+                imageUrl
         );
     }
 

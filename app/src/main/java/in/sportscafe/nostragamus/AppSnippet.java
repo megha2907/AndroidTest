@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
@@ -17,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
@@ -55,6 +57,16 @@ public class AppSnippet implements Constants {
 
     public static String capitalize(String word) {
         return word.substring(0, 1).toUpperCase() + word.substring(1);
+    }
+
+    public static void doGeneralImageShare(Context context, File imageFile){
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+//        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imageFile));  //optional//use this when you want to send an image
+        shareIntent.setType("image/png");
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        context.startActivity(shareIntent);
     }
 
     public static Intent getGeneralShareIntent(String shareText) {

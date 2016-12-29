@@ -1,20 +1,18 @@
 package in.sportscafe.nostragamus.module.user.sportselection.profilesportselection;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.jeeva.android.widgets.HmImageView;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectionAdapter;
-import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionAdapter;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 
 /**
@@ -51,7 +49,7 @@ public class ProfileSportSelectionAdapter extends Adapter<Sport, ProfileSportSel
 
         holder.id = sport.getId();
         holder.mTvSport.setText(sport.getName());
-        holder.mIvSport.setImageResource(sport.getImageResource());
+        holder.mIvSport.setImageUrl(sport.getImageUrl());
 
         if (mSelectedSportsIdList.contains((sport.getId())))
         {
@@ -69,7 +67,7 @@ public class ProfileSportSelectionAdapter extends Adapter<Sport, ProfileSportSel
 
         View mMainView;
 
-        ImageView mIvSport;
+        HmImageView mIvSport;
 
         TextView mTvSport;
 
@@ -78,7 +76,7 @@ public class ProfileSportSelectionAdapter extends Adapter<Sport, ProfileSportSel
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
-            mIvSport = (ImageView) V.findViewById(R.id.profile_sport_row_iv_sport_image);
+            mIvSport = (HmImageView) V.findViewById(R.id.profile_sport_row_iv_sport_image);
             mTvSport = (TextView) V.findViewById(R.id.profile_sport_row_tv_sport_name);
             mIvSelectedIcon = (ImageView) V.findViewById(R.id.profile_sport_row_selected_icon);
 

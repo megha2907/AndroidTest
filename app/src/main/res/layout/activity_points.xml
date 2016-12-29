@@ -42,7 +42,7 @@
             />
 
 
-                <ImageView
+                <com.jeeva.android.widgets.HmImageView
                     android:id="@+id/points_group_icon"
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"

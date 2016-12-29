@@ -12,10 +12,10 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
@@ -95,7 +95,11 @@ public class FeedModelImpl implements FeedModel {
     }
 
     private void handleMatches(List<Match> matchList) {
-        mFeedAdapter.addAll(getFeedList(matchList));
+        List<Feed> feedList = getFeedList(matchList);
+        for (Feed feed : feedList) {
+            mFeedAdapter.add(feed);
+        }
+
         mFeedModelListener.onSuccessFeeds(mFeedAdapter, mClosestDatePosition);
     }
 

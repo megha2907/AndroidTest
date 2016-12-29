@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.tournamentFeed;
+package in.sportscafe.nostragamus.module.TournamentFeed;
 
 /**
  * Created by deepanshi on 9/29/16.
@@ -9,8 +9,8 @@ import android.os.Bundle;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentInfo;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 
 
@@ -44,7 +44,7 @@ public class TournamentFeedModelImpl implements TournamentFeedModel {
     }
 
     private void checkEmpty() {
-        if(mTournamentFeedAdapter.getItemCount() == 0) {
+        if (mTournamentFeedAdapter.getItemCount() == 0) {
             mTournamentFeedModelListener.onEmpty();
         }
     }

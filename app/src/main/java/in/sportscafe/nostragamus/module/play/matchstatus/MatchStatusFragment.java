@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants;
@@ -89,9 +88,7 @@ public class MatchStatusFragment extends NostragamusFragment implements MatchSta
     public void setTournamentImageTeam1(String tournamentImageTeam1) {
         HmImageView mIvPartyAPhoto=(HmImageView) findViewById(R.id.swipe_card_iv_left);
         mIvPartyAPhoto.setImageUrl(
-                tournamentImageTeam1,
-                Volley.getInstance().getImageLoader(),
-                false
+                tournamentImageTeam1
         );
     }
 
@@ -99,9 +96,7 @@ public class MatchStatusFragment extends NostragamusFragment implements MatchSta
     public void setTournamentImageTeam2(String tournamentImageTeam2) {
         HmImageView mIvPartyBPhoto=(HmImageView) findViewById(R.id.swipe_card_iv_right);
         mIvPartyBPhoto.setImageUrl(
-                tournamentImageTeam2,
-                Volley.getInstance().getImageLoader(),
-                false
+                tournamentImageTeam2
         );
     }
 
