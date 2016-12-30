@@ -100,9 +100,9 @@ public class Nostragamus extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
 
-        if(mDebuggable) {
+//        if(mDebuggable) {
             MultiDex.install(this);
-        }
+//        }
     }
 
     private void initCrashHandler(boolean debuggable) {
@@ -110,9 +110,9 @@ public class Nostragamus extends Application {
         // It is to show the crash page, If the application is crashed
         Thread.setDefaultUncaughtExceptionHandler(new NostragamusUncaughtExceptionHandler());
 
-        if(!debuggable) {
+        if (!debuggable) {
             // Initializing the Crashlytics using fabric
-           //Fabric.with(this, new Crashlytics());
+            Fabric.with(this, new Crashlytics());
         }
     }
 
