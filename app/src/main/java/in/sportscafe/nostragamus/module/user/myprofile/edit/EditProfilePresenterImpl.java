@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
+import java.io.File;
 import java.util.Arrays;
 
 import in.sportscafe.nostragamus.Constants;
@@ -14,8 +15,6 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.preference.PreferenceManager;
 import in.sportscafe.nostragamus.module.user.preference.SavePreferenceModelImpl;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -71,7 +70,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     }
 
     @Override
-    public void onProfilePhotoDone(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+    public void onProfilePhotoDone(File file, String filepath, String filename) {
         mEditProfileModel.updateProfilePhoto(file, filepath,filename);
     }
 

@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.user.group.newgroup;
 import android.content.Context;
 import android.os.Bundle;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +19,6 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -80,7 +79,7 @@ public class NewGroupModelImpl implements NewGroupModel {
     }
 
     @Override
-    public void updateGroupPhoto(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+    public void updateGroupPhoto(File file, String filepath, String filename) {
 
         if(filepath.equals(null)) {
             mNewGroupModelListener.onGroupImagePathNull();
@@ -95,9 +94,9 @@ public class NewGroupModelImpl implements NewGroupModel {
     }
 
 
-    private void callUpdateGroupPhotoApi(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+    private void callUpdateGroupPhotoApi(File file, String filepath, String filename) {
 
-        MyWebService.getInstance().getUpdateGroupPhotoRequest(file,filepath,filename).enqueue(new NostragamusCallBack<Result>() {
+        MyWebService.getInstance().getUploadPhotoRequest(file,filepath,filename).enqueue(new NostragamusCallBack<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 super.onResponse(call, response);

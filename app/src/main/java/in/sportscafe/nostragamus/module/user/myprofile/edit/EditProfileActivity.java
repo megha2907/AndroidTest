@@ -290,7 +290,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
                         MediaType.parse("multipart/form-data"), ServerfileName);
 
 
-        mEditProfilePresenter.onProfilePhotoDone(body,filepath,filename);
+        mEditProfilePresenter.onProfilePhotoDone(file, Serverfilepath, ServerfileName);
 
     }
 

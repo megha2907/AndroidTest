@@ -24,9 +24,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeva.android.facebook.FacebookHandler;
+
 import java.io.File;
 
-import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -308,7 +309,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     @Override
-    public void showResultShare(String matchResult, int matchPoints) {
+    public void takeScreenShot() {
         Bitmap screenshot = ViewUtils.viewToBitmap(
                 mRvMyResults,
                 mRvMyResults.getWidth(),
@@ -331,11 +332,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             final View sharePhoto = getLayoutInflater().inflate(R.layout.inflater_my_result_share_holder, parent, false);
             parent.addView(sharePhoto);
 
-            ((TextView) sharePhoto.findViewById(R.id.my_results_share_tv_content)).setText(String.format(
+            /*((TextView) sharePhoto.findViewById(R.id.my_results_share_tv_content)).setText(String.format(
                     resources.getString(R.string.fb_share_result_text),
                     matchResult,
                     matchPoints
-            ));
+            ));*/
 
             sharePhoto.findViewById(R.id.my_results_share_iv_screenshot)
                     .setBackground(new BitmapDrawable(resources, screenshot));
@@ -348,17 +349,24 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                     Bitmap screenshot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
 
                     File screenshotFile = ViewUtils.saveBitmap(screenshot);
-                    AppSnippet.doGeneralImageShare(MyResultsActivity.this, screenshotFile);
 
                     parent.removeAllViews();
+
+                    mResultsPresenter.onGetScreenShot(screenshotFile);
                 }
             });
 
         }
+
+//        doSomething(matchResult, matchPoints);
     }
 
+    @Override
+    public void showFbShare(String url) {
+        FacebookHandler.getInstance(MyResultsActivity.this).share(MyResultsActivity.this, url);
+    }
 
-    public void takeScreenshot(View view) {
+    public void onClickFbShare(View view) {
         mResultsPresenter.onClickFbShare();
     }
 }

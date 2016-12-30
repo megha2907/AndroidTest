@@ -3,6 +3,8 @@ package in.sportscafe.nostragamus.module.user.group.editgroupinfo;
 import android.content.Context;
 import android.os.Bundle;
 
+import java.io.File;
+
 import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import okhttp3.MultipartBody;
@@ -37,5 +39,5 @@ public interface EditGroupInfoModel {
 
     void updateGroupMembers();
 
-    void updateGroupPhoto(MultipartBody.Part file, RequestBody filepath, RequestBody filename);
+    void updateGroupPhoto(File file, String filepath, String filename);
 }

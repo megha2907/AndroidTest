@@ -142,7 +142,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="takeScreenshot"
+        android:onClick="onClickFbShare"
         android:text="fb share" />
 
 </RelativeLayout>

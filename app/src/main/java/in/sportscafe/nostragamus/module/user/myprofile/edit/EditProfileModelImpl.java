@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
+import java.io.File;
+
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
@@ -53,7 +55,7 @@ public class EditProfileModelImpl implements EditProfileModel {
 
 
     @Override
-    public void updateProfilePhoto(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+    public void updateProfilePhoto(File file, String filepath, String filename) {
         if(filepath.equals(null)) {
             mEditProfileListener.onProfileImagePathNull();
             return;
@@ -66,9 +68,9 @@ public class EditProfileModelImpl implements EditProfileModel {
         }
     }
 
-    private void callUpdateUserProfilePhotoApi(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+    private void callUpdateUserProfilePhotoApi(File file, String filepath, String filename) {
 
-        MyWebService.getInstance().getUpdateUserProfilePhotoRequest(file,filepath,filename).enqueue(new NostragamusCallBack<Result>() {
+        MyWebService.getInstance().getUploadPhotoRequest(file,filepath,filename).enqueue(new NostragamusCallBack<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 super.onResponse(call, response);

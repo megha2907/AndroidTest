@@ -23,5 +23,7 @@ public interface MyResultsView extends InAppView {
 
     void openFlipDialog();
 
-    void showResultShare(String matchResult, int matchPoints);
+    void takeScreenShot();
+
+    void showFbShare(String url);
 }

@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
 import android.os.Bundle;
 
+import java.io.File;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
@@ -14,6 +16,6 @@ public interface EditProfilePresenter {
 
     void onClickDone(String about);
 
-    void onProfilePhotoDone(MultipartBody.Part file, RequestBody filepath, RequestBody filename);
+    void onProfilePhotoDone(File file, String filepath, String filename);
 
 }

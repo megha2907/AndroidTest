@@ -3,8 +3,11 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
+import com.jeeva.android.facebook.FacebookHandler;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,17 +18,26 @@ import java.util.Map;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.TournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
+import io.branch.indexing.BranchUniversalObject;
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
+import io.branch.referral.util.LinkProperties;
 import retrofit2.Call;
 import retrofit2.Response;
+
+import static android.R.attr.offset;
+import static com.google.android.gms.analytics.internal.zzy.h;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -84,12 +96,18 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     private void loadMyResults(int offset) {
-        if(Nostragamus.getInstance().hasNetworkConnection()) {
+        if(checkInternet()) {
             Log.i("call","callMyResultsApi");
             callMyResultsApi(offset);
-        } else {
-            mResultsModelListener.onNoInternet();
         }
+    }
+
+    private boolean checkInternet() {
+        if(Nostragamus.getInstance().hasNetworkConnection()) {
+            return true;
+        }
+        mResultsModelListener.onNoInternet();
+        return false;
     }
 
     private void callMyResultsApi(final int offset) {
@@ -202,6 +220,70 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     @Override
     public int getMatchPoints() {
         return match.getMatchPoints();
+    }
+
+    @Override
+    public String getMatchName() {
+        return match.getTournamentName();
+    }
+
+    @Override
+    public void uploadScreenShot(File file) {
+        if(checkInternet()) {
+            callUploadScreenShotApi(file, "sportscafetest/nostragamus/", file.getName());
+        }
+    }
+
+    private void callUploadScreenShotApi(File file, String filepath, String filename) {
+        MyWebService.getInstance().getUploadPhotoRequest(file,filepath,filename)
+                .enqueue(new NostragamusCallBack<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                super.onResponse(call, response);
+
+                if (response.isSuccessful()) {
+                    getSharableLink(response.body().getResult());
+                } else {
+                    mResultsModelListener.onScreenShotFailed();
+                }
+            }
+
+        });
+
+    }
+
+    private void getSharableLink(String screenShotUrl) {
+        Context context = mResultsModelListener.getContext();
+        BranchUniversalObject buo = new BranchUniversalObject()
+                .setTitle("My Result")
+                .setContentDescription(String.format(
+                        context.getString(R.string.fb_share_result_text),
+                        getMatchResult(),
+                        getMatchName(),
+                        getMatchPoints()
+                ))
+                .setContentImageUrl(screenShotUrl)
+                .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId());
+
+
+        LinkProperties linkProperties = new LinkProperties()
+                .addTag("myResult")
+                .setFeature("myResult")
+                .addControlParameter("$android_deeplink_path", "myResult/share/");
+
+        buo.generateShortUrl(mResultsModelListener.getContext(), linkProperties,
+                new Branch.BranchLinkCreateListener() {
+                    @Override
+                    public void onLinkCreate(String url, BranchError error) {
+                        if(null == error) {
+                            mResultsModelListener.onScreenShotUploaded(url);
+                        } else {
+                            mResultsModelListener.onScreenShotFailed();
+                            ExceptionTracker.track(error.getMessage());
+                        }
+                    }
+                });
     }
 
     private void callReplayPowerupAppliedApi(String powerupId, Integer matchId) {
@@ -335,5 +417,9 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         void onSuccessReplayPowerupResponse(Match match);
 
         void onsetMatchDetails(Match match);
+
+        void onScreenShotUploaded(String url);
+
+        void onScreenShotFailed();
     }
 }

@@ -2,9 +2,9 @@ package in.sportscafe.nostragamus.module.user.group.newgroup;
 
 import android.os.Bundle;
 
+import java.io.File;
+
 import in.sportscafe.nostragamus.Constants;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * Created by Jeeva on 1/7/16.
@@ -36,7 +36,7 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
     }
 
     @Override
-    public void onGroupPhotoDone(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+    public void onGroupPhotoDone(File file, String filepath, String filename) {
         mNewGroupModel.updateGroupPhoto(file, filepath,filename);
     }
 

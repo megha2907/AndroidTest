@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
+import java.io.File;
+
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -11,7 +13,7 @@ public interface EditProfileModel {
 
     void updateProfile(String about);
 
-    void updateProfilePhoto(MultipartBody.Part file, RequestBody filepath, RequestBody filename);
+    void updateProfilePhoto(File file, String filepath, String filename);
 
     UserInfo getUserInfo();
 }
