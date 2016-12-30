@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.user.group.editgroupinfo;
 
 import android.os.Bundle;
 
+import java.io.File;
+
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -31,5 +33,5 @@ public interface EditGroupInfoPresenter {
 
     void onGetGroupSummarySuccess(GroupInfo groupInfo);
 
-    void onGroupPhotoDone(MultipartBody.Part body, RequestBody filepath, RequestBody filename);
+    void onGroupPhotoDone(File body, String filepath, String filename);
 }

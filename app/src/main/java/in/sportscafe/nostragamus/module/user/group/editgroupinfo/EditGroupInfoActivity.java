@@ -353,7 +353,7 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
                         MediaType.parse("multipart/form-data"), ServerfileName);
 
 
-        mEditGroupInfoPresenter.onGroupPhotoDone(body,filepath,filename);
+        mEditGroupInfoPresenter.onGroupPhotoDone(file, Serverfilepath, ServerfileName);
 
     }
 

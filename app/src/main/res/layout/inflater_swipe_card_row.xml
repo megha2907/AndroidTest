@@ -94,15 +94,23 @@
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/play_options_bg">
 
+                    <ImageView
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:src="@drawable/option_text_left_arrow"/>
+
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/swipe_card_tv_left"
                         android:layout_width="@dimen/dp_0"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:drawablePadding="@dimen/dp_5"
                         android:ellipsize="end"
                         android:gravity="left|center_vertical"
                         android:maxLines="1"
-                        android:paddingLeft="@dimen/dp_10"
+                        android:layout_marginLeft="@dimen/dp_5"
                         android:paddingRight="@dimen/dp_10"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_16"
@@ -117,10 +125,17 @@
                         android:gravity="right|center_vertical"
                         android:maxLines="1"
                         android:paddingLeft="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_5"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_16"
                         app:typeface="lato_black" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:src="@drawable/option_text_right_arrow"/>
 
                 </LinearLayout>
 
@@ -130,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_32"
                     android:layout_marginRight="@dimen/dp_32"
-                    android:layout_marginTop="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:gravity="center"
                     android:textColor="@color/black_50"
                     android:textSize="@dimen/dp_16"
@@ -155,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@id/swipe_card_ll_option_labels"
                     android:layout_below="@id/swipe_card_tv_context"
-                    android:layout_marginTop="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:orientation="horizontal">
 
                     <FrameLayout

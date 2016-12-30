@@ -236,7 +236,7 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
                         MediaType.parse("multipart/form-data"), ServerfileName);
 
 
-        mNewGroupPresenter.onGroupPhotoDone(body,filepath,filename);
+        mNewGroupPresenter.onGroupPhotoDone(file, Serverfilepath, ServerfileName);
 
     }
 }

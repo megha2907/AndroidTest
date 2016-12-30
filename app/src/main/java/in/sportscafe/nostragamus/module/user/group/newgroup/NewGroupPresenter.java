@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.newgroup;
 
+import java.io.File;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
@@ -12,5 +14,5 @@ public interface NewGroupPresenter {
 
     void onClickDone(String groupName);
 
-    void onGroupPhotoDone(MultipartBody.Part body, RequestBody filepath, RequestBody filename);
+    void onGroupPhotoDone(File body, String filepath, String filename);
 }

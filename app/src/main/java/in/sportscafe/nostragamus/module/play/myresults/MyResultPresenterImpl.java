@@ -3,10 +3,15 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
+import java.io.File;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+
+import static com.google.android.gms.analytics.internal.zzy.m;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -57,7 +62,19 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void onsetMatchDetails(Match match) {
         mResultsView.setMatchDetails(match);
-        mResultsView.navigatetoPlay(match);
+//        mResultsView.navigatetoPlay(match);
+    }
+
+    @Override
+    public void onScreenShotUploaded(String url) {
+        mResultsView.dismissProgressbar();
+        mResultsView.showFbShare(url);
+    }
+
+    @Override
+    public void onScreenShotFailed() {
+        mResultsView.dismissProgressbar();
+        mResultsView.showMessage("Sharing failed, Try again", Toast.LENGTH_LONG);
     }
 
     @Override
@@ -72,7 +89,13 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
 
     @Override
     public void onClickFbShare() {
-        mResultsView.showResultShare(mResultsModel.getMatchResult(), mResultsModel.getMatchPoints());
+        mResultsView.takeScreenShot();
+    }
+
+    @Override
+    public void onGetScreenShot(File screenshotFile) {
+        mResultsView.showProgressbar();
+        mResultsModel.uploadScreenShot(screenshotFile);
     }
 
     private void getResultDetails() {

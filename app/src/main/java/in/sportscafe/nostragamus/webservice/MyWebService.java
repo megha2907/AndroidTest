@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.webservice;
 
+import java.io.File;
+
 import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedResponse;
@@ -37,6 +39,7 @@ import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoRespons
 import in.sportscafe.nostragamus.module.user.sportselection.dto.AllSports;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.PreferenceRequest;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.UserSports;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -66,11 +69,6 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<ApiResponse> getUpdateUserRequest(UpdateUserRequest request) {
         return mNostragamusService.updateUser(request);
     }
-
-    public Call<Result> getUpdateUserProfilePhotoRequest(MultipartBody.Part file,RequestBody filepath,RequestBody filename) {
-        return mNostragamusService.uploadImage(file,filepath,filename);
-    }
-
 
     public Call<UserInfoResponse> getUserInfoRequest(String userId) {
         return mNostragamusService.getUserInfo(userId);
@@ -181,8 +179,12 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getAllGroups(NostragamusDataHandler.getInstance().getUserId());
     }
 
-    public Call<Result> getUpdateGroupPhotoRequest(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
-        return mNostragamusService.uploadImage(file,filepath,filename);
+    public Call<Result> getUploadPhotoRequest(File file, String filepath, String filename) {
+        return mNostragamusService.uploadImage(
+                MultipartBody.Part.createFormData("file", file.getName(),
+                RequestBody.create(MediaType.parse("multipart/form-data"), file)),
+                RequestBody.create(MediaType.parse("multipart/form-data"), filepath),
+                RequestBody.create(MediaType.parse("multipart/form-data"), filename));
     }
 
     public Call<AppSettingsResponse> getAppSettingsRequest(String uniqueId) {

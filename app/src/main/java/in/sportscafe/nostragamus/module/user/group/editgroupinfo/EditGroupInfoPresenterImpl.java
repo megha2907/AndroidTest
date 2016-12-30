@@ -5,10 +5,10 @@ import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
+import java.io.File;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * Created by Deepanshi on 12/6/16.
@@ -113,7 +113,7 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
     }
 
     @Override
-    public void onGroupPhotoDone(MultipartBody.Part file, RequestBody filepath, RequestBody filename) {
+    public void onGroupPhotoDone(File file, String filepath, String filename) {
         mGroupInfoModel.updateGroupPhoto(file, filepath,filename);
     }
 
