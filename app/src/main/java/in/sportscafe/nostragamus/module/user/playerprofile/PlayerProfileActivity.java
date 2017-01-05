@@ -100,7 +100,11 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     public void setGroupsCount(int GroupsCount) {
 //        TextView tvGroup=(TextView) findViewById(R.id.profile_number_of_groups);
 //        tvGroup.setText(String.valueOf(GroupsCount));
-        groupsCount = String.valueOf(GroupsCount);
+        if (GroupsCount==0){
+            groupsCount = "0";
+        }else {
+            groupsCount = String.valueOf(GroupsCount);
+        }
     }
 
 
@@ -315,8 +319,17 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
 
     private ViewPagerAdapter getAdapter(PlayerInfo playerInfo) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragment(MutualGroupsFragment.newInstance(playerInfo), groupsCount+ "\n Mutual Groups");
-        pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount+"\n Badges");
+
+        if (groupsCount=="1"){
+            pagerAdapter.addFragment(MutualGroupsFragment.newInstance(playerInfo), groupsCount+ "\n Mutual Group");
+        }else {
+            pagerAdapter.addFragment(MutualGroupsFragment.newInstance(playerInfo), groupsCount+ "\n Mutual Groups");
+        }
+        if (badgeCount=="1"){
+            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount+"\n Badge");
+        }else {
+            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount+"\n Badges");
+        }
         return pagerAdapter;
     }
 

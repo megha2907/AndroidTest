@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
 import java.io.File;
+import java.util.UUID;
 
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -62,7 +63,7 @@ public class EditProfileModelImpl implements EditProfileModel {
         }
         if(Nostragamus.getInstance().hasNetworkConnection()) {
             mEditProfileListener.onUpdating();
-            callUpdateUserProfilePhotoApi(file,filepath,filename);
+            callUpdateUserProfilePhotoApi(file,filepath, UUID.randomUUID().toString() + "_" + filename);
         } else {
             mEditProfileListener.onNoInternet();
         }

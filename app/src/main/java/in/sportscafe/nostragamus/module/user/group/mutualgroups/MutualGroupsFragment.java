@@ -87,6 +87,7 @@ public class MutualGroupsFragment extends NostragamusFragment implements MutualG
     public void showGroupsEmpty() {
 
         mTvEmptyGroups = (TextView) findViewById(R.id.all_groups_empty_tv);
+        mTvEmptyGroups.setText("No Mutual Groups.");
         mTvEmptyGroups.setVisibility(View.VISIBLE);
 
     }

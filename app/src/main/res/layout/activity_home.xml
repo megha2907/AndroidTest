@@ -15,6 +15,42 @@
         android:orientation="horizontal"
         >
 
+
+        <RelativeLayout
+            android:id="@+id/home_rl_feed"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:onClick="onClickTab"
+            android:focusable="true"
+            android:clickable="true"
+            >
+
+            <ImageView
+                android:id="@+id/home_ibtn_feed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu_home_btn_selector"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_centerHorizontal="true" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/home_tv_feed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textColor="@drawable/menu_tv_selector"
+                android:layout_centerInParent="true"
+                app:typeface="roboto_condensed"
+                android:textSize="@dimen/dp_11"
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_below="@+id/home_ibtn_feed"
+
+                />
+
+        </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/home_rl_notification"
             android:layout_width="@dimen/dp_0"
@@ -66,79 +102,6 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/home_rl_feed"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:onClick="onClickTab"
-            android:focusable="true"
-            android:clickable="true"
-            >
-
-            <ImageView
-                android:id="@+id/home_ibtn_feed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/menu_home_btn_selector"
-                android:layout_marginTop="@dimen/dp_15"
-                android:layout_centerHorizontal="true" />
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/home_tv_feed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Home"
-                android:textColor="@drawable/menu_tv_selector"
-                android:layout_centerInParent="true"
-                app:typeface="roboto_condensed"
-                android:textSize="@dimen/dp_11"
-                android:layout_marginTop="@dimen/dp_3"
-                android:layout_below="@+id/home_ibtn_feed"
-
-                />
-
-        </RelativeLayout>
-
-
-
-        <RelativeLayout
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:id="@+id/home_rl_profile"
-            android:onClick="onClickTab"
-            android:focusable="true"
-            android:clickable="true"
-            >
-
-            <ImageView
-                android:id="@+id/home_ibtn_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/menu_profile_btn_selector"
-                android:layout_marginTop="@dimen/dp_15"
-                android:layout_centerHorizontal="true"
-                />
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/home_tv_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profile"
-                android:textColor="@drawable/menu_tv_selector"
-                android:layout_centerInParent="true"
-                app:typeface="roboto_condensed"
-                android:textSize="@dimen/dp_11"
-                android:layout_marginTop="@dimen/dp_3"
-                android:layout_below="@+id/home_ibtn_profile"
-
-                />
-
-        </RelativeLayout>
-
 
 
         <RelativeLayout
@@ -172,6 +135,42 @@
                 android:textSize="@dimen/dp_11"
                 android:layout_marginTop="@dimen/dp_3"
                 android:layout_below="@+id/home_ibtn_leaderboard"
+
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/home_rl_profile"
+            android:onClick="onClickTab"
+            android:focusable="true"
+            android:clickable="true"
+            >
+
+            <ImageView
+                android:id="@+id/home_ibtn_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu_profile_btn_selector"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_centerHorizontal="true"
+                />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/home_tv_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textColor="@drawable/menu_tv_selector"
+                android:layout_centerInParent="true"
+                app:typeface="roboto_condensed"
+                android:textSize="@dimen/dp_11"
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_below="@+id/home_ibtn_profile"
 
                 />
 

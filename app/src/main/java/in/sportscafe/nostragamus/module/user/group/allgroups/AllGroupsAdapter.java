@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -66,6 +67,11 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
         }
           else
         {
+//            String mUrl = allGroups.getGroupPhoto();
+//            String[] separated = mUrl.split("es3");
+//            separated[4].replace(separated[4],"es3-cfit-s200");
+//            Log.i("imageurlseaparated",separated[4].replace(separated[4],"es3-cfit-s200"));
+
             Picasso.with(mcon)
                     .load( allGroups.getGroupPhoto())
                     .into(holder.mIvGroupImage);

@@ -31,6 +31,7 @@ import com.jeeva.android.facebook.FacebookHandler;
 
 import java.io.File;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -451,7 +452,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
                         Bitmap screenshot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
 
-                        File screenshotFile = ViewUtils.saveBitmap(screenshot);
+                        File screenshotFile = AppSnippet.saveBitmap(screenshot, "fb");
 
                         parent.removeAllViews();
 

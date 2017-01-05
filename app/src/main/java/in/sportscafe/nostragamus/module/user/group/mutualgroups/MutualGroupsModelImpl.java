@@ -61,6 +61,8 @@ public class MutualGroupsModelImpl implements MutualGroupsModel {
                                 NostragamusDataHandler.getInstance().setMutualGroups(oldMutualGroupsList);
                                 mMutualGroupsModelListener.ongetMutualGroupsSuccess();
 
+                            }else {
+                                mMutualGroupsModelListener.onMutualGroupsEmpty();
                             }
     }
 
@@ -68,7 +70,7 @@ public class MutualGroupsModelImpl implements MutualGroupsModel {
     @Override
     public RecyclerView.Adapter getMutualGroupsAdapter(Context context) {
 
-        if(mNostragamusDataHandler.getMutualGroups().isEmpty()){
+        if(mNostragamusDataHandler.getMutualGroups().isEmpty() || null == mNostragamusDataHandler.getMutualGroups()){
 
             mMutualGroupsModelListener.onMutualGroupsEmpty();
         }
