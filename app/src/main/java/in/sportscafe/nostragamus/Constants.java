@@ -29,6 +29,7 @@ public interface Constants {
         String ALL_SPORTS = "allSports";
         String ALL_TOURNAMENTS = "allTournaments";
         String ALL_GROUPS = "allGroups";
+        String MUTUAL_GROUPS = "mutualGroups";
         String SELECTED_TOURNAMENTS = "selectedTournaments";
         String FAVORITE_SPORTS = "favoriteSports";
         String INITIAL_SPORTS_AVAILABLE = "initialSportsAvailable";
@@ -140,6 +141,8 @@ public interface Constants {
         String TOURNAMENT_LIST = "tournamentList";
         String LEADERBOARD_KEY = "leaderboardKey";
         String LEADERBOARD_LIST = "leaderboardList";
+        String MUTUALGROUPSLIST = "mutualGroupsList";
+        String PLAYERINFO = "playerInfo";
         String HOME_SCREEN = "homeScreen";
         String LOGIN_SCREEN = "loginScreen";
         String GROUP_CODE = "groupCode";

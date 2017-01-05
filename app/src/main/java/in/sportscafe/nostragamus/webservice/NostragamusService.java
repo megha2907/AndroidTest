@@ -1,8 +1,8 @@
 package in.sportscafe.nostragamus.webservice;
 
 
-import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedResponse;
-import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentsResponse;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;

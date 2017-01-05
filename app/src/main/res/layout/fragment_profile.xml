@@ -316,7 +316,6 @@
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/silver_chalice"
             app:unselected_textSize="@dimen/dp_14"
-            app:tabMode="scrollable"
             app:unselected_typeface="roboto_condensed"
             android:layout_gravity="center_horizontal|top"
             android:layout_below="@+id/profile_ll_points_parent"

@@ -13,8 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
+import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroups;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
@@ -343,6 +344,24 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     public void setAllGroups(String allGroups) {
         setSharedStringData(SharedKeys.ALL_GROUPS, allGroups);
+    }
+
+    //MUTUAL GROUPS INFO
+    public List<MutualGroups> getMutualGroups() {
+        String mutualGroups = getSharedStringData(SharedKeys.MUTUAL_GROUPS);
+        if (null == mutualGroups || mutualGroups.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return MyWebService.getInstance().getObjectFromJson(mutualGroups,
+                new TypeReference<List<MutualGroups>>() {
+                });
+    }
+
+    public void setMutualGroups(String mutualGroups) {
+        setSharedStringData(SharedKeys.MUTUAL_GROUPS, mutualGroups);
+    }
+    public void setMutualGroups(List<MutualGroups> mutualGroups) {
+        setMutualGroups(MyWebService.getInstance().getJsonStringFromObject(mutualGroups));
     }
 
     public Map<Long, AllGroups> getAllGroupsMap() {

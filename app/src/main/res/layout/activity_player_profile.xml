@@ -13,6 +13,7 @@
         android:id="@+id/htab_maincontent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/profile_screen_bg"
         >
 
         <android.support.design.widget.AppBarLayout
@@ -20,8 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            android:background="@color/black"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="@color/profile_tab_color"
             >
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -49,6 +50,18 @@
                         android:fitsSystemWindows="true"
                         android:layout_alignParentStart="true">
 
+                        <ImageButton
+                            android:id="@+id/player_profile_btn_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/back_icon_grey"
+                            android:alpha="0.8"
+                            android:layout_centerVertical="true"
+                            android:padding="@dimen/dp_25"
+                            android:onClick="onClick"
+                            />
+
                         <TextView
                             android:id="@+id/player_profile_tv_title"
                             android:layout_width="wrap_content"
@@ -60,6 +73,7 @@
                             android:textStyle="bold"
                             android:layout_centerHorizontal="true"
                             />
+
 
 
                     </RelativeLayout>
@@ -74,6 +88,7 @@
                         android:layout_marginTop="@dimen/dp_56"
                         android:src="@drawable/placeholder_icon"
                         android:onClick="onClick"/>
+
 
                     <LinearLayout
                         android:id="@+id/badges_ll"
@@ -114,12 +129,144 @@
                     </RelativeLayout>
 
 
+                    <!--<RelativeLayout-->
+                    <!--android:id="@+id/player_profile_ll_powerups_parent"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/player_profile_groups_parent"-->
+                    <!--android:layout_marginTop="@dimen/dp_10"-->
+                    <!--android:layout_marginRight="@dimen/dp_20"-->
+                    <!--android:layout_toLeftOf="@+id/player_profile_iv_image"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:visibility="gone"-->
+                    <!--&gt;-->
+
+                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
+                    <!--android:id="@+id/player_profile_tv_powerups"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginTop="@dimen/dp_5"-->
+                    <!--android:textColor="@color/greencolor"-->
+                    <!--android:textSize="@dimen/dp_25"-->
+                    <!--app:typeface="lato_regular"-->
+                    <!--android:clickable="false"/>-->
+
+                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
+                    <!--android:id="@+id/player_profile_tv_label_powerups"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/player_profile_tv_powerups"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginTop="@dimen/dp_1"-->
+                    <!--android:text="Powerups"-->
+                    <!--android:textColor="@color/textcolorlight"-->
+                    <!--android:textSize="@dimen/dp_12"-->
+                    <!--app:typeface="lato_regular"-->
+                    <!--android:clickable="false"/>-->
+
+                    <!--</RelativeLayout>-->
+
+
+                    <!--<RelativeLayout-->
+                    <!--android:id="@+id/player_profile_ll_badge_parent"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="@dimen/dp_20"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:layout_alignBaseline="@+id/player_profile_ll_powerups_parent"-->
+                    <!--android:layout_alignBottom="@+id/player_profile_ll_powerups_parent"-->
+                    <!--android:layout_toRightOf="@+id/player_profile_iv_image"-->
+                    <!--android:visibility="invisible"-->
+                    <!--&gt;-->
+
+                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
+                    <!--android:id="@+id/player_profile_tv_badges"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginTop="@dimen/dp_5"-->
+                    <!--android:textColor="@color/tabcolor"-->
+                    <!--android:textSize="@dimen/dp_25"-->
+                    <!--app:typeface="lato_regular"-->
+                    <!--android:clickable="false"-->
+                    <!--/>-->
+
+                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
+                    <!--android:id="@+id/player_profile_tv_label_badges"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/player_profile_tv_badges"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginTop="@dimen/dp_1"-->
+                    <!--android:text="Badges"-->
+                    <!--android:textColor="@color/textcolorlight"-->
+                    <!--android:textSize="@dimen/dp_12"-->
+                    <!--app:typeface="lato_regular"-->
+                    <!--android:clickable="false"-->
+                    <!--/>-->
+                    <!--</RelativeLayout>-->
+
                 </RelativeLayout>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
 
+            <in.sportscafe.nostragamus.module.common.CustomTabLayout
+                android:id="@+id/tab_tl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_56"
+                android:background="@color/profile_tab_color"
+                app:layout_collapseMode="pin"
+                app:selected_typeface="roboto_condensed"
+                app:tabIndicatorColor="@color/tabcolor"
+                app:tabIndicatorHeight="@dimen/dp_4"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="@color/silver_chalice"
+                app:unselected_textSize="@dimen/dp_14"
+                app:unselected_typeface="roboto_condensed"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_below="@+id/player_profile_ll_points_parent"
+                app:tabTextAppearance="@style/ProfileTabLayoutTextAppearance"
+                android:elevation="@dimen/dp_0"
+                />
+
         </android.support.design.widget.AppBarLayout>
+
+
+        <!--<FrameLayout
+            android:id="@+id/player_profile_fl_my_positions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+
+
+        <in.sportscafe.nostragamus.module.common.CustomViewPager
+            android:id="@+id/tab_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:paddingBottom="@dimen/dp_10"
+            android:background="@color/black"/>
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/join_grp_btn"
+            android:layout_width="@dimen/blue_button_width"
+            android:layout_height="@dimen/blue_button_height"
+            android:background="@drawable/powerup_screen_btn_bg"
+            android:onClick="onClick"
+            android:text="CREATE NEW GROUP"
+            android:textAllCaps="false"
+            android:textSize="@dimen/blue_button_text"
+            android:textColor="@color/white"
+            android:layout_marginBottom="@dimen/dp_20"
+            app:typeface="roboto_condensed"
+            android:layout_gravity="bottom"
+            android:visibility="gone"
+            />
 
 
     </android.support.design.widget.CoordinatorLayout>

@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.TournamentFeed;
+package in.sportscafe.nostragamus.module.tournamentFeed;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,7 +17,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.animator.AnimationAdapter;
 import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
-import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentInfo;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 

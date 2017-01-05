@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_320"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="@dimen/dp_110"
+                android:layout_marginBottom="@dimen/dp_95"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:visibility="gone"
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_320"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="@dimen/dp_120"
+                android:layout_marginBottom="@dimen/dp_105"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:visibility="gone"
@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_320"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="@dimen/dp_130"
+                android:layout_marginBottom="@dimen/dp_115"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
                 android:visibility="gone"
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_320"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/dp_140"
+            android:layout_marginBottom="@dimen/dp_125"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/dp_4"
             app:cardElevation="@dimen/dp_6">
@@ -95,10 +95,10 @@
                     android:background="@drawable/play_options_bg">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_16"
-                        android:layout_height="@dimen/dp_16"
+                        android:layout_width="@dimen/dp_13"
+                        android:layout_height="@dimen/dp_13"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginLeft="@dimen/dp_15"
                         android:src="@drawable/option_text_left_arrow"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -113,7 +113,8 @@
                         android:layout_marginLeft="@dimen/dp_5"
                         android:paddingRight="@dimen/dp_10"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_16"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/dp_12"
                         app:typeface="lato_black" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -127,14 +128,15 @@
                         android:paddingLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_5"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_16"
+                        android:textSize="@dimen/dp_12"
+                        android:textAllCaps="true"
                         app:typeface="lato_black" />
 
                     <ImageView
-                        android:layout_width="@dimen/dp_16"
-                        android:layout_height="@dimen/dp_16"
+                        android:layout_width="@dimen/dp_13"
+                        android:layout_height="@dimen/dp_13"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_15"
                         android:src="@drawable/option_text_right_arrow"/>
 
                 </LinearLayout>
@@ -249,7 +251,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_445"
+        android:layout_marginBottom="@dimen/dp_430"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/dp_2"
         app:cardElevation="@dimen/dp_4">

@@ -3,17 +3,21 @@ package in.sportscafe.nostragamus.module.user.playerprofile.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
+import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroups;
 import in.sportscafe.nostragamus.module.user.login.dto.PowerUpInfo;
+import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.GroupSummary;
 
 /**
  * Created by deepanshi on 12/22/16.
  */
 
-public class PlayerInfo {
+public class PlayerInfo implements Serializable{
 
     @JsonProperty("user_id")
     private Integer id;
@@ -27,8 +31,8 @@ public class PlayerInfo {
     @JsonProperty("user_photo")
     private String photo;
 
-//    @JsonProperty("user_points")
-//    private Long points;
+    @JsonProperty("total_points")
+    private Long points;
 
     @JsonProperty("user_nick")
     private String userNickName;
@@ -41,6 +45,13 @@ public class PlayerInfo {
 
     @JsonProperty("info")
     private BadgesInfo badgeInfo;
+
+    @JsonProperty("groups")
+    private List<GroupSummary> groups = new ArrayList<>();
+
+    @JsonProperty("groups")
+    private List<MutualGroups> mutualGroups;
+
 
 
     /**
@@ -107,15 +118,15 @@ public class PlayerInfo {
         this.photo = photo;
     }
 
-//    @JsonProperty("user_points")
-//    public Long getPoints() {
-//        return points;
-//    }
-//
-//    @JsonProperty("user_points")
-//    public void setPoints(Long points) {
-//        this.points = points;
-//    }
+    @JsonProperty("total_points")
+    public Long getPoints() {
+        return points;
+    }
+
+    @JsonProperty("total_points")
+    public void setPoints(Long points) {
+        this.points = points;
+    }
 
     @JsonProperty("user_nick")
     public String getUserNickName() {
@@ -156,4 +167,16 @@ public class PlayerInfo {
     {
         return badgeInfo.getBadges();
     }
+
+
+    @JsonProperty("groups")
+    public List<MutualGroups> getMutualGroups() {
+        return mutualGroups;
+    }
+
+    @JsonProperty("groups")
+    public void setMutualGroups(List<MutualGroups> mutualGroups) {
+        this.mutualGroups = mutualGroups;
+    }
+
 }

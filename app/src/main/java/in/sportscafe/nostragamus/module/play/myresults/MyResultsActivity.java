@@ -1,5 +1,9 @@
 package in.sportscafe.nostragamus.module.play.myresults;
 
+import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +17,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +32,7 @@ import android.widget.Toast;
 import com.jeeva.android.facebook.FacebookHandler;
 
 import java.io.File;
+import java.util.UUID;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -35,6 +41,8 @@ import in.sportscafe.nostragamus.animator.AnimationAdapter;
 import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.MyResultsTimelineActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
@@ -43,7 +51,7 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class MyResultsActivity extends NostragamusActivity implements MyResultsView,View.OnClickListener {
+public class MyResultsActivity extends NostragamusActivity implements MyResultsView,View.OnClickListener{
 
     private RecyclerView mRvMyResults;
 
@@ -58,11 +66,23 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     private Toolbar mtoolbar;
     private TextView mTitle;
     private boolean goback = false;
-    private Boolean isFabOpen = false;
-    private FloatingActionButton powerupMainFab,powerupReplayFab,powerupFlipFab;
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
+    private Boolean isFabOpen,isShareFabOpen = false;
+    private View powerupReplayFab,powerupFlipFab,fabContainer,shareContainer,btnfbShare;
+    private FloatingActionButton powerupMainFab,shareFab;
+    private Animation fab_open,fab_close,rotate_forward,rotate_backward,share_rotate_forward,share_rotate_backward;
+
+    private float offset1;
+    private float offset2;
+
+    private float offset3;
 
     private Bundle matchBundle;
+
+    PermissionsChecker checker;
+    LinearLayoutManager mlayoutManager;
+
+    private static final String[] PERMISSIONS_READ_STORAGE = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 
     @Override
@@ -71,22 +91,66 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         setContentView(R.layout.activity_my_results);
 
         initToolBar();
+        checker = new PermissionsChecker(this);
 
+        mlayoutManager =new LinearLayoutManager(this);
         this.mRvMyResults = (RecyclerView) findViewById(R.id.my_results_rv);
+        this.mRvMyResults.setLayoutManager(mlayoutManager);
+
+
+        shareFab = (FloatingActionButton)findViewById(R.id.fab_share);
+        btnfbShare =findViewById(R.id.fab_fb);
+        shareContainer = findViewById(R.id.fab_container_share);
+
+
+        shareFab.setOnClickListener(this);
+        btnfbShare.setOnClickListener(this);
 
         //POWERUPFAB ICONS
         btnReplayPowerUpCount=(Button) findViewById(R.id.powerup_replay_count);
         btnFlipPowerUpCount=(Button)findViewById(R.id.powerup_flip_count);
         powerupMainFab = (FloatingActionButton)findViewById(R.id.fab_main);
-        powerupReplayFab = (FloatingActionButton)findViewById(R.id.fab_replay);
-        powerupFlipFab = (FloatingActionButton)findViewById(R.id.fab_flip);
+
+        powerupReplayFab = findViewById(R.id.fab_replay);
+        powerupFlipFab = findViewById(R.id.fab_flip);
+        fabContainer = findViewById(R.id.fab_container);
+
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.powerup_fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.powerup_fab_rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.powerup_fab_rotate_backward);
+        share_rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.share_fab_rotate_forward);
+        share_rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.share_fab_rotate_backward);
+
         powerupMainFab.setOnClickListener(this);
         powerupReplayFab.setOnClickListener(this);
         powerupFlipFab.setOnClickListener(this);
+
+        fabContainer.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                fabContainer.getViewTreeObserver().removeOnPreDrawListener(this);
+                float mainY = powerupMainFab.getY();
+
+                offset1 = mainY - powerupFlipFab.getY();
+                powerupFlipFab.setTranslationY(offset1);
+                offset2 = mainY - powerupReplayFab.getY();
+                powerupReplayFab.setTranslationY(offset2);
+                return true;
+            }
+        });
+
+        shareContainer.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                shareContainer.getViewTreeObserver().removeOnPreDrawListener(this);
+                float mainY = shareFab.getY();
+
+                offset3 = mainY - btnfbShare.getY();
+                btnfbShare.setTranslationY(offset3);
+                return true;
+            }
+        });
 
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
@@ -100,6 +164,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 super.onScrolled(recyclerView, dx, dy);
                 mResultsPresenter.onArticleScroll(linearLayoutManager.findFirstVisibleItemPosition(),
                         linearLayoutManager.getChildCount(), linearLayoutManager.getItemCount());
+
             }
         });
         this.mRvMyResults.setLayoutManager(linearLayoutManager);
@@ -111,11 +176,43 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         Bundle mbundle = new Bundle();
         mbundle = getIntent().getExtras();
         Match match = (Match) mbundle.getSerializable(Constants.BundleKeys.MATCH_LIST);
+
         if (match.getMatchPoints()!=0){
             powerupMainFab.setVisibility(View.GONE);
         }else {
             powerupMainFab.setVisibility(View.VISIBLE);
         }
+
+        this.mRvMyResults.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if (dy < 0) {
+                    shareFab.show();
+
+                    if (isShareFabOpen) {
+                        btnfbShare.setVisibility(View.VISIBLE);
+                    }
+
+                    // Recycle view scrolling up...
+
+                } else if (dy > 0) {
+                    shareFab.hide();
+
+                    if (isShareFabOpen) {
+                        btnfbShare.setVisibility(View.INVISIBLE);
+                    }
+                    // Recycle view scrolling down...
+                }
+
+
+            }
+
+        });
+
+
 
 
     }
@@ -180,6 +277,10 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 animateFAB();
                 break;
 
+            case R.id.fab_share:
+                animateShareFAB();
+                break;
+
             case R.id.fab_replay:
                 if (!mFlippowerUpApplied || !mReplaypowerUpApplied ) {
                     if (NostragamusDataHandler.getInstance().getNumberofReplayPowerups() > 0) {
@@ -203,6 +304,14 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                        toast.setGravity(Gravity.CENTER, 0, 0);
                        toast.show();
                    }
+                }
+                break;
+
+            case R.id.fab_fb:
+                if (checker.lacksPermissions(PERMISSIONS_READ_STORAGE)) {
+                    startPermissionsActivity(PERMISSIONS_READ_STORAGE);
+                } else {
+                    mResultsPresenter.onClickFbShare();
                 }
                 break;
 
@@ -283,27 +392,33 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     public void animateFAB(){
 
         if(isFabOpen){
+            collapseFab();
             powerupMainFab.startAnimation(rotate_backward);
             powerupMainFab.setImageResource(R.drawable.powerup_main_icon_white);
-            powerupReplayFab.startAnimation(fab_close);
-            powerupFlipFab.startAnimation(fab_close);
-            powerupReplayFab.setClickable(false);
-            powerupFlipFab.setClickable(false);
-            btnReplayPowerUpCount.setVisibility(View.GONE);
-            btnFlipPowerUpCount.setVisibility(View.GONE);
             isFabOpen = false;
 
         } else {
-
+            expandFab();
             powerupMainFab.startAnimation(rotate_forward);
             powerupMainFab.setImageResource(R.drawable.powerup_main_icon);
-            powerupReplayFab.startAnimation(fab_open);
-            powerupFlipFab.startAnimation(fab_open);
-            powerupReplayFab.setClickable(true);
-            powerupFlipFab.setClickable(true);
-            btnReplayPowerUpCount.setVisibility(View.VISIBLE);
-            btnFlipPowerUpCount.setVisibility(View.VISIBLE);
             isFabOpen = true;
+
+        }
+    }
+
+    public void animateShareFAB(){
+
+        if(isShareFabOpen){
+            collapseShareFab();
+            shareFab.startAnimation(share_rotate_backward);
+            shareFab.setImageResource(R.drawable.share_icon_white);
+            isShareFabOpen = false;
+
+        } else {
+            expandShareFab();
+            shareFab.startAnimation(share_rotate_forward);
+            shareFab.setImageResource(R.drawable.share_cross_icon);
+            isShareFabOpen = true;
 
         }
     }
@@ -344,15 +459,16 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             sharePhoto.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
+
                     sharePhoto.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                    Bitmap screenshot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
+                        Bitmap screenshot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
 
-                    File screenshotFile = ViewUtils.saveBitmap(screenshot);
+                        File screenshotFile = ViewUtils.saveBitmap(screenshot);
 
-                    parent.removeAllViews();
+                        parent.removeAllViews();
 
-                    mResultsPresenter.onGetScreenShot(screenshotFile);
+                        mResultsPresenter.onGetScreenShot(screenshotFile);
                 }
             });
 
@@ -361,12 +477,145 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 //        doSomething(matchResult, matchPoints);
     }
 
+
+
     @Override
     public void showFbShare(String url) {
         FacebookHandler.getInstance(MyResultsActivity.this).share(MyResultsActivity.this, url);
     }
 
-    public void onClickFbShare(View view) {
+    public void onClickbtnfbShare() {
         mResultsPresenter.onClickFbShare();
     }
+
+    private void startPermissionsActivity(String[] permission) {
+        PermissionsActivity.startActivityForResult(this, 0, permission);
+    }
+
+
+    private void collapseFab() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(createCollapseAnimator(powerupFlipFab, offset1),
+                createCollapseAnimator(powerupReplayFab, offset2));
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                powerupFlipFab.setVisibility(View.INVISIBLE);
+                powerupReplayFab.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animatorSet.start();
+    }
+
+    private void expandFab() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(createExpandAnimator(powerupFlipFab, offset1),
+                createExpandAnimator(powerupReplayFab, offset2));
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                powerupFlipFab.setVisibility(View.VISIBLE);
+                powerupReplayFab.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animatorSet.start();
+    }
+
+
+    private void collapseShareFab() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(createCollapseAnimator(btnfbShare, offset3));
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                btnfbShare.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animatorSet.start();
+    }
+
+    private void expandShareFab() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(createExpandAnimator(btnfbShare, offset3));
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                btnfbShare.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animatorSet.start();
+    }
+
+    private static final String TRANSLATION_Y = "translationY";
+
+    private Animator createCollapseAnimator(View view, float offset) {
+        return ObjectAnimator.ofFloat(view, TRANSLATION_Y, 0, offset)
+                .setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime));
+    }
+
+    private Animator createExpandAnimator(View view, float offset) {
+        return ObjectAnimator.ofFloat(view, TRANSLATION_Y, offset, 0)
+                .setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime));
+    }
+
 }

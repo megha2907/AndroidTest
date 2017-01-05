@@ -274,11 +274,13 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void onLeftSwipe(Question dataObject) {
+        Log.i("swipe","left");
         saveSinglePrediction(dataObject, 1);
     }
 
     @Override
     public void onRightSwipe(Question dataObject) {
+        Log.i("swipe","right");
         saveSinglePrediction(dataObject, 2);
     }
 
@@ -323,6 +325,17 @@ public class PredictionModelImpl implements PredictionModel,
     @Override
     public boolean needBottomSwipe() {
         return mPassEnabled;
+    }
+
+    @Override
+    public void onCardMovedLeft() {
+        mPredictionAdapter.setRightOptnVisibility();
+        //mPredictionAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCardMovedRight() {
+        mPredictionAdapter.setLeftOptnVisibility();
     }
 
     private void saveSinglePrediction(Question question, int answerId) {
