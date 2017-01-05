@@ -4,8 +4,8 @@ import java.io.File;
 
 import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedResponse;
-import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentsResponse;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;

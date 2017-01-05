@@ -27,7 +27,7 @@
     <RelativeLayout
         android:id="@+id/prediction_rl_header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_80"
+        android:layout_height="@dimen/dp_70"
         android:alpha="0.7"
         android:background="@color/colorMedium">
 
@@ -47,8 +47,8 @@
 
         <com.jeeva.android.widgets.HmImageView
             android:id="@+id/prediction_iv_tournament_photo"
-            android:layout_width="@dimen/dp_48"
-            android:layout_height="@dimen/dp_48"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_toRightOf="@id/prediction_ibtn_back"
@@ -135,8 +135,8 @@
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_nonegs"
-                android:layout_width="@dimen/dp_52"
-                android:layout_height="@dimen/dp_52"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45"
                 android:layout_gravity="bottom|end"
                 android:layout_marginRight="@dimen/dp_18"
                 android:layout_marginTop="@dimen/dp_20"
@@ -174,8 +174,8 @@
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_audience_poll"
-                android:layout_width="@dimen/dp_52"
-                android:layout_height="@dimen/dp_52"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45"
                 android:layout_below="@+id/fab_2x"
                 android:layout_gravity="bottom|end"
                 android:layout_marginRight="@dimen/dp_18"
@@ -212,8 +212,8 @@
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_2x"
-                android:layout_width="@dimen/dp_52"
-                android:layout_height="@dimen/dp_52"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45"
                 android:layout_below="@+id/fab_main"
                 android:layout_gravity="bottom|end"
                 android:layout_marginRight="@dimen/dp_18"
@@ -243,8 +243,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_main"
-            android:layout_width="@dimen/dp_52"
-            android:layout_height="@dimen/dp_52"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_18"
             android:layout_marginTop="@dimen/dp_14"
@@ -252,7 +252,8 @@
             android:src="@drawable/powerup_main_icon_white"
             app:backgroundTint="@color/blackopacity"
             app:borderWidth="@dimen/dp_0"
-            app:elevation="@dimen/dp_0" />
+            app:elevation="@dimen/dp_0"
+            android:scaleType="center"/>
 
     </RelativeLayout>
 
@@ -270,7 +271,8 @@
             android:id="@+id/downnarrow"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
-            android:src="@drawable/neither_icon" />
+            android:src="@drawable/neither_icon"
+            android:alpha="0.8"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/prediction_btn_neither"
@@ -279,30 +281,32 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:onClick="onClick"
-            android:padding="@dimen/dp_10"
-            android:text="Neither"
-            android:textAllCaps="false"
+            android:padding="@dimen/dp_2"
+            android:text="NEITHER"
+            android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/dp_14"
+            android:textSize="@dimen/dp_13"
             app:typeface="roboto_condensed" />
 
     </LinearLayout>
 
     <ImageView
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dp_70"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:background="@drawable/left_option_arrow" />
+        android:layout_marginBottom="@dimen/dp_65"
+        android:layout_marginLeft="@dimen/dp_25"
+        android:background="@drawable/left_option_arrow"
+        android:alpha="0.9"/>
 
     <ImageView
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/dp_70"
-        android:layout_marginRight="@dimen/dp_10"
-        android:src="@drawable/right_option_arrow" />
+        android:layout_marginBottom="@dimen/dp_65"
+        android:layout_marginRight="@dimen/dp_25"
+        android:src="@drawable/right_option_arrow"
+        android:alpha="0.9"/>
 
 </RelativeLayout>

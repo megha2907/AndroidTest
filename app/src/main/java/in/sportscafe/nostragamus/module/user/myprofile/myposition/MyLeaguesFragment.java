@@ -20,7 +20,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.GroupSummary;

@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
-import com.jeeva.android.facebook.FacebookHandler;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,12 +13,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.TournamentFeed.dto.Tournament;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
@@ -35,9 +35,6 @@ import io.branch.referral.BranchError;
 import io.branch.referral.util.LinkProperties;
 import retrofit2.Call;
 import retrofit2.Response;
-
-import static android.R.attr.offset;
-import static com.google.android.gms.analytics.internal.zzy.h;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -230,7 +227,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     @Override
     public void uploadScreenShot(File file) {
         if(checkInternet()) {
-            callUploadScreenShotApi(file, "sportscafetest/nostragamus/", file.getName());
+            callUploadScreenShotApi(file, "sportscafetest/nostragamus/", UUID.randomUUID().toString()+file.getName());
         }
     }
 

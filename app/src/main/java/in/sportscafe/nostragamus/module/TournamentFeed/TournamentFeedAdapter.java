@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.TournamentFeed;
+package in.sportscafe.nostragamus.module.tournamentFeed;
 
 /**
  * Created by deepanshi on 9/29/16.
@@ -17,7 +17,7 @@ import com.jeeva.android.widgets.HmImageView;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.FeedActivity;

@@ -40,17 +40,20 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
     }
 
 
+
     private void populateUserInfo() {
         PlayerInfo playerInfo = mProfileModel.getPlayerInfo();
         mProfileView.setName(playerInfo.getUserNickName());
         mProfileView.setProfileImage(playerInfo.getPhoto());
        // mProfileView.setPoints(playerInfo.getPoints());
-        mProfileView.setBadgesCount(playerInfo.getBadges().size());
+        mProfileView.setBadgesCount(playerInfo.getBadges().size(),playerInfo.getBadges());
         if (playerInfo.getNumberofgroups() == 0) {
             mProfileView.setGroupsCount(0);
         } else {
             mProfileView.setGroupsCount(playerInfo.getNumberofgroups());
         }
+        mProfileView.setPoints(playerInfo.getPoints());
+        mProfileView.initMyPosition(playerInfo);
     }
 
 

@@ -12,7 +12,7 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.TournamentFeed.dto.Tournament;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;

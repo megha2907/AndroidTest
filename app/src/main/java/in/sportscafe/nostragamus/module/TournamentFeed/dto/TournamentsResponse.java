@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.TournamentFeed.dto;
+package in.sportscafe.nostragamus.module.tournamentFeed.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

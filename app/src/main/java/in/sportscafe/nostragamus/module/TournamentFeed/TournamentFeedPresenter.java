@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.TournamentFeed;
+package in.sportscafe.nostragamus.module.tournamentFeed;
 
 import android.os.Bundle;
 

@@ -6,7 +6,6 @@ package in.sportscafe.nostragamus.module.user.group.allgroups;
 
 public interface AllGroupsPresenter {
 
-
     void onCreateAllGroups();
 
     void onCreateAllGroupsAdapter();

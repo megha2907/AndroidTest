@@ -15,7 +15,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.TournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 
 /**
  * Created by rb on 30/11/15.

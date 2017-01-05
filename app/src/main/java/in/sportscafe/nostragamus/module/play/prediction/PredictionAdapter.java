@@ -3,7 +3,9 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -15,6 +17,9 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomTextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 
@@ -22,6 +27,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     private LayoutInflater mLayoutInflater;
     private int mInitialCount;
+    private Boolean isRightSwiped;
 
     public PredictionAdapter(Context context, int count) {
         super(context, android.R.layout.simple_list_item_1);
@@ -102,7 +108,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         } else {
             viewHolder.view1.setVisibility(View.VISIBLE);
             viewHolder.view2.setVisibility(View.VISIBLE);
-            viewHolder.view3.setVisibility(View.VISIBLE);
         }
 
 
@@ -127,6 +132,17 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
             }
         });
+
+//        if (isRightSwiped==true){
+//
+//            viewHolder.tvLeftOption.setVisibility(View.INVISIBLE);
+//
+//        }else if(isRightSwiped==false) {
+//
+//            viewHolder.tvRightOption.setVisibility(View.INVISIBLE);
+//        }
+
+
 
 
         return convertView;
@@ -163,7 +179,15 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         return getItem(0);
     }
 
-    static class ViewHolder {
+    public void setRightOptnVisibility() {
+
+    }
+
+    public void setLeftOptnVisibility() {
+
+    }
+
+    static class ViewHolder  {
 
         TextView tvQuestion;
 

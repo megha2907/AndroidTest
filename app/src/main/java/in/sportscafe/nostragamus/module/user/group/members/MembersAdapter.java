@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.user.group.members;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.RoundImage;
+import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
+import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
@@ -56,7 +62,7 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
         holder.mTvAdminLabel.setVisibility(groupPerson.isAdmin() ? View.VISIBLE : View.GONE);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener ,View.OnLongClickListener{
 
         int mPosition;
 
@@ -72,10 +78,11 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
             mTvName = (TextView) V.findViewById(R.id.members_tv_name);
             mTvAdminLabel = (TextView) V.findViewById(R.id.members_tv_admin_label);
             V.setOnClickListener(this);
+            V.setOnLongClickListener(this);
         }
 
         @Override
-        public void onClick(View view) {
+        public boolean onLongClick(View view) {
             if(mAdmin) {
                 ViewUtils.getDialogList(view.getContext(), mOptionList, new DialogInterface.OnClickListener() {
                     @Override
@@ -91,6 +98,29 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
                     }
                 }).show();
             }
+            return true;
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            String playerId = String.valueOf(getItem(getAdapterPosition()).getId());
+
+            if (playerId.equals(NostragamusDataHandler.getInstance().getUserId())){
+
+                Intent homeintent = new Intent(v.getContext(), HomeActivity.class);
+                homeintent.putExtra("group", "openprofile");
+                v.getContext().startActivity(homeintent);
+
+            }else {
+
+                Bundle mBundle = new Bundle();
+                mBundle.putString(Constants.BundleKeys.PLAYER_ID,playerId);
+                Intent mintent2 =  new Intent(v.getContext(), PlayerProfileActivity.class);
+                mintent2.putExtras(mBundle);
+                v.getContext().startActivity(mintent2);
+            }
+
         }
     }
 

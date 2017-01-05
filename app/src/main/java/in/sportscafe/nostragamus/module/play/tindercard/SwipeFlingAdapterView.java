@@ -8,7 +8,10 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -34,6 +37,7 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
     private OnItemClickListener mOnItemClickListener;
     private FlingCardListener flingCardListener;
     private PointF mLastTouchPoint;
+    float initialX, initialY;
 
     public SwipeFlingAdapterView(Context context) {
         this(context, null);
@@ -296,12 +300,24 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
                     public void onScroll(float scrollProgressPercent) {
                         mScrollListener.onScroll(scrollProgressPercent);
                     }
+
+                    @Override
+                    public void onCardMovedtoLeft() {
+                        mSwipeListener.onCardMovedLeft();
+                    }
+
+                    @Override
+                    public void onCardMovedtoRight() {
+                        mSwipeListener.onCardMovedRight();
+                    }
                 });
 
                 mActiveCard.setOnTouchListener(flingCardListener);
             }
         }
     }
+
+
 
     public FlingCardListener getTopCardListener() throws NullPointerException {
         if (flingCardListener == null) {
@@ -374,6 +390,10 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
         void onAdapterAboutToEmpty(int itemsInAdapter);
 
         boolean needBottomSwipe();
+
+        void onCardMovedLeft();
+
+        void onCardMovedRight();
     }
 
     public interface OnScrollListener {
