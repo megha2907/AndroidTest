@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -11,6 +13,7 @@ import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -21,8 +24,14 @@ import android.widget.Toast;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
@@ -201,7 +210,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        try {
+//        try {
             if (resultCode == Activity.RESULT_OK ) {
 
                 if (requestCode == 1010){
@@ -211,21 +220,22 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Uri selectedImageUri = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Uri selectedImageUri = data.getData();
 
-                Cursor cursor = getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-                if (cursor != null) {
-                    cursor.moveToFirst();
+                    Cursor cursor = getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);
 
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    imagePath = cursor.getString(columnIndex);
+                    if (cursor != null) {
+                        cursor.moveToFirst();
 
-                    File file = new File(imagePath);
-                    long length = file.length() / 1024;
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        imagePath = cursor.getString(columnIndex);
 
-                    if(length < 1024){
+                        File file = new File(imagePath);
+                        long length = file.length() / 10240;
+
+                    if(length < 10240){
                         if (!TextUtils.isEmpty(imagePath)) {
                             uploadImage();
                         }
@@ -239,7 +249,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
                     }
                     else
                     {
-                        Toast toast =Toast.makeText(getContext(), "Image size is too large, please select an image with size <1MB", Toast.LENGTH_SHORT);
+                        Toast toast =Toast.makeText(getContext(), "Image size is too large, please select an image with size <10MB", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                     }
@@ -254,10 +264,10 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
             }
             }
 
-        } catch (Exception e) {
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT)
-                        .show();
-            }
+//        } catch (Exception e) {
+//                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT)
+//                        .show();
+//            }
     }
 
 
@@ -268,33 +278,14 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private void uploadImage() {
 
-        //File creating from selected URL
-        File file = new File(imagePath);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
-        // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        Log.i("file",imagePath);
+        Bitmap bitmap = BitmapFactory.decodeFile(new File(imagePath).getAbsolutePath(),options);
+        File file = AppSnippet.saveBitmap(AppSnippet.compressBitmap(bitmap,100), "group_photo");
 
-        // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-
-        // add another part within the multipart request
-        String Serverfilepath = "game/profileimage/";
-        RequestBody filepath =
-                RequestBody.create(
-                        MediaType.parse("multipart/form-data"), Serverfilepath);
-
-        String ServerfileName = file.getName();
-        RequestBody filename =
-                RequestBody.create(
-                        MediaType.parse("multipart/form-data"), ServerfileName);
-
-
-        mEditProfilePresenter.onProfilePhotoDone(file, Serverfilepath, ServerfileName);
-
+        mEditProfilePresenter.onProfilePhotoDone(file, "game/profileimage/", file.getName());
     }
-
-
-
 
 }
