@@ -17,14 +17,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,14 +30,11 @@ import android.widget.Toast;
 import com.jeeva.android.facebook.FacebookHandler;
 
 import java.io.File;
-import java.util.UUID;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.animator.AnimationAdapter;
-import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
@@ -220,15 +215,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void setAdapter(MyResultsAdapter myResultsAdapter) {
-        mRvMyResults.setAdapter(getAnimationAdapter(myResultsAdapter));
-    }
-
-    private AnimationAdapter getAnimationAdapter(RecyclerView.Adapter adapter) {
-        SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
-        animationAdapter.setFirstOnly(true);
-        animationAdapter.setDuration(750);
-        animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
-        return animationAdapter;
+        mRvMyResults.setAdapter(ViewUtils.getAnimationAdapter(myResultsAdapter));
     }
 
     public void onBack(View view) {

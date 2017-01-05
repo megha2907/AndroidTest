@@ -8,21 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
-
-import java.io.Serializable;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.animator.AnimationAdapter;
-import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsPresenter;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsPresenterImpl;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsView;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -87,15 +80,7 @@ public class MutualGroupsFragment extends NostragamusFragment implements MutualG
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        this.mRvAllGroups.setAdapter(getAnimationAdapter(adapter));
-    }
-
-    private AnimationAdapter getAnimationAdapter(RecyclerView.Adapter adapter) {
-        SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
-        animationAdapter.setFirstOnly(true);
-        animationAdapter.setDuration(750);
-        animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
-        return animationAdapter;
+        this.mRvAllGroups.setAdapter(ViewUtils.getAnimationAdapter(adapter));
     }
 
     @Override

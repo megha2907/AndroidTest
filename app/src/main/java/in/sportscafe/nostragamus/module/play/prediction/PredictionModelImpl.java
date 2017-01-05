@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.jeeva.android.Log;
 
@@ -58,10 +59,9 @@ public class PredictionModelImpl implements PredictionModel,
 
     private String sportName;
 
-    private boolean mPassEnabled = true;
+    private Question mTopQuestion;
 
-    private Context context;
-
+    private boolean mNeitherOptionAvailable = false;
 
     public PredictionModelImpl(OnPredictionModelListener predictionModelListener) {
         this.mPredictionModelListener = predictionModelListener;
@@ -69,10 +69,6 @@ public class PredictionModelImpl implements PredictionModel,
 
     public static PredictionModel newInstance(OnPredictionModelListener predictionModelListener) {
         return new PredictionModelImpl(predictionModelListener);
-    }
-
-    public PredictionModelImpl(Context context){
-        this.context=context;
     }
 
     @Override
@@ -164,10 +160,6 @@ public class PredictionModelImpl implements PredictionModel,
         mPredictionAdapter.notifyDataSetChanged();
     }
 
-    public Question getTopQuestion(){
-        return mPredictionAdapter.getTopQuestion();
-    }
-
     @Override
     public void updatePowerUps(String powerup) {
 
@@ -181,10 +173,9 @@ public class PredictionModelImpl implements PredictionModel,
         }
         else if(powerup.equals("player_poll"))
         {
-            Question question = getTopQuestion();
             AudiencePollRequest audiencePollRequest = new AudiencePollRequest();
             audiencePollRequest.setUserId(NostragamusDataHandler.getInstance().getUserId());
-            audiencePollRequest.setQuestionId(question.getQuestionId());
+            audiencePollRequest.setQuestionId(mTopQuestion.getQuestionId());
             callAudiencePollApi(audiencePollRequest);
         }
         mPredictionAdapter.notifyDataSetChanged();
@@ -223,7 +214,7 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void setFlingCardListener(FlingCardListener flingCardListener) {
-//        mPredictionAdapter.setFlingCardListener(flingCardListener);
+        mPredictionAdapter.setFlingCardListener(flingCardListener);
     }
 
     @Override
@@ -274,20 +265,17 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void onLeftSwipe(Question dataObject) {
-        Log.i("swipe","left");
         saveSinglePrediction(dataObject, 1);
     }
 
     @Override
     public void onRightSwipe(Question dataObject) {
-        Log.i("swipe","right");
         saveSinglePrediction(dataObject, 2);
     }
 
     @Override
     public void onBottomSwipe(Question dataObject) {
         saveSinglePrediction(dataObject, 0);
-//        mPredictionAdapter.add(dataObject);
     }
 
     @Override
@@ -309,33 +297,46 @@ public class PredictionModelImpl implements PredictionModel,
         }
 
         if(itemsInAdapter == 1 && mTotalCount == 1) {
-            mPassEnabled = false;
             mPredictionModelListener.onShowingLastQuestion();
         } else if(mTotalCount == 0) {
             mTotalCount = mPredictionAdapter.getCount();
         }
 
 
-        mPredictionModelListener.onQuestionChanged(mPredictionAdapter.getItem(0),minitialCount);
-//        mPredictionAdapter.changeCardViewBackground();
+        mTopQuestion = mPredictionAdapter.getTopQuestion();
+        mNeitherOptionAvailable = !TextUtils.isEmpty(mTopQuestion.getQuestionOption3());
 
-        // mPredictionAdapter.startTimer();
+        mPredictionModelListener.onQuestionChanged(mTopQuestion, minitialCount);
     }
 
     @Override
     public boolean needBottomSwipe() {
-        return mPassEnabled;
+        return mNeitherOptionAvailable;
     }
 
     @Override
     public void onCardMovedLeft() {
-        mPredictionAdapter.setRightOptnVisibility();
-        //mPredictionAdapter.notifyDataSetChanged();
+        mPredictionAdapter.onCardMovedLeft();
     }
 
     @Override
     public void onCardMovedRight() {
-        mPredictionAdapter.setLeftOptnVisibility();
+        mPredictionAdapter.onCardMovedRight();
+    }
+
+    @Override
+    public void onCardMovedTop() {
+        mPredictionAdapter.onCardMoveStopped();
+    }
+
+    @Override
+    public void onCardMovedBottom() {
+        mPredictionAdapter.onCardMoveStopped();
+    }
+
+    @Override
+    public void onCardNotInMoveRegion() {
+        mPredictionAdapter.onCardMoveStopped();
     }
 
     private void saveSinglePrediction(Question question, int answerId) {

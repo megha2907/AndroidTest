@@ -9,17 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.animator.AnimationAdapter;
-import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by deepanshi on 9/29/16.
@@ -81,15 +79,7 @@ public class TournamentFeedFragment extends NostragamusFragment implements Tourn
 
     @Override
     public void setAdapter(TournamentFeedAdapter tournamentFeedAdapter) {
-        mRcvTournamentFeed.setAdapter(getAnimationAdapter(tournamentFeedAdapter));
-    }
-
-    private AnimationAdapter getAnimationAdapter(RecyclerView.Adapter adapter) {
-        SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
-        animationAdapter.setFirstOnly(true);
-        animationAdapter.setDuration(750);
-        animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
-        return animationAdapter;
+        mRcvTournamentFeed.setAdapter(ViewUtils.getAnimationAdapter(tournamentFeedAdapter));
     }
 
     @Override
