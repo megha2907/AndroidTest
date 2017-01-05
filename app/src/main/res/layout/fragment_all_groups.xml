@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/dp_130"
         android:layout_above="@+id/all_groups_empty_btn"
         android:text="You don't have any groups yet."
         android:textColor="@color/textcolorlight"

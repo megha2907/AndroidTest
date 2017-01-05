@@ -6,7 +6,10 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
@@ -18,7 +21,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
@@ -170,5 +177,53 @@ public class AppSnippet implements Constants {
     public static AlertDialog getAlertDialog(Context context, String title, String message,
                                              String positiveButton, View.OnClickListener positiveListener) {
         return getAlertDialog(context, title, message, positiveButton, positiveListener, null, null, null);
+    }
+
+    public static File saveBitmap(Bitmap bitmap, String name) {
+        try {
+            File mFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            if (!mFolder.exists()) {
+                mFolder.mkdir();
+            }
+
+            File imgFile = new File(mFolder.getAbsolutePath(), name + ".png");
+            if (!imgFile.exists()) {
+                imgFile.createNewFile();
+            }
+
+            FileOutputStream output = new FileOutputStream(imgFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+            output.close();
+
+            return imgFile;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Bitmap compressBitmap(Bitmap original, int maxSize) {
+        int width = original.getWidth();
+        int height = original.getHeight();
+        int scale = 1;
+        if (height > maxSize || width > maxSize) {
+            scale = (int)Math.pow(2, (int) Math.ceil(Math.log(maxSize /
+                    (double) Math.max(height, width)) / Math.log(0.5)));
+        }
+
+        //Decode with inSampleSize
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = scale;
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        original.compress(Bitmap.CompressFormat.PNG, 100, out);
+        byte[] bitmapData = out.toByteArray();
+        Bitmap compressed = BitmapFactory.decodeByteArray(bitmapData, 0, bitmapData.length, options);
+
+        original.recycle();
+
+        return compressed;
     }
 }

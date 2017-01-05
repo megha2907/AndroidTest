@@ -175,9 +175,9 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
                         imagePath = cursor.getString(columnIndex);
 
                         File file = new File(imagePath);
-                        long length = file.length() / 1024;
+                        long length = file.length() / 10240;
 
-                        if(length < 1024){
+                        if(length < 10240){
                             if (!TextUtils.isEmpty(imagePath)) {
                                 uploadImage();
                             }
@@ -191,7 +191,7 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
                         }
                         else
                         {
-                            Toast toast =Toast.makeText(getContext(), "Image size is too large, please select an image with size <1MB", Toast.LENGTH_SHORT);
+                            Toast toast =Toast.makeText(getContext(), "Image size is too large, please select an image with size <10MB", Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
                         }

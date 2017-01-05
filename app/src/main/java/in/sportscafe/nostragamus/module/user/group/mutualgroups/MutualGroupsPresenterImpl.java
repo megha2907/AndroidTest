@@ -57,6 +57,7 @@ public class MutualGroupsPresenterImpl   implements MutualGroupsPresenter, Mutua
 
     @Override
     public void onMutualGroupsEmpty() {
+        mmutualGroupsView.dismissProgressbar();
         mmutualGroupsView.showGroupsEmpty();
     }
 
