@@ -95,6 +95,7 @@
                     android:background="@drawable/play_options_bg">
 
                     <ImageView
+                        android:id="@+id/swipe_card_iv_left_arrow"
                         android:layout_width="@dimen/dp_13"
                         android:layout_height="@dimen/dp_13"
                         android:layout_gravity="center_vertical"
@@ -133,6 +134,7 @@
                         app:typeface="lato_black" />
 
                     <ImageView
+                        android:id="@+id/swipe_card_iv_right_arrow"
                         android:layout_width="@dimen/dp_13"
                         android:layout_height="@dimen/dp_13"
                         android:layout_gravity="center_vertical"

@@ -7,12 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.animator.AnimationAdapter;
-import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by deepanshi on 12/8/16.
@@ -52,15 +50,7 @@ public class PowerUpFragment extends NostragamusFragment implements PowerUpView{
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        this.mRvPowerUp.setAdapter(getAnimationAdapter(adapter));
-    }
-
-    private AnimationAdapter getAnimationAdapter(RecyclerView.Adapter adapter) {
-        SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
-        animationAdapter.setFirstOnly(true);
-        animationAdapter.setDuration(750);
-        animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
-        return animationAdapter;
+        this.mRvPowerUp.setAdapter(ViewUtils.getAnimationAdapter(adapter));
     }
 
 }
