@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.squareup.picasso.Picasso;
 
@@ -35,7 +36,9 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
@@ -54,19 +57,26 @@ import okhttp3.RequestBody;
 public class EditProfileActivity extends NostragamusActivity implements EditProfileView,
         View.OnClickListener {
 
+    private static final String[] PERMISSIONS_READ_STORAGE = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
-    private static final String[] PERMISSIONS_READ_STORAGE = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private EditText mEtName;
-    PermissionsChecker checker;
-    private String imagePath;
-    private EditText mEtNickName;
-    private TextInputLayout mTilNickName;
-    private ImageView mIvProfileImage;
-    private EditProfilePresenter mEditProfilePresenter;
-    private TextView mTvUpdateProfile;
-    private CustomButton mBtnUpdateDone;
 
+    private PermissionsChecker checker;
+
+    private EditText mEtNickName;
+
+    private TextInputLayout mTilNickName;
+
+    private HmImageView mIvProfileImage;
+
+    private EditProfilePresenter mEditProfilePresenter;
+
+    private TextView mTvUpdateProfile;
+
+    private CustomButton mBtnUpdateDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +88,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         mTilNickName = (TextInputLayout) findViewById(R.id.input_layout_edit_et_nickname);
         mTvUpdateProfile = (TextView) findViewById(R.id.edit_tv);
         mEtNickName = (EditText) findViewById(R.id.edit_et_nickname);
-        mIvProfileImage = (ImageView) findViewById(R.id.edit_iv_user_image);
+        mIvProfileImage = (HmImageView) findViewById(R.id.edit_iv_user_image);
         mBtnUpdateDone = (CustomButton) findViewById(R.id.edit_btn_done);
         initListener();
 
@@ -99,10 +109,9 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
             }
 
             public void afterTextChanged(Editable arg0) {
-                String s=arg0.toString();
-                if(!s.equals(s.toLowerCase()))
-                {
-                    s=s.toLowerCase();
+                String s = arg0.toString();
+                if (!s.equals(s.toLowerCase())) {
+                    s = s.toLowerCase();
                     mEtNickName.setText(s);
                     mEtNickName.setSelection(mEtNickName.getText().length());
                 }
@@ -125,10 +134,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void setProfileImage(String imageUrl) {
-
-        Picasso.with(this)
-                .load(imageUrl)
-                .into(mIvProfileImage);
+        mIvProfileImage.setImageUrl(imageUrl);
     }
 
 
@@ -181,7 +187,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void changeViewforLogin(String username) {
-        mTvUpdateProfile.setText("Welcome "+username+"\n"+"Let’s update your profile.");
+        mTvUpdateProfile.setText("Welcome " + username + "\n" + "Let’s update your profile.");
         mBtnUpdateDone.setText("NEXT");
     }
 
@@ -191,101 +197,26 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         mTilNickName.setError(Constants.Alerts.NICKNAME_NOT_VALID);
     }
 
+    @Override
+    public void navigateToAddPhoto(int requestCode) {
+        startActivityForResult(new Intent(this, AddPhotoActivity.class), requestCode);
+    }
+
     public void showImagePopup(View view) {
         if (checker.lacksPermissions(PERMISSIONS_READ_STORAGE)) {
             startPermissionsActivity(PERMISSIONS_READ_STORAGE);
         } else {
-            // File System.
-            final Intent galleryIntent = new Intent();
-            galleryIntent.setType("image/*");
-            galleryIntent.setAction(Intent.ACTION_PICK);
-
-            // Chooser of file system options.
-            final Intent chooserIntent = Intent.createChooser(galleryIntent, Constants.Alerts.IMAGE_UPLOAD_TEXT);
-            startActivityForResult(chooserIntent, 1010);
+            mEditProfilePresenter.onClickImage();
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        try {
-            if (resultCode == Activity.RESULT_OK ) {
-
-                if (requestCode == 1010){
-
-                if (data == null) {
-                    Toast.makeText(getActivity(), Constants.Alerts.IMAGE_UNABLE_TO_PICK,
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                    Uri selectedImageUri = data.getData();
-
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                    Cursor cursor = getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);
-
-                    if (cursor != null) {
-                        cursor.moveToFirst();
-
-                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                        imagePath = cursor.getString(columnIndex);
-
-                        File file = new File(imagePath);
-                        long length = file.length() / 10240;
-
-                    if(length < 10240){
-                        if (!TextUtils.isEmpty(imagePath)) {
-                            uploadImage();
-                        }
-
-                        Picasso.with(getApplicationContext()).load(new File(imagePath))
-                                .into(mIvProfileImage);
-                        cursor.close();
-
-                        mIvProfileImage.setVisibility(View.VISIBLE);
-
-                    }
-                    else
-                    {
-                        Toast toast =Toast.makeText(getContext(), "Image size is too large, please select an image with size <10MB", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                    }
-
-                    NostragamusAnalytics.getInstance().trackEditProfile(AnalyticsActions.PHOTO, AnalyticsLabels.GALLERY);
-                } else {
-
-                    mIvProfileImage.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), Constants.Alerts.IMAGE_UNABLE_TO_LOAD,
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-            }
-
-//        } catch (Exception e) {
-//                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
+        mEditProfilePresenter.onGetResult(requestCode, resultCode, data);
     }
-
 
     private void startPermissionsActivity(String[] permission) {
         PermissionsActivity.startActivityForResult(this, 0, permission);
     }
-
-
-    private void uploadImage() {
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-
-        Log.i("file",imagePath);
-        Bitmap bitmap = BitmapFactory.decodeFile(new File(imagePath).getAbsolutePath(),options);
-        File file = AppSnippet.saveBitmap(AppSnippet.compressBitmap(bitmap,100), "group_photo");
-
-        mEditProfilePresenter.onProfilePhotoDone(file, "game/profileimage/", file.getName());
-    }
-
 }

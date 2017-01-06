@@ -13,9 +13,11 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -225,5 +227,28 @@ public class AppSnippet implements Constants {
         original.recycle();
 
         return compressed;
+    }
+
+    public static DisplayMetrics getDisplayDimension(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(metrics);
+        return metrics;
+    }
+
+    public static File getInternalFolder(Context context, String folderName) {
+        File file = context.getDir(folderName, Context.MODE_PRIVATE);
+        if(!file.exists()) {
+            file.mkdir();
+        }
+        return file;
+    }
+
+    public static File getInternalFolder(Context context, String mainFolder, String subFolder) {
+        File file = new File(getInternalFolder(context, mainFolder), subFolder);
+        if(!file.exists()) {
+            file.mkdir();
+        }
+        return file;
     }
 }
