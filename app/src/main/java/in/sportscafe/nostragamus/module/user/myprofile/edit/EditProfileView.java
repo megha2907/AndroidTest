@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
 import com.jeeva.android.View;
 
+import static com.google.android.gms.analytics.internal.zzy.i;
+
 /**
  * Created by Jeeva on 12/6/16.
  */
@@ -28,4 +30,6 @@ public interface EditProfileView extends View {
     void changeViewforLogin(String UserName);
 
     void setNicknameNotValid();
+
+    void navigateToAddPhoto(int requestCode);
 }

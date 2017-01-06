@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.jeeva.android.Log;
@@ -16,16 +17,19 @@ import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.preference.PreferenceManager;
 import in.sportscafe.nostragamus.module.user.preference.SavePreferenceModelImpl;
 
+import static android.app.Activity.RESULT_OK;
+import static android.os.Build.VERSION_CODES.M;
+
 /**
  * Created by Jeeva on 12/6/16.
  */
 public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfileModelImpl.OnEditProfileListener {
 
+    private static final int ADD_PHOTO_REQUEST_CODE = 23;
+
     private EditProfileView mEditProfileView;
 
     private EditProfileModel mEditProfileModel;
-
-    private int EDIT_PROFILE_CODE;
 
     private String screen;
 
@@ -43,11 +47,9 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
         screen = bundle.getString("screen");
 
-        if (screen.equals(Constants.BundleKeys.HOME_SCREEN))
-        {
+        if (screen.equals(Constants.BundleKeys.HOME_SCREEN)) {
             mEditProfileView.changeViewforProfile();
-        }
-        else {
+        } else {
             mEditProfileView.changeViewforLogin(NostragamusDataHandler.getInstance().getUserInfo().getUserName());
         }
 
@@ -70,8 +72,15 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     }
 
     @Override
-    public void onProfilePhotoDone(File file, String filepath, String filename) {
-        mEditProfileModel.updateProfilePhoto(file, filepath,filename);
+    public void onClickImage() {
+        mEditProfileView.navigateToAddPhoto(ADD_PHOTO_REQUEST_CODE);
+    }
+
+    @Override
+    public void onGetResult(int requestCode, int resultCode, Intent data) {
+        if (ADD_PHOTO_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
+            mEditProfileModel.onGetImage(data);
+        }
     }
 
     @Override
@@ -83,50 +92,46 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     public void onEditSuccess() {
         mEditProfileView.dismissProgressbar();
 
-        if (screen.equals(Constants.BundleKeys.HOME_SCREEN))
-        {
+        if (screen.equals(Constants.BundleKeys.HOME_SCREEN)) {
             //mEditProfileView.navigateToHome();
             mEditProfileView.setSuccessResult();
-        }
-        else {
-          //mEditProfileView.navigateToSportsSelection();
+        } else {
+            //mEditProfileView.navigateToSportsSelection();
 
             autoSaveAllSports();
 
             // For ISB
-           // autoSaveIsb();
+            // autoSaveIsb();
         }
     }
 
     private void autoSaveIsb() {
-        new PreferenceManager().savePreference(Arrays.asList(new Integer[] {10}),
+        new PreferenceManager().savePreference(Arrays.asList(new Integer[]{10}),
                 new SavePreferenceModelImpl.SavePreferenceModelListener() {
-            @Override
-            public void onSuccess()
-            {
-                mEditProfileView.navigateToHome();
-            }
+                    @Override
+                    public void onSuccess() {
+                        mEditProfileView.navigateToHome();
+                    }
 
-            @Override
-            public void onNoInternet() {
-                onNoInternet();
-            }
+                    @Override
+                    public void onNoInternet() {
+                        onNoInternet();
+                    }
 
-            @Override
-            public void onFailed(String message) {
-                onEditFailed(message);
-            }
-        });
+                    @Override
+                    public void onFailed(String message) {
+                        onEditFailed(message);
+                    }
+                });
     }
 
 
     private void autoSaveAllSports() {
-        new PreferenceManager().savePreference(Arrays.asList(new Integer[] {1,2,3,4,5,6,7,8,9,10}),
+        new PreferenceManager().savePreference(Arrays.asList(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}),
                 new SavePreferenceModelImpl.SavePreferenceModelListener() {
                     @Override
-                    public void onSuccess()
-                    {
-                        Log.i("selected","inside");
+                    public void onSuccess() {
+                        Log.i("selected", "inside");
                         mEditProfileView.navigateToHome();
                     }
 
@@ -144,6 +149,9 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     @Override
     public void onPhotoUpdate() {
+        UserInfo userInfo = mEditProfileModel.getUserInfo();
+        mEditProfileView.setProfileImage(userInfo.getPhoto());
+
         mEditProfileView.dismissProgressbar();
     }
 

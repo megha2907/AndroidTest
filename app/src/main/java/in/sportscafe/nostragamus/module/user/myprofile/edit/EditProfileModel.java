@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
+import android.content.Intent;
+
 import java.io.File;
 
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -12,6 +14,8 @@ import okhttp3.RequestBody;
 public interface EditProfileModel {
 
     void updateProfile(String about);
+
+    void onGetImage(Intent imageData);
 
     void updateProfilePhoto(File file, String filepath, String filename);
 

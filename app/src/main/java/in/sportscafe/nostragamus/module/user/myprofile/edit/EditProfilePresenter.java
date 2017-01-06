@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.io.File;
@@ -16,6 +17,7 @@ public interface EditProfilePresenter {
 
     void onClickDone(String about);
 
-    void onProfilePhotoDone(File file, String filepath, String filename);
+    void onClickImage();
 
+    void onGetResult(int requestCode, int resultCode, Intent data);
 }
