@@ -73,10 +73,8 @@ public class AllGroups implements Serializable {
 
     @JsonProperty("no_of_tournaments")
     public void setTournamentsCount(Integer tournamentsCount) {
-        tournamentsCount = tournamentsCount;
+        this.tournamentsCount = tournamentsCount;
     }
-
-
 
 }
 
