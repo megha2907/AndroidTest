@@ -5,6 +5,14 @@ package in.sportscafe.nostragamus;
  */
 public interface Constants {
 
+    String IMAGE_TYPE = "png";
+
+    interface ImageFolders {
+        String MAIN = "Nostragamus_Images";
+
+        String PROFILE = "Profile_Images";
+    }
+
     interface DatabaseKeys {
     }
 
@@ -118,6 +126,7 @@ public interface Constants {
         String MATCH_ALREADY_STARTED = "This match has already started!";
         String FLIP_POWERUP_OVER = "You have used all your flip powerups!";
         String REPLAY_POWERUP_OVER = "You have used all your replay powerups!";
+        String ADD_PHOTO_FAILED = "Adding photo failed! Try again!";
     }
 
     interface BundleKeys {
@@ -149,6 +158,7 @@ public interface Constants {
         String FEEDBACK_FORM_URL = "feedbackFormUrl";
         String FEED_SCREEN = "feedScreen";
         String PLAYER_ID = "playerId";
+        String ADDED_NEW_IMAGE_PATH = "addedNewImagePath";
     }
 
     interface ParcelableKeys {

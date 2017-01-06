@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class FlingCardListener implements View.OnTouchListener {
 
     enum Direction {
@@ -66,6 +68,9 @@ public class FlingCardListener implements View.OnTouchListener {
 
     }
 
+    public View getFrame() {
+        return frame;
+    }
 
     public boolean onTouch(View view, MotionEvent event) {
 
@@ -149,6 +154,7 @@ public class FlingCardListener implements View.OnTouchListener {
                     rotation = -rotation;
                 }
 
+                com.jeeva.android.Log.d(TAG, "Rotation --> " + rotation);
 
                 frame.setX(aPosX);
                 frame.setY(aPosY);
@@ -179,8 +185,14 @@ public class FlingCardListener implements View.OnTouchListener {
             mFlingListener.onCardMovedtoRight();
             return 1f;
         } else if (movedBeyondBottomBorder()) {
+            mFlingListener.onCardMovedtoBottom();
             return 1f;
         } else {
+            if(movedBeyondTopBorder()) {
+                mFlingListener.onCardMovedtoTop();
+            } else {
+                mFlingListener.onCardNotInMoveRegion();
+            }
             float zeroToOneValue = (aPosX + halfWidth - leftBorder()) / (rightBorder() - leftBorder());
             return zeroToOneValue * 2f - 1f;
         }
@@ -227,6 +239,10 @@ public class FlingCardListener implements View.OnTouchListener {
         return aPosX + halfWidth > rightBorder();
     }
 
+    private boolean movedBeyondTopBorder() {
+        return aPosY + halfHeight < topBorder();
+    }
+
     private boolean movedBeyondBottomBorder() {
         return aPosY + halfHeight > bottomBorder();
     }
@@ -237,6 +253,10 @@ public class FlingCardListener implements View.OnTouchListener {
 
     public float rightBorder() {
         return 3 * parentWidth / 4.f;
+    }
+
+    public float topBorder() {
+        return parentHeight / 4.f;
     }
 
     public float bottomBorder() {
@@ -383,6 +403,12 @@ public class FlingCardListener implements View.OnTouchListener {
         void onCardMovedtoLeft();
 
         void onCardMovedtoRight();
+
+        void onCardMovedtoTop();
+
+        void onCardMovedtoBottom();
+
+        void onCardNotInMoveRegion();
     }
 
 }

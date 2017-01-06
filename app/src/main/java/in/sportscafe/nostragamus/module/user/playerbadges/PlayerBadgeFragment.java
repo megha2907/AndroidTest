@@ -7,20 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.animator.AnimationAdapter;
-import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
-import in.sportscafe.nostragamus.module.user.badges.BadgePresenter;
-import in.sportscafe.nostragamus.module.user.badges.BadgePresenterImpl;
-import in.sportscafe.nostragamus.module.user.badges.BadgeView;
-import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroupsFragment;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by deepanshi on 1/5/17.
@@ -62,15 +55,7 @@ public class PlayerBadgeFragment extends NostragamusFragment implements PlayerBa
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        this.mRvBadge.setAdapter(getAnimationAdapter(adapter));
-    }
-
-    private AnimationAdapter getAnimationAdapter(RecyclerView.Adapter adapter) {
-        SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
-        animationAdapter.setFirstOnly(true);
-        animationAdapter.setDuration(750);
-        animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
-        return animationAdapter;
+        this.mRvBadge.setAdapter(ViewUtils.getAnimationAdapter(adapter));
     }
 
     @Override

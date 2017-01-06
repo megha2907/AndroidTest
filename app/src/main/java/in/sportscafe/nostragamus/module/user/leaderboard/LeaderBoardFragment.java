@@ -7,14 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.animator.AnimationAdapter;
-import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -56,15 +54,7 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
 
     @Override
     public void setLeaderBoardAdapter(LeaderBoardAdapter leaderBoardAdapter) {
-        mRvLeaderBoard.setAdapter(getAnimationAdapter(leaderBoardAdapter));
-    }
-
-    private AnimationAdapter getAnimationAdapter(RecyclerView.Adapter adapter) {
-        SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
-        animationAdapter.setFirstOnly(true);
-        animationAdapter.setDuration(750);
-        animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
-        return animationAdapter;
+        mRvLeaderBoard.setAdapter(ViewUtils.getAnimationAdapter(leaderBoardAdapter));
     }
 
     @Override

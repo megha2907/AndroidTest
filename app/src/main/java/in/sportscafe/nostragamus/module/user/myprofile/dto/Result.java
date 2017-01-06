@@ -11,6 +11,7 @@ public class Result {
     /**
      * @return The result
      */
+    @JsonProperty("data")
     public String getResult() {
         return result;
     }
@@ -18,6 +19,7 @@ public class Result {
     /**
      * @param result The result
      */
+    @JsonProperty("data")
     public void setResult(String result) {
         this.result = result;
     }

@@ -12,6 +12,7 @@ import android.support.v4.util.LruCache;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
@@ -23,6 +24,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import in.sportscafe.nostragamus.animator.AnimationAdapter;
+import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 
 /**
  * Created by Jeeva on 17/6/16.
@@ -138,7 +142,37 @@ public class ViewUtils {
         return bigBitmap;
     }
 
-    public static void addNostragamusLabel() {
+    public static File saveBitmap(Bitmap bitmap) {
+        try {
+            File mFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            if (!mFolder.exists()) {
+                mFolder.mkdir();
+            }
 
+            File imgFile = new File(mFolder.getAbsolutePath(), "fb.png");
+            if (!imgFile.exists()) {
+                imgFile.createNewFile();
+            }
+
+            FileOutputStream output = new FileOutputStream(imgFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+            output.close();
+
+            return imgFile;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static RecyclerView.Adapter getAnimationAdapter(RecyclerView.Adapter adapter) {
+        SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
+        animationAdapter.setFirstOnly(true);
+        animationAdapter.setDuration(750);
+        animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
+//        return animationAdapter;
+        return adapter;
     }
 }

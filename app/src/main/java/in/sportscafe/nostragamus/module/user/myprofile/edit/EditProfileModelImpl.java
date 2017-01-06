@@ -1,8 +1,12 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
+import android.content.Intent;
+import android.util.Log;
+
 import java.io.File;
 import java.util.UUID;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
@@ -14,6 +18,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Response;
+
+import static android.R.attr.data;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -54,6 +60,14 @@ public class EditProfileModelImpl implements EditProfileModel {
         }
     }
 
+    @Override
+    public void onGetImage(Intent imageData) {
+        String imagePath = imageData.getStringExtra(Constants.BundleKeys.ADDED_NEW_IMAGE_PATH);
+        Log.i("file", imagePath);
+
+        File file = new File(imagePath);
+        updateProfilePhoto(file, "game/profileimage/", file.getName());
+    }
 
     @Override
     public void updateProfilePhoto(File file, String filepath, String filename) {
@@ -70,22 +84,23 @@ public class EditProfileModelImpl implements EditProfileModel {
     }
 
     private void callUpdateUserProfilePhotoApi(File file, String filepath, String filename) {
+        MyWebService.getInstance().getUploadPhotoRequest(file, filepath, filename)
+                .enqueue(new NostragamusCallBack<Result>() {
+                    @Override
+                    public void onResponse(Call<Result> call, Response<Result> response) {
+                        super.onResponse(call, response);
 
-        MyWebService.getInstance().getUploadPhotoRequest(file,filepath,filename).enqueue(new NostragamusCallBack<Result>() {
-            @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
-                super.onResponse(call, response);
+                        if (response.isSuccessful()) {
+                            mUserInfo.setPhoto(response.body().getResult());
+                            NostragamusDataHandler.getInstance().setUserInfo(mUserInfo);
 
-                if (response.isSuccessful()) {
-                    mUserInfo.setPhoto(response.body().getResult());
-                    mEditProfileListener.onPhotoUpdate();
-                } else {
-                    mEditProfileListener.onEditFailed(response.message());
-                }
-            }
+                            mEditProfileListener.onPhotoUpdate();
+                        } else {
+                            mEditProfileListener.onEditFailed(response.message());
+                        }
+                    }
 
-        });
-
+                });
     }
 
     private void callUpdateUserApi(final String nickname) {

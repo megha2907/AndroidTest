@@ -3,42 +3,37 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
-import com.jeeva.android.widgets.customfont.CustomTextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 
 public class PredictionAdapter extends ArrayAdapter<Question> {
 
     private LayoutInflater mLayoutInflater;
+
     private int mInitialCount;
+
     private Boolean isRightSwiped;
+
+    private FlingCardListener mFlingCardListener;
+
+    private View mTopView, mLeftOption, mRightOption, mLeftOptionArrow, mRightOptionArrow;
 
     public PredictionAdapter(Context context, int count) {
         super(context, android.R.layout.simple_list_item_1);
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mInitialCount = count;
 
-    }
-
-    @Override
-    public void remove(Question object) {
-        super.remove(object);
     }
 
     @Override
@@ -133,26 +128,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             }
         });
 
-//        if (isRightSwiped==true){
-//
-//            viewHolder.tvLeftOption.setVisibility(View.INVISIBLE);
-//
-//        }else if(isRightSwiped==false) {
-//
-//            viewHolder.tvRightOption.setVisibility(View.INVISIBLE);
-//        }
-
-
-
-
         return convertView;
     }
-
-//    public void changeCardViewBackground(){
-//
-//        Question question = getItem(0);
-//
-//    }
 
 
     public void update2xPowerUp() {
@@ -179,12 +156,37 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         return getItem(0);
     }
 
-    public void setRightOptnVisibility() {
-
+    public void onCardMovedRight() {
+        setOptionVisibility(View.INVISIBLE, View.VISIBLE);
     }
 
-    public void setLeftOptnVisibility() {
+    public void onCardMovedLeft() {
+        setOptionVisibility(View.VISIBLE, View.INVISIBLE);
+    }
 
+    public void onCardMoveStopped() {
+        setOptionVisibility(View.VISIBLE, View.VISIBLE);
+    }
+
+    public void setFlingCardListener(FlingCardListener listener) {
+        this.mFlingCardListener = listener;
+        this.mTopView = mFlingCardListener.getFrame();
+        this.mLeftOption = mTopView.findViewById(R.id.swipe_card_tv_left);
+        this.mRightOption = mTopView.findViewById(R.id.swipe_card_tv_right);
+        this.mLeftOptionArrow = mTopView.findViewById(R.id.swipe_card_iv_left_arrow);
+        this.mRightOptionArrow = mTopView.findViewById(R.id.swipe_card_iv_right_arrow);
+    }
+
+    private void setOptionVisibility(int leftVis, int rightVis) {
+        if(leftVis != mLeftOption.getVisibility()) {
+            mLeftOption.setVisibility(leftVis);
+            mLeftOptionArrow.setVisibility(leftVis);
+        }
+
+        if(rightVis != mRightOption.getVisibility()) {
+            mRightOption.setVisibility(rightVis);
+            mRightOptionArrow.setVisibility(rightVis);
+        }
     }
 
     static class ViewHolder  {
