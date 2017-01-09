@@ -183,7 +183,8 @@ public interface Constants {
         String YYYY_MMM_DD = "yyyy/MMM/dd";
     }
 
-    interface BroadcastKeys {
+    interface IntentActions {
+        String ACTION_SHARE_SCORE = "in.sportscafe.nostragamus.intent.action.SHARE_SCORE";
     }
 
     interface LeaderBoardPeriods {
