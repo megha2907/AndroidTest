@@ -24,6 +24,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.squareup.picasso.Picasso;
 
@@ -37,6 +38,7 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.group.admin.adminmembers.AdminMembersActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoActivity;
+import in.sportscafe.nostragamus.module.user.group.groupselection.GroupSelectionFragment;
 import in.sportscafe.nostragamus.module.user.group.members.MembersActivity;
 import in.sportscafe.nostragamus.module.user.group.members.MembersFragment;
 import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroupsFragment;
@@ -68,7 +70,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     private Button mBtnMembersCount;
 
-    private ImageView mIvGroupIcon;
+    private HmImageView mIvGroupIcon;
 
     private RecyclerView mRvSportSelection;
 
@@ -161,16 +163,8 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     @Override
     public void setGroupIcon(String groupPhotoUrl) {
-        mIvGroupIcon = (ImageView) findViewById(R.id.group_iv_user_image);
-
-        if (null == groupPhotoUrl) {
-
-            mIvGroupIcon.setBackgroundResource(R.drawable.placeholder_icon);
-        } else {
-            Picasso.with(this)
-                    .load(groupPhotoUrl)
-                    .into(mIvGroupIcon);
-        }
+        mIvGroupIcon = (HmImageView) findViewById(R.id.group_iv_user_image);
+        mIvGroupIcon.setImageUrl(groupPhotoUrl);
 
     }
 
@@ -377,12 +371,15 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         if (groupInfo.getMembers().size()==1){
-            pagerAdapter.addFragment(MembersFragment.newInstance(String.valueOf(groupInfo.getId())), groupInfo.getMembers().size()+ "\n Member");
+            pagerAdapter.addFragment(MembersFragment.newInstance(String.valueOf(groupInfo.getId())),
+                    groupInfo.getMembers().size()+ "\n Member");
         }else {
-            pagerAdapter.addFragment(MembersFragment.newInstance(String.valueOf(groupInfo.getId())), groupInfo.getMembers().size()+ "\n Members");
+            pagerAdapter.addFragment(MembersFragment.newInstance(String.valueOf(groupInfo.getId())),
+                    groupInfo.getMembers().size()+ "\n Members");
         }
 
-           // pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount+"\n Badge");
+            pagerAdapter.addFragment(GroupSelectionFragment.newInstance(String.valueOf(groupInfo.getId())),
+                    groupInfo.getFollowedTournaments().size()+"\n Tournaments");
 
         return pagerAdapter;
     }

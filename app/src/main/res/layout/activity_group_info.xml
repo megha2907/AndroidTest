@@ -37,7 +37,8 @@
         <android.support.v7.widget.Toolbar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/group_info_toolbar">
+            android:id="@+id/group_info_toolbar"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/group_name"
@@ -74,14 +75,14 @@
             >
 
 
-            <ImageView
+            <com.jeeva.android.widgets.HmImageView
                 android:id="@+id/group_iv_user_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
                 android:alpha="0.8"
-                android:src="@drawable/profile_screen_bg"
+                app:defaultImage="@drawable/placeholder_icon"
                 />
         </RelativeLayout>
 
