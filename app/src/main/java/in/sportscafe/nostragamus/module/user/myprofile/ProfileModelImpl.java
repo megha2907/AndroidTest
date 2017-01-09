@@ -30,7 +30,6 @@ public class ProfileModelImpl implements ProfileModel {
 
     @Override
     public void getProfileDetails() {
-        getLbSummary();
         getUserInfoFromServer();
     }
 
@@ -58,6 +57,10 @@ public class ProfileModelImpl implements ProfileModel {
                                     NostragamusDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
                                     NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());
                                 }
+
+                                getLbSummary(updatedUserInfo);
+                            } else {
+                                mProfileModelListener.onGetProfileFailed(response.message());
                             }
                         }
                     }
@@ -65,7 +68,7 @@ public class ProfileModelImpl implements ProfileModel {
         }
     }
 
-    private void getLbSummary() {
+    private void getLbSummary(final UserInfo updatedUserInfo) {
         MyWebService.getInstance().getLeaderBoardSummary().enqueue(
                 new NostragamusCallBack<LbSummaryResponse>() {
                     @Override
@@ -75,7 +78,7 @@ public class ProfileModelImpl implements ProfileModel {
                             return;
                         }
                         if(response.isSuccessful()) {
-                            mProfileModelListener.onGetProfileSuccess(response.body().getLbSummary());
+                            mProfileModelListener.onGetProfileSuccess(updatedUserInfo, response.body().getLbSummary());
                         } else {
                             mProfileModelListener.onGetProfileFailed(response.message());
                         }
@@ -86,7 +89,7 @@ public class ProfileModelImpl implements ProfileModel {
 
     public interface OnProfileModelListener {
 
-        void onGetProfileSuccess(LbSummary lbSummary);
+        void onGetProfileSuccess(UserInfo userInfo, LbSummary lbSummary);
 
         void onGetProfileFailed(String message);
 

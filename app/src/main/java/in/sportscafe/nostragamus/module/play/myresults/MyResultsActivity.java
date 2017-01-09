@@ -37,6 +37,7 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
@@ -238,7 +239,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                         if (goback == true) {
                             onBackPressed();
                         } else {
-                            gotoMyResultsTimeline();
+                            gotoHomeActivity();
                         }
                     }
                 }
@@ -251,9 +252,17 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         goback=true;
     }
 
-    private void gotoMyResultsTimeline() {
+    /*private void gotoMyResultsTimeline() {
         Intent intent = new Intent(this, MyResultsTimelineActivity.class);
         startActivity(intent);
+        finish();
+    }*/
+
+    private void gotoHomeActivity() {
+        Intent homeintent = new Intent(this, HomeActivity.class);
+        homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        homeintent.putExtra("results", "openprofile");
+        startActivity(homeintent);
         finish();
     }
 

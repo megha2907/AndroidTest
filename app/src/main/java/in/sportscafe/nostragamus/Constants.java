@@ -159,6 +159,7 @@ public interface Constants {
         String FEED_SCREEN = "feedScreen";
         String PLAYER_ID = "playerId";
         String ADDED_NEW_IMAGE_PATH = "addedNewImagePath";
+        String PLAYER_USER_ID = "playerUserId";
     }
 
     interface ParcelableKeys {

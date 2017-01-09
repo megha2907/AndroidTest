@@ -38,7 +38,7 @@ public class AddPhotoPresenterImpl implements AddPhotoPresenter, AddPhotoModelIm
     @Override
     public void onCreateAddPhoto() {
         onClickGallery();
-//        mAddPhotoView.setListAdapter(mAddPhotoModel.getAddPhotoAdapter(mAddPhotoView.getContext(), this));
+//        mAddPhotoView.setListAdapter(mAddPhotoModel.getAddPhotoAdapter(mAddPhotoView.isThreadAlive(), this));
     }
 
     @Override

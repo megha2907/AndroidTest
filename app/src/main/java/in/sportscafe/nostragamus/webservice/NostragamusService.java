@@ -160,4 +160,11 @@ public interface NostragamusService {
 
     @GET ("/v1/game/users/getPlayerProfile")
     Call<PlayerInfoResponse> getPlayerInfo(@Query("player_user_id") String playerId);
+
+    @GET("v1/game/users/matches/timeline")
+    Call<MatchesResponse> getTimelines(
+            @Query("player_user_id") String playerUserId,
+            @Query("skip") int skip,
+            @Query("limit") int limit
+    );
 }

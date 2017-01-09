@@ -100,7 +100,7 @@ public class FlipAdapter extends Adapter<Match, FlipAdapter.ViewHolder> {
             if (isShowFlipOptn == true) {
                 mFlipPowerUp.setVisibility(View.VISIBLE);
 
-//                ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(convertView.getContext(), R.animator.flip_anim);
+//                ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(convertView.isThreadAlive(), R.animator.flip_anim);
 //                anim.setTarget(mFlipPowerUp);
 //                anim.setDuration(6000);
 //                anim.setRepeatCount(ObjectAnimator.INFINITE);

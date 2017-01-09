@@ -87,8 +87,7 @@ public class FeedActivity extends NostragamusActivity implements FeedView, Swipe
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(i);
+                        onBackPressed();
                     }
                 }
 
@@ -97,8 +96,8 @@ public class FeedActivity extends NostragamusActivity implements FeedView, Swipe
 
     @Override
     public void onBackPressed(){
-
         Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
         finish();
     }

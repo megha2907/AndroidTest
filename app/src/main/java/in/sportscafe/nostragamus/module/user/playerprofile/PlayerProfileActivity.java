@@ -25,6 +25,7 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroupsFragment;
@@ -286,6 +287,7 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     public void initMyPosition(PlayerInfo playerInfo) {
 
         mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
+        mViewPager.setOffscreenPageLimit(5);
         mpagerAdapter = getAdapter(playerInfo);
         mViewPager.setAdapter(mpagerAdapter);
 
@@ -319,6 +321,9 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
 
     private ViewPagerAdapter getAdapter(PlayerInfo playerInfo) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        pagerAdapter.addFragment(TimelineFragment.newInstance(playerInfo.getId() + ""),
+                playerInfo.getTotalMatchesPlayed() + "\n Matches");
 
         if (groupsCount=="1"){
             pagerAdapter.addFragment(MutualGroupsFragment.newInstance(playerInfo), groupsCount+ "\n Mutual Group");

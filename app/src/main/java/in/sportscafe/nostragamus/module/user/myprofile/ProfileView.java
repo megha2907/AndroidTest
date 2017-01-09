@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.user.myprofile;
 
 import com.jeeva.android.InAppView;
 
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
 
 /**
@@ -21,7 +22,7 @@ public interface ProfileView extends InAppView {
 
     void setPoints(long points);
 
-    void initMyPosition(LbSummary lbSummary);
+    void initMyPosition(UserInfo userInfo, LbSummary lbSummary);
 
     void navigateToLogIn();
 
