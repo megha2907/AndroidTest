@@ -97,7 +97,7 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
         mIBtnEditName = (ImageButton) findViewById(R.id.group_info_btn_edit_name);
 
-        this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_rcv);
+        this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_selected_tournaments_rcv);
         this.mRvSportSelection.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
         this.mRvSportSelection.setHasFixedSize(true);

@@ -42,7 +42,6 @@ public class LeaveGroupModelImpl {
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             MembersRequest membersRequest = new MembersRequest();
-            membersRequest.setUserId(NostragamusDataHandler.getInstance().getUserId());
             membersRequest.setGroupId(groupId);
 
             callLeaveGroupApi(membersRequest);

@@ -87,8 +87,6 @@ public class ApproveModelImpl implements ApproveModel, ApproveAdapter.OnApproveO
 
             ApproveRequest approveRequest = new ApproveRequest();
             approveRequest.setGroupId(mGroupId);
-            approveRequest.setUserId(mApproveAdapter.getItem(position).getId() + "");
-            approveRequest.setAdminId(NostragamusDataHandler.getInstance().getUserId());
             approveRequest.setApproved(approved);
 
             callApprovePersonApi(approveRequest, position);

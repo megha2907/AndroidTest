@@ -111,7 +111,6 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
     private AdminRequest getAdminRequest(int position) {
         AdminRequest removePersonRequest = new AdminRequest();
         removePersonRequest.setAdminId(NostragamusDataHandler.getInstance().getUserId());
-        removePersonRequest.setUserId(mMembersAdapter.getItem(position).getId() + "");
         removePersonRequest.setGroupId(mGroupId);
 
         return removePersonRequest;
