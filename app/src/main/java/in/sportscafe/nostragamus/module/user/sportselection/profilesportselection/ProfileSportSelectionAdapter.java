@@ -91,7 +91,7 @@ public class ProfileSportSelectionAdapter extends Adapter<Sport, ProfileSportSel
             } else {
                 mSelectedSportsIdList.add(id);
             }
-            notifyDataSetChanged();
+            notifyItemChanged(getAdapterPosition());
 
             if(null != mChangedListener) {
                 mChangedListener.onOnSportChanged(mSelectedSportsIdList);

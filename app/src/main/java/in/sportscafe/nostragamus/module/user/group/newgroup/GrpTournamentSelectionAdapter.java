@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
+import com.jeeva.android.widgets.HmImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -69,10 +70,15 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, G
         holder.mTvTournament.setText(tournamentInfo.getTournamentName());
         holder.mTvSport.setText(tournamentInfo.getSportsName());
 
-        Picasso.with(mcontext)
-                .load(tournamentInfo.getTournamentPhoto())
-                .placeholder(R.drawable.placeholder_icon)
-                .into(holder.mIvTournament);
+
+        Log.i("tournamentUrl",tournamentInfo.getTournamentPhoto());
+
+//        Picasso.with(mcontext)
+//                .load(tournamentInfo.getTournamentPhoto())
+//                .placeholder(R.drawable.placeholder_icon)
+//                .into(holder.mIvTournament);
+
+        holder.mIvTournament.setImageUrl(tournamentInfo.getTournamentPhoto());
 
 
         if (mSelectedTournamentsIdList.contains((tournamentInfo.getTournamentId()))) {
@@ -95,14 +101,14 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, G
 
         // CheckBox mCbSport;
         TextView mTvSport;
-        ImageView mIvTournament;
+        HmImageView mIvTournament;
         ImageView mIvSelectedIcon;
         TextView mTvTournament;
 
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
-            mIvTournament = (ImageView) V.findViewById(R.id.group_sport_row_image_tournament);
+            mIvTournament = (HmImageView) V.findViewById(R.id.group_sport_row_image_tournament);
             mTvSport = (TextView) V.findViewById(R.id.group_sport_row_tv_sport_name);
             mIvSelectedIcon = (ImageView) V.findViewById(R.id.group_sport_row_selected_icon);
             mTvTournament = (TextView) V.findViewById(R.id.group_sport_row_tv_tournament_name);

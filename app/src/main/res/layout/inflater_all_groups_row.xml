@@ -29,6 +29,12 @@
             android:scaleType="fitXY"
             android:layout_centerVertical="true"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/all_groups_iv_groupImage"
+            >
 
         <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/all_groups_tv_groupName"
@@ -36,9 +42,8 @@
         android:layout_height="wrap_content"
         android:text="Office Group"
         android:textColor="@color/white"
-        app:typeface="roboto_condensed"
-        android:textSize="@dimen/dp_18"
-        android:layout_toRightOf="@+id/all_groups_iv_groupImage"
+        app:typeface="lato_regular"
+        android:textSize="@dimen/dp_16"
         android:layout_marginLeft="@dimen/dp_10"
         />
 
@@ -57,27 +62,41 @@
         android:id="@+id/all_groups_tv_GroupMembers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="( 3 Members )"
+        android:text="3 Members"
         android:textColor="@color/silver_chalice"
         app:typeface="roboto_condensed"
-        android:textSize="@dimen/dp_18"
-        android:layout_toRightOf="@+id/all_groups_tv_groupName"
+        android:textSize="@dimen/dp_13"
+        android:layout_below="@+id/all_groups_tv_groupName"
         android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_2"
         />
+
+            <ImageView
+                android:id="@+id/all_groups_iv_circleIcon"
+                android:layout_width="@dimen/dp_5"
+                android:layout_height="@dimen/dp_5"
+                android:src="@drawable/powerup_screen_count_bg"
+                android:adjustViewBounds="true"
+                android:layout_below="@+id/all_groups_tv_groupName"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_toRightOf="@+id/all_groups_tv_GroupMembers"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/all_groups_tv_GroupTournaments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="6 Tournaments"
             android:textColor="@color/silver_chalice"
             app:typeface="roboto_condensed"
-            android:textSize="@dimen/dp_14"
-            android:layout_toRightOf="@+id/all_groups_iv_groupImage"
-            android:layout_below="@+id/all_groups_tv_GroupMembers"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:textSize="@dimen/dp_13"
+            android:text="6 Tournaments"
+            android:layout_toRightOf="@+id/all_groups_iv_circleIcon"
+            android:layout_below="@+id/all_groups_tv_groupName"
+            android:layout_marginLeft="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_2"
             />
+
+            </RelativeLayout>
 
     </RelativeLayout>
 

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.HmImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,14 +51,21 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
         AllGroups allGroups = getItem(position);
         holder.mTvGroupName.setText(allGroups.getGroupName());
 
-        //holder.mTvGroupTournaments.setText(String.valueOf(allGroups.getTournamentsCount())+" Tournaments");
+
+        if (allGroups.getTournamentsCount()==1){
+
+            holder.mTvGroupTournaments.setText(String.valueOf(allGroups.getTournamentsCount())+" Tournament");
+        }
+        else {
+            holder.mTvGroupTournaments.setText(String.valueOf(allGroups.getTournamentsCount())+" Tournaments");
+        }
 
         if (allGroups.getCountGroupMembers()==1){
 
-            holder.mTvGroupMembers.setText("("+ String.valueOf(allGroups.getCountGroupMembers())+")");
+            holder.mTvGroupMembers.setText(String.valueOf(allGroups.getCountGroupMembers())+" Member");
         }
         else {
-            holder.mTvGroupMembers.setText("("+String.valueOf(allGroups.getCountGroupMembers())+")");
+            holder.mTvGroupMembers.setText(String.valueOf(allGroups.getCountGroupMembers())+" Members");
         }
 
         if (null==allGroups.getGroupPhoto() || allGroups.getGroupPhoto().isEmpty()) {

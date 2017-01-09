@@ -1,8 +1,11 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,17 +24,27 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.squareup.picasso.Picasso;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.group.admin.adminmembers.AdminMembersActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoActivity;
+import in.sportscafe.nostragamus.module.user.group.groupselection.GroupSelectionFragment;
 import in.sportscafe.nostragamus.module.user.group.members.MembersActivity;
+import in.sportscafe.nostragamus.module.user.group.members.MembersFragment;
+import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroupsFragment;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
+import in.sportscafe.nostragamus.module.user.playerbadges.PlayerBadgeFragment;
+import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -56,7 +70,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     private Button mBtnMembersCount;
 
-    private ImageView mIvGroupIcon;
+    private HmImageView mIvGroupIcon;
 
     private RecyclerView mRvSportSelection;
 
@@ -67,6 +81,10 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     private Toolbar mtoolbar;
 
     private Bundle mBundle;
+
+    private ViewPagerAdapter mpagerAdapter;
+
+    private ViewPager mViewPager;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -80,19 +98,19 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
         initToolBar();
 
-        findViewById(R.id.group_info_ll_share).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                mGroupInfoPresenter.onLongClickShareCode();
-                showMessage("Group code is copied to the clipboard");
-                return true;
-            }
-        });
+//        findViewById(R.id.group_info_ll_share).setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                mGroupInfoPresenter.onLongClickShareCode();
+//                showMessage("Group code is copied to the clipboard");
+//                return true;
+//            }
+//        });
 
-        this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_rcv);
-        this.mRvSportSelection.setLayoutManager(new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false));
-        this.mRvSportSelection.setHasFixedSize(true);
+//        this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_rcv);
+//        this.mRvSportSelection.setLayoutManager(new LinearLayoutManager(this,
+//                LinearLayoutManager.VERTICAL, false));
+//        this.mRvSportSelection.setHasFixedSize(true);
         this.mGroupInfoPresenter = GroupInfoPresenterImpl.newInstance(this);
         this.mGroupInfoPresenter.onCreateGroupInfo(getIntent().getExtras());
 
@@ -110,15 +128,15 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
                 navigatetoEditGroupInfoActivity();
                 break;
 
-            case R.id.group_info_btn_edit_members:
-                mGroupInfoPresenter.onClickMembers();
-                break;
-            case R.id.group_info_ll_share:
-                mGroupInfoPresenter.onClickShareCode();
-                break;
-            case R.id.group_info_exit_group:
-                mGroupInfoPresenter.onLeaveGroup();
-                break;
+//            case R.id.group_info_btn_edit_members:
+//                mGroupInfoPresenter.onClickMembers();
+//                break;
+//            case R.id.group_info_ll_share:
+//                mGroupInfoPresenter.onClickShareCode();
+//                break;
+//            case R.id.group_info_exit_group:
+//                mGroupInfoPresenter.onLeaveGroup();
+//                break;
 
         }
     }
@@ -145,40 +163,32 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     @Override
     public void setGroupIcon(String groupPhotoUrl) {
-        mIvGroupIcon = (ImageView) findViewById(R.id.group_iv_user_image);
-
-        if (null == groupPhotoUrl) {
-
-            mIvGroupIcon.setBackgroundResource(R.drawable.placeholder_icon);
-        } else {
-            Picasso.with(this)
-                    .load(groupPhotoUrl)
-                    .into(mIvGroupIcon);
-        }
+        mIvGroupIcon = (HmImageView) findViewById(R.id.group_iv_user_image);
+        mIvGroupIcon.setImageUrl(groupPhotoUrl);
 
     }
 
     @Override
     public void setMembersSize(int size) {
 
-        mBtnMembersCount = (Button) findViewById(R.id.group_info_btn_edit_members);
-
-        mBtnExitGroup= (Button) findViewById(R.id.group_info_exit_group);
-        mBtnExitGroup.setVisibility(View.VISIBLE);
-
-        RelativeLayout rlShareCode = (RelativeLayout)findViewById(R.id.group_info_ll_members);
-        rlShareCode.setVisibility(View.VISIBLE);
-        
-
-        TextView tournamentHeading = (TextView) findViewById(R.id.tournaments_tv);
-        tournamentHeading.setVisibility(View.VISIBLE);
-
-
-        if (size == 1) {
-            mBtnMembersCount.setText(String.valueOf(size) + " Member");
-        } else {
-            mBtnMembersCount.setText(String.valueOf(size) + " Members");
-        }
+//        mBtnMembersCount = (Button) findViewById(R.id.group_info_btn_edit_members);
+//
+//        mBtnExitGroup= (Button) findViewById(R.id.group_info_exit_group);
+//        mBtnExitGroup.setVisibility(View.VISIBLE);
+//
+//        RelativeLayout rlShareCode = (RelativeLayout)findViewById(R.id.group_info_ll_members);
+//        rlShareCode.setVisibility(View.VISIBLE);
+//
+//
+//        TextView tournamentHeading = (TextView) findViewById(R.id.tournaments_tv);
+//        tournamentHeading.setVisibility(View.VISIBLE);
+//
+//
+//        if (size == 1) {
+//            mBtnMembersCount.setText(String.valueOf(size) + " Member");
+//        } else {
+//            mBtnMembersCount.setText(String.valueOf(size) + " Members");
+//        }
     }
 
     @Override
@@ -188,9 +198,9 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     @Override
     public void setGroupCode(String groupCode) {
-        CustomButton groupCodebtn = (CustomButton) findViewById(R.id.group_info_ll_share);
-        groupCodebtn.setVisibility(View.VISIBLE);
-        groupCodebtn.setTag(groupCode);
+//        CustomButton groupCodebtn = (CustomButton) findViewById(R.id.group_info_ll_share);
+//        groupCodebtn.setVisibility(View.VISIBLE);
+//        groupCodebtn.setTag(groupCode);
     }
 
     @Override
@@ -321,4 +331,57 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }
+
+    @Override
+    public void initMyPosition(GroupInfo groupInfo) {
+
+        mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
+        mpagerAdapter = getAdapter(groupInfo);
+        mViewPager.setAdapter(mpagerAdapter);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                NostragamusAnalytics.getInstance().trackUserProfile(Constants.AnalyticsActions.TABS,
+                        mViewPager.getAdapter().getPageTitle(position).toString());
+
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
+        tabLayout.setupWithViewPager(mViewPager);
+
+        LinearLayout linearLayout = (LinearLayout)tabLayout.getChildAt(0);
+        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setColor(getContext().getResources().getColor(R.color.profile_tab_line_color));
+        drawable.setSize(1, 1);
+        linearLayout.setDividerPadding(10);
+        linearLayout.setDividerDrawable(drawable);
+
+    }
+
+    private ViewPagerAdapter getAdapter(GroupInfo groupInfo) {
+        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        if (groupInfo.getMembers().size()==1){
+            pagerAdapter.addFragment(MembersFragment.newInstance(String.valueOf(groupInfo.getId())),
+                    groupInfo.getMembers().size()+ "\n Member");
+        }else {
+            pagerAdapter.addFragment(MembersFragment.newInstance(String.valueOf(groupInfo.getId())),
+                    groupInfo.getMembers().size()+ "\n Members");
+        }
+
+            pagerAdapter.addFragment(GroupSelectionFragment.newInstance(String.valueOf(groupInfo.getId())),
+                    groupInfo.getFollowedTournaments().size()+"\n Tournaments");
+
+        return pagerAdapter;
+    }
+
 }

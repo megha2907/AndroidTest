@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import com.jeeva.android.View;
 
+import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
+
 /**
  * Created by Jeeva on 12/6/16.
  */
@@ -36,4 +38,6 @@ public interface GroupInfoView extends View {
     void navigateToAllGroups();
 
     void navigateToHomeActivity();
+
+    void initMyPosition(GroupInfo groupInfo);
 }

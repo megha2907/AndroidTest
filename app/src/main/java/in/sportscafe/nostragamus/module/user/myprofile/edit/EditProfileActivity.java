@@ -40,6 +40,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.common.ImageHandler;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;

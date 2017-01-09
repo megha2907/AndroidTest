@@ -108,11 +108,11 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             mNotificationTv.setSelected(false);
             mProfileTv.setSelected(true);
 
-            mProfileRl.setBackgroundColor(Color.BLACK);
-            mProfileRl.getBackground().setAlpha(40);
-
-            mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
-            mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+//            mProfileRl.setBackgroundColor(Color.BLACK);
+//            mProfileRl.getBackground().setAlpha(40);
+//
+//            mHomeRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
+//            mNotificationRl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMedium));
 
             loadFragment(new ProfileFragment());
         }

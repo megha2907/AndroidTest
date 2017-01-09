@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.HmImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -53,11 +54,7 @@ public class GroupTournamentAdapter extends Adapter<TournamentFeedInfo, GroupTou
         TournamentFeedInfo tournamentInfo = getItem(position);
         holder.mPosition = position;
         holder.mTvTournamentName.setText(tournamentInfo.getTournamentName());
-        Picasso.with(mcon)
-                .load(tournamentInfo.getTournamentPhoto())
-                .placeholder(R.drawable.placeholder_icon)
-                .into(holder.mIvTournamentImage);
-
+        holder.mIvTournamentImage.setImageUrl(tournamentInfo.getTournamentPhoto());
         holder.mTvSport.setText(tournamentInfo.getSportsName());
 
     }
@@ -70,7 +67,7 @@ public class GroupTournamentAdapter extends Adapter<TournamentFeedInfo, GroupTou
 
         View mMainView;
         TextView mTvTournamentName;
-        ImageView mIvTournamentImage;
+        HmImageView mIvTournamentImage;
         TextView mTvSport;
 
 
@@ -78,7 +75,7 @@ public class GroupTournamentAdapter extends Adapter<TournamentFeedInfo, GroupTou
             super(V);
             mMainView = V;
             mTvTournamentName = (TextView) V.findViewById(R.id.group_sport_row_tv_tournament_name);
-            mIvTournamentImage = (ImageView) V.findViewById(R.id.group_sport_row_image_tournament);
+            mIvTournamentImage = (HmImageView) V.findViewById(R.id.group_sport_row_image_tournament);
             mTvSport = (TextView) V.findViewById(R.id.group_sport_row_tv_sport_name);
 
         }

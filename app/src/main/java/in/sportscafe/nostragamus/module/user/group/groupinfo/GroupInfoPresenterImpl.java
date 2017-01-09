@@ -39,7 +39,6 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
         mGroupInfoView.setGroupName(bundle.getString(BundleKeys.GROUP_NAME));
         mGroupInfoView.showProgressbar();
         mGroupInfoModel.init(bundle);
-
     }
 
 
@@ -48,8 +47,9 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
         mGroupInfoView.setGroupName(groupInfo.getName());
         mGroupInfoView.setGroupIcon(groupInfo.getPhoto());
         mGroupInfoView.setMembersSize(mGroupInfoModel.getMembersCount());
-        mGroupInfoView.setAdapter(mGroupInfoModel.getAdapter(mGroupInfoView.getContext()));
+       // mGroupInfoView.setAdapter(mGroupInfoModel.getAdapter(mGroupInfoView.getContext()));
         mGroupInfoView.setGroupCode(groupInfo.getGroupCode());
+        mGroupInfoView.initMyPosition(groupInfo);
 
 //        if(mGroupInfoModel.amAdmin()) {
 //            mGroupInfoView.showDeleteGroup();
