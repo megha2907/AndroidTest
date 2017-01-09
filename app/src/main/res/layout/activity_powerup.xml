@@ -43,7 +43,7 @@
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginLeft="@dimen/dp_70"
         android:layout_marginRight="@dimen/dp_70"
-        app:typeface="lato_medium"
+        app:typeface="lato_regular"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp_20"
         android:visibility="gone"

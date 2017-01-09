@@ -14,6 +14,7 @@ import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GrpNameUpdateModelImpl;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GrpTournamentUpdateModelImpl;
+import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectedAdapter;
 import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
@@ -59,6 +60,24 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
 
     }
 
+
+
+    @Override
+    public void updateGroupMembers(){
+
+        String myId = NostragamusDataHandler.getInstance().getUserId();
+        List<GroupPerson> groupMembers = mGroupInfo.getMembers();
+
+        for (GroupPerson groupPerson : groupMembers) {
+            if (myId.compareTo(groupPerson.getId().toString()) == 0
+                    && groupPerson.isAdmin()) {
+                mAdmin = true;
+                break;
+            }
+        }
+
+
+    }
 
     private void getAllTournamentsfromServer() {
 
@@ -162,8 +181,8 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
     public GrpTournamentSelectionAdapter getAdapter(Context context) {
 
         getAllTournamentsfromServer();
-        List<TournamentFeedInfo> followedTournaments = mGroupInfo.getFollowedTournaments();
 
+        List<TournamentFeedInfo> followedTournaments = mGroupInfo.getFollowedTournaments();
         List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
         for (TournamentFeedInfo tournamentInfo : followedTournaments) {
             mFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
@@ -184,11 +203,11 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
 
         });
 
-        if(amAdmin()) {
-            this.mGrpTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
-        } else {
-            this.mGrpTournamentSelectionAdapter.addAll(followedTournaments);
-        }
+//        if(amAdmin()) {
+//            this.mGrpTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
+//        } else {
+//            this.mGrpTournamentSelectionAdapter.addAll(followedTournaments);
+//        }
         return mGrpTournamentSelectionAdapter;
     }
 

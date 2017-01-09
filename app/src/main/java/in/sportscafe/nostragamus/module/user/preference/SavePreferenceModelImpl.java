@@ -31,8 +31,7 @@ public class SavePreferenceModelImpl {
     }
 
     private void callPreferenceApi(final List<Integer> selectedSports) {
-        PreferenceRequest preferenceRequest = new PreferenceRequest(
-                NostragamusDataHandler.getInstance().getUserId());
+        PreferenceRequest preferenceRequest = new PreferenceRequest();
         preferenceRequest.setSportPreferences(selectedSports);
 
         MyWebService.getInstance().savePreferenceRequest(preferenceRequest).enqueue(

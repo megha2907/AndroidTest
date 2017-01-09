@@ -7,24 +7,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class UpdateUserRequest {
 
-    @JsonProperty("user_id")
-    private String userId;
 
     @JsonProperty("user_photo")
     private String userPhoto;
 
     @JsonProperty("user_nick")
     private String userNickName;
-
-    @JsonProperty("user_id")
-    public String getUserId() {
-        return userId;
-    }
-
-    @JsonProperty("user_id")
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     @JsonProperty("user_photo")
     public String getUserPhoto() {

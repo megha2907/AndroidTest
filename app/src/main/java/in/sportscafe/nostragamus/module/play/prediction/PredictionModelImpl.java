@@ -174,7 +174,6 @@ public class PredictionModelImpl implements PredictionModel,
         else if(powerup.equals("player_poll"))
         {
             AudiencePollRequest audiencePollRequest = new AudiencePollRequest();
-            audiencePollRequest.setUserId(NostragamusDataHandler.getInstance().getUserId());
             audiencePollRequest.setQuestionId(mTopQuestion.getQuestionId());
             callAudiencePollApi(audiencePollRequest);
         }
