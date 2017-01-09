@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
@@ -34,6 +33,7 @@ import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.MyResultsTimelineActivity;
+import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.settings.SettingsActivity;
 import in.sportscafe.nostragamus.module.user.badges.BadgeActivity;
 import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
@@ -41,6 +41,7 @@ import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUpActivity;
@@ -113,7 +114,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         findViewById(R.id.profile_btn_edit).setOnClickListener(this);
         findViewById(R.id.profile_btn_logout).setOnClickListener(this);
         //findViewById(R.id.profile_groups_parent).setOnClickListener(this);
-        findViewById(R.id.profile_ll_points_parent).setOnClickListener(this);
+//        findViewById(R.id.profile_ll_points_parent).setOnClickListener(this);
         //findViewById(R.id.profile_ll_powerups_parent).setOnClickListener(this);
         //findViewById(R.id.profile_ll_sports_followed_parent).setOnClickListener(this);
         //findViewById(R.id.profile_ll_badge_parent).setOnClickListener(this);
@@ -336,9 +337,10 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
 
     @Override
-    public void initMyPosition(LbSummary lbSummary) {
+    public void initMyPosition(UserInfo userInfo, LbSummary lbSummary) {
         mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
-        mpagerAdapter = getAdapter(lbSummary);
+        mViewPager.setOffscreenPageLimit(5);
+        mpagerAdapter = getAdapter(userInfo, lbSummary);
         mViewPager.setAdapter(mpagerAdapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -377,7 +379,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 //        for (int i = 0; i < tabLayout.getTabCount(); i++) {
 //            TabLayout.Tab tab = tabLayout.getTabAt(i);
 //            RelativeLayout relativeLayout = (RelativeLayout)
-//                    LayoutInflater.from(getContext()).inflate(R.layout.inflater_profile_tab_layout, tabLayout, false);
+//                    LayoutInflater.from(isThreadAlive()).inflate(R.layout.inflater_profile_tab_layout, tabLayout, false);
 //
 //            TextView tabTextView = (TextView) relativeLayout.findViewById(R.id.tab_title);
 //            tabTextView.setText(tab.getText());
@@ -387,8 +389,10 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     }
 
-    private ViewPagerAdapter getAdapter(LbSummary lbSummary) {
+    private ViewPagerAdapter getAdapter(UserInfo userInfo, LbSummary lbSummary) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        pagerAdapter.addFragment(TimelineFragment.newInstance(userInfo.getId() + ""),
+                userInfo.getTotalMatchesPlayed() + "\n Matches");
         pagerAdapter.addFragment(PowerUpFragment.newInstance(), powerUpsCount+"\n Powerups");
         pagerAdapter.addFragment(AllGroupsFragment.newInstance(), groupsCount+ "\n Groups");
         pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), sportsFollowed + " \n Sports");

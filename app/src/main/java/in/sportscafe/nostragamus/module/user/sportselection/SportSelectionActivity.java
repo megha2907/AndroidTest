@@ -59,7 +59,9 @@ public class SportSelectionActivity extends NostragamusActivity implements Sport
 
     @Override
     public void navigateToHome() {
-        startActivity(new Intent(this, HomeActivity.class));
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
         finish();
     }
 

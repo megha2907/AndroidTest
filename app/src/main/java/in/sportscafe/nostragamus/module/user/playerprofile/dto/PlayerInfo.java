@@ -52,7 +52,8 @@ public class PlayerInfo implements Serializable{
     @JsonProperty("groups")
     private List<MutualGroups> mutualGroups;
 
-
+    @JsonProperty("count_matches")
+    private Integer totalMatchesPlayed = 0;
 
     /**
      * @return The id
@@ -179,4 +180,13 @@ public class PlayerInfo implements Serializable{
         this.mutualGroups = mutualGroups;
     }
 
+    @JsonProperty("count_matches")
+    public Integer getTotalMatchesPlayed() {
+        return totalMatchesPlayed;
+    }
+
+    @JsonProperty("count_matches")
+    public void setTotalMatchesPlayed(Integer totalMatchesPlayed) {
+        this.totalMatchesPlayed = totalMatchesPlayed;
+    }
 }

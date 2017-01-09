@@ -109,6 +109,7 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
             if (playerId.equals(NostragamusDataHandler.getInstance().getUserId())){
 
                 Intent homeintent = new Intent(v.getContext(), HomeActivity.class);
+                homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 homeintent.putExtra("group", "openprofile");
                 v.getContext().startActivity(homeintent);
 

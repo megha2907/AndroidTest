@@ -176,7 +176,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             holder.mTvResultWait.setVisibility(View.GONE);
 
             holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
-            holder.mBtnMatchPoints.setTag(match);
+            holder.mRlMatchPoints.setTag(match);
             holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
 
             if (null != match.getWinnerPartyId()) {
@@ -347,7 +347,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
 
             mBtnPlayMatch.setOnClickListener(this);
-            mBtnMatchPoints.setOnClickListener(this);
+            mRlMatchPoints.setOnClickListener(this);
             mTvResultWait.setOnClickListener(this);
         }
 
@@ -367,7 +367,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
                     mcon.startActivity(intent);
                     break;
 
-                case R.id.schedule_row_btn_points:
+                case R.id.rl_points:
 
                     Match match2 = (Match) view.getTag();
                     Bundle mBundle2 = new Bundle();

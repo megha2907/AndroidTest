@@ -47,7 +47,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
         mGroupInfoView.setGroupName(groupInfo.getName());
         mGroupInfoView.setGroupIcon(groupInfo.getPhoto());
         mGroupInfoView.setMembersSize(mGroupInfoModel.getMembersCount());
-       // mGroupInfoView.setAdapter(mGroupInfoModel.getAdapter(mGroupInfoView.getContext()));
+       // mGroupInfoView.setAdapter(mGroupInfoModel.getAdapter(mGroupInfoView.isThreadAlive()));
         mGroupInfoView.setGroupCode(groupInfo.getGroupCode());
         mGroupInfoView.initMyPosition(groupInfo);
 

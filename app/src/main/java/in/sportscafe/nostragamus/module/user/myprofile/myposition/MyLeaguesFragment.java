@@ -115,7 +115,7 @@ public class MyLeaguesFragment extends NostragamusFragment implements MyGroupPos
 //            LinearLayout llMyPositionParent = (LinearLayout) convertView.findViewById(R.id.league_row_ll_positions);
 //            for (RankSummary rankSummary : ranks) {
 //                rankSummary.setGroupId(groupSummary.getGroupId());
-//                llMyPositionParent.addView(new MyPositionLayout(getContext(), rankSummary, this));
+//                llMyPositionParent.addView(new MyPositionLayout(isThreadAlive(), rankSummary, this));
 //            }
 //        }
         return convertView;

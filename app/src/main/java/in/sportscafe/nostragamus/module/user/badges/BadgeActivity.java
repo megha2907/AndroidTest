@@ -70,6 +70,7 @@ public class BadgeActivity extends NostragamusActivity implements BadgeView{
 
     private void gotoHomeActivity() {
         Intent homeintent = new Intent(this, HomeActivity.class);
+        homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         homeintent.putExtra("badges", "openprofile");
         startActivity(homeintent);
         finish();

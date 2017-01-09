@@ -54,6 +54,9 @@ public class UserInfo {
     @JsonProperty("info")
     private PowerUpInfo powerUpInfo;
 
+    @JsonProperty("count_matches")
+    private Integer totalMatchesPlayed = 0;
+
     /**
      * @return The id
      */
@@ -241,6 +244,16 @@ public class UserInfo {
     public List<String> getBadges()
     {
         return powerUpInfo.getBadges();
+    }
+
+    @JsonProperty("count_matches")
+    public Integer getTotalMatchesPlayed() {
+        return totalMatchesPlayed;
+    }
+
+    @JsonProperty("count_matches")
+    public void setTotalMatchesPlayed(Integer totalMatchesPlayed) {
+        this.totalMatchesPlayed = totalMatchesPlayed;
     }
 
 }

@@ -200,6 +200,7 @@
             android:id="@+id/rl_points"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:layout_below="@+id/schedule_row_v_party_a"
             android:layout_marginTop="@dimen/feed_screen_spacing"
             android:visibility="gone">
@@ -212,9 +213,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_20"
                 android:background="@drawable/btn_points_bg"
-                android:onClick="onClick"
                 android:padding="@dimen/dp_0"
                 android:text="60 Points"
+                android:clickable="false"
                 android:textAllCaps="false"
                 android:textColor="@color/linecolor"
                 android:textSize="@dimen/dp_14"
