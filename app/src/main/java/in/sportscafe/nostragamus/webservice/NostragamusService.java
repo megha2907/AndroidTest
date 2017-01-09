@@ -148,7 +148,7 @@ public interface NostragamusService {
     @POST("v1/game/users/poll")
     Call<AudiencePollResponse> getAudiencePoll(@Body AudiencePollRequest request);
 
-    @GET("v2/user/refreshToken")
+    @GET("v2/game/refreshToken")
     Call<JwtToken> refreshAccessToken();
 
     @GET("/v2/game/applyResultsPowerups")

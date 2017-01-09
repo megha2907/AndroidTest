@@ -12,9 +12,8 @@ import android.view.ViewGroup;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.SpacesItemDecoration;
+import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectedAdapter;
 import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectionAdapter;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by deepanshi on 1/6/17.
@@ -25,6 +24,8 @@ public class GroupSelectionFragment extends NostragamusFragment implements Group
     private static final String KEY_GROUP_ID = "groupId";
 
     private RecyclerView mRvSportSelection;
+
+    private RecyclerView mRvUnselectedTournaments;
 
     private GroupSelectionPresenter mGroupSelectionPresenter;
 
@@ -50,19 +51,26 @@ public class GroupSelectionFragment extends NostragamusFragment implements Group
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_rcv);
+        this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_selected_tournaments_rcv);
         this.mRvSportSelection.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
         this.mRvSportSelection.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         this.mRvSportSelection.setHasFixedSize(true);
+
+        this.mRvUnselectedTournaments = (RecyclerView) findViewById(R.id.group_info_unselected_tournaments_rcv);
+        this.mRvUnselectedTournaments.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.dp_10)));
+        this.mRvUnselectedTournaments.setLayoutManager(
+                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        this.mRvUnselectedTournaments.setHasFixedSize(true);
 
         this.mGroupSelectionPresenter = GroupSelectionPresenterImpl.newInstance(this);
         this.mGroupSelectionPresenter.onGetGroupSelectionInfo(getArguments().getLong(KEY_GROUP_ID));
     }
 
     @Override
-    public void setAdapter(GrpTournamentSelectionAdapter adapter) {
+    public void setAdapter(GrpTournamentSelectedAdapter adapter) {
         this.mRvSportSelection.setAdapter(adapter);
+        this.mRvUnselectedTournaments.setAdapter(adapter);
     }
 
     @Override

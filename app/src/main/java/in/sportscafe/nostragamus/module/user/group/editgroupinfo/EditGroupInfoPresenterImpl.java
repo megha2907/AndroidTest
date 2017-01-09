@@ -102,7 +102,6 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
 
     @Override
     public void onGetGroupSummarySuccess(GroupInfo groupInfo) {
-        Log.i("inside","onGetGroupSummarySuccess");
         mGroupInfoView.dismissProgressbar();
         mGroupInfoModel.updateGroupMembers();
         mGroupInfoModel.updateTournaments();

@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.user.group.groupselection;
 
 import com.jeeva.android.View;
 
+import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectedAdapter;
 import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 
 /**
@@ -10,7 +11,7 @@ import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelecti
 
 public interface GroupSelectionView extends View {
 
-    void setAdapter(GrpTournamentSelectionAdapter adapter);
+    void setAdapter(GrpTournamentSelectedAdapter adapter);
 
     void setSuccessResult();
 }

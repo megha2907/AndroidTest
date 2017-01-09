@@ -261,11 +261,11 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
 
         });
 
-        if(amAdmin()) {
-            this.mGrpTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
-        } else {
-            this.mGrpTournamentSelectionAdapter.addAll(followedTournaments);
-        }
+//        if(amAdmin()) {
+//            this.mGrpTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
+//        } else {
+//            this.mGrpTournamentSelectionAdapter.addAll(followedTournaments);
+//        }
         return mGrpTournamentSelectionAdapter;
     }
 

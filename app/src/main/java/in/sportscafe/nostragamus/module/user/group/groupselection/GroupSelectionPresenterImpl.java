@@ -82,8 +82,8 @@ public class GroupSelectionPresenterImpl implements GroupSelectionPresenter, Gro
 
     @Override
     public void onGetGroupSummarySuccess(GroupInfo groupInfo) {
-        Log.i("inside", "onGetGroupSummarySuccess");
         mGroupSelectionView.dismissProgressbar();
+        mGroupSelectionModel.updateGroupMembers();
         mGroupSelectionModel.updateTournaments();
         onUpdateGroupSelectionInfo(groupInfo);
     }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -78,8 +80,6 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     private LinearLayoutManager mlinearLayoutManagerVertical;
 
-    private Toolbar mtoolbar;
-
     private Bundle mBundle;
 
     private ViewPagerAdapter mpagerAdapter;
@@ -96,21 +96,17 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_info);
 
-        initToolBar();
+        findViewById(R.id.group_info_ll_share).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mGroupInfoPresenter.onLongClickShareCode();
+                showMessage("Group code is copied to the clipboard");
+                return true;
+            }
+        });
 
-//        findViewById(R.id.group_info_ll_share).setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {
-//                mGroupInfoPresenter.onLongClickShareCode();
-//                showMessage("Group code is copied to the clipboard");
-//                return true;
-//            }
-//        });
+        findViewById(R.id.group_info_ll_share).setOnClickListener(this);
 
-//        this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_rcv);
-//        this.mRvSportSelection.setLayoutManager(new LinearLayoutManager(this,
-//                LinearLayoutManager.VERTICAL, false));
-//        this.mRvSportSelection.setHasFixedSize(true);
         this.mGroupInfoPresenter = GroupInfoPresenterImpl.newInstance(this);
         this.mGroupInfoPresenter.onCreateGroupInfo(getIntent().getExtras());
 
@@ -131,9 +127,9 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 //            case R.id.group_info_btn_edit_members:
 //                mGroupInfoPresenter.onClickMembers();
 //                break;
-//            case R.id.group_info_ll_share:
-//                mGroupInfoPresenter.onClickShareCode();
-//                break;
+            case R.id.group_info_ll_share:
+                mGroupInfoPresenter.onClickShareCode();
+                break;
 //            case R.id.group_info_exit_group:
 //                mGroupInfoPresenter.onLeaveGroup();
 //                break;
@@ -153,6 +149,8 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     @Override
     public void setGroupName(String groupName) {
+
+        mTvGroupName =(TextView)findViewById(R.id.group_name);
 
         if (null == groupName || groupName.isEmpty()) {
             mTvGroupName.setText("Group Info");
@@ -198,9 +196,9 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     @Override
     public void setGroupCode(String groupCode) {
-//        CustomButton groupCodebtn = (CustomButton) findViewById(R.id.group_info_ll_share);
-//        groupCodebtn.setVisibility(View.VISIBLE);
-//        groupCodebtn.setTag(groupCode);
+        FloatingActionButton groupCodebtn = (FloatingActionButton) findViewById(R.id.group_info_ll_share);
+        groupCodebtn.setVisibility(View.VISIBLE);
+        groupCodebtn.setTag(groupCode);
     }
 
     @Override
@@ -257,23 +255,6 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         onBackPressed();
     }
 
-    public void initToolBar() {
-        mtoolbar = (Toolbar) findViewById(R.id.group_info_toolbar);
-//        mIBtnEditProfile = (ImageButton) mtoolbar.findViewById(R.id.edit_profile_btn);
-        mTvGroupName = (TextView) mtoolbar.findViewById(R.id.group_name);
-        setSupportActionBar(mtoolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
-        mtoolbar.setNavigationOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        navigateToHomeActivity();
-                    }
-                }
-
-        );
-    }
 
     @Override
     public void onBackPressed() {
@@ -370,6 +351,9 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     private ViewPagerAdapter getAdapter(GroupInfo groupInfo) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
+        pagerAdapter.addFragment(GroupSelectionFragment.newInstance(String.valueOf(groupInfo.getId())),
+                groupInfo.getFollowedTournaments().size()+"\n Tournaments");
+
         if (groupInfo.getMembers().size()==1){
             pagerAdapter.addFragment(MembersFragment.newInstance(String.valueOf(groupInfo.getId())),
                     groupInfo.getMembers().size()+ "\n Member");
@@ -378,8 +362,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
                     groupInfo.getMembers().size()+ "\n Members");
         }
 
-            pagerAdapter.addFragment(GroupSelectionFragment.newInstance(String.valueOf(groupInfo.getId())),
-                    groupInfo.getFollowedTournaments().size()+"\n Tournaments");
+
 
         return pagerAdapter;
     }
