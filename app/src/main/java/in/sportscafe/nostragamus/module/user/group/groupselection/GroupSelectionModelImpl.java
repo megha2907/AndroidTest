@@ -34,7 +34,7 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
 
     private GroupInfo mGroupInfo;
 
-    private GrpTournamentSelectedAdapter mGrpTournamentSelectionAdapter;
+    private GrpTournamentSelectionAdapter mGrpTournamentSelectionAdapter;
 
     private OnGroupSelectionModelListener mGroupInfoModelListener;
 
@@ -178,7 +178,7 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
     }
 
     @Override
-    public GrpTournamentSelectedAdapter getAdapter(Context context) {
+    public GrpTournamentSelectionAdapter getAdapter(Context context) {
 
         getAllTournamentsfromServer();
 
@@ -188,8 +188,8 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
             mFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
         }
 
-        this.mGrpTournamentSelectionAdapter = new GrpTournamentSelectedAdapter(context,
-                mFollowedTournamentsIdList, new GrpTournamentSelectedAdapter.OnGrpTournamentChangedListener() {
+        this.mGrpTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context,
+                mFollowedTournamentsIdList, new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
 
             @Override
             public boolean onGrpTournamentSelected(boolean addNewTournament, int existingTournamentCount) {

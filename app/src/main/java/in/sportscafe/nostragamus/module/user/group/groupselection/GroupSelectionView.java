@@ -11,7 +11,7 @@ import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelecti
 
 public interface GroupSelectionView extends View {
 
-    void setAdapter(GrpTournamentSelectedAdapter adapter);
+    void setAdapter(GrpTournamentSelectionAdapter adapter);
 
     void setSuccessResult();
 }

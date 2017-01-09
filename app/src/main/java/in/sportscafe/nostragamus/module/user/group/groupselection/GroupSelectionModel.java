@@ -23,7 +23,7 @@ public interface GroupSelectionModel {
 
     GroupInfo getGroupInfo();
 
-    GrpTournamentSelectedAdapter getAdapter(Context context);
+    GrpTournamentSelectionAdapter getAdapter(Context context);
 
     void refreshGroupInfo();
 }

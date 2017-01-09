@@ -68,7 +68,7 @@ public class GroupSelectionFragment extends NostragamusFragment implements Group
     }
 
     @Override
-    public void setAdapter(GrpTournamentSelectedAdapter adapter) {
+    public void setAdapter(GrpTournamentSelectionAdapter adapter) {
         this.mRvSportSelection.setAdapter(adapter);
         this.mRvUnselectedTournaments.setAdapter(adapter);
     }

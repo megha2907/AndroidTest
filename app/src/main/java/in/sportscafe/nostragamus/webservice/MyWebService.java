@@ -71,7 +71,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<UserInfoResponse> getUserInfoRequest(String userId) {
-        return mNostragamusService.getUserInfo(userId);
+        return mNostragamusService.getUserInfo();
     }
 
     public Call<PlayerInfoResponse> getPlayerInfoRequest(String playerId) {
@@ -87,27 +87,27 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<UserSports> getUserSportsRequest() {
-        return mNostragamusService.getUserSports(NostragamusDataHandler.getInstance().getUserId());
+        return mNostragamusService.getUserSports();
     }
 
     public Call<MatchesResponse> getMatches(Integer tourId) {
-        return mNostragamusService.getMatches(NostragamusDataHandler.getInstance().getUserId(),tourId);
+        return mNostragamusService.getMatches(tourId);
     }
 
     public Call<MatchesResponse> getMatchResults(Boolean isAttempted , Boolean WithoutCommentary) {
-        return mNostragamusService.getMatchResults(NostragamusDataHandler.getInstance().getUserId(),isAttempted,WithoutCommentary);
+        return mNostragamusService.getMatchResults(isAttempted,WithoutCommentary);
     }
 
     public Call<QuestionsResponse> getAllQuestions(Integer matchId) {
-        return mNostragamusService.getQuestions(NostragamusDataHandler.getInstance().getUserId(),matchId);
+        return mNostragamusService.getQuestions(matchId);
     }
 
     public Call<TournamentsResponse> getTournaments(boolean isCurrent, boolean groupbySport) {
-        return mNostragamusService.getTournaments(NostragamusDataHandler.getInstance().getUserId(),isCurrent,groupbySport);
+        return mNostragamusService.getTournaments(isCurrent,groupbySport);
     }
 
     public Call<TournamentFeedResponse> getCurrentTournaments(boolean isCurrent) {
-        return mNostragamusService.getCurrentTournaments(NostragamusDataHandler.getInstance().getUserId(),isCurrent);
+        return mNostragamusService.getCurrentTournaments(isCurrent);
     }
 
     public Call<ApiResponse> getPostAnswerRequest(Answer answer) {
@@ -115,13 +115,12 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<GroupsDetailResponse> getGrpInfoRequest() {
-        return mNostragamusService.getGroupDetails(NostragamusDataHandler.getInstance().getUserId());
+        return mNostragamusService.getGroupDetails();
     }
 
     public Call<JoinGroupResponse> getJoinGroupRequest(String groupCode) {
         AddGroupRequest memberRequest = new AddGroupRequest();
         memberRequest.setGroupCode(groupCode);
-        memberRequest.setUserId(NostragamusDataHandler.getInstance().getUserId());
         return mNostragamusService.joinGroup(memberRequest);
     }
 
@@ -146,12 +145,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<MyResultsResponse> getMyResultsRequest(Integer MatchId) {
-        return mNostragamusService.getMyResults(NostragamusDataHandler.getInstance().getUserId(),
-                MatchId);
-    }
+        return mNostragamusService.getMyResults(MatchId);}
 
     public Call<LbSummaryResponse> getLeaderBoardSummary() {
-        return mNostragamusService.getLeaderBoardSummary(NostragamusDataHandler.getInstance().getUserId());
+        return mNostragamusService.getLeaderBoardSummary();
     }
 
     public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Integer sportsId,Integer groupId,
@@ -172,11 +169,11 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<GroupSummaryResponse> getGroupSummaryRequest(Integer groupId) {
-        return mNostragamusService.getGroupSummary(NostragamusDataHandler.getInstance().getUserId(),groupId);
+        return mNostragamusService.getGroupSummary(groupId);
     }
 
     public Call<AllGroupsResponse> getAllGroupsRequest() {
-        return mNostragamusService.getAllGroups(NostragamusDataHandler.getInstance().getUserId());
+        return mNostragamusService.getAllGroups();
     }
 
     public Call<Result> getUploadPhotoRequest(File file, String filepath, String filename) {

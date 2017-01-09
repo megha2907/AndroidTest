@@ -58,29 +58,29 @@ public interface NostragamusService {
     @GET("v1/game/sports")
     Call<AllSports> getAllSports();
 
-    @GET("v1/game/users/{userId}/sports")
-    Call<UserSports> getUserSports(@Path("userId") String userId);
+    @GET("v1/game/users/sports")
+    Call<UserSports> getUserSports();
 
-    @GET("v1/game/users/{userId}")
-    Call<UserInfoResponse> getUserInfo(@Path("userId") String userId);
+    @GET("v1/game/users")
+    Call<UserInfoResponse> getUserInfo();
 
-    @GET("v1/game/users/{userId}/matches")
-    Call<MatchesResponse> getMatches(@Path("userId") String userId,@Query("tour_id") int tourId);
+    @GET("v1/game/users/matches")
+    Call<MatchesResponse> getMatches(@Query("tour_id") int tourId);
 
-    @GET("v1/game/users/{userId}/matches")
-    Call<MatchesResponse> getMatchResults(@Path("userId") String userId,@Query("is_attempted") Boolean isAttempted ,@Query("without_commentary") Boolean WithoutCommentary);
+    @GET("v1/game/users/matches")
+    Call<MatchesResponse> getMatchResults(@Query("is_attempted") Boolean isAttempted ,@Query("without_commentary") Boolean WithoutCommentary);
 
-    @GET("v1/game/users/{userId}/questions")
-    Call<QuestionsResponse> getQuestions(@Path("userId") String userId,@Query("match_id") int matchId);
+    @GET("v1/game/users/questions")
+    Call<QuestionsResponse> getQuestions(@Query("match_id") int matchId);
 
-    @GET("v1/game/users/{user_id}/tournaments")
-    Call<TournamentsResponse> getTournaments(@Path("user_id") String userId, @Query("is_current") boolean isCurrent, @Query("group_by_sport") boolean groupbySport);
+    @GET("v1/game/users/tournaments")
+    Call<TournamentsResponse> getTournaments(@Query("is_current") boolean isCurrent, @Query("group_by_sport") boolean groupbySport);
 
-    @GET("v1/game/users/{user_id}/tournaments")
-    Call<TournamentFeedResponse> getCurrentTournaments(@Path("user_id") String userId, @Query("is_current") boolean isCurrent);
+    @GET("v1/game/users/tournaments")
+    Call<TournamentFeedResponse> getCurrentTournaments(@Query("is_current") boolean isCurrent);
 
-    @GET("v1/game/users/{userId}/groups/info")
-    Call<GroupsDetailResponse> getGroupDetails(@Path("userId") String userId);
+    @GET("v1/game/users/groups/info")
+    Call<GroupsDetailResponse> getGroupDetails();
 
     @POST("/v2/game/login")
     Call<LogInResponse> loginUser(@Body LogInRequest logInRequest);
@@ -116,11 +116,11 @@ public interface NostragamusService {
     @HTTP(method = "DELETE", path = "v1/game/users/groups", hasBody = true)
     Call<ApiResponse> leaveGroup(@Body MembersRequest request);
 
-    @GET("v1/game/users/{userId}/results")
-    Call<MyResultsResponse> getMyResults(@Path("userId") String userId,@Query("match_id") Integer matchId);
+    @GET("v1/game/users/results")
+    Call<MyResultsResponse> getMyResults(@Query("match_id") Integer matchId);
 
-    @GET("v1/game/users/{userId}/leaderboard/summary")
-    Call<LbSummaryResponse> getLeaderBoardSummary(@Path("userId") String userId);
+    @GET("v1/game/users/leaderboard/summary")
+    Call<LbSummaryResponse> getLeaderBoardSummary();
 
     @GET("v1/game/leaderboard/detail")
     Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("sports_id") Integer sportId,
@@ -136,11 +136,11 @@ public interface NostragamusService {
     @PUT("v1/game/groups")
     Call<ApiResponse> updateGroupName(@Body GroupNameUpdateRequest request);
 
-    @GET("v1/game/users/{user_id}/groups/{group_id}/info")
-    Call<GroupSummaryResponse> getGroupSummary(@Path("user_id") String userId,@Path("group_id") Integer groupId);
+    @GET("v1/game/users/groups/{group_id}/info")
+    Call<GroupSummaryResponse> getGroupSummary(@Path("group_id") Integer groupId);
 
-    @GET("v1/game/users/{user_id}/groups")
-    Call<AllGroupsResponse> getAllGroups(@Path("user_id") String userId);
+    @GET("v1/game/users/groups")
+    Call<AllGroupsResponse> getAllGroups();
 
     @GET("v1/setting/getSettingsBody")
     Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId);
