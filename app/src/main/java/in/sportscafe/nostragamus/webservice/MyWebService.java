@@ -206,4 +206,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<ReplayPowerupResponse> getFlipPowerup(String powerupId, Integer matchId, Integer questionId) {
         return mNostragamusService.getFlipPowerup(powerupId,matchId,questionId);
     }
+
+    public Call<MatchesResponse> getTimelinesRequest(String playerUserId, int skip, int limit) {
+        return mNostragamusService.getTimelines(playerUserId, skip, limit);
+    }
 }

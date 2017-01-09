@@ -1,9 +1,13 @@
 package in.sportscafe.nostragamus.module.play.myresultstimeline;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.R;
+
+import static com.google.android.gms.analytics.internal.zzy.m;
 
 
 /**
@@ -25,8 +29,11 @@ public class MyResultsTimelinePresenterImpl implements MyResultsTimelinePresente
     }
 
     @Override
-    public void onCreateFeed() {
-        myResultsTimelineView.setAdapter(myResultsTimelineModel.getAdapter());
+    public void onCreateFeed(Bundle bundle) {
+        myResultsTimelineModel.init(bundle);
+        myResultsTimelineView.setAdapter(myResultsTimelineModel.getAdapter(myResultsTimelineView.getContext()));
+
+        getFeedDetails();
     }
 
     @Override
@@ -34,47 +41,64 @@ public class MyResultsTimelinePresenterImpl implements MyResultsTimelinePresente
         getFeedDetails();
     }
 
+    @Override
+    public void onTimelineScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        myResultsTimelineModel.checkPagination(firstVisibleItem, visibleItemCount, totalItemCount);
+    }
+
     private void getFeedDetails() {
+        myResultsTimelineView.showProgressbar();
         myResultsTimelineModel.getFeeds();
     }
 
     @Override
-    public void onSuccessFeeds(MyResultsTimelineAdapter myResultsTimelineAdapter, int movePosition) {
-        myResultsTimelineView.moveAdapterPosition(movePosition);
-        myResultsTimelineView.dismissSwipeRefresh();
+    public void onSuccessFeeds() {
+//        myResultsTimelineView.moveAdapterPosition(movePosition);
+        myResultsTimelineView.dismissProgressbar();
     }
 
     @Override
     public void onFailedFeeds(String message) {
-        myResultsTimelineView.dismissSwipeRefresh();
+        myResultsTimelineView.dismissProgressbar();
         showAlertMessage(message);
     }
 
     @Override
     public void onNoInternet() {
-        myResultsTimelineView.dismissSwipeRefresh();
+        myResultsTimelineView.dismissProgressbar();
         showAlertMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
     public void onEmpty() {
-        myResultsTimelineView.dismissSwipeRefresh();
-        myResultsTimelineView.showInAppMessage(Constants.Alerts.NO_RESULTS);
+        myResultsTimelineView.dismissProgressbar();
+        if (myResultsTimelineModel.isAdapterEmpty()) {
+            myResultsTimelineView.showInAppMessage(Constants.Alerts.NO_RESULTS);
+        }
     }
 
     @Override
-    public Context getContext() {
-        return myResultsTimelineView.getContext();
+    public boolean isThreadAlive() {
+        return null != myResultsTimelineView.getContext();
+    }
+
+    @Override
+    public void onAllTimelinesFetched() {
+
     }
 
     private void showAlertMessage(String message) {
-        myResultsTimelineView.showMessage(message, "RETRY",
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getFeedDetails();
-                    }
-                });
+        if (myResultsTimelineModel.isAdapterEmpty()) {
+            myResultsTimelineView.showMessage(message, "RETRY",
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            getFeedDetails();
+                        }
+                    });
+        } else {
+            myResultsTimelineView.showMessage(message);
+        }
     }
 
 
