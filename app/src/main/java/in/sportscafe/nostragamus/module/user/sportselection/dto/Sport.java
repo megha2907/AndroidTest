@@ -38,7 +38,7 @@ public class Sport implements Serializable {
 
     @JsonIgnore
     public String getImageUrl() {
-        return ImageConfig.getSportImageUrl(100, 100, name.toLowerCase() + "w");
+        return ImageConfig.getSportImageUrl(100, 100, name.replace(" ", "").toLowerCase() + "w");
         /*switch (id) {
             case 6:
                 return R.drawable.badminton_menu_icon;

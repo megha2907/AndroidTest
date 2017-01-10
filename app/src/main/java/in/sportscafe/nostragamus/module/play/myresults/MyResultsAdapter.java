@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +21,8 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.common.Adapter;
@@ -27,6 +30,9 @@ import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryActivity;
+import in.sportscafe.nostragamus.module.user.otheranswers.OthersAnswersActivity;
+
+import static in.sportscafe.nostragamus.R.id.view;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -430,16 +436,14 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
 
     private View getLeaderBoardView(ViewGroup parent,Match match) {
-
-
         View leaderboardView = getLayoutInflater().inflate(R.layout.inflater_leaderboard_btn_row, parent, false);
 
-        CustomButton leaderBoardbtn = (CustomButton) leaderboardView.findViewById(R.id.leaderboard_btn);
-        leaderBoardbtn.setOnClickListener(this);
-
-        TextView tvcommentary = (TextView) leaderboardView.findViewById(R.id.schedule_row_tv_match_result_commentary);
+        leaderboardView.findViewById(R.id.my_results_ll_others_answers).setOnClickListener(this);
+        leaderboardView.findViewById(R.id.my_results_ll_leaderboards).setOnClickListener(this);
+        leaderboardView.findViewById(R.id.my_results_ll_share_score).setOnClickListener(this);
 
         if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()){
+            TextView tvcommentary = (TextView) leaderboardView.findViewById(R.id.schedule_row_tv_match_result_commentary);
             tvcommentary.setVisibility(View.VISIBLE);
             tvcommentary.setText(match.getResultdesc());
         }
@@ -448,17 +452,32 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     }
 
     @Override
-    public void onClick(View v) {
-
-        onclickLeaderBoardbtn(v);
-
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.my_results_ll_others_answers:
+                navigateToOthersAnswers(view.getContext());
+                break;
+            case R.id.my_results_ll_leaderboards:
+                navigateToLeaderboards(view.getContext());
+                break;
+            case R.id.my_results_ll_share_score:
+                broadcastShareScore(view.getContext());
+                break;
+        }
     }
 
-    private void onclickLeaderBoardbtn(View view) {
+    private void navigateToOthersAnswers(Context context) {
+        Intent intent =  new Intent(context, OthersAnswersActivity.class);
+        context.startActivity(intent);
+    }
 
-        Intent intent =  new Intent(view.getContext(), LeaderBoardSummaryActivity.class);
-        view.getContext().startActivity(intent);
+    private void navigateToLeaderboards(Context context) {
+        Intent intent =  new Intent(context, LeaderBoardSummaryActivity.class);
+        context.startActivity(intent);
+    }
 
+    private void broadcastShareScore(Context context) {
+        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(IntentActions.ACTION_SHARE_SCORE));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

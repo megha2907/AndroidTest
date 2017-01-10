@@ -127,6 +127,7 @@ public interface Constants {
         String FLIP_POWERUP_OVER = "You have used all your flip powerups!";
         String REPLAY_POWERUP_OVER = "You have used all your replay powerups!";
         String ADD_PHOTO_FAILED = "Adding photo failed! Try again!";
+        String FUZZY_SEARCH_FAILED = "Something went wrong! Please try again!";
     }
 
     interface BundleKeys {
@@ -183,7 +184,8 @@ public interface Constants {
         String YYYY_MMM_DD = "yyyy/MMM/dd";
     }
 
-    interface BroadcastKeys {
+    interface IntentActions {
+        String ACTION_SHARE_SCORE = "in.sportscafe.nostragamus.intent.action.SHARE_SCORE";
     }
 
     interface LeaderBoardPeriods {
