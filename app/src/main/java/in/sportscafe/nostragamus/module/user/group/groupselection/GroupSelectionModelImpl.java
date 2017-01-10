@@ -100,7 +100,7 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
                                     }
 
                                     mNostragamusDataHandler.setTournaments(oldTournamentList);
-                                    mGrpTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
+                                    mGrpTournamentSelectionAdapter.addAll(mNostragamusDataHandler.getTournaments());
 
                                     mGroupInfoModelListener.onSuccessTournamentInfo();
                                 }
@@ -183,13 +183,24 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
         getAllTournamentsfromServer();
 
         List<TournamentFeedInfo> followedTournaments = mGroupInfo.getFollowedTournaments();
-        List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
+
+        final List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
         for (TournamentFeedInfo tournamentInfo : followedTournaments) {
             mFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
         }
 
+
+        List<TournamentFeedInfo> unfollowedTournaments = mNostragamusDataHandler.getTournaments();
+        unfollowedTournaments.removeAll(followedTournaments);
+
+        final List<Integer> mUnFollowedTournamentsIdList = new ArrayList<>();
+        for (TournamentFeedInfo tournamentInfo : unfollowedTournaments) {
+            mUnFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
+        }
+
+
         this.mGrpTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context,
-                mFollowedTournamentsIdList, new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
+                mFollowedTournamentsIdList,mUnFollowedTournamentsIdList, new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
 
             @Override
             public boolean onGrpTournamentSelected(boolean addNewTournament, int existingTournamentCount) {
@@ -199,6 +210,22 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
             @Override
             public void onGrpTournamentChanged(List<Integer> selectedTournamentsIdList) {
                 mGrpTournamentUpdateModel.updateGrpTournaments(selectedTournamentsIdList);
+            }
+
+            @Override
+            public void removeSelectedTournament(int adapterPosition) {
+                mGrpTournamentSelectionAdapter.getSelectedTournamentList().remove(adapterPosition);
+                mGrpTournamentSelectionAdapter.getUnSelectedTournamentList().add(adapterPosition,0);
+                mGrpTournamentSelectionAdapter.notifyItemRemoved(adapterPosition);
+                mGrpTournamentSelectionAdapter.notifyItemInserted(adapterPosition);
+            }
+
+            @Override
+            public void addSelectedTournament(int adapterPosition) {
+                mGrpTournamentSelectionAdapter.getUnSelectedTournamentList().remove(adapterPosition);
+                mGrpTournamentSelectionAdapter.getSelectedTournamentList().add(adapterPosition,0);
+                mGrpTournamentSelectionAdapter.notifyItemRemoved(adapterPosition);
+                mGrpTournamentSelectionAdapter.notifyItemInserted(adapterPosition);
             }
 
         });

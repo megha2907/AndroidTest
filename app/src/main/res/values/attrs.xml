@@ -12,28 +12,24 @@
         <attr name="unselected_typeface" format="enum">
             <enum name="roboto_light" value="0" />
             <enum name="roboto" value="1" />
-            <enum name="roboto_condensed" value="3" />
-            <enum name="roboto_condensed_bold" value="4" />
-            <enum name="lato_bold" value="6" />
-            <enum name="lato_hairline" value="7" />
-            <enum name="lato_light" value="9" />
-            <enum name="lato_regular" value="11" />
-            <enum name="lato_semibold" value="12" />
-            <enum name="lato_thin" value="13" />
-            <enum name="lato_black" value="14" />
+            <enum name="roboto_condensed" value="2" />
+            <enum name="roboto_condensed_bold" value="3" />
+            <enum name="lato_bold" value="4" />
+            <enum name="lato_hairline" value="5" />
+            <enum name="lato_light" value="6" />
+            <enum name="lato_regular" value="7" />
+            <enum name="lato_black" value="8" />
         </attr>
         <attr name="selected_typeface" format="enum">
             <enum name="roboto_light" value="0" />
-            <enum name="roboto" value="2" />
-            <enum name="roboto_condensed" value="3" />
-            <enum name="roboto_condensed_bold" value="4" />
-            <enum name="lato_bold" value="6" />
-            <enum name="lato_hairline" value="7" />
-            <enum name="lato_light" value="9" />
-            <enum name="lato_regular" value="11" />
-            <enum name="lato_semibold" value="12" />
-            <enum name="lato_thin" value="13" />
-            <enum name="lato_black" value="14" />
+            <enum name="roboto" value="1" />
+            <enum name="roboto_condensed" value="2" />
+            <enum name="roboto_condensed_bold" value="3" />
+            <enum name="lato_bold" value="4" />
+            <enum name="lato_hairline" value="5" />
+            <enum name="lato_light" value="6" />
+            <enum name="lato_regular" value="7" />
+            <enum name="lato_black" value="8" />
         </attr>
         <attr name="unselected_textSize" format="dimension" />
         <attr name="selected_textSize" format="dimension" />
@@ -60,16 +56,14 @@
 
     <attr name="typeface" format="enum">
         <enum name="roboto_light" value="0" />
-        <enum name="roboto" value="2" />
-        <enum name="roboto_condensed" value="3" />
-        <enum name="roboto_condensed_bold" value="4" />
-        <enum name="lato_bold" value="6" />
-        <enum name="lato_hairline" value="7" />
-        <enum name="lato_light" value="9" />
-        <enum name="lato_regular" value="11" />
-        <enum name="lato_semibold" value="12" />
-        <enum name="lato_thin" value="13" />
-        <enum name="lato_black" value="14" />
+        <enum name="roboto" value="1" />
+        <enum name="roboto_condensed" value="2" />
+        <enum name="roboto_condensed_bold" value="3" />
+        <enum name="lato_bold" value="4" />
+        <enum name="lato_hairline" value="5" />
+        <enum name="lato_light" value="6" />
+        <enum name="lato_regular" value="7" />
+        <enum name="lato_black" value="8" />
     </attr>
 
     <declare-styleable name="MaxHeightScrollView">

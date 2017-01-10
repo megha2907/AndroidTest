@@ -49,7 +49,7 @@ public class NewGroupModelImpl implements NewGroupModel {
 
         getAllTournamentsfromServer();
 
-        this.mTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context, new ArrayList<Integer>());
+        this.mTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context, new ArrayList<Integer>(),null);
         return mTournamentSelectionAdapter;
     }
 

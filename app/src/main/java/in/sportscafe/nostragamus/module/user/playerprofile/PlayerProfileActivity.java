@@ -76,7 +76,7 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
 
     @Override
     public void setName(String name) {
-        Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Medium.ttf");
+        Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Regular.ttf");
         TextView tvName=(TextView) findViewById(R.id.player_profile_tv_title);
         tvName.setText(name);
         tvName.setTypeface(tftitle);

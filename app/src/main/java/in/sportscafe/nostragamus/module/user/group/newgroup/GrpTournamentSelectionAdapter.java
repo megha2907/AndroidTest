@@ -27,19 +27,23 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, G
 
     private List<Integer> mSelectedTournamentsIdList;
 
+    private List<Integer> mUnSelectedTournamentsIdList;
+
     private OnGrpTournamentChangedListener mChangedListener;
 
-    public GrpTournamentSelectionAdapter(Context context, List<Integer> SelectedTournamentsIdList) {
+    public GrpTournamentSelectionAdapter(Context context, List<Integer> SelectedTournamentsIdList,List<Integer> UnSelectedTournamentsIdList) {
         super(context);
         mcontext=context;
         this.mSelectedTournamentsIdList = SelectedTournamentsIdList;
+        this.mUnSelectedTournamentsIdList = UnSelectedTournamentsIdList;
     }
 
-    public GrpTournamentSelectionAdapter(Context context, List<Integer> SelectedTournamentsIdList,
+    public GrpTournamentSelectionAdapter(Context context, List<Integer> SelectedTournamentsIdList,List<Integer> UnSelectedTournamentsIdList,
                                          OnGrpTournamentChangedListener listener) {
         super(context);
         mcontext=context;
         this.mSelectedTournamentsIdList = SelectedTournamentsIdList;
+        this.mUnSelectedTournamentsIdList=UnSelectedTournamentsIdList;
         this.mChangedListener = listener;
     }
 
@@ -118,18 +122,31 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, G
         @Override
         public void onClick(View view) {
             boolean removeOldTournament = mSelectedTournamentsIdList.contains(id);
-            if(null == mChangedListener
-                    || mChangedListener.onGrpTournamentSelected(!removeOldTournament, mSelectedTournamentsIdList.size())) {
-                if (removeOldTournament) {
-                    mSelectedTournamentsIdList.remove(mSelectedTournamentsIdList.indexOf(id));
-                } else {
-                    mSelectedTournamentsIdList.add(id);
-                }
-                notifyItemChanged(getAdapterPosition());
 
-                if(null != mChangedListener) {
-                    mChangedListener.onGrpTournamentChanged(mSelectedTournamentsIdList);
+            if (null == mUnSelectedTournamentsIdList) {
+                if (null == mChangedListener
+                        || mChangedListener.onGrpTournamentSelected(!removeOldTournament, mSelectedTournamentsIdList.size())) {
+                    if (removeOldTournament) {
+                        mSelectedTournamentsIdList.remove(mSelectedTournamentsIdList.indexOf(id));
+
+                    } else {
+                        mSelectedTournamentsIdList.add(id);
+                    }
+                    notifyItemChanged(getAdapterPosition());
+
+                    if (null != mChangedListener) {
+                        mChangedListener.onGrpTournamentChanged(mSelectedTournamentsIdList);
+                    }
                 }
+            }else {
+
+                if (removeOldTournament){
+                    mChangedListener.removeSelectedTournament(getAdapterPosition());
+                }else {
+                    mChangedListener.addSelectedTournament(getAdapterPosition());
+                }
+
+
             }
         }
     }
@@ -138,10 +155,30 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, G
         return mSelectedTournamentsIdList;
     }
 
+    public List<Integer> getUnSelectedTournamentList() {
+        return mUnSelectedTournamentsIdList;
+    }
+
     public interface OnGrpTournamentChangedListener {
 
         boolean onGrpTournamentSelected(boolean addNewTournament, int existingTournamentCount);
 
         void onGrpTournamentChanged(List<Integer> selectedTournamentsIdList);
+
+        void removeSelectedTournament(int adapterPosition);
+
+        void addSelectedTournament(int adapterPosition);
     }
+
+    public void addTournament(int adapterPosition){
+        mUnSelectedTournamentsIdList.add(adapterPosition, 0);
+        notifyItemInserted(adapterPosition);
+    }
+
+    public void removeTournament(int adapterPosition){
+        mSelectedTournamentsIdList.remove(adapterPosition);
+        notifyItemRemoved(adapterPosition);
+    }
+
+
 }
