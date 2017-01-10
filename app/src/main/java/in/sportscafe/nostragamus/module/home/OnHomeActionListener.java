@@ -9,5 +9,4 @@ public interface OnHomeActionListener {
 
     void onClickPlay();
 
-    void getUserInfoFromServer();
 }

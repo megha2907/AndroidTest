@@ -129,7 +129,6 @@ public class Nostragamus extends Application {
                 "fonts/roboto/RobotoCondensed-Bold.ttf",
                 "fonts/lato/Lato-Bold.ttf", "fonts/lato/Lato-Hairline.ttf",
                 "fonts/lato/Lato-Light.ttf", "fonts/lato/Lato-Regular.ttf",
-                "fonts/lato/Lato-Semibold.ttf", "fonts/lato/Lato-Thin.ttf",
                 "fonts/lato/Lato-Black.ttf"
         );
     }

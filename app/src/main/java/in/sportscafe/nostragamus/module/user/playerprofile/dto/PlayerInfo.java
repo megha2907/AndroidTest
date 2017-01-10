@@ -49,7 +49,7 @@ public class PlayerInfo implements Serializable{
     @JsonProperty("groups")
     private List<GroupSummary> groups = new ArrayList<>();
 
-    @JsonProperty("groups")
+    @JsonProperty("mutual_groups")
     private List<MutualGroups> mutualGroups;
 
     @JsonProperty("count_matches")
@@ -170,12 +170,12 @@ public class PlayerInfo implements Serializable{
     }
 
 
-    @JsonProperty("groups")
+    @JsonProperty("mutual_groups")
     public List<MutualGroups> getMutualGroups() {
         return mutualGroups;
     }
 
-    @JsonProperty("groups")
+    @JsonProperty("mutual_groups")
     public void setMutualGroups(List<MutualGroups> mutualGroups) {
         this.mutualGroups = mutualGroups;
     }

@@ -246,8 +246,19 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
             mFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
         }
 
+
+        List<TournamentFeedInfo> unfollowedTournaments = mNostragamusDataHandler.getTournaments();
+        unfollowedTournaments.removeAll(followedTournaments);
+
+        List<Integer> mUnFollowedTournamentsIdList = new ArrayList<>();
+        for (TournamentFeedInfo tournamentInfo : unfollowedTournaments) {
+            mUnFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
+        }
+
+
+
         this.mGrpTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context,
-                mFollowedTournamentsIdList, new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
+                mFollowedTournamentsIdList, mUnFollowedTournamentsIdList,new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
 
             @Override
             public boolean onGrpTournamentSelected(boolean addNewTournament, int existingTournamentCount) {
@@ -257,6 +268,16 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
             @Override
             public void onGrpTournamentChanged(List<Integer> selectedTournamentsIdList) {
                 mGrpTournamentUpdateModel.updateGrpTournaments(selectedTournamentsIdList);
+            }
+
+            @Override
+            public void removeSelectedTournament(int adapterPosition) {
+
+            }
+
+            @Override
+            public void addSelectedTournament(int adapterPosition) {
+
             }
 
         });
