@@ -1,63 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/match_result_commentary_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/black">
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/schedule_row_tv_match_result_commentary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_5"
+        android:gravity="left"
+        android:text="lkjasdfjkljadsfkjaskdfjalskdfj"
+        android:textColor="@color/silver_chalice"
+        android:textColorLink="#29abe2"
+        android:textSize="@dimen/dp_13"
+        android:visibility="visible"
+        app:typeface="lato_regular" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:alpha="0.4"
+        android:background="@color/white" />
 
     <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/match_result_commentary_ll"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dp_80"
+        android:orientation="horizontal">
 
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/schedule_row_tv_match_result_commentary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_3"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_gravity="left"
-            android:textColor="@color/silver_chalice"
-            android:layout_marginRight="@dimen/dp_10"
-            app:typeface="lato_regular"
-            android:gravity="left"
-            android:textSize="@dimen/dp_13"
-            android:visibility="gone"
-            android:textColorLink="#29abe2"
-            />
+        <LinearLayout
+            android:id="@+id/my_results_ll_others_answers"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@drawable/others_answers_blue_icon" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="Other's Answers"
+                android:textColor="@color/btn_powerup_screen_color"
+                android:textSize="@dimen/dp_14"
+                app:typeface="roboto_condensed" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/my_results_ll_leaderboards"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@drawable/leaderboard_blue_icon" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="Leaderboards"
+                android:textColor="@color/btn_powerup_screen_color"
+                android:textSize="@dimen/dp_14"
+                app:typeface="roboto_condensed" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/my_results_ll_share_score"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@drawable/share_blue_icon" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="Share Score"
+                android:textColor="@color/btn_powerup_screen_color"
+                android:textSize="@dimen/dp_14"
+                app:typeface="roboto_condensed" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/leaderboard_row_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/match_result_commentary_ll"
-        >
-
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/leaderboard_btn"
-            android:layout_width="@dimen/blue_button_width"
-            android:layout_height="@dimen/blue_button_height"
-            android:background="@drawable/powerup_screen_btn_bg"
-            android:onClick="onClick"
-            android:text="View Leaderboard"
-            android:textAllCaps="false"
-            android:textSize="@dimen/blue_button_text"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
-            app:typeface="roboto_condensed"
-            android:textColor="@color/white"
-            android:paddingBottom="@dimen/dp_3"
-            />
-
-    </RelativeLayout>
-
-
-
-</RelativeLayout>
+</LinearLayout>

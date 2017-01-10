@@ -368,12 +368,10 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {
-
     }
 
     @Override
     public void onFailedGetUpdateUserInfo(String message) {
-
     }
 
     public interface OnMyResultsModelListener {

@@ -56,7 +56,7 @@ public class UserInfoModelImpl  {
                                     NostragamusDataHandler.getInstance().setNumberofFlipPowerups(updatedUserInfo.getPowerUps().get("answer_flip"));
                                 }
                                 NostragamusDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
-                                NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());
+                                NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getTotalGroups());
                             }
 
                         }else {
