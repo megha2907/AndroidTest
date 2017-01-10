@@ -183,7 +183,6 @@ public class LogInModelImpl implements LogInModel {
         nostragamusDataHandler.setNumberofReplayPowerups(userInfo.getPowerUps().get("match_replay"));
         nostragamusDataHandler.setNumberofFlipPowerups(userInfo.getPowerUps().get("answer_flip"));
         nostragamusDataHandler.setNumberofBadges(userInfo.getBadges().size());
-        userInfo.setPoints(100L);
         Log.i("powerups", String.valueOf(userInfo.getPowerUps().get("2x")));
         nostragamusDataHandler.setUserInfo(userInfo);
 

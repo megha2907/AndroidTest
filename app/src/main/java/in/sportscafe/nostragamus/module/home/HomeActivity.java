@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
@@ -321,7 +319,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                                         NostragamusDataHandler.getInstance().setNumberofFlipPowerups(updatedUserInfo.getPowerUps().get("answer_flip"));
                                     }
                                     NostragamusDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
-                                    NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());
+                                    NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getTotalGroups());
                                 }
                             }
                         }

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by deepanshi on 10/8/16.
  */
-public class PowerUpInfo {
+public class InfoDetails {
 
     @JsonProperty("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();

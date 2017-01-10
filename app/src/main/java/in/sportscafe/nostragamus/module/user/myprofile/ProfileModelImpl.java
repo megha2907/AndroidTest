@@ -55,7 +55,7 @@ public class ProfileModelImpl implements ProfileModel {
                                     NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(updatedUserInfo.getPowerUps().get("player_poll"));
                                    // NostragamusDataHandler.getInstance().setNumberofReplayPowerups(updatedUserInfo.getPowerUps().get("match_replay"));
                                     NostragamusDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
-                                    NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());
+                                    NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getTotalGroups());
                                 }
 
                                 getLbSummary(updatedUserInfo);

@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 
 /**
@@ -46,7 +45,7 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
         PlayerInfo playerInfo = mProfileModel.getPlayerInfo();
         mProfileView.setName(playerInfo.getUserNickName());
         mProfileView.setProfileImage(playerInfo.getPhoto());
-       // mProfileView.setPoints(playerInfo.getPoints());
+       // mProfileView.setTotalPoints(playerInfo.getTotalPoints());
         mProfileView.setBadgesCount(playerInfo.getBadges().size(),playerInfo.getBadges());
 
         if (null == playerInfo.getMutualGroups()) {
@@ -56,7 +55,7 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
             Log.i("inside","elsemutualgroups"+playerInfo.getMutualGroups());
             mProfileView.setGroupsCount(playerInfo.getMutualGroups().size());
         }
-        mProfileView.setPoints(playerInfo.getPoints());
+        mProfileView.setPoints(playerInfo.getTotalPoints());
         mProfileView.initMyPosition(playerInfo);
     }
 

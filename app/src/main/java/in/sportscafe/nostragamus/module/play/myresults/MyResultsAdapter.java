@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -453,14 +454,20 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.my_results_ll_others_answers:
+                navigateToOthersAnswers(view.getContext());
                 break;
             case R.id.my_results_ll_leaderboards:
                 navigateToLeaderboards(view.getContext());
                 break;
             case R.id.my_results_ll_share_score:
-
+                broadcastShareScore(view.getContext());
                 break;
         }
+    }
+
+    private void navigateToOthersAnswers(Context context) {
+        Intent intent =  new Intent(context, LeaderBoardSummaryActivity.class);
+        context.startActivity(intent);
     }
 
     private void navigateToLeaderboards(Context context) {
@@ -469,7 +476,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     }
 
     private void broadcastShareScore(Context context) {
-        context.sendBroadcast(new Intent(IntentActions.ACTION_SHARE_SCORE));
+        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(IntentActions.ACTION_SHARE_SCORE));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
