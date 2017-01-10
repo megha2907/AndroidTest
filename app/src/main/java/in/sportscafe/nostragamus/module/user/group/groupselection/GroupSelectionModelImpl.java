@@ -1,20 +1,17 @@
 package in.sportscafe.nostragamus.module.user.group.groupselection;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GrpNameUpdateModelImpl;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GrpTournamentUpdateModelImpl;
-import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectedAdapter;
 import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectionAdapter;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
@@ -34,7 +31,9 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
 
     private GroupInfo mGroupInfo;
 
-    private GrpTournamentSelectionAdapter mGrpTournamentSelectionAdapter;
+    private GrpTournamentSelectionAdapter mGrpTournamentSelectedAdapter;
+
+    private GrpTournamentSelectionAdapter mGrpTournamentUnSelectedAdapter;
 
     private OnGroupSelectionModelListener mGroupInfoModelListener;
 
@@ -79,7 +78,8 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
 
     }
 
-    private void getAllTournamentsfromServer() {
+    @Override
+    public void getAllTournamentsfromServer() {
 
         if(Nostragamus.getInstance().hasNetworkConnection()) {
             MyWebService.getInstance().getCurrentTournaments(true).enqueue(
@@ -88,23 +88,7 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
                         public void onResponse(Call<TournamentFeedResponse> call, Response<TournamentFeedResponse> response) {
                             super.onResponse(call, response);
                             if(response.isSuccessful()) {
-                                List<TournamentFeedInfo> newTournamentInfo = response.body().getTournamentInfos();
-
-                                if(null != newTournamentInfo && newTournamentInfo.size() > 0) {
-                                    List<TournamentFeedInfo> oldTournamentList = mNostragamusDataHandler.getTournaments();
-                                    oldTournamentList.clear();
-                                    for (TournamentFeedInfo tournamentInfo : newTournamentInfo) {
-                                        if(!oldTournamentList.contains(tournamentInfo)) {
-                                            oldTournamentList.add(tournamentInfo);
-                                        }
-                                    }
-
-                                    mNostragamusDataHandler.setTournaments(oldTournamentList);
-                                    mGrpTournamentSelectionAdapter.addAll(mNostragamusDataHandler.getTournaments());
-
-                                    mGroupInfoModelListener.onSuccessTournamentInfo();
-                                }
-
+                                mGroupInfoModelListener.onSuccessTournamentInfo(response.body().getTournamentInfos());
                             } else {
                                 mGroupInfoModelListener.onFailed(response.message());
                             }
@@ -116,7 +100,6 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
         }
 
     }
-
 
     @Override
     public boolean amAdmin() {
@@ -178,67 +161,85 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
     }
 
     @Override
-    public GrpTournamentSelectionAdapter getAdapter(Context context) {
-
-        getAllTournamentsfromServer();
-
+    public GrpTournamentSelectionAdapter getSelectedAdapter(Context context,List<TournamentFeedInfo> tournamentInfos) {
         List<TournamentFeedInfo> followedTournaments = mGroupInfo.getFollowedTournaments();
 
-        final List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
+        List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
         for (TournamentFeedInfo tournamentInfo : followedTournaments) {
             mFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
         }
 
 
-        List<TournamentFeedInfo> unfollowedTournaments = mNostragamusDataHandler.getTournaments();
-        unfollowedTournaments.removeAll(followedTournaments);
-
-        final List<Integer> mUnFollowedTournamentsIdList = new ArrayList<>();
-        for (TournamentFeedInfo tournamentInfo : unfollowedTournaments) {
-            mUnFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
+        for (TournamentFeedInfo tournamentInfo : followedTournaments) {
+            tournamentInfos.remove(tournamentInfo);
         }
 
+//        TournamentFeedInfo selectedLabel = new TournamentFeedInfo();
+//        selectedLabel.setTournamentId(-1);
 
-        this.mGrpTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context,
-                mFollowedTournamentsIdList,mUnFollowedTournamentsIdList, new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
+        TournamentFeedInfo unselectedLabel = new TournamentFeedInfo();
+        unselectedLabel.setTournamentId(-2);
 
-            @Override
-            public boolean onGrpTournamentSelected(boolean addNewTournament, int existingTournamentCount) {
-                return mAdmin && (addNewTournament || existingTournamentCount > 1);
-            }
+        this.mGrpTournamentSelectedAdapter = new GrpTournamentSelectionAdapter(context, mFollowedTournamentsIdList,
+                new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
+                    @Override
+                    public void onGrpTournamentClicked(int position, boolean selected) {
+                        TournamentFeedInfo feedInfo = mGrpTournamentSelectedAdapter.getItem(position);
 
-            @Override
-            public void onGrpTournamentChanged(List<Integer> selectedTournamentsIdList) {
-                mGrpTournamentUpdateModel.updateGrpTournaments(selectedTournamentsIdList);
-            }
+                        mGrpTournamentSelectedAdapter.updateSelectionList(feedInfo);
+                        mGrpTournamentSelectedAdapter.remove(position);
 
-            @Override
-            public void removeSelectedTournament(int adapterPosition) {
-                mGrpTournamentSelectionAdapter.getSelectedTournamentList().remove(adapterPosition);
-                mGrpTournamentSelectionAdapter.getUnSelectedTournamentList().add(adapterPosition,0);
-                mGrpTournamentSelectionAdapter.notifyItemRemoved(adapterPosition);
-                mGrpTournamentSelectionAdapter.notifyItemInserted(adapterPosition);
-            }
+                        if(selected) {
+                            mGrpTournamentSelectedAdapter.add(feedInfo);
+                        } else {
+                            mGrpTournamentSelectedAdapter.add(feedInfo, 1);
+                        }
+                        mGrpTournamentSelectedAdapter.notifyItemChanged(position);
+                        mGroupInfoModelListener.setTournamentsCount(mGrpTournamentSelectedAdapter.getSelectedTournamentList().size());
 
-            @Override
-            public void addSelectedTournament(int adapterPosition) {
-                mGrpTournamentSelectionAdapter.getUnSelectedTournamentList().remove(adapterPosition);
-                mGrpTournamentSelectionAdapter.getSelectedTournamentList().add(adapterPosition,0);
-                mGrpTournamentSelectionAdapter.notifyItemRemoved(adapterPosition);
-                mGrpTournamentSelectionAdapter.notifyItemInserted(adapterPosition);
-            }
 
-        });
+                    }
+                });
+       // mGrpTournamentSelectedAdapter.add(selectedLabel);
+        mGrpTournamentSelectedAdapter.addAll(followedTournaments);
+        mGrpTournamentSelectedAdapter.add(unselectedLabel);
+        mGrpTournamentSelectedAdapter.addAll(tournamentInfos);
+
+        mGroupInfoModelListener.setTournamentsCount(mGrpTournamentSelectedAdapter.getSelectedTournamentList().size());
 
 //        if(amAdmin()) {
 //            this.mGrpTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
 //        } else {
 //            this.mGrpTournamentSelectionAdapter.addAll(followedTournaments);
 //        }
-        return mGrpTournamentSelectionAdapter;
+        return mGrpTournamentSelectedAdapter;
     }
 
+    @Override
+    public GrpTournamentSelectionAdapter getUnSelectedAdapter(Context context, List<TournamentFeedInfo> tournamentInfos) {
 
+        for (TournamentFeedInfo tournamentInfo : mGroupInfo.getFollowedTournaments()) {
+            tournamentInfos.remove(tournamentInfo);
+        }
+
+        this.mGrpTournamentUnSelectedAdapter = new GrpTournamentSelectionAdapter(context, new ArrayList<Integer>(),
+                new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
+                    @Override
+                    public void onGrpTournamentClicked(int position, boolean selected) {
+                        TournamentFeedInfo feedInfo = mGrpTournamentUnSelectedAdapter.getItem(position);
+                        mGrpTournamentUnSelectedAdapter.remove(position);
+                        mGrpTournamentUnSelectedAdapter.notifyItemRemoved(position);
+
+
+                        mGrpTournamentSelectedAdapter.updateSelectionList(feedInfo);
+                        mGrpTournamentSelectedAdapter.add(feedInfo);
+                        mGrpTournamentSelectedAdapter.notifyDataSetChanged();
+                    }
+                });
+        this.mGrpTournamentUnSelectedAdapter.addAll(tournamentInfos);
+
+        return mGrpTournamentUnSelectedAdapter;
+    }
 
     @Override
     public void refreshGroupInfo() {
@@ -258,8 +259,8 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
 
         void onGetGroupSummaryFailed(String message);
 
-        Context getContext();
+        void onSuccessTournamentInfo(List<TournamentFeedInfo> tournamentInfos);
 
-        void onSuccessTournamentInfo();
+        void setTournamentsCount(int size);
     }
 }

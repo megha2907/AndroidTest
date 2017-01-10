@@ -68,23 +68,8 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
             holder.mTvGroupMembers.setText(String.valueOf(allGroups.getCountGroupMembers())+" Members");
         }
 
-        if (null==allGroups.getGroupPhoto() || allGroups.getGroupPhoto().isEmpty()) {
 
-            holder.mIvGroupImage.setImageDrawable(null);
-            holder.mIvGroupImage.setImageResource(R.drawable.placeholder_icon);
-        }
-          else
-        {
-//            String mUrl = allGroups.getGroupPhoto();
-//            String[] separated = mUrl.split("es3");
-//            separated[4].replace(separated[4],"es3-cfit-s200");
-//            Log.i("imageurlseaparated",separated[4].replace(separated[4],"es3-cfit-s200"));
-
-            Picasso.with(mcon)
-                    .load( allGroups.getGroupPhoto())
-                    .into(holder.mIvGroupImage);
-
-        }
+            holder.mIvGroupImage.setImageUrl(allGroups.getGroupPhoto());
 
     }
 
@@ -98,7 +83,7 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
 
         TextView mTvGroupTournaments;
 
-        ImageView mIvGroupImage;
+        HmImageView mIvGroupImage;
 
 
         public ViewHolder(View V) {
@@ -107,7 +92,7 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
             mTvGroupName = (TextView) V.findViewById(R.id.all_groups_tv_groupName);
             mTvGroupTournaments = (TextView) V.findViewById(R.id.all_groups_tv_GroupTournaments);
             mTvGroupMembers = (TextView) V.findViewById(R.id.all_groups_tv_GroupMembers);
-            mIvGroupImage = (ImageView) V.findViewById(R.id.all_groups_iv_groupImage);
+            mIvGroupImage = (HmImageView) V.findViewById(R.id.all_groups_iv_groupImage);
             V.setOnClickListener(this);
 
 

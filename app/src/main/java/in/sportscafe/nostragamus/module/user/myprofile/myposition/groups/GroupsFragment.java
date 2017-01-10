@@ -19,10 +19,12 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.module.user.group.groupselection.GroupSelectionFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.BaseSummary;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.GroupSummary;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.GroupsTourSummary;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
+import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 
 /**
  * Created by Jeeva on 13/6/16.
@@ -130,4 +132,5 @@ public class GroupsFragment extends NostragamusFragment implements GroupsLayout.
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
 }

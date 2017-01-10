@@ -19,12 +19,12 @@
         >
 
 
-        <ImageView
+        <com.jeeva.android.widgets.HmImageView
             android:id="@+id/all_groups_iv_groupImage"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
             android:adjustViewBounds="true"
-            android:src="@drawable/placeholder_icon"
+            app:defaultImage="@drawable/placeholder_icon"
             android:layout_marginLeft="@dimen/dp_10"
             android:scaleType="fitXY"
             android:layout_centerVertical="true"/>

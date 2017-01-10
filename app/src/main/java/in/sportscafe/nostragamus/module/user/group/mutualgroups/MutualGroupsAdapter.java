@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.HmImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -69,10 +70,7 @@ public class MutualGroupsAdapter extends Adapter<MutualGroups, MutualGroupsAdapt
         }
         else
         {
-            Picasso.with(mcon)
-                    .load( mutualGroups.getGroupPhoto())
-                    .into(holder.mIvGroupImage);
-
+            holder.mIvGroupImage.setImageUrl(mutualGroups.getGroupPhoto());
         }
 
     }
@@ -87,7 +85,7 @@ public class MutualGroupsAdapter extends Adapter<MutualGroups, MutualGroupsAdapt
 
         TextView mTvGroupTournaments;
 
-        ImageView mIvGroupImage;
+        HmImageView mIvGroupImage;
 
 
         public ViewHolder(View V) {
@@ -96,7 +94,7 @@ public class MutualGroupsAdapter extends Adapter<MutualGroups, MutualGroupsAdapt
             mTvGroupName = (TextView) V.findViewById(R.id.all_groups_tv_groupName);
             mTvGroupTournaments = (TextView) V.findViewById(R.id.all_groups_tv_GroupTournaments);
             mTvGroupMembers = (TextView) V.findViewById(R.id.all_groups_tv_GroupMembers);
-            mIvGroupImage = (ImageView) V.findViewById(R.id.all_groups_iv_groupImage);
+            mIvGroupImage = (HmImageView) V.findViewById(R.id.all_groups_iv_groupImage);
             V.setOnClickListener(this);
 
 

@@ -256,31 +256,31 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
         }
 
 
-
-        this.mGrpTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context,
-                mFollowedTournamentsIdList, mUnFollowedTournamentsIdList,new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
-
-            @Override
-            public boolean onGrpTournamentSelected(boolean addNewTournament, int existingTournamentCount) {
-                return mAdmin && (addNewTournament || existingTournamentCount > 1);
-            }
-
-            @Override
-            public void onGrpTournamentChanged(List<Integer> selectedTournamentsIdList) {
-                mGrpTournamentUpdateModel.updateGrpTournaments(selectedTournamentsIdList);
-            }
-
-            @Override
-            public void removeSelectedTournament(int adapterPosition) {
-
-            }
-
-            @Override
-            public void addSelectedTournament(int adapterPosition) {
-
-            }
-
-        });
+//
+//        this.mGrpTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context,
+//                mFollowedTournamentsIdList, new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
+//
+//            @Override
+//            public boolean onGrpTournamentSelected(boolean addNewTournament, int existingTournamentCount) {
+//                return mAdmin && (addNewTournament || existingTournamentCount > 1);
+//            }
+//
+//            @Override
+//            public void onGrpTournamentChanged(List<Integer> selectedTournamentsIdList) {
+//                mGrpTournamentUpdateModel.updateGrpTournaments(selectedTournamentsIdList);
+//            }
+//
+//            @Override
+//            public void removeSelectedTournament(int adapterPosition) {
+//
+//            }
+//
+//            @Override
+//            public void addSelectedTournament(int adapterPosition) {
+//
+//            }
+//
+//        });
 
 //        if(amAdmin()) {
 //            this.mGrpTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());

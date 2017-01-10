@@ -35,7 +35,9 @@ public abstract class Adapter<T, VH extends RecyclerView.ViewHolder> extends Rec
     }
 
     public void addAll(Collection<T> items) {
-        mItems.addAll(items);
+        for (T item : items) {
+            add(item);
+        }
         notifyDataSetChanged();
     }
 

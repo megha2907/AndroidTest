@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/group_label_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SELECTED TOURNAMENTS"
+        android:textColor="@color/white"
+        android:padding="@dimen/dp_10"/>
+
+</LinearLayout>

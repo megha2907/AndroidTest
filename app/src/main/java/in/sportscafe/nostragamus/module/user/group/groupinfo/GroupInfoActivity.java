@@ -52,7 +52,7 @@ import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
  * Created by Jeeva on 12/6/16.
  */
 public class GroupInfoActivity extends NostragamusActivity implements GroupInfoView,
-        View.OnClickListener {
+        View.OnClickListener,GroupSelectionFragment.OnTournamentUpdatedListener {
 
     private static final int CODE_GROUP_INFO = 10;
 
@@ -353,8 +353,8 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     private ViewPagerAdapter getAdapter(GroupInfo groupInfo) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        pagerAdapter.addFragment(GroupSelectionFragment.newInstance(String.valueOf(groupInfo.getId())),
-                groupInfo.getFollowedTournaments().size()+"\n Tournaments");
+        pagerAdapter.addFragment(GroupSelectionFragment.newInstance(String.valueOf(groupInfo.getId()),this),
+               "\n Tournaments");
 
         if (groupInfo.getMembers().size()==1){
             pagerAdapter.addFragment(MembersFragment.newInstance(String.valueOf(groupInfo.getId())),
@@ -369,4 +369,14 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         return pagerAdapter;
     }
 
+    @Override
+    public void setTournamentsCount(int tournamentsCount) {
+
+        if(tournamentsCount==1){
+            mpagerAdapter.updateTitle(0,tournamentsCount+ " \n Tournament");
+        }
+        else {
+            mpagerAdapter.updateTitle(0,tournamentsCount+ " \n Tournaments");
+        }
+    }
 }
