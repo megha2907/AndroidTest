@@ -4,6 +4,8 @@ import android.content.Context;
 
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.user.login.RefreshTokenModelImpl;
+import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
@@ -16,7 +18,7 @@ import retrofit2.Response;
 /**
  * Created by Jeeva on 14/6/16.
  */
-public class ProfileModelImpl implements ProfileModel {
+public class ProfileModelImpl implements ProfileModel , UserInfoModelImpl.OnGetUserInfoModelListener {
 
     private OnProfileModelListener mProfileModelListener;
 
@@ -30,42 +32,12 @@ public class ProfileModelImpl implements ProfileModel {
 
     @Override
     public void getProfileDetails() {
-        getUserInfoFromServer();
+        UserInfoModelImpl.newInstance(this).getUserInfo();
     }
 
     @Override
     public UserInfo getUserInfo() {
         return NostragamusDataHandler.getInstance().getUserInfo();
-    }
-
-    private void getUserInfoFromServer() {
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getUserInfoRequest(NostragamusDataHandler.getInstance().getUserId()).enqueue(
-                    new NostragamusCallBack<UserInfoResponse>() {
-                        @Override
-                        public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
-                            super.onResponse(call, response);
-                            if (response.isSuccessful()) {
-                                UserInfo updatedUserInfo = response.body().getUserInfo();
-
-                                if (null != updatedUserInfo) {
-                                    NostragamusDataHandler.getInstance().setUserInfo(updatedUserInfo);
-                                    NostragamusDataHandler.getInstance().setNumberof2xPowerups(updatedUserInfo.getPowerUps().get("2x"));
-                                    NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(updatedUserInfo.getPowerUps().get("no_negs"));
-                                    NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(updatedUserInfo.getPowerUps().get("player_poll"));
-                                   // NostragamusDataHandler.getInstance().setNumberofReplayPowerups(updatedUserInfo.getPowerUps().get("match_replay"));
-                                    NostragamusDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
-                                    NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getNumberofgroups());
-                                }
-
-                                getLbSummary(updatedUserInfo);
-                            } else {
-                                mProfileModelListener.onGetProfileFailed(response.message());
-                            }
-                        }
-                    }
-            );
-        }
     }
 
     private void getLbSummary(final UserInfo updatedUserInfo) {
@@ -85,6 +57,16 @@ public class ProfileModelImpl implements ProfileModel {
                     }
                 }
         );
+    }
+
+    @Override
+    public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {
+        getLbSummary(updatedUserInfo);
+    }
+
+    @Override
+    public void onFailedGetUpdateUserInfo(String message) {
+        mProfileModelListener.onGetProfileFailed(message);
     }
 
     public interface OnProfileModelListener {
