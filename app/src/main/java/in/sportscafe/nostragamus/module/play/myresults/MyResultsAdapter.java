@@ -30,6 +30,7 @@ import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryActivity;
+import in.sportscafe.nostragamus.module.user.otheranswers.OthersAnswersActivity;
 
 import static in.sportscafe.nostragamus.R.id.view;
 
@@ -466,7 +467,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     }
 
     private void navigateToOthersAnswers(Context context) {
-        Intent intent =  new Intent(context, LeaderBoardSummaryActivity.class);
+        Intent intent =  new Intent(context, OthersAnswersActivity.class);
         context.startActivity(intent);
     }
 
