@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
+import in.sportscafe.nostragamus.module.othersanswers.AnswerPercentage;
+
 /**
  * Created by Jeeva on 27/5/16.
  */
@@ -78,6 +80,9 @@ public class Question implements Serializable {
 
     @JsonIgnore
     private String option2AudPollPer;
+
+    @JsonIgnore
+    private String option3AudPollPer;
 
     /**
      * @return The questionId
@@ -372,6 +377,22 @@ public class Question implements Serializable {
         this.option2AudPollPer = option2AudPollPer;
     }
 
+    @JsonIgnore
+    public String getOption3AudPollPer() {
+        return option3AudPollPer;
+    }
 
+    @JsonIgnore
+    public void setOption3AudPollPer(String option3AudPollPer) {
+        this.option3AudPollPer = option3AudPollPer;
+    }
 
+    @JsonIgnore
+    public void updatePollPercentage(AnswerPercentage answerPercentage) {
+        if(null != answerPercentage) {
+            option1AudPollPer = answerPercentage.getAnswer1() + "%";
+            option2AudPollPer = answerPercentage.getAnswer2() + "%";
+            option3AudPollPer = answerPercentage.getAnswer0() + "%";
+        }
+    }
 }

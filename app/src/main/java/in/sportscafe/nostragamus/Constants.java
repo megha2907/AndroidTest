@@ -128,6 +128,7 @@ public interface Constants {
         String REPLAY_POWERUP_OVER = "You have used all your replay powerups!";
         String ADD_PHOTO_FAILED = "Adding photo failed! Try again!";
         String FUZZY_SEARCH_FAILED = "Something went wrong! Please try again!";
+        String GETTING_OTHERS_ANSWERS_FAILED = "Getting others answers failed! Try again!";
     }
 
     interface BundleKeys {
@@ -161,6 +162,8 @@ public interface Constants {
         String PLAYER_ID = "playerId";
         String ADDED_NEW_IMAGE_PATH = "addedNewImagePath";
         String PLAYER_USER_ID = "playerUserId";
+        String SHOW_ANSWER_PERCENTAGE = "showAnswerPercentage";
+        String MATCH_DETAILS = "matchDetails";
     }
 
     interface ParcelableKeys {
@@ -186,6 +189,7 @@ public interface Constants {
 
     interface IntentActions {
         String ACTION_SHARE_SCORE = "in.sportscafe.nostragamus.intent.action.SHARE_SCORE";
+        String ACTION_FUZZY_PLAYER_CLICK = "in.sportscafe.nostragamus.intent.action.FUZZY_PLAYER_CLICK";
     }
 
     interface LeaderBoardPeriods {

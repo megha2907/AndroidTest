@@ -113,6 +113,34 @@
         android:layout_below="@+id/my_predictions_row_tv_question"
         />
 
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/my_predictions_row_tv_perc_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textColor="@color/textcolorlight"
+        android:textSize="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_1"
+        android:layout_marginRight="@dimen/dp_1"
+        app:typeface="lato_regular"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/my_predictions_row_tv_question"
+        />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/my_predictions_row_tv_perc_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textColor="@color/textcolorlight"
+        android:textSize="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_1"
+        android:layout_marginRight="@dimen/dp_1"
+        app:typeface="lato_regular"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/my_predictions_row_tv_perc_1"
+        />
+
     <View
         android:id="@+id/schedule_row_v_party_a"
         android:layout_width="match_parent"

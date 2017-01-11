@@ -5,13 +5,6 @@ import android.os.Bundle;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.myprofile.ProfileModel;
-import in.sportscafe.nostragamus.module.user.myprofile.ProfileModelImpl;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummaryResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -39,8 +32,8 @@ public class PlayerProfileModelImpl implements PlayerProfileModel {
 
     @Override
     public void getProfileDetails(Bundle bundle) {
-        String playerId = bundle.getString(Constants.BundleKeys.PLAYER_ID);
-        getUserInfoFromServer(playerId);
+        Integer playerId = bundle.getInt(Constants.BundleKeys.PLAYER_ID);
+        getPlayerInfoFromServer(playerId);
     }
 
     @Override
@@ -48,7 +41,8 @@ public class PlayerProfileModelImpl implements PlayerProfileModel {
         return mplayerInfo;
     }
 
-    private void getUserInfoFromServer(String playerId) {
+    @Override
+    public void getPlayerInfoFromServer(Integer playerId) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             MyWebService.getInstance().getPlayerInfoRequest(playerId).enqueue(
                     new NostragamusCallBack<PlayerInfoResponse>() {
@@ -57,7 +51,9 @@ public class PlayerProfileModelImpl implements PlayerProfileModel {
                             super.onResponse(call, response);
                             if (response.isSuccessful()) {
                                 mplayerInfo = response.body().getPlayerInfo();
-                                mProfileModelListener.populatePlayerInfo();
+                                mProfileModelListener.onSuccessPlayerInfo(mplayerInfo);
+                            } else {
+                                mProfileModelListener.onFailedPlayerInfo();
                             }
                         }
                     }
@@ -69,8 +65,8 @@ public class PlayerProfileModelImpl implements PlayerProfileModel {
 
         void onNoInternet();
 
-        Context getContext();
+        void onSuccessPlayerInfo(PlayerInfo playerInfo);
 
-        void populatePlayerInfo();
+        void onFailedPlayerInfo();
     }
 }

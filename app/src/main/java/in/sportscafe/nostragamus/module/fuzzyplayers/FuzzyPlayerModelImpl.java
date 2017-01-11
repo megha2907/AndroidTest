@@ -1,10 +1,9 @@
-package in.sportscafe.nostragamus.module.user.playerprofile;
+package in.sportscafe.nostragamus.module.fuzzyplayers;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.user.login.dto.BasicUserInfo;
-import in.sportscafe.nostragamus.module.user.playerprofile.dto.FuzzyPlayersResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;

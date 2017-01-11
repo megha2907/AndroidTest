@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.user.otheranswers;
+package in.sportscafe.nostragamus.module.fuzzyplayers;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,12 +6,11 @@ import android.os.Bundle;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.user.login.dto.BasicUserInfo;
-import in.sportscafe.nostragamus.module.user.playerprofile.FuzzyPlayerModelImpl;
 
 /**
  * Created by deepanshu on 5/10/16.
  */
-public class OthersAnswersModelImpl implements OthersAnswersModel, FuzzyPlayerModelImpl.OnFuzzyPlayerModelListener {
+public class FuzzyPlayersModelImpl implements FuzzyPlayersModel, FuzzyPlayerModelImpl.OnFuzzyPlayerModelListener {
 
     private FuzzyPlayerAdapter mFuzzyPlayerAdapter;
 
@@ -19,13 +18,13 @@ public class OthersAnswersModelImpl implements OthersAnswersModel, FuzzyPlayerMo
 
     private FuzzyPlayerModelImpl mFuzzyPlayerModel;
 
-    private OthersAnswersModelImpl(OnOthersAnswersModelListener listener) {
+    private FuzzyPlayersModelImpl(OnOthersAnswersModelListener listener) {
         this.onOthersAnswersModelListener = listener;
         this.mFuzzyPlayerModel = FuzzyPlayerModelImpl.newInstance(this);
     }
 
-    public static OthersAnswersModel newInstance(OnOthersAnswersModelListener listener) {
-        return new OthersAnswersModelImpl(listener);
+    public static FuzzyPlayersModel newInstance(OnOthersAnswersModelListener listener) {
+        return new FuzzyPlayersModelImpl(listener);
     }
 
     @Override
@@ -45,6 +44,8 @@ public class OthersAnswersModelImpl implements OthersAnswersModel, FuzzyPlayerMo
         int length = key.length();
         if (length > 2) {
             mFuzzyPlayerModel.getFuzzyPlayers(key);
+        } else {
+            mFuzzyPlayerAdapter.clear();
         }
     }
 

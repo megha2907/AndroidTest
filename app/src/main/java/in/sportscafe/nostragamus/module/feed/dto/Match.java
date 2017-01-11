@@ -1,11 +1,14 @@
 package in.sportscafe.nostragamus.module.feed.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import in.sportscafe.nostragamus.module.othersanswers.AnswerPercentage;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 
 /**
@@ -344,6 +347,10 @@ public class Match implements Serializable {
         this.resultdesc = resultdesc;
     }
 
-
-
+    @JsonIgnore
+    public void updateAnswerPercentage(Map<Integer, AnswerPercentage> questionAnswersMap) {
+        for (Question question : questions) {
+            question.updatePollPercentage(questionAnswersMap.get(question.getQuestionId()));
+        }
+    }
 }

@@ -57,5 +57,6 @@
     <color name="black_80">#CC000000</color>
     <color name="transparent">#00000000</color>
     <color name="cerulean">#11B0DE</color>
+    <color name="white_60">#99FFFFFF</color>
 
 </resources>
