@@ -99,4 +99,9 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
         mNewGroupView.setGroupImage(groupPhoto);
 
     }
+
+    @Override
+    public void selectedTournamentsLimit() {
+        mNewGroupView.showMessage(Constants.Alerts.SELECTED_TOURNAMENTS_LIMIT);
+    }
 }

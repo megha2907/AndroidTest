@@ -8,7 +8,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.92"
+        android:alpha="0.80"
         android:background="@color/black" />
 
     <in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView
@@ -21,7 +21,7 @@
         android:id="@+id/play_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
-        android:alpha="0.7"
+        android:alpha="0.1"
         android:background="@color/colorMedium" />
 
     <RelativeLayout

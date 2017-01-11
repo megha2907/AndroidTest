@@ -267,7 +267,7 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
 //
 //            @Override
 //            public void onGrpTournamentChanged(List<Integer> selectedTournamentsIdList) {
-//                mGrpTournamentUpdateModel.updateGrpTournaments(selectedTournamentsIdList);
+ //               mGrpTournamentUpdateModel.updateGrpTournaments(selectedTournamentsIdList);
 //            }
 //
 //            @Override
