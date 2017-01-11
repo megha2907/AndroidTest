@@ -12,24 +12,4 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 public interface GroupSelectionPresenter {
 
     void onGetGroupSelectionInfo(long groupId);
-
-    void onDoneUpdateTournaments();
-
-    void onGetMemberResult();
-
-    void onNoInternet();
-
-    void onGroupTournamentUpdateSuccess();
-
-    void onFailed(String message);
-
-    void onGetGroupSummarySuccess(GroupInfo groupInfo);
-
-    Context getContext();
-
-    void onUpdating();
-
-    void onEditFailed(String message);
-
-    void onSuccessTournamentInfo();
 }

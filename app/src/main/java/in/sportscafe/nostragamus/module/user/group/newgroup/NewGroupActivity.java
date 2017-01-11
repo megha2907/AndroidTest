@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.jeeva.android.widgets.HmImageView;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -58,14 +59,14 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
 
     private String imagePath;
 
-    private ImageView mIvGroupImage;
+    private HmImageView mIvGroupImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_group);
 
-        mIvGroupImage = (ImageView) findViewById(R.id.group_iv_user_image);
+        mIvGroupImage = (HmImageView) findViewById(R.id.group_iv_user_image);
         checker = new PermissionsChecker(this);
 
         this.mEtGroupName = (EditText) findViewById(R.id.new_group_et_group_name);
@@ -123,9 +124,8 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
     @Override
     public void setGroupImage(String imageUrl) {
 
-        Picasso.with(this)
-                .load(imageUrl)
-                .into(mIvGroupImage);
+        mIvGroupImage.setImageUrl(imageUrl);
+
     }
 
 

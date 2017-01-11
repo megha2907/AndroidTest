@@ -1,19 +1,14 @@
 package in.sportscafe.nostragamus.module.user.group.groupselection;
 
 import android.content.Context;
-import android.os.Bundle;
+import android.util.Log;
 
-import com.jeeva.android.Log;
-
-import java.io.File;
+import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoModel;
-import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoModelImpl;
-import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoPresenter;
-import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoPresenterImpl;
-import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoView;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
+import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 
 /**
  * Created by deepanshi on 1/6/17.
@@ -25,13 +20,16 @@ public class GroupSelectionPresenterImpl implements GroupSelectionPresenter, Gro
 
     private GroupSelectionModel mGroupSelectionModel;
 
-    private GroupSelectionPresenterImpl(GroupSelectionView groupSelectionView) {
+    private GroupSelectionFragment.OnTournamentUpdatedListener mChangedListener;
+
+    private GroupSelectionPresenterImpl(GroupSelectionView groupSelectionView,GroupSelectionFragment.OnTournamentUpdatedListener listener) {
         this.mGroupSelectionView = groupSelectionView;
         this.mGroupSelectionModel = GroupSelectionModelImpl.newInstance(this);
+        this.mChangedListener =listener;
     }
 
-    public static GroupSelectionPresenter newInstance(GroupSelectionView groupSelectionView) {
-        return new GroupSelectionPresenterImpl(groupSelectionView);
+    public static GroupSelectionPresenter newInstance(GroupSelectionView groupSelectionView,GroupSelectionFragment.OnTournamentUpdatedListener listener) {
+        return new GroupSelectionPresenterImpl(groupSelectionView,listener);
     }
 
     @Override
@@ -43,24 +41,10 @@ public class GroupSelectionPresenterImpl implements GroupSelectionPresenter, Gro
 
     private void onUpdateGroupSelectionInfo(GroupInfo groupInfo){
 
-        mGroupSelectionView.setAdapter(mGroupSelectionModel.getAdapter(mGroupSelectionView.getContext()));
+        Log.i("inside","onUpdateGroupSelectionInfo");
+        mGroupSelectionModel.getAllTournamentsfromServer();
 
     }
-
-
-    @Override
-    public void onDoneUpdateTournaments() {
-        mGroupSelectionModel.updateTournaments();
-
-    }
-
-
-
-    @Override
-    public void onGetMemberResult() {
-        mGroupSelectionModel.refreshGroupInfo();
-    }
-
 
     @Override
     public void onNoInternet() {
@@ -93,25 +77,15 @@ public class GroupSelectionPresenterImpl implements GroupSelectionPresenter, Gro
 
     }
 
-
     @Override
-    public Context getContext() {
-        return mGroupSelectionView.getContext();
-    }
-
-    @Override
-    public void onUpdating() {
-        mGroupSelectionView.showProgressbar();
-    }
-
-    @Override
-    public void onEditFailed(String message) {
+    public void onSuccessTournamentInfo(List<TournamentFeedInfo> tournamentInfos) {
         mGroupSelectionView.dismissProgressbar();
-        mGroupSelectionView.showMessage(message);
+        mGroupSelectionView.setSelectedAdapter(mGroupSelectionModel.getSelectedAdapter(mGroupSelectionView.getContext(), tournamentInfos));
     }
 
     @Override
-    public void onSuccessTournamentInfo() {
-        mGroupSelectionView.dismissProgressbar();
+    public void setTournamentsCount(int size) {
+        mChangedListener.setTournamentsCount(size);
     }
+
 }

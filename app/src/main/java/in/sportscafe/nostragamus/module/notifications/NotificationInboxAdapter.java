@@ -52,7 +52,7 @@ public class NotificationInboxAdapter extends InboxManager.InboxAdapter<Notifica
     /**
      * Bind an existing view to the data pointed to by cursor
      *
-     * @param holder The ViewHolder which should be updated to represent the contents of the
+     * @param holder The TourViewHolder which should be updated to represent the contents of the
      * item at the given position in the data set.
      * @param context Interface to application's global information
      * @param cursor The cursor from which to get the data. The cursor is already moved to the
@@ -129,11 +129,11 @@ public class NotificationInboxAdapter extends InboxManager.InboxAdapter<Notifica
     }
 
     /**
-     * Return the ViewHolder from this method which will be used to reduce Hierarchy lookup and also
+     * Return the TourViewHolder from this method which will be used to reduce Hierarchy lookup and also
      * be used to piggy back data required when view is clicked
      *
      * @param convertView The view which is used by the adapter
-     * @return The ViewHolder which should be updated to represent the contents of the
+     * @return The TourViewHolder which should be updated to represent the contents of the
      * item at the given position in the data set.
      */
     @Override public NotificationInboxHolder getViewHolder(View convertView) {

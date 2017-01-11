@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeva.android.widgets.HmImageView;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -55,7 +56,7 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
     private String imagePath;
 
-    private ImageView mIvGroupImage;
+    private HmImageView mIvGroupImage;
 
     private static final int CODE_ADMIN_MEMBERS = 3;
 
@@ -89,7 +90,7 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
         initToolBar();
         mBundle=getIntent().getExtras();
         mBtnGroupIcon = (Button) findViewById(R.id.group_info_iv_user_image);
-        mIvGroupImage = (ImageView) findViewById(R.id.group_iv_user_image);
+        mIvGroupImage = (HmImageView) findViewById(R.id.group_iv_user_image);
 
         checker = new PermissionsChecker(this);
 
@@ -236,9 +237,8 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
         }
         else
         {
-            Picasso.with(this)
-                    .load(imageUrl)
-                    .into(mIvGroupImage);
+            mIvGroupImage.setImageUrl(imageUrl);
+
         }
 
     }
@@ -302,6 +302,7 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
                             Picasso.with(getApplicationContext()).load(new File(imagePath))
                                     .into(mIvGroupImage);
+
                             cursor.close();
 
                             mIvGroupImage.setVisibility(View.VISIBLE);

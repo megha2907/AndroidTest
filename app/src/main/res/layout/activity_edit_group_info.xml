@@ -47,13 +47,14 @@
                 android:layout_height="@dimen/dp_200"
                 >
 
-                <ImageView
+                <com.jeeva.android.widgets.HmImageView
                     android:id="@+id/group_iv_user_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
                     android:onClick="showImagePopup"
+                    app:defaultImage="@drawable/placeholder_icon"
                     android:alpha="0.8"
                     />
 

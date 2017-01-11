@@ -66,23 +66,18 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         if (mSelectedSportId!=0) {
             for (Sport sport : NostragamusDataHandler.getInstance().getAllSports()) {
                 if (sport.getId() == mSelectedSportId) {
-                    Log.i("SPORTS","INSIDE");
                     pointsIcon.setImageUrl(sport.getImageUrl());
                 }
 
             }
         }
         else if (null==icon || icon.isEmpty()) {
-            Log.i("NULL","INSIDE");
             pointsIcon.setImageDrawable(null);
             pointsIcon.setImageResource(R.drawable.placeholder_icon);
         }
         else
         {
-            Picasso.with(getApplicationContext())
-                    .load(icon)
-                    .into(pointsIcon);
-
+            pointsIcon.setImageUrl(icon);
         }
 
     }
