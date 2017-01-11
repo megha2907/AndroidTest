@@ -1,12 +1,9 @@
 package in.sportscafe.nostragamus.webservice;
 
 
-import android.nfc.Tag;
-
-import java.util.List;
-
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
+import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
@@ -36,7 +33,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummaryResponse;
-import in.sportscafe.nostragamus.module.user.playerprofile.dto.FuzzyPlayersResponse;
+import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayersResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.AllSports;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.PreferenceRequest;
@@ -164,7 +161,7 @@ public interface NostragamusService {
     Call<ReplayPowerupResponse> getFlipPowerup(@Query("powerup_id") String powerupId,@Query("match_id") Integer matchId,@Query("question_id") Integer questionId);
 
     @GET ("/v1/game/users/getPlayerProfile")
-    Call<PlayerInfoResponse> getPlayerInfo(@Query("player_user_id") String playerId);
+    Call<PlayerInfoResponse> getPlayerInfo(@Query("player_user_id") Integer playerId);
 
     @GET("v1/game/users/matches/timeline")
     Call<MatchesResponse> getTimelines(
@@ -175,4 +172,10 @@ public interface NostragamusService {
 
     @GET("v1/game/users/getFuzzyPlayer")
     Call<FuzzyPlayersResponse> fuzzyPlayers(@Query("player_user_name") String key);
+
+    @GET("v1/game/getPlayerResult")
+    Call<MyResultsResponse> getPlayerResult(@Query("player_id") Integer playerId, @Query("match_id") Integer matchId);
+
+    @GET("v1/game/getPlayerResultPercentage")
+    Call<PlayerResultPercentageResponse> playerResultPercentage(@Query("match_id") Integer matchId);
 }

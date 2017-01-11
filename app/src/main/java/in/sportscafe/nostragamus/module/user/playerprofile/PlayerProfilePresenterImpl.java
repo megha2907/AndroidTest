@@ -67,14 +67,14 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
     }
 
     @Override
-    public Context getContext() {
-        return mProfileView.getContext();
+    public void onSuccessPlayerInfo(PlayerInfo playerInfo) {
+        mProfileView.dismissProgressbar();
+        populateUserInfo();
     }
 
     @Override
-    public void populatePlayerInfo() {
+    public void onFailedPlayerInfo() {
         mProfileView.dismissProgressbar();
-        populateUserInfo();
     }
 
     private void showAlert(String message) {

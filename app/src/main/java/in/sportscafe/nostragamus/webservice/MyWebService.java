@@ -5,6 +5,7 @@ import java.io.File;
 import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
+import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
@@ -34,7 +35,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummaryResponse;
-import in.sportscafe.nostragamus.module.user.playerprofile.dto.FuzzyPlayersResponse;
+import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayersResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.AllSports;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.PreferenceRequest;
@@ -74,7 +75,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getUserInfo();
     }
 
-    public Call<PlayerInfoResponse> getPlayerInfoRequest(String playerId) {
+    public Call<PlayerInfoResponse> getPlayerInfoRequest(Integer playerId) {
         return mNostragamusService.getPlayerInfo(playerId);
     }
 
@@ -145,7 +146,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<MyResultsResponse> getMyResultsRequest(Integer MatchId) {
-        return mNostragamusService.getMyResults(MatchId);}
+        return mNostragamusService.getMyResults(MatchId);
+    }
 
     public Call<LbSummaryResponse> getLeaderBoardSummary() {
         return mNostragamusService.getLeaderBoardSummary();
@@ -210,5 +212,13 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<FuzzyPlayersResponse> getFuzzyPlayersRequest(String key) {
         return mNostragamusService.fuzzyPlayers(key);
+    }
+
+    public Call<MyResultsResponse> getPlayerResultRequest(Integer playerId, Integer matchId) {
+        return mNostragamusService.getPlayerResult(playerId, matchId);
+    }
+
+    public Call<PlayerResultPercentageResponse> getPlayerResultPercentageRequest(Integer matchId) {
+        return mNostragamusService.playerResultPercentage(matchId);
     }
 }

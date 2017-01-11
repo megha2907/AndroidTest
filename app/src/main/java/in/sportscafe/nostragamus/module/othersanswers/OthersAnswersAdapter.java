@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.play.myresults;
+package in.sportscafe.nostragamus.module.othersanswers;
 
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
@@ -22,39 +22,22 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryActivity;
-import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayersFragment;
 
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder> implements View.OnClickListener {
+public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.ViewHolder> {
 
-    private OnMyResultsActionListener mResultsActionListener;
-
-    private AlertDialog mAlertDialog;
-
-    private static final int CODE_PROFILE_ACTIVITY = 1;
-
-    private Boolean isShowFlipOptn = false;
-
-    private Boolean isFlipclicked = true;
-
-    public MyResultsAdapter(Context context) {
+    public OthersAnswersAdapter(Context context) {
         super(context);
-    }
-
-    public void setResultsActionListener(OnMyResultsActionListener mResultsActionListener) {
-        this.mResultsActionListener = mResultsActionListener;
     }
 
     @Override
@@ -91,12 +74,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         return tourView;
     }
 
-    public void showFlipOptnforQuestion() {
-        isShowFlipOptn = true;
-    }
-
-
-    class TourViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class TourViewHolder extends RecyclerView.ViewHolder {
 
         TextView mTvTournamentName;
 
@@ -107,21 +85,8 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
             mTvTournamentName = (TextView) V.findViewById(R.id.tour_row_tv_tour_name);
             mLlScheduleParent = (LinearLayout) V.findViewById(R.id.tour_row_ll_schedule_parent);
-
-            V.findViewById(R.id.tour_row_ibtn_options).setOnClickListener(this);
-            V.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.tour_row_ibtn_options:
-//                        mResultsActionListener.onClickLeaderBoard(mPosition);
-                    break;
-            }
         }
     }
-
 
     private View getMyResultView(Match match, ViewGroup parent) {
         View myResultView = getLayoutInflater().inflate(R.layout.inflater_schedule_match_results_row, parent, false);
@@ -176,8 +141,6 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question));
         }
 
-        holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard,match));
-
         return myResultView;
     }
 
@@ -227,12 +190,12 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             mViewResult = (View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlPredictionsParent = (LinearLayout) V.findViewById(R.id.my_results_row_ll_predictions);
             mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
-            mleaderboard=(LinearLayout)V.findViewById(R.id.my_results_row_ll_leaderboardbtn);
+            mleaderboard = (LinearLayout) V.findViewById(R.id.my_results_row_ll_leaderboardbtn);
         }
     }
 
 
-    private View getMyPrediction(ViewGroup parent, final Question question)   {
+    private View getMyPrediction(ViewGroup parent, final Question question) {
         View convertView = getLayoutInflater().inflate(R.layout.inflater_my_predictions_row, parent, false);
 
         ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_question))
@@ -260,67 +223,12 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             } else {
                 tvAnswerPoints.setText(question.getAnswerPoints() + " Points");
             }
+        }
 
-        }else {
-            if(isShowFlipOptn==true){
-                mFlipPowerUp.setVisibility(View.VISIBLE);
-                ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(convertView.getContext(), R.animator.flip_anim);
-                anim.setTarget(mFlipPowerUp);
-                anim.setDuration(3000);
-                anim.setRepeatCount(ObjectAnimator.INFINITE);
-                anim.setRepeatMode(ObjectAnimator.REVERSE);
-                anim.start();
-
-                final int answerId = Integer.parseInt(question.getAnswerId());
-                if (answerId == 1) {
-                    tvotheroption.setText(question.getQuestionOption2());
-                } else {
-                    tvotheroption.setText(question.getQuestionOption1());
-                }
-
-
-                mFlipPowerUp.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-
-                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(v.getContext());
-                        alertDialogBuilder.setMessage("Are you sure, You want to apply Flip Powerup on this Question?");
-                        alertDialogBuilder.setPositiveButton("yes",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface arg0, int arg1) {
-                                        if (answerId == 1) {
-                                            tvAnswer.setText(question.getQuestionOption2());
-                                            tvotheroption.setText(question.getQuestionOption1());
-                                        } else {
-                                            tvAnswer.setText(question.getQuestionOption1());
-                                            tvotheroption.setText(question.getQuestionOption2());
-                                        }
-
-                                    }
-                                });
-
-                        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
-                        alertDialog.show();
-
-//                        if(isFlipclicked==true)
-//                        {
-//                            mFlipPowerUp.setEnabled(false);
-//                        }
-//                        isFlipclicked =false;
-//                        notifyDataSetChanged();
-                    }
-                });
-
-                tvotheroption.setVisibility(View.VISIBLE);
-                setTextColor(tvotheroption, R.color.textcolorlight);
-            }
+        if(null != question.getOption1AudPollPer()) {
+            tvAnswerPoints.setVisibility(View.INVISIBLE);
+            ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_1)).setText(question.getOption1AudPollPer());
+            ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_2)).setText(question.getOption2AudPollPer());
         }
 
         String powerupused = question.getAnswerPowerUpId();
@@ -337,7 +245,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         } else if (powerupused.equals("no_negs")) {
             powerupUsed.setBackgroundResource(R.drawable.powerup_nonegs);
             powerupUsed.setVisibility(View.VISIBLE);
-        }else if (powerupused.equals("answer_flip")) {
+        } else if (powerupused.equals("answer_flip")) {
             powerupUsed.setBackgroundResource(R.drawable.powerup_flip);
             powerupUsed.setVisibility(View.VISIBLE);
         } else if (powerupused.equals("match_replay")) {
@@ -370,16 +278,15 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
             if (null == question.getQuestionAnswer()) {
                 setTextColor(tvAnswer, R.color.white);
-            }
-            else if (answerId == question.getQuestionAnswer()) {
+            } else if (answerId == question.getQuestionAnswer()) {
 
-                Log.i("answer","correct answer");
+                Log.i("answer", "correct answer");
 
                 //if your answer = correct answer
                 setTextColor(tvAnswer, R.color.greencolor);
-                tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
+                tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
                 tvotheroption.setVisibility(View.VISIBLE);
-                tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
+                tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
 
                 if (question.getQuestionAnswer() == 1) {
                     tvotheroption.setText(question.getQuestionOption2());
@@ -390,9 +297,9 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                 }
 
             }  // if your answer & other option both are correct
-            else if(question.getQuestionAnswer() == 0){
+            else if (question.getQuestionAnswer() == 0) {
 
-                Log.i("answer","both correct");
+                Log.i("answer", "both correct");
 
                 tvotheroption.setVisibility(View.VISIBLE);
                 if (question.getQuestionAnswer() == 1) {
@@ -403,22 +310,22 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                     setTextColor(tvotheroption, R.color.textcolorlight);
                 }
                 tvotheroption.setVisibility(View.VISIBLE);
-                tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
-                tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
+                tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+                tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
                 setTextColor(tvAnswer, R.color.greencolor);
 
             }  // if your answer is incorrect and other option is correct
             else {
 
-                Log.i("answer","not correct");
+                Log.i("answer", "not correct");
 
                 setTextColor(tvAnswer, R.color.tabcolor);
-                tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
+                tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
 
 
                 tvotheroption.setVisibility(View.VISIBLE);
                 setTextColor(tvotheroption, R.color.textcolorlight);
-                tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
+                tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
 
                 if (question.getQuestionAnswer() == 1) {
                     tvotheroption.setText(question.getQuestionOption1());
@@ -432,53 +339,6 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         }
 
         return convertView;
-    }
-
-
-    private View getLeaderBoardView(ViewGroup parent,Match match) {
-        View leaderboardView = getLayoutInflater().inflate(R.layout.inflater_leaderboard_btn_row, parent, false);
-
-        leaderboardView.findViewById(R.id.my_results_ll_others_answers).setOnClickListener(this);
-        leaderboardView.findViewById(R.id.my_results_ll_leaderboards).setOnClickListener(this);
-        leaderboardView.findViewById(R.id.my_results_ll_share_score).setOnClickListener(this);
-
-        if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()){
-            TextView tvcommentary = (TextView) leaderboardView.findViewById(R.id.schedule_row_tv_match_result_commentary);
-            tvcommentary.setVisibility(View.VISIBLE);
-            tvcommentary.setText(match.getResultdesc());
-        }
-
-        return leaderboardView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.my_results_ll_others_answers:
-                navigateToOthersAnswers(view.getContext());
-                break;
-            case R.id.my_results_ll_leaderboards:
-                navigateToLeaderboards(view.getContext());
-                break;
-            case R.id.my_results_ll_share_score:
-                broadcastShareScore(view.getContext());
-                break;
-        }
-    }
-
-    private void navigateToOthersAnswers(Context context) {
-        Intent intent =  new Intent(context, OthersAnswersActivity.class);
-        intent.putExtra(BundleKeys.MATCH_DETAILS, getItem(0).getTournaments().get(0).getMatches().get(0));
-        context.startActivity(intent);
-    }
-
-    private void navigateToLeaderboards(Context context) {
-        Intent intent =  new Intent(context, LeaderBoardSummaryActivity.class);
-        context.startActivity(intent);
-    }
-
-    private void broadcastShareScore(Context context) {
-        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(IntentActions.ACTION_SHARE_SCORE));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

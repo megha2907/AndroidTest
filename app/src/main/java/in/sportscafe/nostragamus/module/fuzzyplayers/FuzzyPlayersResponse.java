@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.user.playerprofile.dto;
+package in.sportscafe.nostragamus.module.fuzzyplayers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
