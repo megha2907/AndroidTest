@@ -350,7 +350,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                         mViewPager.getAdapter().getPageTitle(position).toString());
 
                 Button createGroupbtn = (Button)findViewById(R.id.join_grp_btn);
-                if(position==1){
+                if(position==2){
                     createGroupbtn.setVisibility(View.VISIBLE);
                 }else {
                     createGroupbtn.setVisibility(View.GONE);
@@ -510,10 +510,10 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     public void setSportsCount(int sportsCount) {
 
         if(sportsCount==1){
-            mpagerAdapter.updateTitle(2,sportsCount+ " \n Sport");
+            mpagerAdapter.updateTitle(3,sportsCount+ " \n Sport");
         }
         else {
-            mpagerAdapter.updateTitle(2,sportsCount+ " \n Sports");
+            mpagerAdapter.updateTitle(3,sportsCount+ " \n Sports");
         }
     }
 }

@@ -1,10 +1,13 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -29,6 +32,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -124,6 +132,10 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
                 navigatetoEditGroupInfoActivity();
                 break;
 
+            case R.id.edit_group_back_btn:
+                navigateToHomeActivity();
+                break;
+
 //            case R.id.group_info_btn_edit_members:
 //                mGroupInfoPresenter.onClickMembers();
 //                break;
@@ -163,6 +175,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     public void setGroupIcon(String groupPhotoUrl) {
         mIvGroupIcon = (HmImageView) findViewById(R.id.group_iv_user_image);
         mIvGroupIcon.setImageUrl(groupPhotoUrl);
+
 
     }
 
@@ -379,4 +392,6 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
             mpagerAdapter.updateTitle(0,tournamentsCount+ " \n Tournaments");
         }
     }
+
+
 }

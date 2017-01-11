@@ -97,8 +97,10 @@
     <dimen name="dp_180">180dp</dimen>
     <dimen name="dp_198">198dp</dimen>
     <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_220">220dp</dimen>
     <dimen name="dp_248">248dp</dimen>
     <dimen name="dp_272">272dp</dimen>
+    <dimen name="dp_278">278dp</dimen>
     <dimen name="dp_400">400dp</dimen>
     <dimen name="dp_31">31dp</dimen>
     <dimen name="dp_24">24dp</dimen>

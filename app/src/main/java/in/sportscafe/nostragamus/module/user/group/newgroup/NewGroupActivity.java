@@ -59,14 +59,14 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
 
     private String imagePath;
 
-    private HmImageView mIvGroupImage;
+    private ImageView mIvGroupImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_group);
 
-        mIvGroupImage = (HmImageView) findViewById(R.id.group_iv_user_image);
+        mIvGroupImage = (ImageView) findViewById(R.id.group_iv_user_image);
         checker = new PermissionsChecker(this);
 
         this.mEtGroupName = (EditText) findViewById(R.id.new_group_et_group_name);
@@ -124,7 +124,8 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
     @Override
     public void setGroupImage(String imageUrl) {
 
-        mIvGroupImage.setImageUrl(imageUrl);
+        Picasso.with(getApplicationContext()).load(imageUrl)
+                .into(mIvGroupImage);
 
     }
 

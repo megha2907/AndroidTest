@@ -162,6 +162,7 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
 
     @Override
     public GrpTournamentSelectionAdapter getSelectedAdapter(Context context,List<TournamentFeedInfo> tournamentInfos) {
+
         List<TournamentFeedInfo> followedTournaments = mGroupInfo.getFollowedTournaments();
 
         List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
@@ -174,8 +175,8 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
             tournamentInfos.remove(tournamentInfo);
         }
 
-//        TournamentFeedInfo selectedLabel = new TournamentFeedInfo();
-//        selectedLabel.setTournamentId(-1);
+        TournamentFeedInfo selectedLabel = new TournamentFeedInfo();
+        selectedLabel.setTournamentId(-1);
 
         TournamentFeedInfo unselectedLabel = new TournamentFeedInfo();
         unselectedLabel.setTournamentId(-2);
@@ -184,20 +185,34 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
                 new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
                     @Override
                     public void onGrpTournamentClicked(int position, boolean selected) {
-                        TournamentFeedInfo feedInfo = mGrpTournamentSelectedAdapter.getItem(position);
 
-                        mGrpTournamentSelectedAdapter.updateSelectionList(feedInfo);
-                        mGrpTournamentSelectedAdapter.remove(position);
+                        if (amAdmin()) {
 
-                        if(selected) {
-                            mGrpTournamentSelectedAdapter.add(feedInfo);
-                        } else {
-                            mGrpTournamentSelectedAdapter.add(feedInfo, 1);
+                            TournamentFeedInfo feedInfo = mGrpTournamentSelectedAdapter.getItem(position);
+
+                            if (mGrpTournamentSelectedAdapter.getSelectedTournamentList().size() == 1 && selected) {
+                                mGroupInfoModelListener.selectedTournamentsLimit();
+                                return;
+
+                            } else {
+
+                                mGrpTournamentSelectedAdapter.updateSelectionList(feedInfo);
+                                mGrpTournamentSelectedAdapter.remove(position);
+
+                                if (selected) {
+                                    mGrpTournamentSelectedAdapter.add(feedInfo);
+                                } else {
+                                    mGrpTournamentSelectedAdapter.add(feedInfo, 0);
+                                }
+
+                                mGrpTournamentSelectedAdapter.notifyItemChanged(position);
+                                mGrpTournamentUpdateModel.updateGrpTournaments(mGrpTournamentSelectedAdapter.getSelectedTournamentList());
+                                mGroupInfoModelListener.setTournamentsCount(mGrpTournamentSelectedAdapter.getSelectedTournamentList().size());
+                            }
+
+                        }else {
+                            mGroupInfoModelListener.notanAdmin();
                         }
-                        mGrpTournamentSelectedAdapter.notifyItemChanged(position);
-                        mGroupInfoModelListener.setTournamentsCount(mGrpTournamentSelectedAdapter.getSelectedTournamentList().size());
-
-
                     }
                 });
        // mGrpTournamentSelectedAdapter.add(selectedLabel);
@@ -262,5 +277,9 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
         void onSuccessTournamentInfo(List<TournamentFeedInfo> tournamentInfos);
 
         void setTournamentsCount(int size);
+
+        void selectedTournamentsLimit();
+
+        void notanAdmin();
     }
 }
