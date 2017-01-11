@@ -88,4 +88,14 @@ public class GroupSelectionPresenterImpl implements GroupSelectionPresenter, Gro
         mChangedListener.setTournamentsCount(size);
     }
 
+    @Override
+    public void selectedTournamentsLimit() {
+        mGroupSelectionView.showMessage(Constants.Alerts.SELECTED_TOURNAMENTS_LIMIT);
+    }
+
+    @Override
+    public void notanAdmin() {
+        mGroupSelectionView.showMessage(Constants.Alerts.NOT_ADMIN);
+    }
+
 }

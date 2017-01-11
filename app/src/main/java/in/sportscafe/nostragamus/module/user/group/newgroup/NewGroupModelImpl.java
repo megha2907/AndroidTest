@@ -49,14 +49,57 @@ public class NewGroupModelImpl implements NewGroupModel {
 
         getAllTournamentsfromServer();
 
-        this.mTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context, new ArrayList<Integer>(),
+        List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
+
+        TournamentFeedInfo selectedLabel = new TournamentFeedInfo();
+        selectedLabel.setTournamentId(-1);
+
+        TournamentFeedInfo unselectedLabel = new TournamentFeedInfo();
+        unselectedLabel.setTournamentId(-2);
+
+        this.mTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context, mFollowedTournamentsIdList,
                 new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
                     @Override
                     public void onGrpTournamentClicked(int position, boolean selected) {
-                        mTournamentSelectionAdapter.updateSelectionList(mTournamentSelectionAdapter.getItem(position));
+
+                            TournamentFeedInfo feedInfo = mTournamentSelectionAdapter.getItem(position);
+
+                            if (mTournamentSelectionAdapter.getSelectedTournamentList().size() == 1 && selected) {
+                                mNewGroupModelListener.selectedTournamentsLimit();
+                                return;
+
+                            } else {
+
+                                mTournamentSelectionAdapter.updateSelectionList(feedInfo);
+                                mTournamentSelectionAdapter.remove(position);
+
+                                if (selected) {
+                                    mTournamentSelectionAdapter.add(feedInfo);
+                                } else {
+                                    mTournamentSelectionAdapter.add(feedInfo, 0);
+                                }
+
+                                mTournamentSelectionAdapter.notifyItemChanged(position);
+                            }
+
                     }
                 });
+
+        mTournamentSelectionAdapter.add(unselectedLabel);
+        mTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
+
         return mTournamentSelectionAdapter;
+
+
+//
+//        this.mTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context, new ArrayList<Integer>(),
+//                new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
+//                    @Override
+//                    public void onGrpTournamentClicked(int position, boolean selected) {
+//                        mTournamentSelectionAdapter.updateSelectionList(mTournamentSelectionAdapter.getItem(position));
+//                    }
+//                });
+//        return mTournamentSelectionAdapter;
     }
 
     @Override
@@ -138,7 +181,6 @@ public class NewGroupModelImpl implements NewGroupModel {
                                     }
 
                                     mNostragamusDataHandler.setTournaments(oldTournamentList);
-                                    mTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
 
                                     mNewGroupModelListener.onSuccessTournamentInfo();
                                 }
@@ -210,5 +252,7 @@ public class NewGroupModelImpl implements NewGroupModel {
         void onEditFailed(String message);
 
         void onPhotoUpdate(String groupPhoto);
+
+        void selectedTournamentsLimit();
     }
 }

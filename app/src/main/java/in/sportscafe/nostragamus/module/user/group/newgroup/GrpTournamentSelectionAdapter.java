@@ -53,7 +53,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
 //            case SELECTED_LABEL_TYPE:
 //                return new LabelViewHolder(getLayoutInflater().inflate(R.layout.inflater_group_label, parent, false),"SELECTED TOURNAMENTS");
             case UNSELECTED_LABEL_TYPE:
-                return new LabelViewHolder(getLayoutInflater().inflate(R.layout.inflater_group_label, parent, false),"UNSELECTED TOURNAMENTS");
+                return new LabelViewHolder(getLayoutInflater().inflate(R.layout.inflater_group_label, parent, false),"CURRENT TOURNAMENTS");
             case TOURNAMENT_TYPE:
             default:
                 return new TourViewHolder(getLayoutInflater().inflate(R.layout.inflater_group_sport_row, parent, false));
@@ -69,7 +69,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
     public int getItemViewType(int position) {
 
         TournamentFeedInfo tournamentInfo = getItem(position);
-
+//
 //        if (tournamentInfo.getTournamentId()== -1) {
 //            return SELECTED_LABEL_TYPE;
 //        }

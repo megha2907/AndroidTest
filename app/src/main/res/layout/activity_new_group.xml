@@ -107,34 +107,10 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/input_layout_new_group_et_group_name"
-                android:layout_marginTop="@dimen/dp_20">
-
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/new_group_tv_sport_hint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:text="TOURNAMENTS"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_12"
-                    app:typeface="roboto_condensed" />
-
-
-            </RelativeLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/rl1"
+                android:layout_below="@id/input_layout_new_group_et_group_name"
                 android:layout_marginTop="@dimen/dp_5"
                 android:paddingBottom="@dimen/dp_20"
                 android:focusable="true">

@@ -128,6 +128,8 @@ public interface Constants {
         String REPLAY_POWERUP_OVER = "You have used all your replay powerups!";
         String ADD_PHOTO_FAILED = "Adding photo failed! Try again!";
         String FUZZY_SEARCH_FAILED = "Something went wrong! Please try again!";
+        String SELECTED_TOURNAMENTS_LIMIT = "Please Pick atleast one Tournament";
+        String NOT_ADMIN = "Only Admin can change Tournaments";
     }
 
     interface BundleKeys {
