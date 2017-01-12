@@ -166,6 +166,7 @@ public interface Constants {
         String PLAYER_USER_ID = "playerUserId";
         String SHOW_ANSWER_PERCENTAGE = "showAnswerPercentage";
         String MATCH_DETAILS = "matchDetails";
+        String PLAYER_USER_NAME = "playerUserName";
     }
 
     interface ParcelableKeys {

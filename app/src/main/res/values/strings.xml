@@ -23,4 +23,6 @@
     <string name="termspolicy"><![CDATA[By continuing, you agree to our <u>Terms and Privacy Policy</u>]]></string>
     <string name="fb_share_result_text">I just predicted %1$s events in %2$s match and scored %3$d points. Get the Nostragamus app and see if you can do better than me in the next match.</string>
     <string name="fuzzy_players_hint">Type in name of friend...</string>
+    <string name="view_profile">View Profile</string>
+    <string name="total_points">Total Points</string>
 </resources>

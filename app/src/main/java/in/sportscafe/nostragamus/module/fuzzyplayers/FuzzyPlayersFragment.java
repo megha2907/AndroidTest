@@ -14,6 +14,8 @@ import android.widget.EditText;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 
+import static com.google.android.gms.analytics.internal.zzy.i;
+
 /**
  * Created by deepanshu on 4/10/16.
  */
@@ -65,5 +67,15 @@ public class FuzzyPlayersFragment extends NostragamusFragment implements FuzzyPl
     @Override
     public void setAdapter(FuzzyPlayerAdapter adapter) {
         mRecyclerView.setAdapter(adapter);
+    }
+
+    public boolean isListShowing() {
+        return mRecyclerView.getAdapter().getItemCount() > 0;
+    }
+
+    public boolean clearList() {
+        boolean listShowing = isListShowing();
+        mEtSearch.setText("");
+        return listShowing;
     }
 }

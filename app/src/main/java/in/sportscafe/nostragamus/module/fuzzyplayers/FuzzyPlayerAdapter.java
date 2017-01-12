@@ -51,8 +51,11 @@ public class FuzzyPlayerAdapter extends Adapter<BasicUserInfo, FuzzyPlayerAdapte
 
         @Override
         public void onClick(View view) {
+            BasicUserInfo basicUserInfo = getItem(getAdapterPosition());
+
             Intent intent = new Intent(IntentActions.ACTION_FUZZY_PLAYER_CLICK);
-            intent.putExtra(Constants.BundleKeys.PLAYER_USER_ID, getItem(getAdapterPosition()).getId());
+            intent.putExtra(Constants.BundleKeys.PLAYER_USER_ID, basicUserInfo.getId());
+            intent.putExtra(Constants.BundleKeys.PLAYER_USER_NAME, basicUserInfo.getUserNickName());
 
             LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
         }
