@@ -1,12 +1,6 @@
 package in.sportscafe.nostragamus.module.othersanswers;
 
-import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -16,28 +10,33 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
-import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryActivity;
+import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 
 /**
  * Created by Jeeva on 15/6/16.
  */
 public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.ViewHolder> {
 
+    private PlayerInfo mPlayerInfo;
+
     public OthersAnswersAdapter(Context context) {
         super(context);
+    }
+
+    public void setPlayerInfo(PlayerInfo playerInfo) {
+        this.mPlayerInfo = playerInfo;
     }
 
     @Override
@@ -55,8 +54,41 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
         Feed feed = getItem(position);
         holder.mPosition = position;
         holder.mLlTourParent.removeAllViews();
+
+        if (position == 0 && null != mPlayerInfo) {
+            holder.mLlTourParent.addView(getPlayerView(mPlayerInfo, holder.mLlTourParent));
+        }
+
         for (Tournament tournament : feed.getTournaments()) {
             holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent));
+        }
+    }
+
+    private View getPlayerView(PlayerInfo playerInfo, ViewGroup parent) {
+        View playerView = getLayoutInflater().inflate(R.layout.inflater_player_points, parent, false);
+        PlayerViewHolder holder = new PlayerViewHolder(playerView);
+
+        holder.mTvPlayerName.setText(playerInfo.getUserNickName());
+        holder.mTvPlayerPoints.setText(playerInfo.getTotalPoints() + "");
+        holder.mIvPlayerPhoto.setImageUrl(playerInfo.getPhoto());
+
+        return playerView;
+    }
+
+    class PlayerViewHolder extends RecyclerView.ViewHolder {
+
+        TextView mTvPlayerName;
+
+        TextView mTvPlayerPoints;
+
+        HmImageView mIvPlayerPhoto;
+
+        public PlayerViewHolder(View V) {
+            super(V);
+
+            mTvPlayerName = (TextView) V.findViewById(R.id.player_points_tv_name);
+            mTvPlayerPoints = (TextView) V.findViewById(R.id.player_points_tv_points);
+            mIvPlayerPhoto = (HmImageView) V.findViewById(R.id.player_points_iv_photo);
         }
     }
 
@@ -225,7 +257,7 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
             }
         }
 
-        if(null != question.getOption1AudPollPer()) {
+        if (null != question.getOption1AudPollPer()) {
             tvAnswerPoints.setVisibility(View.INVISIBLE);
             ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_1)).setText(question.getOption1AudPollPer());
             ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_2)).setText(question.getOption2AudPollPer());

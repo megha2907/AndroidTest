@@ -4,8 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -23,6 +27,8 @@ import static com.google.android.gms.analytics.internal.zzy.t;
 
 public class OthersAnswersActivity extends NostragamusActivity {
 
+    private FuzzyPlayersFragment mFuzzyPlayersFragment;
+
     private Match mMatchDetails;
 
     @Override
@@ -31,17 +37,52 @@ public class OthersAnswersActivity extends NostragamusActivity {
         setContentView(R.layout.activity_others_answers);
 
         Bundle bundle = getIntent().getExtras();
+
+        String userName = "Other";
+        if(bundle.containsKey(BundleKeys.PLAYER_USER_NAME)) {
+            userName = bundle.getString(BundleKeys.PLAYER_USER_NAME);
+        }
+        initToolBar(userName);
+
         mMatchDetails = (Match) bundle.getSerializable(BundleKeys.MATCH_DETAILS);
 
-        getSupportFragmentManager().beginTransaction().replace(
-                R.id.others_answers_fl_fuzzy_holder,
-                FuzzyPlayersFragment.newInstance()
-        ).commit();
+        if(!bundle.containsKey(BundleKeys.SHOW_ANSWER_PERCENTAGE)) {
+            getSupportFragmentManager().beginTransaction().replace(
+                    R.id.others_answers_fl_fuzzy_holder,
+                    mFuzzyPlayersFragment = FuzzyPlayersFragment.newInstance()
+            ).commit();
+        }
 
         getSupportFragmentManager().beginTransaction().replace(
                 R.id.others_answers_fl_answers_holder,
                 OthersAnswersFragment.newInstance(bundle)
         ).commit();
+    }
+
+    private void initToolBar(String name) {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.others_answers_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView tvTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        tvTitle.setText(name + "'s Answers");
+
+        toolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        toolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onBackPressed();
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(null == mFuzzyPlayersFragment || !mFuzzyPlayersFragment.clearList()) {
+            super.onBackPressed();
+        }
     }
 
     @Override

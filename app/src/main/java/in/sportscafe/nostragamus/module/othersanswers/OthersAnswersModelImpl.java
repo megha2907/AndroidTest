@@ -129,11 +129,12 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
         mMatchDetails = othersAnswers.get(0);
         if(mShowAnswerPercentage) {
             callPlayerResultPercentageApi();
-            return;
+        } else {
+            callPlayerProfileApi();
         }
 
-        loadAdapterData(getCategorizedList(mMatchDetails, new HashMap<Integer, AnswerPercentage>()));
-        mOthersAnswersModelListener.onSuccessOthersAnswers();
+//        loadAdapterData(getCategorizedList(mMatchDetails, new HashMap<Integer, AnswerPercentage>()));
+//        mOthersAnswersModelListener.onSuccessOthersAnswers();
     }
 
     private void loadAdapterData(List<Feed> feedList) {
@@ -235,19 +236,26 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
         PlayerProfileModelImpl.newInstance(new PlayerProfileModelImpl.OnProfileModelListener() {
             @Override
             public void onNoInternet() {
-
+                mOthersAnswersModelListener.onNoInternet();
             }
 
             @Override
             public void onSuccessPlayerInfo(PlayerInfo playerInfo) {
-
+                handlePlayerProfileResponse(playerInfo);
             }
 
             @Override
             public void onFailedPlayerInfo() {
-
+                mOthersAnswersModelListener.onFailedOthersAnswers();
             }
         }).getPlayerInfoFromServer(mPlayerUserId);
+    }
+
+    private void handlePlayerProfileResponse(PlayerInfo playerInfo) {
+        mOthersAnswersAdapter.setPlayerInfo(playerInfo);
+
+        loadAdapterData(getCategorizedList(mMatchDetails, new HashMap<Integer, AnswerPercentage>()));
+        mOthersAnswersModelListener.onSuccessOthersAnswers();
     }
 
     public interface OnOthersAnswersModelListener {
