@@ -1,15 +1,20 @@
 package in.sportscafe.nostragamus.module.user.group.newgroup;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.io.File;
 
 import in.sportscafe.nostragamus.Constants;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by Jeeva on 1/7/16.
  */
 public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelImpl.OnNewGroupModelListener {
+
+    private static final int ADD_PHOTO_REQUEST_CODE = 23;
 
     private NewGroupView mNewGroupView;
 
@@ -38,6 +43,18 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
     @Override
     public void onGroupPhotoDone(File file, String filepath, String filename) {
         mNewGroupModel.updateGroupPhoto(file, filepath,filename);
+    }
+
+    @Override
+    public void onClickImage() {
+        mNewGroupView.navigateToAddPhoto(ADD_PHOTO_REQUEST_CODE);
+    }
+
+    @Override
+    public void onGetResult(int requestCode, int resultCode, Intent data) {
+        if (ADD_PHOTO_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
+            mNewGroupModel.onGetImage(data);
+        }
     }
 
     @Override

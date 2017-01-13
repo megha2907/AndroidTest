@@ -14,4 +14,6 @@ public interface NewGroupView extends View {
     void setSuccessBack(Bundle bundle);
 
     void setGroupImage(String imageUrl);
+
+    void navigateToAddPhoto(int addPhotoRequestCode);
 }

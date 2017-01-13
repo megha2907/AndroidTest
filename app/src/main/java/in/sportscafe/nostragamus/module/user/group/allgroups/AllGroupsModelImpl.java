@@ -1,12 +1,17 @@
 package in.sportscafe.nostragamus.module.user.group.allgroups;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
+import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroups;
+import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroupsAdapter;
+import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -23,6 +28,8 @@ public class AllGroupsModelImpl implements AllGroupsModel{
 
     private AllGroupsAdapter mAllGroupsAdapter;
 
+    private MutualGroupsAdapter mMutualGroupsAdapter;
+
     private AllGroupsModelImpl.AllGroupsModelListener mAllGroupsModelListener;
 
     protected AllGroupsModelImpl(AllGroupsModelImpl.AllGroupsModelListener modelListener) {
@@ -37,6 +44,31 @@ public class AllGroupsModelImpl implements AllGroupsModel{
     @Override
     public void init() {
         getAllGroups();
+    }
+
+    @Override
+    public void initMutualGroups(Bundle bundle) {
+        PlayerInfo playerInfo = (PlayerInfo) bundle.getSerializable(Constants.BundleKeys.PLAYERINFO);
+        getMutualGroups(playerInfo);
+    }
+
+    private void getMutualGroups(PlayerInfo playerInfo) {
+
+        List<MutualGroups> newmutualGroups = playerInfo.getMutualGroups();
+        if (null != newmutualGroups && newmutualGroups.size() > 0) {
+            List<MutualGroups> oldMutualGroupsList = NostragamusDataHandler.getInstance().getMutualGroups();
+            oldMutualGroupsList.clear();
+            for (MutualGroups mutualGroups : newmutualGroups) {
+                if (!oldMutualGroupsList.contains(mutualGroups)) {
+                    oldMutualGroupsList.add(mutualGroups);
+                }
+            }
+            NostragamusDataHandler.getInstance().setMutualGroups(oldMutualGroupsList);
+            mAllGroupsModelListener.ongetMutualGroupsSuccess();
+
+        }else {
+            mAllGroupsModelListener.onMutualGroupsEmpty();
+        }
     }
 
 
@@ -59,14 +91,10 @@ public class AllGroupsModelImpl implements AllGroupsModel{
                                 }
                                 NostragamusDataHandler.getInstance().setAllGroups(oldAllGroupsList);
                                 NostragamusDataHandler.getInstance().setNumberofGroups(oldAllGroupsList.size());
-
-
                             }
 
                             mAllGroupsModelListener.ongetAllGroupsSuccess();
-
                         } else {
-
                             mAllGroupsModelListener.ongetAllGroupsFailed(response.message());
                         }
                     }
@@ -89,6 +117,21 @@ public class AllGroupsModelImpl implements AllGroupsModel{
     }
 
 
+    @Override
+    public RecyclerView.Adapter getMutualGroupsAdapter(Context context) {
+
+        if(mNostragamusDataHandler.getMutualGroups().isEmpty() || null == mNostragamusDataHandler.getMutualGroups()){
+
+            mAllGroupsModelListener.onMutualGroupsEmpty();
+        }
+        mMutualGroupsAdapter = new MutualGroupsAdapter(context,
+                mNostragamusDataHandler.getMutualGroups());
+        return mMutualGroupsAdapter;
+    }
+
+
+
+
     public interface AllGroupsModelListener {
 
         void onNoInternet();
@@ -100,5 +143,9 @@ public class AllGroupsModelImpl implements AllGroupsModel{
         void ongetAllGroupsSuccess();
 
         void ongetAllGroupsFailed(String message);
+
+        void onMutualGroupsEmpty();
+
+        void ongetMutualGroupsSuccess();
     }
 }

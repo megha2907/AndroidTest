@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.editgroupinfo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.jeeva.android.Log;
@@ -10,12 +11,16 @@ import java.io.File;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by Deepanshi on 12/6/16.
  */
 public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditGroupInfoModelImpl.OnEditGroupInfoModelListener {
 
     private EditGroupInfoView mGroupInfoView;
+
+    private static final int ADD_PHOTO_REQUEST_CODE = 23;
 
     private EditGroupInfoModel mGroupInfoModel;
 
@@ -35,11 +40,8 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
         mGroupInfoModel.init(bundle);
     }
 
-    private void onUpdateGroupInfo(GroupInfo groupInfo){
-
+    private void onUpdateGroupInfo(GroupInfo groupInfo) {
         mGroupInfoView.setGroupName(groupInfo.getName());
-        mGroupInfoView.setAdapter(mGroupInfoModel.getAdapter(mGroupInfoView.getContext()));
-
     }
 
 
@@ -47,16 +49,10 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
     @Override
     public void onDoneGroupName(String groupName,String groupPhoto) {
         mGroupInfoView.showProgressbar();
+        Log.i("name,photopres",groupName+""+groupPhoto);
         mGroupInfoModel.updateGroupName(groupName,groupPhoto);
         mGroupInfoView.setGroupIcon(groupName.substring(0,1));
     }
-
-    @Override
-    public void onDoneUpdateTournaments() {
-        mGroupInfoModel.updateTournaments();
-
-    }
-
 
 
     @Override
@@ -74,11 +70,6 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
     public void onNoInternet() {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
-    }
-
-    @Override
-    public void onGroupTournamentUpdateSuccess() {
-        mGroupInfoView.setSuccessResult();
     }
 
     @Override
@@ -104,7 +95,6 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
     public void onGetGroupSummarySuccess(GroupInfo groupInfo) {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoModel.updateGroupMembers();
-        mGroupInfoModel.updateTournaments();
         mGroupInfoView.setGroupImage(groupInfo.getPhoto());
         onUpdateGroupInfo(groupInfo);
 
@@ -114,6 +104,18 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
     @Override
     public void onGroupPhotoDone(File file, String filepath, String filename) {
         mGroupInfoModel.updateGroupPhoto(file, filepath,filename);
+    }
+
+    @Override
+    public void onClickImage() {
+        mGroupInfoView.navigateToAddPhoto(ADD_PHOTO_REQUEST_CODE);
+    }
+
+    @Override
+    public void onGetResult(int requestCode, int resultCode, Intent data) {
+        if (ADD_PHOTO_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
+            mGroupInfoModel.onGetImage(data);
+        }
     }
 
     @Override

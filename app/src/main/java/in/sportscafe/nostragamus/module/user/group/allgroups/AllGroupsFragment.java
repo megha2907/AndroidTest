@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 import static android.app.Activity.RESULT_OK;
@@ -33,9 +35,24 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
 
     private static final int GROUPS_CODE = 20;
 
+    private static Boolean allgroups;
+
     public static AllGroupsFragment newInstance() {
 
+        allgroups=true;
         AllGroupsFragment fragment = new AllGroupsFragment();
+        return fragment;
+    }
+
+    public static AllGroupsFragment newMutualGroupInstance(PlayerInfo playerInfo) {
+
+        allgroups=false;
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.BundleKeys.PLAYERINFO, playerInfo);
+
+        AllGroupsFragment fragment = new AllGroupsFragment();
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -53,7 +70,12 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
         this.mRvAllGroups.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL, false));
         this.mRvAllGroups.setHasFixedSize(true);
         this.mAllGroupsPresenter = AllGroupsPresenterImpl.newInstance(this);
-        this.mAllGroupsPresenter.onCreateAllGroups();
+
+        if (allgroups) {
+            this.mAllGroupsPresenter.onCreateAllGroups();
+        }else {
+            this.mAllGroupsPresenter.onCreateMutualGroups(getArguments());
+        }
 
     }
 
