@@ -302,28 +302,8 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
                     }
 
                     @Override
-                    public void onCardMovedtoLeft() {
-                        mSwipeListener.onCardMovedLeft();
-                    }
-
-                    @Override
-                    public void onCardMovedtoRight() {
-                        mSwipeListener.onCardMovedRight();
-                    }
-
-                    @Override
-                    public void onCardMovedtoTop() {
-                        mSwipeListener.onCardMovedTop();
-                    }
-
-                    @Override
-                    public void onCardMovedtoBottom() {
-                        mSwipeListener.onCardMovedBottom();
-                    }
-
-                    @Override
-                    public void onCardNotInMoveRegion() {
-                        mSwipeListener.onCardNotInMoveRegion();
+                    public void onCardMoving(int xPercent, int yPercent) {
+                        mSwipeListener.onCardMoving(xPercent, yPercent);
                     }
                 });
 
@@ -406,15 +386,7 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
 
         boolean needBottomSwipe();
 
-        void onCardMovedLeft();
-
-        void onCardMovedRight();
-
-        void onCardMovedTop();
-
-        void onCardMovedBottom();
-
-        void onCardNotInMoveRegion();
+        void onCardMoving(float xPercent, float yPercent);
     }
 
     public interface OnScrollListener {
