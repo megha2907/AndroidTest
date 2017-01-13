@@ -59,4 +59,7 @@
     <color name="cerulean">#11B0DE</color>
     <color name="white_60">#99FFFFFF</color>
 
+    <color name="radical_red">#FE3555</color>
+    <color name="malachite">#00CE61</color>
+
 </resources>

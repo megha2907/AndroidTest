@@ -12,6 +12,12 @@ import android.view.animation.OvershootInterpolator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import static android.R.attr.rotation;
+import static android.R.attr.x;
+import static com.google.android.gms.analytics.internal.zzy.d;
+import static com.google.android.gms.analytics.internal.zzy.f;
+import static com.google.android.gms.analytics.internal.zzy.m;
+
 public class FlingCardListener implements View.OnTouchListener {
 
     enum Direction {
@@ -19,6 +25,9 @@ public class FlingCardListener implements View.OnTouchListener {
     }
 
     private static final String TAG = FlingCardListener.class.getSimpleName();
+
+    private static final float PERCENT = 1f;
+    private static final float DELTA = 10f;
     private static final int INVALID_POINTER_ID = -1;
     private final float objectX;
     private final float objectY;
@@ -44,6 +53,12 @@ public class FlingCardListener implements View.OnTouchListener {
     private int touchPosition;
     private boolean isAnimationRunning = false;
     private float MAX_COS = (float) Math.cos(Math.toRadians(45));
+
+    private boolean mIsRotation = false;
+
+    private boolean mIsXAxis = true;
+
+    private boolean mIsYAxis = true;
 
 
     public FlingCardListener(View frame, Object itemAtPosition, FlingListener flingListener) {
@@ -145,8 +160,22 @@ public class FlingCardListener implements View.OnTouchListener {
 
 
                 aPosX += dx;
-                aPosY += dy;
+                /*if(mIsXAxis) {
+                } else {
+                    float tempX = aPosX + dx;
+                    if(tempX > mLeftXStopPos && tempX < mRightXStopPos) {
+                        aPosX = tempX;
+                    }
+                }*/
 
+                aPosY += dy;
+                /*if(mIsYAxis) {
+                } else {
+                    float tempY = aPosY + dy;
+                    if(tempY > mTopYStopPos && tempY < mBottomYStopPos) {
+                        aPosY = tempY;
+                    }
+                }*/
 
                 float distobjectX = aPosX - objectX;
                 float rotation = BASE_ROTATION_DEGREES * 2.f * distobjectX / parentWidth;
@@ -154,11 +183,16 @@ public class FlingCardListener implements View.OnTouchListener {
                     rotation = -rotation;
                 }
 
-                com.jeeva.android.Log.d(TAG, "Rotation --> " + rotation);
+//                checkSwipeDirection();
 
                 frame.setX(aPosX);
+
                 frame.setY(aPosY);
-                frame.setRotation(rotation);
+
+                if(mIsRotation) {
+                    frame.setRotation(rotation);
+                }
+
                 mFlingListener.onScroll(getScrollProgressPercent());
                 break;
 
@@ -178,7 +212,14 @@ public class FlingCardListener implements View.OnTouchListener {
     }
 
     private float getScrollProgressPercent() {
-        if (movedBeyondLeftBorder()) {
+        float xPercent = ((aPosX + halfWidth - leftBorder()) / (rightBorder() - leftBorder())) * 2f - 1f;
+        float yPercent = ((aPosY + halfHeight - topBorder()) / (bottomBorder() - topBorder())) * 2f - 1f;
+        mFlingListener.onCardMoving((int) (xPercent/1f * 100), (int) (yPercent/1f * 100));
+
+        return xPercent;
+
+
+        /*if (movedBeyondLeftBorder()) {
             mFlingListener.onCardMovedtoLeft();
             return -1f;
         } else if (movedBeyondRightBorder()) {
@@ -192,10 +233,39 @@ public class FlingCardListener implements View.OnTouchListener {
                 mFlingListener.onCardMovedtoTop();
             } else {
                 mFlingListener.onCardNotInMoveRegion();
-            }
-            float zeroToOneValue = (aPosX + halfWidth - leftBorder()) / (rightBorder() - leftBorder());
-            return zeroToOneValue * 2f - 1f;
+            }*/
+
+
+
+
+//        }
+    }
+
+    private float mLeftXStopPos;
+    private float mRightXStopPos;
+
+    private float mTopYStopPos;
+    private float mBottomYStopPos;
+
+    private void checkSwipeDirection() {
+        if(movingToLeftBorder() || movingToRightBorder()) {
+            mIsXAxis = true;
+            mIsYAxis = false;
+
+            mTopYStopPos = aPosY - DELTA;
+            mBottomYStopPos = aPosY + DELTA;
+        } else if(movingToTopBorder() || movingToBottomBorder()) {
+            mIsXAxis = false;
+            mIsYAxis = true;
+
+            mLeftXStopPos = aPosX - DELTA;
+            mRightXStopPos = aPosX + DELTA;
+        } else {
+            mIsXAxis = true;
+            mIsYAxis = true;
         }
+
+        com.jeeva.android.Log.d("x, y --> ", mIsXAxis + ", " + mIsYAxis);
     }
 
     private boolean resetCardViewOnStack() {
@@ -222,7 +292,22 @@ public class FlingCardListener implements View.OnTouchListener {
                     .setInterpolator(new OvershootInterpolator(1.5f))
                     .x(objectX)
                     .y(objectY)
-                    .rotation(0);
+                    .rotation(0)
+                    .setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {}
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            getScrollProgressPercent();
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {}
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {}
+                    });
             mFlingListener.onScroll(0.0f);
             if (abslMoveDistance < 4.0) {
                 mFlingListener.onClick(dataObject);
@@ -245,6 +330,22 @@ public class FlingCardListener implements View.OnTouchListener {
 
     private boolean movedBeyondBottomBorder() {
         return aPosY + halfHeight > bottomBorder();
+    }
+
+    private boolean movingToLeftBorder() {
+        return aPosX + halfWidth < leftBorder() * PERCENT;
+    }
+
+    private boolean movingToRightBorder() {
+        return aPosX + halfWidth > rightBorder() * PERCENT;
+    }
+
+    private boolean movingToTopBorder() {
+        return aPosY + halfHeight < topBorder() * PERCENT;
+    }
+
+    private boolean movingToBottomBorder() {
+        return aPosY + halfHeight > bottomBorder() * PERCENT;
     }
 
     public float leftBorder() {
@@ -400,15 +501,7 @@ public class FlingCardListener implements View.OnTouchListener {
 
         void onScroll(float scrollProgressPercent);
 
-        void onCardMovedtoLeft();
-
-        void onCardMovedtoRight();
-
-        void onCardMovedtoTop();
-
-        void onCardMovedtoBottom();
-
-        void onCardNotInMoveRegion();
+        void onCardMoving(int xPercent, int yPercent);
     }
 
 }

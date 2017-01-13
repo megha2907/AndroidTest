@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.jeeva.android.widgets.customfont.CustomTextView;
@@ -64,8 +65,10 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mSwipeFlingAdapterView.setScrollListener(new SwipeFlingAdapterView.OnScrollListener() {
             @Override
             public void onScroll(float scrollProgressPercent) {
-                View view = mSwipeFlingAdapterView.getSelectedView();
-                view.findViewById(R.id.background).setAlpha(0);
+                /*View view = mSwipeFlingAdapterView.getSelectedView();
+                view.findViewById(R.id.background).setAlpha(0);*/
+
+                Log.d("scrollProgressPercent --> ", scrollProgressPercent + "");
             }
         });
 
@@ -519,6 +522,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void goBack() {
         onBackPressed();
+    }
+
+    @Override
+    public View getRootView() {
+        return findViewById(R.id.content);
     }
 
 
