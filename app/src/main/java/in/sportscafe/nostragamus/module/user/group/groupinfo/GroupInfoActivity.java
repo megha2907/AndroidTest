@@ -1,28 +1,19 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
@@ -30,13 +21,6 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.jeeva.android.widgets.HmImageView;
-import com.jeeva.android.widgets.customfont.CustomButton;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -51,10 +35,7 @@ import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoAc
 import in.sportscafe.nostragamus.module.user.group.groupselection.GroupSelectionFragment;
 import in.sportscafe.nostragamus.module.user.group.members.MembersActivity;
 import in.sportscafe.nostragamus.module.user.group.members.MembersFragment;
-import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroupsFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
-import in.sportscafe.nostragamus.module.user.playerbadges.PlayerBadgeFragment;
-import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 
 /**
  * Created by Jeeva on 12/6/16.

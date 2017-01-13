@@ -9,7 +9,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
@@ -26,14 +24,9 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
-import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
-import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroupsFragment;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
 import in.sportscafe.nostragamus.module.user.playerbadges.PlayerBadgeFragment;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUpFragment;
-import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 
 
 /**
@@ -326,9 +319,9 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
                 playerInfo.getTotalMatchesPlayed() + "\n Matches");
 
         if (groupsCount=="1"){
-            pagerAdapter.addFragment(MutualGroupsFragment.newInstance(playerInfo), groupsCount+ "\n Mutual Group");
+            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), groupsCount+ "\n Mutual Group");
         }else {
-            pagerAdapter.addFragment(MutualGroupsFragment.newInstance(playerInfo), groupsCount+ "\n Mutual Groups");
+            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), groupsCount+ "\n Mutual Groups");
         }
         if (badgeCount=="1"){
             pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount+"\n Badge");

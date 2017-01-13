@@ -26,6 +26,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
@@ -129,19 +130,24 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
 
     }
 
+    @Override
+    public void navigateToAddPhoto(int addPhotoRequestCode) {
+        startActivityForResult(new Intent(this, AddPhotoActivity.class), addPhotoRequestCode);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mNewGroupPresenter.onGetResult(requestCode, resultCode, data);
+    }
+
 
     public void showImagePopup(View view) {
         if (checker.lacksPermissions(PERMISSIONS_READ_STORAGE)) {
             startPermissionsActivity(PERMISSIONS_READ_STORAGE);
         } else {
-            // File System.
-            final Intent galleryIntent = new Intent();
-            galleryIntent.setType("image/*");
-            galleryIntent.setAction(Intent.ACTION_PICK);
 
-            // Chooser of file system options.
-            final Intent chooserIntent = Intent.createChooser(galleryIntent, Constants.Alerts.IMAGE_UPLOAD_TEXT);
-            startActivityForResult(chooserIntent, 1010);
+            mNewGroupPresenter.onClickImage();
         }
     }
 
@@ -149,95 +155,4 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
         PermissionsActivity.startActivityForResult(this, 0, permission);
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            if (resultCode == Activity.RESULT_OK ) {
-
-                if (requestCode == 1010){
-
-                    if (data == null) {
-                        Toast.makeText(getActivity(), Constants.Alerts.IMAGE_UNABLE_TO_PICK,
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    Uri selectedImageUri = data.getData();
-
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                    Cursor cursor = getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);
-
-                    if (cursor != null) {
-                        cursor.moveToFirst();
-
-                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                        imagePath = cursor.getString(columnIndex);
-
-                        File file = new File(imagePath);
-                        long length = file.length() / 10240;
-
-                        if(length < 10240){
-                            if (!TextUtils.isEmpty(imagePath)) {
-                                uploadImage();
-                            }
-
-                            Picasso.with(getApplicationContext()).load(new File(imagePath))
-                                    .into(mIvGroupImage);
-                            cursor.close();
-
-                            mIvGroupImage.setVisibility(View.VISIBLE);
-
-                        }
-                        else
-                        {
-                            Toast toast =Toast.makeText(getContext(), "Image size is too large, please select an image with size <10MB", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
-                        }
-
-                        NostragamusAnalytics.getInstance().trackNewGroup(AnalyticsActions.PHOTO, AnalyticsLabels.GALLERY);
-                    } else {
-
-                        mIvGroupImage.setVisibility(View.GONE);
-                        Toast.makeText(getActivity(), Constants.Alerts.IMAGE_UNABLE_TO_LOAD,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT)
-                    .show();
-        }
-    }
-
-    private void uploadImage() {
-
-        //File creating from selected URL
-        File file = new File(imagePath);
-
-        // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-
-        // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-
-        // add another part within the multipart request
-        String Serverfilepath = "game/groupimages/";
-        RequestBody filepath =
-                RequestBody.create(
-                        MediaType.parse("multipart/form-data"), Serverfilepath);
-
-        String ServerfileName = file.getName();
-        RequestBody filename =
-                RequestBody.create(
-                        MediaType.parse("multipart/form-data"), ServerfileName);
-
-
-        mNewGroupPresenter.onGroupPhotoDone(file, Serverfilepath, ServerfileName);
-
-    }
 }

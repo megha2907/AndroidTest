@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.user.group.editgroupinfo;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.io.File;
@@ -17,15 +18,12 @@ public interface EditGroupInfoPresenter {
 
     void onDoneGroupName(String groupName,String groupPhoto);
 
-    void onDoneUpdateTournaments();
 
     void onGetMemberResult();
 
     void onGroupNameEmpty();
 
     void onNoInternet();
-
-    void onGroupTournamentUpdateSuccess();
 
     void onLeaveGroupSuccess();
 
@@ -34,4 +32,8 @@ public interface EditGroupInfoPresenter {
     void onGetGroupSummarySuccess(GroupInfo groupInfo);
 
     void onGroupPhotoDone(File body, String filepath, String filename);
+
+    void onClickImage();
+
+    void onGetResult(int requestCode, int resultCode, Intent data);
 }

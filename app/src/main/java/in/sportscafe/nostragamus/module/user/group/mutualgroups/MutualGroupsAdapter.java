@@ -57,21 +57,22 @@ public class MutualGroupsAdapter extends Adapter<MutualGroups, MutualGroupsAdapt
 
         if (mutualGroups.getCountGroupMembers()==1){
 
-            holder.mTvGroupMembers.setText("("+ String.valueOf(mutualGroups.getCountGroupMembers())+")");
+            holder.mTvGroupTournaments.setText(String.valueOf(mutualGroups.getCountGroupMembers())+" Tournament");
         }
         else {
-            holder.mTvGroupMembers.setText("("+String.valueOf(mutualGroups.getCountGroupMembers())+")");
+            holder.mTvGroupTournaments.setText(String.valueOf(mutualGroups.getCountGroupMembers())+" Tournaments");
         }
 
-        if (null==mutualGroups.getGroupPhoto() || mutualGroups.getGroupPhoto().isEmpty()) {
+        if (mutualGroups.getCountGroupMembers()==1){
 
-            holder.mIvGroupImage.setImageDrawable(null);
-            holder.mIvGroupImage.setImageResource(R.drawable.placeholder_icon);
+            holder.mTvGroupMembers.setText(String.valueOf(mutualGroups.getCountGroupMembers())+" Member");
         }
-        else
-        {
+        else {
+            holder.mTvGroupMembers.setText(String.valueOf(mutualGroups.getCountGroupMembers())+" Members");
+        }
+
             holder.mIvGroupImage.setImageUrl(mutualGroups.getGroupPhoto());
-        }
+
 
     }
 

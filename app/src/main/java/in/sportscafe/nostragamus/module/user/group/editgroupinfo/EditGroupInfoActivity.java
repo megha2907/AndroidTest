@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.squareup.picasso.Picasso;
 
@@ -29,6 +30,7 @@ import java.io.File;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
@@ -54,8 +56,6 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
     PermissionsChecker checker;
 
-    private String imagePath;
-
     private HmImageView mIvGroupImage;
 
     private static final int CODE_ADMIN_MEMBERS = 3;
@@ -64,15 +64,9 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
     private ImageButton mIBtnEditName;
 
-    private TextView mEtMembersCount;
-
     private Button mBtnGroupIcon;
 
-    private RecyclerView mRvSportSelection;
-
     private EditGroupInfoPresenter mEditGroupInfoPresenter;
-
-    private LinearLayoutManager mlinearLayoutManagerVertical;
 
     private Toolbar mtoolbar;
 
@@ -98,10 +92,6 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
         mIBtnEditName = (ImageButton) findViewById(R.id.group_info_btn_edit_name);
 
-        this.mRvSportSelection = (RecyclerView) findViewById(R.id.group_info_selected_tournaments_rcv);
-        this.mRvSportSelection.setLayoutManager(new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false));
-        this.mRvSportSelection.setHasFixedSize(true);
         this.mEditGroupInfoPresenter = EditGroupInfoPresenterImpl.newInstance(this);
         this.mEditGroupInfoPresenter.onCreateGroupInfo(getIntent().getExtras());
 
@@ -136,11 +126,9 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
             case R.id.save_btn:
 
-                if (editGroupName)
-                {
+                   Log.i("name,photo",getTrimmedText(mEtGroupName)+""+mPhoto);
                     mEditGroupInfoPresenter.onDoneGroupName(getTrimmedText(mEtGroupName),mPhoto);
-                    setResult(RESULT_OK);
-                }
+                    //setResult(RESULT_OK);
 
                 break;
 
@@ -157,12 +145,6 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
         mBtnGroupIcon.setText(groupName.substring(0,1));
     }
 
-
-
-    @Override
-    public void setAdapter(GrpTournamentSelectionAdapter adapter) {
-        this.mRvSportSelection.setAdapter(adapter);
-    }
 
     private void navigatetoGroupInfoActivity() {
 
@@ -190,16 +172,12 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
     @Override
     public void setGroupIcon(String groupIcon) {
-
         mBtnGroupIcon.setText(groupIcon);
-
     }
 
     @Override
     public void goBackWithSuccessResult() {
-        setResult(RESULT_OK);
-        onBackPressed();
-        finish();
+        navigatetoGroupInfoActivity();
     }
 
 
@@ -232,30 +210,31 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
         mPhoto = imageUrl;
 
         if (null==imageUrl) {
-
             mIvGroupImage.setBackgroundResource(R.drawable.placeholder_icon);
         }
         else
         {
             mIvGroupImage.setImageUrl(imageUrl);
-
         }
 
     }
 
+    @Override
+    public void navigateToAddPhoto(int addPhotoRequestCode) {
+        startActivityForResult(new Intent(this, AddPhotoActivity.class), addPhotoRequestCode);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mEditGroupInfoPresenter.onGetResult(requestCode, resultCode, data);
+    }
 
     public void showImagePopup(View view) {
         if (checker.lacksPermissions(PERMISSIONS_READ_STORAGE)) {
             startPermissionsActivity(PERMISSIONS_READ_STORAGE);
         } else {
-            // File System.
-            final Intent galleryIntent = new Intent();
-            galleryIntent.setType("image/*");
-            galleryIntent.setAction(Intent.ACTION_PICK);
-
-            // Chooser of file system options.
-            final Intent chooserIntent = Intent.createChooser(galleryIntent, Constants.Alerts.IMAGE_UPLOAD_TEXT);
-            startActivityForResult(chooserIntent, 1010);
+            mEditGroupInfoPresenter.onClickImage();
         }
     }
 
@@ -263,100 +242,6 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
         PermissionsActivity.startActivityForResult(this, 0, permission);
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            if(RESULT_OK == resultCode && CODE_ADMIN_MEMBERS == requestCode) {
-                mEditGroupInfoPresenter.onGetMemberResult();
-            }
-
-           else if (resultCode == Activity.RESULT_OK ) {
-
-                if (requestCode == 1010){
-
-                    if (data == null) {
-                        Toast.makeText(getActivity(), Constants.Alerts.IMAGE_UNABLE_TO_PICK,
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    Uri selectedImageUri = data.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                    Cursor cursor = getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);
-
-                    if (cursor != null) {
-                        cursor.moveToFirst();
-
-                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                        imagePath = cursor.getString(columnIndex);
-
-                        File file = new File(imagePath);
-                        long length = file.length() / 10240;
-
-                        if(length < 10240){
-                            if (!TextUtils.isEmpty(imagePath)) {
-                                uploadImage();
-                            }
-
-                            Picasso.with(getApplicationContext()).load(new File(imagePath))
-                                    .into(mIvGroupImage);
-
-                            cursor.close();
-
-                            mIvGroupImage.setVisibility(View.VISIBLE);
-
-                        }
-                        else
-                        {
-                            Toast toast =Toast.makeText(getContext(), "Image size is too large, please select an image with size <10MB", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
-                        }
-
-                    } else {
-
-                        mIvGroupImage.setVisibility(View.GONE);
-                        Toast.makeText(getActivity(), Constants.Alerts.IMAGE_UNABLE_TO_LOAD,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT)
-                    .show();
-        }
-    }
-
-    private void uploadImage() {
-
-        //File creating from selected URL
-        File file = new File(imagePath);
-
-        // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-
-        // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-
-        // add another part within the multipart request
-        String Serverfilepath = "game/groupimages/";
-        RequestBody filepath =
-                RequestBody.create(
-                        MediaType.parse("multipart/form-data"), Serverfilepath);
-
-        String ServerfileName = file.getName();
-        RequestBody filename =
-                RequestBody.create(
-                        MediaType.parse("multipart/form-data"), ServerfileName);
-
-
-        mEditGroupInfoPresenter.onGroupPhotoDone(file, Serverfilepath, ServerfileName);
-
-    }
 
 
 }

@@ -93,8 +93,8 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
         mEditProfileView.dismissProgressbar();
 
         if (screen.equals(Constants.BundleKeys.HOME_SCREEN)) {
-            //mEditProfileView.navigateToHome();
-            mEditProfileView.setSuccessResult();
+            mEditProfileView.navigateToHome();
+            //mEditProfileView.setSuccessResult();
         } else {
             //mEditProfileView.navigateToSportsSelection();
 

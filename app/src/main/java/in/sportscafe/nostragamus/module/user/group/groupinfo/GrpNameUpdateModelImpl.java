@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
+import com.jeeva.android.Log;
+
 import java.util.Map;
 
 import in.sportscafe.nostragamus.Nostragamus;
@@ -27,13 +29,14 @@ public class GrpNameUpdateModelImpl {
 
     public void updateGrpName(String name,String photo) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
+            Log.i("name,photomodelimpl",name+""+photo);
             callGrpNameUpdateApi(name,photo);
         } else {
             mGrpNameUpdateModelListener.onNoInternet();
         }
     }
 
-    private void callGrpNameUpdateApi(final String name,String photo) {
+    private void callGrpNameUpdateApi(final String name, String photo) {
         GroupNameUpdateRequest groupNameUpdateRequest = new GroupNameUpdateRequest();
         groupNameUpdateRequest.setAdminId(NostragamusDataHandler.getInstance().getUserId());
         groupNameUpdateRequest.setGroupId(mGroupId);

@@ -28,6 +28,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,9 +68,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     private Toolbar mtoolbar;
     private TextView mTitle;
     private boolean goback = false;
-    private Boolean isFabOpen,isShareFabOpen = false;
+    private Boolean isFabOpen = false;
+    private Boolean isShareFabOpen = false;
     private View powerupReplayFab,powerupFlipFab,fabContainer/*,shareContainer,btnfbShare*/;
-    private FloatingActionButton powerupMainFab,shareFab;
+    private ImageButton powerupMainFab;
+    private FloatingActionButton shareFab;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward,share_rotate_forward,share_rotate_backward;
 
     private float offset1;
@@ -110,10 +113,10 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         //POWERUPFAB ICONS
         btnReplayPowerUpCount=(Button) findViewById(R.id.powerup_replay_count);
         btnFlipPowerUpCount=(Button)findViewById(R.id.powerup_flip_count);
-        powerupMainFab = (FloatingActionButton)findViewById(R.id.fab_main);
+        powerupMainFab = (ImageButton)findViewById(R.id.results_fab_main);
 
-        powerupReplayFab = findViewById(R.id.fab_replay);
-        powerupFlipFab = findViewById(R.id.fab_flip);
+        powerupReplayFab = findViewById(R.id.fab_fl_replay);
+        powerupFlipFab = findViewById(R.id.fab_fl_flip);
         fabContainer = findViewById(R.id.fab_container);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_open);
@@ -274,7 +277,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.fab_main:
+            case R.id.results_fab_main:
                 animateFAB();
                 break;
 
@@ -293,6 +296,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                     }
+                    animateFAB();
                 }
             case R.id.fab_flip:
                 if (!mFlippowerUpApplied || !mReplaypowerUpApplied ) {
@@ -305,6 +309,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                        toast.setGravity(Gravity.CENTER, 0, 0);
                        toast.show();
                    }
+                    animateFAB();
                 }
                 break;
 
@@ -383,7 +388,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         String flipPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofFlipPowerups());
         btnFlipPowerUpCount.setText(flipPowerUps);
         mResultsPresenter.onFlipPowerupApplied();
-        animateFAB();
     }
 
     public void animateFAB(){

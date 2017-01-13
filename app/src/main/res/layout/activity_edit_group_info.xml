@@ -133,28 +133,6 @@
             </RelativeLayout>
 
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/group_info_tv_label_sports"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/group_info_rl2"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:text="TOURNAMENTS"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dp_12"
-                app:typeface="lato_regular"/>
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/group_info_selected_tournaments_rcv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/group_info_tv_label_sports"
-                android:clipToPadding="false"
-                />
-
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

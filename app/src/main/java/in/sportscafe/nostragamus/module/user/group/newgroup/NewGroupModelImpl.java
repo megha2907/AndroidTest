@@ -1,13 +1,16 @@
 package in.sportscafe.nostragamus.module.user.group.newgroup;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -136,10 +139,19 @@ public class NewGroupModelImpl implements NewGroupModel {
         }
         if(Nostragamus.getInstance().hasNetworkConnection()) {
             mNewGroupModelListener.onUpdating();
-            callUpdateGroupPhotoApi(file,filepath,filename);
+            callUpdateGroupPhotoApi(file,filepath, UUID.randomUUID().toString() + "_" + filename);
         } else {
             mNewGroupModelListener.onNoInternet();
         }
+    }
+
+    @Override
+    public void onGetImage(Intent data) {
+        String imagePath = data.getStringExtra(Constants.BundleKeys.ADDED_NEW_IMAGE_PATH);
+        Log.i("file", imagePath);
+
+        File file = new File(imagePath);
+        updateGroupPhoto(file, "game/groupimages/", file.getName());
     }
 
 

@@ -159,6 +159,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     public void navigateToHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("group", "openprofile");
         startActivity(intent);
         finish();
     }
