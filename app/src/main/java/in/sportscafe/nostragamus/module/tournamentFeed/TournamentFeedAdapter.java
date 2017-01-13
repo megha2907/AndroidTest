@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
@@ -54,6 +55,13 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
 
         holder.mTvTournamentUnplayedCount.setText(tournamentInfo.getTournamentSubtext());
 
+        if (!tournamentInfo.getCountsUnplayed().equals("0")){
+            holder.mBtnTournamentUnplayedCount.setVisibility(View.VISIBLE);
+            holder.mBtnTournamentUnplayedCount.setText(tournamentInfo.getCountsUnplayed());
+        }else {
+            holder.mBtnTournamentUnplayedCount.setVisibility(View.GONE);
+        }
+
         holder.mIvTournamentImage.setImageUrl(
                 tournamentInfo.getTournamentPhoto()
         );
@@ -74,6 +82,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
         TextView mTvTournamentName;
         HmImageView mIvTournamentImage;
         TextView mTvTournamentUnplayedCount;
+        Button mBtnTournamentUnplayedCount;
 
 
         public ViewHolder(View V) {
@@ -82,6 +91,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
             mTvTournamentName = (TextView) V.findViewById(R.id.tournament_tv_tournamentName);
             mIvTournamentImage = (HmImageView) V.findViewById(R.id.tournament_iv_tournamentImage);
             mTvTournamentUnplayedCount = (TextView) V.findViewById(R.id.tournament_btn_count_unplayed);
+            mBtnTournamentUnplayedCount = (Button)V.findViewById(R.id.tournament_btn_unplayed_count);
 
             V.setOnClickListener(this);
         }

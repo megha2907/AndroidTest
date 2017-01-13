@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.editgroupinfo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.io.File;
@@ -17,7 +18,7 @@ public interface EditGroupInfoModel {
 
     void init(Bundle bundle);
 
-    void updateTournaments();
+    void onGetImage(Intent data);
 
     boolean amAdmin();
 
@@ -25,13 +26,10 @@ public interface EditGroupInfoModel {
 
     int getMembersCount();
 
-    GrpTournamentSelectionAdapter getAdapter(Context context);
-
     Bundle getGroupIdBundle();
 
     void updateGroupName(String groupName, String photo);
 
-    String getShareCodeContent();
 
     void refreshGroupInfo();
 
@@ -40,4 +38,6 @@ public interface EditGroupInfoModel {
     void updateGroupMembers();
 
     void updateGroupPhoto(File file, String filepath, String filename);
+
+
 }

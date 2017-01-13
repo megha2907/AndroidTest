@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.allgroups;
 
+import android.os.Bundle;
+
 import in.sportscafe.nostragamus.Constants;
 
 
@@ -36,9 +38,21 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
                 .getAllGroupsAdapter(mAllGroupsView.getContext()));
     }
 
+    private void onCreateMutualGroupsAdapter() {
+        mAllGroupsView.setAdapter(mAllGroupsModel
+                .getMutualGroupsAdapter(mAllGroupsView.getContext()));
+    }
+
+
     @Override
     public void onClickNext() {
         mAllGroupsView.showProgressbar();
+    }
+
+    @Override
+    public void onCreateMutualGroups(Bundle bundle) {
+        mAllGroupsView.showProgressbar();
+        mAllGroupsModel.initMutualGroups(bundle);
     }
 
     @Override
@@ -69,4 +83,17 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
         mAllGroupsView.dismissProgressbar();
         mAllGroupsView.showMessage(message);
     }
+
+    @Override
+    public void onMutualGroupsEmpty() {
+        mAllGroupsView.dismissProgressbar();
+        mAllGroupsView.showGroupsEmpty();
+    }
+
+    @Override
+    public void ongetMutualGroupsSuccess() {
+        mAllGroupsView.dismissProgressbar();
+        onCreateMutualGroupsAdapter();
+    }
+
 }

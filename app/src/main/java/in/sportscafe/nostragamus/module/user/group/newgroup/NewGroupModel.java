@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.newgroup;
 
 import android.content.Context;
+import android.content.Intent;
 
 import java.io.File;
 
@@ -17,4 +18,6 @@ public interface NewGroupModel {
     void createGroup(String groupName);
 
     void updateGroupPhoto(File file, String filepath, String filename);
+
+    void onGetImage(Intent data);
 }

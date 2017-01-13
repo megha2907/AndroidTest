@@ -11,8 +11,6 @@ public interface EditGroupInfoView extends View {
 
     void setGroupName(String groupName);
 
-    void setAdapter(GrpTournamentSelectionAdapter adapter);
-
     void navigateToHome();
 
     void disableEdit();
@@ -24,4 +22,6 @@ public interface EditGroupInfoView extends View {
     void setSuccessResult();
 
     void setGroupImage(String imageUrl);
+
+    void navigateToAddPhoto(int addPhotoRequestCode);
 }

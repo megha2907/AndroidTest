@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.editgroupinfo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.jeeva.android.Log;
@@ -8,6 +9,7 @@ import com.jeeva.android.Log;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -35,8 +37,6 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
     private boolean mAdmin = false;
 
     private GroupInfo mGroupInfo;
-
-    private GrpTournamentSelectionAdapter mGrpTournamentSelectionAdapter;
 
     private OnEditGroupInfoModelListener mGroupInfoModelListener;
 
@@ -88,10 +88,21 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
         }
         if(Nostragamus.getInstance().hasNetworkConnection()) {
             mGroupInfoModelListener.onUpdating();
-            callUpdateGroupPhotoApi(file,filepath,filename);
+            callUpdateGroupPhotoApi(file,filepath, UUID.randomUUID().toString() + "_" + filename);
         } else {
             mGroupInfoModelListener.onNoInternet();
         }
+    }
+
+    @Override
+    public void onGetImage(Intent data) {
+
+        String imagePath = data.getStringExtra(Constants.BundleKeys.ADDED_NEW_IMAGE_PATH);
+        android.util.Log.i("file", imagePath);
+
+        File file = new File(imagePath);
+        updateGroupPhoto(file, "game/groupimages/", file.getName());
+
     }
 
 
@@ -111,80 +122,6 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
             }
 
         });
-
-    }
-
-    private void getAllTournamentsfromServer() {
-        if(Nostragamus.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getCurrentTournaments(true).enqueue(
-                    new NostragamusCallBack<TournamentFeedResponse>() {
-                        @Override
-                        public void onResponse(Call<TournamentFeedResponse> call, Response<TournamentFeedResponse> response) {
-                            super.onResponse(call, response);
-                            if(response.isSuccessful()) {
-                                List<TournamentFeedInfo> newTournamentInfo = response.body().getTournamentInfos();
-
-                                if(null != newTournamentInfo && newTournamentInfo.size() > 0) {
-                                    List<TournamentFeedInfo> oldTournamentList = mNostragamusDataHandler.getTournaments();
-                                    oldTournamentList.clear();
-                                    for (TournamentFeedInfo tournamentInfo : newTournamentInfo) {
-                                        if(!oldTournamentList.contains(tournamentInfo)) {
-                                            oldTournamentList.add(tournamentInfo);
-                                        }
-                                    }
-
-                                    mNostragamusDataHandler.setTournaments(oldTournamentList);
-                                    mGrpTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
-
-                                    mGroupInfoModelListener.onSuccessTournamentInfo();
-                                }
-
-                            } else {
-                                mGroupInfoModelListener.onFailed(response.message());
-                            }
-                        }
-                    }
-            );
-        } else {
-            mGroupInfoModelListener.onNoInternet();
-        }
-    }
-
-    @Override
-    public void updateTournaments(){
-
-        Log.i("inside","updateTournaments");
-
-        this.mGrpTournamentUpdateModel = new GrpTournamentUpdateModelImpl(mGroupInfo.getId(),
-                new GrpTournamentUpdateModelImpl.OnGrpTournamentUpdateModelListener() {
-                    @Override
-                    public void onSuccessGrpTournamentUpdate() {
-                        mGroupInfoModelListener.onGroupTournamentUpdateSuccess();
-                    }
-
-                    @Override
-                    public void onFailedGrpTournamentUpdate(String message) {}
-
-                    @Override
-                    public void onNoInternet() {}
-                });
-
-        this.mGrpNameUpdateModel = new GrpNameUpdateModelImpl(mGroupInfo.getId(),
-                new GrpNameUpdateModelImpl.OnGrpNameUpdateModelListener() {
-                    @Override
-                    public void onSuccessGrpNameUpdate() {
-                        mGroupInfoModelListener.onGroupNameUpdateSuccess();
-                    }
-
-                    @Override
-                    public void onFailedGrpNameUpdate(String message) {}
-
-                    @Override
-                    public void onNoInternet() {
-                        mGroupInfoModelListener.onNoInternet();
-                    }
-                });
-
 
     }
 
@@ -236,61 +173,6 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
     }
 
     @Override
-    public GrpTournamentSelectionAdapter getAdapter(Context context) {
-
-        getAllTournamentsfromServer();
-        List<TournamentFeedInfo> followedTournaments = mGroupInfo.getFollowedTournaments();
-
-        List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
-        for (TournamentFeedInfo tournamentInfo : followedTournaments) {
-            mFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
-        }
-
-
-        List<TournamentFeedInfo> unfollowedTournaments = mNostragamusDataHandler.getTournaments();
-        unfollowedTournaments.removeAll(followedTournaments);
-
-        List<Integer> mUnFollowedTournamentsIdList = new ArrayList<>();
-        for (TournamentFeedInfo tournamentInfo : unfollowedTournaments) {
-            mUnFollowedTournamentsIdList.add(tournamentInfo.getTournamentId());
-        }
-
-
-//
-//        this.mGrpTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context,
-//                mFollowedTournamentsIdList, new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
-//
-//            @Override
-//            public boolean onGrpTournamentSelected(boolean addNewTournament, int existingTournamentCount) {
-//                return mAdmin && (addNewTournament || existingTournamentCount > 1);
-//            }
-//
-//            @Override
-//            public void onGrpTournamentChanged(List<Integer> selectedTournamentsIdList) {
- //               mGrpTournamentUpdateModel.updateGrpTournaments(selectedTournamentsIdList);
-//            }
-//
-//            @Override
-//            public void removeSelectedTournament(int adapterPosition) {
-//
-//            }
-//
-//            @Override
-//            public void addSelectedTournament(int adapterPosition) {
-//
-//            }
-//
-//        });
-
-//        if(amAdmin()) {
-//            this.mGrpTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
-//        } else {
-//            this.mGrpTournamentSelectionAdapter.addAll(followedTournaments);
-//        }
-        return mGrpTournamentSelectionAdapter;
-    }
-
-    @Override
     public Bundle getGroupIdBundle() {
         Bundle bundle = new Bundle();
         bundle.putLong(Constants.BundleKeys.GROUP_ID, mGroupInfo.getId());
@@ -299,21 +181,32 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
 
     @Override
     public void updateGroupName(String groupName,String photo) {
+
+        this.mGrpNameUpdateModel = new GrpNameUpdateModelImpl(mGroupInfo.getId(),
+                new GrpNameUpdateModelImpl.OnGrpNameUpdateModelListener() {
+                    @Override
+                    public void onSuccessGrpNameUpdate() {
+                        mGroupInfoModelListener.onGroupNameUpdateSuccess();
+                    }
+
+                    @Override
+                    public void onFailedGrpNameUpdate(String message) {}
+
+                    @Override
+                    public void onNoInternet() {
+                        mGroupInfoModelListener.onNoInternet();
+                    }
+                });
+
         if (groupName.isEmpty()) {
             mGroupInfoModelListener.onGroupNameEmpty();
             return;
         }
 
+        Log.i("name,photomodel",groupName+""+photo);
         mGrpNameUpdateModel.updateGrpName(groupName,photo);
     }
 
-    @Override
-    public String getShareCodeContent() {
-        return "Group Code: " + mGroupInfo.getGroupCode() + "\n\n" +
-                "If you want to join in the '" + mGroupInfo.getName() +
-                "' group, Use the above code in the join group page in the application. " +
-                "\n\nIf you don't have the application, use this link";
-    }
 
     @Override
     public void refreshGroupInfo() {
@@ -347,8 +240,6 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
         void onGroupNameEmpty();
 
         void onNoInternet();
-
-        void onGroupTournamentUpdateSuccess();
 
         void onLeaveGroupSuccess();
 
