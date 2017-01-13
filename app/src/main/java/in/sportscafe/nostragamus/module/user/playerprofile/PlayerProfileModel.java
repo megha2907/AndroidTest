@@ -14,4 +14,6 @@ public interface PlayerProfileModel {
     void getProfileDetails(Bundle bundle);
 
     PlayerInfo getPlayerInfo();
+
+    void getPlayerInfoFromServer(Integer playerId);
 }

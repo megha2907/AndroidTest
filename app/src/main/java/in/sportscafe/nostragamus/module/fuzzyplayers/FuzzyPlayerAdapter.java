@@ -1,16 +1,17 @@
-package in.sportscafe.nostragamus.module.user.otheranswers;
+package in.sportscafe.nostragamus.module.fuzzyplayers;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.feed.dto.Feed;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.user.login.dto.BasicUserInfo;
 
 /**
@@ -50,7 +51,13 @@ public class FuzzyPlayerAdapter extends Adapter<BasicUserInfo, FuzzyPlayerAdapte
 
         @Override
         public void onClick(View view) {
+            BasicUserInfo basicUserInfo = getItem(getAdapterPosition());
 
+            Intent intent = new Intent(IntentActions.ACTION_FUZZY_PLAYER_CLICK);
+            intent.putExtra(Constants.BundleKeys.PLAYER_USER_ID, basicUserInfo.getId());
+            intent.putExtra(Constants.BundleKeys.PLAYER_USER_NAME, basicUserInfo.getUserNickName());
+
+            LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
         }
     }
 }

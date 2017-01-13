@@ -1,31 +1,30 @@
-package in.sportscafe.nostragamus.module.user.otheranswers;
+package in.sportscafe.nostragamus.module.fuzzyplayers;
 
 import android.content.Context;
 import android.os.Bundle;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 
 /**
  * Created by deepanshu on 12/10/16.
  */
-public class OthersAnswersPresenterImpl implements OthersAnswersPresenter, OthersAnswersModelImpl.OnOthersAnswersModelListener {
+public class FuzzyPlayersPresenterImpl implements FuzzyPlayersPresenter, FuzzyPlayersModelImpl.OnOthersAnswersModelListener {
 
-    private OthersAnswersView mOthersAnswersView;
+    private FuzzyPlayersView mOthersAnswersView;
 
-    private OthersAnswersModel mOthersAnswersModel;
+    private FuzzyPlayersModel mOthersAnswersModel;
 
-    public OthersAnswersPresenterImpl(OthersAnswersView view) {
+    public FuzzyPlayersPresenterImpl(FuzzyPlayersView view) {
         this.mOthersAnswersView = view;
-        this.mOthersAnswersModel = OthersAnswersModelImpl.newInstance(this);
+        this.mOthersAnswersModel = FuzzyPlayersModelImpl.newInstance(this);
     }
 
-    public static OthersAnswersPresenter newInstance(OthersAnswersView view) {
-        return new OthersAnswersPresenterImpl(view);
+    public static FuzzyPlayersPresenter newInstance(FuzzyPlayersView view) {
+        return new FuzzyPlayersPresenterImpl(view);
     }
 
     @Override
-    public void onCreateOthersAnswers(Bundle bundle) {
+    public void onCreateFuzzyPlayers(Bundle bundle) {
         Context context = mOthersAnswersView.getContext();
         if (null != context) {
             mOthersAnswersView.setAdapter(mOthersAnswersModel.createAdapter(context));

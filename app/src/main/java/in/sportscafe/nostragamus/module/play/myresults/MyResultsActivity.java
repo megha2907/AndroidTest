@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -29,6 +30,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -426,23 +428,21 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void takeScreenShot() {
-        Bitmap screenshot = ViewUtils.viewToBitmap(
-                mRvMyResults,
+        Resources resources = getResources();
+        LinearLayout ShareRow = (LinearLayout)findViewById(R.id.my_results_ll_share_score);
+        int delta = ShareRow.getHeight();
+        Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth() , mRvMyResults.computeVerticalScrollRange()-delta, Bitmap.Config.ARGB_8888);
+
+        Canvas c = new Canvas(screenshot);
+        mRvMyResults.layout(
+                0,
+                mRvMyResults.getHeight()-mRvMyResults.computeVerticalScrollRange(),
                 mRvMyResults.getWidth(),
-                mRvMyResults.computeVerticalScrollRange()
-        );
+                mRvMyResults.computeVerticalScrollRange());
+
+        mRvMyResults.draw(c);
 
         if(null != screenshot) {
-            Resources resources = getResources();
-            int delta = resources.getDimensionPixelSize(R.dimen.dp_10);
-
-            // cutting top part
-            screenshot = ViewUtils.cutPartOfBitmap(screenshot, new Rect(
-                    0,
-                    findViewById(R.id.schedule_row_ll).getTop() + delta,
-                    screenshot.getWidth(),
-                    findViewById(R.id.my_results_row_ll_predictions).getBottom() + delta)
-            );
 
             final ViewGroup parent = (ViewGroup) findViewById(R.id.for_screenshot);
             final View sharePhoto = getLayoutInflater().inflate(R.layout.inflater_my_result_share_holder, parent, false);
@@ -460,16 +460,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             sharePhoto.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-
                     sharePhoto.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-                        Bitmap screenshot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
-
-                        File screenshotFile = AppSnippet.saveBitmap(screenshot, "fb");
-
-                        parent.removeAllViews();
-
-                        mResultsPresenter.onGetScreenShot(screenshotFile);
+                    Bitmap screenshot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
+                    File screenshotFile = AppSnippet.saveBitmap(screenshot, "fb");
+                    parent.removeAllViews();
+                    mResultsPresenter.onGetScreenShot(screenshotFile);
                 }
             });
 
