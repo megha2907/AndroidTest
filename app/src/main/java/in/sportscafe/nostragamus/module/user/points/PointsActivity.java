@@ -71,10 +71,6 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
             }
         }
-        else if (null==icon || icon.isEmpty()) {
-            pointsIcon.setImageDrawable(null);
-            pointsIcon.setImageResource(R.drawable.placeholder_icon);
-        }
         else
         {
             pointsIcon.setImageUrl(icon);

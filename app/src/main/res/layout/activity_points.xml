@@ -52,6 +52,7 @@
                     android:layout_marginTop="@dimen/dp_20"
                     android:layout_toRightOf="@+id/points_back_icon"
                     android:scaleType="fitXY"
+                    app:defaultImage="@drawable/placeholder_icon"
                    />
 
         <RelativeLayout

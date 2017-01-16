@@ -206,17 +206,8 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
     @Override
     public void setGroupImage(String imageUrl) {
-
         mPhoto = imageUrl;
-
-        if (null==imageUrl) {
-            mIvGroupImage.setBackgroundResource(R.drawable.placeholder_icon);
-        }
-        else
-        {
-            mIvGroupImage.setImageUrl(imageUrl);
-        }
-
+        mIvGroupImage.setImageUrl(imageUrl);
     }
 
     @Override

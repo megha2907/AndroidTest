@@ -107,140 +107,81 @@
         </RelativeLayout>
 
 
-
     </android.support.design.widget.CollapsingToolbarLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
 
-            <in.sportscafe.nostragamus.module.common.CustomTabLayout
-                android:id="@+id/tab_tl"
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <in.sportscafe.nostragamus.module.common.CustomTabLayout
+            android:id="@+id/tab_tl"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_56"
+            android:background="@color/colorMedium"
+            app:layout_collapseMode="pin"
+            app:selected_typeface="roboto_condensed"
+            app:tabIndicatorColor="@color/tabcolor"
+            app:tabIndicatorHeight="@dimen/dp_4"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/silver_chalice"
+            app:unselected_textSize="@dimen/dp_14"
+            app:unselected_typeface="roboto_condensed"
+            app:tabTextAppearance="@style/ProfileTabLayoutTextAppearance"
+            android:elevation="@dimen/dp_0"
+            />
+
+            <in.sportscafe.nostragamus.module.common.CustomViewPager
+                android:id="@+id/tab_vp"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_56"
-                android:background="@color/colorMedium"
-                app:layout_collapseMode="pin"
-                app:selected_typeface="roboto_condensed"
-                app:tabIndicatorColor="@color/tabcolor"
-                app:tabIndicatorHeight="@dimen/dp_4"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/silver_chalice"
-                app:unselected_textSize="@dimen/dp_14"
-                app:unselected_typeface="roboto_condensed"
-                android:layout_alignParentBottom="true"
-                app:tabTextAppearance="@style/ProfileTabLayoutTextAppearance"
-                android:elevation="@dimen/dp_0"
+                android:layout_height="match_parent"
+                android:background="@color/black"
+                android:visibility="visible"
+                android:layout_below="@+id/tab_tl"
                 />
 
+        </RelativeLayout>
 
-
-            </RelativeLayout>
-
-
-    </android.support.design.widget.AppBarLayout>
-
-
-        <!--<RelativeLayout-->
-                <!--android:id="@+id/group_info_ll_members"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:paddingTop="@dimen/dp_10"-->
-                <!--android:paddingBottom="@dimen/dp_10"-->
-                <!--android:background="@color/black_60"-->
-                <!--android:visibility="gone">-->
-                <!---->
-
-                <!--<com.jeeva.android.widgets.customfont.CustomButton-->
-                    <!--android:id="@+id/group_info_btn_edit_members"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="@dimen/dp_38"-->
-                    <!--android:layout_alignParentLeft="true"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:onClick="onClick"-->
-                    <!--android:textColor="@color/greencolor"-->
-                    <!--android:visibility="visible"-->
-                    <!--android:gravity="center"-->
-                    <!--android:layout_marginLeft="@dimen/dp_20"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:duplicateParentState="true"-->
-                    <!--android:background="@drawable/group_btn_bg"-->
-                    <!--android:drawableLeft="@drawable/group_members_icon"-->
-                    <!--android:paddingLeft="@dimen/dp_10"-->
-                    <!--android:paddingRight="@dimen/dp_10"-->
-                    <!--android:drawablePadding="@dimen/dp_10"-->
-                    <!--app:typeface="lato_regular"-->
-                    <!--/>-->
-
-
-
-            <!--</RelativeLayout>-->
-
-
-
-
-
-        <in.sportscafe.nostragamus.module.common.CustomViewPager
-            android:id="@+id/tab_vp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:paddingBottom="@dimen/dp_10"
-            android:background="@color/black"/>
-
-
-
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/group_info_rcv"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:clipToPadding="false"-->
-            <!--android:layout_marginTop="@dimen/dp_10"-->
-            <!--android:layout_marginLeft="@dimen/dp_20"-->
-            <!--android:layout_marginRight="@dimen/dp_20"-->
+        <!--<com.jeeva.android.widgets.customfont.CustomButton-->
+            <!--android:id="@+id/group_info_exit_group"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="@dimen/dp_38"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:onClick="onClick"-->
+            <!--android:textColor="@color/tabcolor"-->
             <!--android:visibility="gone"-->
-           <!--/>-->
+            <!--android:gravity="center"-->
+            <!--android:layout_marginLeft="@dimen/dp_20"-->
+            <!--android:duplicateParentState="true"-->
+            <!--android:background="@drawable/exit_group_btn_bg"-->
+            <!--android:text="EXIT GROUP"-->
+            <!--android:drawablePadding="@dimen/dp_10"-->
+            <!--app:typeface="lato_regular"-->
+            <!--android:padding="@dimen/dp_10"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_below="@+id/group_info_selected_tournaments_rcv"-->
+            <!--android:layout_marginTop="@dimen/dp_10"-->
+            <!--/>-->
 
-
-
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/group_info_exit_group"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_38"
-            android:layout_alignParentBottom="true"
-            android:onClick="onClick"
-            android:textColor="@color/tabcolor"
-            android:visibility="gone"
-            android:gravity="center"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:duplicateParentState="true"
-            android:background="@drawable/exit_group_btn_bg"
-            android:text="EXIT GROUP"
-            android:drawablePadding="@dimen/dp_10"
-            app:typeface="lato_regular"
-            android:padding="@dimen/dp_10"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/group_info_selected_tournaments_rcv"
-            android:layout_marginTop="@dimen/dp_10"
-            />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/group_info_ll_share"
-            android:layout_width="@dimen/dp_48"
-            android:layout_height="@dimen/dp_48"
+            android:layout_height="@dimen/dp_50"
+            android:layout_width="@dimen/dp_50"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:src="@drawable/add_members_icon"
             app:layout_anchor="@id/htab_appbar"
             app:layout_anchorGravity="bottom|right|end"
-            android:layout_gravity="bottom|end"
             android:onClick="onClick"
-            android:layout_marginRight="@dimen/dp_16"
-            android:clipToPadding="false"
-            android:src="@drawable/add_members_icon"
-            app:backgroundTint="@color/btncolor"
+            android:scaleType="center"
             app:borderWidth="@dimen/dp_0"
-            app:elevation="@dimen/dp_0"
-            android:scaleType="center"/>
+            app:elevation="@dimen/dp_6"
+            />
+
 
     </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

@@ -46,27 +46,6 @@
                         android:fitsSystemWindows="true"
                         android:orientation="horizontal">
 
-                        <ImageButton
-                            android:id="@+id/profile_btn_edit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:alpha="0.8"
-                            android:background="@android:color/transparent"
-                            android:padding="@dimen/dp_25"
-                            android:src="@drawable/edit_profile_icon" />
-
-                        <TextView
-                            android:id="@+id/profile_tv_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:text="Deepanshi Bajaj"
-                            android:textAllCaps="false"
-                            android:textColor="@color/alto"
-                            android:textSize="@dimen/dp_18"
-                            android:textStyle="bold" />
 
 
                         <ImageButton
@@ -82,218 +61,110 @@
 
                     </RelativeLayout>
 
+
                     <in.sportscafe.nostragamus.module.common.RoundImage
                         android:id="@+id/profile_iv_image"
                         android:layout_width="@dimen/dp_80"
                         android:layout_height="@dimen/dp_80"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginLeft="@dimen/dp_20"
                         android:layout_marginRight="@dimen/dp_20"
-                        android:layout_marginTop="@dimen/dp_56"
+                        android:layout_marginTop="@dimen/dp_20"
                         android:onClick="onClick"
                         android:src="@drawable/placeholder_icon" />
 
+                    <ImageButton
+                        android:id="@+id/profile_btn_edit"
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_marginLeft="@dimen/dp_80"
+                        android:layout_marginTop="@dimen/dp_80"
+                        android:background="@drawable/notification_count_bg"
+                        android:padding="@dimen/dp_25"
+                        android:src="@drawable/edit_profile_icon" />
 
-                    <!--<RelativeLayout-->
-                    <!--android:id="@+id/profile_ll_sports_followed_parent"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignTop="@+id/profile_iv_image"-->
-                    <!--android:layout_marginLeft="@dimen/dp_20"-->
-                    <!--android:layout_marginTop="@dimen/dp_15"-->
-                    <!--android:layout_toRightOf="@+id/profile_iv_image"-->
-                    <!--android:orientation="vertical"-->
-                    <!--android:visibility="invisible">-->
-
-
-                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                    <!--android:id="@+id/profile_tv_sports_folld"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="@dimen/dp_5"-->
-                    <!--android:textColor="@color/btn_powerup_screen_color"-->
-                    <!--android:textSize="@dimen/dp_25"-->
-                    <!--android:clickable="false"/>-->
-
-                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                    <!--android:id="@+id/profile_tv_label_tournaments"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@+id/profile_tv_sports_folld"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="@dimen/dp_1"-->
-                    <!--android:text="Sports"-->
-                    <!--android:textColor="@color/textcolorlight"-->
-                    <!--android:textSize="@dimen/dp_12"-->
-                    <!--app:typeface="lato_regular"-->
-                    <!--android:clickable="false"/>-->
-
-                    <!--</RelativeLayout>-->
-
-                    <!--<RelativeLayout-->
-                    <!--android:id="@+id/profile_groups_parent"-->
-                    <!--android:layout_width="@dimen/dp_60"-->
-                    <!--android:layout_height="@dimen/dp_60"-->
-                    <!--android:layout_alignTop="@+id/profile_iv_image"-->
-                    <!--android:layout_marginRight="@dimen/dp_20"-->
-                    <!--android:layout_marginTop="@dimen/dp_15"-->
-                    <!--android:layout_toLeftOf="@+id/profile_iv_image"-->
-                    <!--android:orientation="vertical"-->
-                    <!--android:clickable="true"-->
-                    <!--android:focusable="true"-->
-                    <!--android:visibility="invisible">-->
-
-                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                    <!--android:id="@+id/profile_number_of_groups"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="@dimen/dp_4"-->
-                    <!--android:textColor="@color/btn_powerup_screen_color"-->
-                    <!--android:textSize="@dimen/dp_25"-->
-                    <!--app:typeface="lato_regular"-->
-                    <!--android:clickable="false"/>-->
-
-                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                    <!--android:id="@+id/profile_add_group_text"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@+id/profile_number_of_groups"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="@dimen/dp_1"-->
-                    <!--android:text="Groups"-->
-                    <!--android:textColor="@color/textcolorlight"-->
-                    <!--android:textSize="@dimen/dp_12"-->
-                    <!--app:typeface="lato_regular"-->
-                    <!--android:clickable="false"/>-->
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/profile_tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/profile_iv_image"
+                        android:text="Deepanshi Bajaj"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_18"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:textStyle="bold"
+                        app:typeface="lato_regular"/>
 
 
-                    <!--</RelativeLayout>-->
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/profile_tv_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/profile_iv_image"
+                        android:text="4th Level"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white_60"
+                        android:textSize="@dimen/dp_13"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:textStyle="bold"
+                        android:layout_below="@+id/profile_tv_title"
+                        app:typeface="lato_regular"/>
+
 
 
                     <LinearLayout
                         android:id="@+id/badges_ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/profile_iv_image"
-                        android:layout_marginLeft="10dp"
+                        android:layout_below="@+id/profile_tv_level"
+                        android:layout_toRightOf="@+id/profile_iv_image"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:gravity="center"
-                        android:orientation="vertical"></LinearLayout>
+                        android:orientation="vertical">
+
+                    </LinearLayout>
 
 
                     <RelativeLayout
                         android:id="@+id/profile_ll_points_parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/badges_ll"
-                        android:layout_centerInParent="true"
-                        android:layout_marginBottom="@dimen/dp_10"
+                        android:layout_below="@+id/profile_btn_edit"
+                        android:layout_marginBottom="@dimen/dp_20"
                         android:layout_marginLeft="@dimen/dp_30"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dp_20"
                         android:orientation="vertical">
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/profile_tv_points"
+                            android:id="@+id/profile_tv_points_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:clickable="false"
-                            android:textColor="@color/yellowcolor"
-                            android:textSize="@dimen/dp_22"
+                            android:text="POINTS"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dp_12"
+                            app:typeface="lato_regular" />
+
+                        <com.jeeva.android.widgets.customfont.CustomButton
+                            android:id="@+id/profile_tv_points"
+                            android:layout_width="@dimen/dp_100"
+                            android:layout_height="@dimen/dp_30"
+                            android:clickable="false"
+                            android:text="530"
+                            android:background="@drawable/profile_screen_btns_bg"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dp_14"
+                            android:layout_below="@+id/profile_tv_points_txt"
                             app:typeface="lato_regular" />
 
                     </RelativeLayout>
 
 
-                    <!--<RelativeLayout-->
-                    <!--android:id="@+id/profile_ll_powerups_parent"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@+id/profile_groups_parent"-->
-                    <!--android:layout_marginTop="@dimen/dp_10"-->
-                    <!--android:layout_marginRight="@dimen/dp_20"-->
-                    <!--android:layout_toLeftOf="@+id/profile_iv_image"-->
-                    <!--android:orientation="vertical"-->
-                    <!--android:visibility="gone"-->
-                    <!--&gt;-->
-
-                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                    <!--android:id="@+id/profile_tv_powerups"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="@dimen/dp_5"-->
-                    <!--android:textColor="@color/greencolor"-->
-                    <!--android:textSize="@dimen/dp_25"-->
-                    <!--app:typeface="lato_regular"-->
-                    <!--android:clickable="false"/>-->
-
-                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                    <!--android:id="@+id/profile_tv_label_powerups"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@+id/profile_tv_powerups"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="@dimen/dp_1"-->
-                    <!--android:text="Powerups"-->
-                    <!--android:textColor="@color/textcolorlight"-->
-                    <!--android:textSize="@dimen/dp_12"-->
-                    <!--app:typeface="lato_regular"-->
-                    <!--android:clickable="false"/>-->
-
-                    <!--</RelativeLayout>-->
-
-
-                    <!--<RelativeLayout-->
-                    <!--android:id="@+id/profile_ll_badge_parent"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="@dimen/dp_20"-->
-                    <!--android:orientation="vertical"-->
-                    <!--android:layout_alignBaseline="@+id/profile_ll_powerups_parent"-->
-                    <!--android:layout_alignBottom="@+id/profile_ll_powerups_parent"-->
-                    <!--android:layout_toRightOf="@+id/profile_iv_image"-->
-                    <!--android:visibility="invisible"-->
-                    <!--&gt;-->
-
-                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                    <!--android:id="@+id/profile_tv_badges"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="@dimen/dp_5"-->
-                    <!--android:textColor="@color/tabcolor"-->
-                    <!--android:textSize="@dimen/dp_25"-->
-                    <!--app:typeface="lato_regular"-->
-                    <!--android:clickable="false"-->
-                    <!--/>-->
-
-                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                    <!--android:id="@+id/profile_tv_label_badges"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@+id/profile_tv_badges"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="@dimen/dp_1"-->
-                    <!--android:text="Badges"-->
-                    <!--android:textColor="@color/textcolorlight"-->
-                    <!--android:textSize="@dimen/dp_12"-->
-                    <!--app:typeface="lato_regular"-->
-                    <!--android:clickable="false"-->
-                    <!--/>-->
-                    <!--</RelativeLayout>-->
-
                 </RelativeLayout>
 
             </android.support.design.widget.CollapsingToolbarLayout>
+
 
 
             <in.sportscafe.nostragamus.module.common.CustomTabLayout
@@ -316,13 +187,6 @@
                 app:unselected_typeface="roboto_condensed" />
 
         </android.support.design.widget.AppBarLayout>
-
-
-        <!--<FrameLayout
-            android:id="@+id/profile_fl_my_positions"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
 
 
         <in.sportscafe.nostragamus.module.common.CustomViewPager
