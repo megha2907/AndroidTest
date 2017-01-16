@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.jeeva.android.InAppView;
 
@@ -53,4 +54,6 @@ public interface PredictionView extends InAppView {
     void changeBackgroundImage(String sportName);
 
     void goBack();
+
+    View getRootView();
 }

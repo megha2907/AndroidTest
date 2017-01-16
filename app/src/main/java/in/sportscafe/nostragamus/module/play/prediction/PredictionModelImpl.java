@@ -3,6 +3,8 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.View;
 
 import com.jeeva.android.Log;
 
@@ -149,7 +151,7 @@ public class PredictionModelImpl implements PredictionModel,
         minitialCount=questionList.size();
 
         mPredictionAdapter = new PredictionAdapter(mPredictionModelListener.getContext(),
-                mTotalCount);
+                mPredictionModelListener.getRootView());
         mPredictionModelListener.onGetAdapter(mPredictionAdapter, this);
         int count = 1;
         for (Question question : questionList) {
@@ -264,17 +266,17 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void onLeftSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, 1);
+//        saveSinglePrediction(dataObject, 1);
     }
 
     @Override
     public void onRightSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, 2);
+//        saveSinglePrediction(dataObject, 2);
     }
 
     @Override
     public void onBottomSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, 0);
+//        saveSinglePrediction(dataObject, 0);
     }
 
     @Override
@@ -314,6 +316,27 @@ public class PredictionModelImpl implements PredictionModel,
     }
 
     @Override
+    public void onCardMoving(float xPercent, float yPercent) {
+        Log.d("Move Percentages --> ", xPercent + "%  " + yPercent + "%");
+
+        /*if(xPercent <= -100f) {
+            mPredictionAdapter.onCardMovedLeft();
+            mDirectionLocked = Gravity.LEFT;
+        } else if(xPercent >= 100f) {
+            mPredictionAdapter.onCardMovedRight();
+            mDirectionLocked = Gravity.RIGHT;
+        } else if(mNeitherOptionAvailable && yPercent >= 100f) {
+            mDirectionLocked = Gravity.BOTTOM;
+        } else {
+            mPredictionAdapter.onCardMoveStopped();
+            mDirectionLocked = -1;
+        }*/
+
+        mPredictionAdapter.onCardMoving(xPercent, yPercent);
+
+    }
+
+    /*@Override
     public void onCardMovedLeft() {
         mPredictionAdapter.onCardMovedLeft();
     }
@@ -336,7 +359,7 @@ public class PredictionModelImpl implements PredictionModel,
     @Override
     public void onCardNotInMoveRegion() {
         mPredictionAdapter.onCardMoveStopped();
-    }
+    }*/
 
     private void saveSinglePrediction(Question question, int answerId) {
         Answer answer = new Answer (
@@ -410,5 +433,7 @@ public class PredictionModelImpl implements PredictionModel,
         void changePlayCardBackground(String sportName);
 
         void onFailedPostAnswerToServer(String message);
+
+        View getRootView();
     }
 }
