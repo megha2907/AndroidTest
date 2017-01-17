@@ -20,5 +20,4 @@ public interface PointsModel {
     void refreshLeaderBoard();
 
     int getSelectedPosition();
-
 }

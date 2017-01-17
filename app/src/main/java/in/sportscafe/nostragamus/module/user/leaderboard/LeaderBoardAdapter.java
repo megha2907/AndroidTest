@@ -2,13 +2,17 @@ package in.sportscafe.nostragamus.module.user.leaderboard;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
@@ -45,10 +49,9 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
 
 
-
-
         UserLeaderBoard userLeaderBoard = getItem(position);
 
+        holder.itemView.setTag(userLeaderBoard.getUserId());
 
         if(userLeaderBoard.getRankChange() < 0) {
             holder.mIvStatus.setImageResource(R.drawable.status_arrow_down);
@@ -68,7 +71,11 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
 
         holder.mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
 
-        holder.mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed()));
+        if (userLeaderBoard.getCountPlayed()==1 || userLeaderBoard.getCountPlayed()==0) {
+            holder.mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Match");
+        }else {
+            holder.mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Matches");
+        }
 
         String imageUrl=userLeaderBoard.getUserPhoto();
         holder.mIvUser.setImageUrl(
@@ -76,21 +83,19 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         );
 
         if (NostragamusDataHandler.getInstance().getUserId().equals(String.valueOf(userLeaderBoard.getUserId()))){
-
-            holder.mTvName.setTextColor(ContextCompat.getColor(mcontext, R.color.btn_powerup_screen_color));
-            holder.mTvPoints.setTextColor(ContextCompat.getColor(mcontext, R.color.btn_powerup_screen_color));
-            holder.mTvPlayed.setTextColor(ContextCompat.getColor(mcontext, R.color.btn_powerup_screen_color));
-            holder.mViewUserLine.setVisibility(View.VISIBLE);
-
+            holder.mLlLeaderBoards.setBackgroundColor(ContextCompat.getColor(mcontext, R.color.leaderboard_bg_color));
         }
         else {
-            holder.mTvName.setTextColor(ContextCompat.getColor(mcontext, R.color.white));
-            holder.mTvPoints.setTextColor(ContextCompat.getColor(mcontext, R.color.yellowcolor));
-            holder.mTvPlayed.setTextColor(ContextCompat.getColor(mcontext, R.color.white));
-            holder.mViewUserLine.setVisibility(View.GONE);
+            holder.mLlLeaderBoards.setBackgroundColor(ContextCompat.getColor(mcontext, R.color.black));
         }
 
-
+        if (userLeaderBoard.getRank()!=null) {
+            if (userLeaderBoard.getRank() == 1 || userLeaderBoard.getRank() == 2 || userLeaderBoard.getRank() == 3) {
+                holder.mTvRank.setTextColor(Color.WHITE);
+            } else {
+                holder.mTvRank.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.leaderboard_rank_color));
+            }
+        }
 
     }
 
@@ -110,6 +115,8 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
 
         View mViewUserLine;
 
+        LinearLayout mLlLeaderBoards;
+
         public ViewHolder(View V) {
             super(V);
 
@@ -120,15 +127,17 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             mTvPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_points);
             mTvPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_points);
             mTvPlayed= (TextView) V.findViewById(R.id.leaderboard_row_tv_played);
+            mLlLeaderBoards=(LinearLayout)V.findViewById(R.id.leaderboard_ll);
             mViewUserLine = (View) V.findViewById(R.id.leaderboard_row_view_user);
 
             V.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    String playerId = String.valueOf(getItem(getAdapterPosition()).getUserId());
+                    Integer playerId = getItem(getAdapterPosition()).getUserId();
+
                     Bundle mBundle = new Bundle();
-                    mBundle.putString(Constants.BundleKeys.PLAYER_ID,playerId);
+                    mBundle.putInt(Constants.BundleKeys.PLAYER_ID,playerId);
                     Intent mintent2 =  new Intent(view.getContext(), PlayerProfileActivity.class);
                     mintent2.putExtras(mBundle);
                     view.getContext().startActivity(mintent2);

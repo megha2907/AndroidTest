@@ -3,12 +3,17 @@ package in.sportscafe.nostragamus.module.user.points;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.AppCompatSpinner;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
-import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -16,12 +21,13 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class PointsActivity extends NostragamusActivity implements PointsView, View.OnClickListener {
+public class PointsActivity extends NostragamusActivity implements PointsView, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private PointsPresenter mPointsPresenter;
 
@@ -36,8 +42,25 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
         mbundle=getIntent().getExtras();
 
+        LeaderBoardFragment leaderBoardFragment = new LeaderBoardFragment();
+        final OnLeaderBoardUpdateListener listener = leaderBoardFragment;
+
         PointsActivity.this.mPointsPresenter = PointsPresenterImpl.newInstance(PointsActivity.this);
-        PointsActivity.this.mPointsPresenter.onCreatePoints( getIntent().getExtras());
+        PointsActivity.this.mPointsPresenter.onCreatePoints( getIntent().getExtras(),listener);
+
+
+        AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.points_sp_sport);
+        spinner.setOnItemSelectedListener(this);
+        List categories = new ArrayList();
+        categories.add("Sort by Accuracy");
+        categories.add("Sort by Points");
+        ArrayAdapter dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(R.layout.custom_radio_btn_spinner);
+        spinner.setAdapter(dataAdapter);
+
+
     }
 
     @Override
@@ -86,5 +109,29 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
             case R.id.points_back_icon:
                 onBackPressed();
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        String item = parent.getItemAtPosition(position).toString();
+        // hide selection text
+        ((TextView)view).setText(null);
+
+        if (item=="Sort by Points"){
+            onSortByPoints();
+        }
+
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+
+    }
+
+    private void onSortByPoints() {
+        mPointsPresenter.onSortByPoints();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

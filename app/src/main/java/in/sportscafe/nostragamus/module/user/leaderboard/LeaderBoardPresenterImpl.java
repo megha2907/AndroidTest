@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.user.leaderboard;
 
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -36,5 +38,10 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoa
     @Override
     public void onEmpty() {
         mLeaderBoardView.showInAppMessage("Your leaderboard will update here after a match you have played is over");
+    }
+
+    @Override
+    public void setUserLeaderBoard(UserLeaderBoard userLeaderBoard) {
+        mLeaderBoardView.setUserPoints(userLeaderBoard);
     }
 }

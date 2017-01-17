@@ -100,7 +100,7 @@
                 android:layout_gravity="bottom|end"
                 android:layout_marginRight="@dimen/dp_18"
                 android:scaleType="center"
-                android:src="@drawable/flip_icon"
+                android:src="@drawable/powerup_flip"
                 app:backgroundTint="@color/colorMedium"
                 app:borderWidth="0dp"
                 app:elevation="@dimen/dp_0" />

@@ -83,6 +83,7 @@ public class PointsModelImpl implements PointsModel {
         return mSelectedPosition;
     }
 
+
     private void callLbDetailApi(final Integer sportId, Long groupId, Integer challengeId) {
         MyWebService.getInstance().getLeaderBoardDetailRequest(
                 sportId, groupId.intValue(), challengeId
@@ -114,6 +115,7 @@ public class PointsModelImpl implements PointsModel {
 
         Log.d("PointsModelImpl", "Selected Summary --> " + tourId);
         LeaderBoard leaderBoard;
+
         for (int i = 0; i < leaderBoardList.size(); i++) {
             leaderBoard = leaderBoardList.get(i);
             mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());

@@ -3,12 +3,13 @@ package in.sportscafe.nostragamus.module.user.leaderboard.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * Created by deepanshi on 10/14/16.
  */
 
-public class UserLeaderBoard implements Serializable {
+public class UserLeaderBoard implements Serializable,Comparable<UserLeaderBoard>{
 
     @JsonProperty("user_id")
     private Integer userId;
@@ -119,6 +120,13 @@ public class UserLeaderBoard implements Serializable {
     @JsonProperty("count_played")
     public void setCountPlayed(Integer countPlayed) {
         this.countPlayed = countPlayed;
+    }
+
+    @Override
+    public int compareTo(UserLeaderBoard userLeaderBoard) {
+        Long userPoints=((UserLeaderBoard)userLeaderBoard).getPoints();
+        /* For Ascending order*/
+        return (int)(this.points-userPoints);
     }
 
 }

@@ -92,7 +92,7 @@ public class CustomTabLayout extends TabLayout {
                     textView = (TextView) tabViewChild;
 
                     // Todo Have to update when the fonts are choosen
-                    textView.setTypeface(mSelTabFont, Typeface.NORMAL);
+                    textView.setTypeface(mSelTabFont, Typeface.BOLD);
                     textView.setTextSize(mSelTextSize);
                 } else{
                     textView = (TextView) tabViewChild;

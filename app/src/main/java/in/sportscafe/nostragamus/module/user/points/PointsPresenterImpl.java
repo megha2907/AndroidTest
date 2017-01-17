@@ -14,6 +14,8 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
 
     private PointsModel mPointsModel;
 
+    private OnLeaderBoardUpdateListener mLeaderBoardUpdateListener;
+
 
     private PointsPresenterImpl(PointsView pointsView) {
         this.mPointsView = pointsView;
@@ -25,11 +27,19 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     }
 
     @Override
-    public void onCreatePoints(Bundle bundle) {
+    public void onCreatePoints(Bundle bundle,OnLeaderBoardUpdateListener listener) {
+
+        this.mLeaderBoardUpdateListener = listener;
+
         mPointsModel.init(bundle);
         mPointsView.setName(mPointsModel.getName());
         mPointsView.setIcon(mPointsModel.getIcon());
         refreshLb();
+    }
+
+    @Override
+    public void onSortByPoints() {
+        mLeaderBoardUpdateListener.updateLeaderBoard();
     }
 
     @Override
