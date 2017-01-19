@@ -8,4 +8,6 @@ import android.os.Bundle;
 public interface PointsPresenter {
 
     void onCreatePoints(Bundle bundle);
+
+    void onSortByPoints();
 }

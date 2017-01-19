@@ -2,6 +2,10 @@ package in.sportscafe.nostragamus.module.tournament;
 
 import android.support.v4.app.FragmentManager;
 
+import com.jeeva.android.Log;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Nostragamus;
@@ -81,7 +85,6 @@ public class TournamentModelImpl implements TournamentModel {
 
                                     refreshAdapter(newTournamentInfo);
 
-                                    mTournamemtModelListener.onSuccessFeeds();
                                 } else {
                                     mTournamemtModelListener.onFailedFeeds(response.message());
                                 }
@@ -102,10 +105,17 @@ public class TournamentModelImpl implements TournamentModel {
 
         TournamentInfo tournamentInfo;
 
+        ArrayList<String> sportsArrayList = new ArrayList<String>();
+
         for (int i = 0; i < tournamentInfoList.size(); i++) {
             tournamentInfo = tournamentInfoList.get(i);
             mViewPagerAdapter.addFragment(TournamentFeedFragment.newInstance(tournamentInfo), tournamentInfo.getSportsName());
+            sportsArrayList.add(tournamentInfo.getSportsName());
         }
+
+        String [] sportsArray = sportsArrayList.toArray(new String[sportsArrayList.size()]);
+
+        mTournamemtModelListener.onSuccessFeeds(sportsArray);
 
         mViewPagerAdapter.notifyDataSetChanged();
     }
@@ -116,7 +126,7 @@ public class TournamentModelImpl implements TournamentModel {
 
         void onNoInternet();
 
-        void onSuccessFeeds();
+        void onSuccessFeeds(String[] sportsArray);
 
         void onFailedFeeds(String message);
     }

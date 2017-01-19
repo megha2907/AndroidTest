@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
@@ -19,7 +22,13 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     private OnLeaderBoardModelListener onLeaderBoardModelListener;
 
+    private LeaderBoard mleaderBoard;
+
+    public static int SORT_TYPE = 0;
+
     private int mUserPosition = 0;
+
+    Integer mName;
 
     private LeaderBoardModelImpl(OnLeaderBoardModelListener listener) {
         onLeaderBoardModelListener=listener;
@@ -31,8 +40,8 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     @Override
     public void init(Bundle bundle) {
-        refreshLeaderBoard(bundle);
-        checkEmpty();
+
+        mleaderBoard = (LeaderBoard) bundle.getSerializable(Constants.BundleKeys.LEADERBOARD_LIST);
     }
 
     private void checkEmpty() {
@@ -43,7 +52,8 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     @Override
     public LeaderBoardAdapter getAdapter(Context context) {
-        return mLeaderBoardAdapter = new LeaderBoardAdapter(context);
+        mLeaderBoardAdapter = new LeaderBoardAdapter(context);
+        return mLeaderBoardAdapter;
     }
 
     @Override
@@ -51,36 +61,50 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
         return mUserPosition;
     }
 
-    @Override
-    public void refreshLeaderBoard(Bundle bundle) {
-        mLeaderBoardAdapter.clear();
+    private void refreshUserPosition() {
 
         Integer userId = Integer.valueOf(NostragamusDataHandler.getInstance().getUserId());
 
-        LeaderBoard leaderBoard = (LeaderBoard) bundle.getSerializable(Constants.BundleKeys.LEADERBOARD_LIST);
-        for (UserLeaderBoard userLeaderBoard : leaderBoard.getUserLeaderBoardList()) {
-            mLeaderBoardAdapter.add(userLeaderBoard);
+        UserLeaderBoard userLeaderBoard;
 
-            UserLeaderBoard newuserLeaderBoard;
-            for (int i = 0; i < leaderBoard.getUserLeaderBoardList().size(); i++) {
-                newuserLeaderBoard = leaderBoard.getUserLeaderBoardList().get(i);
+        for (int i = 0; i < mleaderBoard.getUserLeaderBoardList().size(); i++) {
 
-                if(userId.equals(newuserLeaderBoard.getUserId())) {
+            userLeaderBoard = mleaderBoard.getUserLeaderBoardList().get(i);
+
+                if(userId.equals(userLeaderBoard.getUserId())) {
                     mUserPosition = i;
                     Log.i("userpos",String.valueOf(mUserPosition));
+                    onLeaderBoardModelListener.setUserLeaderBoard(userLeaderBoard);
+
+
                 }
-
-            }
-
+            mLeaderBoardAdapter.add(userLeaderBoard);
         }
 
-
         mLeaderBoardAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void sortAndRefreshLeaderBoard() {
+
+            if (SORT_TYPE == 0) {
+                Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserAccuracyComparator);
+            } else {
+                Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
+            }
+
+            mLeaderBoardAdapter.clear();
+            mLeaderBoardAdapter.notifyDataSetChanged();
+            refreshUserPosition();
+            checkEmpty();
+
     }
 
 
     public interface OnLeaderBoardModelListener {
 
         void onEmpty();
+
+        void setUserLeaderBoard(UserLeaderBoard newuserLeaderBoard);
     }
 }

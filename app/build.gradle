@@ -97,6 +97,7 @@ dependencies {
     compile 'com.moengage:addon-inbox:2.8.0'
     compile 'com.google.android.gms:play-services-gcm:9.4.0'
     compile 'com.github.nirhart:parallaxscroll:1.0'
+    compile 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
     compile 'com.bignerdranch.android:expandablerecyclerview:2.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     // To track the install counts, events, crashes and acquisition

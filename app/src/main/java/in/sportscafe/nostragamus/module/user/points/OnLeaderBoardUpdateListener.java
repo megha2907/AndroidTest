@@ -6,5 +6,5 @@ import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
 
 public interface OnLeaderBoardUpdateListener {
 
-    void updateLeaderBoard(List<LeaderBoard> leaderBoardList);
+    void updateLeaderBoard();
 }

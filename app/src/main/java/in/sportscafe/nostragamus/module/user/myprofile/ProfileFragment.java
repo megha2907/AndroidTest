@@ -163,8 +163,8 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     @Override
     public void setPoints(long points) {
-        TextView tvPoints=(TextView) findViewById(R.id.profile_tv_points);
-        tvPoints.setText(String.valueOf(points)+" Points");
+        Button tvPoints=(Button) findViewById(R.id.profile_tv_points);
+        tvPoints.setText(String.valueOf(points));
     }
 
     @Override
@@ -184,7 +184,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
             layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
             parent.setOrientation(LinearLayout.VERTICAL);
             parent.addView(layout2);
-            layout2.setGravity(Gravity.CENTER_HORIZONTAL);
+            //layout2.setGravity(Gravity.CENTER_HORIZONTAL);
 
 
             for (int i = 0; i < badgeList.size(); i++) {
@@ -195,8 +195,8 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                 ImageView imageView = new ImageView(getContext());
                 imageView.setLayoutParams(new RelativeLayout.LayoutParams
                         (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                imageView.getLayoutParams().height = 60;
-                imageView.getLayoutParams().width = 60;
+                imageView.getLayoutParams().height = 40;
+                imageView.getLayoutParams().width = 40;
 
                 switch (badge_id) {
                     case "accuracy_streak":
@@ -221,7 +221,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
             layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
             parent.setOrientation(LinearLayout.VERTICAL);
             parent.addView(layout2);
-            layout2.setGravity(Gravity.CENTER_HORIZONTAL);
+           // layout2.setGravity(Gravity.CENTER_HORIZONTAL);
 
             for (int i = 0; i < 8; i++) {
                 String[] parts = badgeList.get(i).split("\\$");
@@ -231,8 +231,8 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                 ImageView imageView = new ImageView(getContext());
                 imageView.setLayoutParams(new RelativeLayout.LayoutParams
                         (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                imageView.getLayoutParams().height = 60;
-                imageView.getLayoutParams().width = 60;
+                imageView.getLayoutParams().height = 40;
+                imageView.getLayoutParams().width = 40;
 
                 switch (badge_id) {
                     case "accuracy_streak":
@@ -254,7 +254,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                 LinearLayout layout3 = new LinearLayout(getContext());
                 layout3.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
                 parent.addView(layout3);
-                layout3.setGravity(Gravity.CENTER_HORIZONTAL);
+               // layout3.setGravity(Gravity.CENTER_HORIZONTAL);
 
             if(badgeList.size()<=16){
 
@@ -263,8 +263,8 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                     ImageView imageView2 = new ImageView(getContext());
                     imageView2.setLayoutParams(new RelativeLayout.LayoutParams
                             (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                    imageView2.getLayoutParams().height = 60;
-                    imageView2.getLayoutParams().width = 60;
+                    imageView2.getLayoutParams().height = 40;
+                    imageView2.getLayoutParams().width = 40;
 
                     String[] part = badgeList.get(j).split("\\$");
                     String badgeId = part[0];
@@ -292,8 +292,8 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                     ImageView imageView2 = new ImageView(getContext());
                     imageView2.setLayoutParams(new RelativeLayout.LayoutParams
                             (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                    imageView2.getLayoutParams().height = 60;
-                    imageView2.getLayoutParams().width = 60;
+                    imageView2.getLayoutParams().height = 40;
+                    imageView2.getLayoutParams().width = 40;
 
                     String[] part = badgeList.get(j).split("\\$");
                     String badgeId = part[0];

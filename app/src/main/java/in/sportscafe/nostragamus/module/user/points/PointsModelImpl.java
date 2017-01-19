@@ -5,13 +5,16 @@ import android.support.v4.app.FragmentManager;
 
 import com.jeeva.android.Log;
 
+import java.util.Collections;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.BaseSummary;
+import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -39,6 +42,9 @@ public class PointsModelImpl implements PointsModel {
     private ViewPagerAdapter mViewPagerAdapter;
 
     private int mSelectedPosition = 0;
+
+    private List<LeaderBoard> mleaderBoardList;
+
 
     private PointsModelImpl(OnPointsModelListener listener, FragmentManager fm) {
         this.mPointsModelListener = listener;
@@ -83,6 +89,7 @@ public class PointsModelImpl implements PointsModel {
         return mSelectedPosition;
     }
 
+
     private void callLbDetailApi(final Integer sportId, Long groupId, Integer challengeId) {
         MyWebService.getInstance().getLeaderBoardDetailRequest(
                 sportId, groupId.intValue(), challengeId
@@ -97,7 +104,9 @@ public class PointsModelImpl implements PointsModel {
                         return;
                     }
 
-                    refreshAdapter(leaderBoardList);
+                    mleaderBoardList =leaderBoardList;
+
+                    refreshAdapter(leaderBoardList,"");
 
                     mPointsModelListener.onSuccessLeaderBoard();
                 } else {
@@ -107,15 +116,30 @@ public class PointsModelImpl implements PointsModel {
         });
     }
 
-    private void refreshAdapter(List<LeaderBoard> leaderBoardList) {
+    @Override
+    public List<LeaderBoard> getLeaderBoardList() {
+        return mleaderBoardList;
+    }
+
+    @Override
+    public void refreshAdapter(List<LeaderBoard> leaderBoardList, String SortType) {
+
+        Log.i("sortrefreshAdapter",SortType);
 
         Integer tourId = mBaseSummary.getTournamentId();
 
 
         Log.d("PointsModelImpl", "Selected Summary --> " + tourId);
         LeaderBoard leaderBoard;
+
         for (int i = 0; i < leaderBoardList.size(); i++) {
             leaderBoard = leaderBoardList.get(i);
+
+//            if (SortType.equals("rank")) {
+//                mViewPagerAdapter.getItem(mSelectedPosition).setUserVisibleHint(true);
+//               // Collections.sort(leaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
+//            }
+
             mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());
 
            //if match not played change tab to overall
@@ -136,6 +160,15 @@ public class PointsModelImpl implements PointsModel {
 
         mViewPagerAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void sortAdapter(String sortType) {
+        if (sortType.equals("rank")) {
+            Log.i("sort","sortAdapter");
+            mViewPagerAdapter.getItem(mSelectedPosition).setUserVisibleHint(true);
+        }
+    }
+
 
     public interface OnPointsModelListener {
 

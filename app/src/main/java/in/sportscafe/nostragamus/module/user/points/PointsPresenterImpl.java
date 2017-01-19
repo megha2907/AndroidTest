@@ -1,7 +1,10 @@
 package in.sportscafe.nostragamus.module.user.points;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+
+import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
 
@@ -13,6 +16,8 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     private PointsView mPointsView;
 
     private PointsModel mPointsModel;
+//
+//    private OnLeaderBoardUpdateListener mLeaderBoardUpdateListener;
 
 
     private PointsPresenterImpl(PointsView pointsView) {
@@ -26,10 +31,17 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
 
     @Override
     public void onCreatePoints(Bundle bundle) {
+
         mPointsModel.init(bundle);
         mPointsView.setName(mPointsModel.getName());
         mPointsView.setIcon(mPointsModel.getIcon());
         refreshLb();
+    }
+
+    @Override
+    public void onSortByPoints() {
+        Log.i("sort","onSortByPoints");
+        mPointsModel.sortAdapter("rank");
     }
 
     @Override
