@@ -53,8 +53,8 @@
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
                     android:adjustViewBounds="true"
-                    android:layout_marginRight="@dimen/dp_10"
                     android:layout_marginLeft="@dimen/dp_12"
+                    android:layout_marginRight="@dimen/dp_8"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/points_back_icon"
                     android:scaleType="fitXY"
@@ -66,11 +66,10 @@
                 android:id="@+id/points_sp_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CRICKET"
+                android:text="Cricket"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_16"
                 android:layout_toRightOf="@+id/points_group_icon"
-                android:layout_marginLeft="@dimen/dp_12"
                 android:layout_centerVertical="true"
                 app:typeface="roboto_condensed_bold"/>
 
@@ -80,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sort"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_16"
+                    android:textSize="@dimen/dp_14"
                     android:layout_toLeftOf="@+id/points_sp_sport"
                     android:layout_marginRight="@dimen/dp_12"
                     android:layout_centerVertical="true"
@@ -101,7 +100,7 @@
 
             </RelativeLayout>
 
-            <android.support.design.widget.TabLayout
+            <in.sportscafe.nostragamus.module.common.CustomTabLayout
                 android:id="@+id/points_tab_tl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,11 +114,12 @@
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextColor="@color/silver_chalice"
-                app:unselected_textSize="@dimen/dp_12"
+                app:unselected_textSize="@dimen/dp_14"
                 app:unselected_typeface="roboto_condensed"
                 android:layout_gravity="center_horizontal|top"
                 android:layout_below="@+id/rl3"
-                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                app:tabTextAppearance="@style/LeaderBoardTabLayoutTextAppearance"
+                android:elevation="@dimen/dp_4"
                 />
 
                 <TableRow

@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import com.jeeva.android.Log;
 
-import java.util.List;
-
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -28,7 +26,7 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class LeaderBoardFragment extends NostragamusFragment implements LeaderBoardView,OnLeaderBoardUpdateListener {
+public class LeaderBoardFragment extends NostragamusFragment implements LeaderBoardView {
 
     private RecyclerView mRvLeaderBoard;
 
@@ -48,6 +46,18 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_leaderboard, container, false);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (getView() != null) {
+            if (getUserVisibleHint() == true) {
+                Log.i("inside","setUserVisibleHint");
+                mLeaderBoardPresenter.checkSortType();
+            }
+        }
     }
 
     @Override
@@ -120,8 +130,4 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
         mLeaderBoardPresenter.update(bundle);
     }
 
-    @Override
-    public void updateLeaderBoard() {
-
-    }
 }

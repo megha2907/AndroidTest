@@ -22,6 +22,10 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     private OnLeaderBoardModelListener onLeaderBoardModelListener;
 
+    private LeaderBoard mleaderBoard;
+
+    public static int SORT_TYPE = 0;
+
     private int mUserPosition = 0;
 
     Integer mName;
@@ -36,8 +40,8 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     @Override
     public void init(Bundle bundle) {
-        refreshLeaderBoard(bundle);
-        checkEmpty();
+
+        mleaderBoard = (LeaderBoard) bundle.getSerializable(Constants.BundleKeys.LEADERBOARD_LIST);
     }
 
     private void checkEmpty() {
@@ -48,7 +52,8 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     @Override
     public LeaderBoardAdapter getAdapter(Context context) {
-        return mLeaderBoardAdapter = new LeaderBoardAdapter(context);
+        mLeaderBoardAdapter = new LeaderBoardAdapter(context);
+        return mLeaderBoardAdapter;
     }
 
     @Override
@@ -56,41 +61,43 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
         return mUserPosition;
     }
 
-    @Override
-    public void refreshLeaderBoard(Bundle bundle) {
-        mLeaderBoardAdapter.clear();
+    private void refreshUserPosition() {
 
         Integer userId = Integer.valueOf(NostragamusDataHandler.getInstance().getUserId());
 
-        LeaderBoard leaderBoard = (LeaderBoard) bundle.getSerializable(Constants.BundleKeys.LEADERBOARD_LIST);
+        UserLeaderBoard userLeaderBoard;
 
-        for (UserLeaderBoard userLeaderBoard : leaderBoard.getUserLeaderBoardList()) {
+        for (int i = 0; i < mleaderBoard.getUserLeaderBoardList().size(); i++) {
 
+            userLeaderBoard = mleaderBoard.getUserLeaderBoardList().get(i);
 
-            if (userLeaderBoard.getUserId().equals(userId)){
-                onLeaderBoardModelListener.setUserLeaderBoard(userLeaderBoard);
-            }
-            
-            mLeaderBoardAdapter.add(userLeaderBoard);
-            
-
-            UserLeaderBoard newuserLeaderBoard;
-
-            for (int i = 0; i < leaderBoard.getUserLeaderBoardList().size(); i++) {
-                newuserLeaderBoard = leaderBoard.getUserLeaderBoardList().get(i);
-
-                if(userId.equals(newuserLeaderBoard.getUserId())) {
+                if(userId.equals(userLeaderBoard.getUserId())) {
                     mUserPosition = i;
                     Log.i("userpos",String.valueOf(mUserPosition));
-                    
+                    onLeaderBoardModelListener.setUserLeaderBoard(userLeaderBoard);
+
+
                 }
-
-            }
-
+            mLeaderBoardAdapter.add(userLeaderBoard);
         }
 
-
         mLeaderBoardAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void sortAndRefreshLeaderBoard() {
+
+            if (SORT_TYPE == 0) {
+                Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserAccuracyComparator);
+            } else {
+                Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
+            }
+
+            mLeaderBoardAdapter.clear();
+            mLeaderBoardAdapter.notifyDataSetChanged();
+            refreshUserPosition();
+            checkEmpty();
+
     }
 
 

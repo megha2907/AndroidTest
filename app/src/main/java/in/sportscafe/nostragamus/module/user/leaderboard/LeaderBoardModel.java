@@ -14,5 +14,6 @@ public interface LeaderBoardModel {
 
     int getUserPosition();
 
-    void refreshLeaderBoard(Bundle bundle);
+    void sortAndRefreshLeaderBoard();
+
 }

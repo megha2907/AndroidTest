@@ -1,8 +1,10 @@
 package in.sportscafe.nostragamus.module.user.points;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
+import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardModelImpl;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 
 /**
@@ -35,6 +39,8 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
      private Bundle mbundle;
 
+    private ViewPager mViewPager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,18 +48,16 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
         mbundle=getIntent().getExtras();
 
-        LeaderBoardFragment leaderBoardFragment = new LeaderBoardFragment();
-        final OnLeaderBoardUpdateListener listener = leaderBoardFragment;
 
         PointsActivity.this.mPointsPresenter = PointsPresenterImpl.newInstance(PointsActivity.this);
-        PointsActivity.this.mPointsPresenter.onCreatePoints( getIntent().getExtras(),listener);
+        PointsActivity.this.mPointsPresenter.onCreatePoints( getIntent().getExtras());
 
 
         AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.points_sp_sport);
         spinner.setOnItemSelectedListener(this);
         List categories = new ArrayList();
-        categories.add("Sort by Accuracy");
-        categories.add("Sort by Points");
+        categories.add("By Rank");
+        categories.add("By Accuracy");
         ArrayAdapter dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
 
         // Drop down layout style - list view with radio button
@@ -70,13 +74,13 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     @Override
     public void initMyPosition(ViewPagerAdapter adapter, int selectedPosition) {
-        CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.points_tab_vp);
-        viewPager.setAdapter(adapter);
+        mViewPager = (CustomViewPager) findViewById(R.id.points_tab_vp);
+        mViewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.points_tab_tl);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(mViewPager);
 
-        viewPager.setCurrentItem(selectedPosition);
+        mViewPager.setCurrentItem(selectedPosition);
     }
 
     @Override
@@ -91,7 +95,6 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
                 if (sport.getId() == mSelectedSportId) {
                     pointsIcon.setImageUrl(sport.getImageUrl());
                 }
-
             }
         }
         else
@@ -107,6 +110,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
         switch (view.getId()) {
             case R.id.points_back_icon:
+                LeaderBoardModelImpl.SORT_TYPE = 0;
                 onBackPressed();
         }
     }
@@ -118,16 +122,11 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         // hide selection text
         ((TextView)view).setText(null);
 
-        if (item=="Sort by Points"){
-            onSortByPoints();
+        if (mViewPager != null) {
+            LeaderBoardModelImpl.SORT_TYPE = position;
+            ((ViewPagerAdapter) mViewPager.getAdapter()).getItem(mViewPager.getCurrentItem()).setUserVisibleHint(true);
         }
 
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-
-    }
-
-    private void onSortByPoints() {
-        mPointsPresenter.onSortByPoints();
     }
 
     @Override

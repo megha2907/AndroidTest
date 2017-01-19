@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.user.leaderboard;
 
 import android.os.Bundle;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 
 
@@ -27,12 +29,20 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoa
     public void onCreateLeaderBoard(Bundle bundle) {
         mLeaderBoardView.setLeaderBoardAdapter(mLeaderBoardModel.getAdapter(mLeaderBoardView.getContext()));
         mLeaderBoardModel.init(bundle);
-        mLeaderBoardView.moveAdapterPosition(mLeaderBoardModel.getUserPosition());
+        checkSortType();
     }
 
     @Override
     public void update(Bundle bundle) {
-        mLeaderBoardModel.refreshLeaderBoard(bundle);
+        checkSortType();
+    }
+
+    @Override
+    public void checkSortType() {
+        Log.i("checkSortType","checkSortType");
+        mLeaderBoardModel.sortAndRefreshLeaderBoard();
+        mLeaderBoardView.moveAdapterPosition(mLeaderBoardModel.getUserPosition());
+        //mLeaderBoardModel.setSortType(0);
     }
 
     @Override

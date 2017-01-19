@@ -129,4 +129,51 @@ public class UserLeaderBoard implements Serializable,Comparable<UserLeaderBoard>
         return (int)(this.points-userPoints);
     }
 
+    /*Comparator for sorting the list by User Rank*/
+    public static Comparator<UserLeaderBoard> UserRankComparator = new Comparator<UserLeaderBoard>() {
+
+        public int compare(UserLeaderBoard u1, UserLeaderBoard u2) {
+
+            Integer user1 = null;
+            Integer user2 = null;
+
+            user1 = u1.getRank();
+            user2 = u2.getRank();
+
+            if (null==user1){
+                user1 = Integer.MAX_VALUE;
+            }
+            if(null == user2){
+                user2 = Integer.MAX_VALUE;
+            }
+
+            //descending order
+            return user2.compareTo(user1);
+        }};
+
+
+
+    /*Comparator for sorting the list by User Rank*/
+    public static Comparator<UserLeaderBoard> UserAccuracyComparator = new Comparator<UserLeaderBoard>() {
+
+        public int compare(UserLeaderBoard u1, UserLeaderBoard u2) {
+
+            Integer user1 = null;
+            Integer user2 = null;
+
+            user1 = u1.getRank();
+            user2 = u2.getRank();
+
+            if (null==user1){
+                user1 = Integer.MAX_VALUE;
+            }
+            if(null == user2){
+                user2 = Integer.MAX_VALUE;
+            }
+
+            //ascending order
+            return user1.compareTo(user2);
+
+        }};
+
 }

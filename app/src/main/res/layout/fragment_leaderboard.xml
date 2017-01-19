@@ -15,8 +15,7 @@
     <View
         android:id="@+id/gradient_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_4"
-        android:alpha="0.5"
+        android:layout_height="@dimen/dp_10"
         android:background="@drawable/gradient_above_hometab"
         android:layout_above="@+id/points_user_rl" />
 
