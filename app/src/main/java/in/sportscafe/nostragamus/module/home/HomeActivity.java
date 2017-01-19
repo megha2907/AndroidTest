@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.notifications.NotificationInboxFragment;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
+import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.RefreshTokenModelImpl;
@@ -241,7 +242,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mNotificationRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
                   mHomeRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));*/
 
-                  loadFragment(new LeaderBoardSummaryFragment());
+                  loadFragment(new LBLandingFragment());
                   break;
           }
     }
