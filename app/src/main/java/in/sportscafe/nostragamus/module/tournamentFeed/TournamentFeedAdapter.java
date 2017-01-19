@@ -53,13 +53,13 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
         try {
         holder.mTvTournamentName.setText(tournamentInfo.getTournamentName());
 
-        holder.mTvTournamentUnplayedCount.setText(tournamentInfo.getTournamentSubtext());
-
         if (!tournamentInfo.getCountsUnplayed().equals("0")){
             holder.mBtnTournamentUnplayedCount.setVisibility(View.VISIBLE);
             holder.mBtnTournamentUnplayedCount.setText(tournamentInfo.getCountsUnplayed());
+            holder.mBtnTournamentUnplayed.setVisibility(View.VISIBLE);
         }else {
             holder.mBtnTournamentUnplayedCount.setVisibility(View.GONE);
+            holder.mBtnTournamentUnplayed.setVisibility(View.GONE);
         }
 
         holder.mIvTournamentImage.setImageUrl(
@@ -81,8 +81,9 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
         View mMainView;
         TextView mTvTournamentName;
         HmImageView mIvTournamentImage;
-        TextView mTvTournamentUnplayedCount;
+        TextView mTvTournamentNotification;
         Button mBtnTournamentUnplayedCount;
+        Button mBtnTournamentUnplayed;
 
 
         public ViewHolder(View V) {
@@ -90,10 +91,12 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
             mMainView = V;
             mTvTournamentName = (TextView) V.findViewById(R.id.tournament_tv_tournamentName);
             mIvTournamentImage = (HmImageView) V.findViewById(R.id.tournament_iv_tournamentImage);
-            mTvTournamentUnplayedCount = (TextView) V.findViewById(R.id.tournament_btn_count_unplayed);
+            mTvTournamentNotification = (TextView) V.findViewById(R.id.tournament_tv_notification);
             mBtnTournamentUnplayedCount = (Button)V.findViewById(R.id.tournament_btn_unplayed_count);
+            mBtnTournamentUnplayed = (Button)V.findViewById(R.id.tournament_btn_unplayed_btn);
 
             V.setOnClickListener(this);
+            mBtnTournamentUnplayed.setOnClickListener(this);
         }
 
         @Override

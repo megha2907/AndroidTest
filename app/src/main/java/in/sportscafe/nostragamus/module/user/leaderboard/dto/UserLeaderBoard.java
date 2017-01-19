@@ -20,6 +20,9 @@ public class UserLeaderBoard implements Serializable,Comparable<UserLeaderBoard>
     @JsonProperty("user_photo")
     private String userPhoto;
 
+    @JsonProperty("accuracy")
+    private Integer accuracy;
+
     @JsonProperty("rank")
     private Integer rank;
 
@@ -122,6 +125,17 @@ public class UserLeaderBoard implements Serializable,Comparable<UserLeaderBoard>
         this.countPlayed = countPlayed;
     }
 
+    @JsonProperty("accuracy")
+    public Integer getAccuracy() {
+        return accuracy;
+    }
+
+    @JsonProperty("accuracy")
+    public void setAccuracy(Integer accuracy) {
+        this.accuracy = accuracy;
+    }
+
+
     @Override
     public int compareTo(UserLeaderBoard userLeaderBoard) {
         Long userPoints=((UserLeaderBoard)userLeaderBoard).getPoints();
@@ -129,16 +143,16 @@ public class UserLeaderBoard implements Serializable,Comparable<UserLeaderBoard>
         return (int)(this.points-userPoints);
     }
 
-    /*Comparator for sorting the list by User Rank*/
-    public static Comparator<UserLeaderBoard> UserRankComparator = new Comparator<UserLeaderBoard>() {
+    /*Comparator for sorting the list by User Accuracy*/
+    public static Comparator<UserLeaderBoard> UserAccuracyComparator = new Comparator<UserLeaderBoard>() {
 
         public int compare(UserLeaderBoard u1, UserLeaderBoard u2) {
 
             Integer user1 = null;
             Integer user2 = null;
 
-            user1 = u1.getRank();
-            user2 = u2.getRank();
+            user1 = u1.getAccuracy();
+            user2 = u2.getAccuracy();
 
             if (null==user1){
                 user1 = Integer.MAX_VALUE;
@@ -154,7 +168,7 @@ public class UserLeaderBoard implements Serializable,Comparable<UserLeaderBoard>
 
 
     /*Comparator for sorting the list by User Rank*/
-    public static Comparator<UserLeaderBoard> UserAccuracyComparator = new Comparator<UserLeaderBoard>() {
+    public static Comparator<UserLeaderBoard> UserRankComparator = new Comparator<UserLeaderBoard>() {
 
         public int compare(UserLeaderBoard u1, UserLeaderBoard u2) {
 

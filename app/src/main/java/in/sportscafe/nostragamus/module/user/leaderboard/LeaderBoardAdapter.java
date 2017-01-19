@@ -97,6 +97,10 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             }
         }
 
+        if (userLeaderBoard.getAccuracy()!=null) {
+            holder.mTvAccuracy.setText(userLeaderBoard.getAccuracy()+"%");
+        }
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -112,6 +116,8 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         TextView mTvPoints;
 
         TextView mTvPlayed;
+
+        TextView mTvAccuracy;
 
         View mViewUserLine;
 
@@ -129,6 +135,7 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             mTvPlayed= (TextView) V.findViewById(R.id.leaderboard_row_tv_played);
             mLlLeaderBoards=(LinearLayout)V.findViewById(R.id.leaderboard_ll);
             mViewUserLine = (View) V.findViewById(R.id.leaderboard_row_view_user);
+            mTvAccuracy = (TextView)V.findViewById(R.id.leaderboard_row_tv_accuracy);
 
             V.setOnClickListener(new View.OnClickListener() {
                 @Override
