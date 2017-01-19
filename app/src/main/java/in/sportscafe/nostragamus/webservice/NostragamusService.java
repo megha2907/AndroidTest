@@ -24,6 +24,7 @@ import in.sportscafe.nostragamus.module.user.group.members.AdminRequest;
 import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupResponse;
+import in.sportscafe.nostragamus.module.user.lblanding.LBLandingResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
@@ -178,4 +179,7 @@ public interface NostragamusService {
 
     @GET("v1/game/getPlayerResultPercentage")
     Call<PlayerResultPercentageResponse> playerResultPercentage(@Query("match_id") Integer matchId);
+
+    @GET("v2/game/users/leaderboard/summary")
+    Call<LBLandingResponse> getLBLandingSummary();
 }

@@ -266,17 +266,17 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void onLeftSwipe(Question dataObject) {
-//        saveSinglePrediction(dataObject, 1);
+        saveSinglePrediction(dataObject, 1);
     }
 
     @Override
     public void onRightSwipe(Question dataObject) {
-//        saveSinglePrediction(dataObject, 2);
+        saveSinglePrediction(dataObject, 2);
     }
 
     @Override
     public void onBottomSwipe(Question dataObject) {
-//        saveSinglePrediction(dataObject, 0);
+        saveSinglePrediction(dataObject, 0);
     }
 
     @Override
@@ -319,47 +319,9 @@ public class PredictionModelImpl implements PredictionModel,
     public void onCardMoving(float xPercent, float yPercent) {
         Log.d("Move Percentages --> ", xPercent + "%  " + yPercent + "%");
 
-        /*if(xPercent <= -100f) {
-            mPredictionAdapter.onCardMovedLeft();
-            mDirectionLocked = Gravity.LEFT;
-        } else if(xPercent >= 100f) {
-            mPredictionAdapter.onCardMovedRight();
-            mDirectionLocked = Gravity.RIGHT;
-        } else if(mNeitherOptionAvailable && yPercent >= 100f) {
-            mDirectionLocked = Gravity.BOTTOM;
-        } else {
-            mPredictionAdapter.onCardMoveStopped();
-            mDirectionLocked = -1;
-        }*/
-
         mPredictionAdapter.onCardMoving(xPercent, yPercent);
 
     }
-
-    /*@Override
-    public void onCardMovedLeft() {
-        mPredictionAdapter.onCardMovedLeft();
-    }
-
-    @Override
-    public void onCardMovedRight() {
-        mPredictionAdapter.onCardMovedRight();
-    }
-
-    @Override
-    public void onCardMovedTop() {
-        mPredictionAdapter.onCardMoveStopped();
-    }
-
-    @Override
-    public void onCardMovedBottom() {
-        mPredictionAdapter.onCardMoveStopped();
-    }
-
-    @Override
-    public void onCardNotInMoveRegion() {
-        mPredictionAdapter.onCardMoveStopped();
-    }*/
 
     private void saveSinglePrediction(Question question, int answerId) {
         Answer answer = new Answer (

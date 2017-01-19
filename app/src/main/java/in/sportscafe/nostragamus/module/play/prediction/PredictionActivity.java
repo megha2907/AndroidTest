@@ -363,15 +363,15 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 break;
             case R.id.fab_fl_2x:
                 if(!m2xpowerUpApplied || !mAudiencePollpowerUpApplied || !mNonegspowerUpApplied) {
-//                    if (NostragamusDataHandler.getInstance().getNumberof2xPowerups() > 0) {
+                    if (NostragamusDataHandler.getInstance().getNumberof2xPowerups() > 0) {
                         m2xpowerUpApplied = true;
                         mAudiencePollpowerUpApplied = true;
                         mNonegspowerUpApplied = true;
                         mPredictionPresenter.onPowerUp("2x");
-//                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberof2xPowerups()-1);
-//                        btn2xpowerUpCount.setText(UpdatedPowerUps);
+                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberof2xPowerups()-1);
+                        btn2xpowerUpCount.setText(UpdatedPowerUps);
                         animateFAB();
-//                    }
+                    }
                 }
                 break;
             case R.id.fab_audience_poll:

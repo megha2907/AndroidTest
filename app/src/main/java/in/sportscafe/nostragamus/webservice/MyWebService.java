@@ -26,6 +26,7 @@ import in.sportscafe.nostragamus.module.user.group.members.AdminRequest;
 import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupResponse;
+import in.sportscafe.nostragamus.module.user.lblanding.LBLandingResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
@@ -220,5 +221,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<PlayerResultPercentageResponse> getPlayerResultPercentageRequest(Integer matchId) {
         return mNostragamusService.playerResultPercentage(matchId);
+    }
+
+    public Call<LBLandingResponse> getLBLandingSummary() {
+        return mNostragamusService.getLBLandingSummary();
     }
 }

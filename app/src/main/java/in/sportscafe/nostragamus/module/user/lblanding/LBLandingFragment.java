@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.user.lblanding;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,29 +9,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryPresenter;
-import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryPresenterImpl;
-import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryView;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
+import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 
 /**
  * Created by deepanshi on 1/19/17.
  */
 
-public class LBLandingFragment extends NostragamusFragment implements LeaderBoardSummaryView {
+public class LBLandingFragment extends NostragamusFragment implements LBLandingView {
 
-    private RecyclerView horizontal_recycler_view;
-    private LBSportsAdapter mAdapter;
+    private LinearLayout mLlLandingHolder;
 
-    private Toolbar mtoolbar;
-    private TextView mTitle;
+    private TextView mTvTitle;
 
-    private LeaderBoardSummaryPresenter mleaderBoardSummaryPresenter;
+    private LBLandingPresenter mLbLandingPresenter;
 
 
     @Nullable
@@ -47,31 +43,55 @@ public class LBLandingFragment extends NostragamusFragment implements LeaderBoar
 
         initToolBar();
 
-        this.mleaderBoardSummaryPresenter = LeaderBoardSummaryPresenterImpl.newInstance(this);
-        this.mleaderBoardSummaryPresenter.onCreateLeaderBoard();
-        horizontal_recycler_view = (RecyclerView) findViewById(R.id.lb_landing_rv);
-        LinearLayoutManager horizontalLayoutManagaer
-                = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        this.mLbLandingPresenter = LBLandingPresenterImpl.newInstance(this);
+        this.mLbLandingPresenter.onCreateLeaderBoard();
 
-        horizontal_recycler_view.setLayoutManager(horizontalLayoutManagaer);
+        mLlLandingHolder = (LinearLayout) findViewById(R.id.lb_landing_ll_holder);
     }
 
 
     @Override
-    public void initMyPosition(LbSummary lbSummary) {
-        mAdapter = new LBSportsAdapter(lbSummary.getSports());
-        horizontal_recycler_view.setAdapter(mAdapter);
+    public void initMyPosition(LBLandingSummary lbSummary) {
+        for (LBLanding lbLanding : lbSummary.getSports()) {
+            lbLanding.setImgUrl(Sport.getSportImageUrl(lbLanding.getName(), 200, 200));
+        }
+
+        mLlLandingHolder.addView(getLandingRow(
+                getResources().getString(R.string.sports),
+                lbSummary.getSports(),
+                mLlLandingHolder,
+                true
+        ));
+
+        mLlLandingHolder.addView(getLandingRow(
+                getResources().getString(R.string.groups),
+                lbSummary.getGroups(),
+                mLlLandingHolder,
+                false
+        ));
+    }
+
+    private View getLandingRow(String categoryName, List<LBLanding> lbList, ViewGroup parent, boolean needPadding) {
+        View landingRow = getLayoutInflater().inflate(R.layout.inflater_lblanding_row, parent, false);
+
+        ((TextView) landingRow.findViewById(R.id.lblanding_tv_category_name)).setText(categoryName);
+
+        RecyclerView recyclerView = (RecyclerView) landingRow.findViewById(R.id.lblanding_rv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        LBLandingAdapter lbLandingAdapter = new LBLandingAdapter(getContext(), needPadding);
+        lbLandingAdapter.addAll(lbList);
+        recyclerView.setAdapter(lbLandingAdapter);
+
+        return landingRow;
     }
 
 
     public void initToolBar() {
-        Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Regular.ttf");
-        mtoolbar = (Toolbar) findViewById(R.id.lb_landing_toolbar);
-        mTitle = (TextView) mtoolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("LEADERBOARDS");
-        mTitle.setTypeface(tftitle);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mtoolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar((Toolbar) findViewById(R.id.lb_landing_toolbar));
+
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
 }

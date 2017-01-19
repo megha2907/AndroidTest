@@ -25,4 +25,8 @@
     <string name="fuzzy_players_hint">Type in name of friend...</string>
     <string name="view_profile">View Profile</string>
     <string name="total_points">Total Points</string>
+    <string name="leaderboards">Leaderboards</string>
+    <string name="position">Position</string>
+    <string name="sports">Sports</string>
+    <string name="groups">Groups</string>
 </resources>
