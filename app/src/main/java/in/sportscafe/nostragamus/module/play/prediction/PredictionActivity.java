@@ -361,18 +361,17 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             case R.id.fab_main:
                 animateFAB();
                 break;
-            case R.id.fab_2x:
+            case R.id.fab_fl_2x:
                 if(!m2xpowerUpApplied || !mAudiencePollpowerUpApplied || !mNonegspowerUpApplied) {
-                    if (NostragamusDataHandler.getInstance().getNumberof2xPowerups() > 0) {
+//                    if (NostragamusDataHandler.getInstance().getNumberof2xPowerups() > 0) {
                         m2xpowerUpApplied = true;
                         mAudiencePollpowerUpApplied = true;
                         mNonegspowerUpApplied = true;
                         mPredictionPresenter.onPowerUp("2x");
-                       // NostragamusDataHandler.getInstance().setNumberof2xPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups() - 1);
-                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberof2xPowerups()-1);
-                        btn2xpowerUpCount.setText(UpdatedPowerUps);
+//                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberof2xPowerups()-1);
+//                        btn2xpowerUpCount.setText(UpdatedPowerUps);
                         animateFAB();
-                    }
+//                    }
                 }
                 break;
             case R.id.fab_audience_poll:
@@ -441,7 +440,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             TextView textView = (TextView) findViewById(R.id.prediction_btn_neither);
             textView.setText(neitherOption);
         }
-        findViewById(R.id.prediction_ll_neither).setVisibility(visibility);
+//        findViewById(R.id.prediction_ll_neither).setVisibility(visibility);
         invokeCardListener();
     }
 

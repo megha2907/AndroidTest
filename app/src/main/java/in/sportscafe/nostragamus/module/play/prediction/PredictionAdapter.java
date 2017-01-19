@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -20,6 +23,10 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 
 public class PredictionAdapter extends ArrayAdapter<Question> {
+
+    private final float SCREEN_WIDTH;
+
+    private final float SCREEN_HEIGHT;
 
     private LayoutInflater mLayoutInflater;
 
@@ -36,6 +43,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
     private boolean mNeitherOptionAvailable = false;
 
     private View mTopView;
+
+    private CardView mCvMain;
 
     private View mLeftOption;
 
@@ -55,19 +64,83 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     private TextView mTvLockingOption;
 
+    private float mOptionHeight;
+
+    private float mCardWidth;
+
+    private float mCardHeight;
+
+    private float mCardMargin;
+
+    private float mImageWidth;
+
+    private float mImageHeight;
+
     public PredictionAdapter(Context context, View rootView) {
         super(context, android.R.layout.simple_list_item_1);
         this.mLayoutInflater = LayoutInflater.from(context);
 
-        vBgFrame1 = rootView.findViewById(R.id.bg_view1);
-        vBgFrame2 = rootView.findViewById(R.id.bg_view2);
+        Rect rect = new Rect();
+        rootView.getLocalVisibleRect(rect);
+
+        SCREEN_WIDTH = rect.width();
+        SCREEN_HEIGHT = rect.height();
+
+        mCardWidth = SCREEN_WIDTH * 0.89f;
+        mCardHeight = SCREEN_WIDTH;
+        mOptionHeight = SCREEN_WIDTH * 0.11f;
+        mCardMargin = mOptionHeight / 2;
+        mImageWidth = mCardWidth / 2f;
+        mImageHeight = mImageWidth;
+
+        Log.d("outLocation --> ", SCREEN_WIDTH + ", " + SCREEN_HEIGHT);
+
+        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_cv_bg_0).getLayoutParams();
+        rlp.height = (int) mCardHeight;
+        rlp.leftMargin = (int) mCardMargin;
+        rlp.rightMargin = (int) mCardMargin;
+
+        vBgFrame1 = rootView.findViewById(R.id.prediction_cv_bg_1);
+        vBgFrame1.getLayoutParams().height = (int) mCardHeight;
+
+        vBgFrame2 = rootView.findViewById(R.id.prediction_cv_bg_2);
+        vBgFrame2.getLayoutParams().height = (int) mCardHeight;
+
+//        rootView.findViewById(R.id.activity_prediction_swipe).getLayoutParams().height = (int) mCardHeight;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         convertView = mLayoutInflater.inflate(R.layout.inflater_swipe_card_row, parent, false);
+
         final ViewHolder viewHolder = new ViewHolder(convertView);
         convertView.setTag(viewHolder);
+
+
+        /*sdf*/
+
+        ViewGroup.LayoutParams lp = viewHolder.flLeftArea.getLayoutParams();
+        lp.width = (int) mImageWidth;
+
+        /*lp = viewHolder.flRightArea.getLayoutParams();
+        lp.width = (int) mImageWidth;*/
+
+        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) viewHolder.llOptionLabels.getLayoutParams();
+        rlp.height = (int) mOptionHeight;
+
+        rlp = (RelativeLayout.LayoutParams) viewHolder.tvLockingOption.getLayoutParams();
+        rlp.height = (int) mOptionHeight;
+
+        rlp = (RelativeLayout.LayoutParams) viewHolder.llQuestionDesc.getLayoutParams();
+        rlp.height = (int) (mCardWidth / 2);
+
+        rlp = (RelativeLayout.LayoutParams) viewHolder.cvMainCard.getLayoutParams();
+        rlp.height = (int) mCardHeight;
+        rlp.leftMargin = (int) mCardMargin;
+        rlp.rightMargin = (int) mCardMargin;
+        /*sadf*/
+
 
         Question question = getItem(position);
 
@@ -146,6 +219,10 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     private void updateBg(int offset) {
         if(!mBgUpdateDone) {
+            float elevation = vBgFrame1.getResources().getDimensionPixelSize(R.dimen.dp_6);
+            if(offset != 1) {
+                elevation = 0f;
+            }
             int totalCount = getCount() - offset;
             if(totalCount > 0) {
                 if (totalCount == 1) {
@@ -159,6 +236,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
                     vBgFrame2.setVisibility(View.VISIBLE);
                 }
             }
+            mCvMain.setCardElevation(elevation);
         }
     }
 
@@ -203,6 +281,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         this.mTopQuestion = getItem(0);
         this.mNeitherOptionAvailable = !TextUtils.isEmpty(mTopQuestion.getQuestionOption3());
         this.mTopView = mFlingCardListener.getFrame();
+        this.mCvMain = (CardView) mTopView.findViewById(R.id.swipe_card_cv_main);
         this.mLeftOption = mTopView.findViewById(R.id.swipe_card_tv_left);
         this.mRightOption = mTopView.findViewById(R.id.swipe_card_tv_right);
         this.mLeftOptionArrow = mTopView.findViewById(R.id.swipe_card_iv_left_arrow);
@@ -278,8 +357,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             mRightOverlay.setBackgroundColor(getColor(R.color.transparent));
             alpha = 0f;
 
-            /*mBgUpdateDone = false;
-            updateBg(0);*/
+            mBgUpdateDone = false;
+            updateBg(0);
 
             mLeftAlpha = 1f;
             mRightAlpha = 1f;
@@ -306,9 +385,15 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     static class ViewHolder  {
 
+        CardView cvMainCard;
+
         TextView tvQuestion;
 
         TextView tvContext;
+
+        FrameLayout flLeftArea;
+
+        FrameLayout flRightArea;
 
         HmImageView ivLeftOption;
 
@@ -332,9 +417,18 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         View viewPoints;
 
+        TextView tvLockingOption;
+
+        LinearLayout llOptionLabels;
+
+        LinearLayout llQuestionDesc;
+
         public ViewHolder(View rootView) {
+            cvMainCard = (CardView) rootView.findViewById(R.id.swipe_card_cv_main);
             tvQuestion = (TextView) rootView.findViewById(R.id.swipe_card_tv_question);
             tvContext = (TextView) rootView.findViewById(R.id.swipe_card_tv_context);
+            flLeftArea = (FrameLayout) rootView.findViewById(R.id.swipe_card_fl_left_area);
+            flRightArea = (FrameLayout) rootView.findViewById(R.id.swipe_card_fl_right_area);
             ivLeftOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_left);
             ivRightOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_right);
             tvLeftOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_left);
@@ -346,6 +440,9 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             tvquestionNegativePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_negative_points);
             viewPoints = rootView.findViewById(R.id.swipe_card_question_points_line);
             cardViewpoints = (CardView) rootView.findViewById(R.id.points_cardview);
+            tvLockingOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_locking_option);
+            llOptionLabels = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_option_labels);
+            llQuestionDesc = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_question_desc);
         }
     }
 }

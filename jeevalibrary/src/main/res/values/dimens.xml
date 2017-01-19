@@ -113,4 +113,5 @@
     <dimen name="dp_130">130dp</dimen>
     <dimen name="dp_450">450dp</dimen>
     <dimen name="dp_430">430dp</dimen>
+    <dimen name="_dp_18">-18dp</dimen>
 </resources>
