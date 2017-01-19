@@ -88,9 +88,9 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
     public void sortAndRefreshLeaderBoard() {
 
             if (SORT_TYPE == 0) {
-                Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserAccuracyComparator);
-            } else {
                 Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
+            } else {
+                Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserAccuracyComparator);
             }
 
             mLeaderBoardAdapter.clear();

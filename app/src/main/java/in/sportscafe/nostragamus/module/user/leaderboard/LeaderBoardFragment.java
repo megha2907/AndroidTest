@@ -93,6 +93,7 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
         TextView mTvName = (TextView) findViewById(R.id.leaderboard_row_tv_user_name);
         TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_row_tv_points);
         TextView mTvPlayed= (TextView) findViewById(R.id.leaderboard_row_tv_played);
+        TextView mTvAccuracy = (TextView)findViewById(R.id.leaderboard_row_tv_accuracy);
 
         userPoints.setVisibility(View.VISIBLE);
 
@@ -121,6 +122,10 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
             mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Match");
         }else {
             mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Matches");
+        }
+
+        if (userLeaderBoard.getAccuracy()!=null) {
+            mTvAccuracy.setText(userLeaderBoard.getAccuracy()+"%");
         }
 
 

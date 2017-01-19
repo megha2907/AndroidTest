@@ -122,6 +122,8 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         // hide selection text
         ((TextView)view).setText(null);
 
+        ((TextView) findViewById(R.id.sorting_tv)).setText(item);
+
         if (mViewPager != null) {
             LeaderBoardModelImpl.SORT_TYPE = position;
             ((ViewPagerAdapter) mViewPager.getAdapter()).getItem(mViewPager.getCurrentItem()).setUserVisibleHint(true);
