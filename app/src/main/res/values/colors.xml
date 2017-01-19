@@ -47,6 +47,9 @@
     <color name="curious_blue">#29ABE2</color>
     <color name="profile_tab_color">#33000000</color>
     <color name="profile_tab_line_color">#22ffffff</color>
+    <color name="ready_btn_color">#186AA2</color>
+    <color name="tournament_divider_color">#202020</color>
+
 
     <color name="black">#151515</color>
     <color name="black_10">#1A000000</color>
