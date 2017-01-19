@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/black">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_140"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+
+    <com.jeeva.android.widgets.HmImageView
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_140"
+        android:id="@+id/lb_summary_item_iv"
+        app:defaultImage="@drawable/points_gradient_bg"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/lb_summary_item_rank_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2nd"
+            android:textSize="@dimen/dp_20"
+            app:typeface="roboto_condensed_bold"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"/>
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/lb_summary_item_pos_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="POSITION"
+            android:textSize="@dimen/dp_10"
+            app:typeface="roboto_condensed"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/lb_summary_item_rank_tv" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/lb_summary_item_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Badminton"
+            android:textSize="@dimen/dp_12"
+            app:typeface="roboto_condensed"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:textColor="@color/white_90"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
