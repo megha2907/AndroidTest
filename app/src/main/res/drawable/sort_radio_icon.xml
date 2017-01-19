@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:drawable="@drawable/spinner_radio_selector"
+        android:top="@dimen/dp_2"
+        android:right="@dimen/dp_5"
+        android:left="@dimen/dp_5"/>
+
+</layer-list>

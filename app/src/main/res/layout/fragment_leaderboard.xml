@@ -2,12 +2,138 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/leaderboard_rcv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"/>
+        android:background="@color/black"
+        android:layout_above="@+id/points_user_rl"/>
+
+
+    <View
+        android:id="@+id/gradient_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@drawable/gradient_above_hometab"
+        android:layout_above="@+id/points_user_rl" />
+
+
+    <RelativeLayout
+        android:id="@+id/points_user_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/points_user_blue_bg">
+
+
+        <LinearLayout
+            android:id="@+id/leaderboard_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/leaderboard_row_view_user"
+                android:layout_width="@dimen/dp_3"
+                android:layout_height="fill_parent"
+                android:background="@color/btn_powerup_screen_color"
+                android:visibility="gone"/>
+
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/leaderboard_row_tv_rank"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:text="52nd"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_20"
+                app:typeface="roboto_condensed"/>
+
+            <ImageView
+                android:id="@+id/leaderboard_row_iv_status"
+                android:layout_width="@dimen/dp_5"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_1"
+                android:layout_weight="0.5"
+                android:src="@drawable/status_arrow_down"
+                />
+
+
+            <in.sportscafe.nostragamus.module.common.RoundImage
+                android:id="@+id/leaderboard_row_iv_user_img"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:src="@drawable/placeholder_icon"
+                android:layout_marginLeft="@dimen/dp_12"
+                />
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_weight="5">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/leaderboard_row_tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Deepanshi"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="lato_regular"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/leaderboard_row_tv_played"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3 Matches"
+                    android:layout_below="@+id/leaderboard_row_tv_user_name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    android:alpha="0.7"
+                    app:typeface="lato_regular"/>
+
+            </RelativeLayout>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/leaderboard_row_tv_accuracy"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="72%"
+                android:drawablePadding="@dimen/dp_5"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                android:drawableLeft="@drawable/leaderboards_accuracy_icon"
+                app:typeface="roboto_condensed"/>
+
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/leaderboard_row_tv_points"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp_5"
+                android:layout_weight="3"
+                android:text="930"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:drawablePadding="@dimen/dp_5"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                android:drawableLeft="@drawable/profile_screen_points_icon"
+                app:typeface="roboto_condensed"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

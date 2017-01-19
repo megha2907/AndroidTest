@@ -10,4 +10,7 @@ public interface LeaderBoardPresenter {
     void onCreateLeaderBoard(Bundle bundle);
 
     void update(Bundle bundle);
+
+    void checkSortType();
+
 }

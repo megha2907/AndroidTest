@@ -7,11 +7,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+import in.sportscafe.nostragamus.module.user.points.OnLeaderBoardUpdateListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
@@ -40,6 +49,18 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (getView() != null) {
+            if (getUserVisibleHint() == true) {
+                Log.i("inside","setUserVisibleHint");
+                mLeaderBoardPresenter.checkSortType();
+            }
+        }
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -62,7 +83,51 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
         mRvLeaderBoard.getLayoutManager().scrollToPosition(movePosition);
     }
 
+    @Override
+    public void setUserPoints(UserLeaderBoard userLeaderBoard) {
+
+        RelativeLayout userPoints = (RelativeLayout)findViewById(R.id.points_user_rl);
+        ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_row_iv_status);
+        TextView  mTvRank = (TextView) findViewById(R.id.leaderboard_row_tv_rank);
+        RoundImage mIvUser = (RoundImage) findViewById(R.id.leaderboard_row_iv_user_img);
+        TextView mTvName = (TextView) findViewById(R.id.leaderboard_row_tv_user_name);
+        TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_row_tv_points);
+        TextView mTvPlayed= (TextView) findViewById(R.id.leaderboard_row_tv_played);
+
+        userPoints.setVisibility(View.VISIBLE);
+
+
+        if(null == userLeaderBoard.getRank()) {
+            mTvRank.setText("-");
+        } else {
+            String rank = AppSnippet.ordinal(userLeaderBoard.getRank());
+            mTvRank.setText(rank);
+        }
+
+        mTvName.setText(userLeaderBoard.getUserName());
+        mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
+
+        if(userLeaderBoard.getRankChange() < 0) {
+            mIvStatus.setImageResource(R.drawable.status_arrow_down);
+        } else {
+            mIvStatus.setImageResource(R.drawable.status_arrow_up);
+        }
+
+        mIvUser.setImageUrl(
+                userLeaderBoard.getUserPhoto()
+        );
+
+        if (userLeaderBoard.getCountPlayed()==1 || userLeaderBoard.getCountPlayed()==0) {
+            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Match");
+        }else {
+            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Matches");
+        }
+
+
+    }
+
     public void refreshLeaderBoard(Bundle bundle) {
         mLeaderBoardPresenter.update(bundle);
     }
+
 }

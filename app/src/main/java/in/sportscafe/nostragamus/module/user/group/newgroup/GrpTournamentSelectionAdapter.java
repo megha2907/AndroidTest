@@ -100,11 +100,11 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
 
             if (mSelectedTournamentsIdList.contains((tournamentInfo.getTournamentId()))) {
                 holder.mIvSelectedIcon.setBackgroundResource(R.drawable.tick_icon);
-                holder.mTvTournament.setTextColor(ContextCompat.getColor(holder.mIvTournament.getContext(), R.color.btn_powerup_screen_color));
+              //  holder.mTvTournament.setTextColor(ContextCompat.getColor(holder.mIvTournament.getContext(), R.color.btn_powerup_screen_color));
                 holder.mTvTournament.setAlpha(0.9f);
 
             } else {
-                holder.mTvTournament.setTextColor(Color.WHITE);
+                //holder.mTvTournament.setTextColor(Color.WHITE);
                 holder.mIvSelectedIcon.setBackgroundResource(R.drawable.add_icon);
             }
         }

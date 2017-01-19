@@ -8,7 +8,7 @@
     <color name="colorBackground">#202020</color>
 
     <color name="alto">#D8D8D8</color>
-    <color name="silver_chalice">#AAAAAA</color>
+    <color name="silver_chalice">#A6A6A6</color>
     <color name="dark_grey">#272731</color>
     <color name="chambray">#3B5999</color>
     <color name="chathamsBlue">#194586</color>
@@ -42,6 +42,8 @@
     <color name="colorGrey">#26252d</color>
     <color name="invitepeoplebtncolor">#00CE61</color>
     <color name="mainpowerupbg">#55202020</color>
+    <color name="leaderboard_rank_color">#505050</color>
+    <color name="leaderboard_bg_color">#182b34</color>
     <color name="curious_blue">#29ABE2</color>
     <color name="profile_tab_color">#33000000</color>
     <color name="profile_tab_line_color">#22ffffff</color>
@@ -61,5 +63,6 @@
 
     <color name="radical_red">#FE3555</color>
     <color name="malachite">#00CE61</color>
+    <color name="tab_tv_not_selected_color">#88ffffff</color>
 
 </resources>

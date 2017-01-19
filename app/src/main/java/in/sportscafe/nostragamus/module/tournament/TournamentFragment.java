@@ -10,6 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.gigamole.navigationtabstrip.NavigationTabStrip;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
@@ -43,9 +48,16 @@ public class TournamentFragment extends NostragamusFragment implements Tournamen
     }
 
     @Override
-    public void initMyPosition(ViewPagerAdapter adapter, int selectedPosition) {
+    public void initMyPosition(ViewPagerAdapter adapter, int selectedPosition,String[] sportsArray) {
+
         CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.tournament_tab_vp);
         viewPager.setAdapter(adapter);
+
+//        NavigationTabStrip mTopNavigationTabStrip = (NavigationTabStrip) findViewById(R.id.nts_bottom);
+//        mTopNavigationTabStrip.setTabIndex(1, true);
+//        mTopNavigationTabStrip.setViewPager(viewPager);
+//        mTopNavigationTabStrip.setTitles(sportsArray);
+//        mTopNavigationTabStrip.setHorizontalScrollBarEnabled(true);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tournament_tab_tl);
         tabLayout.setupWithViewPager(viewPager);
