@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.lblanding;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
@@ -30,9 +31,14 @@ public class LBLandingPresenterImpl implements LBLandingPresenter, LBLandingMode
         getLeaderBoardSummary();
     }
 
+    @Override
+    public void onFuzzyLbClick(Bundle bundle) {
+        mLbLandingModel.getLeaderBoardSummary(bundle);
+    }
+
     private void getLeaderBoardSummary() {
         mLbLandingView.showProgressbar();
-        mLbLandingModel.getLeaderBoardSummary();
+        mLbLandingModel.getLeaderBoardSummary(null);
     }
 
     @Override

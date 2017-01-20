@@ -306,11 +306,21 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
 
     @Override
-    public void hidePass() {
+    public void hideShuffle() {
+        findViewById(R.id.prediction_btn_shuffle).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showNeither() {
+        findViewById(R.id.prediction_btn_neither).setVisibility(View.VISIBLE);
+        findViewById(R.id.downnarrow).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideNeither() {
         findViewById(R.id.prediction_btn_neither).setVisibility(View.INVISIBLE);
         findViewById(R.id.downnarrow).setVisibility(View.INVISIBLE);
     }
-
 
     @Override
     public void showNoNegativeAlert() {
@@ -347,10 +357,10 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 onBackPressed();
                 break;
             case R.id.prediction_btn_shuffle:
-                mSwipeFlingAdapterView.getTopCardListener().selectTop();
+                mSwipeFlingAdapterView.getTopCardListener().selectBottom();
                 break;
             case R.id.prediction_btn_neither:
-                mSwipeFlingAdapterView.getTopCardListener().selectBottom();
+                mSwipeFlingAdapterView.getTopCardListener().selectTop();
                 break;
             case R.id.swipe_card_tv_left:
                 mSwipeFlingAdapterView.getTopCardListener().selectLeft();
@@ -433,14 +443,9 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void setNeitherOption(String neitherOption) {
-        int visibility = View.GONE;
-        if (!TextUtils.isEmpty(neitherOption)) {
-            visibility = View.VISIBLE;
+        TextView textView = (TextView) findViewById(R.id.prediction_btn_neither);
+        textView.setText(neitherOption);
 
-            TextView textView = (TextView) findViewById(R.id.prediction_btn_neither);
-            textView.setText(neitherOption);
-        }
-//        findViewById(R.id.prediction_ll_neither).setVisibility(visibility);
         invokeCardListener();
     }
 

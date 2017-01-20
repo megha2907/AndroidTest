@@ -18,9 +18,11 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -33,6 +35,8 @@ import java.util.regex.Pattern;
 
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 /**
@@ -250,5 +254,12 @@ public class AppSnippet implements Constants {
             file.mkdir();
         }
         return file;
+    }
+    public static void hideSoftKeyBoard(Context context, EditText editText) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
+
+        if(imm.isAcceptingText()) { // verify if the soft keyboard is open
+            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        }
     }
 }

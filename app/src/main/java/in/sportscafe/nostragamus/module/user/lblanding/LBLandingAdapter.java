@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
@@ -20,13 +19,13 @@ import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 /**
  * Created by deepanshi on 14/07/16.
  */
-public class LBLandingAdapter extends Adapter<LBLanding, LBLandingAdapter.MyViewHolder> {
+public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyViewHolder> {
 
-    private int mLbLandingType;
+    private String mLbLandingType;
 
     private boolean mNeedPadding = true;
 
-    public LBLandingAdapter(Context context, int lbLandingType, boolean needPadding) {
+    public LBLandingAdapter(Context context, String lbLandingType, boolean needPadding) {
         super(context);
         this.mLbLandingType = lbLandingType;
         this.mNeedPadding = needPadding;
@@ -39,7 +38,7 @@ public class LBLandingAdapter extends Adapter<LBLanding, LBLandingAdapter.MyView
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        LBLanding lbLandingDto = getItem(position);
+        LbLanding lbLandingDto = getItem(position);
 
         holder.ivImage.setImageUrl(lbLandingDto.getImgUrl());
 
@@ -77,7 +76,7 @@ public class LBLandingAdapter extends Adapter<LBLanding, LBLandingAdapter.MyView
         @Override
         public void onClick(View view) {
             Bundle bundle = new Bundle();
-            bundle.putInt(BundleKeys.LB_LANDING_TYPE, mLbLandingType);
+            bundle.putString(BundleKeys.LB_LANDING_TYPE, mLbLandingType);
             bundle.putSerializable(BundleKeys.LB_LANDING_DATA, getItem(getAdapterPosition()));
 
             navigateToPointsActivity(view.getContext(), bundle);

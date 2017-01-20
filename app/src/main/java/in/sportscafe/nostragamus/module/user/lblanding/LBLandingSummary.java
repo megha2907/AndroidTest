@@ -12,41 +12,41 @@ import java.util.List;
 public class LBLandingSummary {
 
     @JsonProperty("sports")
-    private List<LBLanding> sports = new ArrayList<>();
+    private List<LbLanding> sports = new ArrayList<>();
 
     @JsonProperty("groups")
-    private List<LBLanding> groups = new ArrayList<>();
+    private List<LbLanding> groups = new ArrayList<>();
 
     @JsonProperty("challenges")
-    private List<LBLanding> challenges = new ArrayList<>();
+    private List<LbLanding> challenges = new ArrayList<>();
 
     @JsonProperty("sports")
-    public List<LBLanding> getSports() {
+    public List<LbLanding> getSports() {
         return sports;
     }
 
     @JsonProperty("sports")
-    public void setSports(List<LBLanding> sports) {
+    public void setSports(List<LbLanding> sports) {
         this.sports = sports;
     }
 
     @JsonProperty("groups")
-    public List<LBLanding> getGroups() {
+    public List<LbLanding> getGroups() {
         return groups;
     }
 
     @JsonProperty("groups")
-    public void setGroups(List<LBLanding> groups) {
+    public void setGroups(List<LbLanding> groups) {
         this.groups = groups;
     }
 
     @JsonProperty("challenges")
-    public List<LBLanding> getChallenges() {
+    public List<LbLanding> getChallenges() {
         return challenges;
     }
 
     @JsonProperty("challenges")
-    public void setChallenges(List<LBLanding> challenges) {
+    public void setChallenges(List<LbLanding> challenges) {
         this.challenges = challenges;
     }
 }

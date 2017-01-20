@@ -1,7 +1,12 @@
 package in.sportscafe.nostragamus.module.user.lblanding;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +19,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbFragment;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 
 /**
@@ -31,13 +38,14 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
     private LBLandingPresenter mLbLandingPresenter;
 
+    private FuzzyLbFragment mFuzzyLbFragment;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_lb_landing, container, false);
-        return rootView;
+        return inflater.inflate(R.layout.activity_lb_landing, container, false);
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -48,20 +56,27 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
         this.mLbLandingPresenter.onCreateLeaderBoard();
 
         mLlLandingHolder = (LinearLayout) findViewById(R.id.lb_landing_ll_holder);
+
+        getChildFragmentManager().beginTransaction().replace(
+                R.id.lb_landing_fl_fuzzy_holder,
+                mFuzzyLbFragment = FuzzyLbFragment.newInstance()
+        ).commit();
     }
 
 
     @Override
     public void initMyPosition(LBLandingSummary lbSummary) {
-        List<LBLanding> lbLandingList = lbSummary.getSports();
+        mLlLandingHolder.removeAllViews();
+
+        List<LbLanding> lbLandingList = lbSummary.getSports();
         if (null != lbLandingList && lbLandingList.size() > 0) {
-            for (LBLanding lbLanding : lbSummary.getSports()) {
+            for (LbLanding lbLanding : lbSummary.getSports()) {
                 lbLanding.setImgUrl(Sport.getSportImageUrl(lbLanding.getName(), 200, 200));
             }
 
             addLandingRow(
                     lbLandingList,
-                    LBLandingType.SPORT_TYPE,
+                    LBLandingType.SPORT,
                     true
             );
         }
@@ -70,7 +85,7 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
         if (null != lbLandingList && lbLandingList.size() > 0) {
             addLandingRow(
                     lbLandingList,
-                    LBLandingType.GROUP_TYPE,
+                    LBLandingType.GROUP,
                     false
             );
         }
@@ -79,13 +94,13 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
         if (null != lbLandingList && lbLandingList.size() > 0) {
             addLandingRow(
                     lbLandingList,
-                    LBLandingType.CHALLENGE_TYPE,
+                    LBLandingType.CHALLENGE,
                     true
             );
         }
     }
 
-    private void addLandingRow(List<LBLanding> lbList, int lbLandingType, boolean needPadding) {
+    private void addLandingRow(List<LbLanding> lbList, String lbLandingType, boolean needPadding) {
         View landingRow = getLayoutInflater().inflate(R.layout.inflater_lblanding_row, mLlLandingHolder, false);
         mLlLandingHolder.addView(landingRow);
 
@@ -99,13 +114,13 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
         recyclerView.setAdapter(lbLandingAdapter);
     }
 
-    private String getCategoryName(int lbLandingType) {
+    private String getCategoryName(String lbLandingType) {
         switch (lbLandingType) {
-            case LBLandingType.SPORT_TYPE:
+            case LBLandingType.SPORT:
                 return getResources().getString(R.string.sports);
-            case LBLandingType.GROUP_TYPE:
+            case LBLandingType.GROUP:
                 return getResources().getString(R.string.groups);
-            case LBLandingType.CHALLENGE_TYPE:
+            case LBLandingType.CHALLENGE:
                 return getResources().getString(R.string.challenges);
         }
         return "";
@@ -118,5 +133,25 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mFuzzyLbClickReceiver,
+                new IntentFilter(IntentActions.ACTION_FUZZY_LB_CLICK));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mFuzzyLbClickReceiver);
+    }
+
+    BroadcastReceiver mFuzzyLbClickReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mLbLandingPresenter.onFuzzyLbClick(intent.getExtras());
+        }
+    };
 
 }

@@ -10,14 +10,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import static android.R.attr.rotation;
-import static android.R.attr.x;
-import static com.google.android.gms.analytics.internal.zzy.d;
-import static com.google.android.gms.analytics.internal.zzy.f;
-import static com.google.android.gms.analytics.internal.zzy.m;
-
 public class FlingCardListener implements View.OnTouchListener {
 
     enum Direction {
@@ -54,7 +46,7 @@ public class FlingCardListener implements View.OnTouchListener {
     private boolean isAnimationRunning = false;
     private float MAX_COS = (float) Math.cos(Math.toRadians(45));
 
-    private boolean mIsRotation = false;
+    private boolean mIsRotation = true;
 
     private boolean mIsXAxis = true;
 
@@ -281,6 +273,10 @@ public class FlingCardListener implements View.OnTouchListener {
             // Bottom Swipe
             onSelected(Direction.BOTTOM, objectX, getExitPoint(parentHeight), 100);
             mFlingListener.onScroll(1.0f);
+        } else if (mFlingListener.needTopSwipe() && movedBeyondTopBorder()) {
+            // Bottom Swipe
+            onSelected(Direction.TOP, objectX, getExitPoint(-objectH), 100);
+            mFlingListener.onScroll(1.0f);
         } else {
             float abslMoveDistance = Math.abs(aPosX - objectX);
             aPosX = 0;
@@ -494,6 +490,8 @@ public class FlingCardListener implements View.OnTouchListener {
         void topExit(Object dataObject);
 
         void bottomExit(Object dataObject);
+
+        boolean needTopSwipe();
 
         boolean needBottomSwipe();
 

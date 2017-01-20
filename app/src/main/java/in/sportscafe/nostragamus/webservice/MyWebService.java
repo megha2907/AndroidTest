@@ -1,10 +1,13 @@
 package in.sportscafe.nostragamus.webservice;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
+import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
@@ -36,7 +39,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummaryResponse;
-import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayersResponse;
+import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.AllSports;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.PreferenceRequest;
@@ -211,7 +214,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getTimelines(playerUserId, skip, limit);
     }
 
-    public Call<FuzzyPlayersResponse> getFuzzyPlayersRequest(String key) {
+    public Call<FuzzyPlayerResponse> getFuzzyPlayersRequest(String key) {
         return mNostragamusService.fuzzyPlayers(key);
     }
 
@@ -223,7 +226,24 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.playerResultPercentage(matchId);
     }
 
-    public Call<LBLandingResponse> getLBLandingSummary() {
-        return mNostragamusService.getLBLandingSummary();
+    public Call<LBLandingResponse> getLBLandingSummary(Integer sportsId, Integer groupId, Integer challengeId, Integer tourId) {
+        Map<String, String> queries = new HashMap<>();
+        if(null != sportsId) {
+            queries.put("sports_id", sportsId.toString());
+        }
+        if(null != groupId) {
+            queries.put("group_id", groupId.toString());
+        }
+        if(null != challengeId) {
+            queries.put("challenge_id", challengeId.toString());
+        }
+        if(null != tourId) {
+            queries.put("tournament_id", tourId.toString());
+        }
+        return mNostragamusService.getLBLandingSummary(queries);
+    }
+
+    public Call<FuzzyLbResponse> getFuzzyLbsRequest(String key) {
+        return mNostragamusService.fuzzyLbs(key);
     }
 }

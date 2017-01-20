@@ -9,7 +9,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
-import in.sportscafe.nostragamus.module.user.lblanding.LBLanding;
+import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
@@ -36,11 +36,11 @@ public class PointsModelImpl implements PointsModel {
 
     private Integer mTourId;
 
-    private Integer mLandingType;
+    private String mLandingType;
 
     private BaseSummary mBaseSummary;
 
-    private LBLanding mLBLanding;
+    private LbLanding mLbLanding;
 
     private OnPointsModelListener mPointsModelListener;
 
@@ -66,18 +66,18 @@ public class PointsModelImpl implements PointsModel {
             mTourId = bundle.getInt(BundleKeys.TOURNAMENT_ID);
         }
 
-        mLBLanding = (LBLanding) bundle.getSerializable(BundleKeys.LB_LANDING_DATA);
-        mLandingType = bundle.getInt(BundleKeys.LB_LANDING_TYPE);
+        mLbLanding = (LbLanding) bundle.getSerializable(BundleKeys.LB_LANDING_DATA);
+        mLandingType = bundle.getString(BundleKeys.LB_LANDING_TYPE);
 
         switch (mLandingType) {
-            case LBLandingType.SPORT_TYPE:
-                mSportId = mLBLanding.getId();
+            case LBLandingType.SPORT:
+                mSportId = mLbLanding.getId();
                 break;
-            case LBLandingType.GROUP_TYPE:
-                mGroupId = mLBLanding.getId();
+            case LBLandingType.GROUP:
+                mGroupId = mLbLanding.getId();
                 break;
-            case LBLandingType.CHALLENGE_TYPE:
-                mChallengeId = mLBLanding.getId();
+            case LBLandingType.CHALLENGE:
+                mChallengeId = mLbLanding.getId();
                 break;
         }
 
@@ -85,12 +85,12 @@ public class PointsModelImpl implements PointsModel {
 
     @Override
     public String getName() {
-        return mLBLanding.getName();
+        return mLbLanding.getName();
     }
 
     @Override
     public String getIcon() {
-        return mLBLanding.getImgUrl();
+        return mLbLanding.getImgUrl();
     }
 
     @Override

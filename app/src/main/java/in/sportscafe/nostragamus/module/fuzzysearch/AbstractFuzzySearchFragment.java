@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.fuzzyplayers;
+package in.sportscafe.nostragamus.module.fuzzysearch;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,26 +11,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-
-import static com.google.android.gms.analytics.internal.zzy.i;
 
 /**
  * Created by deepanshu on 4/10/16.
  */
 
-public class FuzzyPlayersFragment extends NostragamusFragment implements FuzzyPlayersView {
+public abstract class AbstractFuzzySearchFragment extends NostragamusFragment implements AbstractFuzzySearchView {
 
     private RecyclerView mRecyclerView;
 
     private EditText mEtSearch;
 
-    private FuzzyPlayersPresenter mOthersAnswersPresenter;
+    private AbstractFuzzySearchPresenter mOthersAnswersPresenter;
 
-    public static FuzzyPlayersFragment newInstance() {
-        return new FuzzyPlayersFragment();
-    }
+    private boolean mUserTyping = true;
 
     @Nullable
     @Override
@@ -53,20 +51,31 @@ public class FuzzyPlayersFragment extends NostragamusFragment implements FuzzyPl
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mOthersAnswersPresenter.filterSearch(s.toString());
+                if(mUserTyping) {
+                    mOthersAnswersPresenter.filterSearch(s.toString());
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
-        this.mOthersAnswersPresenter = FuzzyPlayersPresenterImpl.newInstance(this);
+        this.mOthersAnswersPresenter = AbstractFuzzySearchPresenterImpl.newInstance(this);
         mOthersAnswersPresenter.onCreateFuzzyPlayers(getArguments());
     }
 
     @Override
-    public void setAdapter(FuzzyPlayerAdapter adapter) {
+    public void setAdapter(Adapter adapter) {
         mRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void setSearchItem(String name) {
+        mUserTyping = false;
+        mEtSearch.setText(name);
+        mEtSearch.setSelection(name.length());
+        mUserTyping = true;
+        AppSnippet.hideSoftKeyBoard(getContext(), mEtSearch);
     }
 
     public boolean isListShowing() {

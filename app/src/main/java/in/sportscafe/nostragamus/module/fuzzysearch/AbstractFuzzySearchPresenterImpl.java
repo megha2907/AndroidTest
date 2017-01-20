@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.fuzzyplayers;
+package in.sportscafe.nostragamus.module.fuzzysearch;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,19 +8,20 @@ import in.sportscafe.nostragamus.Constants.Alerts;
 /**
  * Created by deepanshu on 12/10/16.
  */
-public class FuzzyPlayersPresenterImpl implements FuzzyPlayersPresenter, FuzzyPlayersModelImpl.OnOthersAnswersModelListener {
+public class AbstractFuzzySearchPresenterImpl implements AbstractFuzzySearchPresenter,
+        AbstractFuzzySearchModelImpl.OnFuzzySearchModelListener {
 
-    private FuzzyPlayersView mOthersAnswersView;
+    private AbstractFuzzySearchView mOthersAnswersView;
 
-    private FuzzyPlayersModel mOthersAnswersModel;
+    private AbstractFuzzySearchModel mOthersAnswersModel;
 
-    public FuzzyPlayersPresenterImpl(FuzzyPlayersView view) {
+    public AbstractFuzzySearchPresenterImpl(AbstractFuzzySearchView view) {
         this.mOthersAnswersView = view;
-        this.mOthersAnswersModel = FuzzyPlayersModelImpl.newInstance(this);
+        this.mOthersAnswersModel = mOthersAnswersView.getModel(this);
     }
 
-    public static FuzzyPlayersPresenter newInstance(FuzzyPlayersView view) {
-        return new FuzzyPlayersPresenterImpl(view);
+    public static AbstractFuzzySearchPresenter newInstance(AbstractFuzzySearchView view) {
+        return new AbstractFuzzySearchPresenterImpl(view);
     }
 
     @Override
@@ -40,6 +41,11 @@ public class FuzzyPlayersPresenterImpl implements FuzzyPlayersPresenter, FuzzyPl
     @Override
     public void onFailed() {
         mOthersAnswersView.showMessage(Alerts.FUZZY_SEARCH_FAILED);
+    }
+
+    @Override
+    public void onSearchItemSelected(String name) {
+        mOthersAnswersView.setSearchItem(name);
     }
 
     @Override

@@ -275,12 +275,12 @@ public class PredictionModelImpl implements PredictionModel,
     }
 
     @Override
-    public void onBottomSwipe(Question dataObject) {
+    public void onTopSwipe(Question dataObject) {
         saveSinglePrediction(dataObject, 0);
     }
 
     @Override
-    public void onTopSwipe(Question dataObject) {
+    public void onBottomSwipe(Question dataObject) {
         mPredictionAdapter.add(dataObject);
     }
 
@@ -307,12 +307,17 @@ public class PredictionModelImpl implements PredictionModel,
         mTopQuestion = mPredictionAdapter.getTopQuestion();
         mNeitherOptionAvailable = !TextUtils.isEmpty(mTopQuestion.getQuestionOption3());
 
-        mPredictionModelListener.onQuestionChanged(mTopQuestion, minitialCount);
+        mPredictionModelListener.onQuestionChanged(mTopQuestion, minitialCount, mNeitherOptionAvailable);
+    }
+
+    @Override
+    public boolean needTopSwipe() {
+        return mNeitherOptionAvailable;
     }
 
     @Override
     public boolean needBottomSwipe() {
-        return mNeitherOptionAvailable;
+        return mTotalCount > 1;
     }
 
     @Override
@@ -384,7 +389,7 @@ public class PredictionModelImpl implements PredictionModel,
 
         void onNoQuestions();
 
-        void onQuestionChanged(Question item, int minitialCount);
+        void onQuestionChanged(Question item, int minitialCount, boolean neitherAvailable);
 
         void onFailedAudiencePollResponse(String message);
 

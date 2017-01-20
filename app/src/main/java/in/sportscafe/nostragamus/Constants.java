@@ -195,6 +195,7 @@ public interface Constants {
     interface IntentActions {
         String ACTION_SHARE_SCORE = "in.sportscafe.nostragamus.intent.action.SHARE_SCORE";
         String ACTION_FUZZY_PLAYER_CLICK = "in.sportscafe.nostragamus.intent.action.FUZZY_PLAYER_CLICK";
+        String ACTION_FUZZY_LB_CLICK = "in.sportscafe.nostragamus.intent.action.FUZZY_LB_CLICK";
     }
 
     interface LeaderBoardPeriods {
@@ -204,9 +205,10 @@ public interface Constants {
     }
 
     interface LBLandingType {
-        int SPORT_TYPE = 0;
-        int GROUP_TYPE = 1;
-        int CHALLENGE_TYPE = 2;
+        String SPORT = "sport";
+        String GROUP = "group";
+        String CHALLENGE = "challenge";
+        String TOURNAMENT = "tournament";
     }
 
     interface AnalyticsCategory {

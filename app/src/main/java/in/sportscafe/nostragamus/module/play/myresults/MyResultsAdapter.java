@@ -21,7 +21,6 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
@@ -32,7 +31,6 @@ import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryActivity;
-import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayersFragment;
 
 /**
  * Created by Jeeva on 15/6/16.

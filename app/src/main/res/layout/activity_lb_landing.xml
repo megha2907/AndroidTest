@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/lb_landing_toolbar"
-        android:background="@color/black">
+        android:layout_marginTop="@dimen/dp_60">
 
         <LinearLayout
             android:id="@+id/lb_landing_ll_holder"
@@ -45,5 +45,11 @@
             android:paddingTop="@dimen/dp_16" />
 
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/lb_landing_fl_fuzzy_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lb_landing_toolbar" />
 
 </RelativeLayout>

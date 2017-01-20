@@ -3,7 +3,6 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -69,13 +68,13 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onShowingLastQuestion() {
-        mPredictionView.hidePass();
+        mPredictionView.hideShuffle();
         //mPredictionView.showLastQuestionAlert();
     }
 
     @Override
     public void onShowingPassedQuestions() {
-        mPredictionView.hidePass();
+        mPredictionView.hideShuffle();
         //mPredictionView.showNoNegativeAlert();
         //mPredictionView.showMessage(Constants.Alerts.PASSED_QUESTION_ALERT);
     }
@@ -109,9 +108,14 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onQuestionChanged(Question question, int minitialCount) {
+    public void onQuestionChanged(Question question, int minitialCount, boolean neitherAvailable) {
         mPredictionView.setNumberofCards(question.getQuestionNumber(),minitialCount);
         mPredictionView.setNeitherOption(question.getQuestionOption3());
+        if(neitherAvailable) {
+            mPredictionView.showNeither();
+        } else {
+            mPredictionView.hideNeither();
+        }
     }
 
     @Override
