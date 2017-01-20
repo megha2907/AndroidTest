@@ -87,6 +87,7 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
     public void setUserPoints(UserLeaderBoard userLeaderBoard) {
 
         RelativeLayout userPoints = (RelativeLayout)findViewById(R.id.points_user_rl);
+        View gradientView = (View)findViewById(R.id.gradient_view);
         ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_row_iv_status);
         TextView  mTvRank = (TextView) findViewById(R.id.leaderboard_row_tv_rank);
         RoundImage mIvUser = (RoundImage) findViewById(R.id.leaderboard_row_iv_user_img);
@@ -96,6 +97,7 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
         TextView mTvAccuracy = (TextView)findViewById(R.id.leaderboard_row_tv_accuracy);
 
         userPoints.setVisibility(View.VISIBLE);
+        gradientView.setVisibility(View.VISIBLE);
 
 
         if(null == userLeaderBoard.getRank()) {
