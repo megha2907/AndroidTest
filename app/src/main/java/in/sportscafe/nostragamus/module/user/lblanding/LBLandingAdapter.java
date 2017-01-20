@@ -1,6 +1,8 @@
 package in.sportscafe.nostragamus.module.user.lblanding;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +11,26 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
+import in.sportscafe.nostragamus.module.user.points.PointsActivity;
+
+import static com.google.android.gms.analytics.internal.zzy.s;
 
 /**
  * Created by deepanshi on 14/07/16.
  */
 public class LBLandingAdapter extends Adapter<LBLanding, LBLandingAdapter.MyViewHolder> {
 
+    private int mLbLandingType;
+
     private boolean mNeedPadding = true;
 
-    public LBLandingAdapter(Context context, boolean needPadding) {
+    public LBLandingAdapter(Context context, int lbLandingType, boolean needPadding) {
         super(context);
+        this.mLbLandingType = lbLandingType;
         this.mNeedPadding = needPadding;
     }
 
@@ -45,7 +55,7 @@ public class LBLandingAdapter extends Adapter<LBLanding, LBLandingAdapter.MyView
         holder.tvName.setText(lbLandingDto.getName());
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         HmImageView ivImage;
 
@@ -62,6 +72,23 @@ public class LBLandingAdapter extends Adapter<LBLanding, LBLandingAdapter.MyView
             if(!mNeedPadding) {
                 ivImage.setPadding(0, 0, 0, 0);
             }
+
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(BundleKeys.LB_LANDING_TYPE, mLbLandingType);
+            bundle.putSerializable(BundleKeys.LB_LANDING_DATA, getItem(getAdapterPosition()));
+
+            navigateToPointsActivity(view.getContext(), bundle);
+        }
+
+        private void navigateToPointsActivity(Context context, Bundle bundle) {
+            Intent intent = new Intent(context, PointsActivity.class);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         }
     }
 }

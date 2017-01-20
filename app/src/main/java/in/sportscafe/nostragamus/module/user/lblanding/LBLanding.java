@@ -2,11 +2,13 @@ package in.sportscafe.nostragamus.module.user.lblanding;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
 /**
  * Created by Jeeva on 19/01/17.
  */
 
-public class LBLanding {
+public class LBLanding implements Serializable {
 
     private Integer id;
 

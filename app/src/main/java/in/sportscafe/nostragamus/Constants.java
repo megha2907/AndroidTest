@@ -167,6 +167,8 @@ public interface Constants {
         String SHOW_ANSWER_PERCENTAGE = "showAnswerPercentage";
         String MATCH_DETAILS = "matchDetails";
         String PLAYER_USER_NAME = "playerUserName";
+        String LB_LANDING_DATA = "lbLandingData";
+        String LB_LANDING_TYPE = "lbLandingType";
     }
 
     interface ParcelableKeys {
@@ -226,5 +228,11 @@ public interface Constants {
         String CAMERA = "Camera";
         String UPDATE = "Update";
         String DONE = "Done";
+    }
+
+    interface LBLandingType {
+        int SPORT_TYPE = 0;
+        int GROUP_TYPE = 1;
+        int CHALLENGE_TYPE = 2;
     }
 }
