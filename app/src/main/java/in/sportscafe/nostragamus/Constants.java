@@ -46,6 +46,7 @@ public interface Constants {
         String USER_INFO = "userInfo";
         String USER_ID = "userId";
         String LOGGED_USER = "loggedUser";
+        String FIRST_TIME_USER = "firstTimeUser";
         String COOKIE = "cookie";
         String NUMBER_OF_POWERUPS = "numberofpowerups";
         String NUMBER_OF_NONEGS_POWERUPS = "numberofnonegspowerups";
@@ -66,6 +67,7 @@ public interface Constants {
         String INITIAL_FORM_SHOWN = "initialFormShown";
         String ACCESS_TOKEN = "accessToken";
         String TOKEN_EXPIRY = "tokenExpiry";
+        int TOURNAMENT_ID = 0;
     }
 
     interface Alerts {

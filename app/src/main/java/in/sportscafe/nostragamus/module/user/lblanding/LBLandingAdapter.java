@@ -47,7 +47,8 @@ public class LBLandingAdapter extends Adapter<LBLanding, LBLandingAdapter.MyView
         if (null != rank) {
             holder.tvRank.setText(AppSnippet.ordinal(rank));
         } else {
-            holder.tvRank.setText("-");
+            holder.tvRank.setVisibility(View.GONE);
+            holder.tvPosTxt.setText("NOT\nPLAYED");
         }
 
         holder.tvName.setText(lbLandingDto.getName());
@@ -61,11 +62,14 @@ public class LBLandingAdapter extends Adapter<LBLanding, LBLandingAdapter.MyView
 
         TextView tvName;
 
+        TextView tvPosTxt;
+
         public MyViewHolder(View view) {
             super(view);
             ivImage = (HmImageView) view.findViewById(R.id.lb_summary_item_iv);
             tvRank = (TextView) view.findViewById(R.id.lb_summary_item_rank_tv);
             tvName = (TextView) view.findViewById(R.id.lb_summary_item_name_tv);
+            tvPosTxt= (TextView) view.findViewById(R.id.lb_summary_item_pos_tv);
 
             if (!mNeedPadding) {
                 ivImage.setPadding(0, 0, 0, 0);

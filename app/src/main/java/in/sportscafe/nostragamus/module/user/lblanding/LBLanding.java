@@ -10,13 +10,13 @@ import java.io.Serializable;
 
 public class LBLanding implements Serializable {
 
-    private Integer id;
+    private Integer id =1;
 
-    private String name;
+    private String name = "Cricket";
 
-    private Integer rank;
+    private Integer rank ;
 
-    private Integer rankChange;
+    private Integer rankChange ;
 
     @JsonProperty("img_url")
     private String imgUrl;

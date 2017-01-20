@@ -21,7 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_70"
-            android:layout_marginRight="@dimen/dp_30"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/tournament_iv_notification_icon"
             android:layout_centerVertical="true">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -60,16 +61,17 @@
         android:layout_centerVertical="true"/>
 
 
-    <ImageView
-        android:id="@+id/tournament_iv_rightarrow"
+    <ImageButton
+        android:id="@+id/tournament_iv_notification_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/tournament_bell_icon"
+        android:onClick="onClick"
         android:adjustViewBounds="true"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_80"
-        android:visibility="gone"/>
+        android:background="@color/transparent"
+        android:layout_marginRight="@dimen/dp_75"
+        android:visibility="visible"/>
 
 
         <com.jeeva.android.widgets.customfont.CustomButton

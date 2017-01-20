@@ -38,8 +38,6 @@ public class PointsModelImpl implements PointsModel {
 
     private Integer mLandingType;
 
-    private BaseSummary mBaseSummary;
-
     private LBLanding mLBLanding;
 
     private OnPointsModelListener mPointsModelListener;

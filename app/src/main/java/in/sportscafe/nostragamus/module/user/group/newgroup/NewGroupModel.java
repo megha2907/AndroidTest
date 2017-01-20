@@ -20,4 +20,6 @@ public interface NewGroupModel {
     void updateGroupPhoto(File file, String filepath, String filename);
 
     void onGetImage(Intent data);
+
+    void getAllTournamentsfromServer();
 }
