@@ -151,6 +151,7 @@ public interface Constants {
         String MATCH_ID = "match_id";
         String TOURNAMENT_NAME = "tourName";
         String TOURNAMENT_SUMMARY = "tourSummary";
+        String LBLANDING = "LBLanding";
         String TOURNAMENT_LIST = "tournamentList";
         String LEADERBOARD_KEY = "leaderboardKey";
         String LEADERBOARD_LIST = "leaderboardList";
@@ -199,6 +200,12 @@ public interface Constants {
         String ALL_TIME = "alltime";
         String MONTH = "monthly";
         String WEEK = "weekly";
+    }
+
+    interface LBLandingType {
+        int SPORT_TYPE = 0;
+        int GROUP_TYPE = 1;
+        int CHALLENGE_TYPE = 2;
     }
 
     interface AnalyticsCategory {

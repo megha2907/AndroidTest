@@ -27,6 +27,7 @@
     </android.support.v7.widget.CardView>
 
     <RelativeLayout
+        android:id="@+id/prediction_cv_bg_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/prediction_cv_bg_0"
@@ -318,7 +319,7 @@
         android:layout_height="match_parent"
         android:layout_alignLeft="@id/prediction_cv_bg_0"
         android:layout_alignRight="@id/prediction_cv_bg_0"
-        android:layout_below="@id/prediction_cv_bg_1">
+        android:layout_below="@id/prediction_cv_bg_rl">
 
         <LinearLayout
             android:id="@+id/prediction_ll_neither"

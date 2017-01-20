@@ -1,6 +1,8 @@
 package in.sportscafe.nostragamus.module.user.lblanding;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +11,11 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
+import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.TourSummary;
+import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 
 /**
  * Created by deepanshi on 14/07/16.
@@ -63,5 +68,6 @@ public class LBLandingAdapter extends Adapter<LBLanding, LBLandingAdapter.MyView
                 ivImage.setPadding(0, 0, 0, 0);
             }
         }
+
     }
 }
