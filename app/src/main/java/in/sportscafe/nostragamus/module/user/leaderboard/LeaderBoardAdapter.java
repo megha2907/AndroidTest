@@ -53,10 +53,12 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
 
         holder.itemView.setTag(userLeaderBoard.getUserId());
 
-        if(userLeaderBoard.getRankChange() < 0) {
-            holder.mIvStatus.setImageResource(R.drawable.status_arrow_down);
-        } else {
-            holder.mIvStatus.setImageResource(R.drawable.status_arrow_up);
+        if (null !=userLeaderBoard.getRankChange()) {
+            if (userLeaderBoard.getRankChange() < 0) {
+                holder.mIvStatus.setImageResource(R.drawable.status_arrow_down);
+            } else {
+                holder.mIvStatus.setImageResource(R.drawable.status_arrow_up);
+            }
         }
 
 

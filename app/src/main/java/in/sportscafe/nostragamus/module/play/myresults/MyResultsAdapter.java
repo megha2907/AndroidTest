@@ -324,6 +324,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         }
 
         String powerupused = question.getAnswerPowerUpId();
+        Log.i("powerupused",powerupused);
 
         if (powerupused.equals("null")) {
             powerupUsed.setVisibility(View.GONE);

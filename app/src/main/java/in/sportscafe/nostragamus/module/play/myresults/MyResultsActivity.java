@@ -287,7 +287,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 animateShareFAB();
                 break;*/
 
-            case R.id.fab_replay:
+            case R.id.fab_fl_replay:
                 if (!mFlippowerUpApplied || !mReplaypowerUpApplied ) {
                     if (NostragamusDataHandler.getInstance().getNumberofReplayPowerups() > 0) {
                         mFlippowerUpApplied = true;
@@ -300,7 +300,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                     }
                     animateFAB();
                 }
-            case R.id.fab_flip:
+            case R.id.fab_fl_flip:
                 if (!mFlippowerUpApplied || !mReplaypowerUpApplied ) {
                    if (NostragamusDataHandler.getInstance().getNumberofFlipPowerups() > 0) {
                     mFlippowerUpApplied = true;

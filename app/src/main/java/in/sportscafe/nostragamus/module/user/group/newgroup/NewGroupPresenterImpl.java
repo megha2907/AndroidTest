@@ -31,7 +31,7 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
 
     @Override
     public void onCreateNewGroup() {
-        mNewGroupView.setAdapter(mNewGroupModel.getAdapter(mNewGroupView.getContext()));
+        mNewGroupModel.getAllTournamentsfromServer();
     }
 
     @Override
@@ -65,6 +65,7 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
 
     @Override
     public void onSuccessTournamentInfo() {
+        mNewGroupView.setAdapter(mNewGroupModel.getAdapter(mNewGroupView.getContext()));
         mNewGroupView.dismissProgressbar();
     }
 

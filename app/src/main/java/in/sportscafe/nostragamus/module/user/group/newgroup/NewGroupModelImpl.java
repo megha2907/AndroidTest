@@ -50,8 +50,6 @@ public class NewGroupModelImpl implements NewGroupModel {
     @Override
     public GrpTournamentSelectionAdapter getAdapter(Context context) {
 
-        getAllTournamentsfromServer();
-
         List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
 
         TournamentFeedInfo selectedLabel = new TournamentFeedInfo();
@@ -173,7 +171,8 @@ public class NewGroupModelImpl implements NewGroupModel {
 
     }
 
-    private void getAllTournamentsfromServer() {
+    @Override
+    public void getAllTournamentsfromServer() {
         if(Nostragamus.getInstance().hasNetworkConnection()) {
             MyWebService.getInstance().getCurrentTournaments(true).enqueue(
                     new NostragamusCallBack<TournamentFeedResponse>() {
