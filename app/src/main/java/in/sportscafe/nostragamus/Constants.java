@@ -151,7 +151,6 @@ public interface Constants {
         String MATCH_ID = "match_id";
         String TOURNAMENT_NAME = "tourName";
         String TOURNAMENT_SUMMARY = "tourSummary";
-        String LBLANDING = "LBLanding";
         String TOURNAMENT_LIST = "tournamentList";
         String LEADERBOARD_KEY = "leaderboardKey";
         String LEADERBOARD_LIST = "leaderboardList";
@@ -168,6 +167,8 @@ public interface Constants {
         String SHOW_ANSWER_PERCENTAGE = "showAnswerPercentage";
         String MATCH_DETAILS = "matchDetails";
         String PLAYER_USER_NAME = "playerUserName";
+        String LB_LANDING_DATA = "lbLandingData";
+        String LB_LANDING_TYPE = "lbLandingType";
     }
 
     interface ParcelableKeys {

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
@@ -52,38 +53,62 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
     @Override
     public void initMyPosition(LBLandingSummary lbSummary) {
-        for (LBLanding lbLanding : lbSummary.getSports()) {
-            lbLanding.setImgUrl(Sport.getSportImageUrl(lbLanding.getName(), 200, 200));
+        List<LBLanding> lbLandingList = lbSummary.getSports();
+        if (null != lbLandingList && lbLandingList.size() > 0) {
+            for (LBLanding lbLanding : lbSummary.getSports()) {
+                lbLanding.setImgUrl(Sport.getSportImageUrl(lbLanding.getName(), 200, 200));
+            }
+
+            addLandingRow(
+                    lbLandingList,
+                    LBLandingType.SPORT_TYPE,
+                    true
+            );
         }
 
-        mLlLandingHolder.addView(getLandingRow(
-                getResources().getString(R.string.sports),
-                lbSummary.getSports(),
-                mLlLandingHolder,
-                true
-        ));
+        lbLandingList = lbSummary.getGroups();
+        if (null != lbLandingList && lbLandingList.size() > 0) {
+            addLandingRow(
+                    lbLandingList,
+                    LBLandingType.GROUP_TYPE,
+                    false
+            );
+        }
 
-        mLlLandingHolder.addView(getLandingRow(
-                getResources().getString(R.string.groups),
-                lbSummary.getGroups(),
-                mLlLandingHolder,
-                false
-        ));
+        lbLandingList = lbSummary.getChallenges();
+        if (null != lbLandingList && lbLandingList.size() > 0) {
+            addLandingRow(
+                    lbLandingList,
+                    LBLandingType.CHALLENGE_TYPE,
+                    true
+            );
+        }
     }
 
-    private View getLandingRow(String categoryName, List<LBLanding> lbList, ViewGroup parent, boolean needPadding) {
-        View landingRow = getLayoutInflater().inflate(R.layout.inflater_lblanding_row, parent, false);
+    private void addLandingRow(List<LBLanding> lbList, int lbLandingType, boolean needPadding) {
+        View landingRow = getLayoutInflater().inflate(R.layout.inflater_lblanding_row, mLlLandingHolder, false);
+        mLlLandingHolder.addView(landingRow);
 
-        ((TextView) landingRow.findViewById(R.id.lblanding_tv_category_name)).setText(categoryName);
+        ((TextView) landingRow.findViewById(R.id.lblanding_tv_category_name)).setText(getCategoryName(lbLandingType));
 
         RecyclerView recyclerView = (RecyclerView) landingRow.findViewById(R.id.lblanding_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        LBLandingAdapter lbLandingAdapter = new LBLandingAdapter(getContext(), needPadding);
+        LBLandingAdapter lbLandingAdapter = new LBLandingAdapter(getContext(), lbLandingType, needPadding);
         lbLandingAdapter.addAll(lbList);
         recyclerView.setAdapter(lbLandingAdapter);
+    }
 
-        return landingRow;
+    private String getCategoryName(int lbLandingType) {
+        switch (lbLandingType) {
+            case LBLandingType.SPORT_TYPE:
+                return getResources().getString(R.string.sports);
+            case LBLandingType.GROUP_TYPE:
+                return getResources().getString(R.string.groups);
+            case LBLandingType.CHALLENGE_TYPE:
+                return getResources().getString(R.string.challenges);
+        }
+        return "";
     }
 
 
