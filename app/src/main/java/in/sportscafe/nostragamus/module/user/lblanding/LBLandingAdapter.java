@@ -17,8 +17,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 
-import static com.google.android.gms.analytics.internal.zzy.s;
-
 /**
  * Created by deepanshi on 14/07/16.
  */
@@ -69,7 +67,7 @@ public class LBLandingAdapter extends Adapter<LBLanding, LBLandingAdapter.MyView
             tvRank = (TextView) view.findViewById(R.id.lb_summary_item_rank_tv);
             tvName = (TextView) view.findViewById(R.id.lb_summary_item_name_tv);
 
-            if(!mNeedPadding) {
+            if (!mNeedPadding) {
                 ivImage.setPadding(0, 0, 0, 0);
             }
 
@@ -90,5 +88,6 @@ public class LBLandingAdapter extends Adapter<LBLanding, LBLandingAdapter.MyView
             intent.putExtras(bundle);
             context.startActivity(intent);
         }
+
     }
 }

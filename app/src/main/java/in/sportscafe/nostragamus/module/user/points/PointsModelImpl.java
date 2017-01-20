@@ -5,16 +5,15 @@ import android.support.v4.app.FragmentManager;
 
 import com.jeeva.android.Log;
 
-import java.util.Collections;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.user.lblanding.LBLanding;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
-import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.BaseSummary;
-import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -29,13 +28,19 @@ public class PointsModelImpl implements PointsModel {
 
     private boolean mUserInput = false;
 
-    private Integer mSelectedSportId;
+    private Integer mSportId = 0;
 
-    private Long mSelectedGroupId;
+    private Integer mGroupId = 0;
 
-    private Integer mSelectedChallengeId;
+    private Integer mChallengeId = 0;
+
+    private Integer mTourId;
+
+    private Integer mLandingType;
 
     private BaseSummary mBaseSummary;
+
+    private LBLanding mLBLanding;
 
     private OnPointsModelListener mPointsModelListener;
 
@@ -57,21 +62,35 @@ public class PointsModelImpl implements PointsModel {
 
     @Override
     public void init(Bundle bundle) {
-        mSelectedGroupId = bundle.getLong(BundleKeys.GROUP_ID);
-        mSelectedSportId = bundle.getInt(BundleKeys.SPORT_ID);
-        mSelectedChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
-        mBaseSummary = (BaseSummary) bundle.getSerializable(BundleKeys.TOURNAMENT_SUMMARY);
-        Log.i("challenges",mBaseSummary.getName());
+        if (bundle.containsKey(BundleKeys.TOURNAMENT_ID)) {
+            mTourId = bundle.getInt(BundleKeys.TOURNAMENT_ID);
+        }
+
+        mLBLanding = (LBLanding) bundle.getSerializable(BundleKeys.LB_LANDING_DATA);
+        mLandingType = bundle.getInt(BundleKeys.LB_LANDING_TYPE);
+
+        switch (mLandingType) {
+            case LBLandingType.SPORT_TYPE:
+                mSportId = mLBLanding.getId();
+                break;
+            case LBLandingType.GROUP_TYPE:
+                mGroupId = mLBLanding.getId();
+                break;
+            case LBLandingType.CHALLENGE_TYPE:
+                mChallengeId = mLBLanding.getId();
+                break;
+        }
+
     }
 
     @Override
     public String getName() {
-        return mBaseSummary.getName();
+        return mLBLanding.getName();
     }
 
     @Override
     public String getIcon() {
-        return mBaseSummary.getPhoto();
+        return mLBLanding.getImgUrl();
     }
 
     @Override
@@ -81,7 +100,7 @@ public class PointsModelImpl implements PointsModel {
 
     @Override
     public void refreshLeaderBoard() {
-        callLbDetailApi(mSelectedSportId,mSelectedGroupId,mSelectedChallengeId);
+        callLbDetailApi();
     }
 
     @Override
@@ -90,30 +109,30 @@ public class PointsModelImpl implements PointsModel {
     }
 
 
-    private void callLbDetailApi(final Integer sportId, Long groupId, Integer challengeId) {
-        MyWebService.getInstance().getLeaderBoardDetailRequest(
-                sportId, groupId.intValue(), challengeId
-        ).enqueue(new NostragamusCallBack<LeaderBoardResponse>() {
-            @Override
-            public void onResponse(Call<LeaderBoardResponse> call, Response<LeaderBoardResponse> response) {
-                super.onResponse(call, response);
-                if (response.isSuccessful()) {
-                    List<LeaderBoard> leaderBoardList = response.body().getLeaderBoardList();
-                    if (null == leaderBoardList || leaderBoardList.isEmpty()) {
-                        mPointsModelListener.onEmpty();
-                        return;
+    private void callLbDetailApi() {
+        MyWebService.getInstance().getLeaderBoardDetailRequest(mSportId, mGroupId, mChallengeId)
+                .enqueue(new NostragamusCallBack<LeaderBoardResponse>() {
+                    @Override
+                    public void onResponse(Call<LeaderBoardResponse> call, Response<LeaderBoardResponse> response) {
+                        super.onResponse(call, response);
+                        if (response.isSuccessful()) {
+
+                            List<LeaderBoard> leaderBoardList = response.body().getLeaderBoardList();
+                            if (null == leaderBoardList || leaderBoardList.isEmpty()) {
+                                mPointsModelListener.onEmpty();
+                                return;
+                            }
+
+                            mleaderBoardList = leaderBoardList;
+
+                            refreshAdapter(leaderBoardList, "");
+
+                            mPointsModelListener.onSuccessLeaderBoard();
+                        } else {
+                            mPointsModelListener.onFailureLeaderBoard(response.message());
+                        }
                     }
-
-                    mleaderBoardList =leaderBoardList;
-
-                    refreshAdapter(leaderBoardList,"");
-
-                    mPointsModelListener.onSuccessLeaderBoard();
-                } else {
-                    mPointsModelListener.onFailureLeaderBoard(response.message());
-                }
-            }
-        });
+                });
     }
 
     @Override
@@ -124,34 +143,25 @@ public class PointsModelImpl implements PointsModel {
     @Override
     public void refreshAdapter(List<LeaderBoard> leaderBoardList, String SortType) {
 
-        Log.i("sortrefreshAdapter",SortType);
 
-        Integer tourId = mBaseSummary.getTournamentId();
-
-
-        Log.d("PointsModelImpl", "Selected Summary --> " + tourId);
+        Log.d("PointsModelImpl", "Selected Summary --> " + mTourId);
         LeaderBoard leaderBoard;
 
         for (int i = 0; i < leaderBoardList.size(); i++) {
             leaderBoard = leaderBoardList.get(i);
 
-//            if (SortType.equals("rank")) {
-//                mViewPagerAdapter.getItem(mSelectedPosition).setUserVisibleHint(true);
-//               // Collections.sort(leaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
-//            }
-
             mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());
 
-           //if match not played change tab to overall
-           if (null==tourId){
-                 mSelectedPosition = 0;
-               }
-           //for challenges change tab to overall
-           else if (mSelectedChallengeId!=0){
-               mSelectedPosition = 0;
-           }
-           //for match played change tab to tournament
-            else if(tourId.equals(leaderBoard.getTournamentId())) {
+            //if match not played change tab to overall
+            if (null == mTourId) {
+                mSelectedPosition = 0;
+            }
+            //for challenges change tab to overall
+            else if (mChallengeId != 0) {
+                mSelectedPosition = 0;
+            }
+            //for match played change tab to tournament
+            else if (mTourId.equals(leaderBoard.getTournamentId())) {
                 mSelectedPosition = i;
             }
 
@@ -164,7 +174,6 @@ public class PointsModelImpl implements PointsModel {
     @Override
     public void sortAdapter(String sortType) {
         if (sortType.equals("rank")) {
-            Log.i("sort","sortAdapter");
             mViewPagerAdapter.getItem(mSelectedPosition).setUserVisibleHint(true);
         }
     }

@@ -203,6 +203,12 @@ public interface Constants {
         String WEEK = "weekly";
     }
 
+    interface LBLandingType {
+        int SPORT_TYPE = 0;
+        int GROUP_TYPE = 1;
+        int CHALLENGE_TYPE = 2;
+    }
+
     interface AnalyticsCategory {
         String LOGIN = "Login";
         String LOGOUT = "Logout";
@@ -228,11 +234,5 @@ public interface Constants {
         String CAMERA = "Camera";
         String UPDATE = "Update";
         String DONE = "Done";
-    }
-
-    interface LBLandingType {
-        int SPORT_TYPE = 0;
-        int GROUP_TYPE = 1;
-        int CHALLENGE_TYPE = 2;
     }
 }
