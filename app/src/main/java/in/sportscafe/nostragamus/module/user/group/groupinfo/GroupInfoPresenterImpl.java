@@ -74,8 +74,8 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
         GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
 
         BranchUniversalObject buo = new BranchUniversalObject()
-                .setTitle("Group Invitation")
-                .setContentDescription("Click this link, If you want to join in my &quot;" + groupInfo.getName() + "&quot; group." )
+                .setTitle("Play Nostragamus")
+                .setContentDescription("I challenge you - Click this link to join the &quot;" + groupInfo.getName() + "&quot; and prove your love of sports" )
                 .setContentImageUrl("https://cdn-images.spcafe.in/img/es3/screact/game-app/game-logo.png")
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode())
