@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
@@ -36,22 +37,27 @@ public class FuzzyLbAdapter extends Adapter<LbLanding, FuzzyLbAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(getLayoutInflater().inflate(R.layout.inflater_fuzzy_player_row, parent, false));
+        return new ViewHolder(getLayoutInflater().inflate(R.layout.inflater_fuzzy_lb_row, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTvPlayerName.setText(getItem(position).getName());
+        LbLanding lbLanding = getItem(position);
+        holder.mTvName.setText(lbLanding.getName());
+        holder.mTvCategory.setText(AppSnippet.capitalize(lbLanding.getType()));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView mTvPlayerName;
+        TextView mTvName;
+
+        TextView mTvCategory;
 
         public ViewHolder(View V) {
             super(V);
 
-            mTvPlayerName = (TextView) V.findViewById(R.id.fuzzy_player_tv_name);
+            mTvName = (TextView) V.findViewById(R.id.fuzzy_lb_tv_name);
+            mTvCategory = (TextView) V.findViewById(R.id.fuzzy_lb_tv_category);
             V.setOnClickListener(this);
         }
 

@@ -21,8 +21,10 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
+import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
@@ -30,7 +32,10 @@ import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryActivity;
+import in.sportscafe.nostragamus.module.user.points.PointsActivity;
+import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -322,6 +327,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         }
 
         String powerupused = question.getAnswerPowerUpId();
+        Log.i("powerupused",powerupused);
 
         if (powerupused.equals("null")) {
             powerupUsed.setVisibility(View.GONE);
@@ -471,8 +477,22 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     }
 
     private void navigateToLeaderboards(Context context) {
-        Intent intent =  new Intent(context, LeaderBoardSummaryActivity.class);
+        Match match = getItem(0).getTournaments().get(0).getMatches().get(0);
+
+        LbLanding lbLanding = new LbLanding(
+                match.getSportId(),
+                match.getSportName(),
+                null, null,
+                Sport.getSportImageUrl(match.getSportName(), 100, 100),
+                LBLandingType.SPORT
+        );
+
+        Intent intent =  new Intent(context, PointsActivity.class);
+        intent.putExtra(BundleKeys.LB_LANDING_DATA, lbLanding);
+        intent.putExtra(BundleKeys.LB_LANDING_TYPE, LBLandingType.SPORT);
+        intent.putExtra(BundleKeys.TOURNAMENT_ID, match.getTournamentId());
         context.startActivity(intent);
+//        context.startActivity(new Intent(context, LeaderBoardSummaryActivity.class));
     }
 
     private void broadcastShareScore(Context context) {

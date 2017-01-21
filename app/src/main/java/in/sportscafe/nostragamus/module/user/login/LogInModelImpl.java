@@ -175,6 +175,7 @@ public class LogInModelImpl implements LogInModel {
         NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
 
         nostragamusDataHandler.setLoggedInUser(true);
+        nostragamusDataHandler.setFirstTimeUser(true);
         nostragamusDataHandler.setUserId(userInfo.getId().toString());
         nostragamusDataHandler.setJwtToken(userLoginInResponse);
         nostragamusDataHandler.setNumberof2xPowerups(userInfo.getPowerUps().get("2x"));

@@ -22,6 +22,8 @@ import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 
 public abstract class AbstractFuzzySearchFragment extends NostragamusFragment implements AbstractFuzzySearchView {
 
+    public abstract String getSearchHint();
+
     private RecyclerView mRecyclerView;
 
     private EditText mEtSearch;
@@ -59,6 +61,7 @@ public abstract class AbstractFuzzySearchFragment extends NostragamusFragment im
             @Override
             public void afterTextChanged(Editable s) {}
         });
+        mEtSearch.setHint(getSearchHint());
 
         this.mOthersAnswersPresenter = AbstractFuzzySearchPresenterImpl.newInstance(this);
         mOthersAnswersPresenter.onCreateFuzzyPlayers(getArguments());

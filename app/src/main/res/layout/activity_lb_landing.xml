@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/lb_landing_toolbar"
-        android:layout_marginTop="@dimen/dp_60">
+        android:layout_marginTop="@dimen/dp_50">
 
         <LinearLayout
             android:id="@+id/lb_landing_ll_holder"

@@ -70,6 +70,15 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedBooleanData(SharedKeys.LOGGED_USER, loggedInUser);
     }
 
+    public boolean isFirstTimeUser() {
+        return getSharedBooleanData(SharedKeys.FIRST_TIME_USER, false);
+    }
+
+    public void setFirstTimeUser(boolean FirstTimeUser) {
+        setSharedBooleanData(SharedKeys.FIRST_TIME_USER, FirstTimeUser);
+    }
+
+
     public boolean isInitialSportsAvailable() {
         return getSharedBooleanData(SharedKeys.INITIAL_SPORTS_AVAILABLE, false);
     }

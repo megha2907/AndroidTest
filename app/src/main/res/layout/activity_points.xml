@@ -53,7 +53,7 @@
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
                     android:adjustViewBounds="true"
-                    android:layout_marginLeft="@dimen/dp_12"
+                    android:layout_marginLeft="@dimen/dp_6"
                     android:layout_marginRight="@dimen/dp_8"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/points_back_icon"

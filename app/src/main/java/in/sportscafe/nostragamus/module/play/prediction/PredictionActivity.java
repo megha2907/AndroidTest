@@ -384,7 +384,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                     }
                 }
                 break;
-            case R.id.fab_audience_poll:
+            case R.id.fab_fl_audience_poll:
                 if(!mAudiencePollpowerUpApplied || !m2xpowerUpApplied || !mNonegspowerUpApplied) {
                     if (NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() > 0) {
                         showProgressbar();
@@ -399,7 +399,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                     }
                 }
                 break;
-            case R.id.fab_nonegs:
+            case R.id.fab_fl_nonegs:
                 if(!mNonegspowerUpApplied || !m2xpowerUpApplied || !mAudiencePollpowerUpApplied) {
                     if (NostragamusDataHandler.getInstance().getNumberofNonegsPowerups() > 0) {
                         m2xpowerUpApplied = true;
