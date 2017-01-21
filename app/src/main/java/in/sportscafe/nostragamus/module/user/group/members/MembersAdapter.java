@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,7 +106,7 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
         @Override
         public void onClick(View v) {
 
-            String playerId = String.valueOf(getItem(getAdapterPosition()).getId());
+            Integer playerId = getItem(getAdapterPosition()).getId();
 
             if (playerId.equals(NostragamusDataHandler.getInstance().getUserId())){
 
@@ -116,7 +118,7 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
             }else {
 
                 Bundle mBundle = new Bundle();
-                mBundle.putString(Constants.BundleKeys.PLAYER_ID,playerId);
+                mBundle.putInt(Constants.BundleKeys.PLAYER_ID,playerId);
                 Intent mintent2 =  new Intent(v.getContext(), PlayerProfileActivity.class);
                 mintent2.putExtras(mBundle);
                 v.getContext().startActivity(mintent2);

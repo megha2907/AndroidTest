@@ -4,6 +4,7 @@ import android.content.Context;
 
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.user.lblanding.LBLandingResponse;
 import in.sportscafe.nostragamus.module.user.login.RefreshTokenModelImpl;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -57,6 +58,15 @@ public class ProfileModelImpl implements ProfileModel , UserInfoModelImpl.OnGetU
                     }
                 }
         );
+
+        MyWebService.getInstance().getLBLandingSummary(null, null, null, null)
+                .enqueue(new NostragamusCallBack<LBLandingResponse>() {
+                    @Override
+                    public void onResponse(Call<LBLandingResponse> call, Response<LBLandingResponse> response) {
+                        super.onResponse(call, response);
+
+                    }
+                });
     }
 
     @Override
