@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by Jeeva on 19/01/17.
  */
 
-public class LBLanding implements Serializable {
+public class LbLanding implements Serializable {
 
     private Integer id =1;
 
@@ -21,15 +21,18 @@ public class LBLanding implements Serializable {
     @JsonProperty("img_url")
     private String imgUrl;
 
-    public LBLanding() {
+    private String type;
+
+    public LbLanding() {
     }
 
-    public LBLanding(Integer id, String name, Integer rank, Integer rankChange, String imgUrl) {
+    public LbLanding(Integer id, String name, Integer rank, Integer rankChange, String imgUrl, String type) {
         this.id = id;
         this.name = name;
         this.rank = rank;
         this.rankChange = rankChange;
         this.imgUrl = imgUrl;
+        this.type = type;
     }
 
     public Integer getRankChange() {
@@ -72,5 +75,13 @@ public class LBLanding implements Serializable {
     @JsonProperty("img_url")
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

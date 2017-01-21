@@ -109,11 +109,12 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
 
         mTvName.setText(userLeaderBoard.getUserName());
         mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
-
-        if(userLeaderBoard.getRankChange() < 0) {
-            mIvStatus.setImageResource(R.drawable.status_arrow_down);
-        } else {
-            mIvStatus.setImageResource(R.drawable.status_arrow_up);
+        if(null!=userLeaderBoard.getRankChange()) {
+            if (userLeaderBoard.getRankChange() < 0) {
+                mIvStatus.setImageResource(R.drawable.status_arrow_down);
+            } else {
+                mIvStatus.setImageResource(R.drawable.status_arrow_up);
+            }
         }
 
         mIvUser.setImageUrl(

@@ -17,7 +17,7 @@ public interface EditProfileView extends View {
 
     void setSuccessResult();
 
-    void navigateToHome();
+    void navigateToHome(boolean fromHome);
 
     void navigateToSportsSelection();
 

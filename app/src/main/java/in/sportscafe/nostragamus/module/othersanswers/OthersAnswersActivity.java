@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
@@ -16,10 +15,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayersFragment;
-
-import static com.google.android.gms.analytics.internal.zzy.m;
-import static com.google.android.gms.analytics.internal.zzy.t;
+import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerFragment;
 
 /**
  * Created by Jeeva on 11/01/17.
@@ -27,7 +23,7 @@ import static com.google.android.gms.analytics.internal.zzy.t;
 
 public class OthersAnswersActivity extends NostragamusActivity {
 
-    private FuzzyPlayersFragment mFuzzyPlayersFragment;
+    private FuzzyPlayerFragment mFuzzyPlayersFragment;
 
     private Match mMatchDetails;
 
@@ -49,7 +45,7 @@ public class OthersAnswersActivity extends NostragamusActivity {
         if(!bundle.containsKey(BundleKeys.SHOW_ANSWER_PERCENTAGE)) {
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.others_answers_fl_fuzzy_holder,
-                    mFuzzyPlayersFragment = FuzzyPlayersFragment.newInstance()
+                    mFuzzyPlayersFragment = FuzzyPlayerFragment.newInstance()
             ).commit();
         }
 

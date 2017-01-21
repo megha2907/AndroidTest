@@ -1,8 +1,11 @@
 package in.sportscafe.nostragamus.webservice;
 
 
+import java.util.Map;
+
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
+import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
@@ -34,7 +37,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummaryResponse;
-import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayersResponse;
+import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.AllSports;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.PreferenceRequest;
@@ -51,6 +54,9 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
+
+import static android.R.attr.key;
 
 /**
  * Created by Jeeva on 14/3/16.
@@ -172,7 +178,7 @@ public interface NostragamusService {
     );
 
     @GET("v1/game/users/getFuzzyPlayer")
-    Call<FuzzyPlayersResponse> fuzzyPlayers(@Query("player_user_name") String key);
+    Call<FuzzyPlayerResponse> fuzzyPlayers(@Query("player_user_name") String key);
 
     @GET("v1/game/getPlayerResult")
     Call<MyResultsResponse> getPlayerResult(@Query("player_id") Integer playerId, @Query("match_id") Integer matchId);
@@ -181,5 +187,8 @@ public interface NostragamusService {
     Call<PlayerResultPercentageResponse> playerResultPercentage(@Query("match_id") Integer matchId);
 
     @GET("v2/game/users/leaderboard/summary")
-    Call<LBLandingResponse> getLBLandingSummary();
+    Call<LBLandingResponse> getLBLandingSummary(@QueryMap Map<String, String> queries);
+
+    @GET("v1/game/users/getFuzzySearchLeaderboards")
+    Call<FuzzyLbResponse> fuzzyLbs(@Query("search_key") String key);
 }

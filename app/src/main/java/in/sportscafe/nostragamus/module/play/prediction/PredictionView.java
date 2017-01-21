@@ -22,8 +22,11 @@ public interface PredictionView extends InAppView {
     void setAdapter(PredictionAdapter predictionAdapter,
                     SwipeFlingAdapterView.OnSwipeListener<Question> swipeListener);
 
+    void hideShuffle();
 
-    void hidePass();
+    void showNeither();
+
+    void hideNeither();
 
     void showNoNegativeAlert();
 

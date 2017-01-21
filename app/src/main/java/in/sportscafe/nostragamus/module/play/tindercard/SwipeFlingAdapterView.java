@@ -8,10 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -285,6 +282,11 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
                     }
 
                     @Override
+                    public boolean needTopSwipe() {
+                        return mSwipeListener.needTopSwipe();
+                    }
+
+                    @Override
                     public boolean needBottomSwipe() {
                         return mSwipeListener.needBottomSwipe();
                     }
@@ -383,6 +385,8 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
         void onBottomSwipe(T dataObject);
 
         void onAdapterAboutToEmpty(int itemsInAdapter);
+
+        boolean needTopSwipe();
 
         boolean needBottomSwipe();
 

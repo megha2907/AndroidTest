@@ -148,7 +148,14 @@ public class FeedModelImpl implements FeedModel {
         Collections.sort(feedList, new Comparator<Feed>() {
             @Override
             public int compare(Feed lhs, Feed rhs) {
-                return (int) (lhs.getDate() - rhs.getDate());
+                if(lhs.getDate() > rhs.getDate()) {
+                    return 1;
+                } else if(lhs.getDate() < rhs.getDate()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+//                return (int) (lhs.getDate() - rhs.getDate());
             }
         });
 

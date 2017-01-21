@@ -63,6 +63,12 @@ public class Match implements Serializable {
     @JsonProperty("match_winner_id")
     private Integer winnerPartyId;
 
+    @JsonProperty("sports_id")
+    private Integer sportId;
+
+    @JsonProperty("sports_name")
+    private String sportName;
+
 //    @JsonProperty("match_commentary")
 //    private String matchCommentary;
 
@@ -352,5 +358,25 @@ public class Match implements Serializable {
         for (Question question : questions) {
             question.updatePollPercentage(questionAnswersMap.get(question.getQuestionId()));
         }
+    }
+
+    @JsonProperty("sports_id")
+    public Integer getSportId() {
+        return sportId;
+    }
+
+    @JsonProperty("sports_id")
+    public void setSportId(Integer sportId) {
+        this.sportId = sportId;
+    }
+
+    @JsonProperty("sports_name")
+    public String getSportName() {
+        return sportName;
+    }
+
+    @JsonProperty("sports_name")
+    public void setSportName(String sportName) {
+        this.sportName = sportName;
     }
 }
