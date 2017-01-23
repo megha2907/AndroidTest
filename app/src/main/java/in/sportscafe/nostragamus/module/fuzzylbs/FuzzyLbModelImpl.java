@@ -1,7 +1,10 @@
-package in.sportscafe.nostragamus.module.fuzzyplayers;
+package in.sportscafe.nostragamus.module.fuzzylbs;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 
+import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.fuzzysearch.AbstractFuzzySearchModel;
@@ -15,25 +18,25 @@ import retrofit2.Response;
 /**
  * Created by deepanshu on 5/10/16.
  */
-public class FuzzyPlayerModelImpl extends AbstractFuzzySearchModelImpl<BasicUserInfo> {
+public class FuzzyLbModelImpl extends AbstractFuzzySearchModelImpl<BasicUserInfo> {
 
-    private FuzzyPlayerModelImpl(OnFuzzySearchModelListener listener) {
+    private FuzzyLbModelImpl(OnFuzzySearchModelListener listener) {
         super(listener);
     }
 
     public static AbstractFuzzySearchModel newInstance(OnFuzzySearchModelListener listener) {
-        return new FuzzyPlayerModelImpl(listener);
+        return new FuzzyLbModelImpl(listener);
     }
 
     @Override
     public Adapter getAdapter(Context context) {
-        return new FuzzyPlayerAdapter(context);
+        return new FuzzyLbAdapter(context, this);
     }
 
     @Override
     public void getFuzzySearchDetails(String key) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            callFuzzyPlayersApi(key);
+            callFuzzyLbsApi(key);
         } else {
             onNoInternet();
         }
@@ -41,18 +44,19 @@ public class FuzzyPlayerModelImpl extends AbstractFuzzySearchModelImpl<BasicUser
 
     @Override
     public void onNoSearch() {
-
+        LocalBroadcastManager.getInstance(Nostragamus.getInstance().getBaseContext())
+                .sendBroadcast(new Intent(IntentActions.ACTION_FUZZY_LB_CLICK));
     }
 
-    private void callFuzzyPlayersApi(String key) {
-        MyWebService.getInstance().getFuzzyPlayersRequest(key)
-                .enqueue(new NostragamusCallBack<FuzzyPlayerResponse>() {
+    private void callFuzzyLbsApi(String key) {
+        MyWebService.getInstance().getFuzzyLbsRequest(key)
+                .enqueue(new NostragamusCallBack<FuzzyLbResponse>() {
                     @Override
-                    public void onResponse(Call<FuzzyPlayerResponse> call, Response<FuzzyPlayerResponse> response) {
+                    public void onResponse(Call<FuzzyLbResponse> call, Response<FuzzyLbResponse> response) {
                         super.onResponse(call, response);
 
                         if (response.isSuccessful()) {
-                            addAll(response.body().getPlayers());
+                            addAll(response.body().getLbs());
                         } else {
                             onFailed();
                         }

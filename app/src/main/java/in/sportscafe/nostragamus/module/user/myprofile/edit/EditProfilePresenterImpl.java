@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
-import java.io.File;
 import java.util.Arrays;
 
 import in.sportscafe.nostragamus.Constants;
@@ -18,7 +17,6 @@ import in.sportscafe.nostragamus.module.user.preference.PreferenceManager;
 import in.sportscafe.nostragamus.module.user.preference.SavePreferenceModelImpl;
 
 import static android.app.Activity.RESULT_OK;
-import static android.os.Build.VERSION_CODES.M;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -93,7 +91,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
         mEditProfileView.dismissProgressbar();
 
         if (screen.equals(Constants.BundleKeys.HOME_SCREEN)) {
-            mEditProfileView.navigateToHome();
+            mEditProfileView.navigateToHome(true);
             //mEditProfileView.setSuccessResult();
         } else {
             //mEditProfileView.navigateToSportsSelection();
@@ -110,7 +108,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
                 new SavePreferenceModelImpl.SavePreferenceModelListener() {
                     @Override
                     public void onSuccess() {
-                        mEditProfileView.navigateToHome();
+                        mEditProfileView.navigateToHome(false);
                     }
 
                     @Override
@@ -132,7 +130,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
                     @Override
                     public void onSuccess() {
                         Log.i("selected", "inside");
-                        mEditProfileView.navigateToHome();
+                        mEditProfileView.navigateToHome(false);
                     }
 
                     @Override

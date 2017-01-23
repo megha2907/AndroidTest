@@ -1,11 +1,11 @@
-package in.sportscafe.nostragamus.module.fuzzyplayers;
+package in.sportscafe.nostragamus.module.fuzzysearch;
 
 import android.os.Bundle;
 
 /**
  * Created by deepanshu on 12/10/16.
  */
-interface FuzzyPlayersPresenter {
+interface AbstractFuzzySearchPresenter {
 
     void onCreateFuzzyPlayers(Bundle bundle);
 

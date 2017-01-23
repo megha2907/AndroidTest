@@ -1,6 +1,8 @@
 package in.sportscafe.nostragamus.module.othersanswers;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -16,13 +18,19 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
+import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
+
+import static com.google.android.gms.analytics.internal.zzy.v;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -75,7 +83,7 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
         return playerView;
     }
 
-    class PlayerViewHolder extends RecyclerView.ViewHolder {
+    class PlayerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView mTvPlayerName;
 
@@ -89,6 +97,25 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
             mTvPlayerName = (TextView) V.findViewById(R.id.player_points_tv_name);
             mTvPlayerPoints = (TextView) V.findViewById(R.id.player_points_tv_points);
             mIvPlayerPhoto = (HmImageView) V.findViewById(R.id.player_points_iv_photo);
+            V.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Integer playerId = mPlayerInfo.getId();
+
+            if (playerId.equals(NostragamusDataHandler.getInstance().getUserId())) {
+                Intent homeintent = new Intent(view.getContext(), HomeActivity.class);
+                homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                homeintent.putExtra("group", "openprofile");
+                view.getContext().startActivity(homeintent);
+            } else {
+                Bundle mBundle = new Bundle();
+                mBundle.putInt(Constants.BundleKeys.PLAYER_ID, playerId);
+                Intent mintent2 = new Intent(view.getContext(), PlayerProfileActivity.class);
+                mintent2.putExtras(mBundle);
+                view.getContext().startActivity(mintent2);
+            }
         }
     }
 

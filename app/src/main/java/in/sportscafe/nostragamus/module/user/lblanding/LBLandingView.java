@@ -9,5 +9,4 @@ import com.jeeva.android.InAppView;
 public interface LBLandingView extends InAppView {
 
     void initMyPosition(LBLandingSummary lbSummary);
-
 }

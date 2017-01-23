@@ -11,7 +11,7 @@ import in.sportscafe.nostragamus.module.user.login.dto.BasicUserInfo;
  * Created by Jeeva on 10/01/17.
  */
 
-public class FuzzyPlayersResponse {
+public class FuzzyPlayerResponse {
 
     @JsonProperty("data")
     private List<BasicUserInfo> players = new ArrayList<>();
