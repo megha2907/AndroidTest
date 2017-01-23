@@ -70,10 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:paddingLeft="@dimen/dp_5"
                 android:layout_toLeftOf="@id/schedule_row_btn_vs"
                 android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp_5">
 
                 <com.jeeva.android.widgets.HmImageView
                     android:id="@+id/swipe_card_iv_left"
@@ -102,10 +102,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:paddingRight="@dimen/dp_5"
                 android:layout_toRightOf="@id/schedule_row_btn_vs"
                 android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingRight="@dimen/dp_5">
 
                 <com.jeeva.android.widgets.HmImageView
                     android:id="@+id/swipe_card_iv_right"
@@ -200,9 +200,9 @@
             android:id="@+id/rl_points"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:layout_below="@+id/schedule_row_v_party_a"
             android:layout_marginTop="@dimen/feed_screen_spacing"
+            android:clickable="true"
             android:visibility="gone">
 
             <com.jeeva.android.widgets.customfont.CustomButton
@@ -213,9 +213,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_20"
                 android:background="@drawable/btn_points_bg"
+                android:clickable="false"
                 android:padding="@dimen/dp_0"
                 android:text="60 Points"
-                android:clickable="false"
                 android:textAllCaps="false"
                 android:textColor="@color/linecolor"
                 android:textSize="@dimen/dp_14"
@@ -278,19 +278,32 @@
         android:layout_height="30dp"
         android:layout_marginLeft="@dimen/dp_35"
         android:layout_marginTop="@dimen/dp_8"
-        android:background="@drawable/round_grey_button_with_shadow" />
+        android:background="@drawable/round_grey_button_with_shadow"
+        android:visibility="gone" />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/schedule_row_tv_date"
+        android:layout_width="@dimen/dp_38"
+        android:layout_height="@dimen/dp_38"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@drawable/timeline_side_circle"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white_60"
+        android:textSize="@dimen/dp_10"
+        app:typeface="roboto_condensed" />
 
     <View
         android:id="@+id/view"
         android:layout_width="@dimen/dp_1"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_20"
         android:layout_alignBottom="@id/space"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_54"
         android:layout_marginRight="@dimen/dp_5"
-        android:layout_marginTop="@dimen/dp_46"
-        android:background="@color/dividercolor"
-
+        android:layerType="software"
+        android:background="@color/tundora"
+        android:layout_below="@+id/schedule_row_tv_date"
         />
 
     <com.jeeva.android.widgets.customfont.CustomTextView

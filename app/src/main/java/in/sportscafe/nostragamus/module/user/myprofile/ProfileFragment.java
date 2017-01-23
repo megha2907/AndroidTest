@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,6 @@ import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
-import in.sportscafe.nostragamus.module.play.myresultstimeline.MyResultsTimelineActivity;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.settings.SettingsActivity;
 import in.sportscafe.nostragamus.module.user.badges.BadgeActivity;
@@ -162,7 +160,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
 
     @Override
-    public void setPoints(long points) {
+    public void setPoints(int points) {
         Button tvPoints=(Button) findViewById(R.id.profile_tv_points);
         tvPoints.setText(String.valueOf(points));
     }
@@ -337,10 +335,10 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
 
     @Override
-    public void initMyPosition(UserInfo userInfo, LbSummary lbSummary) {
+    public void initMyPosition(UserInfo userInfo) {
         mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
         mViewPager.setOffscreenPageLimit(5);
-        mpagerAdapter = getAdapter(userInfo, lbSummary);
+        mpagerAdapter = getAdapter(userInfo);
         mViewPager.setAdapter(mpagerAdapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -389,7 +387,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     }
 
-    private ViewPagerAdapter getAdapter(UserInfo userInfo, LbSummary lbSummary) {
+    private ViewPagerAdapter getAdapter(UserInfo userInfo) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         pagerAdapter.addFragment(TimelineFragment.newInstance(userInfo.getId() + ""),
                 userInfo.getTotalMatchesPlayed() + "\n Matches");
@@ -424,27 +422,12 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.profile_ll_points_parent:
-                navigateToMyResults();
-                break;
-//            case R.id.profile_ll_sports_followed_parent:
-//                navigateToSportSelection();
-//                break;
             case R.id.profile_btn_edit:
                 navigateToEditProfile();
                 break;
             case R.id.profile_iv_image:
                 navigateToEditProfile();
                 break;
-//            case R.id.profile_groups_parent:
-//                navigateToNewGroup();
-//                break;
-//            case R.id.profile_ll_powerups_parent:
-//                navigateToPowerUpScreen();
-//                break;
-//            case R.id.profile_ll_badge_parent:
-//                navigateToBadgeScreen();
-//                break;
             case R.id.profile_btn_logout:
                 navigateToSettings();
                 break;
@@ -452,11 +435,6 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                 navigateToJoinGroup();
                 break;
         }
-    }
-
-    private void navigateToMyResults() {
-        startActivity(new Intent(getContext(), MyResultsTimelineActivity.class));
-        getActivity().finish();
     }
 
     private void navigateToSettings() {

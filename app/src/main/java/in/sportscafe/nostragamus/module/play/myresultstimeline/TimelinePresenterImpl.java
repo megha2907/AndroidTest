@@ -1,31 +1,27 @@
 package in.sportscafe.nostragamus.module.play.myresultstimeline;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.R;
-
-import static com.google.android.gms.analytics.internal.zzy.m;
 
 
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class MyResultsTimelinePresenterImpl implements MyResultsTimelinePresenter, MyResultsTimelineModelImpl.OnMyResultsTimelineModelListener {
+public class TimelinePresenterImpl implements TimelinePresenter, TimelineModelImpl.OnMyResultsTimelineModelListener {
 
-    private MyResultsTimelineView myResultsTimelineView;
+    private TimelineView myResultsTimelineView;
 
-    private MyResultsTimelineModel myResultsTimelineModel;
+    private TimelineModel myResultsTimelineModel;
 
-    private MyResultsTimelinePresenterImpl(MyResultsTimelineView myResultsTimelineView) {
+    private TimelinePresenterImpl(TimelineView myResultsTimelineView) {
         this.myResultsTimelineView = myResultsTimelineView;
-        this.myResultsTimelineModel = MyResultsTimelineModelImpl.newInstance(this);
+        this.myResultsTimelineModel = TimelineModelImpl.newInstance(this);
     }
 
-    public static MyResultsTimelinePresenter newInstance(MyResultsTimelineView myResultsTimelineView) {
-        return new MyResultsTimelinePresenterImpl(myResultsTimelineView);
+    public static TimelinePresenter newInstance(TimelineView myResultsTimelineView) {
+        return new TimelinePresenterImpl(myResultsTimelineView);
     }
 
     @Override

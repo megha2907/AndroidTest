@@ -71,5 +71,7 @@
     <color name="radical_red">#FE3555</color>
     <color name="malachite">#00CE61</color>
     <color name="tab_tv_not_selected_color">#88ffffff</color>
+    <color name="tundora">#464646</color>
+    <color name="mine_shaft">#3D3D3D</color>
 
 </resources>

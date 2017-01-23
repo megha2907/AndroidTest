@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -18,8 +17,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
-import in.sportscafe.nostragamus.module.play.myresultstimeline.MyResultsTimelineActivity;
-import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
 
 /**
  * Created by deepanshi on 12/20/16.

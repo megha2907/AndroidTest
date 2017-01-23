@@ -158,11 +158,6 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name="in.sportscafe.nostragamus.module.play.myresultstimeline.MyResultsTimelineActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
-        <activity
             android:name="in.sportscafe.nostragamus.module.user.points.PointsActivity"
             android:screenOrientation="portrait" />
 

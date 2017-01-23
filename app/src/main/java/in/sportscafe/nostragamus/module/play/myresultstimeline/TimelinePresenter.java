@@ -6,7 +6,7 @@ import android.os.Bundle;
  * Created by deepanshi on 10/5/16.
  */
 
-public interface MyResultsTimelinePresenter {
+public interface TimelinePresenter {
 
     void onCreateFeed(Bundle bundle);
 

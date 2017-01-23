@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,16 +35,19 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
+import static com.google.android.gms.analytics.internal.zzy.c;
+import static in.sportscafe.nostragamus.utils.timeutils.TimeUtils.getMillisecondsFromDateString;
+
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAdapter.ViewHolder> {
+public class TimelineAdapter extends Adapter<Feed, TimelineAdapter.ViewHolder> {
 
     private AlertDialog mAlertDialog;
     private Context mcon;
     private List<Match> mMyResultList = new ArrayList<>();
 
-    public MyResultsTimelineAdapter(Context context) {
+    public TimelineAdapter(Context context) {
         super(context);
         mcon = context;
     }
@@ -62,20 +66,13 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
     public void onBindViewHolder(ViewHolder holder, int position) {
         Feed feed = getItem(position);
         holder.mPosition = position;
-
-        int date= Integer.parseInt(TimeUtils.getDateStringFromMs(feed.getDate(), "d"));
-        String newOrdinalDate= AppSnippet.ordinal(date);
-        String month = TimeUtils.getDateStringFromMs(feed.getDate(), "MMM");
-        String finalDate = newOrdinalDate + " " +month ;
-
-        holder.mTvDate.setText(finalDate);
         holder.mLlTourParent.removeAllViews();
         for (Tournament tournament : feed.getTournaments()) {
-            holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent,position));
+            holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent, position));
         }
     }
 
-    private View getTourView(Tournament tournament, ViewGroup parent,int position) {
+    private View getTourView(Tournament tournament, ViewGroup parent, int position) {
         View tourView = getLayoutInflater().inflate(R.layout.inflater_tour_row, parent, false);
         TourViewHolder holder = new TourViewHolder(tourView);
 
@@ -83,18 +80,17 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
         holder.mLlScheduleParent.removeAllViews();
         for (Match match : tournament.getMatches()) {
-            holder.mLlScheduleParent.addView(getScheduleView(match, holder.mLlScheduleParent,position));
+            holder.mLlScheduleParent.addView(getScheduleView(match, holder.mLlScheduleParent, position));
         }
 
         return tourView;
     }
 
-    private View getScheduleView(Match match, ViewGroup parent,int position) {
+    private View getScheduleView(Match match, ViewGroup parent, int position) {
         View scheduleView = getLayoutInflater().inflate(R.layout.inflater_schedule_row, parent, false);
         ScheduleViewHolder holder = new ScheduleViewHolder(scheduleView);
 
-        if( null == match.getParties())
-        {
+        if (null == match.getParties()) {
             holder.mTvPartyAName.setVisibility(View.GONE);
             holder.mTvPartyBName.setVisibility(View.GONE);
             holder.mIvPartyAPhoto.setVisibility(View.GONE);
@@ -105,9 +101,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             holder.mTvStartTime.setVisibility(View.GONE);
             holder.mViewResult.setVisibility(View.GONE);
 
-        }
-        else
-        {
+        } else {
             holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
             holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
 
@@ -121,7 +115,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
         }
 
 
-        if(null == match.getStage()) {
+        if (null == match.getStage()) {
             holder.mTvMatchStage.setVisibility(View.GONE);
         } else {
             holder.mTvMatchStage.setText(match.getStage());
@@ -140,44 +134,35 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
         }
 
 
-
-        if(match.getMatchQuestionCount()==0)
-        {
+        if (match.getMatchQuestionCount() == 0) {
             holder.mBtnPlayMatch.setVisibility(View.GONE);
-        }
-        else if(match.getisAttempted()==true && (null == match.getResult() || match.getResult().isEmpty()))
-        {
+        } else if (match.getisAttempted() == true && (null == match.getResult() || match.getResult().isEmpty())) {
             holder.mTvMatchResult.setVisibility(View.GONE);
             holder.mBtnPlayMatch.setVisibility(View.GONE);
             holder.mTvResultWait.setVisibility(View.VISIBLE);
             holder.mViewResult.setVisibility(View.VISIBLE);
-            holder.mTvResultWait.setText(match.getMatchQuestionCount()+" predictions made, waiting for results");
+            holder.mTvResultWait.setText(match.getMatchQuestionCount() + " predictions made, waiting for results");
             holder.mTvResultWait.setTag(match);
-        }
-        else if ((null == match.getResult() || match.getResult().isEmpty()))
-        {   //ELSE PLAY BTN VISIBLE
+        } else if ((null == match.getResult() || match.getResult().isEmpty())) {   //ELSE PLAY BTN VISIBLE
             holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
             holder.mBtnPlayMatch.setTag(match);
 
         }
 
 
-        if (match.getMatchPoints()==0)
-        {
+        if (match.getMatchPoints() == 0) {
             holder.mBtnMatchPoints.setVisibility(View.GONE);
             holder.mTvResultCorrectCount.setVisibility(View.GONE);
-        }
-        else
-        {
+        } else {
             holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
             holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
             holder.mViewResult.setVisibility(View.VISIBLE);
             holder.mRlMatchPoints.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setVisibility(View.GONE);
 
-            holder.mBtnMatchPoints.setText(match.getMatchPoints()+" Points");
+            holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
             holder.mRlMatchPoints.setTag(match);
-            holder.mTvResultCorrectCount.setText("You got "+ match.getCorrectCount()+"/"+match.getMatchQuestionCount() +" questions correct");
+            holder.mTvResultCorrectCount.setText("You got " + match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " questions correct");
 
             if (null != match.getWinnerPartyId()) {
 
@@ -193,27 +178,34 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
             float percent = (match.getCorrectCount() * 100.0f) / match.getMatchQuestionCount();
 
-            if (percent < 40.0){
+            if (percent < 40.0) {
                 holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_red_button_with_shadow);
-            }
-            else if (percent >= 40.0 && percent <= 60.0){
+            } else if (percent >= 40.0 && percent <= 60.0) {
                 holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_blue_button_with_shadow);
-            }
-            else if (percent > 60.0){
+            } else if (percent > 60.0) {
                 holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_green_button_with_shadow);
-            }
-            else {
+            } else {
                 holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_grey_button_with_shadow);
             }
-
 
 
         }
 
 
+        long startTimeMs = TimeUtils.getMillisecondsFromDateString(match.getStartTime(),
+                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                null);
+
+        int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
+        holder.mTvDate.setText(Html.fromHtml(
+                TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + "\n" + dayOfMonth
+                        + "<sup>" +AppSnippet.ordinalOnly(dayOfMonth) + "</sup>")
+        );
+
+
         Calendar c = Calendar.getInstance();
         Long formattedCurrentDate = c.getTimeInMillis();
-        String date = TimeUtils.getFormattedDateString(
+        /*String date = TimeUtils.getFormattedDateString(
                 match.getStartTime(),
                 Constants.DateFormats.DD_MM_YYYY,
                 Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
@@ -224,12 +216,11 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
                 date,
                 Constants.DateFormats.DD_MM_YYYY,
                 Constants.DateFormats.GMT
-        );
-        TimeAgo timeAgo = TimeUtils.calcTimeAgo(formattedCurrentDate,formattedstartDate);
+        );*/
+        TimeAgo timeAgo = TimeUtils.calcTimeAgo(formattedCurrentDate, startTimeMs);
 
 
-        if(match.getMatchQuestionCount()==0 && match.getParties() != null && timeAgo.timeDiff > 0 && timeAgo.timeUnit != TimeUnit.MILLISECOND && timeAgo.timeUnit != TimeUnit.SECOND)
-        {
+        if (match.getMatchQuestionCount() == 0 && match.getParties() != null && timeAgo.timeDiff > 0 && timeAgo.timeUnit != TimeUnit.MILLISECOND && timeAgo.timeUnit != TimeUnit.SECOND) {
             holder.mTvResultWait.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setText("Coming up");
             holder.mViewResult.setVisibility(View.GONE);
@@ -237,7 +228,6 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
         return scheduleView;
     }
-
 
 
     private View getMatchCommentary(Match match2, ViewGroup parent) {
@@ -254,14 +244,14 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
         int mPosition;
 
-        TextView mTvDate;
+//        TextView mTvDate;
 
         private LinearLayout mLlTourParent;
 
         public ViewHolder(View V) {
             super(V);
 
-            mTvDate = (TextView) V.findViewById(R.id.feed_row_tv_date);
+//            mTvDate = (TextView) V.findViewById(R.id.feed_row_tv_date);
             mLlTourParent = (LinearLayout) V.findViewById(R.id.feed_row_ll_tour_parent);
         }
     }
@@ -322,7 +312,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
         RelativeLayout mRlMatchPoints;
 
-
+        TextView mTvDate;
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -334,16 +324,19 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
             mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_match_time);
             mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
             mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
-            mIvPartyAPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_left);
-            mIvPartyBPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_right);
-            mBtnVs=(Button) V.findViewById(R.id.schedule_row_btn_vs);
-            mBtnPlayMatch=(CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
-            mBtnMatchPoints=(CustomButton) V.findViewById(R.id.schedule_row_btn_points);
-            mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
+            mIvPartyAPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_left);
+            mIvPartyBPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_right);
+            mBtnVs = (Button) V.findViewById(R.id.schedule_row_btn_vs);
+            mBtnPlayMatch = (CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
+            mBtnMatchPoints = (CustomButton) V.findViewById(R.id.schedule_row_btn_points);
+            mViewResult = (View) V.findViewById(R.id.schedule_row_v_party_a);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
-            mIbfeedDotIcon=(Button) V.findViewById(R.id.feed_dot_icon);
+            mIbfeedDotIcon = (Button) V.findViewById(R.id.feed_dot_icon);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);
+            mTvDate = (TextView) V.findViewById(R.id.schedule_row_tv_date);
+
+            V.findViewById(R.id.view).setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
 
             mBtnPlayMatch.setOnClickListener(this);
@@ -358,11 +351,11 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
 
                 case R.id.schedule_row_btn_playmatch:
 
-                    Match match = (Match)view.getTag();
+                    Match match = (Match) view.getTag();
                     Bundle mBundle = new Bundle();
                     mBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
 
-                    Intent intent =  new Intent(mcon, PredictionActivity.class);
+                    Intent intent = new Intent(mcon, PredictionActivity.class);
                     intent.putExtras(mBundle);
                     mcon.startActivity(intent);
                     break;
@@ -373,7 +366,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
                     Bundle mBundle2 = new Bundle();
                     mBundle2.putSerializable(Constants.BundleKeys.MATCH_LIST, match2);
 
-                    Intent mintent =  new Intent(mcon, MyResultsActivity.class);
+                    Intent mintent = new Intent(mcon, MyResultsActivity.class);
                     mintent.putExtras(mBundle2);
                     mcon.startActivity(mintent);
                     break;
@@ -384,7 +377,7 @@ public class MyResultsTimelineAdapter extends Adapter<Feed, MyResultsTimelineAda
                     Bundle mBundle3 = new Bundle();
                     mBundle3.putSerializable(Constants.BundleKeys.MATCH_LIST, match3);
 
-                    Intent mintent2 =  new Intent(mcon, MyResultsActivity.class);
+                    Intent mintent2 = new Intent(mcon, MyResultsActivity.class);
                     mintent2.putExtras(mBundle3);
                     mcon.startActivity(mintent2);
                     break;

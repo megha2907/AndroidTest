@@ -128,9 +128,6 @@ public interface NostragamusService {
     @GET("v1/game/users/results")
     Call<MyResultsResponse> getMyResults(@Query("match_id") Integer matchId);
 
-    @GET("v1/game/users/leaderboard/summary")
-    Call<LbSummaryResponse> getLeaderBoardSummary();
-
     @GET("v1/game/leaderboard/detail")
     Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("sports_id") Integer sportId,
                                                    @Query("group_id") Integer groupId,

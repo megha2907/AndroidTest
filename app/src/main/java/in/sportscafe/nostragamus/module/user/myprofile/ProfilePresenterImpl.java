@@ -7,7 +7,6 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
 
 /**
  * Created by Jeeva on 14/6/16.
@@ -88,10 +87,10 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     }
 
     @Override
-    public void onGetProfileSuccess(UserInfo userInfo, LbSummary lbSummary) {
+    public void onGetProfileSuccess(UserInfo userInfo, Integer totalPoints) {
         mProfileView.dismissProgressbar();
-        mProfileView.setPoints(lbSummary.getTotalPoints());
-        mProfileView.initMyPosition(userInfo, lbSummary);
+        mProfileView.setPoints(totalPoints);
+        mProfileView.initMyPosition(userInfo);
     }
 
     private void populateUserInfo() {

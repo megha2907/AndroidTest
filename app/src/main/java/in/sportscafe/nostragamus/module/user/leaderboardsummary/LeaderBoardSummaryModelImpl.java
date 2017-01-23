@@ -33,7 +33,7 @@ public class LeaderBoardSummaryModelImpl implements LeaderBoardSummaryModel {
     }
 
     private void getLbSummary() {
-        MyWebService.getInstance().getLeaderBoardSummary().enqueue(
+        /*MyWebService.getInstance().getLeaderBoardSummary().enqueue(
                 new NostragamusCallBack<LbSummaryResponse>() {
                     @Override
                     public void onResponse(Call<LbSummaryResponse> call, Response<LbSummaryResponse> response) {
@@ -48,7 +48,7 @@ public class LeaderBoardSummaryModelImpl implements LeaderBoardSummaryModel {
                         }
                     }
                 }
-        );
+        );*/
     }
 
     public interface OnLeaderBoardSummaryModelListener {

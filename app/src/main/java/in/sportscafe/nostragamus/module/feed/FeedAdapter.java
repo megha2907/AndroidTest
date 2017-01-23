@@ -83,7 +83,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         String month = TimeUtils.getDateStringFromMs(feed.getDate(), "MMM");
         String finalDate = newOrdinalDate + " " +month ;
 
-        holder.mTvDate.setText(finalDate);
+//        holder.mTvDate.setText(finalDate);
         holder.mLlTourParent.removeAllViews();
         for (Tournament tournament : feed.getTournaments()) {
             holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent,position));
@@ -296,14 +296,14 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         int mPosition;
 
-        TextView mTvDate;
+//        TextView mTvDate;
 
         private LinearLayout mLlTourParent;
 
         public ViewHolder(View V) {
             super(V);
 
-            mTvDate = (TextView) V.findViewById(R.id.feed_row_tv_date);
+//            mTvDate = (TextView) V.findViewById(R.id.feed_row_tv_date);
             mLlTourParent = (LinearLayout) V.findViewById(R.id.feed_row_ll_tour_parent);
         }
     }

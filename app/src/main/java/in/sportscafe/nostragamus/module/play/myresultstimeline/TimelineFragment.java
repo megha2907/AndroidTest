@@ -4,34 +4,27 @@ package in.sportscafe.nostragamus.module.play.myresultstimeline;
  * Created by deepanshi on 10/5/16.
  */
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class TimelineFragment extends NostragamusFragment implements MyResultsTimelineView, SwipeRefreshLayout.OnRefreshListener {
+public class TimelineFragment extends NostragamusFragment implements TimelineView, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView mRcvFeed;
 
-    private MyResultsTimelinePresenter myResultsTimelinePresenter;
-
-//    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private TimelinePresenter myResultsTimelinePresenter;
 
     private LinearLayoutManager mLinearLayoutManager;
 
@@ -73,23 +66,12 @@ public class TimelineFragment extends NostragamusFragment implements MyResultsTi
 
         this.mRcvFeed.setHasFixedSize(true);
 
-        /*this.mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swifeRefresh);
-        this.mSwipeRefreshLayout.setOnRefreshListener(this);*/
-
-        this.myResultsTimelinePresenter = MyResultsTimelinePresenterImpl.newInstance(this);
+        this.myResultsTimelinePresenter = TimelinePresenterImpl.newInstance(this);
         this.myResultsTimelinePresenter.onCreateFeed(getArguments());
-
-        /*this.mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                onRefresh();
-            }
-        });*/
     }
 
     @Override
-    public void setAdapter(MyResultsTimelineAdapter myResultsTimelineAdapter) {
+    public void setAdapter(TimelineAdapter myResultsTimelineAdapter) {
         mRcvFeed.setAdapter(myResultsTimelineAdapter);
     }
 

@@ -27,7 +27,7 @@ import retrofit2.Response;
  * Created by deepanshi on 10/5/16.
  */
 
-public class MyResultsTimelineModelImpl implements MyResultsTimelineModel {
+public class TimelineModelImpl implements TimelineModel {
 
     private static final int PAGINATION_START_AT = 5;
 
@@ -41,16 +41,16 @@ public class MyResultsTimelineModelImpl implements MyResultsTimelineModel {
 
     private boolean mHasMoreItems = true;
 
-    private MyResultsTimelineAdapter mMyResultsTimelineAdapter;
+    private TimelineAdapter mMyResultsTimelineAdapter;
 
-    private MyResultsTimelineModelImpl.OnMyResultsTimelineModelListener mMyResultsTimelineModelListener;
+    private TimelineModelImpl.OnMyResultsTimelineModelListener mMyResultsTimelineModelListener;
 
-    private MyResultsTimelineModelImpl(MyResultsTimelineModelImpl.OnMyResultsTimelineModelListener listener) {
+    private TimelineModelImpl(TimelineModelImpl.OnMyResultsTimelineModelListener listener) {
         this.mMyResultsTimelineModelListener = listener;
     }
 
-    public static MyResultsTimelineModel newInstance(MyResultsTimelineModelImpl.OnMyResultsTimelineModelListener listener) {
-        return new MyResultsTimelineModelImpl(listener);
+    public static TimelineModel newInstance(TimelineModelImpl.OnMyResultsTimelineModelListener listener) {
+        return new TimelineModelImpl(listener);
     }
 
     @Override
@@ -61,8 +61,8 @@ public class MyResultsTimelineModelImpl implements MyResultsTimelineModel {
     }
 
     @Override
-    public MyResultsTimelineAdapter getAdapter(Context context) {
-        return mMyResultsTimelineAdapter = new MyResultsTimelineAdapter(context);
+    public TimelineAdapter getAdapter(Context context) {
+        return mMyResultsTimelineAdapter = new TimelineAdapter(context);
     }
 
     @Override

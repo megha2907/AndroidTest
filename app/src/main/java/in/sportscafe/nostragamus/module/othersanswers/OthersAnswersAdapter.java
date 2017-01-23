@@ -404,14 +404,11 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
 
         int mPosition;
 
-        TextView mTvDate;
-
         private LinearLayout mLlTourParent;
 
         public ViewHolder(View V) {
             super(V);
 
-            mTvDate = (TextView) V.findViewById(R.id.feed_row_tv_date);
             mLlTourParent = (LinearLayout) V.findViewById(R.id.feed_row_ll_tour_parent);
         }
     }
