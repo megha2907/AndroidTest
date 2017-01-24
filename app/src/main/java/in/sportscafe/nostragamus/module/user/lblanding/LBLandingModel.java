@@ -9,4 +9,6 @@ import android.os.Bundle;
 public interface LBLandingModel {
 
     void getLeaderBoardSummary(Bundle bundle);
+
+    void sortLeaderBoard(Integer sortBy);
 }

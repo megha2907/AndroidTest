@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.user.points;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -58,7 +60,27 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         List categories = new ArrayList();
         categories.add("By Rank");
         categories.add("By Accuracy");
-        ArrayAdapter dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter dataAdapter = new ArrayAdapter(this,  android.R.layout.simple_list_item_1, categories) {
+
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+
+                Typeface externalFont=Typeface.createFromAsset(getContext().getAssets(), "fonts/roboto/RobotoCondensed-Regular.ttf");
+                ((TextView) v).setTypeface(externalFont);
+
+                return v;
+            }
+
+            public View getDropDownView(int position,  View convertView,  ViewGroup parent) {
+                View v =super.getDropDownView(position, convertView, parent);
+
+                Typeface externalFont=Typeface.createFromAsset(getContext().getAssets(), "fonts/roboto/RobotoCondensed-Regular.ttf");
+                ((TextView) v).setTypeface(externalFont);
+
+                return v;
+            }
+        };
+
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(R.layout.custom_radio_btn_spinner);

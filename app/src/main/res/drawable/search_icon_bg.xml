@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <item>
+        <shape>
+            <solid android:color="#2d2d2d"/>
+            <corners android:radius="@dimen/dp_80"/>
+        </shape>
+    </item>
+
+    <item android:drawable="@drawable/search_icon"
+        android:right="@dimen/dp_8"
+        android:bottom="@dimen/dp_8"
+        android:top="@dimen/dp_8"
+        android:left="@dimen/dp_8"/>
+
+
+
+</layer-list>

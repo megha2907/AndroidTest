@@ -13,6 +13,9 @@ public class Answer {
     @JsonProperty("question_id")
     private Integer questionId;
 
+    @JsonProperty("is_minority_option")
+    private Boolean isMinorityOption;
+
     @JsonProperty("answer")
     private String answerId;
 
@@ -26,12 +29,13 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(Integer matchId, Integer questionId, String answerId, String answerTime, String powerUpId) {
+    public Answer(Integer matchId, Integer questionId, String answerId, String answerTime, String powerUpId,Boolean isMinorityOption) {
         this.matchId = matchId;
         this.questionId = questionId;
         this.answerId = answerId;
         this.answerTime = answerTime;
         this.powerUpId = powerUpId;
+        this.isMinorityOption = isMinorityOption;
     }
 
 
@@ -74,6 +78,16 @@ public class Answer {
     @JsonProperty("answer_time")
     public void setAnswerTime(String answerTime) {
         this.answerTime = answerTime;
+    }
+
+    @JsonProperty("is_minority_option")
+    public Boolean getMinorityOption() {
+        return isMinorityOption;
+    }
+
+    @JsonProperty("is_minority_option")
+    public void setMinorityOption(Boolean minorityOption) {
+        isMinorityOption = minorityOption;
     }
 
 
