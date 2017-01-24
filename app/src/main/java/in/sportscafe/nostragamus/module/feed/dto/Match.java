@@ -49,7 +49,7 @@ public class Match implements Serializable {
     private String resultdesc;
 
     @JsonProperty("match_question_count")
-    private Integer matchQuestionCount;
+    private Integer matchQuestionCount = 0;
 
     @JsonProperty("match_points")
     private Integer matchPoints;
@@ -58,7 +58,7 @@ public class Match implements Serializable {
     private Integer correctCount;
 
     @JsonProperty("is_attempted")
-    private boolean isAttempted;
+    private boolean isAttempted = false;
 
     @JsonProperty("match_winner_id")
     private Integer winnerPartyId;

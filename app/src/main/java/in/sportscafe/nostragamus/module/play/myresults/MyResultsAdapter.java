@@ -21,7 +21,6 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
@@ -33,7 +32,6 @@ import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
-import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryActivity;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 
@@ -227,7 +225,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             mIvPartyBPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_right);
             mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
             mBtnMatchPoints = (CustomButton) V.findViewById(R.id.schedule_row_btn_points);
-            mViewResult = (View) V.findViewById(R.id.schedule_row_v_party_a);
+            mViewResult = (View) V.findViewById(R.id.schedule_row_v_result_line);
             mLlPredictionsParent = (LinearLayout) V.findViewById(R.id.my_results_row_ll_predictions);
             mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
             mleaderboard=(LinearLayout)V.findViewById(R.id.my_results_row_ll_leaderboardbtn);

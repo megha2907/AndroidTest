@@ -6,4 +6,5 @@
         android:width="@dimen/dp_1"
         android:color="@color/tundora" />
 
+    <solid android:color="@color/black" />
 </shape>

@@ -8,15 +8,20 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
+import com.jeeva.android.widgets.customfont.Typefaces;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,32 +29,33 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.DateFormats;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.common.Adapter;
+import in.sportscafe.nostragamus.module.feed.FeedWebView;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.feed.dto.Parties;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
-
-import static com.google.android.gms.analytics.internal.zzy.c;
-import static in.sportscafe.nostragamus.utils.timeutils.TimeUtils.getMillisecondsFromDateString;
 
 /**
  * Created by Jeeva on 15/6/16.
  */
 public class TimelineAdapter extends Adapter<Feed, TimelineAdapter.ViewHolder> {
 
-    private AlertDialog mAlertDialog;
-    private Context mcon;
+    private static final String COMMENTARY = "commentary";
+
     private List<Match> mMyResultList = new ArrayList<>();
 
     public TimelineAdapter(Context context) {
         super(context);
-        mcon = context;
     }
 
     @Override
@@ -87,171 +93,113 @@ public class TimelineAdapter extends Adapter<Feed, TimelineAdapter.ViewHolder> {
     }
 
     private View getScheduleView(Match match, ViewGroup parent, int position) {
+        /*if (!(TextUtils.isEmpty(matchStage) || COMMENTARY.equalsIgnoreCase(matchStage))) {
+
+        }*/
+
+        /*holder.mTvDate.setText(Html.fromHtml(
+                TimeUtils.getDateStringFromMs(startTimeMs, "MMM").toUpperCase() + "<br>" + String.valueOf(dayOfMonth).toUpperCase()
+                        + "<sup>" +AppSnippet.ordinalOnly(dayOfMonth) + "</sup>")
+        );*/
+
         View scheduleView = getLayoutInflater().inflate(R.layout.inflater_schedule_row, parent, false);
         ScheduleViewHolder holder = new ScheduleViewHolder(scheduleView);
 
-        if (null == match.getParties()) {
-            holder.mTvPartyAName.setVisibility(View.GONE);
-            holder.mTvPartyBName.setVisibility(View.GONE);
-            holder.mIvPartyAPhoto.setVisibility(View.GONE);
-            holder.mIvPartyBPhoto.setVisibility(View.GONE);
-            holder.mBtnVs.setVisibility(View.GONE);
-            holder.mTvMatchStage.setVisibility(View.GONE);
-            holder.mRlMatchStageParent.setVisibility(View.GONE);
-            holder.mTvStartTime.setVisibility(View.GONE);
-            holder.mViewResult.setVisibility(View.GONE);
-
-        } else {
-            holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
-            holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
-
-            holder.mIvPartyAPhoto.setImageUrl(
-                    match.getParties().get(0).getPartyImageUrl()
-            );
-
-            holder.mIvPartyBPhoto.setImageUrl(
-                    match.getParties().get(1).getPartyImageUrl()
-            );
-        }
-
-
-        if (null == match.getStage()) {
-            holder.mTvMatchStage.setVisibility(View.GONE);
-        } else {
-            holder.mTvMatchStage.setText(match.getStage());
-        }
-
-
-        if (null == match.getResult() || match.getResult().isEmpty()) {
-            holder.mTvMatchResult.setVisibility(View.GONE);
-            holder.mTvStartTime.setText(TimeUtils.getFormattedDateString(
-                    match.getStartTime(), Constants.DateFormats.HH_MM_AA,
-                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT));
-        } else {
-            holder.mTvMatchResult.setVisibility(View.VISIBLE);
-            holder.mTvMatchResult.setText(match.getResult());
-            holder.mBtnPlayMatch.setVisibility(View.GONE);
-        }
-
-
-        if (match.getMatchQuestionCount() == 0) {
-            holder.mBtnPlayMatch.setVisibility(View.GONE);
-        } else if (match.getisAttempted() == true && (null == match.getResult() || match.getResult().isEmpty())) {
-            holder.mTvMatchResult.setVisibility(View.GONE);
-            holder.mBtnPlayMatch.setVisibility(View.GONE);
-            holder.mTvResultWait.setVisibility(View.VISIBLE);
-            holder.mViewResult.setVisibility(View.VISIBLE);
-            holder.mTvResultWait.setText(match.getMatchQuestionCount() + " predictions made, waiting for results");
-            holder.mTvResultWait.setTag(match);
-        } else if ((null == match.getResult() || match.getResult().isEmpty())) {   //ELSE PLAY BTN VISIBLE
-            holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
-            holder.mBtnPlayMatch.setTag(match);
-
-        }
-
-
-        if (match.getMatchPoints() == 0) {
-            holder.mBtnMatchPoints.setVisibility(View.GONE);
-            holder.mTvResultCorrectCount.setVisibility(View.GONE);
-        } else {
-            holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
-            holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
-            holder.mViewResult.setVisibility(View.VISIBLE);
-            holder.mRlMatchPoints.setVisibility(View.VISIBLE);
-            holder.mTvResultWait.setVisibility(View.GONE);
-
-            holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
-            holder.mRlMatchPoints.setTag(match);
-            holder.mTvResultCorrectCount.setText("You got " + match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " questions correct");
-
-            if (null != match.getWinnerPartyId()) {
-
-                if (match.getWinnerPartyId().equals(match.getParties().get(0).getPartyId())) {
-                    holder.mTvPartyAName.setTypeface(null, Typeface.BOLD);
-                    holder.mTvPartyAName.setTextColor(Color.WHITE);
-                } else if (match.getWinnerPartyId().equals(match.getParties().get(1).getPartyId())) {
-                    holder.mTvPartyBName.setTypeface(null, Typeface.BOLD);
-                    holder.mTvPartyBName.setTextColor(Color.WHITE);
-                }
-
-            }
-
-            float percent = (match.getCorrectCount() * 100.0f) / match.getMatchQuestionCount();
-
-            if (percent < 40.0) {
-                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_red_button_with_shadow);
-            } else if (percent >= 40.0 && percent <= 60.0) {
-                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_blue_button_with_shadow);
-            } else if (percent > 60.0) {
-                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_green_button_with_shadow);
-            } else {
-                holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_grey_button_with_shadow);
-            }
-
-
-        }
-
-
-        long startTimeMs = TimeUtils.getMillisecondsFromDateString(match.getStartTime(),
-                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                null);
+        String startTime = match.getStartTime();
+        long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                startTime,
+                DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                DateFormats.GMT
+        );
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
-        holder.mTvDate.setText(Html.fromHtml(
-                TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + "\n" + dayOfMonth
-                        + "<sup>" +AppSnippet.ordinalOnly(dayOfMonth) + "</sup>")
+        // Setting date of the match
+        holder.mTvDate.setText(
+                TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + "\n"
+                        + dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth)
         );
 
+        String matchStage = match.getStage();
+        if (COMMENTARY.equalsIgnoreCase(matchStage)) {
+            holder.mLlCardLayout.setVisibility(View.GONE);
+        } else {
 
-        Calendar c = Calendar.getInstance();
-        Long formattedCurrentDate = c.getTimeInMillis();
-        /*String date = TimeUtils.getFormattedDateString(
-                match.getStartTime(),
-                Constants.DateFormats.DD_MM_YYYY,
-                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                Constants.DateFormats.GMT
-        );
+            // Setting match stage, if the stage is not empty & not the "commentary"
+            if(!TextUtils.isEmpty(matchStage)) {
+                holder.mTvMatchStage.setVisibility(View.VISIBLE);
+                holder.mTvMatchStage.setText(match.getStage());
+            }
 
-        Long formattedstartDate = TimeUtils.getMillisecondsFromDateString(
-                date,
-                Constants.DateFormats.DD_MM_YYYY,
-                Constants.DateFormats.GMT
-        );*/
-        TimeAgo timeAgo = TimeUtils.calcTimeAgo(formattedCurrentDate, startTimeMs);
+            // Setting starting time of the match
+            holder.mTvStartTime.setVisibility(View.VISIBLE);
+            holder.mTvStartTime.setText(TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA));
 
+            // Setting party details
+            List<Parties> parties = match.getParties();
+            holder.mTvPartyAName.setText(parties.get(0).getPartyName());
+            holder.mTvPartyBName.setText(parties.get(1).getPartyName());
+            holder.mIvPartyAPhoto.setImageUrl(parties.get(0).getPartyImageUrl());
+            holder.mIvPartyBPhoto.setImageUrl(parties.get(1).getPartyImageUrl());
 
-        if (match.getMatchQuestionCount() == 0 && match.getParties() != null && timeAgo.timeDiff > 0 && timeAgo.timeUnit != TimeUnit.MILLISECOND && timeAgo.timeUnit != TimeUnit.SECOND) {
-            holder.mTvResultWait.setVisibility(View.VISIBLE);
-            holder.mTvResultWait.setText("Coming up");
-            holder.mViewResult.setVisibility(View.GONE);
+            if(match.getMatchQuestionCount() > 0) {
+                String result = match.getResult();
+                if(TextUtils.isEmpty(result)) {
+                    if(match.getisAttempted()) { // Waiting for results
+                        holder.mTvResultWait.setVisibility(View.VISIBLE);
+                        holder.mVResultLine.setVisibility(View.VISIBLE);
+//                        holder.mTvResultWait.setText(match.getMatchQuestionCount() + " predictions made, waiting for results");
+                        holder.mTvResultWait.setTag(match);
+                    } else { // You can now play the match
+                        holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
+                        holder.mBtnPlayMatch.setTag(match);
+                    }
+                } else if(match.getisAttempted()) { // Played match result published
+                    holder.mRlMatchPoints.setVisibility(View.VISIBLE);
+                    holder.mVResultLine.setVisibility(View.VISIBLE);
+
+                    holder.mRlMatchPoints.setTag(match);
+                    holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
+                    holder.mTvResultCorrectCount.setText("You got " + match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " answers correct");
+
+                    Integer winnerPartyId = match.getWinnerPartyId();
+                    if (null != winnerPartyId) {
+                        int whiteSixty = ViewUtils.getColor(holder.mTvPartyAName.getContext(), R.color.white_60);
+                        Typeface latoBold = Typefaces.get(holder.mTvPartyAName.getContext(), "fonts/lato/Lato-Bold.ttf");
+                        if (winnerPartyId.equals(parties.get(0).getPartyId())) {
+                            holder.mTvPartyAName.setTypeface(latoBold);
+                            holder.mTvPartyBName.setTextColor(whiteSixty);
+                        } else if (winnerPartyId.equals(parties.get(1).getPartyId())) {
+                            holder.mTvPartyBName.setTypeface(latoBold);
+                            holder.mTvPartyAName.setTextColor(whiteSixty);
+                        }
+                    }
+                } else { // Not played match result published
+
+                }
+            } else { // No questions prepared
+
+                TimeAgo timeAgo = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(), startTimeMs);
+                if (timeAgo.timeDiff > 0 && timeAgo.timeUnit != TimeUnit.MILLISECOND && timeAgo.timeUnit != TimeUnit.SECOND) {
+
+                    // Still the question is not prepared for these matches
+                    holder.mTvResultWait.setVisibility(View.VISIBLE);
+                    holder.mTvResultWait.setText("Coming up");
+                    holder.mTvResultWait.setOnClickListener(null);
+                }
+            }
         }
 
         return scheduleView;
     }
 
-
-    private View getMatchCommentary(Match match2, ViewGroup parent) {
-        View MatchCommentary = getLayoutInflater().inflate(R.layout.inflater_match_commentary_row, parent, false);
-        MatchCommentaryHolder holder = new MatchCommentaryHolder(MatchCommentary);
-
-        holder.mTvMatchCommentary.setText(match2.getVenue()); //// TODO: 9/22/16 change to match commentry
-
-        return MatchCommentary;
-    }
-
-
     class ViewHolder extends RecyclerView.ViewHolder {
 
         int mPosition;
-
-//        TextView mTvDate;
 
         private LinearLayout mLlTourParent;
 
         public ViewHolder(View V) {
             super(V);
-
-//            mTvDate = (TextView) V.findViewById(R.id.feed_row_tv_date);
             mLlTourParent = (LinearLayout) V.findViewById(R.id.feed_row_ll_tour_parent);
         }
     }
@@ -273,6 +221,8 @@ public class TimelineAdapter extends Adapter<Feed, TimelineAdapter.ViewHolder> {
     }
 
     class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        LinearLayout mLlCardLayout;
 
         TextView mTvMatchStage;
 
@@ -296,19 +246,13 @@ public class TimelineAdapter extends Adapter<Feed, TimelineAdapter.ViewHolder> {
 
         HmImageView mIvPartyBPhoto;
 
-        Button mBtnVs;
-
         CustomButton mBtnMatchPoints;
 
         CustomButton mBtnPlayMatch;
 
-        View mViewResult;
+        View mVResultLine;
 
         LinearLayout mLlMatchCommentaryParent;
-
-        RelativeLayout mRlMatchStageParent;
-
-        Button mIbfeedDotIcon;
 
         RelativeLayout mRlMatchPoints;
 
@@ -317,27 +261,23 @@ public class TimelineAdapter extends Adapter<Feed, TimelineAdapter.ViewHolder> {
         public ScheduleViewHolder(View V) {
             super(V);
 
+            mTvDate = (TextView) V.findViewById(R.id.schedule_row_tv_date);
             mTvMatchStage = (TextView) V.findViewById(R.id.schedule_row_tv_match_stage);
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
+            mIvPartyAPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_left);
+            mIvPartyBPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_right);
             mTvMatchResult = (TextView) V.findViewById(R.id.schedule_row_tv_match_result);
             mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_match_time);
             mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
-            mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
-            mIvPartyAPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_left);
-            mIvPartyBPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_right);
-            mBtnVs = (Button) V.findViewById(R.id.schedule_row_btn_vs);
+            mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_btn_waiting_for_result);
             mBtnPlayMatch = (CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
             mBtnMatchPoints = (CustomButton) V.findViewById(R.id.schedule_row_btn_points);
-            mViewResult = (View) V.findViewById(R.id.schedule_row_v_party_a);
+
+            mLlCardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
+            mVResultLine = V.findViewById(R.id.schedule_row_v_result_line);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
-            mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
-            mIbfeedDotIcon = (Button) V.findViewById(R.id.feed_dot_icon);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);
-            mTvDate = (TextView) V.findViewById(R.id.schedule_row_tv_date);
-
-            V.findViewById(R.id.view).setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
 
             mBtnPlayMatch.setOnClickListener(this);
             mRlMatchPoints.setOnClickListener(this);
@@ -346,57 +286,97 @@ public class TimelineAdapter extends Adapter<Feed, TimelineAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
+            Context context = view.getContext();
+            Bundle bundle = null;
 
-            switch (view.getId()) {
-
-                case R.id.schedule_row_btn_playmatch:
-
-                    Match match = (Match) view.getTag();
-                    Bundle mBundle = new Bundle();
-                    mBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
-
-                    Intent intent = new Intent(mcon, PredictionActivity.class);
-                    intent.putExtras(mBundle);
-                    mcon.startActivity(intent);
-                    break;
-
-                case R.id.rl_points:
-
-                    Match match2 = (Match) view.getTag();
-                    Bundle mBundle2 = new Bundle();
-                    mBundle2.putSerializable(Constants.BundleKeys.MATCH_LIST, match2);
-
-                    Intent mintent = new Intent(mcon, MyResultsActivity.class);
-                    mintent.putExtras(mBundle2);
-                    mcon.startActivity(mintent);
-                    break;
-
-                case R.id.schedule_row_tv_match_result_wait:
-
-                    Match match3 = (Match) view.getTag();
-                    Bundle mBundle3 = new Bundle();
-                    mBundle3.putSerializable(Constants.BundleKeys.MATCH_LIST, match3);
-
-                    Intent mintent2 = new Intent(mcon, MyResultsActivity.class);
-                    mintent2.putExtras(mBundle3);
-                    mcon.startActivity(mintent2);
-                    break;
+            Match match = (Match) view.getTag();
+            if(null != match) {
+                bundle = new Bundle();
+                bundle.putSerializable(BundleKeys.MATCH_LIST, match);
             }
 
-
+            switch (view.getId()) {
+                case R.id.schedule_row_btn_playmatch:
+                    navigateToPrediction(context, bundle);
+                    break;
+                case R.id.rl_points:
+                    navigateToMyResults(context, bundle);
+                    break;
+                case R.id.schedule_row_tv_match_result_wait:
+                    navigateToMyResults(context, bundle);
+                    break;
+            }
         }
 
     }
 
-    class MatchCommentaryHolder extends RecyclerView.ViewHolder {
+    private void navigateToPrediction(Context context, Bundle bundle) {
+        Intent intent = new Intent(context, PredictionActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
 
-        TextView mTvMatchCommentary;
+    private void navigateToMyResults(Context context, Bundle bundle) {
+        Intent intent = new Intent(context, MyResultsActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
 
-        public MatchCommentaryHolder(View V) {
-            super(V);
+    private View getCommentary(ViewGroup parent, Match match) {
+        View commentary = getLayoutInflater().inflate(R.layout.inflater_match_result_commentary_row, parent, false);
 
-            mTvMatchCommentary = (TextView) V.findViewById(R.id.match_commentary_tv);
+        TextView tvcommentary = (TextView) commentary.findViewById(R.id.schedule_row_tv_match_result_commentary);
 
+        TextView tvcommentarytitle = (TextView) commentary.findViewById(R.id.schedule_row_tv_match_result_commentary_title);
+
+        String description = match.getResultdesc();
+        if (!TextUtils.isEmpty(description)) {
+            tvcommentary.setVisibility(View.VISIBLE);
+
+            tvcommentary.setText(AppSnippet.noTrailingwhiteLines(Html.fromHtml(match.getResultdesc().toString().replaceAll("&nbsp;", ""))));
+            tvcommentary.setMovementMethod(LinkMovementMethod.getInstance());
+
+            CharSequence text = tvcommentary.getText();
+            if (text instanceof Spannable) {
+                int end = text.length();
+                Spannable sp = (Spannable) tvcommentary.getText();
+                URLSpan[] urls = sp.getSpans(0, end, URLSpan.class);
+                SpannableStringBuilder style = new SpannableStringBuilder(text);
+                style.clearSpans();//should clear old spans
+                for (URLSpan url : urls) {
+                    LinkSpan click = new LinkSpan(url.getURL());
+                    style.setSpan(click, sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                tvcommentary.setText(style);
+            }
+
+            if (match.getMatchPoints() == 0) {
+                tvcommentarytitle.setVisibility(View.VISIBLE);
+                tvcommentarytitle.setText(Html.fromHtml(match.getResult()));
+            } else {
+                tvcommentarytitle.setVisibility(View.GONE);
+            }
+
+            if (!match.getStage().equals("Commentary")) {
+                tvcommentarytitle.setVisibility(View.GONE);
+            }
+        }
+
+        return commentary;
+    }
+
+    private class LinkSpan extends URLSpan {
+
+        private LinkSpan(String url) {
+            super(url);
+        }
+
+        @Override
+        public void onClick(View view) {
+            String url = getURL();
+            if (url != null) {
+                view.getContext().startActivity(new Intent(view.getContext(), FeedWebView.class).putExtra("url", url));
+            }
         }
     }
 
