@@ -12,6 +12,7 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
@@ -29,7 +30,7 @@ public class FeedModelImpl implements FeedModel {
 
     private int mClosestDatePosition = 0;
 
-    private FeedAdapter mFeedAdapter;
+    private TimelineAdapter mFeedAdapter;
 
     private OnFeedModelListener mFeedModelListener;
 
@@ -53,8 +54,8 @@ public class FeedModelImpl implements FeedModel {
     }
 
     @Override
-    public FeedAdapter getAdapter() {
-        return mFeedAdapter = new FeedAdapter(mFeedModelListener.getContext(),sportName);
+    public TimelineAdapter getAdapter() {
+        return mFeedAdapter = new TimelineAdapter(mFeedModelListener.getContext());
     }
 
     @Override
@@ -97,7 +98,7 @@ public class FeedModelImpl implements FeedModel {
     private void handleMatches(List<Match> matchList) {
         List<Feed> feedList = getFeedList(matchList);
         for (Feed feed : feedList) {
-            mFeedAdapter.add(feed);
+//            mFeedAdapter.add(feed);
         }
 
         mFeedModelListener.onSuccessFeeds(mFeedAdapter, mClosestDatePosition);
@@ -149,9 +150,9 @@ public class FeedModelImpl implements FeedModel {
             @Override
             public int compare(Feed lhs, Feed rhs) {
                 if(lhs.getDate() > rhs.getDate()) {
-                    return 1;
-                } else if(lhs.getDate() < rhs.getDate()) {
                     return -1;
+                } else if(lhs.getDate() < rhs.getDate()) {
+                    return 1;
                 } else {
                     return 0;
                 }
@@ -184,7 +185,7 @@ public class FeedModelImpl implements FeedModel {
 
     public interface OnFeedModelListener {
 
-        void onSuccessFeeds(FeedAdapter feedAdapter, int movePosition);
+        void onSuccessFeeds(TimelineAdapter feedAdapter, int movePosition);
 
         void onFailedFeeds(String message);
 

@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.feed;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,12 +13,21 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
  */
 public class FeedActivity extends NostragamusActivity implements FeedView, SwipeRefreshLayout.OnRefreshListener {
+
+    private static final float MAX_ROTATION = 30;
+
+    private float mVisibleHeight;
+
+    private float mHalfVisibleHeight;
+
+    private float mDifference;
 
     private RecyclerView mRcvFeed;
 
@@ -56,10 +66,50 @@ public class FeedActivity extends NostragamusActivity implements FeedView, Swipe
         });
 
         initToolBar();
+
+        initRotation();
+    }
+
+    private void initRotation() {
+        mRcvFeed.post(new Runnable() {
+            @Override
+            public void run() {
+                mVisibleHeight = findViewById(R.id.content).getMeasuredHeight();
+                mHalfVisibleHeight = getResources().getDimensionPixelSize(R.dimen.dp_150);
+                mDifference = mVisibleHeight - mHalfVisibleHeight;
+            }
+        });
+
+        mRcvFeed.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                View child = null;
+                int[] location = new int[2];
+                int yAxis;
+                int childCount = parent.getChildCount();
+                for (int i = 0; i < childCount; i++) {
+                    child = parent.getChildAt(i).findViewById(R.id.schedule_row_ll);
+
+                    if(child.getVisibility() == View.VISIBLE) {
+                        child.getLocationOnScreen(location);
+                        child.setRotationX(getRotationByY(location[1]));
+                    }
+                }
+                super.onDraw(c, parent, state);
+            }
+        });
+    }
+
+    private float getRotationByY(int yAxis) {
+        float rotation = MAX_ROTATION * (yAxis - mHalfVisibleHeight) / mDifference;
+        if(rotation < 0) {
+            return 0;
+        }
+        return rotation;
     }
 
     @Override
-    public void setAdapter(FeedAdapter feedAdapter) {
+    public void setAdapter(TimelineAdapter feedAdapter) {
         mRcvFeed.setAdapter(ViewUtils.getAnimationAdapter(feedAdapter));
     }
 
