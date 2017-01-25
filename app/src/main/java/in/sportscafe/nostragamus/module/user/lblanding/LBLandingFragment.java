@@ -20,16 +20,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
+import com.jeeva.android.widgets.customfont.CustomEditText;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
@@ -42,7 +46,8 @@ import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
  * Created by deepanshi on 1/19/17.
  */
 
-public class LBLandingFragment extends NostragamusFragment implements LBLandingView, AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class LBLandingFragment extends NostragamusFragment implements LBLandingView,
+        AdapterView.OnItemSelectedListener, CustomEditText.EditTextImeBackListener {
 
     private LinearLayout mLlLandingHolder;
 
@@ -56,13 +61,9 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
     private LBLandingSummary mlbLandingSummary;
 
-    private LinearLayoutManager mlayoutManager;
+    private TextView mTvDummySearch;
 
-    private RecyclerView mrecyclerView;
-
-    private ImageButton mleftArrow;
-
-    private ImageButton mRightArrow;
+    private FrameLayout mFlFuzzyHolder;
 
     @Nullable
     @Override
@@ -86,7 +87,22 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
                 mFuzzyLbFragment = FuzzyLbFragment.newInstance()
         ).commit();
 
+        mFlFuzzyHolder = (FrameLayout) findViewById(R.id.lb_landing_fl_fuzzy_holder);
 
+        mTvDummySearch = (TextView) findViewById(R.id.fuzzy_players_tv_search);
+        findViewById(R.id.lb_landing_rl_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openFuzzy();
+            }
+        });
+
+        mFlFuzzyHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeFuzzy();
+            }
+        });
     }
 
     @Override
@@ -106,16 +122,16 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
             public View getView(int position, View convertView, ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
 
-                Typeface externalFont=Typeface.createFromAsset(getContext().getAssets(), "fonts/roboto/RobotoCondensed-Regular.ttf");
+                Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/roboto/RobotoCondensed-Regular.ttf");
                 ((TextView) v).setTypeface(externalFont);
 
                 return v;
             }
 
-            public View getDropDownView(int position,  View convertView,  ViewGroup parent) {
-                View v =super.getDropDownView(position, convertView, parent);
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView, parent);
 
-                Typeface externalFont=Typeface.createFromAsset(getContext().getAssets(), "fonts/roboto/RobotoCondensed-Regular.ttf");
+                Typeface externalFont = Typeface.createFromAsset(getContext().getAssets(), "fonts/roboto/RobotoCondensed-Regular.ttf");
                 ((TextView) v).setTypeface(externalFont);
 
                 return v;
@@ -173,66 +189,13 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
     }
 
     private void addLandingRow(List<LbLanding> lbList, String lbLandingType, boolean needPadding) {
-        View landingRow = getLayoutInflater().inflate(R.layout.inflater_lblanding_row, mLlLandingHolder, false);
+        LBLandingRow landingRow = (LBLandingRow) getLayoutInflater().inflate(
+                R.layout.inflater_lblanding_row,
+                mLlLandingHolder,
+                false
+        );
         mLlLandingHolder.addView(landingRow);
-
-        ((TextView) landingRow.findViewById(R.id.lblanding_tv_category_name)).setText(getCategoryName(lbLandingType));
-
-        mRightArrow = (ImageButton) landingRow.findViewById(R.id.lblanding_ib_right_arrow);
-        mleftArrow = (ImageButton) landingRow.findViewById(R.id.lblanding_ib_left_arrow);
-        mRightArrow.setOnClickListener(this);
-        mleftArrow.setOnClickListener(this);
-
-        mrecyclerView = (RecyclerView) landingRow.findViewById(R.id.lblanding_rv);
-
-        mlayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        mrecyclerView.setLayoutManager(mlayoutManager);
-
-        LBLandingAdapter lbLandingAdapter = new LBLandingAdapter(getContext(), lbLandingType, needPadding);
-        lbLandingAdapter.addAll(lbList);
-        mrecyclerView.setAdapter(lbLandingAdapter);
-
-
-        if (mrecyclerView.getAdapter().getItemCount() > 3)  {
-            mleftArrow.setBackgroundResource(R.drawable.leaderboard_grey_arrow_icon);
-            mRightArrow.setBackgroundResource(R.drawable.leaderboard_white_arrow_icon);
-        } else {
-            mleftArrow.setBackgroundResource(R.drawable.leaderboard_grey_arrow_icon);
-            mRightArrow.setBackgroundResource(R.drawable.leaderboard_grey_arrow_icon);
-        }
-
-        mrecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                if (mlayoutManager.findFirstCompletelyVisibleItemPosition() > 0) {
-                    // beginning of the recycler
-                    mRightArrow.setBackgroundResource(R.drawable.leaderboard_grey_arrow_icon);
-                    mleftArrow.setBackgroundResource(R.drawable.leaderboard_white_arrow_icon);
-                }
-
-                if (mlayoutManager.findLastCompletelyVisibleItemPosition() + 1 < mrecyclerView.getAdapter().getItemCount()) {
-                    // end of the recycler
-                    mleftArrow.setBackgroundResource(R.drawable.leaderboard_grey_arrow_icon);
-                    mRightArrow.setBackgroundResource(R.drawable.leaderboard_white_arrow_icon);
-                }
-            }
-
-        });
-
-        }
-
-    private String getCategoryName(String lbLandingType) {
-        switch (lbLandingType) {
-            case LBLandingType.SPORT:
-                return getResources().getString(R.string.sports);
-            case LBLandingType.GROUP:
-                return getResources().getString(R.string.groups);
-            case LBLandingType.CHALLENGE:
-                return getResources().getString(R.string.challenges);
-        }
-        return "";
+        landingRow.init(lbList, lbLandingType, needPadding);
     }
 
 
@@ -258,7 +221,11 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
     BroadcastReceiver mFuzzyLbClickReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mLbLandingPresenter.onFuzzyLbClick(intent.getExtras());
+            Bundle bundle = intent.getExtras();
+            if(null != bundle && bundle.containsKey(BundleKeys.LB_LANDING_KEY)) {
+                closeFuzzy();
+            }
+            mLbLandingPresenter.onFuzzyLbClick(bundle);
         }
     };
 
@@ -267,9 +234,9 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
         String item = parent.getItemAtPosition(position).toString();
         // hide selection text
-        ((TextView)view).setText(null);
+        ((TextView) view).setText(null);
 
-        if(mlbLandingSummary!=null) {
+        if (mlbLandingSummary != null) {
             mLbLandingPresenter.sortLeaderBoardList(position);
         }
 
@@ -280,21 +247,34 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.lblanding_ib_right_arrow:
-                    mrecyclerView.smoothScrollToPosition(mlayoutManager.findLastVisibleItemPosition() + 2);
-                break;
-
-            case R.id.lblanding_ib_left_arrow:
-                if ((mlayoutManager.findFirstVisibleItemPosition() - 2) > 0) {
-                    mrecyclerView.smoothScrollToPosition(mlayoutManager.findFirstVisibleItemPosition() - 2);
-                }
-                break;
-
+    public boolean onBack() {
+        if(mFlFuzzyHolder.getVisibility() == View.VISIBLE) {
+            closeFuzzy();
+            return true;
         }
+        return false;
+    }
 
+    private boolean mBackListenerSet = false;
 
+    private void openFuzzy() {
+        mFlFuzzyHolder.setVisibility(View.VISIBLE);
+        mFuzzyLbFragment.showKeyboard();
+
+        if(!mBackListenerSet) {
+            mBackListenerSet = true;
+            mFuzzyLbFragment.setOnEditTextImeBackListener(this);
+        }
+    }
+
+    private void closeFuzzy() {
+        mTvDummySearch.setText(mFuzzyLbFragment.getSearchKey());
+        mFuzzyLbFragment.hideKeyboard();
+        mFlFuzzyHolder.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onImeBack(CustomEditText ctrl, String text) {
+        onBack();
     }
 }
