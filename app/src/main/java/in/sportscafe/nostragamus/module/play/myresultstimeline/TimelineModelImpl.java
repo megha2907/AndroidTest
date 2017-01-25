@@ -128,11 +128,11 @@ public class TimelineModelImpl implements TimelineModel {
             mHasMoreItems = false;
         }
 
-        mMyResultsTimelineAdapter.addAll(getFeedList(matchList));
+        mMyResultsTimelineAdapter.addAll(matchList);
         mMyResultsTimelineModelListener.onSuccessFeeds();
     }
 
-    private List<Feed> getFeedList(List<Match> matchList) {
+    /*private List<Feed> getFeedList(List<Match> matchList) {
         Map<String, Tournament> tourMap = new HashMap<>();
         Map<String, Feed> feedMap = new HashMap<>();
         List<Feed> feedList = new ArrayList<>();
@@ -202,7 +202,7 @@ public class TimelineModelImpl implements TimelineModel {
         }
 
         return feedList;
-    }
+    }*/
 
 
     public interface OnMyResultsTimelineModelListener {

@@ -245,11 +245,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (goback == true) {
+//                        if (goback == true) {
                             onBackPressed();
-                        } else {
+                        /*} else {
                             gotoHomeActivity();
-                        }
+                        }*/
                     }
                 }
 
