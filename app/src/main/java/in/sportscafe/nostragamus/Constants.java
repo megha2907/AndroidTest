@@ -171,6 +171,7 @@ public interface Constants {
         String PLAYER_USER_NAME = "playerUserName";
         String LB_LANDING_DATA = "lbLandingData";
         String LB_LANDING_TYPE = "lbLandingType";
+        String LB_LANDING_KEY = "lbLandingKey";
     }
 
     interface ParcelableKeys {

@@ -57,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity implements com.jeev
     }
 
     public void showSoftKeyboard(View view) {
-        getInputMethodManager().showSoftInput(view, 0);
+        getInputMethodManager().showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
     }
 
     public void hideSoftKeyboard() {

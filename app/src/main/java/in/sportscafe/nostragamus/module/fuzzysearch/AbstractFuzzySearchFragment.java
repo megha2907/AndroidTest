@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.jeeva.android.widgets.customfont.CustomEditText;
+
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
@@ -26,7 +28,7 @@ public abstract class AbstractFuzzySearchFragment extends NostragamusFragment im
 
     private RecyclerView mRecyclerView;
 
-    private EditText mEtSearch;
+    private CustomEditText mEtSearch;
 
     private AbstractFuzzySearchPresenter mOthersAnswersPresenter;
 
@@ -46,7 +48,7 @@ public abstract class AbstractFuzzySearchFragment extends NostragamusFragment im
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
 
-        mEtSearch = ((EditText) findViewById(R.id.fuzzy_players_et_search));
+        mEtSearch = (CustomEditText) findViewById(R.id.fuzzy_players_et_search);
         mEtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -67,6 +69,10 @@ public abstract class AbstractFuzzySearchFragment extends NostragamusFragment im
         mOthersAnswersPresenter.onCreateFuzzyPlayers(getArguments());
     }
 
+    public void setOnEditTextImeBackListener(CustomEditText.EditTextImeBackListener listener) {
+        mEtSearch.setOnEditTextImeBackListener(listener);
+    }
+
     @Override
     public void setAdapter(Adapter adapter) {
         mRecyclerView.setAdapter(adapter);
@@ -78,7 +84,7 @@ public abstract class AbstractFuzzySearchFragment extends NostragamusFragment im
         mEtSearch.setText(name);
         mEtSearch.setSelection(name.length());
         mUserTyping = true;
-        AppSnippet.hideSoftKeyBoard(getContext(), mEtSearch);
+        hideSoftKeyboard();
     }
 
     public boolean isListShowing() {
@@ -89,5 +95,18 @@ public abstract class AbstractFuzzySearchFragment extends NostragamusFragment im
         boolean listShowing = isListShowing();
         mEtSearch.setText("");
         return listShowing;
+    }
+
+    public String getSearchKey() {
+        return mEtSearch.getText().toString();
+    }
+
+    public void showKeyboard() {
+        mEtSearch.requestFocus();
+        showSoftKeyboard(mEtSearch);
+    }
+
+    public void hideKeyboard() {
+        hideSoftKeyboard();
     }
 }

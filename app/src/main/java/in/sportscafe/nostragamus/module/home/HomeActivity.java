@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,7 +17,6 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 import com.moe.pushlibrary.providers.MoEDataContract;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -24,17 +24,10 @@ import in.sportscafe.nostragamus.module.notifications.NotificationInboxFragment;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
-import in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
-import in.sportscafe.nostragamus.module.user.login.RefreshTokenModelImpl;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
-import in.sportscafe.nostragamus.webservice.MyWebService;
-import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
-import retrofit2.Call;
-import retrofit2.Response;
 
 /**
  * Created by Jeeva on 16/6/16.
@@ -68,6 +61,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     private RelativeLayout mNotificationRl;
 
     private RelativeLayout mLeaderBoardRl;
+
+    private Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +167,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mProfileRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
                   mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));*/
 
-                  loadFragment(new NotificationInboxFragment());
+                  loadFragment(mCurrentFragment = new NotificationInboxFragment());
                   break;
 
               case R.id.home_rl_feed:
@@ -194,7 +189,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mNotificationRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
                   mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));*/
 
-                  loadFragment(new TournamentFragment());
+                  loadFragment(mCurrentFragment = new TournamentFragment());
                   break;
 
               case R.id.home_rl_profile:
@@ -220,7 +215,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                       navigateToLogIn();
                       return;
                   }
-                  loadFragment(new ProfileFragment());
+                  loadFragment(mCurrentFragment = new ProfileFragment());
                   break;
 
               case R.id.home_rl_leaderboard:
@@ -242,7 +237,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mNotificationRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
                   mHomeRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));*/
 
-                  loadFragment(new LBLandingFragment());
+                  loadFragment(mCurrentFragment = new LBLandingFragment());
                   break;
           }
     }
@@ -318,5 +313,24 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     @Override
     public void onFailedGetUpdateUserInfo(String message) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(null != mCurrentFragment
+                && mCurrentFragment instanceof LBLandingFragment
+                && ((LBLandingFragment) mCurrentFragment).onBack()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if(KeyEvent.KEYCODE_BACK == keyCode) {
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 }
