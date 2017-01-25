@@ -13,4 +13,5 @@ public interface LBLandingPresenter {
     void onFuzzyLbClick(Bundle bundle);
 
     void sortLeaderBoardList(Integer sortBy);
+
 }

@@ -107,6 +107,7 @@ public class LBLandingModelImpl implements LBLandingModel {
 
     }
 
+
     private void getLbSummary() {
         MyWebService.getInstance().getLBLandingSummary(mSportsId, mGroupId, mChallengeId, mTourId).enqueue(
                 new NostragamusCallBack<LBLandingResponse>() {

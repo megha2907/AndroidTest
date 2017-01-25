@@ -45,7 +45,6 @@
         android:id="@+id/feed_row_ll_tour_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/feed_row_space"
         android:orientation="vertical" />
 
 </RelativeLayout>

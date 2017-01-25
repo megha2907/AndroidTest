@@ -41,6 +41,7 @@ public class LBLandingPresenterImpl implements LBLandingPresenter, LBLandingMode
         mLbLandingModel.sortLeaderBoard(sortBy);
     }
 
+
     private void getLeaderBoardSummary() {
         mLbLandingView.showProgressbar();
         mLbLandingModel.getLeaderBoardSummary(null);

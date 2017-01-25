@@ -66,14 +66,14 @@
                 android:layout_marginRight="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_toLeftOf="@+id/lb_landing_spinner_rl"
-                app:cardBackgroundColor="@color/search_bar_stroke">
+                app:cardBackgroundColor="@color/search_bar_stroke"
+                app:cardElevation="@dimen/dp_6">
 
                 <RelativeLayout
                     android:id="@+id/lb_landing_rl_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp_1"
-                    android:background="@color/search_bar">
+                   >
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/fuzzy_players_tv_search"

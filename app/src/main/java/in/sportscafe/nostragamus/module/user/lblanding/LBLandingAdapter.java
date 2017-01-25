@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
@@ -39,6 +40,10 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         LbLanding lbLandingDto = getItem(position);
+
+        if (mLbLandingType== Constants.LBLandingType.SPORT){
+            holder.ivImage.setAlpha(0.1F);
+        }
 
         holder.ivImage.setImageUrl(lbLandingDto.getImgUrl());
 
