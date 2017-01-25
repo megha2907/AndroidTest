@@ -8,5 +8,7 @@ import com.jeeva.android.InAppView;
 
 public interface LBLandingView extends InAppView {
 
+    void sortLeaderBoards();
+
     void initMyPosition(LBLandingSummary lbSummary);
 }

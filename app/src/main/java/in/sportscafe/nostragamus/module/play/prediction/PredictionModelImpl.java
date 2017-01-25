@@ -63,6 +63,12 @@ public class PredictionModelImpl implements PredictionModel,
 
     private Question mTopQuestion;
 
+    private String majorityAnswer;
+
+    private String minorityAnswer;
+
+    private Boolean isMinorityOption=false;
+
     private boolean mNeitherOptionAvailable = false;
 
     public PredictionModelImpl(OnPredictionModelListener predictionModelListener) {
@@ -199,6 +205,15 @@ public class PredictionModelImpl implements PredictionModel,
                         List<AudiencePoll> audiencePoll = response.body().getAudiencePoll();
                         String answer1Percentage = audiencePoll.get(0).getAnswerPercentage();
                         String answer2Percentage = audiencePoll.get(1).getAnswerPercentage();
+
+                        if (Integer.valueOf(answer1Percentage) > Integer.valueOf(answer2Percentage)){
+                            majorityAnswer = mTopQuestion.getQuestionOption1();
+                            minorityAnswer = mTopQuestion.getQuestionOption2();
+                        }else {
+                            majorityAnswer = mTopQuestion.getQuestionOption2();
+                            minorityAnswer = mTopQuestion.getQuestionOption1();
+                        }
+
                         mPredictionAdapter.updateAudiencePollPowerUp(answer1Percentage, answer2Percentage);
                         mPredictionAdapter.notifyDataSetChanged();
                         mPredictionModelListener.onNegativePowerUpApplied();
@@ -256,6 +271,7 @@ public class PredictionModelImpl implements PredictionModel,
         } else if(dataObject.getPowerUpId().equalsIgnoreCase("player_poll")) {
 
             NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() - 1);
+
         }
         else if(dataObject.getPowerUpId().equalsIgnoreCase("no_negs")){
 
@@ -266,17 +282,30 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void onLeftSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, 1);
+
+        if (null != majorityAnswer){
+            if (!majorityAnswer.equals(dataObject.getQuestionOption1())){
+                isMinorityOption = true;
+            }
+        }
+        saveSinglePrediction(dataObject, 1,isMinorityOption);
     }
 
     @Override
     public void onRightSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, 2);
+
+        if (null != majorityAnswer){
+            if (!majorityAnswer.equals(dataObject.getQuestionOption2())){
+                isMinorityOption = true;
+            }
+        }
+
+        saveSinglePrediction(dataObject, 2,isMinorityOption);
     }
 
     @Override
     public void onTopSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, 0);
+        saveSinglePrediction(dataObject, 0,isMinorityOption);
     }
 
     @Override
@@ -328,13 +357,14 @@ public class PredictionModelImpl implements PredictionModel,
 
     }
 
-    private void saveSinglePrediction(Question question, int answerId) {
+    private void saveSinglePrediction(Question question, int answerId,boolean minorityOption) {
         Answer answer = new Answer (
                 question.getMatchId(),
                 question.getQuestionId(),
                 String.valueOf(answerId),
                 TimeUtils.getCurrentTime(DateFormats.FORMAT_DATE_T_TIME_ZONE, DateFormats.GMT),
-                question.getPowerUpId()
+                question.getPowerUpId(),
+                minorityOption
 
         );
         PredictionDataHandler.getInstance().savePrediction(answer);

@@ -5,6 +5,10 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/lblanding_tv_category_name"
         android:layout_width="wrap_content"
@@ -12,8 +16,36 @@
         android:layout_marginLeft="@dimen/dp_12"
         android:text="@string/sports"
         android:textAllCaps="true"
+        android:layout_marginTop="@dimen/dp_8"
         android:textColor="@color/white_80"
         app:typeface="lato_regular" />
+
+        <ImageButton
+            android:id="@+id/lblanding_ib_right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@color/transparent"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="@dimen/dp_24"
+            android:onClick="onClick"
+            android:padding="@dimen/dp_10"/>
+
+        <ImageButton
+            android:id="@+id/lblanding_ib_left_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:adjustViewBounds="true"
+            android:background="@color/transparent"
+            android:rotation="180"
+            android:layout_marginRight="@dimen/dp_65"
+            android:onClick="onClick"
+            android:padding="@dimen/dp_10"/>
+
+
+    </RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lblanding_rv"
