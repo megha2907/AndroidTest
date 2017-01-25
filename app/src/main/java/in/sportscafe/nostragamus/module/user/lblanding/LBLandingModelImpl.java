@@ -3,6 +3,10 @@ package in.sportscafe.nostragamus.module.user.lblanding;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.jeeva.android.Log;
+
+import java.util.Collections;
+
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -25,6 +29,8 @@ public class LBLandingModelImpl implements LBLandingModel {
     private Integer mTourId;
 
     private OnLBLandingModelListener mLbLandingModelListener;
+
+    public LBLandingSummary mlbSummary;
 
     private boolean mEmptyDone = false;
 
@@ -71,6 +77,36 @@ public class LBLandingModelImpl implements LBLandingModel {
         }
     }
 
+    @Override
+    public void sortLeaderBoard(Integer sortBy) {
+
+        switch (sortBy){
+            case 0:
+                Collections.sort(mlbSummary.getGroups(), LbLanding.LeaderBoardDateComparator);
+                Collections.sort(mlbSummary.getSports(), LbLanding.LeaderBoardDateComparator);
+                Collections.sort(mlbSummary.getChallenges(), LbLanding.LeaderBoardDateComparator);
+                break;
+            case 1:
+                Collections.sort(mlbSummary.getGroups(), LbLanding.LeaderBoardRankComparator);
+                Collections.sort(mlbSummary.getSports(), LbLanding.LeaderBoardRankComparator);
+                Collections.sort(mlbSummary.getChallenges(), LbLanding.LeaderBoardRankComparator);
+                break;
+            case 2:
+                Collections.sort(mlbSummary.getGroups(), LbLanding.LeaderBoardRankChangeComparator);
+                Collections.sort(mlbSummary.getSports(), LbLanding.LeaderBoardRankChangeComparator);
+                Collections.sort(mlbSummary.getChallenges(), LbLanding.LeaderBoardRankChangeComparator);
+                break;
+            case 3:
+                Collections.sort(mlbSummary.getGroups(), LbLanding.LeaderBoardPlayedMatchesComparator);
+                Collections.sort(mlbSummary.getSports(), LbLanding.LeaderBoardPlayedMatchesComparator);
+                Collections.sort(mlbSummary.getChallenges(), LbLanding.LeaderBoardPlayedMatchesComparator);
+                break;
+        }
+
+        mLbLandingModelListener.refreshLeaderBoard(mlbSummary);
+
+    }
+
     private void getLbSummary() {
         MyWebService.getInstance().getLBLandingSummary(mSportsId, mGroupId, mChallengeId, mTourId).enqueue(
                 new NostragamusCallBack<LBLandingResponse>() {
@@ -81,6 +117,7 @@ public class LBLandingModelImpl implements LBLandingModel {
                             return;
                         }
                         if (response.isSuccessful()) {
+                            mlbSummary = response.body().getSummary();
                             mLbLandingModelListener.onGetLBLandingSuccess(response.body().getSummary());
                         } else {
                             mLbLandingModelListener.onGetLBLandingFailed(response.message());
@@ -89,6 +126,8 @@ public class LBLandingModelImpl implements LBLandingModel {
                 }
         );
     }
+
+
 
     public interface OnLBLandingModelListener {
 
@@ -99,5 +138,7 @@ public class LBLandingModelImpl implements LBLandingModel {
         void onNoInternet();
 
         Context getContext();
+
+        void refreshLeaderBoard(LBLandingSummary mlbSummary);
     }
 }

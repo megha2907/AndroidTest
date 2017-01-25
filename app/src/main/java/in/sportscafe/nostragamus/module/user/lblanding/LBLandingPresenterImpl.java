@@ -36,6 +36,11 @@ public class LBLandingPresenterImpl implements LBLandingPresenter, LBLandingMode
         mLbLandingModel.getLeaderBoardSummary(bundle);
     }
 
+    @Override
+    public void sortLeaderBoardList(Integer sortBy) {
+        mLbLandingModel.sortLeaderBoard(sortBy);
+    }
+
     private void getLeaderBoardSummary() {
         mLbLandingView.showProgressbar();
         mLbLandingModel.getLeaderBoardSummary(null);
@@ -45,6 +50,7 @@ public class LBLandingPresenterImpl implements LBLandingPresenter, LBLandingMode
     public void onGetLBLandingSuccess(LBLandingSummary lbSummary) {
         mLbLandingView.dismissProgressbar();
         mLbLandingView.initMyPosition(lbSummary);
+        mLbLandingView.sortLeaderBoards();
     }
 
     @Override
@@ -62,6 +68,11 @@ public class LBLandingPresenterImpl implements LBLandingPresenter, LBLandingMode
     @Override
     public Context getContext() {
         return mLbLandingView.getContext();
+    }
+
+    @Override
+    public void refreshLeaderBoard(LBLandingSummary mlbSummary) {
+        mLbLandingView.initMyPosition(mlbSummary);
     }
 
     private void showAlert(String message) {
