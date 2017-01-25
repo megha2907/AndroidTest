@@ -83,7 +83,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         String month = TimeUtils.getDateStringFromMs(feed.getDate(), "MMM");
         String finalDate = newOrdinalDate + " " +month ;
 
-        holder.mTvDate.setText(finalDate);
+//        holder.mTvDate.setText(finalDate);
         holder.mLlTourParent.removeAllViews();
         for (Tournament tournament : feed.getTournaments()) {
             holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent,position));
@@ -131,7 +131,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             holder.mViewResult.setVisibility(View.GONE);
             holder.mRlMatchPoints.setVisibility(View.GONE);
             holder.mLlMatch.setBackgroundColor(Color.TRANSPARENT);
-            holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_grey_button_with_shadow);
+//            holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_grey_button_with_shadow);
             holder.mTvMatchResult.setGravity(Gravity.LEFT);
             holder.mLlMatch.setVisibility(View.GONE);
         }
@@ -216,7 +216,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
                     float percent = (match.getCorrectCount() * 100.0f) / match.getMatchQuestionCount();
 
-                    if (percent < 40.0){
+                    /*if (percent < 40.0){
                         holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_red_button_with_shadow);
                     }
                     else if (percent >= 40.0 && percent <= 60.0){
@@ -227,7 +227,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                     }
                     else {
                         holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_grey_button_with_shadow);
-                    }
+                    }*/
 
                 }
                 else //show pending results
@@ -254,7 +254,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
                 {
                     holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
                     holder.mBtnPlayMatch.setTag(match);
-                    holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_grey_button_with_shadow);
+//                    holder.mIbfeedDotIcon.setBackgroundResource(R.drawable.round_grey_button_with_shadow);
                 }
 
 
@@ -296,14 +296,14 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         int mPosition;
 
-        TextView mTvDate;
+//        TextView mTvDate;
 
         private LinearLayout mLlTourParent;
 
         public ViewHolder(View V) {
             super(V);
 
-            mTvDate = (TextView) V.findViewById(R.id.feed_row_tv_date);
+//            mTvDate = (TextView) V.findViewById(R.id.feed_row_tv_date);
             mLlTourParent = (LinearLayout) V.findViewById(R.id.feed_row_ll_tour_parent);
         }
     }
@@ -335,8 +335,6 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
     }
 
     private View getResultCommentaryView(ViewGroup parent,Match match) {
-
-
         View resultCommentaryView = getLayoutInflater().inflate(R.layout.inflater_match_result_commentary_row, parent, false);
 
         TextView tvcommentary = (TextView) resultCommentaryView.findViewById(R.id.schedule_row_tv_match_result_commentary);
@@ -423,7 +421,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
 
         RelativeLayout mRlMatchPoints;
 
-        Button mIbfeedDotIcon;
+//        Button mIbfeedDotIcon;
 
         LinearLayout mMatchResultCommentary;
 
@@ -443,10 +441,10 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
             mIvPartyAPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_left);
             mIvPartyBPhoto=(HmImageView) V.findViewById(R.id.swipe_card_iv_right);
             mBtnPlayMatch=(CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
-            mIbfeedDotIcon=(Button) V.findViewById(R.id.feed_dot_icon);
+//            mIbfeedDotIcon=(Button) V.findViewById(R.id.feed_dot_icon);
             mBtnMatchPoints=(CustomButton) V.findViewById(R.id.schedule_row_btn_points);
             mLlMatch = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
-            mViewResult=(View) V.findViewById(R.id.schedule_row_v_party_a);
+            mViewResult=(View) V.findViewById(R.id.schedule_row_v_result_line);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchStageParent = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_match_stage);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);

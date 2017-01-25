@@ -11,6 +11,9 @@ import java.util.List;
 
 public class LBLandingSummary {
 
+    @JsonProperty("total_points")
+    private Integer totalPoints = 0;
+
     @JsonProperty("sports")
     private List<LbLanding> sports = new ArrayList<>();
 
@@ -19,6 +22,16 @@ public class LBLandingSummary {
 
     @JsonProperty("challenges")
     private List<LbLanding> challenges = new ArrayList<>();
+
+    @JsonProperty("total_points")
+    public Integer getTotalPoints() {
+        return totalPoints;
+    }
+
+    @JsonProperty("total_points")
+    public void setTotalPoints(Integer totalPoints) {
+        this.totalPoints = totalPoints;
+    }
 
     @JsonProperty("sports")
     public List<LbLanding> getSports() {

@@ -42,16 +42,17 @@ public class ProfileModelImpl implements ProfileModel , UserInfoModelImpl.OnGetU
     }
 
     private void getLbSummary(final UserInfo updatedUserInfo) {
-        MyWebService.getInstance().getLeaderBoardSummary().enqueue(
-                new NostragamusCallBack<LbSummaryResponse>() {
+        MyWebService.getInstance().getLBLandingSummary(null, null, null, null).enqueue(
+                new NostragamusCallBack<LBLandingResponse>() {
                     @Override
-                    public void onResponse(Call<LbSummaryResponse> call, Response<LbSummaryResponse> response) {
+                    public void onResponse(Call<LBLandingResponse> call, Response<LBLandingResponse> response) {
                         super.onResponse(call, response);
+
                         if(null == mProfileModelListener.getContext()) {
                             return;
                         }
                         if(response.isSuccessful()) {
-                            mProfileModelListener.onGetProfileSuccess(updatedUserInfo, response.body().getLbSummary());
+                            mProfileModelListener.onGetProfileSuccess(updatedUserInfo, response.body().getSummary().getTotalPoints());
                         } else {
                             mProfileModelListener.onGetProfileFailed(response.message());
                         }
@@ -81,7 +82,7 @@ public class ProfileModelImpl implements ProfileModel , UserInfoModelImpl.OnGetU
 
     public interface OnProfileModelListener {
 
-        void onGetProfileSuccess(UserInfo userInfo, LbSummary lbSummary);
+        void onGetProfileSuccess(UserInfo userInfo, Integer totalPoints);
 
         void onGetProfileFailed(String message);
 

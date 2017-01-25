@@ -8,11 +8,11 @@ import android.os.Bundle;
  * Created by deepanshi on 10/5/16.
  */
 
-public interface MyResultsTimelineModel {
+public interface TimelineModel {
 
     void init(Bundle bundle);
 
-    MyResultsTimelineAdapter getAdapter(Context context);
+    TimelineAdapter getAdapter(Context context);
 
     void getFeeds();
 

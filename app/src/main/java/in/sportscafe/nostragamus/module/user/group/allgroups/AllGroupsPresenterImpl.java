@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.user.group.allgroups;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import in.sportscafe.nostragamus.Constants;
@@ -34,8 +35,10 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
 
     @Override
     public void onCreateAllGroupsAdapter() {
-        mAllGroupsView.setAdapter(mAllGroupsModel
-                .getAllGroupsAdapter(mAllGroupsView.getContext()));
+        Context context = mAllGroupsView.getContext();
+        if(null != context) {
+            mAllGroupsView.setAdapter(mAllGroupsModel.getAllGroupsAdapter(context));
+        }
     }
 
     private void onCreateMutualGroupsAdapter() {

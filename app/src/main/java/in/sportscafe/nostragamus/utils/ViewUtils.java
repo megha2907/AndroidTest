@@ -2,12 +2,14 @@ package in.sportscafe.nostragamus.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Environment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -174,5 +176,9 @@ public class ViewUtils {
         animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
 //        return animationAdapter;
         return adapter;
+    }
+
+    public static int getColor(Context context, int resColor) {
+        return ContextCompat.getColor(context, resColor);
     }
 }
