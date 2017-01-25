@@ -12,7 +12,7 @@
         android:background="@color/colorMedium"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/tour_row_tv_tour_name"

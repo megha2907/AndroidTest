@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -40,7 +41,7 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
     }
 
     @Override
-    public void onSuccessFeeds(FeedAdapter feedAdapter, int movePosition) {
+    public void onSuccessFeeds(TimelineAdapter feedAdapter, int movePosition) {
         mFeedView.moveAdapterPosition(movePosition);
         mFeedView.dismissSwipeRefresh();
     }

@@ -4,6 +4,7 @@ package in.sportscafe.nostragamus.module.play.myresultstimeline;
  * Created by deepanshi on 10/5/16.
  */
 
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,15 +13,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 
+import static com.google.android.gms.analytics.internal.zzy.w;
+
 /**
  * Created by Jeeva on 15/6/16.
  */
 public class TimelineFragment extends NostragamusFragment implements TimelineView, SwipeRefreshLayout.OnRefreshListener {
+
+    private static final float MAX_ROTATION = 20;
+
+    private float mVisibleHeight;
+
+    private float mHalfVisibleHeight;
+
+    private float mDifference;
 
     private RecyclerView mRcvFeed;
 
@@ -66,6 +80,39 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
 
         this.mRcvFeed.setHasFixedSize(true);
 
+        mRcvFeed.post(new Runnable() {
+            @Override
+            public void run() {
+                mVisibleHeight = findViewById(R.id.content).getMeasuredHeight();
+                mHalfVisibleHeight = getResources().getDimensionPixelSize(R.dimen.dp_150);
+                mDifference = mVisibleHeight - mHalfVisibleHeight;
+            }
+        });
+
+        mRcvFeed.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                View child = null;
+                int[] location = new int[2];
+                int yAxis;
+                float rotation;
+                int childCount = parent.getChildCount();
+                for (int i = 0; i < childCount; i++) {
+                    child = parent.getChildAt(i).findViewById(R.id.schedule_row_ll);
+
+                    if(child.getVisibility() == View.VISIBLE) {
+                        child.setPivotY(child.getMeasuredHeight());
+                        child.getLocationOnScreen(location);
+                        child.setRotationX(rotation = getRotationByY(location[1]));
+
+//                        getRotationWidth(child.getMeasuredWidth(), rotation);
+
+                    }
+                }
+                super.onDraw(c, parent, state);
+            }
+        });
+
         this.myResultsTimelinePresenter = TimelinePresenterImpl.newInstance(this);
         this.myResultsTimelinePresenter.onCreateFeed(getArguments());
     }
@@ -88,6 +135,14 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
     @Override
     public void onRefresh() {
         myResultsTimelinePresenter.onRefresh();
+    }
+
+    private float getRotationByY(int yAxis) {
+        float rotation = MAX_ROTATION * (yAxis - mHalfVisibleHeight) / mDifference;
+        if(rotation < 0) {
+            return 0;
+        }
+        return rotation;
     }
 
 }

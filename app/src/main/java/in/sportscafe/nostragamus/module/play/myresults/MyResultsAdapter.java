@@ -353,10 +353,12 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             tvAnswer.setText("Not Attempted");
             setTextColor(tvAnswer, R.color.tabcolor);
 
-            if (question.getQuestionAnswer() == 1) {
-                tvotheroption.setText(question.getQuestionOption1());
-            } else {
-                tvotheroption.setText(question.getQuestionOption2());
+            if(null != question.getQuestionAnswer()) {
+                if (question.getQuestionAnswer() == 1) {
+                    tvotheroption.setText(question.getQuestionOption1());
+                } else {
+                    tvotheroption.setText(question.getQuestionOption2());
+                }
             }
 
             tvAnswerPoints.setText("---");
