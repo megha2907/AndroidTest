@@ -68,6 +68,7 @@ public class FuzzyLbAdapter extends Adapter<LbLanding, FuzzyLbAdapter.ViewHolder
 
             Intent intent = new Intent(IntentActions.ACTION_FUZZY_LB_CLICK);
             intent.putExtra(BundleKeys.LB_LANDING_DATA, lbLanding);
+            intent.putExtra(BundleKeys.LB_LANDING_KEY, lbLanding.getName());
 
             LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
         }

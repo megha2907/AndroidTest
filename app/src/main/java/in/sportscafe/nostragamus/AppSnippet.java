@@ -258,13 +258,6 @@ public class AppSnippet implements Constants {
         }
         return file;
     }
-    public static void hideSoftKeyBoard(Context context, EditText editText) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
-
-        if(imm.isAcceptingText()) { // verify if the soft keyboard is open
-            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-        }
-    }
 
     public static CharSequence noTrailingwhiteLines(CharSequence text) {
         while (text.charAt(text.length() - 1) == '\n') {
