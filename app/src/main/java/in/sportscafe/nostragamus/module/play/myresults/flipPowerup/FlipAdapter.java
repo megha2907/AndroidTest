@@ -107,7 +107,7 @@ public class FlipAdapter extends Adapter<Match, FlipAdapter.ViewHolder> {
 //                anim.setRepeatMode(ObjectAnimator.REVERSE);
 //                anim.start();
 
-                final int answerId = Integer.parseInt(question.getAnswerId());
+                final int answerId = question.getAnswerId();
                 if (answerId == 1) {
                     tvotheroption.setText(question.getQuestionOption2());
                 } else {
@@ -183,7 +183,7 @@ public class FlipAdapter extends Adapter<Match, FlipAdapter.ViewHolder> {
             powerupUsed.setVisibility(View.VISIBLE);
         }
 
-        int answerId = Integer.parseInt(question.getAnswerId());
+        int answerId = question.getAnswerId();
 
         if (answerId == 0) {
             tvAnswer.setText("Not Attempted");

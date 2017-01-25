@@ -16,7 +16,7 @@
         android:layout_marginLeft="@dimen/dp_12"
         android:text="@string/sports"
         android:textAllCaps="true"
-        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_2"
         android:textColor="@color/white_80"
         app:typeface="lato_regular" />
 

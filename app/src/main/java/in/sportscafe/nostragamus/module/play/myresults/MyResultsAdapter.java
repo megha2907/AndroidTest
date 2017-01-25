@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,8 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     private Boolean isShowFlipOptn = false;
 
     private Boolean isFlipclicked = true;
+
+    private  int answerId;
 
     public MyResultsAdapter(Context context) {
         super(context);
@@ -241,6 +244,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
 
         final TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
+        final TextView tvNeitherAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_neither_answer);
         CustomButton powerupUsed = (CustomButton) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
         RelativeLayout powerup = (RelativeLayout) convertView.findViewById(R.id.my_predictions_row_rl);
         TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
@@ -272,7 +276,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                 anim.setRepeatMode(ObjectAnimator.REVERSE);
                 anim.start();
 
-                final int answerId = Integer.parseInt(question.getAnswerId());
+                final int answerId = question.getAnswerId();
                 if (answerId == 1) {
                     tvotheroption.setText(question.getQuestionOption2());
                 } else {
@@ -347,26 +351,27 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             powerupUsed.setVisibility(View.VISIBLE);
         }
 
-        int answerId = Integer.parseInt(question.getAnswerId());
 
-        if (answerId == 0) {
-            tvAnswer.setText("Not Attempted");
-            setTextColor(tvAnswer, R.color.tabcolor);
+        answerId = question.getAnswerId();
 
-            if (question.getQuestionAnswer() == 1) {
-                tvotheroption.setText(question.getQuestionOption1());
+            if (answerId == 0) {
+                tvAnswer.setText("Not Attempted");
+                setTextColor(tvAnswer, R.color.tabcolor);
+//                if (answerId== 1) {
+//                    tvotheroption.setText(question.getQuestionOption1());
+//                } else {
+//                    tvotheroption.setText(question.getQuestionOption2());
+//                }
+                tvAnswerPoints.setText("---");
+
             } else {
-                tvotheroption.setText(question.getQuestionOption2());
-            }
-
-            tvAnswerPoints.setText("---");
-
-        } else {
-
-            if (answerId == 1) {
-                tvAnswer.setText(question.getQuestionOption1());
-            } else {
-                tvAnswer.setText(question.getQuestionOption2());
+                if (answerId == 1) {
+                    tvAnswer.setText(question.getQuestionOption1());
+                } else if (answerId == 3) {
+                    tvAnswer.setText(question.getQuestionOption3());
+                } else {
+                    tvAnswer.setText(question.getQuestionOption2());
+                }
             }
 
 
@@ -374,9 +379,6 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                 setTextColor(tvAnswer, R.color.white);
             }
             else if (answerId == question.getQuestionAnswer()) {
-
-                Log.i("answer","correct answer");
-
                 //if your answer = correct answer
                 setTextColor(tvAnswer, R.color.greencolor);
                 tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
@@ -386,6 +388,10 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
                 if (question.getQuestionAnswer() == 1) {
                     tvotheroption.setText(question.getQuestionOption2());
                     setTextColor(tvotheroption, R.color.textcolorlight);
+                }else if (question.getQuestionAnswer()==3){
+                    tvNeitherAnswer.setVisibility(View.VISIBLE);
+                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    setTextColor(tvNeitherAnswer, R.color.greencolor);
                 } else {
                     tvotheroption.setText(question.getQuestionOption1());
                     setTextColor(tvotheroption, R.color.textcolorlight);
@@ -424,14 +430,18 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
                 if (question.getQuestionAnswer() == 1) {
                     tvotheroption.setText(question.getQuestionOption1());
-                } else {
+                }else if (question.getQuestionAnswer()==3){
+                    tvNeitherAnswer.setVisibility(View.VISIBLE);
+                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    setTextColor(tvNeitherAnswer, R.color.tabcolor);
+                }else {
                     tvotheroption.setText(question.getQuestionOption2());
                 }
 
             }
 
 
-        }
+
 
         return convertView;
     }

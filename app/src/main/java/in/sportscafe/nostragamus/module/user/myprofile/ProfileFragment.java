@@ -111,11 +111,6 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     private void setClickListeners() {
         findViewById(R.id.profile_btn_edit).setOnClickListener(this);
         findViewById(R.id.profile_btn_logout).setOnClickListener(this);
-        //findViewById(R.id.profile_groups_parent).setOnClickListener(this);
-//        findViewById(R.id.profile_ll_points_parent).setOnClickListener(this);
-        //findViewById(R.id.profile_ll_powerups_parent).setOnClickListener(this);
-        //findViewById(R.id.profile_ll_sports_followed_parent).setOnClickListener(this);
-        //findViewById(R.id.profile_ll_badge_parent).setOnClickListener(this);
         findViewById(R.id.profile_iv_image).setOnClickListener(this);
         findViewById(R.id.join_grp_btn).setOnClickListener(this);
     }
@@ -137,24 +132,18 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     @Override
     public void setSportsFollowedCount(int sportsFollowedCount) {
-//        TextView tvsports=(TextView) findViewById(R.id.profile_tv_sports_folld);
-//        tvsports.setText(String.valueOf(sportsFollowedCount));
         sportsFollowed = String.valueOf(sportsFollowedCount);
 
     }
 
     @Override
     public void setGroupsCount(int GroupsCount) {
-//        TextView tvGroup=(TextView) findViewById(R.id.profile_number_of_groups);
-//        tvGroup.setText(String.valueOf(GroupsCount));
         groupsCount = String.valueOf(GroupsCount);
     }
 
 
     @Override
     public void setPowerUpsCount(int PowerUpsCount) {
-//        TextView tvPowerUp=(TextView) findViewById(R.id.profile_tv_powerups);
-//        tvPowerUp.setText(String.valueOf(PowerUpsCount));
         powerUpsCount = String.valueOf(PowerUpsCount);
     }
 
