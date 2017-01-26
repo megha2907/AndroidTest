@@ -22,7 +22,9 @@ import com.jeeva.android.Log;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
+import static android.R.attr.rotation;
 import static com.google.android.gms.analytics.internal.zzy.w;
 
 /**
@@ -114,7 +116,6 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
                 View child = null;
                 int[] location = new int[2];
                 int yAxis;
-                float rotation;
                 int childCount = parent.getChildCount();
                 for (int i = 0; i < childCount; i++) {
                     child = parent.getChildAt(i).findViewById(R.id.schedule_row_ll);
@@ -122,10 +123,7 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
                     if(child.getVisibility() == View.VISIBLE) {
                         child.setPivotY(child.getMeasuredHeight());
                         child.getLocationOnScreen(location);
-                        child.setRotationX(rotation = getRotationByY(location[1]));
-
-//                        getRotationWidth(child.getMeasuredWidth(), rotation);
-
+                        child.setRotationX(getRotationByY(location[1]));
                     }
                 }
                 super.onDraw(c, parent, state);
@@ -138,7 +136,7 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
 
     @Override
     public void setAdapter(TimelineAdapter myResultsTimelineAdapter) {
-        mRcvFeed.setAdapter(myResultsTimelineAdapter);
+        mRcvFeed.setAdapter(ViewUtils.getAnimationAdapter(myResultsTimelineAdapter));
     }
 
     @Override

@@ -79,7 +79,7 @@ public class TournamentFeedFragment extends NostragamusFragment implements Tourn
 
     @Override
     public void setAdapter(TournamentFeedAdapter tournamentFeedAdapter) {
-        mRcvTournamentFeed.setAdapter(ViewUtils.getAnimationAdapter(tournamentFeedAdapter));
+        mRcvTournamentFeed.setAdapter(tournamentFeedAdapter);
     }
 
     @Override

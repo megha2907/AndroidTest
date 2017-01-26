@@ -50,7 +50,7 @@ public class PowerUpFragment extends NostragamusFragment implements PowerUpView{
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        this.mRvPowerUp.setAdapter(ViewUtils.getAnimationAdapter(adapter));
+        this.mRvPowerUp.setAdapter(adapter);
     }
 
 }

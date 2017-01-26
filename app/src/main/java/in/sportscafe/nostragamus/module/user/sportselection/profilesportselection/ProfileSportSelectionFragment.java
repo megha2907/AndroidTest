@@ -54,7 +54,7 @@ public class ProfileSportSelectionFragment extends NostragamusFragment implement
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        this.mRvSportSelection.setAdapter(ViewUtils.getAnimationAdapter(adapter));
+        this.mRvSportSelection.setAdapter(adapter);
     }
 
     @Override

@@ -50,7 +50,7 @@ public class BadgeFragment  extends NostragamusFragment implements BadgeView {
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        this.mRvBadge.setAdapter(ViewUtils.getAnimationAdapter(adapter));
+        this.mRvBadge.setAdapter(adapter);
     }
 
     @Override
