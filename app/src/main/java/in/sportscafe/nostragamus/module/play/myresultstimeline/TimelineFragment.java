@@ -17,6 +17,8 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
@@ -76,6 +78,22 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
                 myResultsTimelinePresenter.onTimelineScroll(mLinearLayoutManager.findFirstVisibleItemPosition(),
                         mLinearLayoutManager.getChildCount(), mLinearLayoutManager.getItemCount());
             }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        Log.d("TimelineFragment", "The RecyclerView is not scrolling");
+                        break;
+                    case RecyclerView.SCROLL_STATE_DRAGGING:
+                        Log.d("TimelineFragment", "Scrolling now");
+                        break;
+                    case RecyclerView.SCROLL_STATE_SETTLING:
+                        Log.d("TimelineFragment", "Scroll Settling");
+                        break;
+                }
+            }
         });
 
         this.mRcvFeed.setHasFixedSize(true);
@@ -92,6 +110,7 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
         mRcvFeed.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+
                 View child = null;
                 int[] location = new int[2];
                 int yAxis;
