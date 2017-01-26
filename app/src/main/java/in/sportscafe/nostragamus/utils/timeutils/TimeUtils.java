@@ -75,26 +75,26 @@ public class TimeUtils {
         if (daysDifference <= 0) {
             long[] splitTime = getTimeFromLongValue(milliSecondDiff);
             if (splitTime[0] > 0) {
-                return new TimeAgo(splitTime[0], TimeUnit.HOUR);
+                return new TimeAgo(milliSecondDiff, splitTime[0], TimeUnit.HOUR);
             } else if (splitTime[1] > 0) {
-                return new TimeAgo(splitTime[1], TimeUnit.MINUTE);
+                return new TimeAgo(milliSecondDiff, splitTime[1], TimeUnit.MINUTE);
             } else if (splitTime[2] > 0) {
-                return new TimeAgo(splitTime[2], TimeUnit.SECOND);
+                return new TimeAgo(milliSecondDiff, splitTime[2], TimeUnit.SECOND);
             } else {
-                return new TimeAgo(splitTime[3], TimeUnit.MILLISECOND);
+                return new TimeAgo(milliSecondDiff, splitTime[3], TimeUnit.MILLISECOND);
             }
         } else {
             if (daysDifference < 7) {
-                return new TimeAgo(daysDifference, TimeUnit.DAY);
+                return new TimeAgo(milliSecondDiff, daysDifference, TimeUnit.DAY);
             } else if (daysDifference < 30) {
-                return new TimeAgo(daysDifference / 7, TimeUnit.WEEK);
+                return new TimeAgo(milliSecondDiff, daysDifference / 7, TimeUnit.WEEK);
             }
 
             int monthsDifference = ((int) daysDifference / 30);
             if (monthsDifference < 12) {
-                return new TimeAgo(monthsDifference, TimeUnit.MONTH);
+                return new TimeAgo(milliSecondDiff, monthsDifference, TimeUnit.MONTH);
             } else {
-                return new TimeAgo(findYearDiff(startTime, endTime), TimeUnit.YEAR);
+                return new TimeAgo(milliSecondDiff, findYearDiff(startTime, endTime), TimeUnit.YEAR);
             }
         }
     }

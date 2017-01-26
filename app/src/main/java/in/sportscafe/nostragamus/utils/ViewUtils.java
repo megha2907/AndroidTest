@@ -174,8 +174,8 @@ public class ViewUtils {
         animationAdapter.setFirstOnly(true);
         animationAdapter.setDuration(750);
         animationAdapter.setInterpolator(new DecelerateInterpolator(1f));
-//        return animationAdapter;
-        return adapter;
+        return animationAdapter;
+//        return adapter;
     }
 
     public static int getColor(Context context, int resColor) {

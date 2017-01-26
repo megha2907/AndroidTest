@@ -48,6 +48,8 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
  */
 public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> {
 
+    private static final long ONE_DAY_IN_MS = 60 * 60 * 1000;
+
     private static final String COMMENTARY = "commentary";
 
     private List<Match> mMyResultList = new ArrayList<>();
@@ -145,7 +147,6 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 if(TextUtils.isEmpty(result)) {
                     if(match.getisAttempted()) { // Waiting for results
                         holder.mLlResultWait.setVisibility(View.VISIBLE);
-                        holder.mVResultLine.setVisibility(View.VISIBLE);
                         holder.mLlResultWait.setTag(match);
                     } else if(isMatchStarted) { // You cannot play the match as the match already started
                         holder.mVResultLine.setVisibility(View.VISIBLE);
@@ -154,6 +155,11 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                     } else { // You can now play the match
                         holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
                         holder.mBtnPlayMatch.setTag(match);
+
+                        if(timeAgo.totalDiff < ONE_DAY_IN_MS) {
+                            holder.mTvExpiresIn.setVisibility(View.VISIBLE);
+                            holder.mTvExpiresIn.setText("Expires in " + TimeUtils.convertTimeAgoToDefaultString(timeAgo));
+                        }
                     }
                 } else {
                     holder.mTvMatchResult.setVisibility(View.VISIBLE);
@@ -232,6 +238,10 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
         TextView mTvMatchStage;
 
+        TextView mTvStartTime;
+
+        TextView mTvExpiresIn;
+
         TextView mTvPartyAName;
 
         TextView mTvPartyAScore;
@@ -247,8 +257,6 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         TextView mTvInfo;
 
         LinearLayout mLlResultWait;
-
-        TextView mTvStartTime;
 
         HmImageView mIvPartyAPhoto;
 
@@ -271,12 +279,13 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
             mTvDate = (TextView) V.findViewById(R.id.schedule_row_tv_date);
             mTvMatchStage = (TextView) V.findViewById(R.id.schedule_row_tv_match_stage);
+            mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_match_time);
+            mTvExpiresIn = (TextView) V.findViewById(R.id.schedule_row_tv_expires_in);
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
             mIvPartyAPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_left);
             mIvPartyBPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_right);
             mTvMatchResult = (TextView) V.findViewById(R.id.schedule_row_tv_match_result);
-            mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_match_time);
             mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
             mTvInfo = (TextView) V.findViewById(R.id.schedule_row_tv_info);
             mLlResultWait = (LinearLayout) V.findViewById(R.id.schedule_row_ll_waiting_for_result);

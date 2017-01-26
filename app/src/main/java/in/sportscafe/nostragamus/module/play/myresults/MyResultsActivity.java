@@ -225,7 +225,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void setAdapter(MyResultsAdapter myResultsAdapter) {
-        mRvMyResults.setAdapter(ViewUtils.getAnimationAdapter(myResultsAdapter));
+        mRvMyResults.setAdapter(myResultsAdapter);
     }
 
     public void onBack(View view) {

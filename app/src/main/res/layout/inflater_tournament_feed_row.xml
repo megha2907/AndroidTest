@@ -84,7 +84,7 @@
             android:background="@drawable/tournament_ready_btn_bg"
             android:gravity="center"
             android:onClick="onClick"
-            android:paddingTop="@dimen/dp_7"
+            android:paddingBottom="@dimen/dp_2"
             android:text="READY"
             android:textAlignment="gravity"
             android:textAllCaps="false"
