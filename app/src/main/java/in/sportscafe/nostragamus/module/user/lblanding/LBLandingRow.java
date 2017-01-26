@@ -73,16 +73,16 @@ public class LBLandingRow extends LinearLayout implements View.OnClickListener {
     private void updateArrowState() {
         int position = mLayoutManager.findFirstCompletelyVisibleItemPosition();
         if (position == 0) {
-            mLeftArrow.setBackgroundResource(R.drawable.leaderboard_grey_arrow_icon);
+            mLeftArrow.setImageResource(R.drawable.leaderboard_grey_arrow_icon);
         } else if(position > 0) {
-            mLeftArrow.setBackgroundResource(R.drawable.leaderboard_white_arrow_icon);
+            mLeftArrow.setImageResource(R.drawable.leaderboard_white_arrow_icon);
         }
 
         position = mLayoutManager.findLastCompletelyVisibleItemPosition() + 1;
         if (position == mLbLandingAdapter.getItemCount()) {
-            mRightArrow.setBackgroundResource(R.drawable.leaderboard_grey_arrow_icon);
+            mRightArrow.setImageResource(R.drawable.leaderboard_grey_arrow_icon);
         } else if(position < mLbLandingAdapter.getItemCount()) {
-            mRightArrow.setBackgroundResource(R.drawable.leaderboard_white_arrow_icon);
+            mRightArrow.setImageResource(R.drawable.leaderboard_white_arrow_icon);
         }
     }
 

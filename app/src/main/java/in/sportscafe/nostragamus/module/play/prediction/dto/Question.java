@@ -46,7 +46,7 @@ public class Question implements Serializable {
     private Integer questionAnswer;
 
     @JsonProperty("answer")
-    private String answerId;
+    private Integer answerId;
 
     @JsonProperty("question_value")
     private String questionValue;
@@ -258,7 +258,7 @@ public class Question implements Serializable {
      * @return The answerId
      */
     @JsonProperty("answer")
-    public String getAnswerId() {
+    public Integer getAnswerId() {
         return answerId;
     }
 
@@ -266,7 +266,7 @@ public class Question implements Serializable {
      * @param answerId The answer
      */
     @JsonProperty("answer")
-    public void setAnswerId(String answerId) {
+    public void setAnswerId(Integer answerId) {
         this.answerId = answerId;
     }
 
