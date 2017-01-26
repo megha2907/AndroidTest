@@ -50,7 +50,7 @@
     <color name="ready_btn_color">#186AA2</color>
     <color name="tournament_divider_color">#202020</color>
     <color name="search_bar">#101010</color>
-    <color name="search_bar_stroke">#252525</color>
+    <color name="search_bar_stroke">#202020</color>
 
 
 

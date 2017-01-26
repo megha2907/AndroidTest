@@ -164,6 +164,7 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
                     LBLandingType.SPORT,
                     true
             );
+
         }
 
         lbLandingList = lbSummary.getGroups();

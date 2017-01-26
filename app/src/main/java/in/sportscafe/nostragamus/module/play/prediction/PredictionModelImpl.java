@@ -305,7 +305,7 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void onTopSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, 0,isMinorityOption);
+        saveSinglePrediction(dataObject, 3,isMinorityOption);
     }
 
     @Override

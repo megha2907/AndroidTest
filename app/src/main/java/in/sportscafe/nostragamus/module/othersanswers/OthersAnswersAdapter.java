@@ -309,7 +309,7 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
             powerupUsed.setVisibility(View.VISIBLE);
         }
 
-        int answerId = Integer.parseInt(question.getAnswerId());
+        int answerId = question.getAnswerId();
 
         if (answerId == 0) {
             tvAnswer.setText("Not Attempted");
