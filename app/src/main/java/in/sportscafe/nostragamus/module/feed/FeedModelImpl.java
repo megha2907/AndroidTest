@@ -96,9 +96,9 @@ public class FeedModelImpl implements FeedModel {
     }
 
     private void handleMatches(List<Match> matchList) {
-        List<Feed> feedList = getFeedList(matchList);
-        for (Feed feed : feedList) {
-//            mFeedAdapter.add(feed);
+        List<Match> feedList = matchList;
+        for (Match feed : feedList) {
+            mFeedAdapter.add(feed);
         }
 
         mFeedModelListener.onSuccessFeeds(mFeedAdapter, mClosestDatePosition);
