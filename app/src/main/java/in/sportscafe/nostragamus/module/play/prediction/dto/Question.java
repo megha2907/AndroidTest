@@ -12,7 +12,7 @@ import in.sportscafe.nostragamus.module.othersanswers.AnswerPercentage;
  */
 public class Question implements Serializable {
 
-    @JsonProperty("question_id")
+    @JsonProperty("id")
     private Integer questionId;
 
     @JsonProperty("match_id")
@@ -87,7 +87,7 @@ public class Question implements Serializable {
     /**
      * @return The questionId
      */
-    @JsonProperty("question_id")
+    @JsonProperty("id")
     public Integer getQuestionId() {
         return questionId;
     }
@@ -95,7 +95,7 @@ public class Question implements Serializable {
     /**
      * @param questionId The question_id
      */
-    @JsonProperty("question_id")
+    @JsonProperty("id")
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
     }

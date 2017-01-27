@@ -197,7 +197,7 @@ public class FeedAdapter extends Adapter<Feed, FeedAdapter.ViewHolder> {
         if(match.getMatchQuestionCount() > 0){
 
             //if(answers submitted) then check if results published or not else show play button
-            if(match.getisAttempted()==true){
+            if(match.getisAttempted()==0){
 
 
                 //if(results published) then show Match Points else show pending results

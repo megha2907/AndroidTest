@@ -54,7 +54,6 @@ public class BadgeActivity extends NostragamusActivity implements BadgeView{
 
     public void initToolBar() {
         mtoolbar = (Toolbar) findViewById(R.id.badge_toolbar);
-        mtoolbar.setTitle("Badges");
         setSupportActionBar(mtoolbar);
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
         mtoolbar.setNavigationOnClickListener(

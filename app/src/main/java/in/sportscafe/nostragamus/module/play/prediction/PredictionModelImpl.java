@@ -327,6 +327,7 @@ public class PredictionModelImpl implements PredictionModel,
         }
 
         if(itemsInAdapter == 1 && mTotalCount == 1) {
+
             mPredictionModelListener.onShowingLastQuestion();
         } else if(mTotalCount == 0) {
             mTotalCount = mPredictionAdapter.getCount();

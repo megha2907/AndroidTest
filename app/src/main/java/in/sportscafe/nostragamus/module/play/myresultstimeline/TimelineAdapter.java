@@ -143,29 +143,14 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                     || timeAgo.timeUnit == TimeUnit.SECOND;
 
             if(match.getMatchQuestionCount() > 0) {
-                String result = match.getResult();
-                if(TextUtils.isEmpty(result)) {
-                    if(match.getisAttempted()) { // Waiting for results
-                        holder.mLlResultWait.setVisibility(View.VISIBLE);
-                        holder.mLlResultWait.setTag(match);
-                    } else if(isMatchStarted) { // You cannot play the match as the match already started
-                        holder.mVResultLine.setVisibility(View.VISIBLE);
-                        holder.mTvInfo.setVisibility(View.VISIBLE);
-                        holder.mTvInfo.setText("Opportunity missed at scoring!");
-                    } else { // You can now play the match
-                        holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
-                        holder.mBtnPlayMatch.setTag(match);
 
-                        if(timeAgo.totalDiff < ONE_DAY_IN_MS) {
-                            holder.mTvExpiresIn.setVisibility(View.VISIBLE);
-                            holder.mTvExpiresIn.setText("Expires in " + TimeUtils.convertTimeAgoToDefaultString(timeAgo));
-                        }
-                    }
-                } else {
-                    holder.mTvMatchResult.setVisibility(View.VISIBLE);
-                    holder.mTvMatchResult.setText(result);
+                //if match Result Published
+                if (match.getResultPublished()) {
 
-                    if(match.getisAttempted()) { // Played match result published
+                    //if match Completely Attempted then IsAttempted = 2 else if Partially Attempted then is Attempted =1
+                    //show Match Results
+                    if (match.getisAttempted() == 2 || match.getisAttempted()==1) {
+
                         holder.mRlMatchPoints.setVisibility(View.VISIBLE);
                         holder.mVResultLine.setVisibility(View.VISIBLE);
 
@@ -185,20 +170,91 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                                 holder.mTvPartyAName.setTextColor(whiteSixty);
                             }
                         }
-                    } else { // Not played match result published
+                    }
+
+                    //if match not Attempted then IsAttempted=0
+                    if (match.getisAttempted() == 0) {
+                        // Show Opportunity missed at scoring!
                         holder.mVResultLine.setVisibility(View.VISIBLE);
                         holder.mTvInfo.setVisibility(View.VISIBLE);
                         holder.mTvInfo.setText("Opportunity missed at scoring!");
                     }
-                }
-            } else { // No questions prepared
 
-                if (!isMatchStarted) { // Still the question is not prepared for these matches
-                    holder.mVResultLine.setVisibility(View.VISIBLE);
-                    holder.mTvInfo.setVisibility(View.VISIBLE);
-                    holder.mTvInfo.setText("Games coming up!");
+                }
+                //if Results not published
+                else {
+                    if (match.getisAttempted() == 0 || match.getisAttempted() == 1) {
+                        // show Play button
+                        holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
+                        holder.mBtnPlayMatch.setTag(match);
+                    } else if (match.getisAttempted() == 2) {
+                        //  Waiting for results
+                        holder.mLlResultWait.setVisibility(View.VISIBLE);
+                        holder.mVResultLine.setVisibility(View.VISIBLE);
+                        holder.mLlResultWait.setTag(match);
+                    }else if(isMatchStarted) {
+                        // You cannot play the match as the match already started
+                        holder.mVResultLine.setVisibility(View.VISIBLE);
+                        holder.mTvInfo.setVisibility(View.VISIBLE);
+                        holder.mTvInfo.setText("Opportunity missed at scoring!");
+                    }
+
                 }
             }
+//
+//
+//                String result = match.getResult();
+//                if(TextUtils.isEmpty(result)) {
+//                    if(match.getisAttempted()==0||match.getisAttempted()==1) { // Waiting for results
+//                        holder.mLlResultWait.setVisibility(View.VISIBLE);
+//                        holder.mVResultLine.setVisibility(View.VISIBLE);
+//                        holder.mLlResultWait.setTag(match);
+//                    } else if(isMatchStarted) { // You cannot play the match as the match already started
+//                        holder.mVResultLine.setVisibility(View.VISIBLE);
+//                        holder.mTvInfo.setVisibility(View.VISIBLE);
+//                        holder.mTvInfo.setText("Opportunity missed at scoring!");
+//                    } else { // You can now play the match
+//                        holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
+//                        holder.mBtnPlayMatch.setTag(match);
+//                    }
+//                } else {
+//                    holder.mTvMatchResult.setVisibility(View.VISIBLE);
+//                    holder.mTvMatchResult.setText(result);
+//
+//                    if(match.getisAttempted()==2) { // Played match result published
+//                        holder.mRlMatchPoints.setVisibility(View.VISIBLE);
+//                        holder.mVResultLine.setVisibility(View.VISIBLE);
+//
+//                        holder.mRlMatchPoints.setTag(match);
+//                        holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
+//                        holder.mTvResultCorrectCount.setText("You got " + match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " answers correct");
+//
+//                        Integer winnerPartyId = match.getWinnerPartyId();
+//                        if (null != winnerPartyId) {
+//                            int whiteSixty = ViewUtils.getColor(holder.mTvPartyAName.getContext(), R.color.white_60);
+//                            Typeface latoBold = Typefaces.get(holder.mTvPartyAName.getContext(), "fonts/lato/Lato-Bold.ttf");
+//                            if (winnerPartyId.equals(parties.get(0).getPartyId())) {
+//                                holder.mTvPartyAName.setTypeface(latoBold);
+//                                holder.mTvPartyBName.setTextColor(whiteSixty);
+//                            } else if (winnerPartyId.equals(parties.get(1).getPartyId())) {
+//                                holder.mTvPartyBName.setTypeface(latoBold);
+//                                holder.mTvPartyAName.setTextColor(whiteSixty);
+//                            }
+//                        }
+//                    } else { // Not played match result published
+//                        holder.mVResultLine.setVisibility(View.VISIBLE);
+//                        holder.mTvInfo.setVisibility(View.VISIBLE);
+//                        holder.mTvInfo.setText("Opportunity missed at scoring!");
+//                    }
+//                }
+//            } else { // No questions prepared
+//
+//                if (!isMatchStarted) { // Still the question is not prepared for these matches
+//                    holder.mVResultLine.setVisibility(View.VISIBLE);
+//                    holder.mTvInfo.setVisibility(View.VISIBLE);
+//                    holder.mTvInfo.setText("Games coming up!");
+//                }
+//            }
         }
 
         return scheduleView;

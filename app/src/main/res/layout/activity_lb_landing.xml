@@ -67,7 +67,7 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_toLeftOf="@+id/lb_landing_spinner_rl"
                 app:cardBackgroundColor="@color/search_bar_stroke"
-                app:cardElevation="@dimen/dp_6">
+                app:cardElevation="@dimen/dp_4">
 
                 <RelativeLayout
                     android:id="@+id/lb_landing_rl_search"

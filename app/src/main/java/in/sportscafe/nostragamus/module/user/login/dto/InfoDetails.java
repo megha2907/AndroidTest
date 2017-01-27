@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import in.sportscafe.nostragamus.module.user.badges.Badge;
+
 /**
  * Created by deepanshi on 10/8/16.
  */
@@ -15,7 +17,7 @@ public class InfoDetails {
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
     @JsonProperty("badges")
-    private List<String> badges = new ArrayList<>();
+    private List<Badge> badges = new ArrayList<>();
 
     @JsonProperty("powerups")
     public HashMap<String, Integer> getPowerUps() {
@@ -28,12 +30,12 @@ public class InfoDetails {
     }
 
     @JsonProperty("badges")
-    public List<String> getBadges() {
+    public List<Badge> getBadges() {
         return badges;
     }
 
     @JsonProperty("badges")
-    public void setBadges(List<String> badges) {
+    public void setBadges(List<Badge> badges) {
         this.badges = badges;
     }
 

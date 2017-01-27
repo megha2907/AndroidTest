@@ -307,7 +307,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void hideShuffle() {
-        findViewById(R.id.prediction_btn_shuffle).setVisibility(View.INVISIBLE);
+        findViewById(R.id.prediction_btn_shuffle).setVisibility(View.GONE);
     }
 
     @Override
