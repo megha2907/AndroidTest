@@ -2,15 +2,10 @@ package in.sportscafe.nostragamus.module.user.myprofile;
 
 import android.content.Context;
 
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingResponse;
-import in.sportscafe.nostragamus.module.user.login.RefreshTokenModelImpl;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummaryResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;

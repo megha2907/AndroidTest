@@ -10,11 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.gigamole.navigationtabstrip.NavigationTabStrip;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;

@@ -8,6 +8,7 @@ import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
+import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
 import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
@@ -21,7 +22,6 @@ import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.group.admin.approve.ApproveRequest;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
-import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupSportUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroupResponse;
 import in.sportscafe.nostragamus.module.user.group.members.AddGroupRequest;
@@ -34,16 +34,12 @@ import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupsDetailResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummaryResponse;
-import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.AllSports;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.PreferenceRequest;
-import in.sportscafe.nostragamus.module.user.sportselection.dto.UserSports;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -91,10 +87,6 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.savePreference(preferenceRequest);
     }
 
-    public Call<UserSports> getUserSportsRequest() {
-        return mNostragamusService.getUserSports();
-    }
-
     public Call<MatchesResponse> getMatches(Integer tourId) {
         return mNostragamusService.getMatches(tourId);
     }
@@ -117,10 +109,6 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<ApiResponse> getPostAnswerRequest(Answer answer,Boolean isMatchComplete,Boolean isMinorityOption) {
         return mNostragamusService.saveAnswer(answer,isMatchComplete,isMinorityOption);
-    }
-
-    public Call<GroupsDetailResponse> getGrpInfoRequest() {
-        return mNostragamusService.getGroupDetails();
     }
 
     public Call<JoinGroupResponse> getJoinGroupRequest(String groupCode) {
@@ -156,10 +144,6 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Integer sportsId,Integer groupId,
                                                                  Integer challengeId) {
         return mNostragamusService.getLeaderBoardDetail(sportsId, groupId, challengeId);
-    }
-
-    public Call<ApiResponse> getGrpSportUpdateRequest(GroupSportUpdateRequest request) {
-        return mNostragamusService.updateGroupSport(request);
     }
 
     public Call<ApiResponse> getGrpTournamentUpdateRequest(GroupTournamentUpdateRequest request) {

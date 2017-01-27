@@ -3,7 +3,6 @@ package in.sportscafe.nostragamus.module.user.myprofile;
 import com.jeeva.android.InAppView;
 
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
 
 /**
  * Created by Jeeva on 14/6/16.

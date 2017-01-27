@@ -2,8 +2,6 @@ package in.sportscafe.nostragamus.module.user.lblanding;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
-
 /**
  * Created by Jeeva on 11/7/16.
  */

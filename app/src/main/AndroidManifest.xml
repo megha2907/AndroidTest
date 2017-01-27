@@ -139,10 +139,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="in.sportscafe.nostragamus.module.user.leaderboardsummary.LeaderBoardSummaryActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name="in.sportscafe.nostragamus.module.play.prediction.PredictionActivity"
             android:screenOrientation="portrait" />
         <activity android:name="in.sportscafe.nostragamus.module.play.prediction.AllDoneActivity"
@@ -333,7 +329,7 @@
         <!-- Enable/Disable the test mode -->
         <meta-data
             android:name="io.branch.sdk.TestMode"
-            android:value="false" />
+            android:value="true" />
 
         <!-- Live branch key -->
         <meta-data
