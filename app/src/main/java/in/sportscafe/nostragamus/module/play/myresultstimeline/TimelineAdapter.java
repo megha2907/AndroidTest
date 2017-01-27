@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spannable;
@@ -13,13 +14,14 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
+import com.jeeva.android.widgets.customfont.CustomTextView;
 import com.jeeva.android.widgets.customfont.Typefaces;
 
 import java.util.ArrayList;
@@ -32,7 +34,6 @@ import in.sportscafe.nostragamus.Constants.DateFormats;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.FeedWebView;
-import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.Parties;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
@@ -48,7 +49,7 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
  */
 public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> {
 
-    private static final long ONE_DAY_IN_MS = 60 * 60 * 1000;
+    private static final long ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
     private static final String COMMENTARY = "commentary";
 
@@ -99,7 +100,8 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         View scheduleView = getLayoutInflater().inflate(R.layout.inflater_schedule_row, parent, false);
         ScheduleViewHolder holder = new ScheduleViewHolder(scheduleView);
 
-        String startTime = match.getStartTime();
+//        String startTime = match.getStartTime();
+        String startTime = "2017-01-27T18:00:00.000Z";
         long startTimeMs = TimeUtils.getMillisecondsFromDateString(
                 startTime,
                 DateFormats.FORMAT_DATE_T_TIME_ZONE,
@@ -158,7 +160,8 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
                         if(timeAgo.totalDiff < ONE_DAY_IN_MS) {
                             holder.mTvExpiresIn.setVisibility(View.VISIBLE);
-                            holder.mTvExpiresIn.setText("Expires in " + TimeUtils.convertTimeAgoToDefaultString(timeAgo));
+                            new TimerRunnable(timeAgo.totalDiff, holder.mTvExpiresIn);
+//                            holder.mTvExpiresIn.setText("Expires in " + TimeUtils.convertTimeAgoToDefaultString(timeAgo));
                         }
                     }
                 } else {
@@ -240,7 +243,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
         TextView mTvStartTime;
 
-        TextView mTvExpiresIn;
+        CustomTextView mTvExpiresIn;
 
         TextView mTvPartyAName;
 
@@ -280,7 +283,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             mTvDate = (TextView) V.findViewById(R.id.schedule_row_tv_date);
             mTvMatchStage = (TextView) V.findViewById(R.id.schedule_row_tv_match_stage);
             mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_match_time);
-            mTvExpiresIn = (TextView) V.findViewById(R.id.schedule_row_tv_expires_in);
+            mTvExpiresIn = (CustomTextView) V.findViewById(R.id.schedule_row_tv_expires_in);
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
             mIvPartyAPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_left);
@@ -397,5 +400,51 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             }
         }
     }
+
+    private class TimerRunnable implements Runnable {
+
+        private CustomTextView tvTimerValue;
+
+        private Handler customHandler;
+
+        private long updatedTime;
+
+        private TimerRunnable(long initialTimeInMs, CustomTextView timerValue) {
+            updatedTime = initialTimeInMs + 1000;
+            tvTimerValue = timerValue;
+
+            customHandler = new Handler();
+            customHandler.postDelayed(this, 0);
+        }
+
+        public void run() {
+            if(null == tvTimerValue || null == tvTimerValue.getContext()) {
+                Log.d("TimelineAdapter", null == tvTimerValue ? "textview null" : "textview destroyed");
+                customHandler.removeCallbacks(this);
+                customHandler = null;
+                tvTimerValue = null;
+            } else {
+                updateTimer();
+
+                customHandler.postDelayed(this, 1000);
+            }
+        }
+
+        private void updateTimer() {
+            updatedTime -= 1000;
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            int hours = mins / 60;
+            mins = mins % 60;
+            secs = secs % 60;
+
+            tvTimerValue.setText("Expires in " +
+                    String.format("%02d", hours) + ":"
+                    + String.format("%02d", mins) + ":"
+                    + String.format("%02d", secs)
+            );
+        }
+
+    };
 
 }
