@@ -21,7 +21,9 @@ public interface ProfileView extends InAppView {
 
     void setPowerUpsCount(int PowerUpsCount);
 
-    void setPoints(int points);
+    void setAccuracy(int accuracy);
+
+    void setPoints(Long points);
 
     void initMyPosition(UserInfo userInfo);
 

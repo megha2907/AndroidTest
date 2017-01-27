@@ -353,6 +353,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             if(null != match) {
                 bundle = new Bundle();
                 bundle.putSerializable(BundleKeys.MATCH_LIST, match);
+                bundle.putString(BundleKeys.SPORT_NAME, match.getSportName());
             }
 
             switch (view.getId()) {
