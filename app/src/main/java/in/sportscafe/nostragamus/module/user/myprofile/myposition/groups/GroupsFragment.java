@@ -122,7 +122,7 @@ public class GroupsFragment extends NostragamusFragment implements GroupsLayout.
     @Override
     public void onClickRank(GroupsTourSummary groupsTourSummary) {
         Bundle bundle = new Bundle();
-        bundle.putLong(Constants.BundleKeys.GROUP_ID, 0);
+        bundle.putInt(Constants.BundleKeys.GROUP_ID, 0);
         bundle.putInt(Constants.BundleKeys.SPORT_ID, groupsTourSummary.getTournamentId());
         navigateToPointsActivity(bundle);
     }

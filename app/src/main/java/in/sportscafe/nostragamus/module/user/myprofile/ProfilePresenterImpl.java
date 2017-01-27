@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.myprofile;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
@@ -99,6 +100,12 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
         UserInfo userInfo = mProfileModel.getUserInfo();
         mProfileView.setName(userInfo.getUserNickName());
         mProfileView.setProfileImage(userInfo.getPhoto());
+
+        if (!TextUtils.isEmpty(userInfo.getInfoDetails().getLevel())) {
+            mProfileView.setLevel(userInfo.getInfoDetails().getLevel());
+        }else {
+            mProfileView.setLevel("1");
+        }
         onGetSportsSelectionResult();
         onGetGroupCount();
         onGetPowerUpsCount();

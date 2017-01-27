@@ -139,7 +139,7 @@ public class ChallengesFragment extends NostragamusFragment implements Challenge
     @Override
     public void onClickRank(ChallengesTourSummary tourSummary) {
         Bundle bundle = new Bundle();
-        bundle.putLong(Constants.BundleKeys.GROUP_ID, 0);
+        bundle.putInt(Constants.BundleKeys.GROUP_ID, 0);
         bundle.putInt(Constants.BundleKeys.SPORT_ID, 0);
         bundle.putInt(Constants.BundleKeys.CHALLENGE_ID, tourSummary.getChallengeId());
         navigateToPointsActivity(bundle);

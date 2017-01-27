@@ -75,7 +75,7 @@ public class JoinGroupModelImpl implements JoinGroupModel {
                         if(response.isSuccessful()) {
 
                             JoinGroup joinGroup = response.body().getJoinGroup();
-                            Long groupId = joinGroup.getGroupId();
+                            Integer groupId = joinGroup.getGroupId();
                             mJoinGroupModelListener.onSuccess(groupId);
 
                         } else {
@@ -95,7 +95,7 @@ public class JoinGroupModelImpl implements JoinGroupModel {
 
     public interface OnJoinGroupModelListener {
 
-        void onSuccess(Long GroupId);
+        void onSuccess(Integer GroupId);
 
         void onInvalidGroupCode();
 

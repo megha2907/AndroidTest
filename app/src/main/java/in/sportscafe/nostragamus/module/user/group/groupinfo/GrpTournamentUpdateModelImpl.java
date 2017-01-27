@@ -20,11 +20,11 @@ import retrofit2.Response;
 
 public class GrpTournamentUpdateModelImpl {
 
-    private Long mGroupId;
+    private Integer mGroupId;
 
     private GrpTournamentUpdateModelImpl.OnGrpTournamentUpdateModelListener mGrpTournamentUpdateModelListener;
 
-    public GrpTournamentUpdateModelImpl(Long groupId, GrpTournamentUpdateModelImpl.OnGrpTournamentUpdateModelListener listener) {
+    public GrpTournamentUpdateModelImpl(Integer groupId, GrpTournamentUpdateModelImpl.OnGrpTournamentUpdateModelListener listener) {
         this.mGroupId = groupId;
         this.mGrpTournamentUpdateModelListener = listener;
     }
@@ -66,7 +66,7 @@ public class GrpTournamentUpdateModelImpl {
             followedtournaments.add(allTournamentsMap.get(TournamentId));
         }
 
-        Map<Long, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
+        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
         grpInfoMap.get(mGroupId).setFollowedTournaments(followedtournaments);
         NostragamusDataHandler.getInstance().setGrpInfoMap(grpInfoMap);
 

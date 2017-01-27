@@ -22,6 +22,8 @@ public interface PlayerProfileView extends InAppView {
 
     void setGroupsCount(int GroupsCount);
 
+    void setLevel(String level);
+
     void setPoints(long points);
 
     void setBadgesCount(int badgesCount,List<Badge> badgeList);

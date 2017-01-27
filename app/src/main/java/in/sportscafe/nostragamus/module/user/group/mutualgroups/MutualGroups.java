@@ -12,7 +12,7 @@ public class MutualGroups implements Serializable {
 
 
     @JsonProperty("group_id")
-    private Long groupId;
+    private Integer groupId;
 
     @JsonProperty("group_name")
     private String groupName;
@@ -27,12 +27,12 @@ public class MutualGroups implements Serializable {
     private Integer tournamentsCount;
 
     @JsonProperty("group_id")
-    public Long getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
     @JsonProperty("group_id")
-    public void setGroupId(Long groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 

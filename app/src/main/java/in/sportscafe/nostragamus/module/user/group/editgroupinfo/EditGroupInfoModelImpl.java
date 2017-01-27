@@ -57,8 +57,8 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
 
     @Override
     public void init(Bundle bundle) {
-        Long groupId = Long.parseLong(bundle.getString(Constants.BundleKeys.GROUP_ID));
-        getGroupSummary(groupId.intValue());
+        Integer groupId = bundle.getInt(Constants.BundleKeys.GROUP_ID);
+        getGroupSummary(groupId);
 
     }
 
@@ -175,7 +175,7 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
     @Override
     public Bundle getGroupIdBundle() {
         Bundle bundle = new Bundle();
-        bundle.putLong(Constants.BundleKeys.GROUP_ID, mGroupInfo.getId());
+        bundle.putInt(Constants.BundleKeys.GROUP_ID, mGroupInfo.getId());
         return bundle;
     }
 

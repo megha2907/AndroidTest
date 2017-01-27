@@ -21,7 +21,7 @@ import retrofit2.Response;
  */
 public class ApproveModelImpl implements ApproveModel, ApproveAdapter.OnApproveOptionListener {
 
-    private Long mGroupId;
+    private Integer mGroupId;
 
     private ApproveAdapter mApproveAdapter;
 
@@ -40,11 +40,11 @@ public class ApproveModelImpl implements ApproveModel, ApproveAdapter.OnApproveO
     }
 
     @Override
-    public ApproveAdapter init(Context context, long groupId, ApproveFragment.OnApproveAcceptedListener listener) {
+    public ApproveAdapter init(Context context, Integer groupId, ApproveFragment.OnApproveAcceptedListener listener) {
         this.mGroupId = groupId;
         this.mApproveAcceptedListener = listener;
         
-        Map<Long, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
+        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
         if(grpInfoMap.containsKey(mGroupId)) {
 
             List<GroupPerson> members = grpInfoMap.get(mGroupId).getMembers();
@@ -114,7 +114,7 @@ public class ApproveModelImpl implements ApproveModel, ApproveAdapter.OnApproveO
     private void handleApproveResponse(int position, String message) {
         GroupPerson groupPerson = mApproveAdapter.getItem(position);
 
-        Map<Long, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
+        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
         List<GroupPerson> members = grpInfoMap.get(mGroupId).getMembers();
         members.remove(groupPerson);
 

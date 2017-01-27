@@ -219,13 +219,13 @@ public class NewGroupModelImpl implements NewGroupModel {
 
                             GroupInfo groupInfo = response.body().getGroupInfo();
 
-                            Map<Long, GroupInfo> grpInfoMap = nostragamusDataHandler.getGrpInfoMap();
+                            Map<Integer, GroupInfo> grpInfoMap = nostragamusDataHandler.getGrpInfoMap();
                             grpInfoMap.put(groupInfo.getId(), groupInfo);
 
                             nostragamusDataHandler.setGrpInfoMap(grpInfoMap);
 
                             Bundle bundle = new Bundle();
-                            bundle.putString(Constants.BundleKeys.GROUP_ID, String.valueOf(groupInfo.getId()));
+                            bundle.putInt(Constants.BundleKeys.GROUP_ID, groupInfo.getId());
                             bundle.putString(Constants.BundleKeys.GROUP_NAME, groupInfo.getName());
                             mNewGroupModelListener.onSuccess(bundle);
                         } else {

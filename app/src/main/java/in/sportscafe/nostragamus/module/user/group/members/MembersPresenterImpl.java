@@ -22,7 +22,7 @@ public class MembersPresenterImpl implements MembersPresenter, MembersModelImpl.
     }
 
     @Override
-    public void onCreateMembers(long groupId) {
+    public void onCreateMembers(Integer groupId) {
         MembersAdapter membersAdapter = mMembersModel.init(mMembersView.getContext(), groupId);
         if(null != membersAdapter) {
             mMembersView.setAdapter(membersAdapter);

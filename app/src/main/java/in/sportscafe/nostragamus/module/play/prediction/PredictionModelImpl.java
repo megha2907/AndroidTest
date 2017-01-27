@@ -71,6 +71,8 @@ public class PredictionModelImpl implements PredictionModel,
 
     private boolean mNeitherOptionAvailable = false;
 
+    private Boolean matchComplete = false;
+
     public PredictionModelImpl(OnPredictionModelListener predictionModelListener) {
         this.mPredictionModelListener = predictionModelListener;
     }
@@ -288,7 +290,7 @@ public class PredictionModelImpl implements PredictionModel,
                 isMinorityOption = true;
             }
         }
-        saveSinglePrediction(dataObject, 1,isMinorityOption);
+        saveSinglePrediction(dataObject, 1,isMinorityOption,matchComplete);
     }
 
     @Override
@@ -300,12 +302,12 @@ public class PredictionModelImpl implements PredictionModel,
             }
         }
 
-        saveSinglePrediction(dataObject, 2,isMinorityOption);
+        saveSinglePrediction(dataObject, 2,isMinorityOption,matchComplete);
     }
 
     @Override
     public void onTopSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, 3,isMinorityOption);
+        saveSinglePrediction(dataObject, 3,isMinorityOption,matchComplete);
     }
 
     @Override
@@ -327,7 +329,7 @@ public class PredictionModelImpl implements PredictionModel,
         }
 
         if(itemsInAdapter == 1 && mTotalCount == 1) {
-
+            matchComplete = true;
             mPredictionModelListener.onShowingLastQuestion();
         } else if(mTotalCount == 0) {
             mTotalCount = mPredictionAdapter.getCount();
@@ -358,21 +360,23 @@ public class PredictionModelImpl implements PredictionModel,
 
     }
 
-    private void saveSinglePrediction(Question question, int answerId,boolean minorityOption) {
+    private void saveSinglePrediction(Question question, int answerId,boolean minorityOption,Boolean matchComplete) {
+
+        Log.i("matchComplete",matchComplete+"");
+
         Answer answer = new Answer (
                 question.getMatchId(),
                 question.getQuestionId(),
                 String.valueOf(answerId),
                 TimeUtils.getCurrentTime(DateFormats.FORMAT_DATE_T_TIME_ZONE, DateFormats.GMT),
-                question.getPowerUpId(),
-                minorityOption
+                question.getPowerUpId()
 
         );
         PredictionDataHandler.getInstance().savePrediction(answer);
-        postAnswerToServer(answer);
+        postAnswerToServer(answer,minorityOption,matchComplete);
     }
 
-    private void postAnswerToServer(Answer answer) {
+    private void postAnswerToServer(Answer answer,boolean minorityOption,Boolean matchComplete) {
         new PostAnswerModelImpl(new PostAnswerModelImpl.PostAnswerModelListener() {
             @Override
             public void onSuccess() {
@@ -386,7 +390,7 @@ public class PredictionModelImpl implements PredictionModel,
                 mPredictionModelListener.onFailedPostAnswerToServer(message);
 
             }
-        }).postAnswer(answer);
+        }).postAnswer(answer,minorityOption,matchComplete);
     }
 //
 //    @Override

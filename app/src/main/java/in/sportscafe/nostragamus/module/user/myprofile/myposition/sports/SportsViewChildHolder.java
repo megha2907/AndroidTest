@@ -71,7 +71,7 @@ public class SportsViewChildHolder extends ChildViewHolder{
                 Bundle bundle = new Bundle();
                 bundle.putString(Constants.BundleKeys.LEADERBOARD_KEY, "sport");
                 bundle.putSerializable(Constants.BundleKeys.TOURNAMENT_SUMMARY,(TourSummary) v.getTag());
-                bundle.putLong(Constants.BundleKeys.GROUP_ID,0);
+                bundle.putInt(Constants.BundleKeys.GROUP_ID,0);
                 bundle.putInt(Constants.BundleKeys.SPORT_ID,tourSummary.getSportId());
                 bundle.putInt(Constants.BundleKeys.CHALLENGE_ID,0);
                 Intent intent =  new Intent(v.getContext(), PointsActivity.class);

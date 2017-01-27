@@ -189,7 +189,7 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(SharedKeys.GRP_INFOS, MyWebService.getInstance().getJsonStringFromObject(grpInfoList));
     }
 
-    public Map<Long, GroupInfo> getGrpInfoMap() {
+    public Map<Integer, GroupInfo> getGrpInfoMap() {
         String grpInfoList = getSharedStringData(SharedKeys.GRP_INFOS);
         if (null == grpInfoList || grpInfoList.isEmpty()) {
             return new HashMap<>();
@@ -205,25 +205,25 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
             grpInfoListObject.add(groupInfo);
         }
 
-        Map<Long, GroupInfo> groupInfoMap = new HashMap<>();
+        Map<Integer, GroupInfo> groupInfoMap = new HashMap<>();
         for (GroupInfo groupInfo : grpInfoListObject) {
             groupInfoMap.put(groupInfo.getId(), groupInfo);
         }
         return groupInfoMap;
     }
 
-    public void setGrpInfoMap(Map<Long, GroupInfo> grpInfoMap) {
+    public void setGrpInfoMap(Map<Integer, GroupInfo> grpInfoMap) {
 
         List<GroupInfo> grpInfoListObject = new ArrayList<>();
-        Set<Long> keys = grpInfoMap.keySet();
-        for (Long key : keys) {
+        Set<Integer> keys = grpInfoMap.keySet();
+        for (Integer key : keys) {
             grpInfoListObject.add(grpInfoMap.get(key));
         }
         setGrpInfoList(grpInfoListObject);
     }
 
     public void addNewGroup(GroupInfo newGroupInfo) {
-        Map<Long, GroupInfo> grpInfoMap = getGrpInfoMap();
+        Map<Integer, GroupInfo> grpInfoMap = getGrpInfoMap();
         grpInfoMap.put(newGroupInfo.getId(), newGroupInfo);
         setGrpInfoMap(grpInfoMap);
     }
@@ -374,8 +374,8 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setMutualGroups(MyWebService.getInstance().getJsonStringFromObject(mutualGroups));
     }
 
-    public Map<Long, AllGroups> getAllGroupsMap() {
-        Map<Long, AllGroups> allGroupsMap = new HashMap<>();
+    public Map<Integer, AllGroups> getAllGroupsMap() {
+        Map<Integer, AllGroups> allGroupsMap = new HashMap<>();
 
         for (AllGroups allGroups : getAllGroups()) {
             allGroupsMap.put(allGroups.getGroupId(), allGroups);

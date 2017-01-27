@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
@@ -39,11 +40,9 @@ public class BadgeAdapter extends Adapter<Badge, BadgeAdapter.ViewHolder> {
 
         Badge badge = getItem(position);
 
-//        String badgeId = badge.getName();
-
         holder.mTvBadgeName.setText(badge.getName());
-        holder.mIvBadge.setBackgroundResource(R.drawable.notification_accuracy_badge);
         holder.mTvBadgeDesc.setText(badge.getDesc());
+        holder.mIvBadge.setImageUrl(badge.getPhoto());
 
 //        switch (badgeId) {
 //            case "accuracy_streak":
@@ -72,14 +71,14 @@ public class BadgeAdapter extends Adapter<Badge, BadgeAdapter.ViewHolder> {
 
         TextView mTvBadgeDesc;
 
-        ImageButton mIvBadge;
+        HmImageView mIvBadge;
 
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
             mTvBadgeName = (TextView) V.findViewById(R.id.badge_tv_name);
             mTvBadgeDesc = (TextView) V.findViewById(R.id.badge_tv_desc);
-            mIvBadge = (ImageButton) V.findViewById(R.id.badge_iv);
+            mIvBadge = (HmImageView) V.findViewById(R.id.badge_iv);
 
         }
 

@@ -14,11 +14,12 @@
         android:layout_alignParentEnd="true">
 
 
-        <ImageButton
+        <com.jeeva.android.widgets.HmImageView
             android:id="@+id/badge_iv"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
             android:background="@android:color/transparent"
+            app:defaultImage="@drawable/placeholder_icon"
             />
 
     <com.jeeva.android.widgets.customfont.CustomTextView

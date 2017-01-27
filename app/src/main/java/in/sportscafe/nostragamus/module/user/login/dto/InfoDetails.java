@@ -19,6 +19,9 @@ public class InfoDetails {
     @JsonProperty("badges")
     private List<Badge> badges = new ArrayList<>();
 
+    @JsonProperty("level")
+    private String level;
+
     @JsonProperty("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps;
@@ -37,6 +40,16 @@ public class InfoDetails {
     @JsonProperty("badges")
     public void setBadges(List<Badge> badges) {
         this.badges = badges;
+    }
+
+    @JsonProperty("level")
+    public String getLevel() {
+        return level;
+    }
+
+    @JsonProperty("level")
+    public void setLevel(String level) {
+        this.level = level;
     }
 
 }

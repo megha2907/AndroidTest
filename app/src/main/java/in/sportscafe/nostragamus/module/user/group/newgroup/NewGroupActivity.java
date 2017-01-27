@@ -124,10 +124,8 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
 
     @Override
     public void setGroupImage(String imageUrl) {
-
         Picasso.with(getApplicationContext()).load(imageUrl)
                 .into(mIvGroupImage);
-
     }
 
     @Override

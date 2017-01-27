@@ -21,16 +21,16 @@ public class PostAnswerModelImpl {
         this.mPostAnswerModelListener = modelListener;
     }
 
-    public void postAnswer(Answer answer) {
+    public void postAnswer(Answer answer,boolean minorityOption,Boolean matchComplete) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            callPostAnswerApi(answer);
+            callPostAnswerApi(answer,minorityOption,matchComplete);
         } else {
             mPostAnswerModelListener.onNoInternet();
         }
     }
 
-    private void callPostAnswerApi(Answer answer) {
-        MyWebService.getInstance().getPostAnswerRequest(answer).enqueue(
+    private void callPostAnswerApi(Answer answer,boolean minorityOption,Boolean matchComplete) {
+        MyWebService.getInstance().getPostAnswerRequest(answer,minorityOption,matchComplete).enqueue(
                 new NostragamusCallBack<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

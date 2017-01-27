@@ -13,6 +13,9 @@ public class Badge {
     @JsonProperty("desc")
     private String desc;
 
+    @JsonProperty("img_url")
+    private String photo;
+
     public Badge() {
     }
 
@@ -39,5 +42,15 @@ public class Badge {
     @JsonProperty("desc")
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    @JsonProperty("img_url")
+    public String getPhoto() {
+        return photo;
+    }
+
+    @JsonProperty("img_url")
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

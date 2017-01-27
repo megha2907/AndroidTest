@@ -5,5 +5,5 @@ package in.sportscafe.nostragamus.module.user.group.admin.approve;
  */
 public interface ApprovePresenter {
 
-    void onCreateApprove(long groupId, ApproveFragment.OnApproveAcceptedListener listener);
+    void onCreateApprove(Integer groupId, ApproveFragment.OnApproveAcceptedListener listener);
 }
