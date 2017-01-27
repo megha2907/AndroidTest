@@ -150,9 +150,14 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         powerUpsCount = String.valueOf(PowerUpsCount);
     }
 
+    @Override
+    public void setAccuracy(int accuracy) {
+        Button tvPoints=(Button) findViewById(R.id.profile_btn_accuracy);
+        tvPoints.setText(String.valueOf(accuracy + "%"));
+    }
 
     @Override
-    public void setPoints(int points) {
+    public void setPoints(Long points) {
         Button tvPoints=(Button) findViewById(R.id.profile_tv_points);
         tvPoints.setText(String.valueOf(points));
     }

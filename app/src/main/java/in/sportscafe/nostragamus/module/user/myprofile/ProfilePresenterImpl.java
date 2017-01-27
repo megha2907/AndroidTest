@@ -90,9 +90,9 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     }
 
     @Override
-    public void onGetProfileSuccess(UserInfo userInfo, Integer totalPoints) {
+    public void onGetProfileSuccess(UserInfo userInfo) {
         mProfileView.dismissProgressbar();
-        mProfileView.setPoints(totalPoints);
+        mProfileView.setPoints(userInfo.getTotalPoints());
         mProfileView.initMyPosition(userInfo);
     }
 
