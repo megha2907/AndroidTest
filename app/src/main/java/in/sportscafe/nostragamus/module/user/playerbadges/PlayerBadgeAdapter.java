@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.customfont.CustomButton;
@@ -71,7 +72,7 @@ public class PlayerBadgeAdapter extends Adapter<String, PlayerBadgeAdapter.ViewH
 
         TextView mTvBadgeDesc;
 
-        CustomButton mIvBadge;
+        ImageButton mIvBadge;
 
 
         public ViewHolder(View V) {
@@ -79,7 +80,7 @@ public class PlayerBadgeAdapter extends Adapter<String, PlayerBadgeAdapter.ViewH
             mMainView = V;
             mTvBadgeName = (TextView) V.findViewById(R.id.badge_tv_name);
             mTvBadgeDesc = (TextView) V.findViewById(R.id.badge_tv_desc);
-            mIvBadge = (CustomButton) V.findViewById(R.id.badge_iv);
+            mIvBadge = (ImageButton) V.findViewById(R.id.badge_iv);
 
         }
 

@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -85,7 +86,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         View tourView = getLayoutInflater().inflate(R.layout.inflater_tour_row, parent, false);
         TourViewHolder holder = new TourViewHolder(tourView);
 
-        holder.mTvTournamentName.setText(tournament.getTournamentName());
+        holder.mLltourView.setVisibility(View.GONE);
 
         holder.mLlScheduleParent.removeAllViews();
         for (Match match : tournament.getMatches()) {
@@ -106,11 +107,14 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
         LinearLayout mLlScheduleParent;
 
+        LinearLayout mLltourView;
+
         public TourViewHolder(View V) {
             super(V);
 
             mTvTournamentName = (TextView) V.findViewById(R.id.tour_row_tv_tour_name);
             mLlScheduleParent = (LinearLayout) V.findViewById(R.id.tour_row_ll_schedule_parent);
+            mLltourView= (LinearLayout) V.findViewById(R.id.tour_row_ll);
 
             V.findViewById(R.id.tour_row_ibtn_options).setOnClickListener(this);
             V.setOnClickListener(this);
@@ -253,6 +257,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
         tvAnswer.setCompoundDrawablePadding(10);
         tvotheroption.setCompoundDrawablePadding(10);
+        tvNeitherAnswer.setCompoundDrawablePadding(10);
 
         if (question.getAnswerPoints() != null) {
 
@@ -328,73 +333,99 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             }
         }
 
-        String powerupused = question.getAnswerPowerUpId();
-        Log.i("powerupused",powerupused);
 
-        if (powerupused.equals("null")) {
-            powerupUsed.setVisibility(View.GONE);
-            powerup.setVisibility(View.GONE);
-        } else if (powerupused.equals("player_poll")) {
-            powerupUsed.setBackgroundResource(R.drawable.powerup_audience_poll);
-            powerupUsed.setVisibility(View.VISIBLE);
-        } else if (powerupused.equals("2x")) {
-            powerupUsed.setBackgroundResource(R.drawable.powerup_icon);
-            powerupUsed.setVisibility(View.VISIBLE);
-        } else if (powerupused.equals("no_negs")) {
-            powerupUsed.setBackgroundResource(R.drawable.powerup_nonegs);
-            powerupUsed.setVisibility(View.VISIBLE);
-        }else if (powerupused.equals("answer_flip")) {
-            powerupUsed.setBackgroundResource(R.drawable.powerup_flip);
-            powerupUsed.setVisibility(View.VISIBLE);
-        } else if (powerupused.equals("match_replay")) {
-            powerupUsed.setBackgroundResource(R.drawable.replay_icon);
-            powerupUsed.setVisibility(View.VISIBLE);
+        if (!TextUtils.isEmpty(question.getAnswerPowerUpId())) {
+
+            String powerupused = question.getAnswerPowerUpId();
+
+            if (powerupused.equals("null")) {
+                powerupUsed.setVisibility(View.GONE);
+                powerup.setVisibility(View.GONE);
+            } else if (powerupused.equals("player_poll")) {
+                powerupUsed.setBackgroundResource(R.drawable.powerup_audience_poll);
+                powerupUsed.setVisibility(View.VISIBLE);
+            } else if (powerupused.equals("2x")) {
+                powerupUsed.setBackgroundResource(R.drawable.powerup_icon);
+                powerupUsed.setVisibility(View.VISIBLE);
+            } else if (powerupused.equals("no_negs")) {
+                powerupUsed.setBackgroundResource(R.drawable.powerup_nonegs);
+                powerupUsed.setVisibility(View.VISIBLE);
+            } else if (powerupused.equals("answer_flip")) {
+                powerupUsed.setBackgroundResource(R.drawable.powerup_flip);
+                powerupUsed.setVisibility(View.VISIBLE);
+            } else if (powerupused.equals("match_replay")) {
+                powerupUsed.setBackgroundResource(R.drawable.replay_icon);
+                powerupUsed.setVisibility(View.VISIBLE);
+            }
         }
 
-
         answerId = question.getAnswerId();
+
+
+        //BEFORE THE RESULT IS PUBLISHED SHOW ANSWERS
+        if (null==question.getQuestionAnswer()) {
+
+            setTextColor(tvAnswer, R.color.white);
 
             if (answerId == 0) {
                 tvAnswer.setText("Not Attempted");
                 setTextColor(tvAnswer, R.color.tabcolor);
-//                if (answerId== 1) {
-//                    tvotheroption.setText(question.getQuestionOption1());
-//                } else {
-//                    tvotheroption.setText(question.getQuestionOption2());
-//                }
                 tvAnswerPoints.setText("---");
 
             } else {
                 if (answerId == 1) {
                     tvAnswer.setText(question.getQuestionOption1());
                 } else if (answerId == 3) {
-                    tvAnswer.setText(question.getQuestionOption3());
+                    tvAnswer.setVisibility(View.GONE);
+                    tvNeitherAnswer.setVisibility(View.VISIBLE);
+                    tvNeitherAnswer.setTextColor(Color.WHITE);
+                    tvNeitherAnswer.setText(question.getQuestionOption3());
                 } else {
                     tvAnswer.setText(question.getQuestionOption2());
                 }
             }
 
+        }
+        // if played match but not attempted Question
+        else if (answerId == 0){
+            tvAnswer.setText("Not Attempted");
+            setTextColor(tvAnswer, R.color.white);
+            tvAnswerPoints.setText("---");
+        }
+        //if your answer = correct answer
+         else if (answerId == question.getQuestionAnswer()) {
 
-            if (null == question.getQuestionAnswer()) {
-                setTextColor(tvAnswer, R.color.white);
-            }
-            else if (answerId == question.getQuestionAnswer()) {
-                //if your answer = correct answer
                 setTextColor(tvAnswer, R.color.greencolor);
                 tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
                 tvotheroption.setVisibility(View.VISIBLE);
                 tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
 
+
+             // IF USER ANSWER = OPTION 1 OR OPTION 2
                 if (question.getQuestionAnswer() == 1) {
+                    tvAnswer.setText(question.getQuestionOption1());
                     tvotheroption.setText(question.getQuestionOption2());
                     setTextColor(tvotheroption, R.color.textcolorlight);
-                }else if (question.getQuestionAnswer()==3){
+                } else {
+                    tvAnswer.setText(question.getQuestionOption2());
+                    tvotheroption.setText(question.getQuestionOption1());
+                    setTextColor(tvotheroption, R.color.textcolorlight);
+                }
+
+
+             // IF USER ANSWER = NEITHER
+                if (answerId==3){
+                    tvAnswer.setVisibility(View.VISIBLE);
+                    tvAnswer.setText(question.getQuestionOption1());
+                    tvotheroption.setText(question.getQuestionOption2());
+                    tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
+                    tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
+                    setTextColor(tvAnswer, R.color.textcolorlight);
+
                     tvNeitherAnswer.setVisibility(View.VISIBLE);
                     tvNeitherAnswer.setText(question.getQuestionOption3());
                     setTextColor(tvNeitherAnswer, R.color.greencolor);
-                } else {
-                    tvotheroption.setText(question.getQuestionOption1());
-                    setTextColor(tvotheroption, R.color.textcolorlight);
+                    tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
                 }
 
             }  // if your answer & other option both are correct
@@ -417,30 +448,40 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
             }  // if your answer is incorrect and other option is correct
             else {
-
-                Log.i("answer","not correct");
-
                 setTextColor(tvAnswer, R.color.tabcolor);
                 tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
-
-
                 tvotheroption.setVisibility(View.VISIBLE);
                 setTextColor(tvotheroption, R.color.textcolorlight);
                 tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
 
+
+            // IF USER ANSWER = OPTION 1 OR OPTION 2
                 if (question.getQuestionAnswer() == 1) {
+                    tvAnswer.setText(question.getQuestionOption2());
                     tvotheroption.setText(question.getQuestionOption1());
-                }else if (question.getQuestionAnswer()==3){
-                    tvNeitherAnswer.setVisibility(View.VISIBLE);
-                    tvNeitherAnswer.setText(question.getQuestionOption3());
-                    setTextColor(tvNeitherAnswer, R.color.tabcolor);
                 }else {
+                    tvAnswer.setText(question.getQuestionOption1());
                     tvotheroption.setText(question.getQuestionOption2());
                 }
 
+            // IF USER ANSWER = NEITHER
+                if (answerId==3){
+                    if (question.getQuestionAnswer() == 1) {
+                        tvotheroption.setText(question.getQuestionOption1());
+                        tvAnswer.setText(question.getQuestionOption2());
+                    }else {
+                        tvotheroption.setText(question.getQuestionOption2());
+                        tvAnswer.setText(question.getQuestionOption1());
+                    }
+                    tvAnswer.setVisibility(View.VISIBLE);
+                    setTextColor(tvAnswer, R.color.textcolorlight);
+                    tvNeitherAnswer.setVisibility(View.VISIBLE);
+                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    setTextColor(tvNeitherAnswer, R.color.tabcolor);
+                    tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
+                }
+
             }
-
-
 
 
         return convertView;

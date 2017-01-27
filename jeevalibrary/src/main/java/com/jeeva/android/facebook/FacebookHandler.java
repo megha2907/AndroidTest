@@ -14,6 +14,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.AppInviteContent;
+import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.AppInviteDialog;
 import com.facebook.share.widget.ShareDialog;
@@ -113,10 +114,12 @@ public class FacebookHandler implements FacebookConstants.Alerts {
         shareDialog.registerCallback(mCallBackManager, new FacebookCallback<Sharer.Result>() {
             @Override
             public void onSuccess(Sharer.Result result) {
+                Log.i("share",result.toString()+"share");
             }
 
             @Override
             public void onCancel() {
+                Log.i("share","cancel"+"share");
             }
 
             @Override
@@ -125,10 +128,14 @@ public class FacebookHandler implements FacebookConstants.Alerts {
         });
 
         if (ShareDialog.canShow(ShareLinkContent.class)) {
-            ShareLinkContent linkContent = new ShareLinkContent.Builder()
+            ShareLinkContent.Builder linkContent = new ShareLinkContent.Builder()
                     .setContentUrl(Uri.parse(contentUrl))
-                    .build();
-            shareDialog.show(linkContent);
+                    .setShareHashtag(new ShareHashtag.Builder()
+                            .setHashtag("#NOSTRAGAMUS")
+                            .build());
+
+            shareDialog.show(linkContent.build());
+
         }
     }
 

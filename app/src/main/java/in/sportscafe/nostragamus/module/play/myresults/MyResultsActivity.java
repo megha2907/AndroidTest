@@ -34,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
 
 import java.io.File;
@@ -178,6 +179,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
         this.mResultsPresenter = MyResultPresenterImpl.newInstance(this);
         this.mResultsPresenter.onCreateMyResults(getIntent().getExtras());
+
 
         Bundle mbundle = new Bundle();
         mbundle = getIntent().getExtras();
