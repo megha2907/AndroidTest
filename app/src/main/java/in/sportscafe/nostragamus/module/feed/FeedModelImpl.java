@@ -106,7 +106,7 @@ public class FeedModelImpl implements FeedModel {
             mFeedAdapter.add(feed);
         }
 
-        mFeedModelListener.onSuccessFeeds(mFeedAdapter, mClosestDatePosition);
+        mFeedModelListener.onSuccessFeeds(mFeedAdapter, mFeedAdapter.getItemCount() - 1);
     }
 
     private List<Feed> getFeedList(List<Match> matchList) {
