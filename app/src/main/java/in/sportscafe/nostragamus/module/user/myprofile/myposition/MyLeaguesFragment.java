@@ -65,7 +65,7 @@ public class MyLeaguesFragment extends NostragamusFragment implements MyGroupPos
             groupSummaryList = new ArrayList<>();
         }
 
-        Map<Long, GroupSummary> grpSummaryMap = new HashMap<>();
+        Map<Integer, GroupSummary> grpSummaryMap = new HashMap<>();
         List<String> grpSportKeys = new ArrayList<>();
         for (GroupSummary groupSummary : groupSummaryList) {
             grpSummaryMap.put(groupSummary.getGroupId(), groupSummary);
@@ -78,7 +78,7 @@ public class MyLeaguesFragment extends NostragamusFragment implements MyGroupPos
         LinearLayout myLeagueParent = (LinearLayout) findViewById(R.id.my_leagues_ll_positions);
 
         GroupSummary groupSummary;
-        Long groupId;
+        Integer groupId;
         for (GroupInfo groupInfo : grpInfoList) {
             groupId = groupInfo.getId();
 
@@ -124,7 +124,7 @@ public class MyLeaguesFragment extends NostragamusFragment implements MyGroupPos
     @Override
     public void onClickRank(GroupsTourSummary tourSummary,GroupSummary groupSummary) {
         Bundle bundle = new Bundle();
-        bundle.putLong(Constants.BundleKeys.GROUP_ID, groupSummary.getGroupId());
+        bundle.putInt(Constants.BundleKeys.GROUP_ID, groupSummary.getGroupId());
         bundle.putInt(Constants.BundleKeys.SPORT_ID, tourSummary.getTournamentId());
 
         navigateToPointsActivity(bundle);
@@ -135,7 +135,7 @@ public class MyLeaguesFragment extends NostragamusFragment implements MyGroupPos
         switch (view.getId()) {
             case R.id.league_row_ibtn_options:
                 Bundle bundle = new Bundle();
-                bundle.putLong(Constants.BundleKeys.GROUP_ID, ((GroupSummary) view.getTag()).getGroupId());
+                bundle.putInt(Constants.BundleKeys.GROUP_ID, ((GroupSummary) view.getTag()).getGroupId());
 
                 navigateToGroupInfo(bundle);
                 break;

@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
@@ -103,6 +105,15 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     }
 
 
+    @Override
+    public void setLevel(String level) {
+        TextView tvLevel = (TextView) findViewById(R.id.profile_tv_level);
+        Button btnLevel = (Button) findViewById(R.id.profile_btn_level);
+        String ordinalLevel = AppSnippet.ordinal(Integer.parseInt(level));
+        tvLevel.setText(ordinalLevel + " level");
+        btnLevel.setText(level);
+
+    }
 
     @Override
     public void setPoints(long points) {

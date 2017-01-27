@@ -53,7 +53,7 @@ public class JoinGroupPresenterImpl implements JoinGroupPresenter, JoinGroupMode
     }
 
     @Override
-    public void onSuccess(Long groupId) {
+    public void onSuccess(Integer groupId) {
         mJoinGroupView.dismissProgressbar();
        // mJoinGroupView.showMessage(Constants.Alerts.JOIN_GROUP_SUCCESS);
         mJoinGroupView.showJoinGroupSuccess(groupId);

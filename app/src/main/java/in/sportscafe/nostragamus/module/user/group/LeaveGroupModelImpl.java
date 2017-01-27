@@ -24,7 +24,7 @@ public class LeaveGroupModelImpl {
         this.mLeaveGroupModelListener = listener;
     }
 
-    public void leaveGroup(boolean amAdmin, Long groupId) {
+    public void leaveGroup(boolean amAdmin, Integer groupId) {
         List<GroupPerson> members = NostragamusDataHandler.getInstance().getGrpInfoMap().get(groupId).getMembers();
         if(members.size() > 1 && amAdmin) {
             int count = 0;

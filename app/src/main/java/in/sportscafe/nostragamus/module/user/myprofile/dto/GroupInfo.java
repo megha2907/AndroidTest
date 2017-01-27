@@ -15,7 +15,7 @@ import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 public class GroupInfo implements Serializable {
 
     @JsonProperty("group_id")
-    private Long id;
+    private Integer id;
 
     @JsonProperty("group_name")
     private String name;
@@ -53,7 +53,7 @@ public class GroupInfo implements Serializable {
     public GroupInfo() {
     }
 
-    public GroupInfo(Long id) {
+    public GroupInfo(Integer id) {
         this.id = id;
     }
 
@@ -63,7 +63,7 @@ public class GroupInfo implements Serializable {
      * The id
      */
     @JsonProperty("group_id")
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -73,7 +73,7 @@ public class GroupInfo implements Serializable {
      * The group_id
      */
     @JsonProperty("group_id")
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

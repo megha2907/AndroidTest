@@ -134,7 +134,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
         Intent intent = new Intent(this, EditGroupInfoActivity.class);
         Bundle mBundleNew = new Bundle();
-        mBundleNew.putString(Constants.BundleKeys.GROUP_ID, mBundle.getString(Constants.BundleKeys.GROUP_ID));
+        mBundleNew.putInt(Constants.BundleKeys.GROUP_ID, mBundle.getInt(Constants.BundleKeys.GROUP_ID));
         mBundleNew.putString(Constants.BundleKeys.GROUP_NAME, mBundle.getString(Constants.BundleKeys.GROUP_NAME));
         intent.putExtras(mBundleNew);
         startActivityForResult(intent, CODE_GROUP_INFO);
@@ -347,19 +347,15 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     private ViewPagerAdapter getAdapter(GroupInfo groupInfo) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        pagerAdapter.addFragment(GroupSelectionFragment.newInstance(String.valueOf(groupInfo.getId()),this),
+        pagerAdapter.addFragment(GroupSelectionFragment.newInstance(groupInfo.getId(),this),
                "\n Tournaments");
 
         if (groupInfo.getMembers().size()==1){
-            pagerAdapter.addFragment(MembersFragment.newInstance(String.valueOf(groupInfo.getId())),
+            pagerAdapter.addFragment(MembersFragment.newInstance(groupInfo.getId()),
                     groupInfo.getMembers().size()+ "\n Member");
         }else {
-            pagerAdapter.addFragment(MembersFragment.newInstance(String.valueOf(groupInfo.getId())),
-                    groupInfo.getMembers().size()+ "\n Members");
+            pagerAdapter.addFragment(MembersFragment.newInstance(groupInfo.getId()), groupInfo.getMembers().size()+ "\n Members");
         }
-
-
-
         return pagerAdapter;
     }
 

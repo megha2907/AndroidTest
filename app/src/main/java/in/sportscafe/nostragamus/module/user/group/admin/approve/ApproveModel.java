@@ -7,5 +7,5 @@ import android.content.Context;
  */
 public interface ApproveModel {
 
-    ApproveAdapter init(Context context, long groupId, ApproveFragment.OnApproveAcceptedListener listener);
+    ApproveAdapter init(Context context, Integer groupId, ApproveFragment.OnApproveAcceptedListener listener);
 }

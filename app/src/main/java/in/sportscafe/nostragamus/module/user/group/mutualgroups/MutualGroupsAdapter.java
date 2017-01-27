@@ -107,7 +107,7 @@ public class MutualGroupsAdapter extends Adapter<MutualGroups, MutualGroupsAdapt
             MutualGroups mutualGroups= getItem(getAdapterPosition());
             Intent intent =  new Intent(mcon, GroupInfoActivity.class);
             Bundle mBundle = new Bundle();
-            mBundle.putString(Constants.BundleKeys.GROUP_ID, String.valueOf(mutualGroups.getGroupId()));
+            mBundle.putInt(Constants.BundleKeys.GROUP_ID, mutualGroups.getGroupId());
             mBundle.putString(Constants.BundleKeys.GROUP_NAME,mutualGroups.getGroupName());
             intent.putExtras(mBundle);
             ((Activity) mcon).startActivityForResult(intent,CODE_GROUP_INFO);

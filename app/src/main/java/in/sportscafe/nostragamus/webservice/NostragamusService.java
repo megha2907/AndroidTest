@@ -102,7 +102,7 @@ public interface NostragamusService {
     Call<Result> uploadImage(@Part MultipartBody.Part file, @Part("filePath") RequestBody filepath, @Part("fileName") RequestBody filename);
 
     @POST("v1/game/users/answer")
-    Call<ApiResponse> saveAnswer(@Body Answer answer);
+    Call<ApiResponse> saveAnswer(@Body Answer answer,@Query("is_match_complete") Boolean isMatchComplete,@Query("is_minority_option") Boolean isMinorityOption);
 
     @PUT("v1/game/users/sports/preference")
     Call<ApiResponse> savePreference(@Body PreferenceRequest request);

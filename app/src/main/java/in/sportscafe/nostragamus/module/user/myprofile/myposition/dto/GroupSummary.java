@@ -12,7 +12,7 @@ import java.util.List;
 public class GroupSummary implements Serializable {
 
     @JsonProperty("group_id")
-    private Long groupId;
+    private Integer groupId;
 
     @JsonProperty("group_name")
     private String groupName;
@@ -26,7 +26,7 @@ public class GroupSummary implements Serializable {
     @JsonProperty("tournaments")
     private List<GroupsTourSummary> tourSummaryList;
 
-    public GroupSummary(Long groupId, String groupName) {
+    public GroupSummary(Integer groupId, String groupName) {
         this.groupId = groupId;
         this.groupName = groupName;
     }
@@ -35,12 +35,12 @@ public class GroupSummary implements Serializable {
     }
 
     @JsonProperty("groupId")
-    public Long getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
     @JsonProperty("groupId")
-    public void setGroupId(Long groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 

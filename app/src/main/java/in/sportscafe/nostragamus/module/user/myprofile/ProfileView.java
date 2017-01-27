@@ -18,6 +18,8 @@ public interface ProfileView extends InAppView {
 
     void setGroupsCount(int GroupsCount);
 
+    void setLevel(String level);
+
     void setPowerUpsCount(int PowerUpsCount);
 
     void setPoints(int points);

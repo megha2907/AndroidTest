@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -137,11 +138,20 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     }
 
+
     @Override
     public void setGroupsCount(int GroupsCount) {
         groupsCount = String.valueOf(GroupsCount);
     }
 
+    @Override
+    public void setLevel(String level) {
+        TextView tvLevel=(TextView) findViewById(R.id.profile_tv_level);
+        Button btnLevel=(Button) findViewById(R.id.profile_btn_level);
+        String ordinalLevel = AppSnippet.ordinal(Integer.parseInt(level));
+        tvLevel.setText(ordinalLevel+" level");
+        btnLevel.setText(level);
+    }
 
     @Override
     public void setPowerUpsCount(int PowerUpsCount) {
@@ -316,10 +326,10 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 //
 //        }
 //
-//        if (badgesCount==0){
-//            badgeCount = "0";
-//        }
-//        badgeCount = String.valueOf(badgesCount);
+        if (badgesCount==0){
+            badgeCount = "0";
+        }
+        badgeCount = String.valueOf(badgesCount);
 
     }
 

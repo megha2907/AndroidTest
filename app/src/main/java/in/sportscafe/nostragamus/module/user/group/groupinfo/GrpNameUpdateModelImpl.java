@@ -18,11 +18,11 @@ import retrofit2.Response;
  */
 public class GrpNameUpdateModelImpl {
 
-    private Long mGroupId;
+    private Integer mGroupId;
 
     private OnGrpNameUpdateModelListener mGrpNameUpdateModelListener;
 
-    public GrpNameUpdateModelImpl(Long groupId, OnGrpNameUpdateModelListener listener) {
+    public GrpNameUpdateModelImpl(Integer groupId, OnGrpNameUpdateModelListener listener) {
         this.mGroupId = groupId;
         this.mGrpNameUpdateModelListener = listener;
     }
@@ -59,7 +59,7 @@ public class GrpNameUpdateModelImpl {
     }
 
     private void handleGrpNameUpdateResponse(String groupName) {
-        Map<Long, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
+        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
         grpInfoMap.get(mGroupId).setName(groupName);
         NostragamusDataHandler.getInstance().setGrpInfoMap(grpInfoMap);
 

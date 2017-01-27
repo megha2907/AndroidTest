@@ -12,7 +12,7 @@ public class GroupsTourSummary extends BaseSummary implements Serializable {
     public GroupsTourSummary() {
     }
 
-    public GroupsTourSummary(Integer tournamentId, String tournamentName, String tournamentImageUrl, Integer rank, Integer rankChange, Integer overallRank, Integer overallRankChange, Long groupId, String groupName,String groupIcon) {
+    public GroupsTourSummary(Integer tournamentId, String tournamentName, String tournamentImageUrl, Integer rank, Integer rankChange, Integer overallRank, Integer overallRankChange, Integer groupId, String groupName,String groupIcon) {
         super(groupName,groupIcon, tournamentId, tournamentName, tournamentImageUrl, rank, rankChange, overallRank, overallRankChange);
         this.groupId = groupId;
         this.groupName = groupName;
@@ -20,7 +20,7 @@ public class GroupsTourSummary extends BaseSummary implements Serializable {
     }
 
     @JsonProperty("group_id")
-    private Long groupId;
+    private Integer groupId;
 
     @JsonProperty("group_name")
     private String groupName;
@@ -29,12 +29,12 @@ public class GroupsTourSummary extends BaseSummary implements Serializable {
     private String groupIcon;
 
     @JsonProperty("group_id")
-    public Long getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
     @JsonProperty("group_id")
-    public void setGroupId(Long groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 

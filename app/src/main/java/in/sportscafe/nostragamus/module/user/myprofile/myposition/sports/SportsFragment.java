@@ -122,7 +122,7 @@ public class SportsFragment extends NostragamusFragment implements SportsLayout.
     @Override
     public void onClickRank(TourSummary tourSummary) {
         Bundle bundle = new Bundle();
-        bundle.putLong(Constants.BundleKeys.GROUP_ID, 0);
+        bundle.putInt(Constants.BundleKeys.GROUP_ID, 0);
         bundle.putInt(Constants.BundleKeys.SPORT_ID, tourSummary.getSportId());
 
         navigateToPointsActivity(bundle);

@@ -72,7 +72,7 @@ public class GroupsViewChildHolder extends ChildViewHolder {
                 Bundle bundle = new Bundle();
                 bundle.putString(Constants.BundleKeys.LEADERBOARD_KEY, "group");
                 bundle.putInt(Constants.BundleKeys.SPORT_ID,0);
-                bundle.putLong(Constants.BundleKeys.GROUP_ID,groupsTourSummary.getGroupId());
+                bundle.putInt(Constants.BundleKeys.GROUP_ID,groupsTourSummary.getGroupId());
                 bundle.putInt(Constants.BundleKeys.CHALLENGE_ID,0);
                 bundle.putSerializable(Constants.BundleKeys.TOURNAMENT_SUMMARY, (GroupsTourSummary) v.getTag());
                 Intent intent =  new Intent(v.getContext(), PointsActivity.class);

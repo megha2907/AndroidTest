@@ -104,7 +104,7 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
             AllGroups allGroups= getItem(getAdapterPosition());
             Intent intent =  new Intent(mcon, GroupInfoActivity.class);
             Bundle mBundle = new Bundle();
-            mBundle.putString(Constants.BundleKeys.GROUP_ID, String.valueOf(allGroups.getGroupId()));
+            mBundle.putInt(Constants.BundleKeys.GROUP_ID, allGroups.getGroupId());
             mBundle.putString(Constants.BundleKeys.GROUP_NAME,allGroups.getGroupName());
             intent.putExtras(mBundle);
             ((Activity) mcon).startActivityForResult(intent,CODE_GROUP_INFO);

@@ -9,7 +9,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
  */
 public interface MembersModel {
 
-    MembersAdapter init(Context context, long groupId);
+    MembersAdapter init(Context context, Integer groupId);
 
     void leaveGroup();
 

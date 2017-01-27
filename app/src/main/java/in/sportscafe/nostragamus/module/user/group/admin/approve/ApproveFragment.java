@@ -58,7 +58,7 @@ public class ApproveFragment extends NostragamusFragment implements ApproveView 
         this.mRvMembers.setHasFixedSize(true);
 
         this.mApprovePresenter = ApprovePresenterImpl.newInstance(this);
-        this.mApprovePresenter.onCreateApprove(getArguments().getLong(KEY_GROUP_ID), mApproveAcceptedListener);
+        this.mApprovePresenter.onCreateApprove(getArguments().getInt(KEY_GROUP_ID), mApproveAcceptedListener);
     }
 
     @Override

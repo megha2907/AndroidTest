@@ -23,7 +23,7 @@ public class AdminMembersActivity extends NostragamusActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.admin_members_fl_members_holder,
-                AdminMembersFragment.newInstance(getIntent().getStringExtra(BundleKeys.GROUP_ID)))
+                AdminMembersFragment.newInstance(getIntent().getIntExtra(BundleKeys.GROUP_ID,0)))
                 .commit();
 
         initToolBar();

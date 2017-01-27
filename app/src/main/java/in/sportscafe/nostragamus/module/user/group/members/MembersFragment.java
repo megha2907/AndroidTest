@@ -29,12 +29,10 @@ public class MembersFragment extends NostragamusFragment implements MembersView 
 
     private MembersPresenter mMembersPresenter;
 
-    public static MembersFragment newInstance(String groupid) {
-
-        Long groupId = Long.parseLong(groupid);
+    public static MembersFragment newInstance(Integer groupid) {
 
         Bundle bundle = new Bundle();
-        bundle.putLong(KEY_GROUP_ID, groupId);
+        bundle.putInt(KEY_GROUP_ID, groupid);
 
         MembersFragment fragment = new MembersFragment();
         fragment.setArguments(bundle);
@@ -79,7 +77,7 @@ public class MembersFragment extends NostragamusFragment implements MembersView 
         );
 
         this.mMembersPresenter = MembersPresenterImpl.newInstance(this);
-        this.mMembersPresenter.onCreateMembers(getArguments().getLong(KEY_GROUP_ID));
+        this.mMembersPresenter.onCreateMembers(getArguments().getInt(KEY_GROUP_ID));
     }
 
     @Override
