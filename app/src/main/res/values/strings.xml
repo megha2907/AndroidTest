@@ -6,6 +6,7 @@
     <string name="branch_io_live_key">key_live_eoqby1Qi8GeRDkGLb4tRqemjEDajI3q5</string>
     <string name="branch_io_test_key">key_test_pfyhy6Sp0ViSymPQiXMmEonmuFpcM4Sn</string>
     <string name="moengage_app_id">Z3HNKJCO9QYTYXWGRKU4KEQR</string>
+    <string name="amplitude_api_key">2ba081bedf8fb34e939cd1ac6e3231ab</string>
     <string name="gcm_sender_id">id:576361348926</string>
     <string name="addsport">Pick your Tournament and \n enjoy the game</string>
     <string name="next">NEXT</string>

@@ -6,10 +6,13 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.R;
 
 
 public class CustomTextView extends TextView {
+
+    private boolean isDestroyed = false;
 
 
     public CustomTextView(Context context, AttributeSet attrs, int defStyle) {
@@ -27,5 +30,15 @@ public class CustomTextView extends TextView {
     private void init(Context context, AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomTextView);
         CustomFont.getInstance().setFont(context, this, a.getInt(R.styleable.CustomTextView_typeface, -1));
+    }
+
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        isDestroyed = true;
     }
 }

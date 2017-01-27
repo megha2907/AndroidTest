@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spannable;
@@ -13,31 +14,34 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
+import com.jeeva.android.widgets.customfont.CustomTextView;
 import com.jeeva.android.widgets.customfont.Typefaces;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.DateFormats;
+import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.FeedWebView;
-import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.Parties;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -48,14 +52,17 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
  */
 public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> {
 
-    private static final long ONE_DAY_IN_MS = 60 * 60 * 1000;
+    private static final long ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
     private static final String COMMENTARY = "commentary";
 
     private List<Match> mMyResultList = new ArrayList<>();
 
+    private TimerRunnable mTimerRunnable;
+
     public TimelineAdapter(Context context) {
         super(context);
+        mTimerRunnable = new TimerRunnable();
     }
 
     @Override
@@ -71,35 +78,41 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Match match = getItem(position);
-        holder.mLlTourParent.removeAllViews();
-        holder.mLlTourParent.addView(getScheduleView(match, holder.mLlTourParent));
-    }
 
-    private View getTourView(Tournament tournament, ViewGroup parent, int position) {
-        View tourView = getLayoutInflater().inflate(R.layout.inflater_tour_row, parent, false);
-        TourViewHolder holder = new TourViewHolder(tourView);
+        ScheduleViewHolder scheduleVH;
+        if(holder.mLlTourParent.getChildCount() > 0) {
+            View mainView = holder.mLlTourParent.getChildAt(0);
 
-        holder.mTvTournamentName.setText(tournament.getTournamentName());
+            scheduleVH = mScheduleMap.get(mainView);
+            if(null != scheduleVH) {
+                Log.d("TimelineAdapter", scheduleVH.mTvMatchStage.getText().toString());
+                mScheduleVHList.remove(scheduleVH);
+                mScheduleMap.remove(mainView);
+            }
 
-        holder.mLlScheduleParent.removeAllViews();
-        for (Match match : tournament.getMatches()) {
-            holder.mLlScheduleParent.addView(getScheduleView(match, holder.mLlScheduleParent));
         }
+        holder.mLlTourParent.removeAllViews();
 
-        return tourView;
+        scheduleVH = getScheduleView(match, holder.mLlTourParent);
+        holder.mLlTourParent.addView(scheduleVH.mMainView);
+
+        if(View.VISIBLE == scheduleVH.mTvExpiresIn.getVisibility()) {
+            mScheduleVHList.add(scheduleVH);
+            mScheduleMap.put(scheduleVH.mMainView, scheduleVH);
+        }
     }
 
-    private View getScheduleView(Match match, ViewGroup parent) {
+    private ScheduleViewHolder getScheduleView(Match match, ViewGroup parent) {
 
         /*holder.mTvDate.setText(Html.fromHtml(
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM").toUpperCase() + "<br>" + String.valueOf(dayOfMonth).toUpperCase()
                         + "<sup>" +AppSnippet.ordinalOnly(dayOfMonth) + "</sup>")
         );*/
 
-        View scheduleView = getLayoutInflater().inflate(R.layout.inflater_schedule_row, parent, false);
-        ScheduleViewHolder holder = new ScheduleViewHolder(scheduleView);
+        ScheduleViewHolder holder = new ScheduleViewHolder(getLayoutInflater().inflate(R.layout.inflater_schedule_row, parent, false));
 
         String startTime = match.getStartTime();
+//        String startTime = "2017-01-27T18:00:00.000Z";
         long startTimeMs = TimeUtils.getMillisecondsFromDateString(
                 startTime,
                 DateFormats.FORMAT_DATE_T_TIME_ZONE,
@@ -142,14 +155,15 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                     || timeAgo.timeUnit == TimeUnit.MILLISECOND
                     || timeAgo.timeUnit == TimeUnit.SECOND;
 
+            Integer attemptedStatus = match.getisAttempted();
+
             if(match.getMatchQuestionCount() > 0) {
 
-                //if match Result Published
-                if (match.getResultPublished()) {
+                if (match.getResultPublished()) { // if match Result Published
 
                     //if match Completely Attempted then IsAttempted = 2 else if Partially Attempted then is Attempted =1
                     //show Match Results
-                    if (match.getisAttempted() == 2 || match.getisAttempted()==1) {
+                    if (GameAttemptedStatus.COMPLETELY == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
 
                         holder.mRlMatchPoints.setVisibility(View.VISIBLE);
                         holder.mVResultLine.setVisibility(View.VISIBLE);
@@ -173,91 +187,60 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                     }
 
                     //if match not Attempted then IsAttempted=0
-                    if (match.getisAttempted() == 0) {
+                    if (GameAttemptedStatus.NOT == attemptedStatus) {
                         // Show Opportunity missed at scoring!
                         holder.mVResultLine.setVisibility(View.VISIBLE);
                         holder.mTvInfo.setVisibility(View.VISIBLE);
                         holder.mTvInfo.setText("Opportunity missed at scoring!");
                     }
 
-                }
-                //if Results not published
-                else {
-                    if (match.getisAttempted() == 0 || match.getisAttempted() == 1) {
-                        // show Play button
-                        holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
-                        holder.mBtnPlayMatch.setTag(match);
-                    } else if (match.getisAttempted() == 2) {
+                } else { // if Results not published
+                    if (GameAttemptedStatus.NOT == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
+                        if (isMatchStarted) {
+                            if(attemptedStatus == GameAttemptedStatus.PARTIALLY) {
+
+                                //  Waiting for results
+                                holder.mLlResultWait.setVisibility(View.VISIBLE);
+                                holder.mLlResultWait.setTag(match);
+                            } else {
+
+                                // You cannot play the match as the match already started
+                                holder.mVResultLine.setVisibility(View.VISIBLE);
+                                holder.mTvInfo.setVisibility(View.VISIBLE);
+                                holder.mTvInfo.setText("Opportunity missed at scoring!");
+                            }
+                        } else {
+
+                            // show Play button
+                            holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
+                            holder.mBtnPlayMatch.setTag(match);
+
+                            if(GameAttemptedStatus.PARTIALLY == attemptedStatus) {
+                                holder.mBtnPlayMatch.setText("Continue");
+                            }
+
+                            if (timeAgo.totalDiff < ONE_DAY_IN_MS) {
+                                holder.mTvExpiresIn.setVisibility(View.VISIBLE);
+                                holder.mTvExpiresIn.setTag(timeAgo.totalDiff);
+                            }
+                        }
+                    } else if (attemptedStatus == GameAttemptedStatus.COMPLETELY) {
                         //  Waiting for results
                         holder.mLlResultWait.setVisibility(View.VISIBLE);
-                        holder.mVResultLine.setVisibility(View.VISIBLE);
                         holder.mLlResultWait.setTag(match);
-                    }else if(isMatchStarted) {
-                        // You cannot play the match as the match already started
-                        holder.mVResultLine.setVisibility(View.VISIBLE);
-                        holder.mTvInfo.setVisibility(View.VISIBLE);
-                        holder.mTvInfo.setText("Opportunity missed at scoring!");
                     }
 
                 }
+            } else { // No questions prepared
+                if (!isMatchStarted) { // Still the question is not prepared for these matches
+                    holder.mVResultLine.setVisibility(View.VISIBLE);
+                    holder.mTvInfo.setVisibility(View.VISIBLE);
+                    holder.mTvInfo.setText("Games coming up!");
+                }
             }
-//
-//
-//                String result = match.getResult();
-//                if(TextUtils.isEmpty(result)) {
-//                    if(match.getisAttempted()==0||match.getisAttempted()==1) { // Waiting for results
-//                        holder.mLlResultWait.setVisibility(View.VISIBLE);
-//                        holder.mVResultLine.setVisibility(View.VISIBLE);
-//                        holder.mLlResultWait.setTag(match);
-//                    } else if(isMatchStarted) { // You cannot play the match as the match already started
-//                        holder.mVResultLine.setVisibility(View.VISIBLE);
-//                        holder.mTvInfo.setVisibility(View.VISIBLE);
-//                        holder.mTvInfo.setText("Opportunity missed at scoring!");
-//                    } else { // You can now play the match
-//                        holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
-//                        holder.mBtnPlayMatch.setTag(match);
-//                    }
-//                } else {
-//                    holder.mTvMatchResult.setVisibility(View.VISIBLE);
-//                    holder.mTvMatchResult.setText(result);
-//
-//                    if(match.getisAttempted()==2) { // Played match result published
-//                        holder.mRlMatchPoints.setVisibility(View.VISIBLE);
-//                        holder.mVResultLine.setVisibility(View.VISIBLE);
-//
-//                        holder.mRlMatchPoints.setTag(match);
-//                        holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
-//                        holder.mTvResultCorrectCount.setText("You got " + match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " answers correct");
-//
-//                        Integer winnerPartyId = match.getWinnerPartyId();
-//                        if (null != winnerPartyId) {
-//                            int whiteSixty = ViewUtils.getColor(holder.mTvPartyAName.getContext(), R.color.white_60);
-//                            Typeface latoBold = Typefaces.get(holder.mTvPartyAName.getContext(), "fonts/lato/Lato-Bold.ttf");
-//                            if (winnerPartyId.equals(parties.get(0).getPartyId())) {
-//                                holder.mTvPartyAName.setTypeface(latoBold);
-//                                holder.mTvPartyBName.setTextColor(whiteSixty);
-//                            } else if (winnerPartyId.equals(parties.get(1).getPartyId())) {
-//                                holder.mTvPartyBName.setTypeface(latoBold);
-//                                holder.mTvPartyAName.setTextColor(whiteSixty);
-//                            }
-//                        }
-//                    } else { // Not played match result published
-//                        holder.mVResultLine.setVisibility(View.VISIBLE);
-//                        holder.mTvInfo.setVisibility(View.VISIBLE);
-//                        holder.mTvInfo.setText("Opportunity missed at scoring!");
-//                    }
-//                }
-//            } else { // No questions prepared
-//
-//                if (!isMatchStarted) { // Still the question is not prepared for these matches
-//                    holder.mVResultLine.setVisibility(View.VISIBLE);
-//                    holder.mTvInfo.setVisibility(View.VISIBLE);
-//                    holder.mTvInfo.setText("Games coming up!");
-//                }
-//            }
         }
 
-        return scheduleView;
+        return holder;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -290,13 +273,15 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
     class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        View mMainView;
+
         LinearLayout mLlCardLayout;
 
         TextView mTvMatchStage;
 
         TextView mTvStartTime;
 
-        TextView mTvExpiresIn;
+        CustomTextView mTvExpiresIn;
 
         TextView mTvPartyAName;
 
@@ -333,10 +318,11 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         public ScheduleViewHolder(View V) {
             super(V);
 
+            mMainView = V;
             mTvDate = (TextView) V.findViewById(R.id.schedule_row_tv_date);
             mTvMatchStage = (TextView) V.findViewById(R.id.schedule_row_tv_match_stage);
             mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_match_time);
-            mTvExpiresIn = (TextView) V.findViewById(R.id.schedule_row_tv_expires_in);
+            mTvExpiresIn = (CustomTextView) V.findViewById(R.id.schedule_row_tv_expires_in);
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
             mIvPartyAPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_left);
@@ -424,7 +410,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 tvcommentary.setText(style);
             }
 
-            if (match.getMatchPoints() == 0) {
+            if (match.getMatchPoints() == GameAttemptedStatus.NOT) {
                 tvcommentarytitle.setVisibility(View.VISIBLE);
                 tvcommentarytitle.setText(Html.fromHtml(match.getResult()));
             } else {
@@ -453,5 +439,73 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             }
         }
     }
+
+    @Override
+    public void clear() {
+        super.clear();
+        mScheduleMap.clear();
+        mScheduleVHList.clear();
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        mScheduleVHList.clear();
+        mScheduleMap.clear();
+        mTimerRunnable.destroy();
+    }
+
+    private Map<View, ScheduleViewHolder> mScheduleMap = new HashMap<>();
+
+    private List<ScheduleViewHolder> mScheduleVHList = new ArrayList<>();
+
+    private class TimerRunnable implements Runnable {
+
+        private Handler customHandler;
+
+        private TimerRunnable() {
+            customHandler = new Handler();
+            customHandler.postDelayed(this, 0);
+        }
+
+        public void run() {
+            for (ScheduleViewHolder scheduleVH : mScheduleVHList) {
+                if(View.VISIBLE == scheduleVH.mTvExpiresIn.getVisibility()) {
+                    Log.d("TimelineAdapter", "Atleast one");
+
+                    long updatedTime = Long.parseLong(scheduleVH.mTvExpiresIn.getTag().toString());
+                    if(updatedTime > 1000) {
+                        updateTimer(scheduleVH.mTvExpiresIn, updatedTime);
+                    } else {
+                        scheduleVH.mTvExpiresIn.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            customHandler.postDelayed(this, 1000);
+        }
+
+        private void updateTimer(TextView tvTimerValue, long updatedTime) {
+            tvTimerValue.setTag(updatedTime - 1000);
+
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            int hours = mins / 60;
+            mins = mins % 60;
+            secs = secs % 60;
+
+            tvTimerValue.setText("Expires in " +
+                    String.format("%02d", hours) + ":"
+                    + String.format("%02d", mins) + ":"
+                    + String.format("%02d", secs)
+            );
+        }
+
+        private void destroy() {
+            customHandler.removeCallbacks(this);
+            customHandler = null;
+        }
+
+    };
 
 }

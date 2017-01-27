@@ -214,6 +214,12 @@ public interface Constants {
         String TOURNAMENT = "tournament";
     }
 
+    interface GameAttemptedStatus {
+        int NOT = 0;
+        int PARTIALLY = 1;
+        int COMPLETELY = 2;
+    }
+
     interface AnalyticsCategory {
         String LOGIN = "Login";
         String LOGOUT = "Logout";

@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.amplitude.api.Amplitude;
+import com.amplitude.api.AmplitudeClient;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.PayloadBuilder;
+
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -41,6 +45,8 @@ public class NostragamusAnalytics {
 
     private MoEHelper mMoEHelper;
 
+    private AmplitudeClient mAmplitude;
+
     public NostragamusAnalytics init(Context context, boolean optOut) {
         GoogleAnalytics ga = GoogleAnalytics.getInstance(context);
         ga.setAppOptOut(optOut);
@@ -52,6 +58,10 @@ public class NostragamusAnalytics {
 
             // Initializing the MoEngage
             this.mMoEHelper = MoEHelper.getInstance(context);
+
+            // Initializing the Amplitude
+            this.mAmplitude = Amplitude.getInstance().initialize(context, context.getString(R.string.amplitude_api_key))
+                    .enableForegroundTracking((Application) context);
 
             // Tracking flavor
             trackFlavor();
@@ -177,8 +187,11 @@ public class NostragamusAnalytics {
             moeEventBuilder.putAttrLong(VALUE, value);
         }
 
+        JSONObject jsonObject = moeEventBuilder.build();
+        mAmplitude.logEvent(category, jsonObject);
+        mMoEHelper.trackEvent(category, jsonObject);
+
         mTracker.send(gaEventBuilder.build());
-        mMoEHelper.trackEvent(category, moeEventBuilder.build());
     }
 
     public void trackOtherEvents(String category, Map<String, String> values) {
@@ -204,6 +217,14 @@ public class NostragamusAnalytics {
     public void autoTrack(Application application) {
         if(null != mMoEHelper) {
             mMoEHelper.autoIntegrate(application);
+
+            mAmplitude.trackSessionEvents(true);
+        }
+    }
+
+    public void setUserId(String userId) {
+        if(null != mAmplitude && null != userId) {
+            mAmplitude.setUserId(userId);
         }
     }
 }

@@ -155,4 +155,10 @@ public class FeedActivity extends NostragamusActivity implements FeedView, Swipe
         startActivity(i);
         finish();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mFeedPresenter.onDestroy();
+    }
 }

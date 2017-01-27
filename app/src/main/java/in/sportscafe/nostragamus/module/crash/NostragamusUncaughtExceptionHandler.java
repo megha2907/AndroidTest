@@ -40,6 +40,6 @@ public class NostragamusUncaughtExceptionHandler implements Thread.UncaughtExcep
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK
                 | Intent.FLAG_ACTIVITY_NEW_TASK);
-//        context.startActivity(intent);
+        context.startActivity(intent);
     }
 }

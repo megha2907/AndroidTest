@@ -14,4 +14,6 @@ public interface FeedModel {
     TimelineAdapter getAdapter();
 
     void getFeeds();
+
+    void destroyAll();
 }

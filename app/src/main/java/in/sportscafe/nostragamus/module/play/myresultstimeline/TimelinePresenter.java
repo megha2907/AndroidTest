@@ -13,4 +13,6 @@ public interface TimelinePresenter {
     void onRefresh();
 
     void onTimelineScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount);
+
+    void onDestroy();
 }

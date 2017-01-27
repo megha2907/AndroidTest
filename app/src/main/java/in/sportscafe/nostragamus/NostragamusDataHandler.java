@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
@@ -141,6 +142,7 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     //USER ID
     public void setUserId(String userId) {
+        NostragamusAnalytics.getInstance().setUserId(userId);
         setSharedStringData(SharedKeys.USER_ID, userId);
     }
 

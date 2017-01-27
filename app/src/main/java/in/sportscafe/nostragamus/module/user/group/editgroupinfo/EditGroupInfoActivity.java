@@ -1,32 +1,18 @@
 package in.sportscafe.nostragamus.module.user.group.editgroupinfo;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -36,16 +22,10 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
-import in.sportscafe.nostragamus.module.user.group.newgroup.GrpTournamentSelectionAdapter;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * Created by deepanshi on 10/31/16.
  */
-
-
 public class EditGroupInfoActivity extends NostragamusActivity implements EditGroupInfoView,
         View.OnClickListener {
 

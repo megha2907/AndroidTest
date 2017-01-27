@@ -42,6 +42,11 @@ public class TimelinePresenterImpl implements TimelinePresenter, TimelineModelIm
         myResultsTimelineModel.checkPagination(firstVisibleItem, visibleItemCount, totalItemCount);
     }
 
+    @Override
+    public void onDestroy() {
+        myResultsTimelineModel.destroyAll();
+    }
+
     private void getFeedDetails() {
         myResultsTimelineView.showProgressbar();
         myResultsTimelineModel.getFeeds();

@@ -32,6 +32,7 @@
         <activity
             android:name="in.sportscafe.nostragamus.module.test.TestActivity"
             android:screenOrientation="portrait">
+
         </activity>
 
         <activity
@@ -332,7 +333,7 @@
         <!-- Enable/Disable the test mode -->
         <meta-data
             android:name="io.branch.sdk.TestMode"
-            android:value="true" />
+            android:value="false" />
 
         <!-- Live branch key -->
         <meta-data
