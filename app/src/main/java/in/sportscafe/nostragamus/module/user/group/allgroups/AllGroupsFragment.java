@@ -97,7 +97,7 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        this.mRvAllGroups.setAdapter(ViewUtils.getAnimationAdapter(adapter));
+        this.mRvAllGroups.setAdapter(adapter);
     }
 
     @Override

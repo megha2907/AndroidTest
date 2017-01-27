@@ -47,6 +47,6 @@ public class OthersAnswersFragment extends NostragamusFragment implements Others
 
     @Override
     public void setAdapter(OthersAnswersAdapter adapter) {
-        mRvOthersAnswers.setAdapter(ViewUtils.getAnimationAdapter(adapter));
+        mRvOthersAnswers.setAdapter(adapter);
     }
 }

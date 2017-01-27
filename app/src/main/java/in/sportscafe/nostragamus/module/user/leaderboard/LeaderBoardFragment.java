@@ -75,7 +75,7 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
 
     @Override
     public void setLeaderBoardAdapter(LeaderBoardAdapter leaderBoardAdapter) {
-        mRvLeaderBoard.setAdapter(ViewUtils.getAnimationAdapter(leaderBoardAdapter));
+        mRvLeaderBoard.setAdapter(leaderBoardAdapter);
     }
 
     @Override

@@ -55,7 +55,7 @@ public class PlayerBadgeFragment extends NostragamusFragment implements PlayerBa
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        this.mRvBadge.setAdapter(ViewUtils.getAnimationAdapter(adapter));
+        this.mRvBadge.setAdapter(adapter);
     }
 
     @Override

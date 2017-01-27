@@ -91,8 +91,12 @@ public class FeedActivity extends NostragamusActivity implements FeedView, Swipe
                     child = parent.getChildAt(i).findViewById(R.id.schedule_row_ll);
 
                     if(child.getVisibility() == View.VISIBLE) {
+                        child.setPivotY(child.getMeasuredHeight());
                         child.getLocationOnScreen(location);
                         child.setRotationX(getRotationByY(location[1]));
+
+//                        getRotationWidth(child.getMeasuredWidth(), rotation);
+
                     }
                 }
                 super.onDraw(c, parent, state);
