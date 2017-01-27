@@ -5,7 +5,6 @@ import com.jeeva.android.InAppView;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.user.badges.Badge;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummary;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 
 /**

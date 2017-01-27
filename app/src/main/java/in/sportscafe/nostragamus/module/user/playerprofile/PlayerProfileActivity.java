@@ -107,8 +107,8 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
 
     @Override
     public void setLevel(String level) {
-        TextView tvLevel = (TextView) findViewById(R.id.profile_tv_level);
-        Button btnLevel = (Button) findViewById(R.id.profile_btn_level);
+        TextView tvLevel = (TextView) findViewById(R.id.player_profile_tv_level);
+        Button btnLevel = (Button) findViewById(R.id.player_profile_btn_level);
         String ordinalLevel = AppSnippet.ordinal(Integer.parseInt(level));
         tvLevel.setText(ordinalLevel + " level");
         btnLevel.setText(level);

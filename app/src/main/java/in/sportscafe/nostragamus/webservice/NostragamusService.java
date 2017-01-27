@@ -6,6 +6,7 @@ import java.util.Map;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
+import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
 import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
@@ -19,7 +20,6 @@ import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.group.admin.approve.ApproveRequest;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
-import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupSportUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroupResponse;
 import in.sportscafe.nostragamus.module.user.group.members.AddGroupRequest;
@@ -32,16 +32,12 @@ import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupsDetailResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
-import in.sportscafe.nostragamus.module.user.myprofile.myposition.dto.LbSummaryResponse;
-import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.AllSports;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.PreferenceRequest;
-import in.sportscafe.nostragamus.module.user.sportselection.dto.UserSports;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -56,8 +52,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
-import static android.R.attr.key;
-
 /**
  * Created by Jeeva on 14/3/16.
  */
@@ -66,9 +60,6 @@ public interface NostragamusService {
 
     @GET("v1/game/sports")
     Call<AllSports> getAllSports();
-
-    @GET("v1/game/users/sports")
-    Call<UserSports> getUserSports();
 
     @GET("v1/game/users")
     Call<UserInfoResponse> getUserInfo();
@@ -87,9 +78,6 @@ public interface NostragamusService {
 
     @GET("v1/game/users/tournaments")
     Call<TournamentFeedResponse> getCurrentTournaments(@Query("is_current") boolean isCurrent);
-
-    @GET("v1/game/users/groups/info")
-    Call<GroupsDetailResponse> getGroupDetails();
 
     @POST("/v2/game/login")
     Call<LogInResponse> loginUser(@Body LogInRequest logInRequest);
@@ -132,9 +120,6 @@ public interface NostragamusService {
     Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("sports_id") Integer sportId,
                                                    @Query("group_id") Integer groupId,
                                                    @Query("challenge_id") Integer challengeId);
-
-    @PUT("v1/game/groups/sports")
-    Call<ApiResponse> updateGroupSport(@Body GroupSportUpdateRequest request);
 
     @PUT("v1/game/groups/tournaments")
     Call<ApiResponse> updateGroupTournament(@Body GroupTournamentUpdateRequest request);

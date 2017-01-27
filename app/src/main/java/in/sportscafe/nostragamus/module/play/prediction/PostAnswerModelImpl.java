@@ -21,29 +21,29 @@ public class PostAnswerModelImpl {
         this.mPostAnswerModelListener = modelListener;
     }
 
-    public void postAnswer(Answer answer,boolean minorityOption,Boolean matchComplete) {
+    public void postAnswer(Answer answer, boolean minorityOption, Boolean matchComplete) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            callPostAnswerApi(answer,minorityOption,matchComplete);
+            callPostAnswerApi(answer, minorityOption, matchComplete);
         } else {
             mPostAnswerModelListener.onNoInternet();
         }
     }
 
-    private void callPostAnswerApi(Answer answer,boolean minorityOption,Boolean matchComplete) {
-        MyWebService.getInstance().getPostAnswerRequest(answer,minorityOption,matchComplete).enqueue(
+    private void callPostAnswerApi(Answer answer, boolean minorityOption, Boolean matchComplete) {
+        MyWebService.getInstance().getPostAnswerRequest(answer, minorityOption, matchComplete).enqueue(
                 new NostragamusCallBack<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         super.onResponse(call, response);
                         if (response.isSuccessful()) {
-                            if(response.body().getMessage().equals("Match has already started")){
+                            if (response.body().getMessage().equals("Match has already started")) {
                                 mPostAnswerModelListener.onFailed(response.body().getMessage());
-                            }else {
+                            } else {
                                 mPostAnswerModelListener.onSuccess();
-                            Log.i("inside","onSuccess");
+                                Log.i("inside", "onSuccess");
                             }
                         } else {
-                            Log.i("inside","onFailed");
+                            Log.i("inside", "onFailed");
                             mPostAnswerModelListener.onFailed(response.message());
                         }
                     }

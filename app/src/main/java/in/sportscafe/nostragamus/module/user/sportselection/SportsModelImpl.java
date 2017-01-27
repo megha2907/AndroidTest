@@ -41,14 +41,7 @@ public class SportsModelImpl implements SportsModel {
                                 List<Sport> newSportList = response.body().getSports();
 
                                 if(null != newSportList && newSportList.size() > 0) {
-                                    List<Sport> oldSportList = mNostragamusDataHandler.getAllSports();
-                                    for (Sport sport : newSportList) {
-                                        if(!oldSportList.contains(sport)) {
-                                            oldSportList.add(sport);
-                                        }
-                                    }
-
-                                    mNostragamusDataHandler.setAllSports(oldSportList);
+                                    mNostragamusDataHandler.setAllSports(newSportList);
 
                                     mSportsModelListener.onGetSportsSuccess();
                                 }
