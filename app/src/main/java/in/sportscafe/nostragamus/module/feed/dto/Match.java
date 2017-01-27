@@ -58,7 +58,7 @@ public class Match implements Serializable {
     private Integer correctCount;
 
     @JsonProperty("is_attempted")
-    private boolean isAttempted = false;
+    private Integer isAttempted;
 
     @JsonProperty("match_winner_id")
     private Integer winnerPartyId;
@@ -68,6 +68,9 @@ public class Match implements Serializable {
 
     @JsonProperty("sports_name")
     private String sportName;
+
+    @JsonProperty("is_result_published")
+    private Boolean isResultPublished;
 
 //    @JsonProperty("match_commentary")
 //    private String matchCommentary;
@@ -258,7 +261,7 @@ public class Match implements Serializable {
      * The questionsLive
      */
     @JsonProperty("is_attempted")
-    public boolean getisAttempted() {
+    public Integer getisAttempted() {
         return isAttempted;
     }
 
@@ -268,7 +271,7 @@ public class Match implements Serializable {
      * The match_questions_live
      */
     @JsonProperty("is_attempted")
-    public void setisAttemoted(boolean isAttempted) {
+    public void setisAttemoted(Integer isAttempted) {
         this.isAttempted = isAttempted;
     }
 
@@ -378,5 +381,15 @@ public class Match implements Serializable {
     @JsonProperty("sports_name")
     public void setSportName(String sportName) {
         this.sportName = sportName;
+    }
+
+    @JsonProperty("is_result_published")
+    public Boolean getResultPublished() {
+        return isResultPublished;
+    }
+
+    @JsonProperty("is_result_published")
+    public void setResultPublished(Boolean resultPublished) {
+        isResultPublished = resultPublished;
     }
 }

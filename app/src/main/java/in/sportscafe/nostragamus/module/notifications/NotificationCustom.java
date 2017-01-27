@@ -71,8 +71,9 @@ public class NotificationCustom extends PushMessageListener {
         }
         else if (extras.containsKey(EXTRA_BADGE_REQUEST)) {
             extras.putString(MoEHelperConstants.GCM_EXTRA_ACTIVITY_NAME,
-                    "in.sportscafe.nostragamus.module.user.badges.BadgeActivity");
+                    "in.sportscafe.nostragamus.module.home.HomeActivity");
         }
+
 
         return super.onCreateNotification(context, extras, provider);
     }

@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroups;
 import in.sportscafe.nostragamus.module.user.login.dto.BasicUserInfo;
 import in.sportscafe.nostragamus.module.user.login.dto.InfoDetails;
@@ -112,7 +113,7 @@ public class PlayerInfo extends BasicUserInfo implements Serializable {
     }
 
     @JsonIgnore
-    public List<String> getBadges() {
+    public List<Badge> getBadges() {
         return infoDetails.getBadges();
     }
 }

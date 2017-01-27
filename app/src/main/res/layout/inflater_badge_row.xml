@@ -13,12 +13,13 @@
         android:padding="@dimen/dp_15"
         android:layout_alignParentEnd="true">
 
-    <com.jeeva.android.widgets.customfont.CustomButton
-        android:id="@+id/badge_iv"
-        android:layout_width="@dimen/dp_40"
-        android:layout_height="@dimen/dp_40"
-       />
 
+        <ImageButton
+            android:id="@+id/badge_iv"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:background="@android:color/transparent"
+            />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/badge_tv_name"

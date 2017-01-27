@@ -14,7 +14,6 @@
         android:id="@+id/my_predictions_row_tv_question"
         android:layout_width="@dimen/dp_180"
         android:layout_height="wrap_content"
-        android:text="Who will hit more sixes - Pollddd"
         android:layout_gravity="left"
         android:textColor="@color/textcolorlight"
         android:layout_marginTop="@dimen/dp_2"
@@ -39,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:text="Pollard"
             android:textColor="@color/textcolorlight"
             android:textSize="@dimen/dp_14"
             android:layout_marginTop="@dimen/dp_1"
@@ -108,7 +106,7 @@
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
             android:layout_alignParentRight="true"
-            android:background="@drawable/powerup_colored_icon"
+            android:background="@android:color/transparent"
             />
 
     </RelativeLayout>

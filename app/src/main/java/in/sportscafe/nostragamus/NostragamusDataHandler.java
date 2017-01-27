@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
 import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroups;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
@@ -296,7 +297,7 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
 
     //BADGES
-    public List<String> getBadgeList() {
+    public List<Badge> getBadgeList() {
         return getUserInfo().getBadges();
     }
 
