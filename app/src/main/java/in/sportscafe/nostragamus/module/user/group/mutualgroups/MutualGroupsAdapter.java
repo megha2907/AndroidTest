@@ -7,19 +7,15 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsAdapter;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 
 /**

@@ -68,6 +68,11 @@ public class FeedModelImpl implements FeedModel {
         }
     }
 
+    @Override
+    public void destroyAll() {
+        mFeedAdapter.destroy();
+    }
+
     private void callFeedListApi(Integer tourId) {
         MyWebService.getInstance().getMatches(tourId).enqueue(new NostragamusCallBack<MatchesResponse>() {
             @Override

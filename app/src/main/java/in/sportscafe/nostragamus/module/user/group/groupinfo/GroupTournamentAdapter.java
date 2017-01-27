@@ -5,23 +5,20 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 
 /**
  * Created by deepanshi on 11/1/16.
  */
-
 public class GroupTournamentAdapter extends Adapter<TournamentFeedInfo, GroupTournamentAdapter.ViewHolder> {
 
     private OnHomeActionListener mOnHomeActionListener;

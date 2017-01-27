@@ -19,4 +19,6 @@ public interface TimelineModel {
     void checkPagination(int firstVisibleItem, int visibleItemCount, int totalItemCount);
 
     boolean isAdapterEmpty();
+
+    void destroyAll();
 }

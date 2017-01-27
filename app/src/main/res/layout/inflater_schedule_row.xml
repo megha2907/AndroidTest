@@ -48,7 +48,6 @@
         android:layout_alignTop="@+id/schedule_row_tv_match_stage"
         android:layout_marginRight="@dimen/dp_10"
         android:maxLines="1"
-        android:text="Expires in 00:29:59"
         android:textColor="@color/starship"
         android:textSize="@dimen/dp_11"
         android:visibility="gone"
@@ -66,7 +65,7 @@
         android:background="@drawable/swipe_card_shape_test"
         android:orientation="vertical"
         android:paddingBottom="@dimen/dp_14"
-        android:paddingTop="@dimen/dp_14">
+        android:paddingTop="@dimen/dp_7">
 
         <RelativeLayout
             android:id="@+id/image_layout"
@@ -78,8 +77,11 @@
                 android:id="@+id/schedule_row_btn_vs"
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_12"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp_30"
+                android:layout_marginTop="@dimen/dp_10"
                 android:alpha="0.4"
                 android:background="@drawable/vs_button_bg"
                 android:gravity="center"
@@ -152,24 +154,61 @@
                     app:defaultImage="@drawable/placeholder_icon" />
             </LinearLayout>
 
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/schedule_row_btn_playmatch"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_36"
+                android:minWidth="@dimen/dp_72"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/schedule_row_btn_vs"
+                android:background="@drawable/tournament_ready_btn_bg"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:paddingBottom="@dimen/dp_2"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:text="@string/play"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                android:visibility="gone"
+                app:typeface="roboto_condensed" />
+
+            <LinearLayout
+                android:id="@+id/schedule_row_ll_waiting_for_result"
+                android:layout_width="@dimen/dp_90"
+                android:layout_height="@dimen/dp_36"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/schedule_row_btn_vs"
+                android:background="@drawable/tournament_ready_btn_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Your"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_10"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_2"
+                    android:drawableRight="@drawable/timeline_points_arrow"
+                    android:gravity="bottom"
+                    android:text="Answers"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_10"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/schedule_row_btn_playmatch"
-            android:layout_width="@dimen/dp_72"
-            android:layout_height="@dimen/dp_36"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/feed_screen_spacing"
-            android:background="@drawable/tournament_ready_btn_bg"
-            android:gravity="center"
-            android:onClick="onClick"
-            android:paddingBottom="@dimen/dp_2"
-            android:text="@string/play"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_14"
-            android:visibility="gone"
-            app:typeface="roboto_condensed" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/schedule_row_tv_match_result"
@@ -195,39 +234,6 @@
             android:layout_marginTop="@dimen/feed_screen_spacing"
             android:background="#151515"
             android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/schedule_row_ll_waiting_for_result"
-            android:layout_width="@dimen/dp_90"
-            android:layout_height="@dimen/dp_36"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/feed_screen_spacing"
-            android:background="@drawable/tournament_ready_btn_bg"
-            android:clickable="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="View Your"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dp_10"
-                app:typeface="lato_regular" />
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_2"
-                android:drawableRight="@drawable/timeline_points_arrow"
-                android:gravity="bottom"
-                android:text="Answers"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dp_10"
-                app:typeface="lato_regular" />
-
-        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/rl_points"

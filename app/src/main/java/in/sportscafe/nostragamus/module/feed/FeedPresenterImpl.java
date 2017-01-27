@@ -36,6 +36,11 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
         getFeedDetails();
     }
 
+    @Override
+    public void onDestroy() {
+        mFeedModel.destroyAll();
+    }
+
     private void getFeedDetails() {
         mFeedModel.getFeeds();
     }

@@ -90,6 +90,11 @@ public class TimelineModelImpl implements TimelineModel {
         return null == mMyResultsTimelineAdapter || mMyResultsTimelineAdapter.getItemCount() == 0;
     }
 
+    @Override
+    public void destroyAll() {
+        mMyResultsTimelineAdapter.destroy();
+    }
+
     private void callFeedListApi(int skip, int limit) {
         if (!Nostragamus.getInstance().hasNetworkConnection()) {
             mMyResultsTimelineModelListener.onNoInternet();

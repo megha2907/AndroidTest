@@ -10,4 +10,6 @@ public interface FeedPresenter {
     void onCreateFeed(Bundle bundle);
 
     void onRefresh();
+
+    void onDestroy();
 }

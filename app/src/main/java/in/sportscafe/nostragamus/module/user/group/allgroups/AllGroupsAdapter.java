@@ -1,18 +1,15 @@
-package in.sportscafe.nostragamus.module.user.group.allgroups;;
+package in.sportscafe.nostragamus.module.user.group.allgroups;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

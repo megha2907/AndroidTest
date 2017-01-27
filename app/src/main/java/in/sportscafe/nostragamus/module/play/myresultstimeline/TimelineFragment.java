@@ -162,4 +162,9 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
         return rotation;
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        myResultsTimelinePresenter.onDestroy();
+    }
 }
