@@ -7,7 +7,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
  */
 public interface MembersPresenter {
 
-    void onCreateMembers(long groupId);
+    void onCreateMembers(Integer groupId);
 
     void onClickLeaveGroup();
 

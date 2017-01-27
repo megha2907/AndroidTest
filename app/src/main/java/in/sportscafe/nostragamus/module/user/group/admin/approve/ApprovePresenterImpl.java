@@ -21,7 +21,7 @@ public class ApprovePresenterImpl implements ApprovePresenter, ApproveModelImpl.
     }
 
     @Override
-    public void onCreateApprove(long groupId, ApproveFragment.OnApproveAcceptedListener listener) {
+    public void onCreateApprove(Integer groupId, ApproveFragment.OnApproveAcceptedListener listener) {
         mApproveView.setAdapter(mApproveModel.init(mApproveView.getContext(), groupId, listener));
     }
 

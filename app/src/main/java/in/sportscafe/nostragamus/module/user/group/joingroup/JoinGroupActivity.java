@@ -147,7 +147,7 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
     }
 
     @Override
-    public void showJoinGroupSuccess(Long groupId) {
+    public void showJoinGroupSuccess(Integer groupId) {
         navigateToGroupInfo(groupId);
     }
 
@@ -157,10 +157,10 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
     }
 
     @Override
-    public void navigateToGroupInfo(Long groupId) {
+    public void navigateToGroupInfo(Integer groupId) {
         Intent intent = new Intent(this, GroupInfoActivity.class);
         Bundle mbundle = new Bundle();
-        mbundle.putLong(Constants.BundleKeys.GROUP_ID,groupId);
+        mbundle.putInt(Constants.BundleKeys.GROUP_ID,groupId);
         intent.putExtras(mbundle);
         startActivity(intent);
         finish();

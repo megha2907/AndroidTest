@@ -31,12 +31,11 @@ public class GroupSelectionFragment extends NostragamusFragment implements Group
 
     private GroupSelectionFragment.OnTournamentUpdatedListener mUpdatedListener;
 
-    public static GroupSelectionFragment newInstance(String groupid,GroupSelectionFragment.OnTournamentUpdatedListener listener) {
+    public static GroupSelectionFragment newInstance(Integer groupId,GroupSelectionFragment.OnTournamentUpdatedListener listener) {
 
-        Long groupId = Long.parseLong(groupid);
 
         Bundle bundle = new Bundle();
-        bundle.putLong(KEY_GROUP_ID, groupId);
+        bundle.putInt(KEY_GROUP_ID, groupId);
 
         GroupSelectionFragment fragment = new GroupSelectionFragment();
         fragment.setArguments(bundle);
@@ -66,7 +65,6 @@ public class GroupSelectionFragment extends NostragamusFragment implements Group
 
     @Override
     public void setSelectedAdapter(GrpTournamentSelectionAdapter adapter) {
-        Log.i("inside","setSelectedAdapter");
         this.mRvSportSelection.setAdapter(adapter);
     }
 

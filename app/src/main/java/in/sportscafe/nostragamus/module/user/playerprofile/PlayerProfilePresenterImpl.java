@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.user.playerprofile;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -47,6 +48,12 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
         mProfileView.setProfileImage(playerInfo.getPhoto());
        // mProfileView.setTotalPoints(playerInfo.getTotalPoints());
         mProfileView.setBadgesCount(playerInfo.getBadges().size(),playerInfo.getBadges());
+
+        if (!TextUtils.isEmpty(playerInfo.getInfoDetails().getLevel())) {
+            mProfileView.setLevel(playerInfo.getInfoDetails().getLevel());
+        }else {
+            mProfileView.setLevel("1");
+        }
 
         if (null == playerInfo.getMutualGroups()) {
             Log.i("inside","nullmutualgroups");

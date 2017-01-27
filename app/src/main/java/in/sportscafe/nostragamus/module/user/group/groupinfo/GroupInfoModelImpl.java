@@ -45,9 +45,9 @@ public class GroupInfoModelImpl implements GroupInfoModel {
     @Override
     public void init(Bundle bundle) {
 
-        if(null != bundle.getString((Constants.BundleKeys.GROUP_ID))){
-            Long groupId = Long.parseLong(bundle.getString(Constants.BundleKeys.GROUP_ID));
-            getGroupSummary(groupId.intValue());
+        if(bundle.getInt(Constants.BundleKeys.GROUP_ID)!=0){
+            Integer groupId =(bundle.getInt(Constants.BundleKeys.GROUP_ID));
+            getGroupSummary(groupId);
         } else
         {
             mGroupInfoModelListener.onFailed(Constants.Alerts.GROUP_INFO_ERROR);
@@ -84,7 +84,7 @@ public class GroupInfoModelImpl implements GroupInfoModel {
                             NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
                             GroupInfo groupInfo = response.body().getGroupInfo();
 
-                            Map<Long, GroupInfo> grpInfoMap = nostragamusDataHandler.getGrpInfoMap();
+                            Map<Integer, GroupInfo> grpInfoMap = nostragamusDataHandler.getGrpInfoMap();
                             grpInfoMap.put(groupInfo.getId(), groupInfo);
 
                             nostragamusDataHandler.setGrpInfoMap(grpInfoMap);
@@ -126,7 +126,7 @@ public class GroupInfoModelImpl implements GroupInfoModel {
     @Override
     public Bundle getGroupIdBundle() {
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.BundleKeys.GROUP_ID, String.valueOf(mGroupInfo.getId()));
+        bundle.putInt(Constants.BundleKeys.GROUP_ID, mGroupInfo.getId());
         return bundle;
     }
 

@@ -25,8 +25,7 @@ public class MembersActivity extends NostragamusActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.admin_members_fl_members_holder,
-                        MembersFragment.newInstance(getIntent()
-                                .getStringExtra(Constants.BundleKeys.GROUP_ID)))
+                        MembersFragment.newInstance(getIntent().getIntExtra(Constants.BundleKeys.GROUP_ID,0)), "Group Members")
                 .commit();
 
         initToolBar();

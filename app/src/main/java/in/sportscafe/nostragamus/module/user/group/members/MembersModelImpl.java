@@ -25,7 +25,7 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
 
     private boolean mAdmin = false;
 
-    private Long mGroupId;
+    private Integer mGroupId;
 
     private MembersAdapter mMembersAdapter;
 
@@ -40,9 +40,9 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
     }
 
     @Override
-    public MembersAdapter init(Context context, long groupId) {
+    public MembersAdapter init(Context context, Integer groupId) {
         this.mGroupId = groupId;
-        Map<Long, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
+        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
         if(grpInfoMap.containsKey(mGroupId)) {
 
             List<GroupPerson> members = grpInfoMap.get(mGroupId).getMembers();
@@ -135,7 +135,7 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
     private void handleRemoveResponse(int position) {
         GroupPerson groupPerson = mMembersAdapter.getItem(position);
 
-        Map<Long, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
+        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
         List<GroupPerson> members = grpInfoMap.get(mGroupId).getMembers();
         members.remove(groupPerson);
         NostragamusDataHandler.getInstance().setGrpInfoMap(grpInfoMap);
@@ -174,7 +174,7 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
         GroupPerson groupPerson = mMembersAdapter.getItem(position);
         groupPerson.setAdmin(true);
 
-        Map<Long, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
+        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
         List<GroupPerson> members = grpInfoMap.get(mGroupId).getMembers();
         members.get(members.indexOf(groupPerson)).setAdmin(true);
         NostragamusDataHandler.getInstance().setGrpInfoMap(grpInfoMap);

@@ -115,8 +115,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getCurrentTournaments(isCurrent);
     }
 
-    public Call<ApiResponse> getPostAnswerRequest(Answer answer) {
-        return mNostragamusService.saveAnswer(answer);
+    public Call<ApiResponse> getPostAnswerRequest(Answer answer,Boolean isMatchComplete,Boolean isMinorityOption) {
+        return mNostragamusService.saveAnswer(answer,isMatchComplete,isMinorityOption);
     }
 
     public Call<GroupsDetailResponse> getGrpInfoRequest() {

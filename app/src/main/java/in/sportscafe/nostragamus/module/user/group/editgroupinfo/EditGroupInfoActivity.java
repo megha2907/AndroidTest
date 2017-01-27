@@ -130,7 +130,7 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
         Intent intent =  new Intent(this, GroupInfoActivity.class);
         Bundle mBundleNew = new Bundle();
-        mBundleNew.putString(Constants.BundleKeys.GROUP_ID, mBundle.getString(Constants.BundleKeys.GROUP_ID));
+        mBundleNew.putInt(Constants.BundleKeys.GROUP_ID, mBundle.getInt(Constants.BundleKeys.GROUP_ID));
         mBundleNew.putString(Constants.BundleKeys.GROUP_NAME, mBundle.getString(Constants.BundleKeys.GROUP_NAME));
         intent.putExtras(mBundleNew);
         startActivityForResult(intent,CODE_GROUP_INFO);

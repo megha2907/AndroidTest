@@ -9,14 +9,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class JoinGroup {
 
     @JsonProperty("group_id")
-    private Long groupId;
+    private Integer groupId;
 
     @JsonProperty("group_id")
-    public Long getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
+
     @JsonProperty("group_id")
-    public void setGroupId(Long groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 }
