@@ -38,6 +38,7 @@ import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
 
 import java.io.File;
+import java.util.Calendar;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
@@ -52,6 +53,9 @@ import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
+import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -185,7 +189,19 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mbundle = getIntent().getExtras();
         Match match = (Match) mbundle.getSerializable(Constants.BundleKeys.MATCH_LIST);
 
-        if (match.getMatchPoints()!=0){
+        long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                match.getStartTime(),
+                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                Constants.DateFormats.GMT
+        );
+
+        TimeAgo timeAgo = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(), startTimeMs);
+        boolean isMatchStarted = timeAgo.timeDiff <= 0
+                || timeAgo.timeUnit == TimeUnit.MILLISECOND
+                || timeAgo.timeUnit == TimeUnit.SECOND;
+
+
+        if (match.getResultPublished() || isMatchStarted){
             powerupMainFab.setVisibility(View.GONE);
         }else {
             powerupMainFab.setVisibility(View.VISIBLE);
