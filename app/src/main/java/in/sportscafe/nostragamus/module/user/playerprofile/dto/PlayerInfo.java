@@ -84,6 +84,9 @@ public class PlayerInfo extends BasicUserInfo implements Serializable {
 
     @JsonProperty("total_points")
     public Long getTotalPoints() {
+        if(null == points) {
+            return 0L;
+        }
         return points;
     }
 

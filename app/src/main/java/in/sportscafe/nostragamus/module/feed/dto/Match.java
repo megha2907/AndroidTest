@@ -55,7 +55,7 @@ public class Match implements Serializable {
     private Integer matchPoints;
 
     @JsonProperty("correct_count")
-    private Integer correctCount;
+    private Integer correctCount = 0;
 
     @JsonProperty("is_attempted")
     private Integer isAttempted;
@@ -307,6 +307,9 @@ public class Match implements Serializable {
 
     @JsonProperty("correct_count")
     public Integer getCorrectCount() {
+        if(null == correctCount) {
+            return 0;
+        }
         return correctCount;
     }
 

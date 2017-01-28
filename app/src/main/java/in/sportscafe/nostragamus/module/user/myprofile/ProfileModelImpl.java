@@ -47,7 +47,7 @@ public class ProfileModelImpl implements ProfileModel , UserInfoModelImpl.OnGetU
                             return;
                         }
                         if(response.isSuccessful()) {
-                            mProfileModelListener.onGetProfileSuccess(updatedUserInfo, response.body().getSummary().getTotalPoints());
+                            mProfileModelListener.onGetProfileSuccess(updatedUserInfo);
                         } else {
                             mProfileModelListener.onGetProfileFailed(response.message());
                         }
@@ -77,7 +77,7 @@ public class ProfileModelImpl implements ProfileModel , UserInfoModelImpl.OnGetU
 
     public interface OnProfileModelListener {
 
-        void onGetProfileSuccess(UserInfo userInfo, Integer totalPoints);
+        void onGetProfileSuccess(UserInfo userInfo);
 
         void onGetProfileFailed(String message);
 
