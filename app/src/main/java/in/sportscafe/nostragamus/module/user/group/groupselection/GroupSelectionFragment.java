@@ -60,7 +60,7 @@ public class GroupSelectionFragment extends NostragamusFragment implements Group
         this.mRvSportSelection.setHasFixedSize(true);
 
         this.mGroupSelectionPresenter = GroupSelectionPresenterImpl.newInstance(this,mUpdatedListener);
-        this.mGroupSelectionPresenter.onGetGroupSelectionInfo(getArguments().getLong(KEY_GROUP_ID));
+        this.mGroupSelectionPresenter.onGetGroupSelectionInfo(getArguments().getInt(KEY_GROUP_ID));
     }
 
     @Override
