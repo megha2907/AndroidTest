@@ -56,13 +56,13 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
         }
 
         if (null == playerInfo.getMutualGroups()) {
-            Log.i("inside","nullmutualgroups");
             mProfileView.setGroupsCount(0);
         }else {
-            Log.i("inside","elsemutualgroups"+playerInfo.getMutualGroups());
             mProfileView.setGroupsCount(playerInfo.getMutualGroups().size());
         }
         mProfileView.setPoints(playerInfo.getTotalPoints());
+        mProfileView.setAccuracy(playerInfo.getAccuracy());
+        mProfileView.setPredictionCount(playerInfo.getPredictionCount());
         mProfileView.initMyPosition(playerInfo);
     }
 

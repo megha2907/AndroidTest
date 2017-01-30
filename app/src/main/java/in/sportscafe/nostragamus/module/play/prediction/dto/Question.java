@@ -73,7 +73,7 @@ public class Question implements Serializable {
     private int questionNumber;
 
     @JsonIgnore
-    private String powerUpId = "null";
+    private String powerUpId = null;
 
     @JsonIgnore
     private String option1AudPollPer;

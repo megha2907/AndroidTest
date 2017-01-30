@@ -36,6 +36,12 @@ public class PlayerInfo extends BasicUserInfo implements Serializable {
     @JsonProperty("total_powerups")
     private Long totalPowerups;
 
+    @JsonProperty("count_predictions")
+    private Integer predictionCount;
+
+    @JsonProperty("accuracy")
+    private Integer accuracy;
+
     @JsonProperty("mutual_groups")
     private List<MutualGroups> mutualGroups;
 
@@ -119,4 +125,25 @@ public class PlayerInfo extends BasicUserInfo implements Serializable {
     public List<Badge> getBadges() {
         return infoDetails.getBadges();
     }
+
+    @JsonProperty("count_predictions")
+    public Integer getPredictionCount() {
+        return predictionCount;
+    }
+
+    @JsonProperty("count_predictions")
+    public void setPredictionCount(Integer predictionCount) {
+        this.predictionCount = predictionCount;
+    }
+
+    @JsonProperty("accuracy")
+    public Integer getAccuracy() {
+        return accuracy;
+    }
+
+    @JsonProperty("accuracy")
+    public void setAccuracy(Integer accuracy) {
+        this.accuracy = accuracy;
+    }
+
 }

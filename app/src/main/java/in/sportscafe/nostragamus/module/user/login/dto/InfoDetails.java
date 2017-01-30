@@ -19,6 +19,9 @@ public class InfoDetails {
     @JsonProperty("badges")
     private List<Badge> badges = new ArrayList<>();
 
+    @JsonProperty("transient_badges")
+    private List<Badge> transientBadges = new ArrayList<>();
+
     @JsonProperty("level")
     private String level;
 
@@ -50,6 +53,16 @@ public class InfoDetails {
     @JsonProperty("level")
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    @JsonProperty("transient_badges")
+    public List<Badge> getTransientBadges() {
+        return transientBadges;
+    }
+
+    @JsonProperty("transient_badges")
+    public void setTransientBadges(List<Badge> transientBadges) {
+        this.transientBadges = transientBadges;
     }
 
 }

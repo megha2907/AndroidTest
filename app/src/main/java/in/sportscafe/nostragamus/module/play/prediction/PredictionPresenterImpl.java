@@ -122,13 +122,13 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     public void onFailedAudiencePollResponse(String message) {
         mPredictionView.dismissProgressbar();
         mPredictionView.dismissPowerUp();
-        mPredictionView.updateAudiencePollPowerup();
         mPredictionView.showMessage(Constants.Alerts.AUDIENCE_POLL_FAIL);
     }
 
     @Override
     public void onSuccessAudiencePollResponse() {
         mPredictionView.dismissProgressbar();
+        mPredictionView.updateAudiencePollPowerup();
     }
 
     @Override
