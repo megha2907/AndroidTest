@@ -33,6 +33,7 @@ public class UserInfo extends PlayerInfo {
     @JsonProperty("count_groups")
     private Integer totalGroups;
 
+
     /**
      * @return The email
      */
@@ -132,6 +133,7 @@ public class UserInfo extends PlayerInfo {
     public void setTotalGroups(Integer totalGroups) {
         this.totalGroups = totalGroups;
     }
+
 
     @JsonIgnore
     public HashMap<String, Integer> getPowerUps() {

@@ -185,7 +185,12 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         this.mResultsPresenter.onCreateMyResults(getIntent().getExtras());
 
 
-        Bundle mbundle = new Bundle();
+
+      //COMMENT REPLAY AND FLIP POWERUPS FOR NOW
+
+        powerupMainFab.setVisibility(View.GONE);
+
+       /* Bundle mbundle = new Bundle();
         mbundle = getIntent().getExtras();
         Match match = (Match) mbundle.getSerializable(Constants.BundleKeys.MATCH_LIST);
 
@@ -205,7 +210,10 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             powerupMainFab.setVisibility(View.GONE);
         }else {
             powerupMainFab.setVisibility(View.VISIBLE);
-        }
+        } */
+
+
+
 
         /*this.mRvMyResults.addOnScrollListener(new RecyclerView.OnScrollListener()
         {

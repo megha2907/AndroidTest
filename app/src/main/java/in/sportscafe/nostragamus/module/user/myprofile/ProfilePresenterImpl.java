@@ -106,6 +106,10 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
         }else {
             mProfileView.setLevel("1");
         }
+
+        mProfileView.setAccuracy(userInfo.getAccuracy());
+        mProfileView.setPredictionCount(userInfo.getPredictionCount());
+
         onGetSportsSelectionResult();
         onGetGroupCount();
         onGetPowerUpsCount();

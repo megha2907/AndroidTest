@@ -36,7 +36,7 @@ import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
  * Created by deepanshi on 12/22/16.
  */
 
-public class PlayerProfileActivity extends NostragamusActivity implements PlayerProfileView,View.OnClickListener {
+public class PlayerProfileActivity extends NostragamusActivity implements PlayerProfileView, View.OnClickListener {
 
     private String sportsFollowed;
 
@@ -73,7 +73,7 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     @Override
     public void setName(String name) {
         Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Regular.ttf");
-        TextView tvName=(TextView) findViewById(R.id.player_profile_tv_title);
+        TextView tvName = (TextView) findViewById(R.id.player_profile_tv_title);
         tvName.setText(name);
         tvName.setTypeface(tftitle);
     }
@@ -97,9 +97,9 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     public void setGroupsCount(int GroupsCount) {
 //        TextView tvGroup=(TextView) findViewById(R.id.profile_number_of_groups);
 //        tvGroup.setText(String.valueOf(GroupsCount));
-        if (GroupsCount==0){
+        if (GroupsCount == 0) {
             groupsCount = "0";
-        }else {
+        } else {
             groupsCount = String.valueOf(GroupsCount);
         }
     }
@@ -108,21 +108,29 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     @Override
     public void setLevel(String level) {
         TextView tvLevel = (TextView) findViewById(R.id.player_profile_tv_level);
-        Button btnLevel = (Button) findViewById(R.id.player_profile_btn_level);
-        String ordinalLevel = AppSnippet.ordinal(Integer.parseInt(level));
-        tvLevel.setText(ordinalLevel + " level");
-        btnLevel.setText(level);
-
+        tvLevel.setText("Level "+level);
     }
 
     @Override
     public void setPoints(long points) {
-        TextView tvPoints=(TextView) findViewById(R.id.player_profile_tv_points);
+        TextView tvPoints = (TextView) findViewById(R.id.player_profile_tv_points);
         tvPoints.setText(String.valueOf(points));
     }
 
     @Override
-    public void setBadgesCount(int badgesCount,List<Badge> badgeList) {
+    public void setAccuracy(int accuracy) {
+        Button tvPoints = (Button) findViewById(R.id.player_profile_btn_accuracy);
+        tvPoints.setText(String.valueOf(accuracy + "%"));
+    }
+
+    @Override
+    public void setPredictionCount(Integer predictionCount) {
+        Button tvPredictionCount = (Button) findViewById(R.id.player_profile_btn_predictions);
+        tvPredictionCount.setText(String.valueOf(predictionCount));
+    }
+
+    @Override
+    public void setBadgesCount(int badgesCount, List<Badge> badgeList) {
 
 //        LinearLayout parent = (LinearLayout)findViewById(R.id.badges_ll);
 //        RelativeLayout.LayoutParams layoutParams =
@@ -302,16 +310,18 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
             }
 
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
         tabLayout.setupWithViewPager(mViewPager);
 
-        LinearLayout linearLayout = (LinearLayout)tabLayout.getChildAt(0);
+        LinearLayout linearLayout = (LinearLayout) tabLayout.getChildAt(0);
         linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         GradientDrawable drawable = new GradientDrawable();
         drawable.setColor(getContext().getResources().getColor(R.color.profile_tab_line_color));
@@ -327,15 +337,15 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
         pagerAdapter.addFragment(TimelineFragment.newInstance(playerInfo.getId() + ""),
                 playerInfo.getTotalMatchesPlayed() + "\n Matches");
 
-        if (groupsCount=="1"){
-            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), groupsCount+ "\n Mutual Group");
-        }else {
-            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), groupsCount+ "\n Mutual Groups");
+        if (groupsCount == "1") {
+            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), groupsCount + "\n Mutual Group");
+        } else {
+            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), groupsCount + "\n Mutual Groups");
         }
-        if (badgeCount=="1"){
-            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount+"\n Badge");
-        }else {
-            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount+"\n Badges");
+        if (badgeCount == "1") {
+            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount + "\n Badge");
+        } else {
+            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount + "\n Badges");
         }
         return pagerAdapter;
     }

@@ -289,10 +289,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void updateAudiencePollPowerup() {
-
-        NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() + 1);
-        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups());
-        tvPollPowerupCount.setText(UpdatedPowerUps);
+        String updatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() - 1);
+        tvPollPowerupCount.setText(updatedPowerUps);
     }
 
 

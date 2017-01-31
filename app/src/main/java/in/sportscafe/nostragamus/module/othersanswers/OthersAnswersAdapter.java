@@ -289,7 +289,7 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
 
         String powerupused = question.getAnswerPowerUpId();
 
-        if (powerupused.equals("null")) {
+        if (powerupused.equals("null") || powerupused.equals(null)) {
             powerupUsed.setVisibility(View.GONE);
             powerup.setVisibility(View.GONE);
         } else if (powerupused.equals("player_poll")) {
