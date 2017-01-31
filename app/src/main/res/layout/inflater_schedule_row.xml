@@ -46,10 +46,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/schedule_row_tv_match_stage"
-        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_15"
         android:maxLines="1"
         android:textColor="@color/starship"
-        android:textSize="@dimen/dp_11"
+        android:textSize="@dimen/dp_12"
         android:visibility="gone"
         app:typeface="lato_bold" />
 
@@ -110,7 +110,7 @@
                     android:text="Atletico"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_14"
+                    android:textSize="@dimen/dp_12"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.HmImageView
@@ -142,7 +142,7 @@
                     android:text="Atletico"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_14"
+                    android:textSize="@dimen/dp_12"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.HmImageView
@@ -164,50 +164,53 @@
                 android:layout_below="@id/schedule_row_btn_vs"
                 android:background="@drawable/tournament_ready_btn_bg"
                 android:gravity="center"
+                android:textAllCaps="false"
                 android:onClick="onClick"
                 android:paddingBottom="@dimen/dp_2"
                 android:paddingLeft="@dimen/dp_15"
                 android:paddingRight="@dimen/dp_15"
                 android:text="@string/play"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dp_14"
+                android:textSize="@dimen/dp_13"
                 android:visibility="gone"
                 app:typeface="roboto_condensed" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/schedule_row_ll_waiting_for_result"
-                android:layout_width="@dimen/dp_90"
+                android:layout_width="@dimen/dp_72"
                 android:layout_height="@dimen/dp_36"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/schedule_row_btn_vs"
                 android:background="@drawable/tournament_ready_btn_bg"
                 android:clickable="true"
-                android:gravity="center"
-                android:orientation="vertical"
+                android:paddingTop="@dimen/dp_8"
                 android:visibility="gone">
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="View"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_10"
-                    android:gravity="center"
-                    app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/schedule_row_ll_waiting_for_result_answers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp_2"
-                    android:drawableRight="@drawable/timeline_points_arrow"
-                    android:gravity="bottom"
-                    android:layout_gravity="center"
                     android:text="Answers"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_10"
-                    app:typeface="lato_regular" />
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular"
+                    android:visibility="visible"
+                    />
 
-            </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_10"
+                    android:src="@drawable/timeline_points_arrow"
+                    android:layout_toRightOf="@+id/schedule_row_ll_waiting_for_result_answers"
+                    android:layout_marginLeft="@dimen/dp_2"
+                    android:layout_centerVertical="true"
+                    android:visibility="visible"
+
+                   />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
@@ -223,7 +226,7 @@
             android:gravity="center"
             android:lineSpacingExtra="@dimen/dp_2"
             android:textColor="@color/white"
-            android:textSize="@dimen/dp_11"
+            android:textSize="@dimen/dp_12"
             android:visibility="gone"
             app:typeface="lato_regular" />
 
@@ -261,7 +264,7 @@
                 android:text="60 Points"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dp_11"
+                android:textSize="@dimen/dp_12"
                 app:typeface="lato_bold" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -275,7 +278,7 @@
                 android:maxLines="2"
                 android:text="You got 3/5 answers correct"
                 android:textColor="@color/starship"
-                android:textSize="@dimen/dp_11"
+                android:textSize="@dimen/dp_12"
                 app:typeface="lato_bold" />
 
         </RelativeLayout>
@@ -292,7 +295,7 @@
             android:gravity="center"
             android:maxLines="2"
             android:textColor="@color/white"
-            android:textSize="@dimen/dp_14"
+            android:textSize="@dimen/dp_12"
             android:visibility="gone"
             app:typeface="lato_bold" />
 

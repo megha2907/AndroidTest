@@ -176,6 +176,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
             holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
             holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Correct");
+            holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard,match));
 
         }
 
@@ -184,7 +185,6 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question));
         }
 
-        holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard,match));
 
         return myResultView;
     }

@@ -186,9 +186,9 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
             holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
             holder.mViewResult.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setVisibility(View.GONE);
+            holder.mBtnMatchPoints.setVisibility(View.GONE);
+            holder.mTvResultCorrectCount.setVisibility(View.GONE);
 
-            holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
-            holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Correct");
 
         }
 

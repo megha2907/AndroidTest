@@ -160,7 +160,7 @@ public interface NostragamusService {
     );
 
     @GET("v1/game/users/getFuzzyPlayer")
-    Call<FuzzyPlayerResponse> fuzzyPlayers(@Query("player_user_name") String key);
+    Call<FuzzyPlayerResponse> fuzzyPlayers(@Query("player_user_name") String key,@Query("match_id") Integer matchId);
 
     @GET("v1/game/getPlayerResult")
     Call<MyResultsResponse> getPlayerResult(@Query("player_id") Integer playerId, @Query("match_id") Integer matchId);

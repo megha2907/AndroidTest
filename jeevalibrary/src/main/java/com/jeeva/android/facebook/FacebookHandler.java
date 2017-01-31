@@ -131,7 +131,7 @@ public class FacebookHandler implements FacebookConstants.Alerts {
             ShareLinkContent.Builder linkContent = new ShareLinkContent.Builder()
                     .setContentUrl(Uri.parse(contentUrl))
                     .setShareHashtag(new ShareHashtag.Builder()
-                            .setHashtag("#NOSTRAGAMUS")
+                            .setHashtag("#Nostragamus")
                             .build());
 
             shareDialog.show(linkContent.build());
