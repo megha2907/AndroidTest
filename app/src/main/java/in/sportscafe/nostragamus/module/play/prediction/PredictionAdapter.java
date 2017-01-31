@@ -384,8 +384,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         mRightOption.setAlpha(alpha);
         mLeftOptionArrow.setAlpha(alpha);
         mRightOptionArrow.setAlpha(alpha);
-        mLeftImage.setAlpha(mLeftAlpha);
-        mRightImage.setAlpha(mRightAlpha);
+        /*mLeftImage.setAlpha(mLeftAlpha);
+        mRightImage.setAlpha(mRightAlpha);*/
 
         alpha = 1f - alpha;
         /*mLeftOverlay.setAlpha(alpha / 2f);

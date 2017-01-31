@@ -40,6 +40,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     private TextView mTvPollPowerupCount;
 
+    private TextView mTvNeitherOption;
+
     private PredictionPresenter mPredictionPresenter;
 
     private PredictionModel mPredictionModel;
@@ -61,6 +63,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mTv2xPowerupCount = (TextView) findViewById(R.id.powerup_tv_2x_count);
         mTvNonegsPowerupCount = (TextView) findViewById(R.id.powerup_tv_nonegs_count);
         mTvPollPowerupCount = (TextView) findViewById(R.id.powerup_tv_poll_count);
+        mTvNeitherOption = (TextView) findViewById(R.id.prediction_tv_neither_text);
 
         mIv2xPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
         mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.radical_red));
@@ -113,12 +116,12 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void showNeither() {
-        findViewById(R.id.prediction_btn_neither).setVisibility(View.VISIBLE);
+        findViewById(R.id.prediction_ll_neither).setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideNeither() {
-        findViewById(R.id.prediction_btn_neither).setVisibility(View.INVISIBLE);
+        findViewById(R.id.prediction_ll_neither).setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -130,7 +133,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             case R.id.prediction_btn_shuffle:
                 mSwipeFlingAdapterView.getTopCardListener().selectBottom();
                 break;
-            case R.id.prediction_btn_neither:
+            case R.id.prediction_ll_neither:
                 mSwipeFlingAdapterView.getTopCardListener().selectTop();
                 break;
             case R.id.swipe_card_tv_left:
@@ -160,8 +163,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void setNeitherOption(String neitherOption) {
-        TextView textView = (TextView) findViewById(R.id.prediction_btn_neither);
-        textView.setText(neitherOption);
+        mTvNeitherOption.setText(neitherOption);
 
         invokeCardListener();
     }

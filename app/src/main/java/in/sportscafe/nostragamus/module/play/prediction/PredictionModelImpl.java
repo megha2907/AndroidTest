@@ -219,10 +219,14 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
         if (itemsInAdapter == 0) {
-            Bundle bundle = new Bundle();
-            bundle.putInt(BundleKeys.TOURNAMENT_ID, mMyResult.getTournamentId());
-            bundle.putString(BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
-            mPredictionModelListener.onSuccessCompletion(bundle);
+            if(!mDummyGame) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(BundleKeys.TOURNAMENT_ID, mMyResult.getTournamentId());
+                bundle.putString(BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
+                mPredictionModelListener.onSuccessCompletion(bundle);
+            } else {
+                mPredictionModelListener.onDummyGameCompletion();
+            }
             return;
         }
 
@@ -248,10 +252,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     @Override
     public void onCardMoving(float xPercent, float yPercent) {
-        Log.d("Move Percentages --> ", xPercent + "%  " + yPercent + "%");
-
         mPredictionAdapter.onCardMoving(xPercent, yPercent);
-
     }
 
     private Match getDummyGameMatch() {
@@ -435,5 +436,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         void onNonegsApplied(int count);
 
         void onAudiencePollApplied(int count);
+
+        void onDummyGameCompletion();
     }
 }

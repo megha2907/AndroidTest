@@ -161,6 +161,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
+    public void onDummyGameCompletion() {
+
+    }
+
+    @Override
     public void onNoInternet() {
         mPredictionView.dismissProgressbar();
         mPredictionView.showMessage(Alerts.NO_NETWORK_CONNECTION);
