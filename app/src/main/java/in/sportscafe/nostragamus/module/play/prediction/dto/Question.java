@@ -214,7 +214,7 @@ public class Question implements Serializable {
      */
     @JsonProperty("question_option_3")
     public String getQuestionOption3() {
-        if(null == questionOption3) {
+        if (null == questionOption3) {
             return "";
         }
         return questionOption3;
@@ -289,7 +289,7 @@ public class Question implements Serializable {
      * @param AnswerPowerUpId The answerPowerUpId
      */
     @JsonProperty("powerup_id")
-    public void setAnswerPowerUpId(String AnswerPowerUpId ) {
+    public void setAnswerPowerUpId(String AnswerPowerUpId) {
         this.AnswerPowerUpId = AnswerPowerUpId;
     }
 
@@ -405,7 +405,7 @@ public class Question implements Serializable {
 
     @JsonIgnore
     public void updatePollPercentage(AnswerPercentage answerPercentage) {
-        if(null != answerPercentage) {
+        if (null != answerPercentage) {
             option1AudPollPer = answerPercentage.getAnswer1();
             option2AudPollPer = answerPercentage.getAnswer2();
             option3AudPollPer = answerPercentage.getAnswer0();

@@ -235,6 +235,8 @@ public interface Constants {
         String XX = "2x";
         String NO_NEGATIVE = "no_negs";
         String AUDIENCE_POLL = "player_poll";
+        String MATCH_REPLAY = "match_replay";
+        String ANSWER_FLIP = "answer_flip";
     }
 
     interface AnalyticsCategory {

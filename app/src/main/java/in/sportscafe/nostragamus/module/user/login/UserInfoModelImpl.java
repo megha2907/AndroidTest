@@ -1,5 +1,9 @@
 package in.sportscafe.nostragamus.module.user.login;
 
+import java.util.HashMap;
+
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -13,21 +17,20 @@ import retrofit2.Response;
  * Created by deepanshi on 1/10/17.
  */
 
-public class UserInfoModelImpl  {
+public class UserInfoModelImpl {
 
     private UserInfoModelImpl.OnGetUserInfoModelListener mUserInfoModelListener;
 
-    private UserInfoModelImpl( OnGetUserInfoModelListener listener) {
+    private UserInfoModelImpl(OnGetUserInfoModelListener listener) {
         this.mUserInfoModelListener = listener;
     }
-
 
     public static UserInfoModelImpl newInstance(OnGetUserInfoModelListener listener) {
         return new UserInfoModelImpl(listener);
     }
 
     public void getUserInfo() {
-        if(Nostragamus.getInstance().hasNetworkConnection()) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
             callUserInfoApi();
         }
     }
@@ -39,35 +42,31 @@ public class UserInfoModelImpl  {
                     public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
                         if (response.isSuccessful()) {
                             super.onResponse(call, response);
+                            NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
+
                             UserInfo updatedUserInfo = response.body().getUserInfo();
-
                             if (null != updatedUserInfo) {
+                                nostragamusDataHandler.setUserInfo(updatedUserInfo);
 
-                                NostragamusDataHandler.getInstance().setUserInfo(updatedUserInfo);
+                                HashMap<String, Integer> powerUpMap = updatedUserInfo.getPowerUps();
+                                nostragamusDataHandler.setNumberof2xPowerups(powerUpMap.get(Powerups.XX));
+                                nostragamusDataHandler.setNumberofNonegsPowerups(powerUpMap.get(Powerups.NO_NEGATIVE));
+                                nostragamusDataHandler.setNumberofAudiencePollPowerups(powerUpMap.get(Powerups.AUDIENCE_POLL));
+                                nostragamusDataHandler.setNumberofReplayPowerups(powerUpMap.get(Powerups.MATCH_REPLAY));
+                                nostragamusDataHandler.setNumberofFlipPowerups(powerUpMap.get(Powerups.ANSWER_FLIP));
+
+                                nostragamusDataHandler.setNumberofBadges(updatedUserInfo.getBadges().size());
+                                nostragamusDataHandler.setNumberofGroups(updatedUserInfo.getTotalGroups());
 
                                 mUserInfoModelListener.onSuccessGetUpdatedUserInfo(updatedUserInfo);
-
-                                if(null != updatedUserInfo)
-                                {
-                                    NostragamusDataHandler.getInstance().setNumberof2xPowerups(updatedUserInfo.getPowerUps().get("2x"));
-                                    NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(updatedUserInfo.getPowerUps().get("no_negs"));
-                                    NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(updatedUserInfo.getPowerUps().get("player_poll"));
-                                    NostragamusDataHandler.getInstance().setNumberofReplayPowerups(updatedUserInfo.getPowerUps().get("match_replay"));
-                                    NostragamusDataHandler.getInstance().setNumberofFlipPowerups(updatedUserInfo.getPowerUps().get("answer_flip"));
-                                }
-                                NostragamusDataHandler.getInstance().setNumberofBadges(updatedUserInfo.getBadges().size());
-                                NostragamusDataHandler.getInstance().setNumberofGroups(updatedUserInfo.getTotalGroups());
                             }
-
-                        }else {
-
+                        } else {
                             mUserInfoModelListener.onFailedGetUpdateUserInfo(response.message());
                         }
                     }
                 }
         );
     }
-
 
     public interface OnGetUserInfoModelListener {
 
