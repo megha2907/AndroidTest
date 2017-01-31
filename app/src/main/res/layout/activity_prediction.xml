@@ -78,7 +78,7 @@
         app:rotation_degrees="15.5" />
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/play_toolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
         android:alpha="0.1"

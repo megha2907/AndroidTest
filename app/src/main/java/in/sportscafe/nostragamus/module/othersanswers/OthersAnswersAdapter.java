@@ -281,10 +281,10 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
             }
         }
 
-        if (null != question.getOption1AudPollPer()) {
+        if (-1 != question.getOption1AudPollPer()) {
             tvAnswerPoints.setVisibility(View.INVISIBLE);
-            ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_1)).setText(question.getOption1AudPollPer());
-            ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_2)).setText(question.getOption2AudPollPer());
+            ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_1)).setText(question.getOption1AudPollPer() + "%");
+            ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_2)).setText(question.getOption2AudPollPer() + "%");
         }
 
         String powerupused = question.getAnswerPowerUpId();

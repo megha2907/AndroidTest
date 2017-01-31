@@ -178,7 +178,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 //
 //        if(badgeList.size() <= 8) {
 //
-//            LinearLayout layout2 = new LinearLayout(getContext());
+//            LinearLayout layout2 = new LinearLayout(isThreadAlive());
 //            layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 //            parent.setOrientation(LinearLayout.VERTICAL);
 //            parent.addView(layout2);
@@ -190,7 +190,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 //
 //                String badge_id = parts[0];
 //
-//                ImageView imageView = new ImageView(getContext());
+//                ImageView imageView = new ImageView(isThreadAlive());
 //                imageView.setLayoutParams(new RelativeLayout.LayoutParams
 //                        (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 //                imageView.getLayoutParams().height = 40;
@@ -215,7 +215,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 //
 //        }else if(badgeList.size()>8) {
 //
-//            LinearLayout layout2 = new LinearLayout(getContext());
+//            LinearLayout layout2 = new LinearLayout(isThreadAlive());
 //            layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 //            parent.setOrientation(LinearLayout.VERTICAL);
 //            parent.addView(layout2);
@@ -226,7 +226,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 //
 //                String badge_id = parts[0];
 //
-//                ImageView imageView = new ImageView(getContext());
+//                ImageView imageView = new ImageView(isThreadAlive());
 //                imageView.setLayoutParams(new RelativeLayout.LayoutParams
 //                        (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 //                imageView.getLayoutParams().height = 40;
@@ -249,7 +249,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 //            }
 //
 //
-//                LinearLayout layout3 = new LinearLayout(getContext());
+//                LinearLayout layout3 = new LinearLayout(isThreadAlive());
 //                layout3.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 //                parent.addView(layout3);
 //               // layout3.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -258,7 +258,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 //
 //                for (int j = 8; j < badgeList.size(); j++) {
 //
-//                    ImageView imageView2 = new ImageView(getContext());
+//                    ImageView imageView2 = new ImageView(isThreadAlive());
 //                    imageView2.setLayoutParams(new RelativeLayout.LayoutParams
 //                            (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 //                    imageView2.getLayoutParams().height = 40;
@@ -287,7 +287,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 //
 //                for (int j = 8; j < 16; j++) {
 //
-//                    ImageView imageView2 = new ImageView(getContext());
+//                    ImageView imageView2 = new ImageView(isThreadAlive());
 //                    imageView2.setLayoutParams(new RelativeLayout.LayoutParams
 //                            (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 //                    imageView2.getLayoutParams().height = 40;
@@ -312,7 +312,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 //                    }
 //                }
 //
-//                TextView textview = new TextView(getContext());
+//                TextView textview = new TextView(isThreadAlive());
 //                RelativeLayout.LayoutParams lpTextView = new RelativeLayout.LayoutParams(
 //                        RelativeLayout.LayoutParams.WRAP_CONTENT,
 //                        RelativeLayout.LayoutParams.WRAP_CONTENT);

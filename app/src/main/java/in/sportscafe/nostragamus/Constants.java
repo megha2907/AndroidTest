@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus;
 
+import static android.view.View.X;
+
 /**
  * Created by Jeeva on 30/3/15.
  */
@@ -221,6 +223,18 @@ public interface Constants {
         int NOT = 0;
         int PARTIALLY = 1;
         int COMPLETELY = 2;
+    }
+
+    interface AnswerIds {
+        int LEFT = 1;
+        int RIGHT = 2;
+        int NEITHER = 3;
+    }
+
+    interface Powerups {
+        String XX = "2x";
+        String NO_NEGATIVE = "no_negs";
+        String AUDIENCE_POLL = "player_poll";
     }
 
     interface AnalyticsCategory {

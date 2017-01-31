@@ -14,7 +14,7 @@ public class Answer {
     private Integer questionId;
 
     @JsonProperty("answer")
-    private String answerId;
+    private Integer answerId;
 
     @JsonProperty("answer_time")
     private String answerTime;
@@ -26,7 +26,7 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(Integer matchId, Integer questionId, String answerId, String answerTime, String powerUpId) {
+    public Answer(Integer matchId, Integer questionId, Integer answerId, String answerTime, String powerUpId) {
         this.matchId = matchId;
         this.questionId = questionId;
         this.answerId = answerId;
@@ -57,12 +57,12 @@ public class Answer {
     }
 
     @JsonProperty("answer")
-    public String getAnswerId() {
+    public Integer getAnswerId() {
         return answerId;
     }
 
     @JsonProperty("answer")
-    public void setAnswerId(String answerId) {
+    public void setAnswerId(Integer answerId) {
         this.answerId = answerId;
     }
 

@@ -39,7 +39,7 @@
     <string name="dummy_start_title">Welcome to Nostragamus!</string>
     <string name="dummy_start_desc">This is card swiping game, where you make predictions based on the direction in which you swipe the card. To help you understand the game better, we have prepared a mock game - which you may skipe if you are familiar with the gameplay. You can also access the game in the settings page, for any future reference.</string>
     <string name="dummy_start_action">PLAY</string>
-    <string name="dummy_done_title">And that's it! As easy as that!</string>
+    <string name="dummy_done_title">And that\'s it! As easy as that!</string>
     <string name="dummy_done_desc">You just finished your first match, and it was that simple. Now you can go to your home and play your games, or replay this game from the settings screen.</string>
     <string name="dummy_done_action">Proceed</string>
 
