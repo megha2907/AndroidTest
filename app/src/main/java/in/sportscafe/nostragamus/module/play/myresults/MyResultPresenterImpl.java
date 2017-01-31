@@ -38,11 +38,9 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
         mResultsView.setNumberofPowerups(NostragamusDataHandler.getInstance().getNumberofReplayPowerups(),
                 NostragamusDataHandler.getInstance().getNumberofFlipPowerups());
 
-        if (bundle.containsKey("screen"))
-        {
+        if (bundle.containsKey("screen")) {
             mResultsView.goBack();
         }
-
     }
 
     @Override
@@ -52,9 +50,9 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
 
     @Override
     public void onPowerUp(String powerup) {
-        if(powerup.equalsIgnoreCase("match_replay")){
+        if (powerup.equalsIgnoreCase("match_replay")) {
             mResultsView.openReplayDialog();
-        }else if (powerup.equalsIgnoreCase("answer_flip")){
+        } else if (powerup.equalsIgnoreCase("answer_flip")) {
             mResultsView.openFlipDialog();
         }
     }

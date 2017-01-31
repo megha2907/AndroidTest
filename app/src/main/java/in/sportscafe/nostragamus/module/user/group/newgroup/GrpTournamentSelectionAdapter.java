@@ -100,7 +100,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
 
             if (mSelectedTournamentsIdList.contains((tournamentInfo.getTournamentId()))) {
                 holder.mIvSelectedIcon.setBackgroundResource(R.drawable.tick_icon);
-              //  holder.mTvTournament.setTextColor(ContextCompat.getColor(holder.mIvTournament.getContext(), R.color.btn_powerup_screen_color));
+              //  holder.mTvTournament.setTextColor(ContextCompat.getColor(holder.mIvTournament.isThreadAlive(), R.color.btn_powerup_screen_color));
                 holder.mTvTournament.setAlpha(0.9f);
 
             } else {

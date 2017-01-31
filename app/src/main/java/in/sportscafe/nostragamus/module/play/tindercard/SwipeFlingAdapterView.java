@@ -300,7 +300,9 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
 
                     @Override
                     public void onScroll(float scrollProgressPercent) {
-                        mScrollListener.onScroll(scrollProgressPercent);
+                        if(null != mScrollListener) {
+                            mScrollListener.onScroll(scrollProgressPercent);
+                        }
                     }
 
                     @Override

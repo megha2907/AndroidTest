@@ -76,13 +76,16 @@ public class Question implements Serializable {
     private String powerUpId = null;
 
     @JsonIgnore
-    private String option1AudPollPer;
+    private int option1AudPollPer = -1;
 
     @JsonIgnore
-    private String option2AudPollPer;
+    private int option2AudPollPer = -1;
 
     @JsonIgnore
-    private String option3AudPollPer;
+    private int option3AudPollPer = -1;
+
+    @JsonIgnore
+    private int minorityAnswerId = -1;
 
     /**
      * @return The questionId
@@ -211,6 +214,9 @@ public class Question implements Serializable {
      */
     @JsonProperty("question_option_3")
     public String getQuestionOption3() {
+        if (null == questionOption3) {
+            return "";
+        }
         return questionOption3;
     }
 
@@ -283,7 +289,7 @@ public class Question implements Serializable {
      * @param AnswerPowerUpId The answerPowerUpId
      */
     @JsonProperty("powerup_id")
-    public void setAnswerPowerUpId(String AnswerPowerUpId ) {
+    public void setAnswerPowerUpId(String AnswerPowerUpId) {
         this.AnswerPowerUpId = AnswerPowerUpId;
     }
 
@@ -358,41 +364,56 @@ public class Question implements Serializable {
     }
 
     @JsonIgnore
-    public String getOption1AudPollPer() {
+    public int getOption1AudPollPer() {
         return option1AudPollPer;
     }
 
     @JsonIgnore
-    public void setOption1AudPollPer(String option1AudPollPer) {
+    public void setOption1AudPollPer(int option1AudPollPer) {
         this.option1AudPollPer = option1AudPollPer;
     }
 
     @JsonIgnore
-    public String getOption2AudPollPer() {
+    public int getOption2AudPollPer() {
         return option2AudPollPer;
     }
 
     @JsonIgnore
-    public void setOption2AudPollPer(String option2AudPollPer) {
+    public void setOption2AudPollPer(int option2AudPollPer) {
         this.option2AudPollPer = option2AudPollPer;
     }
 
     @JsonIgnore
-    public String getOption3AudPollPer() {
+    public int getOption3AudPollPer() {
         return option3AudPollPer;
     }
 
     @JsonIgnore
-    public void setOption3AudPollPer(String option3AudPollPer) {
+    public void setOption3AudPollPer(int option3AudPollPer) {
         this.option3AudPollPer = option3AudPollPer;
     }
 
     @JsonIgnore
+    public int getMinorityAnswerId() {
+        return minorityAnswerId;
+    }
+
+    @JsonIgnore
+    public void setMinorityAnswerId(int minorityAnswerId) {
+        this.minorityAnswerId = minorityAnswerId;
+    }
+
+    @JsonIgnore
     public void updatePollPercentage(AnswerPercentage answerPercentage) {
-        if(null != answerPercentage) {
-            option1AudPollPer = answerPercentage.getAnswer1().toString() + "%";
-            option2AudPollPer = answerPercentage.getAnswer2().toString() + "%";
-            option3AudPollPer = answerPercentage.getAnswer0().toString() + "%";
+        if (null != answerPercentage) {
+            option1AudPollPer = answerPercentage.getAnswer1();
+            option2AudPollPer = answerPercentage.getAnswer2();
+            option3AudPollPer = answerPercentage.getAnswer0();
         }
+    }
+
+    @JsonIgnore
+    public boolean isMinorityAnswer() {
+        return -1 != minorityAnswerId && answerId == minorityAnswerId;
     }
 }

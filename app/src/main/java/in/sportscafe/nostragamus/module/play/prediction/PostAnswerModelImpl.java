@@ -27,6 +27,10 @@ public class PostAnswerModelImpl {
         } else {
             mPostAnswerModelListener.onNoInternet();
         }
+
+        /*Log.i("PostAnswerModelImpl", "Answer -- > " + MyWebService.getInstance().getJsonStringFromObject(answer));
+        Log.i("PostAnswerModelImpl", "MinorityOption -- > " + minorityOption);
+        Log.i("PostAnswerModelImpl", "MatchComplete -- > " + matchComplete);*/
     }
 
     private void callPostAnswerApi(Answer answer, boolean minorityOption, Boolean matchComplete) {
@@ -40,10 +44,8 @@ public class PostAnswerModelImpl {
                                 mPostAnswerModelListener.onFailed(response.body().getMessage());
                             } else {
                                 mPostAnswerModelListener.onSuccess();
-                                Log.i("inside", "onSuccess");
                             }
                         } else {
-                            Log.i("inside", "onFailed");
                             mPostAnswerModelListener.onFailed(response.message());
                         }
                     }

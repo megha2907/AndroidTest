@@ -232,9 +232,8 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                             holder.mBtnPlayMatch.setTag(match);
 
                             if (GameAttemptedStatus.PARTIALLY == attemptedStatus) {
+                                holder.mBtnPlayMatch.setAllCaps(false);
                                 holder.mBtnPlayMatch.setText(("Continue"));
-
-
                             }
 
                             if (timeAgo.totalDiff < ONE_DAY_IN_MS) {

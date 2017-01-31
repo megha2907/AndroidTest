@@ -130,7 +130,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
                     @Override
                     public void onSuccess() {
                         Log.i("selected", "inside");
-                        mEditProfileView.navigateToHome(false);
+                        mEditProfileView.navigateToDummyGame(mEditProfileModel.getDummyGameData());
                     }
 
                     @Override

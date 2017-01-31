@@ -1,13 +1,11 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
@@ -19,13 +17,10 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     private PredictionView mPredictionView;
 
-    private FlingCardListener mFlingCardListener;
-
     private PredictionModel mPredictionModel;
 
     public PredictionPresenterImpl(PredictionView predictionView) {
         this.mPredictionView = predictionView;
-        this.mFlingCardListener = mFlingCardListener;
         this.mPredictionModel = PredictionModelImpl.newInstance(this);
     }
 
@@ -35,30 +30,28 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onCreatePrediction(Bundle bundle) {
-        mPredictionModel.saveData(bundle);
-        mPredictionView.setTournamentName(mPredictionModel.getTournamentName());
-        mPredictionView.setContestName(mPredictionModel.getContestName());
-        mPredictionView.setNumberofPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups(),
-                NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups(),
-                NostragamusDataHandler.getInstance().getNumberofNonegsPowerups());
-        // mPredictionView.setMatchStage(mPredictionModel.getMatchStage());
-        mPredictionView.setTournamentPhoto(mPredictionModel.getTournamentPhoto());
+        mPredictionModel.init(bundle);
+        if (!mPredictionModel.isDummyGame()) {
+            getAllQuestions();
+
+            mPredictionView.setTournamentPhoto(mPredictionModel.getTournamentPhoto());
+            mPredictionView.setTournamentName(mPredictionModel.getTournamentName());
+            mPredictionView.setContestName(mPredictionModel.getContestName());
+
+            updatePowerups();
+        }
     }
 
-    @Override
-    public Context getContext() {
-        return mPredictionView.getContext();
-    }
-
-    @Override
-    public void onGetAdapter(PredictionAdapter predictionAdapter,
-                             SwipeFlingAdapterView.OnSwipeListener<Question> listener) {
-        mPredictionView.setAdapter(predictionAdapter, listener);
+    private void updatePowerups() {
+        mPredictionView.set2xPowerupCount(mPredictionModel.get2xPowerupCount());
+        mPredictionView.setNonegsPowerupCount(mPredictionModel.getNonegsPowerupCount());
+        mPredictionView.setPollPowerupCount(mPredictionModel.getPollPowerupCount());
     }
 
     @Override
     public void onSuccessCompletion(Bundle bundle) {
-        mPredictionView.navigateToResult(bundle);
+        mPredictionView.dismissProgressbar();
+        mPredictionView.navigateToFeed(bundle);
     }
 
     private void getAllQuestions() {
@@ -69,24 +62,12 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onShowingLastQuestion() {
         mPredictionView.hideShuffle();
-        //mPredictionView.showLastQuestionAlert();
     }
 
     @Override
-    public void onShowingPassedQuestions() {
-        mPredictionView.hideShuffle();
-        //mPredictionView.showNoNegativeAlert();
-        //mPredictionView.showMessage(Constants.Alerts.PASSED_QUESTION_ALERT);
-    }
-
-
-    public void onPowerUp(String powerup) {
-        mPredictionModel.updatePowerUps(powerup);
-    }
-
-    @Override
-    public void onSuccessQuestions(List<Question> questionList) {
+    public void onSuccessQuestions(List<Question> questions, SwipeFlingAdapterView.OnSwipeListener<Question> listener) {
         mPredictionView.dismissProgressbar();
+        mPredictionView.setAdapter(mPredictionModel.getAdapter(mPredictionView.getContext(), questions), listener);
     }
 
     @Override
@@ -94,6 +75,20 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         mPredictionModel.setFlingCardListener(topCardListener);
     }
 
+    @Override
+    public void onClick2xPowerup() {
+        mPredictionModel.apply2xPowerup();
+    }
+
+    @Override
+    public void onClickNonegsPowerup() {
+        mPredictionModel.applyNonegsPowerup();
+    }
+
+    @Override
+    public void onClickPollPowerup() {
+        mPredictionModel.applyPollPowerup();
+    }
 
     @Override
     public void onFailedQuestions(String message) {
@@ -104,65 +99,83 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onNoQuestions() {
         mPredictionView.dismissProgressbar();
-        showAlertMessage(Constants.Alerts.NO_QUESTIONS);
+        showAlertMessage(Alerts.NO_QUESTIONS);
     }
 
     @Override
-    public void onQuestionChanged(Question question, int minitialCount, boolean neitherAvailable) {
-        mPredictionView.setNumberofCards(question.getQuestionNumber(),minitialCount);
-        mPredictionView.setNeitherOption(question.getQuestionOption3());
-        if(neitherAvailable) {
+    public void onQuestionChanged(Question question, int initialCount, boolean neitherAvailable) {
+        mPredictionView.setNumberofCards(question.getQuestionNumber() + "/" + initialCount);
+
+        if (neitherAvailable) {
             mPredictionView.showNeither();
         } else {
             mPredictionView.hideNeither();
         }
-    }
-
-    @Override
-    public void onFailedAudiencePollResponse(String message) {
-        mPredictionView.dismissProgressbar();
-        mPredictionView.dismissPowerUp();
-        mPredictionView.showMessage(Constants.Alerts.AUDIENCE_POLL_FAIL);
+        mPredictionView.setNeitherOption(question.getQuestionOption3());
     }
 
     @Override
     public void onSuccessAudiencePollResponse() {
         mPredictionView.dismissProgressbar();
-        mPredictionView.updateAudiencePollPowerup();
     }
 
     @Override
-    public void onNegativePowerUpApplied() {
+    public void onFailedAudiencePollResponse() {
+        mPredictionView.dismissProgressbar();
+        mPredictionView.showMessage(Alerts.AUDIENCE_POLL_FAIL);
+    }
+
+    @Override
+    public void notifyTopQuestion() {
         mPredictionView.notifyTopView();
     }
 
     @Override
-    public void changePlayCardBackground(String sportName) {
+    public void onGetSportName(String sportName) {
         mPredictionView.changeBackgroundImage(sportName);
     }
 
     @Override
     public void onFailedPostAnswerToServer(String message) {
-
-        if (message.equalsIgnoreCase("Match has already started")){
-            mPredictionView.showMessage(Constants.Alerts.MATCH_ALREADY_STARTED);
-        }else {
-            mPredictionView.showMessage(Constants.Alerts.API_FAIL);
+        if (message.equalsIgnoreCase("Match has already started")) {
+            mPredictionView.showMessage(Alerts.MATCH_ALREADY_STARTED);
+        } else {
+            mPredictionView.showMessage(Alerts.API_FAIL);
         }
         mPredictionView.goBack();
     }
 
     @Override
-    public View getRootView() {
-        return mPredictionView.getRootView();
+    public void on2xApplied(int count) {
+        mPredictionView.set2xPowerupCount(count);
+    }
+
+    @Override
+    public void onNonegsApplied(int count) {
+        mPredictionView.setNonegsPowerupCount(count);
+    }
+
+    @Override
+    public void onAudiencePollApplied(int count) {
+        mPredictionView.setPollPowerupCount(count);
+    }
+
+    @Override
+    public void onDummyGameCompletion() {
+
     }
 
     @Override
     public void onNoInternet() {
         mPredictionView.dismissProgressbar();
-        showAlertMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+        mPredictionView.showMessage(Alerts.NO_NETWORK_CONNECTION);
     }
 
+    @Override
+    public void onNoInternetForQuestions() {
+        mPredictionView.dismissProgressbar();
+        showAlertMessage(Alerts.NO_NETWORK_CONNECTION);
+    }
 
     private void showAlertMessage(String message) {
         mPredictionView.showMessage(message, "RETRY",
@@ -175,7 +188,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void dismissPowerUpApplied() {
-        mPredictionView.dismissPowerUp();
+    public boolean isThreadAlive() {
+        return null != mPredictionView.getContext();
     }
 }
