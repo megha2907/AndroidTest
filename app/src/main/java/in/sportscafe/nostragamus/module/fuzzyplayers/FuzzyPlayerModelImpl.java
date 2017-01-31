@@ -17,12 +17,15 @@ import retrofit2.Response;
  */
 public class FuzzyPlayerModelImpl extends AbstractFuzzySearchModelImpl<BasicUserInfo> {
 
-    private FuzzyPlayerModelImpl(OnFuzzySearchModelListener listener) {
+    private Integer mMatchId;
+
+    private FuzzyPlayerModelImpl(OnFuzzySearchModelListener listener, int matchId) {
         super(listener);
+        this.mMatchId = matchId;
     }
 
-    public static AbstractFuzzySearchModel newInstance(OnFuzzySearchModelListener listener) {
-        return new FuzzyPlayerModelImpl(listener);
+    public static AbstractFuzzySearchModel newInstance(OnFuzzySearchModelListener listener, int matchId) {
+        return new FuzzyPlayerModelImpl(listener,matchId);
     }
 
     @Override
@@ -33,7 +36,7 @@ public class FuzzyPlayerModelImpl extends AbstractFuzzySearchModelImpl<BasicUser
     @Override
     public void getFuzzySearchDetails(String key) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            callFuzzyPlayersApi(key);
+            callFuzzyPlayersApi(key,mMatchId);
         } else {
             onNoInternet();
         }
@@ -44,8 +47,8 @@ public class FuzzyPlayerModelImpl extends AbstractFuzzySearchModelImpl<BasicUser
 
     }
 
-    private void callFuzzyPlayersApi(String key) {
-        MyWebService.getInstance().getFuzzyPlayersRequest(key)
+    private void callFuzzyPlayersApi(String key, Integer matchId) {
+        MyWebService.getInstance().getFuzzyPlayersRequest(key,matchId)
                 .enqueue(new NostragamusCallBack<FuzzyPlayerResponse>() {
                     @Override
                     public void onResponse(Call<FuzzyPlayerResponse> call, Response<FuzzyPlayerResponse> response) {

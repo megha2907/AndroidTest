@@ -194,8 +194,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getTimelines(playerUserId, skip, limit);
     }
 
-    public Call<FuzzyPlayerResponse> getFuzzyPlayersRequest(String key) {
-        return mNostragamusService.fuzzyPlayers(key);
+    public Call<FuzzyPlayerResponse> getFuzzyPlayersRequest(String key, Integer matchId) {
+        return mNostragamusService.fuzzyPlayers(key,matchId);
     }
 
     public Call<MyResultsResponse> getPlayerResultRequest(Integer playerId, Integer matchId) {

@@ -20,7 +20,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="Hello"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_20"
             app:typeface="lato_regular"/>

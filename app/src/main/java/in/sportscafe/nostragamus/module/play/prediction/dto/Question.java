@@ -390,9 +390,9 @@ public class Question implements Serializable {
     @JsonIgnore
     public void updatePollPercentage(AnswerPercentage answerPercentage) {
         if(null != answerPercentage) {
-            option1AudPollPer = answerPercentage.getAnswer1() + "%";
-            option2AudPollPer = answerPercentage.getAnswer2() + "%";
-            option3AudPollPer = answerPercentage.getAnswer0() + "%";
+            option1AudPollPer = answerPercentage.getAnswer1().toString() + "%";
+            option2AudPollPer = answerPercentage.getAnswer2().toString() + "%";
+            option3AudPollPer = answerPercentage.getAnswer0().toString() + "%";
         }
     }
 }

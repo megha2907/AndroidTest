@@ -392,9 +392,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                         mAudiencePollpowerUpApplied = true;
                         mNonegspowerUpApplied = true;
                         mPredictionPresenter.onPowerUp("player_poll");
-                       // NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() - 1);
-                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups()-1);
-                        btnAudiencePollCount.setText(UpdatedPowerUps);
                         animateFAB();
                     }
                 }
@@ -406,7 +403,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                         mAudiencePollpowerUpApplied = true;
                         mNonegspowerUpApplied = true;
                         mPredictionPresenter.onPowerUp("no_negs");
-                        //NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups() - 1);
                         String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups()-1);
                         btnNonegsCount.setText(UpdatedPowerUps);
                         animateFAB();

@@ -45,7 +45,7 @@ public class OthersAnswersActivity extends NostragamusActivity {
         if(!bundle.containsKey(BundleKeys.SHOW_ANSWER_PERCENTAGE)) {
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.others_answers_fl_fuzzy_holder,
-                    mFuzzyPlayersFragment = FuzzyPlayerFragment.newInstance()
+                    mFuzzyPlayersFragment = FuzzyPlayerFragment.newInstance(mMatchDetails.getId())
             ).commit();
         }
 

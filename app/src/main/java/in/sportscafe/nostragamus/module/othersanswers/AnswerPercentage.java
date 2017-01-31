@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AnswerPercentage {
 
-    @JsonProperty("questionId")
+    @JsonProperty("question_id")
     private Integer questionId;
 
     @JsonProperty("answer0")
