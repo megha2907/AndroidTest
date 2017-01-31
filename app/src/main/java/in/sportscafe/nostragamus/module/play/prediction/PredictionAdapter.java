@@ -173,23 +173,25 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         }
 
 
-        if (question.getPowerUpId().equalsIgnoreCase("no_negs")) {
-            viewHolder.btnpowerupicon.setImageResource(R.drawable.powerup_nonegs_white);
-            viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
-        } else if (question.getPowerUpId().equalsIgnoreCase("2x")) {
-            viewHolder.btnpowerupicon.setImageResource(R.drawable.powerup_2x_white);
-            viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
-        } else if (question.getPowerUpId().equalsIgnoreCase("player_poll")) {
-            viewHolder.btnpowerupicon.setImageResource(R.drawable.powerup_audience_poll_white);
-            viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
+        if (question.getPowerUpId()!=null) {
+            if (question.getPowerUpId().equalsIgnoreCase("no_negs")) {
+                viewHolder.btnpowerupicon.setImageResource(R.drawable.powerup_nonegs_white);
+                viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
+            } else if (question.getPowerUpId().equalsIgnoreCase("2x")) {
+                viewHolder.btnpowerupicon.setImageResource(R.drawable.powerup_2x_white);
+                viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
+            } else if (question.getPowerUpId().equalsIgnoreCase("player_poll")) {
+                viewHolder.btnpowerupicon.setImageResource(R.drawable.powerup_audience_poll_white);
+                viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
 
-            viewHolder.btnanswer1Percentage.setText(question.getOption1AudPollPer());
-            viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
+                viewHolder.btnanswer1Percentage.setText(question.getOption1AudPollPer());
+                viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
 
-            viewHolder.btnanswer2Percentage.setText(question.getOption2AudPollPer());
-            viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.btnpowerupicon.setVisibility(View.GONE);
+                viewHolder.btnanswer2Percentage.setText(question.getOption2AudPollPer());
+                viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.btnpowerupicon.setVisibility(View.GONE);
+            }
         }
 
         viewHolder.tvQuestion.post(new Runnable() {

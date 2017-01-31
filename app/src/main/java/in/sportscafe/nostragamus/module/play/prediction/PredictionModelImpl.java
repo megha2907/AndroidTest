@@ -118,7 +118,7 @@ public class PredictionModelImpl implements PredictionModel,
 
                     if (null == allQuestions || allQuestions.isEmpty() || allQuestions.size() < 0) {
                         mPredictionModelListener.onNoQuestions();
-                        Log.i("null","questions");
+
                     }
                     else {
                         handleAllQuestionsResponse(allQuestions);
@@ -208,7 +208,7 @@ public class PredictionModelImpl implements PredictionModel,
                         String answer1Percentage = audiencePoll.get(0).getAnswerPercentage();
                         String answer2Percentage = audiencePoll.get(1).getAnswerPercentage();
 
-                        if (Integer.valueOf(answer1Percentage) > Integer.valueOf(answer2Percentage)){
+                        if (Integer.parseInt(answer1Percentage.replaceAll("%","")) > Integer.parseInt(answer2Percentage.replaceAll("%",""))){
                             majorityAnswer = mTopQuestion.getQuestionOption1();
                             minorityAnswer = mTopQuestion.getQuestionOption2();
                         }else {
@@ -260,24 +260,27 @@ public class PredictionModelImpl implements PredictionModel,
         // mRemainingTime = mPredictionAdapter.getRemainingTime();
         // Log.d("Remaining Time", mRemainingTime + " seconds");
 
+
         mTotalCount--;
         // mPredictionAdapter.stopTimer();
         mPredictionAdapter.remove(dataObject);
         mPredictionAdapter.notifyDataSetChanged();
         mPredictionModelListener.dismissPowerUpApplied();
 
-        if (dataObject.getPowerUpId().equalsIgnoreCase("2x")){
+        if (dataObject.getPowerUpId()!=null) {
 
-            NostragamusDataHandler.getInstance().setNumberof2xPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups() - 1);
+            if (dataObject.getPowerUpId().equalsIgnoreCase("2x")) {
 
-        } else if(dataObject.getPowerUpId().equalsIgnoreCase("player_poll")) {
+                NostragamusDataHandler.getInstance().setNumberof2xPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups() - 1);
 
-            NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() - 1);
+            } else if (dataObject.getPowerUpId().equalsIgnoreCase("player_poll")) {
 
-        }
-        else if(dataObject.getPowerUpId().equalsIgnoreCase("no_negs")){
+                NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() - 1);
 
-            NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups() - 1);
+            } else if (dataObject.getPowerUpId().equalsIgnoreCase("no_negs")) {
+
+                NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups() - 1);
+            }
         }
 
     }
@@ -312,11 +315,13 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public void onBottomSwipe(Question dataObject) {
+        mTotalCount++;
         mPredictionAdapter.add(dataObject);
     }
 
     @Override
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
+
 
         if(itemsInAdapter == 0) {
             PredictionDataHandler.getInstance().saveMyResult(mMyResult);
@@ -330,6 +335,8 @@ public class PredictionModelImpl implements PredictionModel,
 
         if(itemsInAdapter == 1 && mTotalCount == 1) {
             matchComplete = true;
+            mPredictionModelListener.onShowingLastQuestion();
+        } else if (mPredictionAdapter.getCount()==1){
             mPredictionModelListener.onShowingLastQuestion();
         } else if(mTotalCount == 0) {
             mTotalCount = mPredictionAdapter.getCount();
@@ -361,8 +368,6 @@ public class PredictionModelImpl implements PredictionModel,
     }
 
     private void saveSinglePrediction(Question question, int answerId,boolean minorityOption,Boolean matchComplete) {
-
-        Log.i("matchComplete",matchComplete+"");
 
         Answer answer = new Answer (
                 question.getMatchId(),

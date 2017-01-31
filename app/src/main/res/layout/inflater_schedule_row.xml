@@ -189,9 +189,10 @@
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View Your"
+                    android:text="View"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_10"
+                    android:gravity="center"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -200,6 +201,7 @@
                     android:layout_marginBottom="@dimen/dp_2"
                     android:drawableRight="@drawable/timeline_points_arrow"
                     android:gravity="bottom"
+                    android:layout_gravity="center"
                     android:text="Answers"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_10"

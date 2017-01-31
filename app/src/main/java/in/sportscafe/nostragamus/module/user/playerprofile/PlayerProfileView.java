@@ -25,7 +25,11 @@ public interface PlayerProfileView extends InAppView {
 
     void setPoints(long points);
 
-    void setBadgesCount(int badgesCount,List<Badge> badgeList);
+    void setAccuracy(int accuracy);
+
+    void setBadgesCount(int badgesCount, List<Badge> badgeList);
 
     void initMyPosition(PlayerInfo playerInfo);
+
+    void setPredictionCount(Integer predictionCount);
 }
