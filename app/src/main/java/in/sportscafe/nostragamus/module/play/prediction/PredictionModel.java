@@ -11,6 +11,8 @@ public interface PredictionModel {
 
     void saveData(Bundle bundle);
 
+    boolean isDummyGame();
+
     String getTournamentName();
 
     String getMatchStage();

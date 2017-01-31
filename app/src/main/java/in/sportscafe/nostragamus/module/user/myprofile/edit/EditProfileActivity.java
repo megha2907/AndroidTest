@@ -20,6 +20,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
+import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
 import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity;
 
 //import com.squareup.picasso.Picasso;
@@ -136,6 +137,13 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         }
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void navigateToDummyGame(Bundle bundle) {
+        Intent intent = new Intent(this, PredictionActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

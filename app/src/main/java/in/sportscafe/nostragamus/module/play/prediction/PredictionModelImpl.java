@@ -3,7 +3,6 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 
 import com.jeeva.android.Log;
@@ -41,13 +40,11 @@ import static in.sportscafe.nostragamus.Constants.DateFormats;
 public class PredictionModelImpl implements PredictionModel,
         SwipeFlingAdapterView.OnSwipeListener<Question> {
 
+    private boolean mDummyGame = false;
+
     private PredictionAdapter mPredictionAdapter;
 
     private OnPredictionModelListener mPredictionModelListener;
-
-    private Map<Integer, Match> mMatchMap = new HashMap<>();
-
-    private List<Match> mMyResultList = new ArrayList<>();
 
     private Match mMyResult;
 
@@ -67,7 +64,7 @@ public class PredictionModelImpl implements PredictionModel,
 
     private String minorityAnswer;
 
-    private Boolean isMinorityOption=false;
+    private Boolean isMinorityOption = false;
 
     private boolean mNeitherOptionAvailable = false;
 
@@ -84,15 +81,30 @@ public class PredictionModelImpl implements PredictionModel,
     @Override
     public void saveData(Bundle bundle) {
 
-        mMyResult = (Match) bundle.getSerializable(BundleKeys.MATCH_LIST);
-        matchId = mMyResult.getId();
+        if (!bundle.containsKey(BundleKeys.IS_DUMMY_GAME)) {
+            mMyResult = (Match) bundle.getSerializable(BundleKeys.MATCH_LIST);
+            matchId = mMyResult.getId();
 
-        if(null != bundle.getString(BundleKeys.SPORT_NAME)){
-          mPredictionModelListener.changePlayCardBackground(bundle.getString(BundleKeys.SPORT_NAME));
+            if (null != bundle.getString(BundleKeys.SPORT_NAME)) {
+                mPredictionModelListener.onGetSportName(bundle.getString(BundleKeys.SPORT_NAME));
+            }
+
+            getAllQuestions();
+        } else {
+            mDummyGame = bundle.getBoolean(BundleKeys.IS_DUMMY_GAME);
+
+
         }
+    }
 
-//        handleAllQuestionsResponse(mMyResult.getQuestions());
-        getAllQuestions();
+    private Match getDummyGameMatch() {
+        String dummyMatchJson = "";
+        return MyWebService.getInstance().getObjectFromJson(dummyMatchJson, Match.class);
+    }
+
+    @Override
+    public boolean isDummyGame() {
+        return mDummyGame;
     }
 
     @Override
@@ -116,12 +128,11 @@ public class PredictionModelImpl implements PredictionModel,
                 if (response.isSuccessful()) {
                     List<Question> allQuestions = response.body().getQuestions();
 
-                    if (null == allQuestions || allQuestions.isEmpty() || allQuestions.size() < 0) {
+                    if (null == allQuestions || allQuestions.isEmpty()) {
                         mPredictionModelListener.onNoQuestions();
-                        Log.i("null","questions");
-                    }
-                    else {
-                        handleAllQuestionsResponse(allQuestions);
+                    } else {
+                        populateAdapterData(allQuestions);
+                        mPredictionModelListener.onSuccessQuestions();
                     }
                 } else {
                     mPredictionModelListener.onFailedQuestions(response.message());
@@ -130,33 +141,9 @@ public class PredictionModelImpl implements PredictionModel,
         });
     }
 
-    private void handleAllQuestionsResponse(List<Question> questionList) {
-        Map<Integer, Match> myResultMap = new HashMap<>();
-
-        Integer matchId;
-        Match myResult;
-        for (Question question : questionList) {
-            matchId = question.getMatchId();
-
-            if (!myResultMap.containsKey(matchId)) {
-                myResult = mMatchMap.get(matchId);
-                mMyResultList.add(mMyResult);
-                myResultMap.put(matchId, myResult);
-            }
-
-            mMyResult.getQuestions().add(question);
-        }
-
-        mPredictionModelListener.onSuccessQuestions(questionList);
-        myResult = mMyResultList.get(0);
-        populateAdapterData(myResult.getQuestions());
-
-    }
-
-
     private void populateAdapterData(List<Question> questionList) {
         mTotalCount = questionList.size();
-        minitialCount=questionList.size();
+        minitialCount = questionList.size();
 
         mPredictionAdapter = new PredictionAdapter(mPredictionModelListener.getContext(),
                 mPredictionModelListener.getRootView());
@@ -173,16 +160,13 @@ public class PredictionModelImpl implements PredictionModel,
     @Override
     public void updatePowerUps(String powerup) {
 
-        if(powerup.equals("2x")){
+        if (powerup.equals("2x")) {
 
             mPredictionAdapter.update2xPowerUp();
-        }
-        else if(powerup.equals("no_negs")){
+        } else if (powerup.equals("no_negs")) {
 
             mPredictionAdapter.updateNonegsPowerUp();
-        }
-        else if(powerup.equals("player_poll"))
-        {
+        } else if (powerup.equals("player_poll")) {
             AudiencePollRequest audiencePollRequest = new AudiencePollRequest();
             audiencePollRequest.setQuestionId(mTopQuestion.getQuestionId());
             callAudiencePollApi(audiencePollRequest);
@@ -200,18 +184,17 @@ public class PredictionModelImpl implements PredictionModel,
 
                 if (response.isSuccessful()) {
 
-                    if (null==response.body().getAudiencePoll()){
+                    if (null == response.body().getAudiencePoll()) {
                         mPredictionModelListener.onFailedAudiencePollResponse("AudiencePoll Fail");
-                    }
-                    else {
+                    } else {
                         List<AudiencePoll> audiencePoll = response.body().getAudiencePoll();
                         String answer1Percentage = audiencePoll.get(0).getAnswerPercentage();
                         String answer2Percentage = audiencePoll.get(1).getAnswerPercentage();
 
-                        if (Integer.valueOf(answer1Percentage) > Integer.valueOf(answer2Percentage)){
+                        if (Integer.valueOf(answer1Percentage) > Integer.valueOf(answer2Percentage)) {
                             majorityAnswer = mTopQuestion.getQuestionOption1();
                             minorityAnswer = mTopQuestion.getQuestionOption2();
-                        }else {
+                        } else {
                             majorityAnswer = mTopQuestion.getQuestionOption2();
                             minorityAnswer = mTopQuestion.getQuestionOption1();
                         }
@@ -252,7 +235,7 @@ public class PredictionModelImpl implements PredictionModel,
 
     @Override
     public String getContestName() {
-        return String.valueOf(mMyResult.getParties().get(0).getPartyName()+"  vs  "+mMyResult.getParties().get(1).getPartyName());
+        return String.valueOf(mMyResult.getParties().get(0).getPartyName() + "  vs  " + mMyResult.getParties().get(1).getPartyName());
     }
 
     @Override
@@ -266,16 +249,15 @@ public class PredictionModelImpl implements PredictionModel,
         mPredictionAdapter.notifyDataSetChanged();
         mPredictionModelListener.dismissPowerUpApplied();
 
-        if (dataObject.getPowerUpId().equalsIgnoreCase("2x")){
+        if (dataObject.getPowerUpId().equalsIgnoreCase("2x")) {
 
             NostragamusDataHandler.getInstance().setNumberof2xPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups() - 1);
 
-        } else if(dataObject.getPowerUpId().equalsIgnoreCase("player_poll")) {
+        } else if (dataObject.getPowerUpId().equalsIgnoreCase("player_poll")) {
 
             NostragamusDataHandler.getInstance().setNumberofAudiencePollPowerups(NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups() - 1);
 
-        }
-        else if(dataObject.getPowerUpId().equalsIgnoreCase("no_negs")){
+        } else if (dataObject.getPowerUpId().equalsIgnoreCase("no_negs")) {
 
             NostragamusDataHandler.getInstance().setNumberofNonegsPowerups(NostragamusDataHandler.getInstance().getNumberofNonegsPowerups() - 1);
         }
@@ -285,29 +267,29 @@ public class PredictionModelImpl implements PredictionModel,
     @Override
     public void onLeftSwipe(Question dataObject) {
 
-        if (null != majorityAnswer){
-            if (!majorityAnswer.equals(dataObject.getQuestionOption1())){
+        if (null != majorityAnswer) {
+            if (!majorityAnswer.equals(dataObject.getQuestionOption1())) {
                 isMinorityOption = true;
             }
         }
-        saveSinglePrediction(dataObject, 1,isMinorityOption,matchComplete);
+        saveSinglePrediction(dataObject, 1, isMinorityOption, matchComplete);
     }
 
     @Override
     public void onRightSwipe(Question dataObject) {
 
-        if (null != majorityAnswer){
-            if (!majorityAnswer.equals(dataObject.getQuestionOption2())){
+        if (null != majorityAnswer) {
+            if (!majorityAnswer.equals(dataObject.getQuestionOption2())) {
                 isMinorityOption = true;
             }
         }
 
-        saveSinglePrediction(dataObject, 2,isMinorityOption,matchComplete);
+        saveSinglePrediction(dataObject, 2, isMinorityOption, matchComplete);
     }
 
     @Override
     public void onTopSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, 3,isMinorityOption,matchComplete);
+        saveSinglePrediction(dataObject, 3, isMinorityOption, matchComplete);
     }
 
     @Override
@@ -318,9 +300,7 @@ public class PredictionModelImpl implements PredictionModel,
     @Override
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
 
-        if(itemsInAdapter == 0) {
-            PredictionDataHandler.getInstance().saveMyResult(mMyResult);
-
+        if (itemsInAdapter == 0) {
             Bundle bundle = new Bundle();
             bundle.putInt(Constants.BundleKeys.TOURNAMENT_ID, mMyResult.getTournamentId());
             bundle.putString(Constants.BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
@@ -328,10 +308,10 @@ public class PredictionModelImpl implements PredictionModel,
             return;
         }
 
-        if(itemsInAdapter == 1 && mTotalCount == 1) {
+        if (itemsInAdapter == 1 && mTotalCount == 1) {
             matchComplete = true;
             mPredictionModelListener.onShowingLastQuestion();
-        } else if(mTotalCount == 0) {
+        } else if (mTotalCount == 0) {
             mTotalCount = mPredictionAdapter.getCount();
         }
 
@@ -360,11 +340,11 @@ public class PredictionModelImpl implements PredictionModel,
 
     }
 
-    private void saveSinglePrediction(Question question, int answerId,boolean minorityOption,Boolean matchComplete) {
+    private void saveSinglePrediction(Question question, int answerId, boolean minorityOption, Boolean matchComplete) {
 
-        Log.i("matchComplete",matchComplete+"");
+        Log.i("matchComplete", matchComplete + "");
 
-        Answer answer = new Answer (
+        Answer answer = new Answer(
                 question.getMatchId(),
                 question.getQuestionId(),
                 String.valueOf(answerId),
@@ -373,24 +353,25 @@ public class PredictionModelImpl implements PredictionModel,
 
         );
         PredictionDataHandler.getInstance().savePrediction(answer);
-        postAnswerToServer(answer,minorityOption,matchComplete);
+        postAnswerToServer(answer, minorityOption, matchComplete);
     }
 
-    private void postAnswerToServer(Answer answer,boolean minorityOption,Boolean matchComplete) {
+    private void postAnswerToServer(Answer answer, boolean minorityOption, Boolean matchComplete) {
         new PostAnswerModelImpl(new PostAnswerModelImpl.PostAnswerModelListener() {
             @Override
             public void onSuccess() {
             }
 
             @Override
-            public void onNoInternet() {}
+            public void onNoInternet() {
+            }
 
             @Override
             public void onFailed(String message) {
                 mPredictionModelListener.onFailedPostAnswerToServer(message);
 
             }
-        }).postAnswer(answer,minorityOption,matchComplete);
+        }).postAnswer(answer, minorityOption, matchComplete);
     }
 //
 //    @Override
@@ -418,7 +399,7 @@ public class PredictionModelImpl implements PredictionModel,
 
         void onNoInternet();
 
-        void onSuccessQuestions(List<Question> questionList);
+        void onSuccessQuestions();
 
         void onFailedQuestions(String message);
 
@@ -432,7 +413,7 @@ public class PredictionModelImpl implements PredictionModel,
 
         void onNegativePowerUpApplied();
 
-        void changePlayCardBackground(String sportName);
+        void onGetSportName(String sportName);
 
         void onFailedPostAnswerToServer(String message);
 

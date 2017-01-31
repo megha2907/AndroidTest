@@ -62,7 +62,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_3"
         android:layout_toRightOf="@id/schedule_row_v_line"
-        android:background="@drawable/swipe_card_shape_test"
+        android:background="@drawable/shape_timeline_tour_bg"
         android:orientation="vertical"
         android:paddingBottom="@dimen/dp_14"
         android:paddingTop="@dimen/dp_7">

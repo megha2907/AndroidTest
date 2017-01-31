@@ -13,7 +13,7 @@
         android:layout_marginLeft="@dimen/dp_40"
         android:layout_marginRight="@dimen/dp_40"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/swipe_card_shape_test"
+        android:background="@drawable/shape_timeline_tour_bg"
         android:gravity="center"
         android:orientation="vertical">
 

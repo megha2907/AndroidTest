@@ -36,13 +36,14 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onCreatePrediction(Bundle bundle) {
         mPredictionModel.saveData(bundle);
-        mPredictionView.setTournamentName(mPredictionModel.getTournamentName());
-        mPredictionView.setContestName(mPredictionModel.getContestName());
-        mPredictionView.setNumberofPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups(),
-                NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups(),
-                NostragamusDataHandler.getInstance().getNumberofNonegsPowerups());
-        // mPredictionView.setMatchStage(mPredictionModel.getMatchStage());
-        mPredictionView.setTournamentPhoto(mPredictionModel.getTournamentPhoto());
+        if(!mPredictionModel.isDummyGame()) {
+            mPredictionView.setTournamentName(mPredictionModel.getTournamentName());
+            mPredictionView.setContestName(mPredictionModel.getContestName());
+            mPredictionView.setNumberofPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups(),
+                    NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups(),
+                    NostragamusDataHandler.getInstance().getNumberofNonegsPowerups());
+            mPredictionView.setTournamentPhoto(mPredictionModel.getTournamentPhoto());
+        }
     }
 
     @Override
@@ -85,7 +86,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onSuccessQuestions(List<Question> questionList) {
+    public void onSuccessQuestions() {
         mPredictionView.dismissProgressbar();
     }
 
@@ -137,7 +138,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void changePlayCardBackground(String sportName) {
+    public void onGetSportName(String sportName) {
         mPredictionView.changeBackgroundImage(sportName);
     }
 

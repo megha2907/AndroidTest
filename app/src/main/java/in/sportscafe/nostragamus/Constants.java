@@ -172,6 +172,7 @@ public interface Constants {
         String LB_LANDING_DATA = "lbLandingData";
         String LB_LANDING_TYPE = "lbLandingType";
         String LB_LANDING_KEY = "lbLandingKey";
+        String IS_DUMMY_GAME = "isDummyGame";
     }
 
     interface ParcelableKeys {
@@ -199,6 +200,8 @@ public interface Constants {
         String ACTION_SHARE_SCORE = "in.sportscafe.nostragamus.intent.action.SHARE_SCORE";
         String ACTION_FUZZY_PLAYER_CLICK = "in.sportscafe.nostragamus.intent.action.FUZZY_PLAYER_CLICK";
         String ACTION_FUZZY_LB_CLICK = "in.sportscafe.nostragamus.intent.action.FUZZY_LB_CLICK";
+        String ACTION_DUMMY_GAME_PLAY = "in.sportscafe.nostragamus.intent.action.DUMMY_GAME_PLAY";
+        String ACTION_DUMMY_GAME_PROCEED = "in.sportscafe.nostragamus.intent.action.DUMMY_GAME_PROCEED";
     }
 
     interface LeaderBoardPeriods {

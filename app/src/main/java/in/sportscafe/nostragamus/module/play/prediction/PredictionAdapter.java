@@ -24,6 +24,10 @@ import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 
 public class PredictionAdapter extends ArrayAdapter<Question> {
 
+    private static final float CARD_SIZE_PERECENTAGE = 0.89f;
+
+    private static final float OPTION_SIZE_PERECENTAGE = 1f - CARD_SIZE_PERECENTAGE;
+
     private final float SCREEN_WIDTH;
 
     private final float SCREEN_HEIGHT;
@@ -83,13 +87,13 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         Rect rect = new Rect();
         rootView.getLocalVisibleRect(rect);
 
-        SCREEN_WIDTH = rect.width();
-        SCREEN_HEIGHT = rect.height();
+        SCREEN_WIDTH = rect.width() * 0.8f;
+        SCREEN_HEIGHT = rect.height() * 0.8f;
 
-        mCardWidth = SCREEN_WIDTH * 0.89f;
+        mCardWidth = SCREEN_WIDTH * CARD_SIZE_PERECENTAGE;
         mCardHeight = SCREEN_WIDTH;
-        mOptionHeight = SCREEN_WIDTH * 0.11f;
-        mCardMargin = mOptionHeight / 2;
+        mOptionHeight = SCREEN_WIDTH * OPTION_SIZE_PERECENTAGE;
+        mCardMargin = (rect.width() - mCardWidth) / 2;
         mImageWidth = mCardWidth / 2f;
         mImageHeight = mImageWidth;
 
@@ -136,6 +140,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         rlp.height = (int) (mCardWidth / 2);
 
         rlp = (RelativeLayout.LayoutParams) viewHolder.cvMainCard.getLayoutParams();
+//        rlp.width = (int) mCardWidth;
         rlp.height = (int) mCardHeight;
         rlp.leftMargin = (int) mCardMargin;
         rlp.rightMargin = (int) mCardMargin;
