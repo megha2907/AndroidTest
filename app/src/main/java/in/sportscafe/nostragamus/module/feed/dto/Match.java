@@ -15,6 +15,7 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
  * Created by Jeeva on 10/6/16.
  */
 public class Match implements Serializable {
+
     @JsonProperty("match_id")
     private Integer id;
 

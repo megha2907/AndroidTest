@@ -12,6 +12,7 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
@@ -84,7 +85,7 @@ public class FeedModelImpl implements FeedModel {
                 }
 
                 if(response.isSuccessful()) {
-                    List<Match> matchList = response.body().getMatches();
+                    List<Match> matchList = response.body().getFeedTimeline().getMatches();
 
                     if(null == matchList || matchList.isEmpty()) {
                         mFeedModelListener.onEmpty();
@@ -92,6 +93,17 @@ public class FeedModelImpl implements FeedModel {
                     }
 
                     handleMatches(matchList);
+
+                    NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
+
+                    HashMap<String, Integer> powerUpMap = response.body().getFeedTimeline()
+                            .getTournamentPowerupInfo().getPowerUps();
+                    nostragamusDataHandler.setNumberof2xPowerups(powerUpMap.get(Constants.Powerups.XX));
+                    nostragamusDataHandler.setNumberofNonegsPowerups(powerUpMap.get(Constants.Powerups.NO_NEGATIVE));
+                    nostragamusDataHandler.setNumberofAudiencePollPowerups(powerUpMap.get(Constants.Powerups.AUDIENCE_POLL));
+                    nostragamusDataHandler.setNumberofReplayPowerups(powerUpMap.get(Constants.Powerups.MATCH_REPLAY));
+                    nostragamusDataHandler.setNumberofFlipPowerups(powerUpMap.get(Constants.Powerups.ANSWER_FLIP));
+
                 } else {
 
                     mFeedModelListener.onFailedFeeds(response.message());
