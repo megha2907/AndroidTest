@@ -40,8 +40,10 @@ import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.FeedWebView;
+import in.sportscafe.nostragamus.module.feed.dto.FeedTimeline;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.Parties;
+import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
@@ -62,9 +64,18 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
     private TimerRunnable mTimerRunnable;
 
+    private TournamentPowerupInfo mTournamentPowerupInfo;
+
     public TimelineAdapter(Context context) {
         super(context);
         mTimerRunnable = new TimerRunnable();
+    }
+
+
+    public TimelineAdapter(Context context, TournamentPowerupInfo tournamentPowerupInfo) {
+        super(context);
+        mTimerRunnable = new TimerRunnable();
+        mTournamentPowerupInfo = tournamentPowerupInfo;
     }
 
     @Override
@@ -384,6 +395,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
             switch (view.getId()) {
                 case R.id.schedule_row_btn_playmatch:
+                    bundle.putParcelable(BundleKeys.TOURNAMENT_POWERUPS,Parcels.wrap(mTournamentPowerupInfo));
                     navigateToPrediction(context, bundle);
                     break;
                 case R.id.rl_points:

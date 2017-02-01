@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.user.myprofile;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -13,12 +14,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.jeeva.android.Log;
+import com.jeeva.android.widgets.HmImageView;
+
+import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
@@ -28,6 +37,7 @@ import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.settings.SettingsActivity;
+import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.badges.BadgeActivity;
 import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
@@ -168,6 +178,92 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     @Override
     public void setBadgesCount(int badgesCount) {
 
+        List<Badge> badgeList = NostragamusDataHandler.getInstance().getBadgeList();
+
+        LinearLayout parent = (LinearLayout)findViewById(R.id.badges_ll);
+        RelativeLayout.LayoutParams layoutParams =
+                (RelativeLayout.LayoutParams)parent.getLayoutParams();
+        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        parent.setLayoutParams(layoutParams);
+
+        if(badgeList.size() <= 8) {
+
+            LinearLayout layout2 = new LinearLayout(getContext());
+            layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            parent.setOrientation(LinearLayout.VERTICAL);
+            parent.addView(layout2);
+
+            for (int i = 0; i < badgeList.size(); i++) {
+
+                HmImageView imageView = new HmImageView(getContext());
+                imageView.setLayoutParams(new RelativeLayout.LayoutParams
+                        (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                imageView.getLayoutParams().height = 40;
+                imageView.getLayoutParams().width = 40;
+                imageView.setImageUrl(badgeList.get(i).getPhoto());
+
+            }
+
+        }else if(badgeList.size()>8) {
+
+            LinearLayout layout2 = new LinearLayout(getContext());
+            layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            parent.setOrientation(LinearLayout.VERTICAL);
+            parent.addView(layout2);
+
+            for (int i = 0; i < 8; i++) {
+                HmImageView imageView = new HmImageView(getContext());
+                imageView.setLayoutParams(new RelativeLayout.LayoutParams
+                        (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                imageView.getLayoutParams().height = 40;
+                imageView.getLayoutParams().width = 40;
+                imageView.setImageUrl(badgeList.get(i).getPhoto());
+            }
+
+
+                LinearLayout layout3 = new LinearLayout(getContext());
+                layout3.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                parent.addView(layout3);
+
+
+            if(badgeList.size()<=16){
+
+                for (int j = 8; j < badgeList.size(); j++) {
+
+                    HmImageView imageView2 = new HmImageView(getContext());
+                    imageView2.setLayoutParams(new RelativeLayout.LayoutParams
+                            (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    imageView2.getLayoutParams().height = 40;
+                    imageView2.getLayoutParams().width = 40;
+                    imageView2.setImageUrl(badgeList.get(j).getPhoto());
+
+                }
+
+            }else if (badgeList.size()>16){
+
+                for (int j = 8; j < 16; j++) {
+
+                    HmImageView imageView2 = new HmImageView(getContext());
+                    imageView2.setLayoutParams(new RelativeLayout.LayoutParams
+                            (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    imageView2.getLayoutParams().height = 40;
+                    imageView2.getLayoutParams().width = 40;
+                    imageView2.setImageUrl(badgeList.get(j).getPhoto());
+                }
+
+                TextView textview = new TextView(getContext());
+                RelativeLayout.LayoutParams lpTextView = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT);
+                textview.setLayoutParams(lpTextView);
+                textview.setPadding(5,10,5,5);
+                textview.setText("+ " + (badgeList.size()-16) + " More");
+                textview.setTextColor(Color.WHITE);
+                layout3.addView(textview);
+
+            }
+
+        }
 //        List<Badge> badgeList = NostragamusDataHandler.getInstance().getBadgeList();
 //
 //        LinearLayout parent = (LinearLayout)findViewById(R.id.badges_ll);

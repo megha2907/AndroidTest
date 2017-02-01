@@ -162,7 +162,7 @@
                 android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/schedule_row_btn_vs"
-                android:background="@drawable/tournament_ready_btn_bg"
+                android:background="@drawable/tournament_play_btn_bg"
                 android:gravity="center"
                 android:textAllCaps="true"
                 android:onClick="onClick"

@@ -15,6 +15,7 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 /**
  * Created by Jeeva on 10/6/16.
  */
+
 @Parcel
 public class Match {
     @JsonProperty("match_id")

@@ -83,7 +83,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
             mResultsModelListener.gotoResultsTimeline();
         }
 
-        UserInfoModelImpl.newInstance(this).getUserInfo();
+        //no replay and flip powerup for now
+        //UserInfoModelImpl.newInstance(this).getUserInfo();
     }
 
     @Override

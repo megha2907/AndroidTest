@@ -9,13 +9,16 @@ import com.jeeva.android.Log;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.offline.PredictionDataHandler;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
@@ -65,18 +68,18 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         this.mPredictionModelListener = predictionModelListener;
         this.mNostragamusDataHandler = NostragamusDataHandler.getInstance();
 
-        updateInitialPowerups();
+//        updateInitialPowerups();
     }
 
     public static PredictionModel newInstance(OnPredictionModelListener predictionModelListener) {
         return new PredictionModelImpl(predictionModelListener);
     }
 
-    private void updateInitialPowerups() {
+    /*private void updateInitialPowerups() {
         m2xPowerups = mNostragamusDataHandler.getNumberof2xPowerups();
         mNonegsPowerups = mNostragamusDataHandler.getNumberofNonegsPowerups();
         mPollPowerups = mNostragamusDataHandler.getNumberofAudiencePollPowerups();
-    }
+    }*/
 
     @Override
     public void init(Bundle bundle) {
@@ -88,6 +91,18 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             if (bundle.containsKey(BundleKeys.SPORT_NAME)) {
                 mPredictionModelListener.onGetSportName(bundle.getString(BundleKeys.SPORT_NAME));
             }
+
+            if (bundle.containsKey(BundleKeys.TOURNAMENT_POWERUPS)) {
+
+                TournamentPowerupInfo tournamentPowerupInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.TOURNAMENT_POWERUPS));
+                HashMap<String, Integer> powerUpMap = tournamentPowerupInfo.getPowerUps();
+
+                m2xPowerups = powerUpMap.get(Powerups.XX);
+                mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
+                mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
+
+            }
+
         } else {
             mDummyGame = bundle.getBoolean(BundleKeys.IS_DUMMY_GAME);
         }
@@ -163,7 +178,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     @Override
     public void apply2xPowerup() {
-        if(isNotPowerupApplied() && m2xPowerups > 0) {
+        if (isNotPowerupApplied() && m2xPowerups > 0) {
             mPredictionAdapter.update2xPowerUp();
             notifyTopQuestion();
 
@@ -174,7 +189,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     @Override
     public void applyNonegsPowerup() {
-        if(isNotPowerupApplied() && mNonegsPowerups > 0) {
+        if (isNotPowerupApplied() && mNonegsPowerups > 0) {
             mPredictionAdapter.updateNonegsPowerUp();
             notifyTopQuestion();
 
@@ -185,7 +200,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     @Override
     public void applyPollPowerup() {
-        if(isNotPowerupApplied() && mPollPowerups > 0) {
+        if (isNotPowerupApplied() && mPollPowerups > 0) {
             getAudiencePollPercent();
         }
     }
@@ -219,7 +234,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
         if (itemsInAdapter == 0) {
-            if(!mDummyGame) {
+            if (!mDummyGame) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(BundleKeys.TOURNAMENT_ID, mMyResult.getTournamentId());
                 bundle.putString(BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
@@ -293,7 +308,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     private void getAudiencePollPercent() {
-        if(Nostragamus.getInstance().hasNetworkConnection()) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
             AudiencePollRequest audiencePollRequest = new AudiencePollRequest();
             audiencePollRequest.setQuestionId(mPredictionAdapter.getTopQuestion().getQuestionId());
 
@@ -355,7 +370,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPollPowerups--;
         mPredictionModelListener.onAudiencePollApplied(mPollPowerups);
 
-        mNostragamusDataHandler.setNumberofAudiencePollPowerups(mPollPowerups);
+        //mNostragamusDataHandler.setNumberofAudiencePollPowerups(mPollPowerups);
     }
 
     private void saveSinglePrediction(Question question, int answerId) {
@@ -374,9 +389,10 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         if (null != powerupId) {
             if (Powerups.XX.equalsIgnoreCase(powerupId)) {
-                mNostragamusDataHandler.setNumberof2xPowerups(m2xPowerups);
+               // mNostragamusDataHandler.setNumberof2xPowerups(m2xPowerups);
             } else if (Powerups.NO_NEGATIVE.equalsIgnoreCase(powerupId)) {
-                mNostragamusDataHandler.setNumberofNonegsPowerups(mNonegsPowerups);
+               //
+                // mNostragamusDataHandler.setNumberofNonegsPowerups(mNonegsPowerups);
             }
         }
     }

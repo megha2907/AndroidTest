@@ -2,6 +2,9 @@ package in.sportscafe.nostragamus.module.feed;
 
 import android.os.Bundle;
 
+import java.util.List;
+
+import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
 
 /**
@@ -16,4 +19,6 @@ public interface FeedModel {
     void getFeeds();
 
     void destroyAll();
+
+    void handleMatches(List<Match> matchList);
 }
