@@ -2,7 +2,10 @@ package in.sportscafe.nostragamus.module.user.playerbadges;
 
 import android.os.Bundle;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.module.user.badges.BadgeModel;
 import in.sportscafe.nostragamus.module.user.badges.BadgeModelImpl;
 import in.sportscafe.nostragamus.module.user.badges.BadgePresenter;
@@ -33,7 +36,7 @@ public class PlayerBadgePresenterImpl implements PlayerBadgePresenter, PlayerBad
 
     @Override
     public void onCreatePlayerBadgeAdapter(Bundle bundle) {
-        PlayerInfo playerInfo = (PlayerInfo) bundle.getSerializable(Constants.BundleKeys.PLAYERINFO);
+        PlayerInfo playerInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.PLAYERINFO));
         mBadgeView.setAdapter(mBadgeModel
                 .getPlayerBadgeAdapter(mBadgeView.getContext(),playerInfo));
     }

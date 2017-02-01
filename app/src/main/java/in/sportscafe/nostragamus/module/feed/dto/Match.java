@@ -3,7 +3,8 @@ package in.sportscafe.nostragamus.module.feed.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,8 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class Match implements Serializable {
+@Parcel
+public class Match {
     @JsonProperty("match_id")
     private Integer id;
 
@@ -71,9 +73,6 @@ public class Match implements Serializable {
 
     @JsonProperty("is_result_published")
     private Boolean isResultPublished;
-
-//    @JsonProperty("match_commentary")
-//    private String matchCommentary;
 
     @JsonProperty("questions")
     private List<Question> questions = new ArrayList<>();
@@ -168,17 +167,6 @@ public class Match implements Serializable {
         this.venue = venue;
     }
 
-    /**
-     *
-     * @return
-     * The parties
-     */
-//    @JsonProperty("match_parties")
-//    public String getParties() {
-//        return parties;
-//    }
-
-
     @JsonProperty("match_parties")
     public List<Parties> getParties() {
         return parties;
@@ -188,12 +176,6 @@ public class Match implements Serializable {
     public void setParties(List<Parties> parties) {
         this.parties = parties;
     }
-
-    /**
-     *
-     * @param parties
-     * The match_parties
-     */
 
     /**
      *
@@ -327,17 +309,6 @@ public class Match implements Serializable {
     public void setTournamentPhoto(String tournamentPhoto) {
         this.tournamentPhoto = tournamentPhoto;
     }
-
-//
-//    @JsonProperty("match_commentary")
-//    public String getMatchCommentary() {
-//        return matchCommentary;
-//    }
-//
-//    @JsonProperty("match_commentary")
-//    public void setMatchCommentary(String matchCommentary) {
-//        this.matchCommentary = matchCommentary;
-//    }
 
     @JsonProperty("match_winner_id")
     public Integer getWinnerPartyId() {

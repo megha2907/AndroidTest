@@ -2,9 +2,12 @@ package in.sportscafe.nostragamus.module.user.badges;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
 /**
  * Created by deepanshi on 25/8/16.
  */
+@Parcel
 public class Badge {
 
     @JsonProperty("name")

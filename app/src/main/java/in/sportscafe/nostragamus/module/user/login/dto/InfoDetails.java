@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.user.login.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +13,7 @@ import in.sportscafe.nostragamus.module.user.badges.Badge;
 /**
  * Created by deepanshi on 10/8/16.
  */
+@Parcel
 public class InfoDetails {
 
     @JsonProperty("powerups")

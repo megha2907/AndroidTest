@@ -13,8 +13,11 @@ import android.widget.TextView;
 
 import com.jeeva.android.Log;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.RoundImage;
@@ -35,7 +38,7 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
 
     public static LeaderBoardFragment newInstance(LeaderBoard leaderBoard) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.BundleKeys.LEADERBOARD_LIST, leaderBoard);
+        bundle.putParcelable(BundleKeys.LEADERBOARD_LIST, Parcels.wrap(leaderBoard));
 
         LeaderBoardFragment fragment = new LeaderBoardFragment();
         fragment.setArguments(bundle);

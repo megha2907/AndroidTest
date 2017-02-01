@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
@@ -35,14 +37,14 @@ public class OthersAnswersActivity extends NostragamusActivity {
         Bundle bundle = getIntent().getExtras();
 
         String userName = "Other";
-        if(bundle.containsKey(BundleKeys.PLAYER_USER_NAME)) {
+        if (bundle.containsKey(BundleKeys.PLAYER_USER_NAME)) {
             userName = bundle.getString(BundleKeys.PLAYER_USER_NAME);
         }
         initToolBar(userName);
 
-        mMatchDetails = (Match) bundle.getSerializable(BundleKeys.MATCH_DETAILS);
+        mMatchDetails = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_DETAILS));
 
-        if(!bundle.containsKey(BundleKeys.SHOW_ANSWER_PERCENTAGE)) {
+        if (!bundle.containsKey(BundleKeys.SHOW_ANSWER_PERCENTAGE)) {
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.others_answers_fl_fuzzy_holder,
                     mFuzzyPlayersFragment = FuzzyPlayerFragment.newInstance(mMatchDetails.getId())
@@ -76,7 +78,7 @@ public class OthersAnswersActivity extends NostragamusActivity {
 
     @Override
     public void onBackPressed() {
-        if(null == mFuzzyPlayersFragment || !mFuzzyPlayersFragment.clearList()) {
+        if (null == mFuzzyPlayersFragment || !mFuzzyPlayersFragment.clearList()) {
             super.onBackPressed();
         }
     }

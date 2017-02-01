@@ -2,14 +2,13 @@ package in.sportscafe.nostragamus.module.user.group.allgroups;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
 
 /**
  * Created by deepanshi on 9/27/16.
  */
-
-public class AllGroups implements Serializable {
-
+@Parcel
+public class AllGroups {
 
     @JsonProperty("group_id")
     private Integer groupId;
@@ -77,4 +76,3 @@ public class AllGroups implements Serializable {
     }
 
 }
-

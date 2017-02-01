@@ -3,6 +3,8 @@ package in.sportscafe.nostragamus.module.othersanswers;
 import android.content.Context;
 import android.os.Bundle;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -66,7 +68,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
             }
 
             if (bundle.containsKey(BundleKeys.MATCH_DETAILS)) {
-                mMatchDetails = (Match) bundle.getSerializable(BundleKeys.MATCH_DETAILS);
+                mMatchDetails = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_DETAILS));
                 mMatchId = mMatchDetails.getId();
             }
 

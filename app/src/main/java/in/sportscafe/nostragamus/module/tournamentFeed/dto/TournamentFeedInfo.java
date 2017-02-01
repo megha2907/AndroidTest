@@ -2,12 +2,13 @@ package in.sportscafe.nostragamus.module.tournamentFeed.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
 
 /**
  * Created by Jeeva on 24/6/16.
  */
-public class TournamentFeedInfo implements Serializable{
+@Parcel
+public class TournamentFeedInfo {
 
     @JsonProperty("tournament_id")
     private Integer tournamentId;
@@ -106,6 +107,5 @@ public class TournamentFeedInfo implements Serializable{
     public String toString() {
         return tournamentName;
     }
-
 
 }

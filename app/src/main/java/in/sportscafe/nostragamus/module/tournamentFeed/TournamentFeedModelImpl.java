@@ -7,7 +7,10 @@ package in.sportscafe.nostragamus.module.tournamentFeed;
 import android.content.Context;
 import android.os.Bundle;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
@@ -51,11 +54,9 @@ public class TournamentFeedModelImpl implements TournamentFeedModel {
 
     @Override
     public void getTournamentFeed(Bundle bundle) {
-
-        TournamentInfo tournamentInfo = (TournamentInfo) bundle.getSerializable(Constants.BundleKeys.TOURNAMENT_LIST);
+        TournamentInfo tournamentInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.TOURNAMENT_LIST));
         for (TournamentFeedInfo tournamentFeedInfo : tournamentInfo.getTournamentFeedInfoList()) {
             mTournamentFeedAdapter.add(tournamentFeedInfo);
-
         }
         mTournamentFeedAdapter.notifyDataSetChanged();
 

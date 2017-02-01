@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -86,7 +88,7 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
         public void onClick(View view) {
             Bundle bundle = new Bundle();
             bundle.putString(BundleKeys.LB_LANDING_TYPE, mLbLandingType);
-            bundle.putSerializable(BundleKeys.LB_LANDING_DATA, getItem(getAdapterPosition()));
+            bundle.putParcelable(BundleKeys.LB_LANDING_DATA, Parcels.wrap(getItem(getAdapterPosition())));
 
             navigateToPointsActivity(view.getContext(), bundle);
         }

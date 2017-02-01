@@ -13,7 +13,6 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -34,14 +33,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
 
+import org.parceler.Parcels;
+
 import java.io.File;
-import java.util.Calendar;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -53,9 +53,6 @@ import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
-import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -192,7 +189,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
        /* Bundle mbundle = new Bundle();
         mbundle = getIntent().getExtras();
-        Match match = (Match) mbundle.getSerializable(Constants.BundleKeys.MATCH_LIST);
+        Match match = Parcels.unwrap(mbundle.getParcelable(Constants.BundleKeys.MATCH_LIST));
 
         long startTimeMs = TimeUtils.getMillisecondsFromDateString(
                 match.getStartTime(),
@@ -372,7 +369,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public void setMatchDetails(Match match) {
         matchBundle = new Bundle();
-        matchBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
+        matchBundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
     }
 
     @Override
@@ -404,10 +401,10 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void navigatetoPlay(Match match) {
-        Bundle mBundle = new Bundle();
-        mBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
         Intent intent =  new Intent(this, PredictionActivity.class);
-        intent.putExtras(mBundle);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

@@ -3,7 +3,8 @@ package in.sportscafe.nostragamus.module.user.playerprofile.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +16,8 @@ import in.sportscafe.nostragamus.module.user.login.dto.InfoDetails;
 /**
  * Created by deepanshi on 12/22/16.
  */
-
-public class PlayerInfo extends BasicUserInfo implements Serializable {
+@Parcel
+public class PlayerInfo extends BasicUserInfo {
 
     @JsonProperty("user_photo")
     private String photo;

@@ -3,17 +3,19 @@ package in.sportscafe.nostragamus.module.user.sportselection.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
 
 import in.sportscafe.nostragamus.ImageConfig;
 
 /**
  * Created by Jeeva on 27/5/16.
  */
-public class Sport implements Serializable {
+@Parcel
+public class Sport {
 
     @JsonProperty("sports_id")
     private int id;
+
     private int state;
 
     @JsonProperty("sports_name")

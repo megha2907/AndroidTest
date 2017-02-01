@@ -2,25 +2,24 @@ package in.sportscafe.nostragamus.module.user.lblanding;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
-import java.util.Comparator;
+import org.parceler.Parcel;
 
-import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+import java.util.Comparator;
 
 /**
  * Created by Jeeva on 19/01/17.
  */
+@Parcel
+public class LbLanding {
 
-public class LbLanding implements Serializable,Comparable<LbLanding> {
-
-    private Integer id =1;
+    private Integer id = 1;
 
     private String name = "Cricket";
 
-    private Integer rank ;
+    private Integer rank;
 
     @JsonProperty("rank_change")
-    private Integer rankChange ;
+    private Integer rankChange;
 
     @JsonProperty("count_played")
     private Integer countPlayed;
@@ -106,100 +105,50 @@ public class LbLanding implements Serializable,Comparable<LbLanding> {
     /*Comparator for sorting the list by User Rank*/
     public static Comparator<LbLanding> LeaderBoardRankComparator = new Comparator<LbLanding>() {
 
-        public int compare(LbLanding l1, LbLanding l2) {
-
-            Integer userLeaderBoard1 = null;
-            Integer userLeaderBoard2 = null;
-
-            userLeaderBoard1 = l1.getRank();
-            userLeaderBoard2 = l2.getRank();
-
-            if (null==userLeaderBoard1){
-                userLeaderBoard1 = Integer.MAX_VALUE;
-            }
-            if(null == userLeaderBoard2){
-                userLeaderBoard2 = Integer.MAX_VALUE;
-            }
-
+        public int compare(LbLanding lhs, LbLanding rhs) {
             //ascending order
-            return userLeaderBoard1.compareTo(userLeaderBoard2);
-
-        }};
+            if(null == lhs.rank || null == rhs.rank) {
+                return -1;
+            }
+            return lhs.rank - rhs.rank;
+        }
+    };
 
     /*Comparator for sorting the list by Rank Change*/
     public static Comparator<LbLanding> LeaderBoardRankChangeComparator = new Comparator<LbLanding>() {
 
-        public int compare(LbLanding l1, LbLanding l2) {
-
-            Integer userLeaderBoard1 = null;
-            Integer userLeaderBoard2 = null;
-
-            userLeaderBoard1 = l1.getRankChange();
-            userLeaderBoard2 = l2.getRankChange();
-
-            if (null==userLeaderBoard1){
-                userLeaderBoard1 = Integer.MAX_VALUE;
-            }
-            if(null == userLeaderBoard2){
-                userLeaderBoard2 = Integer.MAX_VALUE;
-            }
-
+        public int compare(LbLanding lhs, LbLanding rhs) {
             //ascending order
-            return userLeaderBoard1.compareTo(userLeaderBoard2);
-
-        }};
+            if(null == lhs.rankChange || null == rhs.rankChange) {
+                return -1;
+            }
+            return lhs.rankChange - rhs.rankChange;
+        }
+    };
 
     /*Comparator for sorting the list by User Rank*/
     public static Comparator<LbLanding> LeaderBoardDateComparator = new Comparator<LbLanding>() {
 
-        public int compare(LbLanding l1, LbLanding l2) {
-
-            Integer userLeaderBoard1 = null;
-            Integer userLeaderBoard2 = null;
-
-            userLeaderBoard1 = l1.getId();
-            userLeaderBoard2 = l2.getId();
-
-            if (null==userLeaderBoard1){
-                userLeaderBoard1 = Integer.MAX_VALUE;
-            }
-            if(null == userLeaderBoard2){
-                userLeaderBoard2 = Integer.MAX_VALUE;
-            }
-
+        public int compare(LbLanding lhs, LbLanding rhs) {
             //ascending order
-            return userLeaderBoard1.compareTo(userLeaderBoard2);
-
-        }};
+            if(null == lhs.rank || null == rhs.rank) {
+                return -1;
+            }
+            return lhs.rank - rhs.rank;
+        }
+    };
 
 
     /*Comparator for sorting the list by Played Matches*/
     public static Comparator<LbLanding> LeaderBoardPlayedMatchesComparator = new Comparator<LbLanding>() {
 
-        public int compare(LbLanding l1, LbLanding l2) {
-
-            Integer userLeaderBoard1 = null;
-            Integer userLeaderBoard2 = null;
-
-            userLeaderBoard1 = l1.getCountPlayed();
-            userLeaderBoard2 = l2.getCountPlayed();
-
-            if (null==userLeaderBoard1){
-                userLeaderBoard1 = Integer.MAX_VALUE;
-            }
-            if(null == userLeaderBoard2){
-                userLeaderBoard2 = Integer.MAX_VALUE;
-            }
-
+        public int compare(LbLanding lhs, LbLanding rhs) {
             //ascending order
-            return userLeaderBoard1.compareTo(userLeaderBoard2);
-
-        }};
-
-    @Override
-    public int compareTo(LbLanding lbLanding) {
-        Integer Lbid=((LbLanding)lbLanding).getId();
-        return (int)(this.id-Lbid);
-    }
+            if(null == lhs.countPlayed || null == rhs.countPlayed) {
+                return -1;
+            }
+            return lhs.countPlayed - rhs.countPlayed;
+        }
+    };
 
 }
