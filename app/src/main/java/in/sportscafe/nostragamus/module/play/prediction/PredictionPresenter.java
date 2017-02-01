@@ -21,4 +21,8 @@ public interface PredictionPresenter {
     void onClickNonegsPowerup();
 
     void onClickPollPowerup();
+
+    void onDummyGameStart();
+
+    void onDummyGameEnd();
 }

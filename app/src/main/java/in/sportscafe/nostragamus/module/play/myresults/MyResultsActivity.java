@@ -203,7 +203,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 || timeAgo.timeUnit == TimeUnit.SECOND;
 
 
-        if (match.getResultPublished() || isMatchStarted){
+        if (match.isResultPublished() || isMatchStarted){
             powerupMainFab.setVisibility(View.GONE);
         }else {
             powerupMainFab.setVisibility(View.VISIBLE);

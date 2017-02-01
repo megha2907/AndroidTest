@@ -391,7 +391,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     private ViewPagerAdapter getAdapter(UserInfo userInfo) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        pagerAdapter.addFragment(TimelineFragment.newInstance(userInfo.getId() + ""),
+        pagerAdapter.addFragment(TimelineFragment.newInstance(),
                 userInfo.getTotalMatchesPlayed() + "\n Matches");
         pagerAdapter.addFragment(BadgeFragment.newInstance(), badgeCount + "\n Achievements");
         pagerAdapter.addFragment(AllGroupsFragment.newInstance(), groupsCount + "\n Groups");

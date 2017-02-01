@@ -1,9 +1,13 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,9 +18,12 @@ import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomTextView;
 
 import in.sportscafe.nostragamus.Config.Sports;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.FeedActivity;
+import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.play.DummyGameFragment;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 
@@ -111,7 +118,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void hideShuffle() {
-        findViewById(R.id.prediction_btn_shuffle).setVisibility(View.GONE);
+        findViewById(R.id.prediction_iv_shuffle).setVisibility(View.GONE);
     }
 
     @Override
@@ -130,16 +137,16 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             case R.id.prediction_ibtn_back:
                 goBack();
                 break;
-            case R.id.prediction_btn_shuffle:
+            case R.id.prediction_iv_shuffle:
                 mSwipeFlingAdapterView.getTopCardListener().selectBottom();
                 break;
             case R.id.prediction_ll_neither:
                 mSwipeFlingAdapterView.getTopCardListener().selectTop();
                 break;
-            case R.id.swipe_card_tv_left:
+            case R.id.prediction_iv_left_arrow:
                 mSwipeFlingAdapterView.getTopCardListener().selectLeft();
                 break;
-            case R.id.swipe_card_tv_right:
+            case R.id.prediction_iv_right_arrow:
                 mSwipeFlingAdapterView.getTopCardListener().selectRight();
                 break;
             case R.id.powerups_iv_2x:
@@ -231,6 +238,97 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         onBackPressed();
     }
 
+    private DummyGameFragment mDummyGameFragment;
+
+    @Override
+    public void changeToDummyGameMode() {
+        findViewById(R.id.prediction_iv_tournament_photo).setVisibility(View.GONE);
+//        findViewById(R.id.prediction_iv_shuffle).setVisibility(View.INVISIBLE);
+        findViewById(R.id.prediction_rl_play_page).setVisibility(View.INVISIBLE);
+
+        mDummyGameFragment = DummyGameFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.prediction_fl_dummy_holder, mDummyGameFragment).commit();
+    }
+
+    @Override
+    public void showDummyGameInfo() {
+        findViewById(R.id.prediction_rl_play_page).setVisibility(View.INVISIBLE);
+        findViewById(R.id.prediction_fl_dummy_holder).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideDummyGameInfo() {
+        findViewById(R.id.prediction_rl_play_page).setVisibility(View.VISIBLE);
+        findViewById(R.id.prediction_fl_dummy_holder).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void enableLeftRightOptions() {
+        setLeftRightOption(true, 1f);
+    }
+
+    @Override
+    public void disableLeftRightOptions() {
+        setLeftRightOption(false, 0.5f);
+    }
+
+    private void setLeftRightOption(boolean enabled, float alpha) {
+        View arrow = findViewById(R.id.prediction_iv_left_arrow);
+        arrow.setEnabled(enabled);
+        arrow.setAlpha(alpha);
+
+        arrow = findViewById(R.id.prediction_iv_right_arrow);
+        arrow.setEnabled(enabled);
+        arrow.setAlpha(alpha);
+    }
+
+    @Override
+    public void showPowerups() {
+        findViewById(R.id.prediction_ll_powerup_layout).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hidePowerups() {
+        findViewById(R.id.prediction_ll_powerup_layout).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showLeftRightIndicator() {
+        findViewById(R.id.prediction_iv_dummy_left_right_indicator).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLeftRightIndicator() {
+        findViewById(R.id.prediction_iv_dummy_left_right_indicator).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showNeitherIndicator() {
+        findViewById(R.id.prediction_iv_dummy_neither_indicator).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideNeitherIndicator() {
+        findViewById(R.id.prediction_iv_dummy_neither_indicator).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showPowerupsHint() {
+        findViewById(R.id.prediction_rl_powerup_hints).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hidePowerupsHint() {
+        findViewById(R.id.prediction_rl_powerup_hints).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void navigateToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     private Drawable getPowerupDrawable(int colorRes) {
         GradientDrawable powerupDrawable = new GradientDrawable();
         powerupDrawable.setShape(GradientDrawable.RECTANGLE);
@@ -238,6 +336,37 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         powerupDrawable.setColor(getResources().getColor(colorRes));
         return powerupDrawable;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mDummyGameStartReceiver,
+                new IntentFilter(Constants.IntentActions.ACTION_DUMMY_GAME_PLAY));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mDummyGameEndReceiver,
+                new IntentFilter(Constants.IntentActions.ACTION_DUMMY_GAME_PROCEED));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mDummyGameStartReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mDummyGameEndReceiver);
+    }
+
+    BroadcastReceiver mDummyGameStartReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            hideDummyGameInfo();
+            mPredictionPresenter.onDummyGameStart();
+        }
+    };
+
+    BroadcastReceiver mDummyGameEndReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mPredictionPresenter.onDummyGameEnd();
+        }
+    };
 }
 
     /*

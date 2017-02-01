@@ -114,7 +114,7 @@ public interface NostragamusService {
     Call<ApiResponse> leaveGroup(@Body MembersRequest request);
 
     @GET("v1/game/users/results")
-    Call<MyResultsResponse> getMyResults(@Query("match_id") Integer matchId);
+    Call<MyResultsResponse> getMyResults(@Query("match_id") Integer matchId, @Query("player_id") Integer playerId);
 
     @GET("v1/game/leaderboard/detail")
     Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("sports_id") Integer sportId,
@@ -154,7 +154,7 @@ public interface NostragamusService {
 
     @GET("v1/game/users/matches/timeline")
     Call<MatchesResponse> getTimelines(
-            @Query("player_user_id") String playerUserId,
+            @Query("player_id") Integer playerUserId,
             @Query("skip") int skip,
             @Query("limit") int limit
     );

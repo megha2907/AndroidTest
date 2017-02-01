@@ -72,7 +72,7 @@ public class Match {
     private String sportName;
 
     @JsonProperty("is_result_published")
-    private Boolean isResultPublished;
+    private boolean resultPublished;
 
     @JsonProperty("questions")
     private List<Question> questions = new ArrayList<>();
@@ -358,12 +358,12 @@ public class Match {
     }
 
     @JsonProperty("is_result_published")
-    public Boolean getResultPublished() {
-        return isResultPublished;
+    public boolean isResultPublished() {
+        return resultPublished;
     }
 
     @JsonProperty("is_result_published")
-    public void setResultPublished(Boolean resultPublished) {
-        isResultPublished = resultPublished;
+    public void setResultPublished(boolean resultPublished) {
+        this.resultPublished = resultPublished;
     }
 }

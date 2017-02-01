@@ -334,7 +334,7 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     private ViewPagerAdapter getAdapter(PlayerInfo playerInfo) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        pagerAdapter.addFragment(TimelineFragment.newInstance(playerInfo.getId() + ""),
+        pagerAdapter.addFragment(TimelineFragment.newInstance(playerInfo.getId()),
                 playerInfo.getTotalMatchesPlayed() + "\n Matches");
 
         if (groupsCount == "1") {

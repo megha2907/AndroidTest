@@ -143,6 +143,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     public void navigateToDummyGame(Bundle bundle) {
         Intent intent = new Intent(this, PredictionActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
