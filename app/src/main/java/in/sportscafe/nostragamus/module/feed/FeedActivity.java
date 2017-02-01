@@ -43,6 +43,11 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
 
     private ImageView mIvPollPowerup;
 
+    private TextView mTv2xPowerupCount;
+
+    private TextView mTvNonegsPowerupCount;
+
+    private TextView mTvPollPowerupCount;
 
     private Toolbar mtoolbar;
 
@@ -61,8 +66,6 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
         this.mFeedPresenter.onCreateFeed(getIntent().getExtras());
 
         bundle = getIntent().getExtras();
-
-        initToolBar();
 
         initRotation();
     }
@@ -87,7 +90,7 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
                 for (int i = 0; i < childCount; i++) {
                     child = parent.getChildAt(i).findViewById(R.id.schedule_row_ll);
 
-                    if(child.getVisibility() == View.VISIBLE) {
+                    if (child.getVisibility() == View.VISIBLE) {
                         child.setPivotY(child.getMeasuredHeight());
                         child.getLocationOnScreen(location);
                         child.setRotationX(getRotationByY(location[1]));
@@ -103,7 +106,7 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
 
     private float getRotationByY(int yAxis) {
         float rotation = MAX_ROTATION * (yAxis - mHalfVisibleHeight) / mDifference;
-        if(rotation < 0) {
+        if (rotation < 0) {
             return 0;
         }
         return rotation;
@@ -119,13 +122,21 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
         mRcvFeed.getLayoutManager().scrollToPosition(movePosition);
     }
 
-
-    public void initToolBar() {
+    @Override
+    public void initToolBar(Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll) {
         mtoolbar = (Toolbar) findViewById(R.id.feed_toolbar);
-        TextView tournamentName = (TextView)mtoolbar.findViewById(R.id.feed_tv_tournament_name);
-        mIv2xPowerup = (ImageView)mtoolbar.findViewById(R.id.powerups_iv_2x);
-        mIvNonegsPowerup = (ImageView)mtoolbar.findViewById(R.id.powerups_iv_nonegs);
-        mIvPollPowerup = (ImageView)mtoolbar.findViewById(R.id.powerups_iv_poll);
+        TextView tournamentName = (TextView) mtoolbar.findViewById(R.id.feed_tv_tournament_name);
+        mIv2xPowerup = (ImageView) mtoolbar.findViewById(R.id.powerups_iv_2x);
+        mIvNonegsPowerup = (ImageView) mtoolbar.findViewById(R.id.powerups_iv_nonegs);
+        mIvPollPowerup = (ImageView) mtoolbar.findViewById(R.id.powerups_iv_poll);
+        mTv2xPowerupCount = (TextView) mtoolbar.findViewById(R.id.powerup_tv_2x_count);
+        mTvNonegsPowerupCount = (TextView) mtoolbar.findViewById(R.id.powerup_tv_nonegs_count);
+        mTvPollPowerupCount = (TextView) mtoolbar.findViewById(R.id.powerup_tv_poll_count);
+
+        mTv2xPowerupCount.setText(powerUp2x.toString());
+        mTvNonegsPowerupCount.setText(powerUpNonEgs.toString());
+        mTvPollPowerupCount.setText(powerUpAudiencePoll.toString());
+
         tournamentName.setText(bundle.getString(Constants.BundleKeys.TOURNAMENT_NAME));
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -148,7 +159,7 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent i = new Intent(getApplicationContext(), HomeActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);

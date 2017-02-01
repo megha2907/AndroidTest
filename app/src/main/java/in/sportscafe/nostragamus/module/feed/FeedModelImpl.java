@@ -99,7 +99,13 @@ public class FeedModelImpl implements FeedModel {
 
                     FeedTimeline feedTimeline = response.body().getFeedTimeline();
                     mtournamentPowerUpInfo = feedTimeline.getTournamentPowerupInfo();
-                    mFeedModelListener.onSuccessFeeds(matchList);
+                    HashMap<String, Integer> powerUpMap = mtournamentPowerUpInfo.getPowerUps();
+
+                    Integer m2xPowerups = powerUpMap.get(Constants.Powerups.XX);
+                    Integer mNonegsPowerups = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+                    Integer mPollPowerups = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+
+                    mFeedModelListener.onSuccessFeeds(matchList,m2xPowerups,mNonegsPowerups,mPollPowerups);
 
                 } else {
 
@@ -198,7 +204,7 @@ public class FeedModelImpl implements FeedModel {
 
     public interface OnFeedModelListener {
 
-        void onSuccessFeeds(List<Match> matchList);
+        void onSuccessFeeds(List<Match> matchList,Integer powerUp2x,Integer powerUpNonEgs,Integer powerUpAudiencePoll);
 
         void onFailedFeeds(String message);
 
