@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
+import org.parceler.Parcels;
+
 import java.util.Collections;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -54,7 +56,7 @@ public class LBLandingModelImpl implements LBLandingModel {
         resetAllValues();
 
         if (null != bundle && bundle.containsKey(BundleKeys.LB_LANDING_DATA)) {
-            LbLanding lbLanding = (LbLanding) bundle.getSerializable(BundleKeys.LB_LANDING_DATA);
+            LbLanding lbLanding = Parcels.unwrap(bundle.getParcelable(BundleKeys.LB_LANDING_DATA));
             switch (lbLanding.getType()) {
                 case LBLandingType.SPORT:
                     mSportsId = lbLanding.getId();

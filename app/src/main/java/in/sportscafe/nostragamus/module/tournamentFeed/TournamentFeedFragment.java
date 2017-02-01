@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
@@ -39,7 +42,7 @@ public class TournamentFeedFragment extends NostragamusFragment implements Tourn
 
     public static TournamentFeedFragment newInstance(TournamentInfo tournamentInfo) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.BundleKeys.TOURNAMENT_LIST, tournamentInfo);
+        bundle.putParcelable(BundleKeys.TOURNAMENT_LIST, Parcels.wrap(tournamentInfo));
 
         TournamentFeedFragment fragment = new TournamentFeedFragment();
         fragment.setArguments(bundle);

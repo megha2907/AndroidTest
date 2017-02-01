@@ -5,7 +5,10 @@ import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -17,13 +20,13 @@ import retrofit2.Response;
  * Created by deepanshi on 12/20/16.
  */
 
-public class FlipModelImpl implements FlipModel ,FlipAdapter.OnFlipActionListener {
+public class FlipModelImpl implements FlipModel, FlipAdapter.OnFlipActionListener {
 
     private static final int PAGINATION_START_AT = 5;
 
     private static final int LIMIT = 5;
 
-    private  int matchId;
+    private int matchId;
 
     private boolean isLoading = false;
 
@@ -53,14 +56,10 @@ public class FlipModelImpl implements FlipModel ,FlipAdapter.OnFlipActionListene
 
     @Override
     public void init(Bundle bundle) {
-
-        if(null != bundle.getSerializable(Constants.BundleKeys.MATCH_LIST))
-        {
-            match = (Match) bundle.getSerializable(Constants.BundleKeys.MATCH_LIST);
+        if (bundle.containsKey(BundleKeys.MATCH_LIST)) {
+            match = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
             matchId = match.getId();
-        }
-        else
-        {
+        } else {
             mFlipModelListener.onFailedMyResults(Constants.Alerts.RESULTS_INFO_ERROR);
         }
     }
@@ -71,27 +70,26 @@ public class FlipModelImpl implements FlipModel ,FlipAdapter.OnFlipActionListene
     }
 
     private void addMoreInAdapter(Match match) {
-            mFlipAdapter.add(match);
-            mFlipAdapter.notifyDataSetChanged();
+        mFlipAdapter.add(match);
+        mFlipAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void callFlipQuestionApi(Integer questionId) {
-        callFLipPowerupApi("answer_flip",matchId,questionId);
+        callFLipPowerupApi("answer_flip", matchId, questionId);
     }
 
-    private void callFLipPowerupApi(String powerupId,Integer matchId,Integer questionId) {
+    private void callFLipPowerupApi(String powerupId, Integer matchId, Integer questionId) {
 
-        MyWebService.getInstance().getFlipPowerup(powerupId,matchId,questionId).enqueue(new NostragamusCallBack<ReplayPowerupResponse>() {
+        MyWebService.getInstance().getFlipPowerup(powerupId, matchId, questionId).enqueue(new NostragamusCallBack<ReplayPowerupResponse>() {
             @Override
             public void onResponse(Call<ReplayPowerupResponse> call, Response<ReplayPowerupResponse> response) {
                 super.onResponse(call, response);
 
                 if (response.isSuccessful()) {
-                    if (response.body().getResponse().equals(null) || response.body().getResponse().equalsIgnoreCase("failure")){
+                    if (response.body().getResponse().equals(null) || response.body().getResponse().equalsIgnoreCase("failure")) {
                         mFlipModelListener.onFailedFlipPowerupResponse();
-                    }
-                    else {
+                    } else {
                         mFlipModelListener.onSuccessFlipPowerupResponse(match);
                     }
 
@@ -103,7 +101,6 @@ public class FlipModelImpl implements FlipModel ,FlipAdapter.OnFlipActionListene
 
 
     }
-
 
 
     public interface OnFlipModelListener {

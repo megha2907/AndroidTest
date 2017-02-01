@@ -5,10 +5,13 @@ import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
+import org.parceler.Parcels;
+
 import java.util.Collections;
 import java.util.Comparator;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
@@ -40,8 +43,7 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     @Override
     public void init(Bundle bundle) {
-
-        mleaderBoard = (LeaderBoard) bundle.getSerializable(Constants.BundleKeys.LEADERBOARD_LIST);
+        mleaderBoard = Parcels.unwrap(bundle.getParcelable(BundleKeys.LEADERBOARD_LIST));
     }
 
     private void checkEmpty() {

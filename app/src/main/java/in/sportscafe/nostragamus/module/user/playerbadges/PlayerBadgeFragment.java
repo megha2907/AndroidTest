@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
@@ -27,7 +30,7 @@ public class PlayerBadgeFragment extends NostragamusFragment implements PlayerBa
 
     public static PlayerBadgeFragment newInstance(PlayerInfo playerInfo) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.BundleKeys.PLAYERINFO, playerInfo);
+        bundle.putParcelable(BundleKeys.PLAYERINFO, Parcels.wrap(playerInfo));
 
         PlayerBadgeFragment fragment = new PlayerBadgeFragment();
         fragment.setArguments(bundle);

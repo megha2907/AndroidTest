@@ -3,7 +3,8 @@ package in.sportscafe.nostragamus.module.user.myprofile.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,8 @@ import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class GroupInfo implements Serializable {
+@Parcel
+public class GroupInfo {
 
     @JsonProperty("group_id")
     private Integer id;

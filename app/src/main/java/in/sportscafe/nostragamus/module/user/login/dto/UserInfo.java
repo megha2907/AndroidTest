@@ -3,7 +3,8 @@ package in.sportscafe.nostragamus.module.user.login.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
+
 import java.util.HashMap;
 
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
@@ -11,7 +12,8 @@ import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class UserInfo extends PlayerInfo implements Serializable {
+@Parcel
+public class UserInfo extends PlayerInfo {
 
     @JsonProperty("user_email")
     private String email;

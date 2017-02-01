@@ -2,13 +2,13 @@ package in.sportscafe.nostragamus.module.feed.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
 
 /**
  * Created by deepanshi on 9/26/16.
  */
-
-public class Parties implements Serializable {
+@Parcel
+public class Parties {
 
     @JsonProperty("party_name")
     private String partyName;
@@ -48,7 +48,5 @@ public class Parties implements Serializable {
     public void setPartyImageUrl(String partyImageUrl) {
         this.partyImageUrl = partyImageUrl;
     }
-
-
 
 }

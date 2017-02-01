@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
@@ -39,17 +42,16 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
 
     public static AllGroupsFragment newInstance() {
 
-        allgroups=true;
+        allgroups = true;
         AllGroupsFragment fragment = new AllGroupsFragment();
         return fragment;
     }
 
     public static AllGroupsFragment newMutualGroupInstance(PlayerInfo playerInfo) {
-
-        allgroups=false;
+        allgroups = false;
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.BundleKeys.PLAYERINFO, playerInfo);
+        bundle.putParcelable(BundleKeys.PLAYERINFO, Parcels.wrap(playerInfo));
 
         AllGroupsFragment fragment = new AllGroupsFragment();
         fragment.setArguments(bundle);
@@ -62,18 +64,19 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
         View rootView = inflater.inflate(R.layout.fragment_all_groups, container, false);
         return rootView;
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         this.mRvAllGroups = (RecyclerView) findViewById(R.id.all_groups_rcv);
-        this.mRvAllGroups.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL, false));
+        this.mRvAllGroups.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         this.mRvAllGroups.setHasFixedSize(true);
         this.mAllGroupsPresenter = AllGroupsPresenterImpl.newInstance(this);
 
         if (allgroups) {
             this.mAllGroupsPresenter.onCreateAllGroups();
-        }else {
+        } else {
             this.mAllGroupsPresenter.onCreateMutualGroups(getArguments());
         }
 
@@ -103,7 +106,7 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
     @Override
     public void showGroupsEmpty() {
 
-        mTvEmptyGroups=(TextView)findViewById(R.id.all_groups_empty_tv);
+        mTvEmptyGroups = (TextView) findViewById(R.id.all_groups_empty_tv);
         mTvEmptyGroups.setVisibility(View.VISIBLE);
 
     }
@@ -111,8 +114,8 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(RESULT_OK == resultCode) {
-            if(CODE_GROUP_INFO == requestCode) {
+        if (RESULT_OK == resultCode) {
+            if (CODE_GROUP_INFO == requestCode) {
                 mAllGroupsPresenter.onCreateAllGroups();
             }
         }

@@ -2,13 +2,13 @@ package in.sportscafe.nostragamus.module.user.login.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
 
 /**
  * Created by Jeeva on 10/01/17.
  */
-
-public class BasicUserInfo implements Serializable {
+@Parcel
+public class BasicUserInfo {
 
     @JsonProperty("user_id")
     private Integer id;

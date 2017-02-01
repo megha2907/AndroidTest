@@ -3,14 +3,15 @@ package in.sportscafe.nostragamus.module.play.prediction.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
 
 import in.sportscafe.nostragamus.module.othersanswers.AnswerPercentage;
 
 /**
  * Created by Jeeva on 27/5/16.
  */
-public class Question implements Serializable {
+@Parcel
+public class Question {
 
     @JsonProperty("question_id")
     private Integer questionId;

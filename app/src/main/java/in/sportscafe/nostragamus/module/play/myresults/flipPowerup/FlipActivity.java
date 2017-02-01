@@ -11,7 +11,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -50,10 +53,8 @@ public class FlipActivity extends NostragamusActivity implements FlipView {
         this.mFlipPresenter = FlipPresenterImpl.newInstance(this);
         this.mFlipPresenter.onCreateFlip(getIntent().getExtras());
 
-        mbundle = new Bundle();
         mbundle = getIntent().getExtras();
-        match = (Match) mbundle.getSerializable(Constants.BundleKeys.MATCH_LIST);
-
+        match = Parcels.unwrap(mbundle.getParcelable(BundleKeys.MATCH_LIST));
     }
 
     @Override
@@ -90,9 +91,9 @@ public class FlipActivity extends NostragamusActivity implements FlipView {
 
     private void gotoMyResults(Match match) {
         Intent intent = new Intent(this, MyResultsActivity.class);
-        Bundle mBundle = new Bundle();
-        mBundle.putSerializable(Constants.BundleKeys.MATCH_LIST, match);
-        intent.putExtras(mBundle);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
+        intent.putExtras(bundle);
         startActivity(intent);
         finish();
     }

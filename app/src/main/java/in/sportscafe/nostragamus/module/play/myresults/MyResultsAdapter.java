@@ -21,6 +21,8 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -521,7 +523,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
     private void navigateToOthersAnswers(Context context) {
         Intent intent =  new Intent(context, OthersAnswersActivity.class);
-        intent.putExtra(BundleKeys.MATCH_DETAILS, getItem(0).getTournaments().get(0).getMatches().get(0));
+        intent.putExtra(BundleKeys.MATCH_DETAILS, Parcels.wrap(getItem(0).getTournaments().get(0).getMatches().get(0)));
         context.startActivity(intent);
     }
 
@@ -537,7 +539,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         );
 
         Intent intent =  new Intent(context, PointsActivity.class);
-        intent.putExtra(BundleKeys.LB_LANDING_DATA, lbLanding);
+        intent.putExtra(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
         intent.putExtra(BundleKeys.LB_LANDING_TYPE, LBLandingType.SPORT);
         intent.putExtra(BundleKeys.TOURNAMENT_ID, match.getTournamentId());
         context.startActivity(intent);

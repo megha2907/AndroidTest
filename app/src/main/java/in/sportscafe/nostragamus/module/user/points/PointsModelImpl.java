@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentManager;
 
 import com.jeeva.android.Log;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.LBLandingType;
@@ -63,7 +65,7 @@ public class PointsModelImpl implements PointsModel {
             mTourId = bundle.getInt(BundleKeys.TOURNAMENT_ID);
         }
 
-        mLbLanding = (LbLanding) bundle.getSerializable(BundleKeys.LB_LANDING_DATA);
+        mLbLanding = Parcels.unwrap(bundle.getParcelable(BundleKeys.LB_LANDING_DATA));
         mLandingType = bundle.getString(BundleKeys.LB_LANDING_TYPE);
 
         switch (mLandingType) {
