@@ -13,5 +13,4 @@ public interface FeedView extends InAppView {
 
     void moveAdapterPosition(int movePosition);
 
-    void dismissSwipeRefresh();
 }

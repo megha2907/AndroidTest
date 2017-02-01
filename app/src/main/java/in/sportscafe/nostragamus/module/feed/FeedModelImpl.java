@@ -3,6 +3,8 @@ package in.sportscafe.nostragamus.module.feed;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.jeeva.android.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,6 +15,8 @@ import java.util.Map;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.feed.dto.FeedTimeline;
+import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
@@ -39,6 +43,8 @@ public class FeedModelImpl implements FeedModel {
 
     private String sportName;
 
+    private TournamentPowerupInfo mtournamentPowerUpInfo;
+
     private FeedModelImpl(OnFeedModelListener listener) {
         this.mFeedModelListener = listener;
     }
@@ -50,19 +56,18 @@ public class FeedModelImpl implements FeedModel {
     @Override
     public void init(Bundle bundle) {
 
-         tourId = bundle.getInt(Constants.BundleKeys.TOURNAMENT_ID);
+        tourId = bundle.getInt(Constants.BundleKeys.TOURNAMENT_ID);
         sportName = bundle.getString(Constants.BundleKeys.SPORT_NAME);
     }
 
     @Override
     public TimelineAdapter getAdapter() {
-        return mFeedAdapter = new TimelineAdapter(mFeedModelListener.getContext());
+        return mFeedAdapter = new TimelineAdapter(mFeedModelListener.getContext(), mtournamentPowerUpInfo);
     }
 
     @Override
     public void getFeeds() {
-        mFeedAdapter.clear();
-        if(Nostragamus.getInstance().hasNetworkConnection()) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
             callFeedListApi(tourId);
         } else {
             mFeedModelListener.onNoInternet();
@@ -80,29 +85,21 @@ public class FeedModelImpl implements FeedModel {
             public void onResponse(Call<MatchesResponse> call, Response<MatchesResponse> response) {
                 super.onResponse(call, response);
 
-                if(null == mFeedModelListener.getContext()) {
+                if (null == mFeedModelListener.getContext()) {
                     return;
                 }
 
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     List<Match> matchList = response.body().getFeedTimeline().getMatches();
 
-                    if(null == matchList || matchList.isEmpty()) {
+                    if (null == matchList || matchList.isEmpty()) {
                         mFeedModelListener.onEmpty();
                         return;
                     }
 
-                    handleMatches(matchList);
-
-                    NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
-
-                    HashMap<String, Integer> powerUpMap = response.body().getFeedTimeline()
-                            .getTournamentPowerupInfo().getPowerUps();
-                    nostragamusDataHandler.setNumberof2xPowerups(powerUpMap.get(Constants.Powerups.XX));
-                    nostragamusDataHandler.setNumberofNonegsPowerups(powerUpMap.get(Constants.Powerups.NO_NEGATIVE));
-                    nostragamusDataHandler.setNumberofAudiencePollPowerups(powerUpMap.get(Constants.Powerups.AUDIENCE_POLL));
-                    nostragamusDataHandler.setNumberofReplayPowerups(powerUpMap.get(Constants.Powerups.MATCH_REPLAY));
-                    nostragamusDataHandler.setNumberofFlipPowerups(powerUpMap.get(Constants.Powerups.ANSWER_FLIP));
+                    FeedTimeline feedTimeline = response.body().getFeedTimeline();
+                    mtournamentPowerUpInfo = feedTimeline.getTournamentPowerupInfo();
+                    mFeedModelListener.onSuccessFeeds(matchList);
 
                 } else {
 
@@ -112,13 +109,12 @@ public class FeedModelImpl implements FeedModel {
         });
     }
 
-    private void handleMatches(List<Match> matchList) {
+    @Override
+    public void handleMatches(List<Match> matchList) {
         List<Match> feedList = matchList;
         for (Match feed : feedList) {
             mFeedAdapter.add(feed);
         }
-
-        mFeedModelListener.onSuccessFeeds(mFeedAdapter, mFeedAdapter.getItemCount() - 1);
     }
 
     private List<Feed> getFeedList(List<Match> matchList) {
@@ -166,9 +162,9 @@ public class FeedModelImpl implements FeedModel {
         Collections.sort(feedList, new Comparator<Feed>() {
             @Override
             public int compare(Feed lhs, Feed rhs) {
-                if(lhs.getDate() > rhs.getDate()) {
+                if (lhs.getDate() > rhs.getDate()) {
                     return -1;
-                } else if(lhs.getDate() < rhs.getDate()) {
+                } else if (lhs.getDate() < rhs.getDate()) {
                     return 1;
                 } else {
                     return 0;
@@ -186,12 +182,12 @@ public class FeedModelImpl implements FeedModel {
 
         for (int i = feedList.size() - 1; i >= 0; i--) {
             tempMs = feedList.get(i).getDate();
-            if(todayDateMs - tempMs == 0) {
+            if (todayDateMs - tempMs == 0) {
                 mClosestDatePosition = i;
                 break;
             }
 
-            if(closestDateMs == 0 || Math.abs(todayDateMs - tempMs) < Math.abs(todayDateMs - closestDateMs)) {
+            if (closestDateMs == 0 || Math.abs(todayDateMs - tempMs) < Math.abs(todayDateMs - closestDateMs)) {
                 closestDateMs = tempMs;
                 mClosestDatePosition = i;
             }
@@ -202,7 +198,7 @@ public class FeedModelImpl implements FeedModel {
 
     public interface OnFeedModelListener {
 
-        void onSuccessFeeds(TimelineAdapter feedAdapter, int movePosition);
+        void onSuccessFeeds(List<Match> matchList);
 
         void onFailedFeeds(String message);
 
