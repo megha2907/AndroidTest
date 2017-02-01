@@ -2,14 +2,15 @@ package in.sportscafe.nostragamus.module.user.leaderboard.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
+
 import java.util.Comparator;
 
 /**
  * Created by deepanshi on 10/14/16.
  */
-
-public class UserLeaderBoard implements Serializable,Comparable<UserLeaderBoard>{
+@Parcel
+public class UserLeaderBoard {
 
     @JsonProperty("user_id")
     private Integer userId;
@@ -135,59 +136,27 @@ public class UserLeaderBoard implements Serializable,Comparable<UserLeaderBoard>
         this.accuracy = accuracy;
     }
 
-
-    @Override
-    public int compareTo(UserLeaderBoard userLeaderBoard) {
-        Long userPoints=((UserLeaderBoard)userLeaderBoard).getPoints();
-        /* For Ascending order*/
-        return (int)(this.points-userPoints);
-    }
-
     /*Comparator for sorting the list by User Accuracy*/
     public static Comparator<UserLeaderBoard> UserAccuracyComparator = new Comparator<UserLeaderBoard>() {
 
-        public int compare(UserLeaderBoard u1, UserLeaderBoard u2) {
-
-            Integer user1 = null;
-            Integer user2 = null;
-
-            user1 = u1.getAccuracy();
-            user2 = u2.getAccuracy();
-
-            if (null==user1){
-                user1 = Integer.MAX_VALUE;
+        public int compare(UserLeaderBoard lhs, UserLeaderBoard rhs) {
+            //ascending order
+            if (null == lhs.accuracy || null == rhs.accuracy) {
+                return -1;
             }
-            if(null == user2){
-                user2 = Integer.MAX_VALUE;
-            }
-
-            //descending order
-            return user2.compareTo(user1);
-        }};
-
-
+            return lhs.accuracy - rhs.accuracy;
+        }
+    };
 
     /*Comparator for sorting the list by User Rank*/
     public static Comparator<UserLeaderBoard> UserRankComparator = new Comparator<UserLeaderBoard>() {
 
-        public int compare(UserLeaderBoard u1, UserLeaderBoard u2) {
-
-            Integer user1 = null;
-            Integer user2 = null;
-
-            user1 = u1.getRank();
-            user2 = u2.getRank();
-
-            if (null==user1){
-                user1 = Integer.MAX_VALUE;
-            }
-            if(null == user2){
-                user2 = Integer.MAX_VALUE;
-            }
-
+        public int compare(UserLeaderBoard lhs, UserLeaderBoard rhs) {
             //ascending order
-            return user1.compareTo(user2);
-
-        }};
-
+            if (null == lhs.rank || null == rhs.rank) {
+                return -1;
+            }
+            return lhs.rank - rhs.rank;
+        }
+    };
 }

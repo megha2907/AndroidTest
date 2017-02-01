@@ -2,14 +2,13 @@ package in.sportscafe.nostragamus.module.user.group.mutualgroups;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
 
 /**
  * Created by deepanshi on 1/4/17.
  */
-
-public class MutualGroups implements Serializable {
-
+@Parcel
+public class MutualGroups {
 
     @JsonProperty("group_id")
     private Integer groupId;

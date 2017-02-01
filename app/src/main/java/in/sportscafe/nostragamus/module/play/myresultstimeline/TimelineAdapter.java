@@ -24,6 +24,8 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 import com.jeeva.android.widgets.customfont.CustomTextView;
 import com.jeeva.android.widgets.customfont.Typefaces;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -376,7 +378,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             Match match = (Match) view.getTag();
             if (null != match) {
                 bundle = new Bundle();
-                bundle.putSerializable(BundleKeys.MATCH_LIST, match);
+                bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
                 bundle.putString(BundleKeys.SPORT_NAME, match.getSportName());
             }
 

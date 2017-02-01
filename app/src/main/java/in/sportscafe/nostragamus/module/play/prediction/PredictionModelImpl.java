@@ -6,6 +6,8 @@ import android.text.TextUtils;
 
 import com.jeeva.android.Log;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +82,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     public void init(Bundle bundle) {
 
         if (!bundle.containsKey(BundleKeys.IS_DUMMY_GAME)) {
-            mMyResult = (Match) bundle.getSerializable(BundleKeys.MATCH_LIST);
+            mMyResult = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
             mMatchId = mMyResult.getId();
 
             if (bundle.containsKey(BundleKeys.SPORT_NAME)) {
@@ -88,8 +90,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             }
         } else {
             mDummyGame = bundle.getBoolean(BundleKeys.IS_DUMMY_GAME);
-
-
         }
     }
 

@@ -2,13 +2,15 @@ package in.sportscafe.nostragamus.module.user.leaderboard.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
+import org.parceler.Parcel;
+
 import java.util.List;
 
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class LeaderBoard implements Serializable {
+@Parcel
+public class LeaderBoard {
 
     @JsonProperty("sports_id")
     private Integer sportsId;

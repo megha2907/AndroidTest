@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -67,7 +69,7 @@ public class FuzzyLbAdapter extends Adapter<LbLanding, FuzzyLbAdapter.ViewHolder
             mFuzzySearchClickListener.onFuzzyLbClick(lbLanding.getName());
 
             Intent intent = new Intent(IntentActions.ACTION_FUZZY_LB_CLICK);
-            intent.putExtra(BundleKeys.LB_LANDING_DATA, lbLanding);
+            intent.putExtra(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
             intent.putExtra(BundleKeys.LB_LANDING_KEY, lbLanding.getName());
 
             LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);

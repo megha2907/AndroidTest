@@ -4,9 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroups;
@@ -48,7 +51,7 @@ public class AllGroupsModelImpl implements AllGroupsModel{
 
     @Override
     public void initMutualGroups(Bundle bundle) {
-        PlayerInfo playerInfo = (PlayerInfo) bundle.getSerializable(Constants.BundleKeys.PLAYERINFO);
+        PlayerInfo playerInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.PLAYERINFO));
         getMutualGroups(playerInfo);
     }
 
