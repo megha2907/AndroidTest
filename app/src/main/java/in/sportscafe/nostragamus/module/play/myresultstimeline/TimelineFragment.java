@@ -24,6 +24,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
+import static android.R.attr.fragment;
 import static android.R.attr.rotation;
 import static com.google.android.gms.analytics.internal.zzy.w;
 
@@ -46,13 +47,17 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
 
     private LinearLayoutManager mLinearLayoutManager;
 
-    public static TimelineFragment newInstance(String playerUserId) {
+    public static TimelineFragment newInstance(Integer playerUserId) {
         Bundle args = new Bundle();
-        args.putString(BundleKeys.PLAYER_USER_ID, playerUserId);
+        args.putInt(BundleKeys.PLAYER_USER_ID, playerUserId);
 
         TimelineFragment fragment = new TimelineFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static TimelineFragment newInstance() {
+        return new TimelineFragment();
     }
 
     @Nullable

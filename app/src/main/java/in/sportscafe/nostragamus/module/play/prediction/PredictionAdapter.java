@@ -36,6 +36,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     private boolean mBgUpdateDone = false;
 
+    private int mTopMargin;
+
     View vBgFrame1;
 
     View vBgFrame2;
@@ -89,8 +91,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         Rect rect = new Rect();
         rootView.getLocalVisibleRect(rect);
 
-        final float SCREEN_WIDTH = rect.width() * 0.8f;
-        final float SCREEN_HEIGHT = rect.height() * 0.8f;
+        final float SCREEN_WIDTH = rect.width() * 1f;
+        final float SCREEN_HEIGHT = rect.height() * 1f;
 
         mCardWidth = SCREEN_WIDTH * CARD_SIZE_PERECENTAGE;
         mCardHeight = SCREEN_WIDTH;
@@ -103,6 +105,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         rlp.height = (int) mCardHeight;
         rlp.leftMargin = (int) mCardMargin;
         rlp.rightMargin = (int) mCardMargin;
+        mTopMargin = rlp.topMargin;
 
         vBgFrame1 = rootView.findViewById(R.id.prediction_cv_bg_1);
         vBgFrame1.getLayoutParams().height = (int) mCardHeight;
@@ -144,6 +147,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         rlp.height = (int) mCardHeight;
         rlp.leftMargin = (int) mCardMargin;
         rlp.rightMargin = (int) mCardMargin;
+        rlp.topMargin = (int) mTopMargin;
         /*sadf*/
 
 

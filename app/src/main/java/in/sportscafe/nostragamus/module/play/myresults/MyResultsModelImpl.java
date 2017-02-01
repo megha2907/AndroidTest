@@ -60,6 +60,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private Match match;
 
+    private Integer mPlayerUserId;
+
     private OnMyResultsModelListener mResultsModelListener;
 
     private MyResultsModelImpl(OnMyResultsModelListener listener) {
@@ -81,6 +83,10 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         } else {
             mResultsModelListener.onFailedMyResults(Constants.Alerts.RESULTS_INFO_ERROR);
             mResultsModelListener.gotoResultsTimeline();
+        }
+
+        if(bundle.containsKey(BundleKeys.PLAYER_ID)) {
+            mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_ID);
         }
 
         //no replay and flip powerup for now
@@ -109,7 +115,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private void callMyResultsApi(final int offset) {
         isLoading = true;
-        MyWebService.getInstance().getMyResultsRequest(matchId).enqueue(
+        MyWebService.getInstance().getMyResultsRequest(matchId, mPlayerUserId).enqueue(
                 new NostragamusCallBack<MyResultsResponse>() {
                     @Override
                     public void onResponse(Call<MyResultsResponse> call, Response<MyResultsResponse> response) {
@@ -156,7 +162,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     private MyResultsAdapter createAdapter(Context context) {
-        return mResultAdapter = new MyResultsAdapter(context);
+        return mResultAdapter = new MyResultsAdapter(context, null == mPlayerUserId);
     }
 
     private void destroyAdapter() {

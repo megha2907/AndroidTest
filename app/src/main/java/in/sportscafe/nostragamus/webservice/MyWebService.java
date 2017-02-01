@@ -137,8 +137,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.leaveGroup(request);
     }
 
-    public Call<MyResultsResponse> getMyResultsRequest(Integer MatchId) {
-        return mNostragamusService.getMyResults(MatchId);
+    public Call<MyResultsResponse> getMyResultsRequest(Integer MatchId, Integer playerId) {
+        return mNostragamusService.getMyResults(MatchId, playerId);
     }
 
     public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Integer sportsId,Integer groupId,
@@ -190,7 +190,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getFlipPowerup(powerupId,matchId,questionId);
     }
 
-    public Call<MatchesResponse> getTimelinesRequest(String playerUserId, int skip, int limit) {
+    public Call<MatchesResponse> getTimelinesRequest(Integer playerUserId, int skip, int limit) {
         return mNostragamusService.getTimelines(playerUserId, skip, limit);
     }
 

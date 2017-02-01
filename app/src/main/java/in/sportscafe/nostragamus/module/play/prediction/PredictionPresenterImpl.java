@@ -10,6 +10,8 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 
+import static com.google.android.gms.analytics.internal.zzy.m;
+
 /**
  * Created by Jeeva on 20/5/16.
  */
@@ -38,8 +40,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             mPredictionView.setTournamentName(mPredictionModel.getTournamentName());
             mPredictionView.setContestName(mPredictionModel.getContestName());
 
-            updatePowerups();
+        } else {
+            mPredictionView.changeToDummyGameMode();
         }
+
+        updatePowerups();
     }
 
     private void updatePowerups() {
@@ -91,6 +96,16 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
+    public void onDummyGameStart() {
+        mPredictionModel.getDummyGameQuestions();
+    }
+
+    @Override
+    public void onDummyGameEnd() {
+        mPredictionView.navigateToHome();
+    }
+
+    @Override
     public void onFailedQuestions(String message) {
         mPredictionView.dismissProgressbar();
         showAlertMessage(message);
@@ -112,6 +127,27 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             mPredictionView.hideNeither();
         }
         mPredictionView.setNeitherOption(question.getQuestionOption3());
+
+        if(mPredictionModel.isDummyGame()) {
+            handleDummyGameQuestionChange(question);
+        }
+    }
+
+    private void handleDummyGameQuestionChange(Question question) {
+        int questionNumber = question.getQuestionNumber();
+        if(questionNumber == 1) {
+            mPredictionView.hideNeither();
+            mPredictionView.hidePowerups();
+        } else if(questionNumber == 2) {
+            mPredictionView.showNeither();
+            mPredictionView.disableLeftRightOptions();
+        } else if(questionNumber == 3) {
+            mPredictionView.enableLeftRightOptions();
+            mPredictionView.showPowerups();
+            mPredictionView.showPowerupsHint();
+        } else if(questionNumber == 4) {
+            mPredictionView.hidePowerupsHint();
+        }
     }
 
     @Override
@@ -162,7 +198,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onDummyGameCompletion() {
-
+        mPredictionView.showDummyGameInfo();
     }
 
     @Override
