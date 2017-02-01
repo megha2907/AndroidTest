@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.user.login.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
@@ -10,7 +11,7 @@ import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class UserInfo extends PlayerInfo {
+public class UserInfo extends PlayerInfo implements Serializable {
 
     @JsonProperty("user_email")
     private String email;
@@ -32,7 +33,6 @@ public class UserInfo extends PlayerInfo {
 
     @JsonProperty("count_groups")
     private Integer totalGroups;
-
 
     /**
      * @return The email

@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus;
 
+import static android.view.View.X;
+
 /**
  * Created by Jeeva on 30/3/15.
  */
@@ -172,6 +174,7 @@ public interface Constants {
         String LB_LANDING_DATA = "lbLandingData";
         String LB_LANDING_TYPE = "lbLandingType";
         String LB_LANDING_KEY = "lbLandingKey";
+        String IS_DUMMY_GAME = "isDummyGame";
     }
 
     interface ParcelableKeys {
@@ -199,6 +202,8 @@ public interface Constants {
         String ACTION_SHARE_SCORE = "in.sportscafe.nostragamus.intent.action.SHARE_SCORE";
         String ACTION_FUZZY_PLAYER_CLICK = "in.sportscafe.nostragamus.intent.action.FUZZY_PLAYER_CLICK";
         String ACTION_FUZZY_LB_CLICK = "in.sportscafe.nostragamus.intent.action.FUZZY_LB_CLICK";
+        String ACTION_DUMMY_GAME_PLAY = "in.sportscafe.nostragamus.intent.action.DUMMY_GAME_PLAY";
+        String ACTION_DUMMY_GAME_PROCEED = "in.sportscafe.nostragamus.intent.action.DUMMY_GAME_PROCEED";
     }
 
     interface LeaderBoardPeriods {
@@ -218,6 +223,20 @@ public interface Constants {
         int NOT = 0;
         int PARTIALLY = 1;
         int COMPLETELY = 2;
+    }
+
+    interface AnswerIds {
+        int LEFT = 1;
+        int RIGHT = 2;
+        int NEITHER = 3;
+    }
+
+    interface Powerups {
+        String XX = "2x";
+        String NO_NEGATIVE = "no_negs";
+        String AUDIENCE_POLL = "player_poll";
+        String MATCH_REPLAY = "match_replay";
+        String ANSWER_FLIP = "answer_flip";
     }
 
     interface AnalyticsCategory {

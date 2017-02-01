@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
+import android.os.Bundle;
+
 import com.jeeva.android.View;
 
 import static com.google.android.gms.analytics.internal.zzy.i;
@@ -18,6 +20,8 @@ public interface EditProfileView extends View {
     void setSuccessResult();
 
     void navigateToHome(boolean fromHome);
+
+    void navigateToDummyGame(Bundle bundle);
 
     void navigateToSportsSelection();
 

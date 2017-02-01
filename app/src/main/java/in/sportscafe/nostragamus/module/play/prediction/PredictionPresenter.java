@@ -14,7 +14,11 @@ public interface PredictionPresenter {
 
     void onCreatePrediction(Bundle bundle);
 
-    void onPowerUp(String powerup);
-
     void setFlingListener(FlingCardListener topCardListener);
+
+    void onClick2xPowerup();
+
+    void onClickNonegsPowerup();
+
+    void onClickPollPowerup();
 }

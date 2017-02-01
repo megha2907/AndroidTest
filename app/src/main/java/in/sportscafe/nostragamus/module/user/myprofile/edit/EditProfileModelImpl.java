@@ -1,15 +1,18 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import java.io.File;
 import java.util.UUID;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -20,6 +23,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import static android.R.attr.data;
+import static com.google.android.gms.analytics.internal.zzy.r;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -62,7 +66,7 @@ public class EditProfileModelImpl implements EditProfileModel {
 
     @Override
     public void onGetImage(Intent imageData) {
-        String imagePath = imageData.getStringExtra(Constants.BundleKeys.ADDED_NEW_IMAGE_PATH);
+        String imagePath = imageData.getStringExtra(BundleKeys.ADDED_NEW_IMAGE_PATH);
         Log.i("file", imagePath);
 
         File file = new File(imagePath);
@@ -141,6 +145,13 @@ public class EditProfileModelImpl implements EditProfileModel {
     @Override
     public UserInfo getUserInfo() {
         return mUserInfo;
+    }
+
+    @Override
+    public Bundle getDummyGameData() {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(BundleKeys.IS_DUMMY_GAME, true);
+        return bundle;
     }
 
     public interface OnEditProfileListener {

@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AudiencePollRequest {
 
-
     @JsonProperty("question_id")
     private Integer questionId;
 
