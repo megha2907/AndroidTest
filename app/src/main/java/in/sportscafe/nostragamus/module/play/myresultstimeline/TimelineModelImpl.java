@@ -3,21 +3,12 @@ package in.sportscafe.nostragamus.module.play.myresultstimeline;
 import android.content.Context;
 import android.os.Bundle;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
-import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -33,7 +24,7 @@ public class TimelineModelImpl implements TimelineModel {
 
     private static final int DEFAULT_LIMIT = 10;
 
-    private String mPlayerUserId;
+    private Integer mPlayerUserId;
 
     private int mClosestDatePosition = 0;
 
@@ -41,7 +32,7 @@ public class TimelineModelImpl implements TimelineModel {
 
     private boolean mHasMoreItems = true;
 
-    private TimelineAdapter mMyResultsTimelineAdapter;
+    private TimelineAdapter mTimelineAdapter;
 
     private TimelineModelImpl.OnMyResultsTimelineModelListener mMyResultsTimelineModelListener;
 
@@ -56,18 +47,21 @@ public class TimelineModelImpl implements TimelineModel {
     @Override
     public void init(Bundle bundle) {
         if(null != bundle && bundle.containsKey(BundleKeys.PLAYER_USER_ID)) {
-            mPlayerUserId = bundle.getString(BundleKeys.PLAYER_USER_ID);
+            mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_USER_ID);
         }
     }
 
     @Override
     public TimelineAdapter getAdapter(Context context) {
-        return mMyResultsTimelineAdapter = new TimelineAdapter(context);
+        if(null == mPlayerUserId) {
+            return mTimelineAdapter = new TimelineAdapter(context);
+        }
+        return mTimelineAdapter = new TimelineAdapter(context, mPlayerUserId);
     }
 
     @Override
     public void getFeeds() {
-        mMyResultsTimelineAdapter.clear();
+        mTimelineAdapter.clear();
         callFeedListApi(0, DEFAULT_LIMIT);
     }
 
@@ -87,12 +81,12 @@ public class TimelineModelImpl implements TimelineModel {
 
     @Override
     public boolean isAdapterEmpty() {
-        return null == mMyResultsTimelineAdapter || mMyResultsTimelineAdapter.getItemCount() == 0;
+        return null == mTimelineAdapter || mTimelineAdapter.getItemCount() == 0;
     }
 
     @Override
     public void destroyAll() {
-        mMyResultsTimelineAdapter.destroy();
+        mTimelineAdapter.destroy();
     }
 
     private void callFeedListApi(int skip, int limit) {
@@ -133,7 +127,7 @@ public class TimelineModelImpl implements TimelineModel {
             mHasMoreItems = false;
         }
 
-        mMyResultsTimelineAdapter.addAll(matchList);
+        mTimelineAdapter.addAll(matchList);
         mMyResultsTimelineModelListener.onSuccessFeeds();
     }
 

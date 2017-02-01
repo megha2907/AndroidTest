@@ -49,4 +49,32 @@ public interface PredictionView extends InAppView {
     void navigateToFeed(Bundle bundle);
 
     void goBack();
+
+    void changeToDummyGameMode();
+
+    void showDummyGameInfo();
+
+    void hideDummyGameInfo();
+
+    void enableLeftRightOptions();
+
+    void disableLeftRightOptions();
+
+    void showPowerups();
+
+    void hidePowerups();
+
+    void showLeftRightIndicator();
+
+    void hideLeftRightIndicator();
+
+    void showNeitherIndicator();
+
+    void hideNeitherIndicator();
+
+    void showPowerupsHint();
+
+    void hidePowerupsHint();
+
+    void navigateToHome();
 }

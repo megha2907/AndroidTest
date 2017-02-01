@@ -56,13 +56,13 @@ public class DummyGameFragment extends NostragamusFragment implements View.OnCli
     @Override
     public void onClick(View view) {
         if(R.id.dummy_game_btn_action == view.getId()) {
-            if(mPlayDone) {
+            if (mPlayDone) {
+                broadcastProceed();
+            } else {
                 broadcastPlay();
 
                 changeContentsToProceed();
                 mPlayDone = true;
-            } else {
-                broadcastProceed();
             }
         }
     }

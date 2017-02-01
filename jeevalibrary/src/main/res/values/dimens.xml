@@ -115,4 +115,7 @@
     <dimen name="dp_450">450dp</dimen>
     <dimen name="dp_430">430dp</dimen>
     <dimen name="_dp_18">-18dp</dimen>
+    <dimen name="_dp_35">-35dp</dimen>
+    <dimen name="_dp_30">-30dp</dimen>
+    <dimen name="_dp_40">-45dp</dimen>
 </resources>

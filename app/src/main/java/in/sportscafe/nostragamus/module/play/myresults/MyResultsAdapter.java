@@ -54,10 +54,13 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
     private Boolean isFlipclicked = true;
 
-    private  int answerId;
+    private int answerId;
 
-    public MyResultsAdapter(Context context) {
+    private boolean mIsMyResults = true;
+
+    public MyResultsAdapter(Context context, boolean isMyResults) {
         super(context);
+        this.mIsMyResults = isMyResults;
     }
 
     public void setResultsActionListener(OnMyResultsActionListener mResultsActionListener) {
@@ -178,8 +181,6 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
             holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
             holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Correct");
-            holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard,match));
-
         }
 
         List<Question> questions = match.getQuestions();
@@ -187,6 +188,9 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
             holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question));
         }
 
+        if(match.isResultPublished() && mIsMyResults) {
+            holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard, match));
+        }
 
         return myResultView;
     }

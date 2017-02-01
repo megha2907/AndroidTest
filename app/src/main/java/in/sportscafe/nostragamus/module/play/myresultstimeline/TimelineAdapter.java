@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.DateFormats;
 import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
@@ -64,6 +63,8 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
     private TimerRunnable mTimerRunnable;
 
+    private Integer mPlayerId;
+
     private TournamentPowerupInfo mTournamentPowerupInfo;
 
     public TimelineAdapter(Context context) {
@@ -71,10 +72,13 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         mTimerRunnable = new TimerRunnable();
     }
 
+    public TimelineAdapter(Context context, Integer playerId) {
+        this(context);
+        this.mPlayerId = playerId;
+    }
 
     public TimelineAdapter(Context context, TournamentPowerupInfo tournamentPowerupInfo) {
-        super(context);
-        mTimerRunnable = new TimerRunnable();
+        this(context);
         mTournamentPowerupInfo = tournamentPowerupInfo;
     }
 
@@ -175,7 +179,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
             if (match.getMatchQuestionCount() > 0) {
 
-                if (match.getResultPublished()) { // if match Result Published
+                if (match.isResultPublished()) { // if match Result Published
 
                     //if match Completely Attempted then IsAttempted = 2 else if Partially Attempted then is Attempted =1
                     //show Match Results
@@ -391,6 +395,9 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 bundle = new Bundle();
                 bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
                 bundle.putString(BundleKeys.SPORT_NAME, match.getSportName());
+                if(null != mPlayerId) {
+                    bundle.putInt(BundleKeys.PLAYER_ID, mPlayerId);
+                }
             }
 
             switch (view.getId()) {
@@ -546,7 +553,5 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         }
 
     }
-
-    ;
 
 }
