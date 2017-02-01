@@ -285,10 +285,10 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
 //
 //        }
 //
-//        if (badgesCount==0){
-//            badgeCount = "0";
-//        }
-//        badgeCount = String.valueOf(badgesCount);
+        if (badgesCount==0){
+            badgeCount = "0";
+        }
+        badgeCount = String.valueOf(badgesCount);
 
     }
 
@@ -343,9 +343,9 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
             pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), groupsCount + "\n Mutual Groups");
         }
         if (badgeCount == "1") {
-            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount + "\n Badge");
+            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount + "\n Achievement");
         } else {
-            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount + "\n Badges");
+            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount + "\n Achievements");
         }
         return pagerAdapter;
     }

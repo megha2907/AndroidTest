@@ -89,7 +89,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
             mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_ID);
         }
 
-        UserInfoModelImpl.newInstance(this).getUserInfo();
+        //no replay and flip powerup for now
+        //UserInfoModelImpl.newInstance(this).getUserInfo();
     }
 
     @Override

@@ -9,15 +9,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.Config.Sports;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
@@ -26,8 +27,6 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
-import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
@@ -68,18 +67,18 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         this.mPredictionModelListener = predictionModelListener;
         this.mNostragamusDataHandler = NostragamusDataHandler.getInstance();
 
-        updateInitialPowerups();
+//        updateInitialPowerups();
     }
 
     public static PredictionModel newInstance(OnPredictionModelListener predictionModelListener) {
         return new PredictionModelImpl(predictionModelListener);
     }
 
-    private void updateInitialPowerups() {
+    /*private void updateInitialPowerups() {
         m2xPowerups = mNostragamusDataHandler.getNumberof2xPowerups();
         mNonegsPowerups = mNostragamusDataHandler.getNumberofNonegsPowerups();
         mPollPowerups = mNostragamusDataHandler.getNumberofAudiencePollPowerups();
-    }
+    }*/
 
     @Override
     public void init(Bundle bundle) {
@@ -91,6 +90,18 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             if (bundle.containsKey(BundleKeys.SPORT_NAME)) {
                 mPredictionModelListener.onGetSportName(bundle.getString(BundleKeys.SPORT_NAME));
             }
+
+            if (bundle.containsKey(BundleKeys.TOURNAMENT_POWERUPS)) {
+
+                TournamentPowerupInfo tournamentPowerupInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.TOURNAMENT_POWERUPS));
+                HashMap<String, Integer> powerUpMap = tournamentPowerupInfo.getPowerUps();
+
+                m2xPowerups = powerUpMap.get(Powerups.XX);
+                mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
+                mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
+
+            }
+
         } else {
             mDummyGame = true;
             mPredictionModelListener.onGetSportName(Sports.TENNIS);
@@ -368,7 +379,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPredictionModelListener.onAudiencePollApplied(mPollPowerups);
 
         if (!mDummyGame) {
-            mNostragamusDataHandler.setNumberofAudiencePollPowerups(mPollPowerups);
+//            mNostragamusDataHandler.setNumberofAudiencePollPowerups(mPollPowerups);
         }
     }
 
@@ -389,15 +400,17 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
             if (null != powerupId) {
                 if (Powerups.XX.equalsIgnoreCase(powerupId)) {
-                    mNostragamusDataHandler.setNumberof2xPowerups(m2xPowerups);
+                    // mNostragamusDataHandler.setNumberof2xPowerups(m2xPowerups);
                 } else if (Powerups.NO_NEGATIVE.equalsIgnoreCase(powerupId)) {
-                    mNostragamusDataHandler.setNumberofNonegsPowerups(mNonegsPowerups);
+                    //
+                    // mNostragamusDataHandler.setNumberofNonegsPowerups(mNonegsPowerups);
                 }
             }
         }
     }
 
-    private void postAnswerToServer(Answer answer, boolean minorityOption, Boolean matchComplete) {
+    private void postAnswerToServer(Answer answer, boolean minorityOption, Boolean
+            matchComplete) {
         new PostAnswerModelImpl(new PostAnswerModelImpl.PostAnswerModelListener() {
 
             @Override

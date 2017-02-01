@@ -57,15 +57,14 @@ import retrofit2.http.QueryMap;
  */
 public interface NostragamusService {
 
-
     @GET("v1/game/sports")
     Call<AllSports> getAllSports();
 
     @GET("v1/game/users")
     Call<UserInfoResponse> getUserInfo();
 
-    @GET("v1/game/users/matches")
-    Call<MatchesResponse> getMatches(@Query("tour_id") int tourId);
+    @GET("v2/game/users/{tournament_id}/timeline")
+    Call<MatchesResponse> getMatches(@Path("tournament_id") int tourId);
 
     @GET("v1/game/users/matches")
     Call<MatchesResponse> getMatchResults(@Query("is_attempted") Boolean isAttempted ,@Query("without_commentary") Boolean WithoutCommentary);
@@ -89,7 +88,7 @@ public interface NostragamusService {
     @POST("v1/utility/addFileToS3")
     Call<Result> uploadImage(@Part MultipartBody.Part file, @Part("filePath") RequestBody filepath, @Part("fileName") RequestBody filename);
 
-    @POST("v1/game/users/answer")
+    @POST("v2/game/users/answer")
     Call<ApiResponse> saveAnswer(@Body Answer answer,@Query("is_match_complete") Boolean isMatchComplete,@Query("is_minority_option") Boolean isMinorityOption);
 
     @PUT("v1/game/users/sports/preference")

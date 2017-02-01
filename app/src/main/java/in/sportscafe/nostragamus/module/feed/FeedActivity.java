@@ -2,12 +2,16 @@ package in.sportscafe.nostragamus.module.feed;
 
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -19,7 +23,7 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class FeedActivity extends NostragamusActivity implements FeedView, SwipeRefreshLayout.OnRefreshListener {
+public class FeedActivity extends NostragamusActivity implements FeedView {
 
     private static final float MAX_ROTATION = 30;
 
@@ -33,7 +37,12 @@ public class FeedActivity extends NostragamusActivity implements FeedView, Swipe
 
     private FeedPresenter mFeedPresenter;
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ImageView mIv2xPowerup;
+
+    private ImageView mIvNonegsPowerup;
+
+    private ImageView mIvPollPowerup;
+
 
     private Toolbar mtoolbar;
 
@@ -48,22 +57,10 @@ public class FeedActivity extends NostragamusActivity implements FeedView, Swipe
         this.mRcvFeed.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         this.mRcvFeed.setHasFixedSize(true);
-
-        this.mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swifeRefresh);
-        this.mSwipeRefreshLayout.setOnRefreshListener(this);
-
         this.mFeedPresenter = FeedPresenterImpl.newInstance(this);
         this.mFeedPresenter.onCreateFeed(getIntent().getExtras());
 
         bundle = getIntent().getExtras();
-
-        this.mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                onRefresh();
-            }
-        });
 
         initToolBar();
 
@@ -122,20 +119,17 @@ public class FeedActivity extends NostragamusActivity implements FeedView, Swipe
         mRcvFeed.getLayoutManager().scrollToPosition(movePosition);
     }
 
-    @Override
-    public void dismissSwipeRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void onRefresh() {
-        mFeedPresenter.onRefresh();
-    }
 
     public void initToolBar() {
         mtoolbar = (Toolbar) findViewById(R.id.feed_toolbar);
-        mtoolbar.setTitle(bundle.getString(Constants.BundleKeys.TOURNAMENT_NAME));
+        TextView tournamentName = (TextView)mtoolbar.findViewById(R.id.feed_tv_tournament_name);
+        mIv2xPowerup = (ImageView)mtoolbar.findViewById(R.id.powerups_iv_2x);
+        mIvNonegsPowerup = (ImageView)mtoolbar.findViewById(R.id.powerups_iv_nonegs);
+        mIvPollPowerup = (ImageView)mtoolbar.findViewById(R.id.powerups_iv_poll);
+        tournamentName.setText(bundle.getString(Constants.BundleKeys.TOURNAMENT_NAME));
         setSupportActionBar(mtoolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
         mtoolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {
@@ -146,6 +140,11 @@ public class FeedActivity extends NostragamusActivity implements FeedView, Swipe
                 }
 
         );
+        mtoolbar.setContentInsetStartWithNavigation(0);
+
+        mIv2xPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
+        mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.radical_red));
+        mIvPollPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
     }
 
     @Override
@@ -160,5 +159,13 @@ public class FeedActivity extends NostragamusActivity implements FeedView, Swipe
     protected void onDestroy() {
         super.onDestroy();
         mFeedPresenter.onDestroy();
+    }
+
+    private Drawable getPowerupDrawable(int colorRes) {
+        GradientDrawable powerupDrawable = new GradientDrawable();
+        powerupDrawable.setShape(GradientDrawable.RECTANGLE);
+        powerupDrawable.setCornerRadius(getResources().getDimensionPixelSize(R.dimen.dp_5));
+        powerupDrawable.setColor(getResources().getColor(colorRes));
+        return powerupDrawable;
     }
 }

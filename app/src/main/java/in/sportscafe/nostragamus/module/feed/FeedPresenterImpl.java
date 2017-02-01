@@ -4,7 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
 
 /**
@@ -28,7 +31,7 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
     @Override
     public void onCreateFeed(Bundle bundle) {
         mFeedModel.init(bundle);
-        mFeedView.setAdapter(mFeedModel.getAdapter());
+        getFeedDetails();
     }
 
     @Override
@@ -46,26 +49,25 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
     }
 
     @Override
-    public void onSuccessFeeds(TimelineAdapter feedAdapter, int movePosition) {
-        mFeedView.moveAdapterPosition(movePosition);
-        mFeedView.dismissSwipeRefresh();
+    public void onSuccessFeeds(List<Match> matchList) {
+        mFeedView.setAdapter(mFeedModel.getAdapter());
+        mFeedModel.handleMatches(matchList);
+        mFeedView.moveAdapterPosition(mFeedModel.getAdapter().getItemCount() - 1);
+
     }
 
     @Override
     public void onFailedFeeds(String message) {
-        mFeedView.dismissSwipeRefresh();
         showAlertMessage(message);
     }
 
     @Override
     public void onNoInternet() {
-        mFeedView.dismissSwipeRefresh();
         showAlertMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
     public void onEmpty() {
-        mFeedView.dismissSwipeRefresh();
         mFeedView.showInAppMessage(Constants.Alerts.NO_FEEDS_FOUND);
     }
 
