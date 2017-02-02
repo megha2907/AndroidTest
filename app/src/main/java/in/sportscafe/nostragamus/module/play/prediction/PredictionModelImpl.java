@@ -236,6 +236,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPredictionAdapter.add(dataObject);
     }
 
+    private int mLastQuestionNumber = -1;
+
     @Override
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
         if (itemsInAdapter == 0) {
@@ -245,19 +247,22 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 bundle.putString(BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
                 mPredictionModelListener.onSuccessCompletion(bundle);
             } else {
-                mPredictionModelListener.onDummyGameCompletion();
+                mPredictionModelListener.onSuccessCompletion(null);
             }
             return;
         }
 
-        if (itemsInAdapter == 1) {
-            mPredictionModelListener.onShowingLastQuestion();
-        }
-
         Question topQuestion = mPredictionAdapter.getTopQuestion();
-        mNeitherOptionAvailable = !TextUtils.isEmpty(topQuestion.getQuestionOption3());
+        if(mLastQuestionNumber != topQuestion.getQuestionNumber()) {
+            mLastQuestionNumber = topQuestion.getQuestionNumber();
+            if (itemsInAdapter == 1) {
+                mPredictionModelListener.onShowingLastQuestion();
+            }
 
-        mPredictionModelListener.onQuestionChanged(topQuestion, mInitialCount, mNeitherOptionAvailable);
+            mNeitherOptionAvailable = !TextUtils.isEmpty(topQuestion.getQuestionOption3());
+
+            mPredictionModelListener.onQuestionChanged(topQuestion, mInitialCount, mNeitherOptionAvailable);
+        }
     }
 
     @Override
@@ -529,7 +534,5 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         void onNonegsApplied(int count);
 
         void onAudiencePollApplied(int count);
-
-        void onDummyGameCompletion();
     }
 }

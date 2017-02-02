@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.feed;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import java.util.List;
@@ -14,11 +15,9 @@ public interface FeedModel {
 
     void init(Bundle bundle);
 
-    TimelineAdapter getAdapter();
+    TimelineAdapter getAdapter(Context context, List<Match> matchList);
 
     void getFeeds();
 
     void destroyAll();
-
-    void handleMatches(List<Match> matchList);
 }

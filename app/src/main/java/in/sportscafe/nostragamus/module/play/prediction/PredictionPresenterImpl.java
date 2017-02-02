@@ -55,8 +55,12 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onSuccessCompletion(Bundle bundle) {
-        mPredictionView.dismissProgressbar();
-        mPredictionView.navigateToFeed(bundle);
+        if(!mPredictionModel.isDummyGame()) {
+            mPredictionView.dismissProgressbar();
+            mPredictionView.navigateToFeed(bundle);
+        } else {
+            mPredictionView.showDummyGameInfo();
+        }
     }
 
     private void getAllQuestions() {
@@ -106,6 +110,15 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
+    public void onClickBack() {
+        if (!mPredictionModel.isDummyGame()) {
+            mPredictionView.goBack();
+        } else if(!mPredictionView.dismissCoach()) {
+            mPredictionView.navigateToHome();
+        }
+    }
+
+    @Override
     public void onFailedQuestions(String message) {
         mPredictionView.dismissProgressbar();
         showAlertMessage(message);
@@ -129,22 +142,29 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         mPredictionView.setNeitherOption(question.getQuestionOption3());
 
         if(mPredictionModel.isDummyGame()) {
-            handleDummyGameQuestionChange(question);
+            handleDummyGameQuestionChange(question.getQuestionNumber());
         }
     }
 
-    private void handleDummyGameQuestionChange(Question question) {
-        int questionNumber = question.getQuestionNumber();
+    private void handleDummyGameQuestionChange(int questionNumber) {
         if(questionNumber == 1) {
             mPredictionView.hideNeither();
             mPredictionView.hidePowerups();
+
+            mPredictionView.showLeftRightCoach();
+            mPredictionView.showLeftRightIndicator();
         } else if(questionNumber == 2) {
             mPredictionView.showNeither();
             mPredictionView.disableLeftRightOptions();
+
+            mPredictionView.showNeitherIndicator();
+            mPredictionView.showNeitherCoach();
         } else if(questionNumber == 3) {
             mPredictionView.enableLeftRightOptions();
             mPredictionView.showPowerups();
+
             mPredictionView.showPowerupsHint();
+            mPredictionView.showPowerupsCoach();
         } else if(questionNumber == 4) {
             mPredictionView.hidePowerupsHint();
         }
@@ -194,11 +214,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onAudiencePollApplied(int count) {
         mPredictionView.setPollPowerupCount(count);
-    }
-
-    @Override
-    public void onDummyGameCompletion() {
-        mPredictionView.showDummyGameInfo();
     }
 
     @Override
