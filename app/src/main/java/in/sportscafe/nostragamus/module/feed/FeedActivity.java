@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
@@ -123,9 +124,13 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
     }
 
     @Override
-    public void initToolBar(Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll) {
+    public void initToolBar(Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll, String powerUpText) {
+
+
         mtoolbar = (Toolbar) findViewById(R.id.feed_toolbar);
+        RelativeLayout powerUpRl = (RelativeLayout) findViewById(R.id.feed_rl_powerup_layout);
         TextView tournamentName = (TextView) mtoolbar.findViewById(R.id.feed_tv_tournament_name);
+        TextView poweruptext = (TextView) mtoolbar.findViewById(R.id.feed_tv_tournament_matches_left);
         mIv2xPowerup = (ImageView) mtoolbar.findViewById(R.id.powerups_iv_2x);
         mIvNonegsPowerup = (ImageView) mtoolbar.findViewById(R.id.powerups_iv_nonegs);
         mIvPollPowerup = (ImageView) mtoolbar.findViewById(R.id.powerups_iv_poll);
@@ -133,9 +138,11 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
         mTvNonegsPowerupCount = (TextView) mtoolbar.findViewById(R.id.powerup_tv_nonegs_count);
         mTvPollPowerupCount = (TextView) mtoolbar.findViewById(R.id.powerup_tv_poll_count);
 
+        powerUpRl.setVisibility(View.VISIBLE);
         mTv2xPowerupCount.setText(powerUp2x.toString());
         mTvNonegsPowerupCount.setText(powerUpNonEgs.toString());
         mTvPollPowerupCount.setText(powerUpAudiencePoll.toString());
+        poweruptext.setText(powerUpText);
 
         tournamentName.setText(bundle.getString(Constants.BundleKeys.TOURNAMENT_NAME));
         setSupportActionBar(mtoolbar);

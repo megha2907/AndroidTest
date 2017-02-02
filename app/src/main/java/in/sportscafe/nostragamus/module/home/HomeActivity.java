@@ -22,6 +22,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.notifications.NotificationInboxFragment;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
+import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -119,7 +120,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
         checkGroupCode();
 
-        getunReadNotificationCount();
+       // getunReadNotificationCount();
 
     }
 
@@ -167,7 +168,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mProfileRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
                   mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));*/
 
-                  loadFragment(mCurrentFragment = new NotificationInboxFragment());
+                  loadFragment(mCurrentFragment = new AllGroupsFragment().newInstance());
                   break;
 
               case R.id.home_rl_feed:

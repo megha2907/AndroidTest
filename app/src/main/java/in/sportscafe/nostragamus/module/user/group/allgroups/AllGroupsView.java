@@ -17,4 +17,6 @@ public interface AllGroupsView extends View {
     void setAdapter(RecyclerView.Adapter adapter);
 
     void showGroupsEmpty();
+
+    void navigateToJoinGroup();
 }

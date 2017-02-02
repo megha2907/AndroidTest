@@ -36,6 +36,7 @@ import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
+import in.sportscafe.nostragamus.module.popups.PopUpActivity;
 import in.sportscafe.nostragamus.module.settings.SettingsActivity;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.badges.BadgeActivity;
@@ -110,13 +111,18 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         this.mProfilePresenter = ProfilePresenterImpl.newInstance(this);
         this.mProfilePresenter.onCreateProfile();
 
+        openPopup();
+
+    }
+
+    private void openPopup() {
+        startActivity(new Intent(getContext(), PopUpActivity.class));
     }
 
     private void setClickListeners() {
         findViewById(R.id.profile_btn_edit).setOnClickListener(this);
         findViewById(R.id.profile_btn_logout).setOnClickListener(this);
         findViewById(R.id.profile_iv_image).setOnClickListener(this);
-        findViewById(R.id.join_grp_btn).setOnClickListener(this);
     }
 
     @Override
@@ -264,164 +270,6 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
             }
 
         }
-//        List<Badge> badgeList = NostragamusDataHandler.getInstance().getBadgeList();
-//
-//        LinearLayout parent = (LinearLayout)findViewById(R.id.badges_ll);
-//        RelativeLayout.LayoutParams layoutParams =
-//                (RelativeLayout.LayoutParams)parent.getLayoutParams();
-//        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-//        parent.setLayoutParams(layoutParams);
-//
-//        if(badgeList.size() <= 8) {
-//
-//            LinearLayout layout2 = new LinearLayout(isThreadAlive());
-//            layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-//            parent.setOrientation(LinearLayout.VERTICAL);
-//            parent.addView(layout2);
-//            //layout2.setGravity(Gravity.CENTER_HORIZONTAL);
-//
-//
-//            for (int i = 0; i < badgeList.size(); i++) {
-//                String[] parts = badgeList.get(i).split("\\$");
-//
-//                String badge_id = parts[0];
-//
-//                ImageView imageView = new ImageView(isThreadAlive());
-//                imageView.setLayoutParams(new RelativeLayout.LayoutParams
-//                        (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-//                imageView.getLayoutParams().height = 40;
-//                imageView.getLayoutParams().width = 40;
-//
-//                switch (badge_id) {
-//                    case "accuracy_streak":
-//                        imageView.setBackgroundResource(R.drawable.notification_accuracy_badge);
-//                        layout2.addView(imageView);
-//                        break;
-//                    case "table_topper":
-//                        imageView.setBackgroundResource(R.drawable.notification_topper_badge);
-//                        layout2.addView(imageView);
-//                        break;
-//                    default:
-//                        imageView.setBackgroundResource(R.drawable.notification_topper_badge);
-//                        layout2.addView(imageView);
-//                        break;
-//                }
-//
-//            }
-//
-//        }else if(badgeList.size()>8) {
-//
-//            LinearLayout layout2 = new LinearLayout(isThreadAlive());
-//            layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-//            parent.setOrientation(LinearLayout.VERTICAL);
-//            parent.addView(layout2);
-//           // layout2.setGravity(Gravity.CENTER_HORIZONTAL);
-//
-//            for (int i = 0; i < 8; i++) {
-//                String[] parts = badgeList.get(i).split("\\$");
-//
-//                String badge_id = parts[0];
-//
-//                ImageView imageView = new ImageView(isThreadAlive());
-//                imageView.setLayoutParams(new RelativeLayout.LayoutParams
-//                        (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-//                imageView.getLayoutParams().height = 40;
-//                imageView.getLayoutParams().width = 40;
-//
-//                switch (badge_id) {
-//                    case "accuracy_streak":
-//                        imageView.setBackgroundResource(R.drawable.notification_accuracy_badge);
-//                        layout2.addView(imageView);
-//                        break;
-//                    case "table_topper":
-//                        imageView.setBackgroundResource(R.drawable.notification_topper_badge);
-//                        layout2.addView(imageView);
-//                        break;
-//                    default:
-//                        imageView.setBackgroundResource(R.drawable.notification_topper_badge);
-//                        layout2.addView(imageView);
-//                        break;
-//                }
-//            }
-//
-//
-//                LinearLayout layout3 = new LinearLayout(isThreadAlive());
-//                layout3.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-//                parent.addView(layout3);
-//               // layout3.setGravity(Gravity.CENTER_HORIZONTAL);
-//
-//            if(badgeList.size()<=16){
-//
-//                for (int j = 8; j < badgeList.size(); j++) {
-//
-//                    ImageView imageView2 = new ImageView(isThreadAlive());
-//                    imageView2.setLayoutParams(new RelativeLayout.LayoutParams
-//                            (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-//                    imageView2.getLayoutParams().height = 40;
-//                    imageView2.getLayoutParams().width = 40;
-//
-//                    String[] part = badgeList.get(j).split("\\$");
-//                    String badgeId = part[0];
-//
-//                    switch (badgeId) {
-//                        case "accuracy_streak":
-//                            imageView2.setBackgroundResource(R.drawable.notification_accuracy_badge);
-//                            layout3.addView(imageView2);
-//                            break;
-//                        case "table_topper":
-//                            imageView2.setBackgroundResource(R.drawable.notification_topper_badge);
-//                            layout3.addView(imageView2);
-//                            break;
-//                        default:
-//                            imageView2.setBackgroundResource(R.drawable.notification_topper_badge);
-//                            layout3.addView(imageView2);
-//                            break;
-//                    }
-//                }
-//
-//            }else if (badgeList.size()>16){
-//
-//                for (int j = 8; j < 16; j++) {
-//
-//                    ImageView imageView2 = new ImageView(isThreadAlive());
-//                    imageView2.setLayoutParams(new RelativeLayout.LayoutParams
-//                            (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-//                    imageView2.getLayoutParams().height = 40;
-//                    imageView2.getLayoutParams().width = 40;
-//
-//                    String[] part = badgeList.get(j).split("\\$");
-//                    String badgeId = part[0];
-//
-//                    switch (badgeId) {
-//                        case "accuracy_streak":
-//                            imageView2.setBackgroundResource(R.drawable.notification_accuracy_badge);
-//                            layout3.addView(imageView2);
-//                            break;
-//                        case "table_topper":
-//                            imageView2.setBackgroundResource(R.drawable.notification_topper_badge);
-//                            layout3.addView(imageView2);
-//                            break;
-//                        default:
-//                            imageView2.setBackgroundResource(R.drawable.notification_topper_badge);
-//                            layout3.addView(imageView2);
-//                            break;
-//                    }
-//                }
-//
-//                TextView textview = new TextView(isThreadAlive());
-//                RelativeLayout.LayoutParams lpTextView = new RelativeLayout.LayoutParams(
-//                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-//                textview.setLayoutParams(lpTextView);
-//                textview.setPadding(5,10,5,5);
-//                textview.setText("+ " + (badgeList.size()-16) + " More");
-//                textview.setTextColor(Color.WHITE);
-//                layout3.addView(textview);
-//
-//            }
-//
-//        }
-//
         if (badgesCount == 0) {
             badgeCount = "0";
         }
@@ -442,13 +290,6 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
             public void onPageSelected(int position) {
                 NostragamusAnalytics.getInstance().trackUserProfile(AnalyticsActions.TABS,
                         mViewPager.getAdapter().getPageTitle(position).toString());
-
-                Button createGroupbtn = (Button) findViewById(R.id.join_grp_btn);
-                if (position == 2) {
-                    createGroupbtn.setVisibility(View.VISIBLE);
-                } else {
-                    createGroupbtn.setVisibility(View.GONE);
-                }
 
             }
 
@@ -490,7 +331,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         pagerAdapter.addFragment(TimelineFragment.newInstance(),
                 userInfo.getTotalMatchesPlayed() + "\n Matches");
         pagerAdapter.addFragment(BadgeFragment.newInstance(), badgeCount + "\n Achievements");
-        pagerAdapter.addFragment(AllGroupsFragment.newInstance(), groupsCount + "\n Groups");
+      //  pagerAdapter.addFragment(AllGroupsFragment.newInstance(), groupsCount + "\n Groups");
         pagerAdapter.addFragment(PowerUpFragment.newInstance(), powerUpsCount + "\n Powerups");
         pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), sportsFollowed + " \n Sports");
 //        pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getChallenges()), "0  \n Challenges");
@@ -529,19 +370,11 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
             case R.id.profile_btn_logout:
                 navigateToSettings();
                 break;
-            case R.id.join_grp_btn:
-                navigateToJoinGroup();
-                break;
         }
     }
 
     private void navigateToSettings() {
         startActivity(new Intent(getContext(), SettingsActivity.class));
-    }
-
-    @Override
-    public void navigateToJoinGroup() {
-        startActivity(new Intent(getContext(), JoinGroupActivity.class));
     }
 
 
@@ -586,9 +419,9 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     public void setSportsCount(int sportsCount) {
 
         if (sportsCount == 1) {
-            mpagerAdapter.updateTitle(4, sportsCount + " \n Sport");
+            mpagerAdapter.updateTitle(3, sportsCount + " \n Sport");
         } else {
-            mpagerAdapter.updateTitle(4, sportsCount + " \n Sports");
+            mpagerAdapter.updateTitle(3, sportsCount + " \n Sports");
         }
     }
 }

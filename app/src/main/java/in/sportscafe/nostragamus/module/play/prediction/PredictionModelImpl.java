@@ -83,7 +83,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public void init(Bundle bundle) {
 
-        if (bundle.containsKey(BundleKeys.IS_DUMMY_GAME)) {
+        if (!bundle.containsKey(BundleKeys.IS_DUMMY_GAME)) {
             mMyResult = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
             mMatchId = mMyResult.getId();
 

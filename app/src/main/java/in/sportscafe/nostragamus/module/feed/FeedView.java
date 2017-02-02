@@ -13,5 +13,5 @@ public interface FeedView extends InAppView {
 
     void moveAdapterPosition(int movePosition);
 
-    void initToolBar(Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll);
+    void initToolBar(Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll,String powerUpText);
 }

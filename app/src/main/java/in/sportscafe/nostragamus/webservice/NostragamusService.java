@@ -4,6 +4,7 @@ package in.sportscafe.nostragamus.webservice;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
@@ -64,7 +65,7 @@ public interface NostragamusService {
     Call<UserInfoResponse> getUserInfo();
 
     @GET("v2/game/users/{tournament_id}/timeline")
-    Call<MatchesResponse> getMatches(@Path("tournament_id") int tourId);
+    Call<FeedResponse> getMatches(@Path("tournament_id") int tourId);
 
     @GET("v1/game/users/matches")
     Call<MatchesResponse> getMatchResults(@Query("is_attempted") Boolean isAttempted ,@Query("without_commentary") Boolean WithoutCommentary);

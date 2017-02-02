@@ -105,7 +105,7 @@ public class TimelineModelImpl implements TimelineModel {
 
                         if (mMyResultsTimelineModelListener.isThreadAlive()) {
                             if (response.isSuccessful()) {
-                                handleMatches(response.body().getFeedTimeline().getMatches());
+                                handleMatches(response.body().getMatches());
                             } else {
                                 mMyResultsTimelineModelListener.onFailedFeeds(response.message());
                             }
