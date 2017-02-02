@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -17,6 +19,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
@@ -26,7 +29,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by deepanshi on 12/7/16.
  */
 
-public class AllGroupsFragment extends NostragamusFragment implements AllGroupsView {
+public class AllGroupsFragment extends NostragamusFragment implements AllGroupsView,View.OnClickListener {
 
     private RecyclerView mRvAllGroups;
 
@@ -74,7 +77,13 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
         this.mRvAllGroups.setHasFixedSize(true);
         this.mAllGroupsPresenter = AllGroupsPresenterImpl.newInstance(this);
 
+
         if (allgroups) {
+            Toolbar mtoolbar = (Toolbar)findViewById(R.id.all_groups_toolbar);
+            mtoolbar.setVisibility(View.VISIBLE);
+            Button createGroupbtn = (Button) findViewById(R.id.join_grp_btn);
+            createGroupbtn.setVisibility(View.VISIBLE);
+            createGroupbtn.setOnClickListener(this);
             this.mAllGroupsPresenter.onCreateAllGroups();
         } else {
             this.mAllGroupsPresenter.onCreateMutualGroups(getArguments());
@@ -119,6 +128,21 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
                 mAllGroupsPresenter.onCreateAllGroups();
             }
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.join_grp_btn:
+                navigateToJoinGroup();
+                break;
+        }
+    }
+
+    @Override
+    public void navigateToJoinGroup() {
+        startActivity(new Intent(getContext(), JoinGroupActivity.class));
     }
 
 }

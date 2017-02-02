@@ -13,6 +13,7 @@ import android.widget.TextView;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 
 /**
  * Created by Deepanshi on 23/8/16.
@@ -72,6 +73,11 @@ public class AllGroupsActivity extends NostragamusActivity implements AllGroupsV
         mTvEmptyGroups=(TextView)findViewById(R.id.all_groups_empty_tv);
         mTvEmptyGroups.setVisibility(View.VISIBLE);
 
+    }
+
+    @Override
+    public void navigateToJoinGroup() {
+        startActivity(new Intent(getContext(), JoinGroupActivity.class));
     }
 
     @Override

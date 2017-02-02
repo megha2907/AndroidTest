@@ -13,14 +13,16 @@ import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 public class MatchesResponse {
 
     @JsonProperty("data")
-    private FeedTimeline feedTimeline;
+    private List<Match> matches = new ArrayList<>();
+
 
     @JsonProperty("data")
-    public FeedTimeline getFeedTimeline() {
-        return feedTimeline;
+    public List<Match> getMatches() {
+        return matches;
     }
+
     @JsonProperty("data")
-    public void setFeedTimeline(FeedTimeline feedTimeline) {
-        this.feedTimeline = feedTimeline;
+    public void setMatches(List<Match> matches) {
+        this.matches = matches;
     }
 }

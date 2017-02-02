@@ -35,7 +35,5 @@ public interface ProfileView extends InAppView {
 
     void setBadgesCount(int badgesCount);
 
-    void navigateToJoinGroup();
-
     void setPredictionCount(Integer predictionCount);
 }

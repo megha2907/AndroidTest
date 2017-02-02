@@ -16,6 +16,12 @@ public class FeedTimeline {
     @JsonProperty("matches")
     private List<Match> matches = new ArrayList<>();
 
+    @JsonProperty("info")
+    private TournamentPowerupInfo tournamentPowerupInfo;
+
+    @JsonProperty("powerup_text")
+    private String powerupText;
+
     @JsonProperty("matches")
     public List<Match> getMatches() {
         return matches;
@@ -27,9 +33,6 @@ public class FeedTimeline {
     }
 
     @JsonProperty("info")
-    private TournamentPowerupInfo tournamentPowerupInfo;
-
-    @JsonProperty("info")
     public TournamentPowerupInfo getTournamentPowerupInfo() {
         return tournamentPowerupInfo;
     }
@@ -37,6 +40,16 @@ public class FeedTimeline {
     @JsonProperty("info")
     public void setTournamentPowerupInfo(TournamentPowerupInfo tournamentPowerupInfo) {
         this.tournamentPowerupInfo = tournamentPowerupInfo;
+    }
+
+    @JsonProperty("powerup_text")
+    public String getPowerupText() {
+        return powerupText;
+    }
+
+    @JsonProperty("powerup_text")
+    public void setPowerupText(String powerupText) {
+        this.powerupText = powerupText;
     }
 
 }

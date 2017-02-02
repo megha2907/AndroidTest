@@ -6,6 +6,7 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
@@ -87,7 +88,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.savePreference(preferenceRequest);
     }
 
-    public Call<MatchesResponse> getMatches(Integer tourId) {
+    public Call<FeedResponse> getMatches(Integer tourId) {
         return mNostragamusService.getMatches(tourId);
     }
 
@@ -225,5 +226,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<FuzzyLbResponse> getFuzzyLbsRequest(String key) {
         return mNostragamusService.fuzzyLbs(key);
+    }
+
+    public Call<PopUpResponse> getPopUpsRequest(String screenName) {
+        return  mNostragamusService.getPopUps(screenName);
     }
 }
