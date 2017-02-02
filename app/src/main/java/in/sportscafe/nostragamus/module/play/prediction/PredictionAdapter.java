@@ -91,8 +91,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         Rect rect = new Rect();
         rootView.getLocalVisibleRect(rect);
 
-        final float SCREEN_WIDTH = rect.width() * 1f;
-        final float SCREEN_HEIGHT = rect.height() * 1f;
+        final float SCREEN_WIDTH = rect.width() * 0.9f;
+        final float SCREEN_HEIGHT = rect.height() * 0.9f;
 
         mCardWidth = SCREEN_WIDTH * CARD_SIZE_PERECENTAGE;
         mCardHeight = SCREEN_WIDTH;

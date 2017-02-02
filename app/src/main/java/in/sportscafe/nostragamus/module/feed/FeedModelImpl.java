@@ -77,7 +77,9 @@ public class FeedModelImpl implements FeedModel {
 
     @Override
     public void destroyAll() {
-        mFeedAdapter.destroy();
+        if(null != mFeedAdapter) {
+            mFeedAdapter.destroy();
+        }
     }
 
     private void callFeedListApi(Integer tourId) {

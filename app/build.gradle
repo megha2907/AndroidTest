@@ -94,7 +94,7 @@ dependencies {
     // To track the events, in-app messaging and geo fencing
     // To push the notification from server to application
     compile 'com.google.android.gms:play-services-auth:9.4.0'
-    compile 'com.moengage:moe-android-sdk:7.2.01'
+    compile 'com.moengage:moe-android-sdk:7.6.00'
     compile 'com.moengage:addon-inbox:2.8.0'
     compile 'com.google.android.gms:play-services-gcm:9.4.0'
 //    compile 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'

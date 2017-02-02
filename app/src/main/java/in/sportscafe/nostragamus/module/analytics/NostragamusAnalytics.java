@@ -113,8 +113,8 @@ public class NostragamusAnalytics {
      * @param type - Photo
      * @param name - Gallery, Camera
      */
-    public void trackNewGroup(String type, String name) {
-        track(AnalyticsCategory.NEW_GROUP, type, name, null);
+    public void trackNewGroup(String type) {
+        track(AnalyticsCategory.NEW_GROUP, type, null, null);
     }
 
     /**
