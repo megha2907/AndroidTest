@@ -104,7 +104,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         } else {
             mDummyGame = true;
-            mPredictionModelListener.onGetSportName(Sports.TENNIS);
+            mPredictionModelListener.onGetSportName("");
         }
     }
 

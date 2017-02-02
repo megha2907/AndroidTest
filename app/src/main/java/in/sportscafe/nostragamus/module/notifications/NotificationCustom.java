@@ -7,7 +7,7 @@ import android.support.v4.app.NotificationCompat;
 import com.jeeva.android.Log;
 import com.moe.pushlibrary.utils.MoEHelperConstants;
 import com.moengage.config.ConfigurationProvider;
-import com.moengage.push.PushMessageListener;
+import com.moengage.pushbase.push.PushMessageListener;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
