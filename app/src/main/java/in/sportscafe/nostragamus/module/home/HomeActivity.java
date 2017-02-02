@@ -16,12 +16,17 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.moe.pushlibrary.providers.MoEDataContract;
 
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.notifications.NotificationInboxFragment;
+import in.sportscafe.nostragamus.module.popups.PopUp;
+import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
+import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -76,6 +81,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
         UserInfoModelImpl.newInstance(this).getUserInfo();
 
+
         mHomeButton=(ImageView)findViewById(R.id.home_ibtn_feed);
         mProfileButton=(ImageView)findViewById(R.id.home_ibtn_profile);
         mNotificationButton=(ImageView)findViewById(R.id.home_ibtn_notification);
@@ -119,7 +125,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
         checkGroupCode();
 
-        getunReadNotificationCount();
+       // getunReadNotificationCount();
 
     }
 
@@ -167,7 +173,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mProfileRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
                   mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));*/
 
-                  loadFragment(mCurrentFragment = new NotificationInboxFragment());
+                  loadFragment(mCurrentFragment = new AllGroupsFragment().newInstance());
                   break;
 
               case R.id.home_rl_feed:
@@ -333,4 +339,5 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         }
         return super.onKeyUp(keyCode, event);
     }
+
 }

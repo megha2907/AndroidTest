@@ -84,6 +84,9 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity android:name=".module.popups.PopUpActivity"
+            android:theme="@style/AppTheme.PopupTheme"/>
+
         <activity
             android:name="in.sportscafe.nostragamus.module.home.HomeActivity"
             android:screenOrientation="portrait"

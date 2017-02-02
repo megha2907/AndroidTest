@@ -176,6 +176,7 @@ public interface Constants {
         String LB_LANDING_KEY = "lbLandingKey";
         String IS_DUMMY_GAME = "isDummyGame";
         String TOURNAMENT_POWERUPS = "tournamentPowerups";
+        String POPUP_DATA = "popup";
     }
 
     interface ParcelableKeys {

@@ -12,6 +12,7 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.FeedTimeline;
 import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
@@ -83,9 +84,9 @@ public class FeedModelImpl implements FeedModel {
     }
 
     private void callFeedListApi(Integer tourId) {
-        MyWebService.getInstance().getMatches(tourId).enqueue(new NostragamusCallBack<MatchesResponse>() {
+        MyWebService.getInstance().getMatches(tourId).enqueue(new NostragamusCallBack<FeedResponse>() {
             @Override
-            public void onResponse(Call<MatchesResponse> call, Response<MatchesResponse> response) {
+            public void onResponse(Call<FeedResponse> call, Response<FeedResponse> response) {
                 super.onResponse(call, response);
 
                 if (null == mFeedModelListener.getContext()) {
@@ -102,7 +103,14 @@ public class FeedModelImpl implements FeedModel {
 
                     FeedTimeline feedTimeline = response.body().getFeedTimeline();
                     mtournamentPowerUpInfo = feedTimeline.getTournamentPowerupInfo();
-                    mFeedModelListener.onSuccessFeeds(matchList);
+                    HashMap<String, Integer> powerUpMap = mtournamentPowerUpInfo.getPowerUps();
+
+                    Integer m2xPowerups = powerUpMap.get(Constants.Powerups.XX);
+                    Integer mNonegsPowerups = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+                    Integer mPollPowerups = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+                    String powerUpText = feedTimeline.getPowerupText();
+
+                    mFeedModelListener.onSuccessFeeds(matchList,m2xPowerups,mNonegsPowerups,mPollPowerups,powerUpText);
 
                 } else {
 
@@ -193,7 +201,8 @@ public class FeedModelImpl implements FeedModel {
 
     public interface OnFeedModelListener {
 
-        void onSuccessFeeds(List<Match> matchList);
+        void onSuccessFeeds(List<Match> matchList,Integer powerUp2x,Integer powerUpNonEgs,Integer powerUpAudiencePoll,
+        String powerUpText);
 
         void onFailedFeeds(String message);
 

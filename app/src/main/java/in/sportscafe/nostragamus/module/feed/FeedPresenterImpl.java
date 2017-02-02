@@ -48,9 +48,11 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
     }
 
     @Override
-    public void onSuccessFeeds(List<Match> matchList) {
+    public void onSuccessFeeds(List<Match> matchList, Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll
+            , String powerupText) {
         mFeedView.setAdapter(mFeedModel.getAdapter(mFeedView.getContext(), matchList));
         mFeedView.moveAdapterPosition(matchList.size() - 1);
+        mFeedView.initToolBar(powerUp2x, powerUpNonEgs, powerUpAudiencePoll, powerupText);
     }
 
     @Override
