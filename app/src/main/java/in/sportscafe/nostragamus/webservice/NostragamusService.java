@@ -173,4 +173,7 @@ public interface NostragamusService {
 
     @GET("v1/game/users/getFuzzySearchLeaderboards")
     Call<FuzzyLbResponse> fuzzyLbs(@Query("search_key") String key);
+
+    @GET("/v1/game/users/getPendingUserPopups")
+    Call<PopUpResponse> getPopUps(@Query ("screen_name") String screenName);
 }

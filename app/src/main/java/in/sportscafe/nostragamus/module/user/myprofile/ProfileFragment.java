@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -36,7 +38,9 @@ import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
+import in.sportscafe.nostragamus.module.popups.PopUp;
 import in.sportscafe.nostragamus.module.popups.PopUpActivity;
+import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
 import in.sportscafe.nostragamus.module.settings.SettingsActivity;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.badges.BadgeActivity;
@@ -55,7 +59,8 @@ import in.sportscafe.nostragamus.module.user.sportselection.profilesportselectio
 /**
  * Created by Jeeva on 14/6/16.
  */
-public class ProfileFragment extends NostragamusFragment implements ProfileView, ProfileSportSelectionFragment.OnSportSelectionChangedListener, View.OnClickListener {
+public class ProfileFragment extends NostragamusFragment implements ProfileView, ProfileSportSelectionFragment.OnSportSelectionChangedListener, View.OnClickListener
+        , PopUpModelImpl.OnGetPopUpModelListener{
 
     private static final int SPORTS_SELECTION_CODE = 34;
 
@@ -111,12 +116,16 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         this.mProfilePresenter = ProfilePresenterImpl.newInstance(this);
         this.mProfilePresenter.onCreateProfile();
 
-        openPopup();
+        PopUpModelImpl.newInstance(this).getPopUps("home");
 
     }
 
-    private void openPopup() {
-        startActivity(new Intent(getContext(), PopUpActivity.class));
+    private void openPopup(List<PopUp> popUps) {
+
+        Intent intent = new Intent(getContext(), EditProfileActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.BundleKeys.POPUP_DATA, Parcels.wrap(popUps));
+        startActivity(intent);
     }
 
     private void setClickListeners() {
@@ -423,5 +432,15 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         } else {
             mpagerAdapter.updateTitle(3, sportsCount + " \n Sports");
         }
+    }
+
+    @Override
+    public void onSuccessGetUpdatedPopUps(List<PopUp> PopUps) {
+         openPopup(PopUps);
+    }
+
+    @Override
+    public void onFailedGetUpdatePopUps(String message) {
+
     }
 }

@@ -16,11 +16,15 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.moe.pushlibrary.providers.MoEDataContract;
 
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.notifications.NotificationInboxFragment;
+import in.sportscafe.nostragamus.module.popups.PopUp;
+import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
@@ -76,6 +80,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         }
 
         UserInfoModelImpl.newInstance(this).getUserInfo();
+
 
         mHomeButton=(ImageView)findViewById(R.id.home_ibtn_feed);
         mProfileButton=(ImageView)findViewById(R.id.home_ibtn_profile);
@@ -334,4 +339,5 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         }
         return super.onKeyUp(keyCode, event);
     }
+
 }

@@ -5,11 +5,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.jeeva.android.widgets.HmImageView;
+
+import org.parceler.Parcels;
+
+import java.util.List;
+
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 
 /**
  * Created by deepanshi on 2/2/17.
@@ -17,7 +23,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 
 public class PopUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageButton mexitPopupBtn;
+    ImageButton mExitPopupBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +38,23 @@ public class PopUpActivity extends AppCompatActivity implements View.OnClickList
 
         getWindow().setLayout((int) (width * .8), (int) (height * .6));
 
-        mexitPopupBtn = (ImageButton) findViewById(R.id.popup_exit_btn);
-        mexitPopupBtn.setOnClickListener(this);
+        mExitPopupBtn = (ImageButton) findViewById(R.id.popup_exit_btn);
+        mExitPopupBtn.setOnClickListener(this);
+
+        setPopUpData(getIntent().getExtras());
+
+    }
+
+    private void setPopUpData(Bundle bundle) {
+
+        List<PopUp> popUpData = Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.POPUP_DATA));
+
+        HmImageView popUpImage = (HmImageView) findViewById(R.id.popup_image);
+        TextView popupTitle = (TextView) findViewById(R.id.popup_title);
+        TextView popupDesc = (TextView) findViewById(R.id.popup_desc);
+        popUpImage.setImageUrl(popUpData.get(0).getImageUrl());
+        popupTitle.setText(popUpData.get(0).getTitle());
+        popupDesc.setText(popUpData.get(0).getDescription());
 
     }
 

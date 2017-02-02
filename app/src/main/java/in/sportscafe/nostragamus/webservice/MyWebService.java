@@ -227,4 +227,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<FuzzyLbResponse> getFuzzyLbsRequest(String key) {
         return mNostragamusService.fuzzyLbs(key);
     }
+
+    public Call<PopUpResponse> getPopUpsRequest(String screenName) {
+        return  mNostragamusService.getPopUps(screenName);
+    }
 }
