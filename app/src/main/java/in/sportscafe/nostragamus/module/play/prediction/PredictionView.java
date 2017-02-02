@@ -77,4 +77,12 @@ public interface PredictionView extends InAppView {
     void hidePowerupsHint();
 
     void navigateToHome();
+
+    void showLeftRightCoach();
+
+    void showNeitherCoach();
+
+    void showPowerupsCoach();
+
+    boolean dismissCoach();
 }

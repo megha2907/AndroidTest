@@ -61,7 +61,12 @@ public class DummyGameFragment extends NostragamusFragment implements View.OnCli
             } else {
                 broadcastPlay();
 
-                changeContentsToProceed();
+                view.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        changeContentsToProceed();
+                    }
+                }, 2000);
                 mPlayDone = true;
             }
         }

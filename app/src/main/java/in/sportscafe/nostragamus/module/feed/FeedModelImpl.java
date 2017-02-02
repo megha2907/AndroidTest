@@ -3,8 +3,6 @@ package in.sportscafe.nostragamus.module.feed;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.jeeva.android.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,7 +12,6 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.feed.dto.FeedTimeline;
 import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
@@ -61,8 +58,12 @@ public class FeedModelImpl implements FeedModel {
     }
 
     @Override
-    public TimelineAdapter getAdapter() {
-        return mFeedAdapter = new TimelineAdapter(mFeedModelListener.getContext(), mtournamentPowerUpInfo);
+    public TimelineAdapter getAdapter(Context context, List<Match> matchList) {
+        mFeedAdapter = new TimelineAdapter(context, mtournamentPowerUpInfo);
+        for (Match match : matchList) {
+            mFeedAdapter.add(match);
+        }
+        return mFeedAdapter;
     }
 
     @Override
@@ -107,14 +108,6 @@ public class FeedModelImpl implements FeedModel {
                 }
             }
         });
-    }
-
-    @Override
-    public void handleMatches(List<Match> matchList) {
-        List<Match> feedList = matchList;
-        for (Match feed : feedList) {
-            mFeedAdapter.add(feed);
-        }
     }
 
     private List<Feed> getFeedList(List<Match> matchList) {

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/basic_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <View
+        android:id="@+id/basic_overlay_v_gradient_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_120"
+        android:layout_marginTop="@dimen/dp_90" />
+
+    <LinearLayout
+        android:id="@+id/basic_overlay_ll_labels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_100"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/basic_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hello"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_14"
+            app:typeface="lato_bold" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/basic_tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_3"
+            android:text="hello"
+            android:textAlignment="center"
+            android:textColor="@color/white_70"
+            android:textSize="@dimen/dp_13"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/basic_tv_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_3"
+            android:text="Tap anywhere to dismiss"
+            android:textAlignment="center"
+            android:textColor="@color/curious_blue"
+            android:textSize="@dimen/dp_12"
+            app:typeface="roboto_condensed" />
+    </LinearLayout>
+
+</RelativeLayout>
