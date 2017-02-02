@@ -1,8 +1,8 @@
 package in.sportscafe.nostragamus.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,7 +13,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
@@ -27,8 +29,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import in.sportscafe.nostragamus.animator.AnimationAdapter;
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
+import in.sportscafe.nostragamus.module.coachmarker.BasicOverlay;
+import in.sportscafe.nostragamus.module.coachmarker.TargetView;
+import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
+
+import static in.sportscafe.nostragamus.R.id.view;
 
 /**
  * Created by Jeeva on 17/6/16.
@@ -180,5 +187,37 @@ public class ViewUtils {
 
     public static int getColor(Context context, int resColor) {
         return ContextCompat.getColor(context, resColor);
+    }
+
+    public static TourGuide showCoachMarker(Activity activity, ViewGroup mainView, int title, int description,
+                                            boolean showAtTop, View.OnClickListener listener, TargetView... targetViews) {
+        BasicOverlay basicOverlay = new BasicOverlay(activity);
+
+        basicOverlay.setTitle(activity.getString(title));
+
+        basicOverlay.setDesc(activity.getString(description));
+
+        if(showAtTop) {
+            basicOverlay.showAtTop();
+        } else {
+            basicOverlay.showAtBottom();
+        }
+
+//        if(null == mainView) {
+            mainView = (ViewGroup) activity.getWindow().getDecorView().findViewById(android.R.id.content);
+//        }
+
+        final ViewGroup finalMainView = mainView;
+        final BasicOverlay finalOverlay = basicOverlay;
+        final View.OnClickListener finalListener = listener;
+        return TourGuide.init(Gravity.CENTER, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finalMainView.removeView(finalOverlay);
+                if(null != finalListener) {
+                    finalListener.onClick(view);
+                }
+            }
+        }).playOn(mainView, basicOverlay, targetViews);
     }
 }

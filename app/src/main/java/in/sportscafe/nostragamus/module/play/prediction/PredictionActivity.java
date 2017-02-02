@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,16 +21,23 @@ import com.jeeva.android.widgets.customfont.CustomTextView;
 import in.sportscafe.nostragamus.Config.Sports;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.coachmarker.TargetView;
+import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.FeedActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.DummyGameFragment;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.utils.ViewUtils;
+
+import static com.google.android.gms.analytics.internal.zzy.m;
 
 public class PredictionActivity extends NostragamusActivity implements PredictionView, View.OnClickListener {
 
     private RelativeLayout mRlPlayBg;
+
+    private ViewGroup mVgPlayPage;
 
     private SwipeFlingAdapterView mSwipeFlingAdapterView;
 
@@ -61,6 +69,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         initToolbar();
 
         mRlPlayBg = (RelativeLayout) findViewById(R.id.content);
+        mVgPlayPage = (ViewGroup) findViewById(R.id.prediction_rl_play_page);
         mSwipeFlingAdapterView = (SwipeFlingAdapterView) findViewById(R.id.activity_prediction_swipe);
 
         mTvNumberOfCards = (TextView) findViewById(R.id.prediction_tv_number_of_cards);
@@ -135,7 +144,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.prediction_ibtn_back:
-                goBack();
+            case R.id.prediction_tv_skip:
+                mPredictionPresenter.onClickBack();
                 break;
             case R.id.prediction_iv_shuffle:
                 mSwipeFlingAdapterView.getTopCardListener().selectBottom();
@@ -235,16 +245,22 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void goBack() {
-        onBackPressed();
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        mPredictionPresenter.onClickBack();
     }
 
     private DummyGameFragment mDummyGameFragment;
 
     @Override
     public void changeToDummyGameMode() {
+        mVgPlayPage.setVisibility(View.INVISIBLE);
         findViewById(R.id.prediction_iv_tournament_photo).setVisibility(View.GONE);
-//        findViewById(R.id.prediction_iv_shuffle).setVisibility(View.INVISIBLE);
-        findViewById(R.id.prediction_rl_play_page).setVisibility(View.INVISIBLE);
+        findViewById(R.id.prediction_ibtn_back).setVisibility(View.GONE);
+        findViewById(R.id.prediction_tv_skip).setVisibility(View.VISIBLE);
 
         mDummyGameFragment = DummyGameFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.prediction_fl_dummy_holder, mDummyGameFragment).commit();
@@ -252,13 +268,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void showDummyGameInfo() {
-        findViewById(R.id.prediction_rl_play_page).setVisibility(View.INVISIBLE);
+        mVgPlayPage.setVisibility(View.INVISIBLE);
         findViewById(R.id.prediction_fl_dummy_holder).setVisibility(View.VISIBLE);
+        findViewById(R.id.prediction_tv_skip).setVisibility(View.GONE);
     }
 
     @Override
     public void hideDummyGameInfo() {
-        findViewById(R.id.prediction_rl_play_page).setVisibility(View.VISIBLE);
+        mVgPlayPage.setVisibility(View.VISIBLE);
         findViewById(R.id.prediction_fl_dummy_holder).setVisibility(View.INVISIBLE);
     }
 
@@ -327,6 +344,76 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    private TourGuide mCoachMarker;
+
+    @Override
+    public void showLeftRightCoach() {
+        View leftArrow = findViewById(R.id.prediction_iv_left_arrow);
+        View rightArrow = findViewById(R.id.prediction_iv_right_arrow);
+        mCoachMarker = ViewUtils.showCoachMarker(
+                this,
+                mVgPlayPage,
+                R.string.left_right_coach_title,
+                R.string.left_right_coach_desc,
+                false,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        hideLeftRightIndicator();
+                    }
+                },
+                new TargetView(leftArrow, leftArrow.getWidth(), leftArrow.getHeight()),
+                new TargetView(rightArrow, rightArrow.getWidth(), rightArrow.getHeight())
+        );
+    }
+
+    @Override
+    public void showNeitherCoach() {
+        View neitherOption = findViewById(R.id.prediction_ll_neither);
+        mCoachMarker = ViewUtils.showCoachMarker(
+                this,
+                mVgPlayPage,
+                R.string.neither_coach_title,
+                R.string.neither_coach_desc,
+                false,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        hideNeitherIndicator();
+                    }
+                },
+                new TargetView(neitherOption, neitherOption.getWidth(), neitherOption.getHeight())
+        );
+    }
+
+    @Override
+    public void showPowerupsCoach() {
+        mCoachMarker = ViewUtils.showCoachMarker(
+                this,
+                mVgPlayPage,
+                R.string.powerups_coach_title,
+                R.string.powerups_coach_desc,
+                true,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        hideLeftRightIndicator();
+                    }
+                },
+                new TargetView(mIv2xPowerup, mIv2xPowerup.getWidth(), mIv2xPowerup.getHeight()),
+                new TargetView(mIvNonegsPowerup, mIvNonegsPowerup.getWidth(), mIvNonegsPowerup.getHeight()),
+                new TargetView(mIvPollPowerup, mIvPollPowerup.getWidth(), mIvPollPowerup.getHeight())
+        );
+    }
+
+    @Override
+    public boolean dismissCoach() {
+        if (null != mCoachMarker) {
+            return mCoachMarker.dismiss();
+        }
+        return false;
     }
 
     private Drawable getPowerupDrawable(int colorRes) {

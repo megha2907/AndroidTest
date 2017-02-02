@@ -42,4 +42,11 @@
     <string name="dummy_done_title">And that\'s it! As easy as that!</string>
     <string name="dummy_done_desc">You just finished your first match, and it was that simple. Now you can go to your home and play your games, or replay this game from the settings screen.</string>
     <string name="dummy_done_action">Proceed</string>
+    <string name="left_right_coach_title">Swipe left/right or click to choose</string>
+    <string name="left_right_coach_desc">Swipe left/right on the card to select either choice Or, use the buttons below for the same</string>
+    <string name="neither_coach_title">Swipe up or click to choose</string>
+    <string name="neither_coach_desc">Swipe up on the card to select neither choice Or, use the neither button below for the same</string>
+    <string name="powerups_coach_title">Score big with Power Ups</string>
+    <string name="powerups_coach_desc">Use the various power-ups provided, to increase your score. Check for new power ups in the profile section</string>
+
 </resources>

@@ -25,4 +25,6 @@ public interface PredictionPresenter {
     void onDummyGameStart();
 
     void onDummyGameEnd();
+
+    void onClickBack();
 }
