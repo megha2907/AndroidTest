@@ -230,7 +230,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setGrpInfoMap(grpInfoMap);
     }
 
-
     //JWT TOKEN
     public void setJwtToken(JwtToken jwtToken) {
         setSharedStringData(SharedKeys.ACCESS_TOKEN, jwtToken.getToken());
@@ -245,7 +244,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return getSharedLongData(SharedKeys.TOKEN_EXPIRY, 0);
     }
 
-
     //POWERUPS
     public List<PowerUp> getPowerUpList() {
 
@@ -256,47 +254,53 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return powerUpList;
     }
 
+    public int getNumberof2xGlobalPowerups() {
+        return getSharedIntData(SharedKeys.NUMBER_OF_2X_GLOBAL_POWERUPS, 0);
+    }
+
+    public void setNumberof2xGlobalPowerups(Integer count) {
+        setSharedIntData(SharedKeys.NUMBER_OF_2X_GLOBAL_POWERUPS, null == count ? 0 : count);
+    }
+
     public int getNumberof2xPowerups() {
         return getSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, 0);
     }
 
-    public void setNumberof2xPowerups(int numberofPowerups) {
-        setSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, numberofPowerups);
+    public void setNumberof2xPowerups(Integer count) {
+        setSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, null == count ? 0 : count);
     }
 
     public int getNumberofNonegsPowerups() {
         return getSharedIntData(SharedKeys.NUMBER_OF_NONEGS_POWERUPS, 0);
     }
 
-    public void setNumberofNonegsPowerups(int numberofNonegsPowerups) {
-        setSharedIntData(SharedKeys.NUMBER_OF_NONEGS_POWERUPS, numberofNonegsPowerups);
+    public void setNumberofNonegsPowerups(Integer count) {
+        setSharedIntData(SharedKeys.NUMBER_OF_NONEGS_POWERUPS, null == count ? 0 : count);
     }
 
     public int getNumberofAudiencePollPowerups() {
         return getSharedIntData(SharedKeys.NUMBER_OF_AUDIENCE_POLL_POWERUPS, 0);
     }
 
-    public void setNumberofAudiencePollPowerups(int numberofAudiencePollPowerups) {
-
-        setSharedIntData(SharedKeys.NUMBER_OF_AUDIENCE_POLL_POWERUPS, numberofAudiencePollPowerups);
+    public void setNumberofAudiencePollPowerups(Integer count) {
+        setSharedIntData(SharedKeys.NUMBER_OF_AUDIENCE_POLL_POWERUPS, null == count ? 0 : count);
     }
 
     public int getNumberofReplayPowerups() {
         return getSharedIntData(SharedKeys.NUMBER_OF_REPLAY_POWERUPS, 0);
     }
 
-    public void setNumberofReplayPowerups(int numberofPowerups) {
-        setSharedIntData(SharedKeys.NUMBER_OF_REPLAY_POWERUPS, numberofPowerups);
+    public void setNumberofReplayPowerups(Integer count) {
+        setSharedIntData(SharedKeys.NUMBER_OF_REPLAY_POWERUPS, null == count ? 0 : count);
     }
 
     public int getNumberofFlipPowerups() {
         return getSharedIntData(SharedKeys.NUMBER_OF_FLIP_POWERUPS, 0);
     }
 
-    public void setNumberofFlipPowerups(int numberofPowerups) {
-        setSharedIntData(SharedKeys.NUMBER_OF_FLIP_POWERUPS, numberofPowerups);
+    public void setNumberofFlipPowerups(Integer count) {
+        setSharedIntData(SharedKeys.NUMBER_OF_FLIP_POWERUPS, null == count ? 0 : count);
     }
-
 
     //BADGES
     public List<Badge> getBadgeList() {

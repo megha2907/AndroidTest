@@ -162,7 +162,7 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
             addLandingRow(
                     lbLandingList,
                     LBLandingType.SPORT,
-                    true
+                    false
             );
 
         }
@@ -173,7 +173,7 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
             addLandingRow(
                     lbLandingList,
                     LBLandingType.CHALLENGE,
-                    true
+                    false
             );
         }
 

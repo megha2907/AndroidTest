@@ -11,6 +11,8 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 
@@ -41,32 +43,27 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
         holder.mBtnPowerUpCount.setText(String.valueOf(powerUp.getCount()));
 
         switch (powerUp.getId()) {
-            case "2x_global":
-                holder.mTvPowerUpName.setText("Bonus 2x");
-                holder.mBtnPowerUp.setImageResource(R.drawable.powerup_icon);
-                holder.mTvPowerUpDesc.setText("Double your returns when you are confident about a prediction");
-                break;
-            case "2x":
+            case Powerups.XX_GLOBAL:
                 holder.mTvPowerUpName.setText("2x");
                 holder.mBtnPowerUp.setImageResource(R.drawable.powerup_icon);
                 holder.mTvPowerUpDesc.setText("Double your returns when you are confident about a prediction");
                 break;
-            case "no_negs":
+            case Powerups.NO_NEGATIVE:
                 holder.mTvPowerUpName.setText("No Negative Points");
                 holder.mBtnPowerUp.setImageResource(R.drawable.powerup_nonegs);
                 holder.mTvPowerUpDesc.setText("Avoid being penalised for an incorrect prediction");
                 break;
-            case "player_poll":
+            case Powerups.AUDIENCE_POLL:
                 holder.mTvPowerUpName.setText("Player Poll");
                 holder.mBtnPowerUp.setImageResource(R.drawable.powerup_audience_poll);
                 holder.mTvPowerUpDesc.setText("Peak into how other Nostragamus players have predicted");
                 break;
-            case "answer_flip":
+            case Powerups.ANSWER_FLIP:
                 holder.mTvPowerUpName.setText("Flip Answer");
                 holder.mBtnPowerUp.setImageResource(R.drawable.powerup_flip);
                 holder.mTvPowerUpDesc.setText("Change your mind about a prediction you made before a match begins");
                 break;
-            case "match_replay":
+            case Powerups.MATCH_REPLAY:
                 holder.mTvPowerUpName.setText("Replay Match");
                 holder.mBtnPowerUp.setImageResource(R.drawable.replay_icon);
                 holder.mTvPowerUpDesc.setText("Forget all predictions made for a match so that you can play it again");

@@ -16,6 +16,11 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 public class AllDoneActivity extends NostragamusActivity {
 
     @Override
+    public String getScreenName() {
+        return null;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_all_done);

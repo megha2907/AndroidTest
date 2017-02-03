@@ -14,7 +14,7 @@ import static in.sportscafe.nostragamus.Constants.BundleKeys;
 /**
  * Created by Jeeva on 2/7/16.
  */
-public class AdminMembersActivity extends NostragamusActivity implements GetScreenNameListener{
+public class AdminMembersActivity extends NostragamusActivity {
 
     private Toolbar mtoolbar;
 
@@ -49,7 +49,7 @@ public class AdminMembersActivity extends NostragamusActivity implements GetScre
 
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.ADMIN_MEMBERS;
     }
 }

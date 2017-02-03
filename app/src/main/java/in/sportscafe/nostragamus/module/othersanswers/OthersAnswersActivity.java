@@ -24,7 +24,7 @@ import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
  * Created by Jeeva on 11/01/17.
  */
 
-public class OthersAnswersActivity extends NostragamusActivity implements GetScreenNameListener{
+public class OthersAnswersActivity extends NostragamusActivity {
 
     private FuzzyPlayerFragment mFuzzyPlayersFragment;
 
@@ -111,7 +111,7 @@ public class OthersAnswersActivity extends NostragamusActivity implements GetScr
     };
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.OTHER_ANSWERS;
     }
 }

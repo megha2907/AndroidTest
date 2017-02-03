@@ -24,7 +24,7 @@ import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
  * Created by Jeeva on 1/7/16.
  */
 public class NewGroupActivity extends NostragamusActivity implements NewGroupView,
-        View.OnClickListener,GetScreenNameListener {
+        View.OnClickListener {
 
     private EditText mEtGroupName;
 
@@ -133,7 +133,7 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.GROUPS_CREATE_NEW;
     }
 }

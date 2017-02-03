@@ -50,6 +50,7 @@ public interface Constants {
         String LOGGED_USER = "loggedUser";
         String FIRST_TIME_USER = "firstTimeUser";
         String COOKIE = "cookie";
+        String NUMBER_OF_2X_GLOBAL_POWERUPS = "numberofpowerups";
         String NUMBER_OF_POWERUPS = "numberofpowerups";
         String NUMBER_OF_NONEGS_POWERUPS = "numberofnonegspowerups";
         String NUMBER_OF_AUDIENCE_POLL_POWERUPS = "numberofaudiencepollpowerups";
@@ -234,6 +235,7 @@ public interface Constants {
     }
 
     interface Powerups {
+        String XX_GLOBAL = "2x_global";
         String XX = "2x";
         String NO_NEGATIVE = "no_negs";
         String AUDIENCE_POLL = "player_poll";

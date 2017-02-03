@@ -43,6 +43,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -58,7 +59,7 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class MyResultsActivity extends NostragamusActivity implements MyResultsView,View.OnClickListener,GetScreenNameListener{
+public class MyResultsActivity extends NostragamusActivity implements MyResultsView,View.OnClickListener{
 
     private RecyclerView mRvMyResults;
 
@@ -316,7 +317,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                     if (NostragamusDataHandler.getInstance().getNumberofReplayPowerups() > 0) {
                         mFlippowerUpApplied = true;
                         mReplaypowerUpApplied = true;
-                        mResultsPresenter.onPowerUp("match_replay");
+                        mResultsPresenter.onPowerUp(Powerups.MATCH_REPLAY);
                     }else {
                         Toast toast = Toast.makeText(this,Constants.Alerts.REPLAY_POWERUP_OVER, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
@@ -663,7 +664,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     };
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.RESULTS;
     }
 }

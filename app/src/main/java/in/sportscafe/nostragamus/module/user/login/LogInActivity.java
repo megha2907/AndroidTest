@@ -34,7 +34,7 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
-public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener,GetScreenNameListener{
+public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
     private static final String TAG = "LogInActivity";
 
@@ -303,7 +303,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.LOGIN;
     }
 }

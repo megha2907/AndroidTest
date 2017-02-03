@@ -13,7 +13,7 @@ import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 /**
  * Created by Jeeva on 2/7/16.
  */
-public class MembersActivity extends NostragamusActivity implements GetScreenNameListener{
+public class MembersActivity extends NostragamusActivity {
 
     private Toolbar mtoolbar;
     private TextView mTitle;
@@ -49,7 +49,7 @@ public class MembersActivity extends NostragamusActivity implements GetScreenNam
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return null;
     }
 }

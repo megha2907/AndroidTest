@@ -6,5 +6,5 @@ package in.sportscafe.nostragamus.module.popups;
 
 public interface GetScreenNameListener {
 
-    String onGetScreenName();
+    String getScreenName();
 }

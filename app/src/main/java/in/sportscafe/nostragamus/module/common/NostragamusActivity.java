@@ -1,8 +1,6 @@
 package in.sportscafe.nostragamus.module.common;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -24,7 +22,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.popups.PopUp;
 import in.sportscafe.nostragamus.module.popups.PopUpActivity;
@@ -33,7 +30,9 @@ import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
 /**
  * Created by Jeeva on 6/4/16.
  */
-public class NostragamusActivity extends InAppActivity implements PopUpModelImpl.OnGetPopUpModelListener {
+public abstract class NostragamusActivity extends InAppActivity implements PopUpModelImpl.OnGetPopUpModelListener {
+
+    public abstract String getScreenName();
 
     private static final String NORMAL_UPDATE = "Normal";
 
@@ -41,19 +40,16 @@ public class NostragamusActivity extends InAppActivity implements PopUpModelImpl
 
     private String mScreenName;
 
-    private GetScreenNameListener mGetScreenNameListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mGetScreenNameListener = (GetScreenNameListener) getActivity();
         // Checking the version code to request update or force update the application
         checkAnyUpdate(); // Todo enable it later
 
-        if (null!= mGetScreenNameListener.onGetScreenName()) {
-            PopUpModelImpl.newInstance(this).getPopUps(mGetScreenNameListener.onGetScreenName());
-        }
+        PopUpModelImpl.newInstance(this).getPopUps(getScreenName());
+
     }
 
     private void checkAnyUpdate() {

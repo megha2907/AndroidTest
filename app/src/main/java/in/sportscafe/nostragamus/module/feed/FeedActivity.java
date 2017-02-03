@@ -25,7 +25,7 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class FeedActivity extends NostragamusActivity implements FeedView,GetScreenNameListener {
+public class FeedActivity extends NostragamusActivity implements FeedView {
 
     private static final float MAX_ROTATION = 30;
 
@@ -189,7 +189,7 @@ public class FeedActivity extends NostragamusActivity implements FeedView,GetScr
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.TOURNAMENTS_TIMELINE;
     }
 }

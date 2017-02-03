@@ -14,7 +14,7 @@ import in.sportscafe.nostragamus.module.webview.GoogleFormFragment;
  * Created by Jeeva on 25/11/16.
  */
 
-public class GoogleFormActivity extends NostragamusActivity implements GoogleFormFragment.OnGoogleFormListener ,GetScreenNameListener{
+public class GoogleFormActivity extends NostragamusActivity implements GoogleFormFragment.OnGoogleFormListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class GoogleFormActivity extends NostragamusActivity implements GoogleFor
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.GOOGLE_FORM;
     }
 }

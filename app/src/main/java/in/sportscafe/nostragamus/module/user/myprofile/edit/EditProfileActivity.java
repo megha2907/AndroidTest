@@ -30,7 +30,7 @@ import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivi
  * Created by Jeeva on 12/6/16.
  */
 public class EditProfileActivity extends NostragamusActivity implements EditProfileView,
-        View.OnClickListener,GetScreenNameListener {
+        View.OnClickListener {
 
     private static final String[] PERMISSIONS_READ_STORAGE = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -209,7 +209,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.PROFILE_EDIT;
     }
 }

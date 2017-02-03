@@ -37,7 +37,7 @@ import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
  * Created by deepanshi on 12/22/16.
  */
 
-public class PlayerProfileActivity extends NostragamusActivity implements PlayerProfileView, View.OnClickListener ,GetScreenNameListener {
+public class PlayerProfileActivity extends NostragamusActivity implements PlayerProfileView, View.OnClickListener  {
 
     private String sportsFollowed;
 
@@ -352,7 +352,7 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.PLAYER_PROFILE;
     }
 }

@@ -32,15 +32,11 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
     @Override
     public void onClickFacebook() {
         mLogInModel.triggerFacebook();
-
-        NostragamusAnalytics.getInstance().trackLogIn(AnalyticsActions.FACEBOOK);
     }
 
     @Override
     public void onClickGoogle() {
         mLogInView.signIn(null);
-
-        NostragamusAnalytics.getInstance().trackLogIn(AnalyticsActions.GOOGLE_PLUS);
     }
 
     @Override

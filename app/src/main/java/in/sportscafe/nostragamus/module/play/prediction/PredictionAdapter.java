@@ -91,8 +91,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         Rect rect = new Rect();
         rootView.getLocalVisibleRect(rect);
 
-        final float SCREEN_WIDTH = rect.width() * 0.9f;
-        final float SCREEN_HEIGHT = rect.height() * 0.9f;
+        final float SCREEN_WIDTH = rect.width() * 0.89f;
+        final float SCREEN_HEIGHT = rect.height() * 0.89f;
 
         mCardWidth = SCREEN_WIDTH * CARD_SIZE_PERECENTAGE;
         mCardHeight = SCREEN_WIDTH;
@@ -181,26 +181,22 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             viewHolder.tvquestionNegativePoints.setVisibility(View.VISIBLE);
         }
 
+        String powerupId = question.getPowerUpId();
 
-        if (question.getPowerUpId()!=null) {
-            if (question.getPowerUpId().equalsIgnoreCase("no_negs")) {
-                viewHolder.btnpowerupicon.setImageResource(R.drawable.powerup_nonegs_white);
-                viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
-            } else if (question.getPowerUpId().equalsIgnoreCase("2x")) {
-                viewHolder.btnpowerupicon.setImageResource(R.drawable.powerup_2x_white);
-                viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
-            } else if (question.getPowerUpId().equalsIgnoreCase("player_poll")) {
-                viewHolder.btnpowerupicon.setImageResource(R.drawable.powerup_audience_poll_white);
-                viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
+        int powerupIcons = PowerUp.getPlayPowerupIcons(powerupId);
+        if(powerupIcons != -1) {
+            viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
+            viewHolder.btnpowerupicon.setImageResource(powerupIcons);
+
+            if (Powerups.AUDIENCE_POLL.equalsIgnoreCase(powerupId)) {
+                viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
+                viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
 
                 viewHolder.btnanswer1Percentage.setText(question.getOption1AudPollPer() + "%");
-                viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
-
                 viewHolder.btnanswer2Percentage.setText(question.getOption2AudPollPer() + "%");
-                viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.btnpowerupicon.setVisibility(View.GONE);
             }
+        } else {
+            viewHolder.btnpowerupicon.setVisibility(View.GONE);
         }
 
         viewHolder.tvQuestion.post(new Runnable() {
@@ -229,13 +225,13 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
     }
 
     private void updateBg(int offset) {
-        if(!mBgUpdateDone) {
+        if (!mBgUpdateDone) {
             float elevation = vBgFrame1.getResources().getDimensionPixelSize(R.dimen.dp_6);
-            if(offset != 1) {
+            if (offset != 1) {
                 elevation = 0f;
             }
             int totalCount = getCount() - offset;
-            if(totalCount > 0) {
+            if (totalCount > 0) {
                 if (totalCount == 1) {
                     vBgFrame1.setVisibility(View.INVISIBLE);
                     vBgFrame2.setVisibility(View.INVISIBLE);
@@ -249,6 +245,12 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             }
             mCvMain.setCardElevation(elevation);
         }
+    }
+
+    public void update2xGlobalPowerUp() {
+        mTopQuestion.setPowerUpId(Powerups.XX_GLOBAL);
+        mTopQuestion.setQuestionPositivePoints(2 * mTopQuestion.getQuestionPositivePoints());
+        mTopQuestion.setQuestionNegativePoints(2 * mTopQuestion.getQuestionNegativePoints());
     }
 
     public void update2xPowerUp() {
@@ -313,12 +315,12 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
     }
 
     private void setOptionVisibility(int leftVis, int rightVis) {
-        if(leftVis != mLeftOption.getVisibility()) {
+        if (leftVis != mLeftOption.getVisibility()) {
             mLeftOption.setVisibility(leftVis);
             mLeftOptionArrow.setVisibility(leftVis);
         }
 
-        if(rightVis != mRightOption.getVisibility()) {
+        if (rightVis != mRightOption.getVisibility()) {
             mRightOption.setVisibility(rightVis);
             mRightOptionArrow.setVisibility(rightVis);
         }
@@ -340,12 +342,12 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         float alpha = Math.max(Math.abs(xPercent), Math.abs(yPercent)) / 100f;
 
-        if(alpha > 1f) {
+        if (alpha > 1f) {
             alpha = 1f;
         }
 
-        if(Math.abs(xPercent) > Math.abs(yPercent)) { // Locking horizontal options
-            if(xPercent < 0f) { // Locking left option
+        if (Math.abs(xPercent) > Math.abs(yPercent)) { // Locking horizontal options
+            if (xPercent < 0f) { // Locking left option
                 mLockingOption = mTopQuestion.getQuestionOption1();
                 mLeftOverlay.setBackgroundColor(getColor(R.color.malachite));
                 mRightOverlay.setBackgroundColor(getColor(R.color.radical_red));
@@ -360,7 +362,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
                 mLeftAlpha = 1f - alpha / 2f;
                 mRightAlpha = 1f;
             }
-        } else if(mNeitherOptionAvailable && yPercent < 0f) { // Locking top option
+        } else if (mNeitherOptionAvailable && yPercent < 0f) { // Locking top option
             mLockingOption = mTopQuestion.getQuestionOption3();
             mLeftOverlay.setBackgroundColor(getColor(R.color.radical_red));
             mRightOverlay.setBackgroundColor(getColor(R.color.radical_red));
@@ -399,7 +401,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         Log.d("Image Alpha", mLeftAlpha + "  " + mRightAlpha);
     }
 
-    static class ViewHolder  {
+    static class ViewHolder {
 
         CardView cvMainCard;
 

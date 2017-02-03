@@ -34,7 +34,7 @@ import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class PointsActivity extends NostragamusActivity implements PointsView,GetScreenNameListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class PointsActivity extends NostragamusActivity implements PointsView, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private PointsPresenter mPointsPresenter;
 
@@ -160,7 +160,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView,Ge
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.LEADERBOARD_DETAIL;
     }
 }

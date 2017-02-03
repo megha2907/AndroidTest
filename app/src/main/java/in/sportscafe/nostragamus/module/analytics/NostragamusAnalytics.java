@@ -75,8 +75,8 @@ public class NostragamusAnalytics {
      *
      * @param loginVia - Google Plus, Facebook
      */
-    public void trackLogIn(String loginVia) {
-        track(AnalyticsCategory.LOGIN, loginVia, null, null);
+    public void trackLogIn(String actions, String loginVia) {
+        track(AnalyticsCategory.LOGIN, actions, loginVia, null);
     }
 
     /**

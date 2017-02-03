@@ -28,7 +28,7 @@ import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
  * Created by deepanshi on 10/31/16.
  */
 public class EditGroupInfoActivity extends NostragamusActivity implements EditGroupInfoView,
-        View.OnClickListener,GetScreenNameListener {
+        View.OnClickListener{
 
     private static final int CODE_GROUP_INFO = 10;
 
@@ -216,7 +216,7 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.GROUPS_EDIT_GROUP;
     }
 }

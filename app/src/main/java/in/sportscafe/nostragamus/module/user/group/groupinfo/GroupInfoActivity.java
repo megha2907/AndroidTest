@@ -42,7 +42,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
  * Created by Jeeva on 12/6/16.
  */
 public class GroupInfoActivity extends NostragamusActivity implements GroupInfoView,
-        View.OnClickListener,GroupSelectionFragment.OnTournamentUpdatedListener,GetScreenNameListener {
+        View.OnClickListener,GroupSelectionFragment.OnTournamentUpdatedListener {
 
     private static final int CODE_GROUP_INFO = 10;
 
@@ -373,7 +373,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.GROUPS_INFO;
     }
 }

@@ -24,7 +24,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
  * Created by Jeeva on 27/5/16.
  */
 public class SportSelectionActivity extends NostragamusActivity implements SportSelectionView,
-    View.OnClickListener,GetScreenNameListener {
+    View.OnClickListener {
 
         private RecyclerView mRvSportSelection;
 
@@ -120,7 +120,7 @@ public class SportSelectionActivity extends NostragamusActivity implements Sport
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.SPORT_SELECTION;
     }
 }

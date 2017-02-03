@@ -34,7 +34,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
 /**
  * Created by Jeeva on 16/6/16.
  */
-public class HomeActivity extends NostragamusActivity implements OnHomeActionListener,GetScreenNameListener,UserInfoModelImpl.OnGetUserInfoModelListener {
+public class HomeActivity extends NostragamusActivity implements OnHomeActionListener,UserInfoModelImpl.OnGetUserInfoModelListener {
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
@@ -336,7 +336,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.HOME;
     }
 }

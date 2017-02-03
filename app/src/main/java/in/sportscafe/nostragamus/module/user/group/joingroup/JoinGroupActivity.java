@@ -26,7 +26,7 @@ import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity;
  * Created by Jeeva on 1/7/16.
  */
 public class JoinGroupActivity extends NostragamusActivity implements JoinGroupView,
-        View.OnClickListener,GetScreenNameListener {
+        View.OnClickListener{
 
     private static final String TAG = "JoinGroupActivity";
 
@@ -246,7 +246,7 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.GROUPS_JOIN;
     }
 }

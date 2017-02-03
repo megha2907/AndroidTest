@@ -144,7 +144,7 @@ public class AddPhotoActivity extends Activity implements AddPhotoView, View.OnC
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return null;
     }
 }

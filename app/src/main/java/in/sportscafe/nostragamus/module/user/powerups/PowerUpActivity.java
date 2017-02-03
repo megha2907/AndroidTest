@@ -15,7 +15,7 @@ import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
  * Created by Deepanshi on 23/8/16.
  */
 public class PowerUpActivity extends NostragamusActivity implements PowerUpView,
-        View.OnClickListener,GetScreenNameListener {
+        View.OnClickListener{
 
     private RecyclerView mRvPowerUp;
 
@@ -74,7 +74,7 @@ public class PowerUpActivity extends NostragamusActivity implements PowerUpView,
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return null;
     }
 }

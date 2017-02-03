@@ -20,7 +20,7 @@ import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 /**
  * Created by Deepanshi on 23/8/16.
  */
-public class AllGroupsActivity extends NostragamusActivity implements AllGroupsView,GetScreenNameListener {
+public class AllGroupsActivity extends NostragamusActivity implements AllGroupsView {
 
     private RecyclerView mRvAllGroups;
 
@@ -110,7 +110,7 @@ public class AllGroupsActivity extends NostragamusActivity implements AllGroupsV
     }
 
     @Override
-    public String onGetScreenName() {
+    public String getScreenName() {
         return Constants.ScreenNames.GROUPS_ALL;
     }
 }
