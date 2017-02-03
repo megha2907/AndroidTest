@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
@@ -19,6 +21,8 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+
+import static in.sportscafe.nostragamus.R.id.view;
 
 /**
  * Created by deepanshi on 2/2/17.
@@ -32,6 +36,8 @@ public class PopUpActivity extends AppCompatActivity implements View.OnClickList
 
     private int popUpItem = 0;
 
+    private RelativeLayout mpopUpLayout;
+
     AlphaAnimation alpha;
 
     @Override
@@ -39,16 +45,18 @@ public class PopUpActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-
-        getWindow().setLayout((int) (width * .8), (int) (height * .6));
+//        DisplayMetrics dm = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(dm);
+//
+//        int width = dm.widthPixels;
+//        int height = dm.heightPixels;
+//
+//        getWindow().setLayout((int) (width * .8), (int) (height * .6));
 
         mExitPopupBtn = (ImageButton) findViewById(R.id.popup_exit_btn);
         mExitPopupBtn.setOnClickListener(this);
+
+        mpopUpLayout = (RelativeLayout)findViewById(R.id.popup);
 
         mpopUpData = Parcels.unwrap(getIntent().getExtras().getParcelable(Constants.BundleKeys.POPUP_DATA));
         setPopUpData();
@@ -76,8 +84,11 @@ public class PopUpActivity extends AppCompatActivity implements View.OnClickList
                 if (mpopUpData.size() <= 0) {
                     finish();
                 }else {
-                    alpha= new AlphaAnimation(0, 1);
-                    alpha.setDuration(1000);
+//                    alpha= new AlphaAnimation(0, 1);
+//                    alpha.setDuration(2000);
+//                    mpopUpLayout.setAnimation(alpha);
+                    mpopUpLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),
+                            R.anim.slide_up));
                     setPopUpData();
                 }
                 break;

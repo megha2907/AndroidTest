@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
@@ -47,6 +48,15 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
             holder.ivImage.setAlpha(0.1F);
         }
 
+        if (null !=lbLandingDto.getRankChange()) {
+            if (lbLandingDto.getRankChange() < 0) {
+                holder.mIvStatus.setImageResource(R.drawable.lb_rank_change_icon);
+                holder.mIvStatus.setRotation(180);
+            } else {
+                holder.mIvStatus.setImageResource(R.drawable.lb_rank_change_icon);
+            }
+        }
+
         holder.ivImage.setImageUrl(lbLandingDto.getImgUrl());
 
         Integer rank = lbLandingDto.getRank();
@@ -54,6 +64,7 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
             holder.tvRank.setText(AppSnippet.ordinal(rank));
         } else {
             holder.tvRank.setVisibility(View.GONE);
+            holder.mIvStatus.setVisibility(View.GONE);
             holder.tvPosTxt.setText("NOT\nPLAYED");
         }
 
@@ -70,8 +81,12 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
 
         TextView tvPosTxt;
 
+        ImageView mIvStatus;
+
+
         public MyViewHolder(View view) {
             super(view);
+            mIvStatus = (ImageView) view.findViewById(R.id.lb_summary_item_rank_status_iv);
             ivImage = (HmImageView) view.findViewById(R.id.lb_summary_item_iv);
             tvRank = (TextView) view.findViewById(R.id.lb_summary_item_rank_tv);
             tvName = (TextView) view.findViewById(R.id.lb_summary_item_name_tv);

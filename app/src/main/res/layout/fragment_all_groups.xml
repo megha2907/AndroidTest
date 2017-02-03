@@ -75,7 +75,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_30"
-        android:background="@drawable/powerup_screen_btn_bg"
+        android:background="@drawable/tournament_ready_btn_bg"
         android:onClick="onClick"
         android:text="CREATE NEW GROUP"
         android:textAllCaps="false"

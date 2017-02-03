@@ -6,7 +6,7 @@
     android:layout_marginLeft="@dimen/dp_6"
     android:layout_marginRight="@dimen/dp_6"
     app:cardCornerRadius="@dimen/dp_0"
-    app:cardElevation="@dimen/dp_6">
+    app:cardElevation="@dimen/dp_10">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,6 +41,10 @@
                 android:textSize="@dimen/dp_20"
                 app:typeface="roboto_condensed_bold" />
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/lb_summary_item_pos_tv"
                 android:layout_width="wrap_content"
@@ -55,6 +59,17 @@
                 android:textSize="@dimen/dp_10"
                 android:gravity="center"
                 app:typeface="roboto_condensed" />
+
+            <ImageView
+                android:id="@+id/lb_summary_item_rank_status_iv"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_2"
+                android:layout_marginTop="@dimen/dp_2"
+                android:layout_toRightOf="@+id/lb_summary_item_pos_tv"
+               />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
