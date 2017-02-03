@@ -180,4 +180,7 @@ public interface NostragamusService {
 
     @DELETE("v1/game/users/resetGroupLeaderboard")
     Call<ApiResponse> resetLeaderboard(@Query("group_id") Integer groupId);
+
+    @PUT ("/v1/game/users/acknowledgeUserPopup")
+    Call<ApiResponse> getAcknowledgePopupRequest(@Query("popup_name") String popUpName);
 }

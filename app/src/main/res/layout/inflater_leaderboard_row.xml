@@ -39,8 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_1"
         android:layout_weight="0.5"
-        android:src="@drawable/status_arrow_down"
- />
+        android:src="@drawable/status_arrow_down" />
 
 
     <in.sportscafe.nostragamus.module.common.RoundImage

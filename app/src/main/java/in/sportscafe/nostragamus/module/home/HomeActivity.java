@@ -15,10 +15,13 @@ import android.widget.TextView;
 
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.moe.pushlibrary.providers.MoEDataContract;
+
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
@@ -31,7 +34,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
 /**
  * Created by Jeeva on 16/6/16.
  */
-public class HomeActivity extends NostragamusActivity implements OnHomeActionListener, UserInfoModelImpl.OnGetUserInfoModelListener {
+public class HomeActivity extends NostragamusActivity implements OnHomeActionListener,UserInfoModelImpl.OnGetUserInfoModelListener {
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
@@ -332,4 +335,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         return super.onKeyUp(keyCode, event);
     }
 
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.HOME;
+    }
 }

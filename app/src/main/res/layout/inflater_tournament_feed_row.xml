@@ -45,8 +45,9 @@
             android:textColor="@color/textcolorlight"
             app:typeface="lato_regular"
             android:layout_below="@+id/tournament_tv_tournamentName"
-            android:visibility="visible"
-            android:layout_marginTop="@dimen/dp_2"/>
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/dp_2"
+            />
 
         </RelativeLayout>
 
@@ -71,12 +72,12 @@
         android:layout_alignParentRight="true"
         android:background="@color/transparent"
         android:layout_marginRight="@dimen/dp_75"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
 
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/tournament_btn_unplayed_btn"
-            android:layout_width="@dimen/dp_54"
+            android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_36"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -85,11 +86,11 @@
             android:gravity="center"
             android:onClick="onClick"
             android:paddingBottom="@dimen/dp_2"
-            android:text="READY"
+            android:text="PLAY"
             android:textAlignment="gravity"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/dp_10"
+            android:textSize="@dimen/dp_11"
             android:visibility="visible"
             app:typeface="lato_regular" />
 

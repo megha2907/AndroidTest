@@ -272,4 +272,28 @@ public interface Constants {
         String UPDATE = "Update";
         String DONE = "Done";
     }
+
+    interface ScreenNames {
+        String PROFILE = "profile"; //in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment
+        String PROFILE_EDIT = "edit_profile"; //in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity
+        String PLAYER_PROFILE = "player_profile"; //in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity
+        String LEADERBOARD_LANDING = "leaderboard_landing"; //in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment
+        String LEADERBOARD_DETAIL = "leaderboard_detail"; // in.sportscafe.nostragamus.module.user.points.PointsActivity
+        String GROUPS_ALL = "groups_all"; // in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment
+        String GROUPS_INFO = "groups_info";// in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity
+        String GROUPS_JOIN = "groups_join";// in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity
+        String GROUPS_EDIT_GROUP = "groups_edit";// in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoActivity
+        String GROUPS_CREATE_NEW = "groups_create_new";// in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity
+        String TOURNAMENTS_ALL = "tournaments_all";// in.sportscafe.nostragamus.module.tournament.TournamentFragment
+        String TOURNAMENTS_TIMELINE = "tournaments_timeline";// in.sportscafe.nostragamus.module.feed.FeedActivity
+        String PLAY = "play"; // in.sportscafe.nostragamus.module.play.prediction.PredictionActivity
+        String RESULTS = "results";// in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity
+        String LOGIN = "login";// in.sportscafe.nostragamus.module.user.login.LogInActivity
+        String HOME = "home"; //in.sportscafe.nostragamus.module.home.HomeActivity
+        String ADMIN_MEMBERS = "admin_members"; //in.sportscafe.nostragamus.module.user.group.admin.adminmembers.AdminMembersActivity
+        String FLIP_POWERUP = "flip_powerup"; //in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity
+        String GOOGLE_FORM = "google_form"; // in.sportscafe.nostragamus.module.feedback.GoogleFormActivity
+        String OTHER_ANSWERS = "other_answers"; // in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity
+        String SPORT_SELECTION = "sport_selection"; //in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity
+    }
 }

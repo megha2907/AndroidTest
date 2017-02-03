@@ -22,6 +22,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.popups.PopUp;
 import in.sportscafe.nostragamus.module.popups.PopUpActivity;
 import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
@@ -29,11 +30,16 @@ import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
 /**
  * Created by Jeeva on 6/4/16.
  */
-public class NostragamusActivity extends InAppActivity implements PopUpModelImpl.OnGetPopUpModelListener {
+public abstract class NostragamusActivity extends InAppActivity implements PopUpModelImpl.OnGetPopUpModelListener {
+
+    public abstract String getScreenName();
 
     private static final String NORMAL_UPDATE = "Normal";
 
     private static final String FORCE_UPDATE = "Force";
+
+    private String mScreenName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +47,14 @@ public class NostragamusActivity extends InAppActivity implements PopUpModelImpl
 
         // Checking the version code to request update or force update the application
         checkAnyUpdate(); // Todo enable it later
-        //PopUpModelImpl.newInstance(this).getPopUps("home");
+
+        PopUpModelImpl.newInstance(this).getPopUps(getScreenName());
+
     }
 
     private void checkAnyUpdate() {
-        NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
 
+        NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
         int currentAppVersion = Nostragamus.getInstance().getAppVersionCode();
         if(currentAppVersion < dataHandler.getForceUpdateVersion()) {
             showForceUpdateDialog(dataHandler.getForceUpdateMessage());
@@ -151,4 +159,5 @@ public class NostragamusActivity extends InAppActivity implements PopUpModelImpl
     public void onFailedGetUpdatePopUps(String message) {
 
     }
+
 }

@@ -11,11 +11,13 @@ import android.widget.EditText;
 
 import com.jeeva.android.widgets.HmImageView;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 
 /**
@@ -130,4 +132,8 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
         PermissionsActivity.startActivityForResult(this, 0, permission);
     }
 
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.GROUPS_CREATE_NEW;
+    }
 }

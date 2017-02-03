@@ -32,6 +32,7 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.group.admin.adminmembers.AdminMembersActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoActivity;
@@ -387,4 +388,8 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     }
 
 
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.GROUPS_INFO;
+    }
 }
