@@ -18,13 +18,15 @@ import android.widget.TextView;
 import com.jeeva.android.BaseActivity;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 
 /**
  * Created by hmspl on 4/2/16.
  */
-public class AddPhotoActivity extends Activity implements AddPhotoView, View.OnClickListener {
+public class AddPhotoActivity extends Activity implements AddPhotoView, View.OnClickListener,GetScreenNameListener {
 
     private AddPhotoPresenter mAddPhotoPresenter;
 
@@ -139,5 +141,10 @@ public class AddPhotoActivity extends Activity implements AddPhotoView, View.OnC
                 mAddPhotoPresenter.onClickCamera();
                 break;
         }
+    }
+
+    @Override
+    public String onGetScreenName() {
+        return null;
     }
 }

@@ -176,4 +176,7 @@ public interface NostragamusService {
 
     @GET("/v1/game/users/getPendingUserPopups")
     Call<PopUpResponse> getPopUps(@Query ("screen_name") String screenName);
+
+    @PUT ("/v1/game/users/acknowledgeUserPopup")
+    Call<ApiResponse> getAcknowledgePopupRequest(@Query("popup_name") String popUpName);
 }

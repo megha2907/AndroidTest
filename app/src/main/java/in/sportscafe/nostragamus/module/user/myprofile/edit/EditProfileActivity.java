@@ -21,6 +21,7 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity;
 
 //import com.squareup.picasso.Picasso;
@@ -29,7 +30,7 @@ import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivi
  * Created by Jeeva on 12/6/16.
  */
 public class EditProfileActivity extends NostragamusActivity implements EditProfileView,
-        View.OnClickListener {
+        View.OnClickListener,GetScreenNameListener {
 
     private static final String[] PERMISSIONS_READ_STORAGE = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -205,5 +206,10 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private void startPermissionsActivity(String[] permission) {
         PermissionsActivity.startActivityForResult(this, 0, permission);
+    }
+
+    @Override
+    public String onGetScreenName() {
+        return Constants.ScreenNames.PROFILE_EDIT;
     }
 }

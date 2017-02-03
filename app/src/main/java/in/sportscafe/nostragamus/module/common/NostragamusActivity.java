@@ -1,6 +1,8 @@
 package in.sportscafe.nostragamus.module.common;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +24,8 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.popups.PopUp;
 import in.sportscafe.nostragamus.module.popups.PopUpActivity;
 import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
@@ -35,18 +39,26 @@ public class NostragamusActivity extends InAppActivity implements PopUpModelImpl
 
     private static final String FORCE_UPDATE = "Force";
 
+    private String mScreenName;
+
+    private GetScreenNameListener mGetScreenNameListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mGetScreenNameListener = (GetScreenNameListener) getActivity();
         // Checking the version code to request update or force update the application
         checkAnyUpdate(); // Todo enable it later
-        //PopUpModelImpl.newInstance(this).getPopUps("home");
+
+        if (null!= mGetScreenNameListener.onGetScreenName()) {
+            PopUpModelImpl.newInstance(this).getPopUps(mGetScreenNameListener.onGetScreenName());
+        }
     }
 
     private void checkAnyUpdate() {
-        NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
 
+        NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
         int currentAppVersion = Nostragamus.getInstance().getAppVersionCode();
         if(currentAppVersion < dataHandler.getForceUpdateVersion()) {
             showForceUpdateDialog(dataHandler.getForceUpdateMessage());
@@ -151,4 +163,5 @@ public class NostragamusActivity extends InAppActivity implements PopUpModelImpl
     public void onFailedGetUpdatePopUps(String message) {
 
     }
+
 }

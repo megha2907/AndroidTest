@@ -31,9 +31,10 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.TermsConditions;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
-public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener,GetScreenNameListener{
 
     private static final String TAG = "LogInActivity";
 
@@ -299,5 +300,10 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
+    }
+
+    @Override
+    public String onGetScreenName() {
+        return Constants.ScreenNames.LOGIN;
     }
 }

@@ -4,15 +4,17 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 
 import static in.sportscafe.nostragamus.Constants.BundleKeys;
 
 /**
  * Created by Jeeva on 2/7/16.
  */
-public class AdminMembersActivity extends NostragamusActivity {
+public class AdminMembersActivity extends NostragamusActivity implements GetScreenNameListener{
 
     private Toolbar mtoolbar;
 
@@ -46,4 +48,8 @@ public class AdminMembersActivity extends NostragamusActivity {
     }
 
 
+    @Override
+    public String onGetScreenName() {
+        return Constants.ScreenNames.ADMIN_MEMBERS;
+    }
 }

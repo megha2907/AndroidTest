@@ -19,12 +19,13 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class FeedActivity extends NostragamusActivity implements FeedView {
+public class FeedActivity extends NostragamusActivity implements FeedView,GetScreenNameListener {
 
     private static final float MAX_ROTATION = 30;
 
@@ -185,5 +186,10 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
         powerupDrawable.setCornerRadius(getResources().getDimensionPixelSize(R.dimen.dp_5));
         powerupDrawable.setColor(getResources().getColor(colorRes));
         return powerupDrawable;
+    }
+
+    @Override
+    public String onGetScreenName() {
+        return Constants.ScreenNames.TOURNAMENTS_TIMELINE;
     }
 }

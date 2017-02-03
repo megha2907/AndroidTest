@@ -2,17 +2,19 @@ package in.sportscafe.nostragamus.module.feedback;
 
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.webview.GoogleFormFragment;
 
 /**
  * Created by Jeeva on 25/11/16.
  */
 
-public class GoogleFormActivity extends NostragamusActivity implements GoogleFormFragment.OnGoogleFormListener {
+public class GoogleFormActivity extends NostragamusActivity implements GoogleFormFragment.OnGoogleFormListener ,GetScreenNameListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,5 +34,10 @@ public class GoogleFormActivity extends NostragamusActivity implements GoogleFor
     public void onFormSubmitted() {
         NostragamusDataHandler.getInstance().setInitialFeedbackFormShown(true);
         finish();
+    }
+
+    @Override
+    public String onGetScreenName() {
+        return Constants.ScreenNames.GOOGLE_FORM;
     }
 }

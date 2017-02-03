@@ -47,6 +47,7 @@
                 android:layout_height="@dimen/dp_60"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/feed_tv_tournament_name"
+                android:visibility="gone"
                 >
 
                 <ImageView

@@ -52,12 +52,13 @@ import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class MyResultsActivity extends NostragamusActivity implements MyResultsView,View.OnClickListener{
+public class MyResultsActivity extends NostragamusActivity implements MyResultsView,View.OnClickListener,GetScreenNameListener{
 
     private RecyclerView mRvMyResults;
 
@@ -661,4 +662,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         }
     };
 
+    @Override
+    public String onGetScreenName() {
+        return Constants.ScreenNames.RESULTS;
+    }
 }

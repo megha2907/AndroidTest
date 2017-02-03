@@ -17,6 +17,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity;
@@ -25,7 +26,7 @@ import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity;
  * Created by Jeeva on 1/7/16.
  */
 public class JoinGroupActivity extends NostragamusActivity implements JoinGroupView,
-        View.OnClickListener {
+        View.OnClickListener,GetScreenNameListener {
 
     private static final String TAG = "JoinGroupActivity";
 
@@ -242,5 +243,10 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
     @Override
     public void onBackPressed() {
         mJoinGroupPresenter.onBack();
+    }
+
+    @Override
+    public String onGetScreenName() {
+        return Constants.ScreenNames.GROUPS_JOIN;
     }
 }

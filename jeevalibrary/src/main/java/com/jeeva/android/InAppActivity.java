@@ -129,4 +129,5 @@ public class InAppActivity extends BaseActivity {
         }
         return resources.getColor(colorRes);
     }
+
 }

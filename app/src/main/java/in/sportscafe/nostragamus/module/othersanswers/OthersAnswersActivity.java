@@ -18,12 +18,13 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerFragment;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 
 /**
  * Created by Jeeva on 11/01/17.
  */
 
-public class OthersAnswersActivity extends NostragamusActivity {
+public class OthersAnswersActivity extends NostragamusActivity implements GetScreenNameListener{
 
     private FuzzyPlayerFragment mFuzzyPlayersFragment;
 
@@ -108,4 +109,9 @@ public class OthersAnswersActivity extends NostragamusActivity {
             startActivity(playerAnswersIntent);
         }
     };
+
+    @Override
+    public String onGetScreenName() {
+        return Constants.ScreenNames.OTHER_ANSWERS;
+    }
 }

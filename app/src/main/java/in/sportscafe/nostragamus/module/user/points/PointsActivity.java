@@ -26,6 +26,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardModelImpl;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
@@ -33,7 +34,7 @@ import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class PointsActivity extends NostragamusActivity implements PointsView, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class PointsActivity extends NostragamusActivity implements PointsView,GetScreenNameListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private PointsPresenter mPointsPresenter;
 
@@ -156,5 +157,10 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public String onGetScreenName() {
+        return Constants.ScreenNames.LEADERBOARD_DETAIL;
     }
 }
