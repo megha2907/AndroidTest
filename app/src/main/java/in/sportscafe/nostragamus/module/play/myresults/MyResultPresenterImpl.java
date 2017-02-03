@@ -8,6 +8,7 @@ import android.widget.Toast;
 import java.io.File;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 
@@ -50,9 +51,9 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
 
     @Override
     public void onPowerUp(String powerup) {
-        if (powerup.equalsIgnoreCase("match_replay")) {
+        if (powerup.equalsIgnoreCase(Powerups.MATCH_REPLAY)) {
             mResultsView.openReplayDialog();
-        } else if (powerup.equalsIgnoreCase("answer_flip")) {
+        } else if (powerup.equalsIgnoreCase(Powerups.ANSWER_FLIP)) {
             mResultsView.openFlipDialog();
         }
     }

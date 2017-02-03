@@ -26,7 +26,7 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
 
     private String mLbLandingType;
 
-    private boolean mNeedPadding = true;
+    private boolean mNeedPadding = false;
 
     public LBLandingAdapter(Context context, String lbLandingType, boolean needPadding) {
         super(context);

@@ -40,32 +40,36 @@ public class UserInfoModelImpl {
                 new NostragamusCallBack<UserInfoResponse>() {
                     @Override
                     public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
+                        super.onResponse(call, response);
+
                         if (response.isSuccessful()) {
-                            super.onResponse(call, response);
-                            NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
-
-                            UserInfo updatedUserInfo = response.body().getUserInfo();
-                            if (null != updatedUserInfo) {
-                                nostragamusDataHandler.setUserInfo(updatedUserInfo);
-
-                                HashMap<String, Integer> powerUpMap = updatedUserInfo.getPowerUps();
-                                nostragamusDataHandler.setNumberof2xPowerups(powerUpMap.get(Powerups.XX));
-                                nostragamusDataHandler.setNumberofNonegsPowerups(powerUpMap.get(Powerups.NO_NEGATIVE));
-                                nostragamusDataHandler.setNumberofAudiencePollPowerups(powerUpMap.get(Powerups.AUDIENCE_POLL));
-                                nostragamusDataHandler.setNumberofReplayPowerups(powerUpMap.get(Powerups.MATCH_REPLAY));
-                                nostragamusDataHandler.setNumberofFlipPowerups(powerUpMap.get(Powerups.ANSWER_FLIP));
-
-                                nostragamusDataHandler.setNumberofBadges(updatedUserInfo.getBadges().size());
-                                nostragamusDataHandler.setNumberofGroups(updatedUserInfo.getTotalGroups());
-
-                                mUserInfoModelListener.onSuccessGetUpdatedUserInfo(updatedUserInfo);
-                            }
+                            UserInfo userInfo = response.body().getUserInfo();
+                            handleUserInfoResponse(userInfo);
+                            mUserInfoModelListener.onSuccessGetUpdatedUserInfo(userInfo);
                         } else {
                             mUserInfoModelListener.onFailedGetUpdateUserInfo(response.message());
                         }
                     }
                 }
         );
+    }
+
+    public void handleUserInfoResponse(UserInfo userInfo) {
+        if (null != userInfo) {
+            NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
+            nostragamusDataHandler.setUserInfo(userInfo);
+
+            HashMap<String, Integer> powerUpMap = userInfo.getPowerUps();
+            nostragamusDataHandler.setNumberof2xGlobalPowerups(powerUpMap.get(Powerups.XX_GLOBAL));
+            nostragamusDataHandler.setNumberof2xPowerups(powerUpMap.get(Powerups.XX));
+            nostragamusDataHandler.setNumberofNonegsPowerups(powerUpMap.get(Powerups.NO_NEGATIVE));
+            nostragamusDataHandler.setNumberofAudiencePollPowerups(powerUpMap.get(Powerups.AUDIENCE_POLL));
+            nostragamusDataHandler.setNumberofReplayPowerups(powerUpMap.get(Powerups.MATCH_REPLAY));
+            nostragamusDataHandler.setNumberofFlipPowerups(powerUpMap.get(Powerups.ANSWER_FLIP));
+
+            nostragamusDataHandler.setNumberofBadges(userInfo.getBadges().size());
+            nostragamusDataHandler.setNumberofGroups(userInfo.getTotalGroups());
+        }
     }
 
     public interface OnGetUserInfoModelListener {

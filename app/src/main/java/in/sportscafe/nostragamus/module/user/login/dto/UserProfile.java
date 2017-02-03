@@ -150,6 +150,9 @@ public class UserProfile {
 
     @JsonProperty("user_referral_id")
     public void setUserReferralId(String userReferralId) {
+        if(null == userReferralId) {
+            userReferralId = "";
+        }
         this.userReferralId = userReferralId;
     }
 

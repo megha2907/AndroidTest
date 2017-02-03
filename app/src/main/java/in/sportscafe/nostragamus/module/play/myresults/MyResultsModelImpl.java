@@ -19,6 +19,7 @@ import java.util.UUID;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -202,7 +203,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     public void callReplayPowerupApplied() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 
-            callReplayPowerupAppliedApi("match_replay", matchId);
+            callReplayPowerupAppliedApi(Powerups.MATCH_REPLAY, matchId);
 
         } else {
             mResultsModelListener.onNoInternet();

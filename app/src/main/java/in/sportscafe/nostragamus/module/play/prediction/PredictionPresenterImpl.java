@@ -10,8 +10,6 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 
-import static com.google.android.gms.analytics.internal.zzy.m;
-
 /**
  * Created by Jeeva on 20/5/16.
  */
@@ -48,6 +46,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     private void updatePowerups() {
+        mPredictionView.set2xGlobalPowerupCount(mPredictionModel.get2xGlobalPowerupCount());
         mPredictionView.set2xPowerupCount(mPredictionModel.get2xPowerupCount());
         mPredictionView.setNonegsPowerupCount(mPredictionModel.getNonegsPowerupCount());
         mPredictionView.setPollPowerupCount(mPredictionModel.getPollPowerupCount());
@@ -82,6 +81,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void setFlingListener(FlingCardListener topCardListener) {
         mPredictionModel.setFlingCardListener(topCardListener);
+    }
+
+    @Override
+    public void onClick2xGlobalPowerup() {
+        mPredictionModel.apply2xGlobalPowerup();
     }
 
     @Override
@@ -199,6 +203,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             mPredictionView.showMessage(Alerts.API_FAIL);
         }
         mPredictionView.goBack();
+    }
+
+    @Override
+    public void on2xGlobalApplied(int count) {
+        mPredictionView.set2xGlobalPowerupCount(count);
     }
 
     @Override

@@ -29,13 +29,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.coachmarker.BasicOverlay;
 import in.sportscafe.nostragamus.module.coachmarker.TargetView;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
-
-import static in.sportscafe.nostragamus.R.id.view;
 
 /**
  * Created by Jeeva on 17/6/16.
