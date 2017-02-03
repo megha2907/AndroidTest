@@ -15,7 +15,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0"/>
+        android:layout_height="@dimen/dp_0" />
 
     <RelativeLayout
         android:id="@+id/prediction_rl_header"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:layout_marginRight="@dimen/dp_20"
-                android:text="WELCOME GAME"
+                android:text="SAMPLE GAME"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_16"
                 app:typeface="roboto_condensed_bold" />
@@ -235,18 +235,18 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_22">
 
                 <ImageView
                     android:id="@+id/powerups_iv_2x_global"
                     android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dp_40"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp_22"
                     android:layout_marginRight="@dimen/dp_28"
                     android:onClick="onClick"
                     android:padding="@dimen/dp_8"
-                    android:src="@drawable/powerup_2x_white"/>
+                    android:src="@drawable/powerup_2x_white" />
 
                 <ImageView
                     android:id="@+id/powerups_iv_2x"
@@ -295,7 +295,7 @@
                     android:text="3"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_8"
-                    app:typeface="lato_regular"/>
+                    app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/powerup_tv_2x_count"

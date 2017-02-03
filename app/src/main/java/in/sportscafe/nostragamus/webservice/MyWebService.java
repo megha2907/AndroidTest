@@ -232,6 +232,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return  mNostragamusService.getPopUps(screenName);
     }
 
+    public Call<ApiResponse> getResetLeaderboardRequest(Integer groupId) {
+        return mNostragamusService.resetLeaderboard(groupId);
+    }
+
     public Call<ApiResponse> getAcknowledgePopupRequest(String popUpName) {
         return mNostragamusService.getAcknowledgePopupRequest(popUpName);
     }

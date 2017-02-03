@@ -114,7 +114,7 @@ public interface Constants {
         String APPROVE_EMPTY = "No pending requests found";
         String LOGIN_CANCELLED = "Facebook login cancelled";
         String LEAVE_GROUP_SUCCESS = "You have been removed from the group successfully";
-        String CANNOT_LEAVE_GROUP = "Make anyone in the group as Admin, If you want to leave the group";
+        String CANNOT_LEAVE_GROUP = "You are the only Admin, you need to add another group member as Admin before you can leave";
         String PERMISSION_QUIT_TEXT ="Exit App";
         String PERMISSION_HELP ="Help";
         String PERMISSION_SETTINGS ="Setting";
@@ -126,8 +126,8 @@ public interface Constants {
         String IMAGE_UPLOADING="Uploading.. Wait for a while...";
         String IMAGE_FILEPATH_EMPTY = "Please Select Image";
         String AUDIENCE_POLL_FAIL = "Not enough responses for a meaningful poll, you can try after some time";
-        String POWERUP_FAIL = "Sorry some error occurred,Please try again";
-        String API_FAIL = "Sorry some error occurred,Please try again";
+        String POWERUP_FAIL = "Something went wrong! Please try again!";
+        String API_FAIL = "Something went wrong! Please try again!";
         String MATCH_ALREADY_STARTED = "This match has already started!";
         String FLIP_POWERUP_OVER = "You have used all your flip powerups!";
         String REPLAY_POWERUP_OVER = "You have used all your replay powerups!";
@@ -136,6 +136,8 @@ public interface Constants {
         String GETTING_OTHERS_ANSWERS_FAILED = "Getting others answers failed! Try again!";
         String SELECTED_TOURNAMENTS_LIMIT = "Please Pick atleast one Tournament";
         String NOT_ADMIN = "Only Admin can change Tournaments";
+        String RESET_LB_SUCCESS = "Success! Your group leaderboard have been reset!";
+        String CANNOT_RESET_LB = "Something went wrong! Please try again!";
     }
 
     interface BundleKeys {
@@ -178,6 +180,7 @@ public interface Constants {
         String IS_DUMMY_GAME = "isDummyGame";
         String TOURNAMENT_POWERUPS = "tournamentPowerups";
         String POPUP_DATA = "popup";
+        String FROM_SETTINGS = "fromSettings";
     }
 
     interface ParcelableKeys {
@@ -245,6 +248,7 @@ public interface Constants {
 
     interface AnalyticsCategory {
         String LOGIN = "Login";
+        String DUMMY_GAME = "Dummy Game";
         String LOGOUT = "Logout";
         String EDIT_PROFILE = "Edit Profile";
         String USER_PROFILE = "User Profile";
@@ -255,8 +259,9 @@ public interface Constants {
     }
 
     interface AnalyticsActions {
-        String FACEBOOK = "Facebook";
-        String GOOGLE_PLUS = "Google Plus";
+        String STARTED = "Started";
+        String SKIPPED = "Skipped";
+        String COMPLETED = "Completed";
         String PHOTO = "Photo";
         String OTHERS = "Others";
         String TABS = "Tabs";
@@ -264,6 +269,9 @@ public interface Constants {
     }
 
     interface AnalyticsLabels {
+        String FACEBOOK = "Facebook";
+        String GOOGLE = "Google Plus";
+        String SCREENS_SEEN = "Screens Seen";
         String GALLERY = "Gallery";
         String CAMERA = "Camera";
         String UPDATE = "Update";

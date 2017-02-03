@@ -67,7 +67,11 @@ public class LBLandingRow extends LinearLayout implements View.OnClickListener {
             }
 
         });
-        updateArrowState();
+
+        if(lbList.size() < 4) {
+            mLeftArrow.setVisibility(View.INVISIBLE);
+            mRightArrow.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void updateArrowState() {

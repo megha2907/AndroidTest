@@ -9,6 +9,7 @@ import java.util.Map;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.group.LeaveGroupModelImpl;
+import in.sportscafe.nostragamus.module.user.group.ResetLeaderboardModelImpl;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.webservice.GroupSummaryResponse;
@@ -45,20 +46,17 @@ public class GroupInfoModelImpl implements GroupInfoModel {
     @Override
     public void init(Bundle bundle) {
 
-        if(bundle.getInt(Constants.BundleKeys.GROUP_ID)!=0){
-            Integer groupId =(bundle.getInt(Constants.BundleKeys.GROUP_ID));
+        if (bundle.getInt(Constants.BundleKeys.GROUP_ID) != 0) {
+            Integer groupId = (bundle.getInt(Constants.BundleKeys.GROUP_ID));
             getGroupSummary(groupId);
-        } else
-        {
+        } else {
             mGroupInfoModelListener.onFailed(Constants.Alerts.GROUP_INFO_ERROR);
             mGroupInfoModelListener.gotoAllGroupsScreen();
         }
-
     }
 
     @Override
-    public void updateGroupMembers(GroupInfo groupInfo){
-
+    public void updateGroupMembers(GroupInfo groupInfo) {
         String myId = NostragamusDataHandler.getInstance().getUserId();
         List<GroupPerson> groupMembers = groupInfo.getMembers();
 
@@ -69,8 +67,6 @@ public class GroupInfoModelImpl implements GroupInfoModel {
                 break;
             }
         }
-
-
     }
 
 
@@ -80,7 +76,7 @@ public class GroupInfoModelImpl implements GroupInfoModel {
                     @Override
                     public void onResponse(Call<GroupSummaryResponse> call, Response<GroupSummaryResponse> response) {
                         super.onResponse(call, response);
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
                             NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
                             GroupInfo groupInfo = response.body().getGroupInfo();
 
@@ -133,7 +129,7 @@ public class GroupInfoModelImpl implements GroupInfoModel {
     @Override
     public String getShareCodeContent() {
         return "To join my group " + mGroupInfo.getName() +
-                " , use group code "+ mGroupInfo.getGroupCode();
+                " , use group code " + mGroupInfo.getGroupCode();
     }
 
     @Override
@@ -162,9 +158,29 @@ public class GroupInfoModelImpl implements GroupInfoModel {
     }
 
     @Override
+    public void resetLeaderboard() {
+        new ResetLeaderboardModelImpl(new ResetLeaderboardModelImpl.OnResetLeaderboardModelListener() {
+            @Override
+            public void onSuccessResetLeaderboard() {
+                mGroupInfoModelListener.onResetLeaderboardSuccess();
+            }
+
+            @Override
+            public void onFailedResetLeaderboard(String message) {
+                mGroupInfoModelListener.onFailed(message);
+            }
+
+            @Override
+            public void onNoInternet() {
+                mGroupInfoModelListener.onNoInternet();
+            }
+        }).resetLeaderboard(mGroupInfo.getId());
+    }
+
+    @Override
     public GroupTournamentAdapter getAdapter(Context context) {
 
-        if(NostragamusDataHandler.getInstance().getSelectedTournaments().isEmpty()){
+        if (NostragamusDataHandler.getInstance().getSelectedTournaments().isEmpty()) {
 
             mGroupInfoModelListener.onEmptyList();
         }
@@ -187,6 +203,8 @@ public class GroupInfoModelImpl implements GroupInfoModel {
         void onGroupTournamentUpdateSuccess();
 
         void onLeaveGroupSuccess();
+
+        void onResetLeaderboardSuccess();
 
         void onFailed(String message);
 

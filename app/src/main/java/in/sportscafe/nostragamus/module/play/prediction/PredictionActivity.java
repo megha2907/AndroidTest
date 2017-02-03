@@ -20,6 +20,7 @@ import com.jeeva.android.widgets.customfont.CustomTextView;
 
 import in.sportscafe.nostragamus.Config.Sports;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.coachmarker.TargetView;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
@@ -31,6 +32,8 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
+
+import static com.google.android.gms.analytics.internal.zzy.m;
 
 
 public class PredictionActivity extends NostragamusActivity implements PredictionView, View.OnClickListener {
@@ -279,9 +282,13 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void changeToDummyGameMode() {
         findViewById(R.id.prediction_tv_skip).setVisibility(View.VISIBLE);
-        mVgPlayPage.setVisibility(View.INVISIBLE);
         findViewById(R.id.prediction_iv_tournament_photo).setVisibility(View.GONE);
         findViewById(R.id.prediction_ibtn_back).setVisibility(View.GONE);
+        findViewById(R.id.prediction_iv_left_arrow).setVisibility(View.INVISIBLE);
+        findViewById(R.id.prediction_iv_right_arrow).setVisibility(View.INVISIBLE);
+        findViewById(R.id.prediction_iv_shuffle).setVisibility(View.INVISIBLE);
+
+        mVgPlayPage.setVisibility(View.INVISIBLE);
         mIv2xGlobalPowerup.setVisibility(View.GONE);
         mTv2xGlobalPowerupCount.setVisibility(View.GONE);
 
@@ -373,8 +380,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void showLeftRightCoach() {
-        View leftArrow = findViewById(R.id.prediction_iv_left_arrow);
-        View rightArrow = findViewById(R.id.prediction_iv_right_arrow);
+        /*View leftArrow = findViewById(R.id.prediction_iv_left_arrow);
+        View rightArrow = findViewById(R.id.prediction_iv_right_arrow);*/
         mCoachMarker = ViewUtils.showCoachMarker(
                 this,
                 mVgPlayPage,
@@ -386,9 +393,9 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                     public void onClick(View view) {
                         hideLeftRightIndicator();
                     }
-                },
+                }/*,
                 new TargetView(leftArrow, leftArrow.getWidth(), leftArrow.getHeight()),
-                new TargetView(rightArrow, rightArrow.getWidth(), rightArrow.getHeight())
+                new TargetView(rightArrow, rightArrow.getWidth(), rightArrow.getHeight())*/
         );
     }
 

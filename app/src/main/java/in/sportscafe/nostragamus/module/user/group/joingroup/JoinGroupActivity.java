@@ -164,7 +164,6 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
         mbundle.putInt(Constants.BundleKeys.GROUP_ID,groupId);
         intent.putExtras(mbundle);
         startActivity(intent);
-        finish();
     }
 
     @Override
@@ -206,7 +205,7 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goToHome();
+                        mJoinGroupPresenter.onBack();
                     }
                 }
         );
