@@ -56,11 +56,7 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
 
     @Override
     public void onGetPowerUpsCount() {
-        mProfileView.setPowerUpsCount(NostragamusDataHandler.getInstance().getNumberof2xPowerups()+
-                NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups()+
-                NostragamusDataHandler.getInstance().getNumberofNonegsPowerups()+
-                NostragamusDataHandler.getInstance().getNumberofFlipPowerups()+
-                NostragamusDataHandler.getInstance().getNumberofReplayPowerups());
+        mProfileView.setPowerUpsCount(NostragamusDataHandler.getInstance().getNumberof2xGlobalPowerups());
     }
 
     @Override
