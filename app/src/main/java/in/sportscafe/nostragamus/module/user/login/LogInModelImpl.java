@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.user.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.TextUtils:
 
 import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
@@ -148,7 +149,7 @@ public class LogInModelImpl implements LogInModel {
                                     AnalyticsActions.COMPLETED, provider.equals(PROVIDER_FB) ? AnalyticsLabels.FACEBOOK : AnalyticsLabels.GOOGLE
                             );
                             NostragamusAnalytics.getInstance().trackNewUsers(
-                                    null == userProfile.getUserReferralId() ? AnalyticsActions.ORGANIC : AnalyticsActions.REFERRAL
+                                    TextUtils.isEmpty(userProfile.getUserReferralId()) ? AnalyticsActions.ORGANIC : AnalyticsActions.REFERRAL
                             );
                             handleLoginResponse(response.body().getUserLoginInResponse());
                         } else {
