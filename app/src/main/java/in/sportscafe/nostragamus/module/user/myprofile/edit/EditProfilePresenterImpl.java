@@ -5,7 +5,9 @@ import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
@@ -15,6 +17,7 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.preference.PreferenceManager;
 import in.sportscafe.nostragamus.module.user.preference.SavePreferenceModelImpl;
+import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -125,11 +128,19 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
 
     private void autoSaveAllSports() {
-        new PreferenceManager().savePreference(Arrays.asList(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}),
+
+        List<Sport> newSportList = NostragamusDataHandler.getInstance().getAllSports();
+
+        List<Integer> sportIdList = new ArrayList<Integer>();
+
+        for (Sport sport : newSportList) {
+            sportIdList.add(sport.getId());
+        }
+
+        new PreferenceManager().savePreference(sportIdList,
                 new SavePreferenceModelImpl.SavePreferenceModelListener() {
                     @Override
                     public void onSuccess() {
-                        Log.i("selected", "inside");
                         mEditProfileView.navigateToDummyGame(mEditProfileModel.getDummyGameData());
                     }
 

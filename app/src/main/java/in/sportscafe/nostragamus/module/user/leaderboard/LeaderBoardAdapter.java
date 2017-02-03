@@ -143,6 +143,7 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
                 @Override
                 public void onClick(View view) {
 
+                    Log.i("playerid",getItem(getAdapterPosition()).getUserId().toString());
                     Integer playerId = getItem(getAdapterPosition()).getUserId();
 
                     Bundle mBundle = new Bundle();
