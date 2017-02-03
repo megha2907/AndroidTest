@@ -167,6 +167,16 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
         }
 
+        lbLandingList = lbSummary.getChallenges();
+
+        if (null != lbLandingList && lbLandingList.size() > 0) {
+            addLandingRow(
+                    lbLandingList,
+                    LBLandingType.CHALLENGE,
+                    true
+            );
+        }
+
         lbLandingList = lbSummary.getGroups();
 
         if (null != lbLandingList && lbLandingList.size() > 0) {
@@ -177,15 +187,6 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
             );
         }
 
-        lbLandingList = lbSummary.getChallenges();
-
-        if (null != lbLandingList && lbLandingList.size() > 0) {
-            addLandingRow(
-                    lbLandingList,
-                    LBLandingType.CHALLENGE,
-                    true
-            );
-        }
 
     }
 

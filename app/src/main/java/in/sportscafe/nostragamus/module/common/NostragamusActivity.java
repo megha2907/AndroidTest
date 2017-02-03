@@ -12,16 +12,24 @@ import android.widget.CompoundButton;
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.InAppActivity;
 
+import org.parceler.Parcels;
+
+import java.util.List;
+
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.popups.PopUp;
+import in.sportscafe.nostragamus.module.popups.PopUpActivity;
+import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
 
 /**
  * Created by Jeeva on 6/4/16.
  */
-public class NostragamusActivity extends InAppActivity {
+public class NostragamusActivity extends InAppActivity implements PopUpModelImpl.OnGetPopUpModelListener {
 
     private static final String NORMAL_UPDATE = "Normal";
 
@@ -33,6 +41,7 @@ public class NostragamusActivity extends InAppActivity {
 
         // Checking the version code to request update or force update the application
         checkAnyUpdate(); // Todo enable it later
+        //PopUpModelImpl.newInstance(this).getPopUps("home");
     }
 
     private void checkAnyUpdate() {
@@ -122,5 +131,24 @@ public class NostragamusActivity extends InAppActivity {
         } catch (ActivityNotFoundException e) {
             ExceptionTracker.track(e);
         }
+    }
+
+    private void openPopup(List<PopUp> popUps) {
+
+        Intent intent = new Intent(getContext(), PopUpActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.BundleKeys.POPUP_DATA, Parcels.wrap(popUps));
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onSuccessGetUpdatedPopUps(List<PopUp> popUps) {
+        openPopup(popUps);
+    }
+
+    @Override
+    public void onFailedGetUpdatePopUps(String message) {
+
     }
 }

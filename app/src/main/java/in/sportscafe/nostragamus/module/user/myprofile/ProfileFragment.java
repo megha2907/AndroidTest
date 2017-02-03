@@ -59,8 +59,7 @@ import in.sportscafe.nostragamus.module.user.sportselection.profilesportselectio
 /**
  * Created by Jeeva on 14/6/16.
  */
-public class ProfileFragment extends NostragamusFragment implements ProfileView, ProfileSportSelectionFragment.OnSportSelectionChangedListener, View.OnClickListener
-        , PopUpModelImpl.OnGetPopUpModelListener{
+public class ProfileFragment extends NostragamusFragment implements ProfileView, ProfileSportSelectionFragment.OnSportSelectionChangedListener, View.OnClickListener {
 
     private static final int SPORTS_SELECTION_CODE = 34;
 
@@ -116,17 +115,8 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         this.mProfilePresenter = ProfilePresenterImpl.newInstance(this);
         this.mProfilePresenter.onCreateProfile();
 
-        PopUpModelImpl.newInstance(this).getPopUps("home");
-
     }
 
-    private void openPopup(List<PopUp> popUps) {
-
-        Intent intent = new Intent(getContext(), EditProfileActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.BundleKeys.POPUP_DATA, Parcels.wrap(popUps));
-        startActivity(intent);
-    }
 
     private void setClickListeners() {
         findViewById(R.id.profile_btn_edit).setOnClickListener(this);
@@ -434,13 +424,4 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         }
     }
 
-    @Override
-    public void onSuccessGetUpdatedPopUps(List<PopUp> PopUps) {
-         openPopup(PopUps);
-    }
-
-    @Override
-    public void onFailedGetUpdatePopUps(String message) {
-
-    }
 }
