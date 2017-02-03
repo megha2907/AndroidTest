@@ -9,7 +9,6 @@ import com.jeeva.android.facebook.user.FacebookProfile;
 import com.jeeva.android.facebook.user.GetProfileModelImpl;
 import com.jeeva.android.facebook.user.UserModelImpl;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -128,7 +127,7 @@ public class LogInModelImpl implements LogInModel {
         logInRequest.setAccessToken(accessToken);
         logInRequest.setRefreshToken("");
 
-        UserProfile userProfile = new UserProfile();
+        final UserProfile userProfile = new UserProfile();
         logInRequest.setUserProfile(userProfile);
         userProfile.setId(id);
         userProfile.setUserName(username);
@@ -147,6 +146,9 @@ public class LogInModelImpl implements LogInModel {
                         if (response.isSuccessful()) {
                             NostragamusAnalytics.getInstance().trackLogIn(
                                     AnalyticsActions.COMPLETED, provider.equals(PROVIDER_FB) ? AnalyticsLabels.FACEBOOK : AnalyticsLabels.GOOGLE
+                            );
+                            NostragamusAnalytics.getInstance().trackNewUsers(
+                                    null == userProfile.getUserReferralId() ? AnalyticsActions.ORGANIC : AnalyticsActions.REFERRAL
                             );
                             handleLoginResponse(response.body().getUserLoginInResponse());
                         } else {

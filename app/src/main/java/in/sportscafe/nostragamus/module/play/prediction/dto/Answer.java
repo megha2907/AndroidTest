@@ -76,4 +76,13 @@ public class Answer {
         this.answerTime = answerTime;
     }
 
+    @JsonProperty("powerup_id")
+    public String getPowerUpId() {
+        return powerUpId;
+    }
+
+    @JsonProperty("powerup_id")
+    public void setPowerUpId(String powerUpId) {
+        this.powerUpId = powerUpId;
+    }
 }

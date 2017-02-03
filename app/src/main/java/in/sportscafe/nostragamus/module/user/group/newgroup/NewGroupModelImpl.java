@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
@@ -63,25 +64,25 @@ public class NewGroupModelImpl implements NewGroupModel {
                     @Override
                     public void onGrpTournamentClicked(int position, boolean selected) {
 
-                            TournamentFeedInfo feedInfo = mTournamentSelectionAdapter.getItem(position);
+                        TournamentFeedInfo feedInfo = mTournamentSelectionAdapter.getItem(position);
 
-                            if (mTournamentSelectionAdapter.getSelectedTournamentList().size() == 1 && selected) {
-                                mNewGroupModelListener.selectedTournamentsLimit();
-                                return;
+                        if (mTournamentSelectionAdapter.getSelectedTournamentList().size() == 1 && selected) {
+                            mNewGroupModelListener.selectedTournamentsLimit();
+                            return;
 
+                        } else {
+
+                            mTournamentSelectionAdapter.updateSelectionList(feedInfo);
+                            mTournamentSelectionAdapter.remove(position);
+
+                            if (selected) {
+                                mTournamentSelectionAdapter.add(feedInfo);
                             } else {
-
-                                mTournamentSelectionAdapter.updateSelectionList(feedInfo);
-                                mTournamentSelectionAdapter.remove(position);
-
-                                if (selected) {
-                                    mTournamentSelectionAdapter.add(feedInfo);
-                                } else {
-                                    mTournamentSelectionAdapter.add(feedInfo, 0);
-                                }
-
-                                mTournamentSelectionAdapter.notifyItemChanged(position);
+                                mTournamentSelectionAdapter.add(feedInfo, 0);
                             }
+
+                            mTournamentSelectionAdapter.notifyItemChanged(position);
+                        }
 
                     }
                 });
@@ -105,17 +106,17 @@ public class NewGroupModelImpl implements NewGroupModel {
 
     @Override
     public void createGroup(String groupName) {
-        if(groupName.isEmpty()) {
+        if (groupName.isEmpty()) {
             mNewGroupModelListener.onEmptyGroupName();
             return;
         }
 
         List<Integer> SelectedTournament = mTournamentSelectionAdapter.getSelectedTournamentList();
-        if(null == SelectedTournament || SelectedTournament.isEmpty()) {
+        if (null == SelectedTournament || SelectedTournament.isEmpty()) {
             mNewGroupModelListener.onNoSportSelected();
             return;
         } else {
-            if(Nostragamus.getInstance().hasNetworkConnection()) {
+            if (Nostragamus.getInstance().hasNetworkConnection()) {
                 NewGroupRequest newGroupRequest = new NewGroupRequest();
                 newGroupRequest.setGroupCreatedBy(NostragamusDataHandler.getInstance().getUserId());
                 newGroupRequest.setGroupName(groupName);
@@ -131,13 +132,13 @@ public class NewGroupModelImpl implements NewGroupModel {
     @Override
     public void updateGroupPhoto(File file, String filepath, String filename) {
 
-        if(filepath.equals(null)) {
+        if (filepath.equals(null)) {
             mNewGroupModelListener.onGroupImagePathNull();
             return;
         }
-        if(Nostragamus.getInstance().hasNetworkConnection()) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
             mNewGroupModelListener.onUpdating();
-            callUpdateGroupPhotoApi(file,filepath, UUID.randomUUID().toString() + "_" + filename);
+            callUpdateGroupPhotoApi(file, filepath, UUID.randomUUID().toString() + "_" + filename);
         } else {
             mNewGroupModelListener.onNoInternet();
         }
@@ -155,7 +156,7 @@ public class NewGroupModelImpl implements NewGroupModel {
 
     private void callUpdateGroupPhotoApi(File file, String filepath, String filename) {
 
-        MyWebService.getInstance().getUploadPhotoRequest(file,filepath,filename).enqueue(new NostragamusCallBack<Result>() {
+        MyWebService.getInstance().getUploadPhotoRequest(file, filepath, filename).enqueue(new NostragamusCallBack<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 super.onResponse(call, response);
@@ -173,20 +174,20 @@ public class NewGroupModelImpl implements NewGroupModel {
 
     @Override
     public void getAllTournamentsfromServer() {
-        if(Nostragamus.getInstance().hasNetworkConnection()) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
             MyWebService.getInstance().getCurrentTournaments(true).enqueue(
                     new NostragamusCallBack<TournamentFeedResponse>() {
                         @Override
                         public void onResponse(Call<TournamentFeedResponse> call, Response<TournamentFeedResponse> response) {
                             super.onResponse(call, response);
-                            if(response.isSuccessful()) {
+                            if (response.isSuccessful()) {
                                 List<TournamentFeedInfo> newTournamentInfo = response.body().getTournamentInfos();
 
-                                if(null != newTournamentInfo && newTournamentInfo.size() > 0) {
+                                if (null != newTournamentInfo && newTournamentInfo.size() > 0) {
                                     List<TournamentFeedInfo> oldTournamentList = mNostragamusDataHandler.getTournaments();
                                     oldTournamentList.clear();
                                     for (TournamentFeedInfo tournamentInfo : newTournamentInfo) {
-                                        if(!oldTournamentList.contains(tournamentInfo)) {
+                                        if (!oldTournamentList.contains(tournamentInfo)) {
                                             oldTournamentList.add(tournamentInfo);
                                         }
                                     }
@@ -208,13 +209,18 @@ public class NewGroupModelImpl implements NewGroupModel {
     }
 
 
-    private void callNewGroupApi(NewGroupRequest newGroupRequest) {
+    private void callNewGroupApi(final NewGroupRequest newGroupRequest) {
         MyWebService.getInstance().getNewGroupRequest(newGroupRequest).enqueue(
                 new NostragamusCallBack<NewGroupResponse>() {
                     @Override
                     public void onResponse(Call<NewGroupResponse> call, Response<NewGroupResponse> response) {
                         super.onResponse(call, response);
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
+                            NostragamusAnalytics.getInstance().trackGroups(
+                                    AnalyticsActions.NEW_GROUP,
+                                    MyWebService.getInstance().getJsonStringFromObject(newGroupRequest.getfollowedTournaments())
+                            );
+
                             NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
 
                             GroupInfo groupInfo = response.body().getGroupInfo();

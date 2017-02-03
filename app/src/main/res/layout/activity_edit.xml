@@ -42,7 +42,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_12"
-        android:background="@drawable/powerup_screen_btn_bg"
+        android:background="@drawable/tournament_ready_btn_bg"
         android:onClick="onClick"
         android:text="@string/next"
         android:textAllCaps="false"

@@ -17,6 +17,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 
@@ -101,6 +102,8 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
 
         @Override
         public void onClick(View view) {
+            NostragamusAnalytics.getInstance().trackLeaderboard(mLbLandingType);
+
             Bundle bundle = new Bundle();
             bundle.putString(BundleKeys.LB_LANDING_TYPE, mLbLandingType);
             bundle.putParcelable(BundleKeys.LB_LANDING_DATA, Parcels.wrap(getItem(getAdapterPosition())));

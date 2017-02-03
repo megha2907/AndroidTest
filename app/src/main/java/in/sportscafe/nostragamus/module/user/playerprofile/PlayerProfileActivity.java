@@ -305,9 +305,9 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                NostragamusAnalytics.getInstance().trackUserProfile(Constants.AnalyticsActions.TABS,
-                        mViewPager.getAdapter().getPageTitle(position).toString());
-
+                NostragamusAnalytics.getInstance().trackOtherProfile(
+                        mViewPager.getAdapter().getPageTitle(position).toString()
+                );
             }
 
             @Override

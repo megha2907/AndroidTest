@@ -160,8 +160,10 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.prediction_ibtn_back:
-            case R.id.prediction_tv_skip:
                 mPredictionPresenter.onClickBack();
+                break;
+            case R.id.prediction_tv_skip:
+                mPredictionPresenter.onClickSkip();
                 break;
             case R.id.prediction_iv_shuffle:
                 mSwipeFlingAdapterView.getTopCardListener().selectBottom();

@@ -6,7 +6,7 @@
     android:layout_marginLeft="@dimen/dp_6"
     android:layout_marginRight="@dimen/dp_6"
     app:cardCornerRadius="@dimen/dp_0"
-    app:cardElevation="@dimen/dp_10">
+    app:cardElevation="@dimen/dp_6">
 
     <RelativeLayout
         android:layout_width="match_parent"

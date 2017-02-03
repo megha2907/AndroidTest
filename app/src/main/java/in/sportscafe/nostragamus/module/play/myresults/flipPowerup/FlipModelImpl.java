@@ -10,6 +10,7 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -80,7 +81,7 @@ public class FlipModelImpl implements FlipModel, FlipAdapter.OnFlipActionListene
         callFLipPowerupApi(Powerups.ANSWER_FLIP, matchId, questionId);
     }
 
-    private void callFLipPowerupApi(String powerupId, Integer matchId, Integer questionId) {
+    private void callFLipPowerupApi(final String powerupId, Integer matchId, Integer questionId) {
 
         MyWebService.getInstance().getFlipPowerup(powerupId, matchId, questionId).enqueue(new NostragamusCallBack<ReplayPowerupResponse>() {
             @Override
@@ -91,6 +92,7 @@ public class FlipModelImpl implements FlipModel, FlipAdapter.OnFlipActionListene
                     if (response.body().getResponse().equals(null) || response.body().getResponse().equalsIgnoreCase("failure")) {
                         mFlipModelListener.onFailedFlipPowerupResponse();
                     } else {
+                        NostragamusAnalytics.getInstance().trackPowerups(powerupId);
                         mFlipModelListener.onSuccessFlipPowerupResponse(match);
                     }
 

@@ -17,7 +17,7 @@ import org.json.JSONObject;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
-import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsCategory;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.R;
@@ -108,6 +108,80 @@ public class NostragamusAnalytics {
     }
 
     /**
+     * track groups
+     *
+     * @param actions - join and leave
+     */
+    public void trackGroups(String actions) {
+        track(AnalyticsCategory.GROUP, actions, null, null);
+    }
+
+    /**
+     * track groups
+     *
+     * @param actions - new
+     * @param tournaments - Gallery, Camera
+     */
+    public void trackGroups(String actions, String tournaments) {
+        track(AnalyticsCategory.GROUP, actions, tournaments, null);
+    }
+
+    /**
+     * track new users
+     *
+     * @param actions - referral or organic
+     */
+    public void trackNewUsers(String actions) {
+        track(AnalyticsCategory.NEW_USERS, actions, null, null);
+    }
+
+    /**
+     * track powerups
+     *
+     * @param actions - 2x
+     */
+    public void trackPowerups(String actions) {
+        track(AnalyticsCategory.POWERUP, actions, null, null);
+    }
+
+    /**
+     * track timeline
+     *
+     * @param actions - Tournament
+     */
+    public void trackTimeline(String actions) {
+        track(AnalyticsCategory.TIMELINE, actions, null, null);
+    }
+
+    /**
+     * track timeline
+     *
+     * @param actions - Tournament
+     * @param label - India vs England 2016
+     */
+    public void trackTimeline(String actions, String label, long unplayedMatches) {
+        track(AnalyticsCategory.TIMELINE, actions, label, unplayedMatches);
+    }
+
+    /**
+     * track leaderboards
+     *
+     * @param actions - Tournament, group, challenges and sports
+     */
+    public void trackLeaderboard(String label) {
+        track(AnalyticsCategory.LEADERBOARD, AnalyticsActions.LB_DETAIL, label, null);
+    }
+
+    /**
+     * track play games
+     *
+     * @param actions - Started, completed
+     */
+    public void trackPlay(String actions) {
+        track(AnalyticsCategory.LEADERBOARD, actions, null, null);
+    }
+
+    /**
      * track edit profile
      *
      * @param type - Photo, Others
@@ -123,28 +197,18 @@ public class NostragamusAnalytics {
      * @param type - tabs
      * @param name - Sports, Groups
      */
-    public void trackUserProfile(String type, String name) {
-        track(AnalyticsCategory.USER_PROFILE, type, name, null);
+    public void trackMyProfile(String name) {
+        track(AnalyticsCategory.PROFILE, AnalyticsActions.MYSELF, name, null);
     }
 
     /**
-     * track new group
+     * track user profile
      *
-     * @param type - Photo
-     * @param name - Gallery, Camera
+     * @param type - tabs
+     * @param name - Sports, Groups
      */
-    public void trackNewGroup(String type) {
-        track(AnalyticsCategory.NEW_GROUP, type, null, null);
-    }
-
-    /**
-     * track new group
-     *
-     * @param type - Tournament
-     * @param name - India vs England 2016
-     */
-    public void trackFeed(String type, String name) {
-        track(AnalyticsCategory.FEED, type, name, null);
+    public void trackOtherProfile(String name) {
+        track(AnalyticsCategory.PROFILE, AnalyticsActions.OTHER_USER, name, null);
     }
 
     /**

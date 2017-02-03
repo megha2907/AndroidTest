@@ -9,8 +9,10 @@ import com.jeeva.android.ExceptionTracker;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
@@ -93,6 +95,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
                     @Override
                     public void onLinkCreate(String url, BranchError error) {
                         if (null == error) {
+                            NostragamusAnalytics.getInstance().trackGroups(AnalyticsActions.INVITE_GROUP);
                             AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url);
                         } else {
                             ExceptionTracker.track(error.getMessage());

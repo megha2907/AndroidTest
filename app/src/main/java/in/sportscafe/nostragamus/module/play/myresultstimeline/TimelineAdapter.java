@@ -33,10 +33,13 @@ import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.DateFormats;
 import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.FeedWebView;
 import in.sportscafe.nostragamus.module.feed.dto.FeedTimeline;
@@ -402,13 +405,21 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
             switch (view.getId()) {
                 case R.id.schedule_row_btn_playmatch:
+                    NostragamusAnalytics.getInstance().trackTimeline(
+                            GameAttemptedStatus.PARTIALLY == match.getisAttempted() ? AnalyticsActions.CONTINUE : AnalyticsActions.PLAY
+                    );
+
                     bundle.putParcelable(BundleKeys.TOURNAMENT_POWERUPS,Parcels.wrap(mTournamentPowerupInfo));
                     navigateToPrediction(context, bundle);
                     break;
                 case R.id.rl_points:
+                    NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.VIEW_ANSWERS);
+
                     navigateToMyResults(context, bundle);
                     break;
                 case R.id.schedule_row_ll_waiting_for_result:
+                    NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.RESULT_WAITING);
+
                     navigateToMyResults(context, bundle);
                     break;
             }

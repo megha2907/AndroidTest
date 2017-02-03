@@ -287,9 +287,9 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                NostragamusAnalytics.getInstance().trackUserProfile(AnalyticsActions.TABS,
-                        mViewPager.getAdapter().getPageTitle(position).toString());
-
+                NostragamusAnalytics.getInstance().trackMyProfile(
+                        mViewPager.getAdapter().getPageTitle(position).toString()
+                );
             }
 
             @Override
