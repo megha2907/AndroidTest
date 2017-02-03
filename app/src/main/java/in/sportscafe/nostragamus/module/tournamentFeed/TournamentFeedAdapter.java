@@ -165,8 +165,11 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
                         intent.putExtras(bundle);
                         view.getContext().startActivity(intent);
 
-                        NostragamusAnalytics.getInstance().trackFeed(AnalyticsActions.TOURNAMENT,
-                                tournamentInfo.getTournamentName());
+                        NostragamusAnalytics.getInstance().trackTimeline(
+                                AnalyticsActions.TOURNAMENT,
+                                tournamentInfo.getTournamentName(),
+                                null == tournamentInfo.getCountsUnplayed() ? 0 : Long.parseLong(tournamentInfo.getCountsUnplayed())
+                        );
 
             }
 

@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
@@ -290,7 +291,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 });
     }
 
-    private void callReplayPowerupAppliedApi(String powerupId, Integer matchId) {
+    private void callReplayPowerupAppliedApi(final String powerupId, Integer matchId) {
 
         MyWebService.getInstance().getReplayPowerup(powerupId, matchId).enqueue(new NostragamusCallBack<ReplayPowerupResponse>() {
             @Override
@@ -301,6 +302,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                     if (response.body().getResponse().equals(null) || response.body().getResponse().equalsIgnoreCase("failure")) {
                         mResultsModelListener.onFailedReplayPowerupResponse();
                     } else {
+                        NostragamusAnalytics.getInstance().trackPowerups(powerupId);
                         mResultsModelListener.onSuccessReplayPowerupResponse(match);
                     }
 

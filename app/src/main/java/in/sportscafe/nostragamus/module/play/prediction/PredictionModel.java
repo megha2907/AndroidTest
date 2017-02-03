@@ -52,4 +52,8 @@ public interface PredictionModel {
     void applyPollPowerup();
 
     boolean isFromSettings();
+
+    void onSkippingDummyGame();
+
+    void onAllDoneInDummyGame();
 }

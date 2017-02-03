@@ -249,11 +249,15 @@ public interface Constants {
     interface AnalyticsCategory {
         String LOGIN = "Login";
         String DUMMY_GAME = "Dummy Game";
+        String GROUP = "Group";
+        String NEW_USERS = "New User";
+        String POWERUP = "Powerup";
+        String TIMELINE = "Timeline";
+        String LEADERBOARD = "Leaderboard";
         String LOGOUT = "Logout";
         String EDIT_PROFILE = "Edit Profile";
-        String USER_PROFILE = "User Profile";
-        String NEW_GROUP = "New Group";
-        String FEED = "Feed";
+        String PROFILE = "Profile";
+        String PLAY = "Play";
         String FLAVOR = "Flavor";
         String APP_UPDATE = "App Update";
     }
@@ -262,10 +266,23 @@ public interface Constants {
         String STARTED = "Started";
         String SKIPPED = "Skipped";
         String COMPLETED = "Completed";
+        String INVITE_GROUP = "Invite Group";
+        String REFERRAL = "Referral";
+        String ORGANIC = "Organic";
+        String JOIN_GROUP = "Join Group";
+        String NEW_GROUP = "New Group";
+        String LEAVE_GROUP = "Leave Group";
+        String TOURNAMENT = "Tournament";
+        String VIEW_ANSWERS = "View Answers";
+        String PLAY = "Play";
+        String CONTINUE = "Continue";
+        String RESULT_WAITING = "Waiting For Results";
+        String LB_DETAIL = "Detail";
+        String MYSELF = "Me";
+        String OTHER_USER = "Other";
         String PHOTO = "Photo";
         String OTHERS = "Others";
         String TABS = "Tabs";
-        String TOURNAMENT = "Tournament";
     }
 
     interface AnalyticsLabels {

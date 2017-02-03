@@ -97,6 +97,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
                 mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
             }
+
+            NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.STARTED);
         } else {
             mDummyGame = true;
             if(bundle.containsKey(BundleKeys.FROM_SETTINGS)) {
@@ -236,6 +238,20 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
+    public void onSkippingDummyGame() {
+        int screenCount = 0;
+        if(null != mPredictionAdapter) {
+            screenCount = mPredictionAdapter.getTopQuestion().getQuestionNumber();
+        }
+        NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.SKIPPED, screenCount);
+    }
+
+    @Override
+    public void onAllDoneInDummyGame() {
+        NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.COMPLETED);
+    }
+
+    @Override
     public void removeFirstObjectInAdapter(Question question) {
         mPredictionAdapter.remove(question);
         mPredictionAdapter.notifyDataSetChanged();
@@ -267,6 +283,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
         if (itemsInAdapter == 0) {
             if (!mDummyGame) {
+                NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.COMPLETED);
+
                 Bundle bundle = new Bundle();
                 bundle.putInt(BundleKeys.TOURNAMENT_ID, mMyResult.getTournamentId());
                 bundle.putString(BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
@@ -422,22 +440,22 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                     powerupId
             );
 
-            postAnswerToServer(answer, question.isMinorityAnswer(), mPredictionAdapter.getCount() == 0);
-
-            if (null != powerupId) {
-                if (Powerups.XX_GLOBAL.equalsIgnoreCase(powerupId)) {
-                     mNostragamusDataHandler.setNumberof2xGlobalPowerups(m2xGlobalPowerups);
-                }
-            }
+            postAnswerToServer(answer, question.isMinorityAnswer(), mPredictionAdapter.getCount() == 0, powerupId);
         }
     }
 
     private void postAnswerToServer(Answer answer, boolean minorityOption, Boolean
-            matchComplete) {
+            matchComplete, final String powerupId) {
         new PostAnswerModelImpl(new PostAnswerModelImpl.PostAnswerModelListener() {
 
             @Override
             public void onSuccess() {
+                if (null != powerupId) {
+                    if (Powerups.XX_GLOBAL.equalsIgnoreCase(powerupId)) {
+                        mNostragamusDataHandler.setNumberof2xGlobalPowerups(m2xGlobalPowerups);
+                    }
+                    NostragamusAnalytics.getInstance().trackPowerups(powerupId);
+                }
             }
 
             @Override

@@ -3,8 +3,10 @@ package in.sportscafe.nostragamus.module.user.group;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
@@ -57,6 +59,7 @@ public class LeaveGroupModelImpl {
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         super.onResponse(call, response);
                         if(response.isSuccessful()) {
+                            NostragamusAnalytics.getInstance().trackGroups(AnalyticsActions.LEAVE_GROUP, null);
                             mLeaveGroupModelListener.onSuccessLeaveGroup();
                         } else {
                             mLeaveGroupModelListener.onFailedLeaveGroup(Constants.Alerts.CANNOT_LEAVE_GROUP);

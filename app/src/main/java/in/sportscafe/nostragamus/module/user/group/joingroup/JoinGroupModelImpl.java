@@ -5,6 +5,8 @@ import android.os.Bundle;
 import java.util.HashMap;
 import java.util.Map;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -73,6 +75,7 @@ public class JoinGroupModelImpl implements JoinGroupModel {
                     public void onResponse(Call<JoinGroupResponse> call, Response<JoinGroupResponse> response) {
                         super.onResponse(call, response);
                         if(response.isSuccessful()) {
+                            NostragamusAnalytics.getInstance().trackGroups(AnalyticsActions.JOIN_GROUP, null);
 
                             JoinGroup joinGroup = response.body().getJoinGroup();
                             Integer groupId = joinGroup.getGroupId();

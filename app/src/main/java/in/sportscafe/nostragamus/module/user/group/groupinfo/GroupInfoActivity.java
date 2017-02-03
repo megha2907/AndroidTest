@@ -296,8 +296,6 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                NostragamusAnalytics.getInstance().trackUserProfile(Constants.AnalyticsActions.TABS,
-                        mViewPager.getAdapter().getPageTitle(position).toString());
 
             }
 

@@ -29,4 +29,6 @@ public interface PredictionPresenter {
     void onDummyGameEnd();
 
     void onClickBack();
+
+    void onClickSkip();
 }

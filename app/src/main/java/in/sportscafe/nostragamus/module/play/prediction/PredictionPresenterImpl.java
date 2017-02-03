@@ -110,6 +110,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onDummyGameEnd() {
+        mPredictionModel.onAllDoneInDummyGame();
         checkWhereToGo();
     }
 
@@ -120,6 +121,12 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         } else if(!mPredictionView.dismissCoach()) {
             checkWhereToGo();
         }
+    }
+
+    @Override
+    public void onClickSkip() {
+        mPredictionModel.onSkippingDummyGame();
+        onClickBack();
     }
 
     private void checkWhereToGo() {
