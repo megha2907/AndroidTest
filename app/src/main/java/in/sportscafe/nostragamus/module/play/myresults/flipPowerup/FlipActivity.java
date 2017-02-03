@@ -20,12 +20,13 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 
 /**
  * Created by deepanshi on 12/20/16.
  */
 
-public class FlipActivity extends NostragamusActivity implements FlipView {
+public class FlipActivity extends NostragamusActivity implements FlipView  {
 
     private RecyclerView mRvFlip;
 
@@ -120,4 +121,8 @@ public class FlipActivity extends NostragamusActivity implements FlipView {
 
     }
 
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.FLIP_POWERUP;
+    }
 }

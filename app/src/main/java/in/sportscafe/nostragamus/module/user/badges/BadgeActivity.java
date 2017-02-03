@@ -25,6 +25,11 @@ public class BadgeActivity extends NostragamusActivity implements BadgeView{
     private Toolbar mtoolbar;
 
     @Override
+    public String getScreenName() {
+        return null;
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_badges);

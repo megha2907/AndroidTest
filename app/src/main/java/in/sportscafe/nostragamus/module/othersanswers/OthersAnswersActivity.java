@@ -18,6 +18,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerFragment;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 
 /**
  * Created by Jeeva on 11/01/17.
@@ -108,4 +109,9 @@ public class OthersAnswersActivity extends NostragamusActivity {
             startActivity(playerAnswersIntent);
         }
     };
+
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.OTHER_ANSWERS;
+    }
 }

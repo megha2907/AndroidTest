@@ -2,10 +2,12 @@ package in.sportscafe.nostragamus.module.feedback;
 
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.webview.GoogleFormFragment;
 
 /**
@@ -32,5 +34,10 @@ public class GoogleFormActivity extends NostragamusActivity implements GoogleFor
     public void onFormSubmitted() {
         NostragamusDataHandler.getInstance().setInitialFeedbackFormShown(true);
         finish();
+    }
+
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.GOOGLE_FORM;
     }
 }

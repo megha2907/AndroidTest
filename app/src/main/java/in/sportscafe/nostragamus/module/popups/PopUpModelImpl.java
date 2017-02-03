@@ -4,6 +4,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import in.sportscafe.nostragamus.webservice.PopUpResponse;
@@ -32,6 +33,12 @@ public class PopUpModelImpl {
         }
     }
 
+    public void AcknowledgePopups(String popUpName) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            callAcknowledgePopup(popUpName);
+        }
+    }
+
     private void callPopUpsApi(String screenName) {
         MyWebService.getInstance().getPopUpsRequest(screenName).enqueue(
                 new NostragamusCallBack<PopUpResponse>() {
@@ -41,11 +48,30 @@ public class PopUpModelImpl {
                             super.onResponse(call, response);
 
                             List<PopUp> popUps = response.body().getPopUps();
-                            if (null != popUps) {
+                            if (popUps == null || popUps.isEmpty()) {
+                                mPopUpsModelListener.onFailedGetUpdatePopUps(response.message());
+                            }else {
                                 mPopUpsModelListener.onSuccessGetUpdatedPopUps(popUps);
                             }
                         } else {
                             mPopUpsModelListener.onFailedGetUpdatePopUps(response.message());
+                        }
+                    }
+                }
+        );
+    }
+
+    private void callAcknowledgePopup(String popUpName) {
+        MyWebService.getInstance().getAcknowledgePopupRequest(popUpName).enqueue(
+                new NostragamusCallBack<ApiResponse>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        if (response.isSuccessful()) {
+                            super.onResponse(call, response);
+
+                            String acknowledgePopup = response.body().getMessage();
+
+                        } else {
                         }
                     }
                 }

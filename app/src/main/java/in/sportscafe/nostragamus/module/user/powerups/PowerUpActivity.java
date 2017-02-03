@@ -9,12 +9,13 @@ import android.view.View;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 
 /**
  * Created by Deepanshi on 23/8/16.
  */
 public class PowerUpActivity extends NostragamusActivity implements PowerUpView,
-        View.OnClickListener {
+        View.OnClickListener{
 
     private RecyclerView mRvPowerUp;
 
@@ -70,5 +71,10 @@ public class PowerUpActivity extends NostragamusActivity implements PowerUpView,
                 }
 
         );
+    }
+
+    @Override
+    public String getScreenName() {
+        return null;
     }
 }

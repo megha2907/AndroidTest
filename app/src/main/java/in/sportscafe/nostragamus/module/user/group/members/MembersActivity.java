@@ -8,6 +8,7 @@ import android.widget.TextView;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 
 /**
  * Created by Jeeva on 2/7/16.
@@ -45,5 +46,10 @@ public class MembersActivity extends NostragamusActivity {
                 }
 
         );
+    }
+
+    @Override
+    public String getScreenName() {
+        return null;
     }
 }

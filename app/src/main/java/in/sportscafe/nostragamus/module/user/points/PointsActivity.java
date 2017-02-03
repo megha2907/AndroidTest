@@ -26,6 +26,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardModelImpl;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
@@ -156,5 +157,10 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.LEADERBOARD_DETAIL;
     }
 }

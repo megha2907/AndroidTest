@@ -10,9 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 
 /**
@@ -105,5 +107,10 @@ public class AllGroupsActivity extends NostragamusActivity implements AllGroupsV
                 }
 
         );
+    }
+
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.GROUPS_ALL;
     }
 }

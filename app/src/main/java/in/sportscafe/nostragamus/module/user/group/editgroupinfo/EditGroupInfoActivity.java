@@ -21,13 +21,14 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 
 /**
  * Created by deepanshi on 10/31/16.
  */
 public class EditGroupInfoActivity extends NostragamusActivity implements EditGroupInfoView,
-        View.OnClickListener {
+        View.OnClickListener{
 
     private static final int CODE_GROUP_INFO = 10;
 
@@ -214,5 +215,8 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
     }
 
 
-
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.GROUPS_EDIT_GROUP;
+    }
 }

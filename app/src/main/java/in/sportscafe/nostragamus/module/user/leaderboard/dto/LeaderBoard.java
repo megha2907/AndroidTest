@@ -30,12 +30,14 @@ public class LeaderBoard {
     @JsonProperty("tournament_name")
     private String tournamentName;
 
+    @JsonProperty("group_name")
+    private String groupName;
+
     @JsonProperty("tournament_img_url")
     private String tournamentImageUrl;
 
     @JsonProperty("users")
     private List<UserLeaderBoard> userLeaderBoardList;
-
 
     /**
      * @return The sportsId
@@ -65,6 +67,9 @@ public class LeaderBoard {
 
     @JsonProperty("tournament_name")
     public String getTournamentName() {
+        if (null==tournamentName){
+            return groupName;
+        }
         return tournamentName;
     }
 

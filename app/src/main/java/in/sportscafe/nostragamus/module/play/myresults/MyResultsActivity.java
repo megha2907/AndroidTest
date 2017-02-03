@@ -53,6 +53,7 @@ import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
@@ -662,4 +663,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         }
     };
 
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.RESULTS;
+    }
 }

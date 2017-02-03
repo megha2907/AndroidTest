@@ -57,13 +57,13 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
         holder.mPosition = position;
 
         mNotificationPreferences = holder.mMainView.getContext().getSharedPreferences("TOURNAMENTS", 0);
-
-        SharedPreferences.Editor editor = mNotificationPreferences.edit();
-
-        if (NostragamusDataHandler.getInstance().isFirstTimeUser()) {
-            editor.putInt("7", 7);
-            editor.commit();
-        }
+//
+//        SharedPreferences.Editor editor = mNotificationPreferences.edit();
+//
+//        if (NostragamusDataHandler.getInstance().isFirstTimeUser()) {
+//            editor.putInt("7", 7);
+//            editor.commit();
+//        }
 
         try {
         holder.mTvTournamentName.setText(tournamentInfo.getTournamentName());
@@ -74,7 +74,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
             holder.mBtnTournamentUnplayed.setVisibility(View.VISIBLE);
         }else {
             holder.mBtnTournamentUnplayedCount.setVisibility(View.GONE);
-            holder.mBtnTournamentUnplayed.setVisibility(View.GONE);
+            holder.mBtnTournamentUnplayed.setText("TIMELINE");
         }
 
         holder.mIvTournamentImage.setImageUrl(
@@ -86,14 +86,14 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
         }
 
 
-        if (mNotificationPreferences.contains(String.valueOf(tournamentInfo.getTournamentId())))
-        {
-            holder.mIvNotificationIcon.setBackgroundResource(R.drawable.tournament_bell_green_icon);
-            holder.mTvTournamentNotification.setText("Notifications:ON");
-        }else {
-            holder.mIvNotificationIcon.setBackgroundResource(R.drawable.tournament_bell_grey_icon);
-            holder.mTvTournamentNotification.setText("Notifications:OFF");
-        }
+//        if (mNotificationPreferences.contains(String.valueOf(tournamentInfo.getTournamentId())))
+//        {
+//            holder.mIvNotificationIcon.setBackgroundResource(R.drawable.tournament_bell_green_icon);
+//            holder.mTvTournamentNotification.setText("Notifications:ON");
+//        }else {
+//            holder.mIvNotificationIcon.setBackgroundResource(R.drawable.tournament_bell_grey_icon);
+//            holder.mTvTournamentNotification.setText("Notifications:OFF");
+//        }
 
     }
 
@@ -134,23 +134,23 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
             switch (view.getId()) {
 
 
-                   case R.id.tournament_iv_notification_icon:
-
-                       TournamentFeedInfo tournamentInfo1 = getItem(getAdapterPosition());
-                       SharedPreferences.Editor editor = mNotificationPreferences.edit();
-
-                       if (mNotificationPreferences.contains(String.valueOf(tournamentInfo1.getTournamentId()))){
-                           NostragamusDataHandler.getInstance().setFirstTimeUser(false);
-                           editor.remove(String.valueOf(tournamentInfo1.getTournamentId()));
-                           editor.commit();
-                           notifyItemChanged(getAdapterPosition());
-                       }else {
-                           editor.putInt(String.valueOf(tournamentInfo1.getTournamentId()),tournamentInfo1.getTournamentId());
-                           editor.commit();
-                           notifyItemChanged(getAdapterPosition());
-                       }
-
-                       break;
+//                   case R.id.tournament_iv_notification_icon:
+//
+//                       TournamentFeedInfo tournamentInfo1 = getItem(getAdapterPosition());
+//                       SharedPreferences.Editor editor = mNotificationPreferences.edit();
+//
+//                       if (mNotificationPreferences.contains(String.valueOf(tournamentInfo1.getTournamentId()))){
+//                           NostragamusDataHandler.getInstance().setFirstTimeUser(false);
+//                           editor.remove(String.valueOf(tournamentInfo1.getTournamentId()));
+//                           editor.commit();
+//                           notifyItemChanged(getAdapterPosition());
+//                       }else {
+//                           editor.putInt(String.valueOf(tournamentInfo1.getTournamentId()),tournamentInfo1.getTournamentId());
+//                           editor.commit();
+//                           notifyItemChanged(getAdapterPosition());
+//                       }
+//
+//                       break;
 
                     default:
 

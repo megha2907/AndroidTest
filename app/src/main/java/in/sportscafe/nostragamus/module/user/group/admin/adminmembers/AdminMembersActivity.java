@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 
 import static in.sportscafe.nostragamus.Constants.BundleKeys;
 
@@ -46,4 +48,8 @@ public class AdminMembersActivity extends NostragamusActivity {
     }
 
 
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.ADMIN_MEMBERS;
+    }
 }

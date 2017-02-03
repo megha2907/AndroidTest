@@ -29,9 +29,12 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.DummyGameFragment;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
+
 public class PredictionActivity extends NostragamusActivity implements PredictionView, View.OnClickListener {
+
 
     private RelativeLayout mRlPlayBg;
 
@@ -62,6 +65,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     private PredictionPresenter mPredictionPresenter;
 
     private PredictionModel mPredictionModel;
+
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.PLAY;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -469,6 +477,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             mPredictionPresenter.onDummyGameEnd();
         }
     };
+
 }
 
     /*

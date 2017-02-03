@@ -16,6 +16,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.SpacesItemDecoration;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
@@ -116,5 +117,10 @@ public class SportSelectionActivity extends NostragamusActivity implements Sport
                 }
                 break;
         }
+    }
+
+    @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.SPORT_SELECTION;
     }
 }
