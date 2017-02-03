@@ -72,6 +72,11 @@ public class FrameLayoutWithHole extends FrameLayout {
         }
     }
 
+    public FrameLayoutWithHole(Context context, TourGuide.MotionType motionType) {
+        super(context);
+        init();
+    }
+
     public FrameLayoutWithHole(Context context, View view, TourGuide.MotionType motionType) {
         super(context);
         mViewHole = view;

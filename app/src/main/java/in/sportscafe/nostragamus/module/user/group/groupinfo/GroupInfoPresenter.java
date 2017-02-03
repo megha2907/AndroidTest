@@ -18,4 +18,6 @@ public interface GroupInfoPresenter {
     void onGetMemberResult();
 
     void onLeaveGroup();
+
+    void onClickResetLb();
 }

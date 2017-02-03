@@ -9,6 +9,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -85,6 +88,8 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_info);
 
+        initToolbar();
+
         findViewById(R.id.group_info_ll_share).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -105,28 +110,20 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
-            case R.id.edit_group_btn:
-                navigatetoEditGroupInfoActivity();
-                break;
-
             case R.id.edit_group_back_btn:
-                navigateToHomeActivity();
+                onBackPressed();
                 break;
-
-//            case R.id.group_info_btn_edit_members:
-//                mGroupInfoPresenter.onClickMembers();
-//                break;
             case R.id.group_info_ll_share:
                 mGroupInfoPresenter.onClickShareCode();
                 break;
-//            case R.id.group_info_exit_group:
-//                mGroupInfoPresenter.onLeaveGroup();
-//                break;
-
         }
     }
 
@@ -196,11 +193,6 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     }
 
     @Override
-    public void showDeleteGroup() {
-        // findViewById(R.id.group_info_btn_delete_group).setVisibility(View.VISIBLE);
-    }
-
-    @Override
     public void disableEdit() {
         mEtGroupName.setEnabled(false);
     }
@@ -250,26 +242,10 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         onBackPressed();
     }
 
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        navigateToHomeActivity();
-    }
-
     @Override
     public void navigateToAllGroups() {
         Intent intent = new Intent(this, AllGroupsActivity.class);
         startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public void navigateToHomeActivity() {
-        Intent homeintent = new Intent(this, HomeActivity.class);
-        homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        homeintent.putExtra("group", "openprofile");
-        startActivity(homeintent);
         finish();
     }
 
@@ -344,6 +320,12 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     }
 
+    @Override
+    public void changeToAdminMode() {
+        mAdminMode = true;
+        invalidateOptionsMenu();
+    }
+
     private ViewPagerAdapter getAdapter(GroupInfo groupInfo) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -368,6 +350,40 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         else {
             mpagerAdapter.updateTitle(0,tournamentsCount+ " \n Tournaments");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    private boolean mAdminMode = false;
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(mAdminMode) {
+            menu.findItem(R.id.reset_lb_btn).setVisible(true);
+            menu.findItem(R.id.edit_group_btn).setVisible(true);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit_group_btn:
+                navigatetoEditGroupInfoActivity();
+                break;
+            case R.id.leave_group_btn:
+                mGroupInfoPresenter.onLeaveGroup();
+                break;
+            case R.id.reset_lb_btn:
+                mGroupInfoPresenter.onClickResetLb();
+                break;
+        }
+        return true;
     }
 
 

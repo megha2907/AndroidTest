@@ -29,5 +29,7 @@ public interface GroupInfoModel {
 
     void leaveGroup();
 
+    void resetLeaderboard();
+
     GroupTournamentAdapter getAdapter(Context context);
 }

@@ -31,22 +31,23 @@
     <string name="sports">Sports</string>
     <string name="groups">Groups</string>
     <string name="challenges">Challenges</string>
-    <string name="fuzzy_lbs_hint">Search for games, challenges, etc...</string>
+    <string name="fuzzy_lbs_hint">Search by tournament/group/challenge</string>
     <string name="play">Play</string>
     <string name="neither">Neither</string>
 
     <!-- For dummy game -->
     <string name="dummy_start_title">Welcome to Nostragamus!</string>
-    <string name="dummy_start_desc">This is card swiping game, where you make predictions based on the direction in which you swipe the card. To help you understand the game better, we have prepared a mock game - which you may skipe if you are familiar with the gameplay. You can also access the game in the settings page, for any future reference.</string>
+    <string name="dummy_start_desc">Let\'s go through a sample game to help you understand how to ace it at Nostragamus. You may skip if you are familiar with the gameplay, and you can always access this sample game from the Settings menu inside your Profile section.</string>
     <string name="dummy_start_action">PLAY</string>
-    <string name="dummy_done_title">And that\'s it! As easy as that!</string>
-    <string name="dummy_done_desc">You just finished your first match, and it was that simple. Now you can go to your home and play your games, or replay this game from the settings screen.</string>
+    <string name="dummy_done_title">Well Done!</string>
+    <string name="dummy_done_desc">You just finished your first game, but its now time for the real deal. Proceed to your tournament feed to start swiping on upcoming sporting matches!</string>
     <string name="dummy_done_action">Proceed</string>
-    <string name="left_right_coach_title">Swipe left/right or click to choose</string>
-    <string name="left_right_coach_desc">Swipe left/right on the card to select either choice Or, use the buttons below for the same</string>
-    <string name="neither_coach_title">Swipe up or click to choose</string>
-    <string name="neither_coach_desc">Swipe up on the card to select neither choice Or, use the neither button below for the same</string>
-    <string name="powerups_coach_title">Score big with Power Ups</string>
-    <string name="powerups_coach_desc">Use the various power-ups provided, to increase your score. Check for new power ups in the profile section</string>
+
+    <string name="left_right_coach_title">Swipe left or right</string>
+    <string name="left_right_coach_desc">Swipe to make a choice between the two options presented</string>
+    <string name="neither_coach_title">Swipe up to go for the third option</string>
+    <string name="neither_coach_desc">Sometimes questions will have a third option like Neither, Both or Draw. Tap this or swipe upwards to go with this option</string>
+    <string name="powerups_coach_title">Score big with Powerups</string>
+    <string name="powerups_coach_desc">Powerups will help you maximise your score so use them wisely. You can use only one powerup per question</string>
 
 </resources>

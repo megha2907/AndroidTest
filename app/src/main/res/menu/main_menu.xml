@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -9,5 +9,22 @@
         android:showAsAction="always"
         />
 
+
+</menu>-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/edit_group_btn"
+        android:title="Edit Group"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/leave_group_btn"
+        android:title="Leave Group" />
+
+    <item
+        android:id="@+id/reset_lb_btn"
+        android:title="Reset Leaderboard"
+        android:visible="false"/>
 
 </menu>

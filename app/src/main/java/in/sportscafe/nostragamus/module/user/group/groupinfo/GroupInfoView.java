@@ -21,8 +21,6 @@ public interface GroupInfoView extends View {
 
     void setGroupCode(String groupCode);
 
-    void showDeleteGroup();
-
     void disableEdit();
 
     void navigateToAdminMembers(Bundle bundle);
@@ -37,7 +35,7 @@ public interface GroupInfoView extends View {
 
     void navigateToAllGroups();
 
-    void navigateToHomeActivity();
-
     void initMyPosition(GroupInfo groupInfo);
+
+    void changeToAdminMode();
 }

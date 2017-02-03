@@ -43,6 +43,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.Multipart;
@@ -176,4 +177,7 @@ public interface NostragamusService {
 
     @GET("/v1/game/users/getPendingUserPopups")
     Call<PopUpResponse> getPopUps(@Query ("screen_name") String screenName);
+
+    @DELETE("v1/game/users/resetGroupLeaderboard")
+    Call<ApiResponse> resetLeaderboard(@Query("group_id") Integer groupId);
 }

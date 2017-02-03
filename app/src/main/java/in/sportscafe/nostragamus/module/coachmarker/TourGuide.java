@@ -64,8 +64,12 @@ public class TourGuide {
      * @return return TourGuide instance for chaining purpose
      */
     public TourGuide playOn(ViewGroup mainView, FrameLayout basicOverlay, TargetView... targetViews) {
-        for (TargetView targetView : targetViews) {
-            setupView(mainView, basicOverlay, targetView);
+        if(null != targetViews && targetViews.length > 0) {
+            for (TargetView targetView : targetViews) {
+                setupView(mainView, basicOverlay, targetView);
+            }
+        } else {
+            startView(mainView, basicOverlay);
         }
         return this;
     }
@@ -130,6 +134,17 @@ public class TourGuide {
         }
     }
 
+    private void startView(ViewGroup mainView, FrameLayout basicOverlay) {
+        /* Initialize a frame layout with a hole */
+        FrameLayoutWithHole layoutWithHole = new FrameLayoutWithHole(mainView.getContext(), mMotionType);
+        mFrameList.add(layoutWithHole);
+
+        /* handle click disable */
+        handleDisableClicking(layoutWithHole, null);
+
+        setupFrameLayout(mainView, basicOverlay, layoutWithHole);
+    }
+
     private void startView(ViewGroup mainView, FrameLayout basicOverlay, TargetView targetView){
         /* Initialize a frame layout with a hole */
         FrameLayoutWithHole layoutWithHole = new FrameLayoutWithHole(mainView.getContext(), targetView.view, mMotionType);
@@ -146,8 +161,10 @@ public class TourGuide {
     }
 
     private void handleDisableClicking(FrameLayoutWithHole frameLayoutWithHole, View targetView) {
+        if(null != targetView) {
+            frameLayoutWithHole.setViewHole(targetView);
+        }
 
-        frameLayoutWithHole.setViewHole(targetView);
         frameLayoutWithHole.setSoundEffectsEnabled(false);
         frameLayoutWithHole.setOnClickListener(new View.OnClickListener() {
             @Override
