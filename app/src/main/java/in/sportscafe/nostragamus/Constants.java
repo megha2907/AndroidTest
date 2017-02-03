@@ -248,6 +248,7 @@ public interface Constants {
 
     interface AnalyticsCategory {
         String LOGIN = "Login";
+        String DUMMY_GAME = "Dummy Game";
         String LOGOUT = "Logout";
         String EDIT_PROFILE = "Edit Profile";
         String USER_PROFILE = "User Profile";
@@ -258,8 +259,9 @@ public interface Constants {
     }
 
     interface AnalyticsActions {
-        String FACEBOOK = "Facebook";
-        String GOOGLE_PLUS = "Google Plus";
+        String STARTED = "Started";
+        String SKIPPED = "Skipped";
+        String COMPLETED = "Completed";
         String PHOTO = "Photo";
         String OTHERS = "Others";
         String TABS = "Tabs";
@@ -267,6 +269,9 @@ public interface Constants {
     }
 
     interface AnalyticsLabels {
+        String FACEBOOK = "Facebook";
+        String GOOGLE = "Google Plus";
+        String SCREENS_SEEN = "Screens Seen";
         String GALLERY = "Gallery";
         String CAMERA = "Camera";
         String UPDATE = "Update";

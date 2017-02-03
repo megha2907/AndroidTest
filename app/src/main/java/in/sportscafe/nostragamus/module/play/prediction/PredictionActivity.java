@@ -33,6 +33,8 @@ import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
+import static com.google.android.gms.analytics.internal.zzy.m;
+
 
 public class PredictionActivity extends NostragamusActivity implements PredictionView, View.OnClickListener {
 
@@ -369,13 +371,9 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void navigateToHome() {
-        if(getIntent().getExtras().containsKey(BundleKeys.FROM_SETTINGS)) {
-            goBack();
-        } else {
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private TourGuide mCoachMarker;

@@ -50,4 +50,6 @@ public interface PredictionModel {
     void applyNonegsPowerup();
 
     void applyPollPowerup();
+
+    boolean isFromSettings();
 }

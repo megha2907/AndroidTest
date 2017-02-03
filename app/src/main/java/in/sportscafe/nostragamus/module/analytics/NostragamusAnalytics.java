@@ -17,7 +17,9 @@ import org.json.JSONObject;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsCategory;
+import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.R;
 
 
@@ -85,6 +87,24 @@ public class NostragamusAnalytics {
      */
     public void trackLogOut() {
         track(AnalyticsCategory.LOGOUT, null, null, null);
+    }
+
+    /**
+     * track dummy game start and end
+     *
+     * @param actions - Started, Done
+     */
+    public void trackDummyGame(String actions) {
+        track(AnalyticsCategory.DUMMY_GAME, actions, null, null);
+    }
+
+    /**
+     * track dummy game skip
+     *
+     * @param actions - Started, Done
+     */
+    public void trackDummyGame(String actions, long numberOfScreens) {
+        track(AnalyticsCategory.DUMMY_GAME, actions, AnalyticsLabels.SCREENS_SEEN, numberOfScreens);
     }
 
     /**
