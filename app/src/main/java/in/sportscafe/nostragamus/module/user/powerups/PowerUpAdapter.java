@@ -43,7 +43,7 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
         switch (powerUp.getId()) {
             case "2x_global":
                 holder.mTvPowerUpName.setText("Bonus 2x");
-                holder.mBtnPowerUp.setImageResource(R.drawable.powerup_2x_white);
+                holder.mBtnPowerUp.setImageResource(R.drawable.powerup_icon);
                 holder.mTvPowerUpDesc.setText("Double your returns when you are confident about a prediction");
                 break;
             case "2x":
