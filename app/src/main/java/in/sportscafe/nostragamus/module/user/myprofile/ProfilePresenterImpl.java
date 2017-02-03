@@ -4,6 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -56,7 +58,12 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
 
     @Override
     public void onGetPowerUpsCount() {
-        mProfileView.setPowerUpsCount(NostragamusDataHandler.getInstance().getNumberof2xGlobalPowerups());
+        mProfileView.setPowerUpsCount(NostragamusDataHandler.getInstance().getNumberof2xGlobalPowerups()+
+                NostragamusDataHandler.getInstance().getNumberof2xPowerups()+
+                NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups()+
+                NostragamusDataHandler.getInstance().getNumberofNonegsPowerups()+
+                NostragamusDataHandler.getInstance().getNumberofFlipPowerups()+
+                NostragamusDataHandler.getInstance().getNumberofReplayPowerups());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.login;
 
+import com.jeeva.android.Log;
+
 import java.util.HashMap;
 
 import in.sportscafe.nostragamus.Constants;
@@ -60,6 +62,7 @@ public class UserInfoModelImpl {
             nostragamusDataHandler.setUserInfo(userInfo);
 
             HashMap<String, Integer> powerUpMap = userInfo.getPowerUps();
+            Log.i("2xx", String.valueOf(powerUpMap.get(Powerups.XX_GLOBAL)));
             nostragamusDataHandler.setNumberof2xGlobalPowerups(powerUpMap.get(Powerups.XX_GLOBAL));
 
 
