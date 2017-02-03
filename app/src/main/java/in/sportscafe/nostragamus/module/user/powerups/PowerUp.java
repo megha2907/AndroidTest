@@ -1,5 +1,9 @@
 package in.sportscafe.nostragamus.module.user.powerups;
 
+import android.text.TextUtils;
+
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
 
 /**
@@ -8,10 +12,6 @@ import in.sportscafe.nostragamus.R;
 public class PowerUp {
 
     private String id;
-
-    private String desc;
-
-    private int icon;
 
     private int count;
 
@@ -39,45 +39,43 @@ public class PowerUp {
         this.count = count;
     }
 
-    public String getDesc() {
-        switch (id) {
-            case "2x":
-                id = "2x";
-                desc="Double your returns when you are confident about a prediction";
-                break;
-            case "no_negs":
-                id = "No Negative Points";
-                desc="Avoid being penalised for an incorrect prediction";
-                break;
-            case "player_poll":
-                id = "Player Poll";
-                desc="Peak into how other Nostragamus players have predicted";
-                break;
-            default:
-                desc="";
+    public static int getPlayPowerupIcons(String powerupId) {
+        if(TextUtils.isEmpty(powerupId)) {
+            return -1;
         }
-        return desc;
-    }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public int getIcon() {
-        switch (id) {
-            case "2x":
+        switch (powerupId) {
+            case Powerups.XX:
+            case Powerups.XX_GLOBAL:
                 return R.drawable.powerup_2x_white;
-
-            case "no_negs":
+            case Powerups.NO_NEGATIVE:
                 return R.drawable.powerup_nonegs_white;
-            case "player_poll":
+            case Powerups.AUDIENCE_POLL:
                 return R.drawable.powerup_audience_poll_white;
             default:
-                return R.drawable.placeholder_icon;
+                return -1;
         }
     }
 
-    public void setIcon(int icon) {
-        this.icon = icon;
+    public static int getResultPowerupIcons(String powerupId) {
+        if(TextUtils.isEmpty(powerupId)) {
+            return -1;
+        }
+
+        switch (powerupId) {
+            case Powerups.XX:
+            case Powerups.XX_GLOBAL:
+                return R.drawable.powerup_icon;
+            case Powerups.NO_NEGATIVE:
+                return R.drawable.powerup_nonegs;
+            case Powerups.AUDIENCE_POLL:
+                return R.drawable.powerup_audience_poll;
+            case Powerups.MATCH_REPLAY:
+                return R.drawable.replay_icon;
+            case Powerups.ANSWER_FLIP:
+                return R.drawable.powerup_flip;
+            default:
+                return -1;
+        }
     }
 }

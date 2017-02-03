@@ -36,6 +36,8 @@ public interface PredictionView extends InAppView {
 
     void setNumberofCards(String numberofCards);
 
+    void set2xGlobalPowerupCount(int count);
+
     void set2xPowerupCount(int count);
 
     void setNonegsPowerupCount(int count);

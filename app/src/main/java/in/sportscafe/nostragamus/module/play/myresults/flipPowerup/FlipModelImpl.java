@@ -9,6 +9,7 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -76,7 +77,7 @@ public class FlipModelImpl implements FlipModel, FlipAdapter.OnFlipActionListene
 
     @Override
     public void callFlipQuestionApi(Integer questionId) {
-        callFLipPowerupApi("answer_flip", matchId, questionId);
+        callFLipPowerupApi(Powerups.ANSWER_FLIP, matchId, questionId);
     }
 
     private void callFLipPowerupApi(String powerupId, Integer matchId, Integer questionId) {

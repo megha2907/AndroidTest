@@ -63,7 +63,7 @@ public class LogInModelImpl implements LogInModel {
     public void onLoggedInGoogle(String token, String personId, String personName, String persongender, String profileUrl,
                                  String personEmail, String personPhoto) {
         mLogInModelListener.onGettingProfile();
-        callNostragamusLoginApi(PROVIDER_GOOGLE,token,personId,personName,persongender,profileUrl,personEmail,personPhoto);
+        callNostragamusLoginApi(PROVIDER_GOOGLE, token, personId, personName, persongender, profileUrl, personEmail, personPhoto);
     }
 
     private void loginWithFacebook() {
@@ -103,9 +103,9 @@ public class LogInModelImpl implements LogInModel {
             @Override
             public void onGetProfileSuccess(FacebookProfile facebookProfile) {
                 callNostragamusLoginApi(PROVIDER_FB, facebookProfile.getAccessToken(),
-                        facebookProfile.getId(),facebookProfile.getFirst_name(),
-                        facebookProfile.getGender(),"https://facebook.com/"+facebookProfile.getId(),
-                        facebookProfile.getEmail(),facebookProfile.getProfilePictureUrl(350,350));
+                        facebookProfile.getId(), facebookProfile.getFirst_name(),
+                        facebookProfile.getGender(), "https://facebook.com/" + facebookProfile.getId(),
+                        facebookProfile.getEmail(), facebookProfile.getProfilePictureUrl(350, 350));
                 Log.d(TAG, MyWebService.getInstance().getJsonStringFromObject(facebookProfile));
             }
 
@@ -116,24 +116,14 @@ public class LogInModelImpl implements LogInModel {
         });
     }
 
-    private void callNostragamusLoginApi(String provider, String accessToken,String id , String username,
-                                         String gender, String profileUrl, String email,String photo) {
-
+    private void callNostragamusLoginApi(String provider, String accessToken, String id, String username,
+                                         String gender, String profileUrl, String email, String photo) {
         LogInRequest logInRequest = new LogInRequest();
         logInRequest.setAccessToken(accessToken);
         logInRequest.setRefreshToken("");
 
-//        List<String> emails = new ArrayList<>();
-//        emails.add(email);
-//        Emails newemail = new Emails();
-//        newemail.setEmail(emails);
-//
-//        List<String> photos = new ArrayList<>();
-//        photos.add(photo);
-//        Photos newphotos = new Photos();
-//        newphotos.setPhoto(photos);
-
         UserProfile userProfile = new UserProfile();
+        logInRequest.setUserProfile(userProfile);
         userProfile.setId(id);
         userProfile.setUserName(username);
         userProfile.setDisplayName(username);
@@ -142,18 +132,7 @@ public class LogInModelImpl implements LogInModel {
         userProfile.setProvider(provider);
         userProfile.setEmails(email);
         userProfile.setPhotos(photo);
-
-
-        if(null != NostragamusDataHandler.getInstance().getReferralUserId()){
-            Log.i("user_referral_id",NostragamusDataHandler.getInstance().getReferralUserId());
-            userProfile.setUserReferralId(NostragamusDataHandler.getInstance().getReferralUserId());
-        }else {
-            Log.i("user_referral_id","null");
-            userProfile.setUserReferralId("");
-        }
-
-
-        logInRequest.setUserProfile(userProfile);
+        userProfile.setUserReferralId(NostragamusDataHandler.getInstance().getReferralUserId());
 
         MyWebService.getInstance().getLogInRequest(logInRequest).enqueue(
                 new NostragamusCallBack<LogInResponse>() {
@@ -169,7 +148,6 @@ public class LogInModelImpl implements LogInModel {
     }
 
     private void handleLoginResponse(UserLoginInResponse userLoginInResponse) {
-
         UserInfo userInfo = userLoginInResponse.getUserInfo();
 
         NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
@@ -178,14 +156,8 @@ public class LogInModelImpl implements LogInModel {
         nostragamusDataHandler.setFirstTimeUser(true);
         nostragamusDataHandler.setUserId(userInfo.getId().toString());
         nostragamusDataHandler.setJwtToken(userLoginInResponse);
-        nostragamusDataHandler.setNumberof2xPowerups(userInfo.getPowerUps().get("2x"));
-        nostragamusDataHandler.setNumberofNonegsPowerups(userInfo.getPowerUps().get("no_negs"));
-        nostragamusDataHandler.setNumberofAudiencePollPowerups(userInfo.getPowerUps().get("player_poll"));
-        nostragamusDataHandler.setNumberofReplayPowerups(userInfo.getPowerUps().get("match_replay"));
-        nostragamusDataHandler.setNumberofFlipPowerups(userInfo.getPowerUps().get("answer_flip"));
-        nostragamusDataHandler.setNumberofBadges(userInfo.getBadges().size());
-        Log.i("powerups", String.valueOf(userInfo.getPowerUps().get("2x")));
-        nostragamusDataHandler.setUserInfo(userInfo);
+
+        UserInfoModelImpl.newInstance(null).handleUserInfoResponse(userInfo);
 
         // Getting the saved sports from server and saving it locally
         nostragamusDataHandler.setFavoriteSportsIdList(userInfo.getUserSports());

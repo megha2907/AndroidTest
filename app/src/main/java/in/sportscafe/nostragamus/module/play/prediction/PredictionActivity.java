@@ -31,8 +31,6 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
-import static com.google.android.gms.analytics.internal.zzy.m;
-
 public class PredictionActivity extends NostragamusActivity implements PredictionView, View.OnClickListener {
 
     private RelativeLayout mRlPlayBg;
@@ -43,11 +41,15 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     private TextView mTvNumberOfCards;
 
+    private ImageView mIv2xGlobalPowerup;
+
     private ImageView mIv2xPowerup;
 
     private ImageView mIvNonegsPowerup;
 
     private ImageView mIvPollPowerup;
+
+    private TextView mTv2xGlobalPowerupCount;
 
     private TextView mTv2xPowerupCount;
 
@@ -73,14 +75,17 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mSwipeFlingAdapterView = (SwipeFlingAdapterView) findViewById(R.id.activity_prediction_swipe);
 
         mTvNumberOfCards = (TextView) findViewById(R.id.prediction_tv_number_of_cards);
+        mIv2xGlobalPowerup = (ImageView) findViewById(R.id.powerups_iv_2x_global);
         mIv2xPowerup = (ImageView) findViewById(R.id.powerups_iv_2x);
         mIvNonegsPowerup = (ImageView) findViewById(R.id.powerups_iv_nonegs);
         mIvPollPowerup = (ImageView) findViewById(R.id.powerups_iv_poll);
+        mTv2xGlobalPowerupCount = (TextView) findViewById(R.id.powerup_tv_2x_global_count);
         mTv2xPowerupCount = (TextView) findViewById(R.id.powerup_tv_2x_count);
         mTvNonegsPowerupCount = (TextView) findViewById(R.id.powerup_tv_nonegs_count);
         mTvPollPowerupCount = (TextView) findViewById(R.id.powerup_tv_poll_count);
         mTvNeitherOption = (TextView) findViewById(R.id.prediction_tv_neither_text);
 
+        mIv2xGlobalPowerup.setBackground(getPowerupDrawable(R.color.goldenyellowcolor));
         mIv2xPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
         mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.radical_red));
         mIvPollPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
@@ -159,6 +164,9 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             case R.id.prediction_iv_right_arrow:
                 mSwipeFlingAdapterView.getTopCardListener().selectRight();
                 break;
+            case R.id.powerups_iv_2x_global:
+                mPredictionPresenter.onClick2xGlobalPowerup();
+                break;
             case R.id.powerups_iv_2x:
                 mPredictionPresenter.onClick2xPowerup();
                 break;
@@ -198,6 +206,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void setNumberofCards(String numberofCards) {
         mTvNumberOfCards.setText(numberofCards);
+    }
+
+    @Override
+    public void set2xGlobalPowerupCount(int count) {
+        mTv2xGlobalPowerupCount.setText(String.valueOf(count));
     }
 
     @Override
@@ -257,10 +270,12 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void changeToDummyGameMode() {
+        findViewById(R.id.prediction_tv_skip).setVisibility(View.VISIBLE);
         mVgPlayPage.setVisibility(View.INVISIBLE);
         findViewById(R.id.prediction_iv_tournament_photo).setVisibility(View.GONE);
         findViewById(R.id.prediction_ibtn_back).setVisibility(View.GONE);
-        findViewById(R.id.prediction_tv_skip).setVisibility(View.VISIBLE);
+        mIv2xGlobalPowerup.setVisibility(View.GONE);
+        mTv2xGlobalPowerupCount.setVisibility(View.GONE);
 
         mDummyGameFragment = DummyGameFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.prediction_fl_dummy_holder, mDummyGameFragment).commit();

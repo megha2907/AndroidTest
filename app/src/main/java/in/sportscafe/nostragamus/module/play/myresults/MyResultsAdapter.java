@@ -37,7 +37,9 @@ import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
+import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -340,29 +342,13 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         }
 
 
-        if (!TextUtils.isEmpty(question.getAnswerPowerUpId())) {
-
-            String powerupused = question.getAnswerPowerUpId();
-
-            if (powerupused.equals("null")) {
-                powerupUsed.setVisibility(View.GONE);
-                powerup.setVisibility(View.GONE);
-            } else if (powerupused.equals("player_poll")) {
-                powerupUsed.setBackgroundResource(R.drawable.powerup_audience_poll);
-                powerupUsed.setVisibility(View.VISIBLE);
-            } else if (powerupused.equals("2x")) {
-                powerupUsed.setBackgroundResource(R.drawable.powerup_icon);
-                powerupUsed.setVisibility(View.VISIBLE);
-            } else if (powerupused.equals("no_negs")) {
-                powerupUsed.setBackgroundResource(R.drawable.powerup_nonegs);
-                powerupUsed.setVisibility(View.VISIBLE);
-            } else if (powerupused.equals("answer_flip")) {
-                powerupUsed.setBackgroundResource(R.drawable.powerup_flip);
-                powerupUsed.setVisibility(View.VISIBLE);
-            } else if (powerupused.equals("match_replay")) {
-                powerupUsed.setBackgroundResource(R.drawable.replay_icon);
-                powerupUsed.setVisibility(View.VISIBLE);
-            }
+        int powerupIcons = PowerUp.getResultPowerupIcons(question.getAnswerPowerUpId());
+        if(powerupIcons == -1) {
+            powerupUsed.setVisibility(View.GONE);
+            powerup.setVisibility(View.GONE);
+        } else {
+            powerupUsed.setVisibility(View.VISIBLE);
+            powerupUsed.setBackgroundResource(powerupIcons);
         }
 
         answerId = question.getAnswerId();

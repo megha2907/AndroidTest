@@ -18,6 +18,7 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
@@ -28,6 +29,8 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
+import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -287,26 +290,13 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
             ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_2)).setText(question.getOption2AudPollPer() + "%");
         }
 
-        String powerupused = question.getAnswerPowerUpId();
-
-        if (powerupused.equals("null") || powerupused.equals(null)) {
+        int powerupIcons = PowerUp.getResultPowerupIcons(question.getAnswerPowerUpId());
+        if(powerupIcons == -1) {
             powerupUsed.setVisibility(View.GONE);
             powerup.setVisibility(View.GONE);
-        } else if (powerupused.equals("player_poll")) {
-            powerupUsed.setBackgroundResource(R.drawable.powerup_audience_poll);
+        } else {
             powerupUsed.setVisibility(View.VISIBLE);
-        } else if (powerupused.equals("2x")) {
-            powerupUsed.setBackgroundResource(R.drawable.powerup_icon);
-            powerupUsed.setVisibility(View.VISIBLE);
-        } else if (powerupused.equals("no_negs")) {
-            powerupUsed.setBackgroundResource(R.drawable.powerup_nonegs);
-            powerupUsed.setVisibility(View.VISIBLE);
-        } else if (powerupused.equals("answer_flip")) {
-            powerupUsed.setBackgroundResource(R.drawable.powerup_flip);
-            powerupUsed.setVisibility(View.VISIBLE);
-        } else if (powerupused.equals("match_replay")) {
-            powerupUsed.setBackgroundResource(R.drawable.replay_icon);
-            powerupUsed.setVisibility(View.VISIBLE);
+            powerupUsed.setBackgroundResource(powerupIcons);
         }
 
         int answerId = question.getAnswerId();
