@@ -2,7 +2,7 @@ package in.sportscafe.nostragamus.module.user.login;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.text.TextUtils:
+import android.text.TextUtils;
 
 import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
