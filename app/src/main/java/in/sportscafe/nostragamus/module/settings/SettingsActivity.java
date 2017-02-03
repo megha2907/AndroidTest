@@ -16,11 +16,13 @@ import android.widget.ListView;
 import com.moe.pushlibrary.MoEHelper;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.WebViewActivity;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
+import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.user.referral.ReferralActivity;
 
@@ -34,7 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static final int EDIT_PROFILE_CODE = 35;
 
     private String[] account = {"Edit Profile", "Logout" , "Refer a Friend"};
-    private String[] support = {"Report a Problem"};
+    private String[] support = {"Play Sample Game", "Report a Problem"};
     private String[] about = {"About Sportscafe" , "Terms of Service", "Privacy Policy"};
 
     private ListView accountListView;
@@ -85,8 +87,11 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                switch(position){
+                switch(position) {
                     case 0:
+                        navigateToDummyGame();
+                        break;
+                    case 1:
                         navigateToWebView("https://sportscafe.in/contactus","Report a Problem");
                         break;
                 }
@@ -115,6 +120,13 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void navigateToDummyGame() {
+        Intent intent = new Intent(this, PredictionActivity.class);
+        intent.putExtra(BundleKeys.FROM_SETTINGS, true);
+        intent.putExtra(BundleKeys.IS_DUMMY_GAME, true);
+        startActivity(intent);
     }
 
     private void navigateToReferFriend() {
@@ -165,7 +177,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void navigateToEditProfile() {
         Intent intent=new Intent(this,EditProfileActivity.class);
         Bundle bundle=new Bundle();
-        bundle.putString("screen", Constants.BundleKeys.HOME_SCREEN);
+        bundle.putString("screen", BundleKeys.HOME_SCREEN);
         intent.putExtras(bundle);
         startActivityForResult(intent, EDIT_PROFILE_CODE);
     }

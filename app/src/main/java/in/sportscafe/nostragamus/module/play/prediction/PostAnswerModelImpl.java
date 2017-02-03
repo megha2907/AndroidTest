@@ -34,7 +34,7 @@ public class PostAnswerModelImpl {
     }
 
     private void callPostAnswerApi(Answer answer, boolean minorityOption, Boolean matchComplete) {
-        MyWebService.getInstance().getPostAnswerRequest(answer, minorityOption, matchComplete).enqueue(
+        MyWebService.getInstance().getPostAnswerRequest(answer, matchComplete, minorityOption).enqueue(
                 new NostragamusCallBack<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

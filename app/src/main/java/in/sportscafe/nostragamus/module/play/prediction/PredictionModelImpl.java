@@ -12,10 +12,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
@@ -43,6 +46,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     private final NostragamusDataHandler mNostragamusDataHandler;
 
     private boolean mDummyGame = false;
+
+    private boolean mFromSettings = false;
 
     private PredictionAdapter mPredictionAdapter;
 
@@ -94,11 +99,16 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             }
         } else {
             mDummyGame = true;
+            if(bundle.containsKey(BundleKeys.FROM_SETTINGS)) {
+                mFromSettings = bundle.getBoolean(BundleKeys.FROM_SETTINGS);
+            }
             mPredictionModelListener.onGetSportName("");
 
             m2xPowerups = 3;
             mNonegsPowerups = 3;
             mPollPowerups = 3;
+
+            NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.STARTED);
         }
     }
 
@@ -218,6 +228,11 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         if (isNotPowerupApplied() && mPollPowerups > 0) {
             getAudiencePollPercent();
         }
+    }
+
+    @Override
+    public boolean isFromSettings() {
+        return mFromSettings;
     }
 
     @Override

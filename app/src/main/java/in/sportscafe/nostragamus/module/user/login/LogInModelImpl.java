@@ -9,10 +9,12 @@ import com.jeeva.android.facebook.user.FacebookProfile;
 import com.jeeva.android.facebook.user.GetProfileModelImpl;
 import com.jeeva.android.facebook.user.UserModelImpl;
 
-import java.math.BigInteger;
-
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
+import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -22,6 +24,8 @@ import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
+
+import static in.sportscafe.nostragamus.Constants.AnalyticsActions.STARTED;
 
 public class LogInModelImpl implements LogInModel {
 
@@ -39,6 +43,8 @@ public class LogInModelImpl implements LogInModel {
         this.mLogInModelListener = modelListener;
 
         this.mFacebookHandler = FacebookHandler.getInstance(Nostragamus.getInstance());
+
+        NostragamusAnalytics.getInstance().trackLogIn(STARTED, null);
     }
 
     public static LogInModel newInstance(LogInModelListener modelListener) {
@@ -116,7 +122,7 @@ public class LogInModelImpl implements LogInModel {
         });
     }
 
-    private void callNostragamusLoginApi(String provider, String accessToken, String id, String username,
+    private void callNostragamusLoginApi(final String provider, String accessToken, String id, String username,
                                          String gender, String profileUrl, String email, String photo) {
         LogInRequest logInRequest = new LogInRequest();
         logInRequest.setAccessToken(accessToken);
@@ -139,6 +145,9 @@ public class LogInModelImpl implements LogInModel {
                     @Override
                     public void onResponse(Call<LogInResponse> call, Response<LogInResponse> response) {
                         if (response.isSuccessful()) {
+                            NostragamusAnalytics.getInstance().trackLogIn(
+                                    AnalyticsActions.COMPLETED, provider.equals(PROVIDER_FB) ? AnalyticsLabels.FACEBOOK : AnalyticsLabels.GOOGLE
+                            );
                             handleLoginResponse(response.body().getUserLoginInResponse());
                         } else {
                             mLogInModelListener.onLoginFailed();

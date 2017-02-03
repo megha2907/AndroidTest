@@ -49,11 +49,11 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        switch (viewType){
+        switch (viewType) {
 //            case SELECTED_LABEL_TYPE:
 //                return new LabelViewHolder(getLayoutInflater().inflate(R.layout.inflater_group_label, parent, false),"SELECTED TOURNAMENTS");
             case UNSELECTED_LABEL_TYPE:
-                return new LabelViewHolder(getLayoutInflater().inflate(R.layout.inflater_group_label, parent, false),"CURRENT TOURNAMENTS");
+                return new LabelViewHolder(getLayoutInflater().inflate(R.layout.inflater_group_label, parent, false), "Tournaments your group can follow:");
             case TOURNAMENT_TYPE:
             default:
                 return new TourViewHolder(getLayoutInflater().inflate(R.layout.inflater_group_sport_row, parent, false));
@@ -61,8 +61,6 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
         }
 
     }
-
-
 
 
     @Override
@@ -74,7 +72,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
 //            return SELECTED_LABEL_TYPE;
 //        }
 
-        if (tournamentInfo.getTournamentId()== -2){
+        if (tournamentInfo.getTournamentId() == -2) {
             return UNSELECTED_LABEL_TYPE;
         }
 
@@ -84,7 +82,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder rcvHolder, int position) {
 
-        if(getItemViewType(position)==TOURNAMENT_TYPE) {
+        if (getItemViewType(position) == TOURNAMENT_TYPE) {
             TourViewHolder holder = (TourViewHolder) rcvHolder;
             TournamentFeedInfo tournamentInfo = getItem(position);
 
@@ -100,7 +98,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
 
             if (mSelectedTournamentsIdList.contains((tournamentInfo.getTournamentId()))) {
                 holder.mIvSelectedIcon.setBackgroundResource(R.drawable.tick_icon);
-              //  holder.mTvTournament.setTextColor(ContextCompat.getColor(holder.mIvTournament.isThreadAlive(), R.color.btn_powerup_screen_color));
+                //  holder.mTvTournament.setTextColor(ContextCompat.getColor(holder.mIvTournament.isThreadAlive(), R.color.btn_powerup_screen_color));
                 holder.mTvTournament.setAlpha(0.9f);
 
             } else {
@@ -131,7 +129,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
             mTvSport = (TextView) V.findViewById(R.id.group_sport_row_tv_sport_name);
             mIvSelectedIcon = (ImageView) V.findViewById(R.id.group_sport_row_selected_icon);
             mTvTournament = (TextView) V.findViewById(R.id.group_sport_row_tv_tournament_name);
-            mRlTournament = (RelativeLayout)V.findViewById(R.id.group_sport_row_rl);
+            mRlTournament = (RelativeLayout) V.findViewById(R.id.group_sport_row_rl);
             V.setOnClickListener(this);
         }
 

@@ -8,6 +8,7 @@ import com.jeeva.android.ExceptionTracker;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
@@ -42,26 +43,25 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     }
 
 
-    private void onUpdateGroupInfo(GroupInfo groupInfo){
+    private void onUpdateGroupInfo(GroupInfo groupInfo) {
 
         mGroupInfoView.setGroupName(groupInfo.getName());
         mGroupInfoView.setGroupIcon(groupInfo.getPhoto());
         mGroupInfoView.setMembersSize(mGroupInfoModel.getMembersCount());
-       // mGroupInfoView.setAdapter(mGroupInfoModel.getSelectedAdapter(mGroupInfoView.isThreadAlive()));
+        // mGroupInfoView.setAdapter(mGroupInfoModel.getSelectedAdapter(mGroupInfoView.isThreadAlive()));
         mGroupInfoView.setGroupCode(groupInfo.getGroupCode());
         mGroupInfoView.initMyPosition(groupInfo);
 
-//        if(mGroupInfoModel.amAdmin()) {
-//            mGroupInfoView.showDeleteGroup();
-//           // mGroupInfoView.disableEdit();
-//        }
+        if(mGroupInfoModel.amAdmin()) {
+            mGroupInfoView.changeToAdminMode();
+        }
 
     }
 
     @Override
     public void onClickMembers() {
         Bundle bundle = mGroupInfoModel.getGroupIdBundle();
-        if(mGroupInfoModel.amAdmin()) {
+        if (mGroupInfoModel.amAdmin()) {
             mGroupInfoView.navigateToAdminMembers(bundle);
         } else {
             mGroupInfoView.navigateToGroupMembers(bundle);
@@ -75,7 +75,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
         BranchUniversalObject buo = new BranchUniversalObject()
                 .setTitle("Play Nostragamus")
-                .setContentDescription("I challenge you - Click this link to join the &quot;" + groupInfo.getName() + "&quot; and prove your love of sports" )
+                .setContentDescription("I challenge you - Click this link to join the &quot;" + groupInfo.getName() + "&quot; and prove your love of sports")
                 .setContentImageUrl("https://cdn-images.spcafe.in/img/es3/screact/game-app/game-logo.png")
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode())
@@ -90,15 +90,15 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
         buo.generateShortUrl(mGroupInfoView.getContext(), linkProperties,
                 new Branch.BranchLinkCreateListener() {
-            @Override
-            public void onLinkCreate(String url, BranchError error) {
-                if(null == error) {
-                    AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url);
-                } else {
-                    ExceptionTracker.track(error.getMessage());
-                }
-            }
-        });
+                    @Override
+                    public void onLinkCreate(String url, BranchError error) {
+                        if (null == error) {
+                            AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url);
+                        } else {
+                            ExceptionTracker.track(error.getMessage());
+                        }
+                    }
+                });
     }
 
     @Override
@@ -115,13 +115,13 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     @Override
     public void onGroupNameEmpty() {
         mGroupInfoView.dismissProgressbar();
-        mGroupInfoView.showMessage(Constants.Alerts.EMPTY_GROUP_NAME);
+        mGroupInfoView.showMessage(Alerts.EMPTY_GROUP_NAME);
     }
 
     @Override
     public void onNoInternet() {
         mGroupInfoView.dismissProgressbar();
-        mGroupInfoView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+        mGroupInfoView.showMessage(Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
@@ -131,21 +131,33 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     @Override
     public void onLeaveGroup() {
+        mGroupInfoView.showProgressbar();
         mGroupInfoModel.leaveGroup();
+    }
+
+    @Override
+    public void onClickResetLb() {
+        mGroupInfoView.showProgressbar();
+        mGroupInfoModel.resetLeaderboard();
     }
 
     @Override
     public void onLeaveGroupSuccess() {
         mGroupInfoView.dismissProgressbar();
-        mGroupInfoView.showMessage(Constants.Alerts.LEAVE_GROUP_SUCCESS);
+        mGroupInfoView.showMessage(Alerts.LEAVE_GROUP_SUCCESS);
         mGroupInfoView.navigateToHome();
+    }
+
+    @Override
+    public void onResetLeaderboardSuccess() {
+        mGroupInfoView.dismissProgressbar();
+        mGroupInfoView.showMessage(Alerts.RESET_LB_SUCCESS);
     }
 
     @Override
     public void onFailed(String message) {
         mGroupInfoView.dismissProgressbar();
         showAlert(message);
-
     }
 
     @Override
@@ -154,9 +166,8 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     }
 
     private void showAlert(String message) {
-        Toast.makeText(mGroupInfoView.getContext(), message, Toast.LENGTH_SHORT).show();
-
-        }
+        Toast.makeText(mGroupInfoView.getContext(), message, Toast.LENGTH_LONG).show();
+    }
 
     @Override
     public void onGetGroupSummarySuccess(GroupInfo groupInfo) {

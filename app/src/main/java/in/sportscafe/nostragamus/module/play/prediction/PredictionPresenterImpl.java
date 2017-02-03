@@ -110,7 +110,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onDummyGameEnd() {
-        mPredictionView.navigateToHome();
+        checkWhereToGo();
     }
 
     @Override
@@ -118,6 +118,14 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         if (!mPredictionModel.isDummyGame()) {
             mPredictionView.goBack();
         } else if(!mPredictionView.dismissCoach()) {
+            checkWhereToGo();
+        }
+    }
+
+    private void checkWhereToGo() {
+        if(mPredictionModel.isFromSettings()) {
+            mPredictionView.goBack();
+        } else {
             mPredictionView.navigateToHome();
         }
     }
