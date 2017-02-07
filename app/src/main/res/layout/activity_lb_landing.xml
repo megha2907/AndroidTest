@@ -125,6 +125,7 @@
                     android:overlapAnchor="false"
                     android:paddingLeft="@dimen/dp_10"
                     android:spinnerMode="dropdown"
+                    android:popupBackground="@null"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
             </RelativeLayout>
 

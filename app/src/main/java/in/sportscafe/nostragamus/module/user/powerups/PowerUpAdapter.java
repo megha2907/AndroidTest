@@ -44,6 +44,11 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
 
         switch (powerUp.getId()) {
             case Powerups.XX_GLOBAL:
+                holder.mTvPowerUpName.setText("Bonus 2x");
+                holder.mBtnPowerUp.setImageResource(R.drawable.powerup_icon);
+                holder.mTvPowerUpDesc.setText("Double your returns when you are confident about a prediction");
+                break;
+            case Powerups.XX:
                 holder.mTvPowerUpName.setText("2x");
                 holder.mBtnPowerUp.setImageResource(R.drawable.powerup_icon);
                 holder.mTvPowerUpDesc.setText("Double your returns when you are confident about a prediction");

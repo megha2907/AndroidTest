@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -120,7 +121,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.edit_group_back_btn:
-                onBackPressed();
+                navigateToHome();
                 break;
             case R.id.group_info_ll_share:
                 mGroupInfoPresenter.onClickShareCode();
@@ -215,6 +216,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     @Override
     public void navigateToHome() {
         Intent intent = new Intent(getContext(), HomeActivity.class);
+        intent.putExtra(Constants.BundleKeys.GROUP, Constants.BundleKeys.GROUP);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();

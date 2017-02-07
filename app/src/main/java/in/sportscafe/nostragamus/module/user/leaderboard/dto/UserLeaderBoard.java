@@ -140,11 +140,11 @@ public class UserLeaderBoard {
     public static Comparator<UserLeaderBoard> UserAccuracyComparator = new Comparator<UserLeaderBoard>() {
 
         public int compare(UserLeaderBoard lhs, UserLeaderBoard rhs) {
-            //ascending order
+            //descending order
             if (null == lhs.accuracy || null == rhs.accuracy) {
                 return -1;
             }
-            return lhs.accuracy - rhs.accuracy;
+            return rhs.accuracy - lhs.accuracy;
         }
     };
 

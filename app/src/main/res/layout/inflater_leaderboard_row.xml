@@ -54,7 +54,7 @@
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_12"
-        android:layout_weight="5">
+        android:layout_weight="4">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/leaderboard_row_tv_user_name"
@@ -83,7 +83,7 @@
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:text="72%"
+        android:text="100%"
         android:drawablePadding="@dimen/dp_5"
         android:textColor="@color/white"
         android:textSize="@dimen/dp_14"
@@ -106,7 +106,7 @@
         app:typeface="roboto_condensed"/>
 
     </LinearLayout>
-
+a
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0.5"
