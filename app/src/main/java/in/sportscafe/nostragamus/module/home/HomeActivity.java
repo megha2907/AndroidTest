@@ -34,7 +34,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
 /**
  * Created by Jeeva on 16/6/16.
  */
-public class HomeActivity extends NostragamusActivity implements OnHomeActionListener,UserInfoModelImpl.OnGetUserInfoModelListener {
+public class HomeActivity extends NostragamusActivity implements OnHomeActionListener, UserInfoModelImpl.OnGetUserInfoModelListener {
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
@@ -44,7 +44,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private ImageView mProfileButton;
 
-    private ImageView mNotificationButton;
+    private ImageView mGroupButton;
 
     private ImageView mLeaderBoardButton;
 
@@ -52,7 +52,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private TextView mProfileTv;
 
-    private TextView mNotificationTv;
+    private TextView mGroupTv;
 
     private TextView mLeaderBoardTv;
 
@@ -60,7 +60,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private RelativeLayout mProfileRl;
 
-    private RelativeLayout mNotificationRl;
+    private RelativeLayout mGroupRl;
 
     private RelativeLayout mLeaderBoardRl;
 
@@ -81,39 +81,52 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
         mHomeButton = (ImageView) findViewById(R.id.home_ibtn_feed);
         mProfileButton = (ImageView) findViewById(R.id.home_ibtn_profile);
-        mNotificationButton = (ImageView) findViewById(R.id.home_ibtn_notification);
+        mGroupButton = (ImageView) findViewById(R.id.home_ibtn_group);
         mLeaderBoardButton = (ImageView) findViewById(R.id.home_ibtn_leaderboard);
 
         mHomeTv = (TextView) findViewById(R.id.home_tv_feed);
         mProfileTv = (TextView) findViewById(R.id.home_tv_profile);
-        mNotificationTv = (TextView) findViewById(R.id.home_tv_notification);
+        mGroupTv = (TextView) findViewById(R.id.home_tv_group);
         mLeaderBoardTv = (TextView) findViewById(R.id.home_tv_leaderboard);
 
         mHomeRl = (RelativeLayout) findViewById(R.id.home_rl_feed);
         mProfileRl = (RelativeLayout) findViewById(R.id.home_rl_profile);
-        mNotificationRl = (RelativeLayout) findViewById(R.id.home_rl_notification);
+        mGroupRl = (RelativeLayout) findViewById(R.id.home_rl_group);
         mLeaderBoardRl = (RelativeLayout) findViewById(R.id.home_rl_leaderboard);
 
         Intent intent = getIntent();
         if (null == intent.getExtras()) {
             showFeed();
-        } else if (intent.getExtras().containsKey("group") || intent.getExtras().containsKey("results") || intent.getExtras().containsKey("badges")) {
+        } else if (intent.getExtras().containsKey(BundleKeys.RESULTS) || intent.getExtras().containsKey(BundleKeys.BADGES)) {
 
             mHomeButton.setSelected(false);
-            mNotificationButton.setSelected(false);
+            mGroupButton.setSelected(false);
+            mLeaderBoardButton.setSelected(false);
             mProfileButton.setSelected(true);
 
+
             mHomeTv.setSelected(false);
-            mNotificationTv.setSelected(false);
+            mGroupTv.setSelected(false);
+            mLeaderBoardTv.setSelected(false);
             mProfileTv.setSelected(true);
 
-//            mProfileRl.setBackgroundColor(Color.BLACK);
-//            mProfileRl.getBackground().setAlpha(40);
-//
-//            mHomeRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
-//            mNotificationRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
-
             loadFragment(new ProfileFragment());
+
+
+        } else if (intent.getExtras().containsKey(BundleKeys.GROUP)) {
+
+            mHomeButton.setSelected(false);
+            mGroupButton.setSelected(true);
+            mProfileButton.setSelected(false);
+            mLeaderBoardButton.setSelected(false);
+
+            mHomeTv.setSelected(false);
+            mGroupTv.setSelected(true);
+            mProfileTv.setSelected(false);
+            mLeaderBoardTv.setSelected(false);
+
+            loadFragment(new AllGroupsFragment().newInstance());
+
         } else {
             showFeed();
         }
@@ -124,93 +137,74 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     }
 
-    private void getunReadNotificationCount() {
-
-        Cursor cur = getContext().getContentResolver().query(
-                MoEDataContract.MessageEntity.getContentUri(getApplicationContext()),
-                MoEDataContract.MessageEntity.PROJECTION, MoEDataContract.MessageEntity.MSG_CLICKED + " = ?",
-                new String[]{"0"}, MoEDataContract.MessageEntity.DEFAULT_SORT_ORDER);
-
-        int unReadCount = 0;
-        if (null != cur) {
-            unReadCount = cur.getCount();
-            cur.close();
-        }
-
-        CustomButton notificationCount = (CustomButton) findViewById(R.id.home_ibtn_notification_count);
-
-        if (unReadCount == 0) {
-            notificationCount.setVisibility(View.GONE);
-        } else {
-            notificationCount.setVisibility(View.VISIBLE);
-            notificationCount.setText(String.valueOf(unReadCount));
-        }
-    }
+//    private void getunReadNotificationCount() {
+//
+//        Cursor cur = getContext().getContentResolver().query(
+//                MoEDataContract.MessageEntity.getContentUri(getApplicationContext()),
+//                MoEDataContract.MessageEntity.PROJECTION, MoEDataContract.MessageEntity.MSG_CLICKED + " = ?",
+//                new String[]{"0"}, MoEDataContract.MessageEntity.DEFAULT_SORT_ORDER);
+//
+//        int unReadCount = 0;
+//        if (null != cur) {
+//            unReadCount = cur.getCount();
+//            cur.close();
+//        }
+//
+//        CustomButton notificationCount = (CustomButton) findViewById(R.id.home_ibtn_notification_count);
+//
+//        if (unReadCount == 0) {
+//            notificationCount.setVisibility(View.GONE);
+//        } else {
+//            notificationCount.setVisibility(View.VISIBLE);
+//            notificationCount.setText(String.valueOf(unReadCount));
+//        }
+//    }
 
     public void onClickTab(View view) {
         switch (view.getId()) {
-            case R.id.home_rl_notification:
+            case R.id.home_rl_group:
 
                 mHomeButton.setSelected(false);
                 mProfileButton.setSelected(false);
                 mLeaderBoardButton.setSelected(false);
-                mNotificationButton.setSelected(true);
+                mGroupButton.setSelected(true);
 
                 mHomeTv.setSelected(false);
                 mProfileTv.setSelected(false);
                 mLeaderBoardTv.setSelected(false);
-                mNotificationTv.setSelected(true);
-
-                  /*mNotificationRl.setBackgroundColor(Color.BLACK);
-                  mNotificationRl.getBackground().setAlpha(40);
-
-                  mHomeRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
-                  mProfileRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
-                  mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));*/
+                mGroupTv.setSelected(true);
 
                 loadFragment(mCurrentFragment = new AllGroupsFragment().newInstance());
+
                 break;
 
             case R.id.home_rl_feed:
 
-                mNotificationButton.setSelected(false);
+                mGroupButton.setSelected(false);
                 mProfileButton.setSelected(false);
                 mLeaderBoardButton.setSelected(false);
                 mHomeButton.setSelected(true);
 
-                mNotificationTv.setSelected(false);
+                mGroupTv.setSelected(false);
                 mProfileTv.setSelected(false);
                 mLeaderBoardTv.setSelected(false);
                 mHomeTv.setSelected(true);
 
-                  /*mHomeRl.setBackgroundColor(Color.BLACK);
-                  mHomeRl.getBackground().setAlpha(40);
-
-                  mProfileRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
-                  mNotificationRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
-                  mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));*/
-
                 loadFragment(mCurrentFragment = new TournamentFragment());
+
                 break;
 
             case R.id.home_rl_profile:
 
                 mHomeButton.setSelected(false);
-                mNotificationButton.setSelected(false);
+                mGroupButton.setSelected(false);
                 mLeaderBoardButton.setSelected(false);
                 mProfileButton.setSelected(true);
 
                 mHomeTv.setSelected(false);
-                mNotificationTv.setSelected(false);
+                mGroupTv.setSelected(false);
                 mLeaderBoardTv.setSelected(false);
                 mProfileTv.setSelected(true);
-
-                  /*mProfileRl.setBackgroundColor(Color.BLACK);
-                  mProfileRl.getBackground().setAlpha(40);
-
-                  mHomeRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
-                  mNotificationRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
-                  mLeaderBoardRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));*/
 
                 if (null == NostragamusDataHandler.getInstance().getUserId()) {
                     navigateToLogIn();
@@ -221,12 +215,12 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
             case R.id.home_rl_leaderboard:
 
-                mNotificationButton.setSelected(false);
+                mGroupButton.setSelected(false);
                 mProfileButton.setSelected(false);
                 mHomeButton.setSelected(false);
                 mLeaderBoardButton.setSelected(true);
 
-                mNotificationTv.setSelected(false);
+                mGroupTv.setSelected(false);
                 mProfileTv.setSelected(false);
                 mHomeTv.setSelected(false);
                 mLeaderBoardTv.setSelected(true);
@@ -235,7 +229,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                   mLeaderBoardRl.getBackground().setAlpha(40);
 
                   mProfileRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
-                  mNotificationRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
+                  mGroupRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
                   mHomeRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));*/
 
                 loadFragment(mCurrentFragment = new LBLandingFragment());

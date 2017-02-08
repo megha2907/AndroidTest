@@ -97,9 +97,12 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
             mEditProfileView.navigateToHome(true);
             //mEditProfileView.setSuccessResult();
         } else {
+
+            mEditProfileView.navigateToDummyGame(mEditProfileModel.getDummyGameData());
+
             //mEditProfileView.navigateToSportsSelection();
 
-            autoSaveAllSports();
+            //autoSaveAllSports();
 
             // For ISB
             // autoSaveIsb();

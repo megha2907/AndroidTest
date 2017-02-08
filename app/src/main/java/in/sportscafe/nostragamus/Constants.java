@@ -141,6 +141,9 @@ public interface Constants {
     }
 
     interface BundleKeys {
+        String GROUP = "group";
+        String RESULTS = "results";
+        String BADGES = "badges";
         String CONTEST_QUESTIONS = "contestQuestions";
         String CONTEST_NAME = "contestName";
         String GROUP_INFO = "groupInfo";

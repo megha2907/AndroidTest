@@ -54,12 +54,7 @@ public class TournamentPresenterImpl implements TournamentPresenter, TournamentM
 
     private void showAlertMsg(String message) {
         mtournamentView.dismissProgressbar();
-        mtournamentView.showMessage(Constants.Alerts.NO_TOURNAMENTS, "RETRY", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                refreshLb();
-            }
-        });
+        mtournamentView.showInAppMessage(Constants.Alerts.NO_FEEDS_FOUND);
     }
 
     private void refreshLb() {
