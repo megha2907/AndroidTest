@@ -61,7 +61,7 @@ public class TournamentModelImpl implements TournamentModel {
 
     private void getAllTournamentsfromServer() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getTournaments(false,true).enqueue(
+            MyWebService.getInstance().getTournaments(false, true).enqueue(
                     new NostragamusCallBack<TournamentsResponse>() {
                         @Override
                         public void onResponse(Call<TournamentsResponse> call, Response<TournamentsResponse> response) {
@@ -113,7 +113,7 @@ public class TournamentModelImpl implements TournamentModel {
             sportsArrayList.add(tournamentInfo.getSportsName());
         }
 
-        String [] sportsArray = sportsArrayList.toArray(new String[sportsArrayList.size()]);
+        String[] sportsArray = sportsArrayList.toArray(new String[sportsArrayList.size()]);
 
         mTournamemtModelListener.onSuccessFeeds(sportsArray);
 

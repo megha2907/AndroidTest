@@ -31,8 +31,6 @@ public interface ProfileView extends InAppView {
 
     void navigateToPowerUpScreen();
 
-    void navigateToBadgeScreen();
-
     void setBadgesCount(int badgesCount);
 
     void setPredictionCount(Integer predictionCount);

@@ -14,21 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
@@ -38,16 +32,10 @@ import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
-import in.sportscafe.nostragamus.module.popups.PopUp;
-import in.sportscafe.nostragamus.module.popups.PopUpActivity;
-import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
 import in.sportscafe.nostragamus.module.settings.SettingsActivity;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
-import in.sportscafe.nostragamus.module.user.badges.BadgeActivity;
 import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
-import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
@@ -350,11 +338,6 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         startActivity(intent);
     }
 
-    @Override
-    public void navigateToBadgeScreen() {
-        Intent intent = new Intent(getContext(), BadgeActivity.class);
-        startActivity(intent);
-    }
 
 
     @Override

@@ -27,7 +27,7 @@ public class TournamentFeedPresenterImpl implements TournamentFeedPresenter, Tou
     }
 
     @Override
-    public void onCreateFeed(OnHomeActionListener listener,Bundle bundle) {
+    public void onCreateFeed(OnHomeActionListener listener, Bundle bundle) {
         mTournamentFeedView.setAdapter(mTournamentFeedModel.getAdapter(listener));
         mTournamentFeedModel.init(bundle);
     }
@@ -48,7 +48,6 @@ public class TournamentFeedPresenterImpl implements TournamentFeedPresenter, Tou
     public Context getContext() {
         return mTournamentFeedView.getContext();
     }
-
 
 
 }

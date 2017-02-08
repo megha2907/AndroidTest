@@ -19,6 +19,8 @@ public interface PredictionModel {
 
     boolean isDummyGame();
 
+    String getSportName();
+
     void getDummyGameQuestions();
 
     String getTournamentName();
@@ -26,6 +28,8 @@ public interface PredictionModel {
     String getMatchStage();
 
     String getTournamentPhoto();
+
+    Integer getTournamentId();
 
     String getContestName();
 
@@ -56,4 +60,6 @@ public interface PredictionModel {
     void onSkippingDummyGame();
 
     void onAllDoneInDummyGame();
+
+    Boolean isFirstCardSwiped();
 }

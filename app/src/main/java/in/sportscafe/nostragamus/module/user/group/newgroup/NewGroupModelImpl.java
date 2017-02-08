@@ -233,6 +233,7 @@ public class NewGroupModelImpl implements NewGroupModel {
                             Bundle bundle = new Bundle();
                             bundle.putInt(Constants.BundleKeys.GROUP_ID, groupInfo.getId());
                             bundle.putString(Constants.BundleKeys.GROUP_NAME, groupInfo.getName());
+                            bundle.putString(Constants.BundleKeys.SCREEN,Constants.ScreenNames.GROUPS_CREATE_NEW);
                             mNewGroupModelListener.onSuccess(bundle);
                         } else {
                             mNewGroupModelListener.onFailed(response.message());

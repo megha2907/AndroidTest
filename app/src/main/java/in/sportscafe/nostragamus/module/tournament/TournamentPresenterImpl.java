@@ -18,11 +18,11 @@ public class TournamentPresenterImpl implements TournamentPresenter, TournamentM
 
     private TournamentPresenterImpl(TournamentView tournamentView, FragmentManager childFragmentManager) {
         this.mtournamentView = tournamentView;
-        this.mTournamentModel = TournamentModelImpl.newInstance(this,childFragmentManager);
+        this.mTournamentModel = TournamentModelImpl.newInstance(this, childFragmentManager);
     }
 
     public static TournamentPresenterImpl newInstance(TournamentView pointsView, FragmentManager childFragmentManager) {
-        return new TournamentPresenterImpl(pointsView,childFragmentManager);
+        return new TournamentPresenterImpl(pointsView, childFragmentManager);
     }
 
 
@@ -41,7 +41,7 @@ public class TournamentPresenterImpl implements TournamentPresenter, TournamentM
     public void onSuccessFeeds(String[] sportsArray) {
         mtournamentView.dismissProgressbar();
         if (null != mtournamentView.getContext()) {
-            mtournamentView.initMyPosition(mTournamentModel.getAdapter(), mTournamentModel.getSelectedPosition(),sportsArray);
+            mtournamentView.initMyPosition(mTournamentModel.getAdapter(), mTournamentModel.getSelectedPosition(), sportsArray);
         }
     }
 
@@ -65,6 +65,6 @@ public class TournamentPresenterImpl implements TournamentPresenter, TournamentM
     @Override
     public void onEmpty() {
         mtournamentView.dismissProgressbar();
-        mtournamentView.showInAppMessage("Your leaderboard will update here after a match you have played is over");
+        mtournamentView.showInAppMessage(Constants.Alerts.NO_UPDATED_LEADERBOARDS);
     }
 }

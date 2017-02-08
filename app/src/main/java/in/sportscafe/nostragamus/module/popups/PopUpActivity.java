@@ -38,25 +38,15 @@ public class PopUpActivity extends AppCompatActivity implements View.OnClickList
 
     private RelativeLayout mpopUpLayout;
 
-    AlphaAnimation alpha;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
 
-//        DisplayMetrics dm = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(dm);
-//
-//        int width = dm.widthPixels;
-//        int height = dm.heightPixels;
-//
-//        getWindow().setLayout((int) (width * .8), (int) (height * .6));
-
         mExitPopupBtn = (ImageButton) findViewById(R.id.popup_exit_btn);
         mExitPopupBtn.setOnClickListener(this);
 
-        mpopUpLayout = (RelativeLayout)findViewById(R.id.popup);
+        mpopUpLayout = (RelativeLayout) findViewById(R.id.popup);
 
         mpopUpData = Parcels.unwrap(getIntent().getExtras().getParcelable(Constants.BundleKeys.POPUP_DATA));
         setPopUpData();
@@ -83,10 +73,7 @@ public class PopUpActivity extends AppCompatActivity implements View.OnClickList
             case R.id.popup_exit_btn:
                 if (mpopUpData.size() <= 0) {
                     finish();
-                }else {
-//                    alpha= new AlphaAnimation(0, 1);
-//                    alpha.setDuration(2000);
-//                    mpopUpLayout.setAnimation(alpha);
+                } else {
                     mpopUpLayout.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),
                             R.anim.slide_up));
                     setPopUpData();
