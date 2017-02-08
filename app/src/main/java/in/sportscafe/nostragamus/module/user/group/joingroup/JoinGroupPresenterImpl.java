@@ -30,7 +30,7 @@ public class JoinGroupPresenterImpl implements JoinGroupPresenter, JoinGroupMode
     @Override
     public void onClickJoin(String groupCode) {
         mJoinGroupView.showProgressbar();
-        mJoinGroupModel.joinGroup(groupCode);
+        mJoinGroupModel.joinGroup(groupCode, false);
     }
 
     @Override
