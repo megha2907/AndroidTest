@@ -15,6 +15,7 @@ import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -160,21 +161,57 @@ public class LogInModelImpl implements LogInModel {
     }
 
     private void handleLoginResponse(UserLoginInResponse userLoginInResponse) {
-        UserInfo userInfo = userLoginInResponse.getUserInfo();
-
         NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
 
-        nostragamusDataHandler.setLoggedInUser(true);
-        nostragamusDataHandler.setFirstTimeUser(true);
-        nostragamusDataHandler.setUserId(userInfo.getId().toString());
+        // Removing referral user id since user logged in
+        nostragamusDataHandler.setReferralUserId(null);
         nostragamusDataHandler.setJwtToken(userLoginInResponse);
+        nostragamusDataHandler.setLoggedInUser(true);
+        nostragamusDataHandler.setFirstTimeUser(userLoginInResponse.isNewUser());
+
+        UserInfo userInfo = userLoginInResponse.getUserInfo();
+        nostragamusDataHandler.setUserId(userInfo.getId().toString());
 
         UserInfoModelImpl.newInstance(null).handleUserInfoResponse(userInfo);
 
         // Getting the saved sports from server and saving it locally
         nostragamusDataHandler.setFavoriteSportsIdList(userInfo.getUserSports());
 
-        mLogInModelListener.onLoginCompleted();
+        String groupCode = NostragamusDataHandler.getInstance().getInstallGroupCode();
+        if (null == groupCode) {
+            mLogInModelListener.onLoginCompleted();
+        } else {
+            joinGroup(groupCode);
+        }
+    }
+
+    private void joinGroup(String groupCode) {
+        JoinGroupModelImpl.newInstance(new JoinGroupModelImpl.OnJoinGroupModelListener() {
+            @Override
+            public void onSuccess(Integer GroupId) {
+                mLogInModelListener.onLoginCompleted();
+            }
+
+            @Override
+            public void onInvalidGroupCode() {
+                mLogInModelListener.onLoginCompleted();
+            }
+
+            @Override
+            public void onNoInternet() {
+                mLogInModelListener.onLoginCompleted();
+            }
+
+            @Override
+            public void onFailed(String message) {
+                mLogInModelListener.onLoginCompleted();
+            }
+
+            @Override
+            public void onGetGroupCode(String groupCode) {
+
+            }
+        }).joinGroup(groupCode, true);
     }
 
     public interface LogInModelListener {

@@ -5,13 +5,11 @@ import android.os.Bundle;
 import java.util.HashMap;
 import java.util.Map;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroup;
 import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroupResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -47,10 +45,10 @@ public class JoinGroupModelImpl implements JoinGroupModel {
     }
 
     @Override
-    public void joinGroup(String groupCode) {
+    public void joinGroup(String groupCode, boolean fromReferral) {
         if(isValidGroupCode(groupCode)) {
             if (Nostragamus.getInstance().hasNetworkConnection()) {
-                callJoinGroupApi(groupCode);
+                callJoinGroupApi(groupCode, fromReferral);
             } else {
                 mJoinGroupModelListener.onNoInternet();
             }
@@ -68,7 +66,7 @@ public class JoinGroupModelImpl implements JoinGroupModel {
         return groupCode.length() == 5;
     }
 
-    private void callJoinGroupApi(String groupCode) {
+    private void callJoinGroupApi(String groupCode, final boolean fromReferral) {
         MyWebService.getInstance().getJoinGroupRequest(groupCode).enqueue(
                 new NostragamusCallBack<JoinGroupResponse>() {
                     @Override
@@ -77,9 +75,12 @@ public class JoinGroupModelImpl implements JoinGroupModel {
                         if(response.isSuccessful()) {
                             NostragamusAnalytics.getInstance().trackGroups(AnalyticsActions.JOIN_GROUP, null);
 
-                            JoinGroup joinGroup = response.body().getJoinGroup();
-                            Integer groupId = joinGroup.getGroupId();
-                            mJoinGroupModelListener.onSuccess(groupId);
+                            if(fromReferral) {
+                                // Removing group code since user joined in that group
+                                NostragamusDataHandler.getInstance().setInstallGroupCode(null);
+                            }
+
+                            mJoinGroupModelListener.onSuccess(response.body().getJoinGroup().getGroupId());
 
                         } else {
                             mJoinGroupModelListener.onFailed(response.message());

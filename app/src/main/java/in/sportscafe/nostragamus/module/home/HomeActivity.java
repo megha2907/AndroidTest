@@ -25,6 +25,7 @@ import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
+import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupModelImpl;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
@@ -240,10 +241,27 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     private void checkGroupCode() {
         String groupCode = NostragamusDataHandler.getInstance().getInstallGroupCode();
         if (null != groupCode) {
-            NostragamusDataHandler.getInstance().setInstallGroupCode(null);
-
-            showJoinGroupAlert(groupCode, NostragamusDataHandler.getInstance().getInstallGroupName());
+            joinGroup(groupCode);
         }
+    }
+
+    private void joinGroup(String groupCode) {
+        JoinGroupModelImpl.newInstance(new JoinGroupModelImpl.OnJoinGroupModelListener() {
+            @Override
+            public void onSuccess(Integer GroupId) {}
+
+            @Override
+            public void onInvalidGroupCode() {}
+
+            @Override
+            public void onNoInternet() {}
+
+            @Override
+            public void onFailed(String message) {}
+
+            @Override
+            public void onGetGroupCode(String groupCode) {}
+        }).joinGroup(groupCode, true);
     }
 
     private void showJoinGroupAlert(final String groupCode, String groupName) {
