@@ -9,7 +9,7 @@ public interface JoinGroupModel {
 
     void init(Bundle bundle);
 
-    void joinGroup(String groupCode);
+    void joinGroup(String groupCode, boolean fromReferral);
 
     boolean hadGroupCode();
 }
