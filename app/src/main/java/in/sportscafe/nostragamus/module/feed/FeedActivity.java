@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,12 +13,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
@@ -27,7 +27,7 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
  */
 public class FeedActivity extends NostragamusActivity implements FeedView {
 
-    private static final float MAX_ROTATION = 30;
+    private static final float MAX_ROTATION = 10;
 
     private float mVisibleHeight;
 
@@ -63,7 +63,7 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
         this.mRcvFeed = (RecyclerView) findViewById(R.id.feed_rv);
         this.mRcvFeed.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        this.mRcvFeed.setHasFixedSize(true);
+//        this.mRcvFeed.setHasFixedSize(true);
         this.mFeedPresenter = FeedPresenterImpl.newInstance(this);
         this.mFeedPresenter.onCreateFeed(getIntent().getExtras());
 
@@ -76,9 +76,13 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
         mRcvFeed.post(new Runnable() {
             @Override
             public void run() {
-                mVisibleHeight = findViewById(R.id.content).getMeasuredHeight();
-                mHalfVisibleHeight = getResources().getDimensionPixelSize(R.dimen.dp_150);
+                mVisibleHeight = mRcvFeed.getMeasuredHeight();
+                mHalfVisibleHeight = getResources().getDimensionPixelSize(R.dimen.dp_220);
                 mDifference = mVisibleHeight - mHalfVisibleHeight;
+
+                Log.d("FeedActivity", "mVisibleHeight --> " + mVisibleHeight);
+                Log.d("FeedActivity",  "mHalfVisibleHeight -->" + mHalfVisibleHeight);
+                Log.d("FeedActivity",  "mDifference -->" + mDifference);
             }
         });
 
@@ -86,8 +90,10 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
                 View child = null;
+                RelativeLayout.LayoutParams layoutParams;
                 int[] location = new int[2];
-                int yAxis;
+                int maxHeight;
+                float percent;
                 int childCount = parent.getChildCount();
                 for (int i = 0; i < childCount; i++) {
                     child = parent.getChildAt(i).findViewById(R.id.schedule_row_ll);
@@ -95,10 +101,23 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
                     if (child.getVisibility() == View.VISIBLE) {
                         child.setPivotY(child.getMeasuredHeight());
                         child.getLocationOnScreen(location);
-                        child.setRotationX(getRotationByY(location[1]));
+                        Log.d("FeedActivity", "y --> " + location[1]);
 
-//                        getRotationWidth(child.getMeasuredWidth(), rotation);
+                        percent = (location[1] - mHalfVisibleHeight) / mDifference;
+                        Log.d("FeedActivity", "percent --> " + percent);
+                        child.setRotationX(getRotationByPercent(percent));
 
+                        /*if(null != child.getTag()) {
+                            maxHeight = Integer.parseInt(child.getTag().toString());
+                        } else {
+                            maxHeight = child.getMeasuredHeight();
+                            child.setTag(maxHeight);
+                        }
+
+                        layoutParams = (RelativeLayout.LayoutParams) child.getLayoutParams();
+                        layoutParams.height =  getHeightByPercent(maxHeight, percent,
+                                (TextView) child.findViewById(R.id.schedule_row_tv_party_a_name));
+                        child.setLayoutParams(layoutParams);*/
                     }
                 }
                 super.onDraw(c, parent, state);
@@ -106,12 +125,22 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
         });
     }
 
-    private float getRotationByY(int yAxis) {
-        float rotation = MAX_ROTATION * (yAxis - mHalfVisibleHeight) / mDifference;
+    private float getRotationByPercent(float percent) {
+        float rotation = MAX_ROTATION * percent;
+        Log.d("FeedActivity", "maxRotation --> " + MAX_ROTATION + ", calcRotation --> " + rotation);
         if (rotation < 0) {
             return 0;
         }
         return rotation;
+    }
+
+    private int getHeightByPercent(int maxHeight, float percent, TextView textView) {
+        float calcHeight = maxHeight * (1f- percent);
+        Log.d("FeedActivity", "maxHeight --> " + maxHeight + ", calcHeight --> " + calcHeight + ", teamA --> " + textView.getText().toString());
+        if (calcHeight < 0 || calcHeight > maxHeight) {
+            return maxHeight;
+        }
+        return (int) calcHeight;
     }
 
     @Override
@@ -121,7 +150,7 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
 
     @Override
     public void moveAdapterPosition(int movePosition) {
-        mRcvFeed.getLayoutManager().scrollToPosition(movePosition);
+        mRcvFeed.scrollToPosition(movePosition);
     }
 
     @Override

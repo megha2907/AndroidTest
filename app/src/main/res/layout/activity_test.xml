@@ -1,10 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@id/content">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/test_rcv_timeline"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <com.felipecsl.gifimageview.library.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_150"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
 </RelativeLayout>
