@@ -38,4 +38,6 @@ public interface GroupInfoView extends View {
     void initMyPosition(GroupInfo groupInfo);
 
     void changeToAdminMode();
+
+    Boolean getIsGroupRefreshed();
 }

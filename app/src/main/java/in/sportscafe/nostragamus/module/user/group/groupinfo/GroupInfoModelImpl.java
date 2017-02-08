@@ -181,10 +181,8 @@ public class GroupInfoModelImpl implements GroupInfoModel {
     public GroupTournamentAdapter getAdapter(Context context) {
 
         if (NostragamusDataHandler.getInstance().getSelectedTournaments().isEmpty()) {
-
             mGroupInfoModelListener.onEmptyList();
         }
-
 
         mGrpTournamentAdapter = new GroupTournamentAdapter(context,
                 NostragamusDataHandler.getInstance().getSelectedTournaments());

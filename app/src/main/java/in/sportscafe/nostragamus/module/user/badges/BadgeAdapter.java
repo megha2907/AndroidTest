@@ -4,11 +4,9 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
-import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.List;
 
@@ -43,23 +41,6 @@ public class BadgeAdapter extends Adapter<Badge, BadgeAdapter.ViewHolder> {
         holder.mTvBadgeName.setText(badge.getName());
         holder.mTvBadgeDesc.setText(badge.getDesc());
         holder.mIvBadge.setImageUrl(badge.getPhoto());
-
-//        switch (badgeId) {
-//            case "accuracy_streak":
-//                holder.mTvBadgeName.setText("Sharpshooter"+" - ");
-//                holder.mIvBadge.setBackgroundResource(R.drawable.notification_accuracy_badge);
-//                holder.mTvBadgeDesc.setText(R.string.accuracy_streak);
-//                break;
-//            case "table_topper":
-//                holder.mTvBadgeName.setText("Table Topper"+" - ");
-//                holder.mIvBadge.setBackgroundResource(R.drawable.notification_topper_badge);
-//                holder.mTvBadgeDesc.setText(R.string.table_topper);
-//                break;
-//            default:
-//                holder.mIvBadge.setBackgroundResource(R.drawable.placeholder_icon);
-//                holder.mTvBadgeDesc.setText("You won"+" "+badgeId+" badge");
-//                break;
-//        }
 
     }
 

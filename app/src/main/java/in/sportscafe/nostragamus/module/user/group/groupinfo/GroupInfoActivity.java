@@ -1,7 +1,6 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,16 +23,15 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.group.admin.adminmembers.AdminMembersActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoActivity;
@@ -79,6 +77,9 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     private ViewPagerAdapter mpagerAdapter;
 
     private ViewPager mViewPager;
+
+    private Boolean isRefreshed = false;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -121,7 +122,11 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.edit_group_back_btn:
-                navigateToHome();
+                if (getIsGroupRefreshed() || mBundle.containsKey(Constants.BundleKeys.SCREEN)){
+                    navigateToHome();
+                }else {
+                    onBackPressed();
+                }
                 break;
             case R.id.group_info_ll_share:
                 mGroupInfoPresenter.onClickShareCode();
@@ -343,7 +348,11 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     }
 
     @Override
-    public void setTournamentsCount(int tournamentsCount) {
+    public void setTournamentsCount(int tournamentsCount, boolean isGroupTournamentChanged) {
+
+        if (isGroupTournamentChanged) {
+            isRefreshed = true;
+        }
 
         if(tournamentsCount==1){
             mpagerAdapter.updateTitle(0,tournamentsCount+ " \n Tournament");
@@ -387,6 +396,10 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         return true;
     }
 
+    @Override
+    public Boolean getIsGroupRefreshed(){
+        return isRefreshed;
+    }
 
     @Override
     public String getScreenName() {

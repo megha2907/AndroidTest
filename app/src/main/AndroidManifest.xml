@@ -138,10 +138,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="in.sportscafe.nostragamus.module.user.badges.BadgeActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name="in.sportscafe.nostragamus.module.play.prediction.PredictionActivity"
             android:screenOrientation="portrait" />
         <activity android:name="in.sportscafe.nostragamus.module.play.prediction.AllDoneActivity"

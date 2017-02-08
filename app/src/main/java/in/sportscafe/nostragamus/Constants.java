@@ -104,6 +104,7 @@ public interface Constants {
         String USERNAME_EMPTY = "Please enter username";
         String NO_QUESTIONS_FOUND = "No questions found";
         String NO_FEEDS_FOUND = "No upcoming matches.";
+        String NO_UPDATED_LEADERBOARDS = "Your leaderboard will update here after a match you have played is over";
         String NO_RESULTS = "No Results yet.";
         String JOIN_GROUP_SUCCESS = "Your request sent to the group admin for the approval";
         String INVALID_GROUP_CODE = "Invalid group code";
@@ -184,6 +185,7 @@ public interface Constants {
         String TOURNAMENT_POWERUPS = "tournamentPowerups";
         String POPUP_DATA = "popup";
         String FROM_SETTINGS = "fromSettings";
+        String SCREEN = "screen";
     }
 
     interface ParcelableKeys {

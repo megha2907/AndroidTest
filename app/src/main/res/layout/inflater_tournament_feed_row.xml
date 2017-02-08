@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_70"
             android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/tournament_iv_notification_icon"
+            android:layout_toLeftOf="@+id/tournament_btn_unplayed_btn"
+            android:layout_marginRight="@dimen/dp_10"
             android:layout_centerVertical="true">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -102,10 +103,8 @@
             android:textColor="@color/white"
             android:background="@drawable/notification_count_bg"
             app:typeface="lato_bold"
-            android:text="22"
             android:layout_alignParentRight="true"
-            android:visibility="visible"
-            />
+            android:visibility="visible" />
 
         </RelativeLayout>
 

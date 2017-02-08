@@ -77,7 +77,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
         BranchUniversalObject buo = new BranchUniversalObject()
                 .setTitle("Play Nostragamus")
-                .setContentDescription("I challenge you - Click this link to join the &quot;" + groupInfo.getName() + "&quot; and prove your love of sports")
+                .setContentDescription("I challenge you - Click this link to join the ' " + groupInfo.getName() + " ' and prove your love of sports")
                 .setContentImageUrl("https://cdn-images.spcafe.in/img/es3/screact/game-app/game-logo.png")
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode())
@@ -195,7 +195,6 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     public void onEmptyList() {
 
     }
-
     @Override
     public void onGroupNameUpdateSuccess() {
         mGroupInfoView.dismissProgressbar();

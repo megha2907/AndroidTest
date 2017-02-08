@@ -50,7 +50,7 @@ public class PopUpModelImpl {
                             List<PopUp> popUps = response.body().getPopUps();
                             if (popUps == null || popUps.isEmpty()) {
                                 mPopUpsModelListener.onFailedGetUpdatePopUps(response.message());
-                            }else {
+                            } else {
                                 mPopUpsModelListener.onSuccessGetUpdatedPopUps(popUps);
                             }
                         } else {
@@ -68,10 +68,7 @@ public class PopUpModelImpl {
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         if (response.isSuccessful()) {
                             super.onResponse(call, response);
-
                             String acknowledgePopup = response.body().getMessage();
-
-                        } else {
                         }
                     }
                 }
@@ -84,5 +81,5 @@ public class PopUpModelImpl {
 
         void onFailedGetUpdatePopUps(String message);
     }
-    
+
 }

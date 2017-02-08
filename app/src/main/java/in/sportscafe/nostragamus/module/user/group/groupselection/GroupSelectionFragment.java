@@ -74,6 +74,6 @@ public class GroupSelectionFragment extends NostragamusFragment implements Group
     }
 
     public interface OnTournamentUpdatedListener {
-        void setTournamentsCount(int tournamentsCount);
+        void setTournamentsCount(int tournamentsCount, boolean isGroupTournamentChanged);
     }
 }
