@@ -30,7 +30,6 @@ public class BadgeModelImpl implements BadgeModel {
             mBadgeModelListener.onBadgesEmpty();
         }
 
-
         mBadgeAdapter = new BadgeAdapter(context,
                 mNostragamusDataHandler.getBadgeList());
         return mBadgeAdapter;

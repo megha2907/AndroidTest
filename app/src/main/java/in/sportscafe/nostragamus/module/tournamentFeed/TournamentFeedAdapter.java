@@ -33,7 +33,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
 
     private OnHomeActionListener mOnHomeActionListener;
 
-    private  SharedPreferences mNotificationPreferences;
+    private SharedPreferences mNotificationPreferences;
 
     public TournamentFeedAdapter(Context context, OnHomeActionListener listener) {
         super(context);
@@ -66,20 +66,20 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
 //        }
 
         try {
-        holder.mTvTournamentName.setText(tournamentInfo.getTournamentName());
+            holder.mTvTournamentName.setText(tournamentInfo.getTournamentName());
 
-        if (!tournamentInfo.getCountsUnplayed().equals("0")){
-            holder.mBtnTournamentUnplayedCount.setVisibility(View.VISIBLE);
-            holder.mBtnTournamentUnplayedCount.setText(tournamentInfo.getCountsUnplayed());
-            holder.mBtnTournamentUnplayed.setVisibility(View.VISIBLE);
-        }else {
-            holder.mBtnTournamentUnplayedCount.setVisibility(View.GONE);
-            holder.mBtnTournamentUnplayed.setText("TIMELINE");
-        }
+            if (!tournamentInfo.getCountsUnplayed().equals("0")) {
+                holder.mBtnTournamentUnplayedCount.setVisibility(View.VISIBLE);
+                holder.mBtnTournamentUnplayedCount.setText(tournamentInfo.getCountsUnplayed());
+                holder.mBtnTournamentUnplayed.setVisibility(View.VISIBLE);
+            } else {
+                holder.mBtnTournamentUnplayedCount.setVisibility(View.GONE);
+                holder.mBtnTournamentUnplayed.setText("TIMELINE");
+            }
 
-        holder.mIvTournamentImage.setImageUrl(
-                tournamentInfo.getTournamentPhoto()
-        );
+            holder.mIvTournamentImage.setImageUrl(
+                    tournamentInfo.getTournamentPhoto()
+            );
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,9 +118,9 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
             mTvTournamentName = (TextView) V.findViewById(R.id.tournament_tv_tournamentName);
             mIvTournamentImage = (HmImageView) V.findViewById(R.id.tournament_iv_tournamentImage);
             mTvTournamentNotification = (TextView) V.findViewById(R.id.tournament_tv_notification);
-            mBtnTournamentUnplayedCount = (Button)V.findViewById(R.id.tournament_btn_unplayed_count);
-            mBtnTournamentUnplayed = (Button)V.findViewById(R.id.tournament_btn_unplayed_btn);
-            mIvNotificationIcon=(ImageButton) V.findViewById(R.id.tournament_iv_notification_icon);
+            mBtnTournamentUnplayedCount = (Button) V.findViewById(R.id.tournament_btn_unplayed_count);
+            mBtnTournamentUnplayed = (Button) V.findViewById(R.id.tournament_btn_unplayed_btn);
+            mIvNotificationIcon = (ImageButton) V.findViewById(R.id.tournament_iv_notification_icon);
 
             V.setOnClickListener(this);
             mBtnTournamentUnplayed.setOnClickListener(this);
@@ -152,24 +152,24 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
 //
 //                       break;
 
-                    default:
+                default:
 
-                        TournamentFeedInfo tournamentInfo = getItem(getAdapterPosition());
-                        Integer tournamentId = tournamentInfo.getTournamentId();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(BundleKeys.TOURNAMENT_ID, tournamentId);
-                        bundle.putString(BundleKeys.TOURNAMENT_NAME, tournamentInfo.getTournamentName());
-                        bundle.putString(BundleKeys.SPORT_NAME, tournamentInfo.getSportsName());
+                    TournamentFeedInfo tournamentInfo = getItem(getAdapterPosition());
+                    Integer tournamentId = tournamentInfo.getTournamentId();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleKeys.TOURNAMENT_ID, tournamentId);
+                    bundle.putString(BundleKeys.TOURNAMENT_NAME, tournamentInfo.getTournamentName());
+                    bundle.putString(BundleKeys.SPORT_NAME, tournamentInfo.getSportsName());
 
-                        Intent intent =  new Intent(view.getContext(), FeedActivity.class);
-                        intent.putExtras(bundle);
-                        view.getContext().startActivity(intent);
+                    Intent intent = new Intent(view.getContext(), FeedActivity.class);
+                    intent.putExtras(bundle);
+                    view.getContext().startActivity(intent);
 
-                        NostragamusAnalytics.getInstance().trackTimeline(
-                                AnalyticsActions.TOURNAMENT,
-                                tournamentInfo.getTournamentName(),
-                                null == tournamentInfo.getCountsUnplayed() ? 0 : Long.parseLong(tournamentInfo.getCountsUnplayed())
-                        );
+                    NostragamusAnalytics.getInstance().trackTimeline(
+                            AnalyticsActions.TOURNAMENT,
+                            tournamentInfo.getTournamentName(),
+                            null == tournamentInfo.getCountsUnplayed() ? 0 : Long.parseLong(tournamentInfo.getCountsUnplayed())
+                    );
 
             }
 

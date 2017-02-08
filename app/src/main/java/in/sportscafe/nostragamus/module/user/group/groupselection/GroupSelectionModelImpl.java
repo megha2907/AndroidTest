@@ -43,6 +43,8 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
 
     private NostragamusDataHandler mNostragamusDataHandler;
 
+    private boolean isGroupTournamentChanged = false;
+
     private GroupSelectionModelImpl(OnGroupSelectionModelListener listener) {
         this.mGroupInfoModelListener = listener;
         mNostragamusDataHandler = NostragamusDataHandler.getInstance();
@@ -205,9 +207,10 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
                                     mGrpTournamentSelectedAdapter.add(feedInfo, 0);
                                 }
 
+                                isGroupTournamentChanged = true;
                                 mGrpTournamentSelectedAdapter.notifyItemChanged(position);
                                 mGrpTournamentUpdateModel.updateGrpTournaments(mGrpTournamentSelectedAdapter.getSelectedTournamentList());
-                                mGroupInfoModelListener.setTournamentsCount(mGrpTournamentSelectedAdapter.getSelectedTournamentList().size());
+                                mGroupInfoModelListener.setTournamentsCount(mGrpTournamentSelectedAdapter.getSelectedTournamentList().size(),isGroupTournamentChanged);
                             }
 
                         }else {
@@ -220,7 +223,7 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
         mGrpTournamentSelectedAdapter.add(unselectedLabel);
         mGrpTournamentSelectedAdapter.addAll(tournamentInfos);
 
-        mGroupInfoModelListener.setTournamentsCount(mGrpTournamentSelectedAdapter.getSelectedTournamentList().size());
+        mGroupInfoModelListener.setTournamentsCount(mGrpTournamentSelectedAdapter.getSelectedTournamentList().size(),isGroupTournamentChanged);
 
 //        if(amAdmin()) {
 //            this.mGrpTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
@@ -276,7 +279,7 @@ public class GroupSelectionModelImpl implements GroupSelectionModel {
 
         void onSuccessTournamentInfo(List<TournamentFeedInfo> tournamentInfos);
 
-        void setTournamentsCount(int size);
+        void setTournamentsCount(int size, boolean GroupTournamentChanged);
 
         void selectedTournamentsLimit();
 

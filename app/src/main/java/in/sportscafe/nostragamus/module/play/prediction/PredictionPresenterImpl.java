@@ -5,6 +5,7 @@ import android.view.View;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
@@ -117,7 +118,17 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onClickBack() {
         if (!mPredictionModel.isDummyGame()) {
-            mPredictionView.goBack();
+
+            if (!mPredictionModel.isFirstCardSwiped()){
+                mPredictionView.goBack();
+            }else {
+                Bundle mbundle = new Bundle();
+                mbundle.putString(Constants.BundleKeys.TOURNAMENT_NAME,mPredictionModel.getTournamentName());
+                mbundle.putInt(Constants.BundleKeys.TOURNAMENT_ID,mPredictionModel.getTournamentId());
+                mbundle.putString(Constants.BundleKeys.SPORT_NAME,mPredictionModel.getSportName());
+                mPredictionView.navigateToFeed(mbundle);
+            }
+
         } else if(!mPredictionView.dismissCoach()) {
             checkWhereToGo();
         }

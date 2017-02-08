@@ -184,7 +184,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         String powerupId = question.getPowerUpId();
 
         int powerupIcons = PowerUp.getPlayPowerupIcons(powerupId);
-        if(powerupIcons != -1) {
+        if (powerupIcons != -1) {
             viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
             viewHolder.btnpowerupicon.setImageResource(powerupIcons);
 

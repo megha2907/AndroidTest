@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.user.group.groupselection;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
-import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 
 /**
  * Created by deepanshi on 1/6/17.
@@ -84,8 +82,8 @@ public class GroupSelectionPresenterImpl implements GroupSelectionPresenter, Gro
     }
 
     @Override
-    public void setTournamentsCount(int size) {
-        mChangedListener.setTournamentsCount(size);
+    public void setTournamentsCount(int size, boolean isGroupTournamentChanged) {
+        mChangedListener.setTournamentsCount(size,isGroupTournamentChanged);
     }
 
     @Override

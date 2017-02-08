@@ -34,12 +34,6 @@ public class TournamentFeedFragment extends NostragamusFragment implements Tourn
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private Toolbar mtoolbar;
-
-    private TextView mTitle;
-
-    private ImageView mLogo;
-
     public static TournamentFeedFragment newInstance(TournamentInfo tournamentInfo) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(BundleKeys.TOURNAMENT_LIST, Parcels.wrap(tournamentInfo));
@@ -65,7 +59,7 @@ public class TournamentFeedFragment extends NostragamusFragment implements Tourn
         this.mRcvTournamentFeed.setHasFixedSize(true);
 
         this.mtournamentFeedPresenter = TournamentFeedPresenterImpl.newInstance(this);
-        this.mtournamentFeedPresenter.onCreateFeed((OnHomeActionListener) getActivity(),getArguments());
+        this.mtournamentFeedPresenter.onCreateFeed((OnHomeActionListener) getActivity(), getArguments());
 
 //        this.mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swifeRefresh);
 //        this.mSwipeRefreshLayout.setOnRefreshListener(this);

@@ -69,6 +69,10 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     private int mPollPowerups = 0;
 
+    private String mSportName = "";
+
+    private Boolean isFirstCardSwiped = false;
+
     public PredictionModelImpl(OnPredictionModelListener predictionModelListener) {
         this.mPredictionModelListener = predictionModelListener;
         this.mNostragamusDataHandler = NostragamusDataHandler.getInstance();
@@ -85,7 +89,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             mMatchId = mMyResult.getId();
 
             if (bundle.containsKey(BundleKeys.SPORT_NAME)) {
-                mPredictionModelListener.onGetSportName(bundle.getString(BundleKeys.SPORT_NAME));
+                mSportName = bundle.getString(BundleKeys.SPORT_NAME);
+                mPredictionModelListener.onGetSportName(mSportName);
             }
 
             if (bundle.containsKey(BundleKeys.TOURNAMENT_POWERUPS)) {
@@ -120,6 +125,11 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
+    public String getSportName(){
+        return mSportName;
+    }
+
+    @Override
     public void getDummyGameQuestions() {
         mPredictionModelListener.onSuccessQuestions(getDummyQuestionList(), PredictionModelImpl.this);
     }
@@ -137,6 +147,11 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public String getTournamentPhoto() {
         return mMyResult.getTournamentPhoto();
+    }
+
+    @Override
+    public Integer getTournamentId() {
+        return mMyResult.getTournamentId();
     }
 
     @Override
@@ -252,7 +267,13 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
+    public Boolean isFirstCardSwiped(){
+        return isFirstCardSwiped;
+    }
+
+    @Override
     public void removeFirstObjectInAdapter(Question question) {
+        isFirstCardSwiped = true;
         mPredictionAdapter.remove(question);
         mPredictionAdapter.notifyDataSetChanged();
     }
