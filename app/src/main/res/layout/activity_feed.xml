@@ -11,15 +11,14 @@
         android:layout_height="@dimen/dp_100"
         android:background="@color/colorBackground"
         android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:contentInsetLeft="@dimen/dp_0"
-        app:contentInsetStart="@dimen/dp_0"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+        app:contentInsetStart="@dimen/dp_0">
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-          >
+            android:layout_height="match_parent">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/feed_tv_tournament_name"
@@ -27,21 +26,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_17"
                 android:textSize="@dimen/dp_16"
-                app:typeface="roboto_condensed_bold"/>
+                app:typeface="roboto_condensed_bold" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/feed_tv_tournament_matches_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_below="@+id/feed_tv_tournament_name"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_15"
                 android:layout_toRightOf="@+id/feed_rl_powerup_layout"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/dp_10"
-                android:layout_marginLeft="@dimen/dp_5"
                 android:textSize="@dimen/dp_11"
-                android:layout_centerVertical="true"
-                app:typeface="roboto_condensed"/>
+                app:typeface="roboto_condensed" />
 
             <RelativeLayout
                 android:id="@+id/feed_rl_powerup_layout"
@@ -49,8 +48,7 @@
                 android:layout_height="@dimen/dp_60"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/feed_tv_tournament_name"
-                android:visibility="gone"
-                >
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/powerups_iv_2x"
@@ -147,7 +145,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/feed_toolbar"
-        android:background="@color/black" />
+        android:background="@color/black"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/dp_240"
+        android:paddingTop="@dimen/dp_5" />
 
 
     <!--</android.support.v4.widget.SwipeRefreshLayout>-->

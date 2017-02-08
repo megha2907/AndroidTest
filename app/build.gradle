@@ -118,5 +118,7 @@ dependencies {
     // To use parcelable instead serializable to improve data transfer between components
     compile 'org.parceler:parceler-api:1.1.5'
     apt 'org.parceler:parceler:1.1.5'
+    // To load the gif images in the imageview
+    compile 'com.felipecsl:gifimageview:2.1.0'
 }
 apply plugin: 'com.google.gms.google-services'
