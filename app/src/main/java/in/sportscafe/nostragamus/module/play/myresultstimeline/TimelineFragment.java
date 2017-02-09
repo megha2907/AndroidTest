@@ -33,7 +33,7 @@ import static com.google.android.gms.analytics.internal.zzy.w;
  */
 public class TimelineFragment extends NostragamusFragment implements TimelineView, SwipeRefreshLayout.OnRefreshListener {
 
-    private static final float MAX_ROTATION = 20;
+    private static final float MAX_ROTATION = 10;
 
     private float mVisibleHeight;
 
@@ -108,8 +108,8 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
         mRcvFeed.post(new Runnable() {
             @Override
             public void run() {
-                mVisibleHeight = findViewById(R.id.content).getMeasuredHeight();
-                mHalfVisibleHeight = getResources().getDimensionPixelSize(R.dimen.dp_150);
+                mVisibleHeight = mRcvFeed.getMeasuredHeight();
+                mHalfVisibleHeight = getResources().getDimensionPixelSize(R.dimen.dp_220);
                 mDifference = mVisibleHeight - mHalfVisibleHeight;
             }
         });

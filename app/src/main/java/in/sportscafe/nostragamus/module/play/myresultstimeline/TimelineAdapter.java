@@ -101,7 +101,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
         ScheduleViewHolder scheduleVH;
         if (holder.mLlTourParent.getChildCount() > 0) {
-            View mainView = holder.mLlTourParent.getChildAt(0);
+            View mainView = holder.mLlTourParent.getChildAt(1);
 
             scheduleVH = mScheduleMap.get(mainView);
             if (null != scheduleVH) {
@@ -109,9 +109,14 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 mScheduleVHList.remove(scheduleVH);
                 mScheduleMap.remove(mainView);
             }
-
         }
+
         holder.mLlTourParent.removeAllViews();
+
+        if (position == 0) {
+            holder.mLlTourParent.addView(getLayoutInflater().inflate(R.layout.inflater_timeline_top_dot,
+                    holder.mLlTourParent, false));
+        }
 
         scheduleVH = getScheduleView(match, holder.mLlTourParent);
         holder.mLlTourParent.addView(scheduleVH.mMainView);
@@ -398,7 +403,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 bundle = new Bundle();
                 bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
                 bundle.putString(BundleKeys.SPORT_NAME, match.getSportName());
-                if(null != mPlayerId) {
+                if (null != mPlayerId) {
                     bundle.putInt(BundleKeys.PLAYER_ID, mPlayerId);
                 }
             }
@@ -409,7 +414,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                             GameAttemptedStatus.PARTIALLY == match.getisAttempted() ? AnalyticsActions.CONTINUE : AnalyticsActions.PLAY
                     );
 
-                    bundle.putParcelable(BundleKeys.TOURNAMENT_POWERUPS,Parcels.wrap(mTournamentPowerupInfo));
+                    bundle.putParcelable(BundleKeys.TOURNAMENT_POWERUPS, Parcels.wrap(mTournamentPowerupInfo));
                     navigateToPrediction(context, bundle);
                     break;
                 case R.id.rl_points:
