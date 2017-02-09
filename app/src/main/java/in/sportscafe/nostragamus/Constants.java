@@ -285,6 +285,8 @@ public interface Constants {
         String LB_DETAIL = "Detail";
         String MYSELF = "Me";
         String OTHER_USER = "Other";
+        String ANSWERED = "Answered";
+        String SHUFFLED = "Shuffled";
         String PHOTO = "Photo";
         String OTHERS = "Others";
         String TABS = "Tabs";
@@ -298,6 +300,14 @@ public interface Constants {
         String CAMERA = "Camera";
         String UPDATE = "Update";
         String DONE = "Done";
+        String LEFT = "Left";
+        String RIGHT = "Right";
+        String TOP = "Top";
+        String BOTTOM = "Bottom";
+    }
+
+    interface UserProperties {
+        String NUMBER_OF_GROUPS = "No of Groups";
     }
 
     interface ScreenNames {
