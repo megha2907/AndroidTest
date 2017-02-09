@@ -9,11 +9,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
+import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -280,22 +281,24 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     @Override
     public void onLeftSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, AnswerIds.LEFT);
+        saveSinglePrediction(dataObject, AnswerIds.LEFT, AnalyticsLabels.LEFT);
     }
 
     @Override
     public void onRightSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, AnswerIds.RIGHT);
+        saveSinglePrediction(dataObject, AnswerIds.RIGHT, AnalyticsLabels.RIGHT);
     }
 
     @Override
     public void onTopSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, AnswerIds.NEITHER);
+        saveSinglePrediction(dataObject, AnswerIds.NEITHER, AnalyticsLabels.TOP);
     }
 
     @Override
     public void onBottomSwipe(Question dataObject) {
         mPredictionAdapter.add(dataObject);
+
+        NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.SHUFFLED, AnalyticsLabels.BOTTOM, getTimeSpent());
     }
 
     private int mLastQuestionNumber = -1;
@@ -326,6 +329,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             mNeitherOptionAvailable = !TextUtils.isEmpty(topQuestion.getQuestionOption3());
 
             mPredictionModelListener.onQuestionChanged(topQuestion, mInitialCount, mNeitherOptionAvailable);
+
+            mQuestionSeenTime = Calendar.getInstance().getTimeInMillis();
         }
     }
 
@@ -448,7 +453,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPredictionModelListener.onAudiencePollApplied(mPollPowerups);
     }
 
-    private void saveSinglePrediction(Question question, int answerId) {
+    private void saveSinglePrediction(Question question, int answerId, String direction) {
         if (!mDummyGame) {
             question.setAnswerId(answerId);
             String powerupId = question.getPowerUpId();
@@ -461,12 +466,13 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                     powerupId
             );
 
-            postAnswerToServer(answer, question.isMinorityAnswer(), mPredictionAdapter.getCount() == 0, powerupId);
+            postAnswerToServer(answer, question.isMinorityAnswer(), mPredictionAdapter.getCount() == 0, powerupId, direction);
+            NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.ANSWERED, direction, getTimeSpent());
         }
     }
 
     private void postAnswerToServer(Answer answer, boolean minorityOption, Boolean
-            matchComplete, final String powerupId) {
+            matchComplete, final String powerupId, final String direction) {
         new PostAnswerModelImpl(new PostAnswerModelImpl.PostAnswerModelListener() {
 
             @Override
@@ -490,6 +496,11 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
             }
         }).postAnswer(answer, minorityOption, matchComplete);
+    }
+
+    private long mQuestionSeenTime;
+    private long getTimeSpent() {
+        return Calendar.getInstance().getTimeInMillis() - mQuestionSeenTime;
     }
 
     private List<Question> getDummyQuestionList() {

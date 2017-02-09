@@ -27,7 +27,9 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
  */
 public class FeedActivity extends NostragamusActivity implements FeedView {
 
-    private static final float MAX_ROTATION = 10;
+    private static final float MAX_ROTATION = 10f;
+
+    private float mTopScheduleMargin;
 
     private float mVisibleHeight;
 
@@ -76,6 +78,7 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
         mRcvFeed.post(new Runnable() {
             @Override
             public void run() {
+                mTopScheduleMargin = getResources().getDimensionPixelSize(R.dimen.dp_45);
                 mVisibleHeight = mRcvFeed.getMeasuredHeight();
                 mHalfVisibleHeight = getResources().getDimensionPixelSize(R.dimen.dp_220);
                 mDifference = mVisibleHeight - mHalfVisibleHeight;
@@ -89,35 +92,34 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
         mRcvFeed.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-                View child = null;
+                View child;
+                View dateView;
                 RelativeLayout.LayoutParams layoutParams;
                 int[] location = new int[2];
-                int maxHeight;
+                float maxHeight;
                 float percent;
+                float rotation;
                 int childCount = parent.getChildCount();
                 for (int i = 0; i < childCount; i++) {
-                    child = parent.getChildAt(i).findViewById(R.id.schedule_row_ll);
+                    child = parent.getChildAt(i);
+                    dateView = child.findViewById(R.id.schedule_row_tv_date);
+                    child = child.findViewById(R.id.schedule_row_ll);
 
                     if (child.getVisibility() == View.VISIBLE) {
-                        child.setPivotY(child.getMeasuredHeight());
+                        maxHeight = child.getMeasuredHeight();
+                        child.setPivotY(maxHeight);
+
                         child.getLocationOnScreen(location);
                         Log.d("FeedActivity", "y --> " + location[1]);
 
                         percent = (location[1] - mHalfVisibleHeight) / mDifference;
                         Log.d("FeedActivity", "percent --> " + percent);
-                        child.setRotationX(getRotationByPercent(percent));
-
-                        /*if(null != child.getTag()) {
-                            maxHeight = Integer.parseInt(child.getTag().toString());
-                        } else {
-                            maxHeight = child.getMeasuredHeight();
-                            child.setTag(maxHeight);
-                        }
+                        rotation = getRotationByPercent(percent);
+                        child.setRotationX(rotation);
 
                         layoutParams = (RelativeLayout.LayoutParams) child.getLayoutParams();
-                        layoutParams.height =  getHeightByPercent(maxHeight, percent,
-                                (TextView) child.findViewById(R.id.schedule_row_tv_party_a_name));
-                        child.setLayoutParams(layoutParams);*/
+                        layoutParams.topMargin = (int) (mTopScheduleMargin - (maxHeight - getHeightByRotation(maxHeight, rotation)));
+                        child.setLayoutParams(layoutParams);
                     }
                 }
                 super.onDraw(c, parent, state);
@@ -134,13 +136,13 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
         return rotation;
     }
 
-    private int getHeightByPercent(int maxHeight, float percent, TextView textView) {
-        float calcHeight = maxHeight * (1f- percent);
-        Log.d("FeedActivity", "maxHeight --> " + maxHeight + ", calcHeight --> " + calcHeight + ", teamA --> " + textView.getText().toString());
+    private float getHeightByRotation(float maxHeight, float rotation) {
+        float calcHeight = maxHeight * (1f - rotation / 75f);
+        Log.d("FeedActivity", "maxHeight --> " + maxHeight + ", calcHeight --> " + calcHeight);
         if (calcHeight < 0 || calcHeight > maxHeight) {
             return maxHeight;
         }
-        return (int) calcHeight;
+        return calcHeight;
     }
 
     @Override

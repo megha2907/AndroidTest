@@ -431,7 +431,9 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     }
 
     public void setNumberofGroups(Integer numberofgroups) {
-        setSharedIntData(SharedKeys.NUMBER_OF_GROUPS, null == numberofgroups ? 0 : numberofgroups);
+        int noOfGroups = null == numberofgroups ? 0 : numberofgroups;
+        setSharedIntData(SharedKeys.NUMBER_OF_GROUPS, noOfGroups);
+        NostragamusAnalytics.getInstance().setUserProperties(noOfGroups);
     }
 
     public String getInstallGroupCode() {
