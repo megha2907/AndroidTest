@@ -183,4 +183,7 @@ public interface NostragamusService {
 
     @PUT ("/v1/game/users/acknowledgeUserPopup")
     Call<ApiResponse> getAcknowledgePopupRequest(@Query("popup_name") String popUpName);
+
+    @HTTP(method = "DELETE", path = "v1/game/groups", hasBody = true)
+    Call<ApiResponse> deleteGroup(@Body AdminRequest request);
 }

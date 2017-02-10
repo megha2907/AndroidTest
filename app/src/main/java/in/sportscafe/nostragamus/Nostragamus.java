@@ -4,17 +4,13 @@ package in.sportscafe.nostragamus;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.multidex.MultiDex;
-import android.util.Base64;
 
 import com.crashlytics.android.Crashlytics;
 import com.jeeva.android.ExceptionTracker;
-import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
 import com.jeeva.android.facebook.user.FacebookPermission;
 import com.jeeva.android.volley.Volley;
@@ -24,8 +20,6 @@ import com.moe.pushlibrary.utils.MoEHelperConstants;
 import com.moengage.addon.inbox.InboxManager;
 import com.moengage.push.PushManager;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -35,7 +29,7 @@ import in.sportscafe.nostragamus.module.crash.NostragamusUncaughtExceptionHandle
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.notifications.NotificationCustom;
 import in.sportscafe.nostragamus.module.notifications.NotificationInboxAdapter;
-import in.sportscafe.nostragamus.module.offline.PredictionDataHandler;
+import in.sportscafe.nostragamus.module.offline.OfflineDataHandler;
 import in.sportscafe.nostragamus.module.settings.app.AppSettingsModelImpl;
 import in.sportscafe.nostragamus.module.user.login.RefreshTokenModelImpl;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -100,9 +94,9 @@ public class Nostragamus extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
 
-//        if(mDebuggable) {
+        if(mDebuggable) {
             MultiDex.install(this);
-//        }
+        }
     }
 
     private void initCrashHandler(boolean debuggable) {
@@ -119,7 +113,7 @@ public class Nostragamus extends Application {
     private void initDataHandlers() {
         Context context = getApplicationContext();
         NostragamusDataHandler.getInstance().init(context);
-        PredictionDataHandler.getInstance().init(context);
+        OfflineDataHandler.getInstance().init(context);
     }
 
     private void initCustomFonts() {

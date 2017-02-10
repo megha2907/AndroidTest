@@ -131,7 +131,7 @@ public class GetStartActivity extends Activity {
 
     private void navigateToLogin() {
         startActivity(new Intent(this, LogInActivity.class));
-//        finish();
+        finish();
     }
 
     private void getUpdatedSports() {

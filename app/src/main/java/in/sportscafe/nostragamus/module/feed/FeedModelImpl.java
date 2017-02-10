@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.FeedTimeline;
@@ -19,7 +21,6 @@ import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
@@ -31,17 +32,21 @@ import retrofit2.Response;
  */
 public class FeedModelImpl implements FeedModel {
 
+    private boolean mFeedRefreshed = false;
+
     private int mClosestDatePosition = 0;
 
     private TimelineAdapter mFeedAdapter;
 
     private OnFeedModelListener mFeedModelListener;
 
-    private Integer tourId;
+    private String mTournamentName;
 
-    private String sportName;
+    private Integer mTourId;
 
-    private TournamentPowerupInfo mtournamentPowerUpInfo;
+    private String mSportName;
+
+    private TournamentPowerupInfo mPowerUpInfo;
 
     private FeedModelImpl(OnFeedModelListener listener) {
         this.mFeedModelListener = listener;
@@ -53,14 +58,14 @@ public class FeedModelImpl implements FeedModel {
 
     @Override
     public void init(Bundle bundle) {
-
-        tourId = bundle.getInt(Constants.BundleKeys.TOURNAMENT_ID);
-        sportName = bundle.getString(Constants.BundleKeys.SPORT_NAME);
+        mTournamentName = bundle.getString(BundleKeys.TOURNAMENT_NAME);
+        mTourId = bundle.getInt(BundleKeys.TOURNAMENT_ID);
+        mSportName = bundle.getString(BundleKeys.SPORT_NAME);
     }
 
     @Override
     public TimelineAdapter getAdapter(Context context, List<Match> matchList) {
-        mFeedAdapter = new TimelineAdapter(context, mtournamentPowerUpInfo);
+        mFeedAdapter = new TimelineAdapter(context, mPowerUpInfo);
         for (Match match : matchList) {
             mFeedAdapter.add(match);
         }
@@ -70,7 +75,7 @@ public class FeedModelImpl implements FeedModel {
     @Override
     public void getFeeds() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            callFeedListApi(tourId);
+            callFeedListApi(mTourId);
         } else {
             mFeedModelListener.onNoInternet();
         }
@@ -78,9 +83,29 @@ public class FeedModelImpl implements FeedModel {
 
     @Override
     public void destroyAll() {
-        if(null != mFeedAdapter) {
+        if (null != mFeedAdapter) {
             mFeedAdapter.destroy();
         }
+    }
+
+    @Override
+    public String getTournamentName() {
+        return mTournamentName;
+    }
+
+    @Override
+    public void refreshFeed() {
+        mFeedRefreshed = true;
+
+        mFeedAdapter.clear();
+        mFeedAdapter.notifyDataSetChanged();
+
+        getFeeds();
+    }
+
+    @Override
+    public boolean isFeedRefreshed() {
+        return mFeedRefreshed;
     }
 
     private void callFeedListApi(Integer tourId) {
@@ -89,31 +114,25 @@ public class FeedModelImpl implements FeedModel {
             public void onResponse(Call<FeedResponse> call, Response<FeedResponse> response) {
                 super.onResponse(call, response);
 
-                if (null == mFeedModelListener.getContext()) {
-                    return;
-                }
-
                 if (response.isSuccessful()) {
-                    List<Match> matchList = response.body().getFeedTimeline().getMatches();
-
+                    FeedTimeline feedTimeline = response.body().getFeedTimeline();
+                    List<Match> matchList = feedTimeline.getMatches();
                     if (null == matchList || matchList.isEmpty()) {
                         mFeedModelListener.onEmpty();
                         return;
                     }
 
-                    FeedTimeline feedTimeline = response.body().getFeedTimeline();
-                    mtournamentPowerUpInfo = feedTimeline.getTournamentPowerupInfo();
-                    HashMap<String, Integer> powerUpMap = mtournamentPowerUpInfo.getPowerUps();
+                    mPowerUpInfo = feedTimeline.getTournamentPowerupInfo();
 
-                    Integer m2xPowerups = powerUpMap.get(Constants.Powerups.XX);
-                    Integer mNonegsPowerups = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
-                    Integer mPollPowerups = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
-                    String powerUpText = feedTimeline.getPowerupText();
-
-                    mFeedModelListener.onSuccessFeeds(matchList,m2xPowerups,mNonegsPowerups,mPollPowerups,powerUpText);
-
+                    HashMap<String, Integer> powerUpMap = mPowerUpInfo.getPowerUps();
+                    mFeedModelListener.onSuccessFeeds(
+                            matchList,
+                            powerUpMap.get(Powerups.XX),
+                            powerUpMap.get(Powerups.NO_NEGATIVE),
+                            powerUpMap.get(Powerups.AUDIENCE_POLL),
+                            feedTimeline.getPowerupText()
+                    );
                 } else {
-
                     mFeedModelListener.onFailedFeeds(response.message());
                 }
             }
@@ -201,15 +220,13 @@ public class FeedModelImpl implements FeedModel {
 
     public interface OnFeedModelListener {
 
-        void onSuccessFeeds(List<Match> matchList,Integer powerUp2x,Integer powerUpNonEgs,Integer powerUpAudiencePoll,
-        String powerUpText);
+        void onSuccessFeeds(List<Match> matchList, Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll,
+                            String powerUpText);
 
         void onFailedFeeds(String message);
 
         void onNoInternet();
 
         void onEmpty();
-
-        Context getContext();
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.offline.OfflineDataHandler;
 import in.sportscafe.nostragamus.module.tournamentFeed.TournamentFeedFragment;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
@@ -19,20 +20,17 @@ import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.google.android.gms.analytics.internal.zzy.i;
+
 /**
  * Created by deepanshi on 11/14/16.
  */
 
 public class TournamentModelImpl implements TournamentModel {
 
-
     private TournamentModelImpl.OnTournamentModelListener mTournamemtModelListener;
 
-    private NostragamusDataHandler mNostragamusDataHandler;
-
     private ViewPagerAdapter mViewPagerAdapter;
-
-    private int mSelectedPosition = 0;
 
     private TournamentModelImpl(TournamentModelImpl.OnTournamentModelListener listener, FragmentManager fm) {
         this.mTournamemtModelListener = listener;
@@ -44,22 +42,7 @@ public class TournamentModelImpl implements TournamentModel {
     }
 
     @Override
-    public ViewPagerAdapter getAdapter() {
-        return mViewPagerAdapter;
-    }
-
-    @Override
     public void getTournaments() {
-        getAllTournamentsfromServer();
-    }
-
-    @Override
-    public int getSelectedPosition() {
-        return mSelectedPosition;
-    }
-
-
-    private void getAllTournamentsfromServer() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             MyWebService.getInstance().getTournaments(false, true).enqueue(
                     new NostragamusCallBack<TournamentsResponse>() {
@@ -68,27 +51,13 @@ public class TournamentModelImpl implements TournamentModel {
                             super.onResponse(call, response);
 
                             if (response.isSuccessful()) {
-                                List<TournamentInfo> newTournamentInfo = response.body().getTournamentInfos();
-
-                                if (null != newTournamentInfo && newTournamentInfo.size() > 0) {
-
-
-//                                    List<TournamentFeedInfo> oldTournamentList = mScGameDataHandler.getTournaments();
-//                                    oldTournamentList.clear();
-//                                    for (TournamentFeedInfo tournamentFeedInfo : newTournamentInfo) {
-//                                        if (!oldTournamentList.contains(tournamentFeedInfo)) {
-//                                            oldTournamentList.add(tournamentFeedInfo);
-//                                        }
-//                                    }
-//
-//                                    mScGameDataHandler.setTournaments(oldTournamentList);
-
-                                    refreshAdapter(newTournamentInfo);
-
+                                List<TournamentInfo> tournaments = response.body().getTournamentInfos();
+                                if(tournaments.isEmpty()) {
+                                    mTournamemtModelListener.onEmpty();
                                 } else {
-                                    mTournamemtModelListener.onFailedFeeds(response.message());
+                                    refreshAdapter(tournaments);
                                 }
-
+                                OfflineDataHandler.getInstance().setAllTournaments(tournaments);
                             } else {
                                 mTournamemtModelListener.onFailedFeeds(response.message());
                             }
@@ -96,27 +65,23 @@ public class TournamentModelImpl implements TournamentModel {
                     }
             );
         } else {
+            List<TournamentInfo> allTournaments = OfflineDataHandler.getInstance().getAllTournaments();
+            if(allTournaments.isEmpty()) {
+                mTournamemtModelListener.onEmpty();
+            } else {
+                refreshAdapter(allTournaments);
+            }
+
             mTournamemtModelListener.onNoInternet();
         }
     }
 
-
-    private void refreshAdapter(List<TournamentInfo> tournamentInfoList) {
-
-        TournamentInfo tournamentInfo;
-
-        ArrayList<String> sportsArrayList = new ArrayList<String>();
-
-        for (int i = 0; i < tournamentInfoList.size(); i++) {
-            tournamentInfo = tournamentInfoList.get(i);
-            mViewPagerAdapter.addFragment(TournamentFeedFragment.newInstance(tournamentInfo), tournamentInfo.getSportsName());
-            sportsArrayList.add(tournamentInfo.getSportsName());
+    private void refreshAdapter(List<TournamentInfo> tournaments) {
+        for (TournamentInfo info : tournaments) {
+            mViewPagerAdapter.addFragment(TournamentFeedFragment.newInstance(info), info.getSportsName());
         }
 
-        String[] sportsArray = sportsArrayList.toArray(new String[sportsArrayList.size()]);
-
-        mTournamemtModelListener.onSuccessFeeds(sportsArray);
-
+        mTournamemtModelListener.onSuccessFeeds(mViewPagerAdapter);
         mViewPagerAdapter.notifyDataSetChanged();
     }
 
@@ -126,7 +91,7 @@ public class TournamentModelImpl implements TournamentModel {
 
         void onNoInternet();
 
-        void onSuccessFeeds(String[] sportsArray);
+        void onSuccessFeeds(ViewPagerAdapter adapter);
 
         void onFailedFeeds(String message);
     }

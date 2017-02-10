@@ -20,4 +20,10 @@ public interface FeedModel {
     void getFeeds();
 
     void destroyAll();
+
+    String getTournamentName();
+
+    void refreshFeed();
+
+    boolean isFeedRefreshed();
 }

@@ -71,6 +71,7 @@ public interface Constants {
         String ACCESS_TOKEN = "accessToken";
         String TOKEN_EXPIRY = "tokenExpiry";
         int TOURNAMENT_ID = 0;
+        String INSTALL_CHANNEL = "installChannel";
     }
 
     interface Alerts {
@@ -139,6 +140,8 @@ public interface Constants {
         String NOT_ADMIN = "Only Admin can change Tournaments";
         String RESET_LB_SUCCESS = "Success! Your group leaderboard have been reset!";
         String CANNOT_RESET_LB = "Something went wrong! Please try again!";
+        String DELETE_GROUP_SUCCESS = "You have deleted the group successfully";
+        String CANNOT_DELETE_GROUP = "You cannot delete the group since you are not the Admin";
     }
 
     interface BundleKeys {
@@ -186,6 +189,7 @@ public interface Constants {
         String POPUP_DATA = "popup";
         String FROM_SETTINGS = "fromSettings";
         String SCREEN = "screen";
+        String FROM_PLAY = "fromPlay";
     }
 
     interface ParcelableKeys {
@@ -277,6 +281,7 @@ public interface Constants {
         String JOIN_GROUP = "Join Group";
         String NEW_GROUP = "New Group";
         String LEAVE_GROUP = "Leave Group";
+        String DELETE_GROUP = "Delete Group";
         String TOURNAMENT = "Tournament";
         String VIEW_ANSWERS = "View Answers";
         String PLAY = "Play";

@@ -53,25 +53,45 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
 
     private TextView mTvPollPowerupCount;
 
-    private Toolbar mtoolbar;
-
-    Bundle bundle;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
+        initToolBar();
+
         this.mRcvFeed = (RecyclerView) findViewById(R.id.feed_rv);
         this.mRcvFeed.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-//        this.mRcvFeed.setHasFixedSize(true);
+        this.mRcvFeed.setHasFixedSize(true);
+
         this.mFeedPresenter = FeedPresenterImpl.newInstance(this);
         this.mFeedPresenter.onCreateFeed(getIntent().getExtras());
 
-        bundle = getIntent().getExtras();
-
         initRotation();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mFeedPresenter.onRefresh();
+    }
+
+    private void initToolBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.feed_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        toolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        toolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onBackPressed();
+                    }
+                }
+        );
+        toolbar.setContentInsetStartWithNavigation(0);
     }
 
     private void initRotation() {
@@ -84,8 +104,8 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
                 mDifference = mVisibleHeight - mHalfVisibleHeight;
 
                 Log.d("FeedActivity", "mVisibleHeight --> " + mVisibleHeight);
-                Log.d("FeedActivity",  "mHalfVisibleHeight -->" + mHalfVisibleHeight);
-                Log.d("FeedActivity",  "mDifference -->" + mDifference);
+                Log.d("FeedActivity", "mHalfVisibleHeight -->" + mHalfVisibleHeight);
+                Log.d("FeedActivity", "mDifference -->" + mDifference);
             }
         });
 
@@ -146,6 +166,35 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
     }
 
     @Override
+    public void showPowerups(Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll, String powerupText) {
+        findViewById(R.id.feed_rl_powerup_layout).setVisibility(View.VISIBLE);
+
+        mTv2xPowerupCount = (TextView) findViewById(R.id.powerup_tv_2x_count);
+        mTvNonegsPowerupCount = (TextView) findViewById(R.id.powerup_tv_nonegs_count);
+        mTvPollPowerupCount = (TextView) findViewById(R.id.powerup_tv_poll_count);
+
+        mTv2xPowerupCount.setText(powerUp2x.toString());
+        mTvNonegsPowerupCount.setText(powerUpNonEgs.toString());
+        mTvPollPowerupCount.setText(powerUpAudiencePoll.toString());
+
+        mIv2xPowerup = (ImageView) findViewById(R.id.powerups_iv_2x);
+        mIvNonegsPowerup = (ImageView) findViewById(R.id.powerups_iv_nonegs);
+        mIvPollPowerup = (ImageView) findViewById(R.id.powerups_iv_poll);
+
+        mIv2xPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
+        mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.radical_red));
+        mIvPollPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
+
+        TextView poweruptext = (TextView) findViewById(R.id.feed_tv_tournament_matches_left);
+        poweruptext.setText(powerupText);
+    }
+
+    @Override
+    public void hidePowerups() {
+        findViewById(R.id.feed_rl_powerup_layout).setVisibility(View.GONE);
+    }
+
+    @Override
     public void setAdapter(TimelineAdapter feedAdapter) {
         mRcvFeed.setAdapter(ViewUtils.getAnimationAdapter(feedAdapter));
     }
@@ -156,53 +205,25 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
     }
 
     @Override
-    public void initToolBar(Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll, String powerUpText) {
+    public void setTournamentName(String tournamentName) {
+        ((TextView) findViewById(R.id.feed_tv_tournament_name)).setText(tournamentName);
+    }
 
+    @Override
+    public void navigateToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
-        mtoolbar = (Toolbar) findViewById(R.id.feed_toolbar);
-        RelativeLayout powerUpRl = (RelativeLayout) findViewById(R.id.feed_rl_powerup_layout);
-        TextView tournamentName = (TextView) mtoolbar.findViewById(R.id.feed_tv_tournament_name);
-        TextView poweruptext = (TextView) mtoolbar.findViewById(R.id.feed_tv_tournament_matches_left);
-        mIv2xPowerup = (ImageView) mtoolbar.findViewById(R.id.powerups_iv_2x);
-        mIvNonegsPowerup = (ImageView) mtoolbar.findViewById(R.id.powerups_iv_nonegs);
-        mIvPollPowerup = (ImageView) mtoolbar.findViewById(R.id.powerups_iv_poll);
-        mTv2xPowerupCount = (TextView) mtoolbar.findViewById(R.id.powerup_tv_2x_count);
-        mTvNonegsPowerupCount = (TextView) mtoolbar.findViewById(R.id.powerup_tv_nonegs_count);
-        mTvPollPowerupCount = (TextView) mtoolbar.findViewById(R.id.powerup_tv_poll_count);
-
-        powerUpRl.setVisibility(View.VISIBLE);
-        mTv2xPowerupCount.setText(powerUp2x.toString());
-        mTvNonegsPowerupCount.setText(powerUpNonEgs.toString());
-        mTvPollPowerupCount.setText(powerUpAudiencePoll.toString());
-        poweruptext.setText(powerUpText);
-
-        tournamentName.setText(bundle.getString(Constants.BundleKeys.TOURNAMENT_NAME));
-        setSupportActionBar(mtoolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
-        mtoolbar.setNavigationOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onBackPressed();
-                    }
-                }
-
-        );
-        mtoolbar.setContentInsetStartWithNavigation(0);
-
-        mIv2xPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
-        mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.radical_red));
-        mIvPollPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
+    @Override
+    public void goBack() {
+        super.onBackPressed();
     }
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
-        finish();
+        mFeedPresenter.onBack();
     }
 
     @Override
