@@ -19,14 +19,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -80,12 +76,6 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
     private Boolean isRefreshed = false;
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,9 +98,6 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         this.mGroupInfoPresenter.onCreateGroupInfo(getIntent().getExtras());
 
         mBundle = getIntent().getExtras();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void initToolbar() {
@@ -122,7 +109,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.edit_group_back_btn:
-                if (getIsGroupRefreshed() || mBundle.containsKey(Constants.BundleKeys.SCREEN)){
+                if (getIsGroupRefreshed() || mBundle.containsKey(BundleKeys.SCREEN)){
                     navigateToHome();
                 }else {
                     onBackPressed();
@@ -138,8 +125,8 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
 
         Intent intent = new Intent(this, EditGroupInfoActivity.class);
         Bundle mBundleNew = new Bundle();
-        mBundleNew.putInt(Constants.BundleKeys.GROUP_ID, mBundle.getInt(Constants.BundleKeys.GROUP_ID));
-        mBundleNew.putString(Constants.BundleKeys.GROUP_NAME, mBundle.getString(Constants.BundleKeys.GROUP_NAME));
+        mBundleNew.putInt(BundleKeys.GROUP_ID, mBundle.getInt(BundleKeys.GROUP_ID));
+        mBundleNew.putString(BundleKeys.GROUP_NAME, mBundle.getString(BundleKeys.GROUP_NAME));
         intent.putExtras(mBundleNew);
         startActivityForResult(intent, CODE_GROUP_INFO);
     }
@@ -221,7 +208,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     @Override
     public void navigateToHome() {
         Intent intent = new Intent(getContext(), HomeActivity.class);
-        intent.putExtra(Constants.BundleKeys.GROUP, Constants.BundleKeys.GROUP);
+        intent.putExtra(BundleKeys.GROUP, BundleKeys.GROUP);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
@@ -255,42 +242,6 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         Intent intent = new Intent(this, AllGroupsActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("GroupInfo Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
     }
 
     @Override
@@ -376,6 +327,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         if(mAdminMode) {
             menu.findItem(R.id.reset_lb_btn).setVisible(true);
             menu.findItem(R.id.edit_group_btn).setVisible(true);
+//            menu.findItem(R.id.delete_group_btn).setVisible(true);
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -387,10 +339,13 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
                 navigatetoEditGroupInfoActivity();
                 break;
             case R.id.leave_group_btn:
-                mGroupInfoPresenter.onLeaveGroup();
+                mGroupInfoPresenter.onClickLeaveGroup();
                 break;
             case R.id.reset_lb_btn:
                 mGroupInfoPresenter.onClickResetLb();
+                break;
+            case R.id.delete_group_btn:
+                mGroupInfoPresenter.onClickDeleteGroup();
                 break;
         }
         return true;

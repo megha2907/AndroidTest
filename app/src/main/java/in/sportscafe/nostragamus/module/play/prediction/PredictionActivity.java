@@ -20,7 +20,6 @@ import com.jeeva.android.widgets.customfont.CustomTextView;
 
 import in.sportscafe.nostragamus.Config.Sports;
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.coachmarker.TargetView;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
@@ -30,14 +29,10 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.DummyGameFragment;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
-
-import static com.google.android.gms.analytics.internal.zzy.m;
 
 
 public class PredictionActivity extends NostragamusActivity implements PredictionView, View.OnClickListener {
-
 
     private RelativeLayout mRlPlayBg;
 
@@ -193,10 +188,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void navigateToFeed(Bundle bundle) {
-        Intent i = new Intent(getApplicationContext(), FeedActivity.class);
-        i.putExtras(bundle);
-        startActivity(i);
+    public void navigateToFeed() {
+        Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+        finish();
     }
 
     @Override

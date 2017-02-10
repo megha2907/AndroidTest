@@ -11,5 +11,7 @@ public interface FeedPresenter {
 
     void onRefresh();
 
+    void onBack();
+
     void onDestroy();
 }

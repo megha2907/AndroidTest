@@ -31,5 +31,7 @@ public interface GroupInfoModel {
 
     void resetLeaderboard();
 
+    void deleteGroup();
+
     GroupTournamentAdapter getAdapter(Context context);
 }

@@ -133,9 +133,10 @@ public class NostragamusAnalytics {
      * track new users
      *
      * @param actions - referral or organic
+     * @param label - channels like facebook, twitter
      */
-    public void trackNewUsers(String actions) {
-        track(AnalyticsCategory.NEW_USERS, actions, null, null);
+    public void trackNewUsers(String actions, String label) {
+        track(AnalyticsCategory.NEW_USERS, actions, label, null);
     }
 
     /**

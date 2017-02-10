@@ -1,9 +1,10 @@
 package in.sportscafe.nostragamus.module.tournament;
 
 import android.support.v4.app.FragmentManager;
-import android.view.View;
+import android.widget.Toast;
 
-import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Alerts;
+import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 
 /**
  * Created by deepanshi on 11/14/16.
@@ -11,13 +12,12 @@ import in.sportscafe.nostragamus.Constants;
 
 public class TournamentPresenterImpl implements TournamentPresenter, TournamentModelImpl.OnTournamentModelListener {
 
-    private TournamentView mtournamentView;
+    private TournamentView mTournamentView;
 
     private TournamentModel mTournamentModel;
 
-
     private TournamentPresenterImpl(TournamentView tournamentView, FragmentManager childFragmentManager) {
-        this.mtournamentView = tournamentView;
+        this.mTournamentView = tournamentView;
         this.mTournamentModel = TournamentModelImpl.newInstance(this, childFragmentManager);
     }
 
@@ -25,46 +25,40 @@ public class TournamentPresenterImpl implements TournamentPresenter, TournamentM
         return new TournamentPresenterImpl(pointsView, childFragmentManager);
     }
 
-
     @Override
     public void onCreateTournaments() {
-        mtournamentView.showProgressbar();
+        mTournamentView.showProgressbar();
         mTournamentModel.getTournaments();
     }
 
     @Override
     public void onNoInternet() {
-        showAlertMsg(Constants.Alerts.NO_NETWORK_CONNECTION);
+        mTournamentView.dismissProgressbar();
+        mTournamentView.showMessage(Alerts.NO_NETWORK_CONNECTION, Toast.LENGTH_LONG);
     }
 
     @Override
-    public void onSuccessFeeds(String[] sportsArray) {
-        mtournamentView.dismissProgressbar();
-        if (null != mtournamentView.getContext()) {
-            mtournamentView.initMyPosition(mTournamentModel.getAdapter(), mTournamentModel.getSelectedPosition(), sportsArray);
+    public void onSuccessFeeds(ViewPagerAdapter adapter) {
+        mTournamentView.dismissProgressbar();
+        if (null != mTournamentView.getContext()) {
+            mTournamentView.setAdapter(adapter);
         }
     }
 
     @Override
     public void onFailedFeeds(String message) {
-        mtournamentView.dismissProgressbar();
+        mTournamentView.dismissProgressbar();
         showAlertMsg(message);
     }
 
-
     private void showAlertMsg(String message) {
-        mtournamentView.dismissProgressbar();
-        mtournamentView.showInAppMessage(Constants.Alerts.NO_FEEDS_FOUND);
-    }
-
-    private void refreshLb() {
-        mtournamentView.showProgressbar();
-        mTournamentModel.getTournaments();
+        mTournamentView.dismissProgressbar();
+        mTournamentView.showInAppMessage(Alerts.NO_FEEDS_FOUND);
     }
 
     @Override
     public void onEmpty() {
-        mtournamentView.dismissProgressbar();
-        mtournamentView.showInAppMessage(Constants.Alerts.NO_UPDATED_LEADERBOARDS);
+        mTournamentView.dismissProgressbar();
+        mTournamentView.showInAppMessage(Alerts.NO_FEEDS_FOUND);
     }
 }
