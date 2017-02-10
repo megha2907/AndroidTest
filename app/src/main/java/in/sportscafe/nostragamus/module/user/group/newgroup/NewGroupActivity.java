@@ -7,8 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants;
@@ -36,6 +38,8 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
 
     private Toolbar mtoolbar;
 
+    private Button mDonebtn;
+
 
     private static final String[] PERMISSIONS_READ_STORAGE = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -52,6 +56,7 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
         checker = new PermissionsChecker(this);
 
         this.mEtGroupName = (EditText) findViewById(R.id.new_group_et_group_name);
+        mDonebtn = (Button) findViewById(R.id.new_group_btn_done);
 
         this.mRvTournamentSelection = (RecyclerView) findViewById(R.id.new_group_rcv);
         this.mRvTournamentSelection.setLayoutManager(new LinearLayoutManager(getContext(),
@@ -110,6 +115,11 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
     @Override
     public void navigateToAddPhoto(int addPhotoRequestCode) {
         startActivityForResult(new Intent(this, AddPhotoActivity.class), addPhotoRequestCode);
+    }
+
+    @Override
+    public void setGroupBtnClick(boolean btnClickable) {
+        mDonebtn.setClickable(btnClickable);
     }
 
     @Override

@@ -122,4 +122,9 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
     public void selectedTournamentsLimit() {
         mNewGroupView.showMessage(Constants.Alerts.SELECTED_TOURNAMENTS_LIMIT);
     }
+
+    @Override
+    public void setGroupDoneBtnClickable(boolean btnClickable) {
+        mNewGroupView.setGroupBtnClick(btnClickable);
+    }
 }

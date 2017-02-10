@@ -116,6 +116,7 @@ public class NewGroupModelImpl implements NewGroupModel {
             mNewGroupModelListener.onNoSportSelected();
             return;
         } else {
+            mNewGroupModelListener.setGroupDoneBtnClickable(false);
             if (Nostragamus.getInstance().hasNetworkConnection()) {
                 NewGroupRequest newGroupRequest = new NewGroupRequest();
                 newGroupRequest.setGroupCreatedBy(NostragamusDataHandler.getInstance().getUserId());
@@ -236,6 +237,7 @@ public class NewGroupModelImpl implements NewGroupModel {
                             bundle.putString(Constants.BundleKeys.SCREEN,Constants.ScreenNames.GROUPS_CREATE_NEW);
                             mNewGroupModelListener.onSuccess(bundle);
                         } else {
+                            mNewGroupModelListener.setGroupDoneBtnClickable(true);
                             mNewGroupModelListener.onFailed(response.message());
                         }
                     }
@@ -272,5 +274,7 @@ public class NewGroupModelImpl implements NewGroupModel {
         void onPhotoUpdate(String groupPhoto);
 
         void selectedTournamentsLimit();
+
+        void setGroupDoneBtnClickable(boolean btnClickable);
     }
 }

@@ -32,7 +32,7 @@ import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
-import in.sportscafe.nostragamus.module.settings.SettingsActivity;
+import in.sportscafe.nostragamus.module.settings.SettingActivity;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
@@ -356,7 +356,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     }
 
     private void navigateToSettings() {
-        startActivity(new Intent(getContext(), SettingsActivity.class));
+        startActivity(new Intent(getContext(), SettingActivity.class));
     }
 
 

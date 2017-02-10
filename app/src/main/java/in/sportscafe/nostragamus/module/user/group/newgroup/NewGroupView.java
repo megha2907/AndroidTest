@@ -16,4 +16,6 @@ public interface NewGroupView extends View {
     void setGroupImage(String imageUrl);
 
     void navigateToAddPhoto(int addPhotoRequestCode);
+
+    void setGroupBtnClick(boolean btnClickable);
 }
