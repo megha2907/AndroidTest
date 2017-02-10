@@ -16,7 +16,7 @@
     <item
         android:id="@+id/edit_group_btn"
         android:title="Edit Group"
-        android:visible="false"/>
+        android:visible="false" />
 
     <item
         android:id="@+id/leave_group_btn"
@@ -25,6 +25,11 @@
     <item
         android:id="@+id/reset_lb_btn"
         android:title="Reset Leaderboard"
-        android:visible="false"/>
+        android:visible="false" />
+
+    <item
+        android:id="@+id/delete_group_btn"
+        android:title="Delete Group"
+        android:visible="false" />
 
 </menu>

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.user.group.DeleteGroupModelImpl;
 import in.sportscafe.nostragamus.module.user.group.LeaveGroupModelImpl;
 import in.sportscafe.nostragamus.module.user.group.ResetLeaderboardModelImpl;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
@@ -178,6 +179,26 @@ public class GroupInfoModelImpl implements GroupInfoModel {
     }
 
     @Override
+    public void deleteGroup() {
+        new DeleteGroupModelImpl(new DeleteGroupModelImpl.OnDeleteGroupModelListener() {
+            @Override
+            public void onSuccessDeleteGroup() {
+                mGroupInfoModelListener.onDeleteGroupSuccess();
+            }
+
+            @Override
+            public void onFailedDeleteGroup(String message) {
+                mGroupInfoModelListener.onFailed(message);
+            }
+
+            @Override
+            public void onNoInternet() {
+                mGroupInfoModelListener.onNoInternet();
+            }
+        }).deleteGroup(mAdmin, mGroupInfo.getId());
+    }
+
+    @Override
     public GroupTournamentAdapter getAdapter(Context context) {
 
         if (NostragamusDataHandler.getInstance().getSelectedTournaments().isEmpty()) {
@@ -215,5 +236,7 @@ public class GroupInfoModelImpl implements GroupInfoModel {
         Context getContext();
 
         void onEmptyList();
+
+        void onDeleteGroupSuccess();
     }
 }

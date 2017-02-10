@@ -13,7 +13,6 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
-import in.sportscafe.nostragamus.module.settings.app.AppSettingsModelImpl;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
@@ -42,26 +41,32 @@ public class SplashActivity extends Activity {
                  * Launch Monster viewer activity if a link clicked without $android_deeplink_path
                  */
                 if(null != branchUniversalObject) {
+                    NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
                     HashMap<String, String> metadata = branchUniversalObject.getMetadata();
+
+                    if(metadata.containsKey(BundleKeys.USER_REFERRAL_ID)) {
+                        nostragamusDataHandler.setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
+                    }
+
+                    if(null != linkProperties) {
+                        Log.d("Install Channel", linkProperties.getChannel() + "");
+                        nostragamusDataHandler.setInstallChannel(linkProperties.getChannel());
+                    }
+
                     String path = metadata.get("$android_deeplink_path");
                     if (null != path) {
                         if (path.equalsIgnoreCase("group/invite/")) {
-                            if(NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size() > 0) {
-                                NostragamusDataHandler.getInstance().setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
+                            if(nostragamusDataHandler.getFavoriteSportsIdList().size() > 0) {
                                 navigateToJoinGroup(metadata.get(BundleKeys.GROUP_CODE));
                                 return;
                             }
                             else {
-                                Log.i("inside user_referral_id group/invite/",metadata.get(BundleKeys.USER_REFERRAL_ID));
-                                NostragamusDataHandler.getInstance().setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
-                                NostragamusDataHandler.getInstance().setInstallGroupCode(metadata.get(BundleKeys.GROUP_CODE));
-                                NostragamusDataHandler.getInstance().setInstallGroupName(metadata.get(BundleKeys.GROUP_NAME));
+                                nostragamusDataHandler.setInstallGroupCode(metadata.get(BundleKeys.GROUP_CODE));
+                                nostragamusDataHandler.setInstallGroupName(metadata.get(BundleKeys.GROUP_NAME));
                             }
                         }
 
                        if(path.equalsIgnoreCase("app/invite/")){
-                            Log.i("inside user_referral_id",metadata.get(BundleKeys.USER_REFERRAL_ID));
-                            NostragamusDataHandler.getInstance().setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
                             navigateToGetStarted();
                             return;
                         }

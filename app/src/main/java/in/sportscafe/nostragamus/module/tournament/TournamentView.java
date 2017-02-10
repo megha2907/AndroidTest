@@ -9,7 +9,6 @@ import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
  */
 
 public interface TournamentView extends InAppView {
-    void initMyPosition(ViewPagerAdapter adapter, int selectedPosition,String[] sportsArray);
 
     void setAdapter(ViewPagerAdapter adapter);
 }

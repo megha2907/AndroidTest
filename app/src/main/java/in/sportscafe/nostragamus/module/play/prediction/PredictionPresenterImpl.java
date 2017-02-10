@@ -5,7 +5,6 @@ import android.view.View;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
@@ -55,9 +54,9 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onSuccessCompletion(Bundle bundle) {
-        if(!mPredictionModel.isDummyGame()) {
+        if (!mPredictionModel.isDummyGame()) {
             mPredictionView.dismissProgressbar();
-            mPredictionView.navigateToFeed(bundle);
+            mPredictionView.navigateToFeed();
         } else {
             mPredictionView.showDummyGameInfo();
         }
@@ -118,18 +117,12 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onClickBack() {
         if (!mPredictionModel.isDummyGame()) {
-
-            if (!mPredictionModel.isFirstCardSwiped()){
+            if (!mPredictionModel.isFirstCardSwiped()) {
                 mPredictionView.goBack();
-            }else {
-                Bundle mbundle = new Bundle();
-                mbundle.putString(Constants.BundleKeys.TOURNAMENT_NAME,mPredictionModel.getTournamentName());
-                mbundle.putInt(Constants.BundleKeys.TOURNAMENT_ID,mPredictionModel.getTournamentId());
-                mbundle.putString(Constants.BundleKeys.SPORT_NAME,mPredictionModel.getSportName());
-                mPredictionView.navigateToFeed(mbundle);
+            } else {
+                mPredictionView.navigateToFeed();
             }
-
-        } else if(!mPredictionView.dismissCoach()) {
+        } else if (!mPredictionView.dismissCoach()) {
             checkWhereToGo();
         }
     }
@@ -141,7 +134,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     private void checkWhereToGo() {
-        if(mPredictionModel.isFromSettings()) {
+        if (mPredictionModel.isFromSettings()) {
             mPredictionView.goBack();
         } else {
             mPredictionView.navigateToHome();
@@ -171,31 +164,31 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         }
         mPredictionView.setNeitherOption(question.getQuestionOption3());
 
-        if(mPredictionModel.isDummyGame()) {
+        if (mPredictionModel.isDummyGame()) {
             handleDummyGameQuestionChange(question.getQuestionNumber());
         }
     }
 
     private void handleDummyGameQuestionChange(int questionNumber) {
-        if(questionNumber == 1) {
+        if (questionNumber == 1) {
             mPredictionView.hideNeither();
             mPredictionView.hidePowerups();
 
             mPredictionView.showLeftRightCoach();
             mPredictionView.showLeftRightIndicator();
-        } else if(questionNumber == 2) {
+        } else if (questionNumber == 2) {
             mPredictionView.showNeither();
             mPredictionView.disableLeftRightOptions();
 
             mPredictionView.showNeitherIndicator();
             mPredictionView.showNeitherCoach();
-        } else if(questionNumber == 3) {
+        } else if (questionNumber == 3) {
             mPredictionView.enableLeftRightOptions();
             mPredictionView.showPowerups();
 
             mPredictionView.showPowerupsHint();
             mPredictionView.showPowerupsCoach();
-        } else if(questionNumber == 4) {
+        } else if (questionNumber == 4) {
             mPredictionView.hidePowerupsHint();
         }
     }
@@ -249,6 +242,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onAudiencePollApplied(int count) {
         mPredictionView.setPollPowerupCount(count);
+    }
+
+    @Override
+    public void onUpdatingAnswer() {
+        mPredictionView.showProgressbar();
     }
 
     @Override

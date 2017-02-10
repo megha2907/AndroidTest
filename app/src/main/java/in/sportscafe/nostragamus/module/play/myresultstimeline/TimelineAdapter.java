@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.DateFormats;
@@ -42,7 +41,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.FeedWebView;
-import in.sportscafe.nostragamus.module.feed.dto.FeedTimeline;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.Parties;
 import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
@@ -68,7 +66,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
     private Integer mPlayerId;
 
-    private TournamentPowerupInfo mTournamentPowerupInfo;
+    private TournamentPowerupInfo mPowerupInfo;
 
     public TimelineAdapter(Context context) {
         super(context);
@@ -80,9 +78,9 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         this.mPlayerId = playerId;
     }
 
-    public TimelineAdapter(Context context, TournamentPowerupInfo tournamentPowerupInfo) {
+    public TimelineAdapter(Context context, TournamentPowerupInfo powerupInfo) {
         this(context);
-        mTournamentPowerupInfo = tournamentPowerupInfo;
+        mPowerupInfo = powerupInfo;
     }
 
     @Override
@@ -414,7 +412,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                             GameAttemptedStatus.PARTIALLY == match.getisAttempted() ? AnalyticsActions.CONTINUE : AnalyticsActions.PLAY
                     );
 
-                    bundle.putParcelable(BundleKeys.TOURNAMENT_POWERUPS, Parcels.wrap(mTournamentPowerupInfo));
+                    bundle.putParcelable(BundleKeys.TOURNAMENT_POWERUPS, Parcels.wrap(mPowerupInfo));
                     navigateToPrediction(context, bundle);
                     break;
                 case R.id.rl_points:

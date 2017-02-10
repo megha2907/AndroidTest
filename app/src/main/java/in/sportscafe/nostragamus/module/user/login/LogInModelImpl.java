@@ -129,7 +129,7 @@ public class LogInModelImpl implements LogInModel {
         logInRequest.setAccessToken(accessToken);
         logInRequest.setRefreshToken("");
 
-        final UserProfile userProfile = new UserProfile();
+        UserProfile userProfile = new UserProfile();
         logInRequest.setUserProfile(userProfile);
         userProfile.setId(id);
         userProfile.setUserName(username);
@@ -149,9 +149,6 @@ public class LogInModelImpl implements LogInModel {
                             NostragamusAnalytics.getInstance().trackLogIn(
                                     AnalyticsActions.COMPLETED, provider.equals(PROVIDER_FB) ? AnalyticsLabels.FACEBOOK : AnalyticsLabels.GOOGLE
                             );
-                            NostragamusAnalytics.getInstance().trackNewUsers(
-                                    TextUtils.isEmpty(userProfile.getUserReferralId()) ? AnalyticsActions.ORGANIC : AnalyticsActions.REFERRAL
-                            );
                             handleLoginResponse(response.body().getUserLoginInResponse());
                         } else {
                             mLogInModelListener.onLoginFailed();
@@ -163,8 +160,6 @@ public class LogInModelImpl implements LogInModel {
     private void handleLoginResponse(UserLoginInResponse userLoginInResponse) {
         NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
 
-        // Removing referral user id since user logged in
-        nostragamusDataHandler.setReferralUserId(null);
         nostragamusDataHandler.setJwtToken(userLoginInResponse);
         nostragamusDataHandler.setLoggedInUser(true);
         nostragamusDataHandler.setFirstTimeUser(userLoginInResponse.isNewUser());
@@ -183,6 +178,19 @@ public class LogInModelImpl implements LogInModel {
         } else {
             joinGroup(groupCode);
         }
+
+        if(userLoginInResponse.isNewUser()) {
+            NostragamusAnalytics.getInstance().trackNewUsers(
+                    TextUtils.isEmpty(nostragamusDataHandler.getReferralUserId()) ? AnalyticsActions.ORGANIC : AnalyticsActions.REFERRAL,
+                    NostragamusDataHandler.getInstance().getInstallChannel()
+            );
+        }
+
+        // Removing referral user id since user logged in
+        nostragamusDataHandler.setReferralUserId(null);
+
+        // Removing channel since user logged in
+        nostragamusDataHandler.setInstallChannel(null);
     }
 
     private void joinGroup(String groupCode) {

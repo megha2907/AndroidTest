@@ -9,11 +9,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
+import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -35,6 +37,7 @@ import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.google.android.gms.analytics.internal.zzy.m;
 import static in.sportscafe.nostragamus.Constants.BundleKeys;
 import static in.sportscafe.nostragamus.Constants.DateFormats;
 
@@ -106,7 +109,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.STARTED);
         } else {
             mDummyGame = true;
-            if(bundle.containsKey(BundleKeys.FROM_SETTINGS)) {
+            if (bundle.containsKey(BundleKeys.FROM_SETTINGS)) {
                 mFromSettings = bundle.getBoolean(BundleKeys.FROM_SETTINGS);
             }
             mPredictionModelListener.onGetSportName("");
@@ -125,7 +128,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
-    public String getSportName(){
+    public String getSportName() {
         return mSportName;
     }
 
@@ -255,7 +258,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public void onSkippingDummyGame() {
         int screenCount = 0;
-        if(null != mPredictionAdapter) {
+        if (null != mPredictionAdapter) {
             screenCount = mPredictionAdapter.getTopQuestion().getQuestionNumber();
         }
         NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.SKIPPED, screenCount);
@@ -267,35 +270,38 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
-    public Boolean isFirstCardSwiped(){
+    public Boolean isFirstCardSwiped() {
         return isFirstCardSwiped;
     }
 
     @Override
     public void removeFirstObjectInAdapter(Question question) {
-        isFirstCardSwiped = true;
         mPredictionAdapter.remove(question);
         mPredictionAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onLeftSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, AnswerIds.LEFT);
+        saveSinglePrediction(dataObject, AnswerIds.LEFT, AnalyticsLabels.LEFT);
     }
 
     @Override
     public void onRightSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, AnswerIds.RIGHT);
+        saveSinglePrediction(dataObject, AnswerIds.RIGHT, AnalyticsLabels.RIGHT);
     }
 
     @Override
     public void onTopSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, AnswerIds.NEITHER);
+        saveSinglePrediction(dataObject, AnswerIds.NEITHER, AnalyticsLabels.TOP);
     }
 
     @Override
     public void onBottomSwipe(Question dataObject) {
         mPredictionAdapter.add(dataObject);
+
+        if (!mDummyGame) {
+            NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.SHUFFLED, AnalyticsLabels.BOTTOM, getTimeSpent());
+        }
     }
 
     private int mLastQuestionNumber = -1;
@@ -317,7 +323,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         }
 
         Question topQuestion = mPredictionAdapter.getTopQuestion();
-        if(mLastQuestionNumber != topQuestion.getQuestionNumber()) {
+        if (mLastQuestionNumber != topQuestion.getQuestionNumber()) {
             mLastQuestionNumber = topQuestion.getQuestionNumber();
             if (itemsInAdapter == 1) {
                 mPredictionModelListener.onShowingLastQuestion();
@@ -326,6 +332,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             mNeitherOptionAvailable = !TextUtils.isEmpty(topQuestion.getQuestionOption3());
 
             mPredictionModelListener.onQuestionChanged(topQuestion, mInitialCount, mNeitherOptionAvailable);
+
+            mQuestionSeenTime = Calendar.getInstance().getTimeInMillis();
         }
     }
 
@@ -448,7 +456,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPredictionModelListener.onAudiencePollApplied(mPollPowerups);
     }
 
-    private void saveSinglePrediction(Question question, int answerId) {
+    private void saveSinglePrediction(Question question, int answerId, String direction) {
         if (!mDummyGame) {
             question.setAnswerId(answerId);
             String powerupId = question.getPowerUpId();
@@ -461,12 +469,16 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                     powerupId
             );
 
-            postAnswerToServer(answer, question.isMinorityAnswer(), mPredictionAdapter.getCount() == 0, powerupId);
+            postAnswerToServer(answer, question.isMinorityAnswer(), mPredictionAdapter.getCount() == 0, powerupId, direction);
+            NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.ANSWERED, direction, getTimeSpent());
         }
     }
 
     private void postAnswerToServer(Answer answer, boolean minorityOption, Boolean
-            matchComplete, final String powerupId) {
+            matchComplete, final String powerupId, final String direction) {
+        mPredictionModelListener.onUpdatingAnswer();
+        isFirstCardSwiped = true;
+
         new PostAnswerModelImpl(new PostAnswerModelImpl.PostAnswerModelListener() {
 
             @Override
@@ -490,6 +502,12 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
             }
         }).postAnswer(answer, minorityOption, matchComplete);
+    }
+
+    private long mQuestionSeenTime;
+
+    private long getTimeSpent() {
+        return Calendar.getInstance().getTimeInMillis() - mQuestionSeenTime;
     }
 
     private List<Question> getDummyQuestionList() {
@@ -593,5 +611,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         void onNonegsApplied(int count);
 
         void onAudiencePollApplied(int count);
+
+        void onUpdatingAnswer();
     }
 }

@@ -31,11 +31,24 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
     public void onCreateFeed(Bundle bundle) {
         mFeedModel.init(bundle);
         getFeedDetails();
+
+        mFeedView.setTournamentName(mFeedModel.getTournamentName());
     }
 
     @Override
     public void onRefresh() {
-        getFeedDetails();
+        mFeedView.hidePowerups();
+        mFeedView.showProgressbar();
+        mFeedModel.refreshFeed();
+    }
+
+    @Override
+    public void onBack() {
+        if(mFeedModel.isFeedRefreshed()) {
+            mFeedView.navigateToHome();
+        } else {
+            mFeedView.goBack();
+        }
     }
 
     @Override
@@ -44,15 +57,21 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
     }
 
     private void getFeedDetails() {
+        mFeedView.showProgressbar();
         mFeedModel.getFeeds();
     }
 
     @Override
-    public void onSuccessFeeds(List<Match> matchList, Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll
-            , String powerupText) {
-        mFeedView.setAdapter(mFeedModel.getAdapter(mFeedView.getContext(), matchList));
-        mFeedView.moveAdapterPosition(matchList.size() - 1);
-        mFeedView.initToolBar(powerUp2x, powerUpNonEgs, powerUpAudiencePoll, powerupText);
+    public void onSuccessFeeds(List<Match> matchList, Integer powerUp2x, Integer powerUpNonEgs,
+                               Integer powerUpAudiencePoll, String powerupText) {
+        mFeedView.dismissProgressbar();
+
+        if (null != mFeedView.getContext()) {
+            mFeedView.setAdapter(mFeedModel.getAdapter(mFeedView.getContext(), matchList));
+            mFeedView.moveAdapterPosition(matchList.size() - 1);
+
+            mFeedView.showPowerups(powerUp2x, powerUpNonEgs, powerUpAudiencePoll, powerupText);
+        }
     }
 
     @Override
@@ -70,11 +89,6 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
         mFeedView.showInAppMessage(Constants.Alerts.NO_FEEDS_FOUND);
     }
 
-    @Override
-    public Context getContext() {
-        return mFeedView.getContext();
-    }
-
     private void showAlertMessage(String message) {
         mFeedView.showMessage(message, "RETRY",
                 new View.OnClickListener() {
@@ -84,6 +98,5 @@ public class FeedPresenterImpl implements FeedPresenter, FeedModelImpl.OnFeedMod
                     }
                 });
     }
-
 
 }

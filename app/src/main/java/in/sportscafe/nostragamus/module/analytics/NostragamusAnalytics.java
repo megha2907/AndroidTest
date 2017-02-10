@@ -12,14 +12,17 @@ import com.google.android.gms.analytics.Tracker;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.PayloadBuilder;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsCategory;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
+import in.sportscafe.nostragamus.Constants.UserProperties;
 import in.sportscafe.nostragamus.R;
 
 
@@ -130,9 +133,10 @@ public class NostragamusAnalytics {
      * track new users
      *
      * @param actions - referral or organic
+     * @param label - channels like facebook, twitter
      */
-    public void trackNewUsers(String actions) {
-        track(AnalyticsCategory.NEW_USERS, actions, null, null);
+    public void trackNewUsers(String actions, String label) {
+        track(AnalyticsCategory.NEW_USERS, actions, label, null);
     }
 
     /**
@@ -178,7 +182,18 @@ public class NostragamusAnalytics {
      * @param actions - Started, completed
      */
     public void trackPlay(String actions) {
-        track(AnalyticsCategory.LEADERBOARD, actions, null, null);
+        track(AnalyticsCategory.PLAY, actions, null, null);
+    }
+
+    /**
+     * track play games
+     *
+     * @param actions - Answered, Shuffled
+     * @param label - Swipe direction like left, right, top or bottom
+     * @param timeSpentInMs - Actual milliseconds spent before swiping the questions
+     */
+    public void trackPlay(String actions, String label, long timeSpentInMs) {
+        track(AnalyticsCategory.PLAY, actions, label, timeSpentInMs);
     }
 
     /**
@@ -309,6 +324,18 @@ public class NostragamusAnalytics {
     public void setUserId(String userId) {
         if(null != mAmplitude && null != userId) {
             mAmplitude.setUserId(userId);
+        }
+    }
+
+    public void setUserProperties(int groupCount) {
+        if(null != mAmplitude) {
+            try {
+                JSONObject userProperties = new JSONObject();
+                userProperties.put(UserProperties.NUMBER_OF_GROUPS, groupCount);
+                mAmplitude.setUserProperties(userProperties);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -9,9 +9,17 @@ import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
  */
 public interface FeedView extends InAppView {
 
+    void showPowerups(Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll, String powerupText);
+
+    void hidePowerups();
+
     void setAdapter(TimelineAdapter feedAdapter);
 
     void moveAdapterPosition(int movePosition);
 
-    void initToolBar(Integer powerUp2x, Integer powerUpNonEgs, Integer powerUpAudiencePoll,String powerUpText);
+    void setTournamentName(String tournamentName);
+
+    void navigateToHome();
+
+    void goBack();
 }

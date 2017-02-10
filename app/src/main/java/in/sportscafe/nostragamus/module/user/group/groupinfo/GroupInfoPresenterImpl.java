@@ -88,6 +88,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
         LinkProperties linkProperties = new LinkProperties()
                 .addTag("inviteGroup")
                 .setFeature("inviteGroup")
+                .setChannel("App")
                 .addControlParameter("$android_deeplink_path", "group/invite/");
 
         buo.generateShortUrl(mGroupInfoView.getContext(), linkProperties,
@@ -133,7 +134,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     }
 
     @Override
-    public void onLeaveGroup() {
+    public void onClickLeaveGroup() {
         mGroupInfoView.showProgressbar();
         mGroupInfoModel.leaveGroup();
     }
@@ -142,6 +143,12 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     public void onClickResetLb() {
         mGroupInfoView.showProgressbar();
         mGroupInfoModel.resetLeaderboard();
+    }
+
+    @Override
+    public void onClickDeleteGroup() {
+        mGroupInfoView.showProgressbar();
+        mGroupInfoModel.deleteGroup();
     }
 
     @Override
@@ -195,6 +202,14 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     public void onEmptyList() {
 
     }
+
+    @Override
+    public void onDeleteGroupSuccess() {
+        mGroupInfoView.dismissProgressbar();
+        mGroupInfoView.showMessage(Alerts.DELETE_GROUP_SUCCESS);
+        mGroupInfoView.navigateToHome();
+    }
+
     @Override
     public void onGroupNameUpdateSuccess() {
         mGroupInfoView.dismissProgressbar();

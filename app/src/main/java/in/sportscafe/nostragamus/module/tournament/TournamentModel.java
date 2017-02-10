@@ -8,9 +8,5 @@ import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 
 public interface TournamentModel {
 
-    ViewPagerAdapter getAdapter();
-
     void getTournaments();
-
-    int getSelectedPosition();
 }

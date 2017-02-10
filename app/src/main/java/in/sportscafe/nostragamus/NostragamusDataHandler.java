@@ -1,8 +1,5 @@
 package in.sportscafe.nostragamus;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.jeeva.android.Log;
 
@@ -33,12 +30,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     private static NostragamusDataHandler sNostragamusDataHandler = new NostragamusDataHandler();
 
-    /**
-     * Variable to hold the sharedPreference data
-     */
-    private SharedPreferences mSharedPreferences;
-    private boolean initialFeedbackFormShown;
-
     private NostragamusDataHandler() {
     }
 
@@ -46,13 +37,9 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return sNostragamusDataHandler;
     }
 
-    public void init(Context context) {
-        mSharedPreferences = context.getSharedPreferences("in.sportscafe.nostragamus", Context.MODE_PRIVATE);
-    }
-
     @Override
-    public SharedPreferences getSharedPreferences() {
-        return mSharedPreferences;
+    public String getPreferenceFileName() {
+        return "in.sportscafe.nostragamus";
     }
 
     public int getPreviousAppVersionCode() {
@@ -80,7 +67,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedBooleanData(SharedKeys.FIRST_TIME_USER, FirstTimeUser);
     }
 
-
     public boolean isInitialSportsAvailable() {
         return getSharedBooleanData(SharedKeys.INITIAL_SPORTS_AVAILABLE, false);
     }
@@ -88,7 +74,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public void setInitialSportsAvailable(boolean initialSportsAvailable) {
         setSharedBooleanData(SharedKeys.INITIAL_SPORTS_AVAILABLE, initialSportsAvailable);
     }
-
 
     //ALL SPORTS
     public List<Sport> getAllSports() {
@@ -315,7 +300,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedIntData(SharedKeys.NUMBER_OF_BADGES, numberofbadges);
     }
 
-
     //TOURNAMENTS
     public List<TournamentFeedInfo> getTournaments() {
         String allTournamentsString = getSharedStringData(SharedKeys.ALL_TOURNAMENTS);
@@ -376,6 +360,7 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public void setMutualGroups(String mutualGroups) {
         setSharedStringData(SharedKeys.MUTUAL_GROUPS, mutualGroups);
     }
+
     public void setMutualGroups(List<MutualGroups> mutualGroups) {
         setMutualGroups(MyWebService.getInstance().getJsonStringFromObject(mutualGroups));
     }
@@ -431,7 +416,9 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     }
 
     public void setNumberofGroups(Integer numberofgroups) {
-        setSharedIntData(SharedKeys.NUMBER_OF_GROUPS, null == numberofgroups ? 0 : numberofgroups);
+        int noOfGroups = null == numberofgroups ? 0 : numberofgroups;
+        setSharedIntData(SharedKeys.NUMBER_OF_GROUPS, noOfGroups);
+        NostragamusAnalytics.getInstance().setUserProperties(noOfGroups);
     }
 
     public String getInstallGroupCode() {
@@ -448,6 +435,14 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     public void setInstallGroupName(String installGroupName) {
         setSharedStringData(SharedKeys.INSTALL_GROUP_NAME, installGroupName);
+    }
+
+    public void setInstallChannel(String installChannel) {
+        setSharedStringData(SharedKeys.INSTALL_CHANNEL, installChannel);
+    }
+
+    public String getInstallChannel() {
+        return getSharedStringData(SharedKeys.INSTALL_CHANNEL);
     }
 
     public int getNormalUpdateVersion() {

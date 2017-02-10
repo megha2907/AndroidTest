@@ -239,4 +239,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<ApiResponse> getAcknowledgePopupRequest(String popUpName) {
         return mNostragamusService.getAcknowledgePopupRequest(popUpName);
     }
+
+    public Call<ApiResponse> getDeleteGroupRequest(AdminRequest request) {
+        return mNostragamusService.deleteGroup(request);
+    }
 }

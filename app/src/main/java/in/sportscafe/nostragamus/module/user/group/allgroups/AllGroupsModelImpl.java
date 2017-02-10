@@ -25,7 +25,7 @@ import retrofit2.Response;
  * Created by deepanshi on 9/27/16.
  */
 
-public class AllGroupsModelImpl implements AllGroupsModel{
+public class AllGroupsModelImpl implements AllGroupsModel {
 
     private NostragamusDataHandler mNostragamusDataHandler;
 
@@ -69,7 +69,7 @@ public class AllGroupsModelImpl implements AllGroupsModel{
             NostragamusDataHandler.getInstance().setMutualGroups(oldMutualGroupsList);
             mAllGroupsModelListener.ongetMutualGroupsSuccess();
 
-        }else {
+        } else {
             mAllGroupsModelListener.onMutualGroupsEmpty();
         }
     }
@@ -81,19 +81,12 @@ public class AllGroupsModelImpl implements AllGroupsModel{
                     @Override
                     public void onResponse(Call<AllGroupsResponse> call, Response<AllGroupsResponse> response) {
                         super.onResponse(call, response);
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
 
                             List<AllGroups> newAllGroups = response.body().getAllGroups();
-                            if (null != newAllGroups && newAllGroups.size() > 0) {
-                                List<AllGroups> oldAllGroupsList = NostragamusDataHandler.getInstance().getAllGroups();
-                                oldAllGroupsList.clear();
-                                for (AllGroups allGroups : newAllGroups) {
-                                    if (!oldAllGroupsList.contains(allGroups)) {
-                                        oldAllGroupsList.add(allGroups);
-                                    }
-                                }
-                                NostragamusDataHandler.getInstance().setAllGroups(oldAllGroupsList);
-                                NostragamusDataHandler.getInstance().setNumberofGroups(oldAllGroupsList.size());
+                            if (null != newAllGroups) {
+                                NostragamusDataHandler.getInstance().setAllGroups(newAllGroups);
+                                NostragamusDataHandler.getInstance().setNumberofGroups(newAllGroups.size());
                             }
 
                             mAllGroupsModelListener.ongetAllGroupsSuccess();
@@ -109,7 +102,7 @@ public class AllGroupsModelImpl implements AllGroupsModel{
     @Override
     public RecyclerView.Adapter getAllGroupsAdapter(Context context) {
 
-        if(mNostragamusDataHandler.getAllGroups().isEmpty()){
+        if (mNostragamusDataHandler.getAllGroups().isEmpty()) {
 
             mAllGroupsModelListener.onAllGroupsEmpty();
         }
@@ -123,7 +116,7 @@ public class AllGroupsModelImpl implements AllGroupsModel{
     @Override
     public RecyclerView.Adapter getMutualGroupsAdapter(Context context) {
 
-        if(mNostragamusDataHandler.getMutualGroups().isEmpty() || null == mNostragamusDataHandler.getMutualGroups()){
+        if (mNostragamusDataHandler.getMutualGroups().isEmpty() || null == mNostragamusDataHandler.getMutualGroups()) {
 
             mAllGroupsModelListener.onMutualGroupsEmpty();
         }
@@ -131,8 +124,6 @@ public class AllGroupsModelImpl implements AllGroupsModel{
                 mNostragamusDataHandler.getMutualGroups());
         return mMutualGroupsAdapter;
     }
-
-
 
 
     public interface AllGroupsModelListener {
