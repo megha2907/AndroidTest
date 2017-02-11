@@ -210,8 +210,8 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onGetSportName(String sportName) {
-        mPredictionView.changeBackgroundImage(sportName);
+    public void onGetSport(Integer sportId) {
+        mPredictionView.changeBackgroundImage(sportId);
     }
 
     @Override

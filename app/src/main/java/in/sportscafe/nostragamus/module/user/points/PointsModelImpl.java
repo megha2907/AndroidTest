@@ -37,8 +37,6 @@ public class PointsModelImpl implements PointsModel {
 
     private Integer mTourId;
 
-    private String mLandingType;
-
     private LbLanding mLbLanding;
 
     private OnPointsModelListener mPointsModelListener;
@@ -66,9 +64,8 @@ public class PointsModelImpl implements PointsModel {
         }
 
         mLbLanding = Parcels.unwrap(bundle.getParcelable(BundleKeys.LB_LANDING_DATA));
-        mLandingType = bundle.getString(BundleKeys.LB_LANDING_TYPE);
 
-        switch (mLandingType) {
+        switch (mLbLanding.getType()) {
             case LBLandingType.SPORT:
                 mSportId = mLbLanding.getId();
                 break;
@@ -79,7 +76,6 @@ public class PointsModelImpl implements PointsModel {
                 mChallengeId = mLbLanding.getId();
                 break;
         }
-
     }
 
     @Override

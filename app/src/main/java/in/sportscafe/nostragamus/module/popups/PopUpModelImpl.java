@@ -1,10 +1,16 @@
 package in.sportscafe.nostragamus.module.popups;
 
+import android.os.Bundle;
+
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import in.sportscafe.nostragamus.webservice.PopUpResponse;
@@ -23,6 +29,10 @@ public class PopUpModelImpl {
         this.mPopUpsModelListener = listener;
     }
 
+    public static PopUpModelImpl newInstance() {
+        return newInstance(null);
+    }
+
     public static PopUpModelImpl newInstance(PopUpModelImpl.OnGetPopUpModelListener listener) {
         return new PopUpModelImpl(listener);
     }
@@ -33,9 +43,9 @@ public class PopUpModelImpl {
         }
     }
 
-    public void AcknowledgePopups(String popUpName) {
+    public void acknowledgePopups(PopUp popUp) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            callAcknowledgePopup(popUpName);
+            callAcknowledgePopup(popUp);
         }
     }
 
@@ -61,8 +71,10 @@ public class PopUpModelImpl {
         );
     }
 
-    private void callAcknowledgePopup(String popUpName) {
-        MyWebService.getInstance().getAcknowledgePopupRequest(popUpName).enqueue(
+    private void callAcknowledgePopup(PopUp popUp) {
+        NostragamusAnalytics.getInstance().trackBadges(AnalyticsActions.RECEIVED, popUp.getTitle());
+
+        MyWebService.getInstance().getAcknowledgePopupRequest(popUp.getName()).enqueue(
                 new NostragamusCallBack<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

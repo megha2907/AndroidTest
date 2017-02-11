@@ -521,19 +521,16 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         Match match = getItem(0).getTournaments().get(0).getMatches().get(0);
 
         LbLanding lbLanding = new LbLanding(
-                match.getSportId(),
-                match.getSportName(),
-                null, null,
-                Sport.getSportImageUrl(match.getSportName(), 100, 100),
-                LBLandingType.SPORT
+                match.getChallengeId(),
+                match.getChallengeName(),
+                match.getChallengeImg(),
+                LBLandingType.CHALLENGE
         );
 
         Intent intent =  new Intent(context, PointsActivity.class);
         intent.putExtra(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
-        intent.putExtra(BundleKeys.LB_LANDING_TYPE, LBLandingType.SPORT);
-        intent.putExtra(BundleKeys.TOURNAMENT_ID, match.getTournamentId());
+//        intent.putExtra(BundleKeys.TOURNAMENT_ID, match.getTournamentId());
         context.startActivity(intent);
-//        context.startActivity(new Intent(context, LeaderBoardSummaryActivity.class));
     }
 
     private void broadcastShareScore(Context context) {

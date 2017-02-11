@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomTextView;
 
-import in.sportscafe.nostragamus.Config.Sports;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.coachmarker.TargetView;
@@ -243,20 +242,20 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void changeBackgroundImage(String sportName) {
+    public void changeBackgroundImage(Integer sportId) {
         int bgRes;
-        switch (sportName.toLowerCase()) {
-            case Sports.CRICKET:
+        switch (sportId) {
+            case 1:
                 bgRes = R.drawable.play_cricket_bg;
                 break;
-            case Sports.BADMINTON:
+            case 3:
+                bgRes = R.drawable.play_tennis_bg;
+                break;
+            case 6:
                 bgRes = R.drawable.play_badminton_bg;
                 break;
-            case Sports.FOOTBALL:
+            case 4:
                 bgRes = R.drawable.play_football_bg;
-                break;
-            case Sports.TENNIS:
-                bgRes = R.drawable.play_tennis_bg;
                 break;
             default:
                 return;

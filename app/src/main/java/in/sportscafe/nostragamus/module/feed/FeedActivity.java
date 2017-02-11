@@ -27,7 +27,7 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
  */
 public class FeedActivity extends NostragamusActivity implements FeedView {
 
-    private static final float MAX_ROTATION = 10f;
+    private static final float MAX_ROTATION = 15f;
 
     private float mTopScheduleMargin;
 
@@ -117,7 +117,6 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
                 RelativeLayout.LayoutParams layoutParams;
                 int[] location = new int[2];
                 float maxHeight;
-                float percent;
                 float rotation;
                 int childCount = parent.getChildCount();
                 for (int i = 0; i < childCount; i++) {
@@ -128,18 +127,14 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
                     if (child.getVisibility() == View.VISIBLE) {
                         maxHeight = child.getMeasuredHeight();
                         child.setPivotY(maxHeight);
-
                         child.getLocationOnScreen(location);
-                        Log.d("FeedActivity", "y --> " + location[1]);
 
-                        percent = (location[1] - mHalfVisibleHeight) / mDifference;
-                        Log.d("FeedActivity", "percent --> " + percent);
-                        rotation = getRotationByPercent(percent);
+                        rotation = getRotationByPercent((location[1] - mHalfVisibleHeight) / mDifference);
                         child.setRotationX(rotation);
 
-                        layoutParams = (RelativeLayout.LayoutParams) child.getLayoutParams();
+                        /*layoutParams = (RelativeLayout.LayoutParams) child.getLayoutParams();
                         layoutParams.topMargin = (int) (mTopScheduleMargin - (maxHeight - getHeightByRotation(maxHeight, rotation)));
-                        child.setLayoutParams(layoutParams);
+                        child.setLayoutParams(layoutParams);*/
                     }
                 }
                 super.onDraw(c, parent, state);

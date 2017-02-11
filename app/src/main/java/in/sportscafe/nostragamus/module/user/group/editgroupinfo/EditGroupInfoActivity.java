@@ -80,21 +80,14 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
 
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
                 editGroupName = true;
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // TODO Auto-generated method stub
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
         });
 

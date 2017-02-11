@@ -19,8 +19,6 @@ public interface PredictionModel {
 
     boolean isDummyGame();
 
-    String getSportName();
-
     void getDummyGameQuestions();
 
     String getTournamentName();

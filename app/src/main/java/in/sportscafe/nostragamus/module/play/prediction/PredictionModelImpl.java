@@ -13,7 +13,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
@@ -37,7 +36,6 @@ import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import static com.google.android.gms.analytics.internal.zzy.m;
 import static in.sportscafe.nostragamus.Constants.BundleKeys;
 import static in.sportscafe.nostragamus.Constants.DateFormats;
 
@@ -72,8 +70,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     private int mPollPowerups = 0;
 
-    private String mSportName = "";
-
     private Boolean isFirstCardSwiped = false;
 
     public PredictionModelImpl(OnPredictionModelListener predictionModelListener) {
@@ -91,9 +87,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             mMyResult = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
             mMatchId = mMyResult.getId();
 
-            if (bundle.containsKey(BundleKeys.SPORT_NAME)) {
-                mSportName = bundle.getString(BundleKeys.SPORT_NAME);
-                mPredictionModelListener.onGetSportName(mSportName);
+            if (bundle.containsKey(BundleKeys.SPORT_ID)) {
+                mPredictionModelListener.onGetSport(bundle.getInt(BundleKeys.SPORT_ID));
             }
 
             if (bundle.containsKey(BundleKeys.TOURNAMENT_POWERUPS)) {
@@ -112,7 +107,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             if (bundle.containsKey(BundleKeys.FROM_SETTINGS)) {
                 mFromSettings = bundle.getBoolean(BundleKeys.FROM_SETTINGS);
             }
-            mPredictionModelListener.onGetSportName("");
 
             m2xPowerups = 3;
             mNonegsPowerups = 3;
@@ -125,11 +119,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public boolean isDummyGame() {
         return mDummyGame;
-    }
-
-    @Override
-    public String getSportName() {
-        return mSportName;
     }
 
     @Override
@@ -600,7 +589,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         void notifyTopQuestion();
 
-        void onGetSportName(String sportName);
+        void onGetSport(Integer sportId);
 
         void onFailedPostAnswerToServer(String message);
 
