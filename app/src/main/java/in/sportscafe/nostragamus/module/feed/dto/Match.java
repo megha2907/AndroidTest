@@ -84,8 +84,8 @@ public class Match {
     @JsonProperty("challenge_name")
     private String challengeName;
 
-    @JsonProperty("challenge_img")
-    private String challengeImg;
+    @JsonProperty("challenge_img_url")
+    private String challengeImgUrl;
 
     /**
      *
@@ -397,13 +397,13 @@ public class Match {
         this.challengeName = challengeName;
     }
 
-    @JsonProperty("challenge_img")
-    public String getChallengeImg() {
-        return challengeImg;
+    @JsonProperty("challenge_img_url")
+    public String getChallengeImgUrl() {
+        return challengeImgUrl;
     }
 
-    @JsonProperty("challenge_img")
-    public void setChallengeImg(String challengeImg) {
-        this.challengeImg = challengeImg;
+    @JsonProperty("challenge_img_url")
+    public void setChallengeImgUrl(String challengeImgUrl) {
+        this.challengeImgUrl = challengeImgUrl;
     }
 }
