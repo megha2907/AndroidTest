@@ -483,7 +483,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         }
     };
 
+
+
 }
+
+
 
     /*
 

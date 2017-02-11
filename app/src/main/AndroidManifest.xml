@@ -113,7 +113,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="in.sportscafe.nostragamus.module.settings.SettingsActivity"
+            android:name="in.sportscafe.nostragamus.module.settings.SettingActivity"
             android:screenOrientation="portrait" />
 
         <activity

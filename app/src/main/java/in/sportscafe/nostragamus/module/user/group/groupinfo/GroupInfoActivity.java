@@ -112,7 +112,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
                 if (getIsGroupRefreshed() || mBundle.containsKey(BundleKeys.SCREEN)){
                     navigateToHome();
                 }else {
-                    onBackPressed();
+                    finish();
                 }
                 break;
             case R.id.group_info_ll_share:
@@ -120,6 +120,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
                 break;
         }
     }
+
 
     private void navigatetoEditGroupInfoActivity() {
 
@@ -359,5 +360,14 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     @Override
     public String getScreenName() {
         return Constants.ScreenNames.GROUPS_INFO;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getIsGroupRefreshed() || mBundle.containsKey(Constants.BundleKeys.SCREEN)){
+            navigateToHome();
+        }else {
+            finish();
+        }
     }
 }

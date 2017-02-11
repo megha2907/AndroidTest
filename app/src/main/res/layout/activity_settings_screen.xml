@@ -1,8 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/black">
+
+    <RelativeLayout
+        android:id="@+id/settings_header"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorMedium"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:elevation="4dp"
+            android:id="@+id/settings_toolbar"
+            />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/settings_header">
+
+    <LinearLayout
+        android:id="@+id/settings_ll_action_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp_20">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_4"
+                android:text="@string/account"
+                android:textColor="@color/curious_blue"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_regular" />
+
+            <View style="@style/SettingHeadingDivider" />
+        </LinearLayout>
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/settings_btn_edit_profile"
+            style="@style/SettingOptionStyle"
+            android:text="@string/edit_profile" />
+
+        <View style="@style/SettingOptionDivider" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/settings_btn_logout"
+            style="@style/SettingOptionStyle"
+            android:text="@string/logout" />
+
+        <View style="@style/SettingOptionDivider" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/settings_btn_refer_friend"
+            style="@style/SettingOptionStyle"
+            android:text="@string/refer_friend" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_4"
+                android:text="@string/support"
+                android:textColor="@color/curious_blue"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_regular" />
+
+            <View style="@style/SettingHeadingDivider" />
+        </LinearLayout>
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/settings_btn_dummy_game"
+            style="@style/SettingOptionStyle"
+            android:text="@string/dummy_game" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_4"
+                android:text="@string/about"
+                android:textColor="@color/curious_blue"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_regular" />
+
+            <View style="@style/SettingHeadingDivider" />
+        </LinearLayout>
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/settings_btn_about_us"
+            style="@style/SettingOptionStyle"
+            android:text="@string/about_us" />
+
+        <View style="@style/SettingOptionDivider" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/settings_btn_terms_service"
+            style="@style/SettingOptionStyle"
+            android:text="@string/terms_of_service" />
+
+        <View
+            style="@style/SettingOptionDivider" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/settings_btn_privacy"
+            style="@style/SettingOptionStyle"
+            android:text="@string/privacy" />
+
+        <View
+            style="@style/SettingOptionDivider" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/settings_tv_version"
+            style="@style/SettingOptionStyle"
+            android:alpha="0.6"
+            android:text="Version 1.0.21" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_20" />
+
+    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
