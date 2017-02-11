@@ -1,10 +1,18 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
-import com.jeeva.android.Log;
-
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
+import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
+import in.sportscafe.nostragamus.Constants.AnswerIds;
+import in.sportscafe.nostragamus.Constants.DateFormats;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
+import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -17,33 +25,41 @@ public class PostAnswerModelImpl {
 
     private PostAnswerModelListener mPostAnswerModelListener;
 
-    public PostAnswerModelImpl(PostAnswerModelListener modelListener) {
-        this.mPostAnswerModelListener = modelListener;
+    private PostAnswerModelImpl(PostAnswerModelListener listener) {
+        this.mPostAnswerModelListener = listener;
     }
 
-    public void postAnswer(Answer answer, boolean minorityOption, Boolean matchComplete) {
+    public static PostAnswerModelImpl newInstance(PostAnswerModelListener listener) {
+        return new PostAnswerModelImpl(listener);
+    }
+
+    public void postAnswer(Question question, boolean matchComplete) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            callPostAnswerApi(answer, minorityOption, matchComplete);
+            Answer answer = new Answer(
+                    question.getMatchId(),
+                    question.getQuestionId(),
+                    question.getAnswerId(),
+                    TimeUtils.getCurrentTime(DateFormats.FORMAT_DATE_T_TIME_ZONE, DateFormats.GMT),
+                    question.getPowerUpId()
+            );
+            callPostAnswerApi(answer, question.isMinorityAnswer(), matchComplete);
         } else {
             mPostAnswerModelListener.onNoInternet();
         }
-
-        /*Log.i("PostAnswerModelImpl", "Answer -- > " + MyWebService.getInstance().getJsonStringFromObject(answer));
-        Log.i("PostAnswerModelImpl", "MinorityOption -- > " + minorityOption);
-        Log.i("PostAnswerModelImpl", "MatchComplete -- > " + matchComplete);*/
     }
 
-    private void callPostAnswerApi(Answer answer, boolean minorityOption, Boolean matchComplete) {
+    private void callPostAnswerApi(final Answer answer, boolean minorityOption, boolean matchComplete) {
         MyWebService.getInstance().getPostAnswerRequest(answer, matchComplete, minorityOption).enqueue(
                 new NostragamusCallBack<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         super.onResponse(call, response);
                         if (response.isSuccessful()) {
-                            if (response.body().getMessage().equals("Match has already started")) {
-                                mPostAnswerModelListener.onFailed(response.body().getMessage());
+                            String responseMsg = response.body().getMessage();
+                            if (responseMsg.equals("Match has already started")) {
+                                mPostAnswerModelListener.onFailed(responseMsg);
                             } else {
-                                mPostAnswerModelListener.onSuccess();
+                                handlePostAnswerResponse(answer);
                             }
                         } else {
                             mPostAnswerModelListener.onFailed(response.message());
@@ -53,9 +69,36 @@ public class PostAnswerModelImpl {
         );
     }
 
+    private void handlePostAnswerResponse(Answer answer) {
+        String powerupId = answer.getPowerUpId();
+        if (null != powerupId) {
+            if (Powerups.XX_GLOBAL.equalsIgnoreCase(powerupId)) {
+                NostragamusDataHandler.getInstance().setNumberof2xGlobalPowerups(
+                        NostragamusDataHandler.getInstance().getNumberof2xGlobalPowerups() - 1
+                );
+            }
+            NostragamusAnalytics.getInstance().trackPowerups(AnalyticsActions.APPLIED, powerupId);
+        }
+
+        mPostAnswerModelListener.onSuccess(getAnswerDirection(answer.getAnswerId()));
+    }
+
+    private String getAnswerDirection(int answerId) {
+        switch (answerId) {
+            case AnswerIds.LEFT:
+                return AnalyticsLabels.LEFT;
+            case AnswerIds.RIGHT:
+                return AnalyticsLabels.RIGHT;
+            case AnswerIds.NEITHER:
+                return AnalyticsLabels.TOP;
+            default:
+                return AnalyticsLabels.BOTTOM;
+        }
+    }
+
     public interface PostAnswerModelListener {
 
-        void onSuccess();
+        void onSuccess(String answerDirection);
 
         void onNoInternet();
 

@@ -153,13 +153,11 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
 //                       break;
 
                 default:
-
                     TournamentFeedInfo tournamentInfo = getItem(getAdapterPosition());
-                    Integer tournamentId = tournamentInfo.getTournamentId();
+
                     Bundle bundle = new Bundle();
-                    bundle.putInt(BundleKeys.TOURNAMENT_ID, tournamentId);
+                    bundle.putInt(BundleKeys.TOURNAMENT_ID, tournamentInfo.getTournamentId());
                     bundle.putString(BundleKeys.TOURNAMENT_NAME, tournamentInfo.getTournamentName());
-                    bundle.putString(BundleKeys.SPORT_NAME, tournamentInfo.getSportsName());
 
                     Intent intent = new Intent(view.getContext(), FeedActivity.class);
                     intent.putExtras(bundle);
@@ -170,7 +168,7 @@ public class TournamentFeedAdapter extends Adapter<TournamentFeedInfo, Tournamen
                             tournamentInfo.getTournamentName(),
                             null == tournamentInfo.getCountsUnplayed() ? 0 : Long.parseLong(tournamentInfo.getCountsUnplayed())
                     );
-
+                    break;
             }
 
         }

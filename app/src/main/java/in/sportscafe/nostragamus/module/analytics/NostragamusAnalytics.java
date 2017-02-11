@@ -142,10 +142,21 @@ public class NostragamusAnalytics {
     /**
      * track powerups
      *
-     * @param actions - 2x
+     * @param actions - applied
+     * @param label - 2x, no_negs
      */
-    public void trackPowerups(String actions) {
-        track(AnalyticsCategory.POWERUP, actions, null, null);
+    public void trackPowerups(String actions, String label) {
+        track(AnalyticsCategory.POWERUP, actions, label, null);
+    }
+
+    /**
+     * track badges
+     *
+     * @param actions - received
+     * @param label - Baby Step
+     */
+    public void trackBadges(String actions, String label) {
+        track(AnalyticsCategory.BADGE, actions, label, null);
     }
 
     /**

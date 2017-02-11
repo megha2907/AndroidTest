@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +37,6 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
-import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
-import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -521,19 +518,16 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
         Match match = getItem(0).getTournaments().get(0).getMatches().get(0);
 
         LbLanding lbLanding = new LbLanding(
-                match.getSportId(),
-                match.getSportName(),
-                null, null,
-                Sport.getSportImageUrl(match.getSportName(), 100, 100),
-                LBLandingType.SPORT
+                match.getChallengeId(),
+                match.getChallengeName(),
+                match.getChallengeImgUrl(),
+                LBLandingType.CHALLENGE
         );
 
         Intent intent =  new Intent(context, PointsActivity.class);
         intent.putExtra(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
-        intent.putExtra(BundleKeys.LB_LANDING_TYPE, LBLandingType.SPORT);
-        intent.putExtra(BundleKeys.TOURNAMENT_ID, match.getTournamentId());
+//        intent.putExtra(BundleKeys.TOURNAMENT_ID, match.getTournamentId());
         context.startActivity(intent);
-//        context.startActivity(new Intent(context, LeaderBoardSummaryActivity.class));
     }
 
     private void broadcastShareScore(Context context) {

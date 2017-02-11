@@ -156,7 +156,6 @@ public interface Constants {
         String USER_REFERRAL_ID = "user_referral_id";
         String GROUP_NAME = "group_name";
         String SPORT_ID = "sportId";
-        String SPORT_NAME = "sportName";
         String SPORT_LIST = "sportList";
         String MATCH_LIST = "matchList";
         String FROM_PROFILE = "fromProfile";
@@ -267,6 +266,7 @@ public interface Constants {
         String EDIT_PROFILE = "Edit Profile";
         String PROFILE = "Profile";
         String PLAY = "Play";
+        String BADGE = "Badge";
         String FLAVOR = "Flavor";
         String APP_UPDATE = "App Update";
     }
@@ -295,6 +295,8 @@ public interface Constants {
         String PHOTO = "Photo";
         String OTHERS = "Others";
         String TABS = "Tabs";
+        String RECEIVED = "Received";
+        String APPLIED = "Applied";
     }
 
     interface AnalyticsLabels {

@@ -2,7 +2,6 @@ package in.sportscafe.nostragamus.module.user.points;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import java.util.ArrayList;
@@ -26,10 +23,10 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
-import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardModelImpl;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
+
+import static in.sportscafe.nostragamus.R.id.view;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -38,10 +35,6 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     private PointsPresenter mPointsPresenter;
 
-    private int mSelectedSportId;
-
-     private Bundle mbundle;
-
     private ViewPager mViewPager;
 
     @Override
@@ -49,45 +42,42 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_points);
 
-        mbundle=getIntent().getExtras();
+        initSortingSpinner();
 
+        this.mPointsPresenter = PointsPresenterImpl.newInstance(PointsActivity.this);
+        this.mPointsPresenter.onCreatePoints(getIntent().getExtras());
+    }
 
-        PointsActivity.this.mPointsPresenter = PointsPresenterImpl.newInstance(PointsActivity.this);
-        PointsActivity.this.mPointsPresenter.onCreatePoints( getIntent().getExtras());
-
-
-        AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.points_sp_sport);
-        spinner.setOnItemSelectedListener(this);
+    private void initSortingSpinner() {
         List categories = new ArrayList();
         categories.add("By Rank");
         categories.add("By Accuracy");
-        ArrayAdapter dataAdapter = new ArrayAdapter(this,  android.R.layout.simple_list_item_1, categories) {
+
+        ArrayAdapter dataAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, categories) {
 
             public View getView(int position, View convertView, ViewGroup parent) {
-                View v = super.getView(position, convertView, parent);
-
-                Typeface externalFont=Typeface.createFromAsset(getContext().getAssets(), "fonts/roboto/RobotoCondensed-Regular.ttf");
-                ((TextView) v).setTypeface(externalFont);
-
-                return v;
+                return setExternalFont(super.getView(position, convertView, parent));
             }
 
-            public View getDropDownView(int position,  View convertView,  ViewGroup parent) {
-                View v =super.getDropDownView(position, convertView, parent);
-
-                Typeface externalFont=Typeface.createFromAsset(getContext().getAssets(), "fonts/roboto/RobotoCondensed-Regular.ttf");
-                ((TextView) v).setTypeface(externalFont);
-
-                return v;
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                return setExternalFont(super.getDropDownView(position, convertView, parent));
             }
         };
 
-
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(R.layout.custom_radio_btn_spinner);
+
+        AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.points_sp_sport);
+        spinner.setOnItemSelectedListener(this);
         spinner.setAdapter(dataAdapter);
+    }
 
-
+    private View setExternalFont(View spinnerView) {
+        ((TextView) spinnerView).setTypeface(Typeface.createFromAsset(
+                getContext().getAssets(),
+                "fonts/roboto/RobotoCondensed-Regular.ttf"
+        ));
+        return spinnerView;
     }
 
     @Override
@@ -108,23 +98,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     @Override
     public void setIcon(String icon) {
-
-        mSelectedSportId = mbundle.getInt(Constants.BundleKeys.SPORT_ID);
-
-        HmImageView pointsIcon= (HmImageView) findViewById(R.id.points_group_icon);
-
-        if (mSelectedSportId!=0) {
-            for (Sport sport : NostragamusDataHandler.getInstance().getAllSports()) {
-                if (sport.getId() == mSelectedSportId) {
-                    pointsIcon.setImageUrl(sport.getImageUrl());
-                }
-            }
-        }
-        else
-        {
-            pointsIcon.setImageUrl(icon);
-        }
-
+        ((HmImageView) findViewById(R.id.points_group_icon)).setImageUrl(icon);
     }
 
     @Override
@@ -143,7 +117,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
         String item = parent.getItemAtPosition(position).toString();
         // hide selection text
-        ((TextView)view).setText(null);
+        ((TextView) view).setText(null);
 
         ((TextView) findViewById(R.id.sorting_tv)).setText(item);
 

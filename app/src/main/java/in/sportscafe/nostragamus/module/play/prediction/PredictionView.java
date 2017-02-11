@@ -46,7 +46,7 @@ public interface PredictionView extends InAppView {
 
     void notifyTopView();
 
-    void changeBackgroundImage(String sportName);
+    void changeBackgroundImage(Integer sportId);
 
     void navigateToFeed();
 

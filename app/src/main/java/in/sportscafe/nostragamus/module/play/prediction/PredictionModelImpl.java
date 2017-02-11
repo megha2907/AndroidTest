@@ -13,7 +13,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
@@ -23,7 +22,6 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
@@ -31,15 +29,12 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import static com.google.android.gms.analytics.internal.zzy.m;
 import static in.sportscafe.nostragamus.Constants.BundleKeys;
-import static in.sportscafe.nostragamus.Constants.DateFormats;
 
 /**
  * Created by Jeeva on 20/5/16.
@@ -48,15 +43,17 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     private final NostragamusDataHandler mNostragamusDataHandler;
 
-    private boolean mDummyGame = false;
-
-    private boolean mFromSettings = false;
-
     private PredictionAdapter mPredictionAdapter;
 
     private OnPredictionModelListener mPredictionModelListener;
 
+    private PostAnswerModelImpl mPostAnswerModel;
+
     private Match mMyResult;
+
+    private boolean mDummyGame = false;
+
+    private boolean mFromSettings = false;
 
     private int mInitialCount;
 
@@ -72,13 +69,16 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     private int mPollPowerups = 0;
 
-    private String mSportName = "";
+    private int mLastQuestionNumber = -1;
 
-    private Boolean isFirstCardSwiped = false;
+    private long mQuestionSeenTimeInMs = -1;
+
+    private long mAnswerLockedTimeInMs;
 
     public PredictionModelImpl(OnPredictionModelListener predictionModelListener) {
         this.mPredictionModelListener = predictionModelListener;
         this.mNostragamusDataHandler = NostragamusDataHandler.getInstance();
+        this.mPostAnswerModel = PostAnswerModelImpl.newInstance(postAnsModellistener);
     }
 
     public static PredictionModel newInstance(OnPredictionModelListener predictionModelListener) {
@@ -91,9 +91,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             mMyResult = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
             mMatchId = mMyResult.getId();
 
-            if (bundle.containsKey(BundleKeys.SPORT_NAME)) {
-                mSportName = bundle.getString(BundleKeys.SPORT_NAME);
-                mPredictionModelListener.onGetSportName(mSportName);
+            if (bundle.containsKey(BundleKeys.SPORT_ID)) {
+                mPredictionModelListener.onGetSport(bundle.getInt(BundleKeys.SPORT_ID));
             }
 
             if (bundle.containsKey(BundleKeys.TOURNAMENT_POWERUPS)) {
@@ -112,7 +111,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             if (bundle.containsKey(BundleKeys.FROM_SETTINGS)) {
                 mFromSettings = bundle.getBoolean(BundleKeys.FROM_SETTINGS);
             }
-            mPredictionModelListener.onGetSportName("");
 
             m2xPowerups = 3;
             mNonegsPowerups = 3;
@@ -125,11 +123,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public boolean isDummyGame() {
         return mDummyGame;
-    }
-
-    @Override
-    public String getSportName() {
-        return mSportName;
     }
 
     @Override
@@ -265,13 +258,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
-    public void onAllDoneInDummyGame() {
-        NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.COMPLETED);
-    }
-
-    @Override
-    public Boolean isFirstCardSwiped() {
-        return isFirstCardSwiped;
+    public boolean isAnyQuestionAnswered() {
+        return null != mPredictionAdapter && mInitialCount != mPredictionAdapter.getCount();
     }
 
     @Override
@@ -282,17 +270,17 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     @Override
     public void onLeftSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, AnswerIds.LEFT, AnalyticsLabels.LEFT);
+        saveSinglePrediction(dataObject, AnswerIds.LEFT);
     }
 
     @Override
     public void onRightSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, AnswerIds.RIGHT, AnalyticsLabels.RIGHT);
+        saveSinglePrediction(dataObject, AnswerIds.RIGHT);
     }
 
     @Override
     public void onTopSwipe(Question dataObject) {
-        saveSinglePrediction(dataObject, AnswerIds.NEITHER, AnalyticsLabels.TOP);
+        saveSinglePrediction(dataObject, AnswerIds.NEITHER);
     }
 
     @Override
@@ -300,11 +288,10 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPredictionAdapter.add(dataObject);
 
         if (!mDummyGame) {
+            lockAnswerTime();
             NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.SHUFFLED, AnalyticsLabels.BOTTOM, getTimeSpent());
         }
     }
-
-    private int mLastQuestionNumber = -1;
 
     @Override
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
@@ -317,7 +304,9 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 bundle.putString(BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
                 mPredictionModelListener.onSuccessCompletion(bundle);
             } else {
-                mPredictionModelListener.onSuccessCompletion(null);
+                NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.COMPLETED);
+
+                mPredictionModelListener.onDummyGameCompletion();
             }
             return;
         }
@@ -333,7 +322,9 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
             mPredictionModelListener.onQuestionChanged(topQuestion, mInitialCount, mNeitherOptionAvailable);
 
-            mQuestionSeenTime = Calendar.getInstance().getTimeInMillis();
+            if(-1 == mQuestionSeenTimeInMs) {
+                mQuestionSeenTimeInMs = Calendar.getInstance().getTimeInMillis();
+            }
         }
     }
 
@@ -392,6 +383,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     private void getAudiencePollPercent() {
         if (!isDummyGame()) {
             if (Nostragamus.getInstance().hasNetworkConnection()) {
+                mPredictionModelListener.onLoadingPollPercent();
                 AudiencePollRequest audiencePollRequest = new AudiencePollRequest();
                 audiencePollRequest.setQuestionId(mPredictionAdapter.getTopQuestion().getQuestionId());
 
@@ -456,58 +448,44 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPredictionModelListener.onAudiencePollApplied(mPollPowerups);
     }
 
-    private void saveSinglePrediction(Question question, int answerId, String direction) {
+    private void saveSinglePrediction(Question question, int answerId) {
         if (!mDummyGame) {
+            lockAnswerTime();
+            mPredictionModelListener.onPostingAnswer();
+
             question.setAnswerId(answerId);
-            String powerupId = question.getPowerUpId();
-
-            Answer answer = new Answer(
-                    question.getMatchId(),
-                    question.getQuestionId(),
-                    answerId,
-                    TimeUtils.getCurrentTime(DateFormats.FORMAT_DATE_T_TIME_ZONE, DateFormats.GMT),
-                    powerupId
-            );
-
-            postAnswerToServer(answer, question.isMinorityAnswer(), mPredictionAdapter.getCount() == 0, powerupId, direction);
-            NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.ANSWERED, direction, getTimeSpent());
+            mPostAnswerModel.postAnswer(question, mPredictionAdapter.getCount() == 0);
         }
     }
 
-    private void postAnswerToServer(Answer answer, boolean minorityOption, Boolean
-            matchComplete, final String powerupId, final String direction) {
-        mPredictionModelListener.onUpdatingAnswer();
-        isFirstCardSwiped = true;
+    PostAnswerModelImpl.PostAnswerModelListener postAnsModellistener = new PostAnswerModelImpl.PostAnswerModelListener() {
+        @Override
+        public void onSuccess(String answerDirection) {
+            NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.ANSWERED, answerDirection, getTimeSpent());
 
-        new PostAnswerModelImpl(new PostAnswerModelImpl.PostAnswerModelListener() {
+            mPredictionModelListener.onPostAnswerSuccess();
+        }
 
-            @Override
-            public void onSuccess() {
-                if (null != powerupId) {
-                    if (Powerups.XX_GLOBAL.equalsIgnoreCase(powerupId)) {
-                        mNostragamusDataHandler.setNumberof2xGlobalPowerups(m2xGlobalPowerups);
-                    }
-                    NostragamusAnalytics.getInstance().trackPowerups(powerupId);
-                }
-            }
+        @Override
+        public void onNoInternet() {
+            mPredictionModelListener.noInternetOnPostingAnswer();
+        }
 
-            @Override
-            public void onNoInternet() {
-                mPredictionModelListener.onNoInternet();
-            }
+        @Override
+        public void onFailed(String message) {
+            mPredictionModelListener.onPostAnswerFailed(message);
+        }
+    };
 
-            @Override
-            public void onFailed(String message) {
-                mPredictionModelListener.onFailedPostAnswerToServer(message);
-
-            }
-        }).postAnswer(answer, minorityOption, matchComplete);
+    private void lockAnswerTime() {
+        mAnswerLockedTimeInMs = Calendar.getInstance().getTimeInMillis();
     }
 
-    private long mQuestionSeenTime;
-
     private long getTimeSpent() {
-        return Calendar.getInstance().getTimeInMillis() - mQuestionSeenTime;
+        long timeSpent = mAnswerLockedTimeInMs - mQuestionSeenTimeInMs;
+        mQuestionSeenTimeInMs = Calendar.getInstance().getTimeInMillis();
+        mAnswerLockedTimeInMs = mQuestionSeenTimeInMs;
+        return timeSpent;
     }
 
     private List<Question> getDummyQuestionList() {
@@ -600,9 +578,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         void notifyTopQuestion();
 
-        void onGetSportName(String sportName);
-
-        void onFailedPostAnswerToServer(String message);
+        void onGetSport(Integer sportId);
 
         void on2xGlobalApplied(int count);
 
@@ -612,6 +588,16 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         void onAudiencePollApplied(int count);
 
-        void onUpdatingAnswer();
+        void onLoadingPollPercent();
+
+        void onPostingAnswer();
+
+        void onPostAnswerSuccess();
+
+        void onPostAnswerFailed(String message);
+
+        void noInternetOnPostingAnswer();
+
+        void onDummyGameCompletion();
     }
 }

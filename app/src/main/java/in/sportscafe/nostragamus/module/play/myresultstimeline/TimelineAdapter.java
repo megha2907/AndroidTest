@@ -400,7 +400,11 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             if (null != match) {
                 bundle = new Bundle();
                 bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
-                bundle.putString(BundleKeys.SPORT_NAME, match.getSportName());
+
+                if(null != match.getSportId()) {
+                    bundle.putInt(BundleKeys.SPORT_ID, match.getSportId());
+                }
+
                 if (null != mPlayerId) {
                     bundle.putInt(BundleKeys.PLAYER_ID, mPlayerId);
                 }

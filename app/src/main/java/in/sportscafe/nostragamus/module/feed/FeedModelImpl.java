@@ -44,8 +44,6 @@ public class FeedModelImpl implements FeedModel {
 
     private Integer mTourId;
 
-    private String mSportName;
-
     private TournamentPowerupInfo mPowerUpInfo;
 
     private FeedModelImpl(OnFeedModelListener listener) {
@@ -60,7 +58,6 @@ public class FeedModelImpl implements FeedModel {
     public void init(Bundle bundle) {
         mTournamentName = bundle.getString(BundleKeys.TOURNAMENT_NAME);
         mTourId = bundle.getInt(BundleKeys.TOURNAMENT_ID);
-        mSportName = bundle.getString(BundleKeys.SPORT_NAME);
     }
 
     @Override

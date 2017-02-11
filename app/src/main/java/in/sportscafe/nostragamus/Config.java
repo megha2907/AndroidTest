@@ -32,35 +32,6 @@ public class Config extends BaseConfig {
 
     private static final String KEY_OFFSET_Y = "-y";
 
-    public interface Sports {
-        String BADMINTON = "badminton";
-        String BOXING = "boxing";
-        String CRICKET = "cricket";
-        String FOOTBALL = "football";
-        String HOCKEY = "hockey";
-        String KABADDI = "kabaddi";
-        String SHOOTING = "shooting";
-        String SQUASH = "squash";
-        String TENNIS = "tennis";
-        String WRESTLING = "wrestling";
-    }
-
-    public static String[] getSports() {
-        // Todo If you are adding any new sports don't forget to add it here
-        return new String[] {
-                Sports.BADMINTON,
-                Sports.BOXING,
-                Sports.CRICKET,
-                Sports.FOOTBALL,
-                Sports.HOCKEY,
-                Sports.KABADDI,
-                Sports.SHOOTING,
-                Sports.SQUASH,
-                Sports.TENNIS,
-                Sports.WRESTLING
-        };
-    }
-
     public static String getImageURL(int width, int height, int quality, String path) {
         return (IMAGE_BASE_URL + KEY_IMAGE_FIT
                 + KEY_IMAGE_WIDTH + width

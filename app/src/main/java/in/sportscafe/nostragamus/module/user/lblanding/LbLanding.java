@@ -41,6 +41,13 @@ public class LbLanding {
         this.type = type;
     }
 
+    public LbLanding(Integer id, String name, String imgUrl, String type) {
+        this.id = id;
+        this.name = name;
+        this.imgUrl = imgUrl;
+        this.type = type;
+    }
+
     public Integer getRankChange() {
         return rankChange;
     }
