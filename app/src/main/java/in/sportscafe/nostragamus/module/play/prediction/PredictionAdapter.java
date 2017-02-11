@@ -26,11 +26,19 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 
+import static com.google.android.gms.analytics.internal.zzy.f;
+
 public class PredictionAdapter extends ArrayAdapter<Question> {
 
-    private static final float CARD_SIZE_PERECENTAGE = 0.89f;
+    private static final float HEADER_PERECENTAGE = 12.5f / 100;
 
-    private static final float OPTION_SIZE_PERECENTAGE = 1f - CARD_SIZE_PERECENTAGE;
+    private static final float FOOTER_PERECENTAGE = 20f / 100;
+
+    private static final float OPTION_PERECENTAGE = 6.25f / 100;
+
+    private static final float CARD_HEIGHT_PERECENTAGE = 50f / 100;
+
+    private static final float MARGIN_PERECENTAGE = 3.125f / 100;
 
     private LayoutInflater mLayoutInflater;
 
@@ -38,9 +46,9 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     private int mTopMargin;
 
-    View vBgFrame1;
+    private View vBgFrame1;
 
-    View vBgFrame2;
+    private View vBgFrame2;
 
     private FlingCardListener mFlingCardListener;
 
@@ -91,27 +99,34 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         Rect rect = new Rect();
         rootView.getLocalVisibleRect(rect);
 
-        final float SCREEN_WIDTH = rect.width() * 0.89f;
-        final float SCREEN_HEIGHT = rect.height() * 0.89f;
+        final float SCREEN_WIDTH = rect.width();
+        final float SCREEN_HEIGHT = rect.height();
 
-        mCardWidth = SCREEN_WIDTH * CARD_SIZE_PERECENTAGE;
-        mCardHeight = SCREEN_WIDTH;
-        mOptionHeight = SCREEN_WIDTH * OPTION_SIZE_PERECENTAGE;
-        mCardMargin = (rect.width() - mCardWidth) / 2;
+        Log.d("Play Sizes", SCREEN_WIDTH + ", " + SCREEN_HEIGHT);
+
+        mCardHeight = SCREEN_HEIGHT * CARD_HEIGHT_PERECENTAGE;
+        mCardWidth = mCardHeight;
+        mOptionHeight = SCREEN_HEIGHT * OPTION_PERECENTAGE;
+        mCardMargin = SCREEN_HEIGHT * MARGIN_PERECENTAGE;
         mImageWidth = mCardWidth / 2f;
         mImageHeight = mImageWidth;
 
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_cv_bg_0).getLayoutParams();
-        rlp.height = (int) mCardHeight;
-        rlp.leftMargin = (int) mCardMargin;
-        rlp.rightMargin = (int) mCardMargin;
+        rlp.width = (int) mCardWidth;
+        rlp.height = (int) (mCardHeight + mOptionHeight);
         mTopMargin = rlp.topMargin;
 
         vBgFrame1 = rootView.findViewById(R.id.prediction_cv_bg_1);
-        vBgFrame1.getLayoutParams().height = (int) mCardHeight;
+        vBgFrame1.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
 
         vBgFrame2 = rootView.findViewById(R.id.prediction_cv_bg_2);
-        vBgFrame2.getLayoutParams().height = (int) mCardHeight;
+        vBgFrame2.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
+
+        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_header).getLayoutParams();
+        rlp.height = (int) (SCREEN_HEIGHT * HEADER_PERECENTAGE);
+
+        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_footer).getLayoutParams();
+        rlp.height = (int) (SCREEN_HEIGHT * FOOTER_PERECENTAGE);
 
 //        rootView.findViewById(R.id.activity_prediction_swipe).getLayoutParams().height = (int) mCardHeight;
     }
@@ -129,24 +144,26 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         ViewGroup.LayoutParams lp = viewHolder.flLeftArea.getLayoutParams();
         lp.width = (int) mImageWidth;
+        lp.height = (int) mImageHeight;
 
-        /*lp = viewHolder.flRightArea.getLayoutParams();
-        lp.width = (int) mImageWidth;*/
+        lp = viewHolder.flRightArea.getLayoutParams();
+//        lp.width = (int) mImageWidth;
+        lp.height = (int) mImageHeight;
 
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) viewHolder.llOptionLabels.getLayoutParams();
         rlp.height = (int) mOptionHeight;
 
+        rlp = (RelativeLayout.LayoutParams) viewHolder.llQuestionDesc.getLayoutParams();
+        rlp.height = (int) mImageHeight;
+
         rlp = (RelativeLayout.LayoutParams) viewHolder.tvLockingOption.getLayoutParams();
         rlp.height = (int) mOptionHeight;
 
-        rlp = (RelativeLayout.LayoutParams) viewHolder.llQuestionDesc.getLayoutParams();
-        rlp.height = (int) (mCardWidth / 2);
-
         rlp = (RelativeLayout.LayoutParams) viewHolder.cvMainCard.getLayoutParams();
-//        rlp.width = (int) mCardWidth;
-        rlp.height = (int) mCardHeight;
-        rlp.leftMargin = (int) mCardMargin;
-        rlp.rightMargin = (int) mCardMargin;
+        rlp.width = (int) mCardWidth;
+        rlp.height = (int) (mCardHeight + mOptionHeight);
+        /*rlp.leftMargin = (int) mCardMargin;
+        rlp.rightMargin = (int) mCardMargin;*/
         rlp.topMargin = (int) mTopMargin;
         /*sadf*/
 
