@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -302,7 +303,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                     if (response.body().getResponse().equals(null) || response.body().getResponse().equalsIgnoreCase("failure")) {
                         mResultsModelListener.onFailedReplayPowerupResponse();
                     } else {
-                        NostragamusAnalytics.getInstance().trackPowerups(powerupId);
+                        NostragamusAnalytics.getInstance().trackPowerups(AnalyticsActions.APPLIED, powerupId);
                         mResultsModelListener.onSuccessReplayPowerupResponse(match);
                     }
 

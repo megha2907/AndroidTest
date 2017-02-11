@@ -57,7 +57,5 @@ public interface PredictionModel {
 
     void onSkippingDummyGame();
 
-    void onAllDoneInDummyGame();
-
-    Boolean isFirstCardSwiped();
+    boolean isAnyQuestionAnswered();
 }

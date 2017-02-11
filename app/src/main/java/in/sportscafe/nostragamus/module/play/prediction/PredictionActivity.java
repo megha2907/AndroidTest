@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.CustomProgressbar;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomTextView;
 
@@ -449,6 +450,16 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         powerupDrawable.setCornerRadius(getResources().getDimensionPixelSize(R.dimen.dp_5));
         powerupDrawable.setColor(getResources().getColor(colorRes));
         return powerupDrawable;
+    }
+
+    @Override
+    public void showProgressbar() {
+        CustomProgressbar.getProgressbar(this).show();
+    }
+
+    @Override
+    public void dismissProgressbar() {
+        CustomProgressbar.getProgressbar(this).dismiss();
     }
 
     @Override

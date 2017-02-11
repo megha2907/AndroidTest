@@ -8,6 +8,7 @@ import com.jeeva.android.Log;
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
@@ -92,7 +93,7 @@ public class FlipModelImpl implements FlipModel, FlipAdapter.OnFlipActionListene
                     if (response.body().getResponse().equals(null) || response.body().getResponse().equalsIgnoreCase("failure")) {
                         mFlipModelListener.onFailedFlipPowerupResponse();
                     } else {
-                        NostragamusAnalytics.getInstance().trackPowerups(powerupId);
+                        NostragamusAnalytics.getInstance().trackPowerups(AnalyticsActions.APPLIED, powerupId);
                         mFlipModelListener.onSuccessFlipPowerupResponse(match);
                     }
 

@@ -69,7 +69,7 @@ public interface NostragamusService {
     Call<FeedResponse> getMatches(@Path("tournament_id") int tourId);
 
     @GET("v1/game/users/matches")
-    Call<MatchesResponse> getMatchResults(@Query("is_attempted") Boolean isAttempted ,@Query("without_commentary") Boolean WithoutCommentary);
+    Call<MatchesResponse> getMatchResults(@Query("is_attempted") Boolean isAttempted, @Query("without_commentary") Boolean WithoutCommentary);
 
     @GET("v1/game/users/questions")
     Call<QuestionsResponse> getQuestions(@Query("match_id") int matchId);
@@ -91,7 +91,11 @@ public interface NostragamusService {
     Call<Result> uploadImage(@Part MultipartBody.Part file, @Part("filePath") RequestBody filepath, @Part("fileName") RequestBody filename);
 
     @POST("v2/game/users/answer")
-    Call<ApiResponse> saveAnswer(@Body Answer answer,@Query("is_match_complete") Boolean isMatchComplete,@Query("is_minority_option") Boolean isMinorityOption);
+    Call<ApiResponse> saveAnswer(
+            @Body Answer answer,
+            @Query("is_match_complete") boolean isMatchComplete,
+            @Query("is_minority_option") boolean isMinorityOption
+    );
 
     @PUT("v1/game/users/sports/preference")
     Call<ApiResponse> savePreference(@Body PreferenceRequest request);
@@ -148,9 +152,9 @@ public interface NostragamusService {
                                                  @Query("match_id") Integer matchId);
 
     @GET("/v2/game/applyResultsPowerups")
-    Call<ReplayPowerupResponse> getFlipPowerup(@Query("powerup_id") String powerupId,@Query("match_id") Integer matchId,@Query("question_id") Integer questionId);
+    Call<ReplayPowerupResponse> getFlipPowerup(@Query("powerup_id") String powerupId, @Query("match_id") Integer matchId, @Query("question_id") Integer questionId);
 
-    @GET ("/v1/game/users/getPlayerProfile")
+    @GET("/v1/game/users/getPlayerProfile")
     Call<PlayerInfoResponse> getPlayerInfo(@Query("player_user_id") Integer playerId);
 
     @GET("v1/game/users/matches/timeline")
@@ -161,7 +165,7 @@ public interface NostragamusService {
     );
 
     @GET("v1/game/users/getFuzzyPlayer")
-    Call<FuzzyPlayerResponse> fuzzyPlayers(@Query("player_user_name") String key,@Query("match_id") Integer matchId);
+    Call<FuzzyPlayerResponse> fuzzyPlayers(@Query("player_user_name") String key, @Query("match_id") Integer matchId);
 
     @GET("v1/game/getPlayerResult")
     Call<MyResultsResponse> getPlayerResult(@Query("player_id") Integer playerId, @Query("match_id") Integer matchId);
@@ -176,12 +180,12 @@ public interface NostragamusService {
     Call<FuzzyLbResponse> fuzzyLbs(@Query("search_key") String key);
 
     @GET("/v1/game/users/getPendingUserPopups")
-    Call<PopUpResponse> getPopUps(@Query ("screen_name") String screenName);
+    Call<PopUpResponse> getPopUps(@Query("screen_name") String screenName);
 
     @DELETE("v1/game/users/resetGroupLeaderboard")
     Call<ApiResponse> resetLeaderboard(@Query("group_id") Integer groupId);
 
-    @PUT ("/v1/game/users/acknowledgeUserPopup")
+    @PUT("/v1/game/users/acknowledgeUserPopup")
     Call<ApiResponse> getAcknowledgePopupRequest(@Query("popup_name") String popUpName);
 
     @HTTP(method = "DELETE", path = "v1/game/groups", hasBody = true)
