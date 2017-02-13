@@ -100,9 +100,15 @@ public class CustomProgressbar extends Dialog {
         return progressBar;
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
+    public boolean dismissProgress() {
+        boolean dismissed = false;
+        try {
+            super.dismiss();
+            dismissed = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         customProgressbar = null;
+        return dismissed;
     }
 }

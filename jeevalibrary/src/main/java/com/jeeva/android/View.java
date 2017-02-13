@@ -24,7 +24,7 @@ public interface View {
 
     void updateProgressbar();
 
-    void dismissProgressbar();
+    boolean dismissProgressbar();
 
     void showSoftKeyboard(android.view.View view);
 

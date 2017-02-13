@@ -458,8 +458,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void dismissProgressbar() {
-        CustomProgressbar.getProgressbar(this).dismiss();
+    public boolean dismissProgressbar() {
+        return CustomProgressbar.getProgressbar(this).dismissProgress();
     }
 
     @Override

@@ -57,7 +57,7 @@ public class PostAnswerModelImpl {
                         if (response.isSuccessful()) {
                             String responseMsg = response.body().getMessage();
                             if (responseMsg.equals("Match has already started")) {
-                                mPostAnswerModelListener.onFailed(responseMsg);
+                                mPostAnswerModelListener.onMatchAlreadyStarted();
                             } else {
                                 handlePostAnswerResponse(answer);
                             }
@@ -103,5 +103,7 @@ public class PostAnswerModelImpl {
         void onNoInternet();
 
         void onFailed(String message);
+
+        void onMatchAlreadyStarted();
     }
 }
