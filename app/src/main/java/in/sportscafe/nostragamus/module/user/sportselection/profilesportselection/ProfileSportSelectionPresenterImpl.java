@@ -70,7 +70,6 @@ public class ProfileSportSelectionPresenterImpl implements ProfileSportSelection
 
     @Override
     public void setSportsCount(int size) {
-        Log.i("sportscount",size+"");
         mChangedListener.setSportsCount(size);
     }
 }

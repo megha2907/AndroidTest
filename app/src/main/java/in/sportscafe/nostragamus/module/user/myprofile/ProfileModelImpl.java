@@ -14,7 +14,7 @@ import retrofit2.Response;
 /**
  * Created by Jeeva on 14/6/16.
  */
-public class ProfileModelImpl implements ProfileModel , UserInfoModelImpl.OnGetUserInfoModelListener {
+public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUserInfoModelListener {
 
     private OnProfileModelListener mProfileModelListener;
 
@@ -36,18 +36,34 @@ public class ProfileModelImpl implements ProfileModel , UserInfoModelImpl.OnGetU
         return NostragamusDataHandler.getInstance().getUserInfo();
     }
 
-    private void getLbSummary(final UserInfo updatedUserInfo) {
+    @Override
+    public int getSportsFollowedCount() {
+        return NostragamusDataHandler.getInstance().getGlbFollowedSports().size();
+    }
+
+    @Override
+    public int getPowerupsCount() {
+        NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
+        return dataHandler.getNumberof2xGlobalPowerups() +
+                dataHandler.getNumberof2xPowerups() +
+                dataHandler.getNumberofAudiencePollPowerups() +
+                dataHandler.getNumberofNonegsPowerups() +
+                dataHandler.getNumberofFlipPowerups() +
+                dataHandler.getNumberofReplayPowerups();
+    }
+
+    private void getLbSummary() {
         MyWebService.getInstance().getLBLandingSummary(null, null, null, null).enqueue(
                 new NostragamusCallBack<LBLandingResponse>() {
                     @Override
                     public void onResponse(Call<LBLandingResponse> call, Response<LBLandingResponse> response) {
                         super.onResponse(call, response);
 
-                        if(null == mProfileModelListener.getContext()) {
+                        if (null == mProfileModelListener.getContext()) {
                             return;
                         }
-                        if(response.isSuccessful()) {
-                            mProfileModelListener.onGetProfileSuccess(updatedUserInfo);
+                        if (response.isSuccessful()) {
+                            mProfileModelListener.onGetProfileSuccess();
                         } else {
                             mProfileModelListener.onGetProfileFailed(response.message());
                         }
@@ -67,7 +83,7 @@ public class ProfileModelImpl implements ProfileModel , UserInfoModelImpl.OnGetU
 
     @Override
     public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {
-        getLbSummary(updatedUserInfo);
+        getLbSummary();
     }
 
     @Override
@@ -77,7 +93,7 @@ public class ProfileModelImpl implements ProfileModel , UserInfoModelImpl.OnGetU
 
     public interface OnProfileModelListener {
 
-        void onGetProfileSuccess(UserInfo userInfo);
+        void onGetProfileSuccess();
 
         void onGetProfileFailed(String message);
 

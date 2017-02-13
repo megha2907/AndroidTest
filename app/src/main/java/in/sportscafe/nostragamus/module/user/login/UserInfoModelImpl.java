@@ -62,18 +62,13 @@ public class UserInfoModelImpl {
             nostragamusDataHandler.setUserInfo(userInfo);
 
             HashMap<String, Integer> powerUpMap = userInfo.getPowerUps();
-            Log.i("2xx", String.valueOf(powerUpMap.get(Powerups.XX_GLOBAL)));
             nostragamusDataHandler.setNumberof2xGlobalPowerups(powerUpMap.get(Powerups.XX_GLOBAL));
-
 
             nostragamusDataHandler.setNumberof2xPowerups(powerUpMap.get(Powerups.XX));
             nostragamusDataHandler.setNumberofNonegsPowerups(powerUpMap.get(Powerups.NO_NEGATIVE));
             nostragamusDataHandler.setNumberofAudiencePollPowerups(powerUpMap.get(Powerups.AUDIENCE_POLL));
             nostragamusDataHandler.setNumberofReplayPowerups(powerUpMap.get(Powerups.MATCH_REPLAY));
             nostragamusDataHandler.setNumberofFlipPowerups(powerUpMap.get(Powerups.ANSWER_FLIP));
-
-            nostragamusDataHandler.setNumberofBadges(userInfo.getBadges().size());
-            nostragamusDataHandler.setNumberofGroups(userInfo.getTotalGroups());
         }
     }
 

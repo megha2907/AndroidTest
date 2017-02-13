@@ -292,14 +292,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return getUserInfo().getBadges();
     }
 
-    public int getNumberofBadges() {
-        return getSharedIntData(SharedKeys.NUMBER_OF_BADGES, 0);
-    }
-
-    public void setNumberofBadges(int numberofbadges) {
-        setSharedIntData(SharedKeys.NUMBER_OF_BADGES, numberofbadges);
-    }
-
     //TOURNAMENTS
     public List<TournamentFeedInfo> getTournaments() {
         String allTournamentsString = getSharedStringData(SharedKeys.ALL_TOURNAMENTS);
@@ -330,67 +322,7 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setTournaments(MyWebService.getInstance().getJsonStringFromObject(newTournaments));
     }
 
-    //ALL GROUPS INFO
-    public List<AllGroups> getAllGroups() {
-        String allGroupssString = getSharedStringData(SharedKeys.ALL_GROUPS);
-        Log.i("allGroupssString", allGroupssString + "");
-        if (null == allGroupssString || allGroupssString.isEmpty()) {
-            return new ArrayList<>();
-        }
-        return MyWebService.getInstance().getObjectFromJson(allGroupssString,
-                new TypeReference<List<AllGroups>>() {
-                });
-    }
-
-    public void setAllGroups(String allGroups) {
-        setSharedStringData(SharedKeys.ALL_GROUPS, allGroups);
-    }
-
-    //MUTUAL GROUPS INFO
-    public List<MutualGroups> getMutualGroups() {
-        String mutualGroups = getSharedStringData(SharedKeys.MUTUAL_GROUPS);
-        if (null == mutualGroups || mutualGroups.isEmpty()) {
-            return new ArrayList<>();
-        }
-        return MyWebService.getInstance().getObjectFromJson(mutualGroups,
-                new TypeReference<List<MutualGroups>>() {
-                });
-    }
-
-    public void setMutualGroups(String mutualGroups) {
-        setSharedStringData(SharedKeys.MUTUAL_GROUPS, mutualGroups);
-    }
-
-    public void setMutualGroups(List<MutualGroups> mutualGroups) {
-        setMutualGroups(MyWebService.getInstance().getJsonStringFromObject(mutualGroups));
-    }
-
-    public Map<Integer, AllGroups> getAllGroupsMap() {
-        Map<Integer, AllGroups> allGroupsMap = new HashMap<>();
-
-        for (AllGroups allGroups : getAllGroups()) {
-            allGroupsMap.put(allGroups.getGroupId(), allGroups);
-        }
-
-        return allGroupsMap;
-    }
-
-    public void setAllGroupsMap(Map<Long, AllGroups> allGroupsMap) {
-
-        List<AllGroups> allGroupsListObject = new ArrayList<>();
-        Set<Long> keys = allGroupsMap.keySet();
-        for (Long key : keys) {
-            allGroupsListObject.add(allGroupsMap.get(key));
-        }
-        setAllGroups(allGroupsListObject);
-    }
-
-    public void setAllGroups(List<AllGroups> newAllGroups) {
-        setAllGroups(MyWebService.getInstance().getJsonStringFromObject(newAllGroups));
-    }
-
     //SELECTED GROUP TOURNAMENTS
-
     public void setSelectedTournaments(List<TournamentFeedInfo> selectedTournaments) {
         setSelectedTournaments(MyWebService.getInstance().getJsonStringFromObject(selectedTournaments));
     }
@@ -409,16 +341,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     public void setSelectedTournaments(String selectedTournaments) {
         setSharedStringData(SharedKeys.SELECTED_TOURNAMENTS, selectedTournaments);
-    }
-
-    public int getNumberofGroups() {
-        return getSharedIntData(SharedKeys.NUMBER_OF_GROUPS, 0);
-    }
-
-    public void setNumberofGroups(Integer numberofgroups) {
-        int noOfGroups = null == numberofgroups ? 0 : numberofgroups;
-        setSharedIntData(SharedKeys.NUMBER_OF_GROUPS, noOfGroups);
-        NostragamusAnalytics.getInstance().setUserProperties(noOfGroups);
     }
 
     public String getInstallGroupCode() {

@@ -10,4 +10,8 @@ public interface ProfileModel {
     void getProfileDetails();
 
     UserInfo getUserInfo();
+
+    int getSportsFollowedCount();
+
+    int getPowerupsCount();
 }

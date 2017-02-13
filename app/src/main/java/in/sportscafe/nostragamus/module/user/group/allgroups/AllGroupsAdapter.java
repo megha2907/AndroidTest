@@ -14,6 +14,7 @@ import com.jeeva.android.widgets.HmImageView;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
@@ -23,12 +24,10 @@ import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
  */
 public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHolder> {
 
-    private Context mcon;
     private static final int CODE_GROUP_INFO = 11;
 
     public AllGroupsAdapter(Context context, List<AllGroups> AllGroupsList) {
         super(context);
-        mcon = context;
         addAll(AllGroupsList);
     }
 
@@ -44,30 +43,15 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
         AllGroups allGroups = getItem(position);
         holder.mTvGroupName.setText(allGroups.getGroupName());
+        holder.mIvGroupImage.setImageUrl(allGroups.getGroupPhoto());
 
+        int tourCount = allGroups.getTournamentsCount();
+        holder.mTvGroupTournaments.setText(tourCount + " Tournament" + (tourCount > 1 ? "s" : ""));
 
-        if (allGroups.getTournamentsCount()==1){
-
-            holder.mTvGroupTournaments.setText(String.valueOf(allGroups.getTournamentsCount())+" Tournament");
-        }
-        else {
-            holder.mTvGroupTournaments.setText(String.valueOf(allGroups.getTournamentsCount())+" Tournaments");
-        }
-
-        if (allGroups.getCountGroupMembers()==1){
-
-            holder.mTvGroupMembers.setText(String.valueOf(allGroups.getCountGroupMembers())+" Member");
-        }
-        else {
-            holder.mTvGroupMembers.setText(String.valueOf(allGroups.getCountGroupMembers())+" Members");
-        }
-
-
-            holder.mIvGroupImage.setImageUrl(allGroups.getGroupPhoto());
-
+        tourCount = allGroups.getCountGroupMembers();
+        holder.mTvGroupMembers.setText(tourCount + " Member" + (tourCount > 1 ? "s" : ""));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -82,7 +66,6 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
 
         HmImageView mIvGroupImage;
 
-
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
@@ -91,21 +74,18 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
             mTvGroupMembers = (TextView) V.findViewById(R.id.all_groups_tv_GroupMembers);
             mIvGroupImage = (HmImageView) V.findViewById(R.id.all_groups_iv_groupImage);
             V.setOnClickListener(this);
-
-
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
+            Context context = view.getContext();
+            Intent intent = new Intent(context, GroupInfoActivity.class);
 
-            AllGroups allGroups= getItem(getAdapterPosition());
-            Intent intent =  new Intent(mcon, GroupInfoActivity.class);
-            Bundle mBundle = new Bundle();
-            mBundle.putInt(Constants.BundleKeys.GROUP_ID, allGroups.getGroupId());
-            mBundle.putString(Constants.BundleKeys.GROUP_NAME,allGroups.getGroupName());
-            intent.putExtras(mBundle);
-            ((Activity) mcon).startActivityForResult(intent,CODE_GROUP_INFO);
+            AllGroups allGroups = getItem(getAdapterPosition());
+            intent.putExtra(BundleKeys.GROUP_ID, allGroups.getGroupId());
+            intent.putExtra(BundleKeys.GROUP_NAME, allGroups.getGroupName());
 
+            ((Activity) context).startActivityForResult(intent, CODE_GROUP_INFO);
         }
     }
 

@@ -287,8 +287,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     private ViewPagerAdapter getAdapter(GroupInfo groupInfo) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        pagerAdapter.addFragment(GroupSelectionFragment.newInstance(groupInfo.getId(),this),
-               "\n Tournaments");
+        pagerAdapter.addFragment(GroupSelectionFragment.newInstance(groupInfo.getId()), "\n Tournaments");
 
         if (groupInfo.getMembers().size()==1){
             pagerAdapter.addFragment(MembersFragment.newInstance(groupInfo.getId()),

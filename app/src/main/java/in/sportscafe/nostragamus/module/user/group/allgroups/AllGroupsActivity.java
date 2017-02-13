@@ -43,9 +43,8 @@ public class AllGroupsActivity extends NostragamusActivity implements AllGroupsV
                 LinearLayoutManager.VERTICAL, false));
         this.mRvAllGroups.setHasFixedSize(true);
         this.mAllGroupsPresenter = AllGroupsPresenterImpl.newInstance(this);
-        this.mAllGroupsPresenter.onCreateAllGroups();
+        this.mAllGroupsPresenter.onCreateAllGroups(savedInstanceState);
         initToolBar();
-
     }
 
     @Override
@@ -86,7 +85,7 @@ public class AllGroupsActivity extends NostragamusActivity implements AllGroupsV
         super.onActivityResult(requestCode, resultCode, data);
         if(Activity.RESULT_OK == resultCode) {
             if(CODE_GROUP_INFO == requestCode) {
-                mAllGroupsPresenter.onCreateAllGroups();
+                mAllGroupsPresenter.onCreateAllGroups(getArguments());
             }
         }
     }

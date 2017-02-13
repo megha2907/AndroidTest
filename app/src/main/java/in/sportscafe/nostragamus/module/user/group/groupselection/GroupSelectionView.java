@@ -14,4 +14,6 @@ public interface GroupSelectionView extends View {
     void setSelectedAdapter(GrpTournamentSelectionAdapter adapter);
 
     void setSuccessResult();
+
+    void setTournamentsCount(int size, boolean isGroupTournamentChanged);
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.user.badges.Badge;
-import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroups;
+import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
 import in.sportscafe.nostragamus.module.user.login.dto.BasicUserInfo;
 import in.sportscafe.nostragamus.module.user.login.dto.InfoDetails;
 
@@ -44,7 +44,7 @@ public class PlayerInfo extends BasicUserInfo {
     private Integer accuracy;
 
     @JsonProperty("mutual_groups")
-    private List<MutualGroups> mutualGroups;
+    private List<AllGroups> mutualGroups;
 
     @JsonProperty("user_photo")
     public String getPhoto() {
@@ -113,12 +113,12 @@ public class PlayerInfo extends BasicUserInfo {
     }
 
     @JsonProperty("mutual_groups")
-    public List<MutualGroups> getMutualGroups() {
+    public List<AllGroups> getMutualGroups() {
         return mutualGroups;
     }
 
     @JsonProperty("mutual_groups")
-    public void setMutualGroups(List<MutualGroups> mutualGroups) {
+    public void setMutualGroups(List<AllGroups> mutualGroups) {
         this.mutualGroups = mutualGroups;
     }
 

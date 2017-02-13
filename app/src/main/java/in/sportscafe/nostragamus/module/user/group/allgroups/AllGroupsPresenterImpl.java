@@ -1,9 +1,11 @@
 package in.sportscafe.nostragamus.module.user.group.allgroups;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 
-import in.sportscafe.nostragamus.Constants;
+import java.util.List;
+
+import in.sportscafe.nostragamus.Constants.Alerts;
 
 
 /**
@@ -28,75 +30,43 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
     }
 
     @Override
-    public void onCreateAllGroups() {
-        mAllGroupsView.showProgressbar();
-        mAllGroupsModel.init();
+    public void onCreateAllGroups(Bundle bundle) {
+        mAllGroupsModel.init(bundle);
     }
 
     @Override
-    public void onCreateAllGroupsAdapter() {
-        Context context = mAllGroupsView.getContext();
-        if(null != context) {
-            mAllGroupsView.setAdapter(mAllGroupsModel.getAllGroupsAdapter(context));
-        }
-    }
-
-    private void onCreateMutualGroupsAdapter() {
-        mAllGroupsView.setAdapter(mAllGroupsModel
-                .getMutualGroupsAdapter(mAllGroupsView.getContext()));
-    }
-
-
-    @Override
-    public void onClickNext() {
-        mAllGroupsView.showProgressbar();
+    public void onGetGroupsSuccess(List<AllGroups> groupsList) {
+        mAllGroupsView.setAdapter(mAllGroupsModel.getGroupsAdapter(mAllGroupsView.getContext(), groupsList));
     }
 
     @Override
-    public void onCreateMutualGroups(Bundle bundle) {
-        mAllGroupsView.showProgressbar();
-        mAllGroupsModel.initMutualGroups(bundle);
-    }
-
-    @Override
-    public void onNoInternet() {
-        mAllGroupsView.dismissProgressbar();
-        mAllGroupsView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
-    }
-
-    @Override
-    public void onFailed(String message) {
-        mAllGroupsView.dismissProgressbar();
+    public void onGetGroupsFailed(String message) {
         mAllGroupsView.showMessage(message);
     }
 
     @Override
-    public void onAllGroupsEmpty() {
-            mAllGroupsView.showGroupsEmpty();
-        }
-
-    @Override
-    public void ongetAllGroupsSuccess() {
-        mAllGroupsView.dismissProgressbar();
-        onCreateAllGroupsAdapter();
-    }
-
-    @Override
-    public void ongetAllGroupsFailed(String message) {
-        mAllGroupsView.dismissProgressbar();
-        mAllGroupsView.showMessage(message);
-    }
-
-    @Override
-    public void onMutualGroupsEmpty() {
-        mAllGroupsView.dismissProgressbar();
+    public void onGroupsEmpty() {
         mAllGroupsView.showGroupsEmpty();
     }
 
     @Override
-    public void ongetMutualGroupsSuccess() {
-        mAllGroupsView.dismissProgressbar();
-        onCreateMutualGroupsAdapter();
+    public void onNoInternet() {
+        mAllGroupsView.showMessage(Alerts.NO_NETWORK_CONNECTION, "RETRY",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mAllGroupsModel.getAllGroups();
+                    }
+                });
     }
 
+    @Override
+    public void onApiCallStarted() {
+        mAllGroupsView.showProgressbar();
+    }
+
+    @Override
+    public boolean onApiCallStopped() {
+        return mAllGroupsView.dismissProgressbar();
+    }
 }

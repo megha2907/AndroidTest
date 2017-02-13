@@ -13,25 +13,17 @@ public interface ProfileView extends InAppView {
 
     void setProfileImage(String imageUrl);
 
-    void setSportsFollowedCount(int sportsFollowedCount);
-
-    void setGroupsCount(int GroupsCount);
-
     void setLevel(String level);
-
-    void setPowerUpsCount(int PowerUpsCount);
 
     void setAccuracy(int accuracy);
 
     void setPoints(Long points);
 
-    void initMyPosition(UserInfo userInfo);
+    void initMyPosition(int totalMatchesPlayed, int badgesCount, int sportsFollowedCount, int powerupsCount);
 
     void navigateToLogIn();
 
     void navigateToPowerUpScreen();
-
-    void setBadgesCount(int badgesCount);
 
     void setPredictionCount(Integer predictionCount);
 }

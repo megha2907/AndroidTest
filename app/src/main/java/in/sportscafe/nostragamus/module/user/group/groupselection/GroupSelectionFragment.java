@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.groupselection;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,16 +32,22 @@ public class GroupSelectionFragment extends NostragamusFragment implements Group
 
     private GroupSelectionFragment.OnTournamentUpdatedListener mUpdatedListener;
 
-    public static GroupSelectionFragment newInstance(Integer groupId,GroupSelectionFragment.OnTournamentUpdatedListener listener) {
-
-
+    public static GroupSelectionFragment newInstance(Integer groupId) {
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_GROUP_ID, groupId);
 
         GroupSelectionFragment fragment = new GroupSelectionFragment();
         fragment.setArguments(bundle);
-        fragment.mUpdatedListener = listener;
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if(context instanceof OnTournamentUpdatedListener) {
+            mUpdatedListener = (OnTournamentUpdatedListener) context;
+        } else throw new IllegalArgumentException("Called activity should implement the OnTournamentUpdatedListener");
     }
 
     @Nullable
@@ -59,7 +66,7 @@ public class GroupSelectionFragment extends NostragamusFragment implements Group
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         this.mRvSportSelection.setHasFixedSize(true);
 
-        this.mGroupSelectionPresenter = GroupSelectionPresenterImpl.newInstance(this,mUpdatedListener);
+        this.mGroupSelectionPresenter = GroupSelectionPresenterImpl.newInstance(this);
         this.mGroupSelectionPresenter.onGetGroupSelectionInfo(getArguments().getInt(KEY_GROUP_ID));
     }
 
@@ -71,6 +78,11 @@ public class GroupSelectionFragment extends NostragamusFragment implements Group
     @Override
     public void setSuccessResult() {
         getActivity().setResult(Activity.RESULT_OK);
+    }
+
+    @Override
+    public void setTournamentsCount(int size, boolean isGroupTournamentChanged) {
+        mUpdatedListener.setTournamentsCount(size, isGroupTournamentChanged);
     }
 
     public interface OnTournamentUpdatedListener {

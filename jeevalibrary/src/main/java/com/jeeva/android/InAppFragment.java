@@ -102,9 +102,16 @@ public class InAppFragment extends BaseFragment {
     }
 
     @Override
-    public void dismissProgressbar() {
-        hideInApp();
-        mProgressBar.setVisibility(View.GONE);
+    public boolean dismissProgressbar() {
+        boolean dismissed = false;
+        try {
+            hideInApp();
+            mProgressBar.setVisibility(View.GONE);
+            dismissed = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dismissed;
     }
 
     public void showInApp() {

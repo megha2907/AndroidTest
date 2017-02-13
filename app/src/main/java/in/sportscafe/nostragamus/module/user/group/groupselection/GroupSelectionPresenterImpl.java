@@ -18,16 +18,13 @@ public class GroupSelectionPresenterImpl implements GroupSelectionPresenter, Gro
 
     private GroupSelectionModel mGroupSelectionModel;
 
-    private GroupSelectionFragment.OnTournamentUpdatedListener mChangedListener;
-
-    private GroupSelectionPresenterImpl(GroupSelectionView groupSelectionView,GroupSelectionFragment.OnTournamentUpdatedListener listener) {
+    private GroupSelectionPresenterImpl(GroupSelectionView groupSelectionView) {
         this.mGroupSelectionView = groupSelectionView;
         this.mGroupSelectionModel = GroupSelectionModelImpl.newInstance(this);
-        this.mChangedListener =listener;
     }
 
-    public static GroupSelectionPresenter newInstance(GroupSelectionView groupSelectionView,GroupSelectionFragment.OnTournamentUpdatedListener listener) {
-        return new GroupSelectionPresenterImpl(groupSelectionView,listener);
+    public static GroupSelectionPresenter newInstance(GroupSelectionView groupSelectionView) {
+        return new GroupSelectionPresenterImpl(groupSelectionView);
     }
 
     @Override
@@ -83,7 +80,7 @@ public class GroupSelectionPresenterImpl implements GroupSelectionPresenter, Gro
 
     @Override
     public void setTournamentsCount(int size, boolean isGroupTournamentChanged) {
-        mChangedListener.setTournamentsCount(size,isGroupTournamentChanged);
+        mGroupSelectionView.setTournamentsCount(size,isGroupTournamentChanged);
     }
 
     @Override

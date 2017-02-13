@@ -3,7 +3,6 @@ package in.sportscafe.nostragamus.module.user.myprofile;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -13,17 +12,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.widgets.HmImageView;
-
-import java.util.List;
-
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
@@ -33,7 +25,6 @@ import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.settings.SettingActivity;
-import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -65,17 +56,9 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     private ViewPager mViewPager;
 
-    private String sportsFollowed;
+    private ViewPagerAdapter mPagerAdapter;
 
-    private String powerUpsCount;
-
-    private String groupsCount;
-
-    private String badgeCount;
-
-    private ViewPagerAdapter mpagerAdapter;
-
-    private Boolean groupClicked = false;
+    private Boolean mGroupClicked = false;
 
     @Override
     public void onAttach(Context context) {
@@ -98,11 +81,12 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setClickListeners();
+        if(null == savedInstanceState) {
+            setClickListeners();
 
-        this.mProfilePresenter = ProfilePresenterImpl.newInstance(this);
-        this.mProfilePresenter.onCreateProfile();
-
+            this.mProfilePresenter = ProfilePresenterImpl.newInstance(this);
+            this.mProfilePresenter.onCreateProfile();
+        }
     }
 
 
@@ -128,149 +112,31 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     }
 
     @Override
-    public void setSportsFollowedCount(int sportsFollowedCount) {
-        sportsFollowed = String.valueOf(sportsFollowedCount);
-
-    }
-
-
-    @Override
-    public void setGroupsCount(int GroupsCount) {
-        groupsCount = String.valueOf(GroupsCount);
-    }
-
-    @Override
     public void setLevel(String level) {
-        TextView tvLevel = (TextView) findViewById(R.id.profile_tv_level);
-        tvLevel.setText("Level "+level);
-    }
-
-    @Override
-    public void setPowerUpsCount(int PowerUpsCount) {
-        powerUpsCount = String.valueOf(PowerUpsCount);
+        ((TextView) findViewById(R.id.profile_tv_level)).setText("Level "+ level);
     }
 
     @Override
     public void setAccuracy(int accuracy) {
-        Button tvPoints = (Button) findViewById(R.id.profile_btn_accuracy);
-        tvPoints.setText(String.valueOf(accuracy + "%"));
+        ((TextView) findViewById(R.id.profile_btn_accuracy)).setText(accuracy + "%");
     }
 
     @Override
     public void setPoints(Long points) {
-        Button tvPoints = (Button) findViewById(R.id.profile_tv_points);
-        tvPoints.setText(String.valueOf(points));
+        ((TextView) findViewById(R.id.profile_tv_points)).setText(String.valueOf(points));
     }
 
     @Override
     public void setPredictionCount(Integer predictionCount) {
-        Button tvPredictionCount = (Button) findViewById(R.id.profile_btn_predictions);
-        tvPredictionCount.setText(String.valueOf(predictionCount));
+        ((TextView) findViewById(R.id.profile_btn_predictions)).setText(String.valueOf(predictionCount));
     }
 
     @Override
-    public void setBadgesCount(int badgesCount) {
-
-        List<Badge> badgeList = NostragamusDataHandler.getInstance().getBadgeList();
-
-        LinearLayout parent = (LinearLayout)findViewById(R.id.badges_ll);
-        RelativeLayout.LayoutParams layoutParams =
-                (RelativeLayout.LayoutParams)parent.getLayoutParams();
-        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        parent.setLayoutParams(layoutParams);
-
-        if(badgeList.size() <= 8) {
-
-            LinearLayout layout2 = new LinearLayout(getContext());
-            layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-            parent.setOrientation(LinearLayout.VERTICAL);
-            parent.addView(layout2);
-
-            for (int i = 0; i < badgeList.size(); i++) {
-
-                HmImageView imageView = new HmImageView(getContext());
-                imageView.setLayoutParams(new RelativeLayout.LayoutParams
-                        (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                imageView.getLayoutParams().height = 40;
-                imageView.getLayoutParams().width = 40;
-                imageView.setImageUrl(badgeList.get(i).getPhoto());
-
-            }
-
-        }else if(badgeList.size()>8) {
-
-            LinearLayout layout2 = new LinearLayout(getContext());
-            layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-            parent.setOrientation(LinearLayout.VERTICAL);
-            parent.addView(layout2);
-
-            for (int i = 0; i < 8; i++) {
-                HmImageView imageView = new HmImageView(getContext());
-                imageView.setLayoutParams(new RelativeLayout.LayoutParams
-                        (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                imageView.getLayoutParams().height = 40;
-                imageView.getLayoutParams().width = 40;
-                imageView.setImageUrl(badgeList.get(i).getPhoto());
-            }
-
-
-                LinearLayout layout3 = new LinearLayout(getContext());
-                layout3.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                parent.addView(layout3);
-
-
-            if(badgeList.size()<=16){
-
-                for (int j = 8; j < badgeList.size(); j++) {
-
-                    HmImageView imageView2 = new HmImageView(getContext());
-                    imageView2.setLayoutParams(new RelativeLayout.LayoutParams
-                            (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                    imageView2.getLayoutParams().height = 40;
-                    imageView2.getLayoutParams().width = 40;
-                    imageView2.setImageUrl(badgeList.get(j).getPhoto());
-
-                }
-
-            }else if (badgeList.size()>16){
-
-                for (int j = 8; j < 16; j++) {
-
-                    HmImageView imageView2 = new HmImageView(getContext());
-                    imageView2.setLayoutParams(new RelativeLayout.LayoutParams
-                            (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                    imageView2.getLayoutParams().height = 40;
-                    imageView2.getLayoutParams().width = 40;
-                    imageView2.setImageUrl(badgeList.get(j).getPhoto());
-                }
-
-                TextView textview = new TextView(getContext());
-                RelativeLayout.LayoutParams lpTextView = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                textview.setLayoutParams(lpTextView);
-                textview.setPadding(5,10,5,5);
-                textview.setText("+ " + (badgeList.size()-16) + " More");
-                textview.setTextColor(Color.WHITE);
-                layout3.addView(textview);
-
-            }
-
-        }
-        if (badgesCount == 0) {
-            badgeCount = "0";
-        }
-        badgeCount = String.valueOf(badgesCount);
-
-    }
-
-
-    @Override
-    public void initMyPosition(UserInfo userInfo) {
+    public void initMyPosition(int totalMatchesPlayed, int badgesCount, int sportsFollowedCount, int powerupsCount) {
         mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
         mViewPager.setOffscreenPageLimit(5);
-        mpagerAdapter = getAdapter(userInfo);
-        mViewPager.setAdapter(mpagerAdapter);
+        mPagerAdapter = getAdapter(totalMatchesPlayed, badgesCount, sportsFollowedCount, powerupsCount);
+        mViewPager.setAdapter(mPagerAdapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -281,12 +147,10 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
             }
 
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-            }
+            public void onPageScrollStateChanged(int state) {}
         });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
@@ -299,30 +163,19 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         drawable.setSize(1, 1);
         linearLayout.setDividerPadding(10);
         linearLayout.setDividerDrawable(drawable);
-
-//        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-//            TabLayout.Tab tab = tabLayout.getTabAt(i);
-//            RelativeLayout relativeLayout = (RelativeLayout)
-//                    LayoutInflater.from(isThreadAlive()).inflate(R.layout.inflater_profile_tab_layout, tabLayout, false);
-//
-//            TextView tabTextView = (TextView) relativeLayout.findViewById(R.id.tab_title);
-//            tabTextView.setText(tab.getText());
-//            tab.setCustomView(relativeLayout);
-//            tab.select();
-//        }
-
     }
 
-    private ViewPagerAdapter getAdapter(UserInfo userInfo) {
+    private ViewPagerAdapter getAdapter(int totalMatchesPlayed, int badgesCount, int sportsFollowedCount, int powerupsCount) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        pagerAdapter.addFragment(TimelineFragment.newInstance(),
-                userInfo.getTotalMatchesPlayed() + "\n Matches");
-        pagerAdapter.addFragment(BadgeFragment.newInstance(), badgeCount + "\n Achievements");
-      //  pagerAdapter.addFragment(AllGroupsFragment.newInstance(), groupsCount + "\n Groups");
-        pagerAdapter.addFragment(PowerUpFragment.newInstance(), powerUpsCount + "\n Powerups");
-        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), sportsFollowed + " \n Sports");
-//        pagerAdapter.addFragment(ChallengesFragment.newInstance(lbSummary.getChallenges()), "0  \n Challenges");
+        pagerAdapter.addFragment(TimelineFragment.newInstance(), formatIfPlural(totalMatchesPlayed, "Match", "es"));
+        pagerAdapter.addFragment(BadgeFragment.newInstance(), formatIfPlural(badgesCount, "Achievement", "s"));
+        pagerAdapter.addFragment(PowerUpFragment.newInstance(), formatIfPlural(powerupsCount, "Powerup", "s"));
+        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), formatIfPlural(sportsFollowedCount, "Sport", "s"));
         return pagerAdapter;
+    }
+
+    private String formatIfPlural(int number, String label, String pluralTerm) {
+        return number + "\n" + label + (number > 1 ? pluralTerm : "");
     }
 
     @Override
@@ -337,8 +190,6 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         Intent intent = new Intent(getContext(), PowerUpActivity.class);
         startActivity(intent);
     }
-
-
 
     @Override
     public void onClick(View view) {
@@ -358,7 +209,6 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     private void navigateToSettings() {
         startActivity(new Intent(getContext(), SettingActivity.class));
     }
-
 
     private void navigateToSportSelection() {
         Intent intent = new Intent(getContext(), SportSelectionActivity.class);
@@ -399,12 +249,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     @Override
     public void setSportsCount(int sportsCount) {
-
-        if (sportsCount == 1) {
-            mpagerAdapter.updateTitle(3, sportsCount + " \n Sport");
-        } else {
-            mpagerAdapter.updateTitle(3, sportsCount + " \n Sports");
-        }
+        mPagerAdapter.updateTitle(3, formatIfPlural(sportsCount, "Sport", "s"));
     }
 
 }

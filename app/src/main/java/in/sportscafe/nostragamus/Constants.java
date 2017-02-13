@@ -189,6 +189,7 @@ public interface Constants {
         String FROM_SETTINGS = "fromSettings";
         String SCREEN = "screen";
         String FROM_PLAY = "fromPlay";
+        String IS_ALL_GROUPS = "isAllGroups";
     }
 
     interface ParcelableKeys {
