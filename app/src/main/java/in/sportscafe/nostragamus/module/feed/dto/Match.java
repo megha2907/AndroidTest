@@ -78,6 +78,15 @@ public class Match {
     @JsonProperty("questions")
     private List<Question> questions = new ArrayList<>();
 
+    @JsonProperty("challenge_id")
+    private Integer challengeId;
+
+    @JsonProperty("challenge_name")
+    private String challengeName;
+
+    @JsonProperty("challenge_img_url")
+    private String challengeImgUrl;
+
     /**
      *
      * @return
@@ -366,5 +375,35 @@ public class Match {
     @JsonProperty("is_result_published")
     public void setResultPublished(boolean resultPublished) {
         this.resultPublished = resultPublished;
+    }
+
+    @JsonProperty("challenge_id")
+    public Integer getChallengeId() {
+        return challengeId;
+    }
+
+    @JsonProperty("challenge_id")
+    public void setChallengeId(Integer challengeId) {
+        this.challengeId = challengeId;
+    }
+
+    @JsonProperty("challenge_name")
+    public String getChallengeName() {
+        return challengeName;
+    }
+
+    @JsonProperty("challenge_name")
+    public void setChallengeName(String challengeName) {
+        this.challengeName = challengeName;
+    }
+
+    @JsonProperty("challenge_img_url")
+    public String getChallengeImgUrl() {
+        return challengeImgUrl;
+    }
+
+    @JsonProperty("challenge_img_url")
+    public void setChallengeImgUrl(String challengeImgUrl) {
+        this.challengeImgUrl = challengeImgUrl;
     }
 }

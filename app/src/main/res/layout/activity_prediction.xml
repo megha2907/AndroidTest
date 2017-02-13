@@ -110,6 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_320"
             android:layout_marginTop="@dimen/dp_40"
+            android:layout_centerHorizontal="true"
             android:visibility="invisible"
             app:cardCornerRadius="@dimen/dp_4"
             app:cardElevation="@dimen/dp_2">
@@ -221,11 +222,10 @@
             app:typeface="roboto_condensed" />
 
         <RelativeLayout
+            android:id="@+id/prediction_rl_footer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignLeft="@id/prediction_cv_bg_0"
-            android:layout_alignRight="@id/prediction_cv_bg_0"
-            android:layout_below="@id/prediction_cv_bg_rl">
+            android:layout_height="@dimen/dp_150"
+            android:layout_alignParentBottom="true">
 
             <RelativeLayout
                 android:id="@+id/prediction_ll_powerup_layout"

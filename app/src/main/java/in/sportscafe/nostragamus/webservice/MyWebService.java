@@ -92,8 +92,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getMatches(tourId);
     }
 
-    public Call<MatchesResponse> getMatchResults(Boolean isAttempted , Boolean WithoutCommentary) {
-        return mNostragamusService.getMatchResults(isAttempted,WithoutCommentary);
+    public Call<MatchesResponse> getMatchResults(Boolean isAttempted, Boolean WithoutCommentary) {
+        return mNostragamusService.getMatchResults(isAttempted, WithoutCommentary);
     }
 
     public Call<QuestionsResponse> getAllQuestions(Integer matchId) {
@@ -101,15 +101,15 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<TournamentsResponse> getTournaments(boolean isCurrent, boolean groupbySport) {
-        return mNostragamusService.getTournaments(isCurrent,groupbySport);
+        return mNostragamusService.getTournaments(isCurrent, groupbySport);
     }
 
     public Call<TournamentFeedResponse> getCurrentTournaments(boolean isCurrent) {
         return mNostragamusService.getCurrentTournaments(isCurrent);
     }
 
-    public Call<ApiResponse> getPostAnswerRequest(Answer answer,Boolean isMatchComplete,Boolean isMinorityOption) {
-        return mNostragamusService.saveAnswer(answer,isMatchComplete,isMinorityOption);
+    public Call<ApiResponse> getPostAnswerRequest(Answer answer, boolean isMatchComplete, boolean isMinorityOption) {
+        return mNostragamusService.saveAnswer(answer, isMatchComplete, isMinorityOption);
     }
 
     public Call<JoinGroupResponse> getJoinGroupRequest(String groupCode) {
@@ -142,7 +142,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getMyResults(MatchId, playerId);
     }
 
-    public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Integer sportsId,Integer groupId,
+    public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Integer sportsId, Integer groupId,
                                                                  Integer challengeId) {
         return mNostragamusService.getLeaderBoardDetail(sportsId, groupId, challengeId);
     }
@@ -166,7 +166,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<Result> getUploadPhotoRequest(File file, String filepath, String filename) {
         return mNostragamusService.uploadImage(
                 MultipartBody.Part.createFormData("file", file.getName(),
-                RequestBody.create(MediaType.parse("multipart/form-data"), file)),
+                        RequestBody.create(MediaType.parse("multipart/form-data"), file)),
                 RequestBody.create(MediaType.parse("multipart/form-data"), filepath),
                 RequestBody.create(MediaType.parse("multipart/form-data"), filename));
     }
@@ -183,12 +183,12 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.refreshAccessToken();
     }
 
-    public Call<ReplayPowerupResponse> getReplayPowerup(String powerupId,Integer matchId) {
-        return mNostragamusService.getReplayPowerup(powerupId,matchId);
+    public Call<ReplayPowerupResponse> getReplayPowerup(String powerupId, Integer matchId) {
+        return mNostragamusService.getReplayPowerup(powerupId, matchId);
     }
 
     public Call<ReplayPowerupResponse> getFlipPowerup(String powerupId, Integer matchId, Integer questionId) {
-        return mNostragamusService.getFlipPowerup(powerupId,matchId,questionId);
+        return mNostragamusService.getFlipPowerup(powerupId, matchId, questionId);
     }
 
     public Call<MatchesResponse> getTimelinesRequest(Integer playerUserId, int skip, int limit) {
@@ -196,7 +196,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<FuzzyPlayerResponse> getFuzzyPlayersRequest(String key, Integer matchId) {
-        return mNostragamusService.fuzzyPlayers(key,matchId);
+        return mNostragamusService.fuzzyPlayers(key, matchId);
     }
 
     public Call<MyResultsResponse> getPlayerResultRequest(Integer playerId, Integer matchId) {
@@ -209,16 +209,16 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<LBLandingResponse> getLBLandingSummary(Integer sportsId, Integer groupId, Integer challengeId, Integer tourId) {
         Map<String, String> queries = new HashMap<>();
-        if(null != sportsId) {
+        if (null != sportsId) {
             queries.put("sports_id", sportsId.toString());
         }
-        if(null != groupId) {
+        if (null != groupId) {
             queries.put("group_id", groupId.toString());
         }
-        if(null != challengeId) {
+        if (null != challengeId) {
             queries.put("challenge_id", challengeId.toString());
         }
-        if(null != tourId) {
+        if (null != tourId) {
             queries.put("tournament_id", tourId.toString());
         }
         return mNostragamusService.getLBLandingSummary(queries);
@@ -229,7 +229,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<PopUpResponse> getPopUpsRequest(String screenName) {
-        return  mNostragamusService.getPopUps(screenName);
+        return mNostragamusService.getPopUps(screenName);
     }
 
     public Call<ApiResponse> getResetLeaderboardRequest(Integer groupId) {

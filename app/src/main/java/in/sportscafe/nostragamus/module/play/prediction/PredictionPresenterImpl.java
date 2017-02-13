@@ -54,12 +54,8 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onSuccessCompletion(Bundle bundle) {
-        if (!mPredictionModel.isDummyGame()) {
-            mPredictionView.dismissProgressbar();
-            mPredictionView.navigateToFeed();
-        } else {
-            mPredictionView.showDummyGameInfo();
-        }
+        mPredictionView.dismissProgressbar();
+        mPredictionView.navigateToFeed();
     }
 
     private void getAllQuestions() {
@@ -110,17 +106,16 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onDummyGameEnd() {
-        mPredictionModel.onAllDoneInDummyGame();
         checkWhereToGo();
     }
 
     @Override
     public void onClickBack() {
         if (!mPredictionModel.isDummyGame()) {
-            if (!mPredictionModel.isFirstCardSwiped()) {
-                mPredictionView.goBack();
-            } else {
+            if (mPredictionModel.isAnyQuestionAnswered()) {
                 mPredictionView.navigateToFeed();
+            } else {
+                mPredictionView.goBack();
             }
         } else if (!mPredictionView.dismissCoach()) {
             checkWhereToGo();
@@ -210,18 +205,8 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onGetSportName(String sportName) {
-        mPredictionView.changeBackgroundImage(sportName);
-    }
-
-    @Override
-    public void onFailedPostAnswerToServer(String message) {
-        if (message.equalsIgnoreCase("Match has already started")) {
-            mPredictionView.showMessage(Alerts.MATCH_ALREADY_STARTED);
-        } else {
-            mPredictionView.showMessage(Alerts.API_FAIL);
-        }
-        mPredictionView.goBack();
+    public void onGetSport(Integer sportId) {
+        mPredictionView.changeBackgroundImage(sportId);
     }
 
     @Override
@@ -245,7 +230,12 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onUpdatingAnswer() {
+    public void onLoadingPollPercent() {
+        mPredictionView.showProgressbar();
+    }
+
+    @Override
+    public void onPostingAnswer() {
         mPredictionView.showProgressbar();
     }
 
@@ -274,5 +264,33 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public boolean isThreadAlive() {
         return null != mPredictionView.getContext();
+    }
+
+    @Override
+    public void onPostAnswerSuccess() {
+        mPredictionView.dismissProgressbar();
+    }
+
+    @Override
+    public void onPostAnswerFailed(String message) {
+        mPredictionView.dismissProgressbar();
+        if (message.equalsIgnoreCase("Match has already started")) {
+            mPredictionView.showMessage(Alerts.MATCH_ALREADY_STARTED);
+        } else {
+            mPredictionView.showMessage(Alerts.API_FAIL);
+        }
+        onClickBack();
+    }
+
+    @Override
+    public void noInternetOnPostingAnswer() {
+        mPredictionView.dismissProgressbar();
+        mPredictionView.showMessage(Alerts.NO_NETWORK_CONNECTION);
+        onClickBack();
+    }
+
+    @Override
+    public void onDummyGameCompletion() {
+        mPredictionView.showDummyGameInfo();
     }
 }

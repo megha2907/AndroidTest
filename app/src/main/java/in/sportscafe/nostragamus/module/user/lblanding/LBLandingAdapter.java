@@ -104,10 +104,11 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
         public void onClick(View view) {
             NostragamusAnalytics.getInstance().trackLeaderboard(mLbLandingType);
 
-            Bundle bundle = new Bundle();
-            bundle.putString(BundleKeys.LB_LANDING_TYPE, mLbLandingType);
-            bundle.putParcelable(BundleKeys.LB_LANDING_DATA, Parcels.wrap(getItem(getAdapterPosition())));
+            LbLanding lbLanding = getItem(getAdapterPosition());
+            lbLanding.setType(mLbLandingType);
 
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
             navigateToPointsActivity(view.getContext(), bundle);
         }
 

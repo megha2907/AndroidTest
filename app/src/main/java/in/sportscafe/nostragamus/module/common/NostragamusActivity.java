@@ -18,6 +18,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -46,7 +47,7 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
         super.onCreate(savedInstanceState);
 
         // Checking the version code to request update or force update the application
-        checkAnyUpdate(); // Todo enable it later
+        checkAnyUpdate();
 
         PopUpModelImpl.newInstance(this).getPopUps(getScreenName());
 
@@ -142,11 +143,8 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
     }
 
     private void openPopup(List<PopUp> popUps) {
-
-        Intent intent = new Intent(getContext(), PopUpActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.BundleKeys.POPUP_DATA, Parcels.wrap(popUps));
-        intent.putExtras(bundle);
+        Intent intent = new Intent(this, PopUpActivity.class);
+        intent.putExtra(BundleKeys.POPUP_DATA, Parcels.wrap(popUps));
         startActivity(intent);
     }
 

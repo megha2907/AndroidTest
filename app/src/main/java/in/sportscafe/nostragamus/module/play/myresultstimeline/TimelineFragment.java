@@ -33,7 +33,7 @@ import static com.google.android.gms.analytics.internal.zzy.w;
  */
 public class TimelineFragment extends NostragamusFragment implements TimelineView, SwipeRefreshLayout.OnRefreshListener {
 
-    private static final float MAX_ROTATION = 10;
+    private static final float MAX_ROTATION = 15f;
 
     private float mVisibleHeight;
 

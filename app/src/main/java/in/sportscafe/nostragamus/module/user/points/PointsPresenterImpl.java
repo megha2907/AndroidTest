@@ -31,7 +31,6 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
 
     @Override
     public void onCreatePoints(Bundle bundle) {
-
         mPointsModel.init(bundle);
         mPointsView.setName(mPointsModel.getName());
         mPointsView.setIcon(mPointsModel.getIcon());
