@@ -60,6 +60,21 @@
 
                     </RelativeLayout>
 
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/player_profile_btn_compare_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_marginTop="@dimen/dp_30"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:background="@color/tabcolor"
+                        android:onClick="onClick"
+                        android:gravity="center"
+                        android:text="COMPARE"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_12"
+                        app:typeface="lato_bold" />
+
 
                     <in.sportscafe.nostragamus.module.common.RoundImage
                         android:id="@+id/player_profile_iv_image"

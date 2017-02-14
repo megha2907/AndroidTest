@@ -111,7 +111,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void onFailedMyResults(String message) {
         mResultsView.dismissProgressbar();
-        showAlertMessage(message);
+        showAlertMessage(Constants.Alerts.RESULTS_INFO_ERROR);
     }
 
     @Override

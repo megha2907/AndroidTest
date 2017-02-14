@@ -190,4 +190,7 @@ public interface NostragamusService {
 
     @HTTP(method = "DELETE", path = "v1/game/groups", hasBody = true)
     Call<ApiResponse> deleteGroup(@Body AdminRequest request);
+
+    @GET("/v1/game/users/getCommonLeaderboards")
+    Call<CompareLeaderBoardResponse> getLeaderBoardComparisonRequest(@Query("player_id") Integer playerId);
 }

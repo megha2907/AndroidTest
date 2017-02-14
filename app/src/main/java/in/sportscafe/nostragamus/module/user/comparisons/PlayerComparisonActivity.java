@@ -1,16 +1,12 @@
 package in.sportscafe.nostragamus.module.user.comparisons;
 
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -19,46 +15,16 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
-import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
-import in.sportscafe.nostragamus.module.user.badges.Badge;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
-import in.sportscafe.nostragamus.module.user.playerbadges.PlayerBadgeFragment;
-import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfilePresenter;
-import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfilePresenterImpl;
-import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileView;
-import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
+import in.sportscafe.nostragamus.module.user.comparisons.compareLeaderBoards.CompareLeaderBoardFragment;
+import in.sportscafe.nostragamus.module.user.comparisons.compareprofiles.CompareProfileFragment;
 
 /**
  * Created by deepanshi on 2/11/17.
  */
 
-public class PlayerComparisonActivity extends NostragamusActivity implements PlayerComparisonView, View.OnClickListener  {
+public class PlayerComparisonActivity extends NostragamusActivity implements PlayerComparisonView, View.OnClickListener {
 
-    private String userSportsFollowed;
-
-    private String playerSportsFollowed;
-
-    private String mUserLevel;
-
-    private String mPlayerLevel;
-
-    private String mUserPredictions;
-
-    private String mPlayerPredictions;
-
-    private String mUserAccuracy;
-
-    private String mPlayerAccuracy;
-
-    private String groupsCount;
-
-    private String badgeCount;
-
-    private String mUserPoints;
-
-    private String mPlayerPoints;
-
-    private PlayerProfilePresenter mProfilePresenter;
+    private PlayerComparisonPresenter mPlayerComparisonPresenter;
 
     private ViewPagerAdapter mpagerAdapter;
 
@@ -68,10 +34,10 @@ public class PlayerComparisonActivity extends NostragamusActivity implements Pla
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player_profile);
+        setContentView(R.layout.activity_player_comparison);
 
-        //this.mProfilePresenter = PlayerProfilePresenterImpl.newInstance(this);
-        this.mProfilePresenter.onCreateProfile(getIntent().getExtras());
+        this.mPlayerComparisonPresenter = PlayerComparisonPresenterImpl.newInstance(this);
+        this.mPlayerComparisonPresenter.onCreatePlayerComparison(getIntent().getExtras());
 
     }
 
@@ -103,43 +69,11 @@ public class PlayerComparisonActivity extends NostragamusActivity implements Pla
     }
 
     @Override
-    public void setSportsFollowedCount(int userSportsFollowedCount, int playerSportsFollowedCount) {
-        userSportsFollowed = String.valueOf(userSportsFollowedCount);
-        playerSportsFollowed = String.valueOf(playerSportsFollowedCount);
-
-    }
-
-
-    @Override
-    public void setLevel(String userLevel, String playerLevel) {
-        mUserLevel = userLevel;
-        mPlayerLevel = playerLevel;
-    }
-
-    @Override
-    public void setPoints(long userPoints, long playerPoints) {
-        mUserPoints = String.valueOf(userPoints);
-        mPlayerPoints = String.valueOf(playerPoints);
-    }
-
-    @Override
-    public void setAccuracy(int userAccuracy, int playerAccuracy) {
-       mUserAccuracy = String.valueOf(userAccuracy + "%");
-       mPlayerAccuracy = String.valueOf(playerAccuracy + "%");
-    }
-
-    @Override
-    public void setPredictionCount(Integer userPredictionCount,Integer playerPredictionCount) {
-        mUserPredictions = String.valueOf(userPredictionCount);
-        mPlayerPredictions = String.valueOf(playerPredictionCount);
-    }
-
-    @Override
-    public void initMyPosition(PlayerInfo playerInfo) {
+    public void initMyPosition(Bundle bundle) {
 
         mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
         mViewPager.setOffscreenPageLimit(5);
-        mpagerAdapter = getAdapter(playerInfo);
+        mpagerAdapter = getAdapter(bundle);
         mViewPager.setAdapter(mpagerAdapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -172,22 +106,11 @@ public class PlayerComparisonActivity extends NostragamusActivity implements Pla
 
     }
 
-    private ViewPagerAdapter getAdapter(PlayerInfo playerInfo) {
+    private ViewPagerAdapter getAdapter(Bundle bundle) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        pagerAdapter.addFragment(CompareProfileFragment.newInstance(bundle), "PROFILE");
+        pagerAdapter.addFragment(CompareLeaderBoardFragment.newInstance(bundle), "LEADERBOARDS");
 
-        pagerAdapter.addFragment(TimelineFragment.newInstance(playerInfo.getId()),
-                playerInfo.getTotalMatchesPlayed() + "\n Matches");
-
-        if (groupsCount == "1") {
-            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), groupsCount + "\n Mutual Group");
-        } else {
-            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), groupsCount + "\n Mutual Groups");
-        }
-        if (badgeCount == "1") {
-            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount + "\n Achievement");
-        } else {
-            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount + "\n Achievements");
-        }
         return pagerAdapter;
     }
 

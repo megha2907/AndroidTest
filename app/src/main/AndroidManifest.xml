@@ -98,6 +98,9 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity android:name=".module.user.comparisons.PlayerComparisonActivity"
+            android:screenOrientation="portrait"></activity>
+
         <activity
             android:name="in.sportscafe.nostragamus.module.common.TermsConditions"
             android:screenOrientation="portrait">

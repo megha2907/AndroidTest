@@ -52,7 +52,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:text="Head to Head"
-                            android:textColor="@color/white_60"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/dp_14"
                             app:typeface="lato_regular" />
 
@@ -84,8 +84,9 @@
 
                             <in.sportscafe.nostragamus.module.common.RoundImage
                                 android:id="@+id/player_comparison_user_iv_image"
-                                android:layout_width="@dimen/dp_80"
-                                android:layout_height="@dimen/dp_80"
+                                android:layout_width="@dimen/dp_60"
+                                android:layout_height="@dimen/dp_60"
+                                android:layout_gravity="center"
                                 android:layout_marginTop="@dimen/dp_18"
                                 android:src="@drawable/placeholder_icon" />
 
@@ -95,13 +96,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/player_comparison_user_iv_image"
+                                android:layout_gravity="center"
                                 android:layout_marginTop="@dimen/dp_8"
                                 android:paddingBottom="@dimen/dp_18"
-                                android:text="Deepanshi"
                                 android:textAllCaps="false"
-                                android:layout_gravity="center"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/dp_18"
+                                android:textSize="@dimen/dp_14"
                                 app:typeface="lato_regular" />
 
                         </LinearLayout>
@@ -115,8 +115,9 @@
 
                             <in.sportscafe.nostragamus.module.common.RoundImage
                                 android:id="@+id/player_comparison_other_player_image"
-                                android:layout_width="@dimen/dp_80"
-                                android:layout_height="@dimen/dp_80"
+                                android:layout_width="@dimen/dp_60"
+                                android:layout_height="@dimen/dp_60"
+                                android:layout_gravity="center"
                                 android:layout_marginTop="@dimen/dp_18"
                                 android:src="@drawable/placeholder_icon" />
 
@@ -126,13 +127,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/player_comparison_other_player_image"
+                                android:layout_gravity="center"
                                 android:layout_marginTop="@dimen/dp_8"
                                 android:paddingBottom="@dimen/dp_18"
-                                android:text="Jeeva"
-                                android:layout_gravity="center"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/dp_18"
+                                android:textSize="@dimen/dp_14"
                                 app:typeface="lato_regular" />
 
                         </LinearLayout>
@@ -155,14 +155,14 @@
                 android:background="@color/profile_tab_color"
                 android:elevation="@dimen/dp_0"
                 app:layout_collapseMode="pin"
-                app:selected_typeface="roboto_condensed"
+                app:selected_typeface="lato_bold"
                 app:tabIndicatorColor="@color/tabcolor"
                 app:tabIndicatorHeight="@dimen/dp_4"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextAppearance="@style/ProfileTabLayoutTextAppearance"
                 app:tabTextColor="@color/silver_chalice"
                 app:unselected_textSize="@dimen/dp_14"
-                app:unselected_typeface="roboto_condensed" />
+                app:unselected_typeface="lato_regular" />
 
         </android.support.design.widget.AppBarLayout>
 
