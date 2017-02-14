@@ -35,12 +35,13 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
 
     private List<String> mOptionList = new ArrayList<>();
 
-    public MembersAdapter(Context context, OnMembersOptionListener membersOptionListener, boolean admin) {
+    public MembersAdapter(Context context, OnMembersOptionListener membersOptionListener, boolean admin, List<GroupPerson> memberList) {
         super(context);
         this.mMembersOptionListener = membersOptionListener;
         this.mOptionList.add("Make Admin");
         this.mOptionList.add("Remove");
         this.mAdmin = admin;
+        addAll(memberList);
     }
 
     @Override

@@ -99,7 +99,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 TournamentPowerupInfo tournamentPowerupInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.TOURNAMENT_POWERUPS));
                 HashMap<String, Integer> powerUpMap = tournamentPowerupInfo.getPowerUps();
 
-                m2xGlobalPowerups = NostragamusDataHandler.getInstance().getNumberof2xGlobalPowerups();
+                m2xGlobalPowerups = NostragamusDataHandler.getInstance().get2xGlobalPowerupsCount();
                 m2xPowerups = powerUpMap.get(Powerups.XX);
                 mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
                 mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);

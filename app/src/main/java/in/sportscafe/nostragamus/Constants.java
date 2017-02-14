@@ -142,6 +142,8 @@ public interface Constants {
         String CANNOT_RESET_LB = "Something went wrong! Please try again!";
         String DELETE_GROUP_SUCCESS = "You have deleted the group successfully";
         String CANNOT_DELETE_GROUP = "You cannot delete the group since you are not the Admin";
+        String NO_POWERUPS = "No powerups";
+        String NO_BADGES = "No badges yet";
     }
 
     interface BundleKeys {
@@ -190,6 +192,10 @@ public interface Constants {
         String SCREEN = "screen";
         String FROM_PLAY = "fromPlay";
         String IS_ALL_GROUPS = "isAllGroups";
+        String POWERUPS = "powerUps";
+        String FOLLOWED_TOURS = "followedTours";
+        String IS_ADMIN = "isAdmin";
+        String GROUP_MEMBERS = "groupMembers";
     }
 
     interface ParcelableKeys {

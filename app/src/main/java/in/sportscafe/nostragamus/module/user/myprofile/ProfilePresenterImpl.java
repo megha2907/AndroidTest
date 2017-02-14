@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
@@ -40,17 +39,6 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
         populateUserInfo();
     }
 
-    @Override
-    public void onGroupDetailsUpdated() {
-        getProfile();
-    }
-
-    @Override
-    public void onClickLogout() {
-        NostragamusDataHandler.getInstance().clearAll();
-        mProfileView.navigateToLogIn();
-    }
-
     private void getProfile() {
         mProfileView.showProgressbar();
         mProfileModel.getProfileDetails();
@@ -59,31 +47,35 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     @Override
     public void onGetProfileSuccess() {
         mProfileView.dismissProgressbar();
-
-        UserInfo userInfo = mProfileModel.getUserInfo();
-        mProfileView.setPoints(userInfo.getTotalPoints());
-
-        mProfileView.initMyPosition(
-                userInfo.getTotalMatchesPlayed(),
-                userInfo.getBadges().size(),
-                mProfileModel.getSportsFollowedCount(),
-                mProfileModel.getPowerupsCount()
-        );
+        populateUserInfo();
     }
 
     private void populateUserInfo() {
         UserInfo userInfo = mProfileModel.getUserInfo();
-        mProfileView.setName(userInfo.getUserNickName());
-        mProfileView.setProfileImage(userInfo.getPhoto());
+        updateBasicDetails(userInfo.getUserNickName(), userInfo.getPhoto());
+        updateUserRelaventDetails(userInfo.getInfoDetails().getLevel(), userInfo.getAccuracy(), userInfo.getPredictionCount(), userInfo.getTotalPoints());
+        updateAdapterDetails();
+    }
 
-        if (!TextUtils.isEmpty(userInfo.getInfoDetails().getLevel())) {
-            mProfileView.setLevel(userInfo.getInfoDetails().getLevel());
+    private void updateAdapterDetails() {
+        mProfileView.setAdapter(mProfileModel.getAdapter(mProfileView.getChildFragmentManager()));
+    }
+
+    private void updateBasicDetails(String name, String photo) {
+        mProfileView.setName(name);
+        mProfileView.setProfileImage(photo);
+    }
+
+    private void updateUserRelaventDetails(String level, int accuracy, int predictionCount, Long totalPoints) {
+        if (!TextUtils.isEmpty(level)) {
+            mProfileView.setLevel(level);
         } else {
             mProfileView.setLevel("1");
         }
 
-        mProfileView.setAccuracy(userInfo.getAccuracy());
-        mProfileView.setPredictionCount(userInfo.getPredictionCount());
+        mProfileView.setAccuracy(accuracy);
+        mProfileView.setPredictionCount(predictionCount);
+        mProfileView.setPoints(totalPoints);
     }
 
     @Override
@@ -99,8 +91,8 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     }
 
     @Override
-    public Context getContext() {
-        return mProfileView.getContext();
+    public void onSportsTitleChanged(String title) {
+        mProfileView.updateSportTabTitle(title);
     }
 
     private void showAlert(String message) {

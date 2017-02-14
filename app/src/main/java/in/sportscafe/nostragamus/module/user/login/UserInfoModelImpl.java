@@ -1,10 +1,7 @@
 package in.sportscafe.nostragamus.module.user.login;
 
-import com.jeeva.android.Log;
-
 import java.util.HashMap;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -62,13 +59,13 @@ public class UserInfoModelImpl {
             nostragamusDataHandler.setUserInfo(userInfo);
 
             HashMap<String, Integer> powerUpMap = userInfo.getPowerUps();
-            nostragamusDataHandler.setNumberof2xGlobalPowerups(powerUpMap.get(Powerups.XX_GLOBAL));
+            nostragamusDataHandler.set2xGlobalPowerupsCount(powerUpMap.get(Powerups.XX_GLOBAL));
 
-            nostragamusDataHandler.setNumberof2xPowerups(powerUpMap.get(Powerups.XX));
-            nostragamusDataHandler.setNumberofNonegsPowerups(powerUpMap.get(Powerups.NO_NEGATIVE));
-            nostragamusDataHandler.setNumberofAudiencePollPowerups(powerUpMap.get(Powerups.AUDIENCE_POLL));
-            nostragamusDataHandler.setNumberofReplayPowerups(powerUpMap.get(Powerups.MATCH_REPLAY));
-            nostragamusDataHandler.setNumberofFlipPowerups(powerUpMap.get(Powerups.ANSWER_FLIP));
+            nostragamusDataHandler.set2xPowerupsCount(powerUpMap.get(Powerups.XX));
+            nostragamusDataHandler.setNonegsPowerupsCount(powerUpMap.get(Powerups.NO_NEGATIVE));
+            nostragamusDataHandler.setPollPowerupsCount(powerUpMap.get(Powerups.AUDIENCE_POLL));
+            nostragamusDataHandler.setReplayPowerupsCount(powerUpMap.get(Powerups.MATCH_REPLAY));
+            nostragamusDataHandler.setFlipPowerupsCount(powerUpMap.get(Powerups.ANSWER_FLIP));
         }
     }
 

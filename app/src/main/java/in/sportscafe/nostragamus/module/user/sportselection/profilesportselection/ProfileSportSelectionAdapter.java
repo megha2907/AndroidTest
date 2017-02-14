@@ -26,11 +26,14 @@ public class ProfileSportSelectionAdapter extends Adapter<Sport, ProfileSportSel
 
     private ProfileSportSelectionAdapter.OnSportChangedListener mChangedListener;
 
-    public ProfileSportSelectionAdapter(Context context, List<Integer> selectedSportsIdList,OnSportChangedListener listener) {
+    public ProfileSportSelectionAdapter(Context context, List<Sport> allSports,
+                                        List<Integer> selectedSportsIdList, OnSportChangedListener listener) {
         super(context);
-        mContext=context;
+        mContext = context;
         this.mSelectedSportsIdList = selectedSportsIdList;
         this.mChangedListener = listener;
+
+        addAll(allSports);
     }
 
     @Override
@@ -51,12 +54,10 @@ public class ProfileSportSelectionAdapter extends Adapter<Sport, ProfileSportSel
         holder.mTvSport.setText(sport.getName());
         holder.mIvSport.setImageUrl(sport.getImageUrl());
 
-        if (mSelectedSportsIdList.contains((sport.getId())))
-        {
+        if (mSelectedSportsIdList.contains((sport.getId()))) {
             holder.mIvSelectedIcon.setBackgroundResource(R.drawable.profile_sport_selected_icon);
 
-        } else
-        {
+        } else {
             holder.mIvSelectedIcon.setBackgroundResource(R.drawable.profile_sport_icon);
         }
     }
@@ -93,7 +94,7 @@ public class ProfileSportSelectionAdapter extends Adapter<Sport, ProfileSportSel
             }
             notifyItemChanged(getAdapterPosition());
 
-            if(null != mChangedListener) {
+            if (null != mChangedListener) {
                 mChangedListener.onOnSportChanged(mSelectedSportsIdList);
             }
         }

@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.members;
 
+import android.os.Bundle;
+
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 
 /**
@@ -7,9 +9,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
  */
 public interface MembersPresenter {
 
-    void onCreateMembers(Integer groupId);
+    void onCreateMembers(Bundle bundle);
 
     void onClickLeaveGroup();
-
-    void onGetNewPerson(GroupPerson newPerson);
 }

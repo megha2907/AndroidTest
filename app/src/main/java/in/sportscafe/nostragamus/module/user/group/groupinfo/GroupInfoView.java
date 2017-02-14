@@ -1,43 +1,34 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
+import com.jeeva.android.InAppView;
 import com.jeeva.android.View;
 
+import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
 /**
  * Created by Jeeva on 12/6/16.
  */
-public interface GroupInfoView extends View {
+public interface GroupInfoView extends InAppView {
 
     void setGroupName(String groupName);
 
-    void setGroupIcon(String groupIcon);
+    void setGroupImage(String groupImageUrl);
 
-    void setMembersSize(int size);
+    void setAdapter(ViewPagerAdapter adapter);
 
-    void setAdapter(GroupTournamentAdapter adapter);
-
-    void setGroupCode(String groupCode);
-
-    void disableEdit();
-
-    void navigateToAdminMembers(Bundle bundle);
-
-    void navigateToGroupMembers(Bundle bundle);
+    void setTourTabTitle(String title);
 
     void navigateToHome();
 
-    void setSuccessResult();
-
-    void goBackWithSuccessResult();
-
-    void navigateToAllGroups();
-
-    void initMyPosition(GroupInfo groupInfo);
+    void navigateToEditGroup(Bundle bundle);
 
     void changeToAdminMode();
 
-    Boolean getIsGroupRefreshed();
+    void goBack();
+
+    FragmentManager getSupportFragmentManager();
 }

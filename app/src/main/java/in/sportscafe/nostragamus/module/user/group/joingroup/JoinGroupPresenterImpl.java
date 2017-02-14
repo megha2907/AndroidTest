@@ -39,11 +39,6 @@ public class JoinGroupPresenterImpl implements JoinGroupPresenter, JoinGroupMode
     }
 
     @Override
-    public void onNewGroupSuccess(Bundle bundle) {
-        mJoinGroupView.navigateToGroupInfo(bundle);
-    }
-
-    @Override
     public void onBack() {
         if(mJoinGroupModel.hadGroupCode()) {
             mJoinGroupView.goToHome();

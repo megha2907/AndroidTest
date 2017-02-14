@@ -50,7 +50,6 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
         checkAnyUpdate();
 
         PopUpModelImpl.newInstance(this).getPopUps(getScreenName());
-
     }
 
     private void checkAnyUpdate() {

@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants;
@@ -19,7 +18,6 @@ import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 
 /**
@@ -70,7 +68,7 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
     }
 
     @Override
-    public void setAdapter(GrpTournamentSelectionAdapter adapter) {
+    public void setAdapter(TourSelectionAdapter adapter) {
         this.mRvTournamentSelection.setAdapter(adapter);
     }
 

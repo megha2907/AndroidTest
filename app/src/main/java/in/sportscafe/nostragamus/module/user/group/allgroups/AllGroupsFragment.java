@@ -35,8 +35,6 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
 
     private static final int CODE_GROUP_INFO = 11;
 
-    private static final int GROUPS_CODE = 20;
-
     public static AllGroupsFragment newInstance() {
         Bundle bundle = new Bundle();
         bundle.putBoolean(BundleKeys.IS_ALL_GROUPS, true);

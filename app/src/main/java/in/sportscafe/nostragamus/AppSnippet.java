@@ -276,4 +276,8 @@ public class AppSnippet implements Constants {
         inputStream.close();
         return buffer.toByteArray();
     }
+
+    public static String formatIfPlural(int number, String label, String pluralTerm) {
+        return number + "\n" + label + (number > 1 ? pluralTerm : "");
+    }
 }

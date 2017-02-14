@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.badges;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 /**
@@ -8,5 +9,6 @@ import android.support.v7.widget.RecyclerView;
  */
 public interface BadgeModel {
 
-    RecyclerView.Adapter getBadgeAdapter(Context context);
+    void createAdapter(Context context, Bundle bundle);
+
 }

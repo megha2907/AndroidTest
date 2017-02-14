@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
@@ -23,42 +23,22 @@ import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
-import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.settings.SettingActivity;
-import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
-import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUpActivity;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUpFragment;
-import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity;
-import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 
 /**
  * Created by Jeeva on 14/6/16.
  */
-public class ProfileFragment extends NostragamusFragment implements ProfileView, ProfileSportSelectionFragment.OnSportSelectionChangedListener, View.OnClickListener {
-
-    private static final int SPORTS_SELECTION_CODE = 34;
+public class ProfileFragment extends NostragamusFragment implements ProfileView, View.OnClickListener {
 
     private static final int EDIT_PROFILE_CODE = 35;
-
-    private static final int CODE_NEW_GROUP = 24;
-
-    private static final int GROUPS_CODE = 20;
-
-    private static final int GROUP_INFO_CODE = 10;
 
     private ProfilePresenter mProfilePresenter;
 
     private OnHomeActionListener mHomeActionListener;
 
-    private ViewPager mViewPager;
-
     private ViewPagerAdapter mPagerAdapter;
-
-    private Boolean mGroupClicked = false;
 
     @Override
     public void onAttach(Context context) {
@@ -81,7 +61,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if(null == savedInstanceState) {
+        if (null == savedInstanceState) {
             setClickListeners();
 
             this.mProfilePresenter = ProfilePresenterImpl.newInstance(this);
@@ -91,8 +71,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
 
     private void setClickListeners() {
-        findViewById(R.id.profile_btn_edit).setOnClickListener(this);
-        findViewById(R.id.profile_btn_logout).setOnClickListener(this);
+        findViewById(R.id.profile_btn_settings).setOnClickListener(this);
         findViewById(R.id.profile_iv_image).setOnClickListener(this);
     }
 
@@ -113,7 +92,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     @Override
     public void setLevel(String level) {
-        ((TextView) findViewById(R.id.profile_tv_level)).setText("Level "+ level);
+        ((TextView) findViewById(R.id.profile_tv_level)).setText("Level " + level);
     }
 
     @Override
@@ -132,29 +111,35 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     }
 
     @Override
-    public void initMyPosition(int totalMatchesPlayed, int badgesCount, int sportsFollowedCount, int powerupsCount) {
-        mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
-        mViewPager.setOffscreenPageLimit(5);
-        mPagerAdapter = getAdapter(totalMatchesPlayed, badgesCount, sportsFollowedCount, powerupsCount);
-        mViewPager.setAdapter(mPagerAdapter);
+    public void updateSportTabTitle(String title) {
+        mPagerAdapter.updateTitle(3, title);
+    }
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+    @Override
+    public void setAdapter(ViewPagerAdapter adapter) {
+        ViewPager viewPager = (CustomViewPager) findViewById(R.id.tab_vp);
+        viewPager.setOffscreenPageLimit(5);
+        viewPager.setAdapter(mPagerAdapter = adapter);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 NostragamusAnalytics.getInstance().trackMyProfile(
-                        mViewPager.getAdapter().getPageTitle(position).toString()
+                        mPagerAdapter.getPageTitle(position).toString()
                 );
             }
 
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
-        tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setupWithViewPager(viewPager);
 
         LinearLayout linearLayout = (LinearLayout) tabLayout.getChildAt(0);
         linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
@@ -165,19 +150,6 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         linearLayout.setDividerDrawable(drawable);
     }
 
-    private ViewPagerAdapter getAdapter(int totalMatchesPlayed, int badgesCount, int sportsFollowedCount, int powerupsCount) {
-        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        pagerAdapter.addFragment(TimelineFragment.newInstance(), formatIfPlural(totalMatchesPlayed, "Match", "es"));
-        pagerAdapter.addFragment(BadgeFragment.newInstance(), formatIfPlural(badgesCount, "Achievement", "s"));
-        pagerAdapter.addFragment(PowerUpFragment.newInstance(), formatIfPlural(powerupsCount, "Powerup", "s"));
-        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), formatIfPlural(sportsFollowedCount, "Sport", "s"));
-        return pagerAdapter;
-    }
-
-    private String formatIfPlural(int number, String label, String pluralTerm) {
-        return number + "\n" + label + (number > 1 ? pluralTerm : "");
-    }
-
     @Override
     public void navigateToLogIn() {
         Intent intent = new Intent(getContext(), LogInActivity.class);
@@ -186,22 +158,13 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     }
 
     @Override
-    public void navigateToPowerUpScreen() {
-        Intent intent = new Intent(getContext(), PowerUpActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.profile_btn_edit:
-                navigateToEditProfile();
+            case R.id.profile_btn_settings:
+                navigateToSettings();
                 break;
             case R.id.profile_iv_image:
                 navigateToEditProfile();
-                break;
-            case R.id.profile_btn_logout:
-                navigateToSettings();
                 break;
         }
     }
@@ -210,46 +173,20 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         startActivity(new Intent(getContext(), SettingActivity.class));
     }
 
-    private void navigateToSportSelection() {
-        Intent intent = new Intent(getContext(), SportSelectionActivity.class);
-        intent.putExtra(Constants.BundleKeys.FROM_PROFILE, true);
-        startActivityForResult(intent, SPORTS_SELECTION_CODE);
-    }
-
     private void navigateToEditProfile() {
         Intent intent = new Intent(getContext(), EditProfileActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("screen", Constants.BundleKeys.HOME_SCREEN);
-        intent.putExtras(bundle);
+        intent.putExtra("screen", BundleKeys.HOME_SCREEN);
         startActivityForResult(intent, EDIT_PROFILE_CODE);
-    }
-
-    private void navigateToNewGroup() {
-        Intent intent = new Intent(getContext(), AllGroupsActivity.class);
-        startActivityForResult(intent, GROUPS_CODE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (Activity.RESULT_OK == resultCode) {
-            if (SPORTS_SELECTION_CODE == requestCode) {
-                mProfilePresenter.onGetSportsSelectionResult();
-            }
-            if (GROUPS_CODE == requestCode) {
-                mProfilePresenter.onGetUpdatedNumberofGroups();
-                mProfilePresenter.onCreateProfile();
-            } else if (EDIT_PROFILE_CODE == requestCode) {
+            if (EDIT_PROFILE_CODE == requestCode) {
                 mProfilePresenter.onEditProfileDone();
-            } else {
-                mProfilePresenter.onGroupDetailsUpdated();
             }
         }
-    }
-
-    @Override
-    public void setSportsCount(int sportsCount) {
-        mPagerAdapter.updateTitle(3, formatIfPlural(sportsCount, "Sport", "s"));
     }
 
 }

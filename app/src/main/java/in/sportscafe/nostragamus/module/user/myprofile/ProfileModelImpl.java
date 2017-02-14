@@ -1,20 +1,29 @@
 package in.sportscafe.nostragamus.module.user.myprofile;
 
-import android.content.Context;
+import android.support.v4.app.FragmentManager;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.user.lblanding.LBLandingResponse;
+import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
+import in.sportscafe.nostragamus.module.user.badges.Badge;
+import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.webservice.MyWebService;
-import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
-import retrofit2.Call;
-import retrofit2.Response;
+import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
+import in.sportscafe.nostragamus.module.user.powerups.PowerUpFragment;
+import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 
 /**
  * Created by Jeeva on 14/6/16.
  */
-public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUserInfoModelListener {
+public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUserInfoModelListener,
+        ProfileSportSelectionFragment.OnSportSelectionChangedListener {
 
     private OnProfileModelListener mProfileModelListener;
 
@@ -37,58 +46,49 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
     }
 
     @Override
-    public int getSportsFollowedCount() {
-        return NostragamusDataHandler.getInstance().getGlbFollowedSports().size();
+    public ViewPagerAdapter getAdapter(FragmentManager fm) {
+        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fm);
+
+        UserInfo userInfo = getUserInfo();
+        pagerAdapter.addFragment(TimelineFragment.newInstance(), AppSnippet.formatIfPlural(userInfo.getTotalMatchesPlayed(), "Match", "es"));
+
+        List<Badge> badgeList = userInfo.getBadges();
+        pagerAdapter.addFragment(BadgeFragment.newInstance(badgeList), AppSnippet.formatIfPlural(badgeList.size(), "Achievement", "s"));
+
+        List<PowerUp> powerUpList = getPowerUpList(userInfo.getPowerUps());
+        pagerAdapter.addFragment(PowerUpFragment.newInstance(powerUpList), AppSnippet.formatIfPlural(powerUpList.size(), "Powerup", "s"));
+
+        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), getSportsTabTitle());
+
+        return pagerAdapter;
     }
 
     @Override
-    public int getPowerupsCount() {
-        NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
-        return dataHandler.getNumberof2xGlobalPowerups() +
-                dataHandler.getNumberof2xPowerups() +
-                dataHandler.getNumberofAudiencePollPowerups() +
-                dataHandler.getNumberofNonegsPowerups() +
-                dataHandler.getNumberofFlipPowerups() +
-                dataHandler.getNumberofReplayPowerups();
+    public String getSportsTabTitle() {
+        return AppSnippet.formatIfPlural(NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size(), "Sport", "s");
     }
 
-    private void getLbSummary() {
-        MyWebService.getInstance().getLBLandingSummary(null, null, null, null).enqueue(
-                new NostragamusCallBack<LBLandingResponse>() {
-                    @Override
-                    public void onResponse(Call<LBLandingResponse> call, Response<LBLandingResponse> response) {
-                        super.onResponse(call, response);
-
-                        if (null == mProfileModelListener.getContext()) {
-                            return;
-                        }
-                        if (response.isSuccessful()) {
-                            mProfileModelListener.onGetProfileSuccess();
-                        } else {
-                            mProfileModelListener.onGetProfileFailed(response.message());
-                        }
-                    }
-                }
-        );
-
-        MyWebService.getInstance().getLBLandingSummary(null, null, null, null)
-                .enqueue(new NostragamusCallBack<LBLandingResponse>() {
-                    @Override
-                    public void onResponse(Call<LBLandingResponse> call, Response<LBLandingResponse> response) {
-                        super.onResponse(call, response);
-
-                    }
-                });
+    private List<PowerUp> getPowerUpList(HashMap<String, Integer> powerUps) {
+        List<PowerUp> powerUpList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : powerUps.entrySet()) {
+            powerUpList.add(new PowerUp(entry.getKey(), entry.getValue()));
+        }
+        return powerUpList;
     }
 
     @Override
     public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {
-        getLbSummary();
+        mProfileModelListener.onGetProfileSuccess();
     }
 
     @Override
     public void onFailedGetUpdateUserInfo(String message) {
         mProfileModelListener.onGetProfileFailed(message);
+    }
+
+    @Override
+    public void onSportsSelectionChanged() {
+        mProfileModelListener.onSportsTitleChanged(getSportsTabTitle());
     }
 
     public interface OnProfileModelListener {
@@ -99,6 +99,6 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
 
         void onNoInternet();
 
-        Context getContext();
+        void onSportsTitleChanged(String title);
     }
 }

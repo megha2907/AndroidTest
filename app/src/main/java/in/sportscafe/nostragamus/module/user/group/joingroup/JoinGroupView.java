@@ -11,11 +11,7 @@ public interface JoinGroupView extends View {
 
     void navigateToCreateGroup();
 
-    void navigateToGroupInfo(Bundle bundle);
-
     void showJoinGroupSuccess(Integer groupId);
-
-    void navigateToAllGroups();
 
     void navigateToGroupInfo(Integer groupId);
 

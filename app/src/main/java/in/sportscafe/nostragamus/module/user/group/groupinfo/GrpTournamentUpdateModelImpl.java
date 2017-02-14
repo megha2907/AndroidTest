@@ -37,7 +37,7 @@ public class GrpTournamentUpdateModelImpl {
         }
     }
 
-    private void callGrpTournamentUpdateApi(final List<Integer> selectedTournaments) {
+    private void callGrpTournamentUpdateApi(List<Integer> selectedTournaments) {
         GroupTournamentUpdateRequest groupTournamentUpdateRequest = new GroupTournamentUpdateRequest();
         groupTournamentUpdateRequest.setAdminId(NostragamusDataHandler.getInstance().getUserId());
         groupTournamentUpdateRequest.setGroupId(mGroupId);
@@ -49,28 +49,13 @@ public class GrpTournamentUpdateModelImpl {
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         super.onResponse(call, response);
                         if (response.isSuccessful()) {
-                            handleGrpTournamentUpdateResponse(selectedTournaments);
+                            mGrpTournamentUpdateModelListener.onSuccessGrpTournamentUpdate();
                         } else {
                             mGrpTournamentUpdateModelListener.onFailedGrpTournamentUpdate(response.message());
                         }
                     }
                 }
         );
-    }
-
-    private void handleGrpTournamentUpdateResponse(List<Integer> selectedTournaments) {
-        Map<Integer, TournamentFeedInfo> allTournamentsMap = NostragamusDataHandler.getInstance().getTournamentsMap();
-        List<TournamentFeedInfo> followedtournaments = new ArrayList<>();
-
-        for(Integer TournamentId : selectedTournaments) {
-            followedtournaments.add(allTournamentsMap.get(TournamentId));
-        }
-
-        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
-        grpInfoMap.get(mGroupId).setFollowedTournaments(followedtournaments);
-        NostragamusDataHandler.getInstance().setGrpInfoMap(grpInfoMap);
-
-        mGrpTournamentUpdateModelListener.onSuccessGrpTournamentUpdate();
     }
 
     public interface OnGrpTournamentUpdateModelListener {

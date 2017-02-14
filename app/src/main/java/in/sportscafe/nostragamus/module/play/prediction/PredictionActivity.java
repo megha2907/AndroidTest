@@ -532,11 +532,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
             case DragEvent.ACTION_DRAG_ENDED:
                 if (!m2xpowerUpApplied) {
-                    if (NostragamusDataHandler.getInstance().getNumberof2xPowerups() > 0) {
+                    if (NostragamusDataHandler.getInstance().get2xPowerupsCount() > 0) {
                         m2xpowerUpApplied = true;
                         mPredictionPresenter.onPowerUp("2x");
-                        NostragamusDataHandler.getInstance().setNumberof2xPowerups(NostragamusDataHandler.getInstance().getNumberof2xPowerups() - 1);
-                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberof2xPowerups());
+                        NostragamusDataHandler.getInstance().setNumberof2xPowerups(NostragamusDataHandler.getInstance().get2xPowerupsCount() - 1);
+                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().get2xPowerupsCount());
                         mTv2xPowerupCount.setText(UpdatedPowerUps);
                     }
                 }

@@ -8,8 +8,4 @@ public interface ProfilePresenter {
     void onCreateProfile();
 
     void onEditProfileDone();
-
-    void onGroupDetailsUpdated();
-
-    void onClickLogout();
 }

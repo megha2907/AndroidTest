@@ -1,5 +1,8 @@
 package in.sportscafe.nostragamus.module.user.myprofile;
 
+import android.support.v4.app.FragmentManager;
+
+import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
 /**
@@ -11,7 +14,7 @@ public interface ProfileModel {
 
     UserInfo getUserInfo();
 
-    int getSportsFollowedCount();
+    ViewPagerAdapter getAdapter(FragmentManager fm);
 
-    int getPowerupsCount();
+    String getSportsTabTitle();
 }

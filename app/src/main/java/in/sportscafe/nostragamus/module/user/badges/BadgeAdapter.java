@@ -18,9 +18,9 @@ import in.sportscafe.nostragamus.module.common.Adapter;
  */
 public class BadgeAdapter extends Adapter<Badge, BadgeAdapter.ViewHolder> {
 
-    public BadgeAdapter(Context context, List<Badge> BadgeList) {
+    public BadgeAdapter(Context context, List<Badge> badgeList) {
         super(context);
-        addAll(BadgeList);
+        addAll(badgeList);
     }
 
     @Override
@@ -35,13 +35,11 @@ public class BadgeAdapter extends Adapter<Badge, BadgeAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
         Badge badge = getItem(position);
 
         holder.mTvBadgeName.setText(badge.getName());
         holder.mTvBadgeDesc.setText(badge.getDesc());
         holder.mIvBadge.setImageUrl(badge.getPhoto());
-
     }
 
     class ViewHolder extends RecyclerView.ViewHolder  {
@@ -60,9 +58,7 @@ public class BadgeAdapter extends Adapter<Badge, BadgeAdapter.ViewHolder> {
             mTvBadgeName = (TextView) V.findViewById(R.id.badge_tv_name);
             mTvBadgeDesc = (TextView) V.findViewById(R.id.badge_tv_desc);
             mIvBadge = (HmImageView) V.findViewById(R.id.badge_iv);
-
         }
-
     }
 
 }

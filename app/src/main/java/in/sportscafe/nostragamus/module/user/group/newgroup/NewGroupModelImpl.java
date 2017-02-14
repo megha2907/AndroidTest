@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
@@ -31,7 +32,7 @@ import retrofit2.Response;
  */
 public class NewGroupModelImpl implements NewGroupModel {
 
-    private GrpTournamentSelectionAdapter mTournamentSelectionAdapter;
+    private TourSelectionAdapter mTournamentSelectionAdapter;
 
     private OnNewGroupModelListener mNewGroupModelListener;
 
@@ -49,24 +50,15 @@ public class NewGroupModelImpl implements NewGroupModel {
     }
 
     @Override
-    public GrpTournamentSelectionAdapter getAdapter(Context context) {
-
-        List<Integer> mFollowedTournamentsIdList = new ArrayList<>();
-
-        TournamentFeedInfo selectedLabel = new TournamentFeedInfo();
-        selectedLabel.setTournamentId(-1);
-
-        TournamentFeedInfo unselectedLabel = new TournamentFeedInfo();
-        unselectedLabel.setTournamentId(-2);
-
-        this.mTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context, mFollowedTournamentsIdList,
-                new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
+    public TourSelectionAdapter getAdapter(Context context, List<TournamentFeedInfo> tourList) {
+        this.mTournamentSelectionAdapter = new TourSelectionAdapter(context, new ArrayList<TournamentFeedInfo>(), new ArrayList<Integer>(),
+                new TourSelectionAdapter.OnGrpTournamentChangedListener() {
                     @Override
                     public void onGrpTournamentClicked(int position, boolean selected) {
 
                         TournamentFeedInfo feedInfo = mTournamentSelectionAdapter.getItem(position);
 
-                        if (mTournamentSelectionAdapter.getSelectedTournamentList().size() == 1 && selected) {
+                        if (mTournamentSelectionAdapter.getSelectedTourIdList().size() == 1 && selected) {
                             mNewGroupModelListener.selectedTournamentsLimit();
                             return;
 
@@ -87,21 +79,10 @@ public class NewGroupModelImpl implements NewGroupModel {
                     }
                 });
 
-        mTournamentSelectionAdapter.add(unselectedLabel);
-        mTournamentSelectionAdapter.addAll(NostragamusDataHandler.getInstance().getTournaments());
+        mTournamentSelectionAdapter.add(new TournamentFeedInfo(-2));
+        mTournamentSelectionAdapter.addAll(tourList);
 
         return mTournamentSelectionAdapter;
-
-
-//
-//        this.mTournamentSelectionAdapter = new GrpTournamentSelectionAdapter(context, new ArrayList<Integer>(),
-//                new GrpTournamentSelectionAdapter.OnGrpTournamentChangedListener() {
-//                    @Override
-//                    public void onGrpTournamentClicked(int position, boolean selected) {
-//                        mTournamentSelectionAdapter.updateSelectionList(mTournamentSelectionAdapter.getItem(position));
-//                    }
-//                });
-//        return mTournamentSelectionAdapter;
     }
 
     @Override
@@ -111,9 +92,9 @@ public class NewGroupModelImpl implements NewGroupModel {
             return;
         }
 
-        List<Integer> SelectedTournament = mTournamentSelectionAdapter.getSelectedTournamentList();
-        if (null == SelectedTournament || SelectedTournament.isEmpty()) {
-            mNewGroupModelListener.onNoSportSelected();
+        List<Integer> selectedTournamentList = mTournamentSelectionAdapter.getSelectedTourIdList();
+        if (null == selectedTournamentList || selectedTournamentList.isEmpty()) {
+            mNewGroupModelListener.onNoTournamentSelected();
             return;
         } else {
             mNewGroupModelListener.setGroupDoneBtnClickable(false);
@@ -121,7 +102,7 @@ public class NewGroupModelImpl implements NewGroupModel {
                 NewGroupRequest newGroupRequest = new NewGroupRequest();
                 newGroupRequest.setGroupCreatedBy(NostragamusDataHandler.getInstance().getUserId());
                 newGroupRequest.setGroupName(groupName);
-                newGroupRequest.setfollowedTournaments(SelectedTournament);
+                newGroupRequest.setfollowedTournaments(selectedTournamentList);
                 newGroupRequest.setGroupPhoto(mgroupPhoto);
                 callNewGroupApi(newGroupRequest);
             } else {
@@ -147,7 +128,7 @@ public class NewGroupModelImpl implements NewGroupModel {
 
     @Override
     public void onGetImage(Intent data) {
-        String imagePath = data.getStringExtra(Constants.BundleKeys.ADDED_NEW_IMAGE_PATH);
+        String imagePath = data.getStringExtra(BundleKeys.ADDED_NEW_IMAGE_PATH);
         Log.i("file", imagePath);
 
         File file = new File(imagePath);
@@ -181,23 +162,12 @@ public class NewGroupModelImpl implements NewGroupModel {
                         @Override
                         public void onResponse(Call<TournamentFeedResponse> call, Response<TournamentFeedResponse> response) {
                             super.onResponse(call, response);
+
                             if (response.isSuccessful()) {
-                                List<TournamentFeedInfo> newTournamentInfo = response.body().getTournamentInfos();
-
-                                if (null != newTournamentInfo && newTournamentInfo.size() > 0) {
-                                    List<TournamentFeedInfo> oldTournamentList = mNostragamusDataHandler.getTournaments();
-                                    oldTournamentList.clear();
-                                    for (TournamentFeedInfo tournamentInfo : newTournamentInfo) {
-                                        if (!oldTournamentList.contains(tournamentInfo)) {
-                                            oldTournamentList.add(tournamentInfo);
-                                        }
-                                    }
-
-                                    mNostragamusDataHandler.setTournaments(oldTournamentList);
-
-                                    mNewGroupModelListener.onSuccessTournamentInfo();
+                                List<TournamentFeedInfo> tourList = response.body().getTournamentInfos();
+                                if (null != tourList && tourList.size() > 0) {
+                                    mNewGroupModelListener.onSuccessTournamentInfo(tourList);
                                 }
-
                             } else {
                                 mNewGroupModelListener.onFailed(response.message());
                             }
@@ -222,19 +192,13 @@ public class NewGroupModelImpl implements NewGroupModel {
                                     MyWebService.getInstance().getJsonStringFromObject(newGroupRequest.getfollowedTournaments())
                             );
 
-                            NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
-
                             GroupInfo groupInfo = response.body().getGroupInfo();
 
-                            Map<Integer, GroupInfo> grpInfoMap = nostragamusDataHandler.getGrpInfoMap();
-                            grpInfoMap.put(groupInfo.getId(), groupInfo);
-
-                            nostragamusDataHandler.setGrpInfoMap(grpInfoMap);
-
                             Bundle bundle = new Bundle();
-                            bundle.putInt(Constants.BundleKeys.GROUP_ID, groupInfo.getId());
-                            bundle.putString(Constants.BundleKeys.GROUP_NAME, groupInfo.getName());
-                            bundle.putString(Constants.BundleKeys.SCREEN,Constants.ScreenNames.GROUPS_CREATE_NEW);
+                            bundle.putInt(BundleKeys.GROUP_ID, groupInfo.getId());
+                            bundle.putString(BundleKeys.GROUP_NAME, groupInfo.getName());
+                            bundle.putString(BundleKeys.SCREEN, ScreenNames.GROUPS_CREATE_NEW);
+
                             mNewGroupModelListener.onSuccess(bundle);
                         } else {
                             mNewGroupModelListener.setGroupDoneBtnClickable(true);
@@ -255,11 +219,11 @@ public class NewGroupModelImpl implements NewGroupModel {
 
         void onSuccess(Bundle bundle);
 
-        void onSuccessTournamentInfo();
+        void onSuccessTournamentInfo(List<TournamentFeedInfo> tourList);
 
         void onEmptyGroupName();
 
-        void onNoSportSelected();
+        void onNoTournamentSelected();
 
         void onNoInternet();
 

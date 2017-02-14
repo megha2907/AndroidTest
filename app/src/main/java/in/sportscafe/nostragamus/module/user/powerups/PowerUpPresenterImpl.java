@@ -1,6 +1,9 @@
 package in.sportscafe.nostragamus.module.user.powerups;
 
+import android.os.Bundle;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Alerts;
 
 /**
  * Created by Deepanshi on 27/5/16.
@@ -23,25 +26,17 @@ public class PowerUpPresenterImpl implements PowerUpPresenter, PowerUpModelImpl.
     }
 
     @Override
-    public void onCreatePowerUpAdapter() {
-        mPowerUpView.setAdapter(mPowerUpModel
-                .getPowerUpAdapter(mPowerUpView.getContext()));
+    public void onCreatePowerUps(Bundle bundle) {
+        mPowerUpModel.createPowerUpAdapter(mPowerUpView.getContext(), bundle);
     }
 
     @Override
-    public void onClickNext() {
-        mPowerUpView.showProgressbar();
+    public void onPowerUpsEmpty() {
+        mPowerUpView.showInAppMessage(Alerts.NO_POWERUPS);
     }
 
     @Override
-    public void onNoInternet() {
-        mPowerUpView.dismissProgressbar();
-        mPowerUpView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
-    }
+    public void onAdapterCreated(PowerUpAdapter powerUpAdapter) {
 
-    @Override
-    public void onFailed(String message) {
-        mPowerUpView.dismissProgressbar();
-        mPowerUpView.showMessage(message);
     }
 }

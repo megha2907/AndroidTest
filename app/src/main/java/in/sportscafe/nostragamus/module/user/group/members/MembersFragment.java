@@ -11,6 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.parceler.Parcels;
+
+import java.util.List;
+
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.SpacesItemDecoration;
@@ -23,16 +29,15 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
  */
 public class MembersFragment extends NostragamusFragment implements MembersView {
 
-    private static final String KEY_GROUP_ID = "groupId";
-
     private RecyclerView mRvMembers;
 
     private MembersPresenter mMembersPresenter;
 
-    public static MembersFragment newInstance(Integer groupid) {
-
+    public static MembersFragment newInstance(boolean amAdmin, int groupId, List<GroupPerson> grpMembers) {
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_GROUP_ID, groupid);
+        bundle.putBoolean(BundleKeys.IS_ADMIN, amAdmin);
+        bundle.putInt(BundleKeys.GROUP_ID, groupId);
+        bundle.putParcelable(BundleKeys.GROUP_MEMBERS, Parcels.wrap(grpMembers));
 
         MembersFragment fragment = new MembersFragment();
         fragment.setArguments(bundle);
@@ -77,7 +82,7 @@ public class MembersFragment extends NostragamusFragment implements MembersView 
         );
 
         this.mMembersPresenter = MembersPresenterImpl.newInstance(this);
-        this.mMembersPresenter.onCreateMembers(getArguments().getInt(KEY_GROUP_ID));
+        this.mMembersPresenter.onCreateMembers(getArguments());
     }
 
     @Override
@@ -90,14 +95,5 @@ public class MembersFragment extends NostragamusFragment implements MembersView 
         Intent intent = new Intent(getContext(), HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-    }
-
-    @Override
-    public void setSuccessResult() {
-        getActivity().setResult(Activity.RESULT_OK);
-    }
-
-    public void addNewPerson(GroupPerson newPerson) {
-        mMembersPresenter.onGetNewPerson(newPerson);
     }
 }

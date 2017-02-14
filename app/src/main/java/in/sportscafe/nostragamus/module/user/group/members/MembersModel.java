@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.members;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 
@@ -9,7 +10,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
  */
 public interface MembersModel {
 
-    MembersAdapter init(Context context, Integer groupId);
+    MembersAdapter init(Context context, Bundle bundle);
 
     void leaveGroup();
 

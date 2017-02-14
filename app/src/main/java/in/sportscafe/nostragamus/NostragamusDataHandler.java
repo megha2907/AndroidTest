@@ -1,24 +1,16 @@
 package in.sportscafe.nostragamus;
 
+import android.text.TextUtils;
+
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.jeeva.android.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
-import in.sportscafe.nostragamus.module.user.badges.Badge;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
-import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroups;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -78,8 +70,7 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     //ALL SPORTS
     public List<Sport> getAllSports() {
         String allSportsString = getSharedStringData(SharedKeys.ALL_SPORTS);
-        Log.i("allsportstring", allSportsString + "");
-        if (null == allSportsString || allSportsString.isEmpty()) {
+        if (TextUtils.isEmpty(allSportsString)) {
             return new ArrayList<>();
         }
         return MyWebService.getInstance().getObjectFromJson(allSportsString,
@@ -89,16 +80,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     public void setAllSports(String allSports) {
         setSharedStringData(SharedKeys.ALL_SPORTS, allSports);
-    }
-
-    public Map<Integer, Sport> getAllSportsMap() {
-        Map<Integer, Sport> allSportsMap = new HashMap<>();
-
-        for (Sport sport : getAllSports()) {
-            allSportsMap.put(sport.getId(), sport);
-        }
-
-        return allSportsMap;
     }
 
     public void setAllSports(List<Sport> newSports) {
@@ -131,7 +112,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(SharedKeys.USER_ID, userId);
     }
 
-
     public String getReferralUserId() {
         return getSharedStringData(BundleKeys.USER_REFERRAL_ID);
     }
@@ -155,66 +135,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
                 MyWebService.getInstance().getJsonStringFromObject(userInfo));
     }
 
-    public List<Sport> getGlbFollowedSports() {
-        List<Integer> favoriteSportsIdList = getFavoriteSportsIdList();
-
-        Map<Integer, Sport> allSportsMap = getAllSportsMap();
-
-        List<Sport> glbFollowedSports = new ArrayList<>();
-        for (Integer sportId : favoriteSportsIdList) {
-            if (allSportsMap.containsKey(sportId)) {
-                glbFollowedSports.add(allSportsMap.get(sportId));
-            }
-        }
-
-        return glbFollowedSports;
-    }
-
-
-    //GROUPS INFO
-    public void setGrpInfoList(List<GroupInfo> grpInfoList) {
-        setSharedStringData(SharedKeys.GRP_INFOS, MyWebService.getInstance().getJsonStringFromObject(grpInfoList));
-    }
-
-    public Map<Integer, GroupInfo> getGrpInfoMap() {
-        String grpInfoList = getSharedStringData(SharedKeys.GRP_INFOS);
-        if (null == grpInfoList || grpInfoList.isEmpty()) {
-            return new HashMap<>();
-        }
-
-        List<GroupInfo> grpInfoListObject = MyWebService.getInstance().getObjectFromJson(grpInfoList,
-                new TypeReference<List<GroupInfo>>() {
-                });
-        if (null == grpInfoListObject) {
-            grpInfoListObject = new ArrayList<>();
-
-            GroupInfo groupInfo = MyWebService.getInstance().getObjectFromJson(grpInfoList, GroupInfo.class);
-            grpInfoListObject.add(groupInfo);
-        }
-
-        Map<Integer, GroupInfo> groupInfoMap = new HashMap<>();
-        for (GroupInfo groupInfo : grpInfoListObject) {
-            groupInfoMap.put(groupInfo.getId(), groupInfo);
-        }
-        return groupInfoMap;
-    }
-
-    public void setGrpInfoMap(Map<Integer, GroupInfo> grpInfoMap) {
-
-        List<GroupInfo> grpInfoListObject = new ArrayList<>();
-        Set<Integer> keys = grpInfoMap.keySet();
-        for (Integer key : keys) {
-            grpInfoListObject.add(grpInfoMap.get(key));
-        }
-        setGrpInfoList(grpInfoListObject);
-    }
-
-    public void addNewGroup(GroupInfo newGroupInfo) {
-        Map<Integer, GroupInfo> grpInfoMap = getGrpInfoMap();
-        grpInfoMap.put(newGroupInfo.getId(), newGroupInfo);
-        setGrpInfoMap(grpInfoMap);
-    }
-
     //JWT TOKEN
     public void setJwtToken(JwtToken jwtToken) {
         setSharedStringData(SharedKeys.ACCESS_TOKEN, jwtToken.getToken());
@@ -229,118 +149,52 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return getSharedLongData(SharedKeys.TOKEN_EXPIRY, 0);
     }
 
-    //POWERUPS
-    public List<PowerUp> getPowerUpList() {
-
-        List<PowerUp> powerUpList = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : getUserInfo().getPowerUps().entrySet()) {
-            powerUpList.add(new PowerUp(entry.getKey(), entry.getValue()));
-        }
-        return powerUpList;
-    }
-
-    public int getNumberof2xGlobalPowerups() {
+    public int get2xGlobalPowerupsCount() {
         return getSharedIntData(SharedKeys.NUMBER_OF_2X_GLOBAL_POWERUPS, 0);
     }
 
-    public void setNumberof2xGlobalPowerups(Integer count) {
+    public void set2xGlobalPowerupsCount(Integer count) {
         setSharedIntData(SharedKeys.NUMBER_OF_2X_GLOBAL_POWERUPS, null == count ? 0 : count);
     }
 
-    public int getNumberof2xPowerups() {
+    public int get2xPowerupsCount() {
         return getSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, 0);
     }
 
-    public void setNumberof2xPowerups(Integer count) {
+    public void set2xPowerupsCount(Integer count) {
         setSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, null == count ? 0 : count);
     }
 
-    public int getNumberofNonegsPowerups() {
+    public int getNonegsPowerupsCount() {
         return getSharedIntData(SharedKeys.NUMBER_OF_NONEGS_POWERUPS, 0);
     }
 
-    public void setNumberofNonegsPowerups(Integer count) {
+    public void setNonegsPowerupsCount(Integer count) {
         setSharedIntData(SharedKeys.NUMBER_OF_NONEGS_POWERUPS, null == count ? 0 : count);
     }
 
-    public int getNumberofAudiencePollPowerups() {
+    public int getPollPowerupsCount() {
         return getSharedIntData(SharedKeys.NUMBER_OF_AUDIENCE_POLL_POWERUPS, 0);
     }
 
-    public void setNumberofAudiencePollPowerups(Integer count) {
+    public void setPollPowerupsCount(Integer count) {
         setSharedIntData(SharedKeys.NUMBER_OF_AUDIENCE_POLL_POWERUPS, null == count ? 0 : count);
     }
 
-    public int getNumberofReplayPowerups() {
+    public int getReplayPowerupsCount() {
         return getSharedIntData(SharedKeys.NUMBER_OF_REPLAY_POWERUPS, 0);
     }
 
-    public void setNumberofReplayPowerups(Integer count) {
+    public void setReplayPowerupsCount(Integer count) {
         setSharedIntData(SharedKeys.NUMBER_OF_REPLAY_POWERUPS, null == count ? 0 : count);
     }
 
-    public int getNumberofFlipPowerups() {
+    public int getFlipPowerupsCount() {
         return getSharedIntData(SharedKeys.NUMBER_OF_FLIP_POWERUPS, 0);
     }
 
-    public void setNumberofFlipPowerups(Integer count) {
+    public void setFlipPowerupsCount(Integer count) {
         setSharedIntData(SharedKeys.NUMBER_OF_FLIP_POWERUPS, null == count ? 0 : count);
-    }
-
-    //BADGES
-    public List<Badge> getBadgeList() {
-        return getUserInfo().getBadges();
-    }
-
-    //TOURNAMENTS
-    public List<TournamentFeedInfo> getTournaments() {
-        String allTournamentsString = getSharedStringData(SharedKeys.ALL_TOURNAMENTS);
-        Log.i("allTournamentsString", allTournamentsString + "");
-        if (null == allTournamentsString || allTournamentsString.isEmpty()) {
-            return new ArrayList<>();
-        }
-        return MyWebService.getInstance().getObjectFromJson(allTournamentsString,
-                new TypeReference<List<TournamentFeedInfo>>() {
-                });
-    }
-
-    public void setTournaments(String tournaments) {
-        setSharedStringData(SharedKeys.ALL_TOURNAMENTS, tournaments);
-    }
-
-    public Map<Integer, TournamentFeedInfo> getTournamentsMap() {
-        Map<Integer, TournamentFeedInfo> tournamentMap = new HashMap<>();
-
-        for (TournamentFeedInfo tournamentInfo : getTournaments()) {
-            tournamentMap.put(tournamentInfo.getTournamentId(), tournamentInfo);
-        }
-
-        return tournamentMap;
-    }
-
-    public void setTournaments(List<TournamentFeedInfo> newTournaments) {
-        setTournaments(MyWebService.getInstance().getJsonStringFromObject(newTournaments));
-    }
-
-    //SELECTED GROUP TOURNAMENTS
-    public void setSelectedTournaments(List<TournamentFeedInfo> selectedTournaments) {
-        setSelectedTournaments(MyWebService.getInstance().getJsonStringFromObject(selectedTournaments));
-    }
-
-    public List<TournamentFeedInfo> getSelectedTournaments() {
-        String selectedTournaments = getSharedStringData(SharedKeys.SELECTED_TOURNAMENTS);
-        Log.i("selectedTournaments", selectedTournaments);
-
-        if (null == selectedTournaments || selectedTournaments.isEmpty()) {
-            return new ArrayList<>();
-        }
-        return MyWebService.getInstance().getObjectFromJson(selectedTournaments,
-                new TypeReference<List<TournamentFeedInfo>>() {
-                });
-    }
-
-    public void setSelectedTournaments(String selectedTournaments) {
-        setSharedStringData(SharedKeys.SELECTED_TOURNAMENTS, selectedTournaments);
     }
 
     public String getInstallGroupCode() {
@@ -425,6 +279,14 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedLongData(SharedKeys.NORMAL_UPDATE_SHOWN_TIME, normalUpdateShownTime);
     }
 
+    public boolean isInitialFeedbackFormShown() {
+        return getSharedBooleanData(SharedKeys.INITIAL_FORM_SHOWN, false);
+    }
+
+    public void setInitialFeedbackFormShown(boolean formShown) {
+        setSharedBooleanData(SharedKeys.INITIAL_FORM_SHOWN, formShown);
+    }
+
     @Override
     public void clearAll() {
         boolean formShown = isInitialFeedbackFormShown();
@@ -436,13 +298,5 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
             setAllSports(allSports);
             setInitialSportsAvailable(true);
         }
-    }
-
-    public boolean isInitialFeedbackFormShown() {
-        return getSharedBooleanData(SharedKeys.INITIAL_FORM_SHOWN, false);
-    }
-
-    public void setInitialFeedbackFormShown(boolean formShown) {
-        setSharedBooleanData(SharedKeys.INITIAL_FORM_SHOWN, formShown);
     }
 }

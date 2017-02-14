@@ -9,16 +9,14 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jeeva.android.ExceptionTracker;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity;
 
@@ -26,21 +24,18 @@ import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity;
  * Created by Jeeva on 1/7/16.
  */
 public class JoinGroupActivity extends NostragamusActivity implements JoinGroupView,
-        View.OnClickListener{
+        View.OnClickListener {
 
     private static final String TAG = "JoinGroupActivity";
 
-    private static final int CODE_NEW_GROUP = 1;
-    private static final int CODE_GROUP_INFO = 2;
-
-    private static final int CODE_ALL_GROUP = 3;
-
-    private static final int GROUPS_CODE = 20;
-
     private EditText mEtGroupCode1;
+
     private EditText mEtGroupCode2;
+
     private EditText mEtGroupCode3;
+
     private EditText mEtGroupCode4;
+
     private EditText mEtGroupCode5;
 
     private JoinGroupPresenter mJoinGroupPresenter;
@@ -86,9 +81,11 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
                 }
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         mEtGroupCode2.addTextChangedListener(new TextWatcher() {
@@ -100,9 +97,11 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
                 }
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         mEtGroupCode3.addTextChangedListener(new TextWatcher() {
@@ -114,9 +113,11 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
                 }
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         mEtGroupCode4.addTextChangedListener(new TextWatcher() {
@@ -128,9 +129,11 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
                 }
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 
@@ -141,40 +144,16 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
     }
 
     @Override
-    public void navigateToGroupInfo(Bundle bundle) {
-        Intent intent = new Intent(this, GroupInfoActivity.class);
-        intent.putExtras(bundle);
-        startActivityForResult(intent, GROUPS_CODE);
-    }
-
-    @Override
     public void showJoinGroupSuccess(Integer groupId) {
         navigateToGroupInfo(groupId);
     }
 
     @Override
-    public void navigateToAllGroups() {
-        startActivityForResult(new Intent(this, AllGroupsActivity.class), CODE_ALL_GROUP);
-    }
-
-    @Override
     public void navigateToGroupInfo(Integer groupId) {
         Intent intent = new Intent(this, GroupInfoActivity.class);
-        Bundle mbundle = new Bundle();
-        mbundle.putInt(Constants.BundleKeys.GROUP_ID,groupId);
-        intent.putExtras(mbundle);
+        intent.putExtra(BundleKeys.GROUP_ID, groupId);
         startActivity(intent);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(CODE_NEW_GROUP == requestCode && RESULT_OK == resultCode) {
-            mJoinGroupPresenter.onNewGroupSuccess(data.getExtras());
-        } else if(CODE_GROUP_INFO == requestCode) {
-            setResult(RESULT_OK);
-            onBackPressed();
-        }
+        finish();
     }
 
     @Override

@@ -4,16 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.io.File;
+import java.util.List;
 
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 
 /**
  * Created by Jeeva on 1/7/16.
  */
 public interface NewGroupModel {
 
-    GrpTournamentSelectionAdapter getAdapter(Context context);
+    TourSelectionAdapter getAdapter(Context context, List<TournamentFeedInfo> tourList);
 
     void createGroup(String groupName);
 
