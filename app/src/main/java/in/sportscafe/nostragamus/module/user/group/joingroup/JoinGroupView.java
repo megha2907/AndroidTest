@@ -11,15 +11,13 @@ public interface JoinGroupView extends View {
 
     void navigateToCreateGroup();
 
-    void navigateToGroupInfo(Bundle bundle);
-
     void showJoinGroupSuccess(Integer groupId);
-
-    void navigateToAllGroups();
 
     void navigateToGroupInfo(Integer groupId);
 
     void populateGroupCode(String groupCode);
+
+    void setSuccessResult(Bundle bundle);
 
     void goBack();
 

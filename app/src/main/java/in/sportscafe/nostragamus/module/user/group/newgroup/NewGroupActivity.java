@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants;
@@ -19,8 +18,9 @@ import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
+
+import static com.google.android.gms.analytics.internal.zzy.b;
 
 /**
  * Created by Jeeva on 1/7/16.
@@ -70,16 +70,14 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
     }
 
     @Override
-    public void setAdapter(GrpTournamentSelectionAdapter adapter) {
+    public void setAdapter(TourSelectionAdapter adapter) {
         this.mRvTournamentSelection.setAdapter(adapter);
     }
 
     @Override
     public void setSuccessBack(Bundle bundle) {
-        Intent intent = new Intent(this, GroupInfoActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
-        finish();
+        setResult(RESULT_OK, new Intent().putExtras(bundle));
+        onBackPressed();
     }
 
     @Override

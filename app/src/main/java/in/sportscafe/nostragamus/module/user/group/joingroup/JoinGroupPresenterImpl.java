@@ -30,17 +30,12 @@ public class JoinGroupPresenterImpl implements JoinGroupPresenter, JoinGroupMode
     @Override
     public void onClickJoin(String groupCode) {
         mJoinGroupView.showProgressbar();
-        mJoinGroupModel.joinGroup(groupCode, false);
+        mJoinGroupModel.joinGroup(groupCode);
     }
 
     @Override
     public void onClickCreateGroup() {
         mJoinGroupView.navigateToCreateGroup();
-    }
-
-    @Override
-    public void onNewGroupSuccess(Bundle bundle) {
-        mJoinGroupView.navigateToGroupInfo(bundle);
     }
 
     @Override
@@ -53,10 +48,15 @@ public class JoinGroupPresenterImpl implements JoinGroupPresenter, JoinGroupMode
     }
 
     @Override
-    public void onSuccess(Integer groupId) {
+    public void onGetNewGroupResult(Bundle bundle) {
+        onSuccess(bundle);
+    }
+
+    @Override
+    public void onSuccess(Bundle bundle) {
         mJoinGroupView.dismissProgressbar();
-       // mJoinGroupView.showMessage(Constants.Alerts.JOIN_GROUP_SUCCESS);
-        mJoinGroupView.showJoinGroupSuccess(groupId);
+        mJoinGroupView.setSuccessResult(bundle);
+        onBack();
     }
 
     @Override

@@ -98,7 +98,7 @@
                     android:onClick="onClick"
                     android:padding="@dimen/dp_15"
                     android:src="@drawable/edit_icon"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_marginRight="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_25"/>
 
@@ -116,7 +116,6 @@
                         android:id="@+id/group_info_et_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
                         android:hint="Group Name"
                         android:imeOptions="actionDone"
                         android:inputType="textPersonName"

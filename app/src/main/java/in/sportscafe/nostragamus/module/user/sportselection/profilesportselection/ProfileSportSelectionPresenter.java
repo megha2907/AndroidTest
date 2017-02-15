@@ -9,6 +9,4 @@ import android.os.Bundle;
 public interface ProfileSportSelectionPresenter {
 
     void onCreateSportSelection();
-
-    void onClickNext();
 }

@@ -1,12 +1,18 @@
 package in.sportscafe.nostragamus.module.user.group.members;
 
-import in.sportscafe.nostragamus.Constants;
+import android.os.Bundle;
+
+import java.util.List;
+
+import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 
 /**
  * Created by Jeeva on 2/7/16.
  */
 public class MembersPresenterImpl implements MembersPresenter, MembersModelImpl.OnMembersModelListener {
+
+    private MembersFragment.OnMemberRemoveListener mMemberRemoveListener;
 
     private MembersView mMembersView;
 
@@ -22,8 +28,9 @@ public class MembersPresenterImpl implements MembersPresenter, MembersModelImpl.
     }
 
     @Override
-    public void onCreateMembers(Integer groupId) {
-        MembersAdapter membersAdapter = mMembersModel.init(mMembersView.getContext(), groupId);
+    public void onCreateMembers(Bundle bundle, MembersFragment.OnMemberRemoveListener listener) {
+        this.mMemberRemoveListener = listener;
+        MembersAdapter membersAdapter = mMembersModel.init(mMembersView.getContext(), bundle);
         if(null != membersAdapter) {
             mMembersView.setAdapter(membersAdapter);
         }
@@ -36,22 +43,16 @@ public class MembersPresenterImpl implements MembersPresenter, MembersModelImpl.
     }
 
     @Override
-    public void onGetNewPerson(GroupPerson newPerson) {
-        mMembersModel.addNewPerson(newPerson);
-    }
-
-    @Override
     public void onMakeAdminSuccess() {
         mMembersView.dismissProgressbar();
-        mMembersView.showMessage(Constants.Alerts.MAKE_ADMIN);
+        mMembersView.showMessage(Alerts.MAKE_ADMIN);
     }
 
     @Override
-    public void onRemovedPersonSuccess() {
+    public void onRemovedPersonSuccess(List<GroupPerson> memberList) {
         mMembersView.dismissProgressbar();
-        mMembersView.showMessage(Constants.Alerts.REMOVE_PERSON);
-
-        mMembersView.setSuccessResult();
+        mMembersView.showMessage(Alerts.REMOVE_PERSON);
+        mMemberRemoveListener.onMemberRemoved(memberList);
     }
 
     @Override
@@ -63,19 +64,19 @@ public class MembersPresenterImpl implements MembersPresenter, MembersModelImpl.
     @Override
     public void onEmpty() {
         mMembersView.dismissProgressbar();
-        mMembersView.showMessage(Constants.Alerts.MEMBERS_EMPTY);
+        mMembersView.showMessage(Alerts.MEMBERS_EMPTY);
     }
 
     @Override
     public void onNoInternet() {
         mMembersView.dismissProgressbar();
-        mMembersView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+        mMembersView.showMessage(Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
     public void onLeaveGroupSuccess() {
         mMembersView.dismissProgressbar();
-        mMembersView.showMessage(Constants.Alerts.LEAVE_GROUP_SUCCESS);
+        mMembersView.showMessage(Alerts.LEAVE_GROUP_SUCCESS);
         mMembersView.navigateToHome();
     }
 }

@@ -4,10 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.jeeva.android.Log;
-
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
@@ -38,85 +35,46 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     }
 
     @Override
-    public void onGetSportsSelectionResult() {
-        mProfileView.setSportsFollowedCount(NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size());
-    }
-
-    @Override
-    public void onGetUpdatedNumberofGroups() {
-        mProfileView.setGroupsCount(NostragamusDataHandler.getInstance().getNumberofGroups());
-    }
-
-    @Override
-    public void onGetGroupCount() {
-        if (NostragamusDataHandler.getInstance().getNumberofGroups()==0) {
-            mProfileView.setGroupsCount(0);
-        } else {
-            mProfileView.setGroupsCount(NostragamusDataHandler.getInstance().getNumberofGroups());
-        }
-    }
-
-    @Override
-    public void onGetPowerUpsCount() {
-        mProfileView.setPowerUpsCount(NostragamusDataHandler.getInstance().getNumberof2xGlobalPowerups()+
-                NostragamusDataHandler.getInstance().getNumberof2xPowerups()+
-                NostragamusDataHandler.getInstance().getNumberofAudiencePollPowerups()+
-                NostragamusDataHandler.getInstance().getNumberofNonegsPowerups()+
-                NostragamusDataHandler.getInstance().getNumberofFlipPowerups()+
-                NostragamusDataHandler.getInstance().getNumberofReplayPowerups());
-    }
-
-    @Override
-    public void onGetBadgesCount() {
-        mProfileView.setBadgesCount(NostragamusDataHandler.getInstance().getNumberofBadges());
-    }
-
-    @Override
     public void onEditProfileDone() {
         populateUserInfo();
     }
 
-    @Override
-    public void onGroupDetailsUpdated() {
-        getProfile();
-    }
-
-    @Override
-    public void onClickLogout() {
-        NostragamusDataHandler.getInstance().clearAll();
-        mProfileView.navigateToLogIn();
-    }
-
     private void getProfile() {
-        mProfileView.showProgressbar();
         mProfileModel.getProfileDetails();
     }
 
     @Override
-    public void onGetProfileSuccess(UserInfo userInfo) {
+    public void onGetProfileSuccess() {
         mProfileView.dismissProgressbar();
-        mProfileView.setPoints(userInfo.getTotalPoints());
-        mProfileView.initMyPosition(userInfo);
+        populateUserInfo();
     }
 
     private void populateUserInfo() {
         UserInfo userInfo = mProfileModel.getUserInfo();
-        mProfileView.setName(userInfo.getUserNickName());
-        mProfileView.setProfileImage(userInfo.getPhoto());
+        updateBasicDetails(userInfo.getUserNickName(), userInfo.getPhoto());
+        updateUserRelaventDetails(userInfo.getInfoDetails().getLevel(), userInfo.getAccuracy(), userInfo.getPredictionCount(), userInfo.getTotalPoints());
+        updateAdapterDetails();
+    }
 
-        if (!TextUtils.isEmpty(userInfo.getInfoDetails().getLevel())) {
-            mProfileView.setLevel(userInfo.getInfoDetails().getLevel());
-        }else {
+    private void updateAdapterDetails() {
+        mProfileView.setAdapter(mProfileModel.getAdapter(mProfileView.getChildFragmentManager()));
+    }
+
+    private void updateBasicDetails(String name, String photo) {
+        mProfileView.setName(name);
+        mProfileView.setProfileImage(photo);
+    }
+
+    private void updateUserRelaventDetails(String level, int accuracy, int predictionCount, Long totalPoints) {
+        if (!TextUtils.isEmpty(level)) {
+            mProfileView.setLevel(level);
+        } else {
             mProfileView.setLevel("1");
         }
 
-        mProfileView.setAccuracy(userInfo.getAccuracy());
-        mProfileView.setPredictionCount(userInfo.getPredictionCount());
-
-        onGetSportsSelectionResult();
-        onGetGroupCount();
-        onGetPowerUpsCount();
-        onGetBadgesCount();
+        mProfileView.setAccuracy(accuracy);
+        mProfileView.setPredictionCount(predictionCount);
+        mProfileView.setPoints(totalPoints);
     }
 
     @Override
@@ -132,8 +90,8 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     }
 
     @Override
-    public Context getContext() {
-        return mProfileView.getContext();
+    public void onSportsTitleChanged(String title) {
+        mProfileView.updateSportTabTitle(title);
     }
 
     private void showAlert(String message) {

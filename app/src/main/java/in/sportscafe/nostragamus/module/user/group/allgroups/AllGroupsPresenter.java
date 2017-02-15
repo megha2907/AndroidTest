@@ -8,11 +8,11 @@ import android.os.Bundle;
 
 public interface AllGroupsPresenter {
 
-    void onCreateAllGroups();
+    void onCreateAllGroups(Bundle bundle);
 
-    void onCreateAllGroupsAdapter();
+    void onClickGroupItem(Bundle bundle);
 
-    void onClickNext();
+    void onGetGroupInfoResult(Bundle bundle);
 
-    void onCreateMutualGroups(Bundle bundle);
+    void onGetJoinGroupResult(Bundle bundle);
 }

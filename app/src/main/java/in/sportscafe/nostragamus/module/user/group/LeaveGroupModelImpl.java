@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.user.group;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -27,21 +28,6 @@ public class LeaveGroupModelImpl {
     }
 
     public void leaveGroup(boolean amAdmin, Integer groupId) {
-        List<GroupPerson> members = NostragamusDataHandler.getInstance().getGrpInfoMap().get(groupId).getMembers();
-        if(members.size() > 1 && amAdmin) {
-            int count = 0;
-            for (GroupPerson groupPerson : members) {
-                if (groupPerson.isAdmin() && ++count > 1) {
-                    break;
-                }
-            }
-
-            if(count <= 1) {
-                mLeaveGroupModelListener.onFailedLeaveGroup(Constants.Alerts.CANNOT_LEAVE_GROUP);
-                return;
-            }
-        }
-
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             MembersRequest membersRequest = new MembersRequest();
             membersRequest.setGroupId(groupId);
@@ -62,7 +48,7 @@ public class LeaveGroupModelImpl {
                             NostragamusAnalytics.getInstance().trackGroups(AnalyticsActions.LEAVE_GROUP, null);
                             mLeaveGroupModelListener.onSuccessLeaveGroup();
                         } else {
-                            mLeaveGroupModelListener.onFailedLeaveGroup(Constants.Alerts.CANNOT_LEAVE_GROUP);
+                            mLeaveGroupModelListener.onFailedLeaveGroup(Alerts.CANNOT_LEAVE_GROUP);
                         }
                     }
                 }

@@ -1,6 +1,9 @@
 package in.sportscafe.nostragamus.module.user.badges;
 
+import android.os.Bundle;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Alerts;
 
 /**
  * Created by Deepanshi on 27/5/16.
@@ -10,8 +13,6 @@ public class BadgePresenterImpl implements BadgePresenter, BadgeModelImpl.BadgeM
     private BadgeView mBadgeView;
 
     private BadgeModel mBadgeModel;
-
-    private boolean mFromProfile = false;
 
     public BadgePresenterImpl(BadgeView BadgeView) {
         this.mBadgeView = BadgeView;
@@ -23,30 +24,17 @@ public class BadgePresenterImpl implements BadgePresenter, BadgeModelImpl.BadgeM
     }
 
     @Override
-    public void onCreateBadgeAdapter() {
-        mBadgeView.setAdapter(mBadgeModel
-                .getBadgeAdapter(mBadgeView.getContext()));
+    public void onCreateBadges(Bundle bundle) {
+        mBadgeModel.createAdapter(mBadgeView.getContext(), bundle);
     }
 
     @Override
-    public void onClickNext() {
-        mBadgeView.showProgressbar();
-    }
-
-    @Override
-    public void onNoInternet() {
-        mBadgeView.dismissProgressbar();
-        mBadgeView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
-    }
-
-    @Override
-    public void onFailed(String message) {
-        mBadgeView.dismissProgressbar();
-        mBadgeView.showMessage(message);
+    public void onAdapterCreated(BadgeAdapter badgeAdapter) {
+        mBadgeView.setAdapter(badgeAdapter);
     }
 
     @Override
     public void onBadgesEmpty() {
-        mBadgeView.showBadgesEmpty();
+        mBadgeView.showInAppMessage(Alerts.NO_BADGES);
     }
 }

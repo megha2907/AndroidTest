@@ -9,17 +9,19 @@ public interface GroupInfoPresenter {
 
     void onCreateGroupInfo(Bundle bundle);
 
-    void onClickMembers();
-
     void onClickShareCode();
 
     void onLongClickShareCode();
 
-    void onGetMemberResult();
+    void onClickEditGroup();
 
     void onClickLeaveGroup();
 
     void onClickResetLb();
 
     void onClickDeleteGroup();
+
+    void onClickBack();
+
+    void onGetEditResult(Bundle bundle);
 }

@@ -1,11 +1,8 @@
 package in.sportscafe.nostragamus.module.notifications;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -25,33 +22,17 @@ import com.moengage.addon.inbox.InboxFragment;
 import com.moengage.addon.inbox.InboxManager;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by deepanshi on 26/8/16.
  */
 public class NotificationInboxFragment extends InboxFragment implements View.OnClickListener {
 
-    private OnHomeActionListener mOnHomeActionListener;
-
     private Toolbar mtoolbar;
 
     private ImageView mLogo;
 
     private TextView mTitle;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (context instanceof OnHomeActionListener) {
-            mOnHomeActionListener = (OnHomeActionListener) context;
-        } else {
-            throw new IllegalArgumentException("The base class should implement the OnHomeActionListener");
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -109,12 +90,6 @@ public class NotificationInboxFragment extends InboxFragment implements View.OnC
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        mOnHomeActionListener.onClickPlay();
-    }
-
-
     public void initToolBar() {
         Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Regular.ttf");
         mtoolbar = (Toolbar) getView().findViewById(R.id.tournament_toolbar);
@@ -129,4 +104,8 @@ public class NotificationInboxFragment extends InboxFragment implements View.OnC
                 getResources().getDisplayMetrics());
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }

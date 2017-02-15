@@ -114,10 +114,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
         String item = parent.getItemAtPosition(position).toString();
-        // hide selection text
-        ((TextView) view).setText(null);
 
         ((TextView) findViewById(R.id.sorting_tv)).setText(item);
 

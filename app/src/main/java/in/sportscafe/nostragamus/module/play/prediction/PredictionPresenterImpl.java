@@ -32,7 +32,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     public void onCreatePrediction(Bundle bundle) {
         mPredictionModel.init(bundle);
         if (!mPredictionModel.isDummyGame()) {
-            getAllQuestions();
+            mPredictionModel.getAllQuestions();
 
             mPredictionView.setTournamentPhoto(mPredictionModel.getTournamentPhoto());
             mPredictionView.setTournamentName(mPredictionModel.getTournamentName());
@@ -54,13 +54,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onSuccessCompletion(Bundle bundle) {
-        mPredictionView.dismissProgressbar();
         mPredictionView.navigateToFeed();
-    }
-
-    private void getAllQuestions() {
-        mPredictionView.showProgressbar();
-        mPredictionModel.getAllQuestions();
     }
 
     @Override
@@ -70,7 +64,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onSuccessQuestions(List<Question> questions, SwipeFlingAdapterView.OnSwipeListener<Question> listener) {
-        mPredictionView.dismissProgressbar();
         mPredictionView.setAdapter(mPredictionModel.getAdapter(mPredictionView.getContext(), questions), listener);
     }
 
@@ -138,13 +131,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onFailedQuestions(String message) {
-        mPredictionView.dismissProgressbar();
         showAlertMessage(message);
     }
 
     @Override
     public void onNoQuestions() {
-        mPredictionView.dismissProgressbar();
         showAlertMessage(Alerts.NO_QUESTIONS);
     }
 
@@ -189,13 +180,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onSuccessAudiencePollResponse() {
-        mPredictionView.dismissProgressbar();
-    }
-
-    @Override
     public void onFailedAudiencePollResponse() {
-        mPredictionView.dismissProgressbar();
         mPredictionView.showMessage(Alerts.AUDIENCE_POLL_FAIL);
     }
 
@@ -230,24 +215,12 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onLoadingPollPercent() {
-        mPredictionView.showProgressbar();
-    }
-
-    @Override
-    public void onPostingAnswer() {
-        mPredictionView.showProgressbar();
-    }
-
-    @Override
     public void onNoInternet() {
-        mPredictionView.dismissProgressbar();
         mPredictionView.showMessage(Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
     public void onNoInternetForQuestions() {
-        mPredictionView.dismissProgressbar();
         showAlertMessage(Alerts.NO_NETWORK_CONNECTION);
     }
 
@@ -256,35 +229,25 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        getAllQuestions();
+                        mPredictionModel.getAllQuestions();
                     }
                 });
     }
 
     @Override
-    public boolean isThreadAlive() {
-        return null != mPredictionView.getContext();
-    }
-
-    @Override
-    public void onPostAnswerSuccess() {
-        mPredictionView.dismissProgressbar();
-    }
-
-    @Override
     public void onPostAnswerFailed(String message) {
-        mPredictionView.dismissProgressbar();
-        if (message.equalsIgnoreCase("Match has already started")) {
-            mPredictionView.showMessage(Alerts.MATCH_ALREADY_STARTED);
-        } else {
-            mPredictionView.showMessage(Alerts.API_FAIL);
-        }
+        mPredictionView.showMessage(Alerts.API_FAIL);
+        onClickBack();
+    }
+
+    @Override
+    public void onMatchAlreadyStarted() {
+        mPredictionView.showMessage(Alerts.MATCH_ALREADY_STARTED);
         onClickBack();
     }
 
     @Override
     public void noInternetOnPostingAnswer() {
-        mPredictionView.dismissProgressbar();
         mPredictionView.showMessage(Alerts.NO_NETWORK_CONNECTION);
         onClickBack();
     }
@@ -292,5 +255,15 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onDummyGameCompletion() {
         mPredictionView.showDummyGameInfo();
+    }
+
+    @Override
+    public void onApiCallStarted() {
+        mPredictionView.showProgressbar();
+    }
+
+    @Override
+    public boolean onApiCallStopped() {
+        return mPredictionView.dismissProgressbar();
     }
 }

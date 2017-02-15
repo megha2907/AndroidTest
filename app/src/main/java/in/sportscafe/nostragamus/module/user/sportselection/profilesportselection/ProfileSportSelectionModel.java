@@ -12,6 +12,4 @@ public interface ProfileSportSelectionModel {
     RecyclerView.Adapter getSportsSelectionAdapter(Context context);
 
     void saveSelectedSports();
-
-    boolean isUserLoggedIn();
 }

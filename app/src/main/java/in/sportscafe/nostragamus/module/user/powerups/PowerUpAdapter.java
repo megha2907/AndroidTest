@@ -75,7 +75,6 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
                 break;
 
         }
-
     }
 
     class ViewHolder extends RecyclerView.ViewHolder  {
@@ -101,7 +100,6 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
             mBtnPowerUp = (ImageButton) V.findViewById(R.id.powerup_btn);
 
         }
-
     }
 
 }

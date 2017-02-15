@@ -13,7 +13,6 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 
 /**
@@ -21,17 +20,13 @@ import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
  */
 public class GroupTournamentAdapter extends Adapter<TournamentFeedInfo, GroupTournamentAdapter.ViewHolder> {
 
-    private OnHomeActionListener mOnHomeActionListener;
-
     private List<TournamentFeedInfo> mSelectedTournamentsIdList;
 
     private AlertDialog mAlertDialog;
-    private Context mcon;
 
     public GroupTournamentAdapter(Context context, List<TournamentFeedInfo> SelectedTournamentsIdList) {
         super(context);
-        mcon = context;
-        mSelectedTournamentsIdList=SelectedTournamentsIdList;
+        mSelectedTournamentsIdList = SelectedTournamentsIdList;
         addAll(SelectedTournamentsIdList);
     }
 
@@ -53,20 +48,19 @@ public class GroupTournamentAdapter extends Adapter<TournamentFeedInfo, GroupTou
         holder.mTvTournamentName.setText(tournamentInfo.getTournamentName());
         holder.mIvTournamentImage.setImageUrl(tournamentInfo.getTournamentPhoto());
         holder.mTvSport.setText(tournamentInfo.getSportsName());
-
     }
 
-
-    class ViewHolder extends RecyclerView.ViewHolder  {
-
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         int mPosition;
 
         View mMainView;
-        TextView mTvTournamentName;
-        HmImageView mIvTournamentImage;
-        TextView mTvSport;
 
+        TextView mTvTournamentName;
+
+        HmImageView mIvTournamentImage;
+
+        TextView mTvSport;
 
         public ViewHolder(View V) {
             super(V);
@@ -74,11 +68,6 @@ public class GroupTournamentAdapter extends Adapter<TournamentFeedInfo, GroupTou
             mTvTournamentName = (TextView) V.findViewById(R.id.group_sport_row_tv_tournament_name);
             mIvTournamentImage = (HmImageView) V.findViewById(R.id.group_sport_row_image_tournament);
             mTvSport = (TextView) V.findViewById(R.id.group_sport_row_tv_sport_name);
-
         }
-
-
     }
-
-
 }

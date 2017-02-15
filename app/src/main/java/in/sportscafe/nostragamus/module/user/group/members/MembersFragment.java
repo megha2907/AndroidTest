@@ -11,10 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.parceler.Parcels;
+
+import java.util.List;
+
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.SpacesItemDecoration;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
@@ -23,19 +30,26 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
  */
 public class MembersFragment extends NostragamusFragment implements MembersView {
 
-    private static final String KEY_GROUP_ID = "groupId";
+    private OnMemberRemoveListener mMemberRemoveListener;
 
     private RecyclerView mRvMembers;
 
     private MembersPresenter mMembersPresenter;
 
-    public static MembersFragment newInstance(Integer groupid) {
-
+    public static MembersFragment newInstance(
+            boolean amAdmin,
+            int groupId,
+            List<GroupPerson> grpMembers,
+            OnMemberRemoveListener listener
+    ) {
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_GROUP_ID, groupid);
+        bundle.putBoolean(BundleKeys.IS_ADMIN, amAdmin);
+        bundle.putInt(BundleKeys.GROUP_ID, groupId);
+        bundle.putParcelable(BundleKeys.GROUP_MEMBERS, Parcels.wrap(grpMembers));
 
         MembersFragment fragment = new MembersFragment();
         fragment.setArguments(bundle);
+        fragment.mMemberRemoveListener = listener;
         return fragment;
     }
 
@@ -77,7 +91,7 @@ public class MembersFragment extends NostragamusFragment implements MembersView 
         );
 
         this.mMembersPresenter = MembersPresenterImpl.newInstance(this);
-        this.mMembersPresenter.onCreateMembers(getArguments().getInt(KEY_GROUP_ID));
+        this.mMembersPresenter.onCreateMembers(getArguments(), mMemberRemoveListener);
     }
 
     @Override
@@ -92,12 +106,8 @@ public class MembersFragment extends NostragamusFragment implements MembersView 
         startActivity(intent);
     }
 
-    @Override
-    public void setSuccessResult() {
-        getActivity().setResult(Activity.RESULT_OK);
-    }
+    public interface OnMemberRemoveListener {
 
-    public void addNewPerson(GroupPerson newPerson) {
-        mMembersPresenter.onGetNewPerson(newPerson);
+        void onMemberRemoved(List<GroupPerson> updatedMemberList);
     }
 }

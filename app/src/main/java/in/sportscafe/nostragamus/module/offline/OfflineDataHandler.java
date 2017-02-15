@@ -1,37 +1,16 @@
 package in.sportscafe.nostragamus.module.offline;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.jeeva.android.Log;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import in.sportscafe.nostragamus.AbstractDataHandler;
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
-import in.sportscafe.nostragamus.module.user.badges.Badge;
-import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
-import in.sportscafe.nostragamus.module.user.group.mutualgroups.MutualGroups;
-import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
-import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
-import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
-
-import static com.google.android.gms.analytics.internal.zzy.n;
 
 /**
  * Created by Jeeva on 6/4/16.

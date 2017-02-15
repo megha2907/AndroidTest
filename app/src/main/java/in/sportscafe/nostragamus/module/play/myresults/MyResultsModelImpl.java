@@ -380,6 +380,11 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     public void onFailedGetUpdateUserInfo(String message) {
     }
 
+    @Override
+    public void onNoInternet() {
+
+    }
+
     public interface OnMyResultsModelListener {
 
         void onSuccessMyResults(MyResultsAdapter myResultsAdapter);

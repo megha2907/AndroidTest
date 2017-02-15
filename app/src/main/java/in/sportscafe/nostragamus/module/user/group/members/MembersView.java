@@ -10,6 +10,4 @@ public interface MembersView extends InAppView {
     void setAdapter(MembersAdapter membersAdapter);
 
     void navigateToHome();
-
-    void setSuccessResult();
 }

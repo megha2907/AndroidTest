@@ -4,12 +4,9 @@ package in.sportscafe.nostragamus.module.tournamentFeed;
  * Created by deepanshi on 9/29/16.
  */
 
-import android.content.Context;
 import android.os.Bundle;
 
-import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
-
+import in.sportscafe.nostragamus.Constants.Alerts;
 
 public class TournamentFeedPresenterImpl implements TournamentFeedPresenter, TournamentFeedModelImpl.OnTournamentFeedModelListener {
 
@@ -27,27 +24,14 @@ public class TournamentFeedPresenterImpl implements TournamentFeedPresenter, Tou
     }
 
     @Override
-    public void onCreateFeed(OnHomeActionListener listener, Bundle bundle) {
-        mTournamentFeedView.setAdapter(mTournamentFeedModel.getAdapter(listener));
+    public void onCreateFeed(Bundle bundle) {
         mTournamentFeedModel.init(bundle);
+        mTournamentFeedView.setAdapter(mTournamentFeedModel.getAdapter(mTournamentFeedView.getContext()));
     }
-
-
-    @Override
-    public void update(Bundle bundle) {
-        mTournamentFeedModel.getTournamentFeed(bundle);
-    }
-
 
     @Override
     public void onEmpty() {
-        mTournamentFeedView.showInAppMessage(Constants.Alerts.NO_FEEDS_FOUND);
+        mTournamentFeedView.showInAppMessage(Alerts.NO_FEEDS_FOUND);
     }
-
-    @Override
-    public Context getContext() {
-        return mTournamentFeedView.getContext();
-    }
-
 
 }

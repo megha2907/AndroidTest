@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import java.io.File;
+import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Alerts;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -64,27 +67,27 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
     }
 
     @Override
-    public void onSuccessTournamentInfo() {
-        mNewGroupView.setAdapter(mNewGroupModel.getAdapter(mNewGroupView.getContext()));
+    public void onSuccessTournamentInfo(List<TournamentFeedInfo> tourList) {
+        mNewGroupView.setAdapter(mNewGroupModel.getAdapter(mNewGroupView.getContext(), tourList));
         mNewGroupView.dismissProgressbar();
     }
 
     @Override
     public void onEmptyGroupName() {
         mNewGroupView.dismissProgressbar();
-        mNewGroupView.showMessage(Constants.Alerts.EMPTY_GROUP_NAME);
+        mNewGroupView.showMessage(Alerts.EMPTY_GROUP_NAME);
     }
 
     @Override
-    public void onNoSportSelected() {
+    public void onNoTournamentSelected() {
         mNewGroupView.dismissProgressbar();
-        mNewGroupView.showMessage(Constants.Alerts.EMPTY_TOURNAMENT_SELECTION);
+        mNewGroupView.showMessage(Alerts.EMPTY_TOURNAMENT_SELECTION);
     }
 
     @Override
     public void onNoInternet() {
         mNewGroupView.dismissProgressbar();
-        mNewGroupView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+        mNewGroupView.showMessage(Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
@@ -95,7 +98,7 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
 
     @Override
     public void onGroupImagePathNull() {
-        mNewGroupView.showMessage(Constants.Alerts.IMAGE_FILEPATH_EMPTY);
+        mNewGroupView.showMessage(Alerts.IMAGE_FILEPATH_EMPTY);
     }
 
     @Override
@@ -107,20 +110,17 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
     public void onEditFailed(String message) {
         mNewGroupView.dismissProgressbar();
         mNewGroupView.showMessage(message);
-
     }
 
     @Override
     public void onPhotoUpdate(String groupPhoto) {
-
         mNewGroupView.dismissProgressbar();
         mNewGroupView.setGroupImage(groupPhoto);
-
     }
 
     @Override
     public void selectedTournamentsLimit() {
-        mNewGroupView.showMessage(Constants.Alerts.SELECTED_TOURNAMENTS_LIMIT);
+        mNewGroupView.showMessage(Alerts.SELECTED_TOURNAMENTS_LIMIT);
     }
 
     @Override

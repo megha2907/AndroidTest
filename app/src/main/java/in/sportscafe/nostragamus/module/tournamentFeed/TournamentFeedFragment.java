@@ -5,22 +5,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import org.parceler.Parcels;
 
-import in.sportscafe.nostragamus.Constants;
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
-import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by deepanshi on 9/29/16.
@@ -34,9 +31,9 @@ public class TournamentFeedFragment extends NostragamusFragment implements Tourn
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    public static TournamentFeedFragment newInstance(TournamentInfo tournamentInfo) {
+    public static TournamentFeedFragment newInstance(List<TournamentFeedInfo> tourList) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(BundleKeys.TOURNAMENT_LIST, Parcels.wrap(tournamentInfo));
+        bundle.putParcelable(BundleKeys.TOURNAMENT_LIST, Parcels.wrap(tourList));
 
         TournamentFeedFragment fragment = new TournamentFeedFragment();
         fragment.setArguments(bundle);
@@ -59,7 +56,7 @@ public class TournamentFeedFragment extends NostragamusFragment implements Tourn
         this.mRcvTournamentFeed.setHasFixedSize(true);
 
         this.mtournamentFeedPresenter = TournamentFeedPresenterImpl.newInstance(this);
-        this.mtournamentFeedPresenter.onCreateFeed((OnHomeActionListener) getActivity(), getArguments());
+        this.mtournamentFeedPresenter.onCreateFeed(getArguments());
 
 //        this.mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swifeRefresh);
 //        this.mSwipeRefreshLayout.setOnRefreshListener(this);

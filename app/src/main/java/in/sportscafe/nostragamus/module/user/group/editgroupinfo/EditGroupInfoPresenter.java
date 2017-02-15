@@ -16,24 +16,11 @@ public interface EditGroupInfoPresenter {
 
     void onCreateGroupInfo(Bundle bundle);
 
-    void onDoneGroupName(String groupName,String groupPhoto);
-
-
-    void onGetMemberResult();
-
-    void onGroupNameEmpty();
-
-    void onNoInternet();
-
-    void onLeaveGroupSuccess();
-
-    void onFailed(String message);
-
-    void onGetGroupSummarySuccess(GroupInfo groupInfo);
-
-    void onGroupPhotoDone(File body, String filepath, String filename);
+    void onSaveGroupName(String groupName);
 
     void onClickImage();
 
     void onGetResult(int requestCode, int resultCode, Intent data);
+
+    void onClickBack();
 }

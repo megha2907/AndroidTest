@@ -4,17 +4,25 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
+import java.util.List;
+
 /**
  * Created by deepanshi on 9/27/16.
  */
 
 public interface AllGroupsModel {
 
-    void init();
+    void init(Bundle bundle);
 
-    RecyclerView.Adapter getAllGroupsAdapter(Context context);
+    boolean isAllGroups();
 
-    void initMutualGroups(Bundle bundle);
+    void getAllGroups();
 
-    RecyclerView.Adapter getMutualGroupsAdapter(Context context);
+    RecyclerView.Adapter getGroupsAdapter(Context context, List<AllGroups> groupsList);
+
+    void saveSelectedItem(Bundle bundle);
+
+    void updateGroupInfo(Bundle bundle);
+
+    void addNewGroup(Bundle bundle);
 }

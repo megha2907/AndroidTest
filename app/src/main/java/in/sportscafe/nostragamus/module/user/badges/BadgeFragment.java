@@ -9,9 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
+import java.util.List;
+
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by deepanshi on 12/8/16.
@@ -23,9 +27,12 @@ public class BadgeFragment  extends NostragamusFragment implements BadgeView {
 
     private BadgePresenter mBadgePresenter;
 
-    public static BadgeFragment newInstance() {
+    public static BadgeFragment newInstance(List<Badge> badgeList) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BundleKeys.BADGES, Parcels.wrap(badgeList));
 
         BadgeFragment fragment = new BadgeFragment();
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -43,20 +50,14 @@ public class BadgeFragment  extends NostragamusFragment implements BadgeView {
         this.mRvBadge.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         this.mRvBadge.setHasFixedSize(true);
-        this.mBadgePresenter = BadgePresenterImpl.newInstance(this);
-        this.mBadgePresenter.onCreateBadgeAdapter();
 
+        this.mBadgePresenter = BadgePresenterImpl.newInstance(this);
+        this.mBadgePresenter.onCreateBadges(getArguments());
     }
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
         this.mRvBadge.setAdapter(adapter);
-    }
-
-    @Override
-    public void showBadgesEmpty() {
-        TextView noBadges = (TextView) findViewById(R.id.no_badges);
-        noBadges.setVisibility(View.VISIBLE);
     }
 
 }
