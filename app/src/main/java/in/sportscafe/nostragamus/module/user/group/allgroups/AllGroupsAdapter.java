@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
@@ -23,8 +25,6 @@ import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
  * Created by deepanshi on 23/8/16.
  */
 public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHolder> {
-
-    private static final int CODE_GROUP_INFO = 11;
 
     public AllGroupsAdapter(Context context, List<AllGroups> AllGroupsList) {
         super(context);
@@ -79,13 +79,9 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
         @Override
         public void onClick(View view) {
             Context context = view.getContext();
-            Intent intent = new Intent(context, GroupInfoActivity.class);
-
-            AllGroups allGroups = getItem(getAdapterPosition());
-            intent.putExtra(BundleKeys.GROUP_ID, allGroups.getGroupId());
-            intent.putExtra(BundleKeys.GROUP_NAME, allGroups.getGroupName());
-
-            ((Activity) context).startActivityForResult(intent, CODE_GROUP_INFO);
+            Intent intent = new Intent(IntentActions.ACTION_GROUP_CLICK);
+            intent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
     }
 

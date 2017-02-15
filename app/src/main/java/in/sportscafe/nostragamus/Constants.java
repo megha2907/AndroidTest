@@ -196,6 +196,8 @@ public interface Constants {
         String FOLLOWED_TOURS = "followedTours";
         String IS_ADMIN = "isAdmin";
         String GROUP_MEMBERS = "groupMembers";
+        String CLICK_POSITION = "clickPosition";
+        String OPEN_PROFILE = "openProfile";
     }
 
     interface ParcelableKeys {
@@ -225,6 +227,7 @@ public interface Constants {
         String ACTION_FUZZY_LB_CLICK = "in.sportscafe.nostragamus.intent.action.FUZZY_LB_CLICK";
         String ACTION_DUMMY_GAME_PLAY = "in.sportscafe.nostragamus.intent.action.DUMMY_GAME_PLAY";
         String ACTION_DUMMY_GAME_PROCEED = "in.sportscafe.nostragamus.intent.action.DUMMY_GAME_PROCEED";
+        String ACTION_GROUP_CLICK = "in.sportscafe.nostragamus.intent.action.GROUP_CLICK";
     }
 
     interface LeaderBoardPeriods {

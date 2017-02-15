@@ -26,10 +26,12 @@ import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.google.android.gms.internal.zzng.fm;
+
 /**
  * Created by Jeeva on 12/6/16.
  */
-public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment.OnTourSelectionListener {
+public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment.OnTourSelectionListener, MembersFragment.OnMemberRemoveListener {
 
     private boolean mAmAdmin = false;
 
@@ -117,6 +119,8 @@ public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment
         new LeaveGroupModelImpl(new LeaveGroupModelImpl.OnLeaveGroupModelListener() {
             @Override
             public void onSuccessLeaveGroup() {
+                mGroupInfo = null;
+                mAnythingChanged = true;
                 mGroupInfoModelListener.onLeaveGroupSuccess();
             }
 
@@ -157,6 +161,8 @@ public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment
         new DeleteGroupModelImpl(new DeleteGroupModelImpl.OnDeleteGroupModelListener() {
             @Override
             public void onSuccessDeleteGroup() {
+                mGroupInfo = null;
+                mAnythingChanged = true;
                 mGroupInfoModelListener.onDeleteGroupSuccess();
             }
 
@@ -175,7 +181,9 @@ public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment
     @Override
     public Bundle getGroupInfoBundle() {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(BundleKeys.GROUP_INFO, Parcels.wrap(mGroupInfo));
+        if(null != mGroupInfo) {
+            bundle.putParcelable(BundleKeys.GROUP_INFO, Parcels.wrap(mGroupInfo));
+        }
         return bundle;
     }
 
@@ -189,15 +197,21 @@ public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fm);
 
         pagerAdapter.addFragment(
-                TourSelectionFragment.newInstance(mAmAdmin, mGroupId, mGroupInfo.getFollowedTournaments()),
+                TourSelectionFragment.newInstance(mAmAdmin, mGroupId, mGroupInfo.getFollowedTournaments(), this),
                 getTourTitle()
         );
 
         pagerAdapter.addFragment(
-                MembersFragment.newInstance(mAmAdmin, mGroupId, mGroupInfo.getMembers()),
+                MembersFragment.newInstance(mAmAdmin, mGroupId, mGroupInfo.getMembers(), this),
                 getMemberTitle()
         );
         return pagerAdapter;
+    }
+
+    @Override
+    public void updateEditData(Bundle bundle) {
+        mAnythingChanged = true;
+        mGroupInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.GROUP_INFO));
     }
 
     private String getTourTitle() {
@@ -234,6 +248,13 @@ public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment
         mGroupInfoModelListener.onTourTitleChanged(getTourTitle());
     }
 
+    @Override
+    public void onMemberRemoved(List<GroupPerson> updatedMemberList) {
+        mAnythingChanged = true;
+        mGroupInfo.setMembers(updatedMemberList);
+        mGroupInfoModelListener.onMemberTitleChange(getMemberTitle());
+    }
+
     public interface OnGroupInfoModelListener {
 
         void onNoInternet();
@@ -253,5 +274,7 @@ public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment
         void onNoInternetForGroupDetails();
 
         void onTourTitleChanged(String title);
+
+        void onMemberTitleChange(String title);
     }
 }

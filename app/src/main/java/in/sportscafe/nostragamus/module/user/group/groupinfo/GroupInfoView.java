@@ -22,11 +22,13 @@ public interface GroupInfoView extends InAppView {
 
     void setTourTabTitle(String title);
 
-    void navigateToHome();
+    void setMemberTabTitle(String title);
 
     void navigateToEditGroup(Bundle bundle);
 
     void changeToAdminMode();
+
+    void setSuccessData(Bundle bundle);
 
     void goBack();
 

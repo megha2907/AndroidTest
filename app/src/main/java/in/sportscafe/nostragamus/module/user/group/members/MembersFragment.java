@@ -21,6 +21,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.SpacesItemDecoration;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
@@ -29,11 +30,18 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
  */
 public class MembersFragment extends NostragamusFragment implements MembersView {
 
+    private OnMemberRemoveListener mMemberRemoveListener;
+
     private RecyclerView mRvMembers;
 
     private MembersPresenter mMembersPresenter;
 
-    public static MembersFragment newInstance(boolean amAdmin, int groupId, List<GroupPerson> grpMembers) {
+    public static MembersFragment newInstance(
+            boolean amAdmin,
+            int groupId,
+            List<GroupPerson> grpMembers,
+            OnMemberRemoveListener listener
+    ) {
         Bundle bundle = new Bundle();
         bundle.putBoolean(BundleKeys.IS_ADMIN, amAdmin);
         bundle.putInt(BundleKeys.GROUP_ID, groupId);
@@ -41,6 +49,7 @@ public class MembersFragment extends NostragamusFragment implements MembersView 
 
         MembersFragment fragment = new MembersFragment();
         fragment.setArguments(bundle);
+        fragment.mMemberRemoveListener = listener;
         return fragment;
     }
 
@@ -82,7 +91,7 @@ public class MembersFragment extends NostragamusFragment implements MembersView 
         );
 
         this.mMembersPresenter = MembersPresenterImpl.newInstance(this);
-        this.mMembersPresenter.onCreateMembers(getArguments());
+        this.mMembersPresenter.onCreateMembers(getArguments(), mMemberRemoveListener);
     }
 
     @Override
@@ -95,5 +104,10 @@ public class MembersFragment extends NostragamusFragment implements MembersView 
         Intent intent = new Intent(getContext(), HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    public interface OnMemberRemoveListener {
+
+        void onMemberRemoved(List<GroupPerson> updatedMemberList);
     }
 }

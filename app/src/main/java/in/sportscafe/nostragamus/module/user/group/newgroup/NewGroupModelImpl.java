@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.parceler.Parcels;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -192,12 +194,8 @@ public class NewGroupModelImpl implements NewGroupModel {
                                     MyWebService.getInstance().getJsonStringFromObject(newGroupRequest.getfollowedTournaments())
                             );
 
-                            GroupInfo groupInfo = response.body().getGroupInfo();
-
                             Bundle bundle = new Bundle();
-                            bundle.putInt(BundleKeys.GROUP_ID, groupInfo.getId());
-                            bundle.putString(BundleKeys.GROUP_NAME, groupInfo.getName());
-                            bundle.putString(BundleKeys.SCREEN, ScreenNames.GROUPS_CREATE_NEW);
+                            bundle.putParcelable(BundleKeys.GROUP_INFO, Parcels.wrap(response.body().getGroupInfo()));
 
                             mNewGroupModelListener.onSuccess(bundle);
                         } else {

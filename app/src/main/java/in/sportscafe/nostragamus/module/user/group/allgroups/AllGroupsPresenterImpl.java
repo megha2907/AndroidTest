@@ -32,6 +32,24 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
     @Override
     public void onCreateAllGroups(Bundle bundle) {
         mAllGroupsModel.init(bundle);
+        if(mAllGroupsModel.isAllGroups()) {
+            mAllGroupsView.showTitleBar();
+        }
+    }
+
+    @Override
+    public void onClickGroupItem(Bundle bundle) {
+        mAllGroupsModel.saveSelectedItem(bundle);
+    }
+
+    @Override
+    public void onGetGroupInfoResult(Bundle bundle) {
+        mAllGroupsModel.updateGroupInfo(bundle);
+    }
+
+    @Override
+    public void onGetJoinGroupResult(Bundle bundle) {
+        mAllGroupsModel.addNewGroup(bundle);
     }
 
     @Override
@@ -46,7 +64,8 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
 
     @Override
     public void onGroupsEmpty() {
-        mAllGroupsView.showGroupsEmpty();
+//        mAllGroupsView.showGroupsEmpty();
+        mAllGroupsView.showInAppMessage("You don't have any groups yet");
     }
 
     @Override
@@ -68,5 +87,12 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
     @Override
     public boolean onApiCallStopped() {
         return mAllGroupsView.dismissProgressbar();
+    }
+
+    @Override
+    public void onItemSaved(Bundle bundle) {
+        if(null != bundle) {
+            mAllGroupsView.navigateToGroupInfo(bundle);
+        }
     }
 }

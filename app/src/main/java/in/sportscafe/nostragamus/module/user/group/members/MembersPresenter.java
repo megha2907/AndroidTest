@@ -9,7 +9,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
  */
 public interface MembersPresenter {
 
-    void onCreateMembers(Bundle bundle);
+    void onCreateMembers(Bundle bundle, MembersFragment.OnMemberRemoveListener listener);
 
     void onClickLeaveGroup();
 }

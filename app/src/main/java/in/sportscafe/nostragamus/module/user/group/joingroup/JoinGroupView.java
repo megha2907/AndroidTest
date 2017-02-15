@@ -17,6 +17,8 @@ public interface JoinGroupView extends View {
 
     void populateGroupCode(String groupCode);
 
+    void setSuccessResult(Bundle bundle);
+
     void goBack();
 
     void goToHome();

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.CustomProgressbar;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -27,6 +28,8 @@ import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoAc
  * Created by Jeeva on 12/6/16.
  */
 public class GroupInfoActivity extends NostragamusActivity implements GroupInfoView, View.OnClickListener {
+
+    private static final int EDIT_CODE = 19;
 
     private ViewPager mViewPager;
 
@@ -114,25 +117,21 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     }
 
     @Override
-    public void navigateToHome() {
-        Intent intent = new Intent(getContext(), HomeActivity.class);
-        intent.putExtra(BundleKeys.GROUP, BundleKeys.GROUP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
     public void navigateToEditGroup(Bundle bundle) {
         Intent intent = new Intent(this, EditGroupInfoActivity.class);
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent, EDIT_CODE);
     }
 
     @Override
     public void changeToAdminMode() {
         mAdminMode = true;
         invalidateOptionsMenu();
+    }
+
+    @Override
+    public void setSuccessData(Bundle bundle) {
+        setResult(RESULT_OK, new Intent().putExtras(bundle));
     }
 
     @Override
@@ -143,6 +142,11 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     @Override
     public void setTourTabTitle(String title) {
         mPagerAdapter.updateTitle(0, title);
+    }
+
+    @Override
+    public void setMemberTabTitle(String title) {
+        mPagerAdapter.updateTitle(1, title);
     }
 
     @Override
@@ -159,7 +163,7 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
         if (mAdminMode) {
             menu.findItem(R.id.reset_lb_btn).setVisible(true);
             menu.findItem(R.id.edit_group_btn).setVisible(true);
-//            menu.findItem(R.id.delete_group_btn).setVisible(true);
+            menu.findItem(R.id.delete_group_btn).setVisible(true);
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -184,6 +188,16 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     }
 
     @Override
+    public void showProgressbar() {
+        CustomProgressbar.getProgressbar(this).show();
+    }
+
+    @Override
+    public boolean dismissProgressbar() {
+        return CustomProgressbar.getProgressbar(this).dismissProgress();
+    }
+
+    @Override
     public String getScreenName() {
         return ScreenNames.GROUPS_INFO;
     }
@@ -191,5 +205,13 @@ public class GroupInfoActivity extends NostragamusActivity implements GroupInfoV
     @Override
     public void onBackPressed() {
         mGroupInfoPresenter.onClickBack();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(RESULT_OK == resultCode && EDIT_CODE == requestCode) {
+            mGroupInfoPresenter.onGetEditResult(data.getExtras());
+        }
     }
 }

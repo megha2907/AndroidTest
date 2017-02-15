@@ -2,32 +2,26 @@ package in.sportscafe.nostragamus.module.user.group.joingroup;
 
 import android.os.Bundle;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.parceler.Parcels;
 
-import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroup;
-import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroupResponse;
-import in.sportscafe.nostragamus.webservice.MyWebService;
-import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
-import retrofit2.Call;
-import retrofit2.Response;
+import in.sportscafe.nostragamus.module.user.group.JoinGroupApiModelImpl;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
 /**
  * Created by Jeeva on 1/7/16.
  */
-public class JoinGroupModelImpl implements JoinGroupModel {
+public class JoinGroupModelImpl implements JoinGroupModel, JoinGroupApiModelImpl.OnJoinGroupApiModelListener {
 
     private String mGroupCode;
 
     private OnJoinGroupModelListener mJoinGroupModelListener;
 
+    private JoinGroupApiModelImpl mJoinGroupApiModel;
+
     private JoinGroupModelImpl(OnJoinGroupModelListener listener) {
         this.mJoinGroupModelListener = listener;
+        mJoinGroupApiModel = JoinGroupApiModelImpl.newInstance(this);
     }
 
     public static JoinGroupModel newInstance(OnJoinGroupModelListener listener) {
@@ -38,23 +32,20 @@ public class JoinGroupModelImpl implements JoinGroupModel {
     public void init(Bundle bundle) {
         if(null != bundle && bundle.containsKey(BundleKeys.GROUP_CODE)) {
             mGroupCode = bundle.getString(BundleKeys.GROUP_CODE);
-            if(isValidGroupCode(mGroupCode)) {
+            if(mJoinGroupApiModel.isValidGroupCode(mGroupCode)) {
                 mJoinGroupModelListener.onGetGroupCode(mGroupCode);
             }
         }
     }
 
     @Override
-    public void joinGroup(String groupCode, boolean fromReferral) {
-        if(isValidGroupCode(groupCode)) {
-            if (Nostragamus.getInstance().hasNetworkConnection()) {
-                callJoinGroupApi(groupCode, fromReferral);
-            } else {
-                mJoinGroupModelListener.onNoInternet();
-            }
-        } else {
-            mJoinGroupModelListener.onInvalidGroupCode();
-        }
+    public void joinGroup(String groupCode) {
+        mJoinGroupApiModel.joinGroup(groupCode, false);
+
+        /*GroupInfo groupInfo = new GroupInfo();
+        groupInfo.setId(2323);
+        groupInfo.setName("Dummy Group");
+        onSuccessJoinGroupApi(groupInfo);*/
     }
 
     @Override
@@ -62,44 +53,31 @@ public class JoinGroupModelImpl implements JoinGroupModel {
         return null != mGroupCode;
     }
 
-    private boolean isValidGroupCode(String groupCode) {
-        return groupCode.length() == 5;
+    @Override
+    public void onSuccessJoinGroupApi(GroupInfo groupInfo) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BundleKeys.GROUP_INFO, Parcels.wrap(groupInfo));
+        mJoinGroupModelListener.onSuccess(bundle);
     }
 
-    private void callJoinGroupApi(String groupCode, final boolean fromReferral) {
-        MyWebService.getInstance().getJoinGroupRequest(groupCode).enqueue(
-                new NostragamusCallBack<JoinGroupResponse>() {
-                    @Override
-                    public void onResponse(Call<JoinGroupResponse> call, Response<JoinGroupResponse> response) {
-                        super.onResponse(call, response);
-                        if(response.isSuccessful()) {
-                            NostragamusAnalytics.getInstance().trackGroups(AnalyticsActions.JOIN_GROUP, null);
+    @Override
+    public void onFailedJoinGroupApi(String message) {
+        mJoinGroupModelListener.onFailed(message);
+    }
 
-                            if(fromReferral) {
-                                // Removing group code since user joined in that group
-                                NostragamusDataHandler.getInstance().setInstallGroupCode(null);
-                            }
+    @Override
+    public void onNoInternet() {
+        mJoinGroupModelListener.onNoInternet();
+    }
 
-                            mJoinGroupModelListener.onSuccess(response.body().getJoinGroup().getGroupId());
-
-                        } else {
-                            mJoinGroupModelListener.onFailed(response.message());
-                        }
-                    }
-                }
-        );
-
-
-        Map<String, String> values = new HashMap<>();
-        values.put("GroupCode", groupCode);
-        values.put("UserID", NostragamusDataHandler.getInstance().getUserId());
-
-        NostragamusAnalytics.getInstance().trackOtherEvents("JOIN GROUP-ONCLICK", values);
+    @Override
+    public void onInvalidGroupCode() {
+        mJoinGroupModelListener.onInvalidGroupCode();
     }
 
     public interface OnJoinGroupModelListener {
 
-        void onSuccess(Integer GroupId);
+        void onSuccess(Bundle bundle);
 
         void onInvalidGroupCode();
 

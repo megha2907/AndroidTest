@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.user.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.jeeva.android.Log;
@@ -15,12 +16,14 @@ import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.user.group.JoinGroupApiModelImpl;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.login.dto.UserLoginInResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.UserProfile;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -194,29 +197,24 @@ public class LogInModelImpl implements LogInModel {
     }
 
     private void joinGroup(String groupCode) {
-        JoinGroupModelImpl.newInstance(new JoinGroupModelImpl.OnJoinGroupModelListener() {
+        JoinGroupApiModelImpl.newInstance(new JoinGroupApiModelImpl.OnJoinGroupApiModelListener() {
             @Override
-            public void onSuccess(Integer GroupId) {
-                mLogInModelListener.onLoginCompleted();
+            public void onSuccessJoinGroupApi(GroupInfo groupInfo) {
+
             }
 
             @Override
-            public void onInvalidGroupCode() {
-                mLogInModelListener.onLoginCompleted();
+            public void onFailedJoinGroupApi(String message) {
+
             }
 
             @Override
             public void onNoInternet() {
-                mLogInModelListener.onLoginCompleted();
+
             }
 
             @Override
-            public void onFailed(String message) {
-                mLogInModelListener.onLoginCompleted();
-            }
-
-            @Override
-            public void onGetGroupCode(String groupCode) {
+            public void onInvalidGroupCode() {
 
             }
         }).joinGroup(groupCode, true);

@@ -446,8 +446,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     private Drawable getPowerupDrawable(int colorRes) {
         GradientDrawable powerupDrawable = new GradientDrawable();
-        powerupDrawable.setShape(GradientDrawable.RECTANGLE);
-        powerupDrawable.setCornerRadius(getResources().getDimensionPixelSize(R.dimen.dp_5));
+        powerupDrawable.setShape(GradientDrawable.OVAL);
+//        powerupDrawable.setCornerRadius(getResources().getDimensionPixelSize(R.dimen.dp_5));
         powerupDrawable.setColor(getResources().getColor(colorRes));
         return powerupDrawable;
     }

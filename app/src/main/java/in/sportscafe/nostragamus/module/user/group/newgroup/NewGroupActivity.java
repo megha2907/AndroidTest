@@ -20,6 +20,8 @@ import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 
+import static com.google.android.gms.analytics.internal.zzy.b;
+
 /**
  * Created by Jeeva on 1/7/16.
  */
@@ -74,10 +76,8 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
 
     @Override
     public void setSuccessBack(Bundle bundle) {
-        Intent intent = new Intent(this, GroupInfoActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
-        finish();
+        setResult(RESULT_OK, new Intent().putExtras(bundle));
+        onBackPressed();
     }
 
     @Override

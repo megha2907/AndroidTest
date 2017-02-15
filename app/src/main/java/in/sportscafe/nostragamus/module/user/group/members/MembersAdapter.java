@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
@@ -23,6 +24,8 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
+
+import static com.google.android.gms.analytics.internal.zzy.e;
 
 /**
  * Created by rb on 30/11/15.
@@ -58,16 +61,12 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         GroupPerson groupPerson = getItem(position);
 
-        holder.mPosition = position;
-
         holder.mIvPhoto.setImageUrl(groupPerson.getPhoto());
         holder.mTvName.setText(groupPerson.getUserName());
         holder.mTvAdminLabel.setVisibility(groupPerson.isAdmin() ? View.VISIBLE : View.GONE);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener ,View.OnLongClickListener{
-
-        int mPosition;
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         RoundImage mIvPhoto;
 
@@ -86,45 +85,42 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
 
         @Override
         public boolean onLongClick(View view) {
-            if(mAdmin) {
-                ViewUtils.getDialogList(view.getContext(), mOptionList, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                mMembersOptionListener.onMakeAdmin(mPosition);
-                                break;
-                            case 1:
-                                mMembersOptionListener.onClickRemove(mPosition);
-                                break;
+            if (mAdmin) {
+                GroupPerson groupPerson = getItem(getAdapterPosition());
+                if (!NostragamusDataHandler.getInstance().getUserId().equals(groupPerson.getId().toString())) {
+                    ViewUtils.getDialogList(view.getContext(), mOptionList, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case 0:
+                                    mMembersOptionListener.onMakeAdmin(getAdapterPosition());
+                                    break;
+                                case 1:
+                                    mMembersOptionListener.onClickRemove(getAdapterPosition());
+                                    break;
+                            }
                         }
-                    }
-                }).show();
+                    }).show();
+                }
             }
             return true;
         }
 
         @Override
         public void onClick(View v) {
-
             Integer playerId = getItem(getAdapterPosition()).getId();
-
-            if (playerId.equals(NostragamusDataHandler.getInstance().getUserId())){
-
+            if (NostragamusDataHandler.getInstance().getUserId().equals(playerId.toString())) {
                 Intent homeintent = new Intent(v.getContext(), HomeActivity.class);
                 homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                homeintent.putExtra("group", "openprofile");
+                homeintent.putExtra(BundleKeys.OPEN_PROFILE, true);
                 v.getContext().startActivity(homeintent);
-
-            }else {
-
+            } else {
                 Bundle mBundle = new Bundle();
-                mBundle.putInt(Constants.BundleKeys.PLAYER_ID,playerId);
-                Intent mintent2 =  new Intent(v.getContext(), PlayerProfileActivity.class);
+                mBundle.putInt(BundleKeys.PLAYER_ID, playerId);
+                Intent mintent2 = new Intent(v.getContext(), PlayerProfileActivity.class);
                 mintent2.putExtras(mBundle);
                 v.getContext().startActivity(mintent2);
             }
-
         }
     }
 

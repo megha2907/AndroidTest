@@ -26,6 +26,8 @@ import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity;
 public class JoinGroupActivity extends NostragamusActivity implements JoinGroupView,
         View.OnClickListener {
 
+    private static final int NEW_GROUP = 25;
+
     private static final String TAG = "JoinGroupActivity";
 
     private EditText mEtGroupCode1;
@@ -139,8 +141,7 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
 
     @Override
     public void navigateToCreateGroup() {
-        startActivity(new Intent(this, NewGroupActivity.class));
-        finish();
+        startActivityForResult(new Intent(this, NewGroupActivity.class), NEW_GROUP);
     }
 
     @Override
@@ -205,6 +206,11 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
     }
 
     @Override
+    public void setSuccessResult(Bundle bundle) {
+        setResult(RESULT_OK, new Intent().putExtras(bundle));
+    }
+
+    @Override
     public void goBack() {
         super.onBackPressed();
     }
@@ -226,5 +232,13 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
     @Override
     public String getScreenName() {
         return Constants.ScreenNames.GROUPS_JOIN;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(RESULT_OK == resultCode && requestCode == NEW_GROUP) {
+            mJoinGroupPresenter.onGetNewGroupResult(data.getExtras());
+        }
     }
 }

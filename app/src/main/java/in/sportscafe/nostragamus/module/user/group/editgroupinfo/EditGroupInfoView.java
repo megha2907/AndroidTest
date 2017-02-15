@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.editgroupinfo;
 
+import android.os.Bundle;
+
 import com.jeeva.android.View;
 
 /**
@@ -14,4 +16,6 @@ public interface EditGroupInfoView extends View {
     void navigateToAddPhoto(int addPhotoRequestCode);
 
     void goBack();
+
+    void setSuccessData(Bundle bundle);
 }

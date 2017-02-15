@@ -76,11 +76,6 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
     }
 
     @Override
-    public void addNewPerson(GroupPerson newPerson) {
-        mMembersAdapter.add(newPerson, 0);
-    }
-
-    @Override
     public void onClickRemove(int position) {
         if(Nostragamus.getInstance().hasNetworkConnection()) {
             callRemovePersonApi(getAdminRequest(position), position);
@@ -91,7 +86,7 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
 
     private AdminRequest getAdminRequest(int position) {
         AdminRequest removePersonRequest = new AdminRequest();
-        removePersonRequest.setAdminId(NostragamusDataHandler.getInstance().getUserId());
+        removePersonRequest.setAdminId(mMembersAdapter.getItem(position).getId() + "");
         removePersonRequest.setGroupId(mGroupId);
 
         return removePersonRequest;
@@ -115,8 +110,9 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
 
     private void handleRemoveResponse(int position) {
         mMembersAdapter.remove(position);
+        mMemberList.remove(position);
         mMembersAdapter.notifyDataSetChanged();
-        mMembersModelListener.onRemovedPersonSuccess();
+        mMembersModelListener.onRemovedPersonSuccess(mMemberList);
     }
 
     @Override
@@ -155,7 +151,7 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
 
         void onMakeAdminSuccess();
 
-        void onRemovedPersonSuccess();
+        void onRemovedPersonSuccess(List<GroupPerson> memberList);
 
         void onFailed(String message);
 

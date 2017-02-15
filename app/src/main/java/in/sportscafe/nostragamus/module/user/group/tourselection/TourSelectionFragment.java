@@ -26,13 +26,18 @@ import in.sportscafe.nostragamus.module.user.group.newgroup.TourSelectionAdapter
 
 public class TourSelectionFragment extends NostragamusFragment implements TourSelectionView {
 
+    private OnTourSelectionListener mTourSelectionListener;
+
     private RecyclerView mRvTourSelection;
 
     private TourSelectionPresenter mTourSelectionPresenter;
 
-    private OnTourSelectionListener mTourSelectionListener;
-
-    public static TourSelectionFragment newInstance(boolean amAdmin, Integer groupId, List<TournamentFeedInfo> followedTours) {
+    public static TourSelectionFragment newInstance(
+            boolean amAdmin,
+            Integer groupId,
+            List<TournamentFeedInfo> followedTours,
+            OnTourSelectionListener tourSelectionListener
+    ) {
         Bundle bundle = new Bundle();
         bundle.putBoolean(BundleKeys.IS_ADMIN, amAdmin);
         bundle.putInt(BundleKeys.GROUP_ID, groupId);
@@ -40,17 +45,8 @@ public class TourSelectionFragment extends NostragamusFragment implements TourSe
 
         TourSelectionFragment fragment = new TourSelectionFragment();
         fragment.setArguments(bundle);
+        fragment.mTourSelectionListener = tourSelectionListener;
         return fragment;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (context instanceof OnTourSelectionListener) {
-            mTourSelectionListener = (OnTourSelectionListener) context;
-        } else
-            throw new IllegalArgumentException("Called activity should implement the OnTournamentUpdatedListener");
     }
 
     @Nullable

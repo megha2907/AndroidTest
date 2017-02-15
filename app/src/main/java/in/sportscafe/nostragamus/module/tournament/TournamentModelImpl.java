@@ -2,25 +2,18 @@ package in.sportscafe.nostragamus.module.tournament;
 
 import android.support.v4.app.FragmentManager;
 
-import com.jeeva.android.Log;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.offline.OfflineDataHandler;
 import in.sportscafe.nostragamus.module.tournamentFeed.TournamentFeedFragment;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
-import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
-
-import static com.google.android.gms.analytics.internal.zzy.i;
 
 /**
  * Created by deepanshi on 11/14/16.
@@ -78,7 +71,7 @@ public class TournamentModelImpl implements TournamentModel {
 
     private void refreshAdapter(List<TournamentInfo> tournaments) {
         for (TournamentInfo info : tournaments) {
-            mViewPagerAdapter.addFragment(TournamentFeedFragment.newInstance(info), info.getSportsName());
+            mViewPagerAdapter.addFragment(TournamentFeedFragment.newInstance(info.getTournamentFeedInfoList()), info.getSportsName());
         }
 
         mTournamemtModelListener.onSuccessFeeds(mViewPagerAdapter);

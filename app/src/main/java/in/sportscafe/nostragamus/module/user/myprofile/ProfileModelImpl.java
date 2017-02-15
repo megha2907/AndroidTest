@@ -87,6 +87,10 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
     }
 
     @Override
+    public void onNoInternet() {
+    }
+
+    @Override
     public void onSportsSelectionChanged() {
         mProfileModelListener.onSportsTitleChanged(getSportsTabTitle());
     }

@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.user.group.allgroups;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 import com.jeeva.android.InAppView;
@@ -11,13 +12,17 @@ import com.jeeva.android.View;
 
 public interface AllGroupsView extends InAppView {
 
-    void goBackWithSuccessResult();
-
-    void navigateToHomeActivity();
+    void showTitleBar();
 
     void setAdapter(RecyclerView.Adapter adapter);
 
     void showGroupsEmpty();
 
+    void navigateToHomeActivity();
+
     void navigateToJoinGroup();
+
+    void navigateToGroupInfo(Bundle bundle);
+
+    void goBackWithSuccessResult();
 }

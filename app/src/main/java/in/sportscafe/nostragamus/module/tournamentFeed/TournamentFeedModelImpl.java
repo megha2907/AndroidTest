@@ -1,33 +1,29 @@
 package in.sportscafe.nostragamus.module.tournamentFeed;
 
-/**
- * Created by deepanshi on 9/29/16.
- */
-
 import android.content.Context;
 import android.os.Bundle;
 
 import org.parceler.Parcels;
 
-import in.sportscafe.nostragamus.Constants;
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
-import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 
-
+/**
+ * Created by deepanshi on 9/29/16.
+ */
 public class TournamentFeedModelImpl implements TournamentFeedModel {
+
+    private List<TournamentFeedInfo> mTourFeedInfoList;
 
     private TournamentFeedAdapter mTournamentFeedAdapter;
 
     private OnTournamentFeedModelListener mTournamentFeedModelListener;
 
-    private NostragamusDataHandler mNostragamusDataHandler;
-
     private TournamentFeedModelImpl(OnTournamentFeedModelListener listener) {
         this.mTournamentFeedModelListener = listener;
-        mNostragamusDataHandler = NostragamusDataHandler.getInstance();
     }
 
     public static TournamentFeedModel newInstance(OnTournamentFeedModelListener listener) {
@@ -35,37 +31,26 @@ public class TournamentFeedModelImpl implements TournamentFeedModel {
     }
 
     @Override
-    public TournamentFeedAdapter getAdapter(OnHomeActionListener listener) {
-        return mTournamentFeedAdapter = new TournamentFeedAdapter(mTournamentFeedModelListener.getContext(), listener);
-
-    }
-
-    @Override
     public void init(Bundle bundle) {
-        getTournamentFeed(bundle);
+        mTourFeedInfoList = Parcels.unwrap(bundle.getParcelable(BundleKeys.TOURNAMENT_LIST));
         checkEmpty();
     }
 
-    private void checkEmpty() {
-        if (mTournamentFeedAdapter.getItemCount() == 0) {
-            mTournamentFeedModelListener.onEmpty();
-        }
+    @Override
+    public TournamentFeedAdapter getAdapter(Context context) {
+        mTournamentFeedAdapter = new TournamentFeedAdapter(context);
+        mTournamentFeedAdapter.addAll(mTourFeedInfoList);
+        return mTournamentFeedAdapter;
     }
 
-    @Override
-    public void getTournamentFeed(Bundle bundle) {
-        TournamentInfo tournamentInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.TOURNAMENT_LIST));
-        for (TournamentFeedInfo tournamentFeedInfo : tournamentInfo.getTournamentFeedInfoList()) {
-            mTournamentFeedAdapter.add(tournamentFeedInfo);
+    private void checkEmpty() {
+        if (mTourFeedInfoList.size() == 0) {
+            mTournamentFeedModelListener.onEmpty();
         }
-        mTournamentFeedAdapter.notifyDataSetChanged();
-
     }
 
     public interface OnTournamentFeedModelListener {
 
         void onEmpty();
-
-        Context getContext();
     }
 }

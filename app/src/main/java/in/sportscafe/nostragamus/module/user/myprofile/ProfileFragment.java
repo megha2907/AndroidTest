@@ -1,7 +1,6 @@
 package in.sportscafe.nostragamus.module.user.myprofile;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -22,7 +21,6 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
-import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.settings.SettingActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
@@ -36,20 +34,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     private ProfilePresenter mProfilePresenter;
 
-    private OnHomeActionListener mHomeActionListener;
-
     private ViewPagerAdapter mPagerAdapter;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (context instanceof OnHomeActionListener) {
-            mHomeActionListener = (OnHomeActionListener) context;
-        } else {
-            throw new IllegalArgumentException("The base class should implement the OnHomeActionListener");
-        }
-    }
 
     @Nullable
     @Override

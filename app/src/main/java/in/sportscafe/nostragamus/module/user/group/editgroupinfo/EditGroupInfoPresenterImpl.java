@@ -70,10 +70,9 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
     @Override
     public void onClickBack() {
         if(mGroupInfoModel.isAnythingChanged()) {
-            mGroupInfoView.goBackWithSuccessData(mGroupInfoModel.getGroupInfoBundle());
-        } else {
-            mGroupInfoView.goBack();
+            mGroupInfoView.setSuccessData(mGroupInfoModel.getGroupInfoBundle());
         }
+        mGroupInfoView.goBack();
     }
 
     @Override
@@ -101,5 +100,6 @@ public class EditGroupInfoPresenterImpl implements EditGroupInfoPresenter, EditG
     @Override
     public void onGroupNameUpdateSuccess() {
         mGroupInfoView.dismissProgressbar();
+        onClickBack();
     }
 }

@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.user.group.members;
 
 import android.os.Bundle;
 
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 
@@ -9,6 +11,8 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
  * Created by Jeeva on 2/7/16.
  */
 public class MembersPresenterImpl implements MembersPresenter, MembersModelImpl.OnMembersModelListener {
+
+    private MembersFragment.OnMemberRemoveListener mMemberRemoveListener;
 
     private MembersView mMembersView;
 
@@ -24,7 +28,8 @@ public class MembersPresenterImpl implements MembersPresenter, MembersModelImpl.
     }
 
     @Override
-    public void onCreateMembers(Bundle bundle) {
+    public void onCreateMembers(Bundle bundle, MembersFragment.OnMemberRemoveListener listener) {
+        this.mMemberRemoveListener = listener;
         MembersAdapter membersAdapter = mMembersModel.init(mMembersView.getContext(), bundle);
         if(null != membersAdapter) {
             mMembersView.setAdapter(membersAdapter);
@@ -44,9 +49,10 @@ public class MembersPresenterImpl implements MembersPresenter, MembersModelImpl.
     }
 
     @Override
-    public void onRemovedPersonSuccess() {
+    public void onRemovedPersonSuccess(List<GroupPerson> memberList) {
         mMembersView.dismissProgressbar();
         mMembersView.showMessage(Alerts.REMOVE_PERSON);
+        mMemberRemoveListener.onMemberRemoved(memberList);
     }
 
     @Override

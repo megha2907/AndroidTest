@@ -35,4 +35,6 @@ public interface GroupInfoModel {
     boolean isAnythingChanged();
 
     ViewPagerAdapter getAdapter(FragmentManager fm);
+
+    void updateEditData(Bundle bundle);
 }

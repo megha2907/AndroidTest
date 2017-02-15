@@ -119,15 +119,22 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     @Override
     public void onClickBack() {
         if(mGroupInfoModel.isAnythingChanged()) {
-
+            mGroupInfoView.setSuccessData(mGroupInfoModel.getGroupInfoBundle());
         }
+        mGroupInfoView.goBack();
+    }
+
+    @Override
+    public void onGetEditResult(Bundle bundle) {
+        mGroupInfoModel.updateEditData(bundle);
+        populateGroupInfo();
     }
 
     @Override
     public void onLeaveGroupSuccess() {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.showMessage(Alerts.LEAVE_GROUP_SUCCESS);
-        mGroupInfoView.navigateToHome();
+        onClickBack();
     }
 
     @Override
@@ -159,9 +166,14 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     }
 
     @Override
+    public void onMemberTitleChange(String title) {
+        mGroupInfoView.setMemberTabTitle(title);
+    }
+
+    @Override
     public void onGetGroupInfoSuccess(GroupInfo groupInfo) {
         mGroupInfoView.dismissProgressbar();
-        populateGroupInfo(groupInfo);
+        populateGroupInfo();
     }
 
     @Override
@@ -174,10 +186,11 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     public void onDeleteGroupSuccess() {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.showMessage(Alerts.DELETE_GROUP_SUCCESS);
-        mGroupInfoView.navigateToHome();
+        onClickBack();
     }
 
-    private void populateGroupInfo(GroupInfo groupInfo) {
+    private void populateGroupInfo() {
+        GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
         mGroupInfoView.setGroupName(groupInfo.getName());
         mGroupInfoView.setGroupImage(groupInfo.getPhoto());
         mGroupInfoView.setAdapter(mGroupInfoModel.getAdapter(mGroupInfoView.getSupportFragmentManager()));

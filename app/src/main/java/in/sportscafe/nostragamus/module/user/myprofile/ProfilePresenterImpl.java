@@ -40,7 +40,6 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     }
 
     private void getProfile() {
-        mProfileView.showProgressbar();
         mProfileModel.getProfileDetails();
     }
 

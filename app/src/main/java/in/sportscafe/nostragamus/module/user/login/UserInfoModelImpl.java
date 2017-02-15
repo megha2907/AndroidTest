@@ -31,6 +31,8 @@ public class UserInfoModelImpl {
     public void getUserInfo() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             callUserInfoApi();
+        } else {
+            mUserInfoModelListener.onNoInternet();
         }
     }
 
@@ -74,5 +76,7 @@ public class UserInfoModelImpl {
         void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo);
 
         void onFailedGetUpdateUserInfo(String message);
+
+        void onNoInternet();
     }
 }

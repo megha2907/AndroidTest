@@ -9,4 +9,10 @@ import android.os.Bundle;
 public interface AllGroupsPresenter {
 
     void onCreateAllGroups(Bundle bundle);
+
+    void onClickGroupItem(Bundle bundle);
+
+    void onGetGroupInfoResult(Bundle bundle);
+
+    void onGetJoinGroupResult(Bundle bundle);
 }

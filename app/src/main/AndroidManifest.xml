@@ -173,10 +173,6 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name="in.sportscafe.nostragamus.module.user.group.members.MembersActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name="in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"

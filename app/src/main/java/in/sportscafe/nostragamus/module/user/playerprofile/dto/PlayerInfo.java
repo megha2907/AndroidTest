@@ -44,7 +44,7 @@ public class PlayerInfo extends BasicUserInfo {
     private Integer accuracy;
 
     @JsonProperty("mutual_groups")
-    private List<AllGroups> mutualGroups;
+    private List<AllGroups> mutualGroups = new ArrayList<>();
 
     @JsonProperty("user_photo")
     public String getPhoto() {
@@ -114,6 +114,9 @@ public class PlayerInfo extends BasicUserInfo {
 
     @JsonProperty("mutual_groups")
     public List<AllGroups> getMutualGroups() {
+        if(null == mutualGroups) {
+            mutualGroups = new ArrayList<>();
+        }
         return mutualGroups;
     }
 

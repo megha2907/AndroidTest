@@ -85,7 +85,7 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
     }
 
     @Override
-    public void updateGroupName(String groupName) {
+    public void updateGroupName(final String groupName) {
         if (groupName.isEmpty()) {
             mGroupInfoModelListener.onGroupNameEmpty();
             return;
@@ -97,7 +97,7 @@ public class EditGroupInfoModelImpl implements EditGroupInfoModel {
                     public void onSuccessGrpNameUpdate() {
                         mAnythingChanged = true;
 
-                        mGroupInfo.setName();
+                        mGroupInfo.setName(groupName);
                         mGroupInfoModelListener.onGroupNameUpdateSuccess();
                     }
 

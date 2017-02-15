@@ -22,4 +22,6 @@ public interface GroupInfoPresenter {
     void onClickDeleteGroup();
 
     void onClickBack();
+
+    void onGetEditResult(Bundle bundle);
 }

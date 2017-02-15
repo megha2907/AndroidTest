@@ -13,6 +13,4 @@ public interface MembersModel {
     MembersAdapter init(Context context, Bundle bundle);
 
     void leaveGroup();
-
-    void addNewPerson(GroupPerson newPerson);
 }

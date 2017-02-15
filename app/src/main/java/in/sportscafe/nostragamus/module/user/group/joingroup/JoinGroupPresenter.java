@@ -14,4 +14,6 @@ public interface JoinGroupPresenter {
     void onClickCreateGroup();
 
     void onBack();
+
+    void onGetNewGroupResult(Bundle bundle);
 }

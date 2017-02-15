@@ -4,11 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
 import com.jeeva.android.widgets.CustomProgressbar;
 import com.jeeva.android.widgets.HmImageView;
@@ -17,10 +14,10 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
-import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
+
+import static android.R.attr.data;
 
 /**
  * Created by deepanshi on 10/31/16.
@@ -61,16 +58,6 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
         }
     }
 
-    private void navigatetoGroupInfoActivity() {
-        Intent intent = new Intent(this, GroupInfoActivity.class);
-        Bundle mBundleNew = new Bundle();
-        mBundleNew.putInt(Constants.BundleKeys.GROUP_ID, mBundle.getInt(Constants.BundleKeys.GROUP_ID));
-        mBundleNew.putString(Constants.BundleKeys.GROUP_NAME, mBundle.getString(Constants.BundleKeys.GROUP_NAME));
-        mBundleNew.putString(Constants.BundleKeys.SCREEN, Constants.ScreenNames.GROUPS_EDIT_GROUP);
-        intent.putExtras(mBundleNew);
-        startActivityForResult(intent, CODE_GROUP_INFO);
-    }
-
     @Override
     public void setGroupName(String groupName) {
         mEtGroupName.setText(groupName);
@@ -109,6 +96,11 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
     @Override
     public void goBack() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void setSuccessData(Bundle bundle) {
+        setResult(RESULT_OK, new Intent().putExtras(bundle));
     }
 
     @Override
