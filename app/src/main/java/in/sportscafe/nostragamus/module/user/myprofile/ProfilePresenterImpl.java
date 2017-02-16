@@ -36,7 +36,7 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
 
     @Override
     public void onEditProfileDone() {
-        populateUserInfo();
+        updateBasicDetails();
     }
 
     private void getProfile() {
@@ -47,22 +47,23 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     public void onGetProfileSuccess() {
         mProfileView.dismissProgressbar();
         populateUserInfo();
+        updateAdapterDetails();
     }
 
     private void populateUserInfo() {
         UserInfo userInfo = mProfileModel.getUserInfo();
-        updateBasicDetails(userInfo.getUserNickName(), userInfo.getPhoto());
+        updateBasicDetails();
         updateUserRelaventDetails(userInfo.getInfoDetails().getLevel(), userInfo.getAccuracy(), userInfo.getPredictionCount(), userInfo.getTotalPoints());
-        updateAdapterDetails();
     }
 
     private void updateAdapterDetails() {
         mProfileView.setAdapter(mProfileModel.getAdapter(mProfileView.getChildFragmentManager()));
     }
 
-    private void updateBasicDetails(String name, String photo) {
-        mProfileView.setName(name);
-        mProfileView.setProfileImage(photo);
+    private void updateBasicDetails() {
+        UserInfo userInfo = mProfileModel.getUserInfo();
+        mProfileView.setName(userInfo.getUserNickName());
+        mProfileView.setProfileImage(userInfo.getPhoto());
     }
 
     private void updateUserRelaventDetails(String level, int accuracy, int predictionCount, Long totalPoints) {

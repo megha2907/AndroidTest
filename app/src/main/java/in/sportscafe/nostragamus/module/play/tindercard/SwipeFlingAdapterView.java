@@ -15,6 +15,7 @@ import android.widget.Adapter;
 import android.widget.FrameLayout;
 
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.play.prediction.PredictionAdapter;
 
 
 public class SwipeFlingAdapterView extends FlingAdapterView {
@@ -35,6 +36,8 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
     private FlingCardListener flingCardListener;
     private PointF mLastTouchPoint;
     float initialX, initialY;
+
+    private int mMainViewId;
 
     public SwipeFlingAdapterView(Context context) {
         this(context, null);
@@ -311,7 +314,7 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
                     }
                 });
 
-                mActiveCard.setOnTouchListener(flingCardListener);
+                mActiveCard.findViewById(mMainViewId).setOnTouchListener(flingCardListener);
             }
         }
     }
@@ -366,6 +369,11 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
     @Override
     public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new FrameLayout.LayoutParams(getContext(), attrs);
+    }
+
+    public void setAdapter(PredictionAdapter predictionAdapter, int mainViewId) {
+        this.mMainViewId = mainViewId;
+        setAdapter(predictionAdapter);
     }
 
 

@@ -91,10 +91,10 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mTvPollPowerupCount = (TextView) findViewById(R.id.powerup_tv_poll_count);
         mTvNeitherOption = (TextView) findViewById(R.id.prediction_tv_neither_text);
 
-        mIv2xGlobalPowerup.setBackground(getPowerupDrawable(R.color.goldenyellowcolor));
-        mIv2xPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
-        mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.radical_red));
-        mIvPollPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
+//        mIv2xGlobalPowerup.setBackground(getPowerupDrawable(R.color.goldenyellowcolor));
+        mIv2xPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
+        mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
+        mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
 
         this.mPredictionPresenter = PredictionPresenterImpl.newInstance(this);
         this.mPredictionPresenter.onCreatePrediction(getIntent().getExtras());
@@ -108,20 +108,15 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void setTournamentName(String tournamentName) {
-        ((TextView) findViewById(R.id.prediction_tv_tournament)).setText(tournamentName);
-    }
-
-    @Override
     public void setContestName(String contestName) {
-        ((TextView) findViewById(R.id.prediction_tv_tournament_match_stage)).setText(contestName);
+        ((TextView) findViewById(R.id.prediction_tv_contest_name)).setText(contestName);
     }
 
     @Override
     public void setAdapter(PredictionAdapter predictionAdapter, SwipeFlingAdapterView.OnSwipeListener<Question> swipeListener) {
         predictionAdapter.setRootView(findViewById(R.id.content));
 
-        mSwipeFlingAdapterView.setAdapter(predictionAdapter);
+        mSwipeFlingAdapterView.setAdapter(predictionAdapter, R.id.swipe_card_cv_main);
         mSwipeFlingAdapterView.setSwipeListener(swipeListener);
 
         predictionAdapter.notifyDataSetChanged();
@@ -203,16 +198,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void setMatchStage(String matchStage) {
-        ((CustomTextView) findViewById(R.id.prediction_tv_tournament_match_stage)).setText(matchStage);
-    }
-
-    @Override
-    public void setTournamentPhoto(String tournamentPhoto) {
-        ((HmImageView) findViewById(R.id.prediction_iv_tournament_photo)).setImageUrl(tournamentPhoto);
-    }
-
-    @Override
     public void setNumberofCards(String numberofCards) {
         mTvNumberOfCards.setText(numberofCards);
     }
@@ -280,7 +265,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void changeToDummyGameMode() {
         findViewById(R.id.prediction_tv_skip).setVisibility(View.VISIBLE);
-        findViewById(R.id.prediction_iv_tournament_photo).setVisibility(View.GONE);
         findViewById(R.id.prediction_ibtn_back).setVisibility(View.GONE);
         findViewById(R.id.prediction_iv_left_arrow).setVisibility(View.INVISIBLE);
         findViewById(R.id.prediction_iv_right_arrow).setVisibility(View.INVISIBLE);

@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -19,6 +20,7 @@ import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
@@ -189,7 +191,12 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     public PredictionAdapter getAdapter(Context context, List<Question> questions) {
         mInitialCount = questions.size();
 
-        mPredictionAdapter = new PredictionAdapter(context);
+        mPredictionAdapter = new PredictionAdapter(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeAppliedPowerUp();
+            }
+        });
         int count = 1;
         for (Question question : questions) {
             question.setQuestionNumber(count++);
@@ -204,10 +211,32 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPredictionAdapter.setFlingCardListener(flingCardListener);
     }
 
+    private void removeAppliedPowerUp() {
+        Question topQuestion = mPredictionAdapter.getTopQuestion();
+        updatePowerUpCount(topQuestion.getPowerUpId());
+        topQuestion.removeAppliedPowerUp();
+
+        notifyTopQuestion();
+    }
+
+    private void updatePowerUpCount(String powerUpId) {
+        switch (powerUpId) {
+            case Powerups.XX:
+                mPredictionModelListener.on2xApplied(++m2xPowerups);
+                break;
+            case Powerups.XX_GLOBAL:
+                mPredictionModelListener.on2xGlobalApplied(++m2xGlobalPowerups);
+                break;
+            case Powerups.NO_NEGATIVE:
+                mPredictionModelListener.onNonegsApplied(++mNonegsPowerups);
+                break;
+        }
+    }
+
     @Override
     public void apply2xGlobalPowerup() {
         if (isNotPowerupApplied() && m2xGlobalPowerups > 0) {
-            mPredictionAdapter.update2xGlobalPowerUp();
+            mPredictionAdapter.getTopQuestion().apply2xGlobalPowerUp();
             notifyTopQuestion();
 
             m2xGlobalPowerups--;
@@ -218,7 +247,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public void apply2xPowerup() {
         if (isNotPowerupApplied() && m2xPowerups > 0) {
-            mPredictionAdapter.update2xPowerUp();
+            mPredictionAdapter.getTopQuestion().apply2xPowerUp();
             notifyTopQuestion();
 
             m2xPowerups--;
@@ -229,7 +258,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public void applyNonegsPowerup() {
         if (isNotPowerupApplied() && mNonegsPowerups > 0) {
-            mPredictionAdapter.updateNonegsPowerUp();
+            mPredictionAdapter.getTopQuestion().applyNonegsPowerUp();
             notifyTopQuestion();
 
             mNonegsPowerups--;
@@ -315,7 +344,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
             mPredictionModelListener.onQuestionChanged(topQuestion, mInitialCount, mNeitherOptionAvailable);
 
-            if(-1 == mQuestionSeenTimeInMs) {
+            if (-1 == mQuestionSeenTimeInMs) {
                 mQuestionSeenTimeInMs = Calendar.getInstance().getTimeInMillis();
             }
         }
@@ -347,7 +376,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             public void onResponse(Call<QuestionsResponse> call, Response<QuestionsResponse> response) {
                 super.onResponse(call, response);
 
-                if(!mPredictionModelListener.onApiCallStopped()) {
+                if (!mPredictionModelListener.onApiCallStopped()) {
                     return;
                 }
 
@@ -415,7 +444,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             public void onResponse(Call<AudiencePollResponse> call, Response<AudiencePollResponse> response) {
                 super.onResponse(call, response);
 
-                if(!mPredictionModelListener.onApiCallStopped()) {
+                if (!mPredictionModelListener.onApiCallStopped()) {
                     return;
                 }
 
@@ -437,7 +466,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         int leftAnswerPercent = Integer.parseInt(audiencePoll.get(0).getAnswerPercentage().replaceAll("%", ""));
         int rightAnswerPercent = Integer.parseInt(audiencePoll.get(1).getAnswerPercentage().replaceAll("%", ""));
 
-        mPredictionAdapter.updateAudiencePollPowerUp(leftAnswerPercent, rightAnswerPercent);
+        mPredictionAdapter.getTopQuestion().applyAudiencePollPowerUp(leftAnswerPercent, rightAnswerPercent);
         notifyTopQuestion();
 
         mPollPowerups--;
@@ -459,11 +488,11 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         public void onSuccess(String answerDirection) {
             NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.ANSWERED, answerDirection, getTimeSpent());
 
-            if(!mPredictionModelListener.onApiCallStopped()) {
+            if (!mPredictionModelListener.onApiCallStopped()) {
                 return;
             }
 
-            if(mPredictionAdapter.getCount() == 0) {
+            if (mPredictionAdapter.getCount() == 0) {
                 NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.COMPLETED);
 
                 Bundle bundle = new Bundle();
@@ -475,7 +504,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         @Override
         public void onNoInternet() {
-            if(!mPredictionModelListener.onApiCallStopped()) {
+            if (!mPredictionModelListener.onApiCallStopped()) {
                 return;
             }
 
@@ -484,7 +513,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         @Override
         public void onFailed(String message) {
-            if(!mPredictionModelListener.onApiCallStopped()) {
+            if (!mPredictionModelListener.onApiCallStopped()) {
                 return;
             }
 
@@ -493,7 +522,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         @Override
         public void onMatchAlreadyStarted() {
-            if(!mPredictionModelListener.onApiCallStopped()) {
+            if (!mPredictionModelListener.onApiCallStopped()) {
                 return;
             }
 

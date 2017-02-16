@@ -31,13 +31,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onCreatePrediction(Bundle bundle) {
         mPredictionModel.init(bundle);
+
         if (!mPredictionModel.isDummyGame()) {
             mPredictionModel.getAllQuestions();
 
-            mPredictionView.setTournamentPhoto(mPredictionModel.getTournamentPhoto());
-            mPredictionView.setTournamentName(mPredictionModel.getTournamentName());
             mPredictionView.setContestName(mPredictionModel.getContestName());
-
         } else {
             mPredictionView.changeToDummyGameMode();
         }

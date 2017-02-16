@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.parceler.Parcel;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.module.othersanswers.AnswerPercentage;
 
 /**
@@ -87,6 +89,12 @@ public class Question {
 
     @JsonIgnore
     private int minorityAnswerId = -1;
+
+    @JsonIgnore
+    private Integer updatedPositivePoints;
+
+    @JsonIgnore
+    private Integer updatedNegativePoints;
 
     /**
      * @return The questionId
@@ -416,5 +424,73 @@ public class Question {
     @JsonIgnore
     public boolean isMinorityAnswer() {
         return -1 != minorityAnswerId && answerId == minorityAnswerId;
+    }
+
+    @JsonIgnore
+    public Integer getUpdatedPositivePoints() {
+        if(null == updatedPositivePoints) {
+            return getQuestionPositivePoints();
+        }
+        return updatedPositivePoints;
+    }
+
+    @JsonIgnore
+    public void setUpdatedPositivePoints(Integer updatedPositivePoints) {
+        this.updatedPositivePoints = updatedPositivePoints;
+    }
+
+    @JsonIgnore
+    public Integer getUpdatedNegativePoints() {
+        if(null == updatedNegativePoints) {
+            return getQuestionNegativePoints();
+        }
+        return updatedNegativePoints;
+    }
+
+    @JsonIgnore
+    public void setUpdatedNegativePoints(Integer updatedNegativePoints) {
+        this.updatedNegativePoints = updatedNegativePoints;
+    }
+
+    @JsonIgnore
+    public void apply2xGlobalPowerUp() {
+        setPowerUpId(Powerups.XX_GLOBAL);
+        setUpdatedPositivePoints(2 * getQuestionPositivePoints());
+        setUpdatedNegativePoints(2 * getQuestionNegativePoints());
+    }
+
+    @JsonIgnore
+    public void apply2xPowerUp() {
+        setPowerUpId(Powerups.XX);
+        setUpdatedPositivePoints(2 * getQuestionPositivePoints());
+        setUpdatedNegativePoints(2 * getQuestionNegativePoints());
+    }
+
+    @JsonIgnore
+    public void applyNonegsPowerUp() {
+        setPowerUpId(Powerups.NO_NEGATIVE);
+        setUpdatedNegativePoints(0);
+    }
+
+    @JsonIgnore
+    public void applyAudiencePollPowerUp(int leftAnswerPercent, int rightAnswerPercent) {
+        setPowerUpId(Powerups.AUDIENCE_POLL);
+        setOption1AudPollPer(leftAnswerPercent);
+        setOption2AudPollPer(rightAnswerPercent);
+
+        if (leftAnswerPercent > rightAnswerPercent) {
+            setMinorityAnswerId(Constants.AnswerIds.RIGHT);
+        } else if (leftAnswerPercent < rightAnswerPercent) {
+            setMinorityAnswerId(Constants.AnswerIds.LEFT);
+        } else {
+            setMinorityAnswerId(-1);
+        }
+    }
+
+    @JsonIgnore
+    public void removeAppliedPowerUp() {
+        setPowerUpId(null);
+        setUpdatedPositivePoints(getQuestionPositivePoints());
+        setUpdatedNegativePoints(getQuestionNegativePoints());
     }
 }

@@ -15,8 +15,6 @@ import static android.R.attr.x;
  */
 public interface PredictionView extends InAppView {
 
-    void setTournamentName(String tournamentName);
-
     void setContestName(String contestName);
 
     void setAdapter(PredictionAdapter predictionAdapter,
@@ -29,10 +27,6 @@ public interface PredictionView extends InAppView {
     void hideNeither();
 
     void setNeitherOption(String neitherOption);
-
-    void setMatchStage(String matchStage);
-
-    void setTournamentPhoto(String tournamentPhoto);
 
     void setNumberofCards(String numberofCards);
 

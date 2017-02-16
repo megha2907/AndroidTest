@@ -159,7 +159,7 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
 
     @Override
     public void onRefresh() {
-        myResultsTimelinePresenter.onRefresh();
+//        myResultsTimelinePresenter.onRefresh();
     }
 
     private float getRotationByY(int yAxis) {
