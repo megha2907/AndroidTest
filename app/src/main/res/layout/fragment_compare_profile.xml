@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/profile_compare_rl_points"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp_16">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_user_points"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/profile_screen_points_icon"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:text="POINTS"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_player_points"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/profile_screen_points_icon"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/profile_compare_rl_matches"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_compare_rl_points"
+                android:paddingBottom="@dimen/dp_16">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_user_matches"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/profile_screen_predictions_icon"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:text="MATCHES"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_player_matches"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/profile_screen_predictions_icon"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/profile_compare_rl_accuracy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_compare_rl_matches"
+                android:paddingBottom="@dimen/dp_16">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_user_accuracy"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/profile_screen_accuracy_icon"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:text="ACCURACY"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_player_accuracy"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/profile_screen_accuracy_icon"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/profile_compare_rl_badges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_compare_rl_accuracy"
+                android:paddingBottom="@dimen/dp_16">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_user_badges"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/achievement_icon_white"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:text="ACHIEVEMENTS"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_player_badges"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/achievement_icon_white"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/profile_compare_rl_sports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_compare_rl_badges"
+                android:paddingBottom="@dimen/dp_16">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_user_sports"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/sports_followed_white"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:text="SPORTS FOLLOWED"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_player_sports"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/sports_followed_white"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/profile_compare_rl_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_compare_rl_sports"
+                android:paddingBottom="@dimen/dp_16">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_user_level"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/profile_screen_level_icon"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:text="LEVEL"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/profile_compare_tv_player_level"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/player_profile_tv_points_txt"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/compare_profile_btns_bg"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/profile_screen_level_icon"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>
