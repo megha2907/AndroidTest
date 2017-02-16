@@ -68,8 +68,10 @@
                 android:layout_height="wrap_content"
                 android:text="Cricket"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dp_16"
+                android:textSize="@dimen/dp_14"
                 android:layout_toRightOf="@+id/points_group_icon"
+                android:layout_toLeftOf="@+id/sorting_tv"
+                android:layout_marginRight="@dimen/dp_5"
                 android:layout_centerVertical="true"
                 app:typeface="roboto_condensed_bold"/>
 

@@ -24,6 +24,7 @@
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_5"
             android:text="#1st"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_12"
             app:typeface="lato_bold" />
@@ -52,6 +53,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:background="@drawable/compare_profile_btns_bg"
             android:clickable="false"
+            android:textAllCaps="false"
             android:gravity="center"
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_5"

@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.user.comparisons.compareprofiles;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.module.notifications.InboxFragment;
 
 /**
  * Created by deepanshi on 2/13/17.
@@ -109,6 +111,14 @@ public class CompareProfileFragment extends NostragamusFragment {
         Button playerSportsFollowed = (Button) findViewById(R.id.profile_compare_tv_player_sports);
         playerSportsFollowed.setText(String.valueOf(playerSportsFollowedCount));
 
+        if (playerSportsFollowedCount > userSportsFollowedCount) {
+            playerSportsFollowed.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            playerSportsFollowed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sports_followed_yellow, 0, 0, 0);
+        } else {
+            userSportsFollowed.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            userSportsFollowed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sports_followed_yellow, 0, 0, 0);
+        }
+
     }
 
 
@@ -119,6 +129,14 @@ public class CompareProfileFragment extends NostragamusFragment {
 
         Button playerLevelBtn = (Button) findViewById(R.id.profile_compare_tv_player_level);
         playerLevelBtn.setText(playerLevel);
+
+        if (Integer.parseInt(playerLevel) > Integer.parseInt(userLevel)) {
+            playerLevelBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            playerLevelBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.level_yellow_icon, 0, 0, 0);
+        } else {
+            userLevelBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            userLevelBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.level_yellow_icon, 0, 0, 0);
+        }
     }
 
     public void setPoints(long userPoints, long playerPoints) {
@@ -128,6 +146,14 @@ public class CompareProfileFragment extends NostragamusFragment {
 
         Button playerPointsBtn = (Button) findViewById(R.id.profile_compare_tv_player_points);
         playerPointsBtn.setText(String.valueOf(playerPoints));
+
+        if (playerPoints > userPoints) {
+            playerPointsBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            playerPointsBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.profile_compare_points_yellow, 0, 0, 0);
+        } else {
+            userPointsBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            userPointsBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.profile_compare_points_yellow, 0, 0, 0);
+        }
 
     }
 
@@ -140,6 +166,14 @@ public class CompareProfileFragment extends NostragamusFragment {
         Button playerAccuracyBtn = (Button) findViewById(R.id.profile_compare_tv_player_accuracy);
         playerAccuracyBtn.setText(String.valueOf(playerAccuracy + "%"));
 
+        if (playerAccuracy > userAccuracy) {
+            playerAccuracyBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            playerAccuracyBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.accuracy_yellow_icon, 0, 0, 0);
+        } else {
+            userAccuracyBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            userAccuracyBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.accuracy_yellow_icon, 0, 0, 0);
+        }
+
     }
 
     public void setPredictionCount(Integer userPredictionCount, Integer playerPredictionCount) {
@@ -150,6 +184,14 @@ public class CompareProfileFragment extends NostragamusFragment {
         Button playerPredictionsBtn = (Button) findViewById(R.id.profile_compare_tv_player_matches);
         playerPredictionsBtn.setText(String.valueOf(playerPredictionCount));
 
+        if (playerPredictionCount > userPredictionCount) {
+            playerPredictionsBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            playerPredictionsBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.profile_screen_predictions_icon_yellow, 0, 0, 0);
+        } else {
+            userPredictionsBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            userPredictionsBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.profile_screen_predictions_icon_yellow, 0, 0, 0);
+        }
+
     }
 
     public void setBadgesCount(Integer userBadgeCount, Integer playerBadgeCount) {
@@ -159,6 +201,14 @@ public class CompareProfileFragment extends NostragamusFragment {
 
         Button playerBadgeCountBtn = (Button) findViewById(R.id.profile_compare_tv_player_badges);
         playerBadgeCountBtn.setText(String.valueOf(playerBadgeCount));
+
+        if (playerBadgeCount > userBadgeCount) {
+            playerBadgeCountBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            playerBadgeCountBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.achievement_icon_yellow, 0, 0, 0);
+        } else {
+            userBadgeCountBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
+            userBadgeCountBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.achievement_icon_yellow, 0, 0, 0);
+        }
 
     }
 

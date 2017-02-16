@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/dp_25"
-                    android:text="MATCHES"
+                    android:text="PREDICTIONS"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_12"
                     app:typeface="lato_regular" />

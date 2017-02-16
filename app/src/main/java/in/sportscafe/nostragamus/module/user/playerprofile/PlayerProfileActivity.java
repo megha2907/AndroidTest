@@ -40,7 +40,7 @@ import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
  * Created by deepanshi on 12/22/16.
  */
 
-public class PlayerProfileActivity extends NostragamusActivity implements PlayerProfileView, View.OnClickListener  {
+public class PlayerProfileActivity extends NostragamusActivity implements PlayerProfileView, View.OnClickListener {
 
     private String sportsFollowed;
 
@@ -63,7 +63,7 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
         this.mProfilePresenter = PlayerProfilePresenterImpl.newInstance(this);
         this.mProfilePresenter.onCreateProfile(getIntent().getExtras());
 
-        Button compareProfile = (Button)findViewById(R.id.player_profile_btn_compare_profile);
+        Button compareProfile = (Button) findViewById(R.id.player_profile_btn_compare_profile);
         compareProfile.setOnClickListener(this);
 
     }
@@ -119,7 +119,7 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     @Override
     public void setLevel(String level) {
         TextView tvLevel = (TextView) findViewById(R.id.player_profile_tv_level);
-        tvLevel.setText("Level "+level);
+        tvLevel.setText("Level " + level);
     }
 
     @Override
@@ -303,7 +303,7 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
 //
 //        }
 //
-        if (badgesCount==0){
+        if (badgesCount == 0) {
             badgeCount = "0";
         }
         badgeCount = String.valueOf(badgesCount);

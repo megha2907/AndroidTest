@@ -36,23 +36,42 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
 
     @Override
     public void onClickCompareProfile() {
-        PlayerInfo playerInfo = mProfileModel.getPlayerInfo();
 
-        Bundle playerInfoBundle = new Bundle();
+        if (null != mProfileModel.getPlayerInfo()) {
+            PlayerInfo playerInfo = mProfileModel.getPlayerInfo();
 
-        Long totalPoints =  playerInfo.getTotalPoints();
+            Bundle playerInfoBundle = new Bundle();
 
-        playerInfoBundle.putInt(Constants.BundleKeys.PLAYER_ID,playerInfo.getId());
-        playerInfoBundle.putInt(Constants.BundleKeys.POINTS,totalPoints.intValue());
-        playerInfoBundle.putInt(Constants.BundleKeys.NO_OF_MATCHES,playerInfo.getPredictionCount());
-        playerInfoBundle.putInt(Constants.BundleKeys.ACCURACY,playerInfo.getAccuracy());
-        playerInfoBundle.putInt(Constants.BundleKeys.NO_OF_BADGES,playerInfo.getInfoDetails().getBadges().size());
-        playerInfoBundle.putInt(Constants.BundleKeys.NO_OF_SPORTS_FOLLOWED,playerInfo.getUserSports().size());
-        playerInfoBundle.putString(Constants.BundleKeys.LEVEL,playerInfo.getInfoDetails().getLevel());
-        playerInfoBundle.putString(Constants.BundleKeys.PLAYER_NAME,playerInfo.getUserNickName());
-        playerInfoBundle.putString(Constants.BundleKeys.PLAYER_PHOTO,playerInfo.getPhoto());
+            Long totalPoints = playerInfo.getTotalPoints();
 
-        mProfileView.navigateToPlayerComparison(playerInfoBundle);
+            playerInfoBundle.putInt(Constants.BundleKeys.PLAYER_ID, playerInfo.getId());
+
+            if (playerInfo.getTotalPoints()!=null) {
+                playerInfoBundle.putInt(Constants.BundleKeys.POINTS, totalPoints.intValue());
+            }else {
+                playerInfoBundle.putInt(Constants.BundleKeys.POINTS, 0);
+            }
+
+            if (playerInfo.getPredictionCount()!=null) {
+                playerInfoBundle.putInt(Constants.BundleKeys.NO_OF_MATCHES, playerInfo.getPredictionCount());
+            }else {
+                playerInfoBundle.putInt(Constants.BundleKeys.NO_OF_MATCHES, 0);
+            }
+
+            if (playerInfo.getAccuracy()!=null) {
+                playerInfoBundle.putInt(Constants.BundleKeys.ACCURACY, playerInfo.getAccuracy());
+            }else {
+                playerInfoBundle.putInt(Constants.BundleKeys.ACCURACY, 0);
+            }
+
+            playerInfoBundle.putInt(Constants.BundleKeys.NO_OF_BADGES, playerInfo.getInfoDetails().getBadges().size());
+            playerInfoBundle.putInt(Constants.BundleKeys.NO_OF_SPORTS_FOLLOWED, playerInfo.getUserSports().size());
+            playerInfoBundle.putString(Constants.BundleKeys.LEVEL, playerInfo.getInfoDetails().getLevel());
+            playerInfoBundle.putString(Constants.BundleKeys.PLAYER_NAME, playerInfo.getUserNickName());
+            playerInfoBundle.putString(Constants.BundleKeys.PLAYER_PHOTO, playerInfo.getPhoto());
+
+            mProfileView.navigateToPlayerComparison(playerInfoBundle);
+        }
 
     }
 
@@ -68,7 +87,7 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
         PlayerInfo playerInfo = mProfileModel.getPlayerInfo();
         mProfileView.setName(playerInfo.getUserNickName());
         mProfileView.setProfileImage(playerInfo.getPhoto());
-       // mProfileView.setTotalPoints(playerInfo.getTotalPoints());
+
         mProfileView.setBadgesCount(playerInfo.getBadges().size(),playerInfo.getBadges());
 
         if (!TextUtils.isEmpty(playerInfo.getInfoDetails().getLevel())) {
@@ -82,9 +101,25 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
         }else {
             mProfileView.setGroupsCount(playerInfo.getMutualGroups().size());
         }
-        mProfileView.setPoints(playerInfo.getTotalPoints());
-        mProfileView.setAccuracy(playerInfo.getAccuracy());
-        mProfileView.setPredictionCount(playerInfo.getPredictionCount());
+
+        if (playerInfo.getTotalPoints()!=null) {
+            mProfileView.setPoints(playerInfo.getTotalPoints());
+        }else {
+            mProfileView.setPoints(0);
+        }
+
+        if (playerInfo.getAccuracy()!=null) {
+            mProfileView.setAccuracy(playerInfo.getAccuracy());
+        }else {
+            mProfileView.setAccuracy(0);
+        }
+
+        if (playerInfo.getPredictionCount()!=null) {
+            mProfileView.setPredictionCount(playerInfo.getPredictionCount());
+        }else {
+            mProfileView.setPredictionCount(0);
+        }
+
         mProfileView.initMyPosition(playerInfo);
     }
 

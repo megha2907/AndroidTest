@@ -1,13 +1,16 @@
 package in.sportscafe.nostragamus.module.user.comparisons.compareLeaderBoards;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.webservice.CompareLeaderBoard;
@@ -19,6 +22,8 @@ import in.sportscafe.nostragamus.webservice.CompareLeaderBoard;
 public class CompareLeaderBoardAdapter extends Adapter<CompareLeaderBoard, CompareLeaderBoardAdapter.ViewHolder> {
 
     private Context mcon;
+    private String userRank;
+    private String playerRank;
 
     public CompareLeaderBoardAdapter(Context context, List<CompareLeaderBoard> compareLeaderBoardList) {
         super(context);
@@ -41,8 +46,37 @@ public class CompareLeaderBoardAdapter extends Adapter<CompareLeaderBoard, Compa
 
         CompareLeaderBoard compareLeaderBoard = getItem(position);
         holder.mTvChallengeName.setText(compareLeaderBoard.getName());
-        holder.mBtnUserRank.setText("#"+compareLeaderBoard.getUserRank().toString());
-        holder.mBtnPlayerRank.setText("#"+compareLeaderBoard.getPlayerRank().toString());
+
+        if (compareLeaderBoard.getUserRank() != null) {
+            userRank = AppSnippet.ordinal(compareLeaderBoard.getUserRank());
+        } else {
+            userRank = "No Rank";
+            holder.mBtnUserRank.setTextSize(10);
+        }
+
+        if (compareLeaderBoard.getPlayerRank() != null) {
+            playerRank = AppSnippet.ordinal(compareLeaderBoard.getPlayerRank());
+        } else {
+            playerRank = "No Rank";
+            holder.mBtnPlayerRank.setTextSize(10);
+        }
+
+        holder.mBtnUserRank.setText("#" + userRank);
+        holder.mBtnPlayerRank.setText("#" + playerRank);
+
+        if (compareLeaderBoard.getPlayerRank() != null && compareLeaderBoard.getUserRank() != null) {
+
+            if (compareLeaderBoard.getPlayerRank() < compareLeaderBoard.getUserRank()) {
+                holder.mBtnPlayerRank.setTextColor(ContextCompat.getColor(holder.mBtnPlayerRank.getContext(), R.color.yellowcolor));
+            } else {
+                holder.mBtnUserRank.setTextColor(ContextCompat.getColor(holder.mBtnUserRank.getContext(), R.color.yellowcolor));
+            }
+
+        } else if (compareLeaderBoard.getPlayerRank() == null && compareLeaderBoard.getUserRank() != null) {
+            holder.mBtnUserRank.setTextColor(ContextCompat.getColor(holder.mBtnUserRank.getContext(), R.color.yellowcolor));
+        } else if (compareLeaderBoard.getPlayerRank() != null && compareLeaderBoard.getUserRank() == null) {
+            holder.mBtnPlayerRank.setTextColor(ContextCompat.getColor(holder.mBtnPlayerRank.getContext(), R.color.yellowcolor));
+        }
 
     }
 
