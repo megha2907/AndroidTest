@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.playerprofile;
 
+import android.os.Bundle;
+
 import com.jeeva.android.InAppView;
 
 import java.util.List;
@@ -32,4 +34,6 @@ public interface PlayerProfileView extends InAppView {
     void initMyPosition(PlayerInfo playerInfo);
 
     void setPredictionCount(Integer predictionCount);
+
+    void navigateToPlayerComparison(Bundle playerInfoBundle);
 }

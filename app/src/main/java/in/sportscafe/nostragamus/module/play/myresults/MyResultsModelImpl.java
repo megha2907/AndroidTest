@@ -126,30 +126,36 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                         if (response.isSuccessful()) {
                             Context context = mResultsModelListener.getContext();
                             if (null != context) {
+
                                 List<Match> myResultList = response.body().getMyResults();
 
-                                String responseJson = MyWebService.getInstance().getJsonStringFromObject(myResultList);
-                                Log.d("MyResults Response", responseJson);
-
-                                if (offset == 0) {
-                                    destroyAdapter();
-                                    mResultsModelListener.onSuccessMyResults(createAdapter(context));
-                                    mResultsModelListener.onsetMatchDetails(myResultList.get(0));
-
-                                    loadAdapterData(getCategorizedList(myResultList));
-
-
-                                    if (myResultList.isEmpty()) {
-                                        mResultsModelListener.onEmpty();
-                                    }
+                                if (myResultList.isEmpty() || myResultList == null) {
+                                    mResultsModelListener.onFailedMyResults(response.message());
                                 } else {
-                                    addMoreInAdapter(getCategorizedList(myResultList));
-                                }
+                                    String responseJson = MyWebService.getInstance().getJsonStringFromObject(myResultList);
+                                    Log.d("MyResults Response", responseJson);
 
-                                if (myResultList.size() != LIMIT) {
-                                    hasMoreItems = false;
+                                    if (offset == 0) {
+                                        destroyAdapter();
+                                        mResultsModelListener.onSuccessMyResults(createAdapter(context));
+                                        mResultsModelListener.onsetMatchDetails(myResultList.get(0));
+
+                                        loadAdapterData(getCategorizedList(myResultList));
+
+
+                                        if (myResultList.isEmpty()) {
+                                            mResultsModelListener.onEmpty();
+                                        }
+                                    } else {
+                                        addMoreInAdapter(getCategorizedList(myResultList));
+                                    }
+
+                                    if (myResultList.size() != LIMIT) {
+                                        hasMoreItems = false;
+                                    }
                                 }
                             }
+
                         } else {
                             if (offset == 0) {
                                 mResultsModelListener.onFailedMyResults(response.message());

@@ -26,5 +26,4 @@ public class AllGroupsResponse {
     private List<AllGroups> allGroups;
 
 
-
 }

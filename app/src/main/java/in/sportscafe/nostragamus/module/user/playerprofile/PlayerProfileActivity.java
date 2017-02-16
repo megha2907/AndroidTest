@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.playerprofile;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -25,9 +26,11 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
+import in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.playerbadges.PlayerBadgeFragment;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
@@ -60,6 +63,9 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
         this.mProfilePresenter = PlayerProfilePresenterImpl.newInstance(this);
         this.mProfilePresenter.onCreateProfile(getIntent().getExtras());
 
+        Button compareProfile = (Button)findViewById(R.id.player_profile_btn_compare_profile);
+        compareProfile.setOnClickListener(this);
+
     }
 
     @Override
@@ -67,6 +73,10 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
         switch (view.getId()) {
             case R.id.player_profile_btn_back:
                 finish();
+                break;
+
+            case R.id.player_profile_btn_compare_profile:
+                mProfilePresenter.onClickCompareProfile();
                 break;
         }
     }
@@ -128,6 +138,13 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     public void setPredictionCount(Integer predictionCount) {
         Button tvPredictionCount = (Button) findViewById(R.id.player_profile_btn_predictions);
         tvPredictionCount.setText(String.valueOf(predictionCount));
+    }
+
+    @Override
+    public void navigateToPlayerComparison(Bundle playerInfoBundle) {
+        Intent intent = new Intent(getContext(), PlayerComparisonActivity.class);
+        intent.putExtras(playerInfoBundle);
+        startActivity(intent);
     }
 
     @Override

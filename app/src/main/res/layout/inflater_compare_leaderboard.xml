@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black">
+
+    <RelativeLayout
+        android:id="@+id/compare_leaderboard_item_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_16">
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/compare_leaderboard_item_user_pos"
+            android:layout_width="@dimen/dp_72"
+            android:layout_height="@dimen/dp_30"
+            android:layout_below="@+id/player_profile_tv_points_txt"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/compare_profile_btns_bg"
+            android:clickable="false"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_5"
+            android:text="#1st"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_12"
+            app:typeface="lato_bold" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/compare_leaderboard_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/compare_leaderboard_item_player_pos"
+            android:layout_toRightOf="@+id/compare_leaderboard_item_user_pos"
+            android:text="FOOTBALL"
+            android:layout_margin="@dimen/dp_10"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/dp_12"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/compare_leaderboard_item_player_pos"
+            android:layout_width="@dimen/dp_72"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/player_profile_tv_points_txt"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/compare_profile_btns_bg"
+            android:clickable="false"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_5"
+            android:text="#2nd"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_12"
+            app:typeface="lato_bold" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
