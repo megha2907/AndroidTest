@@ -12,8 +12,6 @@ import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 
-import static com.google.android.gms.analytics.internal.zzy.m;
-
 /**
  * Created by Jeeva on 15/6/16.
  */
@@ -36,8 +34,8 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     public void onCreateMyResults(Bundle bundle) {
         mResultsModel.init(bundle);
         getResultDetails();
-        mResultsView.setNumberofPowerups(NostragamusDataHandler.getInstance().getNumberofReplayPowerups(),
-                NostragamusDataHandler.getInstance().getNumberofFlipPowerups());
+        mResultsView.setNumberofPowerups(NostragamusDataHandler.getInstance().getReplayPowerupsCount(),
+                NostragamusDataHandler.getInstance().getFlipPowerupsCount());
 
         if (bundle.containsKey("screen")) {
             mResultsView.goBack();

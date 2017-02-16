@@ -1,8 +1,7 @@
 package in.sportscafe.nostragamus.module.tournamentFeed;
 
+import android.content.Context;
 import android.os.Bundle;
-
-import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 
 /**
  * Created by deepanshi on 9/29/16.
@@ -10,9 +9,7 @@ import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 
 public interface TournamentFeedModel {
 
-    TournamentFeedAdapter getAdapter(OnHomeActionListener listener);
-
     void init(Bundle bundle);
 
-    void getTournamentFeed(Bundle bundle);
+    TournamentFeedAdapter getAdapter(Context context);
 }

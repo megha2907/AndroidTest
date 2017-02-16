@@ -44,7 +44,7 @@ public class ApproveModelImpl implements ApproveModel, ApproveAdapter.OnApproveO
         this.mGroupId = groupId;
         this.mApproveAcceptedListener = listener;
         
-        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
+        /*Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
         if(grpInfoMap.containsKey(mGroupId)) {
 
             List<GroupPerson> members = grpInfoMap.get(mGroupId).getMembers();
@@ -67,7 +67,7 @@ public class ApproveModelImpl implements ApproveModel, ApproveAdapter.OnApproveO
             }
         } else {
             mApproveModelListener.onEmpty();
-        }
+        }*/
         return null;
     }
 
@@ -114,7 +114,7 @@ public class ApproveModelImpl implements ApproveModel, ApproveAdapter.OnApproveO
     private void handleApproveResponse(int position, String message) {
         GroupPerson groupPerson = mApproveAdapter.getItem(position);
 
-        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
+        /*Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
         List<GroupPerson> members = grpInfoMap.get(mGroupId).getMembers();
         members.remove(groupPerson);
 
@@ -133,7 +133,7 @@ public class ApproveModelImpl implements ApproveModel, ApproveAdapter.OnApproveO
 
         if(mApproveAdapter.getItemCount() == 0) {
             mApproveModelListener.onEmpty();
-        }
+        }*/
     }
 
     public interface OnApproveModelListener {

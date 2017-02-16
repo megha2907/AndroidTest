@@ -2,12 +2,9 @@ package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
 import com.jeeva.android.Log;
 
-import java.util.Map;
-
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -27,10 +24,9 @@ public class GrpNameUpdateModelImpl {
         this.mGrpNameUpdateModelListener = listener;
     }
 
-    public void updateGrpName(String name,String photo) {
+    public void updateGrpName(String name, String photo) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            Log.i("name,photomodelimpl",name+""+photo);
-            callGrpNameUpdateApi(name,photo);
+            callGrpNameUpdateApi(name, photo);
         } else {
             mGrpNameUpdateModelListener.onNoInternet();
         }
@@ -59,10 +55,6 @@ public class GrpNameUpdateModelImpl {
     }
 
     private void handleGrpNameUpdateResponse(String groupName) {
-        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
-        grpInfoMap.get(mGroupId).setName(groupName);
-        NostragamusDataHandler.getInstance().setGrpInfoMap(grpInfoMap);
-
         mGrpNameUpdateModelListener.onSuccessGrpNameUpdate();
     }
 

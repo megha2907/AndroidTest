@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.powerups;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 /**
@@ -8,6 +9,6 @@ import android.support.v7.widget.RecyclerView;
  */
 public interface PowerUpModel {
 
-    RecyclerView.Adapter getPowerUpAdapter(Context context);
+    void createPowerUpAdapter(Context context, Bundle bundle);
 
 }

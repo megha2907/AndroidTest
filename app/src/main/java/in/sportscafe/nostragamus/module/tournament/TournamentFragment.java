@@ -15,10 +15,13 @@ import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 /**
  * Created by deepanshi on 11/14/16.
  */
-
 public class TournamentFragment extends NostragamusFragment implements TournamentView {
 
     private TournamentPresenter mTournamentPresenter;
+
+    public static TournamentFragment newInstance() {
+        return new TournamentFragment();
+    }
 
     @Nullable
     @Override

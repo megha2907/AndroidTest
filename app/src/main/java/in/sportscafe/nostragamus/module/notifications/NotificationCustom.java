@@ -53,18 +53,12 @@ public class NotificationCustom extends PushMessageListener {
                     "in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity");
             String groupInfoStr = extras.getString("group_info");
             GroupInfo groupInfo = MyWebService.getInstance().getObjectFromJson(groupInfoStr, GroupInfo.class);
-            if (null != groupInfo) {
-                NostragamusDataHandler.getInstance().addNewGroup(groupInfo);
-            }
         } else if (extras.containsKey(EXTRA_APPROVED_GROUP_REQUEST)) { // sending group id
             extras.putString(MoEHelperConstants.GCM_EXTRA_ACTIVITY_NAME,
                     "in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity");
 
             String groupInfoStr = extras.getString("group_info");
             GroupInfo groupInfo = MyWebService.getInstance().getObjectFromJson(groupInfoStr, GroupInfo.class);
-            if (null != groupInfo) {
-                NostragamusDataHandler.getInstance().addNewGroup(groupInfo);
-            }
         } else if (extras.containsKey(EXTRA_RESULTS_LEADERBOARD)) { // sending match id
             extras.putString(MoEHelperConstants.GCM_EXTRA_ACTIVITY_NAME,
                     "in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity");

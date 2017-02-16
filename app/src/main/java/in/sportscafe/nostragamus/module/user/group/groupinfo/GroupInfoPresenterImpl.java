@@ -1,13 +1,12 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.jeeva.android.ExceptionTracker;
 
 import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -39,37 +38,15 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     @Override
     public void onCreateGroupInfo(Bundle bundle) {
-        mGroupInfoView.setGroupName(bundle.getString(BundleKeys.GROUP_NAME));
-        mGroupInfoView.showProgressbar();
         mGroupInfoModel.init(bundle);
+        mGroupInfoView.setGroupName(mGroupInfoModel.getGroupName());
+        getGroupDetails();
     }
 
-
-    private void onUpdateGroupInfo(GroupInfo groupInfo) {
-
-        mGroupInfoView.setGroupName(groupInfo.getName());
-        mGroupInfoView.setGroupIcon(groupInfo.getPhoto());
-        mGroupInfoView.setMembersSize(mGroupInfoModel.getMembersCount());
-        // mGroupInfoView.setAdapter(mGroupInfoModel.getSelectedAdapter(mGroupInfoView.isThreadAlive()));
-        mGroupInfoView.setGroupCode(groupInfo.getGroupCode());
-        mGroupInfoView.initMyPosition(groupInfo);
-
-        if(mGroupInfoModel.amAdmin()) {
-            mGroupInfoView.changeToAdminMode();
-        }
-
+    private void getGroupDetails() {
+        mGroupInfoView.showProgressbar();
+        mGroupInfoModel.getGroupDetails();
     }
-
-    @Override
-    public void onClickMembers() {
-        Bundle bundle = mGroupInfoModel.getGroupIdBundle();
-        if (mGroupInfoModel.amAdmin()) {
-            mGroupInfoView.navigateToAdminMembers(bundle);
-        } else {
-            mGroupInfoView.navigateToGroupMembers(bundle);
-        }
-    }
-
 
     @Override
     public void onClickShareCode() {
@@ -111,26 +88,14 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     }
 
     @Override
-    public void onGetMemberResult() {
-        mGroupInfoModel.refreshGroupInfo();
-        mGroupInfoView.setMembersSize(mGroupInfoModel.getMembersCount());
-    }
-
-    @Override
-    public void onGroupNameEmpty() {
-        mGroupInfoView.dismissProgressbar();
-        mGroupInfoView.showMessage(Alerts.EMPTY_GROUP_NAME);
+    public void onClickEditGroup() {
+        mGroupInfoView.navigateToEditGroup(mGroupInfoModel.getGroupInfoBundle());
     }
 
     @Override
     public void onNoInternet() {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.showMessage(Alerts.NO_NETWORK_CONNECTION);
-    }
-
-    @Override
-    public void onGroupTournamentUpdateSuccess() {
-        mGroupInfoView.setSuccessResult();
     }
 
     @Override
@@ -152,10 +117,24 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     }
 
     @Override
+    public void onClickBack() {
+        if(mGroupInfoModel.isAnythingChanged()) {
+            mGroupInfoView.setSuccessData(mGroupInfoModel.getGroupInfoBundle());
+        }
+        mGroupInfoView.goBack();
+    }
+
+    @Override
+    public void onGetEditResult(Bundle bundle) {
+        mGroupInfoModel.updateEditData(bundle);
+        populateGroupInfo();
+    }
+
+    @Override
     public void onLeaveGroupSuccess() {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.showMessage(Alerts.LEAVE_GROUP_SUCCESS);
-        mGroupInfoView.navigateToHome();
+        onClickBack();
     }
 
     @Override
@@ -167,53 +146,57 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     @Override
     public void onFailed(String message) {
         mGroupInfoView.dismissProgressbar();
-        showAlert(message);
+        mGroupInfoView.showMessage(message, Toast.LENGTH_LONG);
     }
 
     @Override
-    public void gotoAllGroupsScreen() {
-        mGroupInfoView.navigateToAllGroups();
-    }
-
-    private void showAlert(String message) {
-        Toast.makeText(mGroupInfoView.getContext(), message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onGetGroupSummarySuccess(GroupInfo groupInfo) {
+    public void onNoInternetForGroupDetails() {
         mGroupInfoView.dismissProgressbar();
-        mGroupInfoModel.updateGroupMembers(groupInfo);
-        onUpdateGroupInfo(groupInfo);
-
+        mGroupInfoView.showMessage(Alerts.NO_NETWORK_CONNECTION, "RETRY", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getGroupDetails();
+            }
+        });
     }
 
     @Override
-    public void onGetGroupSummaryFailed(String message) {
+    public void onTourTitleChanged(String title) {
+        mGroupInfoView.setTourTabTitle(title);
+    }
+
+    @Override
+    public void onMemberTitleChange(String title) {
+        mGroupInfoView.setMemberTabTitle(title);
+    }
+
+    @Override
+    public void onGetGroupInfoSuccess(GroupInfo groupInfo) {
+        mGroupInfoView.dismissProgressbar();
+        populateGroupInfo();
+    }
+
+    @Override
+    public void onGetGroupInfoFailed(String message) {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.showMessage(message);
-    }
-
-    @Override
-    public Context getContext() {
-        return mGroupInfoView.getContext();
-    }
-
-    @Override
-    public void onEmptyList() {
-
     }
 
     @Override
     public void onDeleteGroupSuccess() {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.showMessage(Alerts.DELETE_GROUP_SUCCESS);
-        mGroupInfoView.navigateToHome();
+        onClickBack();
     }
 
-    @Override
-    public void onGroupNameUpdateSuccess() {
-        mGroupInfoView.dismissProgressbar();
-        mGroupInfoView.disableEdit();
-        mGroupInfoView.setSuccessResult();
+    private void populateGroupInfo() {
+        GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
+        mGroupInfoView.setGroupName(groupInfo.getName());
+        mGroupInfoView.setGroupImage(groupInfo.getPhoto());
+        mGroupInfoView.setAdapter(mGroupInfoModel.getAdapter(mGroupInfoView.getSupportFragmentManager()));
+
+        if(mGroupInfoModel.amAdmin()) {
+            mGroupInfoView.changeToAdminMode();
+        }
     }
 }

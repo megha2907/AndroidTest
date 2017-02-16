@@ -4,24 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black">
-s
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/badge_rcv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/badge_toolbar"
-        android:background="@color/black"
-        />
-
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="No badges yet."
-        android:textColor="@color/textcolorlight"
-        android:id="@+id/no_badges"
-        android:visibility="gone"/>
+        android:background="@color/black" />
 
 </RelativeLayout>

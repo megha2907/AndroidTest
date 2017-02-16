@@ -99,7 +99,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 TournamentPowerupInfo tournamentPowerupInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.TOURNAMENT_POWERUPS));
                 HashMap<String, Integer> powerUpMap = tournamentPowerupInfo.getPowerUps();
 
-                m2xGlobalPowerups = NostragamusDataHandler.getInstance().getNumberof2xGlobalPowerups();
+                m2xGlobalPowerups = NostragamusDataHandler.getInstance().get2xGlobalPowerupsCount();
                 m2xPowerups = powerUpMap.get(Powerups.XX);
                 mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
                 mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
@@ -178,6 +178,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public void getAllQuestions() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
+            mPredictionModelListener.onApiCallStarted();
             callAllQuestionsApi(mMatchId);
         } else {
             mPredictionModelListener.onNoInternetForQuestions();
@@ -296,16 +297,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
         if (itemsInAdapter == 0) {
-            if (!mDummyGame) {
-                NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.COMPLETED);
-
-                Bundle bundle = new Bundle();
-                bundle.putInt(BundleKeys.TOURNAMENT_ID, mMyResult.getTournamentId());
-                bundle.putString(BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
-                mPredictionModelListener.onSuccessCompletion(bundle);
-            } else {
+            if (mDummyGame) {
                 NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.COMPLETED);
-
                 mPredictionModelListener.onDummyGameCompletion();
             }
             return;
@@ -353,13 +346,14 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             @Override
             public void onResponse(Call<QuestionsResponse> call, Response<QuestionsResponse> response) {
                 super.onResponse(call, response);
-                if (!mPredictionModelListener.isThreadAlive()) {
+
+                if(!mPredictionModelListener.onApiCallStopped()) {
                     return;
                 }
 
                 if (response.isSuccessful()) {
                     List<Question> questions = response.body().getQuestions();
-                    if (null == questions || questions.isEmpty() || questions.size() < 0) {
+                    if (null == questions || questions.isEmpty()) {
                         mPredictionModelListener.onNoQuestions();
                     } else {
                         mPredictionModelListener.onSuccessQuestions(questions, PredictionModelImpl.this);
@@ -383,7 +377,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     private void getAudiencePollPercent() {
         if (!isDummyGame()) {
             if (Nostragamus.getInstance().hasNetworkConnection()) {
-                mPredictionModelListener.onLoadingPollPercent();
+                mPredictionModelListener.onApiCallStarted();
                 AudiencePollRequest audiencePollRequest = new AudiencePollRequest();
                 audiencePollRequest.setQuestionId(mPredictionAdapter.getTopQuestion().getQuestionId());
 
@@ -393,7 +387,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             }
         } else {
             handleAudiencePollResponse(getDummyGameAudiencePoll().getAudiencePoll());
-            mPredictionModelListener.onSuccessAudiencePollResponse();
         }
     }
 
@@ -422,13 +415,16 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             public void onResponse(Call<AudiencePollResponse> call, Response<AudiencePollResponse> response) {
                 super.onResponse(call, response);
 
+                if(!mPredictionModelListener.onApiCallStopped()) {
+                    return;
+                }
+
                 if (response.isSuccessful()) {
                     List<AudiencePoll> audiencePoll = response.body().getAudiencePoll();
                     if (null == audiencePoll || audiencePoll.isEmpty()) {
                         mPredictionModelListener.onFailedAudiencePollResponse();
                     } else {
                         handleAudiencePollResponse(audiencePoll);
-                        mPredictionModelListener.onSuccessAudiencePollResponse();
                     }
                 } else {
                     mPredictionModelListener.onFailedAudiencePollResponse();
@@ -451,7 +447,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     private void saveSinglePrediction(Question question, int answerId) {
         if (!mDummyGame) {
             lockAnswerTime();
-            mPredictionModelListener.onPostingAnswer();
+            mPredictionModelListener.onApiCallStarted();
 
             question.setAnswerId(answerId);
             mPostAnswerModel.postAnswer(question, mPredictionAdapter.getCount() == 0);
@@ -463,17 +459,45 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         public void onSuccess(String answerDirection) {
             NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.ANSWERED, answerDirection, getTimeSpent());
 
-            mPredictionModelListener.onPostAnswerSuccess();
+            if(!mPredictionModelListener.onApiCallStopped()) {
+                return;
+            }
+
+            if(mPredictionAdapter.getCount() == 0) {
+                NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.COMPLETED);
+
+                Bundle bundle = new Bundle();
+                bundle.putInt(BundleKeys.TOURNAMENT_ID, mMyResult.getTournamentId());
+                bundle.putString(BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
+                mPredictionModelListener.onSuccessCompletion(bundle);
+            }
         }
 
         @Override
         public void onNoInternet() {
+            if(!mPredictionModelListener.onApiCallStopped()) {
+                return;
+            }
+
             mPredictionModelListener.noInternetOnPostingAnswer();
         }
 
         @Override
         public void onFailed(String message) {
+            if(!mPredictionModelListener.onApiCallStopped()) {
+                return;
+            }
+
             mPredictionModelListener.onPostAnswerFailed(message);
+        }
+
+        @Override
+        public void onMatchAlreadyStarted() {
+            if(!mPredictionModelListener.onApiCallStopped()) {
+                return;
+            }
+
+            mPredictionModelListener.onMatchAlreadyStarted();
         }
     };
 
@@ -554,8 +578,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     public interface OnPredictionModelListener {
 
-        boolean isThreadAlive();
-
         void onSuccessCompletion(Bundle bundle);
 
         void onShowingLastQuestion();
@@ -572,8 +594,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         void onQuestionChanged(Question question, int initialCount, boolean neitherAvailable);
 
-        void onSuccessAudiencePollResponse();
-
         void onFailedAudiencePollResponse();
 
         void notifyTopQuestion();
@@ -588,16 +608,16 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         void onAudiencePollApplied(int count);
 
-        void onLoadingPollPercent();
-
-        void onPostingAnswer();
-
-        void onPostAnswerSuccess();
-
         void onPostAnswerFailed(String message);
+
+        void onMatchAlreadyStarted();
 
         void noInternetOnPostingAnswer();
 
         void onDummyGameCompletion();
+
+        void onApiCallStarted();
+
+        boolean onApiCallStopped();
     }
 }

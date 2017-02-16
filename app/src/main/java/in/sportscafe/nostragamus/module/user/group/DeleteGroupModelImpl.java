@@ -1,7 +1,5 @@
 package in.sportscafe.nostragamus.module.user.group;
 
-import java.util.List;
-
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -9,7 +7,6 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.user.group.members.AdminRequest;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -27,8 +24,7 @@ public class DeleteGroupModelImpl {
     }
 
     public void deleteGroup(boolean amAdmin, Integer groupId) {
-        List<GroupPerson> members = NostragamusDataHandler.getInstance().getGrpInfoMap().get(groupId).getMembers();
-        if (members.size() > 0 && amAdmin) {
+        if (amAdmin) {
             if (Nostragamus.getInstance().hasNetworkConnection()) {
                 AdminRequest adminRequest = new AdminRequest();
                 adminRequest.setAdminId(NostragamusDataHandler.getInstance().getUserId());
@@ -47,7 +43,7 @@ public class DeleteGroupModelImpl {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         super.onResponse(call, response);
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
                             NostragamusAnalytics.getInstance().trackGroups(AnalyticsActions.DELETE_GROUP, null);
                             mDeleteGroupModelListener.onSuccessDeleteGroup();
                         } else {

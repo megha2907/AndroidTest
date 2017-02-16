@@ -53,7 +53,6 @@ import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
@@ -314,7 +313,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
             case R.id.fab_fl_replay:
                 if (!mFlippowerUpApplied || !mReplaypowerUpApplied ) {
-                    if (NostragamusDataHandler.getInstance().getNumberofReplayPowerups() > 0) {
+                    if (NostragamusDataHandler.getInstance().getReplayPowerupsCount() > 0) {
                         mFlippowerUpApplied = true;
                         mReplaypowerUpApplied = true;
                         mResultsPresenter.onPowerUp(Powerups.MATCH_REPLAY);
@@ -327,7 +326,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 }
             case R.id.fab_fl_flip:
                 if (!mFlippowerUpApplied || !mReplaypowerUpApplied ) {
-                   if (NostragamusDataHandler.getInstance().getNumberofFlipPowerups() > 0) {
+                   if (NostragamusDataHandler.getInstance().getFlipPowerupsCount() > 0) {
                     mFlippowerUpApplied = true;
                     mReplaypowerUpApplied = true;
                     navigatetoFlipScreen();
@@ -382,8 +381,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                                NostragamusDataHandler.getInstance().setNumberofReplayPowerups(NostragamusDataHandler.getInstance().getNumberofReplayPowerups() - 1);
-                                String updatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofReplayPowerups() - 1);
+                                NostragamusDataHandler.getInstance().setReplayPowerupsCount(NostragamusDataHandler.getInstance().getReplayPowerupsCount() - 1);
+                                String updatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getReplayPowerupsCount() - 1);
                                 btnReplayPowerUpCount.setText(updatedPowerUps);
                                 mResultsPresenter.onReplayPowerupApplied();
                                 animateFAB();
@@ -412,7 +411,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void openFlipDialog() {
-        String flipPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getNumberofFlipPowerups());
+        String flipPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getFlipPowerupsCount());
         btnFlipPowerUpCount.setText(flipPowerUps);
         mResultsPresenter.onFlipPowerupApplied();
     }

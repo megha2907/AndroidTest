@@ -1,7 +1,10 @@
 package in.sportscafe.nostragamus.module.user.myprofile;
 
+import android.support.v4.app.FragmentManager;
+
 import com.jeeva.android.InAppView;
 
+import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
 /**
@@ -13,25 +16,19 @@ public interface ProfileView extends InAppView {
 
     void setProfileImage(String imageUrl);
 
-    void setSportsFollowedCount(int sportsFollowedCount);
-
-    void setGroupsCount(int GroupsCount);
-
     void setLevel(String level);
-
-    void setPowerUpsCount(int PowerUpsCount);
 
     void setAccuracy(int accuracy);
 
     void setPoints(Long points);
 
-    void initMyPosition(UserInfo userInfo);
+    void setPredictionCount(Integer predictionCount);
+
+    void updateSportTabTitle(String title);
+
+    void setAdapter(ViewPagerAdapter adapter);
 
     void navigateToLogIn();
 
-    void navigateToPowerUpScreen();
-
-    void setBadgesCount(int badgesCount);
-
-    void setPredictionCount(Integer predictionCount);
+    FragmentManager getChildFragmentManager();
 }

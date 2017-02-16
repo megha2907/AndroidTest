@@ -1,12 +1,16 @@
 package in.sportscafe.nostragamus.module.user.group.members;
 
 import android.content.Context;
+import android.os.Bundle;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
@@ -23,9 +27,11 @@ import retrofit2.Response;
  */
 public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersOptionListener {
 
-    private boolean mAdmin = false;
+    private boolean mAmAdmin = false;
 
     private Integer mGroupId;
+
+    private List<GroupPerson> mMemberList;
 
     private MembersAdapter mMembersAdapter;
 
@@ -40,38 +46,13 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
     }
 
     @Override
-    public MembersAdapter init(Context context, Integer groupId) {
-        this.mGroupId = groupId;
-        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
-        if(grpInfoMap.containsKey(mGroupId)) {
+    public MembersAdapter init(Context context, Bundle bundle) {
+        this.mAmAdmin = bundle.getBoolean(BundleKeys.IS_ADMIN);
+        this.mGroupId = bundle.getInt(BundleKeys.GROUP_ID);
+        this.mMemberList = Parcels.unwrap(bundle.getParcelable(BundleKeys.GROUP_MEMBERS));
 
-            List<GroupPerson> members = grpInfoMap.get(mGroupId).getMembers();
-            if(null == members || members.isEmpty()) {
-                mMembersModelListener.onEmpty();
-            } else {
-                if(null != context) {
-                    String myId = NostragamusDataHandler.getInstance().getUserId();
-                    List<GroupPerson> groupMembers = new ArrayList<>();
-                    for (GroupPerson groupPerson : members) {
-                        if(groupPerson.isApproved()) {
-                            groupMembers.add(groupPerson);
-                        }
-
-                        if(myId.compareTo(groupPerson.getId().toString()) == 0
-                                && groupPerson.isAdmin()) {
-                            mAdmin = true;
-                        }
-                    }
-
-                    mMembersAdapter = new MembersAdapter(context, this, mAdmin);
-                    mMembersAdapter.addAll(groupMembers);
-                    return mMembersAdapter;
-                }
-            }
-        } else {
-            mMembersModelListener.onEmpty();
-        }
-        return null;
+        mMembersAdapter = new MembersAdapter(context, this, mAmAdmin, mMemberList);
+        return mMembersAdapter;
     }
 
     @Override
@@ -91,12 +72,7 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
             public void onNoInternet() {
                 mMembersModelListener.onNoInternet();
             }
-        }).leaveGroup(mAdmin, mGroupId);
-    }
-
-    @Override
-    public void addNewPerson(GroupPerson newPerson) {
-        mMembersAdapter.add(newPerson, 0);
+        }).leaveGroup(mAmAdmin, mGroupId);
     }
 
     @Override
@@ -110,7 +86,7 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
 
     private AdminRequest getAdminRequest(int position) {
         AdminRequest removePersonRequest = new AdminRequest();
-        removePersonRequest.setAdminId(NostragamusDataHandler.getInstance().getUserId());
+        removePersonRequest.setAdminId(mMembersAdapter.getItem(position).getId() + "");
         removePersonRequest.setGroupId(mGroupId);
 
         return removePersonRequest;
@@ -133,16 +109,10 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
     }
 
     private void handleRemoveResponse(int position) {
-        GroupPerson groupPerson = mMembersAdapter.getItem(position);
-
-        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
-        List<GroupPerson> members = grpInfoMap.get(mGroupId).getMembers();
-        members.remove(groupPerson);
-        NostragamusDataHandler.getInstance().setGrpInfoMap(grpInfoMap);
-
         mMembersAdapter.remove(position);
+        mMemberList.remove(position);
         mMembersAdapter.notifyDataSetChanged();
-        mMembersModelListener.onRemovedPersonSuccess();
+        mMembersModelListener.onRemovedPersonSuccess(mMemberList);
     }
 
     @Override
@@ -171,13 +141,7 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
     }
 
     private void handleMakeAdminResponse(int position) {
-        GroupPerson groupPerson = mMembersAdapter.getItem(position);
-        groupPerson.setAdmin(true);
-
-        Map<Integer, GroupInfo> grpInfoMap = NostragamusDataHandler.getInstance().getGrpInfoMap();
-        List<GroupPerson> members = grpInfoMap.get(mGroupId).getMembers();
-        members.get(members.indexOf(groupPerson)).setAdmin(true);
-        NostragamusDataHandler.getInstance().setGrpInfoMap(grpInfoMap);
+        mMembersAdapter.getItem(position).setAdmin(true);
 
         mMembersAdapter.notifyDataSetChanged();
         mMembersModelListener.onMakeAdminSuccess();
@@ -187,7 +151,7 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
 
         void onMakeAdminSuccess();
 
-        void onRemovedPersonSuccess();
+        void onRemovedPersonSuccess(List<GroupPerson> memberList);
 
         void onFailed(String message);
 

@@ -137,10 +137,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="in.sportscafe.nostragamus.module.user.powerups.PowerUpActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name="in.sportscafe.nostragamus.module.play.prediction.PredictionActivity"
             android:screenOrientation="portrait" />
         <activity android:name="in.sportscafe.nostragamus.module.play.prediction.AllDoneActivity"
@@ -166,10 +162,6 @@
             android:windowSoftInputMode="stateAlwaysHidden"/>
 
         <activity
-            android:name="in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name="in.sportscafe.nostragamus.module.user.group.admin.adminmembers.AdminMembersActivity"
             android:screenOrientation="portrait" />
 
@@ -182,10 +174,6 @@
             android:name="in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-
-        <activity
-            android:name="in.sportscafe.nostragamus.module.user.group.members.MembersActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name="in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity"

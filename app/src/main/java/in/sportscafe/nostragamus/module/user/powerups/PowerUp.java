@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.user.powerups;
 
 import android.text.TextUtils;
 
+import org.parceler.Parcel;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
@@ -9,6 +11,7 @@ import in.sportscafe.nostragamus.R;
 /**
  * Created by deepanshi on 24/8/16.
  */
+@Parcel
 public class PowerUp {
 
     private String id;

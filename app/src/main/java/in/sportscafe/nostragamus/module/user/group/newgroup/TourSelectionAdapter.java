@@ -1,8 +1,6 @@
 package in.sportscafe.nostragamus.module.user.group.newgroup;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +20,11 @@ import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 /**
  * Created by rb on 30/11/15.
  */
-public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, RecyclerView.ViewHolder> {
+public class TourSelectionAdapter extends Adapter<TournamentFeedInfo, RecyclerView.ViewHolder> {
 
-    private List<Integer> mSelectedTournamentsIdList;
+    private List<TournamentFeedInfo> mSelectedTourList;
+
+    private List<Integer> mSelectedTourIdList;
 
     private OnGrpTournamentChangedListener mChangedListener;
 
@@ -34,10 +34,11 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
 
     private static final int TOURNAMENT_TYPE = 7;
 
-    public GrpTournamentSelectionAdapter(Context context, List<Integer> selectedTournamentsIdList,
-                                         OnGrpTournamentChangedListener listener) {
+    public TourSelectionAdapter(Context context, List<TournamentFeedInfo> followedTours, List<Integer> followedTourIds,
+                                OnGrpTournamentChangedListener listener) {
         super(context);
-        this.mSelectedTournamentsIdList = selectedTournamentsIdList;
+        this.mSelectedTourList = followedTours;
+        this.mSelectedTourIdList = followedTourIds;
         this.mChangedListener = listener;
     }
 
@@ -48,7 +49,6 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         switch (viewType) {
 //            case SELECTED_LABEL_TYPE:
 //                return new LabelViewHolder(getLayoutInflater().inflate(R.layout.inflater_group_label, parent, false),"SELECTED TOURNAMENTS");
@@ -57,22 +57,12 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
             case TOURNAMENT_TYPE:
             default:
                 return new TourViewHolder(getLayoutInflater().inflate(R.layout.inflater_group_sport_row, parent, false));
-
         }
-
     }
-
 
     @Override
     public int getItemViewType(int position) {
-
-        TournamentFeedInfo tournamentInfo = getItem(position);
-//
-//        if (tournamentInfo.getTournamentId()== -1) {
-//            return SELECTED_LABEL_TYPE;
-//        }
-
-        if (tournamentInfo.getTournamentId() == -2) {
+        if (getItem(position).getTournamentId() == -2) {
             return UNSELECTED_LABEL_TYPE;
         }
 
@@ -96,7 +86,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
             holder.mIvTournament.setImageUrl(tournamentInfo.getTournamentPhoto());
 
 
-            if (mSelectedTournamentsIdList.contains((tournamentInfo.getTournamentId()))) {
+            if (mSelectedTourIdList.contains((tournamentInfo.getTournamentId()))) {
                 holder.mIvSelectedIcon.setBackgroundResource(R.drawable.tick_icon);
                 //  holder.mTvTournament.setTextColor(ContextCompat.getColor(holder.mIvTournament.isThreadAlive(), R.color.btn_powerup_screen_color));
                 holder.mTvTournament.setAlpha(0.9f);
@@ -136,7 +126,7 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            mChangedListener.onGrpTournamentClicked(position, mSelectedTournamentsIdList.contains(getItem(position).getTournamentId()));
+            mChangedListener.onGrpTournamentClicked(position, mSelectedTourIdList.contains(getItem(position).getTournamentId()));
         }
     }
 
@@ -149,13 +139,15 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
 
             mTvName = (TextView) V.findViewById(R.id.group_label_tv);
             mTvName.setText(label);
-
         }
-
     }
 
-    public List<Integer> getSelectedTournamentList() {
-        return mSelectedTournamentsIdList;
+    public List<Integer> getSelectedTourIdList() {
+        return mSelectedTourIdList;
+    }
+
+    public List<TournamentFeedInfo> getSelectedTourList() {
+        return mSelectedTourList;
     }
 
     public interface OnGrpTournamentChangedListener {
@@ -165,10 +157,12 @@ public class GrpTournamentSelectionAdapter extends Adapter<TournamentFeedInfo, R
 
     public void updateSelectionList(TournamentFeedInfo feedInfo) {
         Integer tournamentId = feedInfo.getTournamentId();
-        if (mSelectedTournamentsIdList.contains(tournamentId)) {
-            mSelectedTournamentsIdList.remove(tournamentId);
+        if (mSelectedTourIdList.contains(tournamentId)) {
+            mSelectedTourList.remove(feedInfo);
+            mSelectedTourIdList.remove(tournamentId);
         } else {
-            mSelectedTournamentsIdList.add(tournamentId);
+            mSelectedTourList.add(feedInfo);
+            mSelectedTourIdList.add(tournamentId);
         }
     }
 

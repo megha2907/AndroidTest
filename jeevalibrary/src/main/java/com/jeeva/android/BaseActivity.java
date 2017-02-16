@@ -52,8 +52,8 @@ public abstract class BaseActivity extends AppCompatActivity implements com.jeev
         // TODO update the progressbar
     }
 
-    public void dismissProgressbar() {
-        CustomProgressbar.getProgressbar(BaseActivity.this).dismiss();
+    public boolean dismissProgressbar() {
+        return CustomProgressbar.getProgressbar(BaseActivity.this).dismissProgress();
     }
 
     public void showSoftKeyboard(View view) {

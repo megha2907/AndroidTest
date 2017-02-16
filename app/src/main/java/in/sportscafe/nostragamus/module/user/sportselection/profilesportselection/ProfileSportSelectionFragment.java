@@ -66,7 +66,7 @@ public class ProfileSportSelectionFragment extends NostragamusFragment implement
 
 
     public interface OnSportSelectionChangedListener {
-        void setSportsCount(int sportsCount);
+        void onSportsSelectionChanged();
     }
 
 }

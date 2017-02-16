@@ -142,6 +142,8 @@ public interface Constants {
         String CANNOT_RESET_LB = "Something went wrong! Please try again!";
         String DELETE_GROUP_SUCCESS = "You have deleted the group successfully";
         String CANNOT_DELETE_GROUP = "You cannot delete the group since you are not the Admin";
+        String NO_POWERUPS = "No powerups";
+        String NO_BADGES = "No badges yet";
     }
 
     interface BundleKeys {
@@ -189,6 +191,13 @@ public interface Constants {
         String FROM_SETTINGS = "fromSettings";
         String SCREEN = "screen";
         String FROM_PLAY = "fromPlay";
+        String IS_ALL_GROUPS = "isAllGroups";
+        String POWERUPS = "powerUps";
+        String FOLLOWED_TOURS = "followedTours";
+        String IS_ADMIN = "isAdmin";
+        String GROUP_MEMBERS = "groupMembers";
+        String CLICK_POSITION = "clickPosition";
+        String OPEN_PROFILE = "openProfile";
         String POINTS = "points";
         String NO_OF_MATCHES = "matches";
         String ACCURACY = "accuracy";
@@ -226,6 +235,7 @@ public interface Constants {
         String ACTION_FUZZY_LB_CLICK = "in.sportscafe.nostragamus.intent.action.FUZZY_LB_CLICK";
         String ACTION_DUMMY_GAME_PLAY = "in.sportscafe.nostragamus.intent.action.DUMMY_GAME_PLAY";
         String ACTION_DUMMY_GAME_PROCEED = "in.sportscafe.nostragamus.intent.action.DUMMY_GAME_PROCEED";
+        String ACTION_GROUP_CLICK = "in.sportscafe.nostragamus.intent.action.GROUP_CLICK";
     }
 
     interface LeaderBoardPeriods {

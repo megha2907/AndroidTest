@@ -7,19 +7,5 @@ public interface ProfilePresenter {
 
     void onCreateProfile();
 
-    void onGetSportsSelectionResult();
-
-    void onGetUpdatedNumberofGroups();
-
-    void onGetGroupCount();
-
-    void onGetPowerUpsCount();
-
-    void onGetBadgesCount();
-
     void onEditProfileDone();
-
-    void onGroupDetailsUpdated();
-
-    void onClickLogout();
 }

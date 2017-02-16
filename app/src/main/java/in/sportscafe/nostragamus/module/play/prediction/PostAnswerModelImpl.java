@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
@@ -57,7 +56,7 @@ public class PostAnswerModelImpl {
                         if (response.isSuccessful()) {
                             String responseMsg = response.body().getMessage();
                             if (responseMsg.equals("Match has already started")) {
-                                mPostAnswerModelListener.onFailed(responseMsg);
+                                mPostAnswerModelListener.onMatchAlreadyStarted();
                             } else {
                                 handlePostAnswerResponse(answer);
                             }
@@ -73,8 +72,8 @@ public class PostAnswerModelImpl {
         String powerupId = answer.getPowerUpId();
         if (null != powerupId) {
             if (Powerups.XX_GLOBAL.equalsIgnoreCase(powerupId)) {
-                NostragamusDataHandler.getInstance().setNumberof2xGlobalPowerups(
-                        NostragamusDataHandler.getInstance().getNumberof2xGlobalPowerups() - 1
+                NostragamusDataHandler.getInstance().set2xGlobalPowerupsCount(
+                        NostragamusDataHandler.getInstance().get2xGlobalPowerupsCount() - 1
                 );
             }
             NostragamusAnalytics.getInstance().trackPowerups(AnalyticsActions.APPLIED, powerupId);
@@ -103,5 +102,7 @@ public class PostAnswerModelImpl {
         void onNoInternet();
 
         void onFailed(String message);
+
+        void onMatchAlreadyStarted();
     }
 }

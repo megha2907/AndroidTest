@@ -8,26 +8,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.parceler.Parcels;
+
+import java.util.List;
+
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by deepanshi on 12/8/16.
  */
-
-public class PowerUpFragment extends NostragamusFragment implements PowerUpView{
+public class PowerUpFragment extends NostragamusFragment implements PowerUpView {
 
     private RecyclerView mRvPowerUp;
 
     private PowerUpPresenter mPowerUpPresenter;
 
-    public static PowerUpFragment newInstance() {
+    public static PowerUpFragment newInstance(List<PowerUp> powerUpList) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BundleKeys.POWERUPS, Parcels.wrap(powerUpList));
 
         PowerUpFragment fragment = new PowerUpFragment();
+        fragment.setArguments(bundle);
         return fragment;
     }
-
 
     @Nullable
     @Override
@@ -43,8 +48,9 @@ public class PowerUpFragment extends NostragamusFragment implements PowerUpView{
         this.mRvPowerUp.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         this.mRvPowerUp.setHasFixedSize(true);
+
         this.mPowerUpPresenter = PowerUpPresenterImpl.newInstance(this);
-        this.mPowerUpPresenter.onCreatePowerUpAdapter();
+        this.mPowerUpPresenter.onCreatePowerUps(getArguments());
 
     }
 

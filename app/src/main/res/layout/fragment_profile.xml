@@ -47,9 +47,8 @@
                         android:orientation="horizontal">
 
 
-
                         <ImageButton
-                            android:id="@+id/profile_btn_logout"
+                            android:id="@+id/profile_btn_settings"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -69,8 +68,7 @@
                         android:layout_marginRight="@dimen/dp_20"
                         android:layout_marginTop="@dimen/dp_20"
                         android:onClick="onClick"
-                        android:src="@drawable/placeholder_icon"
-                        />
+                        android:src="@drawable/placeholder_icon" />
 
                     <ImageButton
                         android:id="@+id/profile_btn_edit"
@@ -86,29 +84,28 @@
                         android:id="@+id/profile_tv_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_20"
                         android:layout_toRightOf="@+id/profile_iv_image"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_18"
-                        android:layout_marginTop="@dimen/dp_20"
                         android:textStyle="bold"
-                        app:typeface="lato_regular"/>
+                        app:typeface="lato_regular" />
 
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/profile_tv_level"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_tv_title"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:layout_toRightOf="@+id/profile_iv_image"
                         android:text="1st Level"
                         android:textAllCaps="false"
                         android:textColor="@color/white_60"
                         android:textSize="@dimen/dp_13"
-                        android:layout_marginTop="@dimen/dp_5"
                         android:textStyle="bold"
-                        android:layout_below="@+id/profile_tv_title"
-                        app:typeface="lato_regular"/>
-
+                        app:typeface="lato_regular" />
 
 
                     <LinearLayout
@@ -116,9 +113,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/profile_tv_level"
-                        android:layout_toRightOf="@+id/profile_iv_image"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/profile_iv_image"
                         android:orientation="vertical">
 
                     </LinearLayout>
@@ -127,165 +124,161 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/profile_btn_edit"
+                        android:layout_marginBottom="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_12"
-                        android:gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/dp_10">
+                        android:gravity="center_horizontal">
 
 
-                    <RelativeLayout
-                        android:id="@+id/profile_ll_points_parent"
-                        android:layout_width="@dimen/dp_72"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                       >
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/profile_tv_points_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:text="POINTS"
-                            android:layout_marginBottom="@dimen/dp_4"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dp_11"
-                            app:typeface="lato_regular" />
-
-                        <com.jeeva.android.widgets.customfont.CustomButton
-                            android:id="@+id/profile_tv_points"
+                        <RelativeLayout
+                            android:id="@+id/profile_ll_points_parent"
                             android:layout_width="@dimen/dp_72"
-                            android:layout_height="@dimen/dp_30"
-                            android:clickable="false"
-                            android:text="0"
-                            android:gravity="center"
-                            android:background="@drawable/profile_screen_btns_bg"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dp_12"
-                            android:drawableLeft="@drawable/profile_screen_points_icon"
-                            android:paddingLeft="@dimen/dp_10"
-                            android:paddingRight="@dimen/dp_5"
-                            android:layout_below="@+id/profile_tv_points_txt"
-                            app:typeface="lato_bold"
-                          />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/profile_ll_accuracy_parent"
-                        android:layout_width="@dimen/dp_72"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/profile_ll_points_parent"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:orientation="vertical">
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/profile_tv_accuracy_txt"
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:text="ACCURACY"
-                            android:layout_marginBottom="@dimen/dp_4"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dp_11"
-                            app:typeface="lato_regular" />
+                            android:layout_centerVertical="true">
 
-                        <com.jeeva.android.widgets.customfont.CustomButton
-                            android:id="@+id/profile_btn_accuracy"
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/profile_tv_points_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/dp_4"
+                                android:clickable="false"
+                                android:text="POINTS"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dp_11"
+                                app:typeface="lato_regular" />
+
+                            <com.jeeva.android.widgets.customfont.CustomButton
+                                android:id="@+id/profile_tv_points"
+                                android:layout_width="@dimen/dp_72"
+                                android:layout_height="@dimen/dp_30"
+                                android:layout_below="@+id/profile_tv_points_txt"
+                                android:background="@drawable/profile_screen_btns_bg"
+                                android:clickable="false"
+                                android:drawableLeft="@drawable/profile_screen_points_icon"
+                                android:gravity="center"
+                                android:paddingLeft="@dimen/dp_10"
+                                android:paddingRight="@dimen/dp_5"
+                                android:text="0"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dp_12"
+                                app:typeface="lato_bold" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/profile_ll_accuracy_parent"
                             android:layout_width="@dimen/dp_72"
-                            android:layout_height="@dimen/dp_30"
-                            android:clickable="false"
-                            android:text="0%"
-                            android:background="@drawable/profile_screen_btns_bg"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dp_12"
-                            android:drawableLeft="@drawable/profile_screen_accuracy_icon"
-                            android:paddingLeft="@dimen/dp_10"
-                            android:paddingRight="@dimen/dp_5"
-                            android:layout_below="@+id/profile_tv_accuracy_txt"
-                            app:typeface="lato_bold" />
-
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:id="@+id/profile_ll_predictions_parent"
-                        android:layout_width="@dimen/dp_72"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/profile_ll_accuracy_parent"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:orientation="vertical">
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/profile_tv_predictions_txt"
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:text="PREDICTIONS"
-                            android:layout_marginBottom="@dimen/dp_4"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dp_11"
-                            app:typeface="lato_regular" />
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_toRightOf="@+id/profile_ll_points_parent"
+                            android:orientation="vertical">
 
-                        <com.jeeva.android.widgets.customfont.CustomButton
-                            android:id="@+id/profile_btn_predictions"
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/profile_tv_accuracy_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/dp_4"
+                                android:clickable="false"
+                                android:text="ACCURACY"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dp_11"
+                                app:typeface="lato_regular" />
+
+                            <com.jeeva.android.widgets.customfont.CustomButton
+                                android:id="@+id/profile_btn_accuracy"
+                                android:layout_width="@dimen/dp_72"
+                                android:layout_height="@dimen/dp_30"
+                                android:layout_below="@+id/profile_tv_accuracy_txt"
+                                android:background="@drawable/profile_screen_btns_bg"
+                                android:clickable="false"
+                                android:drawableLeft="@drawable/profile_screen_accuracy_icon"
+                                android:paddingLeft="@dimen/dp_10"
+                                android:paddingRight="@dimen/dp_5"
+                                android:text="0%"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dp_12"
+                                app:typeface="lato_bold" />
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/profile_ll_predictions_parent"
                             android:layout_width="@dimen/dp_72"
-                            android:layout_height="@dimen/dp_30"
-                            android:clickable="false"
-                            android:text="0"
-                            android:background="@drawable/profile_screen_btns_bg"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dp_12"
-                            android:drawableLeft="@drawable/profile_screen_predictions_icon"
-                            android:paddingLeft="@dimen/dp_10"
-                            android:paddingRight="@dimen/dp_5"
-                            android:layout_below="@+id/profile_tv_predictions_txt"
-                            app:typeface="lato_bold" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/profile_ll_level_parent"
-                        android:layout_width="@dimen/dp_72"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/profile_ll_predictions_parent"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/profile_tv_level_txt"
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:text="LEVEL"
-                            android:layout_marginBottom="@dimen/dp_4"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dp_11"
-                            app:typeface="lato_regular" />
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_toRightOf="@+id/profile_ll_accuracy_parent"
+                            android:orientation="vertical">
 
-                        <com.jeeva.android.widgets.customfont.CustomButton
-                            android:id="@+id/profile_btn_level"
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/profile_tv_predictions_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/dp_4"
+                                android:clickable="false"
+                                android:text="PREDICTIONS"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dp_11"
+                                app:typeface="lato_regular" />
+
+                            <com.jeeva.android.widgets.customfont.CustomButton
+                                android:id="@+id/profile_btn_predictions"
+                                android:layout_width="@dimen/dp_72"
+                                android:layout_height="@dimen/dp_30"
+                                android:layout_below="@+id/profile_tv_predictions_txt"
+                                android:background="@drawable/profile_screen_btns_bg"
+                                android:clickable="false"
+                                android:drawableLeft="@drawable/profile_screen_predictions_icon"
+                                android:paddingLeft="@dimen/dp_10"
+                                android:paddingRight="@dimen/dp_5"
+                                android:text="0"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dp_12"
+                                app:typeface="lato_bold" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/profile_ll_level_parent"
                             android:layout_width="@dimen/dp_72"
-                            android:layout_height="@dimen/dp_30"
-                            android:clickable="false"
-                            android:text="0"
-                            android:background="@drawable/profile_screen_btns_bg"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dp_12"
-                            android:drawableLeft="@drawable/profile_screen_level_icon"
-                            android:paddingLeft="@dimen/dp_10"
-                            android:paddingRight="@dimen/dp_5"
-                            android:layout_below="@+id/profile_tv_level_txt"
-                            app:typeface="lato_bold"
-                           />
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_toRightOf="@+id/profile_ll_predictions_parent"
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
-                    </RelativeLayout>
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/profile_tv_level_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/dp_4"
+                                android:clickable="false"
+                                android:text="LEVEL"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dp_11"
+                                app:typeface="lato_regular" />
+
+                            <com.jeeva.android.widgets.customfont.CustomButton
+                                android:id="@+id/profile_btn_level"
+                                android:layout_width="@dimen/dp_72"
+                                android:layout_height="@dimen/dp_30"
+                                android:layout_below="@+id/profile_tv_level_txt"
+                                android:background="@drawable/profile_screen_btns_bg"
+                                android:clickable="false"
+                                android:drawableLeft="@drawable/profile_screen_level_icon"
+                                android:paddingLeft="@dimen/dp_10"
+                                android:paddingRight="@dimen/dp_5"
+                                android:text="0"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dp_12"
+                                app:typeface="lato_bold" />
+
+                        </RelativeLayout>
 
                     </RelativeLayout>
 
                 </RelativeLayout>
 
             </android.support.design.widget.CollapsingToolbarLayout>
-
 
 
             <in.sportscafe.nostragamus.module.common.CustomTabLayout

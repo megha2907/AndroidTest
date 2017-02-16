@@ -1,41 +1,34 @@
 package in.sportscafe.nostragamus.module.home;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.widgets.customfont.CustomButton;
-import com.moe.pushlibrary.providers.MoEDataContract;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
+import in.sportscafe.nostragamus.module.user.group.JoinGroupApiModelImpl;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
-import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
-import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupModelImpl;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
 /**
  * Created by Jeeva on 16/6/16.
  */
-public class HomeActivity extends NostragamusActivity implements OnHomeActionListener, UserInfoModelImpl.OnGetUserInfoModelListener {
+public class HomeActivity extends NostragamusActivity implements UserInfoModelImpl.OnGetUserInfoModelListener {
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
@@ -95,47 +88,29 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         mGroupRl = (RelativeLayout) findViewById(R.id.home_rl_group);
         mLeaderBoardRl = (RelativeLayout) findViewById(R.id.home_rl_leaderboard);
 
-        Intent intent = getIntent();
-        if (null == intent.getExtras()) {
-            showFeed();
-        } else if (intent.getExtras().containsKey(BundleKeys.RESULTS) || intent.getExtras().containsKey(BundleKeys.BADGES)) {
-
-            mHomeButton.setSelected(false);
-            mGroupButton.setSelected(false);
-            mLeaderBoardButton.setSelected(false);
-            mProfileButton.setSelected(true);
-
-
-            mHomeTv.setSelected(false);
-            mGroupTv.setSelected(false);
-            mLeaderBoardTv.setSelected(false);
-            mProfileTv.setSelected(true);
-
-            loadFragment(new ProfileFragment());
-
-
-        } else if (intent.getExtras().containsKey(BundleKeys.GROUP)) {
-
-            mHomeButton.setSelected(false);
-            mGroupButton.setSelected(true);
-            mProfileButton.setSelected(false);
-            mLeaderBoardButton.setSelected(false);
-
-            mHomeTv.setSelected(false);
-            mGroupTv.setSelected(true);
-            mProfileTv.setSelected(false);
-            mLeaderBoardTv.setSelected(false);
-
-            loadFragment(new AllGroupsFragment().newInstance());
-
-        } else {
-            showFeed();
-        }
-
         checkGroupCode();
 
-        // getunReadNotificationCount();
+        Bundle bundle = getIntent().getExtras();
+        if (null != bundle) {
+            if (bundle.containsKey(BundleKeys.RESULTS)
+                    || bundle.containsKey(BundleKeys.BADGES)
+                    || bundle.containsKey(BundleKeys.OPEN_PROFILE)) {
+                showProfile();
+                return;
+            } else if (bundle.containsKey(BundleKeys.GROUP)) {
+                showGroups();
+                return;
+            }
+        }
+        showFeed();
+    }
 
+    private void showProfile() {
+        onClickTab(findViewById(R.id.home_rl_profile));
+    }
+
+    private void showGroups() {
+        onClickTab(findViewById(R.id.home_rl_group));
     }
 
 //    private void getunReadNotificationCount() {
@@ -164,7 +139,6 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     public void onClickTab(View view) {
         switch (view.getId()) {
             case R.id.home_rl_group:
-
                 mHomeButton.setSelected(false);
                 mProfileButton.setSelected(false);
                 mLeaderBoardButton.setSelected(false);
@@ -176,11 +150,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 mGroupTv.setSelected(true);
 
                 loadFragment(mCurrentFragment = new AllGroupsFragment().newInstance());
-
                 break;
-
             case R.id.home_rl_feed:
-
                 mGroupButton.setSelected(false);
                 mProfileButton.setSelected(false);
                 mLeaderBoardButton.setSelected(false);
@@ -191,12 +162,9 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 mLeaderBoardTv.setSelected(false);
                 mHomeTv.setSelected(true);
 
-                loadFragment(mCurrentFragment = new TournamentFragment());
-
+                loadFragment(mCurrentFragment = TournamentFragment.newInstance());
                 break;
-
             case R.id.home_rl_profile:
-
                 mHomeButton.setSelected(false);
                 mGroupButton.setSelected(false);
                 mLeaderBoardButton.setSelected(false);
@@ -213,9 +181,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 }
                 loadFragment(mCurrentFragment = new ProfileFragment());
                 break;
-
             case R.id.home_rl_leaderboard:
-
                 mGroupButton.setSelected(false);
                 mProfileButton.setSelected(false);
                 mHomeButton.setSelected(false);
@@ -225,13 +191,6 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 mProfileTv.setSelected(false);
                 mHomeTv.setSelected(false);
                 mLeaderBoardTv.setSelected(true);
-
-                  /*mLeaderBoardRl.setBackgroundColor(Color.BLACK);
-                  mLeaderBoardRl.getBackground().setAlpha(40);
-
-                  mProfileRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
-                  mGroupRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));
-                  mHomeRl.setBackgroundColor(ContextCompat.getColor(isThreadAlive(), R.color.colorMedium));*/
 
                 loadFragment(mCurrentFragment = new LBLandingFragment());
                 break;
@@ -246,25 +205,30 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     }
 
     private void joinGroup(String groupCode) {
-        JoinGroupModelImpl.newInstance(new JoinGroupModelImpl.OnJoinGroupModelListener() {
+        JoinGroupApiModelImpl.newInstance(new JoinGroupApiModelImpl.OnJoinGroupApiModelListener() {
             @Override
-            public void onSuccess(Integer GroupId) {}
+            public void onSuccessJoinGroupApi(GroupInfo groupInfo) {
+
+            }
 
             @Override
-            public void onInvalidGroupCode() {}
+            public void onFailedJoinGroupApi(String message) {
+
+            }
 
             @Override
-            public void onNoInternet() {}
+            public void onNoInternet() {
+
+            }
 
             @Override
-            public void onFailed(String message) {}
+            public void onInvalidGroupCode() {
 
-            @Override
-            public void onGetGroupCode(String groupCode) {}
+            }
         }).joinGroup(groupCode, true);
     }
 
-    private void showJoinGroupAlert(final String groupCode, String groupName) {
+    /*private void showJoinGroupAlert(final String groupCode, String groupName) {
         new AlertDialog.Builder(this)
                 .setTitle("Group Invitation")
                 .setMessage("You clicked on a group invitation link from \"" + groupName + "\" group, Would you like to proceed with joining this group?")
@@ -283,20 +247,10 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         Intent intent = new Intent(this, JoinGroupActivity.class);
         intent.putExtra(BundleKeys.GROUP_CODE, groupCode);
         startActivity(intent);
-    }
+    }*/
 
     private void loadFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fl_holder, fragment).commit();
-    }
-
-    @Override
-    public void onClickBack() {
-        onBackPressed();
-    }
-
-    @Override
-    public void onClickPlay() {
-        showFeed();
     }
 
     private void showFeed() {
@@ -325,6 +279,11 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     @Override
     public void onFailedGetUpdateUserInfo(String message) {
+
+    }
+
+    @Override
+    public void onNoInternet() {
 
     }
 

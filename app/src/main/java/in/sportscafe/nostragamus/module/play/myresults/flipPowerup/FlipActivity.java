@@ -20,7 +20,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 
 /**
  * Created by deepanshi on 12/20/16.
@@ -68,7 +67,7 @@ public class FlipActivity extends NostragamusActivity implements FlipView  {
         mtoolbar = (Toolbar) findViewById(R.id.flip_toolbar);
         mTitle = (TextView) mtoolbar.findViewById(R.id.toolbar_title);
 
-        Integer numberofFlipPowerUps = NostragamusDataHandler.getInstance().getNumberofFlipPowerups();
+        Integer numberofFlipPowerUps = NostragamusDataHandler.getInstance().getFlipPowerupsCount();
 
         if(numberofFlipPowerUps==1){
             mTitle.setText(numberofFlipPowerUps + " Flip");
@@ -102,8 +101,8 @@ public class FlipActivity extends NostragamusActivity implements FlipView  {
     @Override
     public void decreasePowerupCount() {
 
-        NostragamusDataHandler.getInstance().setNumberofFlipPowerups(NostragamusDataHandler.getInstance().getNumberofFlipPowerups()-1);
-        Integer numberofFlipPowerUps = NostragamusDataHandler.getInstance().getNumberofFlipPowerups();
+        NostragamusDataHandler.getInstance().setFlipPowerupsCount(NostragamusDataHandler.getInstance().getFlipPowerupsCount()-1);
+        Integer numberofFlipPowerUps = NostragamusDataHandler.getInstance().getFlipPowerupsCount();
 
         if(numberofFlipPowerUps==1){
             mTitle.setText(numberofFlipPowerUps + " Flip Allowed");

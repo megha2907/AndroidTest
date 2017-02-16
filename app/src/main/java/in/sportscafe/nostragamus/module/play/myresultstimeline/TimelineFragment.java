@@ -70,73 +70,76 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        this.mRcvFeed = (RecyclerView) findViewById(R.id.feed_rv);
+        Bundle bundle = getArguments();
+        if((null != bundle && bundle.containsKey(BundleKeys.PLAYER_USER_ID)) || null == savedInstanceState) {
+            this.mRcvFeed = (RecyclerView) findViewById(R.id.feed_rv);
 
-        mLinearLayoutManager = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false);
-        this.mRcvFeed.setLayoutManager(mLinearLayoutManager);
+            mLinearLayoutManager = new LinearLayoutManager(getContext(),
+                    LinearLayoutManager.VERTICAL, false);
+            this.mRcvFeed.setLayoutManager(mLinearLayoutManager);
 
-        // It is to find the scrolling stage to do the pagination
-        mRcvFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            // It is to find the scrolling stage to do the pagination
+            mRcvFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                myResultsTimelinePresenter.onTimelineScroll(mLinearLayoutManager.findFirstVisibleItemPosition(),
-                        mLinearLayoutManager.getChildCount(), mLinearLayoutManager.getItemCount());
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                switch (newState) {
-                    case RecyclerView.SCROLL_STATE_IDLE:
-                        Log.d("TimelineFragment", "The RecyclerView is not scrolling");
-                        break;
-                    case RecyclerView.SCROLL_STATE_DRAGGING:
-                        Log.d("TimelineFragment", "Scrolling now");
-                        break;
-                    case RecyclerView.SCROLL_STATE_SETTLING:
-                        Log.d("TimelineFragment", "Scroll Settling");
-                        break;
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    myResultsTimelinePresenter.onTimelineScroll(mLinearLayoutManager.findFirstVisibleItemPosition(),
+                            mLinearLayoutManager.getChildCount(), mLinearLayoutManager.getItemCount());
                 }
-            }
-        });
 
-        this.mRcvFeed.setHasFixedSize(true);
-
-        mRcvFeed.post(new Runnable() {
-            @Override
-            public void run() {
-                mVisibleHeight = mRcvFeed.getMeasuredHeight();
-                mHalfVisibleHeight = getResources().getDimensionPixelSize(R.dimen.dp_220);
-                mDifference = mVisibleHeight - mHalfVisibleHeight;
-            }
-        });
-
-        mRcvFeed.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-
-                View child = null;
-                int[] location = new int[2];
-                int yAxis;
-                int childCount = parent.getChildCount();
-                for (int i = 0; i < childCount; i++) {
-                    child = parent.getChildAt(i).findViewById(R.id.schedule_row_ll);
-
-                    if(child.getVisibility() == View.VISIBLE) {
-                        child.setPivotY(child.getMeasuredHeight());
-                        child.getLocationOnScreen(location);
-                        child.setRotationX(getRotationByY(location[1]));
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    switch (newState) {
+                        case RecyclerView.SCROLL_STATE_IDLE:
+                            Log.d("TimelineFragment", "The RecyclerView is not scrolling");
+                            break;
+                        case RecyclerView.SCROLL_STATE_DRAGGING:
+                            Log.d("TimelineFragment", "Scrolling now");
+                            break;
+                        case RecyclerView.SCROLL_STATE_SETTLING:
+                            Log.d("TimelineFragment", "Scroll Settling");
+                            break;
                     }
                 }
-                super.onDraw(c, parent, state);
-            }
-        });
+            });
 
-        this.myResultsTimelinePresenter = TimelinePresenterImpl.newInstance(this);
-        this.myResultsTimelinePresenter.onCreateFeed(getArguments());
+            this.mRcvFeed.setHasFixedSize(true);
+
+            mRcvFeed.post(new Runnable() {
+                @Override
+                public void run() {
+                    mVisibleHeight = mRcvFeed.getMeasuredHeight();
+                    mHalfVisibleHeight = getResources().getDimensionPixelSize(R.dimen.dp_220);
+                    mDifference = mVisibleHeight - mHalfVisibleHeight;
+                }
+            });
+
+            mRcvFeed.addItemDecoration(new RecyclerView.ItemDecoration() {
+                @Override
+                public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+
+                    View child = null;
+                    int[] location = new int[2];
+                    int yAxis;
+                    int childCount = parent.getChildCount();
+                    for (int i = 0; i < childCount; i++) {
+                        child = parent.getChildAt(i).findViewById(R.id.schedule_row_ll);
+
+                        if (child.getVisibility() == View.VISIBLE) {
+                            child.setPivotY(child.getMeasuredHeight());
+                            child.getLocationOnScreen(location);
+                            child.setRotationX(getRotationByY(location[1]));
+                        }
+                    }
+                    super.onDraw(c, parent, state);
+                }
+            });
+
+            this.myResultsTimelinePresenter = TimelinePresenterImpl.newInstance(this);
+            this.myResultsTimelinePresenter.onCreateFeed(bundle);
+        }
     }
 
     @Override
@@ -170,6 +173,8 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
     @Override
     public void onDetach() {
         super.onDetach();
-        myResultsTimelinePresenter.onDestroy();
+        if(null != myResultsTimelinePresenter) {
+            myResultsTimelinePresenter.onDestroy();
+        }
     }
 }

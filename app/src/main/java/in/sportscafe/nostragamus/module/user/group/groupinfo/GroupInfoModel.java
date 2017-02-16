@@ -2,7 +2,9 @@ package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
+import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
 /**
@@ -12,20 +14,15 @@ public interface GroupInfoModel {
 
     void init(Bundle bundle);
 
-    void updateGroupMembers(GroupInfo groupInfo);
+    String getGroupName();
+
+    void getGroupDetails();
 
     boolean amAdmin();
 
     GroupInfo getGroupInfo();
 
-    int getMembersCount();
-
-    Bundle getGroupIdBundle();
-
-
-    String getShareCodeContent();
-
-    void refreshGroupInfo();
+    int getApprovedMembersCount();
 
     void leaveGroup();
 
@@ -33,5 +30,11 @@ public interface GroupInfoModel {
 
     void deleteGroup();
 
-    GroupTournamentAdapter getAdapter(Context context);
+    Bundle getGroupInfoBundle();
+
+    boolean isAnythingChanged();
+
+    ViewPagerAdapter getAdapter(FragmentManager fm);
+
+    void updateEditData(Bundle bundle);
 }
