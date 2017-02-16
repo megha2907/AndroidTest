@@ -96,14 +96,6 @@ public class PlayerComparisonActivity extends NostragamusActivity implements Pla
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
         tabLayout.setupWithViewPager(mViewPager);
 
-        LinearLayout linearLayout = (LinearLayout) tabLayout.getChildAt(0);
-        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-        GradientDrawable drawable = new GradientDrawable();
-        drawable.setColor(getContext().getResources().getColor(R.color.profile_tab_line_color));
-        drawable.setSize(1, 1);
-        linearLayout.setDividerPadding(10);
-        linearLayout.setDividerDrawable(drawable);
-
     }
 
     private ViewPagerAdapter getAdapter(Bundle bundle) {

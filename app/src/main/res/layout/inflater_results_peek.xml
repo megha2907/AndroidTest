@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:id="@+id/schedule_row_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_12"
+        android:background="@drawable/shape_timeline_tour_bg"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_14"
+        android:paddingTop="@dimen/dp_7">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/results_peek_row_question_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Who will win the Match ? "
+                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_8"
+                />
+
+            <View
+                android:id="@+id/results_peek_row_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0.5"
+                android:layout_below="@+id/results_peek_row_question_tv"
+                android:background="@color/linecolor"
+                android:layout_marginTop="@dimen/dp_8"
+                android:visibility="visible"
+                android:layout_marginRight="@dimen/dp_12"
+                android:layout_marginLeft="@dimen/dp_12"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_gravity="left">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/results_peek_row_player_one_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                android:layout_alignParentLeft="true"
+                />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/results_peek_row_player_one_points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+10 points"
+                android:textColor="@color/white_60"
+                android:layout_alignParentLeft="true"
+                app:typeface="lato_regular"
+                android:textSize="@dimen/dp_12"
+                android:layout_below="@+id/results_peek_row_player_one_answer"
+                />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/results_peek_row_player_two_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                android:layout_alignParentRight="true"
+                />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/results_peek_row_player_two_points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+10 points"
+                android:textColor="@color/white_60"
+                android:layout_alignParentRight="true"
+                app:typeface="lato_regular"
+                android:textSize="@dimen/dp_12"
+                android:layout_below="@+id/results_peek_row_player_two_answer"
+                />
+
+
+        </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>
