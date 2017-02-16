@@ -198,6 +198,14 @@ public interface Constants {
         String GROUP_MEMBERS = "groupMembers";
         String CLICK_POSITION = "clickPosition";
         String OPEN_PROFILE = "openProfile";
+        String POINTS = "points";
+        String NO_OF_MATCHES = "matches";
+        String ACCURACY = "accuracy";
+        String NO_OF_BADGES = "badges";
+        String LEVEL = "level";
+        String NO_OF_SPORTS_FOLLOWED = "sportsFollowed";
+        String PLAYER_NAME = "playerName";
+        String PLAYER_PHOTO = "playerPhoto";
     }
 
     interface ParcelableKeys {

@@ -12,4 +12,5 @@ public interface PlayerProfilePresenter {
 
     void onCreateProfile(Bundle bundle);
 
+    void onClickCompareProfile();
 }
