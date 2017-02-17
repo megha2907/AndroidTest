@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dp_48"
+    android:layout_height="wrap_content"
+    android:visibility="invisible"
+    android:clickable="true">
+
+    <ImageView
+        android:id="@+id/powerup_applied_iv_icon"
+        android:layout_width="@dimen/dp_46"
+        android:layout_height="@dimen/dp_46"
+        android:layout_toRightOf="@id/powerups_iv_2x_global"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/powerup_2x_white" />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/powerup_applied_tv_count"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:layout_alignRight="@id/powerup_applied_iv_icon"
+        android:layout_alignTop="@id/powerup_applied_iv_icon"
+        android:layout_marginRight="@dimen/_dp_2"
+        android:alpha="0.8"
+        android:background="@drawable/powerup_count_bg"
+        android:gravity="center"
+        android:text="X"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_8"
+        app:typeface="lato_regular" />
+
+</RelativeLayout>

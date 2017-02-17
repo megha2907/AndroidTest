@@ -184,16 +184,19 @@
 
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/swipe_card_powerup_icon"
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="@dimen/dp_40"
+            <LinearLayout
+                android:id="@+id/swipe_card_ll_powerup_holder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignTop="@id/swipe_card_ll_image"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/_dp_20"
-                android:background="@drawable/powerups_count_bg"
-                android:src="@drawable/powerup_nonegs_white"
-                android:visibility="gone" />
+                android:layout_marginTop="@dimen/_dp_23"
+                android:divider="@drawable/transparent_shape"
+                android:orientation="horizontal"
+                android:showDividers="middle">
+
+
+            </LinearLayout>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/swipe_card_tv_locking_option"

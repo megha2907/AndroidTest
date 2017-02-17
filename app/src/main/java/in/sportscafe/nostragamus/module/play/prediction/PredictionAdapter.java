@@ -2,15 +2,20 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +31,7 @@ import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import static com.google.android.gms.analytics.internal.zzy.v;
 
 public class PredictionAdapter extends ArrayAdapter<Question> {
 
@@ -209,22 +215,22 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         }
 
         String powerupId = question.getPowerUpId();
-
-        int powerupIcons = PowerUp.getPlayPowerupIcons(powerupId);
-        if (powerupIcons != -1) {
-            viewHolder.btnpowerupicon.setVisibility(View.VISIBLE);
-            viewHolder.btnpowerupicon.setImageResource(powerupIcons);
-
+        viewHolder.llPowerUpHolder.removeAllViews();
+        if (!TextUtils.isEmpty(powerupId)) {
             if (Powerups.AUDIENCE_POLL.equalsIgnoreCase(powerupId)) {
                 viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
                 viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
 
                 viewHolder.btnanswer1Percentage.setText(question.getOption1AudPollPer() + "%");
                 viewHolder.btnanswer2Percentage.setText(question.getOption2AudPollPer() + "%");
+            } else {
+                View powerUpAppliedView = getPowerUpAppliedView(powerupId, viewHolder.llPowerUpHolder);
+                if (null != powerUpAppliedView) {
+                    viewHolder.llPowerUpHolder.addView(powerUpAppliedView);
+                    powerUpAppliedView.setOnClickListener(mRemovePowerUpListener);
+                    showPowerUpAnimation(powerUpAppliedView);
+                }
             }
-            viewHolder.btnpowerupicon.setOnClickListener(mRemovePowerUpListener);
-        } else {
-            viewHolder.btnpowerupicon.setVisibility(View.GONE);
         }
 
         viewHolder.tvQuestion.post(new Runnable() {
@@ -235,6 +241,60 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         });
 
         return convertView;
+    }
+
+    private View getPowerUpAppliedView(String powerupId, ViewGroup parent) {
+        View powerUpView = mLayoutInflater.inflate(R.layout.inflater_powerup_applied, parent, false);
+        ImageView icon = (ImageView) powerUpView.findViewById(R.id.powerup_applied_iv_icon);
+        switch (powerupId) {
+            case Powerups.XX:
+            case Powerups.XX_GLOBAL:
+                icon.setImageResource(R.drawable.powerup_2x_white);
+                icon.setBackground(getPowerupDrawable(R.color.dodger_blue));
+                break;
+            case Powerups.NO_NEGATIVE:
+                icon.setImageResource(R.drawable.powerup_nonegs_white);
+                icon.setBackground(getPowerupDrawable(R.color.amaranth));
+                break;
+            default:
+                return null;
+        }
+        return powerUpView;
+    }
+
+    private Drawable getPowerupDrawable(int colorRes) {
+        GradientDrawable powerupDrawable = new GradientDrawable();
+        powerupDrawable.setShape(GradientDrawable.OVAL);
+        powerupDrawable.setColor(mLayoutInflater.getContext().getResources().getColor(colorRes));
+        return powerupDrawable;
+    }
+
+    private void showPowerUpAnimation(final View view) {
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        view.startAnimation(scaleAnimation);
+    }
+
+    public void dismissPowerUpAnimation(final View view, Animation.AnimationListener listener) {
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setAnimationListener(listener);
+        view.startAnimation(scaleAnimation);
     }
 
     private void updateBg(int offset) {
@@ -403,8 +463,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         TextView tvRightOption;
 
-        ImageButton btnpowerupicon;
-
         TextView btnanswer1Percentage;
 
         TextView btnanswer2Percentage;
@@ -423,6 +481,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         LinearLayout llQuestionDesc;
 
+        LinearLayout llPowerUpHolder;
+
         public ViewHolder(View rootView) {
             cvMainCard = (CardView) rootView.findViewById(R.id.swipe_card_cv_main);
             tvQuestion = (TextView) rootView.findViewById(R.id.swipe_card_tv_question);
@@ -433,7 +493,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             ivRightOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_right);
             tvLeftOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_left);
             tvRightOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_right);
-            btnpowerupicon = (ImageButton) rootView.findViewById(R.id.swipe_card_powerup_icon);
             btnanswer1Percentage = (TextView) rootView.findViewById(R.id.swipe_card_tv_left_poll);
             btnanswer2Percentage = (TextView) rootView.findViewById(R.id.swipe_card_answer2_percentage);
             tvquestionPositivePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_positive_points);
@@ -443,6 +502,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             tvLockingOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_locking_option);
             llOptionLabels = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_option_labels);
             llQuestionDesc = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_question_desc);
+            llPowerUpHolder = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_powerup_holder);
         }
     }
 }

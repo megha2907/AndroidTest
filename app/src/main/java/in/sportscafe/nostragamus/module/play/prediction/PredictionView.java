@@ -30,13 +30,13 @@ public interface PredictionView extends InAppView {
 
     void setNumberofCards(String numberofCards);
 
-    void set2xGlobalPowerupCount(int count);
+    void set2xGlobalPowerupCount(int count, boolean reverse);
 
-    void set2xPowerupCount(int count);
+    void set2xPowerupCount(int count, boolean reverse);
 
-    void setNonegsPowerupCount(int count);
+    void setNonegsPowerupCount(int count, boolean reverse);
 
-    void setPollPowerupCount(int count);
+    void setPollPowerupCount(int count, boolean reverse);
 
     void notifyTopView();
 
