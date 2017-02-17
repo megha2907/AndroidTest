@@ -26,6 +26,10 @@ public class TimelineModelImpl implements TimelineModel {
 
     private Integer mPlayerUserId;
 
+    private String mPlayerPhoto;
+
+    private String mPlayerName;
+
     private int mClosestDatePosition = 0;
 
     private boolean mTimelineLoading = false;
@@ -48,6 +52,8 @@ public class TimelineModelImpl implements TimelineModel {
     public void init(Bundle bundle) {
         if(null != bundle && bundle.containsKey(BundleKeys.PLAYER_USER_ID)) {
             mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_USER_ID);
+            mPlayerName = bundle.getString(BundleKeys.PLAYER_NAME);
+            mPlayerPhoto = bundle.getString(BundleKeys.PLAYER_PHOTO);
         }
     }
 
@@ -56,7 +62,7 @@ public class TimelineModelImpl implements TimelineModel {
         if(null == mPlayerUserId) {
             return mTimelineAdapter = new TimelineAdapter(context);
         }
-        return mTimelineAdapter = new TimelineAdapter(context, mPlayerUserId);
+        return mTimelineAdapter = new TimelineAdapter(context, mPlayerUserId,mPlayerName,mPlayerPhoto);
     }
 
     @Override

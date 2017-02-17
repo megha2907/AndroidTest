@@ -22,6 +22,7 @@ import com.jeeva.android.Log;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 import static android.R.attr.fragment;
@@ -47,9 +48,11 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
 
     private LinearLayoutManager mLinearLayoutManager;
 
-    public static TimelineFragment newInstance(Integer playerUserId) {
+    public static TimelineFragment newInstance(PlayerInfo playerInfo) {
         Bundle args = new Bundle();
-        args.putInt(BundleKeys.PLAYER_USER_ID, playerUserId);
+        args.putInt(BundleKeys.PLAYER_USER_ID, playerInfo.getId());
+        args.putString(BundleKeys.PLAYER_PHOTO, playerInfo.getPhoto());
+        args.putString(BundleKeys.PLAYER_NAME, playerInfo.getUserNickName());
 
         TimelineFragment fragment = new TimelineFragment();
         fragment.setArguments(args);

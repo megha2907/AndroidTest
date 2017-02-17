@@ -46,6 +46,8 @@ import in.sportscafe.nostragamus.module.feed.dto.Parties;
 import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
+import in.sportscafe.nostragamus.module.resultspeek.dto.ResultsPeek;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -66,6 +68,10 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
     private Integer mPlayerId;
 
+    private String mPlayerName;
+
+    private String mPlayerPhoto;
+
     private TournamentPowerupInfo mPowerupInfo;
 
     public TimelineAdapter(Context context) {
@@ -73,9 +79,11 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         mTimerRunnable = new TimerRunnable();
     }
 
-    public TimelineAdapter(Context context, Integer playerId) {
+    public TimelineAdapter(Context context, Integer playerId,String playerName ,String playerPhoto) {
         this(context);
         this.mPlayerId = playerId;
+        this.mPlayerName = playerName;
+        this.mPlayerPhoto = playerPhoto;
     }
 
     public TimelineAdapter(Context context, TournamentPowerupInfo powerupInfo) {
@@ -407,6 +415,9 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
                 if (null != mPlayerId) {
                     bundle.putInt(BundleKeys.PLAYER_ID, mPlayerId);
+                    bundle.putInt(BundleKeys.MATCH_ID,match.getId());
+                    bundle.putString(BundleKeys.PLAYER_NAME,mPlayerName);
+                    bundle.putString(BundleKeys.PLAYER_PHOTO,mPlayerPhoto);
                 }
             }
 
@@ -422,7 +433,12 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 case R.id.rl_points:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.VIEW_ANSWERS);
 
-                    navigateToMyResults(context, bundle);
+                    if (mPlayerId!=null){
+                        navigateToResultsPeek(context, bundle);
+                    }else {
+                        navigateToMyResults(context, bundle);
+                    }
+
                     break;
                 case R.id.schedule_row_ll_waiting_for_result:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.RESULT_WAITING);
@@ -432,6 +448,12 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             }
         }
 
+    }
+
+    private void navigateToResultsPeek(Context context, Bundle bundle) {
+        Intent intent = new Intent(context, ResultsPeekActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
     private void navigateToPrediction(Context context, Bundle bundle) {

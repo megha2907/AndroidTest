@@ -108,6 +108,6 @@ public class PlayerComparisonActivity extends NostragamusActivity implements Pla
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.PLAYER_PROFILE;
+        return Constants.ScreenNames.PLAYER_COMPARISON;
     }
 }

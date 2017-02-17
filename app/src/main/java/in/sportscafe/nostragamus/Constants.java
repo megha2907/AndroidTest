@@ -89,7 +89,7 @@ public interface Constants {
         String SERVER_DOWN = "There is problem in your internet connection";
         String SESSION_EXPIRED = "Session Expired";
         String NO_ARTICLE_FOUND = "No articles found";
-        String NO_RESULTS_FOUND = "No results found";
+        String NO_RESULTS_FOUND = "No Results found";
         String NO_WHATSAPP = "Whatsapp have not been installed";
         String LOGIN_FAILED = "Login failed";
         String EMPTY_TOURNAMENT_SELECTION = "Please pick atleast one Tournament";
@@ -357,5 +357,7 @@ public interface Constants {
         String GOOGLE_FORM = "google_form"; // in.sportscafe.nostragamus.module.feedback.GoogleFormActivity
         String OTHER_ANSWERS = "other_answers"; // in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity
         String SPORT_SELECTION = "sport_selection"; //in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity
+        String PLAYER_COMPARISON = "player_comparison"; //in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity
+        String RESULTS_PEEK = "results_peek"; //in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity
     }
 }
