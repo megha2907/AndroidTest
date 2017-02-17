@@ -4,17 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.jeeva.android.ExceptionTracker;
-import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import in.sportscafe.nostragamus.Constants;
@@ -25,16 +19,11 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
-import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
-import in.sportscafe.nostragamus.module.user.login.RefreshTokenModelImpl;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import io.branch.indexing.BranchUniversalObject;
@@ -54,10 +43,6 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     private static final int LIMIT = 5;
 
     private int matchId;
-
-    private boolean isLoading = false;
-
-    private boolean hasMoreItems = true;
 
     private MyResultsAdapter mResultAdapter;
 
@@ -88,7 +73,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
             mResultsModelListener.gotoResultsTimeline();
         }
 
-        if(bundle.containsKey(BundleKeys.PLAYER_ID)) {
+        if (bundle.containsKey(BundleKeys.PLAYER_ID)) {
             mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_ID);
         }
 
@@ -98,13 +83,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public void getMyResultsData(Context context) {
-        loadMyResults(0);
-    }
-
-    private void loadMyResults(int offset) {
         if (checkInternet()) {
-            Log.i("call", "callMyResultsApi");
-            callMyResultsApi(offset);
+            callMyResultsApi();
         }
     }
 
@@ -116,8 +96,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         return false;
     }
 
-    private void callMyResultsApi(final int offset) {
-        isLoading = true;
+    private void callMyResultsApi() {
         MyWebService.getInstance().getMyResultsRequest(matchId, mPlayerUserId).enqueue(
                 new NostragamusCallBack<MyResultsResponse>() {
                     @Override
@@ -132,39 +111,20 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                                 if (myResultList.isEmpty() || myResultList == null) {
                                     mResultsModelListener.onFailedMyResults(response.message());
                                 } else {
-                                    String responseJson = MyWebService.getInstance().getJsonStringFromObject(myResultList);
-                                    Log.d("MyResults Response", responseJson);
+                                    destroyAdapter();
+                                    mResultsModelListener.onSuccessMyResults(createAdapter(context));
+                                    mResultsModelListener.onsetMatchDetails(myResultList.get(0));
 
-                                    if (offset == 0) {
-                                        destroyAdapter();
-                                        mResultsModelListener.onSuccessMyResults(createAdapter(context));
-                                        mResultsModelListener.onsetMatchDetails(myResultList.get(0));
+                                    loadAdapterData(myResultList.get(0));
 
-                                        loadAdapterData(getCategorizedList(myResultList));
-
-
-                                        if (myResultList.isEmpty()) {
-                                            mResultsModelListener.onEmpty();
-                                        }
-                                    } else {
-                                        addMoreInAdapter(getCategorizedList(myResultList));
-                                    }
-
-                                    if (myResultList.size() != LIMIT) {
-                                        hasMoreItems = false;
+                                    if (myResultList.isEmpty()) {
+                                        mResultsModelListener.onEmpty();
                                     }
                                 }
                             }
-
                         } else {
-                            if (offset == 0) {
-                                mResultsModelListener.onFailedMyResults(response.message());
-                            }
-                            if (response.code() == 404) {
-                                hasMoreItems = false;
-                            }
+                            mResultsModelListener.onFailedMyResults(response.message());
                         }
-                        isLoading = false;
                     }
                 }
         );
@@ -181,38 +141,15 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         }
     }
 
-    private void loadAdapterData(List<Feed> feedList) {
+    private void loadAdapterData(Match match) {
         mResultAdapter.clear();
-        addMoreInAdapter(feedList);
-    }
-
-    private void addMoreInAdapter(List<Feed> feedList) {
-        int count = mResultAdapter.getItemCount();
-        for (Feed feed : feedList) {
-            mResultAdapter.add(feed, count++);
-        }
-    }
-
-    @Override
-    public void checkPagination(int firstVisibleItemPosition, int childCount, int itemCount) {
-        if (itemCount > 0 && !isLoading && hasMoreItems) {
-            int lastVisibleItem = firstVisibleItemPosition + childCount;
-            if (lastVisibleItem >= (itemCount - PAGINATION_START_AT)) {
-                Log.d("Pagination", "firstVisibleItem : " + firstVisibleItemPosition
-                        + ", " + "visibleItemCount : " + childCount
-                        + ", " + "totalItemCount : " + itemCount);
-
-                loadMyResults(itemCount);
-            }
-        }
+        mResultAdapter.add(match);
     }
 
     @Override
     public void callReplayPowerupApplied() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-
             callReplayPowerupAppliedApi(Powerups.MATCH_REPLAY, matchId);
-
         } else {
             mResultsModelListener.onNoInternet();
         }
@@ -261,7 +198,6 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                     }
 
                 });
-
     }
 
     private void getSharableLink(String screenShotUrl) {
@@ -299,7 +235,6 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     private void callReplayPowerupAppliedApi(final String powerupId, Integer matchId) {
-
         MyWebService.getInstance().getReplayPowerup(powerupId, matchId).enqueue(new NostragamusCallBack<ReplayPowerupResponse>() {
             @Override
             public void onResponse(Call<ReplayPowerupResponse> call, Response<ReplayPowerupResponse> response) {
@@ -319,58 +254,6 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
             }
         });
 
-    }
-
-    private List<Feed> getCategorizedList(List<Match> matchList) {
-        Map<String, Tournament> tourMap = new HashMap<>();
-        Map<String, Feed> feedMap = new HashMap<>();
-        List<Feed> feedList = new ArrayList<>();
-
-        String date;
-        Feed feed;
-        int tourId;
-        Tournament tour;
-        for (Match match : matchList) {
-            date = TimeUtils.getFormattedDateString(
-                    match.getStartTime(),
-                    Constants.DateFormats.DD_MM_YYYY,
-                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                    Constants.DateFormats.GMT
-            );
-
-            if (feedMap.containsKey(date)) {
-                feed = feedMap.get(date);
-            } else {
-                feed = new Feed(TimeUtils.getMillisecondsFromDateString(
-                        date,
-                        Constants.DateFormats.DD_MM_YYYY,
-                        Constants.DateFormats.GMT
-                ));
-                feedMap.put(date, feed);
-                feedList.add(feed);
-            }
-
-            tourId = match.getTournamentId();
-
-            if (tourMap.containsKey(date + tourId)) {
-                tour = tourMap.get(date + tourId);
-            } else {
-                tour = new Tournament(tourId, match.getTournamentName());
-                tourMap.put(date + tourId, tour);
-                feed.addTournament(tour);
-            }
-
-            tour.addMatches(match);
-        }
-
-        Collections.sort(feedList, new Comparator<Feed>() {
-            @Override
-            public int compare(Feed lhs, Feed rhs) {
-                return (int) (lhs.getDate() - rhs.getDate());
-            }
-        });
-
-        return feedList;
     }
 
     @Override

@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
@@ -26,25 +25,31 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 
-import static com.google.android.gms.analytics.internal.zzy.f;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 public class PredictionAdapter extends ArrayAdapter<Question> {
 
-    private static final float HEADER_PERECENTAGE = 12.5f / 100;
+    private static final float HEADER_PERECENTAGE = 10f / 100;
 
-    private static final float FOOTER_PERECENTAGE = 20f / 100;
+    private static final float FOOTER_PERECENTAGE = 23f / 100;
+
+    private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 6f / 100;
 
     private static final float OPTION_PERECENTAGE = 6.25f / 100;
 
-    private static final float CARD_HEIGHT_PERECENTAGE = 50f / 100;
+    private static final float CARD_HEIGHT_PERECENTAGE = 53f / 100;
 
-    private static final float MARGIN_PERECENTAGE = 3.125f / 100;
+    private static final float L_R_DELTA_PERECENTAGE = 1.5f / 100;
+
+    private static final float NEITHER_DELTA_PERECENTAGE = 1.5f / 100;
 
     private LayoutInflater mLayoutInflater;
 
     private boolean mBgUpdateDone = false;
 
     private int mTopMargin;
+
+    private View vBgFrame0;
 
     private View vBgFrame1;
 
@@ -90,31 +95,40 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     private float mImageHeight;
 
-    public PredictionAdapter(Context context) {
+    private View.OnClickListener mRemovePowerUpListener;
+
+    public PredictionAdapter(Context context, View.OnClickListener removePowerUpListener) {
         super(context, android.R.layout.simple_list_item_1);
         this.mLayoutInflater = LayoutInflater.from(context);
+        this.mRemovePowerUpListener = removePowerUpListener;
     }
 
     public void setRootView(View rootView) {
         Rect rect = new Rect();
         rootView.getLocalVisibleRect(rect);
 
-        final float SCREEN_WIDTH = rect.width();
-        final float SCREEN_HEIGHT = rect.height();
+        applyFrameCardPercentages(rootView, rect.height());
+    }
 
-        Log.d("Play Sizes", SCREEN_WIDTH + ", " + SCREEN_HEIGHT);
-
-        mCardHeight = SCREEN_HEIGHT * CARD_HEIGHT_PERECENTAGE;
+    private void applyFrameCardPercentages(View rootView, float screenHeight) {
+        mCardHeight = screenHeight * CARD_HEIGHT_PERECENTAGE;
         mCardWidth = mCardHeight;
-        mOptionHeight = SCREEN_HEIGHT * OPTION_PERECENTAGE;
-        mCardMargin = SCREEN_HEIGHT * MARGIN_PERECENTAGE;
+        mOptionHeight = screenHeight * OPTION_PERECENTAGE;
         mImageWidth = mCardWidth / 2f;
         mImageHeight = mImageWidth;
 
-        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_cv_bg_0).getLayoutParams();
+        vBgFrame0 = rootView.findViewById(R.id.prediction_cv_bg_0);
+        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) vBgFrame0.getLayoutParams();
         rlp.width = (int) mCardWidth;
         rlp.height = (int) (mCardHeight + mOptionHeight);
-        mTopMargin = rlp.topMargin;
+        mTopMargin = (int) (screenHeight * GAP_BW_HEADER_CARD_PERECENTAGE);
+        rlp.topMargin = mTopMargin;
+
+        ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_left_right_indicator).getLayoutParams())
+                .topMargin = (int) (mTopMargin + rlp.height - screenHeight * 1.5f / 100 - mOptionHeight / 2f);
+
+        ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_neither_indicator).getLayoutParams())
+                .topMargin = (int) (mTopMargin + rlp.height - mOptionHeight);
 
         vBgFrame1 = rootView.findViewById(R.id.prediction_cv_bg_1);
         vBgFrame1.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
@@ -123,31 +137,22 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         vBgFrame2.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
 
         rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_header).getLayoutParams();
-        rlp.height = (int) (SCREEN_HEIGHT * HEADER_PERECENTAGE);
+        rlp.height = (int) (screenHeight * HEADER_PERECENTAGE);
+
+        mTopMargin += rlp.height;
+
+//        rootView.findViewById(R.id.prediction_rl_play_page).setPadding(0, rlp.height, 0, 0);
 
         rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_footer).getLayoutParams();
-        rlp.height = (int) (SCREEN_HEIGHT * FOOTER_PERECENTAGE);
-
-//        rootView.findViewById(R.id.activity_prediction_swipe).getLayoutParams().height = (int) mCardHeight;
+        rlp.height = (int) (screenHeight * FOOTER_PERECENTAGE);
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        convertView = mLayoutInflater.inflate(R.layout.inflater_swipe_card_row, parent, false);
-
-        final ViewHolder viewHolder = new ViewHolder(convertView);
-        convertView.setTag(viewHolder);
-
-
-        /*sdf*/
-
+    private void applyMainCardPercentages(ViewHolder viewHolder) {
         ViewGroup.LayoutParams lp = viewHolder.flLeftArea.getLayoutParams();
         lp.width = (int) mImageWidth;
         lp.height = (int) mImageHeight;
 
         lp = viewHolder.flRightArea.getLayoutParams();
-//        lp.width = (int) mImageWidth;
         lp.height = (int) mImageHeight;
 
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) viewHolder.llOptionLabels.getLayoutParams();
@@ -161,12 +166,17 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         rlp = (RelativeLayout.LayoutParams) viewHolder.cvMainCard.getLayoutParams();
         rlp.width = (int) mCardWidth;
-        rlp.height = (int) (mCardHeight + mOptionHeight);
-        /*rlp.leftMargin = (int) mCardMargin;
-        rlp.rightMargin = (int) mCardMargin;*/
-        rlp.topMargin = (int) mTopMargin;
-        /*sadf*/
+        rlp.topMargin = mTopMargin;
+    }
 
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        convertView = mLayoutInflater.inflate(R.layout.inflater_swipe_card_row, parent, false);
+
+        final ViewHolder viewHolder = new ViewHolder(convertView);
+        convertView.setTag(viewHolder);
+
+        applyMainCardPercentages(viewHolder);
 
         Question question = getItem(position);
 
@@ -177,24 +187,24 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         viewHolder.tvLeftOption.setText(question.getQuestionOption1());
         viewHolder.tvRightOption.setText(question.getQuestionOption2());
 
-        if (null == question.getQuestionPositivePoints()
-                || question.getQuestionPositivePoints() == 0) {
+        Integer positivePoint = question.getUpdatedPositivePoints();
+        if (null == positivePoint || positivePoint == 0) {
             viewHolder.tvquestionPositivePoints.setVisibility(View.GONE);
             viewHolder.cardViewpoints.setVisibility(View.GONE);
         } else {
-            viewHolder.tvquestionPositivePoints.setText("+" + question.getQuestionPositivePoints());
-            viewHolder.tvquestionPositivePoints.setTag(question.getQuestionPositivePoints());
+            viewHolder.tvquestionPositivePoints.setText("+" + positivePoint);
+            viewHolder.tvquestionPositivePoints.setTag(positivePoint);
             viewHolder.tvquestionPositivePoints.setVisibility(View.VISIBLE);
         }
 
-        if (null == question.getQuestionNegativePoints()
-                || question.getQuestionNegativePoints() == 0) {
+        Integer negativePoint = question.getUpdatedNegativePoints();
+        if (null == negativePoint || negativePoint == 0) {
             viewHolder.tvquestionNegativePoints.setVisibility(View.GONE);
             viewHolder.viewPoints.setVisibility(View.GONE);
             viewHolder.tvquestionPositivePoints.setPadding(32, 0, 32, 0);
         } else {
-            viewHolder.tvquestionNegativePoints.setText("" + question.getQuestionNegativePoints());
-            viewHolder.tvquestionNegativePoints.setTag(question.getQuestionNegativePoints());
+            viewHolder.tvquestionNegativePoints.setText("" + negativePoint);
+            viewHolder.tvquestionNegativePoints.setTag(negativePoint);
             viewHolder.tvquestionNegativePoints.setVisibility(View.VISIBLE);
         }
 
@@ -212,6 +222,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
                 viewHolder.btnanswer1Percentage.setText(question.getOption1AudPollPer() + "%");
                 viewHolder.btnanswer2Percentage.setText(question.getOption2AudPollPer() + "%");
             }
+            viewHolder.btnpowerupicon.setOnClickListener(mRemovePowerUpListener);
         } else {
             viewHolder.btnpowerupicon.setVisibility(View.GONE);
         }
@@ -219,22 +230,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         viewHolder.tvQuestion.post(new Runnable() {
             @Override
             public void run() {
-                int questionlineCount = viewHolder.tvQuestion.getLineCount();
-
-                if (questionlineCount == 3) {
-                    viewHolder.tvContext.setMaxLines(3);
-                    viewHolder.tvContext.setEllipsize(TextUtils.TruncateAt.END);
-                } else if (questionlineCount == 2) {
-                    viewHolder.tvContext.setMaxLines(4);
-                    viewHolder.tvContext.setEllipsize(TextUtils.TruncateAt.END);
-                } else if (questionlineCount == 1) {
-                    viewHolder.tvContext.setMaxLines(5);
-                    viewHolder.tvContext.setEllipsize(TextUtils.TruncateAt.END);
-                } else {
-                    viewHolder.tvContext.setMaxLines(3);
-                    viewHolder.tvContext.setEllipsize(TextUtils.TruncateAt.END);
-                }
-
+                viewHolder.tvContext.setMaxLines(6 - viewHolder.tvQuestion.getLineCount());
             }
         });
 
@@ -261,37 +257,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
                 }
             }
             mCvMain.setCardElevation(elevation);
-        }
-    }
-
-    public void update2xGlobalPowerUp() {
-        mTopQuestion.setPowerUpId(Powerups.XX_GLOBAL);
-        mTopQuestion.setQuestionPositivePoints(2 * mTopQuestion.getQuestionPositivePoints());
-        mTopQuestion.setQuestionNegativePoints(2 * mTopQuestion.getQuestionNegativePoints());
-    }
-
-    public void update2xPowerUp() {
-        mTopQuestion.setPowerUpId(Powerups.XX);
-        mTopQuestion.setQuestionPositivePoints(2 * mTopQuestion.getQuestionPositivePoints());
-        mTopQuestion.setQuestionNegativePoints(2 * mTopQuestion.getQuestionNegativePoints());
-    }
-
-    public void updateNonegsPowerUp() {
-        mTopQuestion.setPowerUpId(Powerups.NO_NEGATIVE);
-        mTopQuestion.setQuestionNegativePoints(0);
-    }
-
-    public void updateAudiencePollPowerUp(int leftAnswerPercent, int rightAnswerPercent) {
-        mTopQuestion.setPowerUpId(Powerups.AUDIENCE_POLL);
-        mTopQuestion.setOption1AudPollPer(leftAnswerPercent);
-        mTopQuestion.setOption2AudPollPer(rightAnswerPercent);
-
-        if (leftAnswerPercent > rightAnswerPercent) {
-            mTopQuestion.setMinorityAnswerId(AnswerIds.RIGHT);
-        } else if (leftAnswerPercent < rightAnswerPercent) {
-            mTopQuestion.setMinorityAnswerId(AnswerIds.LEFT);
-        } else {
-            mTopQuestion.setMinorityAnswerId(-1);
         }
     }
 

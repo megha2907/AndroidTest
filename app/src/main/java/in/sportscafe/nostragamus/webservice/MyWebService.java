@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.Config;
+import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
@@ -246,5 +247,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<CompareLeaderBoardResponse> getLeaderBoardComparisonRequest(Integer playerId) {
         return mNostragamusService.getLeaderBoardComparisonRequest(playerId);
+    }
+
+    public Call<AllChallengesResponse> getAllChallengesRequest() {
+        return mNostragamusService.getAllChallenges();
     }
 }

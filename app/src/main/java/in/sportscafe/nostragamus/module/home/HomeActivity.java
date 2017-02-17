@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
 import in.sportscafe.nostragamus.module.user.group.JoinGroupApiModelImpl;
@@ -32,31 +30,9 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
-    private View mSelectedTab;
+    private View mSelectedImage;
 
-    private ImageView mHomeButton;
-
-    private ImageView mProfileButton;
-
-    private ImageView mGroupButton;
-
-    private ImageView mLeaderBoardButton;
-
-    private TextView mHomeTv;
-
-    private TextView mProfileTv;
-
-    private TextView mGroupTv;
-
-    private TextView mLeaderBoardTv;
-
-    private RelativeLayout mHomeRl;
-
-    private RelativeLayout mProfileRl;
-
-    private RelativeLayout mGroupRl;
-
-    private RelativeLayout mLeaderBoardRl;
+    private View mSelectedText;
 
     private Fragment mCurrentFragment;
 
@@ -72,22 +48,6 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
 
         UserInfoModelImpl.newInstance(this).getUserInfo();
 
-
-        mHomeButton = (ImageView) findViewById(R.id.home_ibtn_feed);
-        mProfileButton = (ImageView) findViewById(R.id.home_ibtn_profile);
-        mGroupButton = (ImageView) findViewById(R.id.home_ibtn_group);
-        mLeaderBoardButton = (ImageView) findViewById(R.id.home_ibtn_leaderboard);
-
-        mHomeTv = (TextView) findViewById(R.id.home_tv_feed);
-        mProfileTv = (TextView) findViewById(R.id.home_tv_profile);
-        mGroupTv = (TextView) findViewById(R.id.home_tv_group);
-        mLeaderBoardTv = (TextView) findViewById(R.id.home_tv_leaderboard);
-
-        mHomeRl = (RelativeLayout) findViewById(R.id.home_rl_feed);
-        mProfileRl = (RelativeLayout) findViewById(R.id.home_rl_profile);
-        mGroupRl = (RelativeLayout) findViewById(R.id.home_rl_group);
-        mLeaderBoardRl = (RelativeLayout) findViewById(R.id.home_rl_leaderboard);
-
         checkGroupCode();
 
         Bundle bundle = getIntent().getExtras();
@@ -102,7 +62,7 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
                 return;
             }
         }
-        showFeed();
+        showFirstTab();
     }
 
     private void showProfile() {
@@ -138,42 +98,24 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
 
     public void onClickTab(View view) {
         switch (view.getId()) {
-            case R.id.home_rl_group:
-                mHomeButton.setSelected(false);
-                mProfileButton.setSelected(false);
-                mLeaderBoardButton.setSelected(false);
-                mGroupButton.setSelected(true);
-
-                mHomeTv.setSelected(false);
-                mProfileTv.setSelected(false);
-                mLeaderBoardTv.setSelected(false);
-                mGroupTv.setSelected(true);
-
-                loadFragment(mCurrentFragment = new AllGroupsFragment().newInstance());
+            case R.id.home_rl_challenges:
+                setSelected(findViewById(R.id.home_ibtn_challenge), findViewById(R.id.home_tv_challenge));
+                loadFragment(mCurrentFragment = AllChallengesFragment.newInstance());
                 break;
             case R.id.home_rl_feed:
-                mGroupButton.setSelected(false);
-                mProfileButton.setSelected(false);
-                mLeaderBoardButton.setSelected(false);
-                mHomeButton.setSelected(true);
-
-                mGroupTv.setSelected(false);
-                mProfileTv.setSelected(false);
-                mLeaderBoardTv.setSelected(false);
-                mHomeTv.setSelected(true);
-
+                setSelected(findViewById(R.id.home_ibtn_feed), findViewById(R.id.home_tv_feed));
                 loadFragment(mCurrentFragment = TournamentFragment.newInstance());
                 break;
+            case R.id.home_rl_group:
+                setSelected(findViewById(R.id.home_ibtn_group), findViewById(R.id.home_tv_group));
+                loadFragment(mCurrentFragment = AllGroupsFragment.newInstance());
+                break;
+            case R.id.home_rl_leaderboard:
+                setSelected(findViewById(R.id.home_ibtn_leaderboard), findViewById(R.id.home_tv_leaderboard));
+                loadFragment(mCurrentFragment = new LBLandingFragment());
+                break;
             case R.id.home_rl_profile:
-                mHomeButton.setSelected(false);
-                mGroupButton.setSelected(false);
-                mLeaderBoardButton.setSelected(false);
-                mProfileButton.setSelected(true);
-
-                mHomeTv.setSelected(false);
-                mGroupTv.setSelected(false);
-                mLeaderBoardTv.setSelected(false);
-                mProfileTv.setSelected(true);
+                setSelected(findViewById(R.id.home_ibtn_profile), findViewById(R.id.home_tv_profile));
 
                 if (null == NostragamusDataHandler.getInstance().getUserId()) {
                     navigateToLogIn();
@@ -181,20 +123,23 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
                 }
                 loadFragment(mCurrentFragment = new ProfileFragment());
                 break;
-            case R.id.home_rl_leaderboard:
-                mGroupButton.setSelected(false);
-                mProfileButton.setSelected(false);
-                mHomeButton.setSelected(false);
-                mLeaderBoardButton.setSelected(true);
-
-                mGroupTv.setSelected(false);
-                mProfileTv.setSelected(false);
-                mHomeTv.setSelected(false);
-                mLeaderBoardTv.setSelected(true);
-
-                loadFragment(mCurrentFragment = new LBLandingFragment());
-                break;
         }
+    }
+
+    private void setSelected(View selImg, View selText) {
+        if (null != mSelectedImage) {
+            mSelectedImage.setSelected(false);
+        }
+
+        if (null != mSelectedText) {
+            mSelectedText.setSelected(false);
+        }
+
+        mSelectedImage = selImg;
+        mSelectedImage.setSelected(true);
+
+        mSelectedText = selText;
+        mSelectedText.setSelected(true);
     }
 
     private void checkGroupCode() {
@@ -253,8 +198,8 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fl_holder, fragment).commit();
     }
 
-    private void showFeed() {
-        onClickTab(findViewById(R.id.home_rl_feed));
+    private void showFirstTab() {
+        onClickTab(findViewById(R.id.home_rl_challenges));
     }
 
     private void navigateToLogIn() {

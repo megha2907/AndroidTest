@@ -43,11 +43,6 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
-    public void onArticleScroll(int firstVisibleItemPosition, int childCount, int itemCount) {
-        mResultsModel.checkPagination(firstVisibleItemPosition, childCount, itemCount);
-    }
-
-    @Override
     public void onPowerUp(String powerup) {
         if (powerup.equalsIgnoreCase(Powerups.MATCH_REPLAY)) {
             mResultsView.openReplayDialog();

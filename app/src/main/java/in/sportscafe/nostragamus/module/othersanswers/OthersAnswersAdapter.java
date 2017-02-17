@@ -18,11 +18,9 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -30,12 +28,11 @@ import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
-import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.ViewHolder> {
+public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.ViewHolder> {
 
     private PlayerInfo mPlayerInfo;
 
@@ -48,7 +45,7 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
     }
 
     @Override
-    public Feed getItem(int position) {
+    public Match getItem(int position) {
         return super.getItem(position);
     }
 
@@ -59,7 +56,6 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Feed feed = getItem(position);
         holder.mPosition = position;
         holder.mLlTourParent.removeAllViews();
 
@@ -67,9 +63,7 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
             holder.mLlTourParent.addView(getPlayerView(mPlayerInfo, holder.mLlTourParent));
         }
 
-        for (Tournament tournament : feed.getTournaments()) {
-            holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent));
-        }
+        holder.mLlTourParent.addView(getMyResultView(getItem(position), holder.mLlTourParent));
     }
 
     private View getPlayerView(PlayerInfo playerInfo, ViewGroup parent) {
@@ -116,34 +110,6 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
                 mintent2.putExtras(mBundle);
                 view.getContext().startActivity(mintent2);
             }
-        }
-    }
-
-    private View getTourView(Tournament tournament, ViewGroup parent) {
-        View tourView = getLayoutInflater().inflate(R.layout.inflater_tour_row, parent, false);
-        TourViewHolder holder = new TourViewHolder(tourView);
-
-        holder.mTvTournamentName.setText(tournament.getTournamentName());
-
-        holder.mLlScheduleParent.removeAllViews();
-        for (Match match : tournament.getMatches()) {
-            holder.mLlScheduleParent.addView(getMyResultView(match, holder.mLlScheduleParent));
-        }
-
-        return tourView;
-    }
-
-    class TourViewHolder extends RecyclerView.ViewHolder {
-
-        TextView mTvTournamentName;
-
-        LinearLayout mLlScheduleParent;
-
-        public TourViewHolder(View V) {
-            super(V);
-
-            mTvTournamentName = (TextView) V.findViewById(R.id.tour_row_tv_tour_name);
-            mLlScheduleParent = (LinearLayout) V.findViewById(R.id.tour_row_ll_schedule_parent);
         }
     }
 
@@ -400,13 +366,7 @@ public class OthersAnswersAdapter extends Adapter<Feed, OthersAnswersAdapter.Vie
         }
     }
 
-
     private void setTextColor(TextView textView, int color) {
         textView.setTextColor(textView.getResources().getColor(color));
-    }
-
-    public interface OnMyResultsActionListener {
-
-        void onClickLeaderBoard(int position);
     }
 }
