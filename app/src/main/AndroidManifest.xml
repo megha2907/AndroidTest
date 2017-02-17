@@ -147,6 +147,9 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <activity android:name=".module.resultspeek.ResultsPeekActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name="in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity"
             android:screenOrientation="portrait"
@@ -160,10 +163,6 @@
             android:name="in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-
-        <activity
-            android:name="in.sportscafe.nostragamus.module.user.group.admin.adminmembers.AdminMembersActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name="in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity"
