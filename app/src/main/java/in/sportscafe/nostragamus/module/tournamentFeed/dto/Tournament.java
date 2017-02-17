@@ -1,55 +1,38 @@
 package in.sportscafe.nostragamus.module.tournamentFeed.dto;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import in.sportscafe.nostragamus.module.feed.dto.Match;
+import org.parceler.Parcel;
 
 /**
  * Created by deepanshi on 9/28/16.
  */
-
+@Parcel
 public class Tournament {
 
-    private Integer tournamentId;
+    @JsonProperty("tournament_id")
+    private int id;
 
-    private String tournamentName;
+    @JsonProperty("tournament_name")
+    private String name;
 
-    private List<Match> matches = new ArrayList<>();
-
-    public Tournament() {
+    @JsonProperty("tournament_id")
+    public int getId() {
+        return id;
     }
 
-    public Tournament(Integer tournamentId, String tournamentName) {
-        this.tournamentId = tournamentId;
-        this.tournamentName = tournamentName;
+    @JsonProperty("tournament_id")
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Integer getTournamentId() {
-        return tournamentId;
+    @JsonProperty("tournament_name")
+    public String getName() {
+        return name;
     }
 
-    public void setTournamentId(Integer tournamentId) {
-        this.tournamentId = tournamentId;
-    }
-
-    public String getTournamentName() {
-        return tournamentName;
-    }
-
-    public void setTournamentName(String tournamentName) {
-        this.tournamentName = tournamentName;
-    }
-
-    public List<Match> getMatches() {
-        return matches;
-    }
-
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
-    }
-
-    public void addMatches(Match match) {
-        this.matches.add(match);
+    @JsonProperty("tournament_name")
+    public void setName(String name) {
+        this.name = name;
     }
 }

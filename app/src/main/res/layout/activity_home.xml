@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/home_ll_tabs"
@@ -12,8 +11,39 @@
         android:layout_height="@dimen/dp_60"
         android:layout_alignParentBottom="true"
         android:background="@drawable/points_gradient_bg"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/home_rl_challenges"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onClickTab"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/home_ibtn_challenge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_15"
+                android:src="@drawable/menu_home_btn_selector" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/home_tv_challenge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/home_ibtn_challenge"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_3"
+                android:text="Challenges"
+                android:textColor="@drawable/menu_tv_selector"
+                android:textSize="@dimen/dp_11"
+                app:typeface="roboto_condensed" />
+
+        </RelativeLayout>
 
 
         <RelativeLayout
@@ -21,31 +51,30 @@
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:onClick="onClickTab"
-            android:focusable="true"
             android:clickable="true"
-            >
+            android:focusable="true"
+            android:onClick="onClickTab"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/home_ibtn_feed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/menu_home_btn_selector"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_15"
-                android:layout_centerHorizontal="true" />
+                android:src="@drawable/menu_home_btn_selector" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/home_tv_feed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
-                android:textColor="@drawable/menu_tv_selector"
-                android:layout_centerInParent="true"
-                app:typeface="roboto_condensed"
-                android:textSize="@dimen/dp_11"
-                android:layout_marginTop="@dimen/dp_3"
                 android:layout_below="@+id/home_ibtn_feed"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_3"
+                android:text="Tournaments"
+                android:textColor="@drawable/menu_tv_selector"
+                android:textSize="@dimen/dp_11"
+                app:typeface="roboto_condensed"
 
                 />
 
@@ -56,125 +85,116 @@
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:onClick="onClickTab"
-            android:focusable="true"
             android:clickable="true"
-            >
+            android:focusable="true"
+            android:onClick="onClickTab"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/home_ibtn_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/menu_group_btn_selector"
-                android:layout_marginTop="@dimen/dp_15"
                 android:layout_centerHorizontal="true"
-                />
+                android:layout_marginTop="@dimen/dp_15"
+                android:src="@drawable/menu_group_btn_selector" />
 
             <!--<com.jeeva.android.widgets.customfont.CustomButton-->
-                <!--android:id="@+id/home_ibtn_group_count"-->
-                <!--android:layout_width="@dimen/dp_15"-->
-                <!--android:layout_height="@dimen/dp_15"-->
-                <!--android:gravity="center"-->
-                <!--android:textSize="@dimen/dp_9"-->
-                <!--android:textColor="@color/white"-->
-                <!--app:typeface="roboto_light"-->
-                <!--android:layout_marginTop="@dimen/dp_3"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_marginRight="@dimen/dp_46"-->
-                <!--android:visibility="gone"-->
-                <!--/>-->
+            <!--android:id="@+id/home_ibtn_group_count"-->
+            <!--android:layout_width="@dimen/dp_15"-->
+            <!--android:layout_height="@dimen/dp_15"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="@dimen/dp_9"-->
+            <!--android:textColor="@color/white"-->
+            <!--app:typeface="roboto_light"-->
+            <!--android:layout_marginTop="@dimen/dp_3"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="@dimen/dp_46"-->
+            <!--android:visibility="gone"-->
+            <!--/>-->
 
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/home_tv_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/home_ibtn_group"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_3"
                 android:text="Groups"
                 android:textColor="@drawable/menu_tv_selector"
-                android:layout_centerInParent="true"
-                app:typeface="roboto_condensed"
                 android:textSize="@dimen/dp_11"
-                android:layout_marginTop="@dimen/dp_3"
-                android:layout_below="@+id/home_ibtn_group"
-                />
+                app:typeface="roboto_condensed" />
 
         </RelativeLayout>
 
 
-
         <RelativeLayout
+            android:id="@+id/home_rl_leaderboard"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:id="@+id/home_rl_leaderboard"
-            android:onClick="onClickTab"
-            android:focusable="true"
             android:clickable="true"
-            >
+            android:focusable="true"
+            android:onClick="onClickTab"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/home_ibtn_leaderboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/menu_leaderboard_btn_selector"
-                android:layout_marginTop="@dimen/dp_15"
                 android:layout_centerHorizontal="true"
-                />
+                android:layout_marginTop="@dimen/dp_15"
+                android:src="@drawable/menu_leaderboard_btn_selector" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/home_tv_leaderboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/home_ibtn_leaderboard"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_3"
                 android:text="Leaderboards"
                 android:textColor="@drawable/menu_tv_selector"
-                android:layout_centerInParent="true"
-                app:typeface="roboto_condensed"
                 android:textSize="@dimen/dp_11"
-                android:layout_marginTop="@dimen/dp_3"
-                android:layout_below="@+id/home_ibtn_leaderboard"
+                app:typeface="roboto_condensed"
 
                 />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/home_rl_profile"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:id="@+id/home_rl_profile"
-            android:onClick="onClickTab"
-            android:focusable="true"
             android:clickable="true"
-            >
+            android:focusable="true"
+            android:onClick="onClickTab"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/home_ibtn_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/menu_profile_btn_selector"
-                android:layout_marginTop="@dimen/dp_15"
                 android:layout_centerHorizontal="true"
-                />
+                android:layout_marginTop="@dimen/dp_15"
+                android:src="@drawable/menu_profile_btn_selector" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/home_tv_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/home_ibtn_profile"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_3"
                 android:text="Profile"
                 android:textColor="@drawable/menu_tv_selector"
-                android:layout_centerInParent="true"
-                app:typeface="roboto_condensed"
                 android:textSize="@dimen/dp_11"
-                android:layout_marginTop="@dimen/dp_3"
-                android:layout_below="@+id/home_ibtn_profile"
+                app:typeface="roboto_condensed"
 
                 />
 
         </RelativeLayout>
-
 
 
     </LinearLayout>
@@ -184,16 +204,15 @@
         android:id="@+id/home_fl_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/home_ll_tabs"
-        />
+        android:layout_above="@id/home_ll_tabs" />
 
     <View
         android:id="@+id/gradient_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_4"
+        android:layout_above="@+id/home_ll_tabs"
         android:alpha="0.5"
-        android:background="@drawable/gradient_above_hometab"
-        android:layout_above="@+id/home_ll_tabs" />
+        android:background="@drawable/gradient_above_hometab" />
 
 
 </RelativeLayout>

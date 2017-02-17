@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_tl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_ll_points_parent"
+        android:fitsSystemWindows="true"
+        app:layout_collapseMode="pin"
+        app:selected_textSize="@dimen/dp_16"
+        app:selected_typeface="lato_bold"
+        app:tabBackground="@color/colorMedium"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/tabcolor"
+        app:tabIndicatorHeight="@dimen/dp_3"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        app:tabTextColor="@color/silver_chalice"
+        app:unselected_textSize="@dimen/dp_15"
+        app:unselected_typeface="lato_hairline" />
+
+    <in.sportscafe.nostragamus.module.common.CustomViewPager
+        android:id="@+id/tab_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_tl" />
+
+</RelativeLayout>

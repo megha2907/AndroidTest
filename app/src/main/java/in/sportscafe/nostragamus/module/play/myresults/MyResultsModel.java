@@ -14,8 +14,6 @@ public interface MyResultsModel {
 
     void getMyResultsData(Context context);
 
-    void checkPagination(int firstVisibleItemPosition, int childCount, int itemCount);
-
     void callReplayPowerupApplied();
 
     void showFlipQuestion();

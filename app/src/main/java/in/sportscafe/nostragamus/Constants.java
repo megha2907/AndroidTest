@@ -144,6 +144,7 @@ public interface Constants {
         String CANNOT_DELETE_GROUP = "You cannot delete the group since you are not the Admin";
         String NO_POWERUPS = "No powerups";
         String NO_BADGES = "No badges yet";
+        String EMPTY_CHALLENGES = "No challenges currently created to play!";
     }
 
     interface BundleKeys {
@@ -206,6 +207,7 @@ public interface Constants {
         String NO_OF_SPORTS_FOLLOWED = "sportsFollowed";
         String PLAYER_NAME = "playerName";
         String PLAYER_PHOTO = "playerPhoto";
+        String CHALLENGE_LIST = "challengeList";
     }
 
     interface ParcelableKeys {

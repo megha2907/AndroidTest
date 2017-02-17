@@ -58,7 +58,7 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class MyResultsActivity extends NostragamusActivity implements MyResultsView,View.OnClickListener{
+public class MyResultsActivity extends NostragamusActivity implements MyResultsView, View.OnClickListener {
 
     private RecyclerView mRvMyResults;
 
@@ -75,10 +75,10 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     private boolean goback = false;
     private Boolean isFabOpen = false;
     private Boolean isShareFabOpen = false;
-    private View powerupReplayFab,powerupFlipFab,fabContainer/*,shareContainer,btnfbShare*/;
+    private View powerupReplayFab, powerupFlipFab, fabContainer/*,shareContainer,btnfbShare*/;
     private ImageButton powerupMainFab;
     private FloatingActionButton shareFab;
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward,share_rotate_forward,share_rotate_backward;
+    private Animation fab_open, fab_close, rotate_forward, rotate_backward, share_rotate_forward, share_rotate_backward;
 
     private float offset1;
     private float offset2;
@@ -102,7 +102,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         initToolBar();
         checker = new PermissionsChecker(this);
 
-        mlayoutManager =new LinearLayoutManager(this);
+        mlayoutManager = new LinearLayoutManager(this);
         this.mRvMyResults = (RecyclerView) findViewById(R.id.my_results_rv);
         this.mRvMyResults.setLayoutManager(mlayoutManager);
 
@@ -116,20 +116,20 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         btnfbShare.setOnClickListener(this);*/
 
         //POWERUPFAB ICONS
-        btnReplayPowerUpCount=(Button) findViewById(R.id.powerup_replay_count);
-        btnFlipPowerUpCount=(Button)findViewById(R.id.powerup_flip_count);
-        powerupMainFab = (ImageButton)findViewById(R.id.results_fab_main);
+        btnReplayPowerUpCount = (Button) findViewById(R.id.powerup_replay_count);
+        btnFlipPowerUpCount = (Button) findViewById(R.id.powerup_flip_count);
+        powerupMainFab = (ImageButton) findViewById(R.id.results_fab_main);
 
         powerupReplayFab = findViewById(R.id.fab_fl_replay);
         powerupFlipFab = findViewById(R.id.fab_fl_flip);
         fabContainer = findViewById(R.id.fab_container);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.powerup_fab_close);
-        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.powerup_fab_rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.powerup_fab_rotate_backward);
-        share_rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.share_fab_rotate_forward);
-        share_rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.share_fab_rotate_backward);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_rotate_backward);
+        share_rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.share_fab_rotate_forward);
+        share_rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.share_fab_rotate_backward);
 
         powerupMainFab.setOnClickListener(this);
         powerupReplayFab.setOnClickListener(this);
@@ -162,29 +162,15 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         });*/
 
 
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false);
-
-        // It is to find the scrolling stage to do the pagination
-        this.mRvMyResults.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                mResultsPresenter.onArticleScroll(linearLayoutManager.findFirstVisibleItemPosition(),
-                        linearLayoutManager.getChildCount(), linearLayoutManager.getItemCount());
-
-            }
-        });
-        this.mRvMyResults.setLayoutManager(linearLayoutManager);
+        this.mRvMyResults.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
         this.mRvMyResults.setHasFixedSize(true);
 
         this.mResultsPresenter = MyResultPresenterImpl.newInstance(this);
         this.mResultsPresenter.onCreateMyResults(getIntent().getExtras());
 
 
-
-      //COMMENT REPLAY AND FLIP POWERUPS FOR NOW
+        //COMMENT REPLAY AND FLIP POWERUPS FOR NOW
 
         powerupMainFab.setVisibility(View.GONE);
 
@@ -243,8 +229,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         });*/
 
 
-
-
     }
 
     @Override
@@ -270,7 +254,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                     @Override
                     public void onClick(View v) {
 //                        if (goback == true) {
-                            onBackPressed();
+                        onBackPressed();
                         /*} else {
                             gotoHomeActivity();
                         }*/
@@ -281,8 +265,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     @Override
-        public void goBack(){
-        goback=true;
+    public void goBack() {
+        goback = true;
     }
 
     /*private void gotoMyResultsTimeline() {
@@ -312,29 +296,29 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 break;*/
 
             case R.id.fab_fl_replay:
-                if (!mFlippowerUpApplied || !mReplaypowerUpApplied ) {
+                if (!mFlippowerUpApplied || !mReplaypowerUpApplied) {
                     if (NostragamusDataHandler.getInstance().getReplayPowerupsCount() > 0) {
                         mFlippowerUpApplied = true;
                         mReplaypowerUpApplied = true;
                         mResultsPresenter.onPowerUp(Powerups.MATCH_REPLAY);
-                    }else {
-                        Toast toast = Toast.makeText(this,Constants.Alerts.REPLAY_POWERUP_OVER, Toast.LENGTH_LONG);
+                    } else {
+                        Toast toast = Toast.makeText(this, Constants.Alerts.REPLAY_POWERUP_OVER, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                     }
                     animateFAB();
                 }
             case R.id.fab_fl_flip:
-                if (!mFlippowerUpApplied || !mReplaypowerUpApplied ) {
-                   if (NostragamusDataHandler.getInstance().getFlipPowerupsCount() > 0) {
-                    mFlippowerUpApplied = true;
-                    mReplaypowerUpApplied = true;
-                    navigatetoFlipScreen();
-                   }else {
-                       Toast toast = Toast.makeText(this,Constants.Alerts.FLIP_POWERUP_OVER, Toast.LENGTH_LONG);
-                       toast.setGravity(Gravity.CENTER, 0, 0);
-                       toast.show();
-                   }
+                if (!mFlippowerUpApplied || !mReplaypowerUpApplied) {
+                    if (NostragamusDataHandler.getInstance().getFlipPowerupsCount() > 0) {
+                        mFlippowerUpApplied = true;
+                        mReplaypowerUpApplied = true;
+                        navigatetoFlipScreen();
+                    } else {
+                        Toast toast = Toast.makeText(this, Constants.Alerts.FLIP_POWERUP_OVER, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
                     animateFAB();
                 }
                 break;
@@ -347,7 +331,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     private void navigatetoFlipScreen() {
-        Intent mintent =  new Intent(this, FlipActivity.class);
+        Intent mintent = new Intent(this, FlipActivity.class);
         mintent.putExtras(matchBundle);
         startActivity(mintent);
     }
@@ -357,9 +341,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
         if (numberofReplayPowerups < 1) {
             mReplaypowerUpApplied = true;
-        }
-        else if (numberofFlipPowerups < 1){
-            mFlippowerUpApplied=true;
+        } else if (numberofFlipPowerups < 1) {
+            mFlippowerUpApplied = true;
         }
 
         btnReplayPowerUpCount.setText(String.valueOf(numberofReplayPowerups));
@@ -374,22 +357,22 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     @Override
-    public void openReplayDialog(){
+    public void openReplayDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Are you sure, You want to apply Replay Powerup?");
-                alertDialogBuilder.setPositiveButton("yes",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                NostragamusDataHandler.getInstance().setReplayPowerupsCount(NostragamusDataHandler.getInstance().getReplayPowerupsCount() - 1);
-                                String updatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getReplayPowerupsCount() - 1);
-                                btnReplayPowerUpCount.setText(updatedPowerUps);
-                                mResultsPresenter.onReplayPowerupApplied();
-                                animateFAB();
-                            }
-                        });
+        alertDialogBuilder.setPositiveButton("yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        NostragamusDataHandler.getInstance().setReplayPowerupsCount(NostragamusDataHandler.getInstance().getReplayPowerupsCount() - 1);
+                        String updatedPowerUps = String.valueOf(NostragamusDataHandler.getInstance().getReplayPowerupsCount() - 1);
+                        btnReplayPowerUpCount.setText(updatedPowerUps);
+                        mResultsPresenter.onReplayPowerupApplied();
+                        animateFAB();
+                    }
+                });
 
-        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -404,7 +387,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     public void navigatetoPlay(Match match) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
-        Intent intent =  new Intent(this, PredictionActivity.class);
+        Intent intent = new Intent(this, PredictionActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -416,9 +399,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mResultsPresenter.onFlipPowerupApplied();
     }
 
-    public void animateFAB(){
+    public void animateFAB() {
 
-        if(isFabOpen){
+        if (isFabOpen) {
             collapseFab();
             powerupMainFab.startAnimation(rotate_backward);
             powerupMainFab.setImageResource(R.drawable.powerup_main_icon_white);
@@ -453,20 +436,20 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public void takeScreenShot() {
         Resources resources = getResources();
-        LinearLayout ShareRow = (LinearLayout)findViewById(R.id.my_results_ll_share_score);
+        LinearLayout ShareRow = (LinearLayout) findViewById(R.id.my_results_ll_share_score);
         int delta = ShareRow.getHeight();
-        Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth() , mRvMyResults.computeVerticalScrollRange()-delta, Bitmap.Config.ARGB_8888);
+        Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth(), mRvMyResults.computeVerticalScrollRange() - delta, Bitmap.Config.ARGB_8888);
 
         Canvas c = new Canvas(screenshot);
         mRvMyResults.layout(
                 0,
-                mRvMyResults.getHeight()-mRvMyResults.computeVerticalScrollRange(),
+                mRvMyResults.getHeight() - mRvMyResults.computeVerticalScrollRange(),
                 mRvMyResults.getWidth(),
                 mRvMyResults.computeVerticalScrollRange());
 
         mRvMyResults.draw(c);
 
-        if(null != screenshot) {
+        if (null != screenshot) {
 
             final ViewGroup parent = (ViewGroup) findViewById(R.id.for_screenshot);
             final View sharePhoto = getLayoutInflater().inflate(R.layout.inflater_my_result_share_holder, parent, false);
@@ -496,7 +479,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
 //        doSomething(matchResult, matchPoints);
     }
-
 
 
     @Override

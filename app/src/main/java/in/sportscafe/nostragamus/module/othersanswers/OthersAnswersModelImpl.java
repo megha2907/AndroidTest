@@ -139,19 +139,20 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
 //        mOthersAnswersModelListener.onSuccessOthersAnswers();
     }
 
-    private void loadAdapterData(List<Feed> feedList) {
+    private void loadAdapterData(Match match) {
         mOthersAnswersAdapter.clear();
-        addMoreInAdapter(feedList);
+//        addMoreInAdapter(feedList);
+        mOthersAnswersAdapter.add(match);
     }
 
-    private void addMoreInAdapter(List<Feed> feedList) {
+    /*private void addMoreInAdapter(List<Feed> feedList) {
         int count = mOthersAnswersAdapter.getItemCount();
         for (Feed feed : feedList) {
             mOthersAnswersAdapter.add(feed, count++);
         }
-    }
+    }*/
 
-    private List<Feed> getCategorizedList(Match match, Map<Integer, AnswerPercentage> questionAnswersMap) {
+    /*private List<Feed> getCategorizedList(Match match, Map<Integer, AnswerPercentage> questionAnswersMap) {
         Map<String, Tournament> tourMap = new HashMap<>();
         Map<String, Feed> feedMap = new HashMap<>();
         List<Feed> feedList = new ArrayList<>();
@@ -201,7 +202,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
         });
 
         return feedList;
-    }
+    }*/
 
     private void callPlayerResultPercentageApi() {
         MyWebService.getInstance().getPlayerResultPercentageRequest(mMatchId)
@@ -230,7 +231,8 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
             questionAnswersMap.put(questionAnswer.getQuestionId(), questionAnswer);
         }
 
-        loadAdapterData(getCategorizedList(mMatchDetails, questionAnswersMap));
+        mMatchDetails.updateAnswerPercentage(questionAnswersMap);
+        loadAdapterData(mMatchDetails);
         mOthersAnswersModelListener.onSuccessOthersAnswers();
     }
 
@@ -256,7 +258,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
     private void handlePlayerProfileResponse(PlayerInfo playerInfo) {
         mOthersAnswersAdapter.setPlayerInfo(playerInfo);
 
-        loadAdapterData(getCategorizedList(mMatchDetails, new HashMap<Integer, AnswerPercentage>()));
+        loadAdapterData(mMatchDetails);
         mOthersAnswersModelListener.onSuccessOthersAnswers();
     }
 

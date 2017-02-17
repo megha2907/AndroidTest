@@ -12,8 +12,6 @@ public interface MyResultsPresenter {
 
     void onCreateMyResults(Bundle bundle);
 
-    void onArticleScroll(int firstVisibleItemPosition, int childCount, int itemCount);
-
     void onPowerUp(String powerup);
 
     void onReplayPowerupApplied();

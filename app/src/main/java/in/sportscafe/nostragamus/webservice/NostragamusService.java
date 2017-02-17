@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.webservice;
 
 import java.util.Map;
 
+import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
@@ -193,4 +194,7 @@ public interface NostragamusService {
 
     @GET("/v1/game/users/getCommonLeaderboards")
     Call<CompareLeaderBoardResponse> getLeaderBoardComparisonRequest(@Query("player_id") Integer playerId);
+
+    @GET("/v1/game/users/getUserChallenges")
+    Call<AllChallengesResponse> getAllChallenges();
 }

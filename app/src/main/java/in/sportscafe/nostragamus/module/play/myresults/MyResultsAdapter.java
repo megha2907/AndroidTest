@@ -28,11 +28,9 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.feed.dto.Feed;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
@@ -41,7 +39,7 @@ import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder> implements View.OnClickListener {
+public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder> implements View.OnClickListener {
 
     private OnMyResultsActionListener mResultsActionListener;
 
@@ -67,7 +65,7 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
     }
 
     @Override
-    public Feed getItem(int position) {
+    public Match getItem(int position) {
         return super.getItem(position);
     }
 
@@ -78,62 +76,14 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Feed feed = getItem(position);
         holder.mPosition = position;
         holder.mLlTourParent.removeAllViews();
-        for (Tournament tournament : feed.getTournaments()) {
-            holder.mLlTourParent.addView(getTourView(tournament, holder.mLlTourParent));
-        }
-    }
-
-    private View getTourView(Tournament tournament, ViewGroup parent) {
-        View tourView = getLayoutInflater().inflate(R.layout.inflater_tour_row, parent, false);
-        TourViewHolder holder = new TourViewHolder(tourView);
-
-        holder.mLltourView.setVisibility(View.GONE);
-
-        holder.mLlScheduleParent.removeAllViews();
-        for (Match match : tournament.getMatches()) {
-            holder.mLlScheduleParent.addView(getMyResultView(match, holder.mLlScheduleParent));
-        }
-
-        return tourView;
+        holder.mLlTourParent.addView(getMyResultView(getItem(position), holder.mLlTourParent));
     }
 
     public void showFlipOptnforQuestion() {
         isShowFlipOptn = true;
     }
-
-
-    class TourViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        TextView mTvTournamentName;
-
-        LinearLayout mLlScheduleParent;
-
-        LinearLayout mLltourView;
-
-        public TourViewHolder(View V) {
-            super(V);
-
-            mTvTournamentName = (TextView) V.findViewById(R.id.tour_row_tv_tour_name);
-            mLlScheduleParent = (LinearLayout) V.findViewById(R.id.tour_row_ll_schedule_parent);
-            mLltourView= (LinearLayout) V.findViewById(R.id.tour_row_ll);
-
-            V.findViewById(R.id.tour_row_ibtn_options).setOnClickListener(this);
-            V.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.tour_row_ibtn_options:
-//                        mResultsActionListener.onClickLeaderBoard(mPosition);
-                    break;
-            }
-        }
-    }
-
 
     private View getMyResultView(Match match, ViewGroup parent) {
         View myResultView = getLayoutInflater().inflate(R.layout.inflater_schedule_match_results_row, parent, false);
@@ -510,12 +460,12 @@ public class MyResultsAdapter extends Adapter<Feed, MyResultsAdapter.ViewHolder>
 
     private void navigateToOthersAnswers(Context context) {
         Intent intent =  new Intent(context, OthersAnswersActivity.class);
-        intent.putExtra(BundleKeys.MATCH_DETAILS, Parcels.wrap(getItem(0).getTournaments().get(0).getMatches().get(0)));
+        intent.putExtra(BundleKeys.MATCH_DETAILS, Parcels.wrap(getItem(0)));
         context.startActivity(intent);
     }
 
     private void navigateToLeaderboards(Context context) {
-        Match match = getItem(0).getTournaments().get(0).getMatches().get(0);
+        Match match = getItem(0);
 
         LbLanding lbLanding = new LbLanding(
                 match.getChallengeId(),
