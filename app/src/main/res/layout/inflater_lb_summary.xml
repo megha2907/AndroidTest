@@ -33,7 +33,6 @@
                 android:id="@+id/lb_summary_item_rank_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2nd"
                 android:shadowColor="@color/black"
                 android:shadowRadius="15"
                 android:shadowDx="-2"
@@ -50,7 +49,6 @@
                 android:id="@+id/lb_summary_item_pos_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/position"
                 android:textAllCaps="true"
                 android:shadowColor="@color/black"
                 android:shadowRadius="15"
@@ -84,7 +82,6 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="2"
-            android:text="Badminton"
             android:textColor="@color/white_90"
             android:textSize="@dimen/dp_12"
             app:typeface="roboto_condensed" />

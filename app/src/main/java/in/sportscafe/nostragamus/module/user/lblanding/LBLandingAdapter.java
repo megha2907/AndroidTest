@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -60,9 +61,13 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
 
         holder.ivImage.setImageUrl(lbLandingDto.getImgUrl());
 
-        Integer rank = lbLandingDto.getRank();
-        if (null != rank) {
-            holder.tvRank.setText(AppSnippet.ordinal(rank));
+
+        if (null != lbLandingDto.getRank()) {
+            String rank = AppSnippet.ordinal(lbLandingDto.getRank());
+            holder.tvPosTxt.setText("POSITION");
+            holder.tvRank.setVisibility(View.VISIBLE);
+            holder.mIvStatus.setVisibility(View.VISIBLE);
+            holder.tvRank.setText(rank);
         } else {
             holder.tvRank.setVisibility(View.GONE);
             holder.mIvStatus.setVisibility(View.GONE);
