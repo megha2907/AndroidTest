@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -16,9 +14,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
-import in.sportscafe.nostragamus.module.tournamentFeed.TournamentFeedFragment;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.group.JoinGroupApiModelImpl;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
@@ -27,8 +22,6 @@ import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
-
-import static com.google.android.gms.analytics.internal.zzy.m;
 
 /**
  * Created by Jeeva on 16/6/16.
@@ -69,7 +62,7 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
                 return;
             }
         }
-        showFeed();
+        showFirstTab();
     }
 
     private void showProfile() {
@@ -205,7 +198,7 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fl_holder, fragment).commit();
     }
 
-    private void showFeed() {
+    private void showFirstTab() {
         onClickTab(findViewById(R.id.home_rl_challenges));
     }
 
