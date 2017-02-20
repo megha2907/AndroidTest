@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -20,7 +21,6 @@ import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
@@ -194,7 +194,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPredictionAdapter = new PredictionAdapter(context, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeAppliedPowerUp();
+                dismissPowerUpAnimation(view);
             }
         });
         int count = 1;
@@ -211,6 +211,25 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPredictionAdapter.setFlingCardListener(flingCardListener);
     }
 
+    private void dismissPowerUpAnimation(final View view) {
+        mPredictionAdapter.dismissPowerUpAnimation(view, new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.INVISIBLE);
+                removeAppliedPowerUp();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
     private void removeAppliedPowerUp() {
         Question topQuestion = mPredictionAdapter.getTopQuestion();
         updatePowerUpCount(topQuestion.getPowerUpId());
@@ -222,13 +241,13 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     private void updatePowerUpCount(String powerUpId) {
         switch (powerUpId) {
             case Powerups.XX:
-                mPredictionModelListener.on2xApplied(++m2xPowerups);
+                mPredictionModelListener.on2xApplied(++m2xPowerups, true);
                 break;
             case Powerups.XX_GLOBAL:
-                mPredictionModelListener.on2xGlobalApplied(++m2xGlobalPowerups);
+                mPredictionModelListener.on2xGlobalApplied(++m2xGlobalPowerups, true);
                 break;
             case Powerups.NO_NEGATIVE:
-                mPredictionModelListener.onNonegsApplied(++mNonegsPowerups);
+                mPredictionModelListener.onNonegsApplied(++mNonegsPowerups, true);
                 break;
         }
     }
@@ -240,7 +259,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             notifyTopQuestion();
 
             m2xGlobalPowerups--;
-            mPredictionModelListener.on2xGlobalApplied(m2xGlobalPowerups);
+            mPredictionModelListener.on2xGlobalApplied(m2xGlobalPowerups, true);
         }
     }
 
@@ -251,7 +270,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             notifyTopQuestion();
 
             m2xPowerups--;
-            mPredictionModelListener.on2xApplied(m2xPowerups);
+            mPredictionModelListener.on2xApplied(m2xPowerups, false);
         }
     }
 
@@ -262,7 +281,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             notifyTopQuestion();
 
             mNonegsPowerups--;
-            mPredictionModelListener.onNonegsApplied(mNonegsPowerups);
+            mPredictionModelListener.onNonegsApplied(mNonegsPowerups, false);
         }
     }
 
@@ -629,11 +648,11 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         void onGetSport(Integer sportId);
 
-        void on2xGlobalApplied(int count);
+        void on2xGlobalApplied(int count, boolean reverse);
 
-        void on2xApplied(int count);
+        void on2xApplied(int count, boolean reverse);
 
-        void onNonegsApplied(int count);
+        void onNonegsApplied(int count, boolean reverse);
 
         void onAudiencePollApplied(int count);
 

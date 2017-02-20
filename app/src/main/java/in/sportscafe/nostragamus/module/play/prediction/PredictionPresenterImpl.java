@@ -44,10 +44,10 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     private void updatePowerups() {
-        mPredictionView.set2xGlobalPowerupCount(mPredictionModel.get2xGlobalPowerupCount());
-        mPredictionView.set2xPowerupCount(mPredictionModel.get2xPowerupCount());
-        mPredictionView.setNonegsPowerupCount(mPredictionModel.getNonegsPowerupCount());
-        mPredictionView.setPollPowerupCount(mPredictionModel.getPollPowerupCount());
+        mPredictionView.set2xGlobalPowerupCount(mPredictionModel.get2xGlobalPowerupCount(), true);
+        mPredictionView.set2xPowerupCount(mPredictionModel.get2xPowerupCount(), true);
+        mPredictionView.setNonegsPowerupCount(mPredictionModel.getNonegsPowerupCount(), true);
+        mPredictionView.setPollPowerupCount(mPredictionModel.getPollPowerupCount(), true);
     }
 
     @Override
@@ -193,23 +193,23 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void on2xGlobalApplied(int count) {
-        mPredictionView.set2xGlobalPowerupCount(count);
+    public void on2xGlobalApplied(int count, boolean reverse) {
+        mPredictionView.set2xGlobalPowerupCount(count, reverse);
     }
 
     @Override
-    public void on2xApplied(int count) {
-        mPredictionView.set2xPowerupCount(count);
+    public void on2xApplied(int count, boolean reverse) {
+        mPredictionView.set2xPowerupCount(count, reverse);
     }
 
     @Override
-    public void onNonegsApplied(int count) {
-        mPredictionView.setNonegsPowerupCount(count);
+    public void onNonegsApplied(int count, boolean reverse) {
+        mPredictionView.setNonegsPowerupCount(count, reverse);
     }
 
     @Override
     public void onAudiencePollApplied(int count) {
-        mPredictionView.setPollPowerupCount(count);
+        mPredictionView.setPollPowerupCount(count, false);
     }
 
     @Override

@@ -16,8 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.CustomProgressbar;
-import com.jeeva.android.widgets.HmImageView;
-import com.jeeva.android.widgets.customfont.CustomTextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -203,23 +201,27 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void set2xGlobalPowerupCount(int count) {
+    public void set2xGlobalPowerupCount(int count, boolean reverse) {
         mTv2xGlobalPowerupCount.setText(String.valueOf(count));
+        applyAlphaForPowerUp(mIv2xGlobalPowerup, mTv2xGlobalPowerupCount, reverse);
     }
 
     @Override
-    public void set2xPowerupCount(int count) {
+    public void set2xPowerupCount(int count, boolean reverse) {
         mTv2xPowerupCount.setText(String.valueOf(count));
+        applyAlphaForPowerUp(mIv2xPowerup, mTv2xPowerupCount, reverse);
     }
 
     @Override
-    public void setNonegsPowerupCount(int count) {
+    public void setNonegsPowerupCount(int count, boolean reverse) {
         mTvNonegsPowerupCount.setText(String.valueOf(count));
+        applyAlphaForPowerUp(mIvNonegsPowerup, mTvNonegsPowerupCount, reverse);
     }
 
     @Override
-    public void setPollPowerupCount(int count) {
+    public void setPollPowerupCount(int count, boolean reverse) {
         mTvPollPowerupCount.setText(String.valueOf(count));
+        applyAlphaForPowerUp(mIvPollPowerup, mTvPollPowerupCount, reverse);
     }
 
     @Override
@@ -477,7 +479,15 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         }
     };
 
+    private void applyAlphaForPowerUp(View powerUpIcon, View powerUpText, boolean reverse) {
+        float alpha = 0.6f;
+        if(reverse) {
+            alpha = 1f;
+        }
 
+        powerUpIcon.setAlpha(alpha);
+        powerUpText.setAlpha(alpha);
+    }
 
 }
 
