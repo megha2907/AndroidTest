@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
 
 import org.parceler.Parcels;
 
@@ -20,9 +22,11 @@ import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 /**
  * Created by Jeeva on 17/02/17.
  */
-public class ChallengeFragment extends NostragamusFragment implements ChallengeView {
+public class ChallengeFragment extends NostragamusFragment implements ChallengeView ,View.OnClickListener{
 
     private ChallengePresenter mChallengePresenter;
+
+    private   RecyclerView mRecyclerView;
 
     public static ChallengeFragment newInstance(List<Challenge> challenges) {
         Bundle bundle = new Bundle();
@@ -45,14 +49,35 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
         this.mChallengePresenter = ChallengePresenterImpl.newInstance(this);
         this.mChallengePresenter.onCreateChallenge(getArguments());
+
+        ImageButton swipeView = (ImageButton) findViewById(R.id.challenges_swipe_view);
+        ImageButton listView = (ImageButton) findViewById(R.id.challenges_list_view);
+        swipeView.setOnClickListener(this);
+        listView.setOnClickListener(this);
     }
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.challenges_rcv);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setHasFixedSize(true);
+        mRecyclerView  = (RecyclerView) findViewById(R.id.challenges_rcv);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(adapter);
+    }
 
-        recyclerView.setAdapter(adapter);
+    @Override
+    public void onClick(View v) {
+
+        switch(v.getId()){
+
+            case R.id.challenges_swipe_view:
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                    mChallengePresenter.changeAdapterLayout();;
+                break;
+
+            case R.id.challenges_list_view:
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                break;
+        }
+
     }
 }

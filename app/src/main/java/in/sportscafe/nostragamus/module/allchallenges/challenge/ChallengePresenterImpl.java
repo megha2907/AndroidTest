@@ -26,4 +26,9 @@ public class ChallengePresenterImpl implements ChallengePresenter, ChallengeMode
         mChallengeModel.init(bundle);
         mChallengeView.setAdapter(mChallengeModel.getAdapter(mChallengeView.getContext()));
     }
+
+    @Override
+    public void changeAdapterLayout() {
+        mChallengeModel.changeChallengesAdapterLayout();
+    }
 }

@@ -13,4 +13,6 @@ public interface ChallengeModel {
     void init(Bundle bundle);
 
     RecyclerView.Adapter getAdapter(Context context);
+
+    void changeChallengesAdapterLayout();
 }

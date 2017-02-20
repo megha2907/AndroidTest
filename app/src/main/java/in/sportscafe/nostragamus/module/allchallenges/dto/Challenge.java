@@ -25,6 +25,12 @@ public class Challenge {
     @JsonProperty("challenge_desc")
     private String description;
 
+    @JsonProperty("challenge_price")
+    private Integer price;
+
+    @JsonProperty("challenge_img_url")
+    private String image;
+
     @JsonProperty("challenge_tournaments")
     private List<Tournament> tournaments = new ArrayList<>();
 
@@ -36,6 +42,9 @@ public class Challenge {
 
     @JsonProperty("matches")
     private List<Match> matches = new ArrayList<>();
+
+    @JsonProperty("challenge_user_rank")
+    private Integer userRank;
 
     @JsonProperty("challenge_id")
     public int getChallengeId() {
@@ -106,4 +115,36 @@ public class Challenge {
     public void setMatches(List<Match> matches) {
         this.matches = matches;
     }
+
+    @JsonProperty("challenge_price")
+    public Integer getPrice() {
+        return price;
+    }
+
+    @JsonProperty("challenge_price")
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    @JsonProperty("challenge_image_url")
+    public String getImage() {
+        return image;
+    }
+
+    @JsonProperty("challenge_image_url")
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    @JsonProperty("challenge_user_rank")
+    public Integer getUserRank() {
+        return userRank;
+    }
+
+    @JsonProperty("challenge_user_rank")
+    public void setUserRank(Integer userRank) {
+        this.userRank = userRank;
+    }
+
+
 }

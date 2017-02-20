@@ -2,16 +2,25 @@ package in.sportscafe.nostragamus.module.allchallenges.challenge;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
 
+import java.security.KeyStore;
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
@@ -19,12 +28,16 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.common.Adapter;
 
 /**
- * Created by deepanshi on 23/8/16.
+ * Created by deepanshi on 17/2/17.
  */
 public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHolder> {
 
+
+    private Context context;
+
     public ChallengeAdapter(Context context, List<Challenge> challenges) {
         super(context);
+        this.context = context;
         addAll(challenges);
     }
 
@@ -35,39 +48,94 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(getLayoutInflater().inflate(R.layout.inflater_all_groups_row, parent, false));
+        return new ViewHolder(getLayoutInflater().inflate(R.layout.inflater_all_challenges_row, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Challenge challenge = getItem(position);
-        holder.mTvGroupName.setText(challenge.getName());
-//        holder.mIvGroupImage.setImageUrl("test");
 
-        holder.mTvGroupTournaments.setText(challenge.getTournaments().size() + " Tournaments");
+        holder.mTvChallengeName.setText(challenge.getName());
 
-        holder.mTvGroupMembers.setText(challenge.getMatches().size() + " Matches");
+//        if (challenge.getPrice()!=null){
+//         holder.mTvChallengePrice.setText("Paid - Rs."+challenge.getPrice().toString());
+//        }else {
+//         holder.mTvChallengePrice.setVisibility(View.INVISIBLE);
+//        }
+//
+        holder.mIvChallengeImage.setImageUrl(
+                challenge.getImage()
+        );
+
+        holder.mIv2xPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
+        holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
+        holder.mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
+
+        if (null != challenge.getUserRank()) {
+            String rank = AppSnippet.ordinal(challenge.getUserRank());
+            holder.mTvChallengeUserRank.setText(rank + " Rank");
+        } else {
+            holder.mTvChallengeUserRank.setText("Did Not Play");
+        }
+
+
+//        HorizontalScrollView.LayoutParams layoutParams =
+//                (HorizontalScrollView.LayoutParams) holder.mLlTournament.getLayoutParams();
+//        holder.mLlTournament.setLayoutParams(layoutParams);
+//
+//        LinearLayout layout2 = new LinearLayout(context);
+//        layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+//        holder.mLlTournament.setOrientation(LinearLayout.VERTICAL);
+//        holder.mLlTournament.addView(layout2);
+//
+//
+//        for (int i = 0; i < challenge.getTournaments().size(); i++) {
+//
+//            TextView textview = new TextView(context);
+//            textview.setLayoutParams(new RelativeLayout.LayoutParams
+//                    (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+//            textview.setText(challenge.getTournaments().get(i).getName());
+//            layout2.addView(textview);
+//
+//        }
+
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         View mMainView;
+        TextView mTvChallengePrice;
+        TextView mTvChallengeName;
+        HmImageView mIvChallengeImage;
 
-        TextView mTvGroupName;
+        TextView mTvChallengeUserRank;
 
-        TextView mTvGroupMembers;
+        ImageView mIv2xPowerup;
+        ImageView mIvNonegsPowerup;
+        ImageView mIvPollPowerup;
+        TextView mTv2xPowerupCount;
+        TextView mTvNonegsPowerupCount;
+        TextView mTvPollPowerupCount;
 
-        TextView mTvGroupTournaments;
+        LinearLayout mLlTournament;
 
-        HmImageView mIvGroupImage;
 
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
-            mTvGroupName = (TextView) V.findViewById(R.id.all_groups_tv_groupName);
-            mTvGroupTournaments = (TextView) V.findViewById(R.id.all_groups_tv_GroupTournaments);
-            mTvGroupMembers = (TextView) V.findViewById(R.id.all_groups_tv_GroupMembers);
-            mIvGroupImage = (HmImageView) V.findViewById(R.id.all_groups_iv_groupImage);
+            mTvChallengeName = (TextView) V.findViewById(R.id.all_challenges_row_matchstage_tv);
+            mTvChallengePrice = (TextView) V.findViewById(R.id.all_challenges_row_tv_price);
+            mIvChallengeImage = (HmImageView) V.findViewById(R.id.all_challenges_row_iv_image);
+            mIv2xPowerup = (ImageView) V.findViewById(R.id.powerups_iv_2x);
+            mIvNonegsPowerup = (ImageView) V.findViewById(R.id.powerups_iv_nonegs);
+            mIvPollPowerup = (ImageView) V.findViewById(R.id.powerups_iv_poll);
+            mTv2xPowerupCount = (TextView) V.findViewById(R.id.powerup_tv_2x_count);
+            mTvNonegsPowerupCount = (TextView) V.findViewById(R.id.powerup_tv_nonegs_count);
+            mTvPollPowerupCount = (TextView) V.findViewById(R.id.powerup_tv_poll_count);
+            mTvChallengeUserRank = (TextView) V.findViewById(R.id.all_challenges_row_tv_leaderboard_rank);
+            mLlTournament = (LinearLayout) V.findViewById(R.id.all_challenges_row_tournament_ll);
+
             V.setOnClickListener(this);
         }
 
@@ -78,6 +146,15 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             intent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
+    }
+
+
+    private Drawable getPowerupDrawable(int colorRes) {
+        GradientDrawable powerupDrawable = new GradientDrawable();
+        powerupDrawable.setShape(GradientDrawable.RECTANGLE);
+        powerupDrawable.setCornerRadius(context.getResources().getDimensionPixelSize(R.dimen.dp_5));
+        powerupDrawable.setColor(context.getResources().getColor(colorRes));
+        return powerupDrawable;
     }
 
 }

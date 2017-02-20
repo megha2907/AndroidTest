@@ -43,6 +43,10 @@ public class ChallengeModelImpl implements ChallengeModel {
         return mChallengeAdapter = new ChallengeAdapter(context, mChallenges);
     }
 
+    @Override
+    public void changeChallengesAdapterLayout() {
+    }
+
     public interface OnChallengeModelListener {
 
 

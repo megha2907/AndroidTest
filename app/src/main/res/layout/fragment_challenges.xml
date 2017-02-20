@@ -3,11 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <RelativeLayout
+        android:id="@+id/challenges_switch_view_rl"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_30"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/white_border_btn_bg">
+
+        <ImageButton
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1dp"
+            android:id="@+id/challenges_swipe_view"
+            android:background="@drawable/toggle_widget_background"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:src="@drawable/swipe_view_white_icon"
+            android:drawablePadding="@dimen/dp_15"
+           />
+
+        <ImageButton
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:id="@+id/challenges_list_view"
+            android:layout_width="@dimen/dp_30"
+            android:layout_toRightOf="@+id/challenges_swipe_view"
+            android:layout_height="@dimen/dp_30"
+            android:src="@drawable/list_view_white_icon"
+            android:background="@drawable/toggle_widget_background" />
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/challenges_rcv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/challenges_switch_view_rl"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_8"/>
 
 </RelativeLayout>
