@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -18,9 +20,11 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 
 import java.security.KeyStore;
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
@@ -34,6 +38,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
 
     private Context context;
+    private Boolean ismSwipeView = false;
+    private Integer challengeAmount;
 
     public ChallengeAdapter(Context context, List<Challenge> challenges) {
         super(context);
@@ -57,12 +63,13 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         holder.mTvChallengeName.setText(challenge.getName());
 
-//        if (challenge.getPrice()!=null){
-//         holder.mTvChallengePrice.setText("Paid - Rs."+challenge.getPrice().toString());
-//        }else {
-//         holder.mTvChallengePrice.setVisibility(View.INVISIBLE);
-//        }
-//
+        challengeAmount = challenge.getChallengeInfo().getPaymentInfo().getChallengeFee();
+        if (challengeAmount != null) {
+            holder.mTvChallengePrice.setText("Paid - Rs." + challengeAmount.toString());
+        } else {
+            holder.mTvChallengePrice.setVisibility(View.INVISIBLE);
+        }
+
         holder.mIvChallengeImage.setImageUrl(
                 challenge.getImage()
         );
@@ -71,11 +78,27 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
         holder.mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
 
+        HashMap<String, Integer> powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
+        Integer powerUp2x = powerUpMap.get(Constants.Powerups.XX);
+        Integer powerUpNoNegative = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+        Integer powerUpAudiencePoll = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+
+        holder.mTv2xPowerupCount.setText(String.valueOf(powerUp2x));
+        holder.mTvNonegsPowerupCount.setText(String.valueOf(powerUpNoNegative));
+        holder.mTvPollPowerupCount.setText(String.valueOf(powerUpAudiencePoll));
+
         if (null != challenge.getUserRank()) {
             String rank = AppSnippet.ordinal(challenge.getUserRank());
             holder.mTvChallengeUserRank.setText(rank + " Rank");
         } else {
             holder.mTvChallengeUserRank.setText("Did Not Play");
+        }
+
+        if (ismSwipeView) {
+            holder.mLlShowGames.setBackgroundColor
+                    (context.getResources().getColor(R.color.black));
+        } else {
+            holder.mLlShowGames.setBackground(context.getResources().getDrawable(R.drawable.shape_challenges_show_game_bg));
         }
 
 
@@ -102,6 +125,11 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     }
 
+    public void setIsSwipeView(boolean swipeView) {
+        ismSwipeView = swipeView;
+    }
+
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         View mMainView;
@@ -111,6 +139,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         TextView mTvChallengeUserRank;
 
+        Button mTvChallengeDaysLeft;
+        Button mTvChallengeHoursLeft;
+        Button mTvChallengeMinsLeft;
+
         ImageView mIv2xPowerup;
         ImageView mIvNonegsPowerup;
         ImageView mIvPollPowerup;
@@ -119,6 +151,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         TextView mTvPollPowerupCount;
 
         LinearLayout mLlTournament;
+        LinearLayout mLlShowGames;
 
 
         public ViewHolder(View V) {
@@ -135,6 +168,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mTvPollPowerupCount = (TextView) V.findViewById(R.id.powerup_tv_poll_count);
             mTvChallengeUserRank = (TextView) V.findViewById(R.id.all_challenges_row_tv_leaderboard_rank);
             mLlTournament = (LinearLayout) V.findViewById(R.id.all_challenges_row_tournament_ll);
+            mLlShowGames = (LinearLayout) V.findViewById(R.id.all_challenges_row_ll_show_games);
+            mTvChallengeHoursLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_hours_left);
+            mTvChallengeDaysLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_days_left);
+            mTvChallengeMinsLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_mins_left);
 
             V.setOnClickListener(this);
         }

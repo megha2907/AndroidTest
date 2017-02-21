@@ -44,11 +44,13 @@ public class ChallengeModelImpl implements ChallengeModel {
     }
 
     @Override
-    public void changeChallengesAdapterLayout() {
+    public void changeChallengesAdapterLayout(Boolean isSwipeView) {
+       mChallengeAdapter.setIsSwipeView(isSwipeView);
+       mChallengeAdapter.notifyDataSetChanged();
     }
 
-    public interface OnChallengeModelListener {
 
+    public interface OnChallengeModelListener {
 
     }
 }

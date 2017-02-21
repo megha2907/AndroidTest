@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 
 /**
@@ -25,9 +26,6 @@ public class Challenge {
     @JsonProperty("challenge_desc")
     private String description;
 
-    @JsonProperty("challenge_price")
-    private Integer price;
-
     @JsonProperty("challenge_img_url")
     private String image;
 
@@ -43,8 +41,17 @@ public class Challenge {
     @JsonProperty("matches")
     private List<Match> matches = new ArrayList<>();
 
-    @JsonProperty("challenge_user_rank")
+    @JsonProperty("rank")
     private Integer userRank;
+
+    @JsonProperty("rank_change")
+    private Integer userRankChange;
+
+    @JsonProperty("user_challenge_info")
+    private ChallengeUserInfo challengeUserInfo;
+
+    @JsonProperty("challenge_info")
+    private ChallengeInfo challengeInfo;
 
     @JsonProperty("challenge_id")
     public int getChallengeId() {
@@ -116,16 +123,6 @@ public class Challenge {
         this.matches = matches;
     }
 
-    @JsonProperty("challenge_price")
-    public Integer getPrice() {
-        return price;
-    }
-
-    @JsonProperty("challenge_price")
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
     @JsonProperty("challenge_image_url")
     public String getImage() {
         return image;
@@ -146,5 +143,35 @@ public class Challenge {
         this.userRank = userRank;
     }
 
+    @JsonProperty("rank_change")
+    public Integer getUserRankChange() {
+        return userRankChange;
+    }
+
+    @JsonProperty("rank_change")
+    public void setUserRankChange(Integer userRankChange) {
+        this.userRankChange = userRankChange;
+    }
+
+
+    @JsonProperty("user_challenge_info")
+    public ChallengeUserInfo getChallengeUserInfo() {
+        return challengeUserInfo;
+    }
+
+    @JsonProperty("user_challenge_info")
+    public void setChallengeUserInfo(ChallengeUserInfo challengeUserInfo) {
+        this.challengeUserInfo = challengeUserInfo;
+    }
+
+    @JsonProperty("challenge_info")
+    public ChallengeInfo getChallengeInfo() {
+        return challengeInfo;
+    }
+
+    @JsonProperty("challenge_info")
+    public void setChallengeInfo(ChallengeInfo challengeInfo) {
+        this.challengeInfo = challengeInfo;
+    }
 
 }

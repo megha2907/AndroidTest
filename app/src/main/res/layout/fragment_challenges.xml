@@ -12,8 +12,8 @@
         android:layout_height="@dimen/dp_30"
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_20"
-        android:background="@drawable/white_border_btn_bg">
+        android:layout_marginRight="@dimen/dp_22"
+        android:background="@drawable/grey_border_round_btn_bg">
 
         <ImageButton
             android:layout_marginTop="1dp"
@@ -39,12 +39,45 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/challenges_count_rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_20">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/challenges_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:typeface="lato_bold"
+            android:textSize="@dimen/dp_14"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:text="Challenge 1"/>
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/challenges_total_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:typeface="lato_bold"
+            android:textSize="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white_60"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text="/ 20"
+            android:layout_toRightOf="@+id/challenges_count_tv"/>
+
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/challenges_rcv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/challenges_switch_view_rl"
-        android:paddingTop="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
         android:paddingLeft="@dimen/dp_8"
         android:paddingRight="@dimen/dp_8"/>
 

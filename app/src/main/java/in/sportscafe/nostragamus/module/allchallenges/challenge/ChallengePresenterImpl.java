@@ -28,7 +28,7 @@ public class ChallengePresenterImpl implements ChallengePresenter, ChallengeMode
     }
 
     @Override
-    public void changeAdapterLayout() {
-        mChallengeModel.changeChallengesAdapterLayout();
+    public void changeAdapterLayout(Boolean isSwipeView) {
+        mChallengeModel.changeChallengesAdapterLayout(isSwipeView);
     }
 }

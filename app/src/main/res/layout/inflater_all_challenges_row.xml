@@ -31,8 +31,8 @@
 
                 <com.jeeva.android.widgets.HmImageView
                     android:id="@+id/all_challenges_row_iv_image"
-                    android:layout_width="@dimen/dp_50"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_width="@dimen/dp_46"
+                    android:layout_height="@dimen/dp_46"
                     android:layout_marginLeft="@dimen/dp_12"
                     android:layout_marginTop="@dimen/dp_14"
                     android:adjustViewBounds="true"
@@ -88,7 +88,7 @@
                 <RelativeLayout
                     android:id="@+id/all_challenges_row_powerup_rl"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_45"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/all_challenges_row_iv_image"
                     android:layout_marginLeft="@dimen/dp_12"
@@ -97,16 +97,16 @@
 
                     <ImageView
                         android:id="@+id/powerups_iv_2x"
-                        android:layout_width="@dimen/dp_35"
-                        android:layout_height="@dimen/dp_35"
+                        android:layout_width="@dimen/dp_32"
+                        android:layout_height="@dimen/dp_32"
                         android:layout_centerVertical="true"
                         android:padding="@dimen/dp_8"
                         android:src="@drawable/powerup_2x_white" />
 
                     <ImageView
                         android:id="@+id/powerups_iv_nonegs"
-                        android:layout_width="@dimen/dp_35"
-                        android:layout_height="@dimen/dp_35"
+                        android:layout_width="@dimen/dp_32"
+                        android:layout_height="@dimen/dp_32"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
@@ -116,8 +116,8 @@
 
                     <ImageView
                         android:id="@+id/powerups_iv_poll"
-                        android:layout_width="@dimen/dp_35"
-                        android:layout_height="@dimen/dp_35"
+                        android:layout_width="@dimen/dp_32"
+                        android:layout_height="@dimen/dp_32"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dp_10"
                         android:layout_toRightOf="@id/powerups_iv_nonegs"
@@ -183,8 +183,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/all_challenges_row_iv_image"
                     android:layout_marginRight="@dimen/dp_100"
-                    android:layout_marginTop="@dimen/dp_18"
-                    android:text="Paid - Rs.250"
+                    android:layout_marginTop="@dimen/dp_14"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_12"
                     android:visibility="visible"
@@ -203,7 +202,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/dp_10"
-                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_8"
                         android:layout_toLeftOf="@+id/all_challenges_row_btn_days_left"
                         android:text="Ends in"
                         android:textColor="@color/white"
@@ -213,40 +212,40 @@
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/all_challenges_row_btn_days_left"
                         android:layout_width="@dimen/dp_32"
-                        android:layout_height="@dimen/dp_27"
+                        android:layout_height="@dimen/dp_25"
                         android:layout_marginRight="@dimen/dp_6"
                         android:layout_toLeftOf="@+id/all_challenges_row_btn_hours_left"
-                        android:background="@drawable/white_border_btn_bg"
+                        android:background="@drawable/grey_border_btn_bg"
                         android:text="2d"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_12"
+                        android:textSize="@dimen/dp_10"
                         app:typeface="lato_regular" />
 
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/all_challenges_row_btn_hours_left"
                         android:layout_width="@dimen/dp_32"
-                        android:layout_height="@dimen/dp_27"
+                        android:layout_height="@dimen/dp_25"
                         android:layout_marginRight="@dimen/dp_6"
                         android:layout_toLeftOf="@+id/all_challenges_row_btn_mins_left"
-                        android:background="@drawable/white_border_btn_bg"
+                        android:background="@drawable/grey_border_btn_bg"
                         android:text="24h"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_12"
+                        android:textSize="@dimen/dp_10"
                         app:typeface="lato_regular" />
 
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/all_challenges_row_btn_mins_left"
                         android:layout_width="@dimen/dp_35"
-                        android:layout_height="@dimen/dp_27"
+                        android:layout_height="@dimen/dp_25"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="@dimen/dp_10"
-                        android:background="@drawable/white_border_btn_bg"
+                        android:background="@drawable/grey_border_btn_bg"
                         android:text="59m"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_12"
+                        android:textSize="@dimen/dp_10"
                         app:typeface="lato_regular" />
 
                 </RelativeLayout>
@@ -275,7 +274,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginBottom="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_14"
-                    android:drawableLeft="@drawable/menu_leaderboard_unselected_icon"
+                    android:drawableLeft="@drawable/challenge_leaderboard_icon"
                     android:drawablePadding="@dimen/dp_5"
                     android:gravity="bottom"
                     android:text="1st Rank"

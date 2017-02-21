@@ -100,7 +100,7 @@ public class AllChallengesFragment extends NostragamusFragment implements AllCha
             mViewPagerAdapter.addFragment(ChallengeFragment.newInstance(challenges), "New");
         }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.tab_vp);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.tab_challenge_vp);
         viewPager.setAdapter(mViewPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);

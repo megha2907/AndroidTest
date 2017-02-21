@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.parceler.Parcels;
 
@@ -22,11 +24,19 @@ import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 /**
  * Created by Jeeva on 17/02/17.
  */
-public class ChallengeFragment extends NostragamusFragment implements ChallengeView ,View.OnClickListener{
+public class ChallengeFragment extends NostragamusFragment implements ChallengeView, View.OnClickListener {
 
     private ChallengePresenter mChallengePresenter;
 
-    private   RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
+
+    private LinearLayoutManager mLayoutManager;
+
+    private RelativeLayout mRlChallengeCount;
+
+    private ImageButton mSwipeView;
+
+    private ImageButton mlistView;
 
     public static ChallengeFragment newInstance(List<Challenge> challenges) {
         Bundle bundle = new Bundle();
@@ -50,32 +60,70 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         this.mChallengePresenter = ChallengePresenterImpl.newInstance(this);
         this.mChallengePresenter.onCreateChallenge(getArguments());
 
-        ImageButton swipeView = (ImageButton) findViewById(R.id.challenges_swipe_view);
-        ImageButton listView = (ImageButton) findViewById(R.id.challenges_list_view);
-        swipeView.setOnClickListener(this);
-        listView.setOnClickListener(this);
+        mSwipeView = (ImageButton) findViewById(R.id.challenges_swipe_view);
+        mlistView = (ImageButton) findViewById(R.id.challenges_list_view);
+        mSwipeView.setOnClickListener(this);
+        mlistView.setOnClickListener(this);
+        mSwipeView.setSelected(true);
+        mlistView.setSelected(false);
     }
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        mRecyclerView  = (RecyclerView) findViewById(R.id.challenges_rcv);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerView = (RecyclerView) findViewById(R.id.challenges_rcv);
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mChallengePresenter.changeAdapterLayout(true);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                updateChallengeCount();
+            }
+        });
+
+    }
+
+    private void updateChallengeCount() {
+        int currentPosition = mLayoutManager.findFirstCompletelyVisibleItemPosition();
+        int totalCount = mRecyclerView.getAdapter().getItemCount();
+        TextView challengeCount = (TextView) findViewById(R.id.challenges_count_tv);
+        TextView challengeTotalCount = (TextView) findViewById(R.id.challenges_total_count_tv);
+        mRlChallengeCount = (RelativeLayout) findViewById(R.id.challenges_count_rl);
+
+        if (currentPosition < 0) {
+            challengeCount.setText("Challenge " + String.valueOf(mLayoutManager.findLastVisibleItemPosition() + 1));
+        } else {
+            challengeCount.setText("Challenge " + String.valueOf(currentPosition + 1));
+        }
+
+        challengeTotalCount.setText("/" + String.valueOf(totalCount));
     }
 
     @Override
     public void onClick(View v) {
 
-        switch(v.getId()){
+        switch (v.getId()) {
 
             case R.id.challenges_swipe_view:
-                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-                    mChallengePresenter.changeAdapterLayout();;
+                mSwipeView.setSelected(true);
+                mlistView.setSelected(false);
+                mLayoutManager = new  LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mChallengePresenter.changeAdapterLayout(true);
+                mRlChallengeCount.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.challenges_list_view:
-                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                mlistView.setSelected(true);
+                mSwipeView.setSelected(false);
+                mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mChallengePresenter.changeAdapterLayout(false);
+                mRlChallengeCount.setVisibility(View.GONE);
                 break;
         }
 
