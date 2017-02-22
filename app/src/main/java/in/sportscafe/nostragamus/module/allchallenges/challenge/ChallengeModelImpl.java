@@ -9,7 +9,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 
@@ -42,13 +41,6 @@ public class ChallengeModelImpl implements ChallengeModel {
     public RecyclerView.Adapter getAdapter(Context context) {
         return mChallengeAdapter = new ChallengeAdapter(context, mChallenges);
     }
-
-    @Override
-    public void changeChallengesAdapterLayout(Boolean isSwipeView) {
-       mChallengeAdapter.setIsSwipeView(isSwipeView);
-       mChallengeAdapter.notifyDataSetChanged();
-    }
-
 
     public interface OnChallengeModelListener {
 

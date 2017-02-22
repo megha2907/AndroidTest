@@ -2,24 +2,20 @@ package in.sportscafe.nostragamus.module.allchallenges.challenge;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
 
-import java.security.KeyStore;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,14 +32,15 @@ import in.sportscafe.nostragamus.module.common.Adapter;
  */
 public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHolder> {
 
+    private Resources mResources;
 
-    private Context context;
-    private Boolean ismSwipeView = false;
-    private Integer challengeAmount;
+    private boolean mSwipeView = true;
+
+    private Integer mChallengeAmount;
 
     public ChallengeAdapter(Context context, List<Challenge> challenges) {
         super(context);
-        this.context = context;
+        mResources = context.getResources();
         addAll(challenges);
     }
 
@@ -63,9 +60,9 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         holder.mTvChallengeName.setText(challenge.getName());
 
-        challengeAmount = challenge.getChallengeInfo().getPaymentInfo().getChallengeFee();
-        if (challengeAmount != null) {
-            holder.mTvChallengePrice.setText("Paid - Rs." + challengeAmount.toString());
+        mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getChallengeFee();
+        if (mChallengeAmount != null) {
+            holder.mTvChallengePrice.setText("Paid - Rs." + mChallengeAmount.toString());
         } else {
             holder.mTvChallengePrice.setVisibility(View.INVISIBLE);
         }
@@ -94,11 +91,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mTvChallengeUserRank.setText("Did Not Play");
         }
 
-        if (ismSwipeView) {
-            holder.mLlShowGames.setBackgroundColor
-                    (context.getResources().getColor(R.color.black));
+        if (mSwipeView) {
+            holder.mLlShowGames.setBackgroundColor(mResources.getColor(R.color.black));
         } else {
-            holder.mLlShowGames.setBackground(context.getResources().getDrawable(R.drawable.shape_challenges_show_game_bg));
+            holder.mLlShowGames.setBackground(mResources.getDrawable(R.drawable.shape_challenges_show_game_bg));
         }
 
 
@@ -125,10 +121,9 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     }
 
-    public void setIsSwipeView(boolean swipeView) {
-        ismSwipeView = swipeView;
+    public void setSwipeView(boolean swipeView) {
+        mSwipeView = swipeView;
     }
-
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -189,8 +184,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
     private Drawable getPowerupDrawable(int colorRes) {
         GradientDrawable powerupDrawable = new GradientDrawable();
         powerupDrawable.setShape(GradientDrawable.RECTANGLE);
-        powerupDrawable.setCornerRadius(context.getResources().getDimensionPixelSize(R.dimen.dp_5));
-        powerupDrawable.setColor(context.getResources().getColor(colorRes));
+        powerupDrawable.setCornerRadius(mResources.getDimensionPixelSize(R.dimen.dp_5));
+        powerupDrawable.setColor(mResources.getColor(colorRes));
         return powerupDrawable;
     }
 

@@ -13,5 +13,5 @@ public interface ChallengePresenter {
 
     void onCreateChallenge(Bundle bundle);
 
-    void changeAdapterLayout(Boolean isSwipeView);
+    void changeAdapterLayout(boolean swipeView);
 }
