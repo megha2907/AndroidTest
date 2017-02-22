@@ -48,6 +48,8 @@
     <color name="profile_tab_color">#33000000</color>
     <color name="profile_tab_line_color">#22ffffff</color>
     <color name="ready_btn_color">#186AA2</color>
+    <color name="challenges_card_color">#104469</color>
+    <color name="challenges_bg_card_color">#0F2F45</color>
     <color name="tournament_divider_color">#202020</color>
     <color name="search_bar">#101010</color>
     <color name="search_bar_stroke">#202020</color>

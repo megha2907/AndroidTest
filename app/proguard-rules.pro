@@ -102,3 +102,6 @@
 #Start Branch.io
 -keep class com.google.android.gms.ads.identifier.** { *; }
 #End Branch.io
+
+-keep class com.lsjwzh.widget.recyclerviewpager.**
+-dontwarn com.lsjwzh.widget.recyclerviewpager.**

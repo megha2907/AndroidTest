@@ -65,6 +65,7 @@ public abstract class Adapter<T, VH extends RecyclerView.ViewHolder> extends Rec
         mLayoutInflater = null;
     }
 
+
     public interface OnRecyclerItemClickListener<T> {
 
         void onRecyclerItemClick(T t);

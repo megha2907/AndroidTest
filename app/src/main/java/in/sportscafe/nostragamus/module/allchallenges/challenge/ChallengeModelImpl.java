@@ -43,8 +43,14 @@ public class ChallengeModelImpl implements ChallengeModel {
         return mChallengeAdapter = new ChallengeAdapter(context, mChallenges);
     }
 
-    public interface OnChallengeModelListener {
+    @Override
+    public void changeChallengesAdapterLayout(Boolean isSwipeView) {
+       mChallengeAdapter.setIsSwipeView(isSwipeView);
+       mChallengeAdapter.notifyDataSetChanged();
+    }
 
+
+    public interface OnChallengeModelListener {
 
     }
 }
