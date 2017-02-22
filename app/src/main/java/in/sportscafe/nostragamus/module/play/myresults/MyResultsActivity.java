@@ -253,11 +253,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        if (goback == true) {
-                        onBackPressed();
-                        /*} else {
+                        if (goback == true) {
+                            onBackPressed();
+                        } else {
                             gotoHomeActivity();
-                        }*/
+                        }
                     }
                 }
 
@@ -276,10 +276,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }*/
 
     private void gotoHomeActivity() {
-        Intent homeintent = new Intent(this, HomeActivity.class);
-        homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        homeintent.putExtra("results", "openprofile");
-        startActivity(homeintent);
+        Intent homeIntent = new Intent(this, HomeActivity.class);
+        startActivity(homeIntent);
         finish();
     }
 

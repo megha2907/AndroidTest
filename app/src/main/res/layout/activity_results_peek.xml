@@ -80,7 +80,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_marginLeft="@dimen/dp_50"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_toLeftOf="@+id/player_comparison_compare_icon">
 
                             <in.sportscafe.nostragamus.module.common.RoundImage
                                 android:id="@+id/player_comparison_user_iv_image"
@@ -109,6 +110,7 @@
                                 android:layout_height="@dimen/dp_30"
                                 android:background="@drawable/profile_screen_btns_bg"
                                 android:clickable="false"
+                                android:layout_gravity="center"
                                 android:drawableLeft="@drawable/profile_screen_points_icon"
                                 android:gravity="center"
                                 android:paddingLeft="@dimen/dp_10"
@@ -124,6 +126,7 @@
 
 
                         <ImageView
+                            android:id="@+id/player_comparison_compare_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/compare_vs_icon"
@@ -134,7 +137,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="@dimen/dp_50"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_toRightOf="@+id/player_comparison_compare_icon">
 
                             <in.sportscafe.nostragamus.module.common.RoundImage
                                 android:id="@+id/player_comparison_other_player_image"
@@ -163,6 +167,7 @@
                                 android:layout_height="@dimen/dp_30"
                                 android:background="@drawable/profile_screen_btns_bg"
                                 android:clickable="false"
+                                android:layout_gravity="center"
                                 android:drawableLeft="@drawable/profile_screen_points_icon"
                                 android:gravity="center"
                                 android:paddingLeft="@dimen/dp_10"

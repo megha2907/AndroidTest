@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.DateFormats;
@@ -408,6 +409,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             if (null != match) {
                 bundle = new Bundle();
                 bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
+                bundle.putString(BundleKeys.SCREEN, Constants.ScreenNames.PROFILE);
 
                 if(null != match.getSportId()) {
                     bundle.putInt(BundleKeys.SPORT_ID, match.getSportId());
