@@ -48,6 +48,12 @@
         android:paddingLeft="@dimen/dp_20"
         android:paddingRight="@dimen/dp_20" />
 
+    <FrameLayout
+        android:id="@+id/challenges_fl_match_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/challenges_rcv_horizontal"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/challenges_rcv_vertical"
         android:layout_width="match_parent"
@@ -56,6 +62,7 @@
         android:paddingTop="@dimen/dp_40"
         android:paddingLeft="@dimen/dp_20"
         android:paddingRight="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_195"
         android:visibility="invisible" />
 
     <RelativeLayout
