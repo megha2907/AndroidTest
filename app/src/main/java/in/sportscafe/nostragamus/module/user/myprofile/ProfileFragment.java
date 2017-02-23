@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.user.myprofile;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -12,9 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.HmImageView;
+
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
@@ -22,6 +29,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.settings.SettingActivity;
+import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
@@ -94,6 +102,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     public void setPredictionCount(Integer predictionCount) {
         ((TextView) findViewById(R.id.profile_btn_predictions)).setText(String.valueOf(predictionCount));
     }
+
 
     @Override
     public void updateSportTabTitle(String title) {
