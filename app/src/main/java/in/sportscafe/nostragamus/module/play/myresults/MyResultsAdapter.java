@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -341,18 +342,29 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
 
              // IF USER ANSWER = OPTION 1 OR OPTION 2
+
+            if (question.getQuestionAnswer() == 1 || question.getQuestionAnswer() == 2) {
                 if (question.getQuestionAnswer() == 1) {
                     tvAnswer.setText(question.getQuestionOption1());
                     tvotheroption.setText(question.getQuestionOption2());
                     setTextColor(tvotheroption, R.color.textcolorlight);
+
                 } else {
                     tvAnswer.setText(question.getQuestionOption2());
                     tvotheroption.setText(question.getQuestionOption1());
                     setTextColor(tvotheroption, R.color.textcolorlight);
                 }
 
+                if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                    tvNeitherAnswer.setVisibility(View.VISIBLE);
+                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    setTextColor(tvNeitherAnswer, R.color.textcolorlight);
+                    tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+                }
+            }
 
-             // IF USER ANSWER = NEITHER
+
+             // IF USER ANSWER = THIRD OPTION (NEITHER OR DRAW)
                 if (answerId==3){
                     tvAnswer.setVisibility(View.VISIBLE);
                     tvAnswer.setText(question.getQuestionOption1());
@@ -395,6 +407,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
 
             // IF USER ANSWER = OPTION 1 OR OPTION 2
+
+            if (question.getQuestionAnswer() == 1 || question.getQuestionAnswer() == 2) {
+
                 if (question.getQuestionAnswer() == 1) {
                     tvAnswer.setText(question.getQuestionOption2());
                     tvotheroption.setText(question.getQuestionOption1());
@@ -402,6 +417,30 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     tvAnswer.setText(question.getQuestionOption1());
                     tvotheroption.setText(question.getQuestionOption2());
                 }
+
+                if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                    tvNeitherAnswer.setVisibility(View.VISIBLE);
+                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    setTextColor(tvNeitherAnswer, R.color.textcolorlight);
+                    tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+                }
+            }else if (question.getQuestionAnswer()==3){
+
+                if (answerId == 1) {
+                    tvAnswer.setText(question.getQuestionOption1());
+                    tvotheroption.setText(question.getQuestionOption2());
+                }else {
+                    tvAnswer.setText(question.getQuestionOption2());
+                    tvotheroption.setText(question.getQuestionOption1());
+                }
+
+                tvNeitherAnswer.setVisibility(View.VISIBLE);
+                tvNeitherAnswer.setText(question.getQuestionOption3());
+                setTextColor(tvNeitherAnswer, R.color.textcolorlight);
+                tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
+                tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+
+            }
 
             // IF USER ANSWER = NEITHER
                 if (answerId==3){
