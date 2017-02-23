@@ -111,7 +111,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         if (null == match.getResult() || match.getResult().isEmpty()) {
             holder.mTvMatchResult.setVisibility(View.GONE);
             holder.mTvResultWait.setVisibility(View.VISIBLE);
-            holder.mViewResult.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setText(match.getMatchQuestionCount() + " predictions made, waiting for results");
             holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
@@ -126,11 +125,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         } else {
             holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
             holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
-            holder.mViewResult.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setVisibility(View.GONE);
 
             holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
-            holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Correct");
+            holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Answered Correctly");
         }
 
         List<Question> questions = match.getQuestions();
@@ -168,8 +166,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         LinearLayout mleaderboard;
 
         TextView mTvResultCorrectCount;
-        CustomButton mBtnMatchPoints;
-        View mViewResult;
+        TextView mBtnMatchPoints;
 
         HmImageView mIvPartyAPhoto;
         TextView mTvResultWait;
@@ -187,8 +184,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mIvPartyAPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_left);
             mIvPartyBPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_right);
             mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
-            mBtnMatchPoints = (CustomButton) V.findViewById(R.id.schedule_row_btn_points);
-            mViewResult = (View) V.findViewById(R.id.schedule_row_v_result_line);
+            mBtnMatchPoints = (TextView) V.findViewById(R.id.schedule_row_btn_points);
             mLlPredictionsParent = (LinearLayout) V.findViewById(R.id.my_results_row_ll_predictions);
             mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
             mleaderboard=(LinearLayout)V.findViewById(R.id.my_results_row_ll_leaderboardbtn);
@@ -205,7 +201,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         final TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
         final TextView tvNeitherAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_neither_answer);
-        CustomButton powerupUsed = (CustomButton) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
+        ImageView powerupUsed = (ImageView) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
         RelativeLayout powerup = (RelativeLayout) convertView.findViewById(R.id.my_predictions_row_rl);
         TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
         final TextView tvotheroption = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
@@ -218,7 +214,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         if (question.getAnswerPoints() != null) {
 
             if (question.getAnswerPoints().equals(0)) {
-                setTextColor(tvAnswerPoints, R.color.textcolorlight);
+                setTextColor(tvAnswerPoints, R.color.white_60);
             }
 
             if (question.getAnswerPoints() > 0) {
@@ -285,7 +281,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 });
 
                 tvotheroption.setVisibility(View.VISIBLE);
-                setTextColor(tvotheroption, R.color.textcolorlight);
+                setTextColor(tvotheroption, R.color.white_60);
             }
         }
 
@@ -347,18 +343,18 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 if (question.getQuestionAnswer() == 1) {
                     tvAnswer.setText(question.getQuestionOption1());
                     tvotheroption.setText(question.getQuestionOption2());
-                    setTextColor(tvotheroption, R.color.textcolorlight);
+                    setTextColor(tvotheroption, R.color.white_60);
 
                 } else {
                     tvAnswer.setText(question.getQuestionOption2());
                     tvotheroption.setText(question.getQuestionOption1());
-                    setTextColor(tvotheroption, R.color.textcolorlight);
+                    setTextColor(tvotheroption, R.color.white_60);
                 }
 
                 if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                     tvNeitherAnswer.setVisibility(View.VISIBLE);
                     tvNeitherAnswer.setText(question.getQuestionOption3());
-                    setTextColor(tvNeitherAnswer, R.color.textcolorlight);
+                    setTextColor(tvNeitherAnswer, R.color.white_60);
                     tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
             }
@@ -371,7 +367,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     tvotheroption.setText(question.getQuestionOption2());
                     tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
                     tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
-                    setTextColor(tvAnswer, R.color.textcolorlight);
+                    setTextColor(tvAnswer, R.color.white_60);
 
                     tvNeitherAnswer.setVisibility(View.VISIBLE);
                     tvNeitherAnswer.setText(question.getQuestionOption3());
@@ -387,10 +383,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 tvotheroption.setVisibility(View.VISIBLE);
                 if (question.getQuestionAnswer() == 1) {
                     tvotheroption.setText(question.getQuestionOption1());
-                    setTextColor(tvotheroption, R.color.textcolorlight);
+                    setTextColor(tvotheroption, R.color.white_60);
                 } else {
                     tvotheroption.setText(question.getQuestionOption2());
-                    setTextColor(tvotheroption, R.color.textcolorlight);
+                    setTextColor(tvotheroption, R.color.white_60);
                 }
                 tvotheroption.setVisibility(View.VISIBLE);
                 tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
@@ -402,7 +398,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 setTextColor(tvAnswer, R.color.tabcolor);
                 tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
                 tvotheroption.setVisibility(View.VISIBLE);
-                setTextColor(tvotheroption, R.color.textcolorlight);
+                setTextColor(tvotheroption, R.color.white_60);
                 tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
 
 
@@ -421,7 +417,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                     tvNeitherAnswer.setVisibility(View.VISIBLE);
                     tvNeitherAnswer.setText(question.getQuestionOption3());
-                    setTextColor(tvNeitherAnswer, R.color.textcolorlight);
+                    setTextColor(tvNeitherAnswer, R.color.white_60);
                     tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
             }else if (question.getQuestionAnswer()==3){
@@ -436,7 +432,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
                 tvNeitherAnswer.setVisibility(View.VISIBLE);
                 tvNeitherAnswer.setText(question.getQuestionOption3());
-                setTextColor(tvNeitherAnswer, R.color.textcolorlight);
+                setTextColor(tvNeitherAnswer, R.color.white_60);
                 tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
                 tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
 
@@ -452,7 +448,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                         tvAnswer.setText(question.getQuestionOption1());
                     }
                     tvAnswer.setVisibility(View.VISIBLE);
-                    setTextColor(tvAnswer, R.color.textcolorlight);
+                    setTextColor(tvAnswer, R.color.white_60);
                     tvNeitherAnswer.setVisibility(View.VISIBLE);
                     tvNeitherAnswer.setText(question.getQuestionOption3());
                     setTextColor(tvNeitherAnswer, R.color.tabcolor);

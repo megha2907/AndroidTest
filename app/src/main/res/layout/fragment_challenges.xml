@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_1">
+        android:layout_marginTop="@dimen/dp_15">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/challenges_count_tv"
@@ -52,51 +52,51 @@
         android:id="@+id/challenges_fl_match_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/challenges_rcv_horizontal"/>
+        android:layout_below="@id/challenges_rcv_horizontal" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/challenges_rcv_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingTop="@dimen/dp_40"
+        android:paddingBottom="@dimen/dp_195"
         android:paddingLeft="@dimen/dp_20"
         android:paddingRight="@dimen/dp_20"
-        android:paddingBottom="@dimen/dp_195"
+        android:paddingTop="@dimen/dp_40"
         android:visibility="invisible" />
 
     <RelativeLayout
         android:id="@+id/challenges_switch_view_rl"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_27"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_22"
+        android:layout_marginRight="@dimen/dp_24"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/grey_border_round_btn_bg"
         android:clickable="true">
 
         <ImageButton
             android:id="@+id/challenges_swipe_view"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_marginBottom="1dp"
-            android:layout_marginLeft="1dp"
-            android:layout_marginTop="1dp"
+            android:layout_width="@dimen/dp_34"
+            android:layout_height="@dimen/dp_34"
+            android:layout_marginBottom="@dimen/dp_1"
+            android:layout_marginLeft="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_1"
             android:background="@drawable/toggle_widget_background"
-            android:clickable="false"
             android:drawablePadding="@dimen/dp_15"
-            android:src="@drawable/swipe_view_white_icon" />
+            android:src="@drawable/swipe_view_white_icon"
+            android:clickable="false" />
 
         <ImageButton
             android:id="@+id/challenges_list_view"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_marginBottom="1dp"
-            android:layout_marginTop="1dp"
+            android:layout_width="@dimen/dp_34"
+            android:layout_height="@dimen/dp_34"
+            android:layout_marginBottom="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_1"
             android:layout_toRightOf="@+id/challenges_swipe_view"
             android:background="@drawable/toggle_widget_background"
-            android:clickable="false"
-            android:src="@drawable/list_view_white_icon" />
+            android:src="@drawable/list_view_white_icon"
+            android:clickable="false" />
 
     </RelativeLayout>
 
