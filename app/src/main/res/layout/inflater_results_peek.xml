@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/black">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/schedule_row_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,6 +17,7 @@
         android:paddingBottom="@dimen/dp_10">
 
         <RelativeLayout
+            android:id="@+id/results_peek_row_question_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -53,6 +54,7 @@
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_18"
             android:layout_marginRight="@dimen/dp_20"
+            android:layout_below="@+id/results_peek_row_question_rl"
             android:layout_gravity="left">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -62,6 +64,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_14"
                 android:layout_alignParentLeft="true"
+                app:typeface="lato_regular"
                 />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -101,6 +104,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_14"
                 android:layout_alignParentRight="true"
+                app:typeface="lato_regular"
                 />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -136,7 +140,7 @@
 
         </RelativeLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
 

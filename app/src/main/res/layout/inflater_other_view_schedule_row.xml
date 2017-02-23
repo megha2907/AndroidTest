@@ -57,12 +57,12 @@
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/schedule_row_tv_party_a_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dp_90"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp_12"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:maxLines="2"
                     android:text="Atletico"
                     android:textAllCaps="false"
@@ -83,12 +83,12 @@
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/schedule_row_tv_party_b_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dp_90"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="@dimen/dp_12"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:gravity="right"
                     android:maxLines="2"
                     android:text="Atletico"
                     android:textAllCaps="false"
