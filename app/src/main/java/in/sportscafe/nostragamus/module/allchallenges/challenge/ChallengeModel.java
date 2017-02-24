@@ -13,5 +13,7 @@ public interface ChallengeModel {
 
     void init(Bundle bundle);
 
-    RecyclerView.Adapter getAdapter(Context context);
+    RecyclerView.Adapter getSwipeAdapter(Context context);
+
+    RecyclerView.Adapter getListAdapter(Context context);
 }

@@ -1,7 +1,12 @@
 package in.sportscafe.nostragamus.module.allchallenges.challenge;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,14 +27,12 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
-
-import static com.google.android.gms.analytics.internal.zzy.m;
 
 /**
  * Created by Jeeva on 17/02/17.
@@ -143,7 +146,11 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
     private int mFirstItemY = 0;
 
+    private int mYDelta = 0;
+
     private int mCurrentPosition = 0;
+
+    private int mChildHeight = 0;
 
     @Override
     public void onClick(View view) {
@@ -151,13 +158,16 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
             int coords[] = new int[2];
             mRcvVertical.getChildAt(0).getLocationInWindow(coords);
             mFirstItemY = coords[1];
+            mYDelta = getResources().getDimensionPixelSize(R.dimen.dp_45);
+            if(mRcvVertical.getChildCount() > 1) {
+                mChildHeight = mRcvVertical.getChildAt(1).getMeasuredHeight();
+            }
         }
 
         switch (view.getId()) {
             case R.id.challenges_switch_view_rl:
                 if (mListView.isSelected()) {
-                    switchToSwipeView();
-                    updateMatchesToCurrentPosition();
+                    switchToSwipeView(findDiff(-1));
                 } else {
                     switchToListView();
                 }
@@ -165,7 +175,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         }
     }
 
-    private void switchToSwipeView() {
+    private int findDiff(int position) {
         mCurrentPosition = 0;
 
         View child;
@@ -174,15 +184,27 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
         for (int i = 0; i < mRcvVertical.getChildCount(); i++) {
             child = mRcvVertical.getChildAt(i);
-            child.getLocationInWindow(coords);
+            mCurrentPosition = mVerticalManager.getPosition(child);
 
+            child.getLocationInWindow(coords);
             diffY = coords[1] - mFirstItemY;
-            if (diffY >= 0) {
-                mCurrentPosition = mVerticalManager.getPosition(child);
-                break;
+
+            if(position == -1) {
+                if (diffY >= 0) {
+                    return diffY;
+                }
+            } else if(mCurrentPosition == position) {
+                return diffY;
             }
         }
 
+        return diffY;
+    }
+
+    private void switchToSwipeView(int diffY) {
+        if(mCurrentPosition != 0) {
+//            diffY += mYDelta;
+        }
         mRcvHorizontal.getLayoutManager().scrollToPosition(mCurrentPosition);
 
         if (diffY != 0) {
@@ -200,18 +222,19 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         } else {
             verticalSlideBottomItems(false);
         }
+        updateMatchesToCurrentPosition();
     }
 
     private void switchToListView() {
         mCurrentPosition = mRcvHorizontal.getCurrentPosition();
-        mRcvVertical.scrollBy(0, mCurrentPosition * mRcvVertical.getChildAt(0).getMeasuredHeight());
+        mRcvVertical.scrollBy(0, mCurrentPosition * mChildHeight);
         horizontalSlideLeftRightItems(false);
 //        hideMatches();
     }
 
     private void verticalSlideBottomItems(final boolean in) {
         int childCount = mRcvVertical.getChildCount();
-        if (childCount > 1 && mCurrentPosition < mRcvVertical.getAdapter().getItemCount() - 1) {
+        if (mCurrentPosition < mRcvVertical.getAdapter().getItemCount() - 1) {
             Animation slideAnim = getSlideAnim(in, true, false);
             slideAnim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -229,7 +252,18 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
                 public void onAnimationRepeat(Animation animation) {
                 }
             });
-            mRcvVertical.getChildAt(childCount - 1).startAnimation(slideAnim);
+
+            int i = 1;
+            if(mCurrentPosition == 0) {
+                i = 0;
+            }
+
+            mRcvVertical.getChildAt(i).findViewById(R.id.all_challenges_rl_anim_bg).startAnimation(slideAnim);
+
+            if(childCount > i + 1) {
+                slideAnim = getSlideAnim(in, true, false);
+                mRcvVertical.getChildAt(i + 1).startAnimation(slideAnim);
+            }
         } else {
             if (!in) {
                 showSwipeView();
@@ -327,7 +361,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         int y = 0;
 
         if (vertical) {
-            y = mRcvVertical.getChildAt(0).getMeasuredHeight();
+            y = mRcvVertical.getChildAt(0).getMeasuredHeight() + mYDelta;
         } else {
             x = mRcvHorizontal.getPaddingLeft();
         }
@@ -349,4 +383,24 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 //        animation.setFillAfter(true);
         return animation;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mChallengeItemClickReceiver,
+                new IntentFilter(Constants.IntentActions.ACTION_CHALLENGE_CLICK));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mChallengeItemClickReceiver);
+    }
+
+    BroadcastReceiver mChallengeItemClickReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switchToSwipeView(findDiff(intent.getIntExtra(BundleKeys.CLICK_POSITION, -1)));
+        }
+    };
 }
