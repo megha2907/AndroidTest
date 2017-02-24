@@ -24,11 +24,12 @@ public class ChallengePresenterImpl implements ChallengePresenter, ChallengeMode
     @Override
     public void onCreateChallenge(Bundle bundle) {
         mChallengeModel.init(bundle);
-        mChallengeView.setAdapter(mChallengeModel.getAdapter(mChallengeView.getContext()));
+        mChallengeView.setSwipeAdapter(mChallengeModel.getAdapter(mChallengeView.getContext()));
+        mChallengeView.setListAdapter(mChallengeModel.getAdapter(mChallengeView.getContext()));
     }
 
     @Override
-    public void changeAdapterLayout(Boolean isSwipeView) {
-        mChallengeModel.changeChallengesAdapterLayout(isSwipeView);
+    public void changeAdapterLayout(boolean swipeView) {
+//        mChallengeModel.changeChallengesAdapterLayout(swipeView);
     }
 }

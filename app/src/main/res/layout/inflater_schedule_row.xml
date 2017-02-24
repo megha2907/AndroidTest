@@ -247,7 +247,7 @@
             android:layout_marginRight="@dimen/dp_14"
             android:layout_marginTop="@dimen/dp_14"
             android:clickable="true"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/schedule_row_btn_points"

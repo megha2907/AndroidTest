@@ -123,4 +123,5 @@
     <dimen name="dp_240">240dp</dimen>
     <dimen name="dp_49">49dp</dimen>
     <dimen name="_dp_23">-23dp</dimen>
+    <dimen name="dp_195">195dp</dimen>
 </resources>

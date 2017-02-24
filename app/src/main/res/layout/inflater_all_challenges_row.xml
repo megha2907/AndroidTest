@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/dp_320"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/dp_3"
     android:layout_marginRight="@dimen/dp_3"
@@ -57,8 +57,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/all_challenges_row_matchstage_tv"
-                    android:layout_toRightOf="@+id/all_challenges_row_iv_image"
-                    android:layout_marginLeft="@dimen/dp_10">
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_toRightOf="@+id/all_challenges_row_iv_image">
 
                     <LinearLayout
                         android:id="@+id/all_challenges_row_tournament_ll"
@@ -67,23 +67,23 @@
                         android:orientation="horizontal">
 
                         <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                            <!--android:id="@+id/all_challenges_row_tournament_name"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="EPL"-->
-                            <!--android:background="@color/white_20"-->
-                            <!--android:textColor="@color/white"-->
-                            <!--app:typeface="roboto_condensed"-->
-                            <!--android:textSize="@dimen/dp_12"-->
-                            <!--android:paddingTop="@dimen/dp_3"-->
-                            <!--android:paddingBottom="@dimen/dp_3"-->
-                            <!--android:paddingRight="@dimen/dp_5"-->
-                            <!--android:paddingLeft="@dimen/dp_5"-->
-                            <!--android:layout_marginTop="@dimen/dp_5"-->
-                            <!--/>-->
+                        <!--android:id="@+id/all_challenges_row_tournament_name"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="EPL"-->
+                        <!--android:background="@color/white_20"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--app:typeface="roboto_condensed"-->
+                        <!--android:textSize="@dimen/dp_12"-->
+                        <!--android:paddingTop="@dimen/dp_3"-->
+                        <!--android:paddingBottom="@dimen/dp_3"-->
+                        <!--android:paddingRight="@dimen/dp_5"-->
+                        <!--android:paddingLeft="@dimen/dp_5"-->
+                        <!--android:layout_marginTop="@dimen/dp_5"-->
+                        <!--/>-->
 
                     </LinearLayout>
-                 </HorizontalScrollView>
+                </HorizontalScrollView>
 
                 <RelativeLayout
                     android:id="@+id/all_challenges_row_powerup_rl"

@@ -12,5 +12,7 @@ import com.jeeva.android.InAppView;
 
 public interface ChallengeView extends InAppView {
 
-    void setAdapter(RecyclerView.Adapter adapter);
+    void setSwipeAdapter(RecyclerView.Adapter adapter);
+
+    void setListAdapter(RecyclerView.Adapter adapter);
 }
