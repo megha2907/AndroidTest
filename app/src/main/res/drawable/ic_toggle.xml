@@ -2,9 +2,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_checked="false"
-        android:drawable="@drawable/swipe_view_white_icon" />
+        android:drawable="@drawable/challenge_list_icon" />
 
     <item android:state_checked="true"
-        android:drawable="@drawable/list_view_white_icon" />
+        android:drawable="@drawable/challenge_swipe_icon" />
 
 </selector>

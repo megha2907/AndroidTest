@@ -16,11 +16,11 @@
         android:id="@+id/challenges_rcv_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/dp_20"
-        android:paddingRight="@dimen/dp_20"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/dp_195"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20"
         android:paddingTop="@dimen/dp_40"
         android:visibility="invisible" />
 
@@ -86,7 +86,7 @@
                 android:layout_width="@dimen/dp_35"
                 android:layout_height="@dimen/dp_35"
                 android:padding="@dimen/dp_5"
-                android:src="@drawable/swipe_view_white_icon" />
+                android:src="@drawable/challenge_swipe_icon" />
 
             <ImageView
                 android:id="@+id/challenges_list_view"
@@ -94,7 +94,7 @@
                 android:layout_height="@dimen/dp_35"
                 android:layout_toRightOf="@+id/challenges_swipe_view"
                 android:padding="@dimen/dp_5"
-                android:src="@drawable/list_view_white_icon" />
+                android:src="@drawable/challenge_list_icon" />
 
             <View
                 android:id="@+id/challenges_v_switch_seek"

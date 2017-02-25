@@ -33,11 +33,11 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 
-import static android.R.attr.animation;
 import static android.R.attr.fromXDelta;
 import static android.R.attr.fromYDelta;
 import static android.R.attr.toXDelta;
 import static android.R.attr.toYDelta;
+import static android.R.attr.y;
 
 /**
  * Created by Jeeva on 17/02/17.
@@ -151,7 +151,9 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
     private int mCurrentPosition = 0;
 
-    private int mChildHeight = 0;
+    private int mVerticalChildHeight = 0;
+
+    private int mHorizontalChildHeight = 0;
 
     private boolean mSwipeViewSelected = true;
 
@@ -162,9 +164,8 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
             mRcvVertical.getChildAt(0).getLocationInWindow(coords);
             mFirstItemY = coords[1];
             mYDelta = getResources().getDimensionPixelSize(R.dimen.dp_40);
-            if (mRcvVertical.getChildCount() > 1) {
-                mChildHeight = mRcvVertical.getChildAt(1).getMeasuredHeight();
-            }
+            mVerticalChildHeight = mRcvVertical.getChildAt(0).getMeasuredHeight();
+            mHorizontalChildHeight = mRcvHorizontal.getChildAt(0).getMeasuredHeight() + mYDelta;
         }
 
         switch (view.getId()) {
@@ -172,13 +173,13 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
                 if (mSwipeViewSelected) {
                     switchToListView();
                 } else {
-                    switchToSwipeView(findDiff(-1));
+                    switchToSwipeView(findYDiffByPosition(-1));
                 }
                 break;
         }
     }
 
-    private int findDiff(int position) {
+    private int findYDiffByPosition(int position) {
         mCurrentPosition = 0;
 
         View child;
@@ -233,7 +234,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
     private void switchToListView() {
         mCurrentPosition = mRcvHorizontal.getCurrentPosition();
-        mRcvVertical.scrollBy(0, mCurrentPosition * mChildHeight);
+        mRcvVertical.scrollBy(0, mCurrentPosition * mVerticalChildHeight);
         horizontalSlideLeftRightItems(false);
 //        hideMatches();
 
@@ -251,23 +252,30 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
             i = 0;
         }
 
+        if (childCount > i + 1) {
+            AnimationSet animationSet = new AnimationSet(false);
+            TranslateAnimation slideAnim;
+            if (in) {
+                slideAnim = new TranslateAnimation(0, 0, mVerticalChildHeight, 0);
+                slideAnim.setDuration(300);
+                slideAnim.setStartOffset(300);
+            } else {
+                slideAnim = new TranslateAnimation(0, 0, 0, mVerticalChildHeight);
+                slideAnim.setDuration(500);
+                animationSet.addAnimation(slideAnim);
+                slideAnim = new TranslateAnimation(0, 0, 0, mVerticalChildHeight);
+                slideAnim.setDuration(500);
+                slideAnim.setStartOffset(500);
+            }
+            animationSet.addAnimation(slideAnim);
+            mRcvVertical.getChildAt(i + 1).startAnimation(animationSet);
+        }
+
         View showGamesBg = mRcvVertical.getChildAt(i).findViewById(R.id.all_challenges_rl_anim_bg);
         if(in) {
             showShowGamesBg(showGamesBg);
         } else {
             hideShowGamesBg(showGamesBg);
-        }
-
-        if (childCount > i + 1) {
-            TranslateAnimation slideAnim = getSlideAnim(in, true, false);
-            if (in) {
-                slideAnim.setDuration(300);
-                slideAnim.setStartOffset(300);
-            } else {
-                slideAnim = new TranslateAnimation(0, 0, 0, 2 * (mRcvHorizontal.getChildAt(0).getMeasuredHeight() + mYDelta));
-                slideAnim.setDuration(1000);
-            }
-            mRcvVertical.getChildAt(i + 1).startAnimation(slideAnim);
         }
 
         if (in) {
@@ -278,7 +286,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     }
 
     private void hideShowGamesBg(View view) {
-        Animation slideAnimation = new TranslateAnimation(0, 0, 0, mRcvHorizontal.getChildAt(0).getMeasuredHeight() + mYDelta);
+        Animation slideAnimation = new TranslateAnimation(0, 0, 0, mHorizontalChildHeight);
         slideAnimation.setDuration(500);
 
         ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 2f, 1f, 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1f);
@@ -312,7 +320,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     }
 
     private void showShowGamesBg(View view) {
-        Animation slideAnimation = new TranslateAnimation(0, 0, mRcvHorizontal.getChildAt(0).getMeasuredHeight() + mYDelta, 0);
+        Animation slideAnimation = new TranslateAnimation(0, 0, mHorizontalChildHeight, 0);
         slideAnimation.setDuration(300);
         slideAnimation.setStartOffset(300);
 
@@ -336,12 +344,12 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         if (childCount > 1) {
             Animation slideAnim = null;
             if (currentPosition > 0) {
-                slideAnim = getSlideAnim(in, false, true);
+                slideAnim = getSlideAnimX(in, true);
                 mRcvHorizontal.getChildAt(0).startAnimation(slideAnim);
             }
 
             if (currentPosition < mRcvHorizontal.getAdapter().getItemCount() - 1) {
-                slideAnim = getSlideAnim(in, false, false);
+                slideAnim = getSlideAnimX(in, false);
                 mRcvHorizontal.getChildAt(childCount - 1).startAnimation(slideAnim);
             }
 
@@ -425,31 +433,20 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         return animation;
     }
 
-    private TranslateAnimation getSlideAnim(boolean in, boolean vertical, boolean negative) {
-        int x = 0;
-        int y = 0;
+    private TranslateAnimation getSlideAnimX(boolean in, boolean left) {
+        int x = mRcvHorizontal.getPaddingLeft();
 
-        if (vertical) {
-            y = mRcvVertical.getChildAt(0).getMeasuredHeight() + mYDelta;
-        } else {
-            x = mRcvHorizontal.getPaddingLeft();
-        }
-
-        if (negative) {
+        if (left) {
             x = -x;
-            y = -y;
         }
 
+        TranslateAnimation animation;
         if (in) {
-            return getSlideAnim(x, 0, y, 0);
+            animation = new TranslateAnimation(x, 0, 0, 0);
+        } else {
+            animation = new TranslateAnimation(0, x, 0, 0);
         }
-        return getSlideAnim(0, x, 0, y);
-    }
-
-    private TranslateAnimation getSlideAnim(float fromXDelta, float toXDelta, float fromYDelta, float toYDelta) {
-        TranslateAnimation animation = new TranslateAnimation(fromXDelta, toXDelta, fromYDelta, toYDelta);
         animation.setDuration(500);
-//        animation.setFillAfter(true);
         return animation;
     }
 
@@ -469,7 +466,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     BroadcastReceiver mChallengeItemClickReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switchToSwipeView(findDiff(intent.getIntExtra(BundleKeys.CLICK_POSITION, -1)));
+            switchToSwipeView(findYDiffByPosition(intent.getIntExtra(BundleKeys.CLICK_POSITION, -1)));
         }
     };
 }

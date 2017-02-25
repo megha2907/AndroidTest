@@ -69,7 +69,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
                 }
             }, 250);
         } else {
-            mTimelineAdapter.addAll(matches);
+            refreshMatches(matches, matchesLeft);
         }
     }
 

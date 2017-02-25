@@ -68,6 +68,12 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
     }
 
     private void populateMatchDetails(Match match, ScheduleViewHolder holder) {
+        holder.mBtnMatchPoints.setVisibility(View.GONE);
+        holder.mTvInfo.setVisibility(View.GONE);
+        holder.mTvMatchResult.setVisibility(View.GONE);
+        holder.mLlResultWait.setVisibility(View.GONE);
+        holder.mBtnPlayMatch.setVisibility(View.GONE);
+
         String startTime = match.getStartTime().replace("+00:00", ".000Z");
         Log.d("StartTime", startTime);
 //        String startTime = "2017-01-27T18:00:00.000Z";
