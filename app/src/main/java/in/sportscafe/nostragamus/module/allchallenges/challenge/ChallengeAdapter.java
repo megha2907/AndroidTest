@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -75,14 +76,20 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
         holder.mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
 
-        HashMap<String, Integer> powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
-        Integer powerUp2x = powerUpMap.get(Constants.Powerups.XX);
-        Integer powerUpNoNegative = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
-        Integer powerUpAudiencePoll = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+        if (challenge.getChallengeUserInfo().getPowerUps() != null) {
+            HashMap<String, Integer> powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
+            Integer powerUp2x = powerUpMap.get(Constants.Powerups.XX);
+            Integer powerUpNoNegative = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+            Integer powerUpAudiencePoll = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
 
-        holder.mTv2xPowerupCount.setText(String.valueOf(powerUp2x));
-        holder.mTvNonegsPowerupCount.setText(String.valueOf(powerUpNoNegative));
-        holder.mTvPollPowerupCount.setText(String.valueOf(powerUpAudiencePoll));
+            holder.mTv2xPowerupCount.setText(String.valueOf(powerUp2x));
+            holder.mTvNonegsPowerupCount.setText(String.valueOf(powerUpNoNegative));
+            holder.mTvPollPowerupCount.setText(String.valueOf(powerUpAudiencePoll));
+        } else {
+            holder.mTv2xPowerupCount.setText("0");
+            holder.mTvNonegsPowerupCount.setText("0");
+            holder.mTvPollPowerupCount.setText("0");
+        }
 
         if (null != challenge.getUserRank()) {
             String rank = AppSnippet.ordinal(challenge.getUserRank());
@@ -97,6 +104,13 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mLlShowGames.setBackground(mResources.getDrawable(R.drawable.shape_challenges_show_game_bg));
         }
 
+        if (!TextUtils.isEmpty(challenge.getCountMatchesLeft())) {
+            if (challenge.getCountMatchesLeft().equals("0")) {
+                holder.mTvGamesLeftCount.setText("No Games");
+            } else {
+                holder.mTvGamesLeftCount.setText(challenge.getCountMatchesLeft() + " Games Left");
+            }
+        }
 
 //        HorizontalScrollView.LayoutParams layoutParams =
 //                (HorizontalScrollView.LayoutParams) holder.mLlTournament.getLayoutParams();
@@ -148,6 +162,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         LinearLayout mLlTournament;
         LinearLayout mLlShowGames;
 
+        TextView mTvGamesLeftCount;
+
 
         public ViewHolder(View V) {
             super(V);
@@ -167,6 +183,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mTvChallengeHoursLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_hours_left);
             mTvChallengeDaysLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_days_left);
             mTvChallengeMinsLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_mins_left);
+            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
 
             V.setOnClickListener(this);
         }

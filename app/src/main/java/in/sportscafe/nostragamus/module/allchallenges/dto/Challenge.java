@@ -38,6 +38,9 @@ public class Challenge {
     @JsonProperty("challenge_endtime")
     private String endTime;
 
+    @JsonProperty("count_matches_left")
+    private String countMatchesLeft;
+
     @JsonProperty("matches")
     private List<Match> matches = new ArrayList<>();
 
@@ -172,6 +175,16 @@ public class Challenge {
     @JsonProperty("challenge_info")
     public void setChallengeInfo(ChallengeInfo challengeInfo) {
         this.challengeInfo = challengeInfo;
+    }
+
+    @JsonProperty("count_matches_left")
+    public String getCountMatchesLeft() {
+        return countMatchesLeft;
+    }
+
+    @JsonProperty("count_matches_left")
+    public void setCountMatchesLeft(String countMatchesLeft) {
+        this.countMatchesLeft = countMatchesLeft;
     }
 
 }

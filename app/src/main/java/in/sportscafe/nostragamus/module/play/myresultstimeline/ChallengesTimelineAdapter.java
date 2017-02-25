@@ -97,9 +97,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
         // Setting date of the match
-        holder.mTvDate.setText(
-                TimeUtils.getDateStringFromMs(startTimeMs, "MMM")
-                        + dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + ", "
+        holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) +" "+
+                TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
                 + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA)
         );
 
@@ -136,7 +135,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                         holder.mTvMatchResult.setText(Html.fromHtml(match.getResult()));
                         holder.mBtnMatchPoints.setTag(match);
                         holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
-                        holder.mTvResultCorrectCount.setText("You got " + match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " answers correct");
+                        //holder.mTvResultCorrectCount.setText("You got " + match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " answers correct");
 
                         Integer winnerPartyId = match.getWinnerPartyId();
                         if (null != winnerPartyId) {
