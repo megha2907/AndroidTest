@@ -72,10 +72,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mTvChallengePrice.setVisibility(View.INVISIBLE);
         }
 
-        holder.mIvChallengeImage.setImageUrl(
-                challenge.getImage()
-        );
-
         holder.mIv2xPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
         holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
         holder.mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));

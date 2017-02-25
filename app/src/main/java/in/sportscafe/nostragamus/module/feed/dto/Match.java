@@ -99,8 +99,14 @@ public class Match {
     @JsonProperty("count_powerups")
     private Integer countPowerUps;
 
-    @JsonProperty("count_players")
+    @JsonProperty("count_match_powerups")
+    private Integer countMatchPowerupsUsed;
+
+    @JsonProperty("count_challenge_players")
     private Integer countPlayers;
+
+    @JsonProperty("count_match_players")
+    private Integer countMatchPlayers;
 
     /**
      *
@@ -462,14 +468,34 @@ public class Match {
         this.countPowerUps = countPowerUps;
     }
 
-    @JsonProperty("count_players")
+    @JsonProperty("count_challenge_players")
     public Integer getCountPlayers() {
         return countPlayers;
     }
 
-    @JsonProperty("count_players")
+    @JsonProperty("count_challenge_players")
     public void setCountPlayers(Integer countPlayers) {
         this.countPlayers = countPlayers;
+    }
+
+    @JsonProperty("count_match_powerups")
+    public Integer getCountMatchPowerupsUsed() {
+        return countMatchPowerupsUsed;
+    }
+
+    @JsonProperty("count_match_powerups")
+    public void setCountMatchPowerupsUsed(Integer countMatchPowerupsUsed) {
+        this.countMatchPowerupsUsed = countMatchPowerupsUsed;
+    }
+
+    @JsonProperty("count_match_players")
+    public Integer getCountMatchPlayers() {
+        return countMatchPlayers;
+    }
+
+    @JsonProperty("count_match_players")
+    public void setCountMatchPlayers(Integer countMatchPlayers) {
+        this.countMatchPlayers = countMatchPlayers;
     }
 
 

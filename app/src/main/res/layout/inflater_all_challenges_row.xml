@@ -12,7 +12,6 @@
         android:id="@+id/all_challenges_rl_anim_bg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_220"
-        android:layout_alignBottom="@+id/all_challenges_row_ll_bg"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="@dimen/dp_10"
         android:clipChildren="false"
