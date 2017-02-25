@@ -7,7 +7,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,8 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
+
+import org.parceler.Parcels;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -29,14 +30,20 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
+import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
+import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
+import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
-import static in.sportscafe.nostragamus.R.*;
+import static in.sportscafe.nostragamus.R.color;
+import static in.sportscafe.nostragamus.R.dimen;
+import static in.sportscafe.nostragamus.R.id;
+import static in.sportscafe.nostragamus.R.layout;
 
 /**
  * Created by deepanshi on 17/2/17.
@@ -46,8 +53,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
     private Resources mResources;
 
     private boolean mSwipeView = true;
-
-    private Integer mChallengeAmount;
 
     public ChallengeAdapter(Context context, List<Challenge> challenges, boolean swipeView) {
         super(context);
@@ -75,7 +80,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         }
 
         Challenge challenge = getItem(position);
-
         holder.mTvChallengeName.setText(challenge.getName());
 
         try {
@@ -110,20 +114,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         } else {
             holder.mTvChallengeUserRank.setText("Did Not Play");
         }
-
-        /*if (mSwipeView) {
-            holder.mLlShowGames.setBackgroundColor(mResources.getColor(R.color.black));
-        } else {
-            holder.mLlShowGames.setBackground(mResources.getDrawable(R.drawable.shape_challenges_show_game_bg));
-        }*/
-
-        /*if (!TextUtils.isEmpty(challenge.getCountMatchesLeft())) {
-            if (challenge.getCountMatchesLeft().equals("0")) {
-                holder.mTvGamesLeftCount.setText("No Games");
-            } else {
-                holder.mTvGamesLeftCount.setText(challenge.getCountMatchesLeft() + " Games Left");
-            }
-        }*/
 
         LinearLayout.LayoutParams layoutParams = null;
 
@@ -220,16 +210,39 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlTimer = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_timer);
             mTvShowGames = (TextView) V.findViewById(id.all_challenges_row_tv_show_games);
             mTvShowGames.setOnClickListener(this);
+
+            V.findViewById(R.id.all_challenges_rl_leadboard).setOnClickListener(this);
 //            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
         }
 
         @Override
         public void onClick(View view) {
             Context context = view.getContext();
-            Intent intent = new Intent(IntentActions.ACTION_CHALLENGE_CLICK);
-            intent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+            switch (view.getId()) {
+                case R.id.all_challenges_row_tv_show_games:
+                    Intent intent = new Intent(IntentActions.ACTION_CHALLENGE_CLICK);
+                    intent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                    break;
+                case R.id.all_challenges_rl_leadboard:
+                    NostragamusAnalytics.getInstance().trackLeaderboard(LBLandingType.CHALLENGE);
+
+                    Challenge challenge = getItem(getAdapterPosition());
+
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(BundleKeys.LB_LANDING_DATA, Parcels.wrap(new LbLanding(
+                            challenge.getChallengeId(), challenge.getName(), challenge.getImage(), LBLandingType.CHALLENGE
+                    )));
+                    navigateToPointsActivity(context, bundle);
+                    break;
+            }
         }
+    }
+
+    private void navigateToPointsActivity(Context context, Bundle bundle) {
+        Intent intent = new Intent(context, PointsActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
     private void updateTimer(ViewHolder viewHolder, long updatedTime) {
@@ -247,7 +260,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         viewHolder.mTvChallengeMinsLeft.setText(String.format("%02d", mins)+"m");
 
     }
-
 
     private Drawable getPowerupDrawable(int colorRes) {
         GradientDrawable powerupDrawable = new GradientDrawable();

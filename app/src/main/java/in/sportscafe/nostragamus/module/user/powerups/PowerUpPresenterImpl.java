@@ -37,6 +37,6 @@ public class PowerUpPresenterImpl implements PowerUpPresenter, PowerUpModelImpl.
 
     @Override
     public void onAdapterCreated(PowerUpAdapter powerUpAdapter) {
-
+        mPowerUpView.setAdapter(powerUpAdapter);
     }
 }

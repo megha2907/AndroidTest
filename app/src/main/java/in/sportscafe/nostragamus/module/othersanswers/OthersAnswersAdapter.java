@@ -2,7 +2,10 @@ package in.sportscafe.nostragamus.module.othersanswers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -41,8 +44,11 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
 
     private int answerId;
 
+    private Resources mResources;
+
     public OthersAnswersAdapter(Context context) {
         super(context);
+        mResources = context.getResources();
     }
 
     public void setPlayerInfo(PlayerInfo playerInfo) {
@@ -273,14 +279,15 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         }
 
         if (-1 != question.getOption1AudPollPer()) {
+            int maxPercent = Math.max(Math.max(question.getOption1AudPollPer(), question.getOption2AudPollPer()), question.getOption3AudPollPer());
             tvAnswerPoints.setVisibility(View.INVISIBLE);
-            ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_1)).setText(question.getOption1AudPollPer() + "%");
-            ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_2)).setText(question.getOption2AudPollPer() + "%");
-        }
 
-        if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+            setPercentPoll((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_1), question.getOption1AudPollPer(), maxPercent);
+            setPercentPoll((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_2), question.getOption2AudPollPer(), maxPercent);
 
-            ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_3)).setText(question.getOption3AudPollPer() + "%");
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                setPercentPoll((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_3), question.getOption3AudPollPer(), maxPercent);
+            }
         }
 
         int powerupIcons = PowerUp.getResultPowerupIcons(question.getAnswerPowerUpId());
@@ -457,6 +464,20 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         }
 
         return convertView;
+    }
+
+    private void setPercentPoll(TextView textView, int percent, int maxPercent) {
+        GradientDrawable percentageDrawable = new GradientDrawable();
+        percentageDrawable.setShape(GradientDrawable.RECTANGLE);
+        if(percent >= maxPercent) {
+            percentageDrawable.setColor(mResources.getColor(R.color.mine_shaft_3d));
+        } else {
+            percentageDrawable.setColor(mResources.getColor(R.color.mine_shaft_32));
+        }
+
+        textView.setVisibility(View.VISIBLE);
+        textView.setText(percent + "%");
+        textView.setBackground(percentageDrawable);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

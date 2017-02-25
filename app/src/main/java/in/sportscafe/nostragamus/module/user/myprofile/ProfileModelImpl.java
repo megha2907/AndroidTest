@@ -19,6 +19,8 @@ import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUpFragment;
 import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 
+import static com.google.android.gms.analytics.internal.zzy.f;
+
 /**
  * Created by Jeeva on 14/6/16.
  */
@@ -56,7 +58,7 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         pagerAdapter.addFragment(BadgeFragment.newInstance(badgeList), AppSnippet.formatIfPlural(badgeList.size(), "Achievement", "s"));
 
         List<PowerUp> powerUpList = getPowerUpList(userInfo.getPowerUps());
-        pagerAdapter.addFragment(PowerUpFragment.newInstance(powerUpList), AppSnippet.formatIfPlural(powerUpList.size(), "Powerup", "s"));
+        pagerAdapter.addFragment(PowerUpFragment.newInstance(powerUpList), AppSnippet.formatIfPlural(getPowerUpTotalCount(powerUpList), "Powerup", "s"));
 
         pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), getSportsTabTitle());
 
@@ -74,6 +76,14 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
             powerUpList.add(new PowerUp(entry.getKey(), entry.getValue()));
         }
         return powerUpList;
+    }
+
+    private int getPowerUpTotalCount(List<PowerUp> powerUpList) {
+        int count = 0;
+        for (PowerUp powerUp : powerUpList) {
+            count += powerUp.getCount();
+        }
+        return count;
     }
 
     @Override

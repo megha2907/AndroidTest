@@ -44,7 +44,7 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimelineAdapter.ViewHolder> {
+public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimelineAdapter.ScheduleViewHolder> {
 
     private static final String COMMENTARY = "commentary";
 
@@ -58,21 +58,21 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(getLayoutInflater().inflate(R.layout.inflater_feed_row, parent, false));
+    public ScheduleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ScheduleViewHolder(getLayoutInflater().inflate(R.layout.inflater_other_view_schedule_row, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Match match = getItem(position);
-
-        holder.mLlTourParent.removeAllViews();
-
-        holder.mLlTourParent.addView(getScheduleView(match, holder.mLlTourParent).mMainView);
+    public void onBindViewHolder(ScheduleViewHolder holder, int position) {
+        populateMatchDetails(getItem(position), holder);
     }
 
-    private ScheduleViewHolder getScheduleView(Match match, ViewGroup parent) {
-        ScheduleViewHolder holder = new ScheduleViewHolder(getLayoutInflater().inflate(R.layout.inflater_other_view_schedule_row, parent, false));
+    private void populateMatchDetails(Match match, ScheduleViewHolder holder) {
+        holder.mBtnMatchPoints.setVisibility(View.GONE);
+        holder.mTvInfo.setVisibility(View.GONE);
+        holder.mTvMatchResult.setVisibility(View.GONE);
+        holder.mLlResultWait.setVisibility(View.GONE);
+        holder.mBtnPlayMatch.setVisibility(View.GONE);
 
         String startTime = match.getStartTime().replace("+00:00", ".000Z");
         Log.d("StartTime", startTime);
@@ -186,36 +186,6 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                 }
             }
         }
-
-        return holder;
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
-
-        int mPosition;
-
-        private LinearLayout mLlTourParent;
-
-        public ViewHolder(View V) {
-            super(V);
-            mLlTourParent = (LinearLayout) V.findViewById(R.id.feed_row_ll_tour_parent);
-        }
-    }
-
-    class TourViewHolder extends RecyclerView.ViewHolder {
-
-        TextView mTvTournamentName;
-
-        LinearLayout mLlScheduleParent;
-
-        public TourViewHolder(View V) {
-            super(V);
-
-            mTvTournamentName = (TextView) V.findViewById(R.id.tour_row_tv_tour_name);
-            mLlScheduleParent = (LinearLayout) V.findViewById(R.id.tour_row_ll_schedule_parent);
-        }
-
-
     }
 
     class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
