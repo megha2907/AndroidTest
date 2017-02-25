@@ -579,6 +579,8 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             int secs = (int) (updatedTime / 1000);
             int mins = secs / 60;
             int hours = mins / 60;
+            int days = hours / 24;
+            hours = hours % 24;
             mins = mins % 60;
             secs = secs % 60;
 
