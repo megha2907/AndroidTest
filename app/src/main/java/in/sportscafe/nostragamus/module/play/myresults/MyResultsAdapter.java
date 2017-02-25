@@ -25,6 +25,8 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
@@ -36,6 +38,7 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -90,6 +93,23 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         View myResultView = getLayoutInflater().inflate(R.layout.inflater_schedule_match_results_row, parent, false);
         MyResultViewHolder holder = new MyResultViewHolder(myResultView);
 
+        String startTime = match.getStartTime().replace("+00:00", ".000Z");
+        com.jeeva.android.Log.d("StartTime", startTime);
+//        String startTime = "2017-01-27T18:00:00.000Z";
+        long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                startTime,
+                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                Constants.DateFormats.GMT
+        );
+
+        int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
+        // Setting date of the match
+        holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) +" "+
+                TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
+                + TimeUtils.getDateStringFromMs(startTimeMs, Constants.DateFormats.HH_MM_AA)
+        );
+
+
         if (null == match.getStage()) {
             holder.mTvMatchStage.setVisibility(View.GONE);
         } else {
@@ -119,17 +139,16 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             holder.mTvMatchResult.setText(match.getResult());
         }
 
-        if (match.getMatchPoints() == 0) {
-            holder.mBtnMatchPoints.setVisibility(View.GONE);
-            holder.mTvResultCorrectCount.setVisibility(View.GONE);
-        } else {
             holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
             holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setVisibility(View.GONE);
+            holder.mBtnMatchPoints.setText(match.getMatchPoints().toString());
 
-            holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
             holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Answered Correctly");
-        }
+            holder.mTvAvgMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
+            holder.mTvHighestMatchPoints.setText(String.valueOf(match.getHighestMatchPoints()));
+            holder.mTvLeaderBoardRank.setText("Rank "+String.valueOf(match.getUserRank())+"/"+String.valueOf(match.getCountPlayers()));
+            holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps())+" Powerup Used");
 
         List<Question> questions = match.getQuestions();
         for (Question question : questions) {
@@ -144,8 +163,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     }
 
 
-    class MyResultViewHolder extends RecyclerView.ViewHolder {
+    class MyResultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        TextView mTvDate;
 
         TextView mTvMatchStage;
 
@@ -172,10 +192,17 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         TextView mTvResultWait;
         HmImageView mIvPartyBPhoto;
 
+        TextView mTvAvgMatchPoints;
+        TextView mTvHighestMatchPoints;
+        TextView mTvLeaderBoardRank;
+        TextView mTvNumberofPowerupsUsed;
+        RelativeLayout mRlLeaderBoard;
+
 
         public MyResultViewHolder(View V) {
             super(V);
 
+            mTvDate = (TextView) V.findViewById(R.id.schedule_row_tv_date);
             mTvMatchStage = (TextView) V.findViewById(R.id.schedule_row_tv_match_stage);
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
@@ -184,10 +211,28 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mIvPartyAPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_left);
             mIvPartyBPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_right);
             mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
-            mBtnMatchPoints = (TextView) V.findViewById(R.id.schedule_row_btn_points);
+            mBtnMatchPoints = (TextView) V.findViewById(R.id.schedule_row_tv_my_score);
             mLlPredictionsParent = (LinearLayout) V.findViewById(R.id.my_results_row_ll_predictions);
             mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
             mleaderboard=(LinearLayout)V.findViewById(R.id.my_results_row_ll_leaderboardbtn);
+            mTvAvgMatchPoints = (TextView) V.findViewById(R.id.schedule_row_tv_average_score);
+            mTvHighestMatchPoints = (TextView) V.findViewById(R.id.schedule_row_tv_highest_score);
+            mTvLeaderBoardRank = (TextView) V.findViewById(R.id.schedule_row_tv_leaderboard_rank);
+            mTvNumberofPowerupsUsed= (TextView) V.findViewById(R.id.schedule_row_tv_no_of_powerups_used);
+            mRlLeaderBoard= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_leaderboard);
+
+            mRlLeaderBoard.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            switch (v.getId()) {
+                case R.id.schedule_row_rl_leaderboard:
+                    navigateToLeaderboards(v.getContext());
+                    break;
+            }
+
         }
     }
 
@@ -201,7 +246,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         final TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
         final TextView tvNeitherAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_neither_answer);
-        ImageView powerupUsed = (ImageView) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
+        HmImageView powerupUsed = (HmImageView) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
         RelativeLayout powerup = (RelativeLayout) convertView.findViewById(R.id.my_predictions_row_rl);
         TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
         final TextView tvotheroption = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);

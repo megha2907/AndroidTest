@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -211,7 +212,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             mIvPartyAPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_left);
             mIvPartyBPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_right);
             mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
-            mBtnMatchPoints = (TextView) V.findViewById(R.id.schedule_row_btn_points);
+            mBtnMatchPoints = (TextView) V.findViewById(R.id.schedule_row_tv_my_score);
             mViewResult = (View) V.findViewById(R.id.schedule_row_v_result_line);
             mLlPredictionsParent = (LinearLayout) V.findViewById(R.id.my_results_row_ll_predictions);
             mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
@@ -228,7 +229,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
 
 
         final TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
-        CustomButton powerupUsed = (CustomButton) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
+        HmImageView powerupUsed = (HmImageView) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
         RelativeLayout powerup = (RelativeLayout) convertView.findViewById(R.id.my_predictions_row_rl);
         TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
         final TextView tvotheroption = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
