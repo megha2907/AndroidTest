@@ -7,29 +7,61 @@
     android:background="@color/black">
 
     <RelativeLayout
+        android:id="@+id/my_results_toolbar_rl"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/my_results_toolbar_rl">
+        android:layout_height="wrap_content">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_results_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorMedium"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
-
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_results_toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_20" />
+            android:background="@color/colorMedium"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_20" />
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp_110"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/dp_20">
 
 
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/my_results_ll_share_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_28"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/compare_btn_bg"
+                    android:gravity="center"
+                    android:onClick="onClick"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:text="SHARE"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="roboto_condensed"
+                    android:layout_alignBaseline="@+id/my_results_iv_share_icon"/>
 
-    </android.support.v7.widget.Toolbar>
+                <ImageView
+                    android:id="@+id/my_results_iv_share_icon"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_54"
+                    android:paddingTop="@dimen/dp_5"
+                    android:src="@drawable/share_btn_icon" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
 
     </RelativeLayout>
 
@@ -37,8 +69,8 @@
         android:id="@+id/my_results_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
-        android:layout_below="@+id/my_results_toolbar_rl"/>
+        android:layout_below="@+id/my_results_toolbar_rl"
+        android:background="@color/black" />
 
     <RelativeLayout
         android:id="@+id/fab_container"
@@ -131,28 +163,25 @@
             android:layout_marginRight="@dimen/dp_18"
             android:layout_marginTop="@dimen/dp_10"
             android:clipToPadding="false"
+            android:scaleType="center"
             android:src="@drawable/powerup_main_icon_white"
+            android:visibility="gone"
             app:backgroundTint="@color/blackopacity"
             app:borderWidth="@dimen/dp_0"
-            app:elevation="@dimen/dp_0"
-            android:scaleType="center"/>
+            app:elevation="@dimen/dp_0" />
+
 
     </RelativeLayout>
 
 
-
-
-
     <!--<RelativeLayout-->
-        <!--android:id="@+id/fab_container_share"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_below="@id/fab_container"-->
-        <!--&gt;-->
-
-
+    <!--android:id="@+id/fab_container_share"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_below="@id/fab_container"-->
+    <!--&gt;-->
 
 
     <!--<android.support.design.widget.FloatingActionButton
@@ -198,8 +227,7 @@
     </FrameLayout>-->
 
 
-        <!--</RelativeLayout>-->
-
+    <!--</RelativeLayout>-->
 
 
 </RelativeLayout>

@@ -80,6 +80,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     private FloatingActionButton shareFab;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward, share_rotate_forward, share_rotate_backward;
 
+    private Button shareResultsBtn;
+
     private float offset1;
     private float offset2;
 
@@ -106,6 +108,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         this.mRvMyResults = (RecyclerView) findViewById(R.id.my_results_rv);
         this.mRvMyResults.setLayoutManager(mlayoutManager);
 
+
+        shareResultsBtn = (Button) findViewById(R.id.my_results_ll_share_score);
+        shareResultsBtn.setOnClickListener(this);
 
         /*shareFab = (FloatingActionButton)findViewById(R.id.fab_share);
         btnfbShare =findViewById(R.id.fab_fb);
@@ -321,11 +326,20 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 }
                 break;
 
+            case R.id.my_results_ll_share_score:
+                broadcastShareScore(v.getContext());
+                break;
+
             /*case R.id.fab_fb:
 
                 break;*/
 
         }
+    }
+
+
+    private void broadcastShareScore(Context context) {
+        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(IntentActions.ACTION_SHARE_SCORE));
     }
 
     private void navigatetoFlipScreen() {

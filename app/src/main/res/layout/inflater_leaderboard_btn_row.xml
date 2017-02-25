@@ -26,13 +26,15 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:alpha="0.4"
-        android:background="@color/white" />
+        android:background="@color/white"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/match_result_commentary_ll"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_80"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/my_results_ll_others_answers"

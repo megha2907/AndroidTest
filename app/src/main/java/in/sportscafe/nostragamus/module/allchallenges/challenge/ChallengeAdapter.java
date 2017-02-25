@@ -28,8 +28,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.common.Adapter;
 
-import static in.sportscafe.nostragamus.R.string.position;
-
 /**
  * Created by deepanshi on 17/2/17.
  */
@@ -85,14 +83,20 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
         holder.mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
 
-        HashMap<String, Integer> powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
-        Integer powerUp2x = powerUpMap.get(Constants.Powerups.XX);
-        Integer powerUpNoNegative = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
-        Integer powerUpAudiencePoll = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+        if (challenge.getChallengeUserInfo().getPowerUps() != null) {
+            HashMap<String, Integer> powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
+            Integer powerUp2x = powerUpMap.get(Constants.Powerups.XX);
+            Integer powerUpNoNegative = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+            Integer powerUpAudiencePoll = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
 
-        holder.mTv2xPowerupCount.setText(String.valueOf(powerUp2x));
-        holder.mTvNonegsPowerupCount.setText(String.valueOf(powerUpNoNegative));
-        holder.mTvPollPowerupCount.setText(String.valueOf(powerUpAudiencePoll));
+            holder.mTv2xPowerupCount.setText(String.valueOf(powerUp2x));
+            holder.mTvNonegsPowerupCount.setText(String.valueOf(powerUpNoNegative));
+            holder.mTvPollPowerupCount.setText(String.valueOf(powerUpAudiencePoll));
+        } else {
+            holder.mTv2xPowerupCount.setText("0");
+            holder.mTvNonegsPowerupCount.setText("0");
+            holder.mTvPollPowerupCount.setText("0");
+        }
 
         if (null != challenge.getUserRank()) {
             String rank = AppSnippet.ordinal(challenge.getUserRank());
@@ -107,6 +111,13 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mLlShowGames.setBackground(mResources.getDrawable(R.drawable.shape_challenges_show_game_bg));
         }*/
 
+        /*if (!TextUtils.isEmpty(challenge.getCountMatchesLeft())) {
+            if (challenge.getCountMatchesLeft().equals("0")) {
+                holder.mTvGamesLeftCount.setText("No Games");
+            } else {
+                holder.mTvGamesLeftCount.setText(challenge.getCountMatchesLeft() + " Games Left");
+            }
+        }*/
 
 //        HorizontalScrollView.LayoutParams layoutParams =
 //                (HorizontalScrollView.LayoutParams) holder.mLlTournament.getLayoutParams();
@@ -155,6 +166,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         RelativeLayout mRlShowGameBg;
         TextView mTvShowGames;
 
+        TextView mTvGamesLeftCount;
+
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
@@ -175,6 +188,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlShowGameBg = (RelativeLayout) V.findViewById(R.id.all_challenges_rl_anim_bg);
             mTvShowGames = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
             mTvShowGames.setOnClickListener(this);
+//            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
         }
 
         @Override

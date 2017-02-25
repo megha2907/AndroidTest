@@ -111,7 +111,6 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         mListView = (ImageButton) findViewById(R.id.challenges_list_view);
         mSwipeView.setSelected(true);
         mListView.setSelected(false);
-
         mFlMatchHolder = (FrameLayout) findViewById(R.id.challenges_fl_match_holder);
 
         this.mChallengePresenter = ChallengePresenterImpl.newInstance(this);
@@ -122,7 +121,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     public void setSwipeAdapter(RecyclerView.Adapter adapter) {
         mRcvHorizontal.setAdapter(adapter, true);
 
-        tvChallengeTotalCount.setText("/" + String.valueOf(adapter.getItemCount()));
+        tvChallengeTotalCount.setText("/ " + String.valueOf(adapter.getItemCount()));
 
         mTimelineFragment.addInitialMatches(getCurrentChallengeMatches());
     }

@@ -4,14 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.style.URLSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -21,16 +15,12 @@ import android.widget.TextView;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
-import com.jeeva.android.widgets.customfont.CustomTextView;
 import com.jeeva.android.widgets.customfont.Typefaces;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
@@ -41,10 +31,8 @@ import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.feed.FeedWebView;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.Parties;
-import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
@@ -97,9 +85,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
         // Setting date of the match
-        holder.mTvDate.setText(
-                TimeUtils.getDateStringFromMs(startTimeMs, "MMM")
-                        + dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + ", "
+        holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) +" "+
+                TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
                 + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA)
         );
 
@@ -136,7 +123,6 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                         holder.mTvMatchResult.setText(Html.fromHtml(match.getResult()));
                         holder.mBtnMatchPoints.setTag(match);
                         holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
-//                        holder.mTvResultCorrectCount.setText("You got " + match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " answers correct");
 
                         Integer winnerPartyId = match.getWinnerPartyId();
                         if (null != winnerPartyId) {

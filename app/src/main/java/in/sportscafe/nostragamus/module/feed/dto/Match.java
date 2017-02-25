@@ -87,6 +87,21 @@ public class Match {
     @JsonProperty("challenge_img_url")
     private String challengeImgUrl;
 
+    @JsonProperty("avg_match_points")
+    private Double avgMatchPoints;
+
+    @JsonProperty("highest_match_points")
+    private Integer highestMatchPoints;
+
+    @JsonProperty("rank")
+    private Integer userRank;
+
+    @JsonProperty("count_powerups")
+    private Integer countPowerUps;
+
+    @JsonProperty("count_players")
+    private Integer countPlayers;
+
     /**
      *
      * @return
@@ -406,4 +421,56 @@ public class Match {
     public void setChallengeImgUrl(String challengeImgUrl) {
         this.challengeImgUrl = challengeImgUrl;
     }
+
+    @JsonProperty("avg_match_points")
+    public Double getAvgMatchPoints() {
+        return avgMatchPoints;
+    }
+
+    @JsonProperty("avg_match_points")
+    public void setAvgMatchPoints(Double avgMatchPoints) {
+        this.avgMatchPoints = avgMatchPoints;
+    }
+
+    @JsonProperty("highest_match_points")
+    public Integer getHighestMatchPoints() {
+        return highestMatchPoints;
+    }
+
+    @JsonProperty("highest_match_points")
+    public void setHighestMatchPoints(Integer highestMatchPoints) {
+        this.highestMatchPoints = highestMatchPoints;
+    }
+
+    @JsonProperty("rank")
+    public Integer getUserRank() {
+        return userRank;
+    }
+
+    @JsonProperty("rank")
+    public void setUserRank(Integer userRank) {
+        this.userRank = userRank;
+    }
+
+    @JsonProperty("count_powerups")
+    public Integer getCountPowerUps() {
+        return countPowerUps;
+    }
+
+    @JsonProperty("count_powerups")
+    public void setCountPowerUps(Integer countPowerUps) {
+        this.countPowerUps = countPowerUps;
+    }
+
+    @JsonProperty("count_players")
+    public Integer getCountPlayers() {
+        return countPlayers;
+    }
+
+    @JsonProperty("count_players")
+    public void setCountPlayers(Integer countPlayers) {
+        this.countPlayers = countPlayers;
+    }
+
+
 }
