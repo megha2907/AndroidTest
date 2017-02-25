@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus;
 
+import android.content.IntentFilter;
+
 import static android.view.View.X;
 
 /**
@@ -238,6 +240,7 @@ public interface Constants {
         String ACTION_DUMMY_GAME_PLAY = "in.sportscafe.nostragamus.intent.action.DUMMY_GAME_PLAY";
         String ACTION_DUMMY_GAME_PROCEED = "in.sportscafe.nostragamus.intent.action.DUMMY_GAME_PROCEED";
         String ACTION_GROUP_CLICK = "in.sportscafe.nostragamus.intent.action.GROUP_CLICK";
+        String ACTION_CHALLENGE_CLICK = "in.sportscafe.nostragamus.intent.action.CHALLENGE_CLICK";
     }
 
     interface LeaderBoardPeriods {

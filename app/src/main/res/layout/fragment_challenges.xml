@@ -4,43 +4,40 @@
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
-
-
-    <com.jeeva.android.widgets.recyclerviewpager.RecyclerViewPager
-        android:id="@+id/challenges_rcv_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/challenges_rl_one"
-        android:clipToPadding="false"
-        android:paddingLeft="@dimen/dp_20"
-        android:paddingRight="@dimen/dp_20" />
+    android:background="#090909">
 
     <FrameLayout
         android:id="@+id/challenges_fl_match_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/challenges_rcv_horizontal"
-        />
+        android:layout_below="@+id/challenges_rcv_horizontal"
+        android:background="#202020" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/challenges_rcv_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/dp_195"
-        android:paddingLeft="@dimen/dp_20"
-        android:paddingRight="@dimen/dp_20"
         android:paddingTop="@dimen/dp_40"
-        android:visibility="invisible"
-        />
+        android:visibility="invisible" />
+
+    <com.jeeva.android.widgets.recyclerviewpager.RecyclerViewPager
+        android:id="@+id/challenges_rcv_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_40"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20" />
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/challenges_rl_one"
-        android:paddingTop="@dimen/dp_10"
-        android:paddingBottom="@dimen/dp_10">
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40">
 
         <RelativeLayout
             android:id="@+id/challenges_count_rl"
@@ -65,12 +62,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_2"
                 android:layout_toRightOf="@+id/challenges_count_tv"
                 android:text="/ 20"
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/dp_12"
-                app:typeface="lato_bold"
-                android:layout_marginTop="@dimen/dp_2"/>
+                app:typeface="lato_bold" />
 
 
         </RelativeLayout>
@@ -80,10 +77,10 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_27"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp_24"
             android:background="@drawable/grey_border_round_btn_bg"
-            android:clickable="true"
-            android:layout_centerVertical="true">
+            android:clickable="true">
 
             <ImageButton
                 android:id="@+id/challenges_swipe_view"
@@ -93,9 +90,9 @@
                 android:layout_marginLeft="@dimen/dp_1"
                 android:layout_marginTop="@dimen/dp_1"
                 android:background="@drawable/toggle_widget_background"
+                android:clickable="false"
                 android:drawablePadding="@dimen/dp_15"
-                android:src="@drawable/swipe_view_white_icon"
-                android:clickable="false" />
+                android:src="@drawable/swipe_view_white_icon" />
 
             <ImageButton
                 android:id="@+id/challenges_list_view"
@@ -105,8 +102,8 @@
                 android:layout_marginTop="@dimen/dp_1"
                 android:layout_toRightOf="@+id/challenges_swipe_view"
                 android:background="@drawable/toggle_widget_background"
-                android:src="@drawable/list_view_white_icon"
-                android:clickable="false" />
+                android:clickable="false"
+                android:src="@drawable/list_view_white_icon" />
 
         </RelativeLayout>
 

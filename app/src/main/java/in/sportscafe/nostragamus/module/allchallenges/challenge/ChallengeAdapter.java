@@ -7,12 +7,12 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
@@ -39,9 +39,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     private Integer mChallengeAmount;
 
-    public ChallengeAdapter(Context context, List<Challenge> challenges) {
+    public ChallengeAdapter(Context context, List<Challenge> challenges, boolean swipeView) {
         super(context);
         mResources = context.getResources();
+        mSwipeView = swipeView;
         addAll(challenges);
     }
 
@@ -57,6 +58,12 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        if(mSwipeView/* || position == 0*/) {
+            holder.mRlShowGameBg.setVisibility(View.GONE);
+        } else {
+            holder.mRlShowGameBg.setVisibility(View.VISIBLE);
+        }
+
         Challenge challenge = getItem(position);
 
         holder.mTvChallengeName.setText(challenge.getName());
@@ -98,19 +105,19 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mTvChallengeUserRank.setText("Did Not Play");
         }
 
-        if (mSwipeView) {
+        /*if (mSwipeView) {
             holder.mLlShowGames.setBackgroundColor(mResources.getColor(R.color.black));
         } else {
             holder.mLlShowGames.setBackground(mResources.getDrawable(R.drawable.shape_challenges_show_game_bg));
-        }
+        }*/
 
-        if (!TextUtils.isEmpty(challenge.getCountMatchesLeft())) {
+        /*if (!TextUtils.isEmpty(challenge.getCountMatchesLeft())) {
             if (challenge.getCountMatchesLeft().equals("0")) {
                 holder.mTvGamesLeftCount.setText("No Games");
             } else {
                 holder.mTvGamesLeftCount.setText(challenge.getCountMatchesLeft() + " Games Left");
             }
-        }
+        }*/
 
 //        HorizontalScrollView.LayoutParams layoutParams =
 //                (HorizontalScrollView.LayoutParams) holder.mLlTournament.getLayoutParams();
@@ -135,10 +142,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     }
 
-    public void setSwipeView(boolean swipeView) {
-        mSwipeView = swipeView;
-    }
-
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         View mMainView;
@@ -160,10 +163,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         TextView mTvPollPowerupCount;
 
         LinearLayout mLlTournament;
-        LinearLayout mLlShowGames;
+        RelativeLayout mRlShowGameBg;
+        TextView mTvShowGames;
 
         TextView mTvGamesLeftCount;
-
 
         public ViewHolder(View V) {
             super(V);
@@ -178,20 +181,20 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mTvNonegsPowerupCount = (TextView) V.findViewById(R.id.powerup_tv_nonegs_count);
             mTvPollPowerupCount = (TextView) V.findViewById(R.id.powerup_tv_poll_count);
             mTvChallengeUserRank = (TextView) V.findViewById(R.id.all_challenges_row_tv_leaderboard_rank);
-            mLlTournament = (LinearLayout) V.findViewById(R.id.all_challenges_row_tournament_ll);
-            mLlShowGames = (LinearLayout) V.findViewById(R.id.all_challenges_row_ll_show_games);
             mTvChallengeHoursLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_hours_left);
             mTvChallengeDaysLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_days_left);
             mTvChallengeMinsLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_mins_left);
-            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
-
-            V.setOnClickListener(this);
+            mLlTournament = (LinearLayout) V.findViewById(R.id.all_challenges_row_tournament_ll);
+            mRlShowGameBg = (RelativeLayout) V.findViewById(R.id.all_challenges_rl_anim_bg);
+            mTvShowGames = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
+            mTvShowGames.setOnClickListener(this);
+//            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
         }
 
         @Override
         public void onClick(View view) {
             Context context = view.getContext();
-            Intent intent = new Intent(IntentActions.ACTION_GROUP_CLICK);
+            Intent intent = new Intent(IntentActions.ACTION_CHALLENGE_CLICK);
             intent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
