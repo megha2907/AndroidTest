@@ -37,8 +37,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     private boolean mSwipeView = true;
 
-    private Integer mChallengeAmount;
-
     public ChallengeAdapter(Context context, List<Challenge> challenges, boolean swipeView) {
         super(context);
         mResources = context.getResources();
@@ -58,20 +56,19 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if(mSwipeView/* || position == 0*/) {
+        if (mSwipeView/* || position == 0*/) {
             holder.mRlShowGameBg.setVisibility(View.GONE);
         } else {
             holder.mRlShowGameBg.setVisibility(View.VISIBLE);
         }
 
         Challenge challenge = getItem(position);
-
         holder.mTvChallengeName.setText(challenge.getName());
 
-        mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getChallengeFee();
-        if (mChallengeAmount != null) {
-            holder.mTvChallengePrice.setText("Paid - Rs." + mChallengeAmount.toString());
-        } else {
+        try {
+            int mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getChallengeFee();
+            holder.mTvChallengePrice.setText("Paid - Rs." + mChallengeAmount);
+        } catch (Exception e) {
             holder.mTvChallengePrice.setVisibility(View.INVISIBLE);
         }
 
@@ -83,7 +80,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
         holder.mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
 
-        if (challenge.getChallengeUserInfo().getPowerUps() != null) {
+        try {
             HashMap<String, Integer> powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
             Integer powerUp2x = powerUpMap.get(Constants.Powerups.XX);
             Integer powerUpNoNegative = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
@@ -92,7 +89,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mTv2xPowerupCount.setText(String.valueOf(powerUp2x));
             holder.mTvNonegsPowerupCount.setText(String.valueOf(powerUpNoNegative));
             holder.mTvPollPowerupCount.setText(String.valueOf(powerUpAudiencePoll));
-        } else {
+        } catch (Exception e) {
             holder.mTv2xPowerupCount.setText("0");
             holder.mTvNonegsPowerupCount.setText("0");
             holder.mTvPollPowerupCount.setText("0");
@@ -109,14 +106,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mLlShowGames.setBackgroundColor(mResources.getColor(R.color.black));
         } else {
             holder.mLlShowGames.setBackground(mResources.getDrawable(R.drawable.shape_challenges_show_game_bg));
-        }*/
-
-        /*if (!TextUtils.isEmpty(challenge.getCountMatchesLeft())) {
-            if (challenge.getCountMatchesLeft().equals("0")) {
-                holder.mTvGamesLeftCount.setText("No Games");
-            } else {
-                holder.mTvGamesLeftCount.setText(challenge.getCountMatchesLeft() + " Games Left");
-            }
         }*/
 
 //        HorizontalScrollView.LayoutParams layoutParams =
