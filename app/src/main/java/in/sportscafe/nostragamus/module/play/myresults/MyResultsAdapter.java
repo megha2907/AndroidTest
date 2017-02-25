@@ -192,6 +192,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         TextView mTvResultWait;
         HmImageView mIvPartyBPhoto;
 
+        RelativeLayout mRlAvgMatchPoints;
         TextView mTvAvgMatchPoints;
         TextView mTvHighestMatchPoints;
         TextView mTvLeaderBoardRank;
@@ -220,8 +221,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mTvLeaderBoardRank = (TextView) V.findViewById(R.id.schedule_row_tv_leaderboard_rank);
             mTvNumberofPowerupsUsed= (TextView) V.findViewById(R.id.schedule_row_tv_no_of_powerups_used);
             mRlLeaderBoard= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_leaderboard);
+            mRlAvgMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
 
             mRlLeaderBoard.setOnClickListener(this);
+            mRlAvgMatchPoints.setOnClickListener(this);
         }
 
         @Override
@@ -230,6 +233,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             switch (v.getId()) {
                 case R.id.schedule_row_rl_leaderboard:
                     navigateToLeaderboards(v.getContext());
+                    break;
+
+                case R.id.schedule_row_rl_average_score:
+                    navigateToOthersAnswers(v.getContext());
                     break;
             }
 
@@ -241,7 +248,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         View convertView = getLayoutInflater().inflate(R.layout.inflater_my_predictions_row, parent, false);
 
         ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_question))
-                .setText(question.getQuestionText());
+                .setText(question.getQuestionText().replace("\n", ""));
 
 
         final TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);

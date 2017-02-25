@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -41,9 +42,9 @@ public class OthersAnswersActivity extends NostragamusActivity {
         if (bundle.containsKey(BundleKeys.PLAYER_USER_NAME)) {
             userName = bundle.getString(BundleKeys.PLAYER_USER_NAME);
         }
-        initToolBar(userName);
 
         mMatchDetails = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_DETAILS));
+        initToolBar(mMatchDetails.getChallengeName());
 
         if (!bundle.containsKey(BundleKeys.SHOW_ANSWER_PERCENTAGE)) {
             getSupportFragmentManager().beginTransaction().replace(
@@ -64,9 +65,12 @@ public class OthersAnswersActivity extends NostragamusActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         TextView tvTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        tvTitle.setText(name + "'s Answers");
+        TextView matchName = (TextView) toolbar.findViewById(R.id.toolbar_match_stage);
+        tvTitle.setText("Average Score");
+        matchName.setText(name);
 
         toolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        toolbar.setContentInsetStartWithNavigation(2);
         toolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {
                     @Override

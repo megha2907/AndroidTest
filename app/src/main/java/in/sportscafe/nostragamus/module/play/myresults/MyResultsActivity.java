@@ -72,6 +72,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     private Toolbar mtoolbar;
     private TextView mTitle;
+    private TextView mMatchStage;
     private boolean goback = false;
     private Boolean isFabOpen = false;
     private Boolean isShareFabOpen = false;
@@ -246,14 +247,14 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     public void initToolBar() {
-        Typeface tftitle = Typeface.createFromAsset(getActivity().getAssets(), "fonts/lato/Lato-Regular.ttf");
         mtoolbar = (Toolbar) findViewById(R.id.my_results_toolbar);
         mTitle = (TextView) mtoolbar.findViewById(R.id.toolbar_title);
+        mMatchStage = (TextView) mtoolbar.findViewById(R.id.toolbar_match_stage);
         mTitle.setText("Match Result");
-        mTitle.setTypeface(tftitle);
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        mtoolbar.setContentInsetStartWithNavigation(2);
         mtoolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -448,9 +449,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public void takeScreenShot() {
         Resources resources = getResources();
-        LinearLayout ShareRow = (LinearLayout) findViewById(R.id.my_results_ll_share_score);
-        int delta = ShareRow.getHeight();
-        Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth(), mRvMyResults.computeVerticalScrollRange() - delta, Bitmap.Config.ARGB_8888);
+//        LinearLayout ShareRow = (LinearLayout) findViewById(R.id.my_results_ll_share_score);
+//        int delta = ShareRow.getHeight();
+        Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth(), mRvMyResults.computeVerticalScrollRange(), Bitmap.Config.ARGB_8888);
 
         Canvas c = new Canvas(screenshot);
         mRvMyResults.layout(
@@ -496,6 +497,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public void showFbShare(String url) {
         FacebookHandler.getInstance(MyResultsActivity.this).share(MyResultsActivity.this, url);
+    }
+
+    @Override
+    public void setMatchName(String matchName) {
+        mMatchStage.setText(matchName);
     }
 
     /*public void onClickbtnfbShare() {

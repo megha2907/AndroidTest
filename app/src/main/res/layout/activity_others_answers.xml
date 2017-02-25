@@ -15,14 +15,29 @@
         android:elevation="@dimen/dp_4"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/toolbar_title"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_20"
-            app:typeface="lato_regular"/>
+            android:layout_gravity="left">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                app:typeface="roboto_condensed"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/toolbar_match_stage"
+                android:layout_width="@dimen/dp_240"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/dp_12"
+                android:layout_below="@+id/toolbar_title"
+                app:typeface="roboto_condensed"/>
+
+        </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
 
@@ -36,6 +51,7 @@
         android:id="@+id/others_answers_fl_fuzzy_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/others_answers_toolbar" />
+        android:layout_below="@id/others_answers_toolbar"
+        android:visibility="gone"/>
 
 </RelativeLayout>
