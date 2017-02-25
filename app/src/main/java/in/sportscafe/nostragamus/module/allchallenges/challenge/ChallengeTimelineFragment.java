@@ -47,7 +47,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_feed, container, false);
+        return inflater.inflate(R.layout.fragment_challenge_timeline, container, false);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
         super.onActivityCreated(savedInstanceState);
 
         if(null == savedInstanceState) {
-            mRcvFeed = (RecyclerView) findViewById(R.id.feed_rv);
+            mRcvFeed = (RecyclerView) findViewById(R.id.challenge_timeline_rv);
             mRcvFeed.setLayoutManager(new LinearLayoutManager(getContext(),
                     LinearLayoutManager.VERTICAL, false));
             this.mRcvFeed.setHasFixedSize(true);

@@ -20,7 +20,9 @@ public class ChallengeModelImpl implements ChallengeModel {
 
     private List<Challenge> mChallenges = new ArrayList<>();
 
-    private ChallengeAdapter mChallengeAdapter;
+    private ChallengeAdapter mSwipeAdapter;
+
+    private ChallengeAdapter mListAdapter;
 
     private OnChallengeModelListener mChallengeModelListener;
 
@@ -38,8 +40,13 @@ public class ChallengeModelImpl implements ChallengeModel {
     }
 
     @Override
-    public RecyclerView.Adapter getAdapter(Context context) {
-        return mChallengeAdapter = new ChallengeAdapter(context, mChallenges);
+    public RecyclerView.Adapter getSwipeAdapter(Context context) {
+        return mSwipeAdapter = new ChallengeAdapter(context, mChallenges, true);
+    }
+
+    @Override
+    public RecyclerView.Adapter getListAdapter(Context context) {
+        return mListAdapter = new ChallengeAdapter(context, mChallenges, false);
     }
 
     public interface OnChallengeModelListener {

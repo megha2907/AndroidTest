@@ -3,287 +3,276 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/dp_3"
-    android:layout_marginRight="@dimen/dp_3"
-    android:background="@color/black"
-    android:gravity="center_vertical">
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingLeft="@dimen/dp_3"
+    android:paddingRight="@dimen/dp_3">
 
+    <RelativeLayout
+        android:id="@+id/all_challenges_rl_anim_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_220"
+        android:layout_alignBottom="@+id/all_challenges_row_ll_bg"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/shape_challenges_show_game_bg">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/all_challenges_row_tv_show_games"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Show Games"
+            android:textColor="@color/white_80"
+            android:textSize="@dimen/dp_12"
+            app:typeface="lato_regular" />
+
+    </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/all_challenges_row_ll_show_games"
+        android:id="@+id/all_challenges_row_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_5"
-        android:background="@drawable/shape_challenges_show_game_bg"
+        android:layout_height="@dimen/dp_180"
+        android:background="@drawable/shape_challenges_bg"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/all_challenges_row_ll"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_challenges_bg"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <com.jeeva.android.widgets.HmImageView
+                android:id="@+id/all_challenges_row_iv_image"
+                android:layout_width="@dimen/dp_46"
+                android:layout_height="@dimen/dp_46"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_14"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:defaultImage="@drawable/sample_tour_image" />
 
-                <com.jeeva.android.widgets.HmImageView
-                    android:id="@+id/all_challenges_row_iv_image"
-                    android:layout_width="@dimen/dp_46"
-                    android:layout_height="@dimen/dp_46"
-                    android:layout_marginLeft="@dimen/dp_12"
-                    android:layout_marginTop="@dimen/dp_14"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    app:defaultImage="@drawable/sample_tour_image" />
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/all_challenges_row_matchstage_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginRight="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_14"
-                    android:layout_toRightOf="@+id/all_challenges_row_iv_image"
-                    android:text="European Gameweek 25"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_14"
-                    app:typeface="lato_regular" />
-
-                <HorizontalScrollView
-                    android:id="@+id/all_challenges_row_tournament_hsv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/all_challenges_row_matchstage_tv"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_toRightOf="@+id/all_challenges_row_iv_image">
-
-                    <LinearLayout
-                        android:id="@+id/all_challenges_row_tournament_ll"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                        <!--android:id="@+id/all_challenges_row_tournament_name"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="EPL"-->
-                        <!--android:background="@color/white_20"-->
-                        <!--android:textColor="@color/white"-->
-                        <!--app:typeface="roboto_condensed"-->
-                        <!--android:textSize="@dimen/dp_12"-->
-                        <!--android:paddingTop="@dimen/dp_3"-->
-                        <!--android:paddingBottom="@dimen/dp_3"-->
-                        <!--android:paddingRight="@dimen/dp_5"-->
-                        <!--android:paddingLeft="@dimen/dp_5"-->
-                        <!--android:layout_marginTop="@dimen/dp_5"-->
-                        <!--/>-->
-
-                    </LinearLayout>
-                </HorizontalScrollView>
-
-                <RelativeLayout
-                    android:id="@+id/all_challenges_row_powerup_rl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_45"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/all_challenges_row_iv_image"
-                    android:layout_marginLeft="@dimen/dp_12"
-                    android:layout_marginTop="@dimen/dp_12"
-                    android:visibility="visible">
-
-                    <ImageView
-                        android:id="@+id/powerups_iv_2x"
-                        android:layout_width="@dimen/dp_32"
-                        android:layout_height="@dimen/dp_32"
-                        android:layout_centerVertical="true"
-                        android:padding="@dimen/dp_8"
-                        android:src="@drawable/powerup_2x_white" />
-
-                    <ImageView
-                        android:id="@+id/powerups_iv_nonegs"
-                        android:layout_width="@dimen/dp_32"
-                        android:layout_height="@dimen/dp_32"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_marginRight="@dimen/dp_10"
-                        android:layout_toRightOf="@id/powerups_iv_2x"
-                        android:padding="@dimen/dp_8"
-                        android:src="@drawable/powerup_nonegs_white" />
-
-                    <ImageView
-                        android:id="@+id/powerups_iv_poll"
-                        android:layout_width="@dimen/dp_32"
-                        android:layout_height="@dimen/dp_32"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/dp_10"
-                        android:layout_toRightOf="@id/powerups_iv_nonegs"
-                        android:padding="@dimen/dp_8"
-                        android:src="@drawable/powerup_audience_poll_white" />
-
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/powerup_tv_2x_count"
-                        android:layout_width="@dimen/dp_15"
-                        android:layout_height="@dimen/dp_15"
-                        android:layout_alignRight="@id/powerups_iv_2x"
-                        android:layout_alignTop="@id/powerups_iv_2x"
-                        android:layout_marginRight="@dimen/_dp_7"
-                        android:layout_marginTop="@dimen/_dp_7"
-                        android:alpha="0.9"
-                        android:background="@drawable/powerup_count_bg"
-                        android:gravity="center"
-                        android:text="2"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_9"
-                        app:typeface="lato_bold" />
-
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/powerup_tv_nonegs_count"
-                        android:layout_width="@dimen/dp_15"
-                        android:layout_height="@dimen/dp_15"
-                        android:layout_alignRight="@id/powerups_iv_nonegs"
-                        android:layout_alignTop="@id/powerups_iv_nonegs"
-                        android:layout_marginRight="@dimen/_dp_7"
-                        android:layout_marginTop="@dimen/_dp_7"
-                        android:alpha="0.9"
-                        android:background="@drawable/powerup_count_bg"
-                        android:gravity="center"
-                        android:text="2"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_9"
-                        app:typeface="lato_bold" />
-
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/powerup_tv_poll_count"
-                        android:layout_width="@dimen/dp_15"
-                        android:layout_height="@dimen/dp_15"
-                        android:layout_alignRight="@id/powerups_iv_poll"
-                        android:layout_alignTop="@id/powerups_iv_poll"
-                        android:layout_marginRight="@dimen/_dp_7"
-                        android:layout_marginTop="@dimen/_dp_7"
-                        android:alpha="0.9"
-                        android:background="@drawable/powerup_count_bg"
-                        android:gravity="center"
-                        android:text="2"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_9"
-                        app:typeface="lato_bold" />
-
-
-                </RelativeLayout>
-
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/all_challenges_row_tv_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/all_challenges_row_iv_image"
-                    android:layout_marginRight="@dimen/dp_100"
-                    android:layout_marginTop="@dimen/dp_14"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_12"
-                    android:visibility="visible"
-                    app:typeface="lato_regular" />
-
-                <RelativeLayout
-                    android:id="@+id/all_challenges_row_rl_timer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/all_challenges_row_tv_price"
-                    android:layout_marginTop="@dimen/dp_3"
-                    android:layout_toRightOf="@+id/all_challenges_row_powerup_rl">
-
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/dp_10"
-                        android:layout_marginTop="@dimen/dp_4"
-                        android:layout_toLeftOf="@+id/all_challenges_row_btn_days_left"
-                        android:text="Ends in"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_12"
-                        app:typeface="lato_regular" />
-
-                    <com.jeeva.android.widgets.customfont.CustomButton
-                        android:id="@+id/all_challenges_row_btn_days_left"
-                        android:layout_width="@dimen/dp_32"
-                        android:layout_height="@dimen/dp_25"
-                        android:layout_marginRight="@dimen/dp_6"
-                        android:layout_toLeftOf="@+id/all_challenges_row_btn_hours_left"
-                        android:background="@drawable/grey_border_btn_bg"
-                        android:text="2d"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_10"
-                        app:typeface="lato_regular" />
-
-                    <com.jeeva.android.widgets.customfont.CustomButton
-                        android:id="@+id/all_challenges_row_btn_hours_left"
-                        android:layout_width="@dimen/dp_32"
-                        android:layout_height="@dimen/dp_25"
-                        android:layout_marginRight="@dimen/dp_6"
-                        android:layout_toLeftOf="@+id/all_challenges_row_btn_mins_left"
-                        android:background="@drawable/grey_border_btn_bg"
-                        android:text="24h"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_10"
-                        app:typeface="lato_regular" />
-
-                    <com.jeeva.android.widgets.customfont.CustomButton
-                        android:id="@+id/all_challenges_row_btn_mins_left"
-                        android:layout_width="@dimen/dp_35"
-                        android:layout_height="@dimen/dp_25"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/dp_10"
-                        android:background="@drawable/grey_border_btn_bg"
-                        android:text="59m"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_10"
-                        app:typeface="lato_regular" />
-
-                </RelativeLayout>
-
-                <View
-                    android:id="@+id/all_challenges_row_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:layout_below="@+id/all_challenges_row_powerup_rl"
-                    android:layout_marginTop="@dimen/dp_12"
-                    android:background="@color/black_40"
-                    android:visibility="visible" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/all_challenges_row_matchstage_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:layout_marginRight="@dimen/dp_20">
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_14"
+                android:layout_toRightOf="@+id/all_challenges_row_iv_image"
+                android:text="European Gameweek 25"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_regular" />
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/all_challenges_row_tv_leaderboard_rank"
+            <HorizontalScrollView
+                android:id="@+id/all_challenges_row_tournament_hsv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/all_challenges_row_matchstage_tv"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_toRightOf="@+id/all_challenges_row_iv_image">
+
+                <LinearLayout
+                    android:id="@+id/all_challenges_row_tournament_ll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:paddingBottom="@dimen/dp_14"
-                    android:paddingTop="@dimen/dp_12"
-                    android:drawableLeft="@drawable/challenge_leaderboard_icon"
-                    android:drawablePadding="@dimen/dp_5"
-                    android:gravity="bottom"
-                    android:text="1st Rank"
-                    android:textColor="@color/white_80"
+                    android:orientation="horizontal">
+
+                    <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
+                    <!--android:id="@+id/all_challenges_row_tournament_name"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="EPL"-->
+                    <!--android:background="@color/white_20"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--app:typeface="roboto_condensed"-->
+                    <!--android:textSize="@dimen/dp_12"-->
+                    <!--android:paddingTop="@dimen/dp_3"-->
+                    <!--android:paddingBottom="@dimen/dp_3"-->
+                    <!--android:paddingRight="@dimen/dp_5"-->
+                    <!--android:paddingLeft="@dimen/dp_5"-->
+                    <!--android:layout_marginTop="@dimen/dp_5"-->
+                    <!--/>-->
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <RelativeLayout
+                android:id="@+id/all_challenges_row_powerup_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_45"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/all_challenges_row_iv_image"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_12"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/powerups_iv_2x"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_32"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/dp_8"
+                    android:src="@drawable/powerup_2x_white" />
+
+                <ImageView
+                    android:id="@+id/powerups_iv_nonegs"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_32"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_toRightOf="@id/powerups_iv_2x"
+                    android:padding="@dimen/dp_8"
+                    android:src="@drawable/powerup_nonegs_white" />
+
+                <ImageView
+                    android:id="@+id/powerups_iv_poll"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_32"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_toRightOf="@id/powerups_iv_nonegs"
+                    android:padding="@dimen/dp_8"
+                    android:src="@drawable/powerup_audience_poll_white" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/powerup_tv_2x_count"
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_alignRight="@id/powerups_iv_2x"
+                    android:layout_alignTop="@id/powerups_iv_2x"
+                    android:layout_marginRight="@dimen/_dp_7"
+                    android:layout_marginTop="@dimen/_dp_7"
+                    android:alpha="0.9"
+                    android:background="@drawable/powerup_count_bg"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_9"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/powerup_tv_nonegs_count"
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_alignRight="@id/powerups_iv_nonegs"
+                    android:layout_alignTop="@id/powerups_iv_nonegs"
+                    android:layout_marginRight="@dimen/_dp_7"
+                    android:layout_marginTop="@dimen/_dp_7"
+                    android:alpha="0.9"
+                    android:background="@drawable/powerup_count_bg"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_9"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/powerup_tv_poll_count"
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_alignRight="@id/powerups_iv_poll"
+                    android:layout_alignTop="@id/powerups_iv_poll"
+                    android:layout_marginRight="@dimen/_dp_7"
+                    android:layout_marginTop="@dimen/_dp_7"
+                    android:alpha="0.9"
+                    android:background="@drawable/powerup_count_bg"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_9"
+                    app:typeface="lato_bold" />
+
+
+            </RelativeLayout>
+
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/all_challenges_row_tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/all_challenges_row_iv_image"
+                android:layout_marginRight="@dimen/dp_100"
+                android:layout_marginTop="@dimen/dp_14"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_12"
+                android:visibility="visible"
+                app:typeface="lato_regular" />
+
+            <RelativeLayout
+                android:id="@+id/all_challenges_row_rl_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_30"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/all_challenges_row_tv_price"
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_toRightOf="@+id/all_challenges_row_powerup_rl">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_toLeftOf="@+id/all_challenges_row_btn_days_left"
+                    android:text="Ends in"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/all_challenges_row_btn_days_left"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_marginRight="@dimen/dp_6"
+                    android:layout_toLeftOf="@+id/all_challenges_row_btn_hours_left"
+                    android:background="@drawable/grey_border_btn_bg"
+                    android:text="2d"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_10"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/all_challenges_row_btn_hours_left"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_marginRight="@dimen/dp_6"
+                    android:layout_toLeftOf="@+id/all_challenges_row_btn_mins_left"
+                    android:background="@drawable/grey_border_btn_bg"
+                    android:text="24h"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_10"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/all_challenges_row_btn_mins_left"
+                    android:layout_width="@dimen/dp_35"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@drawable/grey_border_btn_bg"
+                    android:text="59m"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_10"
                     app:typeface="lato_regular" />
 
             </RelativeLayout>
 
-        </LinearLayout>
+            <View
+                android:id="@+id/all_challenges_row_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_below="@+id/all_challenges_row_powerup_rl"
+                android:layout_marginTop="@dimen/dp_12"
+                android:background="@color/black_40"
+                android:visibility="visible" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -292,14 +281,16 @@
             android:layout_marginRight="@dimen/dp_20">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/all_challenges_row_tv_show_games"
+                android:id="@+id/all_challenges_row_tv_leaderboard_rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
+                android:drawableLeft="@drawable/challenge_leaderboard_icon"
+                android:drawablePadding="@dimen/dp_5"
                 android:gravity="bottom"
-                android:text="Show Games"
+                android:paddingBottom="@dimen/dp_14"
+                android:paddingTop="@dimen/dp_12"
+                android:text="1st Rank"
                 android:textColor="@color/white_80"
                 android:textSize="@dimen/dp_12"
                 app:typeface="lato_regular" />
@@ -307,6 +298,5 @@
         </RelativeLayout>
 
     </LinearLayout>
-
 
 </RelativeLayout>
