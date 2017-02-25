@@ -11,8 +11,8 @@ public class AnswerPercentage {
     @JsonProperty("question_id")
     private Integer questionId;
 
-    @JsonProperty("answer0")
-    private Integer answer0;
+    @JsonProperty("answer3")
+    private Integer answer3;
 
     @JsonProperty("answer1")
     private Integer answer1;
@@ -30,14 +30,14 @@ public class AnswerPercentage {
         this.questionId = questionId;
     }
 
-    @JsonProperty("answer0")
-    public Integer getAnswer0() {
-        return answer0;
+    @JsonProperty("answer3")
+    public Integer getAnswer3() {
+        return answer3;
     }
 
-    @JsonProperty("answer0")
-    public void setAnswer0(Integer answer0) {
-        this.answer0 = answer0;
+    @JsonProperty("answer3")
+    public void setAnswer3(Integer answer3) {
+        this.answer3 = answer3;
     }
 
     @JsonProperty("answer1")

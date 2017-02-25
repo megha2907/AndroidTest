@@ -68,22 +68,18 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         holder.mTvChallengeName.setText(challenge.getName());
 
-        mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getChallengeFee();
-        if (mChallengeAmount != null) {
-            holder.mTvChallengePrice.setText("Paid - Rs." + mChallengeAmount.toString());
-        } else {
+        try {
+            int mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getChallengeFee();
+            holder.mTvChallengePrice.setText("Paid - Rs." + mChallengeAmount);
+        } catch (Exception e) {
             holder.mTvChallengePrice.setVisibility(View.INVISIBLE);
         }
-
-        holder.mIvChallengeImage.setImageUrl(
-                challenge.getImage()
-        );
 
         holder.mIv2xPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
         holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
         holder.mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
 
-        if (challenge.getChallengeUserInfo().getPowerUps() != null) {
+        try {
             HashMap<String, Integer> powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
             Integer powerUp2x = powerUpMap.get(Constants.Powerups.XX);
             Integer powerUpNoNegative = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
@@ -92,7 +88,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mTv2xPowerupCount.setText(String.valueOf(powerUp2x));
             holder.mTvNonegsPowerupCount.setText(String.valueOf(powerUpNoNegative));
             holder.mTvPollPowerupCount.setText(String.valueOf(powerUpAudiencePoll));
-        } else {
+        } catch (Exception e) {
             holder.mTv2xPowerupCount.setText("0");
             holder.mTvNonegsPowerupCount.setText("0");
             holder.mTvPollPowerupCount.setText("0");

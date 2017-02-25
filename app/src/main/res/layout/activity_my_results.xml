@@ -35,11 +35,10 @@
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/toolbar_match_stage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dp_240"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/dp_12"
-                    android:text="English Premier League Week 1"
                     android:layout_below="@+id/toolbar_title"
                     app:typeface="roboto_condensed"/>
 
@@ -47,10 +46,12 @@
 
 
             <RelativeLayout
+                android:id="@+id/my_results_rl_share_score"
                 android:layout_width="@dimen/dp_110"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="@dimen/dp_20">
+                android:layout_marginRight="@dimen/dp_20"
+                >
 
 
                 <com.jeeva.android.widgets.customfont.CustomButton
@@ -94,7 +95,8 @@
     <RelativeLayout
         android:id="@+id/fab_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
 
         <FrameLayout

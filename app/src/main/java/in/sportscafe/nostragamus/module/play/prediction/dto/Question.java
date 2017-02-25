@@ -417,7 +417,7 @@ public class Question {
         if (null != answerPercentage) {
             option1AudPollPer = answerPercentage.getAnswer1();
             option2AudPollPer = answerPercentage.getAnswer2();
-            option3AudPollPer = answerPercentage.getAnswer0();
+            option3AudPollPer = answerPercentage.getAnswer3();
         }
     }
 
