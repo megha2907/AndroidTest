@@ -3,6 +3,8 @@ package in.sportscafe.nostragamus.module.allchallenges.challenge;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import com.jeeva.android.widgets.HmImageView;
 
 import org.parceler.Parcels;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,6 +37,13 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
+import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
+
+import static in.sportscafe.nostragamus.R.color;
+import static in.sportscafe.nostragamus.R.dimen;
+import static in.sportscafe.nostragamus.R.id;
+import static in.sportscafe.nostragamus.R.layout;
 
 /**
  * Created by deepanshi on 17/2/17.
@@ -58,7 +68,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(getLayoutInflater().inflate(R.layout.inflater_all_challenges_row, parent, false));
+        return new ViewHolder(getLayoutInflater().inflate(layout.inflater_all_challenges_row, parent, false));
     }
 
     @Override
@@ -79,9 +89,9 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mTvChallengePrice.setVisibility(View.INVISIBLE);
         }
 
-        holder.mIv2xPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
-        holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
-        holder.mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
+        holder.mIv2xPowerup.setBackground(getPowerupDrawable(color.dodger_blue));
+        holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(color.amaranth));
+        holder.mIvPollPowerup.setBackground(getPowerupDrawable(color.greencolor));
 
         try {
             HashMap<String, Integer> powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
@@ -105,32 +115,49 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mTvChallengeUserRank.setText("Did Not Play");
         }
 
-        /*if (mSwipeView) {
-            holder.mLlShowGames.setBackgroundColor(mResources.getColor(R.color.black));
-        } else {
-            holder.mLlShowGames.setBackground(mResources.getDrawable(R.drawable.shape_challenges_show_game_bg));
-        }*/
+        LinearLayout.LayoutParams layoutParams = null;
 
-//        HorizontalScrollView.LayoutParams layoutParams =
-//                (HorizontalScrollView.LayoutParams) holder.mLlTournament.getLayoutParams();
-//        holder.mLlTournament.setLayoutParams(layoutParams);
-//
-//        LinearLayout layout2 = new LinearLayout(context);
-//        layout2.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-//        holder.mLlTournament.setOrientation(LinearLayout.VERTICAL);
-//        holder.mLlTournament.addView(layout2);
-//
-//
-//        for (int i = 0; i < challenge.getTournaments().size(); i++) {
-//
-//            TextView textview = new TextView(context);
-//            textview.setLayoutParams(new RelativeLayout.LayoutParams
-//                    (RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-//            textview.setText(challenge.getTournaments().get(i).getName());
-//            layout2.addView(textview);
-//
-//        }
+        LinearLayout layout2 = new LinearLayout(holder.mLlTournament.getContext());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layout2.setLayoutParams(params);
+        holder.mLlTournament.setOrientation(LinearLayout.HORIZONTAL);
+        holder.mLlTournament.removeAllViews();
+        holder.mLlTournament.addView(layout2);
 
+        Typeface tf = Typeface.createFromAsset(holder.mLlTournament.getContext().getAssets(), "fonts/roboto/RobotoCondensed-Regular.ttf");
+
+        for (int i = 0; i < challenge.getTournaments().size(); i++) {
+
+            TextView textview = new TextView(holder.mLlTournament.getContext());
+            layout2.addView(textview);
+            layoutParams =new LinearLayout.LayoutParams
+                    (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.rightMargin = 10;
+            textview.setLayoutParams(layoutParams);
+            textview.setText(challenge.getTournaments().get(i).getTournamentShortName());
+            textview.setTextColor(Color.WHITE);
+            textview.setPadding(10, 5, 10, 10);
+            textview.setBackground(holder.mLlTournament.getContext().getResources().getDrawable(R.drawable.btn_not_played_bg));
+            textview.setTextSize(12);
+            textview.setTypeface(tf, Typeface.NORMAL);
+
+        }
+
+
+        long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                challenge.getEndTime(),
+                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                Constants.DateFormats.GMT
+        );
+
+        TimeAgo timeAgo = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(), startTimeMs);
+        long updatedTime = Long.parseLong(String.valueOf(timeAgo.totalDiff));
+
+        if (updatedTime < 0){
+            holder.mRlTimer.setVisibility(View.INVISIBLE);
+        }else {
+            updateTimer(holder, updatedTime);
+        }
 
     }
 
@@ -158,27 +185,30 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         RelativeLayout mRlShowGameBg;
         TextView mTvShowGames;
 
+        RelativeLayout mRlTimer;
+
         TextView mTvGamesLeftCount;
 
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
-            mTvChallengeName = (TextView) V.findViewById(R.id.all_challenges_row_matchstage_tv);
-            mTvChallengePrice = (TextView) V.findViewById(R.id.all_challenges_row_tv_price);
-            mIvChallengeImage = (HmImageView) V.findViewById(R.id.all_challenges_row_iv_image);
-            mIv2xPowerup = (ImageView) V.findViewById(R.id.powerups_iv_2x);
-            mIvNonegsPowerup = (ImageView) V.findViewById(R.id.powerups_iv_nonegs);
-            mIvPollPowerup = (ImageView) V.findViewById(R.id.powerups_iv_poll);
-            mTv2xPowerupCount = (TextView) V.findViewById(R.id.powerup_tv_2x_count);
-            mTvNonegsPowerupCount = (TextView) V.findViewById(R.id.powerup_tv_nonegs_count);
-            mTvPollPowerupCount = (TextView) V.findViewById(R.id.powerup_tv_poll_count);
-            mTvChallengeUserRank = (TextView) V.findViewById(R.id.all_challenges_row_tv_leaderboard_rank);
-            mTvChallengeHoursLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_hours_left);
-            mTvChallengeDaysLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_days_left);
-            mTvChallengeMinsLeft = (Button) V.findViewById(R.id.all_challenges_row_btn_mins_left);
-            mLlTournament = (LinearLayout) V.findViewById(R.id.all_challenges_row_tournament_ll);
-            mRlShowGameBg = (RelativeLayout) V.findViewById(R.id.all_challenges_rl_anim_bg);
-            mTvShowGames = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
+            mTvChallengeName = (TextView) V.findViewById(id.all_challenges_row_matchstage_tv);
+            mTvChallengePrice = (TextView) V.findViewById(id.all_challenges_row_tv_price);
+            mIvChallengeImage = (HmImageView) V.findViewById(id.all_challenges_row_iv_image);
+            mIv2xPowerup = (ImageView) V.findViewById(id.powerups_iv_2x);
+            mIvNonegsPowerup = (ImageView) V.findViewById(id.powerups_iv_nonegs);
+            mIvPollPowerup = (ImageView) V.findViewById(id.powerups_iv_poll);
+            mTv2xPowerupCount = (TextView) V.findViewById(id.powerup_tv_2x_count);
+            mTvNonegsPowerupCount = (TextView) V.findViewById(id.powerup_tv_nonegs_count);
+            mTvPollPowerupCount = (TextView) V.findViewById(id.powerup_tv_poll_count);
+            mTvChallengeUserRank = (TextView) V.findViewById(id.all_challenges_row_tv_leaderboard_rank);
+            mTvChallengeHoursLeft = (Button) V.findViewById(id.all_challenges_row_btn_hours_left);
+            mTvChallengeDaysLeft = (Button) V.findViewById(id.all_challenges_row_btn_days_left);
+            mTvChallengeMinsLeft = (Button) V.findViewById(id.all_challenges_row_btn_mins_left);
+            mLlTournament = (LinearLayout) V.findViewById(id.all_challenges_row_tournament_ll);
+            mRlShowGameBg = (RelativeLayout) V.findViewById(id.all_challenges_rl_anim_bg);
+            mRlTimer = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_timer);
+            mTvShowGames = (TextView) V.findViewById(id.all_challenges_row_tv_show_games);
             mTvShowGames.setOnClickListener(this);
 
             V.findViewById(R.id.all_challenges_rl_leadboard).setOnClickListener(this);
@@ -215,10 +245,26 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         context.startActivity(intent);
     }
 
+    private void updateTimer(ViewHolder viewHolder, long updatedTime) {
+
+        int secs = (int) (updatedTime / 1000);
+        int mins = secs / 60;
+        int hours = mins / 60;
+        int days = hours / 24;
+        hours = hours % 24;
+        mins = mins % 60;
+        secs = secs % 60;
+
+        viewHolder.mTvChallengeDaysLeft.setText(String.format("%02d", days)+"d");
+        viewHolder.mTvChallengeHoursLeft.setText(String.format("%02d", hours)+"h");
+        viewHolder.mTvChallengeMinsLeft.setText(String.format("%02d", mins)+"m");
+
+    }
+
     private Drawable getPowerupDrawable(int colorRes) {
         GradientDrawable powerupDrawable = new GradientDrawable();
         powerupDrawable.setShape(GradientDrawable.RECTANGLE);
-        powerupDrawable.setCornerRadius(mResources.getDimensionPixelSize(R.dimen.dp_5));
+        powerupDrawable.setCornerRadius(mResources.getDimensionPixelSize(dimen.dp_5));
         powerupDrawable.setColor(mResources.getColor(colorRes));
         return powerupDrawable;
     }

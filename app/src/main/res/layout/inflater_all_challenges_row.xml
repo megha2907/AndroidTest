@@ -66,19 +66,16 @@
                 android:textSize="@dimen/dp_14"
                 app:typeface="lato_regular" />
 
-            <HorizontalScrollView
-                android:id="@+id/all_challenges_row_tournament_hsv"
+            <LinearLayout
+                android:id="@+id/all_challenges_row_tournament_ll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_below="@+id/all_challenges_row_matchstage_tv"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_toRightOf="@+id/all_challenges_row_iv_image">
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_toRightOf="@+id/all_challenges_row_iv_image"/>
 
-                <LinearLayout
-                    android:id="@+id/all_challenges_row_tournament_ll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
 
                     <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
                     <!--android:id="@+id/all_challenges_row_tournament_name"-->
@@ -96,8 +93,6 @@
                     <!--android:layout_marginTop="@dimen/dp_5"-->
                     <!--/>-->
 
-                </LinearLayout>
-            </HorizontalScrollView>
 
             <RelativeLayout
                 android:id="@+id/all_challenges_row_powerup_rl"

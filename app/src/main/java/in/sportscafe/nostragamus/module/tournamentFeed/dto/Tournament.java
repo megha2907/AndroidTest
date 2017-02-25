@@ -16,6 +16,9 @@ public class Tournament {
     @JsonProperty("tournament_name")
     private String name;
 
+    @JsonProperty("tournament_short_name")
+    private String tournamentShortName;
+
     @JsonProperty("tournament_id")
     public int getId() {
         return id;
@@ -34,5 +37,15 @@ public class Tournament {
     @JsonProperty("tournament_name")
     public void setName(String name) {
         this.name = name;
+    }
+
+    @JsonProperty("tournament_short_name")
+    public String getTournamentShortName() {
+        return tournamentShortName;
+    }
+
+    @JsonProperty("tournament_short_name")
+    public void setTournamentShortName(String tournamentShortName) {
+        this.tournamentShortName = tournamentShortName;
     }
 }
