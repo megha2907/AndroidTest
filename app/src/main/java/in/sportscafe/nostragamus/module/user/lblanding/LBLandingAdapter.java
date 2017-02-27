@@ -61,7 +61,6 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
 
         holder.ivImage.setImageUrl(lbLandingDto.getImgUrl());
 
-
         if (null != lbLandingDto.getRank()) {
             String rank = AppSnippet.ordinal(lbLandingDto.getRank());
             holder.tvPosTxt.setText("POSITION");

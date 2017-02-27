@@ -59,7 +59,7 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
     public static int SORT_TYPE = 0;
 
-    private LBLandingSummary mlbLandingSummary;
+    private List<LBLandingSummary> mlbLandingSummary;
 
     private TextView mTvDummySearch;
 
@@ -146,26 +146,22 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
     }
 
     @Override
-    public void initMyPosition(LBLandingSummary lbSummary) {
+    public void initMyPosition(List<LBLandingSummary> lbSummary) {
 
         mLlLandingHolder.removeAllViews();
 
         mlbLandingSummary = lbSummary;
 
-        List<LbLanding> lbLandingList = lbSummary.getLeaderBoardItems();
+        for (int i=0 ; i < mlbLandingSummary.size() ; i++) {
+
+        List<LbLanding> lbLandingList = lbSummary.get(i).getLeaderBoardItems();
 
 
         if (null != lbLandingList && lbLandingList.size() > 0) {
 
-            for (int i=0 ; i < lbLandingList.size() ; i++) {
-
-                for (LbLanding lbLanding : lbSummary.getLeaderBoardItems()) {
-                    lbLanding.setImgUrl(Sport.getSportImageUrl(lbLanding.getName(), 200, 200));
-                }
-
                 addLandingRow(
                         lbLandingList,
-                        LBLandingType.SPORT,
+                        lbSummary.get(i).getLeaderBoardTitle(),
                         false
                 );
             }
