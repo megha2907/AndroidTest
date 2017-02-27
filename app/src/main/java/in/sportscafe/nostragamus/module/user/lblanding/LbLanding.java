@@ -24,7 +24,7 @@ public class LbLanding {
     @JsonProperty("count_played")
     private Integer countPlayed;
 
-    @JsonProperty("img_url")
+    @JsonProperty("challenge_img_url")
     private String imgUrl;
 
     private String type;

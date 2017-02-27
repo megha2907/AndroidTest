@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,7 @@ import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
@@ -104,7 +106,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
         // Setting date of the match
-        holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) +" "+
+        holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
                 + TimeUtils.getDateStringFromMs(startTimeMs, Constants.DateFormats.HH_MM_AA)
         );
@@ -131,31 +133,57 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         if (null == match.getResult() || match.getResult().isEmpty()) {
             holder.mTvMatchResult.setVisibility(View.GONE);
             holder.mTvResultWait.setVisibility(View.VISIBLE);
-            holder.mTvResultWait.setText(match.getMatchQuestionCount() + " predictions made, waiting for results");
+            holder.mTvResultWait.setText("Awaiting Results");
             holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            holder.mTvResultCorrectCount.setText(match.getQuestions().size() +"/" + match.getMatchQuestionCount() + " Questions Answered");
+
+            if (null != match.getUserRank()) {
+                holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));
+            }else {
+                holder.mTvLeaderBoardRank.setText("No Rank");
+            }
+
+            if (null != match.getCountPowerUps()) {
+                holder.mTvNumberofPowerupsUsed.setText("0" + " Powerup Used");
+            }else {
+                holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()) + " Powerup Used");
+            }
 
         } else {
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
             holder.mTvMatchResult.setText(match.getResult());
         }
 
+
+        if (null == match.getMatchPoints()) {
+
+            holder.mBtnMatchPoints.setVisibility(View.GONE);
+            holder.mLlMatchScores.setVisibility(View.GONE);
+
+        } else {
             holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
             holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
             holder.mTvResultWait.setVisibility(View.GONE);
             holder.mBtnMatchPoints.setText(match.getMatchPoints().toString());
-
             holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Answered Correctly");
             holder.mTvAvgMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
             holder.mTvHighestMatchPoints.setText(String.valueOf(match.getHighestMatchPoints()));
-            holder.mTvLeaderBoardRank.setText("Rank "+String.valueOf(match.getUserRank())+"/"+String.valueOf(match.getCountPlayers()));
-            holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps())+" Powerup Used");
+
+            if (null != match.getUserRank()) {
+                holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));
+            }else {
+                holder.mTvLeaderBoardRank.setText("No Rank");
+            }
+            holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()) + " Powerup Used");
+            holder.mRlHighestMatchPoints.setTag(match);
+        }
 
         List<Question> questions = match.getQuestions();
         for (Question question : questions) {
             holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question));
         }
 
-        if(match.isResultPublished() && mIsMyResults) {
+        if (match.isResultPublished() && mIsMyResults) {
             holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard, match));
         }
 
@@ -194,10 +222,12 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         RelativeLayout mRlAvgMatchPoints;
         TextView mTvAvgMatchPoints;
+        RelativeLayout mRlHighestMatchPoints;
         TextView mTvHighestMatchPoints;
         TextView mTvLeaderBoardRank;
         TextView mTvNumberofPowerupsUsed;
         RelativeLayout mRlLeaderBoard;
+        LinearLayout mLlMatchScores;
 
 
         public MyResultViewHolder(View V) {
@@ -215,16 +245,19 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mBtnMatchPoints = (TextView) V.findViewById(R.id.schedule_row_tv_my_score);
             mLlPredictionsParent = (LinearLayout) V.findViewById(R.id.my_results_row_ll_predictions);
             mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
-            mleaderboard=(LinearLayout)V.findViewById(R.id.my_results_row_ll_leaderboardbtn);
+            mleaderboard = (LinearLayout) V.findViewById(R.id.my_results_row_ll_leaderboardbtn);
             mTvAvgMatchPoints = (TextView) V.findViewById(R.id.schedule_row_tv_average_score);
             mTvHighestMatchPoints = (TextView) V.findViewById(R.id.schedule_row_tv_highest_score);
             mTvLeaderBoardRank = (TextView) V.findViewById(R.id.schedule_row_tv_leaderboard_rank);
-            mTvNumberofPowerupsUsed= (TextView) V.findViewById(R.id.schedule_row_tv_no_of_powerups_used);
-            mRlLeaderBoard= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_leaderboard);
-            mRlAvgMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
+            mTvNumberofPowerupsUsed = (TextView) V.findViewById(R.id.schedule_row_tv_no_of_powerups_used);
+            mRlLeaderBoard = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_leaderboard);
+            mRlAvgMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
+            mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
+            mLlMatchScores = (LinearLayout) V.findViewById(R.id.schedule_row_scores_ll);
 
             mRlLeaderBoard.setOnClickListener(this);
             mRlAvgMatchPoints.setOnClickListener(this);
+            mRlHighestMatchPoints.setOnClickListener(this);
         }
 
         @Override
@@ -238,13 +271,25 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 case R.id.schedule_row_rl_average_score:
                     navigateToOthersAnswers(v.getContext());
                     break;
+
+                case R.id.schedule_row_rl_highest_score:
+
+                    Match match = (Match) v.getTag();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleKeys.PLAYER_ID, match.getHighestScorerId());
+                    bundle.putInt(BundleKeys.MATCH_ID, match.getId());
+                    bundle.putString(BundleKeys.PLAYER_NAME, match.getHighestScorerName());
+                    bundle.putString(BundleKeys.PLAYER_PHOTO, match.getHighestScorerPhoto());
+                    navigateToResultsPeek(v.getContext(), bundle);
+                    break;
             }
 
         }
     }
 
 
-    private View getMyPrediction(ViewGroup parent, final Question question)   {
+    private View getMyPrediction(ViewGroup parent, final Question question) {
         View convertView = getLayoutInflater().inflate(R.layout.inflater_my_predictions_row, parent, false);
 
         ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_question))
@@ -275,8 +320,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 tvAnswerPoints.setText(question.getAnswerPoints() + " Points");
             }
 
-        }else {
-            if(isShowFlipOptn==true){
+        } else {
+            if (isShowFlipOptn == true) {
                 mFlipPowerUp.setVisibility(View.VISIBLE);
                 ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(convertView.getContext(), R.animator.flip_anim);
                 anim.setTarget(mFlipPowerUp);
@@ -313,7 +358,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                                     }
                                 });
 
-                        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -339,7 +384,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
 
         int powerupIcons = PowerUp.getResultPowerupIcons(question.getAnswerPowerUpId());
-        if(powerupIcons == -1) {
+        if (powerupIcons == -1) {
             powerupUsed.setVisibility(View.GONE);
             powerup.setVisibility(View.GONE);
         } else {
@@ -351,9 +396,11 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
 
         //BEFORE THE RESULT IS PUBLISHED SHOW ANSWERS
-        if (null==question.getQuestionAnswer()) {
+        if (null == question.getQuestionAnswer()) {
 
+            tvotheroption.setVisibility(View.VISIBLE);
             setTextColor(tvAnswer, R.color.white);
+            setTextColor(tvotheroption, R.color.white_60);
 
             if (answerId == 0) {
                 tvAnswer.setText("Not Attempted");
@@ -363,33 +410,42 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             } else {
                 if (answerId == 1) {
                     tvAnswer.setText(question.getQuestionOption1());
-                } else if (answerId == 3) {
-                    tvAnswer.setVisibility(View.GONE);
-                    tvNeitherAnswer.setVisibility(View.VISIBLE);
-                    tvNeitherAnswer.setTextColor(Color.WHITE);
-                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    tvotheroption.setText(question.getQuestionOption2());
+
                 } else {
                     tvAnswer.setText(question.getQuestionOption2());
+                    tvotheroption.setText(question.getQuestionOption1());
+                }
+
+                if (!TextUtils.isEmpty(question.getQuestionOption3()) && answerId == 3) {
+                    tvNeitherAnswer.setVisibility(View.VISIBLE);
+                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    setTextColor(tvNeitherAnswer, R.color.white);
+                    setTextColor(tvAnswer, R.color.white_60);
+                } else if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                    tvNeitherAnswer.setVisibility(View.VISIBLE);
+                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    setTextColor(tvNeitherAnswer, R.color.white_60);
                 }
             }
 
         }
         // if played match but not attempted Question
-        else if (answerId == 0){
+        else if (answerId == 0) {
             tvAnswer.setText("Not Attempted");
             setTextColor(tvAnswer, R.color.white);
             tvAnswerPoints.setText("---");
         }
         //if your answer = correct answer
-         else if (answerId == question.getQuestionAnswer()) {
+        else if (answerId == question.getQuestionAnswer()) {
 
-                setTextColor(tvAnswer, R.color.greencolor);
-                tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
-                tvotheroption.setVisibility(View.VISIBLE);
-                tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
+            setTextColor(tvAnswer, R.color.greencolor);
+            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+            tvotheroption.setVisibility(View.VISIBLE);
+            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
 
 
-             // IF USER ANSWER = OPTION 1 OR OPTION 2
+            // IF USER ANSWER = OPTION 1 OR OPTION 2
 
             if (question.getQuestionAnswer() == 1 || question.getQuestionAnswer() == 2) {
                 if (question.getQuestionAnswer() == 1) {
@@ -412,46 +468,46 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             }
 
 
-             // IF USER ANSWER = THIRD OPTION (NEITHER OR DRAW)
-                if (answerId==3){
-                    tvAnswer.setVisibility(View.VISIBLE);
-                    tvAnswer.setText(question.getQuestionOption1());
-                    tvotheroption.setText(question.getQuestionOption2());
-                    tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
-                    tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
-                    setTextColor(tvAnswer, R.color.white_60);
+            // IF USER ANSWER = THIRD OPTION (NEITHER OR DRAW)
+            if (answerId == 3) {
+                tvAnswer.setVisibility(View.VISIBLE);
+                tvAnswer.setText(question.getQuestionOption1());
+                tvotheroption.setText(question.getQuestionOption2());
+                tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+                tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+                setTextColor(tvAnswer, R.color.white_60);
 
-                    tvNeitherAnswer.setVisibility(View.VISIBLE);
-                    tvNeitherAnswer.setText(question.getQuestionOption3());
-                    setTextColor(tvNeitherAnswer, R.color.greencolor);
-                    tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
-                }
+                tvNeitherAnswer.setVisibility(View.VISIBLE);
+                tvNeitherAnswer.setText(question.getQuestionOption3());
+                setTextColor(tvNeitherAnswer, R.color.greencolor);
+                tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+            }
 
-            }  // if your answer & other option both are correct
-            else if(question.getQuestionAnswer() == 0){
+        }  // if your answer & other option both are correct
+        else if (question.getQuestionAnswer() == 0) {
 
-                Log.i("answer","both correct");
+            Log.i("answer", "both correct");
 
-                tvotheroption.setVisibility(View.VISIBLE);
-                if (question.getQuestionAnswer() == 1) {
-                    tvotheroption.setText(question.getQuestionOption1());
-                    setTextColor(tvotheroption, R.color.white_60);
-                } else {
-                    tvotheroption.setText(question.getQuestionOption2());
-                    setTextColor(tvotheroption, R.color.white_60);
-                }
-                tvotheroption.setVisibility(View.VISIBLE);
-                tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
-                tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
-                setTextColor(tvAnswer, R.color.greencolor);
-
-            }  // if your answer is incorrect and other option is correct
-            else {
-                setTextColor(tvAnswer, R.color.tabcolor);
-                tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
-                tvotheroption.setVisibility(View.VISIBLE);
+            tvotheroption.setVisibility(View.VISIBLE);
+            if (question.getQuestionAnswer() == 1) {
+                tvotheroption.setText(question.getQuestionOption1());
                 setTextColor(tvotheroption, R.color.white_60);
-                tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
+            } else {
+                tvotheroption.setText(question.getQuestionOption2());
+                setTextColor(tvotheroption, R.color.white_60);
+            }
+            tvotheroption.setVisibility(View.VISIBLE);
+            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+            setTextColor(tvAnswer, R.color.greencolor);
+
+        }  // if your answer is incorrect and other option is correct
+        else {
+            setTextColor(tvAnswer, R.color.tabcolor);
+            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+            tvotheroption.setVisibility(View.VISIBLE);
+            setTextColor(tvotheroption, R.color.white_60);
+            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
 
 
             // IF USER ANSWER = OPTION 1 OR OPTION 2
@@ -461,7 +517,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 if (question.getQuestionAnswer() == 1) {
                     tvAnswer.setText(question.getQuestionOption2());
                     tvotheroption.setText(question.getQuestionOption1());
-                }else {
+                } else {
                     tvAnswer.setText(question.getQuestionOption1());
                     tvotheroption.setText(question.getQuestionOption2());
                 }
@@ -472,12 +528,12 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     setTextColor(tvNeitherAnswer, R.color.white_60);
                     tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
-            }else if (question.getQuestionAnswer()==3){
+            } else if (question.getQuestionAnswer() == 3) {
 
                 if (answerId == 1) {
                     tvAnswer.setText(question.getQuestionOption1());
                     tvotheroption.setText(question.getQuestionOption2());
-                }else {
+                } else {
                     tvAnswer.setText(question.getQuestionOption2());
                     tvotheroption.setText(question.getQuestionOption1());
                 }
@@ -485,43 +541,43 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 tvNeitherAnswer.setVisibility(View.VISIBLE);
                 tvNeitherAnswer.setText(question.getQuestionOption3());
                 setTextColor(tvNeitherAnswer, R.color.white_60);
-                tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
+                tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
 
             }
 
             // IF USER ANSWER = NEITHER
-                if (answerId==3){
-                    if (question.getQuestionAnswer() == 1) {
-                        tvotheroption.setText(question.getQuestionOption1());
-                        tvAnswer.setText(question.getQuestionOption2());
-                    }else {
-                        tvotheroption.setText(question.getQuestionOption2());
-                        tvAnswer.setText(question.getQuestionOption1());
-                    }
-                    tvAnswer.setVisibility(View.VISIBLE);
-                    setTextColor(tvAnswer, R.color.white_60);
-                    tvNeitherAnswer.setVisibility(View.VISIBLE);
-                    tvNeitherAnswer.setText(question.getQuestionOption3());
-                    setTextColor(tvNeitherAnswer, R.color.tabcolor);
-                    tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
+            if (answerId == 3) {
+                if (question.getQuestionAnswer() == 1) {
+                    tvotheroption.setText(question.getQuestionOption1());
+                    tvAnswer.setText(question.getQuestionOption2());
+                } else {
+                    tvotheroption.setText(question.getQuestionOption2());
+                    tvAnswer.setText(question.getQuestionOption1());
                 }
-
+                tvAnswer.setVisibility(View.VISIBLE);
+                setTextColor(tvAnswer, R.color.white_60);
+                tvNeitherAnswer.setVisibility(View.VISIBLE);
+                tvNeitherAnswer.setText(question.getQuestionOption3());
+                setTextColor(tvNeitherAnswer, R.color.tabcolor);
+                tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
             }
+
+        }
 
 
         return convertView;
     }
 
 
-    private View getLeaderBoardView(ViewGroup parent,Match match) {
+    private View getLeaderBoardView(ViewGroup parent, Match match) {
         View leaderboardView = getLayoutInflater().inflate(R.layout.inflater_leaderboard_btn_row, parent, false);
 
         leaderboardView.findViewById(R.id.my_results_ll_others_answers).setOnClickListener(this);
         leaderboardView.findViewById(R.id.my_results_ll_leaderboards).setOnClickListener(this);
         leaderboardView.findViewById(R.id.my_results_ll_share_score).setOnClickListener(this);
 
-        if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()){
+        if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()) {
             TextView tvcommentary = (TextView) leaderboardView.findViewById(R.id.schedule_row_tv_match_result_commentary);
             tvcommentary.setVisibility(View.VISIBLE);
             tvcommentary.setText(match.getResultdesc());
@@ -546,8 +602,14 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     }
 
     private void navigateToOthersAnswers(Context context) {
-        Intent intent =  new Intent(context, OthersAnswersActivity.class);
+        Intent intent = new Intent(context, OthersAnswersActivity.class);
         intent.putExtra(BundleKeys.MATCH_DETAILS, Parcels.wrap(getItem(0)));
+        context.startActivity(intent);
+    }
+
+    private void navigateToResultsPeek(Context context, Bundle bundle) {
+        Intent intent = new Intent(context, ResultsPeekActivity.class);
+        intent.putExtras(bundle);
         context.startActivity(intent);
     }
 
@@ -561,7 +623,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 LBLandingType.CHALLENGE
         );
 
-        Intent intent =  new Intent(context, PointsActivity.class);
+        Intent intent = new Intent(context, PointsActivity.class);
         intent.putExtra(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
 //        intent.putExtra(BundleKeys.TOURNAMENT_ID, match.getTournamentId());
         context.startActivity(intent);

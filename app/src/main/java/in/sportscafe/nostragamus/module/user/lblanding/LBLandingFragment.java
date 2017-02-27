@@ -152,40 +152,45 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
         mlbLandingSummary = lbSummary;
 
-        List<LbLanding> lbLandingList = lbSummary.getSports();
+        List<LbLanding> lbLandingList = lbSummary.getLeaderBoardItems();
+
 
         if (null != lbLandingList && lbLandingList.size() > 0) {
-            for (LbLanding lbLanding : lbSummary.getSports()) {
-                lbLanding.setImgUrl(Sport.getSportImageUrl(lbLanding.getName(), 200, 200));
+
+            for (int i=0 ; i < lbLandingList.size() ; i++) {
+
+                for (LbLanding lbLanding : lbSummary.getLeaderBoardItems()) {
+                    lbLanding.setImgUrl(Sport.getSportImageUrl(lbLanding.getName(), 200, 200));
+                }
+
+                addLandingRow(
+                        lbLandingList,
+                        LBLandingType.SPORT,
+                        false
+                );
             }
 
-            addLandingRow(
-                    lbLandingList,
-                    LBLandingType.SPORT,
-                    false
-            );
-
         }
 
-        lbLandingList = lbSummary.getChallenges();
-
-        if (null != lbLandingList && lbLandingList.size() > 0) {
-            addLandingRow(
-                    lbLandingList,
-                    LBLandingType.CHALLENGE,
-                    false
-            );
-        }
-
-        lbLandingList = lbSummary.getGroups();
-
-        if (null != lbLandingList && lbLandingList.size() > 0) {
-            addLandingRow(
-                    lbLandingList,
-                    LBLandingType.GROUP,
-                    false
-            );
-        }
+//        lbLandingList = lbSummary.getChallenges();
+//
+//        if (null != lbLandingList && lbLandingList.size() > 0) {
+//            addLandingRow(
+//                    lbLandingList,
+//                    LBLandingType.CHALLENGE,
+//                    false
+//            );
+//        }
+//
+//        lbLandingList = lbSummary.getGroups();
+//
+//        if (null != lbLandingList && lbLandingList.size() > 0) {
+//            addLandingRow(
+//                    lbLandingList,
+//                    LBLandingType.GROUP,
+//                    false
+//            );
+//        }
 
 
     }

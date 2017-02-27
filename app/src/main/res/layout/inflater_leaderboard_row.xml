@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/leaderboard_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="@dimen/dp_80"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="@color/black">
@@ -20,35 +20,32 @@
         android:visibility="gone"/>
 
 
+
+        <ImageView
+            android:id="@+id/leaderboard_row_iv_status"
+            android:layout_width="@dimen/dp_5"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_weight="0.5"
+            android:src="@drawable/status_arrow_down" />
+
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/leaderboard_row_tv_rank"
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:text="52nd"
-        android:gravity="center"
+        android:layout_weight="1.5"
+        android:layout_marginLeft="@dimen/dp_4"
+        android:text="100"
         android:textColor="@color/leaderboard_rank_color"
         android:textSize="@dimen/dp_20"
         app:typeface="roboto_condensed"/>
-
-    <ImageView
-        android:id="@+id/leaderboard_row_iv_status"
-        android:layout_width="@dimen/dp_5"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_1"
-        android:layout_weight="0.5"
-        android:src="@drawable/status_arrow_down" />
 
 
     <in.sportscafe.nostragamus.module.common.RoundImage
         android:id="@+id/leaderboard_row_iv_user_img"
         android:layout_width="@dimen/dp_32"
         android:layout_height="@dimen/dp_32"
-        android:src="@drawable/placeholder_icon"
-        android:layout_marginLeft="@dimen/dp_12"
-       />
+        android:src="@drawable/placeholder_icon" />
 
     <RelativeLayout
         android:layout_width="@dimen/dp_0"
@@ -78,7 +75,8 @@
 
     </RelativeLayout>
 
-    <com.jeeva.android.widgets.customfont.CustomTextView
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/leaderboard_row_tv_accuracy"
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
@@ -96,7 +94,7 @@
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/dp_5"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:text="930"
         android:layout_marginLeft="@dimen/dp_5"
         android:drawablePadding="@dimen/dp_5"
@@ -106,7 +104,7 @@
         app:typeface="roboto_condensed"/>
 
     </LinearLayout>
-a
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0.5"
