@@ -33,12 +33,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 
-import static android.R.attr.fromXDelta;
-import static android.R.attr.fromYDelta;
-import static android.R.attr.toXDelta;
-import static android.R.attr.toYDelta;
-import static android.R.attr.y;
-
 /**
  * Created by Jeeva on 17/02/17.
  */
@@ -271,7 +265,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
             mRcvVertical.getChildAt(i + 1).startAnimation(animationSet);
         }
 
-        View showGamesBg = mRcvVertical.getChildAt(i).findViewById(R.id.all_challenges_rl_anim_bg);
+        View showGamesBg = mRcvVertical.getChildAt(i).findViewById(R.id.all_challenges_sl_anim_bg);
         if(in) {
             showShowGamesBg(showGamesBg);
         } else {

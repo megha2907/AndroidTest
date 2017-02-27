@@ -4,7 +4,7 @@
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#090909">
+    android:background="@color/colorPrimaryDark">
 
     <FrameLayout
         android:id="@+id/challenges_fl_match_holder"
@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/dp_195"
+        android:paddingBottom="@dimen/dp_180"
         android:paddingLeft="@dimen/dp_20"
         android:paddingRight="@dimen/dp_20"
         android:paddingTop="@dimen/dp_40"
