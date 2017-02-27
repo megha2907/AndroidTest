@@ -12,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-
     <LinearLayout
         android:id="@+id/schedule_row_ll"
         android:layout_width="match_parent"
@@ -51,13 +50,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="20th Feb , 7:30pm"
             android:textAllCaps="false"
             android:textColor="@color/white_80"
             android:textSize="@dimen/dp_12"
-            app:typeface="lato_light"
-            android:layout_gravity="center"/>
+            app:typeface="lato_light" />
 
         <RelativeLayout
             android:id="@+id/image_layout"
@@ -94,9 +93,9 @@
                     android:id="@+id/swipe_card_iv_left"
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="@dimen/dp_6"
                     android:scaleType="fitXY"
-                    android:layout_centerVertical="true"
                     android:src="@drawable/sample_tour_image"
                     app:defaultImage="@drawable/placeholder_icon" />
 
@@ -104,15 +103,15 @@
                     android:id="@+id/schedule_row_tv_party_a_name"
                     android:layout_width="@dimen/dp_80"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp_12"
+                    android:layout_toRightOf="@+id/swipe_card_iv_left"
                     android:ellipsize="end"
-                    android:text="India"
                     android:gravity="left"
                     android:maxLines="2"
+                    android:text="India"
                     android:textAllCaps="false"
-                    android:layout_toRightOf="@+id/swipe_card_iv_left"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/white_80"
                     android:textSize="@dimen/dp_12"
                     app:typeface="lato_regular" />
@@ -130,28 +129,28 @@
                     android:id="@+id/schedule_row_tv_party_b_name"
                     android:layout_width="@dimen/dp_80"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginRight="@dimen/dp_10"
+                    android:layout_toLeftOf="@+id/swipe_card_iv_right"
                     android:ellipsize="end"
                     android:gravity="right"
                     android:maxLines="2"
+                    android:text="Manchester United Play"
                     android:textAllCaps="false"
-                    android:layout_toLeftOf="@+id/swipe_card_iv_right"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/white_80"
                     android:textSize="@dimen/dp_12"
-                    android:text="Manchester United Play"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.HmImageView
                     android:id="@+id/swipe_card_iv_right"
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_6"
                     android:scaleType="fitXY"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:src="@drawable/sample_tour_image"
                     app:defaultImage="@drawable/placeholder_icon" />
             </RelativeLayout>
@@ -219,47 +218,97 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/schedule_row_ll_show_games"
+    <RelativeLayout
+        android:id="@+id/schedule_row_rl_points_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/schedule_row_ll"
         android:layout_marginBottom="@dimen/dp_10"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/shape_challenges_show_game_bg"
-        android:orientation="vertical"
-        >
+        android:layout_marginTop="@dimen/dp_15">
 
-        <LinearLayout
-            android:id="@+id/schedule_row_scores_ll"
+        <com.jeeva.android.widgets.ShadowLayout
+            android:id="@+id/schedule_row_sl_leaderboard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_challenges_bg"
-            android:orientation="vertical">
+            android:layout_height="@dimen/dp_140"
+            android:layout_below="@+id/schedule_row_ll"
+            app:sl_cornerRadius="@dimen/dp_8"
+            app:sl_fillColor="@color/challenges_bg_card_color">
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/schedule_row_rl_leaderboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_10">
+                android:layout_gravity="bottom"
+                android:paddingBottom="@dimen/dp_12"
+                android:paddingTop="@dimen/dp_12">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/schedule_row_tv_leaderboard_rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:drawableLeft="@drawable/challenge_leaderboard_icon"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:gravity="bottom"
+                    android:text="No Rank"
+                    android:textColor="@color/white_80"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="roboto_condensed" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/schedule_row_tv_leaderboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_row_tv_leaderboard_rank"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_1"
+                    android:gravity="bottom"
+                    android:text="Go to Challenge Leaderboards"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_below="@+id/schedule_row_tv_leaderboard_rank"
+                    android:layout_marginLeft="@dimen/dp_3"
+                    android:layout_toRightOf="@+id/schedule_row_tv_leaderboard"
+                    android:src="@drawable/timeline_points_arrow" />
+
+            </RelativeLayout>
+
+        </com.jeeva.android.widgets.ShadowLayout>
+
+        <com.jeeva.android.widgets.ShadowLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_78"
+            android:layout_below="@+id/schedule_row_ll"
+            app:sl_cornerRadius="@dimen/dp_8"
+            app:sl_fillColor="@color/challenges_card_color">
+
+            <LinearLayout
+                android:id="@+id/schedule_row_scores_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:id="@+id/schedule_row_rl_average_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
-                    >
+                    android:layout_weight="1">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/schedule_row_tv_average_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="48"
-                        android:gravity="center"
                         android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="48"
                         android:textColor="@color/white_80"
                         android:textSize="@dimen/dp_14"
                         app:typeface="lato_bold" />
@@ -268,10 +317,10 @@
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Average"
-                        android:gravity="center"
                         android:layout_below="@+id/schedule_row_tv_average_score"
                         android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="Average"
                         android:textColor="@color/white_60"
                         android:textSize="@dimen/dp_12"
                         app:typeface="roboto_condensed" />
@@ -282,6 +331,8 @@
                     android:layout_width="@dimen/dp_1"
                     android:layout_height="@dimen/dp_50"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:background="@color/black_20" />
 
                 <RelativeLayout
@@ -295,9 +346,9 @@
                         android:id="@+id/schedule_row_tv_my_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
-                        android:gravity="center"
                         android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="0"
                         android:textColor="@color/white_80"
                         android:textSize="@dimen/dp_22"
                         app:typeface="lato_light" />
@@ -307,10 +358,10 @@
                         android:id="@+id/schedule_row_tv_my_score_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="You Scored"
-                        android:gravity="center"
                         android:layout_below="@+id/schedule_row_tv_my_score"
                         android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="You Scored"
                         android:textColor="@color/white_60"
                         android:textSize="@dimen/dp_12"
                         app:typeface="roboto_condensed" />
@@ -330,97 +381,41 @@
                     android:layout_gravity="center"
                     android:layout_weight="1">
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/schedule_row_tv_highest_score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="58"
-                    android:gravity="center"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/white_80"
-                    android:textSize="@dimen/dp_14"
-                    app:typeface="lato_bold" />
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/schedule_row_tv_highest_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="58"
+                        android:textColor="@color/white_80"
+                        android:textSize="@dimen/dp_14"
+                        app:typeface="lato_bold" />
 
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Highest"
-                    android:gravity="center"
-                    android:layout_below="@+id/schedule_row_tv_highest_score"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/white_60"
-                    android:textSize="@dimen/dp_12"
-                    app:typeface="roboto_condensed" />
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/schedule_row_tv_highest_score"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="Highest"
+                        android:textColor="@color/white_60"
+                        android:textSize="@dimen/dp_12"
+                        app:typeface="roboto_condensed" />
 
                 </RelativeLayout>
 
             </LinearLayout>
 
+        </com.jeeva.android.widgets.ShadowLayout>
 
-        </LinearLayout>
-
-
-
-        <RelativeLayout
-            android:id="@+id/schedule_row_rl_leaderboard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginRight="@dimen/dp_20">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:paddingBottom="@dimen/dp_14"
-                android:paddingTop="@dimen/dp_12">
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/schedule_row_tv_leaderboard_rank"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/challenge_leaderboard_icon"
-                android:drawablePadding="@dimen/dp_5"
-                android:gravity="bottom"
-                android:layout_centerHorizontal="true"
-                android:text="No Rank"
-                android:textColor="@color/white_80"
-                android:textSize="@dimen/dp_14"
-                app:typeface="roboto_condensed" />
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/schedule_row_tv_leaderboard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:layout_centerHorizontal="true"
-                android:text="Go to Challenge Leaderboards"
-                android:textColor="@color/white_60"
-                android:textSize="@dimen/dp_12"
-                android:layout_marginTop="@dimen/dp_1"
-                app:typeface="lato_regular"
-                android:layout_below="@+id/schedule_row_tv_leaderboard_rank"/>
-
-                <ImageView
-                    android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_20"
-                    android:layout_below="@+id/schedule_row_tv_leaderboard_rank"
-                    android:layout_toRightOf="@+id/schedule_row_tv_leaderboard"
-                    android:src="@drawable/timeline_points_arrow"
-                    android:layout_marginLeft="@dimen/dp_3"
-                   />
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/points_rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/schedule_row_ll_show_games"
+        android:layout_below="@+id/schedule_row_rl_points_summary"
         android:layout_marginBottom="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_5">
 

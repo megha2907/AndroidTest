@@ -11,4 +11,7 @@
     <color name="java">#14A7D1</color>
     <color name="cerulean">#11B0DE</color>
     <color name="nil">#00ffffff</color>
+
+    <color name="default_shadow_color">#AA000000</color>
+    <color name="default_fill_color">#ffffff</color>
 </resources>
