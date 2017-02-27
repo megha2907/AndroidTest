@@ -5,13 +5,13 @@
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:paddingLeft="@dimen/dp_3"
-    android:paddingRight="@dimen/dp_3">
+    android:paddingLeft="@dimen/dp_6"
+    android:paddingRight="@dimen/dp_6">
 
     <RelativeLayout
         android:id="@+id/all_challenges_rl_anim_bg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_220"
+        android:layout_height="@dimen/dp_200"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="@dimen/dp_10"
         android:clipChildren="false"
@@ -35,7 +35,7 @@
     <LinearLayout
         android:id="@+id/all_challenges_row_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_180"
+        android:layout_height="@dimen/dp_156"
         android:background="@drawable/shape_challenges_bg"
         android:orientation="vertical">
 
@@ -48,7 +48,7 @@
                 android:layout_width="@dimen/dp_46"
                 android:layout_height="@dimen/dp_46"
                 android:layout_marginLeft="@dimen/dp_12"
-                android:layout_marginTop="@dimen/dp_14"
+                android:layout_marginTop="@dimen/dp_12"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                 app:defaultImage="@drawable/sample_tour_image" />
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_14"
+                android:layout_marginTop="@dimen/dp_12"
                 android:layout_toRightOf="@+id/all_challenges_row_iv_image"
                 android:text="European Gameweek 25"
                 android:textColor="@color/white"
@@ -101,7 +101,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/all_challenges_row_iv_image"
                 android:layout_marginLeft="@dimen/dp_12"
-                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_6"
                 android:visibility="visible">
 
                 <ImageView
@@ -192,7 +192,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/all_challenges_row_iv_image"
                 android:layout_marginRight="@dimen/dp_100"
-                android:layout_marginTop="@dimen/dp_14"
+                android:layout_marginTop="@dimen/dp_6"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_12"
                 android:visibility="visible"
@@ -262,9 +262,9 @@
             <View
                 android:id="@+id/all_challenges_row_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/dp_0.5"
                 android:layout_below="@+id/all_challenges_row_powerup_rl"
-                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_6"
                 android:background="@color/black_40"
                 android:visibility="visible" />
 
@@ -284,8 +284,8 @@
                 android:drawableLeft="@drawable/challenge_leaderboard_icon"
                 android:drawablePadding="@dimen/dp_5"
                 android:gravity="bottom"
-                android:paddingBottom="@dimen/dp_14"
-                android:paddingTop="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
                 android:text="1st Rank"
                 android:textColor="@color/white_80"
                 android:textSize="@dimen/dp_12"

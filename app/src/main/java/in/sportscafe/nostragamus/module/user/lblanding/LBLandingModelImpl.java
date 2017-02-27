@@ -8,6 +8,7 @@ import com.jeeva.android.Log;
 import org.parceler.Parcels;
 
 import java.util.Collections;
+import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
@@ -32,7 +33,7 @@ public class LBLandingModelImpl implements LBLandingModel {
 
     private OnLBLandingModelListener mLbLandingModelListener;
 
-    public LBLandingSummary mlbSummary;
+    public List<LBLandingSummary> mlbSummary;
 
     private boolean mEmptyDone = false;
 
@@ -84,28 +85,21 @@ public class LBLandingModelImpl implements LBLandingModel {
 
         switch (sortBy){
             case 0:
-                Collections.sort(mlbSummary.getGroups(), LbLanding.LeaderBoardDateComparator);
-                Collections.sort(mlbSummary.getSports(), LbLanding.LeaderBoardDateComparator);
-                Collections.sort(mlbSummary.getChallenges(), LbLanding.LeaderBoardDateComparator);
+                Collections.sort(mlbSummary.get(0).getLeaderBoardItems(), LbLanding.LeaderBoardDateComparator);
                 break;
             case 1:
-                Collections.sort(mlbSummary.getGroups(), LbLanding.LeaderBoardRankComparator);
-                Collections.sort(mlbSummary.getSports(), LbLanding.LeaderBoardRankComparator);
-                Collections.sort(mlbSummary.getChallenges(), LbLanding.LeaderBoardRankComparator);
+                Collections.sort(mlbSummary.get(0).getLeaderBoardItems(), LbLanding.LeaderBoardRankComparator);
                 break;
             case 2:
-                Collections.sort(mlbSummary.getGroups(), LbLanding.LeaderBoardRankChangeComparator);
-                Collections.sort(mlbSummary.getSports(), LbLanding.LeaderBoardRankChangeComparator);
-                Collections.sort(mlbSummary.getChallenges(), LbLanding.LeaderBoardRankChangeComparator);
+                Collections.sort(mlbSummary.get(0).getLeaderBoardItems(), LbLanding.LeaderBoardRankChangeComparator);
+
                 break;
             case 3:
-                Collections.sort(mlbSummary.getGroups(), LbLanding.LeaderBoardPlayedMatchesComparator);
-                Collections.sort(mlbSummary.getSports(), LbLanding.LeaderBoardPlayedMatchesComparator);
-                Collections.sort(mlbSummary.getChallenges(), LbLanding.LeaderBoardPlayedMatchesComparator);
+                Collections.sort(mlbSummary.get(0).getLeaderBoardItems(), LbLanding.LeaderBoardPlayedMatchesComparator);
                 break;
         }
 
-        mLbLandingModelListener.refreshLeaderBoard(mlbSummary);
+        mLbLandingModelListener.refreshLeaderBoard(mlbSummary.get(0));
 
     }
 
@@ -121,7 +115,7 @@ public class LBLandingModelImpl implements LBLandingModel {
                         }
                         if (response.isSuccessful()) {
                             mlbSummary = response.body().getSummary();
-                            mLbLandingModelListener.onGetLBLandingSuccess(response.body().getSummary());
+                            mLbLandingModelListener.onGetLBLandingSuccess(response.body().getSummary().get(0));
                         } else {
                             mLbLandingModelListener.onGetLBLandingFailed(response.message());
                         }
