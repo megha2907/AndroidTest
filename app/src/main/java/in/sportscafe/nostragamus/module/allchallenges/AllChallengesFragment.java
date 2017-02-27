@@ -42,11 +42,6 @@ public class AllChallengesFragment extends NostragamusFragment implements AllCha
         super.onActivityCreated(savedInstanceState);
 
         mAllChallengesApiModel = AllChallengesApiModelImpl.newInstance(this);
-        getAllChallenges();
-    }
-
-    private void getAllChallenges() {
-        showProgressbar();
         mAllChallengesApiModel.getAllChallenges();
     }
 
@@ -72,12 +67,22 @@ public class AllChallengesFragment extends NostragamusFragment implements AllCha
         showAlertMessage(Alerts.NO_NETWORK_CONNECTION);
     }
 
+    @Override
+    public void onApiCallStarted() {
+        showProgressbar();
+    }
+
+    @Override
+    public boolean onApiCallStopped() {
+        return dismissProgressbar();
+    }
+
     private void showAlertMessage(String message) {
         dismissProgressbar();
         showMessage(message, "RETRY", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getAllChallenges();
+                mAllChallengesApiModel.getAllChallenges();
             }
         });
     }

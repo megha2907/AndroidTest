@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
+import com.jeeva.android.widgets.ShadowLayout;
 
 import org.parceler.Parcels;
 
@@ -74,9 +75,9 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (mSwipeView/* || position == 0*/) {
-            holder.mRlShowGameBg.setVisibility(View.GONE);
+            holder.mSlShowGameBg.setVisibility(View.GONE);
         } else {
-            holder.mRlShowGameBg.setVisibility(View.VISIBLE);
+            holder.mSlShowGameBg.setVisibility(View.VISIBLE);
         }
 
         Challenge challenge = getItem(position);
@@ -182,7 +183,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         TextView mTvPollPowerupCount;
 
         LinearLayout mLlTournament;
-        RelativeLayout mRlShowGameBg;
+        ShadowLayout mSlShowGameBg;
         TextView mTvShowGames;
 
         RelativeLayout mRlTimer;
@@ -206,7 +207,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mTvChallengeDaysLeft = (Button) V.findViewById(id.all_challenges_row_btn_days_left);
             mTvChallengeMinsLeft = (Button) V.findViewById(id.all_challenges_row_btn_mins_left);
             mLlTournament = (LinearLayout) V.findViewById(id.all_challenges_row_tournament_ll);
-            mRlShowGameBg = (RelativeLayout) V.findViewById(id.all_challenges_rl_anim_bg);
+            mSlShowGameBg = (ShadowLayout) V.findViewById(id.all_challenges_sl_anim_bg);
             mRlTimer = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_timer);
             mTvShowGames = (TextView) V.findViewById(id.all_challenges_row_tv_show_games);
             mTvShowGames.setOnClickListener(this);

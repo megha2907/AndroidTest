@@ -3,9 +3,12 @@ package in.sportscafe.nostragamus.module.othersanswers;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,9 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
-import com.jeeva.android.widgets.customfont.CustomButton;
+import com.jeeva.android.widgets.ShadowLayout;
 
-import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -30,7 +32,6 @@ import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
@@ -161,7 +162,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         holder.mBtnMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
         holder.mRlAvgMatchPoints.setVisibility(View.GONE);
         holder.mRlHighestMatchPoints.setVisibility(View.GONE);
-        holder.mRlLeaderBoard.setVisibility(View.GONE);
+        holder.mSlLeaderBoard.setVisibility(View.GONE);
         holder.mTvMatchPointsTxt.setText("Average Score");
         holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountMatchPowerupsUsed())+" Powerup Used");
         holder.mTvResultCorrectCount.setText(match.getCountMatchPlayers().toString()+" People Answered");
@@ -213,7 +214,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         TextView mTvHighestMatchPoints;
         TextView mTvLeaderBoardRank;
         TextView mTvNumberofPowerupsUsed;
-        RelativeLayout mRlLeaderBoard;
+        ShadowLayout mSlLeaderBoard;
 
 
         public MyResultViewHolder(View V) {
@@ -237,7 +238,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             mTvHighestMatchPoints = (TextView) V.findViewById(R.id.schedule_row_tv_highest_score);
             mTvLeaderBoardRank = (TextView) V.findViewById(R.id.schedule_row_tv_leaderboard_rank);
             mTvNumberofPowerupsUsed= (TextView) V.findViewById(R.id.schedule_row_tv_no_of_powerups_used);
-            mRlLeaderBoard= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_leaderboard);
+            mSlLeaderBoard = (ShadowLayout) V.findViewById(R.id.schedule_row_sl_leaderboard);
             mRlAvgMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
             mRlHighestMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mRlMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_my_score);
@@ -467,17 +468,30 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
     }
 
     private void setPercentPoll(TextView textView, int percent, int maxPercent) {
-        GradientDrawable percentageDrawable = new GradientDrawable();
-        percentageDrawable.setShape(GradientDrawable.RECTANGLE);
-        if(percent >= maxPercent) {
-            percentageDrawable.setColor(mResources.getColor(R.color.mine_shaft_3d));
-        } else {
-            percentageDrawable.setColor(mResources.getColor(R.color.mine_shaft_32));
-        }
+        int width = mResources.getDimensionPixelSize(R.dimen.dp_150);
+        int height = mResources.getDimensionPixelOffset(R.dimen.dp_16);
 
         textView.setVisibility(View.VISIBLE);
         textView.setText(percent + "%");
-        textView.setBackground(percentageDrawable);
+        textView.setBackground(getPercentDrawable(
+                width,
+                height,
+                width * percent / 100,
+                mResources.getColor(percent >= maxPercent ? R.color.mine_shaft_3d : R.color.mine_shaft_32)
+        ));
+    }
+
+    private Drawable getPercentDrawable(int fullWidth, int fullHeight, int percentWidth, int percentColor) {
+        Bitmap outputBitmap = Bitmap.createBitmap(fullWidth, fullHeight, Bitmap.Config.ARGB_4444);
+        Canvas outputCanvas = new Canvas(outputBitmap);
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(percentColor);
+        paint.setStyle(Paint.Style.FILL);
+
+        outputCanvas.drawRect(fullWidth - percentWidth, 0, fullWidth, fullHeight, paint);
+        return new BitmapDrawable(mResources, outputBitmap);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

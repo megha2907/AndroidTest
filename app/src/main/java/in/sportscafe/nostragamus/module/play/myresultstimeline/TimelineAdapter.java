@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
+import com.jeeva.android.widgets.ShadowLayout;
 import com.jeeva.android.widgets.customfont.CustomButton;
 import com.jeeva.android.widgets.customfont.CustomTextView;
 import com.jeeva.android.widgets.customfont.Typefaces;
@@ -327,7 +328,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
         View mMainView;
 
-        LinearLayout mLlCardLayout;
+        ShadowLayout mLlCardLayout;
 
         TextView mTvMatchStage;
 
@@ -390,7 +391,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             mTvVs = (TextView) V.findViewById(R.id.schedule_row_btn_vs);
 
 
-            mLlCardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
+            mLlCardLayout = (ShadowLayout) V.findViewById(R.id.schedule_row_ll);
             mVResultLine = V.findViewById(R.id.schedule_row_v_result_line);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);

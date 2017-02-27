@@ -77,11 +77,17 @@ public class AllChallengesApiModelImpl {
     }
 
     private void callAllChallengesApi() {
+        mAllChallengesApiModelListener.onApiCallStarted();
+
         MyWebService.getInstance().getAllChallengesRequest().enqueue(
                 new NostragamusCallBack<AllChallengesResponse>() {
                     @Override
                     public void onResponse(Call<AllChallengesResponse> call, Response<AllChallengesResponse> response) {
                         super.onResponse(call, response);
+
+                        if(!mAllChallengesApiModelListener.onApiCallStopped()) {
+                            return;
+                        }
 
                         if (response.isSuccessful()) {
                             mAllChallenges = response.body().getChallenges();
@@ -150,5 +156,9 @@ public class AllChallengesApiModelImpl {
         void onFailedAllChallengesApi(String message);
 
         void onNoInternet();
+
+        void onApiCallStarted();
+
+        boolean onApiCallStopped();
     }
 }
