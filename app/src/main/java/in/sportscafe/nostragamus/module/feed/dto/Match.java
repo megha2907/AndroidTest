@@ -108,6 +108,16 @@ public class Match {
     @JsonProperty("count_match_players")
     private Integer countMatchPlayers;
 
+    @JsonProperty("highest_player_id")
+    private Integer highestScorerId;
+
+    @JsonProperty("highest_player_name")
+    private String highestScorerName;
+
+    @JsonProperty("highest_player_photo")
+    private String highestScorerPhoto;
+
+
     /**
      *
      * @return
@@ -314,7 +324,7 @@ public class Match {
     }
 
     @JsonProperty("match_points")
-    public void setMatchPoints(int matchPoints) {
+    public void setMatchPoints(Integer matchPoints) {
         this.matchPoints = matchPoints;
     }
 
@@ -496,6 +506,36 @@ public class Match {
     @JsonProperty("count_match_players")
     public void setCountMatchPlayers(Integer countMatchPlayers) {
         this.countMatchPlayers = countMatchPlayers;
+    }
+
+    @JsonProperty("highest_player_id")
+    public Integer getHighestScorerId() {
+        return highestScorerId;
+    }
+
+    @JsonProperty("highest_player_id")
+    public void setHighestScorerId(Integer highestScorerId) {
+        this.highestScorerId = highestScorerId;
+    }
+
+    @JsonProperty("highest_player_name")
+    public String getHighestScorerName() {
+        return highestScorerName;
+    }
+
+    @JsonProperty("highest_player_name")
+    public void setHighestScorerName(String highestScorerName) {
+        this.highestScorerName = highestScorerName;
+    }
+
+    @JsonProperty("highest_player_photo")
+    public String getHighestScorerPhoto() {
+        return highestScorerPhoto;
+    }
+
+    @JsonProperty("highest_player_photo")
+    public void setHighestScorerPhoto(String highestScorerPhoto) {
+        this.highestScorerPhoto = highestScorerPhoto;
     }
 
 

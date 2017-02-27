@@ -11,55 +11,41 @@ import java.util.List;
 
 public class LBLandingSummary {
 
-    @JsonProperty("total_points")
-    private Integer totalPoints = 0;
+//    @JsonProperty("total_points")
+//    private Integer totalPoints = 0;
 
-    @JsonProperty("sports")
-    private List<LbLanding> sports = new ArrayList<>();
+    @JsonProperty("title")
+    private String leaderBoardTitle;
 
-    @JsonProperty("groups")
-    private List<LbLanding> groups = new ArrayList<>();
+    @JsonProperty("items")
+    private List<LbLanding> leaderBoardItems = new ArrayList<>();
 
-    @JsonProperty("challenges")
-    private List<LbLanding> challenges = new ArrayList<>();
+//    @JsonProperty("total_points")
+//    public Integer getTotalPoints() {
+//        return totalPoints;}
+//
+//    @JsonProperty("total_points")
+//    public void setTotalPoints(Integer totalPoints) {
+//        this.totalPoints = totalPoints;
+//    }
 
-    @JsonProperty("total_points")
-    public Integer getTotalPoints() {
-        return totalPoints;
+    @JsonProperty("items")
+    public List<LbLanding> getLeaderBoardItems() {
+        return leaderBoardItems;
     }
 
-    @JsonProperty("total_points")
-    public void setTotalPoints(Integer totalPoints) {
-        this.totalPoints = totalPoints;
+    @JsonProperty("items")
+    public void setLeaderBoardItems(List<LbLanding> leaderBoardItems) {
+        this.leaderBoardItems = leaderBoardItems;
     }
 
-    @JsonProperty("sports")
-    public List<LbLanding> getSports() {
-        return sports;
+    @JsonProperty("title")
+    public String getLeaderBoardTitle() {
+        return leaderBoardTitle;
     }
 
-    @JsonProperty("sports")
-    public void setSports(List<LbLanding> sports) {
-        this.sports = sports;
-    }
-
-    @JsonProperty("groups")
-    public List<LbLanding> getGroups() {
-        return groups;
-    }
-
-    @JsonProperty("groups")
-    public void setGroups(List<LbLanding> groups) {
-        this.groups = groups;
-    }
-
-    @JsonProperty("challenges")
-    public List<LbLanding> getChallenges() {
-        return challenges;
-    }
-
-    @JsonProperty("challenges")
-    public void setChallenges(List<LbLanding> challenges) {
-        this.challenges = challenges;
+    @JsonProperty("title")
+    public void setLeaderBoardTitle(String leaderBoardTitle) {
+        this.leaderBoardTitle = leaderBoardTitle;
     }
 }
