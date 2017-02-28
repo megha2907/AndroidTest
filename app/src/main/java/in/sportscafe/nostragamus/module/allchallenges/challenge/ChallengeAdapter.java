@@ -55,10 +55,13 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     private boolean mSwipeView = true;
 
-    public ChallengeAdapter(Context context, List<Challenge> challenges, boolean swipeView) {
+    private int mTagId;
+
+    public ChallengeAdapter(Context context, List<Challenge> challenges, boolean swipeView, int tagId) {
         super(context);
         mResources = context.getResources();
         mSwipeView = swipeView;
+        mTagId = tagId;
         addAll(challenges);
     }
 
@@ -223,6 +226,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 case R.id.all_challenges_row_tv_show_games:
                     Intent intent = new Intent(IntentActions.ACTION_CHALLENGE_CLICK);
                     intent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
+                    intent.putExtra(BundleKeys.CHALLENGE_TAG_ID, mTagId);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                     break;
                 case R.id.all_challenges_rl_leadboard:
