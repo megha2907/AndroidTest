@@ -123,11 +123,11 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.createNewGroup(request);
     }
 
-    public Call<ApiResponse> getRemovePersonRequest(AdminRequest request) {
+    public Call<ApiResponse> getRemovePersonRequest(MembersRequest request) {
         return mNostragamusService.removePerson(request);
     }
 
-    public Call<ApiResponse> getMakeAdminRequest(AdminRequest request) {
+    public Call<ApiResponse> getMakeAdminRequest(MembersRequest request) {
         return mNostragamusService.makeAdmin(request);
     }
 
@@ -241,7 +241,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getAcknowledgePopupRequest(popUpName);
     }
 
-    public Call<ApiResponse> getDeleteGroupRequest(AdminRequest request) {
+    public Call<ApiResponse> getDeleteGroupRequest(MembersRequest request) {
         return mNostragamusService.deleteGroup(request);
     }
 

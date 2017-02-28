@@ -20,6 +20,7 @@ import com.jeeva.android.widgets.customfont.Typefaces;
 import org.parceler.Parcels;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -48,8 +49,14 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
     private static final String COMMENTARY = "commentary";
 
+    private HashMap<String, Integer> mPowerupInfo;
+
     public ChallengesTimelineAdapter(Context context) {
         super(context);
+    }
+
+    public void setPowerupInfo(HashMap<String, Integer> powerupInfo) {
+        this.mPowerupInfo = powerupInfo;
     }
 
     @Override
@@ -265,7 +272,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             GameAttemptedStatus.PARTIALLY == match.getisAttempted() ? AnalyticsActions.CONTINUE : AnalyticsActions.PLAY
                     );
 
-//                    bundle.putParcelable(BundleKeys.TOURNAMENT_POWERUPS, Parcels.wrap(mPowerupInfo));
+                    if(null != mPowerupInfo) {
+                        bundle.putParcelable(BundleKeys.POWERUPS, Parcels.wrap(mPowerupInfo));
+                    }
                     navigateToPrediction(context, bundle);
                     break;
                 case R.id.schedule_row_btn_points:

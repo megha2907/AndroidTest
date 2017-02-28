@@ -25,6 +25,7 @@ import com.jeeva.android.widgets.recyclerviewpager.RecyclerViewPager;
 
 import org.parceler.Parcels;
 
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -118,12 +119,26 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         tvChallengeTotalCount.setText("/ " + String.valueOf(adapter.getItemCount()));
 
         Challenge currentChallenge = getCurrentChallenge();
-        mTimelineFragment.addInitialMatches(currentChallenge.getMatches(), currentChallenge.getCountMatchesLeft());
+
+        HashMap<String, Integer> powerupInfo = null;
+        try {
+            powerupInfo = currentChallenge.getChallengeUserInfo().getPowerUps();
+        } catch (Exception e) {
+        }
+
+        mTimelineFragment.addInitialMatches(currentChallenge.getMatches(), currentChallenge.getCountMatchesLeft(), powerupInfo);
     }
 
     private void updateMatchesToCurrentPosition() {
         Challenge currentChallenge = getCurrentChallenge();
-        mTimelineFragment.refreshMatches(currentChallenge.getMatches(), currentChallenge.getCountMatchesLeft());
+
+        HashMap<String, Integer> powerupInfo = null;
+        try {
+            powerupInfo = currentChallenge.getChallengeUserInfo().getPowerUps();
+        } catch (Exception e) {
+        }
+
+        mTimelineFragment.refreshMatches(currentChallenge.getMatches(), currentChallenge.getCountMatchesLeft(), powerupInfo);
     }
 
     private Challenge getCurrentChallenge() {

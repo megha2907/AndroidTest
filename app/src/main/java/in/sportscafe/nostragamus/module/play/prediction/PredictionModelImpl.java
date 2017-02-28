@@ -97,14 +97,23 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 mPredictionModelListener.onGetSport(bundle.getInt(BundleKeys.SPORT_ID));
             }
 
-            if (bundle.containsKey(BundleKeys.TOURNAMENT_POWERUPS)) {
-                TournamentPowerupInfo tournamentPowerupInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.TOURNAMENT_POWERUPS));
-                HashMap<String, Integer> powerUpMap = tournamentPowerupInfo.getPowerUps();
+            if (bundle.containsKey(BundleKeys.POWERUPS)) {
+                HashMap<String, Integer> powerUpMap = Parcels.unwrap(bundle.getParcelable(BundleKeys.POWERUPS));
+//                TournamentPowerupInfo tournamentPowerupInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.TOURNAMENT_POWERUPS));
+//                HashMap<String, Integer> powerUpMap = tournamentPowerupInfo.getPowerUps();
 
                 m2xGlobalPowerups = NostragamusDataHandler.getInstance().get2xGlobalPowerupsCount();
-                m2xPowerups = powerUpMap.get(Powerups.XX);
-                mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
-                mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
+                if(powerUpMap.containsKey(Powerups.XX)) {
+                    m2xPowerups = powerUpMap.get(Powerups.XX);
+                }
+
+                if(powerUpMap.containsKey(Powerups.NO_NEGATIVE)) {
+                    mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
+                }
+
+                if(powerUpMap.containsKey(Powerups.AUDIENCE_POLL)) {
+                    mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
+                }
             }
 
             NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.STARTED);

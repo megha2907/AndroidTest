@@ -34,7 +34,8 @@ public class NewGroupPresenterImpl implements NewGroupPresenter, NewGroupModelIm
 
     @Override
     public void onCreateNewGroup() {
-        mNewGroupModel.getAllTournamentsfromServer();
+        // Todo remove later
+//        mNewGroupModel.getAllTournamentsfromServer();
     }
 
     @Override

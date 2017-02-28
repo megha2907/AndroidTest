@@ -3,11 +3,12 @@ package in.sportscafe.nostragamus.module.user.group.groupinfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import in.sportscafe.nostragamus.module.user.group.members.AdminRequest;
+import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
 
 /**
  * Created by Jeeva on 13/7/16.
  */
-public class GroupNameUpdateRequest extends AdminRequest {
+public class GroupNameUpdateRequest extends MembersRequest {
 
     @JsonProperty("group_name")
     private String groupName;

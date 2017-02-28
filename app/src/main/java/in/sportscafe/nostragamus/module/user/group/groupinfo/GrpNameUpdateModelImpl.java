@@ -34,7 +34,6 @@ public class GrpNameUpdateModelImpl {
 
     private void callGrpNameUpdateApi(final String name, String photo) {
         GroupNameUpdateRequest groupNameUpdateRequest = new GroupNameUpdateRequest();
-        groupNameUpdateRequest.setAdminId(NostragamusDataHandler.getInstance().getUserId());
         groupNameUpdateRequest.setGroupId(mGroupId);
         groupNameUpdateRequest.setGroupPhoto(photo);
         groupNameUpdateRequest.setGroupName(name);

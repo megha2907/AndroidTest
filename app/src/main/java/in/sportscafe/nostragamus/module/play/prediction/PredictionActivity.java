@@ -187,10 +187,9 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void navigateToFeed() {
-        Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
     }
 
     @Override

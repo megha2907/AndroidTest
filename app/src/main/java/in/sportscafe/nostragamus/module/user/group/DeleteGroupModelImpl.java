@@ -7,6 +7,7 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.user.group.members.AdminRequest;
+import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -26,19 +27,18 @@ public class DeleteGroupModelImpl {
     public void deleteGroup(boolean amAdmin, Integer groupId) {
         if (amAdmin) {
             if (Nostragamus.getInstance().hasNetworkConnection()) {
-                AdminRequest adminRequest = new AdminRequest();
-                adminRequest.setAdminId(NostragamusDataHandler.getInstance().getUserId());
-                adminRequest.setGroupId(groupId);
+                MembersRequest membersRequest = new MembersRequest();
+                membersRequest.setGroupId(groupId);
 
-                callDeleteGroupApi(adminRequest);
+                callDeleteGroupApi(membersRequest);
             } else {
                 mDeleteGroupModelListener.onNoInternet();
             }
         }
     }
 
-    private void callDeleteGroupApi(AdminRequest adminRequest) {
-        MyWebService.getInstance().getDeleteGroupRequest(adminRequest).enqueue(
+    private void callDeleteGroupApi(MembersRequest membersRequest) {
+        MyWebService.getInstance().getDeleteGroupRequest(membersRequest).enqueue(
                 new NostragamusCallBack<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

@@ -196,10 +196,11 @@ public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment
     public ViewPagerAdapter getAdapter(FragmentManager fm) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fm);
 
-        pagerAdapter.addFragment(
+        // Todo remove later
+        /*pagerAdapter.addFragment(
                 TourSelectionFragment.newInstance(mAmAdmin, mGroupId, mGroupInfo.getFollowedTournaments(), this),
                 getTourTitle()
-        );
+        );*/
 
         pagerAdapter.addFragment(
                 MembersFragment.newInstance(mAmAdmin, mGroupId, mGroupInfo.getMembers(), this),

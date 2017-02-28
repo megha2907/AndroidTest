@@ -16,13 +16,11 @@ import java.util.UUID;
 
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
@@ -94,23 +92,24 @@ public class NewGroupModelImpl implements NewGroupModel {
             return;
         }
 
-        List<Integer> selectedTournamentList = mTournamentSelectionAdapter.getSelectedTourIdList();
+        // Todo remove later
+        /*List<Integer> selectedTournamentList = mTournamentSelectionAdapter.getSelectedTourIdList();
         if (null == selectedTournamentList || selectedTournamentList.isEmpty()) {
             mNewGroupModelListener.onNoTournamentSelected();
             return;
-        } else {
+        } else {*/
             mNewGroupModelListener.setGroupDoneBtnClickable(false);
             if (Nostragamus.getInstance().hasNetworkConnection()) {
                 NewGroupRequest newGroupRequest = new NewGroupRequest();
-                newGroupRequest.setGroupCreatedBy(NostragamusDataHandler.getInstance().getUserId());
                 newGroupRequest.setGroupName(groupName);
-                newGroupRequest.setfollowedTournaments(selectedTournamentList);
+                // Todo remove later
+//                newGroupRequest.setfollowedTournaments(selectedTournamentList);
                 newGroupRequest.setGroupPhoto(mgroupPhoto);
                 callNewGroupApi(newGroupRequest);
             } else {
                 mNewGroupModelListener.onNoInternet();
             }
-        }
+//        }
     }
 
     @Override
@@ -191,7 +190,8 @@ public class NewGroupModelImpl implements NewGroupModel {
                         if (response.isSuccessful()) {
                             NostragamusAnalytics.getInstance().trackGroups(
                                     AnalyticsActions.NEW_GROUP,
-                                    MyWebService.getInstance().getJsonStringFromObject(newGroupRequest.getfollowedTournaments())
+                                    // Todo remove later
+                                    /*MyWebService.getInstance().getJsonStringFromObject(newGroupRequest.getfollowedTournaments())*/"{}"
                             );
 
                             Bundle bundle = new Bundle();

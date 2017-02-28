@@ -5,17 +5,13 @@ import android.os.Bundle;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.user.group.LeaveGroupModelImpl;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
@@ -78,21 +74,21 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
     @Override
     public void onClickRemove(int position) {
         if(Nostragamus.getInstance().hasNetworkConnection()) {
-            callRemovePersonApi(getAdminRequest(position), position);
+            callRemovePersonApi(getMemberRequest(position), position);
         } else {
             mMembersModelListener.onFailed(Constants.Alerts.NO_NETWORK_CONNECTION);
         }
     }
 
-    private AdminRequest getAdminRequest(int position) {
-        AdminRequest removePersonRequest = new AdminRequest();
-        removePersonRequest.setAdminId(mMembersAdapter.getItem(position).getId() + "");
+    private MembersRequest getMemberRequest(int position) {
+        MembersRequest removePersonRequest = new MembersRequest();
+        removePersonRequest.setPlayerId(mMembersAdapter.getItem(position).getId());
         removePersonRequest.setGroupId(mGroupId);
 
         return removePersonRequest;
     }
 
-    private void callRemovePersonApi(AdminRequest request, final int position) {
+    private void callRemovePersonApi(MembersRequest request, final int position) {
         MyWebService.getInstance().getRemovePersonRequest(request).enqueue(
                 new NostragamusCallBack<ApiResponse>() {
                     @Override
@@ -118,13 +114,13 @@ public class MembersModelImpl implements MembersModel, MembersAdapter.OnMembersO
     @Override
     public void onMakeAdmin(int position) {
         if(Nostragamus.getInstance().hasNetworkConnection()) {
-            callMakeAdminApi(getAdminRequest(position), position);
+            callMakeAdminApi(getMemberRequest(position), position);
         } else {
             mMembersModelListener.onFailed(Constants.Alerts.NO_NETWORK_CONNECTION);
         }
     }
 
-    private void callMakeAdminApi(AdminRequest request, final int position) {
+    private void callMakeAdminApi(MembersRequest request, final int position) {
         MyWebService.getInstance().getMakeAdminRequest(request).enqueue(
                 new NostragamusCallBack<ApiResponse>() {
                     @Override
