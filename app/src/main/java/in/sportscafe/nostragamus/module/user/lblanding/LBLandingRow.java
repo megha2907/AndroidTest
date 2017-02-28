@@ -42,8 +42,8 @@ public class LBLandingRow extends LinearLayout implements View.OnClickListener {
         super(context, attrs, defStyleAttr);
     }
 
-    public void init(List<LbLanding> lbList, String lbLandingType, boolean needPadding) {
-        ((TextView) findViewById(R.id.lblanding_tv_category_name)).setText(lbLandingType);
+    public void init(List<LbLanding> lbList, String lbLandingTitle, boolean needPadding) {
+        ((TextView) findViewById(R.id.lblanding_tv_category_name)).setText(lbLandingTitle);
 
         mRightArrow = (ImageButton) findViewById(R.id.lblanding_ib_right_arrow);
         mLeftArrow = (ImageButton) findViewById(R.id.lblanding_ib_left_arrow);
@@ -55,7 +55,7 @@ public class LBLandingRow extends LinearLayout implements View.OnClickListener {
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mLbLandingAdapter = new LBLandingAdapter(getContext(), lbLandingType, needPadding);
+        mLbLandingAdapter = new LBLandingAdapter(getContext(), needPadding);
         mLbLandingAdapter.addAll(lbList);
         mRecyclerView.setAdapter(mLbLandingAdapter);
 

@@ -66,14 +66,11 @@ public class PointsModelImpl implements PointsModel {
         mLbLanding = Parcels.unwrap(bundle.getParcelable(BundleKeys.LB_LANDING_DATA));
 
         switch (mLbLanding.getType()) {
-            case LBLandingType.SPORT:
-                mSportId = mLbLanding.getId();
-                break;
             case LBLandingType.GROUP:
-                mGroupId = mLbLanding.getId();
+                mGroupId = mLbLanding.getGroupId();
                 break;
             case LBLandingType.CHALLENGE:
-                mChallengeId = mLbLanding.getId();
+                mChallengeId = mLbLanding.getChallengeId();
                 break;
         }
     }
@@ -105,7 +102,7 @@ public class PointsModelImpl implements PointsModel {
 
 
     private void callLbDetailApi() {
-        MyWebService.getInstance().getLeaderBoardDetailRequest(mSportId, mGroupId, mChallengeId)
+        MyWebService.getInstance().getLeaderBoardDetailRequest(mGroupId, mChallengeId)
                 .enqueue(new NostragamusCallBack<LeaderBoardResponse>() {
                     @Override
                     public void onResponse(Call<LeaderBoardResponse> call, Response<LeaderBoardResponse> response) {
@@ -142,23 +139,31 @@ public class PointsModelImpl implements PointsModel {
         Log.d("PointsModelImpl", "Selected Summary --> " + mTourId);
         LeaderBoard leaderBoard;
 
+        mGroupId = mLbLanding.getGroupId();
+
         for (int i = 0; i < leaderBoardList.size(); i++) {
             leaderBoard = leaderBoardList.get(i);
 
+            Log.i("groupIdleaderboard", String.valueOf(leaderBoard.getGroupId()));
+
             mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());
 
-            //if match not played change tab to overall
-            if (null == mTourId) {
-                mSelectedPosition = 0;
-            }
             //for challenges change tab to overall
-            else if (mChallengeId != 0) {
+            //if challnegedid=0
+            if (mChallengeId == 0) {
+                Log.i("inside","challenge");
                 mSelectedPosition = 0;
+            } else if (mGroupId == 0) {
+                Log.i("inside","groupid");
+                mSelectedPosition = 0;
+            } else if (mGroupId.equals(leaderBoard.getGroupId())){
+                   Log.i("inside","mGroupId.equals");
+                    mSelectedPosition = i;
             }
-            //for match played change tab to tournament
-            else if (mTourId.equals(leaderBoard.getTournamentId())) {
-                mSelectedPosition = i;
-            }
+
+            Log.i("mChallengeId",mChallengeId.toString());
+            Log.i("mgroupid",mGroupId.toString());
+            Log.i("mSelectedPosition", String.valueOf(mSelectedPosition));
 
             Log.d("PointsModelImpl", "LeaderBoard --> " + leaderBoard.getTournamentId());
         }

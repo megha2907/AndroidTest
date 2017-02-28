@@ -65,6 +65,8 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
     private FrameLayout mFlFuzzyHolder;
 
+    private String lbLandingType;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -191,14 +193,15 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
     }
 
-    private void addLandingRow(List<LbLanding> lbList, String lbLandingType, boolean needPadding) {
+    private void addLandingRow(List<LbLanding> lbList, String lbLandingTitle, boolean needPadding) {
         LBLandingRow landingRow = (LBLandingRow) getLayoutInflater().inflate(
                 R.layout.inflater_lblanding_row,
                 mLlLandingHolder,
                 false
         );
+
         mLlLandingHolder.addView(landingRow);
-        landingRow.init(lbList, lbLandingType, needPadding);
+        landingRow.init(lbList, lbLandingTitle, needPadding);
     }
 
 
