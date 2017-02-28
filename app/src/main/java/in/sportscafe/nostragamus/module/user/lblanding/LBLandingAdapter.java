@@ -28,12 +28,12 @@ import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyViewHolder> {
 
     private String mLbLandingType;
-
+    private Integer mGroupId;
+    private Integer mChallengeId;
     private boolean mNeedPadding = false;
 
-    public LBLandingAdapter(Context context, String lbLandingType, boolean needPadding) {
+    public LBLandingAdapter(Context context, boolean needPadding) {
         super(context);
-        this.mLbLandingType = lbLandingType;
         this.mNeedPadding = needPadding;
     }
 
@@ -109,6 +109,13 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
             NostragamusAnalytics.getInstance().trackLeaderboard(mLbLandingType);
 
             LbLanding lbLanding = getItem(getAdapterPosition());
+            mChallengeId = lbLanding.getChallengeId();
+            mGroupId =lbLanding.getGroupId();
+            if(mChallengeId == 0){
+                mLbLandingType = Constants.LBLandingType.GROUP;
+            }else {
+                mLbLandingType = Constants.LBLandingType.CHALLENGE;
+            }
             lbLanding.setType(mLbLandingType);
 
             Bundle bundle = new Bundle();

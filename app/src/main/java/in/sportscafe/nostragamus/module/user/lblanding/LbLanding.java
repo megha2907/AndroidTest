@@ -14,6 +14,12 @@ public class LbLanding {
 
     private Integer id = 1;
 
+    @JsonProperty("challenge_id")
+    private Integer challengeId;
+
+    @JsonProperty("group_id")
+    private Integer groupId;
+
     @JsonProperty("challenge_name")
     private String name = "Cricket";
 
@@ -109,6 +115,26 @@ public class LbLanding {
     @JsonProperty("count_played")
     public void setCountPlayed(Integer countPlayed) {
         this.countPlayed = countPlayed;
+    }
+
+    @JsonProperty("challenge_id")
+    public Integer getChallengeId() {
+        return challengeId;
+    }
+
+    @JsonProperty("challenge_id")
+    public void setChallengeId(Integer challengeId) {
+        this.challengeId = challengeId;
+    }
+
+    @JsonProperty("group_id")
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    @JsonProperty("group_id")
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 
 

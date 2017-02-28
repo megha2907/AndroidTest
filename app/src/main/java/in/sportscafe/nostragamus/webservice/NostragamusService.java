@@ -123,8 +123,7 @@ public interface NostragamusService {
     Call<MyResultsResponse> getMyResults(@Query("match_id") Integer matchId, @Query("player_id") Integer playerId);
 
     @GET("v1/game/leaderboard/detail")
-    Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("sports_id") Integer sportId,
-                                                   @Query("group_id") Integer groupId,
+    Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("group_id") Integer groupId,
                                                    @Query("challenge_id") Integer challengeId);
 
     @PUT("v2/game/groups/tournaments")
