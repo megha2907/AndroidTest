@@ -43,7 +43,7 @@ public class LBLandingRow extends LinearLayout implements View.OnClickListener {
     }
 
     public void init(List<LbLanding> lbList, String lbLandingType, boolean needPadding) {
-        ((TextView) findViewById(R.id.lblanding_tv_category_name)).setText(getCategoryName(lbLandingType));
+        ((TextView) findViewById(R.id.lblanding_tv_category_name)).setText(lbLandingType);
 
         mRightArrow = (ImageButton) findViewById(R.id.lblanding_ib_right_arrow);
         mLeftArrow = (ImageButton) findViewById(R.id.lblanding_ib_left_arrow);

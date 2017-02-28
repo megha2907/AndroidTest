@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants;
 
 /**
@@ -48,7 +50,7 @@ public class LBLandingPresenterImpl implements LBLandingPresenter, LBLandingMode
     }
 
     @Override
-    public void onGetLBLandingSuccess(LBLandingSummary lbSummary) {
+    public void onGetLBLandingSuccess(List<LBLandingSummary> lbSummary) {
         mLbLandingView.dismissProgressbar();
         mLbLandingView.initMyPosition(lbSummary);
         mLbLandingView.sortLeaderBoards();
@@ -72,7 +74,7 @@ public class LBLandingPresenterImpl implements LBLandingPresenter, LBLandingMode
     }
 
     @Override
-    public void refreshLeaderBoard(LBLandingSummary mlbSummary) {
+    public void refreshLeaderBoard(List<LBLandingSummary> mlbSummary) {
         mLbLandingView.initMyPosition(mlbSummary);
     }
 

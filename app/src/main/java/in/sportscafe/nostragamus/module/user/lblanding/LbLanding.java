@@ -14,6 +14,7 @@ public class LbLanding {
 
     private Integer id = 1;
 
+    @JsonProperty("challenge_name")
     private String name = "Cricket";
 
     private Integer rank;
@@ -64,10 +65,12 @@ public class LbLanding {
         this.rank = rank;
     }
 
+    @JsonProperty("challenge_name")
     public String getName() {
         return name;
     }
 
+    @JsonProperty("challenge_name")
     public void setName(String name) {
         this.name = name;
     }
@@ -80,12 +83,12 @@ public class LbLanding {
         this.id = id;
     }
 
-    @JsonProperty("img_url")
+    @JsonProperty("challenge_img_url")
     public String getImgUrl() {
         return imgUrl;
     }
 
-    @JsonProperty("img_url")
+    @JsonProperty("challenge_img_url")
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }

@@ -99,7 +99,7 @@ public class LBLandingModelImpl implements LBLandingModel {
                 break;
         }
 
-        mLbLandingModelListener.refreshLeaderBoard(mlbSummary.get(0));
+        mLbLandingModelListener.refreshLeaderBoard(mlbSummary);
 
     }
 
@@ -115,7 +115,7 @@ public class LBLandingModelImpl implements LBLandingModel {
                         }
                         if (response.isSuccessful()) {
                             mlbSummary = response.body().getSummary();
-                            mLbLandingModelListener.onGetLBLandingSuccess(response.body().getSummary().get(0));
+                            mLbLandingModelListener.onGetLBLandingSuccess(response.body().getSummary());
                         } else {
                             mLbLandingModelListener.onGetLBLandingFailed(response.message());
                         }
@@ -128,7 +128,7 @@ public class LBLandingModelImpl implements LBLandingModel {
 
     public interface OnLBLandingModelListener {
 
-        void onGetLBLandingSuccess(LBLandingSummary lbSummary);
+        void onGetLBLandingSuccess(List<LBLandingSummary> lbSummary);
 
         void onGetLBLandingFailed(String message);
 
@@ -136,6 +136,6 @@ public class LBLandingModelImpl implements LBLandingModel {
 
         Context getContext();
 
-        void refreshLeaderBoard(LBLandingSummary mlbSummary);
+        void refreshLeaderBoard(List<LBLandingSummary> mlbSummary);
     }
 }
