@@ -91,5 +91,7 @@
     <color name="shark">#1A1A1B</color>
     <color name="amaranth">#ED3869</color>
     <color name="mine_shaft_32">#323232</color>
+    <color name="royal_health">#A3296C</color>
+    <color name="cod_gray">#1A1A1A</color>
 
 </resources>

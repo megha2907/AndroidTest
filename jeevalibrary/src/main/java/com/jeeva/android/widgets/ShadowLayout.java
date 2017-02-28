@@ -9,6 +9,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jeeva.android.R;
 
 public class ShadowLayout extends FrameLayout {
@@ -100,5 +101,10 @@ public class ShadowLayout extends FrameLayout {
 
         outputCanvas.drawRoundRect(shadowRect, mCornerRadius, mCornerRadius, shadowPaint);
         canvas.drawBitmap(outputBitmap, 0, 0, null);
+    }
+
+    public void setFillColor(int fillColor) {
+        this.mFillColor = fillColor;
+        invalidate();
     }
 }
