@@ -112,6 +112,7 @@
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextAppearance="@style/ProfileTabLayoutTextAppearance"
                 app:tabTextColor="@color/silver_chalice"
+                app:tabMode="scrollable"
                 app:unselected_textSize="@dimen/dp_14"
                 app:unselected_typeface="roboto_condensed" />
 

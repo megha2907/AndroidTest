@@ -1,16 +1,25 @@
 package in.sportscafe.nostragamus.module.allchallenges;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeFragment;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
@@ -21,11 +30,20 @@ import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
  * Created by Jeeva on 17/02/17.
  */
 
-public class AllChallengesFragment extends NostragamusFragment implements AllChallengesApiModelImpl.OnAllChallengesApiModelListener {
+public class AllChallengesFragment extends NostragamusFragment
+        implements AllChallengesApiModelImpl.OnAllChallengesApiModelListener, View.OnClickListener {
+
+    private List<ChallengeFragment> mChallengeFragmentList = new ArrayList<>();
 
     private ViewPagerAdapter mViewPagerAdapter;
 
     private AllChallengesApiModelImpl mAllChallengesApiModel;
+
+    private RelativeLayout mRlSwitch;
+
+    private View mVSwitchSeek;
+
+    private boolean mSwipeViewSelected = true;
 
     public static AllChallengesFragment newInstance() {
         return new AllChallengesFragment();
@@ -41,8 +59,40 @@ public class AllChallengesFragment extends NostragamusFragment implements AllCha
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mRlSwitch = (RelativeLayout) findViewById(R.id.challenges_switch_view_rl);
+        mRlSwitch.setOnClickListener(this);
+        mVSwitchSeek = findViewById(R.id.challenges_v_switch_seek);
+
         mAllChallengesApiModel = AllChallengesApiModelImpl.newInstance(this);
         mAllChallengesApiModel.getAllChallenges();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.challenges_switch_view_rl:
+                if (mSwipeViewSelected) {
+                    for (ChallengeFragment fragment : mChallengeFragmentList) {
+                        fragment.switchToListView();
+                    }
+                    moveSeekToList();
+                } else {
+                    for (ChallengeFragment fragment : mChallengeFragmentList) {
+                        fragment.switchToSwipeView(-1);
+                    }
+                    moveSeekToSwipe();
+                }
+                mSwipeViewSelected = !mSwipeViewSelected;
+                break;
+        }
+    }
+
+    private void moveSeekToSwipe() {
+        mVSwitchSeek.animate().translationXBy(-getResources().getDimensionPixelSize(R.dimen.dp_30)).setDuration(500);
+    }
+
+    private void moveSeekToList() {
+        mVSwitchSeek.animate().translationXBy(getResources().getDimensionPixelSize(R.dimen.dp_30)).setDuration(500);
     }
 
     @Override
@@ -90,19 +140,24 @@ public class AllChallengesFragment extends NostragamusFragment implements AllCha
     private void createAdapter() {
         mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
 
+        ChallengeFragment challengeFragment;
         List<Challenge> challenges = mAllChallengesApiModel.getCompletedChallenges();
+        int count = 0;
         if (challenges.size() > 0) {
-            mViewPagerAdapter.addFragment(ChallengeFragment.newInstance(challenges), "Completed");
+            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(challenges, count++), "Completed");
+            mChallengeFragmentList.add(challengeFragment);
         }
 
         challenges = mAllChallengesApiModel.getInPlayChallenges();
         if (challenges.size() > 0) {
-            mViewPagerAdapter.addFragment(ChallengeFragment.newInstance(challenges), "In Play");
+            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(challenges, count++), "In Play");
+            mChallengeFragmentList.add(challengeFragment);
         }
 
         challenges = mAllChallengesApiModel.getNewChallenges();
         if (challenges.size() > 0) {
-            mViewPagerAdapter.addFragment(ChallengeFragment.newInstance(challenges), "New");
+            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(challenges, count++), "New");
+            mChallengeFragmentList.add(challengeFragment);
         }
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.tab_challenge_vp);
@@ -111,4 +166,32 @@ public class AllChallengesFragment extends NostragamusFragment implements AllCha
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
         tabLayout.setupWithViewPager(viewPager);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mChallengeItemClickReceiver,
+                new IntentFilter(Constants.IntentActions.ACTION_CHALLENGE_CLICK));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mChallengeItemClickReceiver);
+    }
+
+    BroadcastReceiver mChallengeItemClickReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int tagId = intent.getIntExtra(BundleKeys.CHALLENGE_TAG_ID, -1);
+            int clickPosition = intent.getIntExtra(BundleKeys.CLICK_POSITION, -1);
+
+            for (int i = 0; i < mChallengeFragmentList.size(); i++) {
+                mChallengeFragmentList.get(i).switchToSwipeView(i == tagId ? clickPosition : -1);
+            }
+
+            moveSeekToSwipe();
+            mSwipeViewSelected = true;
+        }
+    };
 }

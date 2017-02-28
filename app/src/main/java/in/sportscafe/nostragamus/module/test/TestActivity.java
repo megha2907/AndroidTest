@@ -12,6 +12,7 @@ import java.io.InputStream;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.popups.PowerupDialogFragment;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -27,7 +28,10 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        gifImageView = (GifImageView) findViewById(R.id.gifImageView);
+        PowerupDialogFragment fragment = new PowerupDialogFragment();
+        fragment.show(getSupportFragmentManager(), "Powerup");
+
+        /*gifImageView = (GifImageView) findViewById(R.id.gifImageView);
 
         gifImageView.setOnAnimationStop(new GifImageView.OnAnimationStop() {
             @Override
@@ -39,10 +43,10 @@ public class TestActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
     }
 
-    @Override
+    /*@Override
     protected void onStart() {
         super.onStart();
         loadGifs();
@@ -64,5 +68,5 @@ public class TestActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         gifImageView.stopAnimation();
-    }
+    }*/
 }

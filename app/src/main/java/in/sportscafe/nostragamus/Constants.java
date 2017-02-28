@@ -210,6 +210,7 @@ public interface Constants {
         String PLAYER_NAME = "playerName";
         String PLAYER_PHOTO = "playerPhoto";
         String CHALLENGE_LIST = "challengeList";
+        String CHALLENGE_TAG_ID = "challengeTagId";
     }
 
     interface ParcelableKeys {

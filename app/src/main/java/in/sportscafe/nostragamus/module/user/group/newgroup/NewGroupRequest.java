@@ -10,27 +10,15 @@ import java.util.List;
  */
 public class NewGroupRequest {
 
-    @JsonProperty("group_created_by")
-    private String groupCreatedBy;
-
     @JsonProperty("group_name")
     private String groupName;
 
     @JsonProperty("group_img_url")
     private String groupPhoto;
 
-    @JsonProperty("group_tournaments")
-    private List<Integer> followedTournaments = new ArrayList<Integer>();
-
-    @JsonProperty("group_created_by")
-    public String getGroupCreatedBy() {
-        return groupCreatedBy;
-    }
-
-    @JsonProperty("group_created_by")
-    public void setGroupCreatedBy(String groupCreatedBy) {
-        this.groupCreatedBy = groupCreatedBy;
-    }
+    // Todo remove later
+    /*@JsonProperty("group_tournaments")
+    private List<Integer> followedTournaments = new ArrayList<Integer>();*/
 
     @JsonProperty("group_name")
     public String getGroupName() {
@@ -42,7 +30,7 @@ public class NewGroupRequest {
         this.groupName = groupName;
     }
 
-    @JsonProperty("group_tournaments")
+    /*@JsonProperty("group_tournaments")
     public List<Integer> getfollowedTournaments() {
         return followedTournaments;
     }
@@ -50,7 +38,7 @@ public class NewGroupRequest {
     @JsonProperty("group_tournaments")
     public void setfollowedTournaments(List<Integer> followedTournaments) {
         this.followedTournaments = followedTournaments;
-    }
+    }*/
 
     @JsonProperty("group_img_url")
     public String getGroupPhoto() {

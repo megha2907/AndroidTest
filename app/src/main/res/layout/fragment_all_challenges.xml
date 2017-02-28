@@ -54,6 +54,39 @@
         android:layout_height="match_parent"
         android:layout_below="@id/tab_tl" />
 
+    <RelativeLayout
+        android:id="@+id/challenges_switch_view_rl"
+        android:layout_width="@dimen/dp_62"
+        android:layout_height="@dimen/dp_25"
+        android:layout_below="@+id/tab_tl"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_7"
+        android:background="@drawable/grey_border_round_btn_bg"
+        android:clickable="true">
 
+        <View
+            android:id="@+id/challenges_v_switch_seek"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:background="@drawable/toggle_btn_bg" />
+
+        <ImageView
+            android:id="@+id/challenges_swipe_view"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:padding="@dimen/dp_5"
+            android:src="@drawable/challenge_swipe_icon" />
+
+        <ImageView
+            android:id="@+id/challenges_list_view"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:layout_toRightOf="@+id/challenges_swipe_view"
+            android:padding="@dimen/dp_5"
+            android:src="@drawable/challenge_list_icon" />
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

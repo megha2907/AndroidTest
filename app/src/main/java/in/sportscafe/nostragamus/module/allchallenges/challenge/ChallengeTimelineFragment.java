@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
@@ -60,23 +61,24 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
         }
     }
 
-    public void addInitialMatches(final List<Match> matches, final String matchesLeft) {
+    public void addInitialMatches(final List<Match> matches, final String matchesLeft, final HashMap<String, Integer> powerupInfo) {
         if (null == mTimelineAdapter) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    addInitialMatches(matches, matchesLeft);
+                    addInitialMatches(matches, matchesLeft, powerupInfo);
                 }
             }, 250);
         } else {
-            refreshMatches(matches, matchesLeft);
+            refreshMatches(matches, matchesLeft, powerupInfo);
         }
     }
 
-    public void refreshMatches(List<Match> matches, String matchesLeft) {
+    public void refreshMatches(List<Match> matches, String matchesLeft, HashMap<String, Integer> powerupInfo) {
         setMatchesLeft(matchesLeft);
 
         mTimelineAdapter.clear();
+        mTimelineAdapter.setPowerupInfo(powerupInfo);
         mTimelineAdapter.addAll(matches);
 
         mRcvFeed.scrollToPosition(0);

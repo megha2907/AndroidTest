@@ -148,4 +148,9 @@
         <item name="android:textOff"></item>
     </style>
 
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/popup_slide_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_slide_out</item>
+    </style>
+
 </resources>

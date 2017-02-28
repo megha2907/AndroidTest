@@ -101,22 +101,22 @@ public interface NostragamusService {
     @PUT("v1/game/users/sports/preference")
     Call<ApiResponse> savePreference(@Body PreferenceRequest request);
 
-    @POST("v1/game/groups")
+    @POST("v2/game/groups")
     Call<NewGroupResponse> createNewGroup(@Body NewGroupRequest request);
 
-    @HTTP(method = "DELETE", path = "v1/game/groups/users", hasBody = true)
-    Call<ApiResponse> removePerson(@Body AdminRequest request);
+    @HTTP(method = "DELETE", path = "v2/game/groups/users", hasBody = true)
+    Call<ApiResponse> removePerson(@Body MembersRequest request);
 
-    @PUT("v1/game/groups/admins")
-    Call<ApiResponse> makeAdmin(@Body AdminRequest request);
+    @PUT("v2/game/groups/admins")
+    Call<ApiResponse> makeAdmin(@Body MembersRequest request);
 
     @POST("v1/game/groups/users")
     Call<JoinGroupResponse> joinGroup(@Body AddGroupRequest memberRequest);
 
-    @PUT("v1/game/groups/users")
+    @PUT("v2/game/groups/users")
     Call<ApiResponse> approveUser(@Body ApproveRequest request);
 
-    @HTTP(method = "DELETE", path = "v1/game/users/groups", hasBody = true)
+    @HTTP(method = "DELETE", path = "v2/game/users/groups", hasBody = true)
     Call<ApiResponse> leaveGroup(@Body MembersRequest request);
 
     @GET("v1/game/users/results")
@@ -126,16 +126,16 @@ public interface NostragamusService {
     Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("group_id") Integer groupId,
                                                    @Query("challenge_id") Integer challengeId);
 
-    @PUT("v1/game/groups/tournaments")
+    @PUT("v2/game/groups/tournaments")
     Call<ApiResponse> updateGroupTournament(@Body GroupTournamentUpdateRequest request);
 
-    @PUT("v1/game/groups")
+    @PUT("v2/game/groups")
     Call<ApiResponse> updateGroupName(@Body GroupNameUpdateRequest request);
 
-    @GET("v1/game/users/groups/{group_id}/info")
+    @GET("v2/game/users/groups/{group_id}/info")
     Call<GroupSummaryResponse> getGroupSummary(@Path("group_id") Integer groupId);
 
-    @GET("v1/game/users/groups")
+    @GET("v2/game/users/groups")
     Call<AllGroupsResponse> getAllGroups();
 
     @GET("v1/setting/getSettingsBody")
@@ -188,8 +188,8 @@ public interface NostragamusService {
     @PUT("/v1/game/users/acknowledgeUserPopup")
     Call<ApiResponse> getAcknowledgePopupRequest(@Query("popup_name") String popUpName);
 
-    @HTTP(method = "DELETE", path = "v1/game/groups", hasBody = true)
-    Call<ApiResponse> deleteGroup(@Body AdminRequest request);
+    @HTTP(method = "DELETE", path = "v2/game/groups", hasBody = true)
+    Call<ApiResponse> deleteGroup(@Body MembersRequest request);
 
     @GET("/v1/game/users/getCommonLeaderboards")
     Call<CompareLeaderBoardResponse> getLeaderBoardComparisonRequest(@Query("player_id") Integer playerId);

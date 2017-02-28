@@ -27,6 +27,7 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.DummyGameFragment;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.module.popups.PowerupDialogFragment;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 
@@ -177,15 +178,18 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             case R.id.powerups_iv_poll:
                 mPredictionPresenter.onClickPollPowerup();
                 break;
+            case R.id.powerups_iv_info:
+                PowerupDialogFragment fragment = new PowerupDialogFragment();
+                fragment.show(getSupportFragmentManager(), "Powerup");
+                break;
         }
     }
 
     @Override
     public void navigateToFeed() {
-        Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
     }
 
     @Override
