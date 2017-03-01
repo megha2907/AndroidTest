@@ -617,7 +617,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         Match match = getItem(0);
 
         LbLanding lbLanding = new LbLanding(
-                match.getChallengeId(),
+                match.getChallengeId(), 0, //groupid=0
                 match.getChallengeName(),
                 match.getChallengeImgUrl(),
                 LBLandingType.CHALLENGE
@@ -625,6 +625,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         Intent intent = new Intent(context, PointsActivity.class);
         intent.putExtra(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
+        intent.putExtra(BundleKeys.MATCH_ID,match.getId());
 //        intent.putExtra(BundleKeys.TOURNAMENT_ID, match.getTournamentId());
         context.startActivity(intent);
     }

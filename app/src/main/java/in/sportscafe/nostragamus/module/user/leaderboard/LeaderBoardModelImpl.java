@@ -34,7 +34,7 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
     Integer mName;
 
     private LeaderBoardModelImpl(OnLeaderBoardModelListener listener) {
-        onLeaderBoardModelListener=listener;
+        onLeaderBoardModelListener = listener;
     }
 
     public static LeaderBoardModel newInstance(OnLeaderBoardModelListener listener) {
@@ -47,7 +47,7 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
     }
 
     private void checkEmpty() {
-        if(mLeaderBoardAdapter.getItemCount() == 0) {
+        if (mLeaderBoardAdapter.getItemCount() == 0) {
             onLeaderBoardModelListener.onEmpty();
         }
     }
@@ -73,13 +73,13 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
             userLeaderBoard = mleaderBoard.getUserLeaderBoardList().get(i);
 
-                if(userId.equals(userLeaderBoard.getUserId())) {
-                    mUserPosition = i;
-                    Log.i("userpos",String.valueOf(mUserPosition));
-                    onLeaderBoardModelListener.setUserLeaderBoard(userLeaderBoard);
+            if (userId.equals(userLeaderBoard.getUserId())) {
+                mUserPosition = i;
+                Log.i("userpos", String.valueOf(mUserPosition));
+                onLeaderBoardModelListener.setUserLeaderBoard(userLeaderBoard);
 
 
-                }
+            }
             mLeaderBoardAdapter.add(userLeaderBoard);
         }
 
@@ -89,16 +89,23 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
     @Override
     public void sortAndRefreshLeaderBoard() {
 
-            if (SORT_TYPE == 0) {
-                Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
-            } else {
-                Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserAccuracyComparator);
-            }
+        if (SORT_TYPE == 0) {
+            Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
+        } else if (SORT_TYPE == 1) {
+            Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserAccuracyComparator);
+        } else if (SORT_TYPE == 2) {
+            Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserPowerUpsComparator);
+        }else if (SORT_TYPE == 3) {
+            Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserMatchPointsComparator);
+        }else {
+            Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
+        }
 
-            mLeaderBoardAdapter.clear();
-            mLeaderBoardAdapter.notifyDataSetChanged();
-            refreshUserPosition();
-            checkEmpty();
+        mLeaderBoardAdapter.clear();
+        mLeaderBoardAdapter.setPositionSelected(SORT_TYPE);
+        mLeaderBoardAdapter.notifyDataSetChanged();
+        refreshUserPosition();
+        checkEmpty();
 
     }
 

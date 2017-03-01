@@ -144,8 +144,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Integer groupId,
-                                                                 Integer challengeId) {
-        return mNostragamusService.getLeaderBoardDetail(groupId, challengeId);
+                                                                 Integer challengeId,Integer matchId) {
+        return mNostragamusService.getLeaderBoardDetail(groupId,challengeId,matchId);
     }
 
     public Call<ApiResponse> getGrpTournamentUpdateRequest(GroupTournamentUpdateRequest request) {

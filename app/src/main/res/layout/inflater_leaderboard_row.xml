@@ -82,7 +82,7 @@
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:drawableLeft="@drawable/leaderboards_accuracy_icon"
+            android:drawableLeft="@drawable/powerups_white_icon"
             android:drawablePadding="@dimen/dp_5"
             android:paddingLeft="@dimen/dp_5"
             android:text="80"
@@ -110,11 +110,11 @@
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:drawableLeft="@drawable/points_yellow_icon"
+            android:drawableLeft="@drawable/points_white_icon"
             android:drawablePadding="@dimen/dp_5"
             android:paddingLeft="@dimen/dp_5"
             android:text="930"
-            android:textColor="@color/yellowcolor"
+            android:textColor="@color/white"
             android:textSize="@dimen/dp_14"
             app:typeface="roboto_condensed" />
 
