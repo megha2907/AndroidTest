@@ -14,4 +14,6 @@ public interface PointsView extends InAppView {
     void initMyPosition(ViewPagerAdapter adapter, int selectedPosition);
 
     void setIcon(String icon);
+
+    void setMatchPoints(boolean isMatchPoints);
 }

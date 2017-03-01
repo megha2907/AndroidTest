@@ -124,7 +124,7 @@ public interface NostragamusService {
 
     @GET("v1/game/leaderboard/detail")
     Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("group_id") Integer groupId,
-                                                   @Query("challenge_id") Integer challengeId);
+                                                   @Query("challenge_id") Integer challengeId,@Query("match_id") Integer matchId);
 
     @PUT("v2/game/groups/tournaments")
     Call<ApiResponse> updateGroupTournament(@Body GroupTournamentUpdateRequest request);

@@ -257,56 +257,58 @@
                 android:layout_below="@+id/sorting_tv"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_10"
-                android:background="@drawable/round_corner_sorting_bg"
-                android:clickable="true">
+                android:clickable="false">
 
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/sort_by_accuracy_btn"
-                    android:layout_width="@dimen/dp_100"
+                    android:layout_width="@dimen/dp_110"
                     android:layout_height="@dimen/dp_32"
-                    android:drawableLeft="@drawable/leaderboards_accuracy_icon"
-                    android:background="@color/sort_unselected_color"
+                    android:drawableLeft="@drawable/accuracy_grey_icon"
+                    android:background="@drawable/sort_selection_color"
                     android:text="Accuracy"
                     app:typeface="lato_regular"
-                    android:textSize="@dimen/dp_11"
+                    android:textSize="@dimen/dp_10"
                     android:paddingLeft="@dimen/dp_8"
                     android:paddingRight="@dimen/dp_6"
+                    android:onClick="onClick"
+                    android:textColor="@color/white_60"/>
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/sort_by_total_points_btn"
+                    android:layout_width="@dimen/dp_110"
+                    android:layout_height="@dimen/dp_32"
+                    android:layout_toRightOf="@+id/sort_by_accuracy_btn"
+                    android:drawableLeft="@drawable/points_grey_icon"
+                    android:paddingLeft="@dimen/dp_18"
+                    android:paddingRight="@dimen/dp_20"
+                    android:background="@drawable/sort_selection_color"
+                    android:text="Points"
+                    app:typeface="lato_regular"
+                    android:onClick="onClick"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/dp_10"
                     android:textColor="@color/white_60"/>
 
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/sort_by_powerups_btn"
-                    android:layout_width="@dimen/dp_100"
+                    android:layout_width="@dimen/dp_110"
                     android:layout_height="@dimen/dp_32"
-                    android:layout_toRightOf="@+id/sort_by_accuracy_btn"
-                    android:drawableLeft="@drawable/leaderboards_accuracy_icon"
-                    android:background="@color/sort_unselected_color"
+                    android:layout_toRightOf="@+id/sort_by_total_points_btn"
+                    android:drawableLeft="@drawable/powerups_grey_icon"
+                    android:background="@drawable/sort_selection_color"
                     android:text="Powerups"
                     app:typeface="lato_regular"
-                    android:textSize="@dimen/dp_11"
+                    android:textSize="@dimen/dp_10"
                     android:paddingLeft="@dimen/dp_8"
                     android:paddingRight="@dimen/dp_6"
+                    android:onClick="onClick"
                     android:textColor="@color/white_60"/>
 
-                <com.jeeva.android.widgets.customfont.CustomButton
-                    android:id="@+id/sort_by_score_btn"
-                    android:layout_width="@dimen/dp_100"
-                    android:layout_height="@dimen/dp_32"
-                    android:layout_toRightOf="@+id/sort_by_powerups_btn"
-                    android:drawableLeft="@drawable/leaderboards_accuracy_icon"
-                    android:paddingLeft="@dimen/dp_18"
-                    android:paddingRight="@dimen/dp_20"
-                    android:background="@color/sort_unselected_color"
-                    android:text="Points"
-                    app:typeface="lato_regular"
-                    android:layout_gravity="center"
-                    android:textSize="@dimen/dp_11"
-                    android:textColor="@color/white_60"/>
-
-                <com.jeeva.android.widgets.customfont.CustomButton
-                    android:id="@+id/sorting_switch_seek"
-                    android:layout_width="@dimen/dp_100"
-                    android:layout_height="@dimen/dp_32"
-                    android:background="@drawable/toggle_sorting_btn_bg" />
+                <!--<com.jeeva.android.widgets.customfont.CustomButton-->
+                    <!--android:id="@+id/sorting_switch_seek"-->
+                    <!--android:layout_width="@dimen/dp_100"-->
+                    <!--android:layout_height="@dimen/dp_32"-->
+                    <!--android:background="@drawable/toggle_sorting_btn_bg" />-->
 
 
             </RelativeLayout>

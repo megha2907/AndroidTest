@@ -236,7 +236,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(BundleKeys.LB_LANDING_DATA, Parcels.wrap(new LbLanding(
-                            challenge.getChallengeId(), challenge.getName(), challenge.getImage(), LBLandingType.CHALLENGE
+                            challenge.getChallengeId(),0,challenge.getName(), challenge.getImage(), LBLandingType.CHALLENGE
                     )));
                     navigateToPointsActivity(context, bundle);
                     break;

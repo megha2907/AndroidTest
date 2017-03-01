@@ -29,10 +29,11 @@ import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity
 public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdapter.ViewHolder> {
 
     private Context mcontext;
+    private Integer mSelectedPos = 0;
 
     public LeaderBoardAdapter(Context context) {
         super(context);
-        mcontext=context;
+        mcontext = context;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
 
         holder.itemView.setTag(userLeaderBoard.getUserId());
 
-        if (null !=userLeaderBoard.getRankChange()) {
+        if (null != userLeaderBoard.getRankChange()) {
             if (userLeaderBoard.getRankChange() < 0) {
                 holder.mIvStatus.setImageResource(R.drawable.status_arrow_down);
             } else {
@@ -62,7 +63,7 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         }
 
 
-        if(null == userLeaderBoard.getRank()) {
+        if (null == userLeaderBoard.getRank()) {
             holder.mTvRank.setText("-");
         } else {
 //            String rank = AppSnippet.ordinal(userLeaderBoard.getRank());
@@ -71,27 +72,26 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
 
         holder.mTvName.setText(userLeaderBoard.getUserName());
 
-        holder.mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
+        holder.mTvTotalPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
 
-        if (userLeaderBoard.getCountPlayed()==1 || userLeaderBoard.getCountPlayed()==0) {
-            holder.mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Match");
-        }else {
-            holder.mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Matches");
+        if (userLeaderBoard.getCountPlayed() == 1 || userLeaderBoard.getCountPlayed() == 0) {
+            holder.mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed()) + " Match");
+        } else {
+            holder.mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed()) + " Matches");
         }
 
-        String imageUrl=userLeaderBoard.getUserPhoto();
+        String imageUrl = userLeaderBoard.getUserPhoto();
         holder.mIvUser.setImageUrl(
                 imageUrl
         );
 
-        if (NostragamusDataHandler.getInstance().getUserId().equals(String.valueOf(userLeaderBoard.getUserId()))){
+        if (NostragamusDataHandler.getInstance().getUserId().equals(String.valueOf(userLeaderBoard.getUserId()))) {
             holder.mLlLeaderBoards.setBackgroundColor(ContextCompat.getColor(mcontext, R.color.leaderboard_bg_color));
-        }
-        else {
+        } else {
             holder.mLlLeaderBoards.setBackgroundColor(ContextCompat.getColor(mcontext, R.color.black));
         }
 
-        if (userLeaderBoard.getRank()!=null) {
+        if (userLeaderBoard.getRank() != null) {
             if (userLeaderBoard.getRank() == 1 || userLeaderBoard.getRank() == 2 || userLeaderBoard.getRank() == 3) {
                 holder.mTvRank.setTextColor(Color.WHITE);
             } else {
@@ -99,10 +99,54 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             }
         }
 
-        if (userLeaderBoard.getAccuracy()!=null) {
-            holder.mTvAccuracy.setText(userLeaderBoard.getAccuracy()+"%");
+        if (userLeaderBoard.getAccuracy() != null) {
+            holder.mTvAccuracy.setText(userLeaderBoard.getAccuracy() + "%");
         }
 
+        //set PowerUps if Match Points is null
+        if (null == userLeaderBoard.getMatchPoints()) {
+            holder.mTvMatchPoints.setText(userLeaderBoard.getUserPowerUps().toString());
+        } else {
+            holder.mTvMatchPoints.setText(String.valueOf(userLeaderBoard.getMatchPoints()));
+            holder.mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_white_icon, 0, 0, 0);
+        }
+
+        if (mSelectedPos == 0) {
+            holder.mTvTotalPoints.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.yellowcolor));
+            holder.mTvTotalPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.points_yellow_icon, 0, 0, 0);
+        }else {
+            holder.mTvTotalPoints.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.white));
+            holder.mTvTotalPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.points_white_icon, 0, 0, 0);
+        }
+
+        if (mSelectedPos == 1) {
+            holder.mTvAccuracy.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.yellowcolor));
+            holder.mTvAccuracy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.accuracy_yellow_icon_small, 0, 0, 0);
+        }else {
+            holder.mTvAccuracy.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.white));
+            holder.mTvAccuracy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.leaderboards_accuracy_icon, 0, 0, 0);
+        }
+
+        if (mSelectedPos == 2 || mSelectedPos == 3) {
+            holder.mTvMatchPoints.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.yellowcolor));
+            if (null == userLeaderBoard.getMatchPoints()) {
+                holder.mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.powerups_yellow_icon, 0, 0, 0);
+            }else {
+                holder.mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_yellow_icon, 0, 0, 0);
+            }
+        } else {
+            holder.mTvMatchPoints.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.white));
+            if (null == userLeaderBoard.getMatchPoints()) {
+                holder.mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.powerups_white_icon, 0, 0, 0);
+            }else {
+                holder.mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_white_icon, 0, 0, 0);
+            }
+        }
+
+    }
+
+    public void setPositionSelected(Integer pos) {
+        mSelectedPos = pos;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -115,9 +159,11 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
 
         TextView mTvName;
 
-        TextView mTvPoints;
+        TextView mTvTotalPoints;
 
         TextView mTvPlayed;
+
+        TextView mTvMatchPoints;
 
         TextView mTvAccuracy;
 
@@ -132,23 +178,23 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             mTvRank = (TextView) V.findViewById(R.id.leaderboard_row_tv_rank);
             mIvUser = (RoundImage) V.findViewById(R.id.leaderboard_row_iv_user_img);
             mTvName = (TextView) V.findViewById(R.id.leaderboard_row_tv_user_name);
-            mTvPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_points);
-            mTvPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_points);
-            mTvPlayed= (TextView) V.findViewById(R.id.leaderboard_row_tv_played);
-            mLlLeaderBoards=(LinearLayout)V.findViewById(R.id.leaderboard_ll);
+            mTvTotalPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_points);
+            mTvMatchPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_match_points);
+            mTvPlayed = (TextView) V.findViewById(R.id.leaderboard_row_tv_played);
+            mLlLeaderBoards = (LinearLayout) V.findViewById(R.id.leaderboard_ll);
             mViewUserLine = (View) V.findViewById(R.id.leaderboard_row_view_user);
-            mTvAccuracy = (TextView)V.findViewById(R.id.leaderboard_row_tv_accuracy);
+            mTvAccuracy = (TextView) V.findViewById(R.id.leaderboard_row_tv_accuracy);
 
             V.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    Log.i("playerid",getItem(getAdapterPosition()).getUserId().toString());
+                    Log.i("playerid", getItem(getAdapterPosition()).getUserId().toString());
                     Integer playerId = getItem(getAdapterPosition()).getUserId();
 
                     Bundle mBundle = new Bundle();
-                    mBundle.putInt(Constants.BundleKeys.PLAYER_ID,playerId);
-                    Intent mintent2 =  new Intent(view.getContext(), PlayerProfileActivity.class);
+                    mBundle.putInt(Constants.BundleKeys.PLAYER_ID, playerId);
+                    Intent mintent2 = new Intent(view.getContext(), PlayerProfileActivity.class);
                     mintent2.putExtras(mBundle);
                     view.getContext().startActivity(mintent2);
 

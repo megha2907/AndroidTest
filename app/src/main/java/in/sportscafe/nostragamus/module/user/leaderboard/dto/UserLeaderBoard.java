@@ -36,6 +36,12 @@ public class UserLeaderBoard {
     @JsonProperty("total_points")
     private Long points;
 
+    @JsonProperty("this_match_points")
+    private Long matchPoints;
+
+    @JsonProperty("count_powerups")
+    private Integer userPowerUps;
+
     /**
      * @return The userId
      */
@@ -136,6 +142,27 @@ public class UserLeaderBoard {
         this.accuracy = accuracy;
     }
 
+    @JsonProperty("this_match_points")
+    public Long getMatchPoints() {
+        return matchPoints;
+    }
+
+    @JsonProperty("this_match_points")
+    public void setMatchPoints(Long matchPoints) {
+        this.matchPoints = matchPoints;
+    }
+
+    @JsonProperty("count_powerups")
+    public Integer getUserPowerUps() {
+        return userPowerUps;
+    }
+
+    @JsonProperty("count_powerups")
+    public void setUserPowerUps(Integer userPowerUps) {
+        this.userPowerUps = userPowerUps;
+    }
+
+
     /*Comparator for sorting the list by User Accuracy*/
     public static Comparator<UserLeaderBoard> UserAccuracyComparator = new Comparator<UserLeaderBoard>() {
 
@@ -157,6 +184,46 @@ public class UserLeaderBoard {
                 return -1;
             }
             return lhs.rank - rhs.rank;
+        }
+    };
+
+
+    /*Comparator for sorting the list by Total Points*/
+    public static Comparator<UserLeaderBoard> UserTotalPointsComparator = new Comparator<UserLeaderBoard>() {
+
+        public int compare(UserLeaderBoard lhs, UserLeaderBoard rhs) {
+
+            //descending order
+            if (null == lhs.points || null == rhs.points) {
+                return -1;
+            }
+            return (int) (rhs.points - lhs.points);
+        }
+    };
+
+    /*Comparator for sorting the list by Match Points*/
+    public static Comparator<UserLeaderBoard> UserMatchPointsComparator = new Comparator<UserLeaderBoard>() {
+
+        public int compare(UserLeaderBoard lhs, UserLeaderBoard rhs) {
+
+            //descending order
+            if (null == lhs.matchPoints || null == rhs.matchPoints) {
+                return -1;
+            }
+            return (int) (rhs.matchPoints - lhs.matchPoints);
+        }
+    };
+
+    /*Comparator for sorting the list by Powerups*/
+    public static Comparator<UserLeaderBoard> UserPowerUpsComparator = new Comparator<UserLeaderBoard>() {
+
+        public int compare(UserLeaderBoard lhs, UserLeaderBoard rhs) {
+
+            //descending order
+            if (null == lhs.userPowerUps || null == rhs.userPowerUps) {
+                return -1;
+            }
+            return rhs.userPowerUps - lhs.userPowerUps;
         }
     };
 }

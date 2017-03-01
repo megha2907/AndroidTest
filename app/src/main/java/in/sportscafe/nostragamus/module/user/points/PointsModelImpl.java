@@ -9,6 +9,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
@@ -37,6 +38,8 @@ public class PointsModelImpl implements PointsModel {
 
     private Integer mTourId;
 
+    private Integer mMatchId;
+
     private LbLanding mLbLanding;
 
     private OnPointsModelListener mPointsModelListener;
@@ -46,6 +49,8 @@ public class PointsModelImpl implements PointsModel {
     private int mSelectedPosition = 0;
 
     private List<LeaderBoard> mleaderBoardList;
+
+    private boolean isMatchPoints = false;
 
 
     private PointsModelImpl(OnPointsModelListener listener, FragmentManager fm) {
@@ -61,6 +66,12 @@ public class PointsModelImpl implements PointsModel {
     public void init(Bundle bundle) {
         if (bundle.containsKey(BundleKeys.TOURNAMENT_ID)) {
             mTourId = bundle.getInt(BundleKeys.TOURNAMENT_ID);
+        }
+
+        if (bundle.containsKey(BundleKeys.MATCH_ID)){
+            mMatchId = bundle.getInt(BundleKeys.MATCH_ID);
+        }else{
+            mMatchId = null;
         }
 
         mLbLanding = Parcels.unwrap(bundle.getParcelable(BundleKeys.LB_LANDING_DATA));
@@ -102,7 +113,7 @@ public class PointsModelImpl implements PointsModel {
 
 
     private void callLbDetailApi() {
-        MyWebService.getInstance().getLeaderBoardDetailRequest(mGroupId, mChallengeId)
+        MyWebService.getInstance().getLeaderBoardDetailRequest(mGroupId,mChallengeId,mMatchId)
                 .enqueue(new NostragamusCallBack<LeaderBoardResponse>() {
                     @Override
                     public void onResponse(Call<LeaderBoardResponse> call, Response<LeaderBoardResponse> response) {
@@ -113,6 +124,11 @@ public class PointsModelImpl implements PointsModel {
                             if (null == leaderBoardList || leaderBoardList.isEmpty()) {
                                 mPointsModelListener.onEmpty();
                                 return;
+                            }
+
+                            if (leaderBoardList.get(0).getUserLeaderBoardList().get(0).getMatchPoints() != null){
+                                isMatchPoints = true;
+                                mPointsModelListener.setIsMatchPoints(isMatchPoints);
                             }
 
                             mleaderBoardList = leaderBoardList;
@@ -151,13 +167,10 @@ public class PointsModelImpl implements PointsModel {
             //for challenges change tab to overall
             //if challnegedid=0
             if (mChallengeId == 0) {
-                Log.i("inside","challenge");
                 mSelectedPosition = 0;
             } else if (mGroupId == 0) {
-                Log.i("inside","groupid");
                 mSelectedPosition = 0;
             } else if (mGroupId.equals(leaderBoard.getGroupId())){
-                   Log.i("inside","mGroupId.equals");
                     mSelectedPosition = i;
             }
 
@@ -189,5 +202,7 @@ public class PointsModelImpl implements PointsModel {
         void onEmpty();
 
         void onNoInternet();
+
+        void setIsMatchPoints(boolean isMatchPoints);
     }
 }
