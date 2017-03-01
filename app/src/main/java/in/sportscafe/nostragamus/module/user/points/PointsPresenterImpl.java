@@ -49,6 +49,11 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     }
 
     @Override
+    public void setIsMatchPoints(boolean isMatchPoints) {
+       mPointsView.setMatchPoints(isMatchPoints);
+    }
+
+    @Override
     public void onFailureLeaderBoard(String message) {
         showAlertMsg(message);
     }

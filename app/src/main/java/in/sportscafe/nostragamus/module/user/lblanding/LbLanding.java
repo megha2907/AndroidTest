@@ -48,8 +48,9 @@ public class LbLanding {
         this.type = type;
     }
 
-    public LbLanding(Integer id, String name, String imgUrl, String type) {
-        this.id = id;
+    public LbLanding(Integer challengeId,Integer groupId, String name, String imgUrl, String type) {
+        this.challengeId = challengeId;
+        this.groupId = groupId;
         this.name = name;
         this.imgUrl = imgUrl;
         this.type = type;
