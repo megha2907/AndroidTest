@@ -316,7 +316,7 @@
                 android:layout_toRightOf="@id/prediction_ll_powerup_layout"
                 android:onClick="onClick"
                 android:padding="@dimen/dp_8"
-                android:src="@drawable/powerup_audience_poll_white" />
+                android:src="@drawable/powerup_info_icon" />
 
             <LinearLayout
                 android:id="@+id/prediction_ll_neither"

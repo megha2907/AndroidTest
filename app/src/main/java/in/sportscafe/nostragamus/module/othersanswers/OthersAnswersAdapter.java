@@ -214,7 +214,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         TextView mTvHighestMatchPoints;
         TextView mTvLeaderBoardRank;
         TextView mTvNumberofPowerupsUsed;
-        ShadowLayout mSlLeaderBoard;
+        RelativeLayout mSlLeaderBoard;
 
 
         public MyResultViewHolder(View V) {
@@ -238,7 +238,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             mTvHighestMatchPoints = (TextView) V.findViewById(R.id.schedule_row_tv_highest_score);
             mTvLeaderBoardRank = (TextView) V.findViewById(R.id.schedule_row_tv_leaderboard_rank);
             mTvNumberofPowerupsUsed= (TextView) V.findViewById(R.id.schedule_row_tv_no_of_powerups_used);
-            mSlLeaderBoard = (ShadowLayout) V.findViewById(R.id.schedule_row_sl_leaderboard);
+            mSlLeaderBoard = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_leaderboard);
             mRlAvgMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
             mRlHighestMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mRlMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_my_score);

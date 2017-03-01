@@ -13,9 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 
 import com.jeeva.android.Log;
 
@@ -24,10 +21,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.utils.ViewUtils;
-
-import static android.R.attr.fragment;
-import static android.R.attr.rotation;
-import static com.google.android.gms.analytics.internal.zzy.w;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -90,22 +83,6 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
                     myResultsTimelinePresenter.onTimelineScroll(mLinearLayoutManager.findFirstVisibleItemPosition(),
                             mLinearLayoutManager.getChildCount(), mLinearLayoutManager.getItemCount());
                 }
-
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                    switch (newState) {
-                        case RecyclerView.SCROLL_STATE_IDLE:
-                            Log.d("TimelineFragment", "The RecyclerView is not scrolling");
-                            break;
-                        case RecyclerView.SCROLL_STATE_DRAGGING:
-                            Log.d("TimelineFragment", "Scrolling now");
-                            break;
-                        case RecyclerView.SCROLL_STATE_SETTLING:
-                            Log.d("TimelineFragment", "Scroll Settling");
-                            break;
-                    }
-                }
             });
 
             this.mRcvFeed.setHasFixedSize(true);
@@ -123,17 +100,19 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
                 @Override
                 public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 
-                    View child = null;
-                    int[] location = new int[2];
-                    int yAxis;
-                    int childCount = parent.getChildCount();
-                    for (int i = 0; i < childCount; i++) {
-                        child = parent.getChildAt(i).findViewById(R.id.schedule_row_ll);
+                    if(mAppbarExpanded) {
+                        View child = null;
+                        int[] location = new int[2];
+                        int yAxis;
+                        int childCount = parent.getChildCount();
+                        for (int i = 0; i < childCount; i++) {
+                            child = parent.getChildAt(i).findViewById(R.id.schedule_row_ll);
 
-                        if (child.getVisibility() == View.VISIBLE) {
-                            child.setPivotY(child.getMeasuredHeight());
-                            child.getLocationOnScreen(location);
-                            child.setRotationX(getRotationByY(location[1]));
+                            if (child.getVisibility() == View.VISIBLE) {
+                                child.setPivotY(child.getMeasuredHeight());
+                                child.getLocationOnScreen(location);
+                                child.setRotationX(getRotationByY(location[1]));
+                            }
                         }
                     }
                     super.onDraw(c, parent, state);
@@ -179,5 +158,11 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
         if(null != myResultsTimelinePresenter) {
             myResultsTimelinePresenter.onDestroy();
         }
+    }
+
+    private boolean mAppbarExpanded = false;
+
+    public void setAppbarExpanded(boolean expanded) {
+        mAppbarExpanded = expanded;
     }
 }

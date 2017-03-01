@@ -9,7 +9,6 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jeeva.android.R;
 
 public class ShadowLayout extends FrameLayout {
