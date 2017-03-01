@@ -77,6 +77,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     private long mAnswerLockedTimeInMs;
 
+    private int mChallengeId;
+
     public PredictionModelImpl(OnPredictionModelListener predictionModelListener) {
         this.mPredictionModelListener = predictionModelListener;
         this.mNostragamusDataHandler = NostragamusDataHandler.getInstance();
@@ -114,6 +116,10 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 if(powerUpMap.containsKey(Powerups.AUDIENCE_POLL)) {
                     mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
                 }
+            }
+
+            if(bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
+                mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
             }
 
             NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.STARTED);
@@ -437,6 +443,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 mPredictionModelListener.onApiCallStarted();
                 AudiencePollRequest audiencePollRequest = new AudiencePollRequest();
                 audiencePollRequest.setQuestionId(mPredictionAdapter.getTopQuestion().getQuestionId());
+                audiencePollRequest.setChallengeId(mChallengeId);
 
                 callAudiencePollApi(audiencePollRequest);
             } else {
@@ -507,7 +514,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             mPredictionModelListener.onApiCallStarted();
 
             question.setAnswerId(answerId);
-            mPostAnswerModel.postAnswer(question, mPredictionAdapter.getCount() == 0);
+            mPostAnswerModel.postAnswer(question, mChallengeId, mPredictionAdapter.getCount() == 0);
         }
     }
 
