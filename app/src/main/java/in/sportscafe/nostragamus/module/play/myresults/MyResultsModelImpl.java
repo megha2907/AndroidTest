@@ -218,6 +218,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         LinkProperties linkProperties = new LinkProperties()
                 .addTag("myResult")
                 .setFeature("myResult")
+                .setChannel("App")
                 .addControlParameter("$android_deeplink_path", "myResult/share/");
 
         buo.generateShortUrl(mResultsModelListener.getContext(), linkProperties,

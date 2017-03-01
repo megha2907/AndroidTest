@@ -9,6 +9,7 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.bank.BankFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
@@ -52,15 +53,16 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fm);
 
         UserInfo userInfo = getUserInfo();
-        pagerAdapter.addFragment(TimelineFragment.newInstance(), AppSnippet.formatIfPlural(userInfo.getTotalMatchesPlayed(), "Match", "es"));
+        pagerAdapter.addFragment(TimelineFragment.newInstance(), "Matches");
+
+        HashMap<String, PowerUp> powerUpMaps = getPowerUpList(userInfo.getPowerUps());
+//        pagerAdapter.addFragment(PowerUpFragment.newInstance(powerUpList), AppSnippet.formatIfPlural(getPowerUpTotalCount(powerUpList), "Powerup", "s"));
+        pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Bank");
 
         List<Badge> badgeList = userInfo.getBadges();
-        pagerAdapter.addFragment(BadgeFragment.newInstance(badgeList), AppSnippet.formatIfPlural(badgeList.size(), "Achievement", "s"));
+        pagerAdapter.addFragment(BadgeFragment.newInstance(badgeList), "Achievements");
 
-        List<PowerUp> powerUpList = getPowerUpList(userInfo.getPowerUps());
-        pagerAdapter.addFragment(PowerUpFragment.newInstance(powerUpList), AppSnippet.formatIfPlural(getPowerUpTotalCount(powerUpList), "Powerup", "s"));
-
-        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), getSportsTabTitle());
+        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), "Sports");
 
         return pagerAdapter;
     }
@@ -70,12 +72,12 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         return AppSnippet.formatIfPlural(NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size(), "Sport", "s");
     }
 
-    private List<PowerUp> getPowerUpList(HashMap<String, Integer> powerUps) {
-        List<PowerUp> powerUpList = new ArrayList<>();
+    private HashMap<String, PowerUp> getPowerUpList(HashMap<String, Integer> powerUps) {
+        HashMap<String, PowerUp> powerUpMaps = new HashMap<>();
         for (Map.Entry<String, Integer> entry : powerUps.entrySet()) {
-            powerUpList.add(new PowerUp(entry.getKey(), entry.getValue()));
+            powerUpMaps.put(entry.getKey(), new PowerUp(entry.getKey(), entry.getValue()));
         }
-        return powerUpList;
+        return powerUpMaps;
     }
 
     private int getPowerUpTotalCount(List<PowerUp> powerUpList) {

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cod_gray_1e">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/bank_rl_powerup_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_38"
+                    android:background="@drawable/powerup_half_circle_bg"
+                    android:rotation="180" />
+
+                <com.jeeva.android.widgets.ShadowLayout
+                    android:id="@+id/powerup_sl_nonegs"
+                    android:layout_width="@dimen/dp_46"
+                    android:layout_height="@dimen/dp_46"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/dp_40"
+                    android:layout_marginRight="@dimen/dp_40"
+                    android:layout_marginTop="@dimen/dp_16"
+                    app:sl_cornerRadius="@dimen/dp_23"
+                    app:sl_fillColor="@color/amaranth"
+                    app:sl_shadowRadius="@dimen/dp_0">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/powerup_nonegs_white" />
+
+                </com.jeeva.android.widgets.ShadowLayout>
+
+                <com.jeeva.android.widgets.ShadowLayout
+                    android:id="@+id/powerup_sl_2x"
+                    android:layout_width="@dimen/dp_46"
+                    android:layout_height="@dimen/dp_46"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_toLeftOf="@+id/powerup_sl_nonegs"
+                    app:sl_cornerRadius="@dimen/dp_23"
+                    app:sl_fillColor="@color/dodger_blue"
+                    app:sl_shadowRadius="@dimen/dp_0">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/powerup_2x_white" />
+
+                </com.jeeva.android.widgets.ShadowLayout>
+
+                <com.jeeva.android.widgets.ShadowLayout
+                    android:id="@+id/powerup_sl_poll"
+                    android:layout_width="@dimen/dp_46"
+                    android:layout_height="@dimen/dp_46"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_toRightOf="@+id/powerup_sl_nonegs"
+                    app:sl_cornerRadius="@dimen/dp_23"
+                    app:sl_fillColor="@color/greencolor"
+                    app:sl_shadowRadius="@dimen/dp_0">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/powerup_audience_poll_white" />
+
+                </com.jeeva.android.widgets.ShadowLayout>
+
+                <LinearLayout
+                    android:id="@+id/bank_ll_nonegs_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/powerup_sl_nonegs"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:text="No Negative"
+                        android:textColor="@color/white_60"
+                        android:textSize="@dimen/dp_12"
+                        app:typeface="lato_light" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/bank_tv_nonegs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:background="@drawable/bank_powerup_count_bg_enabled"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/dp_2"
+                        android:paddingLeft="@dimen/dp_12"
+                        android:paddingRight="@dimen/dp_12"
+                        android:paddingTop="@dimen/dp_2"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_14"
+                        app:typeface="lato_light" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bank_ll_2x_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/powerup_sl_2x"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_toLeftOf="@+id/bank_ll_nonegs_count"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:text="Bonus Points"
+                        android:textColor="@color/white_60"
+                        android:textSize="@dimen/dp_12"
+                        app:typeface="lato_light" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/bank_tv_2x"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:background="@drawable/bank_powerup_count_bg_enabled"
+                        android:paddingBottom="@dimen/dp_2"
+                        android:paddingLeft="@dimen/dp_12"
+                        android:paddingRight="@dimen/dp_12"
+                        android:paddingTop="@dimen/dp_2"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_14"
+                        app:typeface="lato_light" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bank_ll_poll_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/powerup_sl_poll"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_toRightOf="@id/bank_ll_nonegs_count"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:text="Audience Poll"
+                        android:textColor="@color/white_60"
+                        android:textSize="@dimen/dp_12"
+                        app:typeface="lato_light" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/bank_tv_poll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:background="@drawable/bank_powerup_count_bg_enabled"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/dp_2"
+                        android:paddingLeft="@dimen/dp_12"
+                        android:paddingRight="@dimen/dp_12"
+                        android:paddingTop="@dimen/dp_2"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_14"
+                        app:typeface="lato_light" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/bank_tv_label_running_low"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_10"
+                android:alpha="0.8"
+                android:background="@color/cod_gray_1e"
+                android:gravity="center"
+                android:text="@string/powerup_bank_running_low"
+                android:textColor="@color/radical_red"
+                android:textSize="@dimen/dp_14"
+                android:visibility="gone"
+                app:typeface="lato_light" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/bank_tv_label_benefit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
+                android:text="@string/powerup_bank_refer_benefit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_light" />
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/bank_btn_refer_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/refer_friend_bg"
+                android:paddingBottom="@dimen/dp_2"
+                android:paddingLeft="@dimen/dp_30"
+                android:paddingRight="@dimen/dp_30"
+                android:text="Refer and Earn!"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_13"
+                app:typeface="lato_bold" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_24"
+                android:gravity="center"
+                android:text="@string/powerup_bank_add_info"
+                android:textColor="@color/white_50"
+                android:textSize="@dimen/dp_12"
+                app:typeface="lato_regular" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

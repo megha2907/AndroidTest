@@ -47,11 +47,12 @@ public class AllGroupsAdapter extends Adapter<AllGroups, AllGroupsAdapter.ViewHo
         holder.mTvGroupName.setText(allGroups.getGroupName());
         holder.mIvGroupImage.setImageUrl(allGroups.getGroupPhoto());
 
-        int tourCount = allGroups.getTournamentsCount();
-        holder.mTvGroupTournaments.setText(tourCount + " Tournament" + (tourCount > 1 ? "s" : ""));
+        // TODO remove it later
+        /*int tourCount = allGroups.getTournamentsCount();
+        holder.mTvGroupTournaments.setText(tourCount + " Tournament" + (tourCount > 1 ? "s" : ""));*/
 
-        tourCount = allGroups.getCountGroupMembers();
-        holder.mTvGroupMembers.setText(tourCount + " Member" + (tourCount > 1 ? "s" : ""));
+        int memberSize = allGroups.getCountGroupMembers();
+        holder.mTvGroupMembers.setText(memberSize + " Member" + (memberSize > 1 ? "s" : ""));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

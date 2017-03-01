@@ -58,6 +58,7 @@ public class ReferralActivity extends AppCompatActivity implements
         LinkProperties linkProperties = new LinkProperties()
                 .addTag("inviteApp")
                 .setFeature("inviteApp")
+                .setChannel("App")
                 .addControlParameter("$android_deeplink_path", "app/invite/");
 
         buo.generateShortUrl(this, linkProperties,
