@@ -2,34 +2,29 @@ package in.sportscafe.nostragamus.module.user.myprofile;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.widgets.HmImageView;
-
-import java.util.List;
-
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.animator.AppBarStateChangeListener;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.settings.SettingActivity;
-import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
@@ -55,17 +50,32 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         super.onActivityCreated(savedInstanceState);
 
         if (null == savedInstanceState) {
-            setClickListeners();
+            initListeners();
 
             this.mProfilePresenter = ProfilePresenterImpl.newInstance(this);
             this.mProfilePresenter.onCreateProfile();
         }
     }
 
+    private TimelineFragment mTimelineFragment;
 
-    private void setClickListeners() {
+    private void initListeners() {
         findViewById(R.id.profile_btn_settings).setOnClickListener(this);
         findViewById(R.id.profile_iv_image).setOnClickListener(this);
+
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.htab_appbar);
+        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                if(null != mTimelineFragment) {
+                    if (state == State.EXPANDED) {
+                        mTimelineFragment.setAppbarExpanded(false);
+                    } else {
+                        mTimelineFragment.setAppbarExpanded(true);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -142,6 +152,8 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         drawable.setSize(1, 1);
         linearLayout.setDividerPadding(10);
         linearLayout.setDividerDrawable(drawable);
+
+        mTimelineFragment = (TimelineFragment) mPagerAdapter.getItem(0);
     }
 
     @Override

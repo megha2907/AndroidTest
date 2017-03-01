@@ -16,11 +16,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.HashMap;
-import java.util.List;
 
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.ChallengesTimelineAdapter;
 
 /**
@@ -61,25 +60,32 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
         }
     }
 
-    public void addInitialMatches(final List<Match> matches, final String matchesLeft, final HashMap<String, Integer> powerupInfo) {
+    public void addInitialMatches(final Challenge challenge) {
         if (null == mTimelineAdapter) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    addInitialMatches(matches, matchesLeft, powerupInfo);
+                    addInitialMatches(challenge);
                 }
             }, 250);
         } else {
-            refreshMatches(matches, matchesLeft, powerupInfo);
+            refreshChallengeMatches(challenge);
         }
     }
 
-    public void refreshMatches(List<Match> matches, String matchesLeft, HashMap<String, Integer> powerupInfo) {
-        setMatchesLeft(matchesLeft);
-
+    public void refreshChallengeMatches(Challenge challenge) {
         mTimelineAdapter.clear();
-        mTimelineAdapter.setPowerupInfo(powerupInfo);
-        mTimelineAdapter.addAll(matches);
+        setMatchesLeft(challenge.getCountMatchesLeft());
+
+        HashMap<String, Integer> powerupInfo = null;
+        try {
+            powerupInfo = challenge.getChallengeUserInfo().getPowerUps();
+        } catch (Exception e) {
+        }
+
+        mTimelineAdapter.updateChallengeInfo(powerupInfo, challenge.getChallengeId());
+
+        mTimelineAdapter.addAll(challenge.getMatches());
 
         mRcvFeed.scrollToPosition(0);
     }

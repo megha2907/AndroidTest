@@ -11,6 +11,9 @@ public class AudiencePollRequest {
     @JsonProperty("question_id")
     private Integer questionId;
 
+    @JsonProperty("challenge_id")
+    private int challengeId;
+
     @JsonProperty("question_id")
     public Integer getQuestionId() {
         return questionId;
@@ -19,5 +22,15 @@ public class AudiencePollRequest {
     @JsonProperty("question_id")
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
+    }
+
+    @JsonProperty("challenge_id")
+    public int getChallengeId() {
+        return challengeId;
+    }
+
+    @JsonProperty("challenge_id")
+    public void setChallengeId(int challengeId) {
+        this.challengeId = challengeId;
     }
 }

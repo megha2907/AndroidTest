@@ -1,12 +1,7 @@
 package in.sportscafe.nostragamus.module.allchallenges.challenge;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,7 +23,6 @@ import org.parceler.Parcels;
 import java.util.HashMap;
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
@@ -111,27 +105,11 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
         tvChallengeTotalCount.setText("/ " + String.valueOf(adapter.getItemCount()));
 
-        Challenge currentChallenge = getCurrentChallenge();
-
-        HashMap<String, Integer> powerupInfo = null;
-        try {
-            powerupInfo = currentChallenge.getChallengeUserInfo().getPowerUps();
-        } catch (Exception e) {
-        }
-
-        mTimelineFragment.addInitialMatches(currentChallenge.getMatches(), currentChallenge.getCountMatchesLeft(), powerupInfo);
+        mTimelineFragment.addInitialMatches(getCurrentChallenge());
     }
 
     private void updateMatchesToCurrentPosition() {
-        Challenge currentChallenge = getCurrentChallenge();
-
-        HashMap<String, Integer> powerupInfo = null;
-        try {
-            powerupInfo = currentChallenge.getChallengeUserInfo().getPowerUps();
-        } catch (Exception e) {
-        }
-
-        mTimelineFragment.refreshMatches(currentChallenge.getMatches(), currentChallenge.getCountMatchesLeft(), powerupInfo);
+        mTimelineFragment.refreshChallengeMatches(getCurrentChallenge());
     }
 
     private Challenge getCurrentChallenge() {

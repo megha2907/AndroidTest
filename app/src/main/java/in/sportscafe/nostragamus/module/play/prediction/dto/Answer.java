@@ -22,16 +22,19 @@ public class Answer {
     @JsonProperty("powerup_id")
     private String powerUpId;
 
+    @JsonProperty("challenge_id")
+    private int challengeId;
 
     public Answer() {
     }
 
-    public Answer(Integer matchId, Integer questionId, Integer answerId, String answerTime, String powerUpId) {
+    public Answer(Integer matchId, Integer questionId, Integer answerId, String answerTime, String powerUpId, int challengeId) {
         this.matchId = matchId;
         this.questionId = questionId;
         this.answerId = answerId;
         this.answerTime = answerTime;
         this.powerUpId = powerUpId;
+        this.challengeId = challengeId;
     }
 
 
@@ -84,5 +87,15 @@ public class Answer {
     @JsonProperty("powerup_id")
     public void setPowerUpId(String powerUpId) {
         this.powerUpId = powerUpId;
+    }
+
+    @JsonProperty("challenge_id")
+    public int getChallengeId() {
+        return challengeId;
+    }
+
+    @JsonProperty("challenge_id")
+    public void setChallengeId(int challengeId) {
+        this.challengeId = challengeId;
     }
 }

@@ -32,14 +32,15 @@ public class PostAnswerModelImpl {
         return new PostAnswerModelImpl(listener);
     }
 
-    public void postAnswer(Question question, boolean matchComplete) {
+    public void postAnswer(Question question, int challengeId, boolean matchComplete) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             Answer answer = new Answer(
                     question.getMatchId(),
                     question.getQuestionId(),
                     question.getAnswerId(),
                     TimeUtils.getCurrentTime(DateFormats.FORMAT_DATE_T_TIME_ZONE, DateFormats.GMT),
-                    question.getPowerUpId()
+                    question.getPowerUpId(),
+                    challengeId
             );
             callPostAnswerApi(answer, question.isMinorityAnswer(), matchComplete);
         } else {
