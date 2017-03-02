@@ -318,6 +318,17 @@
                 android:padding="@dimen/dp_8"
                 android:src="@drawable/powerup_info_icon" />
 
+            <ImageView
+                android:id="@+id/powerups_iv_bank"
+                android:layout_width="@dimen/dp_46"
+                android:layout_height="@dimen/dp_46"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_4"
+                android:layout_toLeftOf="@id/prediction_ll_powerup_layout"
+                android:onClick="onClick"
+                android:padding="@dimen/dp_8"
+                android:src="@drawable/bank_transfer_info_icon" />
+
             <LinearLayout
                 android:id="@+id/prediction_ll_neither"
                 android:layout_width="wrap_content"

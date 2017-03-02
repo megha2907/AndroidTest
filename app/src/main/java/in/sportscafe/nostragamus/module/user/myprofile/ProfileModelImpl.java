@@ -2,7 +2,6 @@ package in.sportscafe.nostragamus.module.user.myprofile;
 
 import android.support.v4.app.FragmentManager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +16,7 @@ import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUpFragment;
 import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
-
-import static com.google.android.gms.analytics.internal.zzy.f;
 
 /**
  * Created by Jeeva on 14/6/16.
@@ -55,7 +51,7 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         UserInfo userInfo = getUserInfo();
         pagerAdapter.addFragment(TimelineFragment.newInstance(), "Matches");
 
-        HashMap<String, PowerUp> powerUpMaps = getPowerUpList(userInfo.getPowerUps());
+        HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());
 //        pagerAdapter.addFragment(PowerUpFragment.newInstance(powerUpList), AppSnippet.formatIfPlural(getPowerUpTotalCount(powerUpList), "Powerup", "s"));
         pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Powerup Bank");
 
@@ -72,7 +68,7 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         return AppSnippet.formatIfPlural(NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size(), "Sport", "s");
     }
 
-    private HashMap<String, PowerUp> getPowerUpList(HashMap<String, Integer> powerUps) {
+    private HashMap<String, PowerUp> getPowerUpMap(HashMap<String, Integer> powerUps) {
         HashMap<String, PowerUp> powerUpMaps = new HashMap<>();
         for (Map.Entry<String, Integer> entry : powerUps.entrySet()) {
             powerUpMaps.put(entry.getKey(), new PowerUp(entry.getKey(), entry.getValue()));

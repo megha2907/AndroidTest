@@ -31,4 +31,8 @@ public interface PredictionPresenter {
     void onClickBack();
 
     void onClickSkip();
+
+    void onClickBankTransfer();
+
+    void onPowerUpUpdated(Bundle bundle);
 }

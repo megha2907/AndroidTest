@@ -18,6 +18,8 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
+import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferRequest;
+import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
@@ -251,5 +253,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<AllChallengesResponse> getAllChallengesRequest() {
         return mNostragamusService.getAllChallenges();
+    }
+
+    public Call<BankTransferResponse> getBankTransferRequest(BankTransferRequest request) {
+        return mNostragamusService.bankTransfer(request);
     }
 }
