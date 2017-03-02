@@ -23,7 +23,6 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
@@ -42,6 +41,8 @@ import static in.sportscafe.nostragamus.Constants.BundleKeys;
  * Created by Jeeva on 20/5/16.
  */
 public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterView.OnSwipeListener<Question> {
+
+    private static final int BANK_TRANSFER_MAX_COUNT = 2;
 
     private final NostragamusDataHandler mNostragamusDataHandler;
 
@@ -77,7 +78,11 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     private long mAnswerLockedTimeInMs;
 
+    private String mChallengeName;
+
     private int mChallengeId;
+
+    private boolean mPowerUpUpdated = false;
 
     public PredictionModelImpl(OnPredictionModelListener predictionModelListener) {
         this.mPredictionModelListener = predictionModelListener;
@@ -120,6 +125,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
             if(bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
                 mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+                mChallengeName = bundle.getString(BundleKeys.CHALLENGE_NAME);
             }
 
             NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.STARTED);
@@ -323,7 +329,50 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     @Override
     public boolean isAnyQuestionAnswered() {
-        return null != mPredictionAdapter && mInitialCount != mPredictionAdapter.getCount();
+        return null != mPredictionAdapter
+                && (mInitialCount != mPredictionAdapter.getCount() || mPowerUpUpdated);
+    }
+
+    @Override
+    public String getChallengeName() {
+        return mChallengeName;
+    }
+
+    @Override
+    public int getChallengeId() {
+        return mChallengeId;
+    }
+
+    @Override
+    public int getMaxTransferCount() {
+        return BANK_TRANSFER_MAX_COUNT;
+    }
+
+    @Override
+    public HashMap<String, Integer> getPowerUpBank() {
+        return NostragamusDataHandler.getInstance().getUserInfo().getPowerUps();
+    }
+
+    @Override
+    public void updatePowerUpValues(Bundle bundle) {
+        if (bundle.containsKey(BundleKeys.UPDATED_POWERUPS)) {
+            HashMap<String, Integer> powerUpMap = Parcels.unwrap(bundle.getParcelable(BundleKeys.UPDATED_POWERUPS));
+
+            m2xGlobalPowerups = NostragamusDataHandler.getInstance().get2xGlobalPowerupsCount();
+            if(powerUpMap.containsKey(Powerups.XX)) {
+                m2xPowerups = powerUpMap.get(Powerups.XX);
+            }
+
+            if(powerUpMap.containsKey(Powerups.NO_NEGATIVE)) {
+                mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
+            }
+
+            if(powerUpMap.containsKey(Powerups.AUDIENCE_POLL)) {
+                mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
+            }
+
+            mPowerUpUpdated = true;
+        }
     }
 
     @Override

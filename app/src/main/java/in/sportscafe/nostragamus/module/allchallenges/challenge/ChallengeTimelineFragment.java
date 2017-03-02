@@ -83,7 +83,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
         } catch (Exception e) {
         }
 
-        mTimelineAdapter.updateChallengeInfo(powerupInfo, challenge.getChallengeId());
+        mTimelineAdapter.updateChallengeInfo(powerupInfo, challenge.getName(), challenge.getChallengeId());
 
         mTimelineAdapter.addAll(challenge.getMatches());
 

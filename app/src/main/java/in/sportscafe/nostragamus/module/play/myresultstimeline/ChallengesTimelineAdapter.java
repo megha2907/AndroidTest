@@ -51,14 +51,17 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
     private HashMap<String, Integer> mPowerupInfo;
 
+    private String mChallengeName;
+
     private int mChallengeId;
 
     public ChallengesTimelineAdapter(Context context) {
         super(context);
     }
 
-    public void updateChallengeInfo(HashMap<String, Integer> powerupInfo, int challengeId) {
+    public void updateChallengeInfo(HashMap<String, Integer> powerupInfo, String challengeName, int challengeId) {
         this.mPowerupInfo = powerupInfo;
+        this.mChallengeName = challengeName;
         this.mChallengeId = challengeId;
     }
 
@@ -279,6 +282,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                         bundle.putParcelable(BundleKeys.POWERUPS, Parcels.wrap(mPowerupInfo));
                     }
                     bundle.putInt(BundleKeys.CHALLENGE_ID, mChallengeId);
+                    bundle.putString(BundleKeys.CHALLENGE_NAME, mChallengeName);
                     navigateToPrediction(context, bundle);
                     break;
                 case R.id.schedule_row_btn_points:

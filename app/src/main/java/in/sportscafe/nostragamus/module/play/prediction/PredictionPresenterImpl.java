@@ -119,6 +119,18 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         onClickBack();
     }
 
+    @Override
+    public void onClickBankTransfer() {
+        mPredictionView.navigateToBankTransfer(mPredictionModel.getChallengeName(), mPredictionModel.getChallengeId(),
+                mPredictionModel.getMaxTransferCount(), mPredictionModel.getPowerUpBank());
+    }
+
+    @Override
+    public void onPowerUpUpdated(Bundle bundle) {
+        mPredictionModel.updatePowerUpValues(bundle);
+        updatePowerups();
+    }
+
     private void checkWhereToGo() {
         if (mPredictionModel.isFromSettings()) {
             mPredictionView.goBack();

@@ -11,10 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.BaseActivity;
 import com.jeeva.android.widgets.ShadowLayout;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
 
@@ -33,7 +31,7 @@ public class PowerupDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_powerup_popup, container, false);
+        return inflater.inflate(R.layout.fragment_powerup_popup, container, false);
     }
 
     @Override
@@ -42,6 +40,7 @@ public class PowerupDialogFragment extends DialogFragment {
         Window window = getDialog().getWindow();
         window.setBackgroundDrawableResource(R.color.transparent);
         window.getAttributes().windowAnimations = R.style.DialogAnimation;
+        setCancelable(false);
 
         mLlPowerUpHolder = (LinearLayout) getView().findViewById(R.id.popup_ll_powerup_holder);
 

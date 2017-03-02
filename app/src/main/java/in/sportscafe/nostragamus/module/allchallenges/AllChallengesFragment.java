@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeFragment;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 
@@ -160,7 +161,8 @@ public class AllChallengesFragment extends NostragamusFragment
             mChallengeFragmentList.add(challengeFragment);
         }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.tab_challenge_vp);
+        CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.tab_challenge_vp);
+        viewPager.setPagingEnabled(false);
         viewPager.setAdapter(mViewPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
