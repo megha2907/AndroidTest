@@ -105,7 +105,7 @@ public class AllChallengesFragment extends NostragamusFragment
     @Override
     public void onEmpty() {
         dismissProgressbar();
-        showMessage(Alerts.EMPTY_CHALLENGES);
+        showInAppMessage(Alerts.EMPTY_CHALLENGES);
     }
 
     @Override
@@ -164,9 +164,14 @@ public class AllChallengesFragment extends NostragamusFragment
         CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.tab_challenge_vp);
         viewPager.setPagingEnabled(false);
         viewPager.setAdapter(mViewPagerAdapter);
+        viewPager.setOffscreenPageLimit(3);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
         tabLayout.setupWithViewPager(viewPager);
+
+        if(mChallengeFragmentList.size() > 0) {
+            mRlSwitch.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

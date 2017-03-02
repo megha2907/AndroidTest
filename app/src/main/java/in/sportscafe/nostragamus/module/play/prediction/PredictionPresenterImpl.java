@@ -1,11 +1,13 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.Alerts;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
@@ -36,11 +38,20 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             mPredictionModel.getAllQuestions();
 
             mPredictionView.setContestName(mPredictionModel.getContestName());
+
+            checkShowStatusOfBankInfo();
         } else {
             mPredictionView.changeToDummyGameMode();
         }
 
         updatePowerups();
+    }
+
+    private void checkShowStatusOfBankInfo() {
+        if (NostragamusDataHandler.getInstance().isBankInfoFirstTimeChecked()
+                && !NostragamusDataHandler.getInstance().isBankInfoShown()) {
+            mPredictionView.showBankInfo(null);
+        }
     }
 
     private void updatePowerups() {
@@ -121,8 +132,18 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onClickBankTransfer() {
-        mPredictionView.navigateToBankTransfer(mPredictionModel.getChallengeName(), mPredictionModel.getChallengeId(),
-                mPredictionModel.getMaxTransferCount(), mPredictionModel.getPowerUpBank());
+        if (NostragamusDataHandler.getInstance().isBankInfoShown()) {
+            mPredictionView.navigateToBankTransfer(mPredictionModel.getChallengeName(), mPredictionModel.getChallengeId(),
+                    mPredictionModel.getMaxTransferCount(), mPredictionModel.getPowerUpBank());
+        } else {
+            mPredictionView.showBankInfo(new DialogInterface.OnDismissListener() {
+
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    PredictionPresenterImpl.this.onClickBankTransfer();
+                }
+            });
+        }
     }
 
     @Override
@@ -275,5 +296,10 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public boolean onApiCallStopped() {
         return mPredictionView.dismissProgressbar();
+    }
+
+    @Override
+    public void onNoPowerUps() {
+        onClickBankTransfer();
     }
 }

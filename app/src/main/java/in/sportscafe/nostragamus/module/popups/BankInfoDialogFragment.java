@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.popups;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -7,16 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
-
-import static com.google.android.gms.analytics.internal.zzy.o;
 
 /**
  * Created by Jeeva on 28/02/17.
  */
 
 public class BankInfoDialogFragment extends NostragamusDialogFragment {
+
+    public static BankInfoDialogFragment newInstance() {
+        return new BankInfoDialogFragment();
+    }
 
     @Nullable
     @Override
@@ -39,5 +43,11 @@ public class BankInfoDialogFragment extends NostragamusDialogFragment {
                 dismiss();
             }
         });
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        NostragamusDataHandler.getInstance().setBankInfoShown(true);
     }
 }

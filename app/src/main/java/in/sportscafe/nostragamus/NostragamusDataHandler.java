@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
@@ -286,6 +285,20 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     public void setInitialFeedbackFormShown(boolean formShown) {
         setSharedBooleanData(SharedKeys.INITIAL_FORM_SHOWN, formShown);
+    }
+
+    public boolean isBankInfoFirstTimeChecked() {
+        boolean checked = isKeyShared(SharedKeys.BANK_INFO_SHOWN);
+        setBankInfoShown(false);
+        return checked;
+    }
+
+    public boolean isBankInfoShown() {
+        return getSharedBooleanData(SharedKeys.BANK_INFO_SHOWN, false);
+    }
+
+    public void setBankInfoShown(boolean bankInfoShown) {
+        setSharedBooleanData(SharedKeys.BANK_INFO_SHOWN, bankInfoShown);
     }
 
     @Override

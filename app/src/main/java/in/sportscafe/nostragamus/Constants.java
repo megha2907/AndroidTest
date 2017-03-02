@@ -75,6 +75,7 @@ public interface Constants {
         String TOKEN_EXPIRY = "tokenExpiry";
         int TOURNAMENT_ID = 0;
         String INSTALL_CHANNEL = "installChannel";
+        String BANK_INFO_SHOWN = "bankInfoShown";
     }
 
     interface Alerts {

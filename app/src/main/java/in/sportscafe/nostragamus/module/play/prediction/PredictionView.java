@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
@@ -85,4 +86,6 @@ public interface PredictionView extends InAppView {
     boolean dismissCoach();
 
     void navigateToBankTransfer(String challengeName, int challengeId, int maxTransferCount, HashMap<String, Integer> powerUps);
+
+    void showBankInfo(DialogInterface.OnDismissListener dismissListener);
 }

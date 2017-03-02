@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
@@ -213,26 +214,22 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void set2xGlobalPowerupCount(int count, boolean reverse) {
-        mTv2xGlobalPowerupCount.setText(String.valueOf(count));
-        applyAlphaForPowerUp(mIv2xGlobalPowerup, mTv2xGlobalPowerupCount, reverse);
+        applyAlphaForPowerUp(mIv2xGlobalPowerup, mTv2xGlobalPowerupCount, reverse, count);
     }
 
     @Override
     public void set2xPowerupCount(int count, boolean reverse) {
-        mTv2xPowerupCount.setText(String.valueOf(count));
-        applyAlphaForPowerUp(mIv2xPowerup, mTv2xPowerupCount, reverse);
+        applyAlphaForPowerUp(mIv2xPowerup, mTv2xPowerupCount, reverse, count);
     }
 
     @Override
     public void setNonegsPowerupCount(int count, boolean reverse) {
-        mTvNonegsPowerupCount.setText(String.valueOf(count));
-        applyAlphaForPowerUp(mIvNonegsPowerup, mTvNonegsPowerupCount, reverse);
+        applyAlphaForPowerUp(mIvNonegsPowerup, mTvNonegsPowerupCount, reverse, count);
     }
 
     @Override
     public void setPollPowerupCount(int count, boolean reverse) {
-        mTvPollPowerupCount.setText(String.valueOf(count));
-        applyAlphaForPowerUp(mIvPollPowerup, mTvPollPowerupCount, reverse);
+        applyAlphaForPowerUp(mIvPollPowerup, mTvPollPowerupCount, reverse, count);
     }
 
     @Override
@@ -447,6 +444,16 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 .show(getSupportFragmentManager(), "BankTransfer");
     }
 
+    @Override
+    public void showBankInfo(DialogInterface.OnDismissListener dismissListener) {
+        BankInfoDialogFragment bankInfoDialogFragment = BankInfoDialogFragment.newInstance();
+        bankInfoDialogFragment.show(getSupportFragmentManager(), "BankInfo");
+        getSupportFragmentManager().executePendingTransactions();
+        if(null != dismissListener) {
+            bankInfoDialogFragment.getDialog().setOnDismissListener(dismissListener);
+        }
+    }
+
     private Drawable getPowerupDrawable(int colorRes) {
         GradientDrawable powerupDrawable = new GradientDrawable();
         powerupDrawable.setShape(GradientDrawable.OVAL);
@@ -506,7 +513,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         }
     };
 
-    private void applyAlphaForPowerUp(View powerUpIcon, View powerUpText, boolean reverse) {
+    private void applyAlphaForPowerUp(View powerUpIcon, TextView powerUpText, boolean reverse, int count) {
         float alpha = 0.6f;
         if(reverse) {
             alpha = 1f;
@@ -514,6 +521,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
         powerUpIcon.setAlpha(alpha);
         powerUpText.setAlpha(alpha);
+
+        if(count == 0) {
+            powerUpText.setText("+");
+            powerUpText.setBackgroundResource(R.drawable.powerup_count_add_bg);
+        } else {
+            powerUpText.setText(String.valueOf(count));
+            powerUpText.setBackgroundResource(R.drawable.powerup_count_bg);
+        }
     }
 
 }

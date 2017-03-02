@@ -292,6 +292,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
             m2xPowerups--;
             mPredictionModelListener.on2xApplied(m2xPowerups, false);
+        } else {
+            mPredictionModelListener.onNoPowerUps();
         }
     }
 
@@ -303,6 +305,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
             mNonegsPowerups--;
             mPredictionModelListener.onNonegsApplied(mNonegsPowerups, false);
+        } else {
+            mPredictionModelListener.onNoPowerUps();
         }
     }
 
@@ -310,6 +314,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     public void applyPollPowerup() {
         if (isNotPowerupApplied() && mPollPowerups > 0) {
             getAudiencePollPercent();
+        } else {
+            mPredictionModelListener.onNoPowerUps();
         }
     }
 
@@ -732,5 +738,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         void onApiCallStarted();
 
         boolean onApiCallStopped();
+
+        void onNoPowerUps();
     }
 }

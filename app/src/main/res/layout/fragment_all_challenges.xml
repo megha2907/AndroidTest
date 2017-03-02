@@ -63,7 +63,8 @@
         android:layout_marginRight="@dimen/dp_24"
         android:layout_marginTop="@dimen/dp_7"
         android:background="@drawable/grey_border_round_btn_bg"
-        android:clickable="true">
+        android:clickable="true"
+        android:visibility="gone">
 
         <View
             android:id="@+id/challenges_v_switch_seek"

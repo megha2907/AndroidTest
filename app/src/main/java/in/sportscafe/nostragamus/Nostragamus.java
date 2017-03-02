@@ -114,6 +114,8 @@ public class Nostragamus extends Application {
         Context context = getApplicationContext();
         NostragamusDataHandler.getInstance().init(context);
         OfflineDataHandler.getInstance().init(context);
+
+        NostragamusDataHandler.getInstance().clearData(Constants.SharedKeys.BANK_INFO_SHOWN);
     }
 
     private void initCustomFonts() {
