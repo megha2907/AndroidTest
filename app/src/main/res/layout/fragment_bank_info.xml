@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dp_350"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp_20"
+    android:layout_marginRight="@dimen/dp_20">
+
+    <LinearLayout
+        android:id="@+id/bank_info_ll_heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_42"
+        android:background="@drawable/bank_popup_heading_bg"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dp_12"
+            android:layout_height="@dimen/dp_12"
+            android:src="@drawable/bank_popup_white_icon" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_2"
+            android:text="Powerup Help"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_14"
+            app:typeface="lato_bold" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bank_info_ll_heading_layout"
+        android:background="@drawable/popup_content_bg"
+        android:divider="@drawable/grey_divider_padding"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_62"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_18"
+            android:paddingRight="@dimen/dp_18">
+
+            <ImageView
+                android:layout_width="@dimen/dp_46"
+                android:layout_height="@dimen/dp_46"
+                android:layout_marginRight="@dimen/dp_10"
+                android:padding="@dimen/dp_8"
+                android:src="@drawable/bank_popup_grey_icon" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Want to use more powerups in challenges?\nGet them from your powerup bank"
+                android:textColor="@color/white_80"
+                android:textSize="@dimen/dp_12"
+                app:typeface="lato_light" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_62"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_18"
+            android:paddingRight="@dimen/dp_18">
+
+            <ImageView
+                android:layout_width="@dimen/dp_46"
+                android:layout_height="@dimen/dp_46"
+                android:layout_marginRight="@dimen/dp_10"
+                android:padding="@dimen/dp_8"
+                android:src="@drawable/refer_popup_grey_icon" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Refer friend and get more powerups\nadded to your powerup bank"
+                android:textColor="@color/white_80"
+                android:textSize="@dimen/dp_12"
+                app:typeface="lato_light" />
+
+        </LinearLayout>
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/bank_info_btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_14"
+            android:background="@drawable/bank_popup_action_btn_bg"
+            android:gravity="center"
+            android:minWidth="@dimen/dp_72"
+            android:paddingBottom="@dimen/dp_2"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_15"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_14"
+            app:typeface="lato_bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

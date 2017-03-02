@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
@@ -17,16 +18,20 @@ import android.widget.TextView;
 
 import com.jeeva.android.widgets.CustomProgressbar;
 
+import java.util.HashMap;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.coachmarker.TargetView;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.feed.FeedActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.DummyGameFragment;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
+import in.sportscafe.nostragamus.module.popups.BankTransferDialogFragment;
 import in.sportscafe.nostragamus.module.popups.PowerupDialogFragment;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
@@ -179,8 +184,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 mPredictionPresenter.onClickPollPowerup();
                 break;
             case R.id.powerups_iv_info:
-                PowerupDialogFragment fragment = new PowerupDialogFragment();
-                fragment.show(getSupportFragmentManager(), "Powerup");
+                new PowerupDialogFragment().show(getSupportFragmentManager(), "Powerup");
+                break;
+            case R.id.powerups_iv_bank:
+                mPredictionPresenter.onClickBankTransfer();
+//                new BankInfoDialogFragment().show(getSupportFragmentManager(), "BankInfo");
                 break;
         }
     }
@@ -206,26 +214,22 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void set2xGlobalPowerupCount(int count, boolean reverse) {
-        mTv2xGlobalPowerupCount.setText(String.valueOf(count));
-        applyAlphaForPowerUp(mIv2xGlobalPowerup, mTv2xGlobalPowerupCount, reverse);
+        applyAlphaForPowerUp(mIv2xGlobalPowerup, mTv2xGlobalPowerupCount, reverse, count);
     }
 
     @Override
     public void set2xPowerupCount(int count, boolean reverse) {
-        mTv2xPowerupCount.setText(String.valueOf(count));
-        applyAlphaForPowerUp(mIv2xPowerup, mTv2xPowerupCount, reverse);
+        applyAlphaForPowerUp(mIv2xPowerup, mTv2xPowerupCount, reverse, count);
     }
 
     @Override
     public void setNonegsPowerupCount(int count, boolean reverse) {
-        mTvNonegsPowerupCount.setText(String.valueOf(count));
-        applyAlphaForPowerUp(mIvNonegsPowerup, mTvNonegsPowerupCount, reverse);
+        applyAlphaForPowerUp(mIvNonegsPowerup, mTvNonegsPowerupCount, reverse, count);
     }
 
     @Override
     public void setPollPowerupCount(int count, boolean reverse) {
-        mTvPollPowerupCount.setText(String.valueOf(count));
-        applyAlphaForPowerUp(mIvPollPowerup, mTvPollPowerupCount, reverse);
+        applyAlphaForPowerUp(mIvPollPowerup, mTvPollPowerupCount, reverse, count);
     }
 
     @Override
@@ -434,6 +438,22 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         return false;
     }
 
+    @Override
+    public void navigateToBankTransfer(String challengeName, int challengeId, int maxTransferCount, HashMap<String, Integer> powerUps) {
+        BankTransferDialogFragment.newInstance(challengeName, challengeId, maxTransferCount, powerUps)
+                .show(getSupportFragmentManager(), "BankTransfer");
+    }
+
+    @Override
+    public void showBankInfo(DialogInterface.OnDismissListener dismissListener) {
+        BankInfoDialogFragment bankInfoDialogFragment = BankInfoDialogFragment.newInstance();
+        bankInfoDialogFragment.show(getSupportFragmentManager(), "BankInfo");
+        getSupportFragmentManager().executePendingTransactions();
+        if(null != dismissListener) {
+            bankInfoDialogFragment.getDialog().setOnDismissListener(dismissListener);
+        }
+    }
+
     private Drawable getPowerupDrawable(int colorRes) {
         GradientDrawable powerupDrawable = new GradientDrawable();
         powerupDrawable.setShape(GradientDrawable.OVAL);
@@ -456,9 +476,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     public void onStart() {
         super.onStart();
         LocalBroadcastManager.getInstance(this).registerReceiver(mDummyGameStartReceiver,
-                new IntentFilter(Constants.IntentActions.ACTION_DUMMY_GAME_PLAY));
+                new IntentFilter(IntentActions.ACTION_DUMMY_GAME_PLAY));
         LocalBroadcastManager.getInstance(this).registerReceiver(mDummyGameEndReceiver,
-                new IntentFilter(Constants.IntentActions.ACTION_DUMMY_GAME_PROCEED));
+                new IntentFilter(IntentActions.ACTION_DUMMY_GAME_PROCEED));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mPowerUpUpdatedReceiver,
+                new IntentFilter(IntentActions.ACTION_POWERUPS_UPDATED));
     }
 
     @Override
@@ -466,6 +488,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         super.onStop();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mDummyGameStartReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mDummyGameEndReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mPowerUpUpdatedReceiver);
     }
 
     BroadcastReceiver mDummyGameStartReceiver = new BroadcastReceiver() {
@@ -483,7 +506,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         }
     };
 
-    private void applyAlphaForPowerUp(View powerUpIcon, View powerUpText, boolean reverse) {
+    BroadcastReceiver mPowerUpUpdatedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mPredictionPresenter.onPowerUpUpdated(intent.getExtras());
+        }
+    };
+
+    private void applyAlphaForPowerUp(View powerUpIcon, TextView powerUpText, boolean reverse, int count) {
         float alpha = 0.6f;
         if(reverse) {
             alpha = 1f;
@@ -491,6 +521,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
         powerUpIcon.setAlpha(alpha);
         powerUpText.setAlpha(alpha);
+
+        if(count == 0) {
+            powerUpText.setText("+");
+            powerUpText.setBackgroundResource(R.drawable.powerup_count_add_bg);
+        } else {
+            powerUpText.setText(String.valueOf(count));
+            powerUpText.setBackgroundResource(R.drawable.powerup_count_bg);
+        }
     }
 
 }

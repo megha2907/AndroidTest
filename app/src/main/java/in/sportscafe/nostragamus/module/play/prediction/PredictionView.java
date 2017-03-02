@@ -1,9 +1,12 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
 import com.jeeva.android.InAppView;
+
+import java.util.HashMap;
 
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
@@ -81,4 +84,8 @@ public interface PredictionView extends InAppView {
     void showPowerupsCoach();
 
     boolean dismissCoach();
+
+    void navigateToBankTransfer(String challengeName, int challengeId, int maxTransferCount, HashMap<String, Integer> powerUps);
+
+    void showBankInfo(DialogInterface.OnDismissListener dismissListener);
 }

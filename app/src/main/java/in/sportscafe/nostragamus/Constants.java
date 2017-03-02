@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 
 import static android.view.View.X;
@@ -74,6 +75,7 @@ public interface Constants {
         String TOKEN_EXPIRY = "tokenExpiry";
         int TOURNAMENT_ID = 0;
         String INSTALL_CHANNEL = "installChannel";
+        String BANK_INFO_SHOWN = "bankInfoShown";
     }
 
     interface Alerts {
@@ -147,6 +149,7 @@ public interface Constants {
         String NO_POWERUPS = "No powerups";
         String NO_BADGES = "No badges yet";
         String EMPTY_CHALLENGES = "No challenges currently created to play!";
+        String BANK_TRANSFER_SUCCESS = "Selected powerups successfully transfered to your challenge";
     }
 
     interface BundleKeys {
@@ -211,6 +214,9 @@ public interface Constants {
         String PLAYER_PHOTO = "playerPhoto";
         String CHALLENGE_LIST = "challengeList";
         String CHALLENGE_TAG_ID = "challengeTagId";
+        String UPDATED_POWERUPS = "updatedPowerups";
+        String CHALLENGE_NAME = "challengeName";
+        String MAX_TRANSFER_COUNT = "maxTransferCount";
     }
 
     interface ParcelableKeys {
@@ -242,6 +248,7 @@ public interface Constants {
         String ACTION_DUMMY_GAME_PROCEED = "in.sportscafe.nostragamus.intent.action.DUMMY_GAME_PROCEED";
         String ACTION_GROUP_CLICK = "in.sportscafe.nostragamus.intent.action.GROUP_CLICK";
         String ACTION_CHALLENGE_CLICK = "in.sportscafe.nostragamus.intent.action.CHALLENGE_CLICK";
+        String ACTION_POWERUPS_UPDATED = "in.sportscafe.nostragamus.intent.action.POWERUPS_UPDATED";
     }
 
     interface LeaderBoardPeriods {

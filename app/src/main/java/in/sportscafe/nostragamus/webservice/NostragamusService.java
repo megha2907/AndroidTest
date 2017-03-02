@@ -16,6 +16,8 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
+import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferRequest;
+import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
 import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
@@ -196,4 +198,7 @@ public interface NostragamusService {
 
     @GET("/v1/game/users/getUserChallenges")
     Call<AllChallengesResponse> getAllChallenges();
+
+    @POST("v2/game/users/challenges/transferFromBank")
+    Call<BankTransferResponse> bankTransfer(@Body BankTransferRequest bankTransferRequest);
 }

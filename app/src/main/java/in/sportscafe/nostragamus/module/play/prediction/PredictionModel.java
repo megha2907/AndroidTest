@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.content.Context;
 import android.os.Bundle;
 
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -58,4 +59,14 @@ public interface PredictionModel {
     void onSkippingDummyGame();
 
     boolean isAnyQuestionAnswered();
+
+    String getChallengeName();
+
+    int getChallengeId();
+
+    int getMaxTransferCount();
+
+    HashMap<String,Integer> getPowerUpBank();
+
+    void updatePowerUpValues(Bundle bundle);
 }
