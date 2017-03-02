@@ -79,6 +79,7 @@
     <color name="white_10">#1AFFFFFF</color>
     <color name="white_50">#80FFFFFF</color>
 
+    <color name="timer_color_bg">#0e3a59</color>
     <color name="switch_btn_color">#5E5E5E</color>
     <color name="sort_unselected_color">#212121</color>
     <color name="sort_selected_color">#2c2c2c</color>

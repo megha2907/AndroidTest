@@ -119,7 +119,7 @@
                 android:layout_height="@dimen/dp_30"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:background="@drawable/tournament_play_btn_bg"
+                android:background="@drawable/tournament_ready_btn_bg"
                 android:gravity="center"
                 android:minWidth="@dimen/dp_72"
                 android:onClick="onClick"
@@ -175,8 +175,8 @@
                     app:typeface="lato_regular" />
 
                 <ImageView
-                    android:layout_width="@dimen/dp_10"
-                    android:layout_height="@dimen/dp_10"
+                    android:layout_width="@dimen/dp_8"
+                    android:layout_height="@dimen/dp_8"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_2"
                     android:layout_toRightOf="@+id/schedule_row_ll_waiting_for_result_answers"

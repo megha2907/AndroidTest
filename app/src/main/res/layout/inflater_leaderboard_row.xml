@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_4"
             android:layout_weight="1.2"
-            android:text="100"
+            android:text="-"
             android:textColor="@color/leaderboard_rank_color"
             android:textSize="@dimen/dp_20"
             app:typeface="roboto_condensed" />
@@ -60,7 +60,6 @@
                 android:ellipsize="end"
                 android:maxEms="15"
                 android:singleLine="true"
-                android:text="Jeevanandham"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_13"
                 app:typeface="lato_regular" />
@@ -70,7 +69,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/leaderboard_row_tv_user_name"
-                android:text="3 Matches"
                 android:textColor="@color/white_70"
                 android:textSize="@dimen/dp_10"
                 app:typeface="lato_regular" />
@@ -85,7 +83,7 @@
             android:drawableLeft="@drawable/powerups_white_icon"
             android:drawablePadding="@dimen/dp_5"
             android:paddingLeft="@dimen/dp_5"
-            android:text="80"
+            android:text="0"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_14"
             app:typeface="roboto_condensed" />
@@ -98,7 +96,7 @@
             android:layout_weight="1.5"
             android:drawableLeft="@drawable/leaderboards_accuracy_icon"
             android:drawablePadding="@dimen/dp_5"
-            android:text="100%"
+            android:text="0%"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_14"
             android:layout_marginLeft="@dimen/dp_5"
@@ -113,7 +111,7 @@
             android:drawableLeft="@drawable/points_white_icon"
             android:drawablePadding="@dimen/dp_5"
             android:paddingLeft="@dimen/dp_5"
-            android:text="930"
+            android:text="0"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_14"
             app:typeface="roboto_condensed" />
