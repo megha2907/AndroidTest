@@ -2,20 +2,25 @@ package in.sportscafe.nostragamus.module.user.points;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
+import java.util.Calendar;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
+import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeAdapter;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
+import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -52,6 +57,8 @@ public class PointsModelImpl implements PointsModel {
 
     private boolean isMatchPoints = false;
 
+    private boolean isChallengeTimer = true;
+
 
     private PointsModelImpl(OnPointsModelListener listener, FragmentManager fm) {
         this.mPointsModelListener = listener;
@@ -68,9 +75,9 @@ public class PointsModelImpl implements PointsModel {
             mTourId = bundle.getInt(BundleKeys.TOURNAMENT_ID);
         }
 
-        if (bundle.containsKey(BundleKeys.MATCH_ID)){
+        if (bundle.containsKey(BundleKeys.MATCH_ID)) {
             mMatchId = bundle.getInt(BundleKeys.MATCH_ID);
-        }else{
+        } else {
             mMatchId = null;
         }
 
@@ -78,18 +85,42 @@ public class PointsModelImpl implements PointsModel {
 
         switch (mLbLanding.getType()) {
             case LBLandingType.GROUP:
+                isChallengeTimer=false;
+                mPointsModelListener.setChallengeTimerView(isChallengeTimer);
                 mGroupId = mLbLanding.getGroupId();
                 break;
             case LBLandingType.CHALLENGE:
                 mChallengeId = mLbLanding.getChallengeId();
                 break;
         }
+
+        if (mLbLanding.getEndTime() !=null) {
+            long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                    mLbLanding.getEndTime(),
+                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                    Constants.DateFormats.GMT
+            );
+
+            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(), startTimeMs);
+            long updatedTime = Long.parseLong(String.valueOf(timeAgo.totalDiff));
+
+            if (updatedTime < 0) {
+                isChallengeTimer=false;
+                mPointsModelListener.setChallengeTimerView(isChallengeTimer);
+            } else {
+                updateTimer(updatedTime);
+            }
+
+        }
+
+
     }
 
     @Override
     public String getName() {
         return mLbLanding.getName();
     }
+
 
     @Override
     public String getIcon() {
@@ -113,7 +144,7 @@ public class PointsModelImpl implements PointsModel {
 
 
     private void callLbDetailApi() {
-        MyWebService.getInstance().getLeaderBoardDetailRequest(mGroupId,mChallengeId,mMatchId)
+        MyWebService.getInstance().getLeaderBoardDetailRequest(mGroupId, mChallengeId, mMatchId)
                 .enqueue(new NostragamusCallBack<LeaderBoardResponse>() {
                     @Override
                     public void onResponse(Call<LeaderBoardResponse> call, Response<LeaderBoardResponse> response) {
@@ -126,7 +157,7 @@ public class PointsModelImpl implements PointsModel {
                                 return;
                             }
 
-                            if (leaderBoardList.get(0).getUserLeaderBoardList().get(0).getMatchPoints() != null){
+                            if (leaderBoardList.get(0).getUserLeaderBoardList().get(0).getMatchPoints() != null) {
                                 isMatchPoints = true;
                                 mPointsModelListener.setIsMatchPoints(isMatchPoints);
                             }
@@ -170,12 +201,12 @@ public class PointsModelImpl implements PointsModel {
                 mSelectedPosition = 0;
             } else if (mGroupId == 0) {
                 mSelectedPosition = 0;
-            } else if (mGroupId.equals(leaderBoard.getGroupId())){
-                    mSelectedPosition = i;
+            } else if (mGroupId.equals(leaderBoard.getGroupId())) {
+                mSelectedPosition = i;
             }
 
-            Log.i("mChallengeId",mChallengeId.toString());
-            Log.i("mgroupid",mGroupId.toString());
+            Log.i("mChallengeId", mChallengeId.toString());
+            Log.i("mgroupid", mGroupId.toString());
             Log.i("mSelectedPosition", String.valueOf(mSelectedPosition));
 
             Log.d("PointsModelImpl", "LeaderBoard --> " + leaderBoard.getTournamentId());
@@ -192,6 +223,22 @@ public class PointsModelImpl implements PointsModel {
     }
 
 
+    private void updateTimer(long updatedTime) {
+
+        int secs = (int) (updatedTime / 1000);
+        int mins = secs / 60;
+        int hours = mins / 60;
+        int days = hours / 24;
+        hours = hours % 24;
+        mins = mins % 60;
+        secs = secs % 60;
+
+        mPointsModelListener.setChallengeTimer(String.format("%02d", days) + "d",String.format("%02d", hours) + "h",
+                String.format("%02d", mins) + "m",String.format("%02d", secs) + "s");
+
+    }
+
+
     public interface OnPointsModelListener {
 
 
@@ -204,5 +251,9 @@ public class PointsModelImpl implements PointsModel {
         void onNoInternet();
 
         void setIsMatchPoints(boolean isMatchPoints);
+
+        void setChallengeTimer(String days, String hours, String mins, String secs);
+
+        void setChallengeTimerView(boolean isChallengeTimer);
     }
 }

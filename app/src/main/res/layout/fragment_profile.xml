@@ -294,7 +294,6 @@
                 app:selected_typeface="lato_bold"
                 app:tabIndicatorColor="@color/tabcolor"
                 app:tabIndicatorHeight="@dimen/dp_3"
-                app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextAppearance="@style/ProfileTabLayoutTextAppearance"
                 app:tabTextColor="@color/tab_tv_not_selected_color"

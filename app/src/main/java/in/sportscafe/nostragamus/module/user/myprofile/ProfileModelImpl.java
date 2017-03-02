@@ -57,12 +57,12 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
 
         HashMap<String, PowerUp> powerUpMaps = getPowerUpList(userInfo.getPowerUps());
 //        pagerAdapter.addFragment(PowerUpFragment.newInstance(powerUpList), AppSnippet.formatIfPlural(getPowerUpTotalCount(powerUpList), "Powerup", "s"));
-        pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Bank");
+        pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Powerup Bank");
 
         List<Badge> badgeList = userInfo.getBadges();
         pagerAdapter.addFragment(BadgeFragment.newInstance(badgeList), "Achievements");
 
-        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), "Sports");
+//        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), "Sports");
 
         return pagerAdapter;
     }
