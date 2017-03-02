@@ -9,7 +9,7 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_42"
         android:background="@color/colorMedium"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:id="@+id/challenges_toolbar"
@@ -18,7 +18,7 @@
 
         <ImageView
             android:layout_width="@dimen/dp_140"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_24"
             android:layout_gravity="center_horizontal"
             android:id="@+id/toolbar_logo"
             android:src="@drawable/sportscafe_logo"
@@ -30,21 +30,21 @@
     <in.sportscafe.nostragamus.module.common.CustomTabLayout
         android:id="@+id/tab_tl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_35"
         android:background="@color/colorMedium"
         app:layout_collapseMode="pin"
-        app:selected_textSize="@dimen/dp_16"
-        app:selected_typeface="roboto_condensed_bold"
+        app:selected_textSize="@dimen/dp_12"
+        app:selected_typeface="lato_regular"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/tabcolor"
-        app:tabIndicatorHeight="@dimen/dp_4"
+        app:tabIndicatorHeight="@dimen/dp_3"
         app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="@color/silver_chalice"
-        app:unselected_textSize="@dimen/dp_14"
-        app:unselected_typeface="roboto_condensed"
+        app:tabTextColor="@color/white_60"
+        app:unselected_textSize="@dimen/dp_12"
+        app:unselected_typeface="lato_regular"
         android:layout_gravity="center_horizontal|top"
         android:layout_below="@+id/challenges_toolbar"
-        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+        app:tabTextAppearance="@style/ChallengeTextAppearance"
         android:elevation="@dimen/dp_4"
         />
 

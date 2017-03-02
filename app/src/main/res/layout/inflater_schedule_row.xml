@@ -203,8 +203,8 @@
                         app:typeface="lato_regular" />
 
                     <ImageView
-                        android:layout_width="@dimen/dp_10"
-                        android:layout_height="@dimen/dp_10"
+                        android:layout_width="@dimen/dp_8"
+                        android:layout_height="@dimen/dp_8"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dp_2"
                         android:layout_toRightOf="@+id/schedule_row_ll_waiting_for_result_answers"

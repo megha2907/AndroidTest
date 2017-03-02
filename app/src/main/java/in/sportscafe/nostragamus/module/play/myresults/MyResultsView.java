@@ -28,4 +28,6 @@ public interface MyResultsView extends InAppView {
     void showFbShare(String url);
 
     void setMatchName(String matchName);
+
+    void setToolbarHeading(String result);
 }

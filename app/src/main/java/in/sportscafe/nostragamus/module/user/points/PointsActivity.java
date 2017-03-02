@@ -133,7 +133,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
         if (isMatchPoints){
             mBtnSortByPowerUps.setText("Match Score");
-            mBtnSortByPowerUps.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_grey_icon, 0, 0, 0);
+            mBtnSortByPowerUps.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_selection_icon, 0, 0, 0);
         }
     }
 

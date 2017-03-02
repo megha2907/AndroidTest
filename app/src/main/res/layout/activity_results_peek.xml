@@ -102,7 +102,10 @@
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/dp_14"
-                                app:typeface="lato_regular" />
+                                app:typeface="lato_regular"
+                                android:ellipsize="end"
+                                android:maxEms="15"
+                                android:singleLine="true"/>
 
                             <com.jeeva.android.widgets.customfont.CustomButton
                                 android:id="@+id/player_comparison_user_btn_points"
@@ -159,7 +162,10 @@
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/dp_14"
-                                app:typeface="lato_regular" />
+                                app:typeface="lato_regular"
+                                android:ellipsize="end"
+                                android:maxEms="15"
+                                android:singleLine="true"/>
 
                             <com.jeeva.android.widgets.customfont.CustomButton
                                 android:id="@+id/player_comparison_player_btn_points"

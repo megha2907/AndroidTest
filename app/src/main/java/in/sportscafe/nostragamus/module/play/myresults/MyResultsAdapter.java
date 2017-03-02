@@ -174,6 +174,19 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             }else {
                 holder.mTvLeaderBoardRank.setText("No Rank");
             }
+
+
+            if (null !=match.getRankChange()) {
+                holder.mIvRankStatus.setVisibility(View.VISIBLE);
+
+                if (match.getRankChange() < 0) {
+                    holder.mIvRankStatus.setImageResource(R.drawable.lb_rank_change_icon);
+                    holder.mIvRankStatus.setRotation(180);
+                } else {
+                    holder.mIvRankStatus.setImageResource(R.drawable.lb_rank_change_icon);
+                }
+            }
+
             holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()) + " Powerup Used");
             holder.mRlHighestMatchPoints.setTag(match);
         }
@@ -228,6 +241,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         TextView mTvNumberofPowerupsUsed;
         RelativeLayout mRlLeaderBoard;
         LinearLayout mLlMatchScores;
+        ImageView mIvRankStatus;
 
 
         public MyResultViewHolder(View V) {
@@ -254,6 +268,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mRlAvgMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
             mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mLlMatchScores = (LinearLayout) V.findViewById(R.id.schedule_row_scores_ll);
+            mIvRankStatus = (ImageView) V.findViewById(R.id.schedule_row_rank_status_iv);
 
             mRlLeaderBoard.setOnClickListener(this);
             mRlAvgMatchPoints.setOnClickListener(this);

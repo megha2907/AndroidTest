@@ -96,6 +96,9 @@ public class Match {
     @JsonProperty("rank")
     private Integer userRank;
 
+    @JsonProperty("rank_change")
+    private Integer rankChange;
+
     @JsonProperty("count_powerups")
     private Integer countPowerUps;
 
@@ -536,6 +539,16 @@ public class Match {
     @JsonProperty("highest_player_photo")
     public void setHighestScorerPhoto(String highestScorerPhoto) {
         this.highestScorerPhoto = highestScorerPhoto;
+    }
+
+    @JsonProperty("rank_change")
+    public Integer getRankChange() {
+        return rankChange;
+    }
+
+    @JsonProperty("rank_change")
+    public void setRankChange(Integer rankChange) {
+        this.rankChange = rankChange;
     }
 
 

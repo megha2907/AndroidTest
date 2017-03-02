@@ -352,18 +352,17 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     private ViewPagerAdapter getAdapter(PlayerInfo playerInfo) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        pagerAdapter.addFragment(TimelineFragment.newInstance(playerInfo),
-                playerInfo.getTotalMatchesPlayed() + "\n Matches");
+        pagerAdapter.addFragment(TimelineFragment.newInstance(playerInfo), "Matches");
 
         if (groupsCount == "1") {
-            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), groupsCount + "\n Mutual Group");
+            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), "Mutual Group");
         } else {
-            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), groupsCount + "\n Mutual Groups");
+            pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), "Mutual Groups");
         }
         if (badgeCount == "1") {
-            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount + "\n Achievement");
+            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), "Achievement");
         } else {
-            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), badgeCount + "\n Achievements");
+            pagerAdapter.addFragment(PlayerBadgeFragment.newInstance(playerInfo), "Achievements");
         }
         return pagerAdapter;
     }

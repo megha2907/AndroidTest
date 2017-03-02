@@ -71,6 +71,11 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
+    public void setToolbarHeading(String result) {
+        mResultsView.setToolbarHeading(result);
+    }
+
+    @Override
     public void onReplayPowerupApplied() {
         mResultsModel.callReplayPowerupApplied();
     }

@@ -98,6 +98,7 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
         TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_row_tv_points);
         TextView mTvPlayed= (TextView) findViewById(R.id.leaderboard_row_tv_played);
         TextView mTvAccuracy = (TextView)findViewById(R.id.leaderboard_row_tv_accuracy);
+        TextView mTvMatchPoints = (TextView)findViewById(R.id.leaderboard_row_tv_match_points);
 
         userPoints.setVisibility(View.VISIBLE);
         gradientView.setVisibility(View.VISIBLE);
@@ -106,9 +107,17 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
         if(null == userLeaderBoard.getRank()) {
             mTvRank.setText("-");
         } else {
-            String rank = AppSnippet.ordinal(userLeaderBoard.getRank());
-            mTvRank.setText(rank);
+            mTvRank.setText(userLeaderBoard.getRank().toString());
         }
+
+        //set PowerUps if Match Points is null
+        if (null == userLeaderBoard.getMatchPoints()) {
+            mTvMatchPoints.setText(userLeaderBoard.getUserPowerUps().toString());
+        } else {
+            mTvMatchPoints.setText(String.valueOf(userLeaderBoard.getMatchPoints()));
+            mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_white_icon, 0, 0, 0);
+        }
+
 
         mTvName.setText(userLeaderBoard.getUserName());
         mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
