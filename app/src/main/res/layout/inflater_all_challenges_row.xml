@@ -26,12 +26,15 @@
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/all_challenges_row_tv_show_games"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_40"
                 android:layout_alignParentBottom="true"
                 android:clickable="true"
                 android:gravity="center"
                 android:text="Show Games"
+                android:layout_centerInParent="true"
+                android:drawablePadding="@dimen/dp_5"
+                android:drawableRight="@drawable/challenge_down_arrow"
                 android:textColor="@color/white_80"
                 android:textSize="@dimen/dp_12"
                 app:typeface="lato_regular" />
