@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_8"
             android:paddingTop="@dimen/dp_2"
-            android:text="Powerup Help"
+            android:text="Powerup Bank"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_14"
