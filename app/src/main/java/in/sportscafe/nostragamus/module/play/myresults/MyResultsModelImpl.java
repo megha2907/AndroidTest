@@ -77,6 +77,10 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
             mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_ID);
         }
 
+        if (null == match.getResult() || match.getResult().isEmpty()) {
+            mResultsModelListener.setToolbarHeading("Awaiting Results");
+        }
+
         //no replay and flip powerup for now
         //UserInfoModelImpl.newInstance(this).getUserInfo();
     }
@@ -173,7 +177,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public String getMatchName() {
-        return match.getTournamentName();
+        return match.getStage();
     }
 
     @Override
@@ -298,5 +302,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         void onScreenShotUploaded(String url);
 
         void onScreenShotFailed();
+
+        void setToolbarHeading(String result);
     }
 }

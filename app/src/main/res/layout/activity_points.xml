@@ -46,7 +46,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_12"
-                            android:layout_marginTop="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_8"
                             android:background="@android:color/transparent"
                             android:onClick="onClick"
                             android:padding="@dimen/dp_10"
@@ -105,7 +105,7 @@
                                 android:layout_height="@dimen/dp_25"
                                 android:layout_marginRight="@dimen/dp_6"
                                 android:layout_toLeftOf="@+id/all_challenges_row_btn_hours_left"
-                                android:background="@drawable/grey_border_btn_bg"
+                                android:background="@drawable/grey_leaderboard_border_btn_bg"
                                 android:text="2d"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
@@ -118,7 +118,7 @@
                                 android:layout_height="@dimen/dp_25"
                                 android:layout_marginRight="@dimen/dp_6"
                                 android:layout_toLeftOf="@+id/all_challenges_row_btn_mins_left"
-                                android:background="@drawable/grey_border_btn_bg"
+                                android:background="@drawable/grey_leaderboard_border_btn_bg"
                                 android:text="24h"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
@@ -131,7 +131,7 @@
                                 android:layout_height="@dimen/dp_25"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="@dimen/dp_10"
-                                android:background="@drawable/grey_border_btn_bg"
+                                android:background="@drawable/grey_leaderboard_border_btn_bg"
                                 android:text="59m"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
@@ -263,7 +263,8 @@
                     android:id="@+id/sort_by_accuracy_btn"
                     android:layout_width="@dimen/dp_110"
                     android:layout_height="@dimen/dp_32"
-                    android:drawableLeft="@drawable/accuracy_grey_icon"
+                    android:drawableLeft="@drawable/accuracy_selection_icon"
+                    android:layout_toRightOf="@+id/sort_by_powerups_btn"
                     android:background="@drawable/sort_selection_color"
                     android:text="Accuracy"
                     app:typeface="lato_regular"
@@ -271,14 +272,14 @@
                     android:paddingLeft="@dimen/dp_8"
                     android:paddingRight="@dimen/dp_6"
                     android:onClick="onClick"
-                    android:textColor="@color/white_60"/>
+                    android:textColor="@drawable/sort_tv_selector"/>
 
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/sort_by_total_points_btn"
                     android:layout_width="@dimen/dp_110"
                     android:layout_height="@dimen/dp_32"
                     android:layout_toRightOf="@+id/sort_by_accuracy_btn"
-                    android:drawableLeft="@drawable/points_grey_icon"
+                    android:drawableLeft="@drawable/points_selection_icon"
                     android:paddingLeft="@dimen/dp_18"
                     android:paddingRight="@dimen/dp_20"
                     android:background="@drawable/sort_selection_color"
@@ -287,14 +288,13 @@
                     android:onClick="onClick"
                     android:layout_gravity="center"
                     android:textSize="@dimen/dp_10"
-                    android:textColor="@color/white_60"/>
+                    android:textColor="@drawable/sort_tv_selector"/>
 
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/sort_by_powerups_btn"
                     android:layout_width="@dimen/dp_110"
                     android:layout_height="@dimen/dp_32"
-                    android:layout_toRightOf="@+id/sort_by_total_points_btn"
-                    android:drawableLeft="@drawable/powerups_grey_icon"
+                    android:drawableLeft="@drawable/powerups_selection_icon"
                     android:background="@drawable/sort_selection_color"
                     android:text="Powerups"
                     app:typeface="lato_regular"
@@ -302,7 +302,7 @@
                     android:paddingLeft="@dimen/dp_8"
                     android:paddingRight="@dimen/dp_6"
                     android:onClick="onClick"
-                    android:textColor="@color/white_60"/>
+                    android:textColor="@drawable/sort_tv_selector"/>
 
                 <!--<com.jeeva.android.widgets.customfont.CustomButton-->
                     <!--android:id="@+id/sorting_switch_seek"-->

@@ -504,6 +504,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mMatchStage.setText(matchName);
     }
 
+    @Override
+    public void setToolbarHeading(String result) {
+        mTitle.setText(result);
+    }
+
     /*public void onClickbtnfbShare() {
         mResultsPresenter.onClickFbShare();
     }*/

@@ -177,6 +177,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         Button mTvChallengeDaysLeft;
         Button mTvChallengeHoursLeft;
         Button mTvChallengeMinsLeft;
+        Button mTvChallengeSecsLeft;
 
         ImageView mIv2xPowerup;
         ImageView mIvNonegsPowerup;
@@ -209,6 +210,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mTvChallengeHoursLeft = (Button) V.findViewById(id.all_challenges_row_btn_hours_left);
             mTvChallengeDaysLeft = (Button) V.findViewById(id.all_challenges_row_btn_days_left);
             mTvChallengeMinsLeft = (Button) V.findViewById(id.all_challenges_row_btn_mins_left);
+            mTvChallengeSecsLeft = (Button) V.findViewById(id.all_challenges_row_btn_secs_left);
             mLlTournament = (LinearLayout) V.findViewById(id.all_challenges_row_tournament_ll);
             mSlShowGameBg = (ShadowLayout) V.findViewById(id.all_challenges_sl_anim_bg);
             mRlTimer = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_timer);
@@ -263,6 +265,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         viewHolder.mTvChallengeDaysLeft.setText(String.format("%02d", days)+"d");
         viewHolder.mTvChallengeHoursLeft.setText(String.format("%02d", hours)+"h");
         viewHolder.mTvChallengeMinsLeft.setText(String.format("%02d", mins)+"m");
+        viewHolder.mTvChallengeSecsLeft.setText(String.format("%02d", secs)+"s");
 
     }
 
