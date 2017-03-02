@@ -144,9 +144,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             }
 
             if (null != match.getCountPowerUps()) {
-                holder.mTvNumberofPowerupsUsed.setText("0" + " Powerup Used");
-            }else {
                 holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()) + " Powerup Used");
+            }else {
+                holder.mTvNumberofPowerupsUsed.setText("0" + " Powerup Used");
             }
 
         } else {

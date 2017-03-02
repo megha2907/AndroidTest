@@ -177,7 +177,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public String getMatchName() {
-        return match.getStage();
+        return match.getChallengeName();
     }
 
     @Override
