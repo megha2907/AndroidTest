@@ -24,13 +24,19 @@
             android:layout_height="@dimen/dp_199"
             android:layout_alignParentTop="true">
 
+            <RelativeLayout
+                android:id="@+id/all_challenges_row_rl_show_games"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_alignParentBottom="true"
+                android:clickable="true">
+
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/all_challenges_row_tv_show_games"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_40"
-                android:layout_alignParentBottom="true"
-                android:clickable="true"
                 android:gravity="center"
+                android:clickable="false"
                 android:text="Show Games"
                 android:layout_centerInParent="true"
                 android:drawablePadding="@dimen/dp_5"
@@ -38,6 +44,9 @@
                 android:textColor="@color/white_80"
                 android:textSize="@dimen/dp_12"
                 app:typeface="lato_regular" />
+
+            </RelativeLayout>
+
 
         </RelativeLayout>
 

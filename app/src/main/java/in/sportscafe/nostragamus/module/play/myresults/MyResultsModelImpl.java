@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.play.myresults;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.jeeva.android.ExceptionTracker;
 
@@ -48,6 +49,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private Match match;
 
+    private String challengeName = "";
+
     private Integer mPlayerUserId;
 
     private OnMyResultsModelListener mResultsModelListener;
@@ -65,20 +68,20 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         if (bundle.containsKey(BundleKeys.MATCH_LIST)) {
             match = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
             matchId = match.getId();
+            if (null == match.getResult() || match.getResult().isEmpty()) {
+                mResultsModelListener.setToolbarHeading("Awaiting Results");
+            }
+
         } else if (bundle.containsKey(BundleKeys.MATCH_ID)) {
             String match_id = bundle.getString(BundleKeys.MATCH_ID);
             matchId = Integer.parseInt(match_id);
+            challengeName = bundle.getString(Constants.NotificationKeys.CHALLENGE_NAME_NOTIFICATION);
         } else {
             mResultsModelListener.onFailedMyResults(Constants.Alerts.RESULTS_INFO_ERROR);
-            mResultsModelListener.gotoResultsTimeline();
         }
 
         if (bundle.containsKey(BundleKeys.PLAYER_ID)) {
             mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_ID);
-        }
-
-        if (null == match.getResult() || match.getResult().isEmpty()) {
-            mResultsModelListener.setToolbarHeading("Awaiting Results");
         }
 
         //no replay and flip powerup for now
@@ -177,7 +180,11 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public String getMatchName() {
-        return match.getChallengeName();
+        if (TextUtils.isEmpty(match.getChallengeName())){
+            return challengeName;
+        }else {
+            return match.getChallengeName();
+        }
     }
 
     @Override

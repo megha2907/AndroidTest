@@ -192,6 +192,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         ShadowLayout mSlShowGameBg;
         TextView mTvShowGames;
 
+        RelativeLayout mRlShowGames;
         RelativeLayout mRlTimer;
 
         TextView mTvGamesLeftCount;
@@ -217,7 +218,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mSlShowGameBg = (ShadowLayout) V.findViewById(id.all_challenges_sl_anim_bg);
             mRlTimer = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_timer);
             mTvShowGames = (TextView) V.findViewById(id.all_challenges_row_tv_show_games);
-            mTvShowGames.setOnClickListener(this);
+            mRlShowGames = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_show_games);
+            mRlShowGames.setOnClickListener(this);
 
             V.findViewById(R.id.all_challenges_rl_leadboard).setOnClickListener(this);
 //            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
@@ -227,7 +229,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         public void onClick(View view) {
             Context context = view.getContext();
             switch (view.getId()) {
-                case R.id.all_challenges_row_tv_show_games:
+                case R.id.all_challenges_row_rl_show_games:
                     Intent intent = new Intent(IntentActions.ACTION_CHALLENGE_CLICK);
                     intent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
                     intent.putExtra(BundleKeys.CHALLENGE_TAG_ID, mTagId);
