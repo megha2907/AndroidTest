@@ -289,7 +289,9 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     public boolean isBankInfoFirstTimeChecked() {
         boolean checked = isKeyShared(SharedKeys.BANK_INFO_SHOWN);
-        setBankInfoShown(false);
+        if(!checked) {
+            setBankInfoShown(false);
+        }
         return checked;
     }
 

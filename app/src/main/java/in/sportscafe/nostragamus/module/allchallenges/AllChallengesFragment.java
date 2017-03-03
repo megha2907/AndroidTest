@@ -27,6 +27,8 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 
+import static com.google.android.gms.analytics.internal.zzy.m;
+
 /**
  * Created by Jeeva on 17/02/17.
  */
@@ -144,7 +146,9 @@ public class AllChallengesFragment extends NostragamusFragment
         ChallengeFragment challengeFragment;
         List<Challenge> challenges = mAllChallengesApiModel.getCompletedChallenges();
         int count = 0;
+        boolean completedAvailable = false;
         if (challenges.size() > 0) {
+            completedAvailable = true;
             mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(challenges, count++), "Completed");
             mChallengeFragmentList.add(challengeFragment);
         }
@@ -169,8 +173,12 @@ public class AllChallengesFragment extends NostragamusFragment
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
         tabLayout.setupWithViewPager(viewPager);
 
-        if(mChallengeFragmentList.size() > 0) {
+        if (count > 0) {
             mRlSwitch.setVisibility(View.VISIBLE);
+
+            if (count > 1 && count == 3 || completedAvailable) {
+                viewPager.setCurrentItem(1);
+            }
         }
     }
 

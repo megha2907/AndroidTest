@@ -140,6 +140,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
                 @Override
                 public void onDismiss(DialogInterface dialog) {
+                    NostragamusDataHandler.getInstance().setBankInfoShown(true);
                     PredictionPresenterImpl.this.onClickBankTransfer();
                 }
             });
