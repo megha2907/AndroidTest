@@ -217,6 +217,7 @@ public interface Constants {
         String UPDATED_POWERUPS = "updatedPowerups";
         String CHALLENGE_NAME = "challengeName";
         String MAX_TRANSFER_COUNT = "maxTransferCount";
+        String CHALLENGE_INFO = "challengeInfo";
     }
 
     interface ParcelableKeys {

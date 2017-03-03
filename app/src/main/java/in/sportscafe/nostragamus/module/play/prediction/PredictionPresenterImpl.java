@@ -55,7 +55,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     private void updatePowerups() {
-        mPredictionView.set2xGlobalPowerupCount(mPredictionModel.get2xGlobalPowerupCount(), true);
         mPredictionView.set2xPowerupCount(mPredictionModel.get2xPowerupCount(), true);
         mPredictionView.setNonegsPowerupCount(mPredictionModel.getNonegsPowerupCount(), true);
         mPredictionView.setPollPowerupCount(mPredictionModel.getPollPowerupCount(), true);
@@ -79,11 +78,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void setFlingListener(FlingCardListener topCardListener) {
         mPredictionModel.setFlingCardListener(topCardListener);
-    }
-
-    @Override
-    public void onClick2xGlobalPowerup() {
-        mPredictionModel.apply2xGlobalPowerup();
     }
 
     @Override
@@ -133,8 +127,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onClickBankTransfer() {
         if (NostragamusDataHandler.getInstance().isBankInfoShown()) {
-            mPredictionView.navigateToBankTransfer(mPredictionModel.getChallengeName(), mPredictionModel.getChallengeId(),
-                    mPredictionModel.getMaxTransferCount(), mPredictionModel.getPowerUpBank());
+            mPredictionView.navigateToBankTransfer(mPredictionModel.getChallengeInfoBundle());
         } else {
             mPredictionView.showBankInfo(new DialogInterface.OnDismissListener() {
 
@@ -224,11 +217,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onGetSport(Integer sportId) {
         mPredictionView.changeBackgroundImage(sportId);
-    }
-
-    @Override
-    public void on2xGlobalApplied(int count, boolean reverse) {
-        mPredictionView.set2xGlobalPowerupCount(count, reverse);
     }
 
     @Override

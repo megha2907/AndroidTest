@@ -16,8 +16,6 @@ public interface PredictionPresenter {
 
     void setFlingListener(FlingCardListener topCardListener);
 
-    void onClick2xGlobalPowerup();
-
     void onClick2xPowerup();
 
     void onClickNonegsPowerup();

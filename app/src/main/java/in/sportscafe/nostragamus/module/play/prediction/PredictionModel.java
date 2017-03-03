@@ -32,8 +32,6 @@ public interface PredictionModel {
 
     String getContestName();
 
-    int get2xGlobalPowerupCount();
-
     int get2xPowerupCount();
 
     int getNonegsPowerupCount();
@@ -45,8 +43,6 @@ public interface PredictionModel {
     PredictionAdapter getAdapter(Context context, List<Question> questions);
 
     void setFlingCardListener(FlingCardListener flingCardListener);
-
-    void apply2xGlobalPowerup();
 
     void apply2xPowerup();
 
@@ -60,13 +56,7 @@ public interface PredictionModel {
 
     boolean isAnyQuestionAnswered();
 
-    String getChallengeName();
-
-    int getChallengeId();
-
-    int getMaxTransferCount();
-
-    HashMap<String,Integer> getPowerUpBank();
+    Bundle getChallengeInfoBundle();
 
     void updatePowerUpValues(Bundle bundle);
 }

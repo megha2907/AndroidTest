@@ -46,15 +46,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     private TextView mTvNumberOfCards;
 
-    private ImageView mIv2xGlobalPowerup;
-
     private ImageView mIv2xPowerup;
 
     private ImageView mIvNonegsPowerup;
 
     private ImageView mIvPollPowerup;
-
-    private TextView mTv2xGlobalPowerupCount;
 
     private TextView mTv2xPowerupCount;
 
@@ -85,11 +81,9 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mSwipeFlingAdapterView = (SwipeFlingAdapterView) findViewById(R.id.activity_prediction_swipe);
 
         mTvNumberOfCards = (TextView) findViewById(R.id.prediction_tv_number_of_cards);
-        mIv2xGlobalPowerup = (ImageView) findViewById(R.id.powerups_iv_2x_global);
         mIv2xPowerup = (ImageView) findViewById(R.id.powerups_iv_2x);
         mIvNonegsPowerup = (ImageView) findViewById(R.id.powerups_iv_nonegs);
         mIvPollPowerup = (ImageView) findViewById(R.id.powerups_iv_poll);
-        mTv2xGlobalPowerupCount = (TextView) findViewById(R.id.powerup_tv_2x_global_count);
         mTv2xPowerupCount = (TextView) findViewById(R.id.powerup_tv_2x_count);
         mTvNonegsPowerupCount = (TextView) findViewById(R.id.powerup_tv_nonegs_count);
         mTvPollPowerupCount = (TextView) findViewById(R.id.powerup_tv_poll_count);
@@ -171,9 +165,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             case R.id.prediction_iv_right_arrow:
                 mSwipeFlingAdapterView.getTopCardListener().selectRight();
                 break;
-            case R.id.powerups_iv_2x_global:
-                mPredictionPresenter.onClick2xGlobalPowerup();
-                break;
             case R.id.powerups_iv_2x:
                 mPredictionPresenter.onClick2xPowerup();
                 break;
@@ -210,11 +201,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void setNumberofCards(String numberofCards) {
         mTvNumberOfCards.setText(numberofCards);
-    }
-
-    @Override
-    public void set2xGlobalPowerupCount(int count, boolean reverse) {
-        applyAlphaForPowerUp(mIv2xGlobalPowerup, mTv2xGlobalPowerupCount, reverse, count);
     }
 
     @Override
@@ -281,8 +267,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         findViewById(R.id.prediction_iv_shuffle).setVisibility(View.INVISIBLE);
 
         mVgPlayPage.setVisibility(View.INVISIBLE);
-        mIv2xGlobalPowerup.setVisibility(View.GONE);
-        mTv2xGlobalPowerupCount.setVisibility(View.GONE);
 
         mDummyGameFragment = DummyGameFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.prediction_fl_dummy_holder, mDummyGameFragment).commit();
@@ -439,9 +423,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void navigateToBankTransfer(String challengeName, int challengeId, int maxTransferCount, HashMap<String, Integer> powerUps) {
-        BankTransferDialogFragment.newInstance(challengeName, challengeId, maxTransferCount, powerUps)
-                .show(getSupportFragmentManager(), "BankTransfer");
+    public void navigateToBankTransfer(Bundle bundle) {
+        BankTransferDialogFragment.newInstance(bundle).show(getSupportFragmentManager(), "BankTransfer");
     }
 
     @Override

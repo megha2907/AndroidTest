@@ -21,6 +21,7 @@ import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
@@ -42,8 +43,6 @@ import static in.sportscafe.nostragamus.Constants.BundleKeys;
  */
 public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterView.OnSwipeListener<Question> {
 
-    private static final int BANK_TRANSFER_MAX_COUNT = 2;
-
     private final NostragamusDataHandler mNostragamusDataHandler;
 
     private PredictionAdapter mPredictionAdapter;
@@ -54,6 +53,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     private Match mMyResult;
 
+    private Challenge mChallegeInfo;
+
     private boolean mDummyGame = false;
 
     private boolean mFromSettings = false;
@@ -63,8 +64,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     private Integer mMatchId;
 
     private boolean mNeitherOptionAvailable = false;
-
-    private int m2xGlobalPowerups = 0;
 
     private int m2xPowerups = 0;
 
@@ -77,10 +76,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     private long mQuestionSeenTimeInMs = -1;
 
     private long mAnswerLockedTimeInMs;
-
-    private String mChallengeName;
-
-    private int mChallengeId;
 
     private boolean mPowerUpUpdated = false;
 
@@ -104,28 +99,13 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 mPredictionModelListener.onGetSport(bundle.getInt(BundleKeys.SPORT_ID));
             }
 
-            if (bundle.containsKey(BundleKeys.POWERUPS)) {
-                HashMap<String, Integer> powerUpMap = Parcels.unwrap(bundle.getParcelable(BundleKeys.POWERUPS));
-//                TournamentPowerupInfo tournamentPowerupInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.TOURNAMENT_POWERUPS));
-//                HashMap<String, Integer> powerUpMap = tournamentPowerupInfo.getPowerUps();
+            if (bundle.containsKey(BundleKeys.CHALLENGE_INFO)) {
+                mChallegeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_INFO));
 
-                m2xGlobalPowerups = NostragamusDataHandler.getInstance().get2xGlobalPowerupsCount();
-                if(powerUpMap.containsKey(Powerups.XX)) {
-                    m2xPowerups = powerUpMap.get(Powerups.XX);
-                }
-
-                if(powerUpMap.containsKey(Powerups.NO_NEGATIVE)) {
-                    mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
-                }
-
-                if(powerUpMap.containsKey(Powerups.AUDIENCE_POLL)) {
-                    mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
-                }
-            }
-
-            if(bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
-                mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
-                mChallengeName = bundle.getString(BundleKeys.CHALLENGE_NAME);
+                HashMap<String, Integer> powerUpMap = mChallegeInfo.getChallengeUserInfo().getPowerUps();
+                m2xPowerups = powerUpMap.get(Powerups.XX);
+                mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
+                mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
             }
 
             NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.STARTED);
@@ -176,11 +156,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public String getContestName() {
         return String.valueOf(mMyResult.getParties().get(0).getPartyName() + "  vs  " + mMyResult.getParties().get(1).getPartyName());
-    }
-
-    @Override
-    public int get2xGlobalPowerupCount() {
-        return m2xGlobalPowerups;
     }
 
     @Override
@@ -264,23 +239,9 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             case Powerups.XX:
                 mPredictionModelListener.on2xApplied(++m2xPowerups, true);
                 break;
-            case Powerups.XX_GLOBAL:
-                mPredictionModelListener.on2xGlobalApplied(++m2xGlobalPowerups, true);
-                break;
             case Powerups.NO_NEGATIVE:
                 mPredictionModelListener.onNonegsApplied(++mNonegsPowerups, true);
                 break;
-        }
-    }
-
-    @Override
-    public void apply2xGlobalPowerup() {
-        if (isNotPowerupApplied() && m2xGlobalPowerups > 0) {
-            mPredictionAdapter.getTopQuestion().apply2xGlobalPowerUp();
-            notifyTopQuestion();
-
-            m2xGlobalPowerups--;
-            mPredictionModelListener.on2xGlobalApplied(m2xGlobalPowerups, true);
         }
     }
 
@@ -340,23 +301,10 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
-    public String getChallengeName() {
-        return mChallengeName;
-    }
-
-    @Override
-    public int getChallengeId() {
-        return mChallengeId;
-    }
-
-    @Override
-    public int getMaxTransferCount() {
-        return BANK_TRANSFER_MAX_COUNT;
-    }
-
-    @Override
-    public HashMap<String, Integer> getPowerUpBank() {
-        return NostragamusDataHandler.getInstance().getUserInfo().getPowerUps();
+    public Bundle getChallengeInfoBundle() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BundleKeys.CHALLENGE_INFO, Parcels.wrap(mChallegeInfo));
+        return bundle;
     }
 
     @Override
@@ -364,16 +312,15 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         if (bundle.containsKey(BundleKeys.UPDATED_POWERUPS)) {
             HashMap<String, Integer> powerUpMap = Parcels.unwrap(bundle.getParcelable(BundleKeys.UPDATED_POWERUPS));
 
-            m2xGlobalPowerups = NostragamusDataHandler.getInstance().get2xGlobalPowerupsCount();
-            if(powerUpMap.containsKey(Powerups.XX)) {
+            if (powerUpMap.containsKey(Powerups.XX)) {
                 m2xPowerups = powerUpMap.get(Powerups.XX);
             }
 
-            if(powerUpMap.containsKey(Powerups.NO_NEGATIVE)) {
+            if (powerUpMap.containsKey(Powerups.NO_NEGATIVE)) {
                 mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
             }
 
-            if(powerUpMap.containsKey(Powerups.AUDIENCE_POLL)) {
+            if (powerUpMap.containsKey(Powerups.AUDIENCE_POLL)) {
                 mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
             }
 
@@ -498,7 +445,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 mPredictionModelListener.onApiCallStarted();
                 AudiencePollRequest audiencePollRequest = new AudiencePollRequest();
                 audiencePollRequest.setQuestionId(mPredictionAdapter.getTopQuestion().getQuestionId());
-                audiencePollRequest.setChallengeId(mChallengeId);
+                audiencePollRequest.setChallengeId(mChallegeInfo.getChallengeId());
 
                 callAudiencePollApi(audiencePollRequest);
             } else {
@@ -569,7 +516,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             mPredictionModelListener.onApiCallStarted();
 
             question.setAnswerId(answerId);
-            mPostAnswerModel.postAnswer(question, mChallengeId, mPredictionAdapter.getCount() == 0);
+            mPostAnswerModel.postAnswer(question, mChallegeInfo.getChallengeId(), mPredictionAdapter.getCount() == 0);
         }
     }
 
@@ -718,8 +665,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         void notifyTopQuestion();
 
         void onGetSport(Integer sportId);
-
-        void on2xGlobalApplied(int count, boolean reverse);
 
         void on2xApplied(int count, boolean reverse);
 

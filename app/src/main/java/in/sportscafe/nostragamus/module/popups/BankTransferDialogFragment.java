@@ -21,6 +21,8 @@ import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.popups.banktransfer.BankTranferApiModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -37,29 +39,24 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
 
     private TextView mTvPollInBank;
 
-    private TextView mTv2xInAdd;
+    private TextView mTv2xToWithdraw;
 
-    private TextView mTvNonegsInAdd;
+    private TextView mTvNonegsToWithdraw;
 
-    private TextView mTvPollInAdd;
+    private TextView mTvPollToWithdraw;
 
-    private String mChallengeName;
 
-    private int mChallengeId;
+    private Challenge mChallengeInfo;
 
     private int mMaxTransferCount;
 
-    private HashMap<String, Integer> mPowerUpBank = new HashMap<>();
+    private HashMap<String, Integer> mWithdrawnPowerUps = new HashMap<>();
 
-    private HashMap<String, Integer> mTransferedPowerUp = new HashMap<>();
+    private HashMap<String, Integer> mPowerUpsInBank = new HashMap<>();
 
-    public static BankTransferDialogFragment newInstance(String challengeName, int challengeId, int maxTransferCount, HashMap<String, Integer> powerUps) {
-        Bundle bundle = new Bundle();
-        bundle.putString(BundleKeys.CHALLENGE_NAME, challengeName);
-        bundle.putInt(BundleKeys.CHALLENGE_ID, challengeId);
-        bundle.putInt(BundleKeys.MAX_TRANSFER_COUNT, maxTransferCount);
-        bundle.putParcelable(BundleKeys.POWERUPS, Parcels.wrap(powerUps));
+    private HashMap<String, Integer> mPowerUpsToWithdraw = new HashMap<>();
 
+    public static BankTransferDialogFragment newInstance(Bundle bundle) {
         BankTransferDialogFragment fragment = new BankTransferDialogFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -81,7 +78,7 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
 
         initViews();
 
-        initAddPowerUpMap();
+        initWithdrawPowerUps();
 
         openBundle(getArguments());
 
@@ -92,9 +89,9 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
         mTv2xInBank = (TextView) findViewById(R.id.bank_transfer_tv_2x_bank);
         mTvNonegsInBank = (TextView) findViewById(R.id.bank_transfer_tv_nonegs_bank);
         mTvPollInBank = (TextView) findViewById(R.id.bank_transfer_tv_poll_bank);
-        mTv2xInAdd = (TextView) findViewById(R.id.bank_transfer_tv_2x_add_count);
-        mTvNonegsInAdd = (TextView) findViewById(R.id.bank_transfer_tv_nonegs_add_count);
-        mTvPollInAdd = (TextView) findViewById(R.id.bank_transfer_tv_poll_add_count);
+        mTv2xToWithdraw = (TextView) findViewById(R.id.bank_transfer_tv_2x_add_count);
+        mTvNonegsToWithdraw = (TextView) findViewById(R.id.bank_transfer_tv_nonegs_add_count);
+        mTvPollToWithdraw = (TextView) findViewById(R.id.bank_transfer_tv_poll_add_count);
 
         getView().findViewById(R.id.bank_transfer_btn_add).setOnClickListener(this);
         getView().findViewById(R.id.bank_transfer_iv_close).setOnClickListener(this);
@@ -110,21 +107,21 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
     }
 
     private void set2xInBank(int count) {
-        mPowerUpBank.put(Powerups.XX, count);
+        mPowerUpsInBank.put(Powerups.XX, count);
         mTv2xInBank.setText(count + "");
 
         updateBankPowerUpBg(mTv2xInBank, count);
     }
 
     private void setNonegsInBank(int count) {
-        mPowerUpBank.put(Powerups.NO_NEGATIVE, count);
+        mPowerUpsInBank.put(Powerups.NO_NEGATIVE, count);
         mTvNonegsInBank.setText(count + "");
 
         updateBankPowerUpBg(mTvNonegsInBank, count);
     }
 
     private void setPollInBank(int count) {
-        mPowerUpBank.put(Powerups.AUDIENCE_POLL, count);
+        mPowerUpsInBank.put(Powerups.AUDIENCE_POLL, count);
         mTvPollInBank.setText(count + "");
 
         updateBankPowerUpBg(mTvPollInBank, count);
@@ -138,56 +135,59 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
         }
     }
 
-    private void set2xInAdd(int count) {
-        mTransferedPowerUp.put(Powerups.XX, count);
-        mTv2xInAdd.setText(count + "");
+    private void set2xToWithdraw(int count) {
+        mPowerUpsToWithdraw.put(Powerups.XX, count);
+        mTv2xToWithdraw.setText(count + "");
     }
 
-    private void setNonegsInAdd(int count) {
-        mTransferedPowerUp.put(Powerups.NO_NEGATIVE, count);
-        mTvNonegsInAdd.setText(count + "");
+    private void setNonegsToWithdraw(int count) {
+        mPowerUpsToWithdraw.put(Powerups.NO_NEGATIVE, count);
+        mTvNonegsToWithdraw.setText(count + "");
     }
 
-    private void setPollInAdd(int count) {
-        mTransferedPowerUp.put(Powerups.AUDIENCE_POLL, count);
-        mTvPollInAdd.setText(count + "");
+    private void setPollToWithdraw(int count) {
+        mPowerUpsToWithdraw.put(Powerups.AUDIENCE_POLL, count);
+        mTvPollToWithdraw.setText(count + "");
     }
 
     private int get2xInBank() {
-        return mPowerUpBank.get(Powerups.XX);
+        return mPowerUpsInBank.get(Powerups.XX);
     }
 
     private int getNonegsInBank() {
-        return mPowerUpBank.get(Powerups.NO_NEGATIVE);
+        return mPowerUpsInBank.get(Powerups.NO_NEGATIVE);
     }
 
     private int getPollInBank() {
-        return mPowerUpBank.get(Powerups.AUDIENCE_POLL);
+        return mPowerUpsInBank.get(Powerups.AUDIENCE_POLL);
     }
 
-    private int get2xInAdd() {
-        return mTransferedPowerUp.get(Powerups.XX);
+    private int get2xToWithdraw() {
+        return mPowerUpsToWithdraw.get(Powerups.XX);
     }
 
-    private int getNonegsInAdd() {
-        return mTransferedPowerUp.get(Powerups.NO_NEGATIVE);
+    private int getNonegsToWithdraw() {
+        return mPowerUpsToWithdraw.get(Powerups.NO_NEGATIVE);
     }
 
-    private int getPollInAdd() {
-        return mTransferedPowerUp.get(Powerups.AUDIENCE_POLL);
+    private int getPollToWithdraw() {
+        return mPowerUpsToWithdraw.get(Powerups.AUDIENCE_POLL);
     }
 
-    private void initAddPowerUpMap() {
-        mTransferedPowerUp.put(Powerups.XX, 0);
-        mTransferedPowerUp.put(Powerups.NO_NEGATIVE, 0);
-        mTransferedPowerUp.put(Powerups.AUDIENCE_POLL, 0);
+    private void initWithdrawPowerUps() {
+        mPowerUpsToWithdraw.put(Powerups.XX, 0);
+        mPowerUpsToWithdraw.put(Powerups.NO_NEGATIVE, 0);
+        mPowerUpsToWithdraw.put(Powerups.AUDIENCE_POLL, 0);
     }
 
     private void openBundle(Bundle bundle) {
-        mChallengeName = bundle.getString(BundleKeys.CHALLENGE_NAME);
-        mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
-        mMaxTransferCount = bundle.getInt(BundleKeys.MAX_TRANSFER_COUNT);
-        mPowerUpBank = Parcels.unwrap(bundle.getParcelable(BundleKeys.POWERUPS));
+        mChallengeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_INFO));
+
+        ChallengeUserInfo challengeUserInfo = mChallengeInfo.getChallengeUserInfo();
+        mMaxTransferCount = challengeUserInfo.getMaxWithdrawLimit();
+        mWithdrawnPowerUps = challengeUserInfo.getWithdrawnPowerUps();
+
+        mPowerUpsInBank = NostragamusDataHandler.getInstance().getUserInfo().getPowerUps();
     }
 
     private void populateBankPowerUp() {
@@ -196,7 +196,7 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
         setPollInBank(getPollInBank());
 
         ((TextView) findViewById(R.id.bank_transfer_tv_add_limit)).setText(String.format("You can add %1d of each powerup to", mMaxTransferCount));
-        ((TextView) findViewById(R.id.bank_transfer_tv_challenge_name)).setText(mChallengeName);
+        ((TextView) findViewById(R.id.bank_transfer_tv_challenge_name)).setText(mChallengeInfo.getName());
     }
 
     private void transferToChallenge() {
@@ -207,7 +207,7 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
                 dismissProgressbar();
 
                 UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
-                userInfo.getInfoDetails().setPowerUps(mPowerUpBank);
+                userInfo.getInfoDetails().setPowerUps(mPowerUpsInBank);
                 NostragamusDataHandler.getInstance().setUserInfo(userInfo);
 
                 broadcastUpdatedPowerUp(powerUps);
@@ -227,7 +227,7 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
                 dismissProgressbar();
                 showMessage(message, Toast.LENGTH_LONG);
             }
-        }).transferToChallenge(mTransferedPowerUp, mChallengeId);
+        }).transferToChallenge(mPowerUpsToWithdraw, mChallengeInfo.getChallengeId());
     }
 
     private void broadcastUpdatedPowerUp(HashMap<String, Integer> powerUps) {
@@ -248,67 +248,64 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
                 dismiss();
                 break;
             case R.id.bank_transfer_iv_2x_minus:
-                bankCount = get2xInBank() + 1;
-                transferCount = get2xInAdd() - 1;
-                if (checkTransferLimit(transferCount)) {
-                    set2xInAdd(transferCount);
-                    set2xInBank(bankCount);
-                }
+                removeFromChallenge(Powerups.XX);
                 break;
             case R.id.bank_transfer_iv_2x_plus:
-                bankCount = get2xInBank() - 1;
-                transferCount = get2xInAdd() + 1;
-                if (checkBankLimit(bankCount) && checkTransferLimit(transferCount)) {
-                    set2xInAdd(transferCount);
-                    set2xInBank(bankCount);
-                }
+                addToChallenge(Powerups.XX);
                 break;
             case R.id.bank_transfer_iv_nonegs_minus:
-                bankCount = getNonegsInBank() + 1;
-                transferCount = getNonegsInAdd() - 1;
-                if (checkTransferLimit(transferCount)) {
-                    setNonegsInAdd(transferCount);
-                    setNonegsInBank(bankCount);
-                }
+                removeFromChallenge(Powerups.NO_NEGATIVE);
                 break;
             case R.id.bank_transfer_iv_nonegs_plus:
-                bankCount = getNonegsInBank() - 1;
-                transferCount = getNonegsInAdd() + 1;
-                if (checkBankLimit(bankCount) && checkTransferLimit(transferCount)) {
-                    setNonegsInAdd(transferCount);
-                    setNonegsInBank(bankCount);
-                }
+                addToChallenge(Powerups.NO_NEGATIVE);
                 break;
             case R.id.bank_transfer_iv_poll_minus:
-                bankCount = getPollInBank() + 1;
-                transferCount = getPollInAdd() - 1;
-                if (checkTransferLimit(transferCount)) {
-                    setPollInAdd(transferCount);
-                    setPollInBank(bankCount);
-                }
+                removeFromChallenge(Powerups.AUDIENCE_POLL);
                 break;
             case R.id.bank_transfer_iv_poll_plus:
-                bankCount = getPollInBank() - 1;
-                transferCount = getPollInAdd() + 1;
-                if (checkBankLimit(bankCount) && checkTransferLimit(transferCount)) {
-                    setPollInAdd(transferCount);
-                    setPollInBank(bankCount);
-                }
+                addToChallenge(Powerups.AUDIENCE_POLL);
                 break;
         }
     }
 
-    private boolean checkTransferLimit(int count) {
-        if (count > mMaxTransferCount) {
+    private void addToChallenge(String powerUpId) {
+        updatePowerUps(powerUpId, mPowerUpsInBank.get(powerUpId) - 1, mPowerUpsToWithdraw.get(powerUpId) + 1);
+    }
+
+    private void removeFromChallenge(String powerUpId) {
+        updatePowerUps(powerUpId, mPowerUpsInBank.get(powerUpId) + 1, mPowerUpsToWithdraw.get(powerUpId) - 1);
+    }
+
+    private void updatePowerUps(String powerUpId, int amountInBank, int withdrawAmout) {
+        if (checkBankLimit(amountInBank) && checkWithdrawLimit(withdrawAmout, mWithdrawnPowerUps.get(powerUpId))) {
+            switch (powerUpId) {
+                case Powerups.XX:
+                    set2xToWithdraw(withdrawAmout);
+                    set2xInBank(amountInBank);
+                    break;
+                case Powerups.NO_NEGATIVE:
+                    setNonegsToWithdraw(withdrawAmout);
+                    setNonegsInBank(amountInBank);
+                    break;
+                case Powerups.AUDIENCE_POLL:
+                    setPollToWithdraw(withdrawAmout);
+                    setPollInBank(amountInBank);
+                    break;
+            }
+        }
+    }
+
+    private boolean checkWithdrawLimit(int withdrawAmount, int alreadyWithdrawnAmout) {
+        if(withdrawAmount > 0 && (withdrawAmount + alreadyWithdrawnAmout) > mMaxTransferCount) {
             showMessage("You can't add more than " + mMaxTransferCount + " powerups in one category");
             return false;
         }
-        return count >= 0;
+        return withdrawAmount >= 0;
     }
 
     private boolean checkBankLimit(int count) {
         if (count < 0) {
-            showMessage("Powerup not available");
+            showMessage("Powerup is not available in your bank");
             return false;
         }
         return true;
