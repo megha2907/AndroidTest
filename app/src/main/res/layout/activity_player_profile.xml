@@ -314,14 +314,14 @@
                 android:background="@color/profile_tab_color"
                 android:elevation="@dimen/dp_0"
                 app:layout_collapseMode="pin"
-                app:selected_typeface="roboto_condensed"
+                app:selected_typeface="lato_bold"
                 app:tabIndicatorColor="@color/tabcolor"
                 app:tabIndicatorHeight="@dimen/dp_3"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextAppearance="@style/ProfileTabLayoutTextAppearance"
                 app:tabTextColor="@color/white_60"
                 app:unselected_textSize="@dimen/dp_14"
-                app:unselected_typeface="roboto_condensed" />
+                app:unselected_typeface="lato_regular" />
 
         </android.support.design.widget.AppBarLayout>
 

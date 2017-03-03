@@ -2,7 +2,6 @@ package in.sportscafe.nostragamus.module.allchallenges.challenge;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -39,6 +38,7 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -52,15 +52,12 @@ import static in.sportscafe.nostragamus.R.layout;
  */
 public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHolder> {
 
-    private Resources mResources;
-
     private boolean mSwipeView = true;
 
     private int mTagId;
 
     public ChallengeAdapter(Context context, List<Challenge> challenges, boolean swipeView, int tagId) {
         super(context);
-        mResources = context.getResources();
         mSwipeView = swipeView;
         mTagId = tagId;
         addAll(challenges);
@@ -96,9 +93,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mTvChallengePrice.setVisibility(View.INVISIBLE);
         }
 
-        holder.mIv2xPowerup.setBackground(getPowerupDrawable(color.dodger_blue));
-        holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(color.amaranth));
-        holder.mIvPollPowerup.setBackground(getPowerupDrawable(color.greencolor));
+        Context context = holder.mIv2xPowerup.getContext();
+        holder.mIv2xPowerup.setBackground(getPowerupDrawable(context, color.dodger_blue));
+        holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(context, color.amaranth));
+        holder.mIvPollPowerup.setBackground(getPowerupDrawable(context, color.greencolor));
 
         try {
             HashMap<String, Integer> powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
@@ -205,6 +203,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         ShadowLayout mSlShowGameBg;
         TextView mTvShowGames;
 
+        RelativeLayout mRlShowGames;
         RelativeLayout mRlTimer;
 
         TextView mTvGamesLeftCount;
@@ -231,7 +230,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mSlShowGameBg = (ShadowLayout) V.findViewById(id.all_challenges_sl_anim_bg);
             mRlTimer = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_timer);
             mTvShowGames = (TextView) V.findViewById(id.all_challenges_row_tv_show_games);
-            mTvShowGames.setOnClickListener(this);
+            mRlShowGames = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_show_games);
+            mRlShowGames.setOnClickListener(this);
 
             V.findViewById(R.id.all_challenges_rl_leadboard).setOnClickListener(this);
 //            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
@@ -241,7 +241,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         public void onClick(View view) {
             Context context = view.getContext();
             switch (view.getId()) {
-                case R.id.all_challenges_row_tv_show_games:
+                case R.id.all_challenges_row_rl_show_games:
                     Intent intent = new Intent(IntentActions.ACTION_CHALLENGE_CLICK);
                     intent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
                     intent.putExtra(BundleKeys.CHALLENGE_TAG_ID, mTagId);
@@ -270,11 +270,11 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
 
 
-    private Drawable getPowerupDrawable(int colorRes) {
+    private Drawable getPowerupDrawable(Context context, int colorRes) {
         GradientDrawable powerupDrawable = new GradientDrawable();
         powerupDrawable.setShape(GradientDrawable.RECTANGLE);
-        powerupDrawable.setCornerRadius(mResources.getDimensionPixelSize(dimen.dp_5));
-        powerupDrawable.setColor(mResources.getColor(colorRes));
+        powerupDrawable.setCornerRadius(context.getResources().getDimensionPixelSize(dimen.dp_5));
+        powerupDrawable.setColor(ViewUtils.getColor(context, colorRes));
         return powerupDrawable;
     }
 

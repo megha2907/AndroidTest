@@ -19,6 +19,8 @@ import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 
+import in.sportscafe.nostragamus.utils.ViewUtils;
+
 /**
  * TODO: document your custom view class.
  */
@@ -116,7 +118,7 @@ public class FrameLayoutWithHole extends FrameLayout {
         mPaint = new Paint();
         mPaint.setColor(0xcc000000);
         transparentPaint = new Paint();
-        transparentPaint.setColor(getResources().getColor(android.R.color.transparent));
+        transparentPaint.setColor(ViewUtils.getColor(getContext(), android.R.color.transparent));
         transparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
         mEraser = new Paint();

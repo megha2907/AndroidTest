@@ -231,7 +231,7 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
         GradientDrawable powerupDrawable = new GradientDrawable();
         powerupDrawable.setShape(GradientDrawable.RECTANGLE);
         powerupDrawable.setCornerRadius(getResources().getDimensionPixelSize(R.dimen.dp_5));
-        powerupDrawable.setColor(getResources().getColor(colorRes));
+        powerupDrawable.setColor(ViewUtils.getColor(getContext(), colorRes));
         return powerupDrawable;
     }
 
