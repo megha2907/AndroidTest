@@ -38,7 +38,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:text="Office Group"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_16"
                 app:typeface="lato_regular" />
@@ -51,7 +50,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_2"
-                android:src="@drawable/right_arrow_feedicon" />
+                android:src="@drawable/back_icon_grey"
+                android:rotation="180"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/all_groups_tv_GroupMembers"
@@ -60,8 +60,7 @@
                 android:layout_below="@+id/all_groups_tv_groupName"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_2"
-                android:text="3 Members"
-                android:textColor="@color/silver_chalice"
+                android:textColor="@color/white_60"
                 android:textSize="@dimen/dp_13"
                 app:typeface="roboto_condensed" />
 

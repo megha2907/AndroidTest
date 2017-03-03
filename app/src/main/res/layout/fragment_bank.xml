@@ -270,7 +270,7 @@
                     android:layout_marginLeft="@dimen/dp_3"
                     android:layout_toRightOf="@+id/bank_tv_use_powerbank"
                     android:src="@drawable/powerbank_profile_icon"
-                    android:layout_marginTop="@dimen/dp_1"/>
+                    android:layout_marginTop="@dimen/dp_2"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"

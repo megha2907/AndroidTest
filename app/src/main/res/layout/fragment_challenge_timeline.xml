@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/challenge_timeline_tv_match_left"
-        android:background="@color/colorPrimary"
+        android:background="@color/black"
         android:clipToPadding="false"
         android:paddingTop="@dimen/dp_5" />
 

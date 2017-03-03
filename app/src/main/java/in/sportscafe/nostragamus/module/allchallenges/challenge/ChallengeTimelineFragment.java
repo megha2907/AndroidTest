@@ -93,7 +93,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
     private void setMatchesLeft(String matchesLeft, String matches) {
         if (!TextUtils.isEmpty(matchesLeft)) {
             if (matchesLeft.equals("0")) {
-                mTvMatchesLeft.setText("No Games");
+                mTvMatchesLeft.setText("No Games Left");
             } else {
                 mTvMatchesLeft.setText(matchesLeft+"/"+matches + " Games Left");
             }

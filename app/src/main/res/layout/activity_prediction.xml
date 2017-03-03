@@ -148,18 +148,19 @@
 
         <!--<include layout="@layout/inflater_swipe_card_row" />-->
 
-        <ImageView
+        <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/prediction_iv_shuffle"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignRight="@id/prediction_cv_bg_0"
             android:clickable="true"
             android:onClick="onClick"
             android:paddingBottom="@dimen/dp_10"
-            android:paddingLeft="@dimen/dp_10"
             android:paddingTop="@dimen/dp_10"
-            android:scaleType="fitEnd"
-            android:src="@drawable/shuffle" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_16"
+            app:typeface="roboto_condensed"
+            android:text="Skip" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/prediction_tv_number_of_cards"

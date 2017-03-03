@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.popups;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,7 @@ public class PowerupDialogFragment extends DialogFragment {
         ImageView imageView = (ImageView) powerUpView.findViewById(R.id.powerup_iv_icon);
         imageView.setImageResource(iconRes);
 
-        ((ShadowLayout) powerUpView.findViewById(R.id.powerup_sl_icon_bg)).setFillColor(getContext().getColor(bgColorRes));
+        ((ShadowLayout) powerUpView.findViewById(R.id.powerup_sl_icon_bg)).setFillColor(ContextCompat.getColor(getContext(),bgColorRes));
 
         return powerUpView;
     }

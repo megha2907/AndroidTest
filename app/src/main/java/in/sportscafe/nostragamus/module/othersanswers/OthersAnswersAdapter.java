@@ -164,7 +164,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         holder.mRlHighestMatchPoints.setVisibility(View.GONE);
         holder.mSlLeaderBoard.setVisibility(View.GONE);
         holder.mTvMatchPointsTxt.setText("Average Score");
-        holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountMatchPowerupsUsed())+" Powerup Used");
+        holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountMatchPowerupsUsed()));
         holder.mTvResultCorrectCount.setText(match.getCountMatchPlayers().toString()+" People Answered");
 
         List<Question> questions = match.getQuestions();

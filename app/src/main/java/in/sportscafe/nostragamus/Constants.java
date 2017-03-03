@@ -34,6 +34,7 @@ public interface Constants {
         String BADGE_REQUEST = "badges";
         String REQUEST_ACCEPTED = "REQUEST ACCEPTED";
         String REQUEST_REJECTED = "REQUEST REJECTED";
+        String CHALLENGE_NAME_NOTIFICATION = "challenge_name";
 
     }
 
