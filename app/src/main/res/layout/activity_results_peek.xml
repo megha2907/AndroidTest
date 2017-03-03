@@ -51,11 +51,21 @@
                             android:id="@+id/results_peek_tv_match_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
                             android:textColor="@color/white"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/dp_10"
                             android:textSize="@dimen/dp_14"
                             app:typeface="lato_regular" />
 
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/results_peek_tv_challenge_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/white_60"
+                            android:layout_below="@+id/results_peek_tv_match_name"
+                            android:textSize="@dimen/dp_12"
+                            app:typeface="lato_regular" />
 
                         <ImageButton
                             android:id="@+id/results_peek_btn_back"

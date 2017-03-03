@@ -46,7 +46,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_12"
-                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginTop="@dimen/dp_6"
                             android:background="@android:color/transparent"
                             android:onClick="onClick"
                             android:padding="@dimen/dp_10"
@@ -73,11 +73,35 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginRight="@dimen/dp_5"
-                            android:layout_marginTop="@dimen/dp_16"
-                            android:text="Cricket"
+                            android:layout_marginTop="@dimen/dp_12"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dp_14"
                             app:typeface="roboto_condensed" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/points_group_heading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginRight="@dimen/dp_5"
+                            android:layout_marginTop="@dimen/dp_12"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dp_14"
+                            app:typeface="roboto_condensed"
+                            android:visibility="gone"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/points_group_sub_heading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/points_group_heading"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:textColor="@color/white"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/dp_12"
+                            app:typeface="lato_regular"
+                            android:visibility="gone"/>
 
 
                         <RelativeLayout
@@ -86,7 +110,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/points_sp_name"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="@dimen/dp_9">
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:visibility="visible">
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:layout_width="wrap_content"

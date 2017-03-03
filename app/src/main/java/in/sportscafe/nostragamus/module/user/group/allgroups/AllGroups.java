@@ -47,6 +47,9 @@ public class AllGroups {
 
     @JsonProperty("count_group_members")
     public Integer getCountGroupMembers() {
+        if (null==countGroupMembers){
+            countGroupMembers = 0;
+        }
         return countGroupMembers;
     }
 

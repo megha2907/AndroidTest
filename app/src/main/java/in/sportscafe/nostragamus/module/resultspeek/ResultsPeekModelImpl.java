@@ -35,6 +35,8 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
 
     private String mPlayerName;
 
+    private String mChallengeName;
+
     private String mMatchStage;
 
     private Integer playerPoints;
@@ -42,7 +44,6 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
     private Integer myPoints;
 
     private List<ResultsPeek> mResultsPeek = new ArrayList<>();
-    ;
 
     private ResultsPeekModelImpl.ResultsPeekModelListener mResultsPeekModelListener;
 
@@ -80,6 +81,7 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
                                 if (!response.body().getMyResults().isEmpty()) {
                                 playerPoints = response.body().getMyResults().get(0).getMatchPoints();
                                 mMatchStage = response.body().getMyResults().get(0).getStage();
+                                mChallengeName = response.body().getMyResults().get(0).getChallengeName();
                                 List<Question> playerQuestionsList = response.body().getMyResults().get(0).getQuestions();
                                 for (Question playerQuestion : playerQuestionsList) {
                                     mResultsPeek.add(new ResultsPeek(playerQuestion));
@@ -116,9 +118,9 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
                                         mResultsPeek.get(count++).setPlayerOneQuestions(myQuestion);
                                     }
 
-                                    mResultsPeekModelListener.onSuccessBothResults(myPoints, playerPoints, mMatchStage);
+                                    mResultsPeekModelListener.onSuccessBothResults(myPoints, playerPoints, mMatchStage,mChallengeName);
                                 } else {
-                                    mResultsPeekModelListener.onSuccessBothResults(myPoints, playerPoints, mMatchStage);
+                                    mResultsPeekModelListener.onSuccessBothResults(myPoints, playerPoints, mMatchStage,mChallengeName);
                                 }
 
                             } else {
@@ -150,7 +152,7 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
 
         void onFailedResults();
 
-        void onSuccessBothResults(Integer myPoints, Integer playerPoints, String matchStage);
+        void onSuccessBothResults(Integer myPoints, Integer playerPoints, String matchStage, String challengeName);
 
         void setPlayerProfileData(String playerPhoto, String playerName);
     }

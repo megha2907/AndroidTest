@@ -16,5 +16,5 @@ public interface ResultsPeekView extends InAppView{
 
     void setAdapter(RecyclerView.Adapter adapter);
 
-    void setPointsAndMatch(Integer myPoints, Integer playerPoints,String matchStage);
+    void setPointsAndMatch(Integer myPoints, Integer playerPoints, String matchStage, String challengeName);
 }

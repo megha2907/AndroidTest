@@ -2,9 +2,6 @@ package in.sportscafe.nostragamus.module.resultspeek;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-
-import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -68,9 +65,9 @@ public class ResultsPeekPresenterImpl implements ResultsPeekPresenter, ResultsPe
     }
 
     @Override
-    public void onSuccessBothResults(Integer myPoints,Integer playerPoints,String matchStage) {
+    public void onSuccessBothResults(Integer myPoints, Integer playerPoints, String matchStage, String challengeName) {
         mResultsPeekBoardView.dismissProgressbar();
-        mResultsPeekBoardView.setPointsAndMatch(myPoints,playerPoints,matchStage);
+        mResultsPeekBoardView.setPointsAndMatch(myPoints,playerPoints,matchStage,challengeName);
         onCreateResultsPeekAdapter();
     }
 
