@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.allchallenges.challenge;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +21,6 @@ import com.jeeva.android.widgets.recyclerviewpager.RecyclerViewPager;
 
 import org.parceler.Parcels;
 
-import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -49,6 +49,8 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
     private ChallengeTimelineFragment mTimelineFragment;
 
+    private TimerRunnable mTimerRunnable;
+
     public static ChallengeFragment newInstance(List<Challenge> challenges, int tagId) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(BundleKeys.CHALLENGE_LIST, Parcels.wrap(challenges));
@@ -70,6 +72,8 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mTimerRunnable = new TimerRunnable();
 
         getChildFragmentManager().beginTransaction().replace(R.id.challenges_fl_match_holder,
                 mTimelineFragment = ChallengeTimelineFragment.newInstance()).commit();
@@ -140,7 +144,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
             int coords[] = new int[2];
             mRcvVertical.getChildAt(0).getLocationInWindow(coords);
             mFirstItemY = coords[1];
-            mYDelta = getResources().getDimensionPixelSize(R.dimen.dp_40);
+            mYDelta = getResources().getDimensionPixelSize(R.dimen.dp_25);
             mVerticalChildHeight = mRcvVertical.getChildAt(0).getMeasuredHeight();
             mHorizontalChildHeight = mRcvHorizontal.getChildAt(0).getMeasuredHeight() + mYDelta;
         }
@@ -238,7 +242,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         }
 
         View showGamesBg = mRcvVertical.getChildAt(i).findViewById(R.id.all_challenges_sl_anim_bg);
-        if(in) {
+        if (in) {
             showShowGamesBg(showGamesBg);
         } else {
             hideShowGamesBg(showGamesBg);
@@ -406,5 +410,84 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         }
         animation.setDuration(500);
         return animation;
+    }
+
+    private class TimerRunnable implements Runnable {
+
+        private int firstTimeSeconds = -1;
+
+        private Handler customHandler;
+
+        private TimerRunnable() {
+            customHandler = new Handler();
+            customHandler.post(this);
+        }
+
+        public void run() {
+            int horCount = mRcvHorizontal.getChildCount();
+            int verCount = mRcvVertical.getChildCount();
+            for (int i = 0; i < horCount || i < verCount; i++) {
+                if (i < horCount) {
+                    updateTimer((ChallengeAdapter.ViewHolder) mRcvHorizontal.getChildViewHolder(mRcvHorizontal.getChildAt(i)));
+                }
+
+                if (i < verCount) {
+                    updateTimer((ChallengeAdapter.ViewHolder) mRcvVertical.getChildViewHolder(mRcvVertical.getChildAt(i)));
+                }
+            }
+
+            firstTimeSeconds = -1;
+
+            customHandler.postDelayed(this, 1000);
+        }
+
+        private void updateTimer(ChallengeAdapter.ViewHolder viewHolder) {
+            if (View.VISIBLE != viewHolder.mRlTimer.getVisibility()) {
+                return;
+            }
+
+            long updatedTime = Long.parseLong(viewHolder.mRlTimer.getTag().toString());
+            if (updatedTime < 1000) {
+                viewHolder.mRlTimer.setVisibility(View.GONE);
+                return;
+            }
+
+            viewHolder.mRlTimer.setTag(updatedTime - 1000);
+
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            int hours = mins / 60;
+            int days = hours / 24;
+            hours = hours % 24;
+            mins = mins % 60;
+            secs = secs % 60;
+            if(firstTimeSeconds == -1) {
+                firstTimeSeconds = secs;
+            }
+
+            viewHolder.mTvChallengeDaysLeft.setText(String.format("%02d", days) + "d");
+            viewHolder.mTvChallengeHoursLeft.setText(String.format("%02d", hours) + "h");
+            viewHolder.mTvChallengeMinsLeft.setText(String.format("%02d", mins) + "m");
+            viewHolder.mTvChallengeSecsLeft.setText(String.format("%02d", firstTimeSeconds) + "s");
+        }
+
+        private void destroy() {
+            customHandler.removeCallbacks(this);
+            customHandler = null;
+        }
+
+    }
+
+    private void test() {
+        int count = mRcvHorizontal.getChildCount();
+        for (int i = 0; i < count; i++) {
+            mRcvHorizontal.getChildViewHolder(mRcvHorizontal.getChildAt(i));
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mTimerRunnable.destroy();
     }
 }

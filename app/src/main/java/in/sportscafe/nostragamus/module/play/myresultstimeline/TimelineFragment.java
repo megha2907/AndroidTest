@@ -67,7 +67,7 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
         super.onActivityCreated(savedInstanceState);
 
         Bundle bundle = getArguments();
-        if((null != bundle && bundle.containsKey(BundleKeys.PLAYER_USER_ID)) || null == savedInstanceState) {
+        if ((null != bundle && bundle.containsKey(BundleKeys.PLAYER_USER_ID)) || null == savedInstanceState) {
             this.mRcvFeed = (RecyclerView) findViewById(R.id.feed_rv);
 
             mLinearLayoutManager = new LinearLayoutManager(getContext(),
@@ -90,9 +90,11 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
             mRcvFeed.post(new Runnable() {
                 @Override
                 public void run() {
-                    mVisibleHeight = mRcvFeed.getMeasuredHeight();
-                    mHalfVisibleHeight = getResources().getDimensionPixelSize(R.dimen.dp_220);
-                    mDifference = mVisibleHeight - mHalfVisibleHeight;
+                    if (null != getContext()) {
+                        mVisibleHeight = mRcvFeed.getMeasuredHeight();
+                        mHalfVisibleHeight = getResources().getDimensionPixelSize(R.dimen.dp_220);
+                        mDifference = mVisibleHeight - mHalfVisibleHeight;
+                    }
                 }
             });
 
@@ -100,7 +102,7 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
                 @Override
                 public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 
-                    if(mAppbarExpanded) {
+                    if (mAppbarExpanded) {
                         View child = null;
                         int[] location = new int[2];
                         int yAxis;
@@ -146,7 +148,7 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
 
     private float getRotationByY(int yAxis) {
         float rotation = MAX_ROTATION * (yAxis - mHalfVisibleHeight) / mDifference;
-        if(rotation < 0) {
+        if (rotation < 0) {
             return 0;
         }
         return rotation;
@@ -155,7 +157,7 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
     @Override
     public void onDetach() {
         super.onDetach();
-        if(null != myResultsTimelinePresenter) {
+        if (null != myResultsTimelinePresenter) {
             myResultsTimelinePresenter.onDestroy();
         }
     }

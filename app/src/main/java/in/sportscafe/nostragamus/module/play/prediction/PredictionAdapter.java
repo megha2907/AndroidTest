@@ -130,11 +130,12 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         mTopMargin = (int) (screenHeight * GAP_BW_HEADER_CARD_PERECENTAGE);
         rlp.topMargin = mTopMargin;
 
+        int headerHeight = rootView.findViewById(R.id.prediction_rl_header).getMeasuredHeight();
         ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_left_right_indicator).getLayoutParams())
-                .topMargin = (int) (mTopMargin + rlp.height - screenHeight * 1.5f / 100 - mOptionHeight / 2f);
+                .topMargin = (int) (mTopMargin + rlp.height - screenHeight * 1.5f / 100 - mOptionHeight / 2f + headerHeight);
 
         ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_neither_indicator).getLayoutParams())
-                .topMargin = (int) (mTopMargin + rlp.height - mOptionHeight);
+                .topMargin = (int) (mTopMargin + rlp.height - mOptionHeight + headerHeight);
 
         vBgFrame1 = rootView.findViewById(R.id.prediction_cv_bg_1);
         vBgFrame1.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);

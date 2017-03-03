@@ -32,6 +32,7 @@
         android:id="@+id/lb_landing_sv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="none"
         android:layout_below="@+id/lb_landing_toolbar">
 
         <LinearLayout

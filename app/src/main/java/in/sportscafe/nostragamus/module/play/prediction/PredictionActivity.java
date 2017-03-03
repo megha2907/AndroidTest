@@ -263,6 +263,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         findViewById(R.id.prediction_iv_left_arrow).setVisibility(View.INVISIBLE);
         findViewById(R.id.prediction_iv_right_arrow).setVisibility(View.INVISIBLE);
         findViewById(R.id.prediction_iv_shuffle).setVisibility(View.INVISIBLE);
+        findViewById(R.id.powerups_iv_bank).setVisibility(View.GONE);
+        findViewById(R.id.powerups_iv_info).setVisibility(View.GONE);
 
         mVgPlayPage.setVisibility(View.INVISIBLE);
 
@@ -335,12 +337,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void showPowerupsHint() {
-        findViewById(R.id.prediction_rl_powerup_hints).setVisibility(View.VISIBLE);
+        findViewById(R.id.powerups_iv_info).setVisibility(View.VISIBLE);
+//        findViewById(R.id.prediction_rl_powerup_hints).setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hidePowerupsHint() {
-        findViewById(R.id.prediction_rl_powerup_hints).setVisibility(View.GONE);
+        findViewById(R.id.powerups_iv_info).setVisibility(View.GONE);
+//        findViewById(R.id.prediction_rl_powerup_hints).setVisibility(View.GONE);
     }
 
     @Override
