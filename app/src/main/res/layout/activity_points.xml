@@ -39,7 +39,7 @@
                     <RelativeLayout
                         android:id="@+id/rl3"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_70">
+                        android:layout_height="@dimen/dp_45">
 
                         <ImageButton
                             android:id="@+id/points_back_icon"
@@ -111,7 +111,7 @@
                             android:layout_below="@+id/points_sp_name"
                             android:layout_centerInParent="true"
                             android:layout_marginTop="@dimen/dp_10"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:layout_width="wrap_content"

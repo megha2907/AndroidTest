@@ -71,10 +71,6 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Window window = getDialog().getWindow();
-        window.setBackgroundDrawableResource(R.color.transparent);
-        window.getAttributes().windowAnimations = R.style.DialogAnimation;
-        setCancelable(false);
 
         initViews();
 
@@ -212,7 +208,7 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
 
                 broadcastUpdatedChallengeInfo(challengeUserInfo);
 
-                showMessage(Alerts.BANK_TRANSFER_SUCCESS);
+//                showMessage(Alerts.BANK_TRANSFER_SUCCESS);
                 dismiss();
             }
 

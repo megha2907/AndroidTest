@@ -50,7 +50,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     private void checkShowStatusOfBankInfo() {
         if (NostragamusDataHandler.getInstance().isBankInfoFirstTimeChecked()
                 && !NostragamusDataHandler.getInstance().isBankInfoShown()) {
-            mPredictionView.showBankInfo(null);
+            onClickBankTransfer();
         }
     }
 
@@ -200,7 +200,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             mPredictionView.showPowerupsHint();
             mPredictionView.showPowerupsCoach();
         } else if (questionNumber == 4) {
-            mPredictionView.hidePowerupsHint();
+//            mPredictionView.hidePowerupsHint();
         }
     }
 
@@ -230,8 +230,8 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onAudiencePollApplied(int count) {
-        mPredictionView.setPollPowerupCount(count, false);
+    public void onAudiencePollApplied(int count, boolean reverse) {
+        mPredictionView.setPollPowerupCount(count, reverse);
     }
 
     @Override

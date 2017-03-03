@@ -247,7 +247,7 @@
                         android:id="@+id/all_challenges_row_tv_timer_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/dp_124"
+                        android:layout_alignLeft="@+id/all_challenges_row_btn_days_left"
                         android:text="ENDS IN"
                         android:layout_alignParentRight="true"
                         android:textColor="@color/white"

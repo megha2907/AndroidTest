@@ -31,11 +31,6 @@ public class BankInfoDialogFragment extends NostragamusDialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Window window = getDialog().getWindow();
-        window.setBackgroundDrawableResource(R.color.transparent);
-        window.getAttributes().windowAnimations = R.style.DialogAnimation;
-
-        setCancelable(false);
 
         getView().findViewById(R.id.bank_info_btn_next).setOnClickListener(new View.OnClickListener() {
             @Override

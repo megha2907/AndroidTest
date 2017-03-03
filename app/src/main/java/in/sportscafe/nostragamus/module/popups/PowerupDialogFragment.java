@@ -2,12 +2,10 @@ package in.sportscafe.nostragamus.module.popups;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,12 +14,13 @@ import com.jeeva.android.widgets.ShadowLayout;
 
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 
 /**
  * Created by Jeeva on 28/02/17.
  */
 
-public class PowerupDialogFragment extends DialogFragment {
+public class PowerupDialogFragment extends NostragamusDialogFragment {
 
     private LinearLayout mLlPowerUpHolder;
 
@@ -38,10 +37,6 @@ public class PowerupDialogFragment extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Window window = getDialog().getWindow();
-        window.setBackgroundDrawableResource(R.color.transparent);
-        window.getAttributes().windowAnimations = R.style.DialogAnimation;
-        setCancelable(false);
 
         mLlPowerUpHolder = (LinearLayout) getView().findViewById(R.id.popup_ll_powerup_holder);
 
