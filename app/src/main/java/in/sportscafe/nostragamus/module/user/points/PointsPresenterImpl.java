@@ -64,6 +64,11 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     }
 
     @Override
+    public void setGroupHeadings(String groupName,String heading) {
+       mPointsView.setGroupHeadings(groupName,heading);
+    }
+
+    @Override
     public void onFailureLeaderBoard(String message) {
         showAlertMsg(message);
     }

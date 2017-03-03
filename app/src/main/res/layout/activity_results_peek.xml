@@ -53,7 +53,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="@dimen/dp_12"
+                            android:layout_marginTop="@dimen/dp_10"
                             android:textSize="@dimen/dp_14"
                             app:typeface="lato_regular" />
 

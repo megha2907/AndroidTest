@@ -55,7 +55,7 @@ public class LBLandingRow extends LinearLayout implements View.OnClickListener {
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mLbLandingAdapter = new LBLandingAdapter(getContext(), needPadding);
+        mLbLandingAdapter = new LBLandingAdapter(getContext(),lbLandingTitle, needPadding);
         mLbLandingAdapter.addAll(lbList);
         mRecyclerView.setAdapter(mLbLandingAdapter);
 

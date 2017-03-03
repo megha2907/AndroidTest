@@ -64,6 +64,7 @@
 
     <string name="powerup_bank_running_low">You seem to be running low!</string>
     <string name="powerup_bank_refer_benefit">You get one of each powerup , everytime a friend joins the game</string>
-    <string name="powerup_bank_add_info">Use the powerbank (+) button on the game screen, to add these powerups to that challenge</string>
+    <string name="powerup_bank_add_info">button on the game screen, to add</string>
+    <string name="powerup_bank_add_info_two">these powerups to that challenge</string>
 
 </resources>

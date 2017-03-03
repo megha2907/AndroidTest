@@ -47,7 +47,11 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     private Button mBtnSortByPowerUps;
 
+    private String mHeading;
+
     private View mSelectedImage;
+
+    private TextView mTvLeaderBoardHeading;
 
     private boolean ismMatchPoints = false;
 
@@ -80,6 +84,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         mTvChallengeDaysLeft = (Button) findViewById(R.id.all_challenges_row_btn_days_left);
         mTvChallengeMinsLeft = (Button) findViewById(R.id.all_challenges_row_btn_mins_left);
         mTvChallengeSecsLeft = (Button) findViewById(R.id.all_challenges_row_btn_secs_left);
+        mTvLeaderBoardHeading = (TextView) findViewById(R.id.points_sp_name);
 
         this.mPointsPresenter = PointsPresenterImpl.newInstance(PointsActivity.this);
         this.mPointsPresenter.onCreatePoints(getIntent().getExtras());
@@ -121,7 +126,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     @Override
     public void setName(String name) {
-        ((TextView) findViewById(R.id.points_sp_name)).setText(name);
+        mTvLeaderBoardHeading.setText(name);
     }
 
     @Override
@@ -164,6 +169,17 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         mTvChallengeHoursLeft.setText(hours);
         mTvChallengeMinsLeft.setText(mins);
         mTvChallengeSecsLeft.setText(secs);
+    }
+
+    @Override
+    public void setGroupHeadings(String groupName, String heading) {
+        TextView mGroupHeading = (TextView) findViewById(R.id.points_group_heading);
+        TextView mGroupSubHeading = (TextView) findViewById(R.id.points_group_sub_heading);
+        mTvLeaderBoardHeading.setVisibility(View.GONE);
+        mGroupHeading.setVisibility(View.VISIBLE);
+        mGroupSubHeading.setVisibility(View.VISIBLE);
+        mGroupHeading.setText(groupName);
+        mGroupSubHeading.setText(heading);
     }
 
     @Override

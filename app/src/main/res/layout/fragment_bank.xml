@@ -247,16 +247,53 @@
                 android:textSize="@dimen/dp_13"
                 app:typeface="lato_bold" />
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_24"
-                android:layout_marginRight="@dimen/dp_24"
-                android:gravity="center"
-                android:text="@string/powerup_bank_add_info"
-                android:textColor="@color/white_50"
-                android:textSize="@dimen/dp_12"
-                app:typeface="lato_regular" />
+                android:layout_gravity="center">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/bank_tv_use_powerbank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:text="Use the powerbank"
+                    android:textColor="@color/white_50"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <ImageView
+                    android:id="@+id/bank_iv_use_powerbank"
+                    android:layout_width="@dimen/dp_12"
+                    android:layout_height="@dimen/dp_12"
+                    android:layout_marginRight="@dimen/dp_3"
+                    android:layout_marginLeft="@dimen/dp_3"
+                    android:layout_toRightOf="@+id/bank_tv_use_powerbank"
+                    android:src="@drawable/powerbank_profile_icon"
+                    android:layout_marginTop="@dimen/dp_1"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_toRightOf="@+id/bank_iv_use_powerbank"
+                    android:text="@string/powerup_bank_add_info"
+                    android:textColor="@color/white_50"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_below="@+id/bank_iv_use_powerbank"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/powerup_bank_add_info_two"
+                    android:textColor="@color/white_50"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+            </RelativeLayout>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
