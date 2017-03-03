@@ -61,7 +61,6 @@ public class UserInfoModelImpl {
             nostragamusDataHandler.setUserInfo(userInfo);
 
             HashMap<String, Integer> powerUpMap = userInfo.getPowerUps();
-            nostragamusDataHandler.set2xGlobalPowerupsCount(powerUpMap.get(Powerups.XX_GLOBAL));
 
             nostragamusDataHandler.set2xPowerupsCount(powerUpMap.get(Powerups.XX));
             nostragamusDataHandler.setNonegsPowerupsCount(powerUpMap.get(Powerups.NO_NEGATIVE));

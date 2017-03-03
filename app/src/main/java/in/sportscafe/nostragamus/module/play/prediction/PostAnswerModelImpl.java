@@ -4,9 +4,7 @@ import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.DateFormats;
-import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
@@ -72,11 +70,6 @@ public class PostAnswerModelImpl {
     private void handlePostAnswerResponse(Answer answer) {
         String powerupId = answer.getPowerUpId();
         if (null != powerupId) {
-            if (Powerups.XX_GLOBAL.equalsIgnoreCase(powerupId)) {
-                NostragamusDataHandler.getInstance().set2xGlobalPowerupsCount(
-                        NostragamusDataHandler.getInstance().get2xGlobalPowerupsCount() - 1
-                );
-            }
             NostragamusAnalytics.getInstance().trackPowerups(AnalyticsActions.APPLIED, powerupId);
         }
 

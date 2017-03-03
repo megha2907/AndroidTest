@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.popups.banktransfer;
 import java.util.HashMap;
 
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -42,7 +43,7 @@ public class BankTranferApiModelImpl {
                     public void onResponse(Call<BankTransferResponse> call, Response<BankTransferResponse> response) {
                         super.onResponse(call, response);
                         if (response.isSuccessful()) {
-                            mBankTransferApiModelListener.onSuccess(response.body().getBankTransfer().getChallengeUserInfo().getPowerUps());
+                            mBankTransferApiModelListener.onSuccess(response.body().getBankTransfer().getChallengeUserInfo());
                         } else {
                             mBankTransferApiModelListener.onFailed(response.message());
                         }
@@ -53,7 +54,7 @@ public class BankTranferApiModelImpl {
 
     public interface BankTransferApiModelListener {
 
-        void onSuccess(HashMap<String, Integer> powerUps);
+        void onSuccess(ChallengeUserInfo challengeUserInfo);
 
         void onNoInternet();
 

@@ -33,8 +33,6 @@ public interface PredictionView extends InAppView {
 
     void setNumberofCards(String numberofCards);
 
-    void set2xGlobalPowerupCount(int count, boolean reverse);
-
     void set2xPowerupCount(int count, boolean reverse);
 
     void setNonegsPowerupCount(int count, boolean reverse);
@@ -85,7 +83,7 @@ public interface PredictionView extends InAppView {
 
     boolean dismissCoach();
 
-    void navigateToBankTransfer(String challengeName, int challengeId, int maxTransferCount, HashMap<String, Integer> powerUps);
+    void navigateToBankTransfer(Bundle bundle);
 
     void showBankInfo(DialogInterface.OnDismissListener dismissListener);
 }
