@@ -75,7 +75,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
 
     public void refreshChallengeMatches(Challenge challenge) {
         mTimelineAdapter.clear();
-        setMatchesLeft(String.valueOf(challenge.getMatches().size()));
+        setMatchesLeft(String.valueOf(challenge.getCountMatchesLeft()),String.valueOf(challenge.getMatches().size()));
 
         HashMap<String, Integer> powerupInfo = null;
         try {
@@ -90,12 +90,12 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
         mRcvFeed.scrollToPosition(0);
     }
 
-    private void setMatchesLeft(String matchesLeft) {
+    private void setMatchesLeft(String matchesLeft, String matches) {
         if (!TextUtils.isEmpty(matchesLeft)) {
             if (matchesLeft.equals("0")) {
                 mTvMatchesLeft.setText("No Games");
             } else {
-                mTvMatchesLeft.setText(matchesLeft + " Games");
+                mTvMatchesLeft.setText(matchesLeft+"/"+matches + " Games Left");
             }
         }
     }

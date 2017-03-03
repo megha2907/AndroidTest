@@ -28,13 +28,15 @@ import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyViewHolder> {
 
     private String mLbLandingType;
+    private String mLbLandingTitle;
     private Integer mGroupId;
     private Integer mChallengeId;
     private boolean mNeedPadding = false;
 
-    public LBLandingAdapter(Context context, boolean needPadding) {
+    public LBLandingAdapter(Context context, String lbLandingTitle, boolean needPadding) {
         super(context);
         this.mNeedPadding = needPadding;
+        this.mLbLandingTitle = lbLandingTitle;
     }
 
     @Override
@@ -120,6 +122,7 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
 
             Bundle bundle = new Bundle();
             bundle.putParcelable(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
+            bundle.putString(BundleKeys.LB_LANDING_TITLE,mLbLandingTitle);
             navigateToPointsActivity(view.getContext(), bundle);
         }
 

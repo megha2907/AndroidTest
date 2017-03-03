@@ -144,9 +144,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             }
 
             if (null != match.getCountPowerUps()) {
-                holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()) + " Powerup Used");
+                holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()));
             }else {
-                holder.mTvNumberofPowerupsUsed.setText("0" + " Powerup Used");
+                holder.mTvNumberofPowerupsUsed.setText("0");
             }
 
         } else {
@@ -187,7 +187,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 }
             }
 
-            holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()) + " Powerup Used");
+            holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()));
             holder.mRlHighestMatchPoints.setTag(match);
         }
 

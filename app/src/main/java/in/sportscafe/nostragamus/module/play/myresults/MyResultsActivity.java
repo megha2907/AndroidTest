@@ -30,6 +30,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,6 +83,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     private Animation fab_open, fab_close, rotate_forward, rotate_backward, share_rotate_forward, share_rotate_backward;
 
     private Button shareResultsBtn;
+    private RelativeLayout mRlshareResults;
 
     private float offset1;
     private float offset2;
@@ -111,6 +113,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
 
         shareResultsBtn = (Button) findViewById(R.id.my_results_ll_share_score);
+        mRlshareResults = (RelativeLayout) findViewById(R.id.my_results_rl_share_score);
         shareResultsBtn.setOnClickListener(this);
 
         /*shareFab = (FloatingActionButton)findViewById(R.id.fab_share);
@@ -507,6 +510,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public void setToolbarHeading(String result) {
         mTitle.setText(result);
+        mRlshareResults.setVisibility(View.GONE);
     }
 
     /*public void onClickbtnfbShare() {

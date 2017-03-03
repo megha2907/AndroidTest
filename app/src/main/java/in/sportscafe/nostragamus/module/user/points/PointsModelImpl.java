@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.user.points;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.jeeva.android.Log;
@@ -57,6 +58,8 @@ public class PointsModelImpl implements PointsModel {
 
     private boolean isMatchPoints = false;
 
+    private String mGroupName;
+
     private boolean isChallengeTimer = true;
 
 
@@ -88,6 +91,10 @@ public class PointsModelImpl implements PointsModel {
                 isChallengeTimer=false;
                 mPointsModelListener.setChallengeTimerView(isChallengeTimer);
                 mGroupId = mLbLanding.getGroupId();
+                if (!TextUtils.isEmpty(bundle.getString(BundleKeys.LB_LANDING_TITLE))){
+                    mPointsModelListener.setGroupHeadings(bundle.getString(BundleKeys.LB_LANDING_TITLE),mLbLanding.getName());
+                }
+
                 break;
             case LBLandingType.CHALLENGE:
                 mChallengeId = mLbLanding.getChallengeId();
@@ -255,5 +262,7 @@ public class PointsModelImpl implements PointsModel {
         void setChallengeTimer(String days, String hours, String mins, String secs);
 
         void setChallengeTimerView(boolean isChallengeTimer);
+
+        void setGroupHeadings(String groupName,String heading);
     }
 }

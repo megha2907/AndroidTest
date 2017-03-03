@@ -20,4 +20,6 @@ public interface PointsView extends InAppView {
     void setChallengeTimerView(boolean isChallengeTimer);
 
     void setChallengeTimer(String days, String hours, String mins, String secs);
+
+    void setGroupHeadings(String groupName,String heading);
 }
