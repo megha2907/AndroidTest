@@ -116,7 +116,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     @Override
     public void updateSportTabTitle(String title) {
-        mPagerAdapter.updateTitle(3, title);
+       // mPagerAdapter.updateTitle(3, title);
     }
 
     @Override

@@ -75,7 +75,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
 
     public void refreshChallengeMatches(Challenge challenge) {
         mTimelineAdapter.clear();
-        setMatchesLeft(challenge.getCountMatchesLeft());
+        setMatchesLeft(String.valueOf(challenge.getMatches().size()));
 
         HashMap<String, Integer> powerupInfo = null;
         try {
@@ -95,7 +95,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
             if (matchesLeft.equals("0")) {
                 mTvMatchesLeft.setText("No Games");
             } else {
-                mTvMatchesLeft.setText(matchesLeft + " Games Left");
+                mTvMatchesLeft.setText(matchesLeft + " Games");
             }
         }
     }

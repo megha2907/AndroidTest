@@ -76,7 +76,7 @@ public class ResultsPeekPresenterImpl implements ResultsPeekPresenter, ResultsPe
 
     @Override
     public void setPlayerProfileData(String playerPhoto, String playerName) {
-        mResultsPeekBoardView.setName(NostragamusDataHandler.getInstance().getUserInfo().getUserName(),playerName);
+        mResultsPeekBoardView.setName(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName(),playerName);
         mResultsPeekBoardView.setProfileImage(NostragamusDataHandler.getInstance().getUserInfo().getPhoto(),playerPhoto);
     }
 

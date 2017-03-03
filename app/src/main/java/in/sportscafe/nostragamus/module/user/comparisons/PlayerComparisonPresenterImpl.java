@@ -52,7 +52,7 @@ public class PlayerComparisonPresenterImpl implements PlayerComparisonPresenter,
     @Override
     public void getPlayerComparisonData(Bundle bundle,String playerName,String playerPhoto) {
 
-        mProfileCompView.setName(NostragamusDataHandler.getInstance().getUserInfo().getUserName(),playerName);
+        mProfileCompView.setName(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName(),playerName);
         mProfileCompView.setProfileImage(NostragamusDataHandler.getInstance().getUserInfo().getPhoto(),playerPhoto);
         mProfileCompView.initMyPosition(bundle);
     }

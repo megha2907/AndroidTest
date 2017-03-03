@@ -85,17 +85,24 @@ public class LBLandingModelImpl implements LBLandingModel {
 
         switch (sortBy){
             case 0:
-                Collections.sort(mlbSummary.get(0).getLeaderBoardItems(), LbLanding.LeaderBoardDateComparator);
+                for (int i=0 ; i < mlbSummary.size() ; i++) {
+                    Collections.sort(mlbSummary.get(i).getLeaderBoardItems(), LbLanding.LeaderBoardDateComparator);
+                }
                 break;
             case 1:
-                Collections.sort(mlbSummary.get(0).getLeaderBoardItems(), LbLanding.LeaderBoardRankComparator);
+                for (int i=0 ; i < mlbSummary.size() ; i++) {
+                    Collections.sort(mlbSummary.get(i).getLeaderBoardItems(), LbLanding.LeaderBoardRankComparator);
+                }
                 break;
             case 2:
-                Collections.sort(mlbSummary.get(0).getLeaderBoardItems(), LbLanding.LeaderBoardRankChangeComparator);
-
+                for (int i=0 ; i < mlbSummary.size() ; i++) {
+                    Collections.sort(mlbSummary.get(i).getLeaderBoardItems(), LbLanding.LeaderBoardRankChangeComparator);
+                }
                 break;
             case 3:
-                Collections.sort(mlbSummary.get(0).getLeaderBoardItems(), LbLanding.LeaderBoardPlayedMatchesComparator);
+                for (int i=0 ; i < mlbSummary.size() ; i++) {
+                    Collections.sort(mlbSummary.get(i).getLeaderBoardItems(), LbLanding.LeaderBoardPlayedMatchesComparator);
+                }
                 break;
         }
 

@@ -34,6 +34,12 @@ public class LbLanding {
     @JsonProperty("challenge_img_url")
     private String imgUrl;
 
+    @JsonProperty("challenge_starttime")
+    private String startTime;
+
+    @JsonProperty("challenge_endtime")
+    private String endTime;
+
     private String type;
 
     public LbLanding() {
@@ -136,6 +142,26 @@ public class LbLanding {
     @JsonProperty("group_id")
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
+    }
+
+    @JsonProperty("challenge_starttime")
+    public String getStartTime() {
+        return startTime;
+    }
+
+    @JsonProperty("challenge_starttime")
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    @JsonProperty("challenge_endtime")
+    public String getEndTime() {
+        return endTime;
+    }
+
+    @JsonProperty("challenge_endtime")
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
 

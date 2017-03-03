@@ -25,8 +25,8 @@ public class CheckedTextViewTypeface extends CheckedTextView {
     }
     public void setTypeface(Typeface tf, int style) {
         if(!this.isInEditMode()){
-            Typeface normalTypeface = Typeface.createFromAsset(getContext().getAssets(), "font/RobotoCondensed-Bold.ttf");
-            Typeface boldTypeface = Typeface.createFromAsset(getContext().getAssets(), "font/RobotoCondensed-Bold.ttf");
+            Typeface normalTypeface = Typeface.createFromAsset(getContext().getAssets(), "font/roboto/RobotoCondensed-Bold.ttf");
+            Typeface boldTypeface = Typeface.createFromAsset(getContext().getAssets(), "font/roboto/RobotoCondensed-Bold.ttf");
 
             if (style == Typeface.BOLD) {
                 super.setTypeface(boldTypeface/*, -1*/);
