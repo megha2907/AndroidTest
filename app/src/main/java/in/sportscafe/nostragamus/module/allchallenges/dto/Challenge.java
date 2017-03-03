@@ -159,6 +159,9 @@ public class Challenge {
 
     @JsonProperty("user_challenge_info")
     public ChallengeUserInfo getChallengeUserInfo() {
+        if(null == challengeUserInfo) {
+            challengeUserInfo = new ChallengeUserInfo();
+        }
         return challengeUserInfo;
     }
 

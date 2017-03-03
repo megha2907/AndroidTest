@@ -215,9 +215,10 @@ public interface Constants {
         String PLAYER_PHOTO = "playerPhoto";
         String CHALLENGE_LIST = "challengeList";
         String CHALLENGE_TAG_ID = "challengeTagId";
-        String UPDATED_POWERUPS = "updatedPowerups";
+        String UPDATED_CHALLENGE_USER_INFO = "updatedPowerups";
         String CHALLENGE_NAME = "challengeName";
         String MAX_TRANSFER_COUNT = "maxTransferCount";
+        String CHALLENGE_INFO = "challengeInfo";
     }
 
     interface ParcelableKeys {

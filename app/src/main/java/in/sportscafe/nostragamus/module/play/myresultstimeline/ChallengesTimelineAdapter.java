@@ -30,6 +30,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.DateFormats;
 import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
@@ -49,20 +50,14 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
     private static final String COMMENTARY = "commentary";
 
-    private HashMap<String, Integer> mPowerupInfo;
-
-    private String mChallengeName;
-
-    private int mChallengeId;
+    private Challenge mChallengeInfo;
 
     public ChallengesTimelineAdapter(Context context) {
         super(context);
     }
 
-    public void updateChallengeInfo(HashMap<String, Integer> powerupInfo, String challengeName, int challengeId) {
-        this.mPowerupInfo = powerupInfo;
-        this.mChallengeName = challengeName;
-        this.mChallengeId = challengeId;
+    public void updateChallengeInfo(Challenge challengeInfo) {
+        this.mChallengeInfo = challengeInfo;
     }
 
     @Override
@@ -278,11 +273,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             GameAttemptedStatus.PARTIALLY == match.getisAttempted() ? AnalyticsActions.CONTINUE : AnalyticsActions.PLAY
                     );
 
-                    if(null != mPowerupInfo) {
-                        bundle.putParcelable(BundleKeys.POWERUPS, Parcels.wrap(mPowerupInfo));
+                    if(null != mChallengeInfo) {
+                        bundle.putParcelable(BundleKeys.CHALLENGE_INFO, Parcels.wrap(mChallengeInfo));
                     }
-                    bundle.putInt(BundleKeys.CHALLENGE_ID, mChallengeId);
-                    bundle.putString(BundleKeys.CHALLENGE_NAME, mChallengeName);
                     navigateToPrediction(context, bundle);
                     break;
                 case R.id.schedule_row_btn_points:

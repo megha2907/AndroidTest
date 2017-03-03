@@ -453,13 +453,6 @@ public class Question {
     }
 
     @JsonIgnore
-    public void apply2xGlobalPowerUp() {
-        setPowerUpId(Powerups.XX_GLOBAL);
-        setUpdatedPositivePoints(2 * getQuestionPositivePoints());
-        setUpdatedNegativePoints(2 * getQuestionNegativePoints());
-    }
-
-    @JsonIgnore
     public void apply2xPowerUp() {
         setPowerUpId(Powerups.XX);
         setUpdatedPositivePoints(2 * getQuestionPositivePoints());

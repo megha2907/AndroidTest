@@ -149,14 +149,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return getSharedLongData(SharedKeys.TOKEN_EXPIRY, 0);
     }
 
-    public int get2xGlobalPowerupsCount() {
-        return getSharedIntData(SharedKeys.NUMBER_OF_2X_GLOBAL_POWERUPS, 0);
-    }
-
-    public void set2xGlobalPowerupsCount(Integer count) {
-        setSharedIntData(SharedKeys.NUMBER_OF_2X_GLOBAL_POWERUPS, null == count ? 0 : count);
-    }
-
     public int get2xPowerupsCount() {
         return getSharedIntData(SharedKeys.NUMBER_OF_POWERUPS, 0);
     }
