@@ -18,8 +18,6 @@ import android.widget.TextView;
 
 import com.jeeva.android.widgets.CustomProgressbar;
 
-import java.util.HashMap;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
@@ -492,7 +490,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     BroadcastReceiver mPowerUpUpdatedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mPredictionPresenter.onPowerUpUpdated(intent.getExtras());
+            mPredictionPresenter.onChallengeInfoUpdated(intent.getExtras());
         }
     };
 

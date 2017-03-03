@@ -22,6 +22,7 @@ import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
@@ -308,20 +309,32 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
-    public void updatePowerUpValues(Bundle bundle) {
-        if (bundle.containsKey(BundleKeys.UPDATED_POWERUPS)) {
-            HashMap<String, Integer> powerUpMap = Parcels.unwrap(bundle.getParcelable(BundleKeys.UPDATED_POWERUPS));
+    public void updateChallengeInfoValues(Bundle bundle) {
+        if (bundle.containsKey(BundleKeys.UPDATED_CHALLENGE_USER_INFO)) {
+            mChallegeInfo.setChallengeUserInfo((ChallengeUserInfo) Parcels.unwrap(bundle.getParcelable(BundleKeys.UPDATED_CHALLENGE_USER_INFO)));
 
-            if (powerUpMap.containsKey(Powerups.XX)) {
-                m2xPowerups = powerUpMap.get(Powerups.XX);
-            }
+            HashMap<String, Integer> powerUpMap = mChallegeInfo.getChallengeUserInfo().getPowerUps();
+            m2xPowerups = powerUpMap.get(Powerups.XX);
+            mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
+            mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
 
-            if (powerUpMap.containsKey(Powerups.NO_NEGATIVE)) {
-                mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
-            }
-
-            if (powerUpMap.containsKey(Powerups.AUDIENCE_POLL)) {
-                mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
+            String powerUpId;
+            for (int i = 0; i < mPredictionAdapter.getCount(); i++) {
+                // It's for handling the temporary powerups which the user has already applied
+                powerUpId = mPredictionAdapter.getItem(i).getPowerUpId();
+                if (null != powerUpId) {
+                    switch (powerUpId) {
+                        case Powerups.XX:
+                            m2xPowerups--;
+                            break;
+                        case Powerups.NO_NEGATIVE:
+                            mNonegsPowerups--;
+                            break;
+                        case Powerups.AUDIENCE_POLL:
+                            mPollPowerups--;
+                            break;
+                    }
+                }
             }
 
             mPowerUpUpdated = true;

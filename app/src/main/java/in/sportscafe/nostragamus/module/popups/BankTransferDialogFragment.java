@@ -203,14 +203,14 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
         showProgressbar();
         BankTranferApiModelImpl.newInstance(new BankTranferApiModelImpl.BankTransferApiModelListener() {
             @Override
-            public void onSuccess(HashMap<String, Integer> powerUps) {
+            public void onSuccess(ChallengeUserInfo challengeUserInfo) {
                 dismissProgressbar();
 
                 UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
                 userInfo.getInfoDetails().setPowerUps(mPowerUpsInBank);
                 NostragamusDataHandler.getInstance().setUserInfo(userInfo);
 
-                broadcastUpdatedPowerUp(powerUps);
+                broadcastUpdatedChallengeInfo(challengeUserInfo);
 
                 showMessage(Alerts.BANK_TRANSFER_SUCCESS);
                 dismiss();
@@ -230,9 +230,9 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
         }).transferToChallenge(mPowerUpsToWithdraw, mChallengeInfo.getChallengeId());
     }
 
-    private void broadcastUpdatedPowerUp(HashMap<String, Integer> powerUps) {
+    private void broadcastUpdatedChallengeInfo(ChallengeUserInfo challengeUserInfo) {
         Intent intent = new Intent(IntentActions.ACTION_POWERUPS_UPDATED);
-        intent.putExtra(BundleKeys.UPDATED_POWERUPS, Parcels.wrap(powerUps));
+        intent.putExtra(BundleKeys.UPDATED_CHALLENGE_USER_INFO, Parcels.wrap(challengeUserInfo));
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 

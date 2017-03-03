@@ -141,8 +141,8 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onPowerUpUpdated(Bundle bundle) {
-        mPredictionModel.updatePowerUpValues(bundle);
+    public void onChallengeInfoUpdated(Bundle bundle) {
+        mPredictionModel.updateChallengeInfoValues(bundle);
         updatePowerups();
     }
 

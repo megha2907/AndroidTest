@@ -58,5 +58,5 @@ public interface PredictionModel {
 
     Bundle getChallengeInfoBundle();
 
-    void updatePowerUpValues(Bundle bundle);
+    void updateChallengeInfoValues(Bundle bundle);
 }
