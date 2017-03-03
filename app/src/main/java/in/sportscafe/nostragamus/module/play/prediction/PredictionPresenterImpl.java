@@ -200,7 +200,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             mPredictionView.showPowerupsHint();
             mPredictionView.showPowerupsCoach();
         } else if (questionNumber == 4) {
-            mPredictionView.hidePowerupsHint();
+//            mPredictionView.hidePowerupsHint();
         }
     }
 

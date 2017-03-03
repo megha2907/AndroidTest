@@ -30,6 +30,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.DateFormats;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
@@ -149,25 +150,36 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         }
 
-
-        long startTimeMs = TimeUtils.getMillisecondsFromDateString(
-                challenge.getEndTime(),
-                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                Constants.DateFormats.GMT
+        TimeAgo startTimeLeft = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(),
+                TimeUtils.getMillisecondsFromDateString(
+                        challenge.getStartTime(),
+                        DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                        DateFormats.GMT
+                )
         );
 
-        TimeAgo timeAgo = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(), startTimeMs);
-        long updatedTime = Long.parseLong(String.valueOf(timeAgo.totalDiff));
+        TimeAgo endTimeLeft = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(),
+                TimeUtils.getMillisecondsFromDateString(
+                        challenge.getEndTime(),
+                        DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                        DateFormats.GMT
+                )
+        );
 
-        if (updatedTime < 0){
-            holder.mRlTimer.setVisibility(View.INVISIBLE);
-        }else {
-            updateTimer(holder, updatedTime);
+        if(startTimeLeft.totalDiff > 1000) {
+            holder.mRlTimer.setVisibility(View.VISIBLE);
+            holder.mTvTimerText.setText("STARTS IN");
+            holder.mRlTimer.setTag(startTimeLeft.totalDiff);
+        } else if (endTimeLeft.totalDiff > 1000) {
+            holder.mRlTimer.setVisibility(View.VISIBLE);
+            holder.mTvTimerText.setText("ENDS IN");
+            holder.mRlTimer.setTag(endTimeLeft.totalDiff);
+        } else {
+            holder.mRlTimer.setVisibility(View.GONE);
         }
-
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         View mMainView;
         TextView mTvChallengePrice;
@@ -176,6 +188,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         TextView mTvChallengeUserRank;
 
+        TextView mTvTimerText;
         Button mTvChallengeDaysLeft;
         Button mTvChallengeHoursLeft;
         Button mTvChallengeMinsLeft;
@@ -211,6 +224,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mTvChallengeUserRank = (TextView) V.findViewById(id.all_challenges_row_tv_leaderboard_rank);
             mTvChallengeHoursLeft = (Button) V.findViewById(id.all_challenges_row_btn_hours_left);
             mTvChallengeDaysLeft = (Button) V.findViewById(id.all_challenges_row_btn_days_left);
+            mTvTimerText = (TextView) V.findViewById(id.all_challenges_row_tv_timer_txt);
             mTvChallengeMinsLeft = (Button) V.findViewById(id.all_challenges_row_btn_mins_left);
             mTvChallengeSecsLeft = (Button) V.findViewById(id.all_challenges_row_btn_secs_left);
             mLlTournament = (LinearLayout) V.findViewById(id.all_challenges_row_tournament_ll);
@@ -254,22 +268,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         context.startActivity(intent);
     }
 
-    private void updateTimer(ViewHolder viewHolder, long updatedTime) {
 
-        int secs = (int) (updatedTime / 1000);
-        int mins = secs / 60;
-        int hours = mins / 60;
-        int days = hours / 24;
-        hours = hours % 24;
-        mins = mins % 60;
-        secs = secs % 60;
-
-        viewHolder.mTvChallengeDaysLeft.setText(String.format("%02d", days)+"d");
-        viewHolder.mTvChallengeHoursLeft.setText(String.format("%02d", hours)+"h");
-        viewHolder.mTvChallengeMinsLeft.setText(String.format("%02d", mins)+"m");
-        viewHolder.mTvChallengeSecsLeft.setText(String.format("%02d", secs)+"s");
-
-    }
 
     private Drawable getPowerupDrawable(int colorRes) {
         GradientDrawable powerupDrawable = new GradientDrawable();

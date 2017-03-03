@@ -84,24 +84,6 @@
                 android:background="@drawable/play_options_bg" />
         </android.support.v7.widget.CardView>
 
-        <ImageView
-            android:id="@+id/prediction_iv_dummy_left_right_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:elevation="@dimen/dp_2"
-            android:src="@drawable/left_right_swipe_indicator"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/prediction_iv_dummy_neither_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:elevation="@dimen/dp_2"
-            android:src="@drawable/neither_swipe_indicator"
-            android:visibility="gone" />
-
         <RelativeLayout
             android:id="@+id/prediction_cv_bg_rl"
             android:layout_width="match_parent"
@@ -375,7 +357,8 @@
                 android:background="@drawable/shape_neither_bg"
                 android:onClick="onClick"
                 android:padding="@dimen/dp_10"
-                android:src="@drawable/left_option_arrow" />
+                android:src="@drawable/left_option_arrow"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/prediction_iv_right_arrow"
@@ -387,7 +370,8 @@
                 android:background="@drawable/shape_neither_bg"
                 android:onClick="onClick"
                 android:padding="@dimen/dp_10"
-                android:src="@drawable/right_option_arrow" />
+                android:src="@drawable/right_option_arrow"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:id="@+id/prediction_rl_powerup_hints"
@@ -439,6 +423,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:rotation_degrees="15.5" />
+
+    <ImageView
+        android:id="@+id/prediction_iv_dummy_left_right_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:elevation="@dimen/dp_2"
+        android:src="@drawable/left_right_swipe_indicator"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/prediction_iv_dummy_neither_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:elevation="@dimen/dp_2"
+        android:src="@drawable/neither_swipe_indicator"
+        android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/prediction_fl_dummy_holder"
