@@ -122,6 +122,10 @@ public class LBLandingModelImpl implements LBLandingModel {
                         }
                         if (response.isSuccessful()) {
                             mlbSummary = response.body().getSummary();
+                            if (null == mlbSummary || mlbSummary.isEmpty()) {
+                                mLbLandingModelListener.onEmpty();
+                                return;
+                            }
                             mLbLandingModelListener.onGetLBLandingSuccess(response.body().getSummary());
                         } else {
                             mLbLandingModelListener.onGetLBLandingFailed(response.message());
@@ -144,5 +148,7 @@ public class LBLandingModelImpl implements LBLandingModel {
         Context getContext();
 
         void refreshLeaderBoard(List<LBLandingSummary> mlbSummary);
+
+        void onEmpty();
     }
 }

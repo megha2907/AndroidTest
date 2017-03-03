@@ -49,8 +49,6 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private Match match;
 
-    private String challengeName = "";
-
     private Integer mPlayerUserId;
 
     private OnMyResultsModelListener mResultsModelListener;
@@ -75,7 +73,6 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         } else if (bundle.containsKey(BundleKeys.MATCH_ID)) {
             String match_id = bundle.getString(BundleKeys.MATCH_ID);
             matchId = Integer.parseInt(match_id);
-            challengeName = bundle.getString(Constants.NotificationKeys.CHALLENGE_NAME_NOTIFICATION);
         } else {
             mResultsModelListener.onFailedMyResults(Constants.Alerts.RESULTS_INFO_ERROR);
         }
@@ -119,9 +116,9 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                                     mResultsModelListener.onFailedMyResults(response.message());
                                 } else {
                                     destroyAdapter();
+                                    match = myResultList.get(0);
                                     mResultsModelListener.onSuccessMyResults(createAdapter(context));
                                     mResultsModelListener.onsetMatchDetails(myResultList.get(0));
-
                                     loadAdapterData(myResultList.get(0));
 
                                     if (myResultList.isEmpty()) {
@@ -180,11 +177,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public String getMatchName() {
-        if (TextUtils.isEmpty(match.getChallengeName())){
-            return challengeName;
-        }else {
-            return match.getChallengeName();
-        }
+        return match.getChallengeName();
     }
 
     @Override

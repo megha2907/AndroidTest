@@ -78,6 +78,12 @@ public class LBLandingPresenterImpl implements LBLandingPresenter, LBLandingMode
         mLbLandingView.initMyPosition(mlbSummary);
     }
 
+    @Override
+    public void onEmpty() {
+        mLbLandingView.dismissProgressbar();
+        mLbLandingView.showInAppMessage("Leaderboards will appear once you have made some predictions !");
+    }
+
     private void showAlert(String message) {
         mLbLandingView.showMessage(message, "RETRY",
                 new View.OnClickListener() {
