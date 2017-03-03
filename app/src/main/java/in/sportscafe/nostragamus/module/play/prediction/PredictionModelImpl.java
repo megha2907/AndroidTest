@@ -229,13 +229,13 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     private void removeAppliedPowerUp() {
         Question topQuestion = mPredictionAdapter.getTopQuestion();
-        updatePowerUpCount(topQuestion.getPowerUpId());
+        increasePowerUpCount(topQuestion.getPowerUpId());
         topQuestion.removeAppliedPowerUp();
 
         notifyTopQuestion();
     }
 
-    private void updatePowerUpCount(String powerUpId) {
+    private void increasePowerUpCount(String powerUpId) {
         switch (powerUpId) {
             case Powerups.XX:
                 mPredictionModelListener.on2xApplied(++m2xPowerups, true);
@@ -246,38 +246,50 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         }
     }
 
+    private void updatePowerUpStatus(String powerUpId) {
+        mPredictionModelListener.on2xApplied(m2xPowerups, !(Powerups.XX == powerUpId));
+        mPredictionModelListener.onNonegsApplied(mNonegsPowerups, !(Powerups.NO_NEGATIVE == powerUpId));
+        mPredictionModelListener.onAudiencePollApplied(mPollPowerups, !(Powerups.AUDIENCE_POLL == powerUpId));
+    }
+
     @Override
     public void apply2xPowerup() {
-        if (isNotPowerupApplied() && m2xPowerups > 0) {
-            mPredictionAdapter.getTopQuestion().apply2xPowerUp();
-            notifyTopQuestion();
+        if (isNotPowerupApplied()) {
+            if(m2xPowerups > 0) {
+                mPredictionAdapter.getTopQuestion().apply2xPowerUp();
+                notifyTopQuestion();
 
-            m2xPowerups--;
-            mPredictionModelListener.on2xApplied(m2xPowerups, false);
-        } else {
-            mPredictionModelListener.onNoPowerUps();
+                m2xPowerups--;
+                mPredictionModelListener.on2xApplied(m2xPowerups, false);
+            } else {
+                mPredictionModelListener.onNoPowerUps();
+            }
         }
     }
 
     @Override
     public void applyNonegsPowerup() {
-        if (isNotPowerupApplied() && mNonegsPowerups > 0) {
-            mPredictionAdapter.getTopQuestion().applyNonegsPowerUp();
-            notifyTopQuestion();
+        if (isNotPowerupApplied()) {
+            if(mNonegsPowerups > 0) {
+                mPredictionAdapter.getTopQuestion().applyNonegsPowerUp();
+                notifyTopQuestion();
 
-            mNonegsPowerups--;
-            mPredictionModelListener.onNonegsApplied(mNonegsPowerups, false);
-        } else {
-            mPredictionModelListener.onNoPowerUps();
+                mNonegsPowerups--;
+                mPredictionModelListener.onNonegsApplied(mNonegsPowerups, false);
+            } else {
+                mPredictionModelListener.onNoPowerUps();
+            }
         }
     }
 
     @Override
     public void applyPollPowerup() {
-        if (isNotPowerupApplied() && mPollPowerups > 0) {
-            getAudiencePollPercent();
-        } else {
-            mPredictionModelListener.onNoPowerUps();
+        if (isNotPowerupApplied()) {
+            if(mPollPowerups > 0) {
+                getAudiencePollPercent();
+            } else {
+                mPredictionModelListener.onNoPowerUps();
+            }
         }
     }
 
@@ -392,6 +404,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             mNeitherOptionAvailable = !TextUtils.isEmpty(topQuestion.getQuestionOption3());
 
             mPredictionModelListener.onQuestionChanged(topQuestion, mInitialCount, mNeitherOptionAvailable);
+            updatePowerUpStatus(topQuestion.getPowerUpId());
 
             if (-1 == mQuestionSeenTimeInMs) {
                 mQuestionSeenTimeInMs = Calendar.getInstance().getTimeInMillis();
@@ -520,7 +533,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         notifyTopQuestion();
 
         mPollPowerups--;
-        mPredictionModelListener.onAudiencePollApplied(mPollPowerups);
+        mPredictionModelListener.onAudiencePollApplied(mPollPowerups, false);
     }
 
     private void saveSinglePrediction(Question question, int answerId) {
@@ -683,7 +696,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         void onNonegsApplied(int count, boolean reverse);
 
-        void onAudiencePollApplied(int count);
+        void onAudiencePollApplied(int count, boolean reverse);
 
         void onPostAnswerFailed(String message);
 

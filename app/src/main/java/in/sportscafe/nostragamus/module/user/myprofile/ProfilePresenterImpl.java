@@ -46,9 +46,11 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
 
     @Override
     public void onGetProfileSuccess() {
-        mProfileView.dismissProgressbar();
-        populateUserInfo();
-        updateAdapterDetails();
+        if(null != mProfileView.getContext()) {
+            mProfileView.dismissProgressbar();
+            populateUserInfo();
+            updateAdapterDetails();
+        }
     }
 
     private void populateUserInfo() {
