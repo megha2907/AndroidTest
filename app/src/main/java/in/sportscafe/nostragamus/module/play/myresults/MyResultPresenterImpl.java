@@ -36,7 +36,6 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
         getResultDetails();
         mResultsView.setNumberofPowerups(NostragamusDataHandler.getInstance().getReplayPowerupsCount(),
                 NostragamusDataHandler.getInstance().getFlipPowerupsCount());
-        mResultsView.setMatchName(mResultsModel.getMatchName());
 
         if (bundle.containsKey("screen")) {
             mResultsView.goBack();
@@ -105,6 +104,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     public void onSuccessMyResults(MyResultsAdapter myResultsAdapter) {
         mResultsView.dismissProgressbar();
         mResultsView.setAdapter(myResultsAdapter);
+        mResultsView.setMatchName(mResultsModel.getMatchName());
     }
 
     @Override
