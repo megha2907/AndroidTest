@@ -77,6 +77,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         if (mSwipeView/* || position == 0*/) {
             holder.mSlShowGameBg.setVisibility(View.GONE);
         } else {
@@ -85,6 +86,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         Challenge challenge = getItem(position);
         holder.mTvChallengeName.setText(challenge.getName());
+        holder.mIvChallengeImage.setImageUrl(challenge.getImage());
 
         try {
             int mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getChallengeFee();

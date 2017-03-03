@@ -16,4 +16,8 @@ public interface PointsView extends InAppView {
     void setIcon(String icon);
 
     void setMatchPoints(boolean isMatchPoints);
+
+    void setChallengeTimerView(boolean isChallengeTimer);
+
+    void setChallengeTimer(String days, String hours, String mins, String secs);
 }

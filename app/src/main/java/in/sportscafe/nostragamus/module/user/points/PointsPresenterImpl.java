@@ -54,6 +54,16 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     }
 
     @Override
+    public void setChallengeTimer(String days, String hours, String mins, String secs) {
+        mPointsView.setChallengeTimer(days,hours,mins,secs);
+    }
+
+    @Override
+    public void setChallengeTimerView(boolean isChallengeTimer) {
+        mPointsView.setChallengeTimerView(isChallengeTimer);
+    }
+
+    @Override
     public void onFailureLeaderBoard(String message) {
         showAlertMsg(message);
     }

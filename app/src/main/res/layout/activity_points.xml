@@ -82,7 +82,7 @@
 
                         <RelativeLayout
                             android:id="@+id/all_challenges_row_rl_timer"
-                            android:layout_width="@dimen/dp_200"
+                            android:layout_width="@dimen/dp_220"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/points_sp_name"
                             android:layout_centerInParent="true"
@@ -106,7 +106,7 @@
                                 android:layout_marginRight="@dimen/dp_6"
                                 android:layout_toLeftOf="@+id/all_challenges_row_btn_hours_left"
                                 android:background="@drawable/grey_leaderboard_border_btn_bg"
-                                android:text="2d"
+                                android:text="0d"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/dp_10"
@@ -119,7 +119,7 @@
                                 android:layout_marginRight="@dimen/dp_6"
                                 android:layout_toLeftOf="@+id/all_challenges_row_btn_mins_left"
                                 android:background="@drawable/grey_leaderboard_border_btn_bg"
-                                android:text="24h"
+                                android:text="0h"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/dp_10"
@@ -127,14 +127,29 @@
 
                             <com.jeeva.android.widgets.customfont.CustomButton
                                 android:id="@+id/all_challenges_row_btn_mins_left"
-                                android:layout_width="@dimen/dp_35"
+                                android:layout_width="@dimen/dp_32"
+                                android:layout_height="@dimen/dp_25"
+                                android:layout_marginRight="@dimen/dp_6"
+                                android:layout_toLeftOf="@+id/all_challenges_row_btn_secs_left"
+                                android:layout_below="@+id/all_challenges_row_tv_timer_txt"
+                                android:background="@drawable/grey_leaderboard_border_btn_bg"
+                                android:text="0m"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white_80"
+                                android:textSize="@dimen/dp_10"
+                                app:typeface="lato_regular" />
+
+                            <com.jeeva.android.widgets.customfont.CustomButton
+                                android:id="@+id/all_challenges_row_btn_secs_left"
+                                android:layout_width="@dimen/dp_32"
                                 android:layout_height="@dimen/dp_25"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="@dimen/dp_10"
+                                android:layout_below="@+id/all_challenges_row_tv_timer_txt"
                                 android:background="@drawable/grey_leaderboard_border_btn_bg"
-                                android:text="59m"
+                                android:text="0s"
                                 android:textAllCaps="false"
-                                android:textColor="@color/white"
+                                android:textColor="@color/white_80"
                                 android:textSize="@dimen/dp_10"
                                 app:typeface="lato_regular" />
 

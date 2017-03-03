@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -48,7 +49,13 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     private View mSelectedImage;
 
-    private boolean ismMatchPoints=false;
+    private boolean ismMatchPoints = false;
+
+    Button mTvChallengeDaysLeft;
+    Button mTvChallengeHoursLeft;
+    Button mTvChallengeMinsLeft;
+    Button mTvChallengeSecsLeft;
+    RelativeLayout mRlChallengeTimer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,16 +66,23 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         LeaderBoardModelImpl.SORT_TYPE = 0;
         setSelected(findViewById(R.id.sort_by_total_points_btn));
 
-        this.mPointsPresenter = PointsPresenterImpl.newInstance(PointsActivity.this);
-        this.mPointsPresenter.onCreatePoints(getIntent().getExtras());
 
-        mBtnSortByAccuracy =(Button)findViewById(R.id.sort_by_accuracy_btn);
-        mBtnSortByTotalPoints =(Button)findViewById(R.id.sort_by_total_points_btn);
-        mBtnSortByPowerUps =(Button)findViewById(R.id.sort_by_powerups_btn);
+        mBtnSortByAccuracy = (Button) findViewById(R.id.sort_by_accuracy_btn);
+        mBtnSortByTotalPoints = (Button) findViewById(R.id.sort_by_total_points_btn);
+        mBtnSortByPowerUps = (Button) findViewById(R.id.sort_by_powerups_btn);
 
         mBtnSortByAccuracy.setOnClickListener(this);
         mBtnSortByPowerUps.setOnClickListener(this);
         mBtnSortByTotalPoints.setOnClickListener(this);
+
+        mRlChallengeTimer = (RelativeLayout) findViewById(R.id.all_challenges_row_rl_timer);
+        mTvChallengeHoursLeft = (Button) findViewById(R.id.all_challenges_row_btn_hours_left);
+        mTvChallengeDaysLeft = (Button) findViewById(R.id.all_challenges_row_btn_days_left);
+        mTvChallengeMinsLeft = (Button) findViewById(R.id.all_challenges_row_btn_mins_left);
+        mTvChallengeSecsLeft = (Button) findViewById(R.id.all_challenges_row_btn_secs_left);
+
+        this.mPointsPresenter = PointsPresenterImpl.newInstance(PointsActivity.this);
+        this.mPointsPresenter.onCreatePoints(getIntent().getExtras());
 
 
     }
@@ -131,10 +145,25 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
         ismMatchPoints = isMatchPoints;
 
-        if (isMatchPoints){
+        if (isMatchPoints) {
             mBtnSortByPowerUps.setText("Match Score");
             mBtnSortByPowerUps.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_selection_icon, 0, 0, 0);
         }
+    }
+
+    @Override
+    public void setChallengeTimerView(boolean isChallengeTimer) {
+        if (isChallengeTimer == false) {
+            mRlChallengeTimer.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setChallengeTimer(String days, String hours, String mins, String secs) {
+        mTvChallengeDaysLeft.setText(days);
+        mTvChallengeHoursLeft.setText(hours);
+        mTvChallengeMinsLeft.setText(mins);
+        mTvChallengeSecsLeft.setText(secs);
     }
 
     @Override
@@ -166,14 +195,14 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
                 break;
 
             case R.id.sort_by_powerups_btn:
-                    if (mViewPager != null) {
+                if (mViewPager != null) {
 
-                        if (ismMatchPoints) {
-                            LeaderBoardModelImpl.SORT_TYPE = 3;
-                        }else {
-                            LeaderBoardModelImpl.SORT_TYPE = 2;
-                        }
-                        ((ViewPagerAdapter) mViewPager.getAdapter()).getItem(mViewPager.getCurrentItem()).setUserVisibleHint(true);
+                    if (ismMatchPoints) {
+                        LeaderBoardModelImpl.SORT_TYPE = 3;
+                    } else {
+                        LeaderBoardModelImpl.SORT_TYPE = 2;
+                    }
+                    ((ViewPagerAdapter) mViewPager.getAdapter()).getItem(mViewPager.getCurrentItem()).setUserVisibleHint(true);
 
                 }
                 setSelected(findViewById(R.id.sort_by_powerups_btn));
@@ -203,7 +232,6 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 //        }
 //
 //    }
-
 
 
 //    @Override
