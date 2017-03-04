@@ -129,15 +129,14 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         if (NostragamusDataHandler.getInstance().isBankInfoShown()) {
             mPredictionView.navigateToBankTransfer(mPredictionModel.getChallengeInfoBundle());
         } else {
-            mPredictionView.showBankInfo(new DialogInterface.OnDismissListener() {
-
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    NostragamusDataHandler.getInstance().setBankInfoShown(true);
-                    PredictionPresenterImpl.this.onClickBankTransfer();
-                }
-            });
+            mPredictionView.showBankInfo();
         }
+    }
+
+    @Override
+    public void onBankInfoDismiss() {
+        NostragamusDataHandler.getInstance().setBankInfoShown(true);
+        onClickBankTransfer();
     }
 
     @Override

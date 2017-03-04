@@ -85,5 +85,5 @@ public interface PredictionView extends InAppView {
 
     void navigateToBankTransfer(Bundle bundle);
 
-    void showBankInfo(DialogInterface.OnDismissListener dismissListener);
+    void showBankInfo();
 }
