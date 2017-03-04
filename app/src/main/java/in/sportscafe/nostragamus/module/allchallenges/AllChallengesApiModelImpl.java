@@ -52,6 +52,7 @@ public class AllChallengesApiModelImpl {
 
     /**
      * The challenges which were expired are considered as completed challenges
+     *
      * @return the completed challenge list
      */
     public List<Challenge> getCompletedChallenges() {
@@ -61,6 +62,7 @@ public class AllChallengesApiModelImpl {
     /**
      * The challenges which are currently in-active and that are already started
      * to play by the user are considered as in-play challenges
+     *
      * @return the in-play challenge list
      */
     public List<Challenge> getInPlayChallenges() {
@@ -70,6 +72,7 @@ public class AllChallengesApiModelImpl {
     /**
      * The challenges which are currently in-active, but not yet played by the user
      * are considered as new challenges
+     *
      * @return the new challenge list
      */
     public List<Challenge> getNewChallenges() {
@@ -85,13 +88,13 @@ public class AllChallengesApiModelImpl {
                     public void onResponse(Call<AllChallengesResponse> call, Response<AllChallengesResponse> response) {
                         super.onResponse(call, response);
 
-                        if(!mAllChallengesApiModelListener.onApiCallStopped()) {
+                        if (!mAllChallengesApiModelListener.onApiCallStopped()) {
                             return;
                         }
 
                         if (response.isSuccessful()) {
                             mAllChallenges = response.body().getChallenges();
-                            if(mAllChallenges.isEmpty()) {
+                            if (mAllChallenges.isEmpty()) {
                                 mAllChallengesApiModelListener.onEmpty();
                             } else {
                                 categorizeChallenges();
@@ -115,24 +118,13 @@ public class AllChallengesApiModelImpl {
                     DateFormats.GMT
             );
 
-            if(currentTimeInMs >= timeInMs) {
+            if (currentTimeInMs >= timeInMs) {
                 // If the endtime of the challenge is fell inside the current time, then it is completed challenge
                 mCompletedChallenges.add(challenge);
+            } else if (isChallengeInitiatedByUser(challenge)) {
+                mInPlayChallenges.add(challenge);
             } else {
-                timeInMs = TimeUtils.getMillisecondsFromDateString(
-                        challenge.getStartTime(),
-                        DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                        DateFormats.GMT
-                );
-
-                if(currentTimeInMs < timeInMs) {
-                    // If the current time fell inside the starttime of the challenge, then it is upcoming challenge
-                    mNewChallenges.add(challenge);
-                } else if(isChallengeInitiatedByUser(challenge)) {
-                    mInPlayChallenges.add(challenge);
-                } else {
-                    mNewChallenges.add(challenge);
-                }
+                mNewChallenges.add(challenge);
             }
 
         }
@@ -140,7 +132,7 @@ public class AllChallengesApiModelImpl {
 
     private boolean isChallengeInitiatedByUser(Challenge challenge) {
         for (Match match : challenge.getMatches()) {
-            if(GameAttemptedStatus.NOT != match.getisAttempted()) {
+            if (GameAttemptedStatus.NOT != match.getisAttempted()) {
                 return true;
             }
         }
