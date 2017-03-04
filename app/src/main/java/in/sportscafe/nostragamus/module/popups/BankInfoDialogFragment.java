@@ -1,25 +1,33 @@
 package in.sportscafe.nostragamus.module.popups;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 
 /**
  * Created by Jeeva on 28/02/17.
  */
-
 public class BankInfoDialogFragment extends NostragamusDialogFragment {
+
+    private DialogInterface.OnDismissListener mDismissListener;
 
     public static BankInfoDialogFragment newInstance() {
         return new BankInfoDialogFragment();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof DialogInterface.OnDismissListener) {
+            mDismissListener = (DialogInterface.OnDismissListener) context;
+        }
     }
 
     @Nullable
@@ -43,6 +51,6 @@ public class BankInfoDialogFragment extends NostragamusDialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        NostragamusDataHandler.getInstance().setBankInfoShown(true);
+        mDismissListener.onDismiss(dialog);
     }
 }

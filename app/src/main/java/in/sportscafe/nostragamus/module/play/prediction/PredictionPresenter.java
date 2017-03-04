@@ -32,5 +32,7 @@ public interface PredictionPresenter {
 
     void onClickBankTransfer();
 
+    void onBankInfoDismiss();
+
     void onChallengeInfoUpdated(Bundle bundle);
 }

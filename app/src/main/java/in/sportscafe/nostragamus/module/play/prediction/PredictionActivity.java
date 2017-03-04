@@ -34,7 +34,7 @@ import in.sportscafe.nostragamus.module.popups.PowerupDialogFragment;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 
-public class PredictionActivity extends NostragamusActivity implements PredictionView, View.OnClickListener {
+public class PredictionActivity extends NostragamusActivity implements PredictionView, View.OnClickListener, DialogInterface.OnDismissListener {
 
     private RelativeLayout mRlPlayBg;
 
@@ -430,13 +430,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void showBankInfo(DialogInterface.OnDismissListener dismissListener) {
-        BankInfoDialogFragment bankInfoDialogFragment = BankInfoDialogFragment.newInstance();
-        bankInfoDialogFragment.show(getSupportFragmentManager(), "BankInfo");
-        getSupportFragmentManager().executePendingTransactions();
-        if(null != dismissListener) {
-            bankInfoDialogFragment.getDialog().setOnDismissListener(dismissListener);
-        }
+    public void showBankInfo() {
+        BankInfoDialogFragment.newInstance().show(getSupportFragmentManager(), "BankInfo");
     }
 
     private Drawable getPowerupDrawable(int colorRes) {
@@ -516,6 +511,10 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         }
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        mPredictionPresenter.onBankInfoDismiss();
+    }
 }
 
 

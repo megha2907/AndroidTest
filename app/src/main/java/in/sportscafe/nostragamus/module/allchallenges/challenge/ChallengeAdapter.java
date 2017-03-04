@@ -148,13 +148,13 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         }
 
-        TimeAgo startTimeLeft = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(),
+        /*TimeAgo startTimeLeft = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(),
                 TimeUtils.getMillisecondsFromDateString(
                         challenge.getStartTime(),
                         DateFormats.FORMAT_DATE_T_TIME_ZONE,
                         DateFormats.GMT
                 )
-        );
+        );*/
 
         TimeAgo endTimeLeft = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(),
                 TimeUtils.getMillisecondsFromDateString(
@@ -164,11 +164,11 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 )
         );
 
-        if(startTimeLeft.totalDiff > 1000) {
+        /*if(startTimeLeft.totalDiff > 1000) {
             holder.mRlTimer.setVisibility(View.VISIBLE);
             holder.mTvTimerText.setText("STARTS IN");
             holder.mRlTimer.setTag(startTimeLeft.totalDiff);
-        } else if (endTimeLeft.totalDiff > 1000) {
+        } else */if (endTimeLeft.totalDiff > 1000) {
             holder.mRlTimer.setVisibility(View.VISIBLE);
             holder.mTvTimerText.setText("ENDS IN");
             holder.mRlTimer.setTag(endTimeLeft.totalDiff);
