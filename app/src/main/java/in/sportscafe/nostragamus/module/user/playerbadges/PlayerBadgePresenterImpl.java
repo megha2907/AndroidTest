@@ -4,13 +4,8 @@ import android.os.Bundle;
 
 import org.parceler.Parcels;
 
-import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.module.user.badges.BadgeModel;
-import in.sportscafe.nostragamus.module.user.badges.BadgeModelImpl;
-import in.sportscafe.nostragamus.module.user.badges.BadgePresenter;
-import in.sportscafe.nostragamus.module.user.badges.BadgePresenterImpl;
-import in.sportscafe.nostragamus.module.user.badges.BadgeView;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 
 /**
@@ -49,7 +44,7 @@ public class PlayerBadgePresenterImpl implements PlayerBadgePresenter, PlayerBad
     @Override
     public void onNoInternet() {
         mBadgeView.dismissProgressbar();
-        mBadgeView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+        mBadgeView.showMessage(Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
@@ -60,6 +55,7 @@ public class PlayerBadgePresenterImpl implements PlayerBadgePresenter, PlayerBad
 
     @Override
     public void onBadgesEmpty() {
-        mBadgeView.showBadgesEmpty();
+        mBadgeView.dismissProgressbar();
+        mBadgeView.showInAppMessage(Alerts.NO_BADGES);
     }
 }

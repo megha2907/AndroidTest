@@ -39,6 +39,15 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     private ViewPagerAdapter mPagerAdapter;
 
+    public static ProfileFragment newInstance(int tabPosition) {
+        Bundle args = new Bundle();
+        args.putInt(BundleKeys.TAB_POSITION, tabPosition);
+
+        ProfileFragment fragment = new ProfileFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -152,6 +161,8 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         drawable.setSize(1, 1);
         linearLayout.setDividerPadding(10);
         linearLayout.setDividerDrawable(drawable);
+
+        viewPager.setCurrentItem(getArguments().getInt(BundleKeys.TAB_POSITION));
 
         mTimelineFragment = (TimelineFragment) mPagerAdapter.getItem(0);
     }

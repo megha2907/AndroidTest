@@ -30,6 +30,8 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
+    private int mProfileTabPosition = 0;
+
     private View mSelectedImage;
 
     private View mSelectedText;
@@ -52,9 +54,8 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
 
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
-            if (bundle.containsKey(BundleKeys.RESULTS)
-                    || bundle.containsKey(BundleKeys.BADGES)
-                    || bundle.containsKey(BundleKeys.OPEN_PROFILE)) {
+            if (bundle.containsKey(BundleKeys.OPEN_PROFILE)) {
+                mProfileTabPosition = Integer.parseInt(bundle.getString(BundleKeys.OPEN_PROFILE));
                 showProfile();
                 return;
             } else if (bundle.containsKey(BundleKeys.GROUP)) {
@@ -121,7 +122,9 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
                     navigateToLogIn();
                     return;
                 }
-                loadFragment(mCurrentFragment = new ProfileFragment());
+
+                loadFragment(mCurrentFragment = ProfileFragment.newInstance(mProfileTabPosition));
+//                mProfileTabPosition = 0;
                 break;
         }
     }
