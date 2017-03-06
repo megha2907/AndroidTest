@@ -9,12 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -24,8 +21,6 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
-
-import static com.google.android.gms.analytics.internal.zzy.e;
 
 /**
  * Created by rb on 30/11/15.
@@ -112,7 +107,7 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
             if (NostragamusDataHandler.getInstance().getUserId().equals(playerId.toString())) {
                 Intent homeintent = new Intent(v.getContext(), HomeActivity.class);
                 homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                homeintent.putExtra(BundleKeys.OPEN_PROFILE, true);
+                homeintent.putExtra(BundleKeys.OPEN_PROFILE, 0);
                 v.getContext().startActivity(homeintent);
             } else {
                 Bundle mBundle = new Bundle();

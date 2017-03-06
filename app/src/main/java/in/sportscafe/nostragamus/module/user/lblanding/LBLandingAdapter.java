@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,8 +14,8 @@ import com.jeeva.android.widgets.HmImageView;
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
@@ -27,10 +26,7 @@ import in.sportscafe.nostragamus.module.user.points.PointsActivity;
  */
 public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyViewHolder> {
 
-    private String mLbLandingType;
     private String mLbLandingTitle;
-    private Integer mGroupId;
-    private Integer mChallengeId;
     private boolean mNeedPadding = false;
 
     public LBLandingAdapter(Context context, String lbLandingTitle, boolean needPadding) {
@@ -48,11 +44,11 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         LbLanding lbLandingDto = getItem(position);
 
-        if (mLbLandingType== Constants.LBLandingType.SPORT){
+        /*if (mLbLandingType == LBLandingType.SPORT) {
             holder.ivImage.setAlpha(0.1F);
-        }
+        }*/
 
-        if (null !=lbLandingDto.getRankChange()) {
+        if (null != lbLandingDto.getRankChange()) {
             if (lbLandingDto.getRankChange() < 0) {
                 holder.mIvStatus.setImageResource(R.drawable.lb_rank_change_icon);
                 holder.mIvStatus.setRotation(180);
@@ -97,7 +93,7 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
             ivImage = (HmImageView) view.findViewById(R.id.lb_summary_item_iv);
             tvRank = (TextView) view.findViewById(R.id.lb_summary_item_rank_tv);
             tvName = (TextView) view.findViewById(R.id.lb_summary_item_name_tv);
-            tvPosTxt= (TextView) view.findViewById(R.id.lb_summary_item_pos_tv);
+            tvPosTxt = (TextView) view.findViewById(R.id.lb_summary_item_pos_tv);
 
             if (!mNeedPadding) {
                 ivImage.setPadding(0, 0, 0, 0);
@@ -108,22 +104,21 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
 
         @Override
         public void onClick(View view) {
-            NostragamusAnalytics.getInstance().trackLeaderboard(mLbLandingType);
-
             LbLanding lbLanding = getItem(getAdapterPosition());
-            mChallengeId = lbLanding.getChallengeId();
-            mGroupId =lbLanding.getGroupId();
-            if(mChallengeId == 0){
-                mLbLandingType = Constants.LBLandingType.GROUP;
-            }else {
-                mLbLandingType = Constants.LBLandingType.CHALLENGE;
+
+            String lbLandingType = LBLandingType.CHALLENGE;
+            if (lbLanding.getGroupId() != 0) {
+                lbLandingType = LBLandingType.GROUP;
             }
-            lbLanding.setType(mLbLandingType);
+            lbLanding.setType(lbLandingType);
 
             Bundle bundle = new Bundle();
             bundle.putParcelable(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
-            bundle.putString(BundleKeys.LB_LANDING_TITLE,mLbLandingTitle);
+            bundle.putString(BundleKeys.LB_LANDING_TITLE, mLbLandingTitle);
             navigateToPointsActivity(view.getContext(), bundle);
+
+
+            NostragamusAnalytics.getInstance().trackLeaderboard(lbLandingType);
         }
 
         private void navigateToPointsActivity(Context context, Bundle bundle) {

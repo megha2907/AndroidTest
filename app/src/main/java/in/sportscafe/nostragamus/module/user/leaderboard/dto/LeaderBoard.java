@@ -19,7 +19,7 @@ public class LeaderBoard {
     private Integer challengeId;
 
     @JsonProperty("group_id")
-    private Long groupId;
+    private Integer groupId;
 
     @JsonProperty("sports_name")
     private String sportsName;
@@ -120,12 +120,12 @@ public class LeaderBoard {
     }
 
     @JsonProperty("group_id")
-    public Long getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
     @JsonProperty("group_id")
-    public void setGroupId(Long groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 

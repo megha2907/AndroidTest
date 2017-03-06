@@ -14,6 +14,7 @@ import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -134,7 +135,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         if(fromHome) {
-            intent.putExtra(Constants.BundleKeys.RESULTS, "openprofile");
+            intent.putExtra(BundleKeys.OPEN_PROFILE, 0);
         }
         startActivity(intent);
         finish();
