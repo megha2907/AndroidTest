@@ -66,5 +66,8 @@
     <string name="powerup_bank_refer_benefit">You get one of each powerup , everytime a friend joins the game</string>
     <string name="powerup_bank_add_info">button on the game screen, to add</string>
     <string name="powerup_bank_add_info_two">these powerups to that challenge</string>
+    <string name="empty_group">Create New Groups or join existing groups,to keep \n track of how you\'re playing against friends!</string>
+    <string name="empty_leaderboard">Leaderboards will appear once you have \n made some predictions!</string>
+    <string name="empty_results">You can view your results and details here after \n you have played any matches from the Open challenges</string>
 
 </resources>

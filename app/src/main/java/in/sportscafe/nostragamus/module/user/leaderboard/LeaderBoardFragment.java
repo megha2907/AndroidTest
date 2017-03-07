@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.points.OnLeaderBoardUpdateListener;
+import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
@@ -35,15 +37,18 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
 
     private LeaderBoardPresenter mLeaderBoardPresenter;
 
+    private LeaderBoardFragment.OnGetLeaderBoardListener mGetLeaderBoardListener;
 
-    public static LeaderBoardFragment newInstance(LeaderBoard leaderBoard) {
+
+    public static LeaderBoardFragment newInstance(LeaderBoard leaderBoard,LeaderBoardFragment.OnGetLeaderBoardListener listener) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(BundleKeys.LEADERBOARD_LIST, Parcels.wrap(leaderBoard));
-
         LeaderBoardFragment fragment = new LeaderBoardFragment();
         fragment.setArguments(bundle);
+        fragment.mGetLeaderBoardListener=listener;
         return fragment;
     }
+
 
     @Nullable
     @Override
@@ -72,7 +77,7 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
                 LinearLayoutManager.VERTICAL, false));
         this.mRvLeaderBoard.setHasFixedSize(true);
 
-        this.mLeaderBoardPresenter = LeaderBoardPresenterImpl.newInstance(this);
+        this.mLeaderBoardPresenter = LeaderBoardPresenterImpl.newInstance(this,mGetLeaderBoardListener);
         this.mLeaderBoardPresenter.onCreateLeaderBoard(getArguments());
     }
 
@@ -86,69 +91,12 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
         mRvLeaderBoard.getLayoutManager().scrollToPosition(movePosition);
     }
 
-    @Override
-    public void setUserPoints(UserLeaderBoard userLeaderBoard) {
-
-        RelativeLayout userPoints = (RelativeLayout)findViewById(R.id.points_user_rl);
-        View gradientView = (View)findViewById(R.id.gradient_view);
-        ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_row_iv_status);
-        TextView  mTvRank = (TextView) findViewById(R.id.leaderboard_row_tv_rank);
-        RoundImage mIvUser = (RoundImage) findViewById(R.id.leaderboard_row_iv_user_img);
-        TextView mTvName = (TextView) findViewById(R.id.leaderboard_row_tv_user_name);
-        TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_row_tv_points);
-        TextView mTvPlayed= (TextView) findViewById(R.id.leaderboard_row_tv_played);
-        TextView mTvAccuracy = (TextView)findViewById(R.id.leaderboard_row_tv_accuracy);
-        TextView mTvMatchPoints = (TextView)findViewById(R.id.leaderboard_row_tv_match_points);
-
-        userPoints.setVisibility(View.VISIBLE);
-        gradientView.setVisibility(View.VISIBLE);
-
-
-        if(null == userLeaderBoard.getRank()) {
-            mTvRank.setText("-");
-        } else {
-            mTvRank.setText(userLeaderBoard.getRank().toString());
-        }
-
-        //set PowerUps if Match Points is null
-        if (null == userLeaderBoard.getMatchPoints()) {
-            mTvMatchPoints.setText(userLeaderBoard.getUserPowerUps().toString());
-        } else {
-            mTvMatchPoints.setText(String.valueOf(userLeaderBoard.getMatchPoints()));
-            mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_white_icon, 0, 0, 0);
-        }
-
-
-        mTvName.setText(userLeaderBoard.getUserName());
-        mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
-
-        if(null!=userLeaderBoard.getRankChange()) {
-            if (userLeaderBoard.getRankChange() < 0) {
-                mIvStatus.setImageResource(R.drawable.status_arrow_down);
-            } else {
-                mIvStatus.setImageResource(R.drawable.status_arrow_up);
-            }
-        }
-
-        mIvUser.setImageUrl(
-                userLeaderBoard.getUserPhoto()
-        );
-
-        if (userLeaderBoard.getCountPlayed()==1 || userLeaderBoard.getCountPlayed()==0) {
-            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Match");
-        }else {
-            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Matches");
-        }
-
-        if (userLeaderBoard.getAccuracy()!=null) {
-            mTvAccuracy.setText(userLeaderBoard.getAccuracy()+"%");
-        }
-
-
-    }
-
     public void refreshLeaderBoard(Bundle bundle) {
         mLeaderBoardPresenter.update(bundle);
+    }
+
+    public interface OnGetLeaderBoardListener {
+        void onGetUserLeaderBoard(UserLeaderBoard userLeaderBoard);
     }
 
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 
 
 /**
@@ -16,13 +17,16 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoa
     
     private LeaderBoardModel mLeaderBoardModel;
 
-    private LeaderBoardPresenterImpl(LeaderBoardView leaderBoardView) {
+    private LeaderBoardFragment.OnGetLeaderBoardListener mGetLeaderBoardListener;
+
+    private LeaderBoardPresenterImpl(LeaderBoardView leaderBoardView,LeaderBoardFragment.OnGetLeaderBoardListener getLeaderBoardListener) {
         this.mLeaderBoardView = leaderBoardView;
         this.mLeaderBoardModel = LeaderBoardModelImpl.newInstance(this);
+        mGetLeaderBoardListener = getLeaderBoardListener;
     }
 
-    public static LeaderBoardPresenter newInstance(LeaderBoardView leaderBoardView) {
-        return new LeaderBoardPresenterImpl(leaderBoardView);
+    public static LeaderBoardPresenter newInstance(LeaderBoardView leaderBoardView, LeaderBoardFragment.OnGetLeaderBoardListener getLeaderBoardListener) {
+        return new LeaderBoardPresenterImpl(leaderBoardView,getLeaderBoardListener);
     }
 
     @Override
@@ -51,6 +55,7 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoa
 
     @Override
     public void setUserLeaderBoard(UserLeaderBoard userLeaderBoard) {
-        mLeaderBoardView.setUserPoints(userLeaderBoard);
+       // mLeaderBoardView.setUserPoints(userLeaderBoard);
+        mGetLeaderBoardListener.onGetUserLeaderBoard(userLeaderBoard);
     }
 }

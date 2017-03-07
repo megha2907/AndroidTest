@@ -20,6 +20,7 @@ import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -32,7 +33,7 @@ import static in.sportscafe.nostragamus.Constants.BundleKeys;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class PointsModelImpl implements PointsModel {
+public class PointsModelImpl implements PointsModel ,LeaderBoardFragment.OnGetLeaderBoardListener{
 
     private boolean mUserInput = false;
 
@@ -200,7 +201,7 @@ public class PointsModelImpl implements PointsModel {
 
             Log.i("groupIdleaderboard", String.valueOf(leaderBoard.getGroupId()));
 
-            mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());
+            mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard,this), leaderBoard.getTournamentName());
 
             //for challenges change tab to overall
             //if challnegedid=0
@@ -217,6 +218,7 @@ public class PointsModelImpl implements PointsModel {
             Log.i("mSelectedPosition", String.valueOf(mSelectedPosition));
 
             Log.d("PointsModelImpl", "LeaderBoard --> " + leaderBoard.getTournamentId());
+
         }
 
         mViewPagerAdapter.notifyDataSetChanged();
@@ -245,6 +247,11 @@ public class PointsModelImpl implements PointsModel {
 
     }
 
+    @Override
+    public void onGetUserLeaderBoard(UserLeaderBoard userLeaderBoard) {
+        mPointsModelListener.setUserLeaderBoard(userLeaderBoard);
+    }
+
 
     public interface OnPointsModelListener {
 
@@ -264,5 +271,7 @@ public class PointsModelImpl implements PointsModel {
         void setChallengeTimerView(boolean isChallengeTimer);
 
         void setGroupHeadings(String groupName,String heading);
+
+        void setUserLeaderBoard(UserLeaderBoard userLeaderBoard);
     }
 }

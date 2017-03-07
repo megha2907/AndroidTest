@@ -143,7 +143,7 @@ public interface NostragamusService {
     @GET("v1/setting/getSettingsBody")
     Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId);
 
-    @POST("v1/game/users/poll")
+    @POST("v2/game/users/poll")
     Call<AudiencePollResponse> getAudiencePoll(@Body AudiencePollRequest request);
 
     @GET("v2/game/refreshToken")

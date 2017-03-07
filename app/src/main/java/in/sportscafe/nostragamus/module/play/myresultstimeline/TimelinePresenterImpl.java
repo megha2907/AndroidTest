@@ -74,7 +74,7 @@ public class TimelinePresenterImpl implements TimelinePresenter, TimelineModelIm
     public void onEmpty() {
         myResultsTimelineView.dismissProgressbar();
         if (myResultsTimelineModel.isAdapterEmpty()) {
-            myResultsTimelineView.showInAppMessage(Constants.Alerts.NO_RESULTS);
+            myResultsTimelineView.showTimelineEmpty();
         }
     }
 

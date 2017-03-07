@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,8 +27,10 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeFragment;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardModelImpl;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 
 import static in.sportscafe.nostragamus.R.id.view;
@@ -180,6 +183,65 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         mGroupSubHeading.setVisibility(View.VISIBLE);
         mGroupHeading.setText(groupName);
         mGroupSubHeading.setText(heading);
+    }
+
+    @Override
+    public void setUserLeaderBoardView(UserLeaderBoard userLeaderBoard) {
+
+        RelativeLayout userPoints = (RelativeLayout)findViewById(R.id.points_user_rl);
+        View gradientView = (View)findViewById(R.id.gradient_view);
+        ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_row_iv_status);
+        TextView  mTvRank = (TextView) findViewById(R.id.leaderboard_row_tv_rank);
+        RoundImage mIvUser = (RoundImage) findViewById(R.id.leaderboard_row_iv_user_img);
+        TextView mTvName = (TextView) findViewById(R.id.leaderboard_row_tv_user_name);
+        TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_row_tv_points);
+        TextView mTvPlayed= (TextView) findViewById(R.id.leaderboard_row_tv_played);
+        TextView mTvAccuracy = (TextView)findViewById(R.id.leaderboard_row_tv_accuracy);
+        TextView mTvMatchPoints = (TextView)findViewById(R.id.leaderboard_row_tv_match_points);
+
+        userPoints.setVisibility(View.VISIBLE);
+        gradientView.setVisibility(View.VISIBLE);
+
+
+        if(null == userLeaderBoard.getRank()) {
+            mTvRank.setText("-");
+        } else {
+            mTvRank.setText(userLeaderBoard.getRank().toString());
+        }
+
+        //set PowerUps if Match Points is null
+        if (null == userLeaderBoard.getMatchPoints()) {
+            mTvMatchPoints.setText(userLeaderBoard.getUserPowerUps().toString());
+        } else {
+            mTvMatchPoints.setText(String.valueOf(userLeaderBoard.getMatchPoints()));
+            mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_white_icon, 0, 0, 0);
+        }
+
+
+        mTvName.setText(userLeaderBoard.getUserName());
+        mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
+
+        if(null!=userLeaderBoard.getRankChange()) {
+            if (userLeaderBoard.getRankChange() < 0) {
+                mIvStatus.setImageResource(R.drawable.status_arrow_down);
+            } else {
+                mIvStatus.setImageResource(R.drawable.status_arrow_up);
+            }
+        }
+
+        mIvUser.setImageUrl(
+                userLeaderBoard.getUserPhoto()
+        );
+
+        if (userLeaderBoard.getCountPlayed()==1 || userLeaderBoard.getCountPlayed()==0) {
+            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Match");
+        }else {
+            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Matches");
+        }
+
+        if (userLeaderBoard.getAccuracy()!=null) {
+            mTvAccuracy.setText(userLeaderBoard.getAccuracy()+"%");
+        }
     }
 
     @Override

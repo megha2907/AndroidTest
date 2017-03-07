@@ -77,8 +77,7 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
                 mUserPosition = i;
                 Log.i("userpos", String.valueOf(mUserPosition));
                 onLeaderBoardModelListener.setUserLeaderBoard(userLeaderBoard);
-
-
+                break;
             }
             mLeaderBoardAdapter.add(userLeaderBoard);
         }
