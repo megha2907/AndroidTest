@@ -323,22 +323,23 @@
                 android:background="@drawable/shape_neither_bg"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:minWidth="@dimen/dp_105"
                 android:onClick="onClick"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
-                    android:layout_marginRight="@dimen/dp_5"
-                    android:src="@drawable/neither_icon" />
+                    android:src="@drawable/neither_icon"
+                    android:layout_marginLeft="@dimen/dp_10"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/prediction_tv_neither_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingRight="@dimen/dp_10"
+                    android:minWidth="@dimen/dp_75"
                     android:text="@string/neither"
                     android:textAllCaps="true"
                     android:textColor="@color/white"

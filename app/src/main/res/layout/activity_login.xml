@@ -10,48 +10,46 @@
         android:id="@+id/splash_screen_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/splash_screen_bg"
         android:scaleType="fitXY"
-        />
+        android:src="@drawable/splash_screen_bg" />
 
     <ImageView
         android:id="@+id/splash_screen_human_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/splash_screen_human"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_20"
-        />
+        android:src="@drawable/splash_screen_human" />
 
 
     <ImageView
+        android:id="@+id/nostragamus_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/nostragamus_logo"
         android:layout_centerHorizontal="true"
-        android:id="@+id/nostragamus_logo"
         android:layout_marginTop="@dimen/dp_200"
+        android:src="@drawable/nostragamus_logo"
 
-     />
+        />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/login_label_pregame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/nostragamus_logo"
+        android:layout_centerHorizontal="true"
         android:text="Nostragamus"
         android:textColor="@color/white"
         android:textSize="@dimen/dp_18"
-        app:typeface="lato_regular"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:typeface="lato_regular" />
 
     <android.support.v4.widget.Space
         android:id="@+id/login_center_space"
-        android:layout_below="@+id/nostragamus_logo"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_50"
+        android:layout_below="@+id/nostragamus_logo"
         android:layout_centerInParent="true" />
 
 
@@ -66,8 +64,8 @@
         <ImageView
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_10"
             android:src="@drawable/fb_login_icon" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -96,8 +94,8 @@
         <ImageView
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_10"
             android:src="@drawable/gplus_login_icon" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -118,12 +116,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dp_20"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:onClick="onClick"
         android:textColor="@color/textcolorlight"
         android:textSize="@dimen/dp_12"
-        app:typeface="lato_regular"
-        android:onClick="onClick"
-        />
+        app:typeface="lato_regular" />
 
 </RelativeLayout>

@@ -16,8 +16,8 @@ public class ShadowLayout extends FrameLayout {
     private int mShadowColor;
     private float mShadowRadius;
     private float mCornerRadius;
-    private float mDx;
-    private float mDy;
+//    private float mDx;
+//    private float mDy;
     private int mFillColor;
 
     public ShadowLayout(Context context) {
@@ -39,9 +39,9 @@ public class ShadowLayout extends FrameLayout {
         setWillNotDraw(false);
         initAttributes(context, attrs);
 
-        int xPadding = (int) (mShadowRadius + Math.abs(mDx));
+        /*int xPadding = (int) (mShadowRadius + Math.abs(mDx));
         int yPadding = (int) (mShadowRadius + Math.abs(mDy));
-        setPadding(xPadding, yPadding, xPadding, yPadding);
+        setPadding(xPadding, yPadding, xPadding, yPadding);*/
     }
 
     private void initAttributes(Context context, AttributeSet attrs) {
@@ -53,8 +53,8 @@ public class ShadowLayout extends FrameLayout {
         try {
             mCornerRadius = attr.getDimension(R.styleable.ShadowLayout_sl_cornerRadius, getResources().getDimension(R.dimen.default_corner_radius));
             mShadowRadius = attr.getDimension(R.styleable.ShadowLayout_sl_shadowRadius, getResources().getDimension(R.dimen.default_shadow_radius));
-            mDx = attr.getDimension(R.styleable.ShadowLayout_sl_dx, 0);
-            mDy = attr.getDimension(R.styleable.ShadowLayout_sl_dy, 0);
+//            mDx = attr.getDimension(R.styleable.ShadowLayout_sl_dx, 0);
+//            mDy = attr.getDimension(R.styleable.ShadowLayout_sl_dy, 0);
             mShadowColor = attr.getColor(R.styleable.ShadowLayout_sl_shadowColor, getResources().getColor(R.color.default_shadow_color));
             mFillColor = attr.getColor(R.styleable.ShadowLayout_sl_fillColor, getResources().getColor(R.color.default_fill_color));
         } finally {
@@ -71,12 +71,12 @@ public class ShadowLayout extends FrameLayout {
         Canvas outputCanvas = new Canvas(outputBitmap);
 
         RectF shadowRect = new RectF(
-                mShadowRadius,
-                mShadowRadius,
-                width - mShadowRadius,
-                height - mShadowRadius);
+                getPaddingLeft(),
+                getPaddingTop(),
+                width - getPaddingRight(),
+                height - getPaddingBottom());
 
-        if (mDy > 0) {
+        /*if (mDy > 0) {
             shadowRect.top += mDy;
             shadowRect.bottom -= mDy;
         } else if (mDy < 0) {
@@ -90,13 +90,13 @@ public class ShadowLayout extends FrameLayout {
         } else if (mDx < 0) {
             shadowRect.left += Math.abs(mDx);
             shadowRect.right -= Math.abs(mDx);
-        }
+        }*/
 
         Paint shadowPaint = new Paint();
         shadowPaint.setAntiAlias(true);
         shadowPaint.setColor(mFillColor);
         shadowPaint.setStyle(Paint.Style.FILL);
-        shadowPaint.setShadowLayer(mShadowRadius, mDx, mDy, mShadowColor);
+        shadowPaint.setShadowLayer(mShadowRadius, 0, 0, mShadowColor);
 
         outputCanvas.drawRoundRect(shadowRect, mCornerRadius, mCornerRadius, shadowPaint);
         canvas.drawBitmap(outputBitmap, 0, 0, null);
