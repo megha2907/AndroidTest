@@ -68,7 +68,7 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
         } else {
             holder.tvRank.setVisibility(View.GONE);
             holder.mIvStatus.setVisibility(View.GONE);
-            holder.tvPosTxt.setText("NOT\nPLAYED");
+            holder.tvPosTxt.setText("AWAITING\nRESULT");
         }
 
         holder.tvName.setText(lbLandingDto.getName());

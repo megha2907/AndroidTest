@@ -44,6 +44,11 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     }
 
     @Override
+    public void updateUserLeaderBoard(int position) {
+        mPointsModel.updateUserLeaderBoard(position);
+    }
+
+    @Override
     public void onNoInternet() {
         showAlertMsg(Constants.Alerts.NO_NETWORK_CONNECTION);
     }

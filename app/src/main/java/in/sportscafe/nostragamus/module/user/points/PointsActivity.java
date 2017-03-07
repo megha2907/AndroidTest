@@ -141,6 +141,23 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         tabLayout.setupWithViewPager(mViewPager);
 
         mViewPager.setCurrentItem(selectedPosition);
+        mPointsPresenter.updateUserLeaderBoard(0);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+               mPointsPresenter.updateUserLeaderBoard(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -188,16 +205,19 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     @Override
     public void setUserLeaderBoardView(UserLeaderBoard userLeaderBoard) {
 
+        Log.i("rank", String.valueOf(userLeaderBoard.getRank()));
+        Log.i("username", userLeaderBoard.getUserName());
+
         RelativeLayout userPoints = (RelativeLayout)findViewById(R.id.points_user_rl);
         View gradientView = (View)findViewById(R.id.gradient_view);
-        ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_row_iv_status);
-        TextView  mTvRank = (TextView) findViewById(R.id.leaderboard_row_tv_rank);
-        RoundImage mIvUser = (RoundImage) findViewById(R.id.leaderboard_row_iv_user_img);
-        TextView mTvName = (TextView) findViewById(R.id.leaderboard_row_tv_user_name);
-        TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_row_tv_points);
-        TextView mTvPlayed= (TextView) findViewById(R.id.leaderboard_row_tv_played);
-        TextView mTvAccuracy = (TextView)findViewById(R.id.leaderboard_row_tv_accuracy);
-        TextView mTvMatchPoints = (TextView)findViewById(R.id.leaderboard_row_tv_match_points);
+        ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_iv_status);
+        TextView  mTvRank = (TextView) findViewById(R.id.leaderboard_tv_rank);
+        RoundImage mIvUser = (RoundImage) findViewById(R.id.leaderboard_iv_user_img);
+        TextView mTvName = (TextView) findViewById(R.id.leaderboard_tv_user_name);
+        TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_tv_points);
+        TextView mTvPlayed= (TextView) findViewById(R.id.leaderboard_tv_played);
+        TextView mTvAccuracy = (TextView)findViewById(R.id.leaderboard_tv_accuracy);
+        TextView mTvMatchPoints = (TextView)findViewById(R.id.leaderboard_tv_match_points);
 
         userPoints.setVisibility(View.VISIBLE);
         gradientView.setVisibility(View.VISIBLE);
@@ -242,6 +262,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         if (userLeaderBoard.getAccuracy()!=null) {
             mTvAccuracy.setText(userLeaderBoard.getAccuracy()+"%");
         }
+
     }
 
     @Override

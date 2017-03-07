@@ -17,16 +17,13 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoa
     
     private LeaderBoardModel mLeaderBoardModel;
 
-    private LeaderBoardFragment.OnGetLeaderBoardListener mGetLeaderBoardListener;
-
-    private LeaderBoardPresenterImpl(LeaderBoardView leaderBoardView,LeaderBoardFragment.OnGetLeaderBoardListener getLeaderBoardListener) {
+    private LeaderBoardPresenterImpl(LeaderBoardView leaderBoardView) {
         this.mLeaderBoardView = leaderBoardView;
         this.mLeaderBoardModel = LeaderBoardModelImpl.newInstance(this);
-        mGetLeaderBoardListener = getLeaderBoardListener;
     }
 
-    public static LeaderBoardPresenter newInstance(LeaderBoardView leaderBoardView, LeaderBoardFragment.OnGetLeaderBoardListener getLeaderBoardListener) {
-        return new LeaderBoardPresenterImpl(leaderBoardView,getLeaderBoardListener);
+    public static LeaderBoardPresenter newInstance(LeaderBoardView leaderBoardView) {
+        return new LeaderBoardPresenterImpl(leaderBoardView);
     }
 
     @Override
@@ -53,9 +50,4 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoa
         mLeaderBoardView.showInAppMessage("Your leaderboard will update here after a match you have played is over");
     }
 
-    @Override
-    public void setUserLeaderBoard(UserLeaderBoard userLeaderBoard) {
-       // mLeaderBoardView.setUserPoints(userLeaderBoard);
-        mGetLeaderBoardListener.onGetUserLeaderBoard(userLeaderBoard);
-    }
 }

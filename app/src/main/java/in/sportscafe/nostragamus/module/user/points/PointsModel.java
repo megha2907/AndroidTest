@@ -29,4 +29,6 @@ public interface PointsModel {
     void refreshAdapter(List<LeaderBoard> leaderBoardList, String SortType);
 
     void sortAdapter(String rank);
+
+    void updateUserLeaderBoard(int position);
 }

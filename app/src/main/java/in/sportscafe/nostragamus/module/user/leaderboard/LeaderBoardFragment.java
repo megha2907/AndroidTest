@@ -37,15 +37,11 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
 
     private LeaderBoardPresenter mLeaderBoardPresenter;
 
-    private LeaderBoardFragment.OnGetLeaderBoardListener mGetLeaderBoardListener;
-
-
-    public static LeaderBoardFragment newInstance(LeaderBoard leaderBoard,LeaderBoardFragment.OnGetLeaderBoardListener listener) {
+    public static LeaderBoardFragment newInstance(LeaderBoard leaderBoard) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(BundleKeys.LEADERBOARD_LIST, Parcels.wrap(leaderBoard));
         LeaderBoardFragment fragment = new LeaderBoardFragment();
         fragment.setArguments(bundle);
-        fragment.mGetLeaderBoardListener=listener;
         return fragment;
     }
 
@@ -77,7 +73,7 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
                 LinearLayoutManager.VERTICAL, false));
         this.mRvLeaderBoard.setHasFixedSize(true);
 
-        this.mLeaderBoardPresenter = LeaderBoardPresenterImpl.newInstance(this,mGetLeaderBoardListener);
+        this.mLeaderBoardPresenter = LeaderBoardPresenterImpl.newInstance(this);
         this.mLeaderBoardPresenter.onCreateLeaderBoard(getArguments());
     }
 
@@ -93,10 +89,6 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
 
     public void refreshLeaderBoard(Bundle bundle) {
         mLeaderBoardPresenter.update(bundle);
-    }
-
-    public interface OnGetLeaderBoardListener {
-        void onGetUserLeaderBoard(UserLeaderBoard userLeaderBoard);
     }
 
 }
