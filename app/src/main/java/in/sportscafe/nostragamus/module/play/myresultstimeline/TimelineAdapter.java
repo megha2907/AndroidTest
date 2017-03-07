@@ -211,7 +211,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                         holder.mTvMatchResult.setText(Html.fromHtml(match.getResult()));
                         holder.mRlMatchPoints.setTag(match);
                         holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
-                        holder.mTvResultCorrectCount.setText("You got " + match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " answers correct");
+                        holder.mTvResultCorrectCount.setText(/*"You got " + */match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " answers correct");
 
                         Integer winnerPartyId = match.getWinnerPartyId();
                         if (null != winnerPartyId) {

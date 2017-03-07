@@ -156,12 +156,12 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
         mlbLandingSummary = lbSummary;
 
-        for (int i=0 ; i < mlbLandingSummary.size() ; i++) {
+        for (int i = 0; i < mlbLandingSummary.size(); i++) {
 
-        List<LbLanding> lbLandingList = lbSummary.get(i).getLeaderBoardItems();
+            List<LbLanding> lbLandingList = lbSummary.get(i).getLeaderBoardItems();
 
 
-        if (null != lbLandingList && lbLandingList.size() > 0) {
+            if (null != lbLandingList && lbLandingList.size() > 0) {
 
                 addLandingRow(
                         lbLandingList,
@@ -230,7 +230,7 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
-            if(null != bundle && bundle.containsKey(BundleKeys.LB_LANDING_KEY)) {
+            if (null != bundle && bundle.containsKey(BundleKeys.LB_LANDING_KEY)) {
                 closeFuzzy();
             }
             mLbLandingPresenter.onFuzzyLbClick(bundle);
@@ -256,7 +256,7 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
     }
 
     public boolean onBack() {
-        if(mFlFuzzyHolder.getVisibility() == View.VISIBLE) {
+        if (mFlFuzzyHolder.getVisibility() == View.VISIBLE) {
             closeFuzzy();
             return true;
         }
@@ -269,7 +269,7 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
         mFlFuzzyHolder.setVisibility(View.VISIBLE);
         mFuzzyLbFragment.showKeyboard();
 
-        if(!mBackListenerSet) {
+        if (!mBackListenerSet) {
             mBackListenerSet = true;
             mFuzzyLbFragment.setOnEditTextImeBackListener(this);
         }

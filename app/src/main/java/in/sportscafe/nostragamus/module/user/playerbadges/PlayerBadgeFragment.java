@@ -7,16 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import org.parceler.Parcels;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
-import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by deepanshi on 1/5/17.
@@ -59,12 +56,6 @@ public class PlayerBadgeFragment extends NostragamusFragment implements PlayerBa
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
         this.mRvBadge.setAdapter(adapter);
-    }
-
-    @Override
-    public void showBadgesEmpty() {
-        TextView noBadges = (TextView) findViewById(R.id.no_badges);
-        noBadges.setVisibility(View.VISIBLE);
     }
 
 }

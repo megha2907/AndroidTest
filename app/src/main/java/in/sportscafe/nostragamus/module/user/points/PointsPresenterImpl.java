@@ -1,7 +1,6 @@
 package in.sportscafe.nostragamus.module.user.points;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 
 import com.jeeva.android.Log;
@@ -40,7 +39,7 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
 
     @Override
     public void onSortByPoints() {
-        Log.i("sort","onSortByPoints");
+        Log.i("sort", "onSortByPoints");
         mPointsModel.sortAdapter("rank");
     }
 
@@ -51,12 +50,12 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
 
     @Override
     public void setIsMatchPoints(boolean isMatchPoints) {
-       mPointsView.setMatchPoints(isMatchPoints);
+        mPointsView.setMatchPoints(isMatchPoints);
     }
 
     @Override
     public void setChallengeTimer(String days, String hours, String mins, String secs) {
-        mPointsView.setChallengeTimer(days,hours,mins,secs);
+        mPointsView.setChallengeTimer(days, hours, mins, secs);
     }
 
     @Override
@@ -65,8 +64,8 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     }
 
     @Override
-    public void setGroupHeadings(String groupName,String heading) {
-       mPointsView.setGroupHeadings(groupName,heading);
+    public void setGroupHeadings(String groupName, String heading) {
+        mPointsView.setGroupHeadings(groupName, heading);
     }
 
     @Override
