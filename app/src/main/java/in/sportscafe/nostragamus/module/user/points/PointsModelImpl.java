@@ -188,10 +188,14 @@ public class PointsModelImpl implements PointsModel{
 
             Log.i("groupIdleaderboard", String.valueOf(leaderBoard.getGroupId()));
 
-            mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());
-
             //for challenges change tab to overall
-            //if challnegedid=0
+//            if (mChallengeId==0){
+//                mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoardList.get(0)), leaderBoard.getTournamentName());
+//            }else {
+                mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());
+         //   }
+
+
             if (i != 0 && mGroupId == leaderBoard.getGroupId()) {
                 mSelectedPosition = i;
             }
