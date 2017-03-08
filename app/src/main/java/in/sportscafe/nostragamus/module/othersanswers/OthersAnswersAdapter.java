@@ -162,7 +162,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         holder.mBtnMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
         holder.mRlAvgMatchPoints.setVisibility(View.GONE);
         holder.mRlHighestMatchPoints.setVisibility(View.GONE);
-        holder.mSlLeaderBoard.setVisibility(View.GONE);
+        holder.mRlLeaderBoard.setVisibility(View.GONE);
         holder.mTvMatchPointsTxt.setText("Average Score");
         holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountMatchPowerupsUsed()));
         holder.mTvResultCorrectCount.setText(match.getCountMatchPlayers().toString()+" People Answered");
@@ -214,7 +214,8 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         TextView mTvHighestMatchPoints;
         TextView mTvLeaderBoardRank;
         TextView mTvNumberofPowerupsUsed;
-        RelativeLayout mSlLeaderBoard;
+        RelativeLayout mRlLeaderBoard;
+        ShadowLayout mSlScrores;
 
 
         public MyResultViewHolder(View V) {
@@ -238,7 +239,9 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             mTvHighestMatchPoints = (TextView) V.findViewById(R.id.schedule_row_tv_highest_score);
             mTvLeaderBoardRank = (TextView) V.findViewById(R.id.schedule_row_tv_leaderboard_rank);
             mTvNumberofPowerupsUsed= (TextView) V.findViewById(R.id.schedule_row_tv_no_of_powerups_used);
-            mSlLeaderBoard = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_leaderboard);
+            mRlLeaderBoard = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_leaderboard);
+            mSlScrores = (ShadowLayout) V.findViewById(R.id.schedule_row_scores_sl);
+            mSlScrores.setPadding(0, 0, 0, 0);
             mRlAvgMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
             mRlHighestMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mRlMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_my_score);

@@ -232,6 +232,7 @@
             android:orientation="vertical">
 
             <com.jeeva.android.widgets.ShadowLayout
+                android:id="@+id/schedule_row_scores_sl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:sl_cornerRadius="@dimen/dp_8"
