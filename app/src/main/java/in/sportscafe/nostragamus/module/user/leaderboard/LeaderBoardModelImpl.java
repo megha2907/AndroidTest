@@ -76,9 +76,6 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
             if (userId.equals(userLeaderBoard.getUserId())) {
                 mUserPosition = i;
                 Log.i("userpos", String.valueOf(mUserPosition));
-                onLeaderBoardModelListener.setUserLeaderBoard(userLeaderBoard);
-
-
             }
             mLeaderBoardAdapter.add(userLeaderBoard);
         }
@@ -114,6 +111,5 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
         void onEmpty();
 
-        void setUserLeaderBoard(UserLeaderBoard newuserLeaderBoard);
     }
 }

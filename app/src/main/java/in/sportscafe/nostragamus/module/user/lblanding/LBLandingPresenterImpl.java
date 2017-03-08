@@ -81,7 +81,7 @@ public class LBLandingPresenterImpl implements LBLandingPresenter, LBLandingMode
     @Override
     public void onEmpty() {
         mLbLandingView.dismissProgressbar();
-        mLbLandingView.showInAppMessage("Leaderboards will appear once you have made some predictions !");
+        mLbLandingView.showLeaderBoardsEmpty();
     }
 
     private void showAlert(String message) {

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -124,6 +126,8 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
     public void showGroupsEmpty() {
         mTvEmptyGroups = (TextView) findViewById(R.id.all_groups_empty_tv);
         mTvEmptyGroups.setVisibility(View.VISIBLE);
+        ImageView mIvEmptyGroups = (ImageView) findViewById(R.id.all_groups_empty_iv);
+        mIvEmptyGroups.setVisibility(View.VISIBLE);
     }
 
     @Override

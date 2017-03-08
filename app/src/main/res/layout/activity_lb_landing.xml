@@ -143,4 +143,50 @@
         android:background="@color/black_60"
         android:visibility="invisible" />
 
+    <ImageView
+        android:id="@+id/leaderboard_empty_iv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/leaderboard_play_challenge_btn"
+        android:layout_marginBottom="@dimen/dp_40"
+        android:scaleType="centerCrop"
+        android:layout_below="@+id/lb_landing_toolbar"
+        android:src="@drawable/empty_leaderboard_image"
+        android:visibility="gone" />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/leaderboard_empty_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/leaderboard_play_challenge_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_130"
+        android:gravity="center"
+        android:text="@string/empty_leaderboard"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_13"
+        android:visibility="gone"
+        app:typeface="lato_light" />
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/leaderboard_play_challenge_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_36"
+        android:background="@drawable/tournament_ready_btn_bg"
+        android:onClick="onClick"
+        android:paddingBottom="@dimen/dp_2"
+        android:paddingLeft="@dimen/dp_30"
+        android:paddingRight="@dimen/dp_30"
+        android:text="Play Open Challenges"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_13"
+        android:visibility="gone"
+        app:typeface="lato_bold" />
+
+
 </RelativeLayout>

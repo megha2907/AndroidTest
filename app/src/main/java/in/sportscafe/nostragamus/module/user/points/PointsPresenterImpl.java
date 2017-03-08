@@ -6,6 +6,7 @@ import android.view.View;
 import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -43,6 +44,11 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     }
 
     @Override
+    public void updateUserLeaderBoard(int position) {
+        mPointsModel.updateUserLeaderBoard(position);
+    }
+
+    @Override
     public void onNoInternet() {
         showAlertMsg(Constants.Alerts.NO_NETWORK_CONNECTION);
     }
@@ -65,6 +71,11 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     @Override
     public void setGroupHeadings(String groupName, String heading) {
         mPointsView.setGroupHeadings(groupName, heading);
+    }
+
+    @Override
+    public void setUserLeaderBoard(UserLeaderBoard userLeaderBoard) {
+        mPointsView.setUserLeaderBoardView(userLeaderBoard);
     }
 
     @Override

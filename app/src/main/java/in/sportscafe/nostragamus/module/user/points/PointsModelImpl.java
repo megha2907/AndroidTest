@@ -12,11 +12,13 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -29,7 +31,7 @@ import static in.sportscafe.nostragamus.Constants.BundleKeys;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class PointsModelImpl implements PointsModel {
+public class PointsModelImpl implements PointsModel{
 
     private boolean mUserInput = false;
 
@@ -184,6 +186,8 @@ public class PointsModelImpl implements PointsModel {
         for (int i = 0; i < leaderBoardList.size(); i++) {
             leaderBoard = leaderBoardList.get(i);
 
+            Log.i("groupIdleaderboard", String.valueOf(leaderBoard.getGroupId()));
+
             mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());
 
             //for challenges change tab to overall
@@ -202,6 +206,29 @@ public class PointsModelImpl implements PointsModel {
         if (sortType.equals("rank")) {
             mViewPagerAdapter.getItem(mSelectedPosition).setUserVisibleHint(true);
         }
+    }
+
+    @Override
+    public void updateUserLeaderBoard(int position) {
+
+        UserLeaderBoard userLeaderBoard;
+
+        Integer userId = Integer.valueOf(NostragamusDataHandler.getInstance().getUserId());
+
+        LeaderBoard mLeaderBoard =  mleaderBoardList.get(position);
+
+        for (int i = 0; i < mLeaderBoard.getUserLeaderBoardList().size(); i++) {
+
+            userLeaderBoard = mLeaderBoard.getUserLeaderBoardList().get(i);
+
+            Log.i("userLeaderBoard", String.valueOf(userLeaderBoard));
+
+            if (userId == userLeaderBoard.getUserId()) {
+                mPointsModelListener.setUserLeaderBoard(userLeaderBoard);
+                break;
+            }
+        }
+
     }
 
 
@@ -238,6 +265,8 @@ public class PointsModelImpl implements PointsModel {
 
         void setChallengeTimerView(boolean isChallengeTimer);
 
-        void setGroupHeadings(String groupName, String heading);
+        void setGroupHeadings(String groupName,String heading);
+
+        void setUserLeaderBoard(UserLeaderBoard userLeaderBoard);
     }
 }
