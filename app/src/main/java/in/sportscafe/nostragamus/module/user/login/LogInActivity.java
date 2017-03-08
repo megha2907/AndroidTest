@@ -2,13 +2,15 @@ package in.sportscafe.nostragamus.module.user.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthException;
@@ -23,6 +25,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
+import com.jeeva.android.Log;
 
 import java.io.IOException;
 
@@ -31,10 +34,10 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.TermsConditions;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
+import me.relex.circleindicator.CircleIndicator;
 
-public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
+public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "LogInActivity";
 
@@ -58,7 +61,6 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     private String personPhoto;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +69,12 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
-        TextView termstv = (TextView)findViewById(R.id.terms_tv);
+        TextView termstv = (TextView) findViewById(R.id.login_tv_terms);
         termstv.setText(Html.fromHtml(getString(R.string.termspolicy)));
 
         initGoogle();
+
+        initOnboarding();
 
         mLogInPresenter = LogInPresenterImpl.newInstance(LogInActivity.this);
         mLogInPresenter.onCreateLogIn(getIntent().getExtras());
@@ -103,12 +107,95 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
     }
 
+    private TextView mTvOnboardTitle;
+
+    private TextView mTvOnboardDesc;
+
+    private void initOnboarding() {
+        mTvOnboardTitle = (TextView) findViewById(R.id.login_tv_onboard_title);
+        mTvOnboardDesc = (TextView) findViewById(R.id.login_tv_onboard_desc);
+
+        mOnboardTitles = getResources().getStringArray(R.array.onboard_titles);
+        mOnboardDescs = getResources().getStringArray(R.array.onboard_descs);
+
+        ViewPager viewpager = (ViewPager) findViewById(R.id.login_vp_onboading);
+        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.login_cpi_indicator);
+        viewpager.setAdapter(new PagerAdapter() {
+            @Override
+            public int getCount() {
+                return 4;
+            }
+
+            @Override
+            public boolean isViewFromObject(View view, Object object) {
+                return view == object;
+            }
+
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                RelativeLayout relativeLayout = new RelativeLayout(LogInActivity.this);
+                relativeLayout.setAlpha(0.1f);
+                relativeLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+                if(position == 0) {
+                    relativeLayout.setBackgroundColor(getColor(LogInActivity.this, R.color.yellowcolor));
+                }
+
+                container.addView(relativeLayout);
+                return relativeLayout;
+            }
+
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+                container.removeView((View) object);
+            }
+        });
+        indicator.setViewPager(viewpager);
+
+        /*viewpager.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                float x = scrollX % 1080;
+                float halfWidth = 540;
+                x %= halfWidth;
+                applyAlpha(x / halfWidth);
+
+                if(x != 0) {
+                    changeOnboardText(scrollX / halfWidth);
+                }
+            }
+        });*/
+
+        changeOnboardText(0);
+    }
+
+    private void applyAlpha(float alpha) {
+        mTvOnboardTitle.setAlpha(alpha);
+        mTvOnboardDesc.setAlpha(alpha);
+    }
+
+    private String[] mOnboardTitles;
+
+    private String[] mOnboardDescs;
+
+    private int mCurrentPosition = -1;
+
+    private void changeOnboardText(int position) {
+        if(mCurrentPosition != position) {
+            mCurrentPosition = position;
+            mTvOnboardTitle.setText(mOnboardTitles[position]);
+            mTvOnboardDesc.setText(mOnboardDescs[position]);
+        }
+    }
+
     @Override
     public void initViews() {
         //Setting Button click listeners
         findViewById(R.id.login_btn_fb).setOnClickListener(this);
 
         findViewById(R.id.login_btn_google).setOnClickListener(this);
+
+        findViewById(R.id.login_tv_terms).setOnClickListener(this);
     }
 
     @Override
@@ -119,9 +206,9 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     }
 
     @Override
-        public void navigateToEditProfile() {
+    public void navigateToEditProfile() {
         Intent intent = new Intent(this, EditProfileActivity.class);
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -135,13 +222,13 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
 
-            if(null!=result.getSignInAccount()){
+            if (null != result.getSignInAccount()) {
                 GoogleSignInAccount acct = result.getSignInAccount();
                 personName = acct.getDisplayName();
                 personEmail = acct.getEmail();
                 personId = acct.getId();
                 persongender = "";
-                profileUrl="";
+                profileUrl = "";
                 personPhoto = String.valueOf(acct.getPhotoUrl());
 
             }
@@ -162,13 +249,13 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
             case R.id.login_btn_google:
                 mLogInPresenter.onClickGoogle();
                 break;
-            case R.id.terms_tv:
+            case R.id.login_tv_terms:
                 gotoTermsConditions();
                 break;
         }
     }
 
-    public void gotoTermsConditions(){
+    public void gotoTermsConditions() {
         startActivity(new Intent(this, TermsConditions.class));
     }
 
@@ -202,9 +289,9 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
                 if (null != token) {
                     Log.d("GPlus Token", token);
                     mLogInPresenter.onSuccessGoogleToken(token,
-                            personId,personName,
-                            persongender,profileUrl,
-                            personEmail,personPhoto);
+                            personId, personName,
+                            persongender, profileUrl,
+                            personEmail, personPhoto);
                 }
             }
 
@@ -215,7 +302,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     @Override
     public void onStart() {
         super.onStart();
-       // signOut();
+        // signOut();
 //        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
 //        if (opr.isDone()) {
 //            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
@@ -240,7 +327,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        if(null != result) {
+        if (null != result) {
             Log.d(TAG, "handleSignInResult:" + result.isSuccess());
             if (result.isSuccess()) {
                 // Signed in successfully, show authenticated UI.
@@ -252,7 +339,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
     @Override
     public void signIn(Intent intent) {
-        if(null == intent) {
+        if (null == intent) {
             intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         }
         startActivityForResult(intent, RC_SIGN_IN);
