@@ -17,6 +17,7 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         app:sl_cornerRadius="@dimen/dp_8"
+        android:padding="@dimen/dp_4"
         app:sl_fillColor="@color/challenges_bg_card_color">
 
         <RelativeLayout
@@ -55,6 +56,7 @@
     <com.jeeva.android.widgets.ShadowLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/dp_4"
         app:sl_cornerRadius="@dimen/dp_8"
         app:sl_fillColor="@color/challenges_card_color">
 

@@ -125,5 +125,7 @@ dependencies {
     compile 'com.felipecsl:gifimageview:2.1.0'
     // To handle 65k method issue
     compile 'com.android.support:multidex:1.0.1'
+    // Circle page indicator for zoom in/out circle
+    compile 'me.relex:circleindicator:1.2.2'
 }
 apply plugin: 'com.google.gms.google-services'

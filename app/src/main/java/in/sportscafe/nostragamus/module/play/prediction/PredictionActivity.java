@@ -219,6 +219,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void notifyTopView() {
         mSwipeFlingAdapterView.refreshTopLayout();
+        invokeCardListener();
     }
 
     @Override
