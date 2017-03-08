@@ -133,7 +133,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         if (null == match.getResult() || match.getResult().isEmpty()) {
             holder.mTvMatchResult.setVisibility(View.GONE);
             holder.mTvResultWait.setVisibility(View.VISIBLE);
-            holder.mTvResultWait.setText("Awaiting Results");
+            holder.mTvResultWait.setText(match.getStage()+" - "+"Awaiting Results");
             holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             holder.mTvResultCorrectCount.setText(match.getQuestions().size() +"/" + match.getMatchQuestionCount() + " Questions Answered");
 
@@ -151,7 +151,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         } else {
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
-            holder.mTvMatchResult.setText(match.getResult());
+            holder.mTvMatchResult.setText(match.getStage()+" - "+match.getResult());
         }
 
 

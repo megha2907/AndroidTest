@@ -167,7 +167,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/dp_13"
         android:visibility="gone"
-        app:typeface="lato_light" />
+        app:typeface="roboto_condensed" />
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/leaderboard_play_challenge_btn"

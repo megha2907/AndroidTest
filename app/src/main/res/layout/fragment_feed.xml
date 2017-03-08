@@ -30,14 +30,14 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/leaderboard_play_challenge_btn"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_40"
+        android:layout_marginBottom="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_130"
         android:gravity="center"
         android:text="@string/empty_results"
         android:textColor="@color/white"
         android:textSize="@dimen/dp_13"
         android:visibility="gone"
-        app:typeface="lato_light" />
+        app:typeface="roboto_condensed" />
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/leaderboard_play_challenge_btn"
