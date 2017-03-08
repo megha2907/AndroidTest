@@ -20,8 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -277,6 +279,16 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
         mTvDummySearch.setText(mFuzzyLbFragment.getSearchKey());
         mFuzzyLbFragment.hideKeyboard();
         mFlFuzzyHolder.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showLeaderBoardsEmpty() {
+        TextView mTvEmptyLeaderboards = (TextView) findViewById(R.id.leaderboard_empty_tv);
+        ImageView mIvEmptyLeaderboards = (ImageView) findViewById(R.id.leaderboard_empty_iv);
+        Button mBtnPlayChallenge = (Button) findViewById(R.id.leaderboard_play_challenge_btn);
+        mTvEmptyLeaderboards.setVisibility(View.VISIBLE);
+        mIvEmptyLeaderboards.setVisibility(View.VISIBLE);
+        mBtnPlayChallenge.setVisibility(View.VISIBLE);
     }
 
     @Override

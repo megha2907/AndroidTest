@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 
 
 /**
@@ -49,8 +50,4 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoa
         mLeaderBoardView.showInAppMessage("Your leaderboard will update here after a match you have played is over");
     }
 
-    @Override
-    public void setUserLeaderBoard(UserLeaderBoard userLeaderBoard) {
-        mLeaderBoardView.setUserPoints(userLeaderBoard);
-    }
 }

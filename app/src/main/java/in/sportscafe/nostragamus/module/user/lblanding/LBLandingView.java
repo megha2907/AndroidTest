@@ -13,4 +13,6 @@ public interface LBLandingView extends InAppView {
     void sortLeaderBoards();
 
     void initMyPosition(List<LBLandingSummary> lbSummary);
+
+    void showLeaderBoardsEmpty();
 }

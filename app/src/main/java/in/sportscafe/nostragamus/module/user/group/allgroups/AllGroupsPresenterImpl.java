@@ -64,8 +64,8 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
 
     @Override
     public void onGroupsEmpty() {
-//        mAllGroupsView.showGroupsEmpty();
-        mAllGroupsView.showInAppMessage("You don't have any groups yet");
+        mAllGroupsView.showGroupsEmpty();
+        //mAllGroupsView.showInAppMessage("You don't have any groups yet");
     }
 
     @Override

@@ -10,4 +10,6 @@ public interface PointsPresenter {
     void onCreatePoints(Bundle bundle);
 
     void onSortByPoints();
+
+    void updateUserLeaderBoard(int position);
 }
