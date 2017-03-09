@@ -25,4 +25,6 @@ public interface PointsView extends InAppView {
     void setGroupHeadings(String groupName,String heading);
 
     void setUserLeaderBoardView(UserLeaderBoard userLeaderBoard);
+
+    void setTabsView();
 }

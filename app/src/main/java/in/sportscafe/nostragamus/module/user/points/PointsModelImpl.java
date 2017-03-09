@@ -31,7 +31,7 @@ import static in.sportscafe.nostragamus.Constants.BundleKeys;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class PointsModelImpl implements PointsModel{
+public class PointsModelImpl implements PointsModel {
 
     private boolean mUserInput = false;
 
@@ -182,18 +182,25 @@ public class PointsModelImpl implements PointsModel{
 
     @Override
     public void refreshAdapter(List<LeaderBoard> leaderBoardList, String SortType) {
+
         LeaderBoard leaderBoard;
-        for (int i = 0; i < leaderBoardList.size(); i++) {
-            leaderBoard = leaderBoardList.get(i);
 
-            Log.i("groupIdleaderboard", String.valueOf(leaderBoard.getGroupId()));
+        //for challenges change tab to overall
+        if (mChallengeId == 0) {
+            mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoardList.get(0)), leaderBoardList.get(0).getTournamentName());
+            mPointsModelListener.changeTabsView();
+        } else {
 
-            mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());
+            for (int i = 0; i < leaderBoardList.size(); i++) {
+                leaderBoard = leaderBoardList.get(i);
 
-            //for challenges change tab to overall
-            //if challnegedid=0
-            if (i != 0 && mGroupId == leaderBoard.getGroupId()) {
-                mSelectedPosition = i;
+                Log.i("groupIdleaderboard", String.valueOf(leaderBoard.getGroupId()));
+
+                mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard), leaderBoard.getTournamentName());
+
+                if (i != 0 && mGroupId == leaderBoard.getGroupId()) {
+                    mSelectedPosition = i;
+                }
             }
         }
         Log.i("mSelectedPosition", String.valueOf(mSelectedPosition));
@@ -215,7 +222,7 @@ public class PointsModelImpl implements PointsModel{
 
         Integer userId = Integer.valueOf(NostragamusDataHandler.getInstance().getUserId());
 
-        LeaderBoard mLeaderBoard =  mleaderBoardList.get(position);
+        LeaderBoard mLeaderBoard = mleaderBoardList.get(position);
 
         for (int i = 0; i < mLeaderBoard.getUserLeaderBoardList().size(); i++) {
 
@@ -265,8 +272,10 @@ public class PointsModelImpl implements PointsModel{
 
         void setChallengeTimerView(boolean isChallengeTimer);
 
-        void setGroupHeadings(String groupName,String heading);
+        void setGroupHeadings(String groupName, String heading);
 
         void setUserLeaderBoard(UserLeaderBoard userLeaderBoard);
+
+        void changeTabsView();
     }
 }

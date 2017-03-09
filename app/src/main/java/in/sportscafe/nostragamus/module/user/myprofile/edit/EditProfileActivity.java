@@ -135,7 +135,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         if(fromHome) {
-            intent.putExtra(BundleKeys.OPEN_PROFILE, 0);
+            intent.putExtra(BundleKeys.OPEN_PROFILE, "0");
         }
         startActivity(intent);
         finish();

@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.user.points;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -64,6 +65,8 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     Button mTvChallengeSecsLeft;
     RelativeLayout mRlChallengeTimer;
 
+    private TabLayout mTabLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +80,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         mBtnSortByAccuracy = (Button) findViewById(R.id.sort_by_accuracy_btn);
         mBtnSortByTotalPoints = (Button) findViewById(R.id.sort_by_total_points_btn);
         mBtnSortByPowerUps = (Button) findViewById(R.id.sort_by_powerups_btn);
+        mTabLayout = (TabLayout) findViewById(R.id.points_tab_tl);
 
         mBtnSortByAccuracy.setOnClickListener(this);
         mBtnSortByPowerUps.setOnClickListener(this);
@@ -137,11 +141,10 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         mViewPager = (CustomViewPager) findViewById(R.id.points_tab_vp);
         mViewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.points_tab_tl);
-        tabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setupWithViewPager(mViewPager);
 
         mViewPager.setCurrentItem(selectedPosition);
-        mPointsPresenter.updateUserLeaderBoard(0);
+        mPointsPresenter.updateUserLeaderBoard(selectedPosition);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -205,9 +208,6 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     @Override
     public void setUserLeaderBoardView(UserLeaderBoard userLeaderBoard) {
 
-        Log.i("rank", String.valueOf(userLeaderBoard.getRank()));
-        Log.i("username", userLeaderBoard.getUserName());
-
         RelativeLayout userPoints = (RelativeLayout)findViewById(R.id.points_user_rl);
         View gradientView = (View)findViewById(R.id.gradient_view);
         ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_iv_status);
@@ -263,6 +263,12 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
             mTvAccuracy.setText(userLeaderBoard.getAccuracy()+"%");
         }
 
+    }
+
+    @Override
+    public void setTabsView() {
+        mTabLayout.setSelectedTabIndicatorColor(Color.TRANSPARENT);
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
     @Override

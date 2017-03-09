@@ -117,6 +117,10 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
             Integer attemptedStatus = match.getisAttempted();
 
+            holder.mTvMatchResult.setVisibility(View.VISIBLE);
+            holder.mTvMatchResult.setText(match.getStage());
+
+
             if (match.getMatchQuestionCount() > 0) {
 
                 if (match.isResultPublished()) { // if match Result Published
@@ -128,7 +132,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                         holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
 
                         holder.mTvMatchResult.setVisibility(View.VISIBLE);
-                        holder.mTvMatchResult.setText(Html.fromHtml(match.getResult()));
+                        holder.mTvMatchResult.setText(match.getStage()+" - "+Html.fromHtml(match.getResult()));
                         holder.mBtnMatchPoints.setTag(match);
                         holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
 
@@ -150,7 +154,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     if (GameAttemptedStatus.NOT == attemptedStatus) {
                         // Show Opportunity missed at scoring!
                         holder.mTvMatchResult.setVisibility(View.VISIBLE);
-                        holder.mTvMatchResult.setText(Html.fromHtml(match.getResult()));
+                        holder.mTvMatchResult.setText(match.getStage()+" - "+Html.fromHtml(match.getResult()));
                         holder.mTvInfo.setVisibility(View.VISIBLE);
                         holder.mTvInfo.setText("Did Not Play");
                     }
@@ -162,7 +166,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
                                 //  Waiting for results
                                 holder.mLlResultWait.setVisibility(View.VISIBLE);
-                                holder.mLlResultWait.setTag(match);
+                                holder.mTvMatchResult.setVisibility(View.VISIBLE);
+//                                holder.mTvMatchResult.setText(match.getStage());
+//                                holder.mLlResultWait.setTag(match);
                             } else {
 
                                 // You cannot play the match as the match already started
@@ -174,6 +180,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             // show Play button
                             holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
                             holder.mBtnPlayMatch.setTag(match);
+//                            holder.mTvMatchResult.setVisibility(View.VISIBLE);
+//                            holder.mTvMatchResult.setText(match.getStage());
+
 
                             if (GameAttemptedStatus.PARTIALLY == attemptedStatus) {
                                 holder.mBtnPlayMatch.setAllCaps(false);
@@ -183,6 +192,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     } else if (attemptedStatus == GameAttemptedStatus.COMPLETELY) {
                         //  Waiting for results
                         holder.mLlResultWait.setVisibility(View.VISIBLE);
+//                        holder.mTvMatchResult.setVisibility(View.VISIBLE);
+//                        holder.mTvMatchResult.setText(match.getStage());
                         holder.mLlResultWait.setTag(match);
                     }
 
@@ -191,6 +202,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                 if (!isMatchStarted) { // Still the question is not prepared for these matches
                     holder.mTvInfo.setVisibility(View.VISIBLE);
                     holder.mTvInfo.setText("Coming Up");
+//                    holder.mTvMatchResult.setVisibility(View.VISIBLE);
+//                    holder.mTvMatchResult.setText(match.getStage());
                 }
             }
         }
