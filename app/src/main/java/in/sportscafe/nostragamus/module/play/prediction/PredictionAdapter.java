@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
@@ -231,6 +232,27 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
                     powerUpAppliedView.setOnClickListener(mRemovePowerUpListener);
                     showPowerUpAnimation(powerUpAppliedView);
                 }
+            }
+        }
+
+
+        if (null != question.getAudiencePoll()){
+            question.setPowerUpId(Powerups.AUDIENCE_POLL);
+            int leftAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(0).getAnswerPercentage().replaceAll("%", ""));
+            int rightAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(1).getAnswerPercentage().replaceAll("%", ""));
+
+            viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
+            viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
+
+            viewHolder.btnanswer1Percentage.setText(leftAnswerPercent + "%");
+            viewHolder.btnanswer2Percentage.setText(rightAnswerPercent + "%");
+
+            if (leftAnswerPercent > rightAnswerPercent) {
+                question.setMinorityAnswerId(Constants.AnswerIds.RIGHT);
+            } else if (leftAnswerPercent < rightAnswerPercent) {
+                question.setMinorityAnswerId(Constants.AnswerIds.LEFT);
+            } else {
+                question.setMinorityAnswerId(-1);
             }
         }
 

@@ -22,13 +22,14 @@ import com.jeeva.android.Log;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class TimelineFragment extends NostragamusFragment implements TimelineView, SwipeRefreshLayout.OnRefreshListener {
+public class TimelineFragment extends NostragamusFragment implements TimelineView, SwipeRefreshLayout.OnRefreshListener ,View.OnClickListener{
 
     private static final float MAX_ROTATION = 15f;
 
@@ -43,6 +44,8 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
     private TimelinePresenter myResultsTimelinePresenter;
 
     private LinearLayoutManager mLinearLayoutManager;
+
+    private OnHomeActionListener mOnHomeActionListener;
 
     public static TimelineFragment newInstance(PlayerInfo playerInfo) {
         Bundle args = new Bundle();
@@ -68,6 +71,8 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mOnHomeActionListener = (OnHomeActionListener)getActivity();
 
         Bundle bundle = getArguments();
         if ((null != bundle && bundle.containsKey(BundleKeys.PLAYER_USER_ID)) || null == savedInstanceState) {
@@ -179,5 +184,15 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
         mTvEmptyResultsTimeline.setVisibility(View.VISIBLE);
         mIvEmptyResultsTimeline.setVisibility(View.VISIBLE);
         mBtnPlayChallenge.setVisibility(View.VISIBLE);
+        mBtnPlayChallenge.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.leaderboard_play_challenge_btn:
+                mOnHomeActionListener.onClickChallenges();
+                break;
+        }
     }
 }

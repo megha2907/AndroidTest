@@ -322,6 +322,7 @@ public interface Constants {
         String PLAY = "Play";
         String CONTINUE = "Continue";
         String RESULT_WAITING = "Waiting For Results";
+        String DID_NOT_PLAY = "Did Not Play";
         String LB_DETAIL = "Detail";
         String MYSELF = "Me";
         String OTHER_USER = "Other";

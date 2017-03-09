@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.module.othersanswers.AnswerPercentage;
@@ -68,6 +71,9 @@ public class Question {
 
     @JsonProperty("question_neg_points")
     private Integer questionNegativePoints;
+
+    @JsonProperty("poll")
+    private List<AudiencePoll> playerPoll;
 
     @JsonIgnore
     private int questionTime = 30;
@@ -486,4 +492,15 @@ public class Question {
         setUpdatedPositivePoints(getQuestionPositivePoints());
         setUpdatedNegativePoints(getQuestionNegativePoints());
     }
+
+    @JsonProperty("poll")
+    public List<AudiencePoll> getAudiencePoll() {
+        return playerPoll;
+    }
+
+    @JsonProperty("poll")
+    public void setAudiencePoll(List<AudiencePoll> playerPoll) {
+        this.playerPoll = playerPoll;
+    }
+
 }
