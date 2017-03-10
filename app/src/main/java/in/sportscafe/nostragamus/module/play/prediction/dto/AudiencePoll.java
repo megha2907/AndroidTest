@@ -2,10 +2,13 @@ package in.sportscafe.nostragamus.module.play.prediction.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
 /**
  * Created by deepanshi on 11/24/16.
  */
 
+@Parcel
 public class AudiencePoll {
 
     @JsonProperty("answer")

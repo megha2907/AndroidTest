@@ -338,9 +338,18 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             setTextColor(tvAnswer, R.color.white);
 
             if (answerId == 0) {
-                tvAnswer.setText("Not Attempted");
                 setTextColor(tvAnswer, R.color.tabcolor);
+                tvotheroption.setVisibility(View.VISIBLE);
                 tvAnswerPoints.setText("---");
+                tvAnswer.setText(question.getQuestionOption1());
+                tvotheroption.setText(question.getQuestionOption2());
+                setTextColor(tvAnswer, R.color.white_60);
+                setTextColor(tvotheroption, R.color.white_60);
+                if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                    tvNeitherAnswer.setVisibility(View.VISIBLE);
+                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    setTextColor(tvNeitherAnswer, R.color.white_60);
+                }
 
             } else {
                 if (answerId == 1) {
@@ -358,9 +367,18 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         }
         // if played match but not attempted Question
         else if (answerId == 0){
-            tvAnswer.setText("Not Attempted");
-            setTextColor(tvAnswer, R.color.white);
+            setTextColor(tvAnswer, R.color.tabcolor);
             tvAnswerPoints.setText("---");
+            tvotheroption.setVisibility(View.VISIBLE);
+            tvAnswer.setText(question.getQuestionOption1());
+            tvotheroption.setText(question.getQuestionOption2());
+            setTextColor(tvAnswer, R.color.white_60);
+            setTextColor(tvotheroption, R.color.white_60);
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                tvNeitherAnswer.setVisibility(View.VISIBLE);
+                tvNeitherAnswer.setText(question.getQuestionOption3());
+                setTextColor(tvNeitherAnswer, R.color.white_60);
+            }
         }
         //if your answer = correct answer
         else if (answerId == question.getQuestionAnswer()) {
