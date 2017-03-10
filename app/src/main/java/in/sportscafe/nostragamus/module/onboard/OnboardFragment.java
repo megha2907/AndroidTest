@@ -1,7 +1,6 @@
 package in.sportscafe.nostragamus.module.onboard;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
@@ -12,8 +11,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,6 +28,14 @@ import me.relex.circleindicator.CircleIndicator;
  */
 public class OnboardFragment extends NostragamusFragment {
 
+    private static final float CARD_WIDTH_PERECENTAGE = 33f / 100;
+
+    private static final float CARD_HEIGHT_PERECENTAGE = 50f / 100;
+
+    private static final float MINIMUM_SCALE_X = 0.5f;
+
+    private static final float MAXIMUM_SCALE_X = 1f;
+
     private static final int AVATAR_PER_SCREEN = 3;
 
     private RecyclerView mAvatarPager;
@@ -43,13 +48,19 @@ public class OnboardFragment extends NostragamusFragment {
 
     private float mHalfScreenWidth;
 
+    private float mCardWidth;
+
+    private float mCardHeight;
+
     private List<Avatar> mAvatarImageList = Arrays.asList(new Avatar[]{
+            new Avatar(R.drawable.onboard_predict_match),
             new Avatar(R.drawable.onboard_war_friends),
             new Avatar(R.drawable.onboard_how_to_play),
             new Avatar(R.drawable.onboard_join_public),
             new Avatar(R.drawable.onboard_predict_match),
             new Avatar(R.drawable.onboard_war_friends),
-            new Avatar(R.drawable.onboard_how_to_play)
+            new Avatar(R.drawable.onboard_how_to_play),
+            new Avatar(R.drawable.onboard_join_public)
     });
 
     private String[] mOnboardTitles;
@@ -76,64 +87,40 @@ public class OnboardFragment extends NostragamusFragment {
             mOnboardTitles = getResources().getStringArray(R.array.onboard_titles);
             mOnboardDescs = getResources().getStringArray(R.array.onboard_descs);
 
-            initOnboard();
+            initScreenDimension();
+
+            initAvatar();
+
+            initViewPager();
         }
     }
 
-    private void initOnboard() {
+    private void initScreenDimension() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         mFullScreenWidth = displayMetrics.widthPixels;
         mHalfScreenWidth = mFullScreenWidth / 2f;
 
+        mCardWidth = mFullScreenWidth * CARD_WIDTH_PERECENTAGE;
+        mCardHeight = mFullScreenWidth * CARD_HEIGHT_PERECENTAGE;
+    }
+
+    private void initAvatar() {
         mAvatarPager = (RecyclerView) findViewById(R.id.onboard_rvp_avatar_pager);
         mAvatarPager.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        /*mAvatarPager.addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
-            @Override
-            public void OnPageChanged(int fromPosition, int toPosition) {
-            }
-        });*/
         mAvatarPager.setHasFixedSize(true);
-        mAvatarPager.setAdapter(new AvatarAdapter(getContext(), mAvatarImageList, mFullScreenWidth));
+        mAvatarPager.setAdapter(new AvatarAdapter(getContext(), mAvatarImageList, mCardWidth, mCardHeight));
 
         mAvatarPager.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-                View child = null;
-                int[] location = new int[2];
-                float width;
-                float left;
-                float right;
-                float centerX;
-                float scaleX;
-                int childCount = parent.getChildCount();
-                for (int i = 0; i < childCount; i++) {
-                    child = parent.getChildAt(i);
-                    width = child.getMeasuredWidth();
-
-                    child.getLocationOnScreen(location);
-                    left = location[0];
-                    right = left + width;
-                    centerX = left + (width / 2f);
-
-                    if (right > 0 && left < mFullScreenWidth) {
-                        scaleX = (centerX % mHalfScreenWidth) / mHalfScreenWidth;
-                        if (centerX >= mHalfScreenWidth && centerX < mFullScreenWidth) {
-                            scaleX = Math.abs(1 - scaleX);
-                        }
-                        child = child.findViewById(R.id.avatar_iv_image);
-                        child.setScaleX(scaleX);
-                        child.setScaleY(scaleX);
-                        child.setAlpha(scaleX);
-                        Log.d("Child Pos : " + i + " --> ", left + ", " + right + ", " + centerX + ", " + scaleX);
-                    }
-
-                }
-
+                handleAvatarScroll(c, parent, state);
                 super.onDraw(c, parent, state);
             }
         });
+    }
 
+    private void initViewPager() {
         mTvOnboardTitle = (TextView) findViewById(R.id.onboard_tv_title);
         mTvOnboardDesc = (TextView) findViewById(R.id.onboard_tv_desc);
 
@@ -142,7 +129,7 @@ public class OnboardFragment extends NostragamusFragment {
         viewpager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
-                return 4;
+                return mOnboardTitles.length;
             }
 
             @Override
@@ -154,9 +141,6 @@ public class OnboardFragment extends NostragamusFragment {
             public Object instantiateItem(ViewGroup container, int position) {
                 RelativeLayout relativeLayout = new RelativeLayout(getContext());
                 relativeLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-//                relativeLayout.setBackgroundColor(Color.parseColor("#9" + String.format("%03d", (position * 23)) + "1C"));
-                relativeLayout.setBackgroundColor(Color.parseColor("#00000000"));
 
                 container.addView(relativeLayout);
                 return relativeLayout;
@@ -172,24 +156,63 @@ public class OnboardFragment extends NostragamusFragment {
         viewpager.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                float xFull = scrollX % mFullScreenWidth;
-                float alpha = (xFull % mHalfScreenWidth) / mHalfScreenWidth;
-                if (xFull > mHalfScreenWidth) {
-                    applyAlpha(alpha);
-                } else {
-                    applyAlpha(1 - alpha);
-                }
-
-                if (xFull != 0) {
-                    int position = (int) (((scrollX - mHalfScreenWidth) / mFullScreenWidth) + 1);
-                    changeOnboardText(position > 0 ? position : 0);
-                }
-
-                scrollViews(scrollX, oldScrollX);
+                handleViewPagerScroll(v, scrollX, scrollY, oldScrollX, oldScrollY);
             }
         });
 
         changeOnboardText(0);
+    }
+
+    private void handleAvatarScroll(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        View child = null;
+        int[] location = new int[2];
+        float width;
+        float left;
+        float right;
+        float centerX;
+        float scaleX;
+        for (int i = 0; i < parent.getChildCount(); i++) {
+            child = parent.getChildAt(i);
+            width = child.getMeasuredWidth();
+
+            child.getLocationOnScreen(location);
+            left = location[0];
+            right = left + width;
+            centerX = left + (width / 2f);
+
+            if (right > 0 && left < mFullScreenWidth) {
+                scaleX = (centerX % mHalfScreenWidth) / mHalfScreenWidth;
+                if (centerX >= mHalfScreenWidth && centerX < mFullScreenWidth) {
+                    scaleX = Math.abs(1 - scaleX);
+                }
+//                child = child.findViewById(R.id.avatar_iv_image);
+                scaleX = ((MAXIMUM_SCALE_X - MINIMUM_SCALE_X) * scaleX) + MINIMUM_SCALE_X;
+//                child.setScaleX(scaleX);
+                child.getLayoutParams().width = (int) (mCardWidth * scaleX);
+
+//                child.setScaleY(scaleX);
+//                child.setAlpha(scaleX);
+                Log.d("Child Pos : " + i + " --> ", left + ", " + right + ", " + centerX + ", " + scaleX);
+            }
+
+        }
+    }
+
+    private void handleViewPagerScroll(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        float xFull = scrollX % mFullScreenWidth;
+        float alpha = (xFull % mHalfScreenWidth) / mHalfScreenWidth;
+        if (xFull > mHalfScreenWidth) {
+            applyAlpha(alpha);
+        } else {
+            applyAlpha(1 - alpha);
+        }
+
+        if (xFull != 0) {
+            int position = (int) (((scrollX - mHalfScreenWidth) / mFullScreenWidth) + 1);
+            changeOnboardText(position > 0 ? position : 0);
+        }
+
+        scrollViews(scrollX, oldScrollX);
     }
 
     private void applyAlpha(float alpha) {
@@ -208,36 +231,5 @@ public class OnboardFragment extends NostragamusFragment {
     private void scrollViews(int scrollX, int oldScrollX) {
         float dx = (scrollX - oldScrollX) / AVATAR_PER_SCREEN;
         mAvatarPager.scrollBy((int) dx, 0);
-    }
-
-    private float mDeltaWidth;
-
-    /*private void constrctAvatar() {
-        Rect rect = new Rect();
-        findViewById(R.id.onboard_hsv_avatar).getLocalVisibleRect(rect);
-
-        int holderWidth = rect.width();
-
-        float leftMargin = mLlAvatarHolder.getResources().getDimensionPixelSize(R.dimen.dp_0);
-        mDeltaWidth = leftMargin * (AVATAR_PER_SCREEN);
-
-        float avatarWidth = (holderWidth - mDeltaWidth) / AVATAR_PER_SCREEN;
-        float avatarHeight = mLlAvatarHolder.getResources().getDimensionPixelSize(R.dimen.dp_160);
-
-        int noOfAvatars = AVATAR_PER_SCREEN + mOnboardTitles.length - 1;
-
-        for (int i = 0; i < noOfAvatars; i++) {
-            mLlAvatarHolder.addView(getAvatar(avatarWidth, avatarHeight, leftMargin));
-        }
-    }*/
-
-    private ImageView getAvatar(float width, float height, float leftMargin) {
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int) width, (int) height);
-        lp.leftMargin = (int) leftMargin;
-
-        ImageView avatar = new ImageView(getContext());
-        avatar.setLayoutParams(lp);
-        avatar.setBackgroundResource(R.drawable.onboard_card_bg);
-        return avatar;
     }
 }

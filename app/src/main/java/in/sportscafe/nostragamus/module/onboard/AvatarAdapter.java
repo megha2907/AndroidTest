@@ -22,10 +22,10 @@ public class AvatarAdapter extends Adapter<Avatar, AvatarAdapter.AvatarHolder> {
 
     private float mCardHeight;
 
-    public AvatarAdapter(Context context, List<Avatar> avatars, float screenWidth) {
+    public AvatarAdapter(Context context, List<Avatar> avatars, float cardWidth, float cardHeight) {
         super(context);
-        mCardWidth = screenWidth / 3f;
-        mCardHeight = mCardWidth * (150f / 100);
+        mCardWidth = cardWidth;
+        mCardHeight = cardHeight;
         addAll(avatars);
     }
 
