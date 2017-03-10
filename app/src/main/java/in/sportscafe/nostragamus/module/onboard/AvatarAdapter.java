@@ -60,7 +60,7 @@ public class AvatarAdapter extends Adapter<Avatar, AvatarAdapter.AvatarHolder> {
             super(V);
             mMainView = V;
             mIvAvatarImage = (ImageView) V.findViewById(R.id.avatar_iv_image);
-            ViewGroup.LayoutParams lp = V.getLayoutParams();
+            ViewGroup.LayoutParams lp = mIvAvatarImage.getLayoutParams();
             lp.width = (int) mCardWidth;
             lp.height = (int) mCardHeight;
         }
