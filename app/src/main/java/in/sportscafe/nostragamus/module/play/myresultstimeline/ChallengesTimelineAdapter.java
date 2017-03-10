@@ -159,6 +159,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                         holder.mTvInfo.setText("Did Not Play");
                         holder.mTvInfo.setTag(match);
                         holder.mTvInfo.setClickable(true);
+                        holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
                     }
 
                 } else { // if Results not published
@@ -178,6 +179,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                 holder.mTvInfo.setText("Did Not Play");
                                 holder.mTvInfo.setTag(match);
                                 holder.mTvInfo.setClickable(true);
+                                holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
                             }
                         } else {
 
@@ -207,6 +209,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     holder.mTvInfo.setVisibility(View.VISIBLE);
                     holder.mTvInfo.setText("Coming Up");
                     holder.mTvInfo.setClickable(false);
+                    holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_bg));
 //                    holder.mTvMatchResult.setVisibility(View.VISIBLE);
 //                    holder.mTvMatchResult.setText(match.getStage());
                 }

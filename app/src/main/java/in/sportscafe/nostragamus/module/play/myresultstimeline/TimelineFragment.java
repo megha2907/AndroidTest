@@ -29,7 +29,7 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class TimelineFragment extends NostragamusFragment implements TimelineView, SwipeRefreshLayout.OnRefreshListener ,View.OnClickListener{
+public class TimelineFragment extends NostragamusFragment implements TimelineView, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private static final float MAX_ROTATION = 15f;
 
@@ -72,10 +72,11 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mOnHomeActionListener = (OnHomeActionListener)getActivity();
-
         Bundle bundle = getArguments();
         if ((null != bundle && bundle.containsKey(BundleKeys.PLAYER_USER_ID)) || null == savedInstanceState) {
+
+            mOnHomeActionListener = (OnHomeActionListener) getActivity();
+
             this.mRcvFeed = (RecyclerView) findViewById(R.id.feed_rv);
 
             mLinearLayoutManager = new LinearLayoutManager(getContext(),
@@ -131,6 +132,7 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
 
             this.myResultsTimelinePresenter = TimelinePresenterImpl.newInstance(this);
             this.myResultsTimelinePresenter.onCreateFeed(bundle);
+
         }
     }
 
