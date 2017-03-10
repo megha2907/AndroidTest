@@ -59,16 +59,14 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
         holder.mPosition = position;
         holder.mLlTourParent.removeAllViews();
 
-        holder.mLlTourParent.addView(getMyPrediction(holder.mLlTourParent, resultsPeek.getPlayerOneQuestions(),resultsPeek.getPlayerTwoQuestions()));
+        holder.mLlTourParent.addView(getMyPrediction(holder.mLlTourParent, resultsPeek.getPlayerOneQuestions(), resultsPeek.getPlayerTwoQuestions()));
     }
 
     private View getMyPrediction(ViewGroup parent, Question myQuestion, Question playerQuestion) {
         View convertView = getLayoutInflater().inflate(R.layout.inflater_results_peek, parent, false);
 
 
-
-        ((TextView) convertView.findViewById(R.id.results_peek_row_question_tv))
-                .setText(playerQuestion.getQuestionText().replaceAll("\n",""));
+        TextView tvPlayerQuestionText = (TextView) convertView.findViewById(R.id.results_peek_row_question_tv);
 
         final TextView tvPlayerOneAnswer = (TextView) convertView.findViewById(R.id.results_peek_row_player_one_answer);
         final TextView tvPlayerTwoAnswer = (TextView) convertView.findViewById(R.id.results_peek_row_player_two_answer);
@@ -84,7 +82,13 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
         RelativeLayout powerUpPlayerTwo = (RelativeLayout) convertView.findViewById(R.id.results_peek_row_player_two_powerup_rl);
 
 
-        if (myQuestion==null){
+        if (null == playerQuestion) {
+            tvPlayerQuestionText.setText(myQuestion.getQuestionText().replaceAll("\n", ""));
+        } else {
+            tvPlayerQuestionText.setText(playerQuestion.getQuestionText().replaceAll("\n", ""));
+        }
+
+        if (myQuestion == null) {
             tvPlayerOneAnswer.setText("Did not Play");
             setTextColor(tvPlayerOneAnswer, R.color.white_60);
             tvPlayerOneAnswerPoints.setText("-");
@@ -166,13 +170,20 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
         }
 
 
-            int otherPlayerAnswerId = playerQuestion.getAnswerId();
+        int otherPlayerAnswerId;
+
+        if (null == playerQuestion) {
+            tvPlayerTwoAnswer.setText("Did not Play");
+            setTextColor(tvPlayerTwoAnswer, R.color.white_60);
+            tvPlayerTwoAnswerPoints.setText("-");
+        } else {
+            otherPlayerAnswerId = playerQuestion.getAnswerId();
 
             // if played match but not attempted Question
             if (otherPlayerAnswerId == 0) {
-                tvPlayerTwoAnswer.setText("Not Attempted");
-                setTextColor(tvPlayerTwoAnswer, R.color.white);
-                tvPlayerTwoAnswerPoints.setText("---");
+                tvPlayerTwoAnswer.setText("Did not Play");
+                setTextColor(tvPlayerTwoAnswer, R.color.white_60);
+                tvPlayerTwoAnswerPoints.setText("-");
             }
             //if your answer = correct answer
             else if (otherPlayerAnswerId == playerQuestion.getQuestionAnswer()) {
@@ -218,27 +229,28 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
             }
 
 
-        if (playerQuestion.getAnswerPoints() != null) {
+            if (playerQuestion.getAnswerPoints() != null) {
 
-            if (playerQuestion.getAnswerPoints().equals(0)) {
-                setTextColor(tvPlayerTwoAnswerPoints, R.color.textcolorlight);
+                if (playerQuestion.getAnswerPoints().equals(0)) {
+                    setTextColor(tvPlayerTwoAnswerPoints, R.color.textcolorlight);
+                }
+
+                if (playerQuestion.getAnswerPoints() > 0) {
+                    tvPlayerTwoAnswerPoints.setText("+" + playerQuestion.getAnswerPoints() + " Points");
+                } else {
+                    tvPlayerTwoAnswerPoints.setText(playerQuestion.getAnswerPoints() + " Points");
+                }
+
             }
 
-            if (playerQuestion.getAnswerPoints() > 0) {
-                tvPlayerTwoAnswerPoints.setText("+" + playerQuestion.getAnswerPoints() + " Points");
+            int powerUpOtherPlayerIcons = PowerUp.getResultPowerupIcons(playerQuestion.getAnswerPowerUpId());
+            if (powerUpOtherPlayerIcons == -1) {
+                powerUpUsedPlayerTwo.setVisibility(View.GONE);
+                powerUpPlayerTwo.setVisibility(View.GONE);
             } else {
-                tvPlayerTwoAnswerPoints.setText(playerQuestion.getAnswerPoints() + " Points");
+                powerUpUsedPlayerTwo.setVisibility(View.VISIBLE);
+                powerUpUsedPlayerTwo.setBackgroundResource(powerUpOtherPlayerIcons);
             }
-
-        }
-
-        int powerUpOtherPlayerIcons = PowerUp.getResultPowerupIcons(playerQuestion.getAnswerPowerUpId());
-        if(powerUpOtherPlayerIcons == -1) {
-            powerUpUsedPlayerTwo.setVisibility(View.GONE);
-            powerUpPlayerTwo.setVisibility(View.GONE);
-        } else {
-            powerUpUsedPlayerTwo.setVisibility(View.VISIBLE);
-            powerUpUsedPlayerTwo.setBackgroundResource(powerUpOtherPlayerIcons);
         }
 
         return convertView;

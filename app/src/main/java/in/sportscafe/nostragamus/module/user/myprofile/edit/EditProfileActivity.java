@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
@@ -22,7 +23,6 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity;
 
 //import com.squareup.picasso.Picasso;
@@ -54,6 +54,8 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private CustomButton mBtnUpdateDone;
 
+    private ImageButton mBackBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,8 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         mEtNickName = (EditText) findViewById(R.id.edit_et_nickname);
         mIvProfileImage = (HmImageView) findViewById(R.id.edit_iv_user_image);
         mBtnUpdateDone = (CustomButton) findViewById(R.id.edit_btn_done);
+        mBackBtn = (ImageButton) findViewById(R.id.edit_back_btn);
+        mBackBtn.setOnClickListener(this);
         initListener();
 
         this.mEditProfilePresenter = EditProfilePresenterImpl.newInstance(this);
@@ -103,6 +107,10 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
                         getTrimmedText(mEtNickName)
 
                 );
+                break;
+
+            case R.id.edit_back_btn:
+                finish();
                 break;
         }
     }
@@ -170,14 +178,15 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void changeViewforProfile() {
-        mTvUpdateProfile.setText("Update your profile here.");
+        mTvUpdateProfile.setText("Update your profile here");
         mBtnUpdateDone.setText("UPDATE");
     }
 
     @Override
     public void changeViewforLogin(String username) {
-        mTvUpdateProfile.setText("Welcome " + username + "\n" + "Let’s update your profile.");
+        mTvUpdateProfile.setText("Welcome " + username + "\n" + "Let’s update your profile");
         mBtnUpdateDone.setText("NEXT");
+        mBackBtn.setVisibility(View.GONE);
     }
 
     @Override

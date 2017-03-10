@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -189,7 +190,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         Question question = getItem(position);
 
         viewHolder.tvQuestion.setText(question.getQuestionText());
-        viewHolder.tvContext.setText(question.getQuestionContext());
+        viewHolder.tvContext.setText(Html.fromHtml(question.getQuestionContext()));
         viewHolder.ivLeftOption.setImageUrl(question.getQuestionImage1());
         viewHolder.ivRightOption.setImageUrl(question.getQuestionImage2());
         viewHolder.tvLeftOption.setText(question.getQuestionOption1());
