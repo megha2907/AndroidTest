@@ -9,8 +9,7 @@
         android:id="@+id/splash_screen_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/splash_screen_bg" />
+        android:background="@drawable/onboarding_bg" />
 
     <ImageView
         android:id="@+id/splash_screen_human_icon"
@@ -19,7 +18,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_20"
-        android:src="@drawable/splash_screen_human" />
+        android:src="@drawable/splash_screen_human"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/login_ll_accept_policy_layout"
@@ -137,7 +137,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_25"
-        android:src="@drawable/nostragamus_logo" />
+        android:src="@drawable/nostragamus_logo"
+        android:visibility="invisible" />
 
     <FrameLayout
         android:id="@+id/login_fl_onboard_holder"
