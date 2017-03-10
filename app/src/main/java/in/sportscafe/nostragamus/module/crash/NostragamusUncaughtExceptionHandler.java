@@ -17,21 +17,17 @@ public class NostragamusUncaughtExceptionHandler implements Thread.UncaughtExcep
 
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
-        if(null != ex) {
+        if (null != ex) {
             ex.printStackTrace();
         }
 
-        if(null != ex) {
-            ex.printStackTrace();
-        }
-
-        /*if(NostragamusDataHandler.getInstance().isLoggedInUser()) {
+        if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
             startNewIntent(HomeActivity.class);
         } else {
             startNewIntent(LogInActivity.class);
-        }*/
+        }
 
-//        AppSnippet.closeApp();
+        AppSnippet.closeApp();
     }
 
     private void startNewIntent(Class<?> cls) {
