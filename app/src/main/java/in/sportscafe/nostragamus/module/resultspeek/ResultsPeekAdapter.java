@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
@@ -30,8 +31,11 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
 
     private PlayerInfo mPlayerInfo;
 
-    public ResultsPeekAdapter(Context context) {
+    public ResultsPeekAdapter(Context context, HashMap<Integer, ResultsPeek> resultPeekMap) {
         super(context);
+        for (Integer integer : resultPeekMap.keySet()) {
+            add(resultPeekMap.get(integer));
+        }
     }
 
     public void setPlayerInfo(PlayerInfo playerInfo) {
@@ -60,6 +64,7 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
 
     private View getMyPrediction(ViewGroup parent, Question myQuestion, Question playerQuestion) {
         View convertView = getLayoutInflater().inflate(R.layout.inflater_results_peek, parent, false);
+
 
 
         ((TextView) convertView.findViewById(R.id.results_peek_row_question_tv))
