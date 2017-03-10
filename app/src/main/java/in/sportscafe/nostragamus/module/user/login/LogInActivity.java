@@ -4,13 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthException;
@@ -34,8 +30,8 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.TermsConditions;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.onboard.OnboardFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
-import me.relex.circleindicator.CircleIndicator;
 
 public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -74,7 +70,8 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
         initGoogle();
 
-        initOnboarding();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.login_fl_onboard_holder, OnboardFragment.newInstance()).commit();
 
         mLogInPresenter = LogInPresenterImpl.newInstance(LogInActivity.this);
         mLogInPresenter.onCreateLogIn(getIntent().getExtras());
@@ -105,87 +102,6 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
                 })
                 .build();
 
-    }
-
-    private TextView mTvOnboardTitle;
-
-    private TextView mTvOnboardDesc;
-
-    private void initOnboarding() {
-        mTvOnboardTitle = (TextView) findViewById(R.id.login_tv_onboard_title);
-        mTvOnboardDesc = (TextView) findViewById(R.id.login_tv_onboard_desc);
-
-        mOnboardTitles = getResources().getStringArray(R.array.onboard_titles);
-        mOnboardDescs = getResources().getStringArray(R.array.onboard_descs);
-
-        ViewPager viewpager = (ViewPager) findViewById(R.id.login_vp_onboading);
-        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.login_cpi_indicator);
-        viewpager.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return 4;
-            }
-
-            @Override
-            public boolean isViewFromObject(View view, Object object) {
-                return view == object;
-            }
-
-            @Override
-            public Object instantiateItem(ViewGroup container, int position) {
-                RelativeLayout relativeLayout = new RelativeLayout(LogInActivity.this);
-                relativeLayout.setAlpha(0.1f);
-                relativeLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-                if(position == 0) {
-                    relativeLayout.setBackgroundColor(getColor(LogInActivity.this, R.color.yellowcolor));
-                }
-
-                container.addView(relativeLayout);
-                return relativeLayout;
-            }
-
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-                container.removeView((View) object);
-            }
-        });
-        indicator.setViewPager(viewpager);
-
-        /*viewpager.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                float x = scrollX % 1080;
-                float halfWidth = 540;
-                x %= halfWidth;
-                applyAlpha(x / halfWidth);
-
-                if(x != 0) {
-                    changeOnboardText(scrollX / halfWidth);
-                }
-            }
-        });*/
-
-        changeOnboardText(0);
-    }
-
-    private void applyAlpha(float alpha) {
-        mTvOnboardTitle.setAlpha(alpha);
-        mTvOnboardDesc.setAlpha(alpha);
-    }
-
-    private String[] mOnboardTitles;
-
-    private String[] mOnboardDescs;
-
-    private int mCurrentPosition = -1;
-
-    private void changeOnboardText(int position) {
-        if(mCurrentPosition != position) {
-            mCurrentPosition = position;
-            mTvOnboardTitle.setText(mOnboardTitles[position]);
-            mTvOnboardDesc.setText(mOnboardDescs[position]);
-        }
     }
 
     @Override
