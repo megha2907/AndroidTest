@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.jeeva.android.ExceptionTracker;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -43,7 +46,9 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
 
     private Integer myPoints;
 
-    private List<ResultsPeek> mResultsPeek = new ArrayList<>();
+    private List<Question> playerQuestionsList = new ArrayList<>();
+
+    private HashMap<Integer, ResultsPeek> mResultPeekMap = new HashMap<>();
 
     private ResultsPeekModelImpl.ResultsPeekModelListener mResultsPeekModelListener;
 
@@ -79,19 +84,15 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
                         if (mResultsPeekModelListener.isThreadAlive()) {
                             if (response.isSuccessful()) {
                                 if (!response.body().getMyResults().isEmpty()) {
-                                playerPoints = response.body().getMyResults().get(0).getMatchPoints();
-                                mMatchStage = response.body().getMyResults().get(0).getStage();
-                                mChallengeName = response.body().getMyResults().get(0).getChallengeName();
-                                List<Question> playerQuestionsList = response.body().getMyResults().get(0).getQuestions();
-                                for (Question playerQuestion : playerQuestionsList) {
-                                    mResultsPeek.add(new ResultsPeek(playerQuestion));
-                                }
-                                callMyResultsApi();
-                              }else {
+                                    playerPoints = response.body().getMyResults().get(0).getMatchPoints();
+                                    mMatchStage = response.body().getMyResults().get(0).getStage();
+                                    mChallengeName = response.body().getMyResults().get(0).getChallengeName();
+                                    playerQuestionsList = response.body().getMyResults().get(0).getQuestions();
+                                    callMyResultsApi();
+                                } else {
                                     mResultsPeekModelListener.onFailedResults();
                                 }
-                            }
-                            else {
+                            } else {
                                 mResultsPeekModelListener.onFailedResults();
                             }
                         }
@@ -109,19 +110,28 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
 
                         if (mResultsPeekModelListener.isThreadAlive()) {
                             if (response.isSuccessful()) {
-
-                                if (!response.body().getMyResults().isEmpty()) {
-                                    int count = 0;
+                                List<Question> myQuestionsList = new ArrayList<>();
+                                try {
                                     myPoints = response.body().getMyResults().get(0).getMatchPoints();
-                                    List<Question> myQuestionsList = response.body().getMyResults().get(0).getQuestions();
-                                    for (Question myQuestion : myQuestionsList) {
-                                        mResultsPeek.get(count++).setPlayerOneQuestions(myQuestion);
-                                    }
-
-                                    mResultsPeekModelListener.onSuccessBothResults(myPoints, playerPoints, mMatchStage,mChallengeName);
-                                } else {
-                                    mResultsPeekModelListener.onSuccessBothResults(myPoints, playerPoints, mMatchStage,mChallengeName);
+                                    myQuestionsList = response.body().getMyResults().get(0).getQuestions();
+                                } catch (Exception e) {
+                                    ExceptionTracker.track(e);
                                 }
+
+                                for (Question question : myQuestionsList) {
+                                    mResultPeekMap.put(question.getQuestionId(), new ResultsPeek(question));
+                                }
+
+                                ResultsPeek resultsPeek;
+                                for (Question question : playerQuestionsList) {
+                                    resultsPeek = mResultPeekMap.get(question.getQuestionId());
+                                    if(null == resultsPeek) {
+                                        mResultPeekMap.put(question.getQuestionId(), resultsPeek = new ResultsPeek());
+                                    }
+                                    resultsPeek.setPlayerTwoQuestions(question);
+                                }
+
+                                mResultsPeekModelListener.onSuccessBothResults(myPoints, playerPoints, mMatchStage, mChallengeName);
 
                             } else {
                                 mResultsPeekModelListener.onFailedResults();
@@ -135,10 +145,7 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
 
     @Override
     public RecyclerView.Adapter getResultsPeekAdapter(Context context) {
-
-        mResultsPeekAdapter = new ResultsPeekAdapter(context);
-        mResultsPeekAdapter.addAll(mResultsPeek);
-        return mResultsPeekAdapter;
+        return mResultsPeekAdapter = new ResultsPeekAdapter(context, mResultPeekMap);
     }
 
 

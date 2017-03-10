@@ -27,6 +27,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
@@ -40,7 +41,7 @@ import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
  * Created by deepanshi on 12/22/16.
  */
 
-public class PlayerProfileActivity extends NostragamusActivity implements PlayerProfileView, View.OnClickListener {
+public class PlayerProfileActivity extends NostragamusActivity implements PlayerProfileView, View.OnClickListener,OnHomeActionListener{
 
     private String sportsFollowed;
 
@@ -370,5 +371,10 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     @Override
     public String getScreenName() {
         return Constants.ScreenNames.PLAYER_PROFILE;
+    }
+
+    @Override
+    public void onClickChallenges() {
+
     }
 }

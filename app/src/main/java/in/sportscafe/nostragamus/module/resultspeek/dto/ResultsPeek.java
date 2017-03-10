@@ -14,8 +14,11 @@ public class ResultsPeek {
 
     Question playerTwoQuestions;
 
-    public ResultsPeek(Question playerTwoQuestions) {
-        this.playerTwoQuestions = playerTwoQuestions;
+    public ResultsPeek() {
+    }
+
+    public ResultsPeek(Question playerOneQuestions) {
+        this.playerOneQuestions = playerOneQuestions;
     }
 
     public Question getPlayerOneQuestions() {
