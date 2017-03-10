@@ -103,7 +103,6 @@ dependencies {
 //    compile 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
 //    compile 'com.bignerdranch.android:expandablerecyclerview:2.1.1'
     // To track the install counts, events, crashes and acquisition
-    compile 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2'
     compile 'com.google.android.gms:play-services-analytics:9.4.0'
     // To track the fatal and non-fatal errors from the application
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
