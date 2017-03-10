@@ -71,6 +71,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     private void initListeners() {
         findViewById(R.id.profile_btn_settings).setOnClickListener(this);
         findViewById(R.id.profile_iv_image).setOnClickListener(this);
+        findViewById(R.id.profile_btn_edit).setOnClickListener(this);
 
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.htab_appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
@@ -181,6 +182,9 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                 navigateToSettings();
                 break;
             case R.id.profile_iv_image:
+                navigateToEditProfile();
+                break;
+            case R.id.profile_btn_edit:
                 navigateToEditProfile();
                 break;
         }

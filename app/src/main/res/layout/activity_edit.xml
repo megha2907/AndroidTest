@@ -105,4 +105,16 @@
         android:maxLength="50" />-->
 
 
+    <ImageButton
+        android:id="@+id/edit_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_15"
+        android:background="@android:color/transparent"
+        android:onClick="onClick"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/back_icon_grey" />
+
+
 </RelativeLayout>
