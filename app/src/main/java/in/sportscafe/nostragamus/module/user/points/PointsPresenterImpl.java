@@ -79,6 +79,11 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     }
 
     @Override
+    public void changeTabsView() {
+        mPointsView.setTabsView();
+    }
+
+    @Override
     public void onFailureLeaderBoard(String message) {
         showAlertMsg(message);
     }

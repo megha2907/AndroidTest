@@ -104,8 +104,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void setContestName(String contestName) {
+    public void setContestName(String contestName, String matchStage) {
         ((TextView) findViewById(R.id.prediction_tv_contest_name)).setText(contestName);
+        TextView tvMatchStage = (TextView) findViewById(R.id.prediction_tv_match_stage);
+        tvMatchStage.setVisibility(View.VISIBLE);
+        tvMatchStage.setText(matchStage);
     }
 
     @Override
@@ -496,14 +499,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     private void applyAlphaForPowerUp(View powerUpIcon, TextView powerUpText, boolean reverse, int count) {
         float alpha = 0.6f;
-        if(reverse) {
+        if (reverse) {
             alpha = 1f;
         }
 
         powerUpIcon.setAlpha(alpha);
         powerUpText.setAlpha(alpha);
 
-        if(count == 0) {
+        if (count == 0) {
             powerUpText.setText("+");
             powerUpText.setBackgroundResource(R.drawable.powerup_count_add_bg);
         } else {

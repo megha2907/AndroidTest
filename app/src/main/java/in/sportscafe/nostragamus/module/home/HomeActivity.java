@@ -26,7 +26,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 /**
  * Created by Jeeva on 16/6/16.
  */
-public class HomeActivity extends NostragamusActivity implements UserInfoModelImpl.OnGetUserInfoModelListener {
+public class HomeActivity extends NostragamusActivity implements UserInfoModelImpl.OnGetUserInfoModelListener ,OnHomeActionListener{
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
@@ -72,6 +72,10 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
 
     private void showGroups() {
         onClickTab(findViewById(R.id.home_rl_group));
+    }
+
+    private void showChallenges() {
+        onClickTab(findViewById(R.id.home_rl_challenges));
     }
 
 //    private void getunReadNotificationCount() {
@@ -257,5 +261,10 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
     @Override
     public String getScreenName() {
         return Constants.ScreenNames.HOME;
+    }
+
+    @Override
+    public void onClickChallenges() {
+        showChallenges();
     }
 }

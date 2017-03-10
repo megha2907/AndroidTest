@@ -45,6 +45,21 @@
             app:typeface="roboto_condensed" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/prediction_tv_match_stage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dp_45"
+            android:layout_marginRight="@dimen/dp_45"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:visibility="gone"
+            android:layout_below="@+id/prediction_tv_contest_name"
+            android:textColor="@color/white_60"
+            android:textSize="@dimen/dp_14"
+            app:typeface="lato_light" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/prediction_tv_skip"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

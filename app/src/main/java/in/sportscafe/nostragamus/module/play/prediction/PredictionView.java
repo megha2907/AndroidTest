@@ -18,7 +18,7 @@ import static android.R.attr.x;
  */
 public interface PredictionView extends InAppView {
 
-    void setContestName(String contestName);
+    void setContestName(String contestName,String matchStage);
 
     void setAdapter(PredictionAdapter predictionAdapter,
                     SwipeFlingAdapterView.OnSwipeListener<Question> swipeListener);

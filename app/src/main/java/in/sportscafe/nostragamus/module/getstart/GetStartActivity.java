@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import java.util.Arrays;
+import java.util.EventListener;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -44,10 +46,21 @@ public class GetStartActivity extends Activity {
 //            if (ScGameDataHandler.getInstance().getFavoriteSportsIdList().contains(10)){
 //                autoSaveAllSports();
 //            }
-            navigateToHome();
-            return;
+
+            if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
+                if (null == NostragamusDataHandler.getInstance().getUserInfo().getUserNickName()
+                        || TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName())) {
+                    navigateToEditProfile();
+                    return;
+                } else {
+                    navigateToHome();
+                    return;
+                }
+            }
+
         } else if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
-            if (null == NostragamusDataHandler.getInstance().getUserInfo().getUserNickName()) {
+            if (null == NostragamusDataHandler.getInstance().getUserInfo().getUserNickName()
+                    || TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName())) {
                 navigateToEditProfile();
                 return;
             }

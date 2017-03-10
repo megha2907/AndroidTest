@@ -37,7 +37,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         if (!mPredictionModel.isDummyGame()) {
             mPredictionModel.getAllQuestions();
 
-            mPredictionView.setContestName(mPredictionModel.getContestName());
+            mPredictionView.setContestName(mPredictionModel.getContestName(),mPredictionModel.getMatchStage());
 
             checkShowStatusOfBankInfo();
         } else {

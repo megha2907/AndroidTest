@@ -25,6 +25,7 @@ import com.jeeva.android.widgets.ShadowLayout;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -35,6 +36,7 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -129,6 +131,21 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         View myResultView = getLayoutInflater().inflate(R.layout.inflater_schedule_match_results_row, parent, false);
         MyResultViewHolder holder = new MyResultViewHolder(myResultView);
 
+        String startTime = match.getStartTime().replace("+00:00", ".000Z");
+//        String startTime = "2017-01-27T18:00:00.000Z";
+        long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                startTime,
+                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                Constants.DateFormats.GMT
+        );
+
+        int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
+        // Setting date of the match
+        holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
+                TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
+                + TimeUtils.getDateStringFromMs(startTimeMs, Constants.DateFormats.HH_MM_AA)
+        );
+
         if (null == match.getStage()) {
             holder.mTvMatchStage.setVisibility(View.GONE);
         } else {
@@ -156,13 +173,15 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
 
         } else {
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
-            holder.mTvMatchResult.setText(match.getResult());
+            holder.mTvMatchResult.setText(match.getStage()+" - "+match.getResult());
         }
 
         holder.mBtnMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
         holder.mRlAvgMatchPoints.setVisibility(View.GONE);
         holder.mRlHighestMatchPoints.setVisibility(View.GONE);
         holder.mRlLeaderBoard.setVisibility(View.GONE);
+        holder.mViewAvg.setVisibility(View.INVISIBLE);
+        holder.mViewHighest.setVisibility(View.INVISIBLE);
         holder.mTvMatchPointsTxt.setText("Average Score");
         holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountMatchPowerupsUsed()));
         holder.mTvResultCorrectCount.setText(match.getCountMatchPlayers().toString()+" People Answered");
@@ -178,6 +197,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
 
     class MyResultViewHolder extends RecyclerView.ViewHolder {
 
+        TextView mTvDate;
 
         TextView mTvMatchStage;
 
@@ -217,10 +237,14 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         RelativeLayout mRlLeaderBoard;
         ShadowLayout mSlScrores;
 
+        View mViewAvg;
+        View mViewHighest;
+
 
         public MyResultViewHolder(View V) {
             super(V);
 
+            mTvDate = (TextView) V.findViewById(R.id.schedule_row_tv_date);
             mTvMatchStage = (TextView) V.findViewById(R.id.schedule_row_tv_match_stage);
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
@@ -246,6 +270,8 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             mRlHighestMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mRlMatchPoints= (RelativeLayout) V.findViewById(R.id.schedule_row_rl_my_score);
             mTvMatchPointsTxt = (TextView) V.findViewById(R.id.schedule_row_tv_my_score_txt);
+            mViewAvg = (View) V.findViewById(R.id.schedule_row_avg_line);
+            mViewHighest = (View) V.findViewById(R.id.schedule_row_highest_line);
         }
     }
 
@@ -312,9 +338,18 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             setTextColor(tvAnswer, R.color.white);
 
             if (answerId == 0) {
-                tvAnswer.setText("Not Attempted");
                 setTextColor(tvAnswer, R.color.tabcolor);
+                tvotheroption.setVisibility(View.VISIBLE);
                 tvAnswerPoints.setText("---");
+                tvAnswer.setText(question.getQuestionOption1());
+                tvotheroption.setText(question.getQuestionOption2());
+                setTextColor(tvAnswer, R.color.white_60);
+                setTextColor(tvotheroption, R.color.white_60);
+                if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                    tvNeitherAnswer.setVisibility(View.VISIBLE);
+                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    setTextColor(tvNeitherAnswer, R.color.white_60);
+                }
 
             } else {
                 if (answerId == 1) {
@@ -332,9 +367,18 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         }
         // if played match but not attempted Question
         else if (answerId == 0){
-            tvAnswer.setText("Not Attempted");
-            setTextColor(tvAnswer, R.color.white);
+            setTextColor(tvAnswer, R.color.tabcolor);
             tvAnswerPoints.setText("---");
+            tvotheroption.setVisibility(View.VISIBLE);
+            tvAnswer.setText(question.getQuestionOption1());
+            tvotheroption.setText(question.getQuestionOption2());
+            setTextColor(tvAnswer, R.color.white_60);
+            setTextColor(tvotheroption, R.color.white_60);
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                tvNeitherAnswer.setVisibility(View.VISIBLE);
+                tvNeitherAnswer.setText(question.getQuestionOption3());
+                setTextColor(tvNeitherAnswer, R.color.white_60);
+            }
         }
         //if your answer = correct answer
         else if (answerId == question.getQuestionAnswer()) {

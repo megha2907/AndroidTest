@@ -41,6 +41,7 @@ import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbFragment;
+import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 
@@ -49,7 +50,7 @@ import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
  */
 
 public class LBLandingFragment extends NostragamusFragment implements LBLandingView,
-        AdapterView.OnItemSelectedListener, CustomEditText.EditTextImeBackListener {
+        AdapterView.OnItemSelectedListener, CustomEditText.EditTextImeBackListener,View.OnClickListener {
 
     private LinearLayout mLlLandingHolder;
 
@@ -69,6 +70,8 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
 
     private String lbLandingType;
 
+    private OnHomeActionListener mOnHomeActionListener;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,6 +83,8 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
         super.onActivityCreated(savedInstanceState);
 
         initToolBar();
+
+        mOnHomeActionListener = (OnHomeActionListener)getActivity();
 
         this.mLbLandingPresenter = LBLandingPresenterImpl.newInstance(this);
         this.mLbLandingPresenter.onCreateLeaderBoard();
@@ -289,10 +294,20 @@ public class LBLandingFragment extends NostragamusFragment implements LBLandingV
         mTvEmptyLeaderboards.setVisibility(View.VISIBLE);
         mIvEmptyLeaderboards.setVisibility(View.VISIBLE);
         mBtnPlayChallenge.setVisibility(View.VISIBLE);
+        mBtnPlayChallenge.setOnClickListener(this);
     }
 
     @Override
     public void onImeBack(CustomEditText ctrl, String text) {
         onBack();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.leaderboard_play_challenge_btn:
+                mOnHomeActionListener.onClickChallenges();
+                break;
+        }
     }
 }
