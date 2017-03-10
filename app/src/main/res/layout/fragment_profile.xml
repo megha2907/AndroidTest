@@ -78,6 +78,7 @@
                         android:layout_marginTop="@dimen/dp_72"
                         android:background="@drawable/notification_count_bg"
                         android:padding="@dimen/dp_25"
+                        android:onClick="onClick"
                         android:src="@drawable/edit_profile_icon" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
