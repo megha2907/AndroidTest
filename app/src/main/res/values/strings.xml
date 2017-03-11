@@ -38,7 +38,7 @@
     <!-- For dummy game -->
     <string name="dummy_start_title">Welcome to Nostragamus!</string>
     <string name="dummy_start_desc">Let\'s go through a sample game to help you understand how to ace it at Nostragamus. You may skip if you are familiar with the gameplay, and you can always access this sample game from the Settings menu inside your Profile section.</string>
-    <string name="dummy_start_action">PLAY</string>
+    <string name="dummy_start_action">Next</string>
     <string name="dummy_done_title">Well Done!</string>
     <string name="dummy_done_desc">You just finished your first game, but its now time for the real deal. Proceed to your tournament feed to start swiping on upcoming sporting matches!</string>
     <string name="dummy_done_action">Proceed</string>

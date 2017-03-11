@@ -25,7 +25,7 @@ import in.sportscafe.nostragamus.module.coachmarker.TargetView;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.play.DummyGameFragment;
+import in.sportscafe.nostragamus.module.play.dummygame.DummyGameTextFragment;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
@@ -258,7 +258,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mPredictionPresenter.onClickBack();
     }
 
-    private DummyGameFragment mDummyGameFragment;
+    private DummyGameTextFragment mDummyGameFragment;
 
     @Override
     public void changeToDummyGameMode() {
@@ -272,7 +272,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
         mVgPlayPage.setVisibility(View.INVISIBLE);
 
-        mDummyGameFragment = DummyGameFragment.newInstance();
+        mDummyGameFragment = DummyGameTextFragment.newInstance(null);
         getSupportFragmentManager().beginTransaction().replace(R.id.prediction_fl_dummy_holder, mDummyGameFragment).commit();
     }
 

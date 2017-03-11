@@ -36,6 +36,17 @@
         </activity>
 
         <activity
+            android:name="in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity"
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
             android:name=".module.othersanswers.OthersAnswersActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -43,23 +54,18 @@
         <activity
             android:name="in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Transparent">
-        </activity>
+            android:theme="@style/Theme.Transparent"></activity>
 
         <activity
             android:name="in.sportscafe.nostragamus.module.splash.SplashActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" >
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
 
             <intent-filter>
                 <data android:scheme="nostragamus" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
@@ -67,49 +73,49 @@
             <!-- AppLink config -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- <data android:scheme="https" android:host="bnc.lt" android:pathPrefix="/your_app_id_obtained form Branch dash board " /> -->
-                <data android:scheme="https" android:host="outx.test-app.link" />
+                <data
+                    android:host="outx.test-app.link"
+                    android:scheme="https" />
             </intent-filter>
 
         </activity>
 
-        <activity android:name=".module.feed.FeedWebView"
-                  android:screenOrientation="portrait">
-        </activity>
+        <activity
+            android:name=".module.feed.FeedWebView"
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name="in.sportscafe.nostragamus.module.getstart.GetStartActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".module.popups.PopUpActivity"
-            android:theme="@style/AppTheme.PopupTheme"/>
+        <activity
+            android:name=".module.popups.PopUpActivity"
+            android:theme="@style/AppTheme.PopupTheme" />
 
         <activity
             android:name="in.sportscafe.nostragamus.module.home.HomeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
 
         <activity
             android:name="in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".module.user.comparisons.PlayerComparisonActivity"
+        <activity
+            android:name=".module.user.comparisons.PlayerComparisonActivity"
             android:screenOrientation="portrait"></activity>
 
         <activity
             android:name="in.sportscafe.nostragamus.module.common.TermsConditions"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name="in.sportscafe.nostragamus.module.user.referral.ReferralActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name="in.sportscafe.nostragamus.module.user.login.LogInActivity"
@@ -121,7 +127,7 @@
 
         <activity
             android:name="in.sportscafe.nostragamus.module.common.WebViewActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="in.sportscafe.nostragamus.module.feed.FeedActivity"
@@ -139,7 +145,8 @@
         <activity
             android:name="in.sportscafe.nostragamus.module.play.prediction.PredictionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="in.sportscafe.nostragamus.module.play.prediction.AllDoneActivity"
+        <activity
+            android:name="in.sportscafe.nostragamus.module.play.prediction.AllDoneActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -147,8 +154,9 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name=".module.resultspeek.ResultsPeekActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.resultspeek.ResultsPeekActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity"
@@ -162,7 +170,7 @@
         <activity
             android:name="in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name="in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity"
@@ -176,10 +184,9 @@
 
         <activity
             android:name="in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity"
+            android:parentActivityName="in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:parentActivityName="in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
 
         <activity
             android:name="in.sportscafe.nostragamus.module.permission.PermissionsActivity"
@@ -188,14 +195,12 @@
         <activity
             android:name="in.sportscafe.nostragamus.module.feedback.GoogleFormActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
 
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-           />
+            android:label="@string/app_name" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -205,7 +210,7 @@
         <activity
             android:name="com.moengage.addon.inbox.MoEInboxActivity"
             android:label="Notification"
-            android:parentActivityName="in.sportscafe.nostragamus.module.home.HomeActivity" >
+            android:parentActivityName="in.sportscafe.nostragamus.module.home.HomeActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -339,7 +344,9 @@
         <!-- End Fabric -->
 
         <!-- To receive the install updates -->
-        <receiver android:name="in.sportscafe.nostragamus.module.common.CustomInstallListener" android:exported="true">
+        <receiver
+            android:name="in.sportscafe.nostragamus.module.common.CustomInstallListener"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>

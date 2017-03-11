@@ -1,13 +1,14 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,15 +25,10 @@ import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-import static com.google.android.gms.analytics.internal.zzy.v;
 
 public class PredictionAdapter extends ArrayAdapter<Question> {
 
@@ -112,10 +107,14 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
     }
 
     public void setRootView(View rootView) {
-        Rect rect = new Rect();
+        /*Rect rect = new Rect();
         rootView.getLocalVisibleRect(rect);
 
-        applyFrameCardPercentages(rootView, rect.height());
+        applyFrameCardPercentages(rootView, rect.height());*/
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) rootView.getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        applyFrameCardPercentages(rootView, dm.heightPixels);
     }
 
     private void applyFrameCardPercentages(View rootView, float screenHeight) {
@@ -132,12 +131,12 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         mTopMargin = (int) (screenHeight * GAP_BW_HEADER_CARD_PERECENTAGE);
         rlp.topMargin = mTopMargin;
 
-        int headerHeight = rootView.findViewById(R.id.prediction_rl_header).getMeasuredHeight();
+        /*int headerHeight = rootView.findViewById(R.id.prediction_rl_header).getMeasuredHeight();
         ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_left_right_indicator).getLayoutParams())
                 .topMargin = (int) (mTopMargin + rlp.height - screenHeight * 1.5f / 100 - mOptionHeight / 2f + headerHeight);
 
         ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_neither_indicator).getLayoutParams())
-                .topMargin = (int) (mTopMargin + rlp.height - mOptionHeight + headerHeight);
+                .topMargin = (int) (mTopMargin + rlp.height - mOptionHeight + headerHeight);*/
 
         vBgFrame1 = rootView.findViewById(R.id.prediction_cv_bg_1);
         vBgFrame1.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
@@ -145,10 +144,10 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         vBgFrame2 = rootView.findViewById(R.id.prediction_cv_bg_2);
         vBgFrame2.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
 
-        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_header).getLayoutParams();
-        rlp.height = (int) (screenHeight * HEADER_PERECENTAGE);
+        /*rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_header).getLayoutParams();
+        rlp.height = (int) (screenHeight * HEADER_PERECENTAGE);*/
 
-        mTopMargin += rlp.height;
+        mTopMargin += (int) (screenHeight * HEADER_PERECENTAGE);
 
 //        rootView.findViewById(R.id.prediction_rl_play_page).setPadding(0, rlp.height, 0, 0);
 
