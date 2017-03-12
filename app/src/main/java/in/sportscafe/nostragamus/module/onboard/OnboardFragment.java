@@ -28,13 +28,23 @@ import me.relex.circleindicator.CircleIndicator;
  */
 public class OnboardFragment extends NostragamusFragment {
 
-    private static final float CARD_WIDTH_PERECENTAGE = 33f / 100;
+    private static final float CARD_WIDTH_PERECENTAGE = 33.33f / 100;
 
     private static final float CARD_HEIGHT_PERECENTAGE = 50f / 100;
 
-    private static final float MINIMUM_SCALE_X = 0.5f;
+    private static final float CARD_MOVEMENT_PERCENTAGE = 8f / 100;
+
+    private static final float MINIMUM_SCALE_X = 0.2f;
 
     private static final float MAXIMUM_SCALE_X = 1f;
+
+    private static final float MINIMUM_SCALE_Y = 0.6f;
+
+    private static final float MAXIMUM_SCALE_Y = 1f;
+
+    private static final float MINIMUM_ROTATION_Y = 0f;
+
+    private static final float MAXIMUM_ROTATION_Y = 40f;
 
     private static final int AVATAR_PER_SCREEN = 3;
 
@@ -118,6 +128,8 @@ public class OnboardFragment extends NostragamusFragment {
                 super.onDraw(c, parent, state);
             }
         });
+
+//        handleAvatarScroll(null, mAvatarPager, null);
     }
 
     private void initViewPager() {
@@ -161,41 +173,64 @@ public class OnboardFragment extends NostragamusFragment {
         });
 
         changeOnboardText(0);
+        viewpager.post(new Runnable() {
+            @Override
+            public void run() {
+                handleViewPagerScroll(null, 1, 0, 0, 0);
+            }
+        });
     }
 
+    private boolean mScrolling = false;
+
     private void handleAvatarScroll(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        View child = null;
-        int[] location = new int[2];
-        float width;
-        float left;
-        float right;
-        float centerX;
-        float scaleX;
-        for (int i = 0; i < parent.getChildCount(); i++) {
-            child = parent.getChildAt(i);
-            width = child.getMeasuredWidth();
+        if (mScrolling) {
+            View child;
+            int[] location = new int[2];
+            float width;
+            float left;
+            float right;
+            float centerX;
+            float percentage;
+            float scaleX;
+            float scaleY;
+            float rotationY;
 
-            child.getLocationOnScreen(location);
-            left = location[0];
-            right = left + width;
-            centerX = left + (width / 2f);
+            for (int i = 0; i < parent.getChildCount(); i++) {
+                child = parent.getChildAt(i);
+                width = child.getMeasuredWidth();
 
-            if (right > 0 && left < mFullScreenWidth) {
-                scaleX = (centerX % mHalfScreenWidth) / mHalfScreenWidth;
-                if (centerX >= mHalfScreenWidth && centerX < mFullScreenWidth) {
-                    scaleX = Math.abs(1 - scaleX);
+                child.getLocationOnScreen(location);
+                left = location[0];
+                right = left + width;
+                centerX = left + (width / 2f);
+
+                if (right > 0 && left < mFullScreenWidth) {
+                    rotationY = -1;
+                    percentage = (centerX % mHalfScreenWidth) / mHalfScreenWidth;
+
+                    if (centerX >= mHalfScreenWidth && centerX < mFullScreenWidth) {
+                        percentage = Math.abs(1 - percentage);
+                        rotationY = 1;
+                    }
+
+                    scaleX = ((MAXIMUM_SCALE_X - MINIMUM_SCALE_X) * percentage) + MINIMUM_SCALE_X;
+                    scaleY = ((MAXIMUM_SCALE_Y - MINIMUM_SCALE_Y) * percentage) + MINIMUM_SCALE_Y;
+
+                    child = child.findViewById(R.id.avatar_iv_image);
+                    child.setAlpha(scaleX);
+                    child.getLayoutParams().width = (int) (mCardWidth * scaleX);
+                    child.getLayoutParams().height = (int) (mCardHeight * scaleY);
+
+                    rotationY = MAXIMUM_ROTATION_Y * (1 - percentage) * rotationY;
+                    child.setRotationY(rotationY);
+                    child.requestLayout(); // good one
+                    Log.d("Child Pos : " + i + " --> ", left + ", " + right + ", " + centerX + ", " + percentage);
                 }
-//                child = child.findViewById(R.id.avatar_iv_image);
-                scaleX = ((MAXIMUM_SCALE_X - MINIMUM_SCALE_X) * scaleX) + MINIMUM_SCALE_X;
-//                child.setScaleX(scaleX);
-                child.getLayoutParams().width = (int) (mCardWidth * scaleX);
 
-//                child.setScaleY(scaleX);
-//                child.setAlpha(scaleX);
-                Log.d("Child Pos : " + i + " --> ", left + ", " + right + ", " + centerX + ", " + scaleX);
             }
-
         }
+        mScrolling = false;
     }
 
     private void handleViewPagerScroll(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -229,7 +264,10 @@ public class OnboardFragment extends NostragamusFragment {
     }
 
     private void scrollViews(int scrollX, int oldScrollX) {
-        float dx = (scrollX - oldScrollX) / AVATAR_PER_SCREEN;
+        mScrolling = true;
+
+//        float dx = (scrollX - oldScrollX) / AVATAR_PER_SCREEN;
+        float dx = (scrollX - oldScrollX) * CARD_MOVEMENT_PERCENTAGE;
         mAvatarPager.scrollBy((int) dx, 0);
     }
 }
