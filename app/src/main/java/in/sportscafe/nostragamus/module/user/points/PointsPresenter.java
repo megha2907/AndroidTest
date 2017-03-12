@@ -12,4 +12,5 @@ public interface PointsPresenter {
     void onSortByPoints();
 
     void updateUserLeaderBoard(int position);
+
 }

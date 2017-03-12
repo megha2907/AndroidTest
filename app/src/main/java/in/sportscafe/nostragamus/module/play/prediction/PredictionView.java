@@ -86,4 +86,6 @@ public interface PredictionView extends InAppView {
     void navigateToBankTransfer(Bundle bundle);
 
     void showBankInfo();
+
+    void showFirstMatchCompletedPopUp();
 }
