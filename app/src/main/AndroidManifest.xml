@@ -96,6 +96,9 @@
             android:name=".module.popups.PopUpActivity"
             android:theme="@style/AppTheme.PopupTheme" />
 
+        <activity android:name=".module.popups.inapppopups.InAppPopupActivity"
+            android:theme="@style/AppTheme.PopupTheme"/>
+
         <activity
             android:name="in.sportscafe.nostragamus.module.home.HomeActivity"
             android:screenOrientation="portrait"

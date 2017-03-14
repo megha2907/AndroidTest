@@ -72,6 +72,8 @@ public interface Constants {
         int TOURNAMENT_ID = 0;
         String INSTALL_CHANNEL = "installChannel";
         String BANK_INFO_SHOWN = "bankInfoShown";
+        String FIRST_MATCH_PLAYED = "firstMatchPlayed";
+        String VISITED_LEADERBOARDS= "VisitedLeaderboards";
     }
 
     interface Alerts {
@@ -191,6 +193,7 @@ public interface Constants {
         String IS_DUMMY_GAME = "isDummyGame";
         String TOURNAMENT_POWERUPS = "tournamentPowerups";
         String POPUP_DATA = "popup";
+        String IN_APP_POPUP_DATA = "inAppPopup";
         String FROM_SETTINGS = "fromSettings";
         String SCREEN = "screen";
         String FROM_PLAY = "fromPlay";
@@ -375,5 +378,18 @@ public interface Constants {
         String PLAYER_COMPARISON = "player_comparison"; //in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity
         String RESULTS_PEEK = "results_peek"; //in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity
         String DUMMY_GAME = "dummy_game"; //in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity
+    }
+
+    interface InAppPopups {
+
+        String IN_APP_POPUP_TYPE = "in_app_popup_type";
+        String FIRST_MATCH_PLAYED = "first_match_played";
+        String SECOND_MATCH_PLAYED_WITH_NO_POWERUP = "secondMatchPlayedWithNoPowerUp";
+        String FIFTH_MATCH_PLAYED_WITH_NO_POWERUP = "fifthMatchPlayedWithNoPowerUp";
+        String SEVENTH_MATCH_PLAYED_WITH_NO_GROUPS = "seventhMatchPlayedWithNoGroups";
+        String LESS_POWERUPS = "lessPowerUps";
+        String NOT_VISITED_OTHER_PROFILE = "notVisitedOtherProfile";
+
+
     }
 }

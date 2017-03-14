@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.user.points;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardModelImpl;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
@@ -322,6 +324,17 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
         mSelectedImage = selImg;
         mSelectedImage.setSelected(true);
+    }
+
+    @Override
+    public void showOtherProfilePopUp() {
+        openPopup();
+    }
+
+    private void openPopup() {
+        Intent intent = new Intent(this, InAppPopupActivity.class);
+        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE);
+        startActivity(intent);
     }
 
 

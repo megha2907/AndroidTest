@@ -27,4 +27,6 @@ public interface PointsView extends InAppView {
     void setUserLeaderBoardView(UserLeaderBoard userLeaderBoard);
 
     void setTabsView();
+
+    void showOtherProfilePopUp();
 }
