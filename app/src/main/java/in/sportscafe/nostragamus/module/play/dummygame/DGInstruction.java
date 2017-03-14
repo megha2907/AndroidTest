@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.play.dummygame;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.parceler.Parcel;
@@ -18,8 +19,11 @@ public class DGInstruction {
     @JsonProperty("alignment")
     private String alignment;
 
-    @JsonProperty("action")
-    private String actionText;
+    @JsonProperty("action1")
+    private String action1Text;
+
+    @JsonProperty("action2")
+    private String action2Text;
 
     @JsonProperty("waitingTime")
     private Long waitingTime;
@@ -32,6 +36,9 @@ public class DGInstruction {
 
     @JsonProperty("type")
     private String type;
+
+    @JsonIgnore
+    private Integer scoredPoints;
 
     @JsonProperty("name")
     public String getName() {
@@ -53,14 +60,24 @@ public class DGInstruction {
         this.alignment = alignment;
     }
 
-    @JsonProperty("actionText")
-    public String getActionText() {
-        return actionText;
+    @JsonProperty("action1")
+    public String getAction1Text() {
+        return action1Text;
     }
 
-    @JsonProperty("actionText")
-    public void setActionText(String actionText) {
-        this.actionText = actionText;
+    @JsonProperty("action1")
+    public void setAction1Text(String action1Text) {
+        this.action1Text = action1Text;
+    }
+
+    @JsonProperty("action2")
+    public String getAction2Text() {
+        return action2Text;
+    }
+
+    @JsonProperty("action2")
+    public void setAction2Text(String action2Text) {
+        this.action2Text = action2Text;
     }
 
     @JsonProperty("waitingTime")
@@ -101,5 +118,15 @@ public class DGInstruction {
     @JsonProperty("type")
     public void setType(String type) {
         this.type = type;
+    }
+
+    @JsonIgnore
+    public Integer getScoredPoints() {
+        return scoredPoints;
+    }
+
+    @JsonIgnore
+    public void setScoredPoints(Integer scoredPoints) {
+        this.scoredPoints = scoredPoints;
     }
 }

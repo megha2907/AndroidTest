@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.parceler.Parcel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -434,7 +433,7 @@ public class Question {
 
     @JsonIgnore
     public Integer getUpdatedPositivePoints() {
-        if(null == updatedPositivePoints) {
+        if (null == updatedPositivePoints) {
             return getQuestionPositivePoints();
         }
         return updatedPositivePoints;
@@ -447,7 +446,7 @@ public class Question {
 
     @JsonIgnore
     public Integer getUpdatedNegativePoints() {
-        if(null == updatedNegativePoints) {
+        if (null == updatedNegativePoints) {
             return getQuestionNegativePoints();
         }
         return updatedNegativePoints;
@@ -491,6 +490,14 @@ public class Question {
         setPowerUpId(null);
         setUpdatedPositivePoints(getQuestionPositivePoints());
         setUpdatedNegativePoints(getQuestionNegativePoints());
+    }
+
+    @JsonIgnore
+    public void removePollPowerUp() {
+        removeAppliedPowerUp();
+        setOption1AudPollPer(-1);
+        setOption2AudPollPer(-1);
+        setMinorityAnswerId(-1);
     }
 
     @JsonProperty("poll")

@@ -50,7 +50,9 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
 
     public static DummyGamePlayFragment newInstance(Question dummyQuestion) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(BundleKeys.DUMMY_QUESTION, Parcels.wrap(dummyQuestion));
+        if(null != dummyQuestion) {
+            bundle.putParcelable(BundleKeys.DUMMY_QUESTION, Parcels.wrap(dummyQuestion));
+        }
 
         DummyGamePlayFragment fragment = new DummyGamePlayFragment();
         fragment.setArguments(bundle);
@@ -166,16 +168,25 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
 
     @Override
     public void set2xPowerupCount(int count, boolean reverse) {
+        if(!reverse) {
+            mPlayActionListener.on2xApplied();
+        }
         applyAlphaForPowerUp(mIv2xPowerup, mTv2xPowerupCount, reverse, count);
     }
 
     @Override
     public void setNonegsPowerupCount(int count, boolean reverse) {
+        if(!reverse) {
+            mPlayActionListener.onNonegsApplied();
+        }
         applyAlphaForPowerUp(mIvNonegsPowerup, mTvNonegsPowerupCount, reverse, count);
     }
 
     @Override
     public void setPollPowerupCount(int count, boolean reverse) {
+        if(!reverse) {
+            mPlayActionListener.onPollApplied();
+        }
         applyAlphaForPowerUp(mIvPollPowerup, mTvPollPowerupCount, reverse, count);
     }
 
@@ -188,7 +199,6 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
     @Override
     public void showPowerups() {
         findViewById(R.id.prediction_ll_powerup_layout).setVisibility(View.VISIBLE);
-        mDummyGamePlayPresenter.updatePowerups();
     }
 
     @Override
@@ -197,8 +207,8 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
     }
 
     @Override
-    public void onPlayDone() {
-        mPlayActionListener.onPlayed();
+    public void onPlayDone(Integer scoredPoints) {
+        mPlayActionListener.onPlayed(scoredPoints);
     }
 
     private Drawable getPowerupDrawable(int colorRes) {
@@ -226,7 +236,18 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
         }
     }
 
+    public void addQuestion(Question question) {
+        mDummyGamePlayPresenter.onGetQuestions(question);
+    }
+
     public interface OnDGPlayActionListener {
-        void onPlayed();
+
+        void onPlayed(Integer scoredPoints);
+
+        void on2xApplied();
+
+        void onNonegsApplied();
+
+        void onPollApplied();
     }
 }

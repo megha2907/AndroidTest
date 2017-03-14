@@ -27,15 +27,15 @@ public class DummyGameTextFragment extends NostragamusFragment implements View.O
         String CENTER = "center";
     }
 
-    private DGInstruction mLastInstruction;
-
     private TextView mTvTopText;
 
     private TextView mTvCenterText;
 
     private TextView mTvBottomText;
 
-    private Button mBtnAction;
+    private Button mBtnAction1;
+
+    private Button mBtnAction2;
 
     private OnDGTextActionListener mTextActionListener;
 
@@ -70,54 +70,85 @@ public class DummyGameTextFragment extends NostragamusFragment implements View.O
         mTvCenterText = (TextView) findViewById(R.id.dummy_game_tv_center_text);
         mTvBottomText = (TextView) findViewById(R.id.dummy_game_tv_bottom_text);
 
-        mBtnAction = (Button) findViewById(R.id.dummy_game_btn_action);
-        mBtnAction.setOnClickListener(this);
+        mBtnAction1 = (Button) findViewById(R.id.dummy_game_btn_action1);
+        mBtnAction1.setOnClickListener(this);
+
+        mBtnAction2 = (Button) findViewById(R.id.dummy_game_btn_action2);
+        mBtnAction2.setOnClickListener(this);
 
         applyInstruction((DGInstruction) Parcels.unwrap(getArguments().getParcelable(BundleKeys.DUMMY_INSTRUCTION)));
     }
 
     public void applyInstruction(DGInstruction instruction) {
-        mLastInstruction = instruction;
+        String name = instruction.getName();
+        if(null != instruction.getScoredPoints()) {
+            name = String.format(name, instruction.getScoredPoints());
+        }
 
-        switch (mLastInstruction.getAlignment()) {
+        switch (instruction.getAlignment()) {
             case Alignment.TOP:
-                setTopText(mLastInstruction.getName());
+                setTopText(name);
                 break;
             case Alignment.BOTTOM:
-                setBottomText(mLastInstruction.getName());
+                setBottomText(name);
                 break;
             case Alignment.CENTER:
-                findViewById(R.id.dummy_game_ll_center_holder).setVisibility(View.VISIBLE);
-                setCenterText(mLastInstruction.getName());
-                setActionText(mLastInstruction.getActionText());
+                setCenterText(name);
+
+                if(null != instruction.getAction1Text()) {
+                    setAction1Text(instruction.getAction1Text());
+                }
+
+                if(null != instruction.getAction2Text()) {
+                    setAction2Text(instruction.getAction2Text());
+                }
                 break;
         }
     }
 
     @Override
     public void onClick(View view) {
-        if (R.id.dummy_game_btn_action == view.getId()) {
-            mTextActionListener.onActionClicked(((Button) view).getText().toString());
+        switch (view.getId()) {
+            case R.id.dummy_game_btn_action1:
+            case R.id.dummy_game_btn_action2:
+                mTextActionListener.onActionClicked(((Button) view).getText().toString());
+                break;
         }
     }
 
     private void setTopText(String topText) {
+        applyFadeInAnimation(mTvTopText);
         mTvTopText.setText(topText);
     }
 
     private void setCenterText(String centerText) {
+        applyFadeInAnimation(mTvCenterText);
         mTvCenterText.setText(centerText);
     }
 
     private void setBottomText(String bottomText) {
+        applyFadeInAnimation(mTvBottomText);
         mTvBottomText.setText(bottomText);
     }
 
-    private void setActionText(String actionText) {
-        mBtnAction.setText(actionText);
+    private void setAction1Text(String actionText) {
+        mBtnAction1.setVisibility(View.VISIBLE);
+        applyFadeInAnimation(mBtnAction1);
+        mBtnAction1.setText(actionText);
+    }
+
+    private void setAction2Text(String actionText) {
+        mBtnAction2.setVisibility(View.VISIBLE);
+        applyFadeInAnimation(mBtnAction2);
+        mBtnAction2.setText(actionText);
+    }
+
+    private void applyFadeInAnimation(View view) {
+        view.setAlpha(0f);
+        view.animate().alpha(1f).setDuration(3000);
     }
 
     public interface OnDGTextActionListener {
-        void onActionClicked(String action);
+        void onActionClicked(String actionText);
     }
 }

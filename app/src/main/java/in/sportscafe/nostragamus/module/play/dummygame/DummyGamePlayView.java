@@ -32,5 +32,5 @@ public interface DummyGamePlayView extends InAppView {
 
     void hidePowerups();
 
-    void onPlayDone();
+    void onPlayDone(Integer scoredPoints);
 }

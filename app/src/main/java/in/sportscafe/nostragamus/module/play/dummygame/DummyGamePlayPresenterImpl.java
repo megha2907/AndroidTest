@@ -2,8 +2,10 @@ package in.sportscafe.nostragamus.module.play.dummygame;
 
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.module.play.prediction.PredictionAdapter;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
+import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 
 /**
  * Created by Jeeva on 20/5/16.
@@ -25,10 +27,7 @@ public class DummyGamePlayPresenterImpl implements DummyGamePlayPresenter, Dummy
 
     @Override
     public void onCreatePrediction(Bundle bundle) {
-        mDummyGamePlayView.setAdapter(
-                mDummyGamePlayModel.getAdapter(mDummyGamePlayView.getContext(), bundle),
-                mDummyGamePlayModel.getSwipeListener()
-        );
+        mDummyGamePlayModel.init(mDummyGamePlayView.getContext(), bundle);
     }
 
     @Override
@@ -56,6 +55,17 @@ public class DummyGamePlayPresenterImpl implements DummyGamePlayPresenter, Dummy
     @Override
     public void onClickPollPowerup() {
         mDummyGamePlayModel.applyPollPowerup();
+    }
+
+    @Override
+    public void onGetQuestions(Question question) {
+        mDummyGamePlayModel.initAdapter(mDummyGamePlayView.getContext(), question);
+    }
+
+    @Override
+    public void onAdapterCreated(PredictionAdapter predictionAdapter,
+                                 SwipeFlingAdapterView.OnSwipeListener<Question> onSwipeListener) {
+        mDummyGamePlayView.setAdapter(predictionAdapter, onSwipeListener);
     }
 
     @Override
@@ -90,8 +100,14 @@ public class DummyGamePlayPresenterImpl implements DummyGamePlayPresenter, Dummy
     }
 
     @Override
-    public void onDummyGameCompletion() {
-        mDummyGamePlayView.onPlayDone();
+    public void onQuestionAnswered(Integer scoredPoints) {
+        mDummyGamePlayView.onPlayDone(scoredPoints);
+    }
+
+    @Override
+    public void onGetPowerUpDetails() {
+        mDummyGamePlayView.showPowerups();
+        updatePowerups();
     }
 
     @Override
