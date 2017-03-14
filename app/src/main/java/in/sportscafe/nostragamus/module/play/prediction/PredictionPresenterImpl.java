@@ -63,6 +63,9 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onSuccessCompletion(Bundle bundle) {
         mPredictionView.navigateToFeed();
+        if (!NostragamusDataHandler.getInstance().isPlayedFirstMatch()) {
+            mPredictionView.showFirstMatchCompletedPopUp();
+        }
     }
 
     @Override

@@ -12,4 +12,5 @@ public interface LeaderBoardView extends InAppView {
     void setLeaderBoardAdapter(LeaderBoardAdapter leaderBoardAdapter);
 
     void moveAdapterPosition(int movePosition);
+
 }

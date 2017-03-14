@@ -1,11 +1,14 @@
 package in.sportscafe.nostragamus.module.user.points;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 
 /**
@@ -35,6 +38,9 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
         mPointsView.setName(mPointsModel.getName());
         mPointsView.setIcon(mPointsModel.getIcon());
         refreshLb();
+        if (!NostragamusDataHandler.getInstance().isVisitedLeaderBoards()) {
+            mPointsView.showOtherProfilePopUp();
+        }
     }
 
     @Override
@@ -115,5 +121,7 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
         mPointsView.showInAppMessage("Your leaderboard will update here after a match you have played is over");
 
     }
+
+
 
 }

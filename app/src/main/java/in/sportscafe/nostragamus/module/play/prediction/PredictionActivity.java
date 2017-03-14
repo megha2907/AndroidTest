@@ -18,6 +18,10 @@ import android.widget.TextView;
 
 import com.jeeva.android.widgets.CustomProgressbar;
 
+import org.parceler.Parcels;
+
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
@@ -30,7 +34,11 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
 import in.sportscafe.nostragamus.module.popups.BankTransferDialogFragment;
+import in.sportscafe.nostragamus.module.popups.PopUp;
+import in.sportscafe.nostragamus.module.popups.PopUpActivity;
 import in.sportscafe.nostragamus.module.popups.PowerupDialogFragment;
+import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopup;
+import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 
@@ -436,6 +444,17 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void showBankInfo() {
         BankInfoDialogFragment.newInstance().show(getSupportFragmentManager(), "BankInfo");
+    }
+
+    @Override
+    public void showFirstMatchCompletedPopUp() {
+        openPopup();
+    }
+
+    private void openPopup() {
+        Intent intent = new Intent(this, InAppPopupActivity.class);
+        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, Constants.InAppPopups.FIRST_MATCH_PLAYED);
+        startActivity(intent);
     }
 
     private Drawable getPowerupDrawable(int colorRes) {

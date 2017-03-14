@@ -307,4 +307,20 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
             setInitialSportsAvailable(true);
         }
     }
+
+    public boolean isPlayedFirstMatch() {
+        return getSharedBooleanData(SharedKeys.FIRST_MATCH_PLAYED, false);
+    }
+
+    public void setPlayedFirstMatch(boolean playedFirstMatch) {
+        setSharedBooleanData(SharedKeys.FIRST_MATCH_PLAYED, playedFirstMatch);
+    }
+
+    public boolean isVisitedLeaderBoards() {
+        return getSharedBooleanData(SharedKeys.VISITED_LEADERBOARDS, false);
+    }
+
+    public void setVisitedLeaderBoards(boolean visitedLeaderBoards) {
+        setSharedBooleanData(SharedKeys.VISITED_LEADERBOARDS, visitedLeaderBoards);
+    }
 }
