@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 
+import com.jeeva.android.ExceptionTracker;
+
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -40,6 +42,8 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
 
     private int mPollPowerups = 2;
 
+    private Question mLastAnsweredQuestion = null;
+
     public DummyGamePlayModelImpl(OnDummyGamePlayModelListener predictionModelListener) {
         this.mModelListener = predictionModelListener;
 
@@ -48,6 +52,28 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
 
     public static DummyGamePlayModel newInstance(OnDummyGamePlayModelListener predictionModelListener) {
         return new DummyGamePlayModelImpl(predictionModelListener);
+    }
+
+    @Override
+    public void init(Context context, Bundle bundle) {
+        if (null != bundle && bundle.containsKey(BundleKeys.DUMMY_QUESTION)) {
+            Question dummyQuestion = Parcels.unwrap(bundle.getParcelable(BundleKeys.DUMMY_QUESTION));
+            initAdapter(context, dummyQuestion);
+        } else {
+            mModelListener.onGetPowerUpDetails();
+        }
+    }
+
+    @Override
+    public void initAdapter(Context context, Question question) {
+        mPredictionAdapter = new PredictionAdapter(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismissPowerUpAnimation(view);
+            }
+        });
+        mPredictionAdapter.add(question);
+        mModelListener.onAdapterCreated(mPredictionAdapter, this);
     }
 
     @Override
@@ -63,20 +89,6 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
     @Override
     public int getPollPowerupCount() {
         return mPollPowerups;
-    }
-
-    @Override
-    public PredictionAdapter getAdapter(Context context, Bundle bundle) {
-        Question dummyQuestion = Parcels.unwrap(bundle.getParcelable(BundleKeys.DUMMY_QUESTION));
-
-        mPredictionAdapter = new PredictionAdapter(context, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismissPowerUpAnimation(view);
-            }
-        });
-        mPredictionAdapter.add(dummyQuestion);
-        return mPredictionAdapter;
     }
 
     @Override
@@ -126,11 +138,6 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
     }
 
     @Override
-    public SwipeFlingAdapterView.OnSwipeListener<Question> getSwipeListener() {
-        return DummyGamePlayModelImpl.this;
-    }
-
-    @Override
     public void removeFirstObjectInAdapter(Question question) {
         mPredictionAdapter.remove(question);
         mPredictionAdapter.notifyDataSetChanged();
@@ -138,17 +145,20 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
 
     @Override
     public void onLeftSwipe(Question question) {
-//        saveSinglePrediction(question, AnswerIds.LEFT);
+        question.setAnswerId(AnswerIds.LEFT);
+        mLastAnsweredQuestion = question;
     }
 
     @Override
     public void onRightSwipe(Question question) {
-//        saveSinglePrediction(question, AnswerIds.RIGHT);
+        question.setAnswerId(AnswerIds.RIGHT);
+        mLastAnsweredQuestion = question;
     }
 
     @Override
     public void onTopSwipe(Question question) {
-//        saveSinglePrediction(question, AnswerIds.NEITHER);
+        question.setAnswerId(AnswerIds.NEITHER);
+        mLastAnsweredQuestion = question;
     }
 
     @Override
@@ -159,7 +169,20 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
     @Override
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
         if (itemsInAdapter == 0) {
-            mModelListener.onDummyGameCompletion();
+            Integer scoredPoints = null;
+            if (null != mLastAnsweredQuestion && null != mLastAnsweredQuestion.getQuestionAnswer()) {
+                if (mLastAnsweredQuestion.getAnswerId() == mLastAnsweredQuestion.getQuestionAnswer()) {
+                    scoredPoints = mLastAnsweredQuestion.getUpdatedPositivePoints();
+                } else {
+                    scoredPoints = mLastAnsweredQuestion.getUpdatedNegativePoints();
+                }
+            }
+
+            mLastAnsweredQuestion.setAnswerId(null);
+            mLastAnsweredQuestion.removeAppliedPowerUp();
+            mLastAnsweredQuestion.removePollPowerUp();
+
+            mModelListener.onQuestionAnswered(scoredPoints);
             return;
         }
 
@@ -186,7 +209,12 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
     }
 
     private boolean isNotPowerupApplied() {
-        return null == mPredictionAdapter.getTopQuestion().getPowerUpId();
+        try {
+            return null == mPredictionAdapter.getTopQuestion().getPowerUpId();
+        } catch (Exception e) {
+            ExceptionTracker.track(e);
+        }
+        return false;
     }
 
     private void notifyTopQuestion() {
@@ -270,6 +298,9 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
 
     public interface OnDummyGamePlayModelListener {
 
+        void onAdapterCreated(PredictionAdapter predictionAdapter,
+                              SwipeFlingAdapterView.OnSwipeListener<Question> onSwipeListener);
+
         void onQuestionChanged(Question question, boolean neitherAvailable);
 
         void notifyTopQuestion();
@@ -280,7 +311,9 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
 
         void onAudiencePollApplied(int count, boolean reverse);
 
-        void onDummyGameCompletion();
+        void onQuestionAnswered(Integer scoredPoints);
+
+        void onGetPowerUpDetails();
 
         void onNoPowerUps();
     }

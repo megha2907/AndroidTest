@@ -21,4 +21,6 @@ public interface DummyGamePlayPresenter {
     void onClickNonegsPowerup();
 
     void onClickPollPowerup();
+
+    void onGetQuestions(Question question);
 }
