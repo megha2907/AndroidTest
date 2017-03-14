@@ -1,10 +1,5 @@
 package in.sportscafe.nostragamus;
 
-import android.content.Intent;
-import android.content.IntentFilter;
-
-import static android.view.View.X;
-
 /**
  * Created by Jeeva on 30/3/15.
  */
@@ -224,7 +219,8 @@ public interface Constants {
         String MAX_TRANSFER_COUNT = "maxTransferCount";
         String CHALLENGE_INFO = "challengeInfo";
         String TAB_POSITION = "tabPosition";
-
+        String DUMMY_QUESTION = "dummyQuestion";
+        String DUMMY_INSTRUCTION = "dummyInstruction";
     }
 
     interface ParcelableKeys {
@@ -381,6 +377,7 @@ public interface Constants {
         String SPORT_SELECTION = "sport_selection"; //in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity
         String PLAYER_COMPARISON = "player_comparison"; //in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity
         String RESULTS_PEEK = "results_peek"; //in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity
+        String DUMMY_GAME = "dummy_game"; //in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity
     }
 
     interface InAppPopups {

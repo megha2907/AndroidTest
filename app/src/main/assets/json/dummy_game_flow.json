@@ -1,0 +1,111 @@
+[
+  {
+    "name": "Let's play a game to help you \n understand the gameplay better",
+    "alignment": "center",
+    "action": "Next",
+    "freshStart": true,
+    "type": "text"
+  },
+  {
+    "name": "You may swipe Left or Right on the card to choose the correct option",
+    "alignment": "top",
+    "waitingTime": 3000,
+    "freshStart": true,
+    "type": "text"
+  },
+  {
+    "question": {
+      "question_id": 1,
+      "match_id": 1,
+      "question_text": "Did India win the Cricket WC in 2011?",
+      "question_context": "Both India and Sri Lanka made it to the finals of the ICC World Cup in 2011. Did India manage to get the victory?",
+      "question_option_1": "No",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/4-dummygame.png",
+      "question_option_2": "Yes",
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png"
+    },
+    "type": "question"
+  },
+  {
+    "name": "Some questions may have a 3rd option \n Swipe up, or click on the button to choose it",
+    "alignment": "top",
+    "waitingTime": 3000,
+    "freshStart": true,
+    "type": "text"
+  },
+  {
+    "question": {
+      "question_id": 2,
+      "match_id": 1,
+      "question_text": "Did India win the Cricket WC in 2011?",
+      "question_context": "Both India and Sri Lanka made it to the finals of the ICC World Cup in 2011. Did India manage to get the victory?",
+      "question_option_1": "No",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/4-dummygame.png",
+      "question_option_2": "Yes",
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png",
+      "question_option_3": "Neither"
+    },
+    "type": "question"
+  },
+  {
+    "name": "Questions have positive (+10) and negative (-4) points. Swipe to see how you scored!",
+    "alignment": "top",
+    "waitingTime": 3000,
+    "freshStart": true,
+    "type": "text"
+  },
+  {
+    "question": {
+      "question_id": 3,
+      "match_id": 1,
+      "question_text": "Did India win the Cricket WC in 2011?",
+      "question_context": "Both India and Sri Lanka made it to the finals of the ICC World Cup in 2011. Did India manage to get the victory?",
+      "question_points": 10,
+      "question_neg_points": -4,
+      "question_option_1": "No",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/4-dummygame.png",
+      "question_option_2": "Yes",
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png"
+    },
+    "type": "question"
+  },
+  {
+    "name": "Powerups are a way to improve your score! They are located at the bottom of your screen",
+    "alignment": "top",
+    "waitingTime": 3000,
+    "freshStart": true,
+    "type": "text"
+  },
+  {
+    "question": {
+      "question_id": 4,
+      "match_id": 1,
+      "question_text": "Did India win the Cricket WC in 2011?",
+      "question_context": "Both India and Sri Lanka made it to the finals of the ICC World Cup in 2011. Did India manage to get the victory?",
+      "question_points": 10,
+      "question_neg_points": -4,
+      "question_option_1": "No",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/4-dummygame.png",
+      "question_option_2": "Yes",
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png"
+    },
+    "waitingTime": 1,
+    "type": "question"
+  },
+  {
+    "waitingTime": 3000,
+    "type": "powerup"
+  },
+  {
+    "name": "Tap on a powerup to apply it to the question",
+    "alignment": "bottom",
+    "type": "text"
+  },
+  {
+    "name": "And that's it! Easy as that! Now you can go ahead and play your next game or replay this one",
+    "alignment": "center",
+    "action": "Try other powerups",
+    "freshStart": true,
+    "type": "text"
+  }
+]
