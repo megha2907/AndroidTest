@@ -1,9 +1,10 @@
-package in.sportscafe.nostragamus.module.play.prediction;
+package in.sportscafe.nostragamus.module.play.dummygame;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
@@ -30,7 +31,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 
-public class PredictionAdapter extends ArrayAdapter<Question> {
+public class DGPlayAdapter extends ArrayAdapter<Question> {
 
     private static final float HEADER_PERECENTAGE = 10f / 100;
 
@@ -68,6 +69,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     private CardView mCvMain;
 
+    private LinearLayout mLlPointsLayout;
+
     private View mLeftOption;
 
     private View mRightOption;
@@ -100,17 +103,13 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     private View.OnClickListener mRemovePowerUpListener;
 
-    public PredictionAdapter(Context context, View.OnClickListener removePowerUpListener) {
+    public DGPlayAdapter(Context context, View.OnClickListener removePowerUpListener) {
         super(context, android.R.layout.simple_list_item_1);
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mRemovePowerUpListener = removePowerUpListener;
     }
 
     public void setRootView(View rootView) {
-        /*Rect rect = new Rect();
-        rootView.getLocalVisibleRect(rect);
-
-        applyFrameCardPercentages(rootView, rect.height());*/
         DisplayMetrics dm = new DisplayMetrics();
         ((Activity) rootView.getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -131,12 +130,12 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         mTopMargin = (int) (screenHeight * GAP_BW_HEADER_CARD_PERECENTAGE);
         rlp.topMargin = mTopMargin;
 
-        int headerHeight = rootView.findViewById(R.id.prediction_rl_header).getMeasuredHeight();
+        /*int headerHeight = rootView.findViewById(R.id.prediction_rl_header).getMeasuredHeight();
         ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_left_right_indicator).getLayoutParams())
                 .topMargin = (int) (mTopMargin + rlp.height - screenHeight * 1.5f / 100 - mOptionHeight / 2f + headerHeight);
 
         ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_neither_indicator).getLayoutParams())
-                .topMargin = (int) (mTopMargin + rlp.height - mOptionHeight + headerHeight);
+                .topMargin = (int) (mTopMargin + rlp.height - mOptionHeight + headerHeight);*/
 
         vBgFrame1 = rootView.findViewById(R.id.prediction_cv_bg_1);
         vBgFrame1.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
@@ -144,8 +143,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         vBgFrame2 = rootView.findViewById(R.id.prediction_cv_bg_2);
         vBgFrame2.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
 
-        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_header).getLayoutParams();
-        rlp.height = (int) (screenHeight * HEADER_PERECENTAGE);
+        /*rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_header).getLayoutParams();
+        rlp.height = (int) (screenHeight * HEADER_PERECENTAGE);*/
 
         mTopMargin += (int) (screenHeight * HEADER_PERECENTAGE);
 
@@ -181,7 +180,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = mLayoutInflater.inflate(R.layout.inflater_swipe_card_row, parent, false);
 
-        final ViewHolder viewHolder = new ViewHolder(convertView);
+        ViewHolder viewHolder = new ViewHolder(convertView);
         convertView.setTag(viewHolder);
 
         applyMainCardPercentages(viewHolder);
@@ -235,8 +234,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             }
         }
 
-
-        if (null != question.getAudiencePoll()){
+        if (null != question.getAudiencePoll()) {
             question.setPowerUpId(Powerups.AUDIENCE_POLL);
             int leftAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(0).getAnswerPercentage().replaceAll("%", ""));
             int rightAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(1).getAnswerPercentage().replaceAll("%", ""));
@@ -255,13 +253,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
                 question.setMinorityAnswerId(-1);
             }
         }
-
-        viewHolder.tvQuestion.post(new Runnable() {
-            @Override
-            public void run() {
-                viewHolder.tvContext.setMaxLines(6 - viewHolder.tvQuestion.getLineCount());
-            }
-        });
 
         return convertView;
     }
@@ -361,10 +352,11 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     public void setFlingCardListener(FlingCardListener listener) {
         this.mFlingCardListener = listener;
+        this.mTopView = mFlingCardListener.getFrame();
         this.mTopQuestion = getItem(0);
         this.mNeitherOptionAvailable = !TextUtils.isEmpty(mTopQuestion.getQuestionOption3());
-        this.mTopView = mFlingCardListener.getFrame();
         this.mCvMain = (CardView) mTopView.findViewById(R.id.swipe_card_cv_main);
+        this.mLlPointsLayout = (LinearLayout) mTopView.findViewById(R.id.swipe_card_question_points_rl);
         this.mLeftOption = mTopView.findViewById(R.id.swipe_card_tv_left);
         this.mRightOption = mTopView.findViewById(R.id.swipe_card_tv_right);
         this.mLeftOptionArrow = mTopView.findViewById(R.id.swipe_card_iv_left_arrow);
@@ -377,6 +369,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         mBgUpdateDone = false;
         updateBg(0);
+
+        animateTopView();
     }
 
     private void setOptionVisibility(int leftVis, int rightVis) {
@@ -470,6 +464,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         CardView cvMainCard;
 
+        LinearLayout llPointsLayout;
+
         TextView tvQuestion;
 
         TextView tvContext;
@@ -508,6 +504,13 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         public ViewHolder(View rootView) {
             cvMainCard = (CardView) rootView.findViewById(R.id.swipe_card_cv_main);
+            cvMainCard.setVisibility(View.INVISIBLE);
+
+            llPointsLayout = (LinearLayout) rootView.findViewById(R.id.swipe_card_question_points_rl);
+            // It is to highlight the points layer
+            llPointsLayout.setBackgroundResource(R.drawable.dg_points_bg);
+            llPointsLayout.setVisibility(View.INVISIBLE);
+
             tvQuestion = (TextView) rootView.findViewById(R.id.swipe_card_tv_question);
             tvContext = (TextView) rootView.findViewById(R.id.swipe_card_tv_context);
             flLeftArea = (FrameLayout) rootView.findViewById(R.id.swipe_card_fl_left_area);
@@ -527,5 +530,26 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             llQuestionDesc = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_question_desc);
             llPowerUpHolder = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_powerup_holder);
         }
+    }
+
+    private void animateTopView() {
+        mTopView.setAlpha(0);
+        mTopView.setScaleX(0.9f);
+        mTopView.setScaleY(0.9f);
+
+        mCvMain.setVisibility(View.VISIBLE);
+        mLlPointsLayout.setVisibility(View.VISIBLE);
+
+        mTopView.animate().alpha(1).scaleX(1).scaleY(1).setDuration(1000);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                /*new DummyCardAutoMover(
+                        mFlingCardListener.getFrame().findViewById(R.id.swipe_card_cv_main),
+                        mFlingCardListener
+                ).startAnimate();*/
+            }
+        }, 1500);
     }
 }

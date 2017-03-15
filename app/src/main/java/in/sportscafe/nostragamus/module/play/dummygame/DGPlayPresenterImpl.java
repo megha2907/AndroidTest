@@ -2,7 +2,6 @@ package in.sportscafe.nostragamus.module.play.dummygame;
 
 import android.os.Bundle;
 
-import in.sportscafe.nostragamus.module.play.prediction.PredictionAdapter;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
@@ -10,19 +9,19 @@ import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 /**
  * Created by Jeeva on 20/5/16.
  */
-public class DummyGamePlayPresenterImpl implements DummyGamePlayPresenter, DummyGamePlayModelImpl.OnDummyGamePlayModelListener {
+public class DGPlayPresenterImpl implements DGPlayPresenter, DGPlayModelImpl.OnDummyGamePlayModelListener {
 
-    private DummyGamePlayView mDummyGamePlayView;
+    private DGPlayView mDummyGamePlayView;
 
-    private DummyGamePlayModel mDummyGamePlayModel;
+    private DGPlayModel mDummyGamePlayModel;
 
-    public DummyGamePlayPresenterImpl(DummyGamePlayView DummyGamePlayView) {
+    public DGPlayPresenterImpl(DGPlayView DummyGamePlayView) {
         this.mDummyGamePlayView = DummyGamePlayView;
-        this.mDummyGamePlayModel = DummyGamePlayModelImpl.newInstance(this);
+        this.mDummyGamePlayModel = DGPlayModelImpl.newInstance(this);
     }
 
-    public static DummyGamePlayPresenter newInstance(DummyGamePlayView dummyGamePlayView) {
-        return new DummyGamePlayPresenterImpl(dummyGamePlayView);
+    public static DGPlayPresenter newInstance(DGPlayView dummyGamePlayView) {
+        return new DGPlayPresenterImpl(dummyGamePlayView);
     }
 
     @Override
@@ -63,7 +62,7 @@ public class DummyGamePlayPresenterImpl implements DummyGamePlayPresenter, Dummy
     }
 
     @Override
-    public void onAdapterCreated(PredictionAdapter predictionAdapter,
+    public void onAdapterCreated(DGPlayAdapter predictionAdapter,
                                  SwipeFlingAdapterView.OnSwipeListener<Question> onSwipeListener) {
         mDummyGamePlayView.setAdapter(predictionAdapter, onSwipeListener);
     }

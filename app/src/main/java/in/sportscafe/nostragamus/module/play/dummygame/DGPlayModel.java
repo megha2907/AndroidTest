@@ -9,7 +9,7 @@ import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 /**
  * Created by Jeeva on 20/5/16.
  */
-public interface DummyGamePlayModel {
+public interface DGPlayModel {
 
     void init(Context context, Bundle bundle);
 

@@ -18,10 +18,6 @@ import android.widget.TextView;
 
 import com.jeeva.android.widgets.CustomProgressbar;
 
-import org.parceler.Parcels;
-
-import java.util.List;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
@@ -29,15 +25,12 @@ import in.sportscafe.nostragamus.module.coachmarker.TargetView;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.play.dummygame.DummyGameTextFragment;
+import in.sportscafe.nostragamus.module.play.dummygame.DGTextFragment;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
 import in.sportscafe.nostragamus.module.popups.BankTransferDialogFragment;
-import in.sportscafe.nostragamus.module.popups.PopUp;
-import in.sportscafe.nostragamus.module.popups.PopUpActivity;
 import in.sportscafe.nostragamus.module.popups.PowerupDialogFragment;
-import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopup;
 import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
@@ -266,7 +259,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mPredictionPresenter.onClickBack();
     }
 
-    private DummyGameTextFragment mDummyGameFragment;
+    private DGTextFragment mDummyGameFragment;
 
     @Override
     public void changeToDummyGameMode() {
@@ -280,7 +273,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
         mVgPlayPage.setVisibility(View.INVISIBLE);
 
-        mDummyGameFragment = DummyGameTextFragment.newInstance(null);
+        mDummyGameFragment = DGTextFragment.newInstance(null);
         getSupportFragmentManager().beginTransaction().replace(R.id.prediction_fl_dummy_holder, mDummyGameFragment).commit();
     }
 

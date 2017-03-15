@@ -118,6 +118,8 @@ public class FlingCardListener implements View.OnTouchListener {
                 }
 
                 view.getParent().requestDisallowInterceptTouchEvent(true);
+
+                Log.d(TAG, "Initial Touch Pointer --> " + aDownTouchX);
                 break;
 
             case MotionEvent.ACTION_UP:
@@ -186,6 +188,8 @@ public class FlingCardListener implements View.OnTouchListener {
                 }
 
                 mFlingListener.onScroll(getScrollProgressPercent());
+
+                Log.d(TAG, "Movement --> " + xMove + ", " + dx + ", " + aPosX);
                 break;
 
             case MotionEvent.ACTION_CANCEL: {
@@ -261,11 +265,11 @@ public class FlingCardListener implements View.OnTouchListener {
     }
 
     private boolean resetCardViewOnStack() {
-        if (movedBeyondLeftBorder()) {
+        if (mFlingListener.needLeftSwipe() && movedBeyondLeftBorder()) {
             // Left Swipe
             onSelected(Direction.LEFT, objectX, getExitPoint(-objectW), 100);
             mFlingListener.onScroll(-1.0f);
-        } else if (movedBeyondRightBorder()) {
+        } else if (mFlingListener.needRightSwipe() && movedBeyondRightBorder()) {
             // Right Swipe
             onSelected(Direction.RIGHT, objectX, getExitPoint(parentWidth), 100);
             mFlingListener.onScroll(1.0f);
@@ -490,6 +494,10 @@ public class FlingCardListener implements View.OnTouchListener {
         void topExit(Object dataObject);
 
         void bottomExit(Object dataObject);
+
+        boolean needLeftSwipe();
+
+        boolean needRightSwipe();
 
         boolean needTopSwipe();
 

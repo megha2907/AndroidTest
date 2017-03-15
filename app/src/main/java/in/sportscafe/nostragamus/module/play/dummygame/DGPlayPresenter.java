@@ -8,7 +8,7 @@ import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 /**
  * Created by Jeeva on 20/5/16.
  */
-public interface DummyGamePlayPresenter {
+public interface DGPlayPresenter {
 
     void onCreatePrediction(Bundle bundle);
 
