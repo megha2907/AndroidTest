@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_18"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="@dimen/dp_16"
@@ -82,24 +82,49 @@
             android:visibility="invisible"
             app:typeface="roboto_condensed" />
 
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/dummy_game_btn_action2"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_36"
-            android:layout_marginTop="@dimen/dp_25"
-            android:background="@drawable/group_btn_bg"
-            android:gravity="center"
-            android:minWidth="@dimen/dp_72"
-            android:paddingBottom="@dimen/dp_2"
-            android:paddingLeft="@dimen/dp_15"
-            android:paddingRight="@dimen/dp_15"
-            android:paddingTop="@dimen/dp_0"
-            android:text="@string/dummy_start_action"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_14"
-            android:visibility="invisible"
-            app:typeface="roboto_condensed" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_25">
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/dummy_game_btn_action2"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_36"
+                android:background="@drawable/group_btn_bg"
+                android:gravity="center"
+                android:minWidth="@dimen/dp_72"
+                android:paddingBottom="@dimen/dp_2"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_0"
+                android:text="@string/dummy_start_action"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                android:visibility="invisible"
+                app:typeface="roboto_condensed" />
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/dummy_game_btn_action3"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_36"
+                android:background="@drawable/dg_skip_btn_bg"
+                android:gravity="center"
+                android:minWidth="@dimen/dp_72"
+                android:paddingBottom="@dimen/dp_2"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_0"
+                android:text="@string/dummy_start_action"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                android:visibility="invisible"
+                app:typeface="roboto_condensed" />
+
+
+        </RelativeLayout>
 
     </LinearLayout>
 

@@ -30,7 +30,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.TermsConditions;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.onboard.OnboardFragment;
+import in.sportscafe.nostragamus.module.onboard.AvatarFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
 public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
@@ -71,7 +71,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         initGoogle();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.login_fl_onboard_holder, OnboardFragment.newInstance()).commit();
+                .replace(R.id.login_fl_onboard_holder, AvatarFragment.newInstance()).commit();
 
         mLogInPresenter = LogInPresenterImpl.newInstance(LogInActivity.this);
         mLogInPresenter.onCreateLogIn(getIntent().getExtras());
