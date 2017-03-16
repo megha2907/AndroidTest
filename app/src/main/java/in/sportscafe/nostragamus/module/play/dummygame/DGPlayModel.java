@@ -13,7 +13,7 @@ public interface DGPlayModel {
 
     void init(Context context, Bundle bundle);
 
-    void initAdapter(Context context, Question question);
+    void initAdapter(Context context, Question question, String questionType);
 
     int get2xPowerupCount();
 

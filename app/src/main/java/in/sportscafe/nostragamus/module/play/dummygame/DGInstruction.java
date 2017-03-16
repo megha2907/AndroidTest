@@ -31,6 +31,9 @@ public class DGInstruction {
     @JsonProperty("textType")
     private String textType;
 
+    @JsonProperty("questionType")
+    private String questionType;
+
     @JsonProperty("question")
     private Question question;
 
@@ -95,6 +98,16 @@ public class DGInstruction {
     @JsonProperty("textType")
     public void setTextType(String textType) {
         this.textType = textType;
+    }
+
+    @JsonProperty("questionType")
+    public String getQuestionType() {
+        return questionType;
+    }
+
+    @JsonProperty("questionType")
+    public void setQuestionType(String questionType) {
+        this.questionType = questionType;
     }
 
     @JsonProperty("question")

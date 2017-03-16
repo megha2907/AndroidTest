@@ -22,5 +22,5 @@ public interface DGPlayPresenter {
 
     void onClickPollPowerup();
 
-    void onGetQuestions(Question question);
+    void onGetQuestions(Question question, String questionType);
 }

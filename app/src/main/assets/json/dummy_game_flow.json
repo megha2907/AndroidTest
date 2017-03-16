@@ -59,6 +59,7 @@
       "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png"
     },
     "waitingTime": 1,
+    "questionType": "leftright",
     "type": "question"
   },
   {
@@ -97,6 +98,7 @@
       "question_option_3": "Neither"
     },
     "waitingTime": 1,
+    "questionType": "neither",
     "type": "question"
   },
   {
@@ -137,6 +139,7 @@
       "question_answer": 2
     },
     "waitingTime": 1,
+    "questionType": "points",
     "type": "question"
   },
   {
@@ -194,6 +197,7 @@
       "question_answer": 2
     },
     "waitingTime": 1000,
+    "questionType": "powerups",
     "type": "question"
   },
   {

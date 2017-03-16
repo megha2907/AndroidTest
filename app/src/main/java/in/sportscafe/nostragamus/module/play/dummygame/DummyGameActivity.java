@@ -79,11 +79,11 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
                 addDummyText(instruction);
                 break;
             case InstructionType.QUESTION:
-                addDummyPlay(instruction.getQuestion());
+                addDummyPlay(instruction.getQuestion(), instruction.getQuestionType());
                 break;
             case InstructionType.POWERUP:
                 mPowerUpsInstructionPos = mLastReadInstruction;
-                addDummyPlay(null);
+                addDummyPlay(instruction.getQuestion(), instruction.getQuestionType());
                 break;
         }
 
@@ -101,14 +101,14 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
         } // else wait for user action
     }
 
-    private void addDummyPlay(Question dummyQuestion) {
+    private void addDummyPlay(Question dummyQuestion, String questionType) {
         if (null == mDummyGamePlayFragment) {
             getFragmentTransaction().replace(
                     R.id.dummy_game_fl_play_holder,
-                    mDummyGamePlayFragment = DGPlayFragment.newInstance(dummyQuestion)
+                    mDummyGamePlayFragment = DGPlayFragment.newInstance(dummyQuestion, questionType)
             ).commit();
         } else {
-            mDummyGamePlayFragment.addQuestion(dummyQuestion);
+            mDummyGamePlayFragment.addQuestion(dummyQuestion, questionType);
         }
     }
 

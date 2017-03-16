@@ -49,10 +49,11 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
 
     private OnDGPlayActionListener mPlayActionListener;
 
-    public static DGPlayFragment newInstance(Question dummyQuestion) {
+    public static DGPlayFragment newInstance(Question dummyQuestion, String questionType) {
         Bundle bundle = new Bundle();
         if (null != dummyQuestion) {
             bundle.putParcelable(BundleKeys.DUMMY_QUESTION, Parcels.wrap(dummyQuestion));
+            bundle.putString(BundleKeys.DUMMY_QUESTION_TYPE, questionType);
         }
 
         DGPlayFragment fragment = new DGPlayFragment();
@@ -124,12 +125,12 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
             public void run() {
                 mDummyGamePlayPresenter.setFlingListener(mSwipeFlingAdapterView.getTopCardListener());
 
-                new Handler().postDelayed(new Runnable() {
+                /*new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         animatePowerUps();
                     }
-                }, 1000);
+                }, 1000);*/
             }
         });
     }
@@ -249,8 +250,8 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
         }
     }
 
-    public void addQuestion(Question question) {
-        mDummyGamePlayPresenter.onGetQuestions(question);
+    public void addQuestion(Question question, String questionType) {
+        mDummyGamePlayPresenter.onGetQuestions(question, questionType);
     }
 
     public void animatePowerUps() {
@@ -264,7 +265,8 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
         finalView.animate().rotation(45).setDuration(500).setListener(
                 new Animator.AnimatorListener() {
                     @Override
-                    public void onAnimationStart(Animator animation) {}
+                    public void onAnimationStart(Animator animation) {
+                    }
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -272,10 +274,12 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
                     }
 
                     @Override
-                    public void onAnimationCancel(Animator animation) {}
+                    public void onAnimationCancel(Animator animation) {
+                    }
 
                     @Override
-                    public void onAnimationRepeat(Animator animation) {}
+                    public void onAnimationRepeat(Animator animation) {
+                    }
                 }
         );
     }

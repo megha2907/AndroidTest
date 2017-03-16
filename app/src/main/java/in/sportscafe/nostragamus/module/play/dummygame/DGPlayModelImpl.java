@@ -59,20 +59,20 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
     public void init(Context context, Bundle bundle) {
         if (null != bundle && bundle.containsKey(BundleKeys.DUMMY_QUESTION)) {
             Question dummyQuestion = Parcels.unwrap(bundle.getParcelable(BundleKeys.DUMMY_QUESTION));
-            initAdapter(context, dummyQuestion);
+            initAdapter(context, dummyQuestion, bundle.getString(BundleKeys.DUMMY_QUESTION_TYPE));
         } else {
             mModelListener.onGetPowerUpDetails();
         }
     }
 
     @Override
-    public void initAdapter(Context context, Question question) {
+    public void initAdapter(Context context, Question question, String questionType) {
         mPredictionAdapter = new DGPlayAdapter(context, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismissPowerUpAnimation(view);
             }
-        });
+        }, questionType);
         mPredictionAdapter.add(question);
         mModelListener.onAdapterCreated(mPredictionAdapter, this);
     }

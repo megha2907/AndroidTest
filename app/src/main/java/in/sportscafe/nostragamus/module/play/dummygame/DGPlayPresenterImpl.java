@@ -57,8 +57,8 @@ public class DGPlayPresenterImpl implements DGPlayPresenter, DGPlayModelImpl.OnD
     }
 
     @Override
-    public void onGetQuestions(Question question) {
-        mDummyGamePlayModel.initAdapter(mDummyGamePlayView.getContext(), question);
+    public void onGetQuestions(Question question, String questionType) {
+        mDummyGamePlayModel.initAdapter(mDummyGamePlayView.getContext(), question, questionType);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.amplitude.api.AmplitudeClient;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.jeeva.android.ExceptionTracker;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.PayloadBuilder;
 
@@ -18,7 +19,6 @@ import org.json.JSONObject;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsCategory;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
@@ -56,7 +56,7 @@ public class NostragamusAnalytics {
         GoogleAnalytics ga = GoogleAnalytics.getInstance(context);
         ga.setAppOptOut(optOut);
 
-        if(!optOut) {
+        if (!optOut) {
 
             // Initializing the google analytics
             this.mTracker = ga.newTracker(R.xml.app_tracker);
@@ -86,7 +86,6 @@ public class NostragamusAnalytics {
 
     /**
      * track logout
-     *
      */
     public void trackLogOut() {
         track(AnalyticsCategory.LOGOUT, null, null, null);
@@ -122,7 +121,7 @@ public class NostragamusAnalytics {
     /**
      * track groups
      *
-     * @param actions - new
+     * @param actions     - new
      * @param tournaments - Gallery, Camera
      */
     public void trackGroups(String actions, String tournaments) {
@@ -133,7 +132,7 @@ public class NostragamusAnalytics {
      * track new users
      *
      * @param actions - referral or organic
-     * @param label - channels like facebook, twitter
+     * @param label   - channels like facebook, twitter
      */
     public void trackNewUsers(String actions, String label) {
         track(AnalyticsCategory.NEW_USERS, actions, label, null);
@@ -143,7 +142,7 @@ public class NostragamusAnalytics {
      * track powerups
      *
      * @param actions - applied
-     * @param label - 2x, no_negs
+     * @param label   - 2x, no_negs
      */
     public void trackPowerups(String actions, String label) {
         track(AnalyticsCategory.POWERUP, actions, label, null);
@@ -153,7 +152,7 @@ public class NostragamusAnalytics {
      * track badges
      *
      * @param actions - received
-     * @param label - Baby Step
+     * @param label   - Baby Step
      */
     public void trackBadges(String actions, String label) {
         track(AnalyticsCategory.BADGE, actions, label, null);
@@ -172,7 +171,7 @@ public class NostragamusAnalytics {
      * track timeline
      *
      * @param actions - Tournament
-     * @param label - India vs England 2016
+     * @param label   - India vs England 2016
      */
     public void trackTimeline(String actions, String label, long unplayedMatches) {
         track(AnalyticsCategory.TIMELINE, actions, label, unplayedMatches);
@@ -199,8 +198,8 @@ public class NostragamusAnalytics {
     /**
      * track play games
      *
-     * @param actions - Answered, Shuffled
-     * @param label - Swipe direction like left, right, top or bottom
+     * @param actions       - Answered, Shuffled
+     * @param label         - Swipe direction like left, right, top or bottom
      * @param timeSpentInMs - Actual milliseconds spent before swiping the questions
      */
     public void trackPlay(String actions, String label, long timeSpentInMs) {
@@ -241,14 +240,14 @@ public class NostragamusAnalytics {
      * track normal updates
      *
      * @param updateType - normal or force
-     * @param value    - 0 or 1
+     * @param value      - 0 or 1
      */
     public void trackUpdate(String updateType, long value) {
         track(AnalyticsCategory.APP_UPDATE, updateType, null, value);
     }
 
     public void startFragmentTrack(Activity activity, String fragmentName) {
-        if(null != mMoEHelper) {
+        if (null != mMoEHelper) {
             mMoEHelper.onFragmentStart(activity, fragmentName);
 
             // It is enough to track only the fragment start through GA, no need to track fragment stop
@@ -258,13 +257,13 @@ public class NostragamusAnalytics {
     }
 
     public void stopFragmentTrack(Activity activity, String fragmentName) {
-        if(null != mMoEHelper) {
+        if (null != mMoEHelper) {
             mMoEHelper.onFragmentStop(activity, fragmentName);
         }
     }
 
     private void track(String category, String action, String label, Long value) {
-        if(null == mMoEHelper) {
+        if (null == mMoEHelper) {
             return;
         }
 
@@ -280,9 +279,7 @@ public class NostragamusAnalytics {
         // action
         if (null != action) {
             gaEventBuilder.setAction(action);
-
-            // '_' prefix added because moEngage not supporting "action" keyword
-            moeEventBuilder.putAttrString("_" + ACTION, action);
+            moeEventBuilder.putAttrString(ACTION, action);
         }
 
         // label
@@ -298,14 +295,24 @@ public class NostragamusAnalytics {
         }
 
         JSONObject jsonObject = moeEventBuilder.build();
-        mAmplitude.logEvent(category, jsonObject);
         mMoEHelper.trackEvent(category, jsonObject);
+
+        try {
+            if (jsonObject.has(ACTION)) {
+                jsonObject.put("_" + ACTION, jsonObject.get(ACTION));
+                jsonObject.remove(ACTION);
+            }
+        } catch (JSONException e) {
+            ExceptionTracker.track(e);
+        }
+
+        mAmplitude.logEvent(category, jsonObject);
 
         mTracker.send(gaEventBuilder.build());
     }
 
     public void trackOtherEvents(String category, Map<String, String> values) {
-        if(null == mMoEHelper) {
+        if (null == mMoEHelper) {
             return;
         }
 
@@ -319,13 +326,13 @@ public class NostragamusAnalytics {
     }
 
     private void trackFlavor() {
-        if(!BuildConfig.FLAVOR.equalsIgnoreCase("production")) {
+        if (!BuildConfig.FLAVOR.equalsIgnoreCase("production")) {
             track(AnalyticsCategory.FLAVOR, null, BuildConfig.FLAVOR, null);
         }
     }
 
     public void autoTrack(Application application) {
-        if(null != mMoEHelper) {
+        if (null != mMoEHelper) {
             mMoEHelper.autoIntegrate(application);
 
             mAmplitude.trackSessionEvents(true);
@@ -333,13 +340,13 @@ public class NostragamusAnalytics {
     }
 
     public void setUserId(String userId) {
-        if(null != mAmplitude && null != userId) {
+        if (null != mAmplitude && null != userId) {
             mAmplitude.setUserId(userId);
         }
     }
 
     public void setUserProperties(int groupCount) {
-        if(null != mAmplitude) {
+        if (null != mAmplitude) {
             try {
                 JSONObject userProperties = new JSONObject();
                 userProperties.put(UserProperties.NUMBER_OF_GROUPS, groupCount);

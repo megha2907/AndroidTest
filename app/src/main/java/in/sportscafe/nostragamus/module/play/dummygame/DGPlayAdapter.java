@@ -33,6 +33,12 @@ import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 
 public class DGPlayAdapter extends ArrayAdapter<Question> {
 
+    interface QuestionType {
+        String LEFT_RIGHT = "leftright";
+        String NEITHER = "neither";
+        String POINTS = "points";
+    }
+
     private static final float HEADER_PERECENTAGE = 10f / 100;
 
     private static final float FOOTER_PERECENTAGE = 23f / 100;
@@ -103,10 +109,13 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
     private View.OnClickListener mRemovePowerUpListener;
 
-    public DGPlayAdapter(Context context, View.OnClickListener removePowerUpListener) {
+    private String mQuestionType;
+
+    public DGPlayAdapter(Context context, View.OnClickListener removePowerUpListener, String questionType) {
         super(context, android.R.layout.simple_list_item_1);
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mRemovePowerUpListener = removePowerUpListener;
+        this.mQuestionType = questionType;
     }
 
     public void setRootView(View rootView) {
@@ -254,6 +263,13 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
             }
         }
 
+        if (null != mQuestionType && (QuestionType.LEFT_RIGHT.equalsIgnoreCase(mQuestionType)
+                || QuestionType.NEITHER.equalsIgnoreCase(mQuestionType))) {
+            viewHolder.ivTouchPointer.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.ivTouchPointer.setVisibility(View.GONE);
+        }
+
         return convertView;
     }
 
@@ -370,7 +386,8 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         mBgUpdateDone = false;
         updateBg(0);
 
-        animateTopView();
+        animateCard();
+        checkQuestionType();
     }
 
     private void setOptionVisibility(int leftVis, int rightVis) {
@@ -502,6 +519,8 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
         LinearLayout llPowerUpHolder;
 
+        ImageView ivTouchPointer;
+
         public ViewHolder(View rootView) {
             cvMainCard = (CardView) rootView.findViewById(R.id.swipe_card_cv_main);
             cvMainCard.setVisibility(View.INVISIBLE);
@@ -529,10 +548,11 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
             llOptionLabels = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_option_labels);
             llQuestionDesc = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_question_desc);
             llPowerUpHolder = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_powerup_holder);
+            ivTouchPointer = (ImageView) rootView.findViewById(R.id.swipe_card_iv_pointer);
         }
     }
 
-    private void animateTopView() {
+    private void animateCard() {
         mTopView.setAlpha(0);
         mTopView.setScaleX(0.9f);
         mTopView.setScaleY(0.9f);
@@ -541,15 +561,30 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         mLlPointsLayout.setVisibility(View.VISIBLE);
 
         mTopView.animate().alpha(1).scaleX(1).scaleY(1).setDuration(1000);
+    }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                /*new DummyCardAutoMover(
-                        mFlingCardListener.getFrame().findViewById(R.id.swipe_card_cv_main),
-                        mFlingCardListener
-                ).startAnimate();*/
-            }
-        }, 1500);
+    private void checkQuestionType() {
+        if (null != mQuestionType) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    switch (mQuestionType) {
+                        case QuestionType.LEFT_RIGHT:
+                            getCardAutoMover().startLeftRightAnimation();
+                            break;
+                        case QuestionType.NEITHER:
+                            getCardAutoMover().startNeitherAnimation();
+                            break;
+                    }
+                }
+            }, 1500);
+        }
+    }
+
+    private DGCardAutoMover getCardAutoMover() {
+        return new DGCardAutoMover(
+                mFlingCardListener.getFrame().findViewById(R.id.swipe_card_cv_main),
+                mFlingCardListener
+        );
     }
 }
