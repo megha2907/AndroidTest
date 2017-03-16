@@ -255,7 +255,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public void apply2xPowerup() {
         if (isNotPowerupApplied()) {
-            if(m2xPowerups > 0) {
+            if (m2xPowerups > 0) {
                 mPredictionAdapter.getTopQuestion().apply2xPowerUp();
                 notifyTopQuestion();
 
@@ -270,7 +270,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public void applyNonegsPowerup() {
         if (isNotPowerupApplied()) {
-            if(mNonegsPowerups > 0) {
+            if (mNonegsPowerups > 0) {
                 mPredictionAdapter.getTopQuestion().applyNonegsPowerUp();
                 notifyTopQuestion();
 
@@ -285,7 +285,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     @Override
     public void applyPollPowerup() {
         if (isNotPowerupApplied()) {
-            if(mPollPowerups > 0) {
+            if (mPollPowerups > 0) {
                 getAudiencePollPercent();
             } else {
                 mPredictionModelListener.onNoPowerUps();
@@ -410,6 +410,16 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 mQuestionSeenTimeInMs = Calendar.getInstance().getTimeInMillis();
             }
         }
+    }
+
+    @Override
+    public boolean needLeftSwipe() {
+        return true;
+    }
+
+    @Override
+    public boolean needRightSwipe() {
+        return true;
     }
 
     @Override

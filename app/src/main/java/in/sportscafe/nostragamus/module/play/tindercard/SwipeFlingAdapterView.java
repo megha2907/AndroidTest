@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 
 import in.sportscafe.nostragamus.R;
@@ -285,6 +286,16 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
                     }
 
                     @Override
+                    public boolean needLeftSwipe() {
+                        return mSwipeListener.needLeftSwipe();
+                    }
+
+                    @Override
+                    public boolean needRightSwipe() {
+                        return mSwipeListener.needRightSwipe();
+                    }
+
+                    @Override
                     public boolean needTopSwipe() {
                         return mSwipeListener.needTopSwipe();
                     }
@@ -371,9 +382,9 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
         return new FrameLayout.LayoutParams(getContext(), attrs);
     }
 
-    public void setAdapter(PredictionAdapter predictionAdapter, int mainViewId) {
+    public void setAdapter(ArrayAdapter adapter, int mainViewId) {
         this.mMainViewId = mainViewId;
-        setAdapter(predictionAdapter);
+        setAdapter(adapter);
     }
 
 
@@ -395,6 +406,10 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
         void onBottomSwipe(T dataObject);
 
         void onAdapterAboutToEmpty(int itemsInAdapter);
+
+        boolean needLeftSwipe();
+
+        boolean needRightSwipe();
 
         boolean needTopSwipe();
 

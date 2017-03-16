@@ -18,7 +18,6 @@ import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.play.prediction.PredictionAdapter;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -28,9 +27,9 @@ import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 /**
  * Created by Jeeva on 20/5/16.
  */
-public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAdapterView.OnSwipeListener<Question> {
+public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwipeListener<Question> {
 
-    private PredictionAdapter mPredictionAdapter;
+    private DGPlayAdapter mPredictionAdapter;
 
     private OnDummyGamePlayModelListener mModelListener;
 
@@ -44,34 +43,36 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
 
     private Question mLastAnsweredQuestion = null;
 
-    public DummyGamePlayModelImpl(OnDummyGamePlayModelListener predictionModelListener) {
+    private int mLastQuestionNumber = -1;
+
+    public DGPlayModelImpl(OnDummyGamePlayModelListener predictionModelListener) {
         this.mModelListener = predictionModelListener;
 
         NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.STARTED);
     }
 
-    public static DummyGamePlayModel newInstance(OnDummyGamePlayModelListener predictionModelListener) {
-        return new DummyGamePlayModelImpl(predictionModelListener);
+    public static DGPlayModel newInstance(OnDummyGamePlayModelListener predictionModelListener) {
+        return new DGPlayModelImpl(predictionModelListener);
     }
 
     @Override
     public void init(Context context, Bundle bundle) {
         if (null != bundle && bundle.containsKey(BundleKeys.DUMMY_QUESTION)) {
             Question dummyQuestion = Parcels.unwrap(bundle.getParcelable(BundleKeys.DUMMY_QUESTION));
-            initAdapter(context, dummyQuestion);
+            initAdapter(context, dummyQuestion, bundle.getString(BundleKeys.DUMMY_QUESTION_TYPE));
         } else {
             mModelListener.onGetPowerUpDetails();
         }
     }
 
     @Override
-    public void initAdapter(Context context, Question question) {
-        mPredictionAdapter = new PredictionAdapter(context, new View.OnClickListener() {
+    public void initAdapter(Context context, Question question, String questionType) {
+        mPredictionAdapter = new DGPlayAdapter(context, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismissPowerUpAnimation(view);
             }
-        });
+        }, questionType);
         mPredictionAdapter.add(question);
         mModelListener.onAdapterCreated(mPredictionAdapter, this);
     }
@@ -187,10 +188,23 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
         }
 
         Question topQuestion = mPredictionAdapter.getTopQuestion();
+        if (mLastQuestionNumber != topQuestion.getQuestionNumber()) {
+            mLastQuestionNumber = topQuestion.getQuestionNumber();
 
-        mNeitherOptionAvailable = !TextUtils.isEmpty(topQuestion.getQuestionOption3());
-        updatePowerUpStatus(topQuestion.getPowerUpId());
-        mModelListener.onQuestionChanged(topQuestion, mNeitherOptionAvailable);
+            mNeitherOptionAvailable = !TextUtils.isEmpty(topQuestion.getQuestionOption3());
+            updatePowerUpStatus(topQuestion.getPowerUpId());
+            mModelListener.onQuestionChanged(topQuestion, mNeitherOptionAvailable);
+        }
+    }
+
+    @Override
+    public boolean needLeftSwipe() {
+        return true;
+    }
+
+    @Override
+    public boolean needRightSwipe() {
+        return true;
     }
 
     @Override
@@ -298,7 +312,7 @@ public class DummyGamePlayModelImpl implements DummyGamePlayModel, SwipeFlingAda
 
     public interface OnDummyGamePlayModelListener {
 
-        void onAdapterCreated(PredictionAdapter predictionAdapter,
+        void onAdapterCreated(DGPlayAdapter predictionAdapter,
                               SwipeFlingAdapterView.OnSwipeListener<Question> onSwipeListener);
 
         void onQuestionChanged(Question question, boolean neitherAvailable);

@@ -1,7 +1,7 @@
 [
   {
     "name": "Let's play a game to help you \n understand the gameplay better",
-    "textType": "centerTopText",
+    "textType": "centerBottomText",
     "animation": {
       "start": 0,
       "end": 1,
@@ -37,8 +37,13 @@
   {
     "name": "You may swipe Left or Right on the card to choose the correct option",
     "textType": "topText",
-    "animationTime": 1000,
-    "waitingTime": 3000,
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 4000,
     "freshStart": true,
     "type": "text"
   },
@@ -53,14 +58,30 @@
       "question_option_2": "Yes",
       "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png"
     },
-    "animationTime": 3000,
+    "waitingTime": 1,
+    "questionType": "leftright",
     "type": "question"
+  },
+  {
+    "textType": "topText",
+    "animation": {
+      "start": 1,
+      "end": 0.6,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "type": "text"
   },
   {
     "name": "Some questions may have a 3rd option \n Swipe up, or click on the button to choose it",
     "textType": "topText",
-    "animationTime": 1000,
-    "waitingTime": 3000,
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 4000,
     "freshStart": true,
     "type": "text"
   },
@@ -76,13 +97,30 @@
       "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png",
       "question_option_3": "Neither"
     },
-    "animationTime": 2000,
+    "waitingTime": 1,
+    "questionType": "neither",
     "type": "question"
+  },
+  {
+    "textType": "topText",
+    "animation": {
+      "start": 1,
+      "end": 0.6,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "type": "text"
   },
   {
     "name": "Questions have positive (+10) and negative (-4) points. Swipe to see how you scored!",
     "textType": "topText",
-    "waitingTime": 3000,
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 4000,
     "freshStart": true,
     "type": "text"
   },
@@ -100,11 +138,29 @@
       "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png",
       "question_answer": 2
     },
+    "waitingTime": 1,
+    "questionType": "points",
     "type": "question"
+  },
+  {
+    "textType": "topText",
+    "animation": {
+      "start": 1,
+      "end": 0.6,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "type": "text"
   },
   {
     "name": "You just got (%1d) points for that answer!",
     "textType": "topText",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
     "waitingTime": 2000,
     "freshStart": true,
     "type": "text"
@@ -112,12 +168,18 @@
   {
     "name": "Powerups are a way to improve your score! They are located at the bottom of your screen",
     "textType": "topText",
-    "waitingTime": 3000,
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 4000,
     "freshStart": true,
     "type": "text"
   },
   {
-    "waitingTime": 3000,
+    "waitingTime": 1000,
     "type": "powerup"
   },
   {
@@ -134,36 +196,78 @@
       "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png",
       "question_answer": 2
     },
-    "waitingTime": 1,
+    "waitingTime": 1000,
+    "questionType": "powerups",
     "type": "question"
   },
   {
     "name": "Tap on a powerup to apply it to the question",
     "textType": "bottomText",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 1,
+    "type": "text"
+  },
+  {
+    "textType": "topText",
+    "animation": {
+      "start": 1,
+      "end": 0.6,
+      "duration": 1000,
+      "type": "alpha"
+    },
     "type": "text"
   },
   {
     "name": "You just got (%1d) points for that answer with the help of Powerup.",
-    "textType": "centerText1",
-    "waitingTime": 1000,
+    "textType": "centerTopText",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 2000,
     "freshStart": true,
     "type": "text"
   },
   {
     "name": "And that's it! Easy as that! Now you can go ahead and play your next game",
-    "textType": "centerText2",
-    "waitingTime": 1000,
+    "textType": "centerBottomText",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 2000,
     "type": "text"
   },
   {
     "name": "Try other powerups",
     "textType": "action1",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
     "waitingTime": 1,
     "type": "text"
   },
   {
     "name": "Ok, Got it!",
     "textType": "action2",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
     "type": "text"
   }
 ]

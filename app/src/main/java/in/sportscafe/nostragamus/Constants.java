@@ -221,6 +221,7 @@ public interface Constants {
         String TAB_POSITION = "tabPosition";
         String DUMMY_QUESTION = "dummyQuestion";
         String DUMMY_INSTRUCTION = "dummyInstruction";
+        String DUMMY_QUESTION_TYPE = "dummyQuestionType";
     }
 
     interface ParcelableKeys {

@@ -1,9 +1,11 @@
 package in.sportscafe.nostragamus.module.play.dummygame;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +19,11 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.play.prediction.PredictionAdapter;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 
 
-public class DummyGamePlayFragment extends NostragamusFragment implements DummyGamePlayView, View.OnClickListener {
+public class DGPlayFragment extends NostragamusFragment implements DGPlayView, View.OnClickListener {
 
     private RelativeLayout mRlPlayBg;
 
@@ -44,17 +45,18 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
 
     private TextView mTvNeitherOption;
 
-    private DummyGamePlayPresenter mDummyGamePlayPresenter;
+    private DGPlayPresenter mDummyGamePlayPresenter;
 
     private OnDGPlayActionListener mPlayActionListener;
 
-    public static DummyGamePlayFragment newInstance(Question dummyQuestion) {
+    public static DGPlayFragment newInstance(Question dummyQuestion, String questionType) {
         Bundle bundle = new Bundle();
-        if(null != dummyQuestion) {
+        if (null != dummyQuestion) {
             bundle.putParcelable(BundleKeys.DUMMY_QUESTION, Parcels.wrap(dummyQuestion));
+            bundle.putString(BundleKeys.DUMMY_QUESTION_TYPE, questionType);
         }
 
-        DummyGamePlayFragment fragment = new DummyGamePlayFragment();
+        DGPlayFragment fragment = new DGPlayFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -62,9 +64,10 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof OnDGPlayActionListener) {
+        if (context instanceof OnDGPlayActionListener) {
             this.mPlayActionListener = (OnDGPlayActionListener) context;
-        } else throw new IllegalArgumentException(context.getClass().getSimpleName() + " should implement the OnDGPlayActionListener");
+        } else
+            throw new IllegalArgumentException(context.getClass().getSimpleName() + " should implement the OnDGPlayActionListener");
     }
 
     @Nullable
@@ -79,7 +82,7 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
 
         initViews();
 
-        this.mDummyGamePlayPresenter = DummyGamePlayPresenterImpl.newInstance(this);
+        this.mDummyGamePlayPresenter = DGPlayPresenterImpl.newInstance(this);
         this.mDummyGamePlayPresenter.onCreatePrediction(getArguments());
     }
 
@@ -107,7 +110,7 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
     }
 
     @Override
-    public void setAdapter(PredictionAdapter predictionAdapter, SwipeFlingAdapterView.OnSwipeListener<Question> swipeListener) {
+    public void setAdapter(DGPlayAdapter predictionAdapter, SwipeFlingAdapterView.OnSwipeListener<Question> swipeListener) {
         predictionAdapter.setRootView(findViewById(R.id.content));
 
         mSwipeFlingAdapterView.setAdapter(predictionAdapter, R.id.swipe_card_cv_main);
@@ -121,6 +124,13 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
             @Override
             public void run() {
                 mDummyGamePlayPresenter.setFlingListener(mSwipeFlingAdapterView.getTopCardListener());
+
+                /*new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        animatePowerUps();
+                    }
+                }, 1000);*/
             }
         });
     }
@@ -168,7 +178,7 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
 
     @Override
     public void set2xPowerupCount(int count, boolean reverse) {
-        if(!reverse) {
+        if (!reverse) {
             mPlayActionListener.on2xApplied();
         }
         applyAlphaForPowerUp(mIv2xPowerup, mTv2xPowerupCount, reverse, count);
@@ -176,7 +186,7 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
 
     @Override
     public void setNonegsPowerupCount(int count, boolean reverse) {
-        if(!reverse) {
+        if (!reverse) {
             mPlayActionListener.onNonegsApplied();
         }
         applyAlphaForPowerUp(mIvNonegsPowerup, mTvNonegsPowerupCount, reverse, count);
@@ -184,7 +194,7 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
 
     @Override
     public void setPollPowerupCount(int count, boolean reverse) {
-        if(!reverse) {
+        if (!reverse) {
             mPlayActionListener.onPollApplied();
         }
         applyAlphaForPowerUp(mIvPollPowerup, mTvPollPowerupCount, reverse, count);
@@ -198,7 +208,11 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
 
     @Override
     public void showPowerups() {
-        findViewById(R.id.prediction_ll_powerup_layout).setVisibility(View.VISIBLE);
+        View powerUpView = findViewById(R.id.prediction_ll_powerup_layout);
+        powerUpView.setVisibility(View.VISIBLE);
+
+        powerUpView.setAlpha(0);
+        powerUpView.animate().alpha(1).setDuration(1000);
     }
 
     @Override
@@ -236,8 +250,38 @@ public class DummyGamePlayFragment extends NostragamusFragment implements DummyG
         }
     }
 
-    public void addQuestion(Question question) {
-        mDummyGamePlayPresenter.onGetQuestions(question);
+    public void addQuestion(Question question, String questionType) {
+        mDummyGamePlayPresenter.onGetQuestions(question, questionType);
+    }
+
+    public void animatePowerUps() {
+        doWiggleAnimation(findViewById(R.id.powerups_rl_2x));
+        doWiggleAnimation(findViewById(R.id.powerups_rl_nonegs));
+        doWiggleAnimation(findViewById(R.id.powerups_rl_poll));
+    }
+
+    private void doWiggleAnimation(View view) {
+        final View finalView = view;
+        finalView.animate().rotation(45).setDuration(500).setListener(
+                new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        finalView.animate().rotation(0).setDuration(500);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                }
+        );
     }
 
     public interface OnDGPlayActionListener {

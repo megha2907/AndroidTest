@@ -199,6 +199,15 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/swipe_card_iv_pointer"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_alignTop="@id/swipe_card_ll_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_dp_23"
+                android:src="@drawable/touch_pointer"/>
+
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/swipe_card_tv_locking_option"
                 android:layout_width="match_parent"
@@ -225,16 +234,16 @@
         android:layout_alignTop="@id/swipe_card_cv_main"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_dp_18"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="@dimen/dp_2"
         app:cardElevation="@dimen/dp_7">
 
         <LinearLayout
             android:id="@+id/swipe_card_question_points_rl"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <com.jeeva.android.widgets.customfont.CustomTextView

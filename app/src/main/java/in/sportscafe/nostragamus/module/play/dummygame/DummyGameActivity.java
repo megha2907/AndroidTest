@@ -13,18 +13,19 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.play.dummygame.DGAnimation.AnimationType;
+import in.sportscafe.nostragamus.module.play.dummygame.DGTextFragment.TextType;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 
 
-public class DummyGameActivity extends NostragamusActivity implements DummyGamePlayFragment.OnDGPlayActionListener,
-        DummyGameTextFragment.OnDGTextActionListener {
+public class DummyGameActivity extends NostragamusActivity implements DGPlayFragment.OnDGPlayActionListener,
+        DGTextFragment.OnDGTextActionListener {
 
     private static final String TRY_OTHER_POWERUPS = "Try other powerups";
 
-    private static final int POWERUPS_INSTRUCTION = 8;
-
     interface InstructionType {
+
         String TEXT = "text";
         String ACTION1 = "action1";
         String ACTION2 = "action2";
@@ -36,11 +37,13 @@ public class DummyGameActivity extends NostragamusActivity implements DummyGameP
 
     private int mLastReadInstruction = -1;
 
-    private DummyGamePlayFragment mDummyGamePlayFragment;
+    private DGPlayFragment mDummyGamePlayFragment;
 
-    private DummyGameTextFragment mDummyGameTextFragment;
+    private DGTextFragment mDummyGameTextFragment;
 
     private Integer mLastScoredPoints;
+
+    private int mPowerUpsInstructionPos = 0;
 
     @Override
     public String getScreenName() {
@@ -73,15 +76,14 @@ public class DummyGameActivity extends NostragamusActivity implements DummyGameP
 
         switch (instruction.getType()) {
             case InstructionType.TEXT:
-            case InstructionType.ACTION1:
-            case InstructionType.ACTION2:
                 addDummyText(instruction);
                 break;
             case InstructionType.QUESTION:
-                addDummyPlay(instruction.getQuestion());
+                addDummyPlay(instruction.getQuestion(), instruction.getQuestionType());
                 break;
             case InstructionType.POWERUP:
-                addDummyPlay(null);
+                mPowerUpsInstructionPos = mLastReadInstruction;
+                addDummyPlay(instruction.getQuestion(), instruction.getQuestionType());
                 break;
         }
 
@@ -99,14 +101,14 @@ public class DummyGameActivity extends NostragamusActivity implements DummyGameP
         } // else wait for user action
     }
 
-    private void addDummyPlay(Question dummyQuestion) {
+    private void addDummyPlay(Question dummyQuestion, String questionType) {
         if (null == mDummyGamePlayFragment) {
             getFragmentTransaction().replace(
                     R.id.dummy_game_fl_play_holder,
-                    mDummyGamePlayFragment = DummyGamePlayFragment.newInstance(dummyQuestion)
+                    mDummyGamePlayFragment = DGPlayFragment.newInstance(dummyQuestion, questionType)
             ).commit();
         } else {
-            mDummyGamePlayFragment.addQuestion(dummyQuestion);
+            mDummyGamePlayFragment.addQuestion(dummyQuestion, questionType);
         }
     }
 
@@ -126,7 +128,7 @@ public class DummyGameActivity extends NostragamusActivity implements DummyGameP
         if (null == mDummyGameTextFragment) {
             getFragmentTransaction().replace(
                     R.id.dummy_game_fl_text_holder,
-                    mDummyGameTextFragment = DummyGameTextFragment.newInstance(instruction)
+                    mDummyGameTextFragment = DGTextFragment.newInstance(instruction)
             ).commit();
         } else {
             mDummyGameTextFragment.applyInstruction(instruction);
@@ -164,7 +166,7 @@ public class DummyGameActivity extends NostragamusActivity implements DummyGameP
     @Override
     public void onActionClicked(String actionText) {
         if (TRY_OTHER_POWERUPS.equalsIgnoreCase(actionText)) {
-            mLastReadInstruction = POWERUPS_INSTRUCTION - 1;
+            mLastReadInstruction = mPowerUpsInstructionPos - 2;
         }
         readNextInstruction();
     }
@@ -177,8 +179,16 @@ public class DummyGameActivity extends NostragamusActivity implements DummyGameP
     private DGInstruction getPowerUpInstruction(String powerUpText) {
         DGInstruction instruction = new DGInstruction();
         instruction.setName(powerUpText);
-        instruction.setAlignment(DummyGameTextFragment.Alignment.TOP);
+        instruction.setTextType(TextType.TOP_TEXT);
         instruction.setType(InstructionType.TEXT);
+
+        DGAnimation animation = new DGAnimation();
+        animation.setType(AnimationType.ALPHA);
+        animation.setStart(0);
+        animation.setEnd(1);
+        animation.setDuration(1000);
+
+        instruction.setAnimation(animation);
         return instruction;
     }
 

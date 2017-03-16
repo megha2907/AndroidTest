@@ -16,14 +16,8 @@ public class DGInstruction {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("alignment")
-    private String alignment;
-
-    @JsonProperty("action1")
-    private String action1Text;
-
-    @JsonProperty("action2")
-    private String action2Text;
+    @JsonProperty("animation")
+    private DGAnimation animation;
 
     @JsonProperty("waitingTime")
     private Long waitingTime;
@@ -31,11 +25,17 @@ public class DGInstruction {
     @JsonProperty("freshStart")
     private boolean freshStart = false;
 
-    @JsonProperty("question")
-    private Question question;
-
     @JsonProperty("type")
     private String type;
+
+    @JsonProperty("textType")
+    private String textType;
+
+    @JsonProperty("questionType")
+    private String questionType;
+
+    @JsonProperty("question")
+    private Question question;
 
     @JsonIgnore
     private Integer scoredPoints;
@@ -50,34 +50,14 @@ public class DGInstruction {
         this.name = name;
     }
 
-    @JsonProperty("alignment")
-    public String getAlignment() {
-        return alignment;
+    @JsonProperty("animation")
+    public DGAnimation getAnimation() {
+        return animation;
     }
 
-    @JsonProperty("alignment")
-    public void setAlignment(String alignment) {
-        this.alignment = alignment;
-    }
-
-    @JsonProperty("action1")
-    public String getAction1Text() {
-        return action1Text;
-    }
-
-    @JsonProperty("action1")
-    public void setAction1Text(String action1Text) {
-        this.action1Text = action1Text;
-    }
-
-    @JsonProperty("action2")
-    public String getAction2Text() {
-        return action2Text;
-    }
-
-    @JsonProperty("action2")
-    public void setAction2Text(String action2Text) {
-        this.action2Text = action2Text;
+    @JsonProperty("animation")
+    public void setAnimation(DGAnimation animation) {
+        this.animation = animation;
     }
 
     @JsonProperty("waitingTime")
@@ -100,16 +80,6 @@ public class DGInstruction {
         this.freshStart = freshStart;
     }
 
-    @JsonProperty("question")
-    public Question getQuestion() {
-        return question;
-    }
-
-    @JsonProperty("question")
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
     @JsonProperty("type")
     public String getType() {
         return type;
@@ -118,6 +88,36 @@ public class DGInstruction {
     @JsonProperty("type")
     public void setType(String type) {
         this.type = type;
+    }
+
+    @JsonProperty("textType")
+    public String getTextType() {
+        return textType;
+    }
+
+    @JsonProperty("textType")
+    public void setTextType(String textType) {
+        this.textType = textType;
+    }
+
+    @JsonProperty("questionType")
+    public String getQuestionType() {
+        return questionType;
+    }
+
+    @JsonProperty("questionType")
+    public void setQuestionType(String questionType) {
+        this.questionType = questionType;
+    }
+
+    @JsonProperty("question")
+    public Question getQuestion() {
+        return question;
+    }
+
+    @JsonProperty("question")
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     @JsonIgnore
