@@ -18,7 +18,7 @@ import static android.R.attr.x;
  */
 public interface PredictionView extends InAppView {
 
-    void setContestName(String contestName,String matchStage);
+    void setContestName(String contestName, String matchStage);
 
     void setAdapter(PredictionAdapter predictionAdapter,
                     SwipeFlingAdapterView.OnSwipeListener<Question> swipeListener);
@@ -47,12 +47,6 @@ public interface PredictionView extends InAppView {
 
     void goBack();
 
-    void changeToDummyGameMode();
-
-    void showDummyGameInfo();
-
-    void hideDummyGameInfo();
-
     void enableLeftRightOptions();
 
     void disableLeftRightOptions();
@@ -74,6 +68,8 @@ public interface PredictionView extends InAppView {
     void hidePowerupsHint();
 
     void navigateToHome();
+
+    void navigateToDummyGame();
 
     void showLeftRightCoach();
 

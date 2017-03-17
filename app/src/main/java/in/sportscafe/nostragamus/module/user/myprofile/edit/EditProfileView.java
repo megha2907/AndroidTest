@@ -21,8 +21,6 @@ public interface EditProfileView extends View {
 
     void navigateToHome(boolean fromHome);
 
-    void navigateToDummyGame(Bundle bundle);
-
     void navigateToSportsSelection();
 
     void setNicknameEmpty();

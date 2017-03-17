@@ -142,7 +142,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
                 new SavePreferenceModelImpl.SavePreferenceModelListener() {
                     @Override
                     public void onSuccess() {
-                        mEditProfileView.navigateToDummyGame(mEditProfileModel.getDummyGameData());
+                        mEditProfileView.navigateToHome(false);
                     }
 
                     @Override

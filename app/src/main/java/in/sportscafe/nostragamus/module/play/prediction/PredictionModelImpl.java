@@ -6,11 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -56,10 +53,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     private Challenge mChallegeInfo;
 
-    private boolean mDummyGame = false;
-
-    private boolean mFromSettings = false;
-
     private int mInitialCount;
 
     private Integer mMatchId;
@@ -92,46 +85,23 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     @Override
     public void init(Bundle bundle) {
-        if (!bundle.containsKey(BundleKeys.IS_DUMMY_GAME)) {
-            mMyResult = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
-            mMatchId = mMyResult.getId();
+        mMyResult = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
+        mMatchId = mMyResult.getId();
 
-            if (bundle.containsKey(BundleKeys.SPORT_ID)) {
-                mPredictionModelListener.onGetSport(bundle.getInt(BundleKeys.SPORT_ID));
-            }
-
-            if (bundle.containsKey(BundleKeys.CHALLENGE_INFO)) {
-                mChallegeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_INFO));
-
-                HashMap<String, Integer> powerUpMap = mChallegeInfo.getChallengeUserInfo().getPowerUps();
-                m2xPowerups = powerUpMap.get(Powerups.XX);
-                mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
-                mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
-            }
-
-            NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.STARTED);
-        } else {
-            mDummyGame = true;
-            if (bundle.containsKey(BundleKeys.FROM_SETTINGS)) {
-                mFromSettings = bundle.getBoolean(BundleKeys.FROM_SETTINGS);
-            }
-
-            m2xPowerups = 3;
-            mNonegsPowerups = 3;
-            mPollPowerups = 3;
-
-            NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.STARTED);
+        if (bundle.containsKey(BundleKeys.SPORT_ID)) {
+            mPredictionModelListener.onGetSport(bundle.getInt(BundleKeys.SPORT_ID));
         }
-    }
 
-    @Override
-    public boolean isDummyGame() {
-        return mDummyGame;
-    }
+        if (bundle.containsKey(BundleKeys.CHALLENGE_INFO)) {
+            mChallegeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_INFO));
 
-    @Override
-    public void getDummyGameQuestions() {
-        mPredictionModelListener.onSuccessQuestions(getDummyQuestionList(), PredictionModelImpl.this);
+            HashMap<String, Integer> powerUpMap = mChallegeInfo.getChallengeUserInfo().getPowerUps();
+            m2xPowerups = powerUpMap.get(Powerups.XX);
+            mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
+            mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
+        }
+
+        NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.STARTED);
     }
 
     @Override
@@ -294,20 +264,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
-    public boolean isFromSettings() {
-        return mFromSettings;
-    }
-
-    @Override
-    public void onSkippingDummyGame() {
-        int screenCount = 0;
-        if (null != mPredictionAdapter) {
-            screenCount = mPredictionAdapter.getTopQuestion().getQuestionNumber();
-        }
-        NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.SKIPPED, screenCount);
-    }
-
-    @Override
     public boolean isAnyQuestionAnswered() {
         return null != mPredictionAdapter
                 && (mInitialCount != mPredictionAdapter.getCount() || mPowerUpUpdated);
@@ -354,6 +310,16 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
+    public boolean isDummyGameShown() {
+        return mNostragamusDataHandler.isDummyGameShown();
+    }
+
+    @Override
+    public void onDummyGameShown() {
+        mNostragamusDataHandler.setDummyGameShown(true);
+    }
+
+    @Override
     public void removeFirstObjectInAdapter(Question question) {
         mPredictionAdapter.remove(question);
         mPredictionAdapter.notifyDataSetChanged();
@@ -378,19 +344,13 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     public void onBottomSwipe(Question dataObject) {
         mPredictionAdapter.add(dataObject);
 
-        if (!mDummyGame) {
-            lockAnswerTime();
-            NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.SHUFFLED, AnalyticsLabels.BOTTOM, getTimeSpent());
-        }
+        lockAnswerTime();
+        NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.SHUFFLED, AnalyticsLabels.BOTTOM, getTimeSpent());
     }
 
     @Override
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
         if (itemsInAdapter == 0) {
-            if (mDummyGame) {
-                NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.COMPLETED);
-                mPredictionModelListener.onDummyGameCompletion();
-            }
             return;
         }
 
@@ -476,39 +436,16 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     private void getAudiencePollPercent() {
-        if (!isDummyGame()) {
-            if (Nostragamus.getInstance().hasNetworkConnection()) {
-                mPredictionModelListener.onApiCallStarted();
-                AudiencePollRequest audiencePollRequest = new AudiencePollRequest();
-                audiencePollRequest.setQuestionId(mPredictionAdapter.getTopQuestion().getQuestionId());
-                audiencePollRequest.setChallengeId(mChallegeInfo.getChallengeId());
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            mPredictionModelListener.onApiCallStarted();
+            AudiencePollRequest audiencePollRequest = new AudiencePollRequest();
+            audiencePollRequest.setQuestionId(mPredictionAdapter.getTopQuestion().getQuestionId());
+            audiencePollRequest.setChallengeId(mChallegeInfo.getChallengeId());
 
-                callAudiencePollApi(audiencePollRequest);
-            } else {
-                mPredictionModelListener.onNoInternet();
-            }
+            callAudiencePollApi(audiencePollRequest);
         } else {
-            handleAudiencePollResponse(getDummyGameAudiencePoll().getAudiencePoll());
+            mPredictionModelListener.onNoInternet();
         }
-    }
-
-    private AudiencePollResponse getDummyGameAudiencePoll() {
-        AudiencePollResponse response = new AudiencePollResponse();
-
-        List<AudiencePoll> audiencePollList = new ArrayList<>();
-        response.setAudiencePoll(audiencePollList);
-
-        AudiencePoll audiencePoll = new AudiencePoll();
-        audiencePoll.setAnswerId(AnswerIds.LEFT);
-        audiencePoll.setAnswerPercentage("30%");
-        audiencePollList.add(audiencePoll);
-
-        audiencePoll = new AudiencePoll();
-        audiencePoll.setAnswerId(AnswerIds.RIGHT);
-        audiencePoll.setAnswerPercentage("70%");
-        audiencePollList.add(audiencePoll);
-
-        return response;
     }
 
     private void callAudiencePollApi(AudiencePollRequest request) {
@@ -547,13 +484,11 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     private void saveSinglePrediction(Question question, int answerId) {
-        if (!mDummyGame) {
-            lockAnswerTime();
-            mPredictionModelListener.onApiCallStarted();
+        lockAnswerTime();
+        mPredictionModelListener.onApiCallStarted();
 
-            question.setAnswerId(answerId);
-            mPostAnswerModel.postAnswer(question, mChallegeInfo.getChallengeId(), mPredictionAdapter.getCount() == 0);
-        }
+        question.setAnswerId(answerId);
+        mPostAnswerModel.postAnswer(question, mChallegeInfo.getChallengeId(), mPredictionAdapter.getCount() == 0);
     }
 
     PostAnswerModelImpl.PostAnswerModelListener postAnsModellistener = new PostAnswerModelImpl.PostAnswerModelListener() {
@@ -615,70 +550,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         return timeSpent;
     }
 
-    private List<Question> getDummyQuestionList() {
-        String jsonData = "[\n" +
-                "    {\n" +
-                "      \"question_id\": 1,\n" +
-                "      \"match_id\": 1,\n" +
-                "      \"question_text\": \"How many runs will MS Dhoni score in the final?\",\n" +
-                "      \"question_context\": \"It is the final of the 2011 World Cup. Indian captain MS Dhoni hasn't had a great WC so far, having scored only 150 runs over the last 8 matches.\",\n" +
-                "      \"question_points\": 10,\n" +
-                "      \"question_neg_points\": -4,\n" +
-                "      \"question_option_1\": \"Less than 50\",\n" +
-                "      \"question_image_1\": \"https://cdn-images.spcafe.in/img/es3/scGame/dummygame/dhoni-dummygame1.png\",\n" +
-                "      \"question_option_2\": \"50 or more\",\n" +
-                "      \"question_image_2\": \"https://cdn-images.spcafe.in/img/es3/scGame/dummygame/dhoni-dummygame2.png\",\n" +
-                "      \"question_option_3\": null,\n" +
-                "      \"question_answer\": null\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"question_id\": 2,\n" +
-                "      \"match_id\": 1,\n" +
-                "      \"question_text\": \"Which of these countries will win the World Cup?\",\n" +
-                "      \"question_context\": \"The year is 2014 and FIFA World Cup is returning to Latin America. South American teams have always won the WC when held in their backyard. With stars like Neymar and Messi in the region, victory does seem inevitable.\",\n" +
-                "      \"question_points\": 10,\n" +
-                "      \"question_neg_points\": -4,\n" +
-                "      \"question_option_1\": \"Brazil\",\n" +
-                "      \"question_image_1\": \"https://cdn-images.spcafe.in/img/es3/scGame/dummygame/brazil.png\",\n" +
-                "      \"question_option_2\": \"Argentina\",\n" +
-                "      \"question_image_2\": \"https://cdn-images.spcafe.in/img/es3/scGame/dummygame/argentina.png\",\n" +
-                "      \"question_option_3\": \"Neither\",\n" +
-                "      \"question_answer\": null\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"question_id\": 3,\n" +
-                "      \"match_id\": 1,\n" +
-                "      \"question_text\": \"Who will win the coveted gold in this thriller?\",\n" +
-                "      \"question_context\": \"India has its chance for the first Gold in Rio, with PV Sindhu facing off Carolina Marin in the final's of women's badminton. In the 7 times they have played before, Marin has won 4 times and Sindhu 3 times. \",\n" +
-                "      \"question_points\": 10,\n" +
-                "      \"question_neg_points\": -4,\n" +
-                "      \"question_option_1\": \"PV Sindhu\",\n" +
-                "      \"question_image_1\": \"https://cdn-images.spcafe.in/img/es3/scGame/dummygame/sindhu-dummygame.png\",\n" +
-                "      \"question_option_2\": \"Carolina Marin\",\n" +
-                "      \"question_image_2\": \"https://cdn-images.spcafe.in/img/es3/scGame/dummygame/marin-dummygame.png\",\n" +
-                "      \"question_option_3\": null,\n" +
-                "      \"question_answer\": null\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"question_id\": 4,\n" +
-                "      \"match_id\": 1,\n" +
-                "      \"question_text\": \"How many sets will this epic battle last?\",\n" +
-                "      \"question_context\": \"2017 Australian Open Final - Federer vs Nadal. The clash of legends. Their previous three face-offs in Australian Open have lasted 5, 4 and 3 sets respectively.\",\n" +
-                "      \"question_points\": 10,\n" +
-                "      \"question_neg_points\": -4,\n" +
-                "      \"question_option_1\": 4,\n" +
-                "      \"question_image_1\": \"https://cdn-images.spcafe.in/img/es3/scGame/dummygame/4-dummygame.png\",\n" +
-                "      \"question_option_2\": 5,\n" +
-                "      \"question_image_2\": \"https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png\",\n" +
-                "      \"question_option_3\": \"Neither\",\n" +
-                "      \"question_answer\": null\n" +
-                "    }\n" +
-                "  ]";
-        return MyWebService.getInstance().getObjectFromJson(jsonData,
-                new TypeReference<List<Question>>() {
-                });
-    }
-
     public interface OnPredictionModelListener {
 
         void onSuccessCompletion(Bundle bundle);
@@ -714,8 +585,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         void onMatchAlreadyStarted();
 
         void noInternetOnPostingAnswer();
-
-        void onDummyGameCompletion();
 
         void onApiCallStarted();
 

@@ -81,6 +81,7 @@ public interface Constants {
         String SEVENTH_MATCH_PLAYED = "seventhMatchPlayed";
         String VISITED_LEADERBOARDS= "VisitedLeaderboards";
         String POWERUP_APPLIED= "PowerUpApplied";
+        String DUMMY_GAME_SHOWN = "dummyGameShown";
     }
 
     interface Alerts {
@@ -197,11 +198,9 @@ public interface Constants {
         String LB_LANDING_TITLE = "lbLandingTitle";
         String LB_LANDING_TYPE = "lbLandingType";
         String LB_LANDING_KEY = "lbLandingKey";
-        String IS_DUMMY_GAME = "isDummyGame";
         String TOURNAMENT_POWERUPS = "tournamentPowerups";
         String POPUP_DATA = "popup";
         String IN_APP_POPUP_DATA = "inAppPopup";
-        String FROM_SETTINGS = "fromSettings";
         String SCREEN = "screen";
         String FROM_PLAY = "fromPlay";
         String IS_ALL_GROUPS = "isAllGroups";

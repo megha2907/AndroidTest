@@ -281,7 +281,7 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     public boolean isBankInfoFirstTimeChecked() {
         boolean checked = isKeyShared(SharedKeys.BANK_INFO_SHOWN);
-        if(!checked) {
+        if (!checked) {
             setBankInfoShown(false);
         }
         return checked;
@@ -355,7 +355,7 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public void setPowerUpApplied(boolean powerUpApplied) {
         setSharedBooleanData(SharedKeys.POWERUP_APPLIED, powerUpApplied);
     }
-
+    
     public int getMatchPlayedCount() {
         return getSharedIntData(SharedKeys.NUMBER_OF_MATCH_PLAYED, 0);
     }
@@ -380,4 +380,11 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedIntData(SharedKeys.NUMBER_OF_TOTAL_GROUPS, null == count ? 0 : count);
     }
 
+    public boolean isDummyGameShown() {
+        return getSharedBooleanData(SharedKeys.DUMMY_GAME_SHOWN, false);
+    }
+
+    public void setDummyGameShown(boolean dummyGameShown) {
+        setSharedBooleanData(SharedKeys.DUMMY_GAME_SHOWN, dummyGameShown);
+    }
 }
