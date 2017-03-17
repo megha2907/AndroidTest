@@ -31,7 +31,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.TermsConditions;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
-import in.sportscafe.nostragamus.module.whatsnew.OnBoardingFragment;
+import in.sportscafe.nostragamus.module.onboard.OnBoardingFragment;
 
 public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 

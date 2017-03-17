@@ -57,7 +57,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 4500,
     "freshStart": true,
     "type": "text"
   },
@@ -95,7 +95,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 4500,
     "freshStart": true,
     "type": "text"
   },
@@ -134,7 +134,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 4000,
     "freshStart": true,
     "type": "text"
   },
@@ -180,7 +180,7 @@
     "type": "text"
   },
   {
-    "name": "Powerup time! Use them to maximise your score and push your way to the top of leaderboards. Powerups sit at the bottom of the play screen.",
+    "name": "Use powerups to maximise your score and push your way to the top of leaderboards. Find them at the bottom of the screen.",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -188,7 +188,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 4500,
     "freshStart": true,
     "type": "text"
   },

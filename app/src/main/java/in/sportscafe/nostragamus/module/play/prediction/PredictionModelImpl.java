@@ -331,7 +331,8 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     @Override
     public boolean isDummyGameShown() {
-        return mNostragamusDataHandler.isDummyGameShown();
+        return mNostragamusDataHandler.isDummyGameShown()
+                || mNostragamusDataHandler.getUserInfo().getTotalMatchesPlayed() > 0;
     }
 
     @Override
