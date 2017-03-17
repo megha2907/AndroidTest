@@ -71,7 +71,7 @@
         android:layout_marginBottom="@dimen/dp_36"
         android:background="@drawable/group_btn_bg"
         android:onClick="onClick"
-        android:text="Create New Group"
+        android:text="Create / Join Group"
         android:textAllCaps="false"
         android:paddingBottom="@dimen/dp_2"
         android:paddingLeft="@dimen/dp_30"

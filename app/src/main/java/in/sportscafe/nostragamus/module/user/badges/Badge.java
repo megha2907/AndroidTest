@@ -19,6 +19,9 @@ public class Badge {
     @JsonProperty("img_url")
     private String photo;
 
+    @JsonProperty("is_locked")
+    private Boolean isLocked;
+
     public Badge() {
     }
 
@@ -55,5 +58,15 @@ public class Badge {
     @JsonProperty("img_url")
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    @JsonProperty("is_locked")
+    public Boolean getIsLocked() {
+        return isLocked;
+    }
+
+    @JsonProperty("is_locked")
+    public void setIsLocked(Boolean isLocked) {
+        this.isLocked = isLocked;
     }
 }

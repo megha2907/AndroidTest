@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -35,7 +36,7 @@ public class InAppPopupActivity extends AppCompatActivity implements View.OnClic
 
     private String inAppPopUpBtnTitle;
 
-    private String openScreen ="";
+    private String openScreen = "";
 
     private static final int NEW_GROUP = 25;
 
@@ -48,6 +49,8 @@ public class InAppPopupActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_app_popup);
+
+        ((RelativeLayout) findViewById(R.id.in_app_popup_rl)).setOnClickListener(this);
 
         mbundle = getIntent().getExtras();
         inAppPopUpType = mbundle.getString(Constants.InAppPopups.IN_APP_POPUP_TYPE);
@@ -64,11 +67,11 @@ public class InAppPopupActivity extends AppCompatActivity implements View.OnClic
 
             mleaderboardBundle = new Bundle();
             mleaderboardBundle.putParcelable(Constants.BundleKeys.LB_LANDING_DATA, Parcels.wrap(new LbLanding(
-                    mbundle.getInt(Constants.BundleKeys.CHALLENGE_ID),0,
+                    mbundle.getInt(Constants.BundleKeys.CHALLENGE_ID), 0,
                     mbundle.getString(Constants.BundleKeys.CHALLENGE_NAME),
                     mbundle.getString(Constants.BundleKeys.CHALLENGE_PHOTO), Constants.LBLandingType.CHALLENGE
             )));
-            openScreen ="leaderboards";
+            openScreen = "leaderboards";
 
         } else if (inAppPopUpType.equals(Constants.InAppPopups.SECOND_MATCH_PLAYED_WITH_NO_POWERUP)) {
             inAppPopUpTitle = "Power Tip!";
@@ -113,14 +116,16 @@ public class InAppPopupActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.in_app_popup_btn:
-                if (openScreen.equals("groups")){
+                if (openScreen.equals("groups")) {
                     navigateToCreateGroup();
-                }else if (openScreen.equals("leaderboards")) {
+                } else if (openScreen.equals("leaderboards")) {
                     navigateToPointsActivity(mleaderboardBundle);
-                }else {
+                } else {
                     onBackPressed();
                 }
                 break;
+            case R.id.in_app_popup_rl:
+                onBackPressed();
         }
     }
 

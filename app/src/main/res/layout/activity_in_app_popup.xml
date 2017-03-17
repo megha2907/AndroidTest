@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CC000000">
+    android:background="#CC000000"
+    android:onClick="onClick"
+    android:id="@+id/in_app_popup_rl">
 
     <RelativeLayout
         android:id="@+id/in_app_popup"
@@ -27,10 +29,10 @@
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="Power Tip !"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dp_22"
-                app:typeface="lato_bold" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_25"
+                app:typeface="lato_bold"
+                android:textStyle="bold"/>
 
         </RelativeLayout>
 
@@ -44,7 +46,6 @@
             android:layout_marginRight="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_30"
             android:gravity="center"
-            android:text="A good thumb rule is to use 1 \n power-up of each kind per each game!"
             android:textColor="@color/black_60"
             android:textSize="@dimen/dp_18"
             app:typeface="lato_regular" />
@@ -61,7 +62,6 @@
             android:layout_height="@dimen/dp_60"
             android:layout_alignParentBottom="true"
             android:background="@color/transparent"
-            android:text="CHECK POWERUPS"
             android:onClick="onClick" />
 
     </RelativeLayout>

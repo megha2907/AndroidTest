@@ -230,7 +230,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/all_challenges_row_iv_image"
                 android:layout_marginTop="@dimen/dp_6"
-                android:layout_marginRight="@dimen/dp_12"
+                android:layout_marginRight="@dimen/dp_8"
                 android:visibility="visible">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -244,14 +244,14 @@
 
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/all_challenges_row_tv_price"
-                    android:layout_width="@dimen/dp_80"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_26"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="@dimen/dp_6"
                     android:textColor="#104468"
                     android:textSize="@dimen/dp_10"
-                    android:paddingLeft="@dimen/dp_5"
-                    android:paddingRight="@dimen/dp_5"
+                    android:paddingLeft="@dimen/dp_4"
+                    android:paddingRight="@dimen/dp_4"
                     android:textAllCaps="false"
                     android:layout_below="@+id/all_challenges_row_tv_rewards_txt"
                     android:visibility="visible"
@@ -275,7 +275,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/all_challenges_row_btn_days_left"
-                        android:text="ENDS IN"
+                        android:text="DURATION"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_10"
                         app:typeface="lato_light" />

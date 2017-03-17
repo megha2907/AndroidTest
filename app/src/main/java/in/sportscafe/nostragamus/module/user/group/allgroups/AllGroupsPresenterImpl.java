@@ -34,7 +34,7 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
     @Override
     public void onCreateAllGroups(Bundle bundle) {
         mAllGroupsModel.init(bundle);
-        if(mAllGroupsModel.isAllGroups()) {
+        if (mAllGroupsModel.isAllGroups()) {
             mAllGroupsView.showTitleBar();
         }
         showPopUp();
@@ -42,9 +42,9 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
 
     private void showPopUp() {
 
-        if (NostragamusDataHandler.getInstance().getMatchPlayedCount()==7
-                && NostragamusDataHandler.getInstance().getTotalGroupsCount()==0
-                && !NostragamusDataHandler.getInstance().isPlayedSeventhMatchPopUp()){
+        if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 7
+                && NostragamusDataHandler.getInstance().getTotalGroupsCount() == 0
+                && !NostragamusDataHandler.getInstance().isPlayedSeventhMatchPopUp()) {
             mAllGroupsView.showPopUp(Constants.InAppPopups.SEVENTH_MATCH_PLAYED_WITH_NO_GROUPS);
         }
 
@@ -104,7 +104,7 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
 
     @Override
     public void onItemSaved(Bundle bundle) {
-        if(null != bundle) {
+        if (null != bundle) {
             mAllGroupsView.navigateToGroupInfo(bundle);
         }
     }
