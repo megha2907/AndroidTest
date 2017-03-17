@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.animator.SlideInUpAnimationAdapter;
 import in.sportscafe.nostragamus.module.coachmarker.BasicOverlay;
 import in.sportscafe.nostragamus.module.coachmarker.TargetView;
@@ -220,6 +221,10 @@ public class ViewUtils {
     }
 
     public static int getDrawableIdFromResName(Context context, String resName) {
-        return context.getResources().getIdentifier(resName, "drawable", context.getPackageName());
+        if (null != context) {
+            return context.getResources().getIdentifier(resName, "drawable", context.getPackageName());
+        }else {
+            return R.drawable.onboarding_bg;
+        }
     }
 }

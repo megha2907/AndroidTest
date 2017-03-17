@@ -1,9 +1,12 @@
 package in.sportscafe.nostragamus.module.user.badges;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
@@ -40,6 +43,13 @@ public class BadgeAdapter extends Adapter<Badge, BadgeAdapter.ViewHolder> {
         holder.mTvBadgeName.setText(badge.getName());
         holder.mTvBadgeDesc.setText(badge.getDesc());
         holder.mIvBadge.setImageUrl(badge.getPhoto());
+
+        if (badge.getIsLocked()){
+            holder.mIvLocked.setVisibility(View.VISIBLE);
+        }else {
+            holder.mIvLocked.setVisibility(View.GONE);
+        }
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder  {
@@ -50,7 +60,11 @@ public class BadgeAdapter extends Adapter<Badge, BadgeAdapter.ViewHolder> {
 
         TextView mTvBadgeDesc;
 
+        RelativeLayout mRLBadge;
+
         HmImageView mIvBadge;
+
+        ImageView mIvLocked;
 
         public ViewHolder(View V) {
             super(V);
@@ -58,6 +72,8 @@ public class BadgeAdapter extends Adapter<Badge, BadgeAdapter.ViewHolder> {
             mTvBadgeName = (TextView) V.findViewById(R.id.badge_tv_name);
             mTvBadgeDesc = (TextView) V.findViewById(R.id.badge_tv_desc);
             mIvBadge = (HmImageView) V.findViewById(R.id.badge_iv);
+            mRLBadge = (RelativeLayout) V.findViewById(R.id.badges_rl);
+            mIvLocked= (ImageView) V.findViewById(R.id.badge_locked);
         }
     }
 

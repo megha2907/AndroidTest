@@ -35,15 +35,8 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         mPredictionModel.init(bundle);
 
 
-        mPredictionView.setContestName(mPredictionModel.getContestName(), mPredictionModel.getMatchStage());
-
-        checkShowStatusOfBankInfo();
-
-//            if (NostragamusDataHandler.getInstance().isPlayedFirstMatch()
-//                    && !NostragamusDataHandler.getInstance().isPowerUpApplied()){
-//                mPredictionView.showPopUp(Constants.InAppPopups.SECOND_MATCH_PLAYED_WITH_NO_POWERUP);
-//            }
-
+            mPredictionView.setContestName(mPredictionModel.getContestName(), mPredictionModel.getMatchStage());
+            showPopUp();
         updatePowerups();
 
         if(mPredictionModel.isDummyGameShown()) {
@@ -53,11 +46,21 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         }
     }
 
-    private void checkShowStatusOfBankInfo() {
-        if (NostragamusDataHandler.getInstance().isBankInfoFirstTimeChecked()
+   private void showPopUp() {
+
+        if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 1
+                && !NostragamusDataHandler.getInstance().isPowerUpApplied()
+                && !NostragamusDataHandler.getInstance().isPlayedSecondMatchPopUp()) {
+            mPredictionView.showPopUp(Constants.InAppPopups.SECOND_MATCH_PLAYED_WITH_NO_POWERUP);
+        } else if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 4
+                && !NostragamusDataHandler.getInstance().isPowerUpApplied()
+                && !NostragamusDataHandler.getInstance().isPlayedFifthMatchPopUp()) {
+            mPredictionView.showPopUp(Constants.InAppPopups.FIFTH_MATCH_PLAYED_WITH_NO_POWERUP);
+        } else if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 2
                 && !NostragamusDataHandler.getInstance().isBankInfoShown()) {
             onClickBankTransfer();
         }
+
     }
 
     private void updatePowerups() {
@@ -70,8 +73,9 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     public void onSuccessCompletion(Bundle bundle) {
         mPredictionView.navigateToFeed();
 
-        if (!NostragamusDataHandler.getInstance().isPlayedFirstMatch()) {
-            mPredictionView.showPopUp(Constants.InAppPopups.FIRST_MATCH_PLAYED);
+        if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 0
+                && !NostragamusDataHandler.getInstance().isPlayedFirstMatch()) {
+            mPredictionView.showFirstMatchPlayedPopUp(Constants.InAppPopups.FIRST_MATCH_PLAYED, bundle);
         }
     }
 
@@ -244,5 +248,10 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onNoPowerUps() {
         onClickBankTransfer();
+    }
+
+    @Override
+    public void showPowerUpCountLessPopUp() {
+        mPredictionView.showPopUp(Constants.InAppPopups.LESS_POWERUPS);
     }
 }

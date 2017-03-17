@@ -55,6 +55,9 @@ public interface Constants {
         String NUMBER_OF_AUDIENCE_POLL_POWERUPS = "numberofaudiencepollpowerups";
         String NUMBER_OF_REPLAY_POWERUPS = "numberofreplaypowerups";
         String NUMBER_OF_FLIP_POWERUPS = "numberofflippowerups";
+        String NUMBER_OF_MATCH_PLAYED = "numberofmatchplayed";
+        String NUMBER_OF_TOTAL_GROUPS = "numberoftotalgroups";
+        String NUMBER_OF_POWERUPS_USED = "numberofpowerupsused";
         String NUMBER_OF_BADGES = "numberofbadges";
         String NUMBER_OF_GROUPS = "numberofgroups";
         String ALL_BADGES = "allbadges";
@@ -73,6 +76,9 @@ public interface Constants {
         String INSTALL_CHANNEL = "installChannel";
         String BANK_INFO_SHOWN = "bankInfoShown";
         String FIRST_MATCH_PLAYED = "firstMatchPlayed";
+        String SECOND_MATCH_PLAYED = "secondMatchPlayed";
+        String FIFTH_MATCH_PLAYED = "fifthMatchPlayed";
+        String SEVENTH_MATCH_PLAYED = "seventhMatchPlayed";
         String VISITED_LEADERBOARDS= "VisitedLeaderboards";
         String POWERUP_APPLIED= "PowerUpApplied";
         String DUMMY_GAME_SHOWN = "dummyGameShown";
@@ -216,6 +222,7 @@ public interface Constants {
         String CHALLENGE_TAG_ID = "challengeTagId";
         String UPDATED_CHALLENGE_USER_INFO = "updatedPowerups";
         String CHALLENGE_NAME = "challengeName";
+        String CHALLENGE_PHOTO = "challengePhoto";
         String MAX_TRANSFER_COUNT = "maxTransferCount";
         String CHALLENGE_INFO = "challengeInfo";
         String TAB_POSITION = "tabPosition";

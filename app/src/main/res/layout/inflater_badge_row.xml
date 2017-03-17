@@ -8,6 +8,7 @@
     >
 
     <RelativeLayout
+        android:id="@+id/badges_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_15"
@@ -46,6 +47,17 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_below="@+id/badge_tv_name"
         />
+
+        <ImageView
+            android:id="@+id/badge_locked"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@drawable/locked_icon"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            />
 
         </RelativeLayout>
 
