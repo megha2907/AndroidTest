@@ -74,6 +74,7 @@ public interface Constants {
         String BANK_INFO_SHOWN = "bankInfoShown";
         String FIRST_MATCH_PLAYED = "firstMatchPlayed";
         String VISITED_LEADERBOARDS= "VisitedLeaderboards";
+        String POWERUP_APPLIED= "PowerUpApplied";
     }
 
     interface Alerts {
@@ -384,7 +385,7 @@ public interface Constants {
     interface InAppPopups {
 
         String IN_APP_POPUP_TYPE = "in_app_popup_type";
-        String FIRST_MATCH_PLAYED = "first_match_played";
+        String FIRST_MATCH_PLAYED = "firstMatchPlayed";
         String SECOND_MATCH_PLAYED_WITH_NO_POWERUP = "secondMatchPlayedWithNoPowerUp";
         String FIFTH_MATCH_PLAYED_WITH_NO_POWERUP = "fifthMatchPlayedWithNoPowerUp";
         String SEVENTH_MATCH_PLAYED_WITH_NO_GROUPS = "seventhMatchPlayedWithNoGroups";

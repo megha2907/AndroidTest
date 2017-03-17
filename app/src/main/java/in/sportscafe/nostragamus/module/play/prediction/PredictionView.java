@@ -87,5 +87,5 @@ public interface PredictionView extends InAppView {
 
     void showBankInfo();
 
-    void showFirstMatchCompletedPopUp();
+    void showPopUp(String popUpType);
 }
