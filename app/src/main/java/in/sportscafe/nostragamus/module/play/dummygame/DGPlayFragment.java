@@ -258,8 +258,11 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
         doWiggleAnimation(findViewById(R.id.powerups_rl_poll), 0, MAX_WIGGLE_ROTATION);
     }
 
-    private void doWiggleAnimation(View view, final int count, final float rotation) {
+    private void doWiggleAnimation(View view, int count, float rotation) {
         final View finalView = view;
+        final int finalCount = count;
+        final float finalRotation = rotation;
+
         finalView.animate().rotation(rotation).setDuration(250).setListener(
                 new Animator.AnimatorListener() {
                     @Override
@@ -269,13 +272,13 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         int nextCount = 0;
-                        if(count < 3) {
-                            nextCount = count + 1;
+                        if (finalCount < 3) {
+                            nextCount = finalCount + 1;
                         } else {
                             return;
                         }
 
-                        if(rotation == MAX_WIGGLE_ROTATION) {
+                        if (finalRotation == MAX_WIGGLE_ROTATION) {
                             doWiggleAnimation(finalView, nextCount, 0);
                         } else {
                             doWiggleAnimation(finalView, nextCount, MAX_WIGGLE_ROTATION);

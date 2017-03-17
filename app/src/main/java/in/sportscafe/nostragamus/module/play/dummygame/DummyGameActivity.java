@@ -37,7 +37,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     private List<DGInstruction> mInstructionList;
 
-    private int mLastReadInstruction = 13;
+    private int mLastReadInstruction = 0;
 
     private DGPlayFragment mDummyGamePlayFragment;
 
