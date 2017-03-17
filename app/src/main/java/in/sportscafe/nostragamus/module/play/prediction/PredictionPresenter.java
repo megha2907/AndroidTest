@@ -2,9 +2,6 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.os.Bundle;
 
-import java.util.List;
-
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 
 /**
@@ -22,17 +19,13 @@ public interface PredictionPresenter {
 
     void onClickPollPowerup();
 
-    void onDummyGameStart();
-
-    void onDummyGameEnd();
-
     void onClickBack();
-
-    void onClickSkip();
 
     void onClickBankTransfer();
 
     void onBankInfoDismiss();
 
     void onChallengeInfoUpdated(Bundle bundle);
+
+    void onGetDummyGameResult();
 }

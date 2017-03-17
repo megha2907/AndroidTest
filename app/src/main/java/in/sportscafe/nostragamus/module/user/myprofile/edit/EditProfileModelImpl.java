@@ -1,29 +1,21 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
 import java.io.File;
 import java.util.UUID;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Response;
-
-import static android.R.attr.data;
-import static com.google.android.gms.analytics.internal.zzy.r;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -46,17 +38,15 @@ public class EditProfileModelImpl implements EditProfileModel {
     @Override
     public void updateProfile(String nickname) {
 
-        if(nickname.isEmpty()){
+        if (nickname.isEmpty()) {
             mEditProfileListener.onNickNameEmpty();
             return;
-        }
-        else if (nickname.length() < 3 || nickname.length() > 15)
-        {
+        } else if (nickname.length() < 3 || nickname.length() > 15) {
             mEditProfileListener.onNickNameValidation();
             return;
         }
 
-        if(Nostragamus.getInstance().hasNetworkConnection()) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
             mEditProfileListener.onUpdating();
             callUpdateUserApi(nickname);
         } else {
@@ -75,13 +65,13 @@ public class EditProfileModelImpl implements EditProfileModel {
 
     @Override
     public void updateProfilePhoto(File file, String filepath, String filename) {
-        if(filepath.equals(null)) {
+        if (filepath.equals(null)) {
             mEditProfileListener.onProfileImagePathNull();
             return;
         }
-        if(Nostragamus.getInstance().hasNetworkConnection()) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
             mEditProfileListener.onUpdating();
-            callUpdateUserProfilePhotoApi(file,filepath, UUID.randomUUID().toString() + "_" + filename);
+            callUpdateUserProfilePhotoApi(file, filepath, UUID.randomUUID().toString() + "_" + filename);
         } else {
             mEditProfileListener.onNoInternet();
         }
@@ -119,18 +109,16 @@ public class EditProfileModelImpl implements EditProfileModel {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         super.onResponse(call, response);
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
 
-                            if (response.body().getMessage().equals("user_nick conflict"))
-                            {
+                            if (response.body().getMessage().equals("user_nick conflict")) {
                                 mEditProfileListener.onUserNameConflict();
-                            }
-                            else {
+                            } else {
                                 mUserInfo.setUserNickName(nickname);
                                 NostragamusDataHandler.getInstance().setUserInfo(mUserInfo);
 
                                 mEditProfileListener.onEditSuccess();
-                              }
+                            }
                         } else {
                             mEditProfileListener.onEditFailed(response.message());
                         }
@@ -139,19 +127,9 @@ public class EditProfileModelImpl implements EditProfileModel {
         );
     }
 
-
-
-
     @Override
     public UserInfo getUserInfo() {
         return mUserInfo;
-    }
-
-    @Override
-    public Bundle getDummyGameData() {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(BundleKeys.IS_DUMMY_GAME, true);
-        return bundle;
     }
 
     public interface OnEditProfileListener {
