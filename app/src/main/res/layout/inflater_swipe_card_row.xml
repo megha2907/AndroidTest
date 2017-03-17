@@ -70,8 +70,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:showAnimation="false"
-                        app:defaultImage="@drawable/placeholder_icon" />
+                        app:defaultImage="@drawable/placeholder_icon"
+                        app:showAnimation="false" />
 
                     <View
                         android:id="@+id/swipe_card_v_left_overlay"
@@ -104,8 +104,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:showAnimation="false"
-                        app:defaultImage="@drawable/placeholder_icon" />
+                        app:defaultImage="@drawable/placeholder_icon"
+                        app:showAnimation="false" />
 
                     <View
                         android:id="@+id/swipe_card_v_right_overlay"
@@ -206,7 +206,8 @@
                 android:layout_alignTop="@id/swipe_card_ll_image"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_dp_23"
-                android:src="@drawable/touch_pointer"/>
+                android:src="@drawable/touch_pointer"
+                android:visibility="invisible" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/swipe_card_tv_locking_option"
@@ -279,5 +280,18 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/swipe_card_tv_points_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/points_cardview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:alpha="0"
+        android:text="Points"
+        android:textColor="@color/white_60"
+        android:textSize="@dimen/dp_16"
+        app:typeface="roboto_condensed" />
 
 </RelativeLayout>

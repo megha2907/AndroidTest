@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,20 +123,17 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
             @Override
             public void run() {
                 mDummyGamePlayPresenter.setFlingListener(mSwipeFlingAdapterView.getTopCardListener());
-
-                /*new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        animatePowerUps();
-                    }
-                }, 1000);*/
             }
         });
     }
 
     @Override
     public void showNeither() {
-        findViewById(R.id.prediction_ll_neither).setVisibility(View.VISIBLE);
+        View neitherView = findViewById(R.id.prediction_ll_neither);
+        neitherView.setVisibility(View.VISIBLE);
+
+        neitherView.setAlpha(0);
+        neitherView.animate().alpha(1).setDuration(1000);
     }
 
     @Override
@@ -254,15 +250,20 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
         mDummyGamePlayPresenter.onGetQuestions(question, questionType);
     }
 
+    private static final float MAX_WIGGLE_ROTATION = 15;
+
     public void animatePowerUps() {
-        doWiggleAnimation(findViewById(R.id.powerups_rl_2x));
-        doWiggleAnimation(findViewById(R.id.powerups_rl_nonegs));
-        doWiggleAnimation(findViewById(R.id.powerups_rl_poll));
+        doWiggleAnimation(findViewById(R.id.powerups_rl_2x), 0, MAX_WIGGLE_ROTATION);
+        doWiggleAnimation(findViewById(R.id.powerups_rl_nonegs), 0, MAX_WIGGLE_ROTATION);
+        doWiggleAnimation(findViewById(R.id.powerups_rl_poll), 0, MAX_WIGGLE_ROTATION);
     }
 
-    private void doWiggleAnimation(View view) {
+    private void doWiggleAnimation(View view, int count, float rotation) {
         final View finalView = view;
-        finalView.animate().rotation(45).setDuration(500).setListener(
+        final int finalCount = count;
+        final float finalRotation = rotation;
+
+        finalView.animate().rotation(rotation).setDuration(250).setListener(
                 new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
@@ -270,7 +271,18 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        finalView.animate().rotation(0).setDuration(500);
+                        int nextCount = 0;
+                        if (finalCount < 3) {
+                            nextCount = finalCount + 1;
+                        } else {
+                            return;
+                        }
+
+                        if (finalRotation == MAX_WIGGLE_ROTATION) {
+                            doWiggleAnimation(finalView, nextCount, 0);
+                        } else {
+                            doWiggleAnimation(finalView, nextCount, MAX_WIGGLE_ROTATION);
+                        }
                     }
 
                     @Override

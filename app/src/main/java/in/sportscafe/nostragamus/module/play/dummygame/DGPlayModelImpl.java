@@ -102,7 +102,7 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
         if (isNotPowerupApplied()) {
             if (m2xPowerups > 0) {
                 mPredictionAdapter.getTopQuestion().apply2xPowerUp();
-                notifyTopQuestion();
+                notifyPowerUps();
 
                 m2xPowerups--;
                 mModelListener.on2xApplied(m2xPowerups, false);
@@ -117,7 +117,7 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
         if (isNotPowerupApplied()) {
             if (mNonegsPowerups > 0) {
                 mPredictionAdapter.getTopQuestion().applyNonegsPowerUp();
-                notifyTopQuestion();
+                notifyPowerUps();
 
                 mNonegsPowerups--;
                 mModelListener.onNonegsApplied(mNonegsPowerups, false);
@@ -231,9 +231,10 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
         return false;
     }
 
-    private void notifyTopQuestion() {
+    private void notifyPowerUps() {
         mPredictionAdapter.notifyDataSetChanged();
         mModelListener.notifyTopQuestion();
+//        mPredictionAdapter.refreshPowerUps();
     }
 
     private void handleAudiencePollResponse(List<AudiencePoll> audiencePoll) {
@@ -241,7 +242,7 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
         int rightAnswerPercent = Integer.parseInt(audiencePoll.get(1).getAnswerPercentage().replaceAll("%", ""));
 
         mPredictionAdapter.getTopQuestion().applyAudiencePollPowerUp(leftAnswerPercent, rightAnswerPercent);
-        notifyTopQuestion();
+        notifyPowerUps();
 
         mPollPowerups--;
         mModelListener.onAudiencePollApplied(mPollPowerups, false);
@@ -271,7 +272,7 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
         increasePowerUpCount(topQuestion.getPowerUpId());
         topQuestion.removeAppliedPowerUp();
 
-        notifyTopQuestion();
+        notifyPowerUps();
     }
 
     private void increasePowerUpCount(String powerUpId) {

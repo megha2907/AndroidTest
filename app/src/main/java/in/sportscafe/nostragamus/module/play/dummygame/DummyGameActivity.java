@@ -22,20 +22,22 @@ import in.sportscafe.nostragamus.webservice.MyWebService;
 public class DummyGameActivity extends NostragamusActivity implements DGPlayFragment.OnDGPlayActionListener,
         DGTextFragment.OnDGTextActionListener {
 
-    private static final String TRY_OTHER_POWERUPS = "Try other powerups";
-
     interface InstructionType {
-
         String TEXT = "text";
-        String ACTION1 = "action1";
-        String ACTION2 = "action2";
         String QUESTION = "question";
         String POWERUP = "powerup";
+        String ANIMATE_POWERUP = "animatePowerup";
+    }
+
+    interface ActionType {
+        String GOTO_NEXT = "next";
+        String EXIT = "exit";
+        String GOTO_POWERUPS = "powerups";
     }
 
     private List<DGInstruction> mInstructionList;
 
-    private int mLastReadInstruction = -1;
+    private int mLastReadInstruction = 0;
 
     private DGPlayFragment mDummyGamePlayFragment;
 
@@ -84,6 +86,9 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
             case InstructionType.POWERUP:
                 mPowerUpsInstructionPos = mLastReadInstruction;
                 addDummyPlay(instruction.getQuestion(), instruction.getQuestionType());
+                break;
+            case InstructionType.ANIMATE_POWERUP:
+                mDummyGamePlayFragment.animatePowerUps();
                 break;
         }
 
@@ -150,25 +155,43 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     @Override
     public void on2xApplied() {
-        addDummyText(getPowerUpInstruction("You just used a 2x powerup.\nSwipe to confirm your answer!"));
+        mDummyGameTextFragment.hideBottomText();
+//        addDummyText(getPowerUpInstruction("You just used a 2x powerup.\nSwipe to confirm your answer!"));
+        addDummyText(getPowerUpInstruction("You have just used a Double X powerup. It doubles " +
+                "the points for any question!\n" +
+                "Swipe to confirm your answer!"));
     }
 
     @Override
     public void onNonegsApplied() {
-        addDummyText(getPowerUpInstruction("You just used a No Negative powerup.\nSwipe to confirm your answer!"));
+        mDummyGameTextFragment.hideBottomText();
+        addDummyText(getPowerUpInstruction("You have just used a No Negative powerup. It cuts down " +
+                "the negative marking for any question!\n" +
+                "Swipe to confirm your answer!"));
     }
 
     @Override
     public void onPollApplied() {
-        addDummyText(getPowerUpInstruction("You just used a Audience Poll powerup.\nSwipe to confirm your answer!"));
+        mDummyGameTextFragment.hideBottomText();
+        addDummyText(getPowerUpInstruction("You have just used an Audience poll. It will tell" +
+                "you how others have answered this question\n" +
+                "Swipe to confirm your answer!"));
     }
 
     @Override
-    public void onActionClicked(String actionText) {
-        if (TRY_OTHER_POWERUPS.equalsIgnoreCase(actionText)) {
-            mLastReadInstruction = mPowerUpsInstructionPos - 2;
+    public void onActionClicked(String actionType) {
+        switch (actionType) {
+            case ActionType.GOTO_NEXT:
+                readNextInstruction();
+                break;
+            case ActionType.GOTO_POWERUPS:
+                mLastReadInstruction = mPowerUpsInstructionPos - 2;
+                readNextInstruction();
+                break;
+            case ActionType.EXIT:
+                onBackPressed();
+                break;
         }
-        readNextInstruction();
     }
 
     private void startFresh() {

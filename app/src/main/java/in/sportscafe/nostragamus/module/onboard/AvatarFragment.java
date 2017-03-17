@@ -26,7 +26,7 @@ import me.relex.circleindicator.CircleIndicator;
 /**
  * Created by Jeeva on 08/03/17.
  */
-public class OnboardFragment extends NostragamusFragment {
+public class AvatarFragment extends NostragamusFragment {
 
     private static final float CARD_WIDTH_PERECENTAGE = 33.33f / 100;
 
@@ -79,8 +79,8 @@ public class OnboardFragment extends NostragamusFragment {
 
     private int mCurrentPosition = -1;
 
-    public static OnboardFragment newInstance() {
-        return new OnboardFragment();
+    public static AvatarFragment newInstance() {
+        return new AvatarFragment();
     }
 
     @Nullable

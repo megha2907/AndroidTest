@@ -71,29 +71,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
     private boolean mNeitherOptionAvailable = false;
 
-    private View mTopView;
-
-    private CardView mCvMain;
-
-    private LinearLayout mLlPointsLayout;
-
-    private View mLeftOption;
-
-    private View mRightOption;
-
-    private View mLeftOptionArrow;
-
-    private View mRightOptionArrow;
-
-    private View mLeftOverlay;
-
-    private View mRightOverlay;
-
-    private View mLeftImage;
-
-    private View mRightImage;
-
-    private TextView mTvLockingOption;
+    private ViewHolder mTopViewHolder;
 
     private float mOptionHeight;
 
@@ -196,6 +174,11 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
         Question question = getItem(position);
 
+        viewHolder.mainView.setVisibility(View.INVISIBLE);
+
+        // It is to highlight the points layer
+        viewHolder.llPointsLayout.setBackgroundResource(R.drawable.dg_points_bg);
+
         viewHolder.tvQuestion.setText(question.getQuestionText());
         viewHolder.tvContext.setText(Html.fromHtml(question.getQuestionContext()));
         viewHolder.ivLeftOption.setImageUrl(question.getQuestionImage1());
@@ -203,6 +186,23 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         viewHolder.tvLeftOption.setText(question.getQuestionOption1());
         viewHolder.tvRightOption.setText(question.getQuestionOption2());
 
+        updatePowerUpDetails(viewHolder, question);
+
+        if (null != mQuestionType && (QuestionType.LEFT_RIGHT.equalsIgnoreCase(mQuestionType)
+                || QuestionType.NEITHER.equalsIgnoreCase(mQuestionType))) {
+            viewHolder.ivTouchPointer.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.ivTouchPointer.setVisibility(View.GONE);
+        }
+
+        return convertView;
+    }
+
+    public void refreshPowerUps() {
+        updatePowerUpDetails(mTopViewHolder, mTopQuestion);
+    }
+
+    private void updatePowerUpDetails(ViewHolder viewHolder, Question question) {
         Integer positivePoint = question.getUpdatedPositivePoints();
         if (null == positivePoint || positivePoint == 0) {
             viewHolder.tvquestionPositivePoints.setVisibility(View.GONE);
@@ -262,15 +262,6 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
                 question.setMinorityAnswerId(-1);
             }
         }
-
-        if (null != mQuestionType && (QuestionType.LEFT_RIGHT.equalsIgnoreCase(mQuestionType)
-                || QuestionType.NEITHER.equalsIgnoreCase(mQuestionType))) {
-            viewHolder.ivTouchPointer.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.ivTouchPointer.setVisibility(View.GONE);
-        }
-
-        return convertView;
     }
 
     private View getPowerUpAppliedView(String powerupId, ViewGroup parent) {
@@ -346,7 +337,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
                     vBgFrame2.setVisibility(View.VISIBLE);
                 }
             }
-            mCvMain.setCardElevation(elevation);
+            mTopViewHolder.cvMainCard.setCardElevation(elevation);
         }
     }
 
@@ -368,20 +359,10 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
     public void setFlingCardListener(FlingCardListener listener) {
         this.mFlingCardListener = listener;
-        this.mTopView = mFlingCardListener.getFrame();
         this.mTopQuestion = getItem(0);
         this.mNeitherOptionAvailable = !TextUtils.isEmpty(mTopQuestion.getQuestionOption3());
-        this.mCvMain = (CardView) mTopView.findViewById(R.id.swipe_card_cv_main);
-        this.mLlPointsLayout = (LinearLayout) mTopView.findViewById(R.id.swipe_card_question_points_rl);
-        this.mLeftOption = mTopView.findViewById(R.id.swipe_card_tv_left);
-        this.mRightOption = mTopView.findViewById(R.id.swipe_card_tv_right);
-        this.mLeftOptionArrow = mTopView.findViewById(R.id.swipe_card_iv_left_arrow);
-        this.mRightOptionArrow = mTopView.findViewById(R.id.swipe_card_iv_right_arrow);
-        this.mLeftOverlay = mTopView.findViewById(R.id.swipe_card_v_left_overlay);
-        this.mRightOverlay = mTopView.findViewById(R.id.swipe_card_v_right_overlay);
-        this.mLeftImage = mTopView.findViewById(R.id.swipe_card_iv_left);
-        this.mRightImage = mTopView.findViewById(R.id.swipe_card_iv_right);
-        this.mTvLockingOption = (TextView) mTopView.findViewById(R.id.swipe_card_tv_locking_option);
+
+        this.mTopViewHolder = new ViewHolder(mFlingCardListener.getFrame());
 
         mBgUpdateDone = false;
         updateBg(0);
@@ -391,19 +372,19 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
     }
 
     private void setOptionVisibility(int leftVis, int rightVis) {
-        if (leftVis != mLeftOption.getVisibility()) {
-            mLeftOption.setVisibility(leftVis);
-            mLeftOptionArrow.setVisibility(leftVis);
+        if (leftVis != mTopViewHolder.tvLeftOption.getVisibility()) {
+            mTopViewHolder.tvLeftOption.setVisibility(leftVis);
+            mTopViewHolder.leftOptionArrow.setVisibility(leftVis);
         }
 
-        if (rightVis != mRightOption.getVisibility()) {
-            mRightOption.setVisibility(rightVis);
-            mRightOptionArrow.setVisibility(rightVis);
+        if (rightVis != mTopViewHolder.tvRightOption.getVisibility()) {
+            mTopViewHolder.tvRightOption.setVisibility(rightVis);
+            mTopViewHolder.rightOptionArrow.setVisibility(rightVis);
         }
     }
 
     private int getColor(int colorRes) {
-        return ContextCompat.getColor(mTopView.getContext(), colorRes);
+        return ContextCompat.getColor(mTopViewHolder.mainView.getContext(), colorRes);
     }
 
     private String mLockingOption;
@@ -425,30 +406,30 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         if (Math.abs(xPercent) > Math.abs(yPercent)) { // Locking horizontal options
             if (xPercent < 0f) { // Locking left option
                 mLockingOption = mTopQuestion.getQuestionOption1();
-                mLeftOverlay.setBackgroundColor(getColor(R.color.malachite));
-                mRightOverlay.setBackgroundColor(getColor(R.color.radical_red));
+                mTopViewHolder.leftOverlay.setBackgroundColor(getColor(R.color.malachite));
+                mTopViewHolder.rightOverlay.setBackgroundColor(getColor(R.color.radical_red));
 
                 mLeftAlpha = 1f;
                 mRightAlpha = 1f - alpha / 2f;
             } else { // Locking right option
                 mLockingOption = mTopQuestion.getQuestionOption2();
-                mLeftOverlay.setBackgroundColor(getColor(R.color.radical_red));
-                mRightOverlay.setBackgroundColor(getColor(R.color.malachite));
+                mTopViewHolder.leftOverlay.setBackgroundColor(getColor(R.color.radical_red));
+                mTopViewHolder.rightOverlay.setBackgroundColor(getColor(R.color.malachite));
 
                 mLeftAlpha = 1f - alpha / 2f;
                 mRightAlpha = 1f;
             }
         } else if (mNeitherOptionAvailable && yPercent < 0f) { // Locking top option
             mLockingOption = mTopQuestion.getQuestionOption3();
-            mLeftOverlay.setBackgroundColor(getColor(R.color.radical_red));
-            mRightOverlay.setBackgroundColor(getColor(R.color.radical_red));
+            mTopViewHolder.leftOverlay.setBackgroundColor(getColor(R.color.radical_red));
+            mTopViewHolder.rightOverlay.setBackgroundColor(getColor(R.color.radical_red));
 
             mLeftAlpha = 1f - alpha / 2f;
             mRightAlpha = 1f - alpha / 2f;
         } else { // No locking
             mLockingOption = "";
-            mLeftOverlay.setBackgroundColor(getColor(R.color.transparent));
-            mRightOverlay.setBackgroundColor(getColor(R.color.transparent));
+            mTopViewHolder.leftOverlay.setBackgroundColor(getColor(R.color.transparent));
+            mTopViewHolder.rightOverlay.setBackgroundColor(getColor(R.color.transparent));
             alpha = 0f;
 
             mBgUpdateDone = false;
@@ -460,24 +441,26 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
         alpha = 1f - alpha;
 
-        mTvLockingOption.setText(mLockingOption);
+        mTopViewHolder.tvLockingOption.setText(mLockingOption);
 
-        mLeftOption.setAlpha(alpha);
-        mRightOption.setAlpha(alpha);
-        mLeftOptionArrow.setAlpha(alpha);
-        mRightOptionArrow.setAlpha(alpha);
+        mTopViewHolder.tvLeftOption.setAlpha(alpha);
+        mTopViewHolder.tvRightOption.setAlpha(alpha);
+        mTopViewHolder.leftOptionArrow.setAlpha(alpha);
+        mTopViewHolder.rightOptionArrow.setAlpha(alpha);
         /*mLeftImage.setAlpha(mLeftAlpha);
         mRightImage.setAlpha(mRightAlpha);*/
 
         alpha = 1f - alpha;
         /*mLeftOverlay.setAlpha(alpha / 2f);
         mRightOverlay.setAlpha(alpha / 2f);*/
-        mTvLockingOption.setAlpha(alpha);
+        mTopViewHolder.tvLockingOption.setAlpha(alpha);
 
         Log.d("Image Alpha", mLeftAlpha + "  " + mRightAlpha);
     }
 
     static class ViewHolder {
+
+        View mainView;
 
         CardView cvMainCard;
 
@@ -494,10 +477,6 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         HmImageView ivLeftOption;
 
         HmImageView ivRightOption;
-
-        TextView tvLeftOption;
-
-        TextView tvRightOption;
 
         TextView btnanswer1Percentage;
 
@@ -521,23 +500,30 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
         ImageView ivTouchPointer;
 
+        private TextView tvLeftOption;
+
+        private TextView tvRightOption;
+
+        private View leftOptionArrow;
+
+        private View rightOptionArrow;
+
+        private View leftOverlay;
+
+        private View rightOverlay;
+
+        private TextView tvPointsLabel;
+
         public ViewHolder(View rootView) {
+            mainView = rootView;
             cvMainCard = (CardView) rootView.findViewById(R.id.swipe_card_cv_main);
-            cvMainCard.setVisibility(View.INVISIBLE);
-
             llPointsLayout = (LinearLayout) rootView.findViewById(R.id.swipe_card_question_points_rl);
-            // It is to highlight the points layer
-            llPointsLayout.setBackgroundResource(R.drawable.dg_points_bg);
-            llPointsLayout.setVisibility(View.INVISIBLE);
-
             tvQuestion = (TextView) rootView.findViewById(R.id.swipe_card_tv_question);
             tvContext = (TextView) rootView.findViewById(R.id.swipe_card_tv_context);
             flLeftArea = (FrameLayout) rootView.findViewById(R.id.swipe_card_fl_left_area);
             flRightArea = (FrameLayout) rootView.findViewById(R.id.swipe_card_fl_right_area);
             ivLeftOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_left);
             ivRightOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_right);
-            tvLeftOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_left);
-            tvRightOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_right);
             btnanswer1Percentage = (TextView) rootView.findViewById(R.id.swipe_card_tv_left_poll);
             btnanswer2Percentage = (TextView) rootView.findViewById(R.id.swipe_card_answer2_percentage);
             tvquestionPositivePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_positive_points);
@@ -549,18 +535,25 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
             llQuestionDesc = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_question_desc);
             llPowerUpHolder = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_powerup_holder);
             ivTouchPointer = (ImageView) rootView.findViewById(R.id.swipe_card_iv_pointer);
+            tvLeftOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_left);
+            tvRightOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_right);
+            leftOptionArrow = rootView.findViewById(R.id.swipe_card_iv_left_arrow);
+            rightOptionArrow = rootView.findViewById(R.id.swipe_card_iv_right_arrow);
+            llPointsLayout = (LinearLayout) rootView.findViewById(R.id.swipe_card_question_points_rl);
+            leftOverlay = rootView.findViewById(R.id.swipe_card_v_left_overlay);
+            rightOverlay = rootView.findViewById(R.id.swipe_card_v_right_overlay);
+            tvPointsLabel = (TextView) rootView.findViewById(R.id.swipe_card_tv_points_label);
         }
     }
 
     private void animateCard() {
-        mTopView.setAlpha(0);
-        mTopView.setScaleX(0.9f);
-        mTopView.setScaleY(0.9f);
+        mTopViewHolder.mainView.setAlpha(0);
+        mTopViewHolder.mainView.setScaleX(0.9f);
+        mTopViewHolder.mainView.setScaleY(0.9f);
 
-        mCvMain.setVisibility(View.VISIBLE);
-        mLlPointsLayout.setVisibility(View.VISIBLE);
+        mTopViewHolder.mainView.setVisibility(View.VISIBLE);
 
-        mTopView.animate().alpha(1).scaleX(1).scaleY(1).setDuration(1000);
+        mTopViewHolder.mainView.animate().alpha(1).scaleX(1).scaleY(1).setDuration(1000);
     }
 
     private void checkQuestionType() {
@@ -575,6 +568,9 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
                         case QuestionType.NEITHER:
                             getCardAutoMover().startNeitherAnimation();
                             break;
+                        case QuestionType.POINTS:
+                            mTopViewHolder.tvPointsLabel.animate().alpha(1).setDuration(1000);
+                            break;
                     }
                 }
             }, 1500);
@@ -582,9 +578,15 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
     }
 
     private DGCardAutoMover getCardAutoMover() {
-        return new DGCardAutoMover(
-                mFlingCardListener.getFrame().findViewById(R.id.swipe_card_cv_main),
-                mFlingCardListener
-        );
+        return new DGCardAutoMover(mTopViewHolder.cvMainCard, mFlingCardListener,
+                new DGCardAutoMover.OnDGAutoMoverListener() {
+                    @Override
+                    public void onAnimationStarted() {}
+
+                    @Override
+                    public void onAnimationEnd() {
+                        mTopViewHolder.ivTouchPointer.animate().alpha(0).setDuration(500);
+                    }
+                });
     }
 }

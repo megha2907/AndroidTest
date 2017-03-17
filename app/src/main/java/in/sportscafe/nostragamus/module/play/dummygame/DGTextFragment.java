@@ -31,6 +31,7 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
         String CENTER_BOTTOM_TEXT = "centerBottomText";
         String ACTION1 = "action1";
         String ACTION2 = "action2";
+        String ACTION3 = "action3";
     }
 
     private TextView mTvTopText;
@@ -44,6 +45,8 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
     private Button mBtnAction1;
 
     private Button mBtnAction2;
+
+    private Button mBtnAction3;
 
     private OnDGTextActionListener mTextActionListener;
 
@@ -86,6 +89,9 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
         mBtnAction2 = (Button) findViewById(R.id.dummy_game_btn_action2);
         mBtnAction2.setOnClickListener(this);
 
+        mBtnAction3 = (Button) findViewById(R.id.dummy_game_btn_action3);
+        mBtnAction3.setOnClickListener(this);
+
         applyInstruction((DGInstruction) Parcels.unwrap(getArguments().getParcelable(BundleKeys.DUMMY_INSTRUCTION)));
     }
 
@@ -111,9 +117,15 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
                 break;
             case TextType.ACTION1:
                 textView = mBtnAction1;
+                textView.setTag(instruction.getActionType());
                 break;
             case TextType.ACTION2:
                 textView = mBtnAction2;
+                textView.setTag(instruction.getActionType());
+                break;
+            case TextType.ACTION3:
+                textView = mBtnAction3;
+                textView.setTag(instruction.getActionType());
                 break;
         }
 
@@ -132,9 +144,14 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
         switch (view.getId()) {
             case R.id.dummy_game_btn_action1:
             case R.id.dummy_game_btn_action2:
-                mTextActionListener.onActionClicked(((TextView) view).getText().toString());
+            case R.id.dummy_game_btn_action3:
+                mTextActionListener.onActionClicked(view.getTag().toString());
                 break;
         }
+    }
+
+    public void hideBottomText() {
+        mTvBottomText.animate().alpha(0).setDuration(1000);
     }
 
     private void animateView(TextView textView, DGAnimation animation) {
@@ -154,6 +171,6 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
     }
 
     public interface OnDGTextActionListener {
-        void onActionClicked(String actionText);
+        void onActionClicked(String actionType);
     }
 }

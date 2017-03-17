@@ -28,6 +28,8 @@ public class DGCardAutoMover {
 
     private static final long ANIMATION_DURATION = 500;
 
+    private OnDGAutoMoverListener mDGAutoMoverListener;
+
     private FlingCardListener mFlingCardListener;
 
     private View mViewToBeAnimated;
@@ -50,19 +52,20 @@ public class DGCardAutoMover {
 
     private int mTypeCount;
 
-    public DGCardAutoMover(View view, FlingCardListener flingCardListener) {
-        this.mViewToBeAnimated = view;
+    public DGCardAutoMover(View viewToBeAnimated, FlingCardListener flingCardListener, OnDGAutoMoverListener listener) {
+        this.mViewToBeAnimated = viewToBeAnimated;
         this.mFlingCardListener = flingCardListener;
+        this.mDGAutoMoverListener = listener;
 
-        float viewWidth = view.getMeasuredWidth();
-        mOldX = mCenterX = view.getX() + viewWidth / 2;
-        mMinX = mCenterX - viewWidth / 5;
-        mMaxX = mCenterX + viewWidth / 5;
+        float viewWidth = viewToBeAnimated.getMeasuredWidth();
+        mOldX = mCenterX = viewToBeAnimated.getX() + viewWidth / 2;
+        mMinX = mCenterX - viewWidth / 2;
+        mMaxX = mCenterX + viewWidth / 2;
 
-        float viewHeight = view.getMeasuredHeight();
-        mOldY = mCenterY = view.getY() + viewHeight / 2;
-        mMinY = mCenterY - viewHeight / 5;
-        mMaxY = mCenterY + viewHeight / 5;
+        float viewHeight = viewToBeAnimated.getMeasuredHeight();
+        mOldY = mCenterY = viewToBeAnimated.getY() + viewHeight / 2;
+        mMinY = mCenterY - viewHeight / 2;
+        mMaxY = mCenterY + viewHeight / 2;
 
         Log.d(TAG, "Before touch started --> " + mCenterX + ", " + mCenterY + ", " + mMinX + ", " + mMaxX);
     }
@@ -119,6 +122,7 @@ public class DGCardAutoMover {
 
         mFlingCardListener.onTouch(mViewToBeAnimated, motionEvent);
 
+        mDGAutoMoverListener.onAnimationStarted();
         Log.d(TAG, "Touch started");
     }
 
@@ -134,6 +138,7 @@ public class DGCardAutoMover {
 
         mFlingCardListener.onTouch(mViewToBeAnimated, motionEvent);
 
+        mDGAutoMoverListener.onAnimationEnd();
         Log.d(TAG, "Touch released");
     }
 
@@ -213,12 +218,15 @@ public class DGCardAutoMover {
         va.start();
     }
 
-    public void stopAnimate() {
-        destroyAll();
-    }
-
     private void destroyAll() {
         mViewToBeAnimated = null;
         mFlingCardListener = null;
+    }
+
+    public interface OnDGAutoMoverListener {
+
+        void onAnimationStarted();
+
+        void onAnimationEnd();
     }
 }

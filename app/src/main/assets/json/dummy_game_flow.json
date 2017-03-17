@@ -1,6 +1,6 @@
 [
   {
-    "name": "Let's play a game to help you \n understand the gameplay better",
+    "name": "Let's play a sample game to help you \n understand the gameplay better",
     "textType": "centerBottomText",
     "animation": {
       "start": 0,
@@ -13,8 +13,22 @@
     "type": "text"
   },
   {
-    "name": "Next",
+    "name": "Sounds great, Let's play!",
     "textType": "action1",
+    "actionType": "next",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 1,
+    "type": "text"
+  },
+  {
+    "name": "I'am an expert, no thanks!",
+    "textType": "action3",
+    "actionType": "exit",
     "animation": {
       "start": 0,
       "end": 1,
@@ -35,7 +49,7 @@
     "type": "text"
   },
   {
-    "name": "You may swipe Left or Right on the card to choose the correct option",
+    "name": "Swipe Left or Right on the card to choose your prediction",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -43,7 +57,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4000,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -51,12 +65,12 @@
     "question": {
       "question_id": 1,
       "match_id": 1,
-      "question_text": "Did India win the Cricket WC in 2011?",
-      "question_context": "Both India and Sri Lanka made it to the finals of the ICC World Cup in 2011. Did India manage to get the victory?",
-      "question_option_1": "No",
-      "question_image_1": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/4-dummygame.png",
-      "question_option_2": "Yes",
-      "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png"
+      "question_text": "How many runs will MS Dhoni score off the last ball in the 2011 WC ?",
+      "question_context": "12 Instances when MS Dhoni has finished off a successful chase with a six - nine times in ODIs and three times in T20Is. He has done it once in Tests and two times in IPL",
+      "question_option_1": "One",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_defence.jpg",
+      "question_option_2": "Six",
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_sixer.jpg"
     },
     "waitingTime": 1,
     "questionType": "leftright",
@@ -73,7 +87,7 @@
     "type": "text"
   },
   {
-    "name": "Some questions may have a 3rd option \n Swipe up, or click on the button to choose it",
+    "name": "Some questions have a 3rd option \n Swipe up, or click on the button below  to choose it",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -81,7 +95,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4000,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -89,13 +103,13 @@
     "question": {
       "question_id": 2,
       "match_id": 1,
-      "question_text": "Did India win the Cricket WC in 2011?",
-      "question_context": "Both India and Sri Lanka made it to the finals of the ICC World Cup in 2011. Did India manage to get the victory?",
-      "question_option_1": "No",
-      "question_image_1": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/4-dummygame.png",
-      "question_option_2": "Yes",
-      "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png",
-      "question_option_3": "Neither"
+      "question_text": "How many runs will MS Dhoni score off the last ball in the 2011 WC ?",
+      "question_context": "12 Instances when MS Dhoni has finished off a successful chase with a six - nine times in ODIs and three times in T20Is. He has done it once in Tests and two times in IPL.",
+      "question_option_1": "One",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_1run.jpg",
+      "question_option_2": "Two",
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_2runs.jpg",
+      "question_option_3": "Six!"
     },
     "waitingTime": 1,
     "questionType": "neither",
@@ -112,7 +126,7 @@
     "type": "text"
   },
   {
-    "name": "Questions have positive (+10) and negative (-4) points. Swipe to see how you scored!",
+    "name": "All questions have positive (+10) and negative (-4) points. Swipe to see how you scored!",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -120,7 +134,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4000,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -128,14 +142,14 @@
     "question": {
       "question_id": 3,
       "match_id": 1,
-      "question_text": "Did India win the Cricket WC in 2011?",
-      "question_context": "Both India and Sri Lanka made it to the finals of the ICC World Cup in 2011. Did India manage to get the victory?",
+      "question_text": "How many runs will MS Dhoni score off the last ball in the 2011 WC ?",
+      "question_context": "2 Instances when MS Dhoni has finished off a successful chase with a six - nine times in ODIs and three times in T20Is. He has done it once in Tests and two times in IPL",
       "question_points": 10,
       "question_neg_points": -4,
-      "question_option_1": "No",
-      "question_image_1": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/4-dummygame.png",
-      "question_option_2": "Yes",
-      "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png",
+      "question_option_1": "One",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_defence.jpg",
+      "question_option_2": "Six",
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_sixer.jpg",
       "question_answer": 2
     },
     "waitingTime": 1,
@@ -174,7 +188,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4000,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -186,19 +200,30 @@
     "question": {
       "question_id": 4,
       "match_id": 1,
-      "question_text": "Did India win the Cricket WC in 2011?",
-      "question_context": "Both India and Sri Lanka made it to the finals of the ICC World Cup in 2011. Did India manage to get the victory?",
+      "question_text": "How many runs will MS Dhoni score off the last ball in the 2011 WC ?",
+      "question_context": "12 Instances when MS Dhoni has finished off a successful chase with a six - nine times in ODIs and three times in T20Is. He has done it once in Tests and two times in IPL",
       "question_points": 10,
       "question_neg_points": -4,
-      "question_option_1": "No",
-      "question_image_1": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/4-dummygame.png",
-      "question_option_2": "Yes",
-      "question_image_2": "https://cdn-images.spcafe.in/img/es3/scGame/dummygame/5-dummygame.png",
+      "question_option_1": "One",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_defence.jpg",
+      "question_option_2": "Six",
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_sixer.jpg",
       "question_answer": 2
     },
     "waitingTime": 1000,
     "questionType": "powerups",
     "type": "question"
+  },
+  {
+    "textType": "topText",
+    "animation": {
+      "start": 1,
+      "end": 0,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 1,
+    "type": "text"
   },
   {
     "name": "Tap on a powerup to apply it to the question",
@@ -209,21 +234,14 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 1,
+    "waitingTime": 1000,
     "type": "text"
   },
   {
-    "textType": "topText",
-    "animation": {
-      "start": 1,
-      "end": 0.6,
-      "duration": 1000,
-      "type": "alpha"
-    },
-    "type": "text"
+    "type": "animatePowerup"
   },
   {
-    "name": "You just got (%1d) points for that answer with the help of Powerup.",
+    "name": "You just scored (%1d) points for that answer with the help of Powerup.",
     "textType": "centerTopText",
     "animation": {
       "start": 0,
@@ -236,7 +254,7 @@
     "type": "text"
   },
   {
-    "name": "And that's it! Easy as that! Now you can go ahead and play your next game",
+    "name": "Easy as that! Now you can go ahead and play your game or replay this one to try more powerups!",
     "textType": "centerBottomText",
     "animation": {
       "start": 0,
@@ -250,6 +268,7 @@
   {
     "name": "Try other powerups",
     "textType": "action1",
+    "actionType": "powerups",
     "animation": {
       "start": 0,
       "end": 1,
@@ -262,6 +281,7 @@
   {
     "name": "Ok, Got it!",
     "textType": "action2",
+    "actionType": "exit",
     "animation": {
       "start": 0,
       "end": 1,
