@@ -88,10 +88,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         holder.mIvChallengeImage.setImageUrl(challenge.getImage());
 
         try {
-            int mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getChallengeFee();
-            holder.mTvChallengePrice.setText("Paid - Rs." + mChallengeAmount);
+            int mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getPrizeMoney();
+            holder.mTvChallengePrice.setText("Worth Rs" + mChallengeAmount);
         } catch (Exception e) {
-            holder.mTvChallengePrice.setVisibility(View.INVISIBLE);
+            holder.mRlCashRewards.setVisibility(View.INVISIBLE);
         }
 
         Context context = holder.mIv2xPowerup.getContext();
@@ -176,6 +176,37 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         } else {
             holder.mRlTimer.setVisibility(View.GONE);
         }
+
+
+        String startTime = challenge.getStartTime();
+        long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                startTime,
+                DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                DateFormats.GMT
+        );
+
+        int dayOfMonthinStartTime = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
+
+
+        String endTime = challenge.getEndTime();
+        long endTimeMs = TimeUtils.getMillisecondsFromDateString(
+                endTime,
+                DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                DateFormats.GMT
+        );
+
+        int dayOfMonthinEndTime = Integer.parseInt(TimeUtils.getDateStringFromMs(endTimeMs, "d"));
+
+        // Setting date of the match
+        holder.mBtnTimeLeft.setText(
+                dayOfMonthinStartTime + AppSnippet.ordinalOnly(dayOfMonthinStartTime) + " " +
+                TimeUtils.getDateStringFromMs(startTimeMs, "MMM")
+                         + " to " + dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " " +
+                        TimeUtils.getDateStringFromMs(endTimeMs, "MMM")
+        );
+
+
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -188,6 +219,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         TextView mTvChallengeUserRank;
 
         TextView mTvTimerText;
+        Button mBtnTimeLeft;
         Button mTvChallengeDaysLeft;
         Button mTvChallengeHoursLeft;
         Button mTvChallengeMinsLeft;
@@ -209,11 +241,14 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         TextView mTvGamesLeftCount;
 
+        RelativeLayout mRlCashRewards;
+
         public ViewHolder(View V) {
             super(V);
             mMainView = V;
             mTvChallengeName = (TextView) V.findViewById(id.all_challenges_row_matchstage_tv);
             mTvChallengePrice = (CustomButton) V.findViewById(id.all_challenges_row_tv_price);
+            mBtnTimeLeft = (Button) V.findViewById(id.all_challenges_row_btn_time_left);
             mIvChallengeImage = (HmImageView) V.findViewById(id.all_challenges_row_iv_image);
             mIv2xPowerup = (ImageView) V.findViewById(id.powerups_iv_2x);
             mIvNonegsPowerup = (ImageView) V.findViewById(id.powerups_iv_nonegs);
@@ -232,6 +267,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlTimer = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_timer);
             mTvShowGames = (TextView) V.findViewById(id.all_challenges_row_tv_show_games);
             mRlShowGames = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_show_games);
+            mRlCashRewards = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_cash_rewards);
             mRlShowGames.setOnClickListener(this);
 
             V.findViewById(R.id.all_challenges_rl_leadboard).setOnClickListener(this);

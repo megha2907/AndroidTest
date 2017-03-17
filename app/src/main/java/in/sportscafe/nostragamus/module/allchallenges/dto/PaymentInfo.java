@@ -13,6 +13,9 @@ public class PaymentInfo {
     @JsonProperty("fee")
     private Integer challengeFee;
 
+    @JsonProperty("prize_money")
+    private Integer prizeMoney;
+
     @JsonProperty("fee")
     public Integer getChallengeFee() {
         return challengeFee;
@@ -22,5 +25,16 @@ public class PaymentInfo {
     public void setChallengeFee(Integer challengeFee) {
         this.challengeFee = challengeFee;
     }
+
+    @JsonProperty("prize_money")
+    public Integer getPrizeMoney() {
+        return prizeMoney;
+    }
+
+    @JsonProperty("prize_money")
+    public void setPrizeMoney(Integer prizeMoney) {
+        this.prizeMoney = prizeMoney;
+    }
+
 
 }
