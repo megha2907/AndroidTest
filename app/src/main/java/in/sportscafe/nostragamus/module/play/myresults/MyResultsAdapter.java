@@ -546,7 +546,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         else if (answerId == 0) {
             setTextColor(tvAnswer, R.color.tabcolor);
             tvotheroption.setVisibility(View.VISIBLE);
-            tvAnswerPoints.setText("---");
             tvAnswer.setText(question.getQuestionOption1());
             tvotheroption.setText(question.getQuestionOption2());
             setTextColor(tvAnswer, R.color.white_60);
@@ -556,6 +555,22 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 tvNeitherAnswer.setText(question.getQuestionOption3());
                 setTextColor(tvNeitherAnswer, R.color.white_60);
             }
+
+            if (question.getQuestionAnswer() == 1 || question.getQuestionAnswer() == 2) {
+                if (question.getQuestionAnswer() == 1) {
+                    tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+
+                } else {
+                    tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+                }
+            }
+
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                if (question.getQuestionAnswer() == 3) {
+                    tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+                }
+            }
+
 
         }
         //if your answer = correct answer

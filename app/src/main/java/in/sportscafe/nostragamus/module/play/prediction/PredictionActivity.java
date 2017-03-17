@@ -10,6 +10,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -108,8 +109,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     public void setContestName(String contestName, String matchStage) {
         ((TextView) findViewById(R.id.prediction_tv_contest_name)).setText(contestName);
         TextView tvMatchStage = (TextView) findViewById(R.id.prediction_tv_match_stage);
-        tvMatchStage.setVisibility(View.VISIBLE);
-        tvMatchStage.setText(matchStage);
+//        tvMatchStage.setVisibility(View.VISIBLE);
+//        tvMatchStage.setText(matchStage);q
     }
 
     @Override
@@ -440,13 +441,13 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void showFirstMatchCompletedPopUp() {
-        openPopup();
+    public void showPopUp(String popUpType) {
+        openPopup(popUpType);
     }
 
-    private void openPopup() {
+    private void openPopup(String popUpType) {
         Intent intent = new Intent(this, InAppPopupActivity.class);
-        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, Constants.InAppPopups.FIRST_MATCH_PLAYED);
+        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
         startActivity(intent);
     }
 

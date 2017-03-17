@@ -51,7 +51,7 @@ public class InAppPopupActivity extends AppCompatActivity implements View.OnClic
         } else if (inAppPopUpType.equals(Constants.InAppPopups.SECOND_MATCH_PLAYED_WITH_NO_POWERUP)) {
             inAppPopUpTitle = "Power Tip!";
             inAppPopUpBody = "A good thumb rule is to use 1 power-up of each kind per each game!";
-            inAppPopUpBtnTitle = "Check Powerups!";
+            inAppPopUpBtnTitle = "Ok! Got it!";
         } else if (inAppPopUpType.equals(Constants.InAppPopups.FIFTH_MATCH_PLAYED_WITH_NO_POWERUP)) {
             inAppPopUpTitle = "Power Tip!";
             inAppPopUpBody = "Power-ups are feeling left alone - use them to race ahead of your peers in the leaderboards";

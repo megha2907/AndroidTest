@@ -2,10 +2,12 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -40,6 +42,12 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             mPredictionView.setContestName(mPredictionModel.getContestName(),mPredictionModel.getMatchStage());
 
             checkShowStatusOfBankInfo();
+
+//            if (NostragamusDataHandler.getInstance().isPlayedFirstMatch()
+//                    && !NostragamusDataHandler.getInstance().isPowerUpApplied()){
+//                mPredictionView.showPopUp(Constants.InAppPopups.SECOND_MATCH_PLAYED_WITH_NO_POWERUP);
+//            }
+
         } else {
             mPredictionView.changeToDummyGameMode();
         }
@@ -63,8 +71,9 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onSuccessCompletion(Bundle bundle) {
         mPredictionView.navigateToFeed();
+
         if (!NostragamusDataHandler.getInstance().isPlayedFirstMatch()) {
-            mPredictionView.showFirstMatchCompletedPopUp();
+            mPredictionView.showPopUp(Constants.InAppPopups.FIRST_MATCH_PLAYED);
         }
     }
 
