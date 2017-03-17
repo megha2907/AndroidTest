@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.EventListener;
@@ -32,10 +33,10 @@ public class GetStartActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       //setContentView(R.layout.activity_getstarted);
+        //setContentView(R.layout.activity_getstarted);
 
         /*if (NostragamusDataHandler.getInstance().isInitialFeedbackFormShown()) {*/
-            handleGetStart();
+        handleGetStart();
         /*} else {
             navigateToForm();
         }*/
@@ -48,28 +49,27 @@ public class GetStartActivity extends Activity {
 //            }
 
             if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
-                if (null == NostragamusDataHandler.getInstance().getUserInfo().getUserNickName()
-                        || TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName())) {
+                if (NostragamusDataHandler.getInstance().isFirstTimeUser()) {
+                    Log.i("inside","newuser");
                     navigateToEditProfile();
                     return;
                 } else {
+                    Log.i("inside","home");
                     navigateToHome();
                     return;
                 }
             }
 
         } else if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
-            if (null == NostragamusDataHandler.getInstance().getUserInfo().getUserNickName()
-                    || TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName())) {
+            if (NostragamusDataHandler.getInstance().isFirstTimeUser()) {
+                Log.i("inside","newuser");
                 navigateToEditProfile();
                 return;
-            }
-            else {
+            } else {
                 navigateToSportSelection();
                 return;
             }
-        }
-        else {
+        } else {
             navigateToLogin();
         }
 
@@ -96,17 +96,16 @@ public class GetStartActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(GOOGLE_FORM_CODE == requestCode) {
+        if (GOOGLE_FORM_CODE == requestCode) {
             handleGetStart();
         }
     }
 
     private void autoSaveAllSports() {
-        new PreferenceManager().savePreference(Arrays.asList(new Integer[] {1,2,3,4,5,6,7,8,9,10}),
+        new PreferenceManager().savePreference(Arrays.asList(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}),
                 new SavePreferenceModelImpl.SavePreferenceModelListener() {
                     @Override
-                    public void onSuccess()
-                    {
+                    public void onSuccess() {
                     }
 
                     @Override
@@ -127,7 +126,7 @@ public class GetStartActivity extends Activity {
 
     private void navigateToEditProfile() {
         Intent intent = new Intent(this, EditProfileActivity.class);
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("screen", BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -136,7 +135,7 @@ public class GetStartActivity extends Activity {
 
     private void navigateToSportSelection() {
         Intent intent = new Intent(this, SportSelectionActivity.class);
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("screen", BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);
         startActivity(intent);

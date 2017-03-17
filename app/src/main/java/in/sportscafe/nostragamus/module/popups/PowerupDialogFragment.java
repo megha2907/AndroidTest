@@ -60,7 +60,7 @@ public class PowerupDialogFragment extends NostragamusDialogFragment {
 
             switch (powerUp) {
                 case Powerups.XX:
-                    powerUpView = getPowerUpView("Bonus Points", "Double the points scored for one question", R.drawable.powerup_2x_white, R.color.dodger_blue);
+                    powerUpView = getPowerUpView("Doubler", "Double the points scored for one question", R.drawable.powerup_2x_white, R.color.dodger_blue);
                     break;
                 case Powerups.NO_NEGATIVE:
                     powerUpView = getPowerUpView("No Negative", "Removes negative marking for one question", R.drawable.powerup_nonegs_white, R.color.amaranth);

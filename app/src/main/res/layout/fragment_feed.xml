@@ -50,7 +50,7 @@
         android:paddingBottom="@dimen/dp_2"
         android:paddingLeft="@dimen/dp_30"
         android:paddingRight="@dimen/dp_30"
-        android:text="Play Open Challenges"
+        android:text="Play Challenges"
         android:textAllCaps="false"
         android:layout_centerVertical="true"
         android:textColor="@color/white"

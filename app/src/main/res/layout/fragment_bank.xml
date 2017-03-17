@@ -91,7 +91,7 @@
                     android:layout_below="@+id/powerup_sl_nonegs"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="@dimen/dp_10"
-                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginLeft="@dimen/dp_30"
                     android:layout_marginRight="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_8"
                     android:gravity="center_horizontal"
@@ -139,7 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp_10"
-                        android:text="Bonus Points"
+                        android:text="Doubler"
                         android:textColor="@color/white_60"
                         android:textSize="@dimen/dp_12"
                         app:typeface="lato_light" />

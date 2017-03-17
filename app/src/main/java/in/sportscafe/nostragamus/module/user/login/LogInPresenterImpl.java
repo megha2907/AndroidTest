@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 
@@ -63,7 +64,7 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
     public void onLoginCompleted() {
         mLogInView.hideProgressDialog();
 
-        if (null == NostragamusDataHandler.getInstance().getUserInfo().getUserNickName()) {
+        if (NostragamusDataHandler.getInstance().isFirstTimeUser()) {
             mLogInView.navigateToEditProfile();
         } else {
             mLogInView.navigateToHome();

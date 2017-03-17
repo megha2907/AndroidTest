@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 
@@ -95,10 +96,29 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         if (bundle.containsKey(BundleKeys.CHALLENGE_INFO)) {
             mChallegeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_INFO));
 
-            HashMap<String, Integer> powerUpMap = mChallegeInfo.getChallengeUserInfo().getPowerUps();
-            m2xPowerups = powerUpMap.get(Powerups.XX);
-            mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
-            mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
+            HashMap<String, Integer> userPowerUpMap = mChallegeInfo.getChallengeUserInfo().getPowerUps();
+            m2xPowerups = userPowerUpMap.get(Powerups.XX);
+            mNonegsPowerups = userPowerUpMap.get(Powerups.NO_NEGATIVE);
+            mPollPowerups = userPowerUpMap.get(Powerups.AUDIENCE_POLL);
+
+//            HashMap<String, Integer> initialPowerUpMap = mChallegeInfo.getChallengeInfo().getPowerUps();
+//
+//            if (null != initialPowerUpMap.get(Powerups.XX)) {
+//
+//                Integer mIl2xPowerups = initialPowerUpMap.get(Powerups.XX);
+//                Integer mIlNonegsPowerups = initialPowerUpMap.get(Powerups.NO_NEGATIVE);
+//                Integer mIlPollPowerups = initialPowerUpMap.get(Powerups.AUDIENCE_POLL);
+//
+//                int m2xPowerUpPercent = (m2xPowerups * 100) / mIl2xPowerups;
+//                int mNonegsPercent = (mNonegsPowerups * 100) / mIlNonegsPowerups;
+//                int mPollPercent = (mPollPowerups * 100) / mIlPollPowerups;
+//
+//                if (m2xPowerUpPercent < 25 || mNonegsPercent < 25 || mPollPercent < 25){
+//                    mPredictionModelListener.showPowerUpCountLessPopUp();
+//                }
+//
+//            }
+
         }
 
         NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.STARTED);
@@ -504,8 +524,9 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.COMPLETED);
 
                 Bundle bundle = new Bundle();
-                bundle.putInt(BundleKeys.TOURNAMENT_ID, mMyResult.getTournamentId());
-                bundle.putString(BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
+                bundle.putInt(BundleKeys.CHALLENGE_ID, mMyResult.getChallengeId());
+                bundle.putString(BundleKeys.CHALLENGE_NAME, mMyResult.getChallengeName());
+                bundle.putString(BundleKeys.CHALLENGE_PHOTO, mMyResult.getChallengeImgUrl());
                 mPredictionModelListener.onSuccessCompletion(bundle);
             }
         }
@@ -590,5 +611,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         boolean onApiCallStopped();
 
         void onNoPowerUps();
+
+        void showPowerUpCountLessPopUp();
     }
 }
