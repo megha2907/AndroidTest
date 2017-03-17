@@ -70,18 +70,14 @@
     <string name="empty_leaderboard">Leaderboards will appear once you have \n made some predictions!</string>
     <string name="empty_results">You can view your results and details here after \n you have played any matches from the Open challenges</string>
 
-    <string-array name="onboard_titles">
-        <item>How to play?</item>
-        <item>Join public challenges</item>
-        <item>Predict match events</item>
-        <item>War with Friends</item>
-    </string-array>
+    <string name="ob_how_play_title">How to play?</string>
+    <string name="ob_join_challenge_title">Join public challenges</string>
+    <string name="ob_predict_match_title">Predict match events</string>
+    <string name="ob_war_friends_title">War with Friends</string>
 
-    <string-array name="onboard_descs">
-        <item>Swipe right to know more</item>
-        <item>Compete for fun, or win cash</item>
-        <item>Read in-game stats. Swipe to predict</item>
-        <item>Create you own private leagues</item>
-    </string-array>
+    <string name="ob_how_play_desc">Swipe right to know more</string>
+    <string name="ob_join_challenge_desc">Compete for fun, or win cash</string>
+    <string name="ob_predict_match_desc">Read in-game stats. Swipe to predict</string>
+    <string name="ob_war_friends_desc">Create you own private leagues</string>
 
 </resources>

@@ -86,7 +86,7 @@ public class AvatarFragment extends NostragamusFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_onboard, container, false);
+        return inflater.inflate(R.layout.fragment_avatar, container, false);
     }
 
     @Override
@@ -94,8 +94,8 @@ public class AvatarFragment extends NostragamusFragment {
         super.onActivityCreated(savedInstanceState);
 
         if (null == savedInstanceState) {
-            mOnboardTitles = getResources().getStringArray(R.array.onboard_titles);
-            mOnboardDescs = getResources().getStringArray(R.array.onboard_descs);
+            mOnboardTitles = new String[4];
+            mOnboardDescs = new String[4];
 
             initScreenDimension();
 
