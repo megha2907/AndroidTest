@@ -323,4 +323,12 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public void setVisitedLeaderBoards(boolean visitedLeaderBoards) {
         setSharedBooleanData(SharedKeys.VISITED_LEADERBOARDS, visitedLeaderBoards);
     }
+
+    public boolean isPowerUpApplied() {
+        return getSharedBooleanData(SharedKeys.POWERUP_APPLIED, false);
+    }
+
+    public void setPowerUpApplied(boolean powerUpApplied) {
+        setSharedBooleanData(SharedKeys.POWERUP_APPLIED, powerUpApplied);
+    }
 }

@@ -108,7 +108,6 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
 
         setTopView();
 
-
     }
 
     @Override

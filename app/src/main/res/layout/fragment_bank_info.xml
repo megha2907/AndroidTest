@@ -85,7 +85,7 @@
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Refer friend and get more powerups\nadded to your powerup bank"
+                android:text="Refer friends from profile screen and get more \npowerups added to your powerup bank"
                 android:textColor="@color/white_80"
                 android:textSize="@dimen/dp_12"
                 app:typeface="lato_light" />
