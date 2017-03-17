@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:background="@color/challenges_card_color"
     android:paddingLeft="@dimen/dp_6"
     android:paddingRight="@dimen/dp_6">
 
@@ -223,24 +224,45 @@
 
                 </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/all_challenges_row_rl_cash_rewards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/all_challenges_row_iv_image"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_toRightOf="@+id/all_challenges_row_rl_timer">
+
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/all_challenges_row_tv_price"
+                    android:id="@+id/all_challenges_row_tv_rewards_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/all_challenges_row_iv_image"
-                    android:layout_marginRight="@dimen/dp_100"
-                    android:layout_marginTop="@dimen/dp_6"
+                    android:text="CASH REWARDS"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_12"
-                    android:visibility="gone"
-                    app:typeface="lato_regular" />
+                    android:textSize="@dimen/dp_10"
+                    app:typeface="lato_light" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/all_challenges_row_tv_price"
+                    android:layout_width="@dimen/dp_110"
+                    android:layout_height="@dimen/dp_32"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp_1"
+                    android:textColor="#104468"
+                    android:textSize="@dimen/dp_10"
+                    android:text="Worth Rs.3000"
+                    android:textAllCaps="false"
+                    android:layout_below="@+id/all_challenges_row_tv_rewards_txt"
+                    android:visibility="visible"
+                    android:background="@drawable/rewards_btn_bg"
+                    app:typeface="lato_light" />
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/all_challenges_row_rl_timer"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dp_180"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_below="@+id/all_challenges_row_iv_image"
                     android:layout_marginTop="@dimen/dp_6"
                     android:layout_toRightOf="@+id/all_challenges_row_powerup_rl">
@@ -251,7 +273,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/all_challenges_row_btn_days_left"
                         android:text="ENDS IN"
-                        android:layout_alignParentRight="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_10"
                         app:typeface="lato_light" />

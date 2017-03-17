@@ -46,7 +46,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         }
     }
 
-    private void showPopUp() {
+   private void showPopUp() {
 
         if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 1
                 && !NostragamusDataHandler.getInstance().isPowerUpApplied()
@@ -248,5 +248,10 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onNoPowerUps() {
         onClickBankTransfer();
+    }
+
+    @Override
+    public void showPowerUpCountLessPopUp() {
+        mPredictionView.showPopUp(Constants.InAppPopups.LESS_POWERUPS);
     }
 }

@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.ShadowLayout;
+import com.jeeva.android.widgets.customfont.CustomButton;
 
 import org.parceler.Parcels;
 
@@ -180,7 +181,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         View mMainView;
-        TextView mTvChallengePrice;
+        CustomButton mTvChallengePrice;
         TextView mTvChallengeName;
         HmImageView mIvChallengeImage;
 
@@ -212,7 +213,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             super(V);
             mMainView = V;
             mTvChallengeName = (TextView) V.findViewById(id.all_challenges_row_matchstage_tv);
-            mTvChallengePrice = (TextView) V.findViewById(id.all_challenges_row_tv_price);
+            mTvChallengePrice = (CustomButton) V.findViewById(id.all_challenges_row_tv_price);
             mIvChallengeImage = (HmImageView) V.findViewById(id.all_challenges_row_iv_image);
             mIv2xPowerup = (ImageView) V.findViewById(id.powerups_iv_2x);
             mIvNonegsPowerup = (ImageView) V.findViewById(id.powerups_iv_nonegs);
