@@ -52,6 +52,8 @@ public class NostragamusAnalytics {
 
     private AmplitudeClient mAmplitude;
 
+    private boolean mAppOpeningTracked = false;
+
     public NostragamusAnalytics init(Context context, boolean optOut) {
         GoogleAnalytics ga = GoogleAnalytics.getInstance(context);
         ga.setAppOptOut(optOut);
@@ -73,6 +75,27 @@ public class NostragamusAnalytics {
         }
 
         return this;
+    }
+
+    /**
+     * track app opening
+     *
+     * @param openingFrom - launcher, notification
+     */
+    public void trackAppOpening(String openingFrom) {
+        if(!mAppOpeningTracked) {
+            track(AnalyticsCategory.APP_OPENING, null, openingFrom, null);
+            mAppOpeningTracked = true;
+        }
+    }
+
+    /**
+     * track app sharing
+     *
+     * @param sharingFrom - Group, Profile
+     */
+    public void trackReferralAction(String sharingFrom) {
+        track(AnalyticsCategory.REFERRAL_ACTION, null, sharingFrom, null);
     }
 
     /**
@@ -107,6 +130,15 @@ public class NostragamusAnalytics {
      */
     public void trackDummyGame(String actions, long numberOfScreens) {
         track(AnalyticsCategory.DUMMY_GAME, actions, AnalyticsLabels.SCREENS_SEEN, numberOfScreens);
+    }
+
+    /**
+     * track bank transfer start and end
+     *
+     * @param actions - Started, Successful
+     */
+    public void trackPowerBank(String actions) {
+        track(AnalyticsCategory.POWER_BANK, actions, null, null);
     }
 
     /**

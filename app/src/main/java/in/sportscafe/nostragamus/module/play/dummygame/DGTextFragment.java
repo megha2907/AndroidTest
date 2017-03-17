@@ -150,6 +150,10 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
         }
     }
 
+    public void showBottomText() {
+        mTvBottomText.animate().alpha(1).setDuration(1000);
+    }
+
     public void hideBottomText() {
         mTvBottomText.animate().alpha(0).setDuration(1000);
     }

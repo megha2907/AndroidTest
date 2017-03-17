@@ -32,4 +32,6 @@ public interface DGPlayView extends InAppView {
     void hidePowerups();
 
     void onPlayDone(Integer scoredPoints);
+
+    void onRemovingPowerUps();
 }

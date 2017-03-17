@@ -13,11 +13,9 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -69,6 +67,7 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
             @Override
             public void onClick(View view) {
                 dismissPowerUpAnimation(view);
+                mModelListener.onRemovingPowerUps();
             }
         }, questionType);
         mPredictionAdapter.add(question);
@@ -197,12 +196,12 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
 
     @Override
     public boolean needLeftSwipe() {
-        return true;
+        return !mNeitherOptionAvailable;
     }
 
     @Override
     public boolean needRightSwipe() {
-        return true;
+        return !mNeitherOptionAvailable;
     }
 
     @Override
@@ -329,5 +328,7 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
         void onGetPowerUpDetails();
 
         void onNoPowerUps();
+
+        void onRemovingPowerUps();
     }
 }

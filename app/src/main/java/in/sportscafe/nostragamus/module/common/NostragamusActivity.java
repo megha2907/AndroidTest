@@ -17,13 +17,12 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.popups.PopUp;
 import in.sportscafe.nostragamus.module.popups.PopUpActivity;
 import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
@@ -41,7 +40,6 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
 
     private String mScreenName;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +48,8 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
         checkAnyUpdate();
 
         PopUpModelImpl.newInstance(this).getPopUps(getScreenName());
+
+        NostragamusAnalytics.getInstance().trackAppOpening(AnalyticsLabels.NOTIFICATION);
     }
 
     private void checkAnyUpdate() {

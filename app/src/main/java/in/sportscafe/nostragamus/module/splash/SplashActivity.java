@@ -8,10 +8,13 @@ import com.jeeva.android.Log;
 
 import java.util.HashMap;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import io.branch.indexing.BranchUniversalObject;
@@ -28,6 +31,8 @@ public class SplashActivity extends Activity {
 
         // To get the updated app settings like version details
         Nostragamus.getInstance().startPeriodJobs();
+
+        NostragamusAnalytics.getInstance().trackAppOpening(AnalyticsLabels.LAUNCHER);
     }
 
     @Override

@@ -2,6 +2,10 @@ package in.sportscafe.nostragamus.module.bank;
 
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+
 /**
  * Created by Jeeva on 01/03/17.
  */
@@ -28,6 +32,8 @@ public class BankPresenterImpl implements BankPrensenter, BankModelImpl.OnBankMo
     @Override
     public void onClickReferFriend() {
         mBankView.navigateToReferFriend();
+
+        NostragamusAnalytics.getInstance().trackReferralAction(AnalyticsLabels.GROUP);
     }
 
     @Override
