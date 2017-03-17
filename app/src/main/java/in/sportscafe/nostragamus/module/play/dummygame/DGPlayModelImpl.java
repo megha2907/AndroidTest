@@ -47,8 +47,6 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
 
     public DGPlayModelImpl(OnDummyGamePlayModelListener predictionModelListener) {
         this.mModelListener = predictionModelListener;
-
-        NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.STARTED);
     }
 
     public static DGPlayModel newInstance(OnDummyGamePlayModelListener predictionModelListener) {

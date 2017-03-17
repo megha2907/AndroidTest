@@ -10,9 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.play.dummygame.DGAnimation.AnimationType;
 import in.sportscafe.nostragamus.module.play.dummygame.DGTextFragment.TextType;
@@ -38,7 +39,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     private List<DGInstruction> mInstructionList;
 
-    private int mLastReadInstruction = -1;
+    private int mLastReadInstruction = 0;
 
     private DGPlayFragment mDummyGamePlayFragment;
 
@@ -58,6 +59,8 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dummy_game);
 
+        NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.STARTED);
+
         mInstructionList = getDummyGameInstructions();
         if (null != mInstructionList) {
             readNextInstruction();
@@ -65,8 +68,8 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     }
 
     private void readNextInstruction() {
-        if (mLastReadInstruction + 1 < mInstructionList.size()) {
-            handleInstruction(mInstructionList.get(++mLastReadInstruction));
+        if (mLastReadInstruction < mInstructionList.size()) {
+            handleInstruction(mInstructionList.get(mLastReadInstruction++));
         } else {
             onBackPressed();
         }
@@ -85,7 +88,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
                 addDummyPlay(instruction.getQuestion(), instruction.getQuestionType());
                 break;
             case InstructionType.POWERUP:
-                mPowerUpsInstructionPos = mLastReadInstruction;
+                mPowerUpsInstructionPos = mLastReadInstruction - 1;
                 addDummyPlay(instruction.getQuestion(), instruction.getQuestionType());
                 break;
             case InstructionType.ANIMATE_POWERUP:
@@ -186,7 +189,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
                 readNextInstruction();
                 break;
             case ActionType.GOTO_POWERUPS:
-                mLastReadInstruction = mPowerUpsInstructionPos - 2;
+                mLastReadInstruction = mPowerUpsInstructionPos - 1;
                 readNextInstruction();
                 break;
             case ActionType.EXIT:
@@ -240,5 +243,15 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     private FragmentTransaction getFragmentTransaction() {
         return getSupportFragmentManager().beginTransaction();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mLastReadInstruction == mInstructionList.size()) {
+            NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.COMPLETED);
+        } else {
+            NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.SKIPPED, mLastReadInstruction);
+        }
+        super.onBackPressed();
     }
 }
