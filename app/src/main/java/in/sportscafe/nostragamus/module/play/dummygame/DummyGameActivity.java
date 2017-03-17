@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.ScreenNames;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.play.dummygame.DGAnimation.AnimationType;
@@ -37,7 +38,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     private List<DGInstruction> mInstructionList;
 
-    private int mLastReadInstruction = 0;
+    private int mLastReadInstruction = -1;
 
     private DGPlayFragment mDummyGamePlayFragment;
 

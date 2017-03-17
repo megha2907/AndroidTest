@@ -10,7 +10,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,7 +25,7 @@ import in.sportscafe.nostragamus.module.coachmarker.TargetView;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.play.dummygame.DGTextFragment;
+import in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
@@ -35,8 +34,10 @@ import in.sportscafe.nostragamus.module.popups.PowerupDialogFragment;
 import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
+public class PredictionActivity extends NostragamusActivity implements PredictionView,
+        View.OnClickListener, DialogInterface.OnDismissListener {
 
-public class PredictionActivity extends NostragamusActivity implements PredictionView, View.OnClickListener, DialogInterface.OnDismissListener {
+    private final static int DUMMY_GAME_REQUEST_CODE = 45;
 
     private RelativeLayout mRlPlayBg;
 
@@ -153,9 +154,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             case R.id.prediction_ibtn_back:
                 mPredictionPresenter.onClickBack();
                 break;
-            case R.id.prediction_tv_skip:
-                mPredictionPresenter.onClickSkip();
-                break;
             case R.id.prediction_iv_shuffle:
                 mSwipeFlingAdapterView.getTopCardListener().selectBottom();
                 break;
@@ -260,37 +258,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mPredictionPresenter.onClickBack();
     }
 
-    private DGTextFragment mDummyGameFragment;
-
-    @Override
-    public void changeToDummyGameMode() {
-        findViewById(R.id.prediction_tv_skip).setVisibility(View.VISIBLE);
-        findViewById(R.id.prediction_ibtn_back).setVisibility(View.GONE);
-        findViewById(R.id.prediction_iv_left_arrow).setVisibility(View.INVISIBLE);
-        findViewById(R.id.prediction_iv_right_arrow).setVisibility(View.INVISIBLE);
-        findViewById(R.id.prediction_iv_shuffle).setVisibility(View.INVISIBLE);
-        findViewById(R.id.powerups_iv_bank).setVisibility(View.GONE);
-        findViewById(R.id.powerups_iv_info).setVisibility(View.GONE);
-
-        mVgPlayPage.setVisibility(View.INVISIBLE);
-
-        mDummyGameFragment = DGTextFragment.newInstance(null);
-        getSupportFragmentManager().beginTransaction().replace(R.id.prediction_fl_dummy_holder, mDummyGameFragment).commit();
-    }
-
-    @Override
-    public void showDummyGameInfo() {
-        mVgPlayPage.setVisibility(View.INVISIBLE);
-        findViewById(R.id.prediction_fl_dummy_holder).setVisibility(View.VISIBLE);
-        findViewById(R.id.prediction_tv_skip).setVisibility(View.GONE);
-    }
-
-    @Override
-    public void hideDummyGameInfo() {
-        mVgPlayPage.setVisibility(View.VISIBLE);
-        findViewById(R.id.prediction_fl_dummy_holder).setVisibility(View.INVISIBLE);
-    }
-
     @Override
     public void enableLeftRightOptions() {
         setLeftRightOption(true, 1f);
@@ -358,6 +325,19 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public void navigateToDummyGame() {
+        startActivityForResult(new Intent(this, DummyGameActivity.class), DUMMY_GAME_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(DUMMY_GAME_REQUEST_CODE == requestCode) {
+            mPredictionPresenter.onGetDummyGameResult();
+        }
     }
 
     private TourGuide mCoachMarker;
@@ -472,10 +452,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(mDummyGameStartReceiver,
-                new IntentFilter(IntentActions.ACTION_DUMMY_GAME_PLAY));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mDummyGameEndReceiver,
-                new IntentFilter(IntentActions.ACTION_DUMMY_GAME_PROCEED));
         LocalBroadcastManager.getInstance(this).registerReceiver(mPowerUpUpdatedReceiver,
                 new IntentFilter(IntentActions.ACTION_POWERUPS_UPDATED));
     }
@@ -483,25 +459,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void onStop() {
         super.onStop();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mDummyGameStartReceiver);
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mDummyGameEndReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mPowerUpUpdatedReceiver);
     }
-
-    BroadcastReceiver mDummyGameStartReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            hideDummyGameInfo();
-            mPredictionPresenter.onDummyGameStart();
-        }
-    };
-
-    BroadcastReceiver mDummyGameEndReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            mPredictionPresenter.onDummyGameEnd();
-        }
-    };
 
     BroadcastReceiver mPowerUpUpdatedReceiver = new BroadcastReceiver() {
         @Override

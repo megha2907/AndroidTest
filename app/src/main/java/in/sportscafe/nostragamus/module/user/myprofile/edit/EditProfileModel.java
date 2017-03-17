@@ -21,6 +21,4 @@ public interface EditProfileModel {
     void updateProfilePhoto(File file, String filepath, String filename);
 
     UserInfo getUserInfo();
-
-    Bundle getDummyGameData();
 }

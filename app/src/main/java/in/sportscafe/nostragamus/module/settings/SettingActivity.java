@@ -17,10 +17,9 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.WebViewActivity;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
-import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.user.referral.ReferralActivity;
 
@@ -146,9 +145,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void navigateToDummyGame() {
-        Intent intent = new Intent(this, PredictionActivity.class);
-        intent.putExtra(Constants.BundleKeys.FROM_SETTINGS, true);
-        intent.putExtra(Constants.BundleKeys.IS_DUMMY_GAME, true);
+        Intent intent = new Intent(this, DummyGameActivity.class);
         startActivity(intent);
     }
 

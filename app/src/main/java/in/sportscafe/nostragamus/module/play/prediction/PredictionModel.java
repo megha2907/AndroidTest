@@ -3,13 +3,10 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.content.Context;
 import android.os.Bundle;
 
-import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
-
-import static android.R.attr.x;
 
 /**
  * Created by Jeeva on 20/5/16.
@@ -17,10 +14,6 @@ import static android.R.attr.x;
 public interface PredictionModel {
 
     void init(Bundle bundle);
-
-    boolean isDummyGame();
-
-    void getDummyGameQuestions();
 
     String getTournamentName();
 
@@ -50,13 +43,13 @@ public interface PredictionModel {
 
     void applyPollPowerup();
 
-    boolean isFromSettings();
-
-    void onSkippingDummyGame();
-
     boolean isAnyQuestionAnswered();
 
     Bundle getChallengeInfoBundle();
 
     void updateChallengeInfoValues(Bundle bundle);
+
+    boolean isDummyGameShown();
+
+    void onDummyGameShown();
 }

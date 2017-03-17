@@ -1,8 +1,6 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import java.util.List;
@@ -36,23 +34,23 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     public void onCreatePrediction(Bundle bundle) {
         mPredictionModel.init(bundle);
 
-        if (!mPredictionModel.isDummyGame()) {
-            mPredictionModel.getAllQuestions();
 
-            mPredictionView.setContestName(mPredictionModel.getContestName(),mPredictionModel.getMatchStage());
+        mPredictionView.setContestName(mPredictionModel.getContestName(), mPredictionModel.getMatchStage());
 
-            checkShowStatusOfBankInfo();
+        checkShowStatusOfBankInfo();
 
 //            if (NostragamusDataHandler.getInstance().isPlayedFirstMatch()
 //                    && !NostragamusDataHandler.getInstance().isPowerUpApplied()){
 //                mPredictionView.showPopUp(Constants.InAppPopups.SECOND_MATCH_PLAYED_WITH_NO_POWERUP);
 //            }
 
-        } else {
-            mPredictionView.changeToDummyGameMode();
-        }
-
         updatePowerups();
+
+        if(mPredictionModel.isDummyGameShown()) {
+            mPredictionModel.getAllQuestions();
+        } else {
+            mPredictionView.navigateToDummyGame();
+        }
     }
 
     private void checkShowStatusOfBankInfo() {
@@ -108,32 +106,12 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     }
 
     @Override
-    public void onDummyGameStart() {
-        mPredictionModel.getDummyGameQuestions();
-    }
-
-    @Override
-    public void onDummyGameEnd() {
-        checkWhereToGo();
-    }
-
-    @Override
     public void onClickBack() {
-        if (!mPredictionModel.isDummyGame()) {
-            if (mPredictionModel.isAnyQuestionAnswered()) {
-                mPredictionView.navigateToFeed();
-            } else {
-                mPredictionView.goBack();
-            }
-        } else if (!mPredictionView.dismissCoach()) {
-            checkWhereToGo();
+        if (mPredictionModel.isAnyQuestionAnswered()) {
+            mPredictionView.navigateToFeed();
+        } else {
+            mPredictionView.goBack();
         }
-    }
-
-    @Override
-    public void onClickSkip() {
-        mPredictionModel.onSkippingDummyGame();
-        onClickBack();
     }
 
     @Override
@@ -157,12 +135,10 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         updatePowerups();
     }
 
-    private void checkWhereToGo() {
-        if (mPredictionModel.isFromSettings()) {
-            mPredictionView.goBack();
-        } else {
-            mPredictionView.navigateToHome();
-        }
+    @Override
+    public void onGetDummyGameResult() {
+        mPredictionModel.onDummyGameShown();
+        mPredictionModel.getAllQuestions();
     }
 
     @Override
@@ -185,34 +161,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             mPredictionView.hideNeither();
         }
         mPredictionView.setNeitherOption(question.getQuestionOption3());
-
-        if (mPredictionModel.isDummyGame()) {
-            handleDummyGameQuestionChange(question.getQuestionNumber());
-        }
-    }
-
-    private void handleDummyGameQuestionChange(int questionNumber) {
-        if (questionNumber == 1) {
-            mPredictionView.hideNeither();
-            mPredictionView.hidePowerups();
-
-            mPredictionView.showLeftRightCoach();
-            mPredictionView.showLeftRightIndicator();
-        } else if (questionNumber == 2) {
-            mPredictionView.showNeither();
-            mPredictionView.disableLeftRightOptions();
-
-            mPredictionView.showNeitherIndicator();
-            mPredictionView.showNeitherCoach();
-        } else if (questionNumber == 3) {
-            mPredictionView.enableLeftRightOptions();
-            mPredictionView.showPowerups();
-
-            mPredictionView.showPowerupsHint();
-            mPredictionView.showPowerupsCoach();
-        } else if (questionNumber == 4) {
-//            mPredictionView.hidePowerupsHint();
-        }
     }
 
     @Override
@@ -281,11 +229,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     public void noInternetOnPostingAnswer() {
         mPredictionView.showMessage(Alerts.NO_NETWORK_CONNECTION);
         onClickBack();
-    }
-
-    @Override
-    public void onDummyGameCompletion() {
-        mPredictionView.showDummyGameInfo();
     }
 
     @Override
