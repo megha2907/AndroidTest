@@ -188,13 +188,6 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
         updatePowerUpDetails(viewHolder, question);
 
-        if (null != mQuestionType && (QuestionType.LEFT_RIGHT.equalsIgnoreCase(mQuestionType)
-                || QuestionType.NEITHER.equalsIgnoreCase(mQuestionType))) {
-            viewHolder.ivTouchPointer.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.ivTouchPointer.setVisibility(View.GONE);
-        }
-
         return convertView;
     }
 
@@ -554,6 +547,18 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         mTopViewHolder.mainView.setVisibility(View.VISIBLE);
 
         mTopViewHolder.mainView.animate().alpha(1).scaleX(1).scaleY(1).setDuration(1000);
+
+        if (null != mQuestionType && (QuestionType.LEFT_RIGHT.equalsIgnoreCase(mQuestionType)
+                || QuestionType.NEITHER.equalsIgnoreCase(mQuestionType))) {
+
+            mTopViewHolder.cvMainCard.setEnabled(false);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mTopViewHolder.ivTouchPointer.animate().alpha(1).setDuration(500);
+                }
+            }, 1000);
+        }
     }
 
     private void checkQuestionType() {
@@ -569,7 +574,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
                             getCardAutoMover().startNeitherAnimation();
                             break;
                         case QuestionType.POINTS:
-                            mTopViewHolder.tvPointsLabel.animate().alpha(1).setDuration(1000);
+//                            mTopViewHolder.tvPointsLabel.animate().alpha(1).setDuration(1000);
                             break;
                     }
                 }
@@ -585,6 +590,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
                     @Override
                     public void onAnimationEnd() {
+                        mTopViewHolder.cvMainCard.setEnabled(true);
                         mTopViewHolder.ivTouchPointer.animate().alpha(0).setDuration(500);
                     }
                 });

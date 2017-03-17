@@ -161,25 +161,25 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     public void on2xApplied() {
         mDummyGameTextFragment.hideBottomText();
 //        addDummyText(getPowerUpInstruction("You just used a 2x powerup.\nSwipe to confirm your answer!"));
-        addDummyText(getPowerUpInstruction("You have just used a Double X powerup. It doubles " +
-                "the points for any question!\n" +
-                "Swipe to confirm your answer!"));
+        addDummyText(getPowerUpInstruction("You used a Doubler powerup - this doubles the points you gain (or lose!).\nNow swipe to make a prediction."));
     }
 
     @Override
     public void onNonegsApplied() {
         mDummyGameTextFragment.hideBottomText();
-        addDummyText(getPowerUpInstruction("You have just used a No Negative powerup. It cuts down " +
-                "the negative marking for any question!\n" +
-                "Swipe to confirm your answer!"));
+        addDummyText(getPowerUpInstruction("You used a No-Negatives powerup -  this means you won’t lose points for a wrong prediction!\nNow swipe to make a prediction."));
     }
 
     @Override
     public void onPollApplied() {
         mDummyGameTextFragment.hideBottomText();
-        addDummyText(getPowerUpInstruction("You have just used an Audience poll. It will tell" +
-                "you how others have answered this question\n" +
-                "Swipe to confirm your answer!"));
+        addDummyText(getPowerUpInstruction("You used an Audience Poll - this tells you how other players have answered this question.\nNow swipe to make a prediction."));
+    }
+
+    @Override
+    public void onRemovingPowerUps() {
+        mDummyGameTextFragment.showBottomText();
+        addDummyText(getRemovePowerUpInstruction());
     }
 
     @Override
@@ -213,6 +213,21 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
         animation.setType(AnimationType.ALPHA);
         animation.setStart(0);
         animation.setEnd(1);
+        animation.setDuration(1500);
+
+        instruction.setAnimation(animation);
+        return instruction;
+    }
+
+    private DGInstruction getRemovePowerUpInstruction() {
+        DGInstruction instruction = new DGInstruction();
+        instruction.setTextType(TextType.TOP_TEXT);
+        instruction.setType(InstructionType.TEXT);
+
+        DGAnimation animation = new DGAnimation();
+        animation.setType(AnimationType.ALPHA);
+        animation.setStart(1);
+        animation.setEnd(0);
         animation.setDuration(1000);
 
         instruction.setAnimation(animation);

@@ -7,7 +7,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +15,7 @@ import org.parceler.Parcels;
 import java.util.HashMap;
 
 import in.sportscafe.nostragamus.Constants.Alerts;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.Powerups;
@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.popups.banktransfer.BankTranferApiModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -71,6 +72,8 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        NostragamusAnalytics.getInstance().trackPowerBank(AnalyticsActions.STARTED);
 
         initViews();
 
@@ -210,6 +213,8 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
 
 //                showMessage(Alerts.BANK_TRANSFER_SUCCESS);
                 dismiss();
+
+                NostragamusAnalytics.getInstance().trackPowerBank(AnalyticsActions.COMPLETED);
             }
 
             @Override
@@ -224,6 +229,8 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
                 showMessage(message, Toast.LENGTH_LONG);
             }
         }).transferToChallenge(mPowerUpsToWithdraw, mChallengeInfo.getChallengeId());
+
+        NostragamusAnalytics.getInstance().trackPowerBank(AnalyticsActions.ADDED);
     }
 
     private void broadcastUpdatedChallengeInfo(ChallengeUserInfo challengeUserInfo) {

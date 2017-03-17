@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.whatsnew;
+package in.sportscafe.nostragamus.module.onboard;
 
 import android.animation.Animator;
 import android.os.Bundle;
@@ -64,13 +64,13 @@ public class OnBoardingFragment extends NostragamusFragment implements ViewPager
         mViewPager = (ViewPager) findViewById(R.id.onboard_vp);
 
         mOnBoardingList = getOnBoardingList();
-        initWhatsNew();
+        initOnBoard();
     }
 
-    private void initWhatsNew() {
+    private void initOnBoard() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         for (OnBoardingDto onBoardingDto : mOnBoardingList) {
-            viewPagerAdapter.addFragment(WhatsNewFragment.newInstance(onBoardingDto), "");
+            viewPagerAdapter.addFragment(OnBoardingTextFragment.newInstance(onBoardingDto), "");
         }
 
         mViewPager.addOnPageChangeListener(this);

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +18,15 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
+import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeFragment;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
-
-import static com.google.android.gms.analytics.internal.zzy.m;
 
 /**
  * Created by Jeeva on 17/02/17.
@@ -86,6 +85,8 @@ public class AllChallengesFragment extends NostragamusFragment
                     moveSeekToSwipe();
                 }
                 mSwipeViewSelected = !mSwipeViewSelected;
+
+                NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.SWITCH);
                 break;
         }
     }

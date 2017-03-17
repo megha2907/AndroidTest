@@ -1,6 +1,6 @@
 [
   {
-    "name": "Let's play a sample game to help you \n understand the gameplay better",
+    "name": "Before you start your first game, lets quickly see how predictions and powerups work in Nostragamus.",
     "textType": "centerBottomText",
     "animation": {
       "start": 0,
@@ -13,7 +13,7 @@
     "type": "text"
   },
   {
-    "name": "Sounds great, Let's play!",
+    "name": "Show Me How",
     "textType": "action1",
     "actionType": "next",
     "animation": {
@@ -26,7 +26,7 @@
     "type": "text"
   },
   {
-    "name": "I'am an expert, no thanks!",
+    "name": "No Thanks",
     "textType": "action3",
     "actionType": "exit",
     "animation": {
@@ -49,7 +49,7 @@
     "type": "text"
   },
   {
-    "name": "Swipe Left or Right on the card to choose your prediction",
+    "name": "Each card poses a question along with some background information/stats. Read through and swipe left or right on the card to make a choice.",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -57,7 +57,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 4500,
     "freshStart": true,
     "type": "text"
   },
@@ -65,12 +65,12 @@
     "question": {
       "question_id": 1,
       "match_id": 1,
-      "question_text": "How many runs will MS Dhoni score off the last ball in the 2011 WC ?",
-      "question_context": "12 Instances when MS Dhoni has finished off a successful chase with a six - nine times in ODIs and three times in T20Is. He has done it once in Tests and two times in IPL",
+      "question_text": "How many runs will Dhoni score off the last ball of the 2011 World Cup?",
+      "question_context": "He has finished off a successful chase with a six in 12 matches  - nine times in ODIs, three times in T20Is, once in Tests and two times in IPL. Phew!",
       "question_option_1": "One",
-      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_defence.jpg",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s300/scGame/dummygame/dhoni_defence.jpg",
       "question_option_2": "Six",
-      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_sixer.jpg"
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s300/scGame/dummygame/dhoni_sixer.jpg"
     },
     "waitingTime": 1,
     "questionType": "leftright",
@@ -87,7 +87,7 @@
     "type": "text"
   },
   {
-    "name": "Some questions have a 3rd option \n Swipe up, or click on the button below  to choose it",
+    "name": "Great! Sometimes, a question will have a 3rd option shown in a button below the card. Tap the button or swipe up to go for the 3rd option.",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -95,7 +95,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 4500,
     "freshStart": true,
     "type": "text"
   },
@@ -103,12 +103,12 @@
     "question": {
       "question_id": 2,
       "match_id": 1,
-      "question_text": "How many runs will MS Dhoni score off the last ball in the 2011 WC ?",
-      "question_context": "12 Instances when MS Dhoni has finished off a successful chase with a six - nine times in ODIs and three times in T20Is. He has done it once in Tests and two times in IPL.",
+      "question_text": "How many runs will Dhoni score off the last ball of the 2011 World Cup?",
+      "question_context": "He has finished off a successful chase with a six in 12 matches  - nine times in ODIs, three times in T20Is, once in Tests and two times in IPL. Phew!",
       "question_option_1": "One",
-      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_1run.jpg",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s300/scGame/dummygame/dhoni_1run.jpg",
       "question_option_2": "Two",
-      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_2runs.jpg",
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s300/scGame/dummygame/dhoni_2runs.jpg",
       "question_option_3": "Six!"
     },
     "waitingTime": 1,
@@ -126,7 +126,7 @@
     "type": "text"
   },
   {
-    "name": "All questions have positive (+10) and negative (-4) points. Swipe to see how you scored!",
+    "name": "A correct prediction gets you +10 points, while a wrong one fetches you -4 points. Swipe again to see what you score!",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -134,7 +134,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 4000,
     "freshStart": true,
     "type": "text"
   },
@@ -142,14 +142,14 @@
     "question": {
       "question_id": 3,
       "match_id": 1,
-      "question_text": "How many runs will MS Dhoni score off the last ball in the 2011 WC ?",
-      "question_context": "2 Instances when MS Dhoni has finished off a successful chase with a six - nine times in ODIs and three times in T20Is. He has done it once in Tests and two times in IPL",
+      "question_text": "How many runs will Dhoni score off the last ball of the 2011 World Cup?",
+      "question_context": "He has finished off a successful chase with a six in 12 matches  - nine times in ODIs, three times in T20Is, once in Tests and two times in IPL. Phew!",
       "question_points": 10,
       "question_neg_points": -4,
       "question_option_1": "One",
-      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_defence.jpg",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s300/scGame/dummygame/dhoni_defence.jpg",
       "question_option_2": "Six",
-      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_sixer.jpg",
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s300/scGame/dummygame/dhoni_sixer.jpg",
       "question_answer": 2
     },
     "waitingTime": 1,
@@ -167,20 +167,7 @@
     "type": "text"
   },
   {
-    "name": "You just got (%1d) points for that answer!",
-    "textType": "topText",
-    "animation": {
-      "start": 0,
-      "end": 1,
-      "duration": 1000,
-      "type": "alpha"
-    },
-    "waitingTime": 2000,
-    "freshStart": true,
-    "type": "text"
-  },
-  {
-    "name": "Powerups are a way to improve your score! They are located at the bottom of your screen",
+    "name": "That answer got you (%1d) points!",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -193,6 +180,19 @@
     "type": "text"
   },
   {
+    "name": "Use powerups to maximise your score and push your way to the top of leaderboards. Find them at the bottom of the screen.",
+    "textType": "topText",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 4500,
+    "freshStart": true,
+    "type": "text"
+  },
+  {
     "waitingTime": 1000,
     "type": "powerup"
   },
@@ -200,14 +200,14 @@
     "question": {
       "question_id": 4,
       "match_id": 1,
-      "question_text": "How many runs will MS Dhoni score off the last ball in the 2011 WC ?",
-      "question_context": "12 Instances when MS Dhoni has finished off a successful chase with a six - nine times in ODIs and three times in T20Is. He has done it once in Tests and two times in IPL",
+      "question_text": "How many runs will Dhoni score off the last ball of the 2011 World Cup?",
+      "question_context": "He has finished off a successful chase with a six in 12 matches  - nine times in ODIs, three times in T20Is, once in Tests and two times in IPL. Phew!",
       "question_points": 10,
       "question_neg_points": -4,
       "question_option_1": "One",
-      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_defence.jpg",
+      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s300/scGame/dummygame/dhoni_defence.jpg",
       "question_option_2": "Six",
-      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s350/scGame/dummygame/dhoni_sixer.jpg",
+      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s300/scGame/dummygame/dhoni_sixer.jpg",
       "question_answer": 2
     },
     "waitingTime": 1000,
@@ -218,7 +218,7 @@
     "textType": "topText",
     "animation": {
       "start": 1,
-      "end": 0,
+      "end": 0.6,
       "duration": 1000,
       "type": "alpha"
     },
@@ -226,7 +226,7 @@
     "type": "text"
   },
   {
-    "name": "Tap on a powerup to apply it to the question",
+    "name": "Tap on a powerup to apply it.",
     "textType": "bottomText",
     "animation": {
       "start": 0,
@@ -241,7 +241,7 @@
     "type": "animatePowerup"
   },
   {
-    "name": "You just scored (%1d) points for that answer with the help of Powerup.",
+    "name": "You scored (%1d) points for that answer.",
     "textType": "centerTopText",
     "animation": {
       "start": 0,
@@ -254,7 +254,7 @@
     "type": "text"
   },
   {
-    "name": "Easy as that! Now you can go ahead and play your game or replay this one to try more powerups!",
+    "name": "Easy as that! You can go back and try using other powerups. Or start playing your first game!",
     "textType": "centerBottomText",
     "animation": {
       "start": 0,
@@ -266,7 +266,7 @@
     "type": "text"
   },
   {
-    "name": "Try other powerups",
+    "name": "Try Another Powerup",
     "textType": "action1",
     "actionType": "powerups",
     "animation": {
@@ -279,7 +279,7 @@
     "type": "text"
   },
   {
-    "name": "Ok, Got it!",
+    "name": "Start Playing!",
     "textType": "action2",
     "actionType": "exit",
     "animation": {
