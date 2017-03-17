@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<HorizontalScrollView
+        android:id="@+id/onboard_hsv_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_above="@+id/onboard_tv_title"
+        android:layout_marginBottom="@dimen/dp_30">
+
+        <LinearLayout
+            android:id="@+id/onboard_ll_avatar_holder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+    </HorizontalScrollView>-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/onboard_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true" />
+
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/onboard_cpi_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_56"
+        app:ci_gravity="center"
+        app:ci_orientation="horizontal" />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/onboard_tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/onboard_cpi_indicator"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:text="Description"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:typeface="lato_light" />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/onboard_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/onboard_tv_desc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:text="Description"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_22"
+        app:typeface="lato_light" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/onboard_rvp_avatar_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/onboard_tv_title"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/dp_6" />
+
+</RelativeLayout>

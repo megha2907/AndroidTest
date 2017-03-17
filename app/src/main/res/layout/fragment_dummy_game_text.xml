@@ -80,7 +80,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/dp_14"
             android:visibility="invisible"
-            app:typeface="roboto_condensed" />
+            app:typeface="lato_bold" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -103,7 +103,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_14"
                 android:visibility="invisible"
-                app:typeface="roboto_condensed" />
+                app:typeface="lato_bold" />
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/dummy_game_btn_action3"
@@ -121,7 +121,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_14"
                 android:visibility="invisible"
-                app:typeface="roboto_condensed" />
+                app:typeface="lato_bold" />
 
 
         </RelativeLayout>

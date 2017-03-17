@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -194,14 +195,14 @@ public class ViewUtils {
 
         basicOverlay.setDesc(activity.getString(description));
 
-        if(showAtTop) {
+        if (showAtTop) {
             basicOverlay.showAtTop();
         } else {
             basicOverlay.showAtBottom();
         }
 
 //        if(null == mainView) {
-            mainView = (ViewGroup) activity.getWindow().getDecorView().findViewById(android.R.id.content);
+        mainView = (ViewGroup) activity.getWindow().getDecorView().findViewById(android.R.id.content);
 //        }
 
         final ViewGroup finalMainView = mainView;
@@ -211,10 +212,14 @@ public class ViewUtils {
             @Override
             public void onClick(View view) {
                 finalMainView.removeView(finalOverlay);
-                if(null != finalListener) {
+                if (null != finalListener) {
                     finalListener.onClick(view);
                 }
             }
         }).playOn(mainView, basicOverlay, targetViews);
+    }
+
+    public static int getDrawableIdFromResName(Context context, String resName) {
+        return context.getResources().getIdentifier(resName, "drawable", context.getPackageName());
     }
 }
