@@ -44,10 +44,12 @@ public class BadgeAdapter extends Adapter<Badge, BadgeAdapter.ViewHolder> {
         holder.mTvBadgeDesc.setText(badge.getDesc());
         holder.mIvBadge.setImageUrl(badge.getPhoto());
 
-        if (badge.getIsLocked()){
-            holder.mIvLocked.setVisibility(View.VISIBLE);
-        }else {
-            holder.mIvLocked.setVisibility(View.GONE);
+        if (null != badge.getIsLocked()) {
+            if (badge.getIsLocked()) {
+                holder.mIvLocked.setVisibility(View.VISIBLE);
+            } else {
+                holder.mIvLocked.setVisibility(View.GONE);
+            }
         }
 
     }
