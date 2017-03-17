@@ -5,7 +5,9 @@ import android.view.View;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 
 
 /**
@@ -35,6 +37,17 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
         if(mAllGroupsModel.isAllGroups()) {
             mAllGroupsView.showTitleBar();
         }
+        showPopUp();
+    }
+
+    private void showPopUp() {
+
+        if (NostragamusDataHandler.getInstance().getMatchPlayedCount()==7
+                && NostragamusDataHandler.getInstance().getTotalGroupsCount()==0
+                && !NostragamusDataHandler.getInstance().isPlayedSeventhMatchPopUp()){
+            mAllGroupsView.showPopUp(Constants.InAppPopups.SEVENTH_MATCH_PLAYED_WITH_NO_GROUPS);
+        }
+
     }
 
     @Override

@@ -110,7 +110,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         ((TextView) findViewById(R.id.prediction_tv_contest_name)).setText(contestName);
         TextView tvMatchStage = (TextView) findViewById(R.id.prediction_tv_match_stage);
 //        tvMatchStage.setVisibility(View.VISIBLE);
-//        tvMatchStage.setText(matchStage);q
+//        tvMatchStage.setText(matchStage);
     }
 
     @Override
@@ -443,6 +443,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void showPopUp(String popUpType) {
         openPopup(popUpType);
+    }
+
+    @Override
+    public void showFirstMatchPlayedPopUp(String popUpType, Bundle bundle) {
+        Intent intent = new Intent(this, InAppPopupActivity.class);
+        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void openPopup(String popUpType) {

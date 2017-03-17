@@ -316,6 +316,30 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedBooleanData(SharedKeys.FIRST_MATCH_PLAYED, playedFirstMatch);
     }
 
+    public boolean isPlayedSecondMatchPopUp() {
+        return getSharedBooleanData(SharedKeys.SECOND_MATCH_PLAYED, false);
+    }
+
+    public void setPlayedSecondMatchPopUp(boolean playedSecondMatchPopUp) {
+        setSharedBooleanData(SharedKeys.SECOND_MATCH_PLAYED, playedSecondMatchPopUp);
+    }
+
+    public boolean isPlayedFifthMatchPopUp() {
+        return getSharedBooleanData(SharedKeys.FIFTH_MATCH_PLAYED, false);
+    }
+
+    public void setPlayedFifthMatchPopUp(boolean playedFifthMatchPopUp) {
+        setSharedBooleanData(SharedKeys.FIRST_MATCH_PLAYED, playedFifthMatchPopUp);
+    }
+
+    public boolean isPlayedSeventhMatchPopUp() {
+        return getSharedBooleanData(SharedKeys.SEVENTH_MATCH_PLAYED, false);
+    }
+
+    public void setPlayedSeventhMatchPopUp(boolean playedSeventhMatchPopUp) {
+        setSharedBooleanData(SharedKeys.SEVENTH_MATCH_PLAYED, playedSeventhMatchPopUp);
+    }
+
     public boolean isVisitedLeaderBoards() {
         return getSharedBooleanData(SharedKeys.VISITED_LEADERBOARDS, false);
     }
@@ -331,4 +355,29 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public void setPowerUpApplied(boolean powerUpApplied) {
         setSharedBooleanData(SharedKeys.POWERUP_APPLIED, powerUpApplied);
     }
+
+    public int getMatchPlayedCount() {
+        return getSharedIntData(SharedKeys.NUMBER_OF_MATCH_PLAYED, 0);
+    }
+
+    public void setMatchPlayedCount(Integer count) {
+        setSharedIntData(SharedKeys.NUMBER_OF_MATCH_PLAYED, null == count ? 0 : count);
+    }
+
+    public int getPowerUpsUsedCount() {
+        return getSharedIntData(SharedKeys.NUMBER_OF_POWERUPS_USED, 0);
+    }
+
+    public void setPowerUpsUsedCount(Integer count) {
+        setSharedIntData(SharedKeys.NUMBER_OF_POWERUPS_USED, null == count ? 0 : count);
+    }
+
+    public int getTotalGroupsCount() {
+        return getSharedIntData(SharedKeys.NUMBER_OF_TOTAL_GROUPS, 0);
+    }
+
+    public void setTotalGroupsCount(Integer count) {
+        setSharedIntData(SharedKeys.NUMBER_OF_TOTAL_GROUPS, null == count ? 0 : count);
+    }
+
 }

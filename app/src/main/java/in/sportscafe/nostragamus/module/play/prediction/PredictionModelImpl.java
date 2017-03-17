@@ -569,8 +569,9 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.COMPLETED);
 
                 Bundle bundle = new Bundle();
-                bundle.putInt(BundleKeys.TOURNAMENT_ID, mMyResult.getTournamentId());
-                bundle.putString(BundleKeys.TOURNAMENT_NAME, mMyResult.getTournamentName());
+                bundle.putInt(BundleKeys.CHALLENGE_ID, mMyResult.getChallengeId());
+                bundle.putString(BundleKeys.CHALLENGE_NAME, mMyResult.getChallengeName());
+                bundle.putString(BundleKeys.CHALLENGE_PHOTO, mMyResult.getChallengeImgUrl());
                 mPredictionModelListener.onSuccessCompletion(bundle);
             }
         }

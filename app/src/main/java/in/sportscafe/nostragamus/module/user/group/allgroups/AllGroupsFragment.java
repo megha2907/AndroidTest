@@ -25,6 +25,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
@@ -149,6 +150,17 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
         Intent intent = new Intent(getContext(), GroupInfoActivity.class);
         intent.putExtras(bundle);
         startActivityForResult(intent, GROUP_INFO);
+    }
+
+    @Override
+    public void showPopUp(String popUpType) {
+        openPopup(popUpType);
+    }
+
+    private void openPopup(String popUpType) {
+        Intent intent = new Intent(getContext(), InAppPopupActivity.class);
+        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
+        startActivity(intent);
     }
 
     @Override

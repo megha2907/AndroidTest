@@ -67,6 +67,11 @@ public class UserInfoModelImpl {
             nostragamusDataHandler.setPollPowerupsCount(powerUpMap.get(Powerups.AUDIENCE_POLL));
             nostragamusDataHandler.setReplayPowerupsCount(powerUpMap.get(Powerups.MATCH_REPLAY));
             nostragamusDataHandler.setFlipPowerupsCount(powerUpMap.get(Powerups.ANSWER_FLIP));
+
+            nostragamusDataHandler.setPowerUpsUsedCount(userInfo.getPowerupsUsedCount());
+            nostragamusDataHandler.setMatchPlayedCount(userInfo.getTotalMatchesPlayed());
+            nostragamusDataHandler.setTotalGroupsCount(userInfo.getTotalGroups());
+
         }
     }
 

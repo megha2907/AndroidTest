@@ -40,6 +40,9 @@ public class PlayerInfo extends BasicUserInfo {
     @JsonProperty("count_predictions")
     private Integer predictionCount;
 
+    @JsonProperty("count_powerups")
+    private Integer powerupsUsedCount;
+
     @JsonProperty("accuracy")
     private Integer accuracy;
 
@@ -148,6 +151,16 @@ public class PlayerInfo extends BasicUserInfo {
     @JsonProperty("accuracy")
     public void setAccuracy(Integer accuracy) {
         this.accuracy = accuracy;
+    }
+
+    @JsonProperty("count_powerups")
+    public Integer getPowerupsUsedCount() {
+        return powerupsUsedCount;
+    }
+
+    @JsonProperty("count_powerups")
+    public void setPowerupsUsedCount(Integer powerupsUsedCount) {
+        this.powerupsUsedCount = powerupsUsedCount;
     }
 
 }

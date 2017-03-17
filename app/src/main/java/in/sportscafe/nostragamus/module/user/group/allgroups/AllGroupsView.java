@@ -24,5 +24,7 @@ public interface AllGroupsView extends InAppView {
 
     void navigateToGroupInfo(Bundle bundle);
 
+    void showPopUp(String popUpType);
+
     void goBackWithSuccessResult();
 }
