@@ -30,7 +30,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.TermsConditions;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.onboard.AvatarFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.whatsnew.OnBoardingFragment;
 
@@ -120,6 +119,8 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+
+        onBackPressed();
     }
 
     @Override
@@ -130,6 +131,8 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+
+        onBackPressed();
     }
 
     @Override

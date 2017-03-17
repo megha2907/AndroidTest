@@ -112,4 +112,9 @@ public class DGPlayPresenterImpl implements DGPlayPresenter, DGPlayModelImpl.OnD
     @Override
     public void onNoPowerUps() {
     }
+
+    @Override
+    public void onRemovingPowerUps() {
+        mDummyGamePlayView.onRemovingPowerUps();
+    }
 }

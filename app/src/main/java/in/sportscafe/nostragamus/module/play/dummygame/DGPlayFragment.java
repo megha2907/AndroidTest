@@ -133,7 +133,9 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
         neitherView.setVisibility(View.VISIBLE);
 
         neitherView.setAlpha(0);
-        neitherView.animate().alpha(1).setDuration(1000);
+        neitherView.setScaleX(0.9f);
+        neitherView.setScaleY(0.9f);
+        neitherView.animate().alpha(1).scaleX(1).scaleY(1).setDuration(1000);
     }
 
     @Override
@@ -221,6 +223,11 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
         mPlayActionListener.onPlayed(scoredPoints);
     }
 
+    @Override
+    public void onRemovingPowerUps() {
+        mPlayActionListener.onRemovingPowerUps();
+    }
+
     private Drawable getPowerupDrawable(int colorRes) {
         GradientDrawable powerupDrawable = new GradientDrawable();
         powerupDrawable.setShape(GradientDrawable.OVAL);
@@ -305,5 +312,7 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
         void onNonegsApplied();
 
         void onPollApplied();
+
+        void onRemovingPowerUps();
     }
 }

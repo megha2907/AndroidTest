@@ -183,6 +183,12 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     }
 
     @Override
+    public void onRemovingPowerUps() {
+        mDummyGameTextFragment.showBottomText();
+        addDummyText(getRemovePowerUpInstruction());
+    }
+
+    @Override
     public void onActionClicked(String actionType) {
         switch (actionType) {
             case ActionType.GOTO_NEXT:
@@ -213,6 +219,21 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
         animation.setType(AnimationType.ALPHA);
         animation.setStart(0);
         animation.setEnd(1);
+        animation.setDuration(1500);
+
+        instruction.setAnimation(animation);
+        return instruction;
+    }
+
+    private DGInstruction getRemovePowerUpInstruction() {
+        DGInstruction instruction = new DGInstruction();
+        instruction.setTextType(TextType.TOP_TEXT);
+        instruction.setType(InstructionType.TEXT);
+
+        DGAnimation animation = new DGAnimation();
+        animation.setType(AnimationType.ALPHA);
+        animation.setStart(1);
+        animation.setEnd(0);
         animation.setDuration(1000);
 
         instruction.setAnimation(animation);

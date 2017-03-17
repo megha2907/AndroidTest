@@ -305,6 +305,9 @@ public interface Constants {
         String BADGE = "Badge";
         String FLAVOR = "Flavor";
         String APP_UPDATE = "App Update";
+        String POWER_BANK = "Power Bank";
+        String APP_OPENING = "App Opening";
+        String REFERRAL_ACTION = "Referral Action";
     }
 
     interface AnalyticsActions {
@@ -334,6 +337,8 @@ public interface Constants {
         String TABS = "Tabs";
         String RECEIVED = "Received";
         String APPLIED = "Applied";
+        String ADDED = "Added";
+        String SWITCH = "Switch";
     }
 
     interface AnalyticsLabels {
@@ -348,6 +353,10 @@ public interface Constants {
         String RIGHT = "Right";
         String TOP = "Top";
         String BOTTOM = "Bottom";
+        String LAUNCHER = "Launcher";
+        String NOTIFICATION = "Notification";
+        String GROUP = "Group";
+        String PROFILE = "Profile";
     }
 
     interface UserProperties {

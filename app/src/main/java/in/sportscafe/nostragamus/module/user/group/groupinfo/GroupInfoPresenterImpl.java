@@ -9,6 +9,7 @@ import com.jeeva.android.ExceptionTracker;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
+import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
@@ -80,6 +81,8 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
                         }
                     }
                 });
+
+        NostragamusAnalytics.getInstance().trackReferralAction(AnalyticsLabels.PROFILE);
     }
 
     @Override
