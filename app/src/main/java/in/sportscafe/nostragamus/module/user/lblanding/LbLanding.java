@@ -28,6 +28,9 @@ public class LbLanding {
     @JsonProperty("rank_change")
     private Integer rankChange;
 
+    @JsonProperty("count_participants")
+    private Integer countParticipants;
+
     @JsonProperty("count_played")
     private Integer countPlayed;
 
@@ -163,6 +166,17 @@ public class LbLanding {
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
+
+    @JsonProperty("count_participants")
+    public Integer getCountParticipants() {
+        return countParticipants;
+    }
+
+    @JsonProperty("count_participants")
+    public void setCountParticipants(Integer countParticipants) {
+        this.countParticipants = countParticipants;
+    }
+
 
 
     /*Comparator for sorting the list by User Rank*/

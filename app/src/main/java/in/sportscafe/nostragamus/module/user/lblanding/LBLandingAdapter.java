@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,13 +14,18 @@ import com.jeeva.android.widgets.HmImageView;
 
 import org.parceler.Parcels;
 
+import java.util.Calendar;
+
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by deepanshi on 14/07/16.
@@ -72,6 +78,29 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
         }
 
         holder.tvName.setText(lbLandingDto.getName());
+
+        if (null != lbLandingDto.getCountParticipants()) {
+            holder.tvMembersCount.setText(lbLandingDto.getCountParticipants().toString()+"Members");
+        }
+
+
+        if (null != lbLandingDto.getEndTime()) {
+            long currentTimeInMs = Calendar.getInstance().getTimeInMillis();
+            long timeInMs = TimeUtils.getMillisecondsFromDateString(
+                    lbLandingDto.getEndTime(),
+                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                    Constants.DateFormats.GMT);
+
+            if (currentTimeInMs >= timeInMs) {
+                // If the endtime of the challenge is fell inside the current time, then it is completed challenge
+                holder.btnChallengeCompleted.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnChallengeCompleted.setVisibility(View.GONE);
+            }
+        }else {
+            holder.btnChallengeCompleted.setVisibility(View.GONE);
+        }
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -84,6 +113,10 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
 
         TextView tvPosTxt;
 
+        TextView tvMembersCount;
+
+        Button btnChallengeCompleted;
+
         ImageView mIvStatus;
 
 
@@ -94,6 +127,8 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
             tvRank = (TextView) view.findViewById(R.id.lb_summary_item_rank_tv);
             tvName = (TextView) view.findViewById(R.id.lb_summary_item_name_tv);
             tvPosTxt = (TextView) view.findViewById(R.id.lb_summary_item_pos_tv);
+            tvMembersCount = (TextView) view.findViewById(R.id.lb_summary_item_members_tv);
+            btnChallengeCompleted = (Button) view.findViewById(R.id.lb_summary_item_challenge_completed);
 
             if (!mNeedPadding) {
                 ivImage.setPadding(0, 0, 0, 0);

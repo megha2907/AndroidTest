@@ -59,6 +59,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     private int answerId;
 
+    private int mAnsweredQuestionCount=0;
+
     private boolean mIsMyResults = true;
 
     public MyResultsAdapter(Context context, boolean isMyResults) {
@@ -225,8 +227,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 //if not attempted
                 if (null == match.getisAttempted() || Constants.GameAttemptedStatus.NOT == attemptedStatus) {
 
-                    Log.i("inside", "getisAttempted=0");
-
                     holder.mBtnMatchPoints.setText("Did Not Play");
                     holder.mBtnMatchPoints.setTextSize(14);
                     holder.mTvNumberofPowerupsUsed.setText("No");
@@ -236,7 +236,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     //if partially or completely attempted
                 } else if (Constants.GameAttemptedStatus.COMPLETELY == attemptedStatus || Constants.GameAttemptedStatus.PARTIALLY == attemptedStatus) {
 
-                    Log.i("inside", "getisAttempted=1,2");
                     holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
                     holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
                     holder.mTvResultWait.setVisibility(View.GONE);
@@ -254,7 +253,16 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 holder.mTvResultWait.setVisibility(View.VISIBLE);
                 holder.mTvResultWait.setText(match.getStage() + " - " + "Awaiting Results");
                 holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                holder.mTvResultCorrectCount.setText(match.getQuestions().size() + "/" + match.getMatchQuestionCount() + " Questions Answered");
+
+                if (null != match.getQuestions()) {
+                    for (Question question : match.getQuestions()) {
+                        if (question.getAnswerId() != 0) {
+                            mAnsweredQuestionCount++;
+                        }
+                    }
+                }
+
+                holder.mTvResultCorrectCount.setText(String.valueOf(mAnsweredQuestionCount) + "/" + match.getMatchQuestionCount() + " Questions Answered");
 
                 if (null != match.getUserRank()) {
                     holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));

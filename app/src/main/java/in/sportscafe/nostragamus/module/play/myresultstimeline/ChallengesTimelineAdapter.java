@@ -171,7 +171,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                 holder.mLlResultWait.setVisibility(View.VISIBLE);
                                 holder.mTvMatchResult.setVisibility(View.VISIBLE);
 //                                holder.mTvMatchResult.setText(match.getStage());
-//                                holder.mLlResultWait.setTag(match);
+                               holder.mLlResultWait.setTag(match);
                             } else {
 
                                 // You cannot play the match as the match already started
