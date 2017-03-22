@@ -103,5 +103,11 @@
 -keep class com.google.android.gms.ads.identifier.** { *; }
 #End Branch.io
 
+#Start paytm
+-keepclassmembers class com.paytm.pgsdk.PaytmWebView$PaytmJavaScriptInterface {
+   public *;
+}
+#end paytm
+
 -keep class com.lsjwzh.widget.recyclerviewpager.**
 -dontwarn com.lsjwzh.widget.recyclerviewpager.**

@@ -89,7 +89,11 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         try {
             int mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getPrizeMoney();
-            holder.mTvChallengePrice.setText("Worth Rs" + mChallengeAmount);
+            if (mChallengeAmount == 0) {
+                holder.mRlCashRewards.setVisibility(View.INVISIBLE);
+            } else {
+                holder.mTvChallengePrice.setText("Worth Rs" + mChallengeAmount);
+            }
         } catch (Exception e) {
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);
         }
@@ -136,7 +140,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
             TextView textview = new TextView(holder.mLlTournament.getContext());
             layout2.addView(textview);
-            layoutParams =new LinearLayout.LayoutParams
+            layoutParams = new LinearLayout.LayoutParams
                     (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.rightMargin = 10;
             textview.setLayoutParams(layoutParams);
@@ -169,7 +173,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mRlTimer.setVisibility(View.VISIBLE);
             holder.mTvTimerText.setText("STARTS IN");
             holder.mRlTimer.setTag(startTimeLeft.totalDiff);
-        } else */if (endTimeLeft.totalDiff > 1000) {
+        } else */
+        if (endTimeLeft.totalDiff > 1000) {
             holder.mRlTimer.setVisibility(View.VISIBLE);
             holder.mTvTimerText.setText("DURATION");
             holder.mRlTimer.setTag(endTimeLeft.totalDiff);
@@ -200,11 +205,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         // Setting date of the match
         holder.mBtnTimeLeft.setText(
                 dayOfMonthinStartTime + AppSnippet.ordinalOnly(dayOfMonthinStartTime) + " " +
-                TimeUtils.getDateStringFromMs(startTimeMs, "MMM")
-                         + " to " + dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " " +
+                        TimeUtils.getDateStringFromMs(startTimeMs, "MMM")
+                        + " to " + dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " " +
                         TimeUtils.getDateStringFromMs(endTimeMs, "MMM")
         );
-
 
 
     }
@@ -291,7 +295,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(BundleKeys.LB_LANDING_DATA, Parcels.wrap(new LbLanding(
-                            challenge.getChallengeId(),0,challenge.getName(), challenge.getImage(), LBLandingType.CHALLENGE
+                            challenge.getChallengeId(), 0, challenge.getName(), challenge.getImage(), LBLandingType.CHALLENGE
                     )));
                     navigateToPointsActivity(context, bundle);
                     break;
@@ -304,7 +308,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
-
 
 
     private Drawable getPowerupDrawable(Context context, int colorRes) {

@@ -126,5 +126,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     // Circle page indicator for zoom in/out circle
     compile 'me.relex:circleindicator:1.2.2'
+    compile files('libs/PGSDK_v1.0.1.jar')
 }
 apply plugin: 'com.google.gms.google-services'
