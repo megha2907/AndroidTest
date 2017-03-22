@@ -3,6 +3,8 @@ package in.sportscafe.nostragamus;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -10,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
@@ -23,13 +26,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
@@ -70,13 +73,35 @@ public class AppSnippet implements Constants {
         return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 
-    public static void doGeneralImageShare(Context context, File imageFile){
-        Intent shareIntent = new Intent();
+    public static void doGeneralImageShare(Context context, Bitmap image, String shareText){
+        /*Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-//        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imageFile));  //optional//use this when you want to send an image
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imageFile));
         shareIntent.setType("image/png");
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        context.startActivity(shareIntent);*/
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "title");
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+
+        ContentResolver contentResolver = context.getContentResolver();
+        Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        try {
+            OutputStream outstream = contentResolver.openOutputStream(uri);
+            image.compress(Bitmap.CompressFormat.JPEG, 100, outstream);
+            outstream.close();
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        }
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/jpeg");
+        shareIntent.putExtra(Intent.EXTRA_TITLE, "Title");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         context.startActivity(shareIntent);
     }
 
@@ -194,9 +219,11 @@ public class AppSnippet implements Constants {
             }
 
             File imgFile = new File(mFolder.getAbsolutePath(), name + ".png");
-            if (!imgFile.exists()) {
-                imgFile.createNewFile();
+
+            if (imgFile.exists()) {
+                imgFile.delete();
             }
+            imgFile.createNewFile();
 
             FileOutputStream output = new FileOutputStream(imgFile);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);

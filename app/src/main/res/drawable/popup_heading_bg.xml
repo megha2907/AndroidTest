@@ -6,6 +6,6 @@
         android:bottomRightRadius="@dimen/dp_0"
         android:topLeftRadius="@dimen/dp_4"
         android:topRightRadius="@dimen/dp_4" />
-    <solid android:color="@color/royal_health" />
+    <solid android:color="@color/affair" />
 
 </shape>

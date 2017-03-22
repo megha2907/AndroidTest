@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.popups;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -15,18 +16,26 @@ import com.jeeva.android.widgets.ShadowLayout;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
+import in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity;
 
 /**
  * Created by Jeeva on 28/02/17.
  */
 
-public class PowerupDialogFragment extends NostragamusDialogFragment {
+public class PowerupDialogFragment extends NostragamusDialogFragment implements View.OnClickListener {
+
+    private static final String SAMPLE_GAME = "sampleGame";
 
     private LinearLayout mLlPowerUpHolder;
 
     private LayoutInflater mLayoutInflater;
 
-    private String[] mPowerUps = new String[]{Powerups.XX, Powerups.NO_NEGATIVE, Powerups.AUDIENCE_POLL};
+    private String[] mPowerUps = new String[]{
+            Powerups.XX,
+            Powerups.NO_NEGATIVE,
+            Powerups.AUDIENCE_POLL,
+            SAMPLE_GAME
+    };
 
     @Nullable
     @Override
@@ -38,18 +47,14 @@ public class PowerupDialogFragment extends NostragamusDialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mLlPowerUpHolder = (LinearLayout) getView().findViewById(R.id.popup_ll_powerup_holder);
+        mLlPowerUpHolder = (LinearLayout) findViewById(R.id.popup_ll_powerup_holder);
 
         mLayoutInflater = LayoutInflater.from(getContext());
 
         populatePowerups();
 
-        getView().findViewById(R.id.popup_btn_action).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        findViewById(R.id.popup_btn_sample_game).setOnClickListener(this);
+        findViewById(R.id.popup_iv_close).setOnClickListener(this);
     }
 
     private void populatePowerups() {
@@ -68,6 +73,9 @@ public class PowerupDialogFragment extends NostragamusDialogFragment {
                 case Powerups.AUDIENCE_POLL:
                     powerUpView = getPowerUpView("Audience Poll", "See how your friends answered", R.drawable.powerup_audience_poll_white, R.color.greencolor);
                     break;
+                case SAMPLE_GAME:
+                    powerUpView = getSampleGameView("Sample Game", "Play a game to know more about powerups", R.drawable.powerup_2x_white);
+                    break;
             }
             mLlPowerUpHolder.addView(powerUpView, i);
         }
@@ -82,10 +90,33 @@ public class PowerupDialogFragment extends NostragamusDialogFragment {
         ImageView imageView = (ImageView) powerUpView.findViewById(R.id.powerup_iv_icon);
         imageView.setImageResource(iconRes);
 
-        ((ShadowLayout) powerUpView.findViewById(R.id.powerup_sl_icon_bg)).setFillColor(ContextCompat.getColor(getContext(),bgColorRes));
+        ((ShadowLayout) powerUpView.findViewById(R.id.powerup_sl_icon_bg)).setFillColor(ContextCompat.getColor(getContext(), bgColorRes));
 
         return powerUpView;
     }
 
+    private View getSampleGameView(String title, String desc, int iconRes) {
+        View powerUpView = mLayoutInflater.inflate(R.layout.inflater_sample_game_row, mLlPowerUpHolder, false);
 
+        ((TextView) powerUpView.findViewById(R.id.powerup_tv_title)).setText(title);
+        ((TextView) powerUpView.findViewById(R.id.powerup_tv_desc)).setText(desc);
+
+        ImageView imageView = (ImageView) powerUpView.findViewById(R.id.powerup_iv_icon);
+        imageView.setImageResource(iconRes);
+
+        return powerUpView;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.popup_btn_sample_game:
+                startActivity(new Intent(getContext(), DummyGameActivity.class));
+                dismiss();
+                break;
+            case R.id.popup_iv_close:
+                dismiss();
+                break;
+        }
+    }
 }

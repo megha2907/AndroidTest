@@ -25,7 +25,7 @@
             android:gravity="center"
             android:drawableLeft="@drawable/powerup_title_info_icon"
             android:drawablePadding="@dimen/dp_8"
-            android:text="Powerup Help"
+            android:text="Gameplay Help"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_14"
@@ -44,24 +44,46 @@
         android:orientation="vertical"
         android:showDividers="middle">
 
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/popup_btn_action"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_40"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/dp_14"
-            android:layout_marginTop="@dimen/dp_14"
-            android:background="@drawable/popup_action_btn_bg"
-            android:gravity="center"
-            android:minWidth="@dimen/dp_72"
-            android:paddingBottom="@dimen/dp_2"
-            android:paddingLeft="@dimen/dp_15"
-            android:paddingRight="@dimen/dp_15"
-            android:text="Ok, got it"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_14"
-            app:typeface="lato_bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_64"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/popup_iv_close"
+                android:layout_width="@dimen/dp_64"
+                android:layout_height="@dimen/dp_64"
+                android:padding="@dimen/dp_20"
+                android:src="@drawable/popup_close_icon" />
+
+            <View
+                android:layout_width="@dimen/dp_0.5"
+                android:layout_height="match_parent"
+                android:background="#121212" />
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/popup_btn_sample_game"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_40"
+                    android:background="@drawable/popup_action_btn_bg"
+                    android:gravity="center"
+                    android:minWidth="@dimen/dp_72"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:text="Play Sample Game"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="lato_bold" />
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -2,9 +2,11 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -35,18 +37,18 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         mPredictionModel.init(bundle);
 
 
-            mPredictionView.setContestName(mPredictionModel.getContestName(), mPredictionModel.getMatchStage());
-            showPopUp();
+        mPredictionView.setContestName(mPredictionModel.getContestName(), mPredictionModel.getMatchStage());
+        showPopUp();
         updatePowerups();
 
-        if(mPredictionModel.isDummyGameShown()) {
+        if (mPredictionModel.isDummyGameShown()) {
             mPredictionModel.getAllQuestions();
         } else {
             mPredictionView.navigateToDummyGame();
         }
     }
 
-   private void showPopUp() {
+    private void showPopUp() {
 
         if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 1
                 && !NostragamusDataHandler.getInstance().isPowerUpApplied()
@@ -144,6 +146,14 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     public void onGetDummyGameResult() {
         mPredictionModel.onDummyGameShown();
         mPredictionModel.getAllQuestions();
+    }
+
+    @Override
+    public void onShake() {
+        if (mPredictionModel.isQuestionAvailable()) {
+            mPredictionView.takeScreenshotAndShare();
+            mPredictionModel.getShareText(mPredictionView.getContext());
+        }
     }
 
     @Override
@@ -254,5 +264,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void showPowerUpCountLessPopUp() {
         mPredictionView.showPopUp(Constants.InAppPopups.LESS_POWERUPS);
+    }
+
+    @Override
+    public void onGetQuestionShareText(String shareText) {
+        AppSnippet.copyToClipBoard(mPredictionView.getContext(), shareText);
+        mPredictionView.showMessage("Corresponding share message copied to clipboard!", Toast.LENGTH_LONG);
     }
 }

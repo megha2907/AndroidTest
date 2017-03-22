@@ -3,9 +3,10 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
+
+import com.jeeva.android.ExceptionTracker;
 
 import org.parceler.Parcels;
 
@@ -13,6 +14,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
@@ -32,6 +34,10 @@ import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
+import io.branch.indexing.BranchUniversalObject;
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
+import io.branch.referral.util.LinkProperties;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -341,6 +347,39 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
+    public boolean isQuestionAvailable() {
+        return null != mPredictionAdapter && mPredictionAdapter.getCount() > 0;
+    }
+
+    @Override
+    public void getShareText(Context context) {
+        BranchUniversalObject buo = new BranchUniversalObject()
+                .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId());
+
+        LinkProperties linkProperties = new LinkProperties()
+                .addTag("shareQuestion")
+                .setFeature("shareQuestion")
+                .setChannel("App")
+                .addControlParameter("$android_deeplink_path", "app/share/");
+
+        buo.generateShortUrl(context, linkProperties,
+                new Branch.BranchLinkCreateListener() {
+                    @Override
+                    public void onLinkCreate(String url, BranchError error) {
+                        if (null == error) {
+                            mPredictionModelListener.onGetQuestionShareText(
+                                    NostragamusDataHandler.getInstance().getUserInfo().getUserName() + " just need your help to predict the answer for the above question!"
+                                    + "\n\nInstead of helping, If you want to predict the same for the cash reward, Click the below link\n" + url
+                            );
+                        } else {
+                            ExceptionTracker.track(error.getMessage());
+                        }
+                    }
+                });
+    }
+
+    @Override
     public void removeFirstObjectInAdapter(Question question) {
         mPredictionAdapter.remove(question);
         mPredictionAdapter.notifyDataSetChanged();
@@ -614,5 +653,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         void onNoPowerUps();
 
         void showPowerUpCountLessPopUp();
+
+        void onGetQuestionShareText(String shareText);
     }
 }

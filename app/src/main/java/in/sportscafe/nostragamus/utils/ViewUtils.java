@@ -150,31 +150,6 @@ public class ViewUtils {
         return bigBitmap;
     }
 
-    public static File saveBitmap(Bitmap bitmap) {
-        try {
-            File mFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            if (!mFolder.exists()) {
-                mFolder.mkdir();
-            }
-
-            File imgFile = new File(mFolder.getAbsolutePath(), "fb.png");
-            if (!imgFile.exists()) {
-                imgFile.createNewFile();
-            }
-
-            FileOutputStream output = new FileOutputStream(imgFile);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
-            output.close();
-
-            return imgFile;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public static RecyclerView.Adapter getAnimationAdapter(RecyclerView.Adapter adapter) {
         SlideInUpAnimationAdapter animationAdapter = new SlideInUpAnimationAdapter(adapter);
         animationAdapter.setFirstOnly(true);
