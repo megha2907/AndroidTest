@@ -25,6 +25,8 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     private OnLeaderBoardModelListener onLeaderBoardModelListener;
 
+    private Integer mChallengeId;
+
     private LeaderBoard mleaderBoard;
 
     public static int SORT_TYPE = 0;
@@ -43,6 +45,9 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     @Override
     public void init(Bundle bundle) {
+        if (bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
+            mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+        }
         mleaderBoard = Parcels.unwrap(bundle.getParcelable(BundleKeys.LEADERBOARD_LIST));
     }
 
@@ -54,7 +59,7 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     @Override
     public LeaderBoardAdapter getAdapter(Context context) {
-        mLeaderBoardAdapter = new LeaderBoardAdapter(context);
+        mLeaderBoardAdapter = new LeaderBoardAdapter(context, mChallengeId);
         return mLeaderBoardAdapter;
     }
 
@@ -92,9 +97,9 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
             Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserAccuracyComparator);
         } else if (SORT_TYPE == 2) {
             Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserPowerUpsComparator);
-        }else if (SORT_TYPE == 3) {
+        } else if (SORT_TYPE == 3) {
             Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserMatchPointsComparator);
-        }else {
+        } else {
             Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
         }
 

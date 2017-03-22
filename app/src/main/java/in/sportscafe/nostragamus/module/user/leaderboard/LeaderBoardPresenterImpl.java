@@ -28,9 +28,8 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoa
 
     @Override
     public void onCreateLeaderBoard(Bundle bundle) {
-
-        mLeaderBoardView.setLeaderBoardAdapter(mLeaderBoardModel.getAdapter(mLeaderBoardView.getContext()));
         mLeaderBoardModel.init(bundle);
+        mLeaderBoardView.setLeaderBoardAdapter(mLeaderBoardModel.getAdapter(mLeaderBoardView.getContext()));
         checkSortType();
     }
 

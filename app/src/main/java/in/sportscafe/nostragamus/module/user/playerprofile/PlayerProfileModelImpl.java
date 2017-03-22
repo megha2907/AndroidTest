@@ -1,9 +1,8 @@
 package in.sportscafe.nostragamus.module.user.playerprofile;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
@@ -18,7 +17,9 @@ import retrofit2.Response;
 
 public class PlayerProfileModelImpl implements PlayerProfileModel {
 
-    private PlayerInfo mplayerInfo;
+    private Integer mChallengeId;
+
+    private PlayerInfo mPlayerInfo;
 
     private PlayerProfileModelImpl.OnProfileModelListener mProfileModelListener;
 
@@ -32,13 +33,16 @@ public class PlayerProfileModelImpl implements PlayerProfileModel {
 
     @Override
     public void getProfileDetails(Bundle bundle) {
-        Integer playerId = bundle.getInt(Constants.BundleKeys.PLAYER_ID);
-        getPlayerInfoFromServer(playerId);
+        if(bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
+            mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+        }
+
+        getPlayerInfoFromServer(bundle.getInt(BundleKeys.PLAYER_ID));
     }
 
     @Override
     public PlayerInfo getPlayerInfo() {
-        return mplayerInfo;
+        return mPlayerInfo;
     }
 
     @Override
@@ -50,8 +54,8 @@ public class PlayerProfileModelImpl implements PlayerProfileModel {
                         public void onResponse(Call<PlayerInfoResponse> call, Response<PlayerInfoResponse> response) {
                             super.onResponse(call, response);
                             if (response.isSuccessful()) {
-                                mplayerInfo = response.body().getPlayerInfo();
-                                mProfileModelListener.onSuccessPlayerInfo(mplayerInfo);
+                                mPlayerInfo = response.body().getPlayerInfo();
+                                mProfileModelListener.onSuccessPlayerInfo(mPlayerInfo);
                             } else {
                                 mProfileModelListener.onFailedPlayerInfo();
                             }
@@ -59,6 +63,11 @@ public class PlayerProfileModelImpl implements PlayerProfileModel {
                     }
             );
         }
+    }
+
+    @Override
+    public Integer getChallengeId() {
+        return mChallengeId;
     }
 
     public interface OnProfileModelListener {

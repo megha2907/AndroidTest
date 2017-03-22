@@ -302,11 +302,24 @@
 
     </com.jeeva.android.widgets.ShadowLayout>
 
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/schedule_row_tv_challenge_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/schedule_row_ll"
+        android:layout_alignRight="@id/schedule_row_ll"
+        android:layout_marginTop="@dimen/dp_5"
+        android:maxLines="1"
+        android:textColor="@color/white_80"
+        android:textSize="@dimen/dp_12"
+        app:typeface="lato_regular"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:id="@+id/schedule_row_ll_match_commentary_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/schedule_row_ll"
+        android:layout_below="@id/schedule_row_tv_challenge_name"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
         android:layout_toRightOf="@+id/schedule_row_tv_date"

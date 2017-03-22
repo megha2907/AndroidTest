@@ -120,7 +120,7 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
             mProfileView.setPredictionCount(0);
         }
 
-        mProfileView.initMyPosition(playerInfo);
+        mProfileView.initMyPosition(playerInfo, mProfileModel.getChallengeId());
     }
 
 

@@ -30,6 +30,8 @@ public class TimelineModelImpl implements TimelineModel {
 
     private String mPlayerName;
 
+    private Integer mChallengeId;
+
     private int mClosestDatePosition = 0;
 
     private boolean mTimelineLoading = false;
@@ -50,19 +52,22 @@ public class TimelineModelImpl implements TimelineModel {
 
     @Override
     public void init(Bundle bundle) {
-        if(null != bundle && bundle.containsKey(BundleKeys.PLAYER_USER_ID)) {
+        if (null != bundle && bundle.containsKey(BundleKeys.PLAYER_USER_ID)) {
             mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_USER_ID);
             mPlayerName = bundle.getString(BundleKeys.PLAYER_NAME);
             mPlayerPhoto = bundle.getString(BundleKeys.PLAYER_PHOTO);
+            if (bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
+                mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+            }
         }
     }
 
     @Override
     public TimelineAdapter getAdapter(Context context) {
-        if(null == mPlayerUserId) {
+        if (null == mPlayerUserId) {
             return mTimelineAdapter = new TimelineAdapter(context);
         }
-        return mTimelineAdapter = new TimelineAdapter(context, mPlayerUserId,mPlayerName,mPlayerPhoto);
+        return mTimelineAdapter = new TimelineAdapter(context, mPlayerUserId, mPlayerName, mPlayerPhoto);
     }
 
     @Override
@@ -79,7 +84,7 @@ public class TimelineModelImpl implements TimelineModel {
             if (mHasMoreItems
                     && lastVisibleItem >= (totalItemCount - PAGINATION_START_AT)) {
                 callFeedListApi(totalItemCount, DEFAULT_LIMIT);
-            } else if(!mHasMoreItems) {
+            } else if (!mHasMoreItems) {
                 mMyResultsTimelineModelListener.onAllTimelinesFetched();
             }
         }
@@ -88,6 +93,19 @@ public class TimelineModelImpl implements TimelineModel {
     @Override
     public boolean isAdapterEmpty() {
         return null == mTimelineAdapter || mTimelineAdapter.getItemCount() == 0;
+    }
+
+    @Override
+    public String getChallengeNameIfAvailable() {
+        if(null != mChallengeId && null != mTimelineAdapter && mTimelineAdapter.getItemCount() > 0) {
+            return mTimelineAdapter.getItem(0).getChallengeName();
+        }
+        return null;
+    }
+
+    @Override
+    public void clearChallengeDetails() {
+        mChallengeId = null;
     }
 
     @Override
@@ -103,7 +121,7 @@ public class TimelineModelImpl implements TimelineModel {
 
         mTimelineLoading = true;
 
-        MyWebService.getInstance().getTimelinesRequest(mPlayerUserId, skip, limit)
+        MyWebService.getInstance().getTimelinesRequest(mChallengeId, mPlayerUserId, skip, limit)
                 .enqueue(new NostragamusCallBack<MatchesResponse>() {
                     @Override
                     public void onResponse(Call<MatchesResponse> call, Response<MatchesResponse> response) {
@@ -129,86 +147,13 @@ public class TimelineModelImpl implements TimelineModel {
             return;
         }
 
-        if(matchList.size() < DEFAULT_LIMIT) {
+        if (matchList.size() < DEFAULT_LIMIT) {
             mHasMoreItems = false;
         }
 
         mTimelineAdapter.addAll(matchList);
         mMyResultsTimelineModelListener.onSuccessFeeds();
     }
-
-    /*private List<Feed> getFeedList(List<Match> matchList) {
-        Map<String, Tournament> tourMap = new HashMap<>();
-        Map<String, Feed> feedMap = new HashMap<>();
-        List<Feed> feedList = new ArrayList<>();
-
-        String date;
-        Feed feed;
-        int tourId;
-        Tournament tour;
-        for (Match match : matchList) {
-            date = TimeUtils.getFormattedDateString(
-                    match.getStartTime(),
-                    Constants.DateFormats.DD_MM_YYYY,
-                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                    Constants.DateFormats.GMT
-            );
-
-            if (feedMap.containsKey(date)) {
-                feed = feedMap.get(date);
-            } else {
-                feed = new Feed(TimeUtils.getMillisecondsFromDateString(
-                        date,
-                        Constants.DateFormats.DD_MM_YYYY,
-                        Constants.DateFormats.GMT
-                ));
-                feedMap.put(date, feed);
-                feedList.add(feed);
-            }
-
-            tourId = match.getTournamentId();
-
-            if (tourMap.containsKey(date + tourId)) {
-                tour = tourMap.get(date + tourId);
-            } else {
-                tour = new Tournament(tourId, match.getTournamentName());
-                tourMap.put(date + tourId, tour);
-                feed.addTournament(tour);
-            }
-
-            tour.addMatches(match);
-        }
-
-        Collections.sort(feedList, new Comparator<Feed>() {
-            @Override
-            public int compare(Feed lhs, Feed rhs) {
-                return (int) (rhs.getDate() - lhs.getDate());
-            }
-        });
-
-
-        long todayDateMs = TimeUtils.getMillisecondsFromDateString(
-                TimeUtils.getCurrentTime(Constants.DateFormats.DD_MM_YYYY, Constants.DateFormats.GMT),
-                Constants.DateFormats.DD_MM_YYYY, Constants.DateFormats.GMT);
-        long tempMs;
-        long closestDateMs = 0;
-
-        for (int i = feedList.size() - 1; i >= 0; i--) {
-            tempMs = feedList.get(i).getDate();
-            if (todayDateMs - tempMs == 0) {
-                mClosestDatePosition = i;
-                break;
-            }
-
-            if (closestDateMs == 0 || Math.abs(todayDateMs - tempMs) < Math.abs(todayDateMs - closestDateMs)) {
-                closestDateMs = tempMs;
-                mClosestDatePosition = i;
-            }
-        }
-
-        return feedList;
-    }*/
-
 
     public interface OnMyResultsTimelineModelListener {
 

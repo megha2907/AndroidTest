@@ -124,6 +124,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         predictionAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void showShuffle() {
+        findViewById(R.id.prediction_iv_shuffle).setVisibility(View.VISIBLE);
+    }
+
     private void invokeCardListener() {
         mSwipeFlingAdapterView.post(new Runnable() {
             @Override

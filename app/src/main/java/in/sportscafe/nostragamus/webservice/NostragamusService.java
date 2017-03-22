@@ -27,7 +27,6 @@ import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequ
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroupResponse;
 import in.sportscafe.nostragamus.module.user.group.members.AddGroupRequest;
-import in.sportscafe.nostragamus.module.user.group.members.AdminRequest;
 import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupResponse;
@@ -126,7 +125,7 @@ public interface NostragamusService {
 
     @GET("v1/game/leaderboard/detail")
     Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("group_id") Integer groupId,
-                                                   @Query("challenge_id") Integer challengeId,@Query("match_id") Integer matchId);
+                                                   @Query("challenge_id") Integer challengeId, @Query("match_id") Integer matchId);
 
     @PUT("v2/game/groups/tournaments")
     Call<ApiResponse> updateGroupTournament(@Body GroupTournamentUpdateRequest request);
@@ -161,6 +160,7 @@ public interface NostragamusService {
 
     @GET("v1/game/users/matches/timeline")
     Call<MatchesResponse> getTimelines(
+            @Query("challenge_id") Integer challengeId,
             @Query("player_id") Integer playerUserId,
             @Query("skip") int skip,
             @Query("limit") int limit

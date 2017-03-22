@@ -12,15 +12,15 @@
         android:background="@color/black"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/dp_160"
-        android:paddingTop="@dimen/dp_5" />
+        android:paddingTop="@dimen/dp_20" />
 
     <ImageView
         android:id="@+id/result_timeline_empty_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/leaderboard_play_challenge_btn"
-        android:scaleType="centerCrop"
         android:layout_below="@+id/lb_landing_toolbar"
+        android:scaleType="centerCrop"
         android:src="@drawable/empty_results_image"
         android:visibility="gone" />
 
@@ -44,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_40"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginBottom="@dimen/dp_40"
         android:background="@drawable/tournament_ready_btn_bg"
         android:onClick="onClick"
@@ -52,11 +53,43 @@
         android:paddingRight="@dimen/dp_30"
         android:text="Play Challenges"
         android:textAllCaps="false"
-        android:layout_centerVertical="true"
         android:textColor="@color/white"
         android:textSize="@dimen/dp_13"
         android:visibility="gone"
         app:typeface="lato_bold" />
+
+    <RelativeLayout
+        android:id="@+id/timeline_rl_challenge_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_25"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_15"
+        android:background="@drawable/compare_btn_bg"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/timeline_tv_challenge_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_15"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_12"
+            app:typeface="lato_bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_toRightOf="@id/timeline_tv_challenge_name"
+            android:src="@drawable/popup_close_icon" />
+
+
+    </RelativeLayout>
 
 
 </RelativeLayout>
