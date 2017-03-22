@@ -157,7 +157,8 @@
             android:textColor="@color/white"
             android:textSize="@dimen/dp_16"
             app:typeface="roboto_condensed"
-            android:text="Skip" />
+            android:text="Skip"
+            android:visibility="invisible"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/prediction_tv_number_of_cards"

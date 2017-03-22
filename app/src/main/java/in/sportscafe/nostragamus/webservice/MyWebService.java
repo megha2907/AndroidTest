@@ -29,7 +29,6 @@ import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequ
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.joingroup.dto.JoinGroupResponse;
 import in.sportscafe.nostragamus.module.user.group.members.AddGroupRequest;
-import in.sportscafe.nostragamus.module.user.group.members.AdminRequest;
 import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupResponse;
@@ -194,8 +193,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getFlipPowerup(powerupId, matchId, questionId);
     }
 
-    public Call<MatchesResponse> getTimelinesRequest(Integer playerUserId, int skip, int limit) {
-        return mNostragamusService.getTimelines(playerUserId, skip, limit);
+    public Call<MatchesResponse> getTimelinesRequest(Integer challengeId, Integer playerUserId, int skip, int limit) {
+        return mNostragamusService.getTimelines(challengeId, playerUserId, skip, limit);
     }
 
     public Call<FuzzyPlayerResponse> getFuzzyPlayersRequest(String key, Integer matchId) {

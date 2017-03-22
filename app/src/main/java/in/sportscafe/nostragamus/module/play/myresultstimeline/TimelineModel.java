@@ -20,5 +20,9 @@ public interface TimelineModel {
 
     boolean isAdapterEmpty();
 
+    String getChallengeNameIfAvailable();
+
+    void clearChallengeDetails();
+
     void destroyAll();
 }

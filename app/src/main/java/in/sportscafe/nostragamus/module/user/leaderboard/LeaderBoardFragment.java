@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.user.leaderboard;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,27 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
-import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.common.RoundImage;
-import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
-import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
-import in.sportscafe.nostragamus.module.user.points.OnLeaderBoardUpdateListener;
-import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
-import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -47,6 +34,15 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
         return fragment;
     }
 
+    public static LeaderBoardFragment newInstance(LeaderBoard leaderBoard, int challengeId) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BundleKeys.LEADERBOARD_LIST, Parcels.wrap(leaderBoard));
+        bundle.putInt(BundleKeys.CHALLENGE_ID, challengeId);
+
+        LeaderBoardFragment fragment = new LeaderBoardFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Nullable
     @Override

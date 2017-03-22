@@ -12,28 +12,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
-
-import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 10/6/16.
  */
 public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdapter.ViewHolder> {
 
-    private Context mcontext;
+    private Integer mChallengeId;
+
     private Integer mSelectedPos = 0;
 
-    public LeaderBoardAdapter(Context context) {
+    public LeaderBoardAdapter(Context context, Integer challengeId) {
         super(context);
-        mcontext = context;
+        mChallengeId = challengeId;
     }
 
     @Override
@@ -86,9 +85,9 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         );
 
         if (NostragamusDataHandler.getInstance().getUserId().equals(String.valueOf(userLeaderBoard.getUserId()))) {
-            holder.mLlLeaderBoards.setBackgroundColor(ContextCompat.getColor(mcontext, R.color.leaderboard_bg_color));
+            holder.mLlLeaderBoards.setBackgroundColor(ViewUtils.getColor(holder.mLlLeaderBoards.getContext(), R.color.leaderboard_bg_color));
         } else {
-            holder.mLlLeaderBoards.setBackgroundColor(ContextCompat.getColor(mcontext, R.color.black));
+            holder.mLlLeaderBoards.setBackgroundColor(ViewUtils.getColor(holder.mLlLeaderBoards.getContext(), R.color.black));
         }
 
         if (userLeaderBoard.getRank() != null) {
@@ -114,7 +113,7 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         if (mSelectedPos == 0) {
             holder.mTvTotalPoints.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.yellowcolor));
             holder.mTvTotalPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.points_yellow_icon, 0, 0, 0);
-        }else {
+        } else {
             holder.mTvTotalPoints.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.white));
             holder.mTvTotalPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.points_white_icon, 0, 0, 0);
         }
@@ -122,7 +121,7 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         if (mSelectedPos == 1) {
             holder.mTvAccuracy.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.yellowcolor));
             holder.mTvAccuracy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.accuracy_yellow_icon_small, 0, 0, 0);
-        }else {
+        } else {
             holder.mTvAccuracy.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.white));
             holder.mTvAccuracy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.leaderboards_accuracy_icon, 0, 0, 0);
         }
@@ -131,14 +130,14 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             holder.mTvMatchPoints.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.yellowcolor));
             if (null == userLeaderBoard.getMatchPoints()) {
                 holder.mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.powerups_yellow_icon, 0, 0, 0);
-            }else {
+            } else {
                 holder.mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_yellow_icon, 0, 0, 0);
             }
         } else {
             holder.mTvMatchPoints.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.white));
             if (null == userLeaderBoard.getMatchPoints()) {
                 holder.mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.powerups_white_icon, 0, 0, 0);
-            }else {
+            } else {
                 holder.mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_white_icon, 0, 0, 0);
             }
         }
@@ -188,16 +187,16 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             V.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleKeys.PLAYER_ID, getItem(getAdapterPosition()).getUserId());
 
-                    Log.i("playerid", getItem(getAdapterPosition()).getUserId().toString());
-                    Integer playerId = getItem(getAdapterPosition()).getUserId();
+                    if(null != mChallengeId) {
+                        bundle.putInt(BundleKeys.CHALLENGE_ID, mChallengeId);
+                    }
 
-                    Bundle mBundle = new Bundle();
-                    mBundle.putInt(Constants.BundleKeys.PLAYER_ID, playerId);
-                    Intent mintent2 = new Intent(view.getContext(), PlayerProfileActivity.class);
-                    mintent2.putExtras(mBundle);
-                    view.getContext().startActivity(mintent2);
-
+                    Intent intent = new Intent(view.getContext(), PlayerProfileActivity.class);
+                    intent.putExtras(bundle);
+                    view.getContext().startActivity(intent);
                 }
             });
         }

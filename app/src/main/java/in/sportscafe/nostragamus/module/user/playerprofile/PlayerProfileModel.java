@@ -16,4 +16,6 @@ public interface PlayerProfileModel {
     PlayerInfo getPlayerInfo();
 
     void getPlayerInfoFromServer(Integer playerId);
+
+    Integer getChallengeId();
 }

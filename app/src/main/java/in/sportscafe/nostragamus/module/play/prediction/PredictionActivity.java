@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -16,14 +17,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.CustomProgressbar;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.coachmarker.TargetView;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.ShakeListener;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -61,9 +65,9 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     private TextView mTvNeitherOption;
 
-    private PredictionPresenter mPredictionPresenter;
+    private ShakeListener mShakeListener;
 
-    private PredictionModel mPredictionModel;
+    private PredictionPresenter mPredictionPresenter;
 
     @Override
     public String getScreenName() {
@@ -74,6 +78,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prediction);
+
+        mShakeListener = new ShakeListener() {
+            @Override
+            public void onShake() {
+                Log.d("PredictionActivity", "Shaked");
+                mPredictionPresenter.onShake();
+            }
+        };
 
         initToolbar();
 
@@ -99,6 +111,18 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         this.mPredictionPresenter.onCreatePrediction(getIntent().getExtras());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mShakeListener.resume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mShakeListener.pause();
+    }
+
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setContentInsetsAbsolute(0, 0);
@@ -122,6 +146,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mSwipeFlingAdapterView.setSwipeListener(swipeListener);
 
         predictionAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showShuffle() {
+        findViewById(R.id.prediction_iv_shuffle).setVisibility(View.VISIBLE);
     }
 
     private void invokeCardListener() {
@@ -335,7 +364,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(DUMMY_GAME_REQUEST_CODE == requestCode) {
+        if (DUMMY_GAME_REQUEST_CODE == requestCode) {
             mPredictionPresenter.onGetDummyGameResult();
         }
     }
@@ -431,6 +460,21 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void takeScreenshotAndShare() {
+        View rootView = findViewById(R.id.content);
+
+        Bitmap playCardBitmap = ViewUtils.viewToBitmap(
+                rootView,
+                rootView.getMeasuredWidth(),
+                rootView.getMeasuredHeight()
+        );
+
+        if (null != playCardBitmap) {
+            AppSnippet.doGeneralImageShare(this, playCardBitmap, "");
+        }
     }
 
     private void openPopup(String popUpType) {

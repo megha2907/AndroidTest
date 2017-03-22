@@ -49,7 +49,6 @@ import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
-import in.sportscafe.nostragamus.module.resultspeek.dto.ResultsPeek;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -168,6 +167,12 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             holder.mLlMatchCommentaryParent.setVisibility(View.VISIBLE);
             holder.mLlMatchCommentaryParent.addView(getCommentary(holder.mLlMatchCommentaryParent, match));
         } else {
+
+            // Setting the challenge name, if it is not empty
+            if (!TextUtils.isEmpty(match.getChallengeName())) {
+                holder.mTvChallengeName.setVisibility(View.VISIBLE);
+                holder.mTvChallengeName.setText(match.getChallengeName());
+            }
 
             // Setting match stage, if the stage is not empty & not the "commentary"
             if (!TextUtils.isEmpty(matchStage)) {
@@ -330,6 +335,8 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
         ShadowLayout mLlCardLayout;
 
+        TextView mTvChallengeName;
+
         TextView mTvMatchStage;
 
         TextView mTvStartTime;
@@ -375,6 +382,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
             mMainView = V;
             mTvDate = (TextView) V.findViewById(R.id.schedule_row_tv_date);
+            mTvChallengeName = (TextView) V.findViewById(R.id.schedule_row_tv_challenge_name);
             mTvMatchStage = (TextView) V.findViewById(R.id.schedule_row_tv_match_stage);
             mTvStartTime = (TextView) V.findViewById(R.id.schedule_row_tv_match_time);
             mTvExpiresIn = (CustomTextView) V.findViewById(R.id.schedule_row_tv_expires_in);

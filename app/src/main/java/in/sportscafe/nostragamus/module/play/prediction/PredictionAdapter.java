@@ -236,7 +236,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         }
 
 
-        if (null != question.getAudiencePoll()){
+        if (null != question.getAudiencePoll()) {
             question.setPowerUpId(Powerups.AUDIENCE_POLL);
             int leftAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(0).getAnswerPercentage().replaceAll("%", ""));
             int rightAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(1).getAnswerPercentage().replaceAll("%", ""));
@@ -526,6 +526,14 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             llOptionLabels = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_option_labels);
             llQuestionDesc = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_question_desc);
             llPowerUpHolder = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_powerup_holder);
+
+            cvMainCard.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Log.d("PredictionAdapter", "Card long clicked");
+                    return true;
+                }
+            });
         }
     }
 }

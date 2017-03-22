@@ -43,6 +43,13 @@ public class TimelinePresenterImpl implements TimelinePresenter, TimelineModelIm
     }
 
     @Override
+    public void onClickFilter() {
+        myResultsTimelineModel.clearChallengeDetails();
+        myResultsTimelineView.removeChallengeFilter();
+        getFeedDetails();
+    }
+
+    @Override
     public void onDestroy() {
         myResultsTimelineModel.destroyAll();
     }
@@ -56,6 +63,11 @@ public class TimelinePresenterImpl implements TimelinePresenter, TimelineModelIm
     public void onSuccessFeeds() {
 //        myResultsTimelineView.moveAdapterPosition(movePosition);
         myResultsTimelineView.dismissProgressbar();
+
+        String challengeName = myResultsTimelineModel.getChallengeNameIfAvailable();
+        if(null != challengeName) {
+            myResultsTimelineView.setChallengeFilter(challengeName);
+        }
     }
 
     @Override

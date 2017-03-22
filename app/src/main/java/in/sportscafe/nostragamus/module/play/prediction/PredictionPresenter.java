@@ -28,4 +28,6 @@ public interface PredictionPresenter {
     void onChallengeInfoUpdated(Bundle bundle);
 
     void onGetDummyGameResult();
+
+    void onShake();
 }

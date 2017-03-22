@@ -1,7 +1,6 @@
 package in.sportscafe.nostragamus.module.user.comparisons.compareLeaderBoards;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +12,16 @@ import java.util.List;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.webservice.CompareLeaderBoard;
 
 /**
  * Created by deepanshi on 2/14/17.
  */
-
 public class CompareLeaderBoardAdapter extends Adapter<CompareLeaderBoard, CompareLeaderBoardAdapter.ViewHolder> {
-
-    private Context mcon;
-    private String userRank;
-    private String playerRank;
 
     public CompareLeaderBoardAdapter(Context context, List<CompareLeaderBoard> compareLeaderBoardList) {
         super(context);
-        mcon = context;
         addAll(compareLeaderBoardList);
     }
 
@@ -43,41 +37,40 @@ public class CompareLeaderBoardAdapter extends Adapter<CompareLeaderBoard, Compa
 
     @Override
     public void onBindViewHolder(CompareLeaderBoardAdapter.ViewHolder holder, int position) {
+        CompareLeaderBoard clBoard = getItem(position);
+        holder.mTvChallengeName.setText(clBoard.getName());
 
-        CompareLeaderBoard compareLeaderBoard = getItem(position);
-        holder.mTvChallengeName.setText(compareLeaderBoard.getName());
-
-        if (compareLeaderBoard.getUserRank() != null) {
-            userRank = AppSnippet.ordinal(compareLeaderBoard.getUserRank());
+        String rank = "No Rank";
+        if (clBoard.getUserRank() != null) {
+            rank = AppSnippet.ordinal(clBoard.getUserRank());
         } else {
-            userRank = "No Rank";
             holder.mBtnUserRank.setTextSize(10);
         }
+        holder.mBtnUserRank.setText("#" + rank);
 
-        if (compareLeaderBoard.getPlayerRank() != null) {
-            playerRank = AppSnippet.ordinal(compareLeaderBoard.getPlayerRank());
+        rank = "No Rank";
+        if (clBoard.getPlayerRank() != null) {
+            rank = AppSnippet.ordinal(clBoard.getPlayerRank());
         } else {
-            playerRank = "No Rank";
             holder.mBtnPlayerRank.setTextSize(10);
         }
+        holder.mBtnPlayerRank.setText("#" + rank);
 
-        holder.mBtnUserRank.setText("#" + userRank);
-        holder.mBtnPlayerRank.setText("#" + playerRank);
-
-        if (compareLeaderBoard.getPlayerRank() != null && compareLeaderBoard.getUserRank() != null) {
-
-            if (compareLeaderBoard.getPlayerRank() < compareLeaderBoard.getUserRank()) {
-                holder.mBtnPlayerRank.setTextColor(ContextCompat.getColor(holder.mBtnPlayerRank.getContext(), R.color.yellowcolor));
+        Context context = holder.mBtnPlayerRank.getContext();
+        if (clBoard.getPlayerRank() != clBoard.getUserRank()) {
+            if (null == clBoard.getUserRank()) {
+                holder.mBtnPlayerRank.setTextColor(ViewUtils.getColor(context, R.color.yellowcolor));
+            } else if (null == clBoard.getPlayerRank()) {
+                holder.mBtnUserRank.setTextColor(ViewUtils.getColor(context, R.color.yellowcolor));
+            } else if (clBoard.getPlayerRank() < clBoard.getUserRank()) {
+                holder.mBtnPlayerRank.setTextColor(ViewUtils.getColor(context, R.color.yellowcolor));
             } else {
-                holder.mBtnUserRank.setTextColor(ContextCompat.getColor(holder.mBtnUserRank.getContext(), R.color.yellowcolor));
+                holder.mBtnUserRank.setTextColor(ViewUtils.getColor(context, R.color.yellowcolor));
             }
-
-        } else if (compareLeaderBoard.getPlayerRank() == null && compareLeaderBoard.getUserRank() != null) {
-            holder.mBtnUserRank.setTextColor(ContextCompat.getColor(holder.mBtnUserRank.getContext(), R.color.yellowcolor));
-        } else if (compareLeaderBoard.getPlayerRank() != null && compareLeaderBoard.getUserRank() == null) {
-            holder.mBtnPlayerRank.setTextColor(ContextCompat.getColor(holder.mBtnPlayerRank.getContext(), R.color.yellowcolor));
+        } else {
+            holder.mBtnPlayerRank.setTextColor(ViewUtils.getColor(context, R.color.white));
+            holder.mBtnUserRank.setTextColor(ViewUtils.getColor(context, R.color.white));
         }
-
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

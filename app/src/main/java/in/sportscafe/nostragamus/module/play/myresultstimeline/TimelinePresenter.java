@@ -14,5 +14,7 @@ public interface TimelinePresenter {
 
     void onTimelineScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount);
 
+    void onClickFilter();
+
     void onDestroy();
 }

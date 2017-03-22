@@ -15,9 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
@@ -41,31 +40,39 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
 
     private RecyclerView mRcvFeed;
 
+    private RelativeLayout mRlChallengeFilter;
+
     private TimelinePresenter myResultsTimelinePresenter;
 
     private LinearLayoutManager mLinearLayoutManager;
 
     private OnHomeActionListener mOnHomeActionListener;
 
-    public static TimelineFragment newInstance(PlayerInfo playerInfo) {
+    public static TimelineFragment newInstance() {
+        return new TimelineFragment();
+    }
+
+    public static TimelineFragment newInstance(PlayerInfo playerInfo, Integer challengeId) {
+        TimelineFragment fragment = new TimelineFragment();
+        fragment.setArguments(getBundle(playerInfo, challengeId));
+        return fragment;
+    }
+
+    private static Bundle getBundle(PlayerInfo playerInfo, Integer challengeId) {
         Bundle args = new Bundle();
         args.putInt(BundleKeys.PLAYER_USER_ID, playerInfo.getId());
         args.putString(BundleKeys.PLAYER_PHOTO, playerInfo.getPhoto());
         args.putString(BundleKeys.PLAYER_NAME, playerInfo.getUserNickName());
-
-        TimelineFragment fragment = new TimelineFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public static TimelineFragment newInstance() {
-        return new TimelineFragment();
+        if (null != challengeId) {
+            args.putInt(BundleKeys.CHALLENGE_ID, challengeId);
+        }
+        return args;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_feed, container, false);
+        return inflater.inflate(R.layout.fragment_timeline, container, false);
     }
 
     @Override
@@ -130,9 +137,11 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
                 }
             });
 
+            mRlChallengeFilter = (RelativeLayout) findViewById(R.id.timeline_rl_challenge_filter);
+            mRlChallengeFilter.setOnClickListener(this);
+
             this.myResultsTimelinePresenter = TimelinePresenterImpl.newInstance(this);
             this.myResultsTimelinePresenter.onCreateFeed(bundle);
-
         }
     }
 
@@ -190,10 +199,24 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
     }
 
     @Override
+    public void setChallengeFilter(String challengeName) {
+        mRlChallengeFilter.setVisibility(View.VISIBLE);
+        ((TextView) findViewById(R.id.timeline_tv_challenge_name)).setText(challengeName);
+    }
+
+    @Override
+    public void removeChallengeFilter() {
+        mRlChallengeFilter.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.leaderboard_play_challenge_btn:
                 mOnHomeActionListener.onClickChallenges();
+                break;
+            case R.id.timeline_rl_challenge_filter:
+                myResultsTimelinePresenter.onClickFilter();
                 break;
         }
     }

@@ -52,4 +52,8 @@ public interface PredictionModel {
     boolean isDummyGameShown();
 
     void onDummyGameShown();
+
+    boolean isQuestionAvailable();
+
+    void getShareText(Context context);
 }

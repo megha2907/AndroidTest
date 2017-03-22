@@ -2,23 +2,18 @@ package in.sportscafe.nostragamus.module.user.playerprofile;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
@@ -26,10 +21,8 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.home.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
-import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
@@ -313,11 +306,10 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
 
 
     @Override
-    public void initMyPosition(PlayerInfo playerInfo) {
-
+    public void initMyPosition(PlayerInfo playerInfo, Integer challengeId) {
         mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
         mViewPager.setOffscreenPageLimit(5);
-        mpagerAdapter = getAdapter(playerInfo);
+        mpagerAdapter = getAdapter(playerInfo, challengeId);
         mViewPager.setAdapter(mpagerAdapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -350,10 +342,10 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
 
     }
 
-    private ViewPagerAdapter getAdapter(PlayerInfo playerInfo) {
+    private ViewPagerAdapter getAdapter(PlayerInfo playerInfo, Integer challengeId) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        pagerAdapter.addFragment(TimelineFragment.newInstance(playerInfo), "Matches");
+        pagerAdapter.addFragment(TimelineFragment.newInstance(playerInfo, challengeId), "Matches");
 
         if (groupsCount == "1") {
             pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), "Mutual Group");
