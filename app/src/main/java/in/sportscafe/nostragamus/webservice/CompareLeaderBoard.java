@@ -10,16 +10,16 @@ import org.parceler.Parcel;
 @Parcel
 public class CompareLeaderBoard {
 
-    @JsonProperty("user1")
+    @JsonProperty("user2")
     private String userId;
 
-    @JsonProperty("user1_rank")
+    @JsonProperty("user2_rank")
     private Integer userRank;
 
-    @JsonProperty("user2")
+    @JsonProperty("user1")
     private String playerId;
 
-    @JsonProperty("user2_rank")
+    @JsonProperty("user1_rank")
     private Integer playerRank;
 
     @JsonProperty("name")
@@ -28,42 +28,42 @@ public class CompareLeaderBoard {
     @JsonProperty("type")
     private String type; // challenge or group
 
-    @JsonProperty("user1")
+    @JsonProperty("user2")
     public String getUserId() {
         return userId;
     }
 
-    @JsonProperty("user1")
+    @JsonProperty("user2")
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    @JsonProperty("user1_rank")
+    @JsonProperty("user2_rank")
     public Integer getUserRank() {
         return userRank;
     }
 
-    @JsonProperty("user1_rank")
+    @JsonProperty("user2_rank")
     public void setUserRank(Integer userRank) {
         this.userRank = userRank;
     }
 
-    @JsonProperty("user2")
+    @JsonProperty("user1")
     public String getPlayerId() {
         return playerId;
     }
 
-    @JsonProperty("user2")
+    @JsonProperty("user1")
     public void setPlayerId(String playerId) {
         this.playerId = playerId;
     }
 
-    @JsonProperty("user2_rank")
+    @JsonProperty("user1_rank")
     public Integer getPlayerRank() {
         return playerRank;
     }
 
-    @JsonProperty("user2_rank")
+    @JsonProperty("user1_rank")
     public void setPlayerRank(Integer playerRank) {
         this.playerRank = playerRank;
     }

@@ -8,7 +8,7 @@ public abstract class ShakeListener implements SensorListener {
 
     public abstract void onShake();
 
-    private static final int FORCE_THRESHOLD = 350;
+    private static final int FORCE_THRESHOLD = 1000;
 
     private static final int TIME_THRESHOLD = 100;
 
