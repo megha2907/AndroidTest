@@ -4,11 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Log;
-
-import java.util.Arrays;
-import java.util.EventListener;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -16,10 +11,6 @@ import in.sportscafe.nostragamus.module.feedback.GoogleFormActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
-import in.sportscafe.nostragamus.module.user.preference.PreferenceManager;
-import in.sportscafe.nostragamus.module.user.preference.SavePreferenceModelImpl;
-import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity;
-import in.sportscafe.nostragamus.module.user.sportselection.SportsModelImpl;
 
 /**
  * Created by Jeeva on 27/5/16.
@@ -33,7 +24,6 @@ public class GetStartActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_getstarted);
 
         /*if (NostragamusDataHandler.getInstance().isInitialFeedbackFormShown()) {*/
         handleGetStart();
@@ -43,47 +33,15 @@ public class GetStartActivity extends Activity {
     }
 
     private void handleGetStart() {
-        if (NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size() > 0) {
-//            if (ScGameDataHandler.getInstance().getFavoriteSportsIdList().contains(10)){
-//                autoSaveAllSports();
-//            }
-
-            if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
-                if (NostragamusDataHandler.getInstance().isFirstTimeUser()) {
-                    Log.i("inside","newuser");
-                    navigateToEditProfile();
-                    return;
-                } else {
-                    Log.i("inside","home");
-                    navigateToHome();
-                    return;
-                }
-            }
-
-        } else if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
+        if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
             if (NostragamusDataHandler.getInstance().isFirstTimeUser()) {
-                Log.i("inside","newuser");
                 navigateToEditProfile();
-                return;
             } else {
-                navigateToSportSelection();
-                return;
+                navigateToHome();
             }
         } else {
             navigateToLogin();
         }
-
-        getUpdatedSports();
-
-//        findViewById(R.id.activity_getstarted_btn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                navigateToLogin();
-////                NostragamusDataHandler.getInstance().setUserId("1");
-////                                autoSaveAllSports();
-////                                navigateToHome();
-//            }
-//        });
     }
 
     private void navigateToForm() {
@@ -101,24 +59,6 @@ public class GetStartActivity extends Activity {
         }
     }
 
-    private void autoSaveAllSports() {
-        new PreferenceManager().savePreference(Arrays.asList(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}),
-                new SavePreferenceModelImpl.SavePreferenceModelListener() {
-                    @Override
-                    public void onSuccess() {
-                    }
-
-                    @Override
-                    public void onNoInternet() {
-                        onNoInternet();
-                    }
-
-                    @Override
-                    public void onFailed(String message) {
-                    }
-                });
-    }
-
     private void navigateToHome() {
         startActivity(new Intent(this, HomeActivity.class));
         finish();
@@ -126,39 +66,12 @@ public class GetStartActivity extends Activity {
 
     private void navigateToEditProfile() {
         Intent intent = new Intent(this, EditProfileActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("screen", BundleKeys.LOGIN_SCREEN);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-
-    private void navigateToSportSelection() {
-        Intent intent = new Intent(this, SportSelectionActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("screen", BundleKeys.LOGIN_SCREEN);
-        intent.putExtras(bundle);
+        intent.putExtra("screen", BundleKeys.LOGIN_SCREEN);
         startActivity(intent);
     }
 
     private void navigateToLogin() {
         startActivity(new Intent(this, LogInActivity.class));
         finish();
-    }
-
-    private void getUpdatedSports() {
-        SportsModelImpl.newInstance(new SportsModelImpl.SportsModelListener() {
-            @Override
-            public void onGetSportsSuccess() {
-            }
-
-            @Override
-            public void onNoNetwork() {
-            }
-
-            @Override
-            public void onGetSportsFailed() {
-            }
-        }).getAllSportsFromServer();
     }
 }

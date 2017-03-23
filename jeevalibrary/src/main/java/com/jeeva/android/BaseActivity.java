@@ -44,6 +44,11 @@ public abstract class BaseActivity extends AppCompatActivity implements com.jeev
         return CustomToast.getToast(BaseActivity.this).isToastShowing();
     }
 
+    @Override
+    public void dismissMessage() {
+        CustomToast.getToast(BaseActivity.this).dismissToast();
+    }
+
     public void showProgressbar() {
         CustomProgressbar.getProgressbar(BaseActivity.this).show();
     }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/onboarding_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/dummy_game_tv_top_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_30"
+        android:gravity="center"
+        android:text="Connect to PayTm to make sure you can\nreceive Cash Rewards at the end of\nchallenges"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_16"
+        app:typeface="lato_regular" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/nostragamus_logo" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:src="@drawable/onboard_how_to_play" />
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/paytm_connect_btn_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:background="@drawable/tournament_ready_btn_bg"
+        android:gravity="center"
+        android:minWidth="@dimen/dp_200"
+        android:onClick="onClickConnect"
+        android:paddingBottom="@dimen/dp_2"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_0"
+        android:text="Connect to PayTm"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:typeface="lato_bold" />
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/paytm_connect_btn_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/dg_skip_btn_bg"
+        android:gravity="center"
+        android:minWidth="@dimen/dp_200"
+        android:onClick="onClickSkip"
+        android:paddingBottom="@dimen/dp_2"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_0"
+        android:text="I don't want cash rewards"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:typeface="lato_bold" />
+
+</LinearLayout>

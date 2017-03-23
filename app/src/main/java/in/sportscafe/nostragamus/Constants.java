@@ -156,6 +156,11 @@ public interface Constants {
         String NO_BADGES = "No badges yet";
         String EMPTY_CHALLENGES = "No challenges currently created to play!";
         String BANK_TRANSFER_SUCCESS = "Selected powerups successfully transfered to your challenge";
+        String INVALID_MOBILE_NUMBER = "Invalid mobile number";
+        String CONFIRM_MOBILE_NUMBER_VARY = "Confirm mobile number not matching";
+        String INVALID_EMAIL = "Invalid email id";
+        String CONFIRM_EMAIL_VARY = "Confirm email id not matching";
+        String PAYTM_ADD_DETAIL_SUCCESS = "Your paytm detail saved successfully";
     }
 
     interface BundleKeys {
@@ -395,6 +400,8 @@ public interface Constants {
         String PLAYER_COMPARISON = "player_comparison"; //in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity
         String RESULTS_PEEK = "results_peek"; //in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity
         String DUMMY_GAME = "dummy_game"; //in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity
+        String PAYTM_CONNECT = "paytm_connect"; //in.sportscafe.nostragamus.module.paytm.PaytmConnectActivity
+        String PAYTM_ADD_DETAIL = "paytm_add_detail"; //in.sportscafe.nostragamus.module.paytm.PaytmAddDetailActivity
     }
 
     interface InAppPopups {

@@ -55,11 +55,14 @@ public class JoinGroupApiModelImpl {
                             NostragamusAnalytics.getInstance().trackGroups(AnalyticsActions.JOIN_GROUP, null);
 
                             if (fromReferral) {
-                                // Removing group code since user joined in that group
-                                NostragamusDataHandler.getInstance().setInstallGroupCode(null);
-                            }
+                                // Removing group code and name since user joined in that group
+                                NostragamusDataHandler.getInstance().removeInstallGroupCode();
+                                NostragamusDataHandler.getInstance().removeInstallGroupName();
 
-                            getGroupInfo(response.body().getJoinGroup().getGroupId());
+                                mJoinGroupApiModelListener.onSuccessJoinGroupApi(null);
+                            } else {
+                                getGroupInfo(response.body().getJoinGroup().getGroupId());
+                            }
                         } else {
                             mJoinGroupApiModelListener.onFailedJoinGroupApi(response.message());
                         }

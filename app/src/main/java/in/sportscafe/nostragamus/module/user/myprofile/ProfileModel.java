@@ -15,6 +15,4 @@ public interface ProfileModel {
     UserInfo getUserInfo();
 
     ViewPagerAdapter getAdapter(FragmentManager fm);
-
-    String getSportsTabTitle();
 }

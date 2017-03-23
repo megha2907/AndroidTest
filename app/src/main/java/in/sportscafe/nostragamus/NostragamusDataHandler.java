@@ -1,7 +1,5 @@
 package in.sportscafe.nostragamus;
 
-import android.text.TextUtils;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.ArrayList;
@@ -11,7 +9,6 @@ import java.util.List;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 
@@ -57,49 +54,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     public void setFirstTimeUser(boolean FirstTimeUser) {
         setSharedBooleanData(SharedKeys.FIRST_TIME_USER, FirstTimeUser);
-    }
-
-    public boolean isInitialSportsAvailable() {
-        return getSharedBooleanData(SharedKeys.INITIAL_SPORTS_AVAILABLE, false);
-    }
-
-    public void setInitialSportsAvailable(boolean initialSportsAvailable) {
-        setSharedBooleanData(SharedKeys.INITIAL_SPORTS_AVAILABLE, initialSportsAvailable);
-    }
-
-    //ALL SPORTS
-    public List<Sport> getAllSports() {
-        String allSportsString = getSharedStringData(SharedKeys.ALL_SPORTS);
-        if (TextUtils.isEmpty(allSportsString)) {
-            return new ArrayList<>();
-        }
-        return MyWebService.getInstance().getObjectFromJson(allSportsString,
-                new TypeReference<List<Sport>>() {
-                });
-    }
-
-    public void setAllSports(String allSports) {
-        setSharedStringData(SharedKeys.ALL_SPORTS, allSports);
-    }
-
-    public void setAllSports(List<Sport> newSports) {
-        setAllSports(MyWebService.getInstance().getJsonStringFromObject(newSports));
-    }
-
-    //SPORTS FOLLOWING
-    public List<Integer> getFavoriteSportsIdList() {
-        String favoriteSportsString = getSharedStringData(SharedKeys.FAVORITE_SPORTS);
-        if (null == favoriteSportsString || favoriteSportsString.isEmpty()) {
-            return new ArrayList<>();
-        }
-        return MyWebService.getInstance().getObjectFromJson(favoriteSportsString,
-                new TypeReference<List<Integer>>() {
-                });
-    }
-
-    public void setFavoriteSportsIdList(List<Integer> favoriteSportsIdList) {
-        setSharedStringData(SharedKeys.FAVORITE_SPORTS,
-                MyWebService.getInstance().getJsonStringFromObject(favoriteSportsIdList));
     }
 
     public String getUserId() {
@@ -213,6 +167,22 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return getSharedStringData(SharedKeys.INSTALL_CHANNEL);
     }
 
+    public void removeInstallGroupCode() {
+        clearData(SharedKeys.INSTALL_GROUP_CODE);
+    }
+
+    public void removeInstallGroupName() {
+        clearData(SharedKeys.INSTALL_GROUP_NAME);
+    }
+
+    public void removeInstallChannel() {
+        clearData(SharedKeys.INSTALL_CHANNEL);
+    }
+
+    public void removeReferralUserId() {
+        clearData(BundleKeys.USER_REFERRAL_ID);
+    }
+
     public int getNormalUpdateVersion() {
         return getSharedIntData(SharedKeys.NORMAL_UPDATE_VERSION, -1);
     }
@@ -298,14 +268,9 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     @Override
     public void clearAll() {
         boolean formShown = isInitialFeedbackFormShown();
-        List<Sport> allSports = getAllSports();
         super.clearAll();
 
         setInitialFeedbackFormShown(formShown);
-        if (!allSports.isEmpty()) {
-            setAllSports(allSports);
-            setInitialSportsAvailable(true);
-        }
     }
 
     public boolean isPlayedFirstMatch() {

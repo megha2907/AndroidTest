@@ -94,7 +94,7 @@ public class Nostragamus extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
 
-        if(mDebuggable) {
+        if (mDebuggable) {
             MultiDex.install(this);
         }
     }
@@ -205,8 +205,8 @@ public class Nostragamus extends Application {
     public void startPeriodJobs() {
 
         Long expiryTimeInMs = NostragamusDataHandler.getInstance().getTokenExpiry();
-        if(expiryTimeInMs > 0) {
-            if(Calendar.getInstance().getTimeInMillis() >= expiryTimeInMs - ONE_HOUR_IN_MILLIS) {
+        if (expiryTimeInMs > 0) {
+            if (Calendar.getInstance().getTimeInMillis() >= expiryTimeInMs - ONE_HOUR_IN_MILLIS) {
                 RefreshTokenModelImpl.newInstance().refreshToken();
             }
         }
@@ -216,11 +216,11 @@ public class Nostragamus extends Application {
     }
 
     public void logout() {
-            NostragamusDataHandler.getInstance().clearAll();
-            navigateToLogIn();
-            NostragamusAnalytics.getInstance().trackLogOut();
-            MoEHelper.getInstance(getApplicationContext()).logoutUser();
-        }
+        NostragamusDataHandler.getInstance().clearAll();
+        navigateToLogIn();
+        NostragamusAnalytics.getInstance().trackLogOut();
+        MoEHelper.getInstance(getApplicationContext()).logoutUser();
+    }
 
     private void navigateToLogIn() {
         Intent intent = new Intent(getApplicationContext(), GetStartActivity.class);

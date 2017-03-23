@@ -269,6 +269,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onGetQuestionShareText(String shareText) {
         AppSnippet.copyToClipBoard(mPredictionView.getContext(), shareText);
-        mPredictionView.showMessage("Corresponding share message copied to clipboard!", Toast.LENGTH_LONG);
+        mPredictionView.showMessage("Corresponding share message copied to clipboard!", 15000);
     }
 }

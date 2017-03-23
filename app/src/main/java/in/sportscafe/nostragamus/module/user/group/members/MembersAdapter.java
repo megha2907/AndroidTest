@@ -107,7 +107,7 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
             if (NostragamusDataHandler.getInstance().getUserId().equals(playerId.toString())) {
                 Intent homeintent = new Intent(v.getContext(), HomeActivity.class);
                 homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                homeintent.putExtra(BundleKeys.OPEN_PROFILE, 0);
+                homeintent.putExtra(BundleKeys.OPEN_PROFILE, "0");
                 v.getContext().startActivity(homeintent);
             } else {
                 Bundle mBundle = new Bundle();

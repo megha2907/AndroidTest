@@ -10,6 +10,8 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.user.group.JoinGroupApiModelImpl;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
@@ -42,13 +44,47 @@ public class AllGroupsModelImpl implements AllGroupsModel {
     @Override
     public void init(Bundle bundle) {
         mAllGroups = bundle.getBoolean(BundleKeys.IS_ALL_GROUPS);
-        if (mAllGroups) {
-            getAllGroups();
-        } else {
+
+        if (!mAllGroups) {
             mAllGroupsModelListener.onGetGroupsSuccess(
                     ((PlayerInfo) Parcels.unwrap(bundle.getParcelable(BundleKeys.PLAYERINFO))).getMutualGroups()
             );
         }
+
+        checkGroupCode();
+    }
+
+    private void checkGroupCode() {
+        String groupCode = NostragamusDataHandler.getInstance().getInstallGroupCode();
+        if (null == groupCode) {
+            getAllGroups();
+        } else {
+            joinGroup(groupCode);
+        }
+    }
+
+    private void joinGroup(String groupCode) {
+        JoinGroupApiModelImpl.newInstance(new JoinGroupApiModelImpl.OnJoinGroupApiModelListener() {
+            @Override
+            public void onSuccessJoinGroupApi(GroupInfo groupInfo) {
+                getAllGroups();
+            }
+
+            @Override
+            public void onFailedJoinGroupApi(String message) {
+                getAllGroups();
+            }
+
+            @Override
+            public void onNoInternet() {
+                mAllGroupsModelListener.onNoInternet();
+            }
+
+            @Override
+            public void onInvalidGroupCode() {
+                getAllGroups();
+            }
+        }).joinGroup(groupCode, true);
     }
 
     @Override
@@ -58,29 +94,31 @@ public class AllGroupsModelImpl implements AllGroupsModel {
 
     @Override
     public void getAllGroups() {
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
-            mAllGroupsModelListener.onApiCallStarted();
+        if (mAllGroups) {
+            if (Nostragamus.getInstance().hasNetworkConnection()) {
+                mAllGroupsModelListener.onApiCallStarted();
 
-            MyWebService.getInstance().getAllGroupsRequest().enqueue(
-                    new NostragamusCallBack<AllGroupsResponse>() {
-                        @Override
-                        public void onResponse(Call<AllGroupsResponse> call, Response<AllGroupsResponse> response) {
-                            super.onResponse(call, response);
+                MyWebService.getInstance().getAllGroupsRequest().enqueue(
+                        new NostragamusCallBack<AllGroupsResponse>() {
+                            @Override
+                            public void onResponse(Call<AllGroupsResponse> call, Response<AllGroupsResponse> response) {
+                                super.onResponse(call, response);
 
-                            if (!mAllGroupsModelListener.onApiCallStopped()) {
-                                return;
-                            }
+                                if (!mAllGroupsModelListener.onApiCallStopped()) {
+                                    return;
+                                }
 
-                            if (response.isSuccessful()) {
-                                mAllGroupsModelListener.onGetGroupsSuccess(response.body().getAllGroups());
-                            } else {
-                                mAllGroupsModelListener.onGetGroupsFailed(response.message());
+                                if (response.isSuccessful()) {
+                                    mAllGroupsModelListener.onGetGroupsSuccess(response.body().getAllGroups());
+                                } else {
+                                    mAllGroupsModelListener.onGetGroupsFailed(response.message());
+                                }
                             }
                         }
-                    }
-            );
-        } else {
-            mAllGroupsModelListener.onNoInternet();
+                );
+            } else {
+                mAllGroupsModelListener.onNoInternet();
+            }
         }
     }
 
@@ -98,7 +136,7 @@ public class AllGroupsModelImpl implements AllGroupsModel {
     }
 
     private Bundle getSelectedGroupItemBundle() {
-        if(-1 != mSelectedGroupItem) {
+        if (-1 != mSelectedGroupItem) {
             AllGroups allGroups = mAllGroupsAdapter.getItem(mSelectedGroupItem);
 
             Bundle bundle = new Bundle();
@@ -111,8 +149,8 @@ public class AllGroupsModelImpl implements AllGroupsModel {
 
     @Override
     public void updateGroupInfo(Bundle bundle) {
-        if(-1 != mSelectedGroupItem) {
-            if(bundle.containsKey(BundleKeys.GROUP_INFO)) {
+        if (-1 != mSelectedGroupItem) {
+            if (bundle.containsKey(BundleKeys.GROUP_INFO)) {
                 updateAllGroupsDetails(
                         mAllGroupsAdapter.getItem(mSelectedGroupItem),
                         (GroupInfo) Parcels.unwrap(bundle.getParcelable(BundleKeys.GROUP_INFO))
@@ -128,7 +166,7 @@ public class AllGroupsModelImpl implements AllGroupsModel {
 
     @Override
     public void addNewGroup(Bundle bundle) {
-        if(bundle.containsKey(BundleKeys.GROUP_INFO)) {
+        if (bundle.containsKey(BundleKeys.GROUP_INFO)) {
             mSelectedGroupItem = 0;
             mAllGroupsAdapter.add(migrateGroupInfoToAllGroups(
                     (GroupInfo) Parcels.unwrap(bundle.getParcelable(BundleKeys.GROUP_INFO))),
@@ -141,7 +179,7 @@ public class AllGroupsModelImpl implements AllGroupsModel {
 
     private void checkAdapterEmpty() {
         mAllGroupsModelListener.onApiCallStopped();
-        if(mAllGroupsAdapter.getItemCount() == 0) {
+        if (mAllGroupsAdapter.getItemCount() == 0) {
             mAllGroupsModelListener.onGroupsEmpty();
         }
     }

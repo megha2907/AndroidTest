@@ -2,7 +2,6 @@ package in.sportscafe.nostragamus.module.user.login;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.jeeva.android.Log;
@@ -17,7 +16,6 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.user.group.JoinGroupApiModelImpl;
-import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -101,12 +99,6 @@ public class LogInModelImpl implements LogInModel {
         mFacebookHandler.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public boolean isPreferenceDone() {
-        Log.d(TAG, NostragamusDataHandler.getInstance().getFavoriteSportsIdList() + "");
-        return NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size() > 0;
-    }
-
     private void getProfile() {
         mLogInModelListener.onGettingProfile();
         mFacebookHandler.getProfile(new GetProfileModelImpl.GetProfileModelListener() {
@@ -172,17 +164,12 @@ public class LogInModelImpl implements LogInModel {
 
         UserInfoModelImpl.newInstance(null).handleUserInfoResponse(userInfo);
 
-        // Getting the saved sports from server and saving it locally
-        nostragamusDataHandler.setFavoriteSportsIdList(userInfo.getUserSports());
-
         String groupCode = NostragamusDataHandler.getInstance().getInstallGroupCode();
-        if (null == groupCode) {
-            mLogInModelListener.onLoginCompleted();
-        } else {
+        if (null != groupCode) {
             joinGroup(groupCode);
         }
 
-        if(userLoginInResponse.isNewUser()) {
+        if (userLoginInResponse.isNewUser()) {
             NostragamusAnalytics.getInstance().trackNewUsers(
                     TextUtils.isEmpty(nostragamusDataHandler.getReferralUserId()) ? AnalyticsActions.ORGANIC : AnalyticsActions.REFERRAL,
                     NostragamusDataHandler.getInstance().getInstallChannel()
@@ -190,32 +177,30 @@ public class LogInModelImpl implements LogInModel {
         }
 
         // Removing referral user id since user logged in
-        nostragamusDataHandler.setReferralUserId(null);
+        nostragamusDataHandler.removeReferralUserId();
 
         // Removing channel since user logged in
-        nostragamusDataHandler.setInstallChannel(null);
+        nostragamusDataHandler.removeInstallChannel();
+
+        mLogInModelListener.onLoginCompleted();
     }
 
     private void joinGroup(String groupCode) {
         JoinGroupApiModelImpl.newInstance(new JoinGroupApiModelImpl.OnJoinGroupApiModelListener() {
             @Override
             public void onSuccessJoinGroupApi(GroupInfo groupInfo) {
-
             }
 
             @Override
             public void onFailedJoinGroupApi(String message) {
-
             }
 
             @Override
             public void onNoInternet() {
-
             }
 
             @Override
             public void onInvalidGroupCode() {
-
             }
         }).joinGroup(groupCode, true);
     }

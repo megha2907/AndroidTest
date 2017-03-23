@@ -22,10 +22,6 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
-import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
-import in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity;
-
-//import com.squareup.picasso.Picasso;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -150,12 +146,6 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     }
 
     @Override
-    public void navigateToSportsSelection() {
-        startActivity(new Intent(this, SportSelectionActivity.class));
-        finish();
-    }
-
-    @Override
     public void setNicknameEmpty() {
         mTilNickName.setErrorEnabled(true);
         mTilNickName.setError(Constants.Alerts.NICKNAME_EMPTY);
@@ -203,7 +193,9 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mEditProfilePresenter.onGetResult(requestCode, resultCode, data);
+        if(RESULT_OK == resultCode) {
+            mEditProfilePresenter.onGetResult(requestCode, resultCode, data);
+        }
     }
 
     private void startPermissionsActivity(String[] permission) {

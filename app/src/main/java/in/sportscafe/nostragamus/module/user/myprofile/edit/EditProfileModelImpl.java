@@ -37,7 +37,6 @@ public class EditProfileModelImpl implements EditProfileModel {
 
     @Override
     public void updateProfile(String nickname) {
-
         if (nickname.isEmpty()) {
             mEditProfileListener.onNickNameEmpty();
             return;
@@ -116,6 +115,8 @@ public class EditProfileModelImpl implements EditProfileModel {
                             } else {
                                 mUserInfo.setUserNickName(nickname);
                                 NostragamusDataHandler.getInstance().setUserInfo(mUserInfo);
+
+                                NostragamusDataHandler.getInstance().setFirstTimeUser(false);
 
                                 mEditProfileListener.onEditSuccess();
                             }
