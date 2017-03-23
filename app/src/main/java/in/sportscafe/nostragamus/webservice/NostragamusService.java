@@ -39,8 +39,6 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
-import in.sportscafe.nostragamus.module.user.sportselection.dto.AllSports;
-import in.sportscafe.nostragamus.module.user.sportselection.dto.PreferenceRequest;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -60,9 +58,6 @@ import retrofit2.http.QueryMap;
  * Created by Jeeva on 14/3/16.
  */
 public interface NostragamusService {
-
-    @GET("v1/game/sports")
-    Call<AllSports> getAllSports();
 
     @GET("v1/game/users")
     Call<UserInfoResponse> getUserInfo();
@@ -98,9 +93,6 @@ public interface NostragamusService {
             @Query("is_match_complete") boolean isMatchComplete,
             @Query("is_minority_option") boolean isMinorityOption
     );
-
-    @PUT("v1/game/users/sports/preference")
-    Call<ApiResponse> savePreference(@Body PreferenceRequest request);
 
     @POST("v2/game/groups")
     Call<NewGroupResponse> createNewGroup(@Body NewGroupRequest request);

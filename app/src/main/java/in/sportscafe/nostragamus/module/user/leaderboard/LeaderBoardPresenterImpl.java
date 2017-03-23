@@ -2,11 +2,6 @@ package in.sportscafe.nostragamus.module.user.leaderboard;
 
 import android.os.Bundle;
 
-import com.jeeva.android.Log;
-
-import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
-import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
-
 
 /**
  * Created by Jeeva on 10/6/16.

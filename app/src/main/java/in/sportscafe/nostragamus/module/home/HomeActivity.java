@@ -14,14 +14,12 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
-import in.sportscafe.nostragamus.module.user.group.JoinGroupApiModelImpl;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
 /**
  * Created by Jeeva on 16/6/16.
@@ -49,8 +47,6 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
         }
 
         UserInfoModelImpl.newInstance(this).getUserInfo();
-
-        checkGroupCode();
 
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
@@ -147,37 +143,6 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
 
         mSelectedText = selText;
         mSelectedText.setSelected(true);
-    }
-
-    private void checkGroupCode() {
-        String groupCode = NostragamusDataHandler.getInstance().getInstallGroupCode();
-        if (null != groupCode) {
-            joinGroup(groupCode);
-        }
-    }
-
-    private void joinGroup(String groupCode) {
-        JoinGroupApiModelImpl.newInstance(new JoinGroupApiModelImpl.OnJoinGroupApiModelListener() {
-            @Override
-            public void onSuccessJoinGroupApi(GroupInfo groupInfo) {
-
-            }
-
-            @Override
-            public void onFailedJoinGroupApi(String message) {
-
-            }
-
-            @Override
-            public void onNoInternet() {
-
-            }
-
-            @Override
-            public void onInvalidGroupCode() {
-
-            }
-        }).joinGroup(groupCode, true);
     }
 
     /*private void showJoinGroupAlert(final String groupCode, String groupName) {

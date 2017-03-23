@@ -183,6 +183,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     public void onGetGroupInfoFailed(String message) {
         mGroupInfoView.dismissProgressbar();
         mGroupInfoView.showMessage(message);
+        onClickBack();
     }
 
     @Override

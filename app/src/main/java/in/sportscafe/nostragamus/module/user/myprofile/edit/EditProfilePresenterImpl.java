@@ -3,23 +3,13 @@ package in.sportscafe.nostragamus.module.user.myprofile.edit;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.jeeva.android.Log;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.preference.PreferenceManager;
-import in.sportscafe.nostragamus.module.user.preference.SavePreferenceModelImpl;
-import in.sportscafe.nostragamus.module.user.sportselection.dto.Sport;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -45,10 +35,9 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     @Override
     public void onCreateEditProfile(Bundle bundle) {
-
         screen = bundle.getString("screen");
 
-        if (screen.equals(Constants.BundleKeys.HOME_SCREEN)) {
+        if (screen.equals(BundleKeys.HOME_SCREEN)) {
             mEditProfileView.changeViewforProfile();
         } else {
             mEditProfileView.changeViewforLogin(NostragamusDataHandler.getInstance().getUserInfo().getUserName());
@@ -79,7 +68,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     @Override
     public void onGetResult(int requestCode, int resultCode, Intent data) {
-        if (ADD_PHOTO_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
+        if (ADD_PHOTO_REQUEST_CODE == requestCode) {
             mEditProfileModel.onGetImage(data);
         }
     }
@@ -93,68 +82,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     public void onEditSuccess() {
         mEditProfileView.dismissProgressbar();
 
-        if (screen.equals(Constants.BundleKeys.HOME_SCREEN)) {
+        if (screen.equals(BundleKeys.HOME_SCREEN)) {
             mEditProfileView.navigateToHome(true);
-            //mEditProfileView.setSuccessResult();
         } else {
             mEditProfileView.navigateToHome(false);
-            //mEditProfileView.navigateToSportsSelection();
-
-            //autoSaveAllSports();
-
-            // For ISB
-            // autoSaveIsb();
         }
-    }
-
-    private void autoSaveIsb() {
-        new PreferenceManager().savePreference(Arrays.asList(new Integer[]{10}),
-                new SavePreferenceModelImpl.SavePreferenceModelListener() {
-                    @Override
-                    public void onSuccess() {
-                        mEditProfileView.navigateToHome(false);
-                    }
-
-                    @Override
-                    public void onNoInternet() {
-                        onNoInternet();
-                    }
-
-                    @Override
-                    public void onFailed(String message) {
-                        onEditFailed(message);
-                    }
-                });
-    }
-
-
-    private void autoSaveAllSports() {
-
-        List<Sport> newSportList = NostragamusDataHandler.getInstance().getAllSports();
-
-        List<Integer> sportIdList = new ArrayList<Integer>();
-
-        for (Sport sport : newSportList) {
-            sportIdList.add(sport.getId());
-        }
-
-        new PreferenceManager().savePreference(sportIdList,
-                new SavePreferenceModelImpl.SavePreferenceModelListener() {
-                    @Override
-                    public void onSuccess() {
-                        mEditProfileView.navigateToHome(false);
-                    }
-
-                    @Override
-                    public void onNoInternet() {
-                        onNoInternet();
-                    }
-
-                    @Override
-                    public void onFailed(String message) {
-                        onEditFailed(message);
-                    }
-                });
     }
 
     @Override
@@ -164,7 +96,6 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
         mEditProfileView.dismissProgressbar();
     }
-
 
     @Override
     public void onEditFailed(String message) {

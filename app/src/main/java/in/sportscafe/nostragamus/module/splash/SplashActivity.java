@@ -45,15 +45,15 @@ public class SplashActivity extends Activity {
                 /* In case the clicked link has $android_deeplink_path the Branch will launch the MonsterViewer automatically since AutoDeeplinking feature is enabled.
                  * Launch Monster viewer activity if a link clicked without $android_deeplink_path
                  */
-                if(null != branchUniversalObject) {
+                if (null != branchUniversalObject) {
                     NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
                     HashMap<String, String> metadata = branchUniversalObject.getMetadata();
 
-                    if(metadata.containsKey(BundleKeys.USER_REFERRAL_ID)) {
+                    if (metadata.containsKey(BundleKeys.USER_REFERRAL_ID)) {
                         nostragamusDataHandler.setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
                     }
 
-                    if(null != linkProperties) {
+                    if (null != linkProperties) {
                         Log.d("Install Channel", linkProperties.getChannel() + "");
                         nostragamusDataHandler.setInstallChannel(linkProperties.getChannel());
                     }
@@ -61,17 +61,16 @@ public class SplashActivity extends Activity {
                     String path = metadata.get("$android_deeplink_path");
                     if (null != path) {
                         if (path.equalsIgnoreCase("group/invite/")) {
-                            if(nostragamusDataHandler.getFavoriteSportsIdList().size() > 0) {
+                            if (nostragamusDataHandler.isLoggedInUser()) {
                                 navigateToJoinGroup(metadata.get(BundleKeys.GROUP_CODE));
                                 return;
                             }
-                            else {
-                                nostragamusDataHandler.setInstallGroupCode(metadata.get(BundleKeys.GROUP_CODE));
-                                nostragamusDataHandler.setInstallGroupName(metadata.get(BundleKeys.GROUP_NAME));
-                            }
+                            
+                            nostragamusDataHandler.setInstallGroupCode(metadata.get(BundleKeys.GROUP_CODE));
+                            nostragamusDataHandler.setInstallGroupName(metadata.get(BundleKeys.GROUP_NAME));
                         }
 
-                       if(path.equalsIgnoreCase("app/invite/")){
+                        if (path.equalsIgnoreCase("app/invite/")) {
                             navigateToGetStarted();
                             return;
                         }

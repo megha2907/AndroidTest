@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.bank.BankFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
@@ -16,13 +15,11 @@ import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
-import in.sportscafe.nostragamus.module.user.sportselection.profilesportselection.ProfileSportSelectionFragment;
 
 /**
  * Created by Jeeva on 14/6/16.
  */
-public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUserInfoModelListener,
-        ProfileSportSelectionFragment.OnSportSelectionChangedListener {
+public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUserInfoModelListener {
 
     private OnProfileModelListener mProfileModelListener;
 
@@ -63,11 +60,6 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         return pagerAdapter;
     }
 
-    @Override
-    public String getSportsTabTitle() {
-        return AppSnippet.formatIfPlural(NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size(), "Sport", "s");
-    }
-
     private HashMap<String, PowerUp> getPowerUpMap(HashMap<String, Integer> powerUps) {
         HashMap<String, PowerUp> powerUpMaps = new HashMap<>();
         for (Map.Entry<String, Integer> entry : powerUps.entrySet()) {
@@ -96,11 +88,6 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
 
     @Override
     public void onNoInternet() {
-    }
-
-    @Override
-    public void onSportsSelectionChanged() {
-        mProfileModelListener.onSportsTitleChanged(getSportsTabTitle());
     }
 
     public interface OnProfileModelListener {

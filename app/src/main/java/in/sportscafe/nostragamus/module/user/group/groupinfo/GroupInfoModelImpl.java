@@ -8,6 +8,7 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -25,8 +26,6 @@ import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
-
-import static com.google.android.gms.internal.zzng.fm;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -81,10 +80,13 @@ public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment
                         public void onResponse(Call<GroupSummaryResponse> call, Response<GroupSummaryResponse> response) {
                             super.onResponse(call, response);
                             if (response.isSuccessful()) {
-                                handleGroupInfoResponse(response.body().getGroupInfo());
-                            } else {
-                                mGroupInfoModelListener.onGetGroupInfoFailed(response.message());
+                                GroupInfo groupInfo = response.body().getGroupInfo();
+                                if(null != groupInfo) {
+                                    handleGroupInfoResponse(groupInfo);
+                                    return;
+                                }
                             }
+                            mGroupInfoModelListener.onGetGroupInfoFailed(Alerts.GROUP_INFO_ERROR);
                         }
                     }
             );

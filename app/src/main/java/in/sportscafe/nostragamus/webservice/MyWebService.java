@@ -41,8 +41,6 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
-import in.sportscafe.nostragamus.module.user.sportselection.dto.AllSports;
-import in.sportscafe.nostragamus.module.user.sportselection.dto.PreferenceRequest;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -80,14 +78,6 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<PlayerInfoResponse> getPlayerInfoRequest(Integer playerId) {
         return mNostragamusService.getPlayerInfo(playerId);
-    }
-
-    public Call<AllSports> getAllSportsRequest() {
-        return mNostragamusService.getAllSports();
-    }
-
-    public Call<ApiResponse> savePreferenceRequest(PreferenceRequest preferenceRequest) {
-        return mNostragamusService.savePreference(preferenceRequest);
     }
 
     public Call<FeedResponse> getMatches(Integer tourId) {
