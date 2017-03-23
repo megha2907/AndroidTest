@@ -39,6 +39,13 @@ public abstract class BaseFragment extends Fragment {
         return false;
     }
 
+    public void dismissMessage() {
+        View view = getActivityView();
+        if (null != view) {
+            view.dismissMessage();
+        }
+    }
+
     public void showProgressbar() {
         getActivityView().showProgressbar();
     }

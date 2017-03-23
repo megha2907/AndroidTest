@@ -20,6 +20,8 @@ public interface View {
 
     boolean isMessageShowing();
 
+    void dismissMessage();
+
     void showProgressbar();
 
     void updateProgressbar();

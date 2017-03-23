@@ -1,6 +1,7 @@
 package com.jeeva.android.widgets;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ public class CustomToast extends Toast {
     private CustomToast(Context context) {
         super(context);
         setGravity(Gravity.BOTTOM, 0, 30);
+
         LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflate.inflate(R.layout.inflater_custom_toast, null);
         setView(view);
@@ -37,8 +39,40 @@ public class CustomToast extends Toast {
     }
 
     public void show(String message, int duration) {
+        if (Toast.LENGTH_LONG != duration && Toast.LENGTH_SHORT != duration) {
+            startTimer(duration);
+            duration = Toast.LENGTH_LONG;
+        }
         setDuration(duration);
         show(message);
+    }
+
+    public void dismissToast() {
+        stopTimer();
+    }
+
+    private CountDownTimer mCountDownTimer;
+
+    private void startTimer(long duration) {
+        stopTimer();
+        mCountDownTimer = new CountDownTimer(duration, 3000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                show();
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        };
+        mCountDownTimer.start();
+    }
+
+    private void stopTimer() {
+        if (null != mCountDownTimer) {
+            mCountDownTimer.cancel();
+            mCountDownTimer = null;
+        }
     }
 
     public boolean isToastShowing() {
@@ -56,7 +90,7 @@ public class CustomToast extends Toast {
     }
 
     public boolean isSnackShowing() {
-        if(null != mSnackbar) {
+        if (null != mSnackbar) {
             return mSnackbar.isShown();
         }
         return false;
