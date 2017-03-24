@@ -8,8 +8,6 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
-
 /**
  * Created by Jeeva on 10/6/16.
  */

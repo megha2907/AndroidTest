@@ -161,6 +161,12 @@ public interface Constants {
         String INVALID_EMAIL = "Invalid email id";
         String CONFIRM_EMAIL_VARY = "Confirm email id not matching";
         String PAYTM_ADD_DETAIL_SUCCESS = "Your paytm detail saved successfully";
+        String QUESTION_LIMIT_ALERT = "The question should have atleast 10 characters";
+        String CONTEXT_LIMIT_ALERT = "The context should have atleast 20 characters";
+        String LEFT_OPTION_EMPTY = "The left option should not be empty";
+        String RIGHT_OPTION_EMPTY = "The right option should not be empty";
+        String SUBMIT_QUESTION_SUCCESS = "Your question is submitted successfully";
+        String EMPTY_MATCHES = "Currently no upcoming matches";
     }
 
     interface BundleKeys {
@@ -386,7 +392,7 @@ public interface Constants {
         String GROUPS_JOIN = "groups_join";// in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity
         String GROUPS_EDIT_GROUP = "groups_edit";// in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoActivity
         String GROUPS_CREATE_NEW = "groups_create_new";// in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity
-        String TOURNAMENTS_ALL = "tournaments_all";// in.sportscafe.nostragamus.module.tournament.TournamentFragment
+        String TOURNAMENTS_ALL = "tournaments_all";// in.sportscafe.nostragamus.module.tournament.TourListFragment
         String TOURNAMENTS_TIMELINE = "tournaments_timeline";// in.sportscafe.nostragamus.module.feed.FeedActivity
         String PLAY = "play"; // in.sportscafe.nostragamus.module.play.prediction.PredictionActivity
         String RESULTS = "results";// in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity
@@ -402,6 +408,8 @@ public interface Constants {
         String DUMMY_GAME = "dummy_game"; //in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity
         String PAYTM_CONNECT = "paytm_connect"; //in.sportscafe.nostragamus.module.paytm.PaytmConnectActivity
         String PAYTM_ADD_DETAIL = "paytm_add_detail"; //in.sportscafe.nostragamus.module.paytm.PaytmAddDetailActivity
+        String QUESTION_ADD = "question_add"; //in.sportscafe.nostragamus.module.question.add.AddQuestionActivity
+        String QUESTION_ADD_TOUR_LIST = "question_add_tour_list"; //in.sportscafe.nostragamus.module.question.tourlist.TourListActivity
     }
 
     interface InAppPopups {

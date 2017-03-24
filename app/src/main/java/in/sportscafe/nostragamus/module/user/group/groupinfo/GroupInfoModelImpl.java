@@ -13,12 +13,10 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.group.DeleteGroupModelImpl;
 import in.sportscafe.nostragamus.module.user.group.LeaveGroupModelImpl;
 import in.sportscafe.nostragamus.module.user.group.ResetLeaderboardModelImpl;
 import in.sportscafe.nostragamus.module.user.group.members.MembersFragment;
-import in.sportscafe.nostragamus.module.user.group.tourselection.TourSelectionFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.webservice.GroupSummaryResponse;
@@ -30,7 +28,7 @@ import retrofit2.Response;
 /**
  * Created by Jeeva on 12/6/16.
  */
-public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment.OnTourSelectionListener, MembersFragment.OnMemberRemoveListener {
+public class GroupInfoModelImpl implements GroupInfoModel, MembersFragment.OnMemberRemoveListener {
 
     private boolean mAmAdmin = false;
 
@@ -242,13 +240,6 @@ public class GroupInfoModelImpl implements GroupInfoModel, TourSelectionFragment
                 break;
             }
         }
-    }
-
-    @Override
-    public void onTourSelectionChanged(List<TournamentFeedInfo> followedTours) {
-        mAnythingChanged = true;
-        mGroupInfo.setFollowedTournaments(followedTours);
-        mGroupInfoModelListener.onTourTitleChanged(getTourTitle());
     }
 
     @Override

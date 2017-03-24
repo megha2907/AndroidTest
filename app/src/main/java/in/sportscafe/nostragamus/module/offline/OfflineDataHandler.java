@@ -9,7 +9,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.AbstractDataHandler;
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentInfo;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 
 /**

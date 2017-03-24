@@ -18,9 +18,9 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse
 import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferRequest;
 import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse;
+import in.sportscafe.nostragamus.module.question.add.AddQuestionRequest;
+import in.sportscafe.nostragamus.module.question.tourlist.TourListResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.group.admin.approve.ApproveRequest;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
@@ -36,6 +36,8 @@ import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentFeedResponse;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
@@ -193,4 +195,10 @@ public interface NostragamusService {
 
     @POST("v2/game/users/challenges/transferFromBank")
     Call<BankTransferResponse> bankTransfer(@Body BankTransferRequest bankTransferRequest);
+
+    @POST("v2/game/submitQuestion")
+    Call<ApiResponse> submitQuestion(@Body AddQuestionRequest addQuestionRequest);
+
+    @GET("v2/game/getUpcomingMatches")
+    Call<TourListResponse> getTourList();
 }
