@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.Tournament;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
 
 /**
  * Created by Jeeva on 17/02/17.

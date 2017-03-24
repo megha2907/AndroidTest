@@ -36,6 +36,17 @@
         </activity>
 
         <activity
+            android:name="in.sportscafe.nostragamus.module.question.tourlist.TourListActivity"
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
             android:name="in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity"
             android:screenOrientation="portrait">
         </activity>
@@ -48,6 +59,17 @@
         <activity
             android:name="in.sportscafe.nostragamus.module.paytm.PaytmAddDetailActivity"
             android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name="in.sportscafe.nostragamus.module.question.matchlist.MatchListFragment"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name="in.sportscafe.nostragamus.module.question.add.AddQuestionActivity"
+            android:screenOrientation="portrait">
+
         </activity>
 
         <activity
@@ -65,11 +87,6 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
             <intent-filter>
                 <data android:scheme="nostragamus" />

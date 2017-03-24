@@ -1,14 +1,10 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;

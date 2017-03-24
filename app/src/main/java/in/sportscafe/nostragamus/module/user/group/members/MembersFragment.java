@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.user.group.members;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,13 +14,11 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.SpacesItemDecoration;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
