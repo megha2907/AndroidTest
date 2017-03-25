@@ -20,5 +20,5 @@ public interface MyResultsPresenter {
 
     void onClickFbShare();
 
-    void onGetScreenShot(File screenshotFile);
+    void onDoneScreenShot();
 }

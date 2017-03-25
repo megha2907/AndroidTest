@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.question.tourlist;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.R;
@@ -26,8 +28,25 @@ public class TourListActivity extends NostragamusActivity implements TourListVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tour_list);
 
+        initToolBar();
+
         this.mTournamentPresenter = TourListPresenterImpl.newInstance(this, getSupportFragmentManager());
         this.mTournamentPresenter.onCreateTournaments();
+    }
+
+    public void initToolBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tournament_toolbar);
+        toolbar.setTitle("Select a Match");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        toolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                }
+        );
     }
 
     @Override

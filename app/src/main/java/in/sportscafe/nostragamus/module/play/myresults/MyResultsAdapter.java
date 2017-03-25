@@ -740,9 +740,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             case R.id.my_results_ll_leaderboards:
                 navigateToLeaderboards(view.getContext());
                 break;
-            case R.id.my_results_ll_share_score:
-                broadcastShareScore(view.getContext());
-                break;
         }
     }
 
@@ -773,10 +770,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         intent.putExtra(BundleKeys.MATCH_ID, match.getId());
 //        intent.putExtra(BundleKeys.TOURNAMENT_ID, match.getTournamentId());
         context.startActivity(intent);
-    }
-
-    private void broadcastShareScore(Context context) {
-        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(IntentActions.ACTION_SHARE_SCORE));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

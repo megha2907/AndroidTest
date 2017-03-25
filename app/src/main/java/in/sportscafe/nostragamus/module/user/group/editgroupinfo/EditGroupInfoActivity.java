@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.user.group.editgroupinfo;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,24 +10,18 @@ import com.jeeva.android.widgets.CustomProgressbar;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 
-import static android.R.attr.data;
-
 /**
  * Created by deepanshi on 10/31/16.
  */
 public class EditGroupInfoActivity extends NostragamusActivity implements EditGroupInfoView,
         View.OnClickListener {
-
-    private static final String[] PERMISSIONS_READ_STORAGE = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-    private PermissionsChecker mPermissionChecker;
 
     private EditText mEtGroupName;
 
@@ -40,8 +33,6 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
         setContentView(R.layout.activity_edit_group_info);
 
         initToolBar();
-
-        mPermissionChecker = new PermissionsChecker(this);
 
         mEtGroupName = (EditText) findViewById(R.id.group_info_et_name);
 
@@ -110,15 +101,11 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
     }
 
     public void showImagePopup(View view) {
-        if (mPermissionChecker.lacksPermissions(PERMISSIONS_READ_STORAGE)) {
-            startPermissionsActivity(PERMISSIONS_READ_STORAGE);
+        if(new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
+            PermissionsActivity.startActivityForResult(this, 0, AppPermissions.STORAGE);
         } else {
             mEditGroupInfoPresenter.onClickImage();
         }
-    }
-
-    private void startPermissionsActivity(String[] permission) {
-        PermissionsActivity.startActivityForResult(this, 0, permission);
     }
 
     @Override

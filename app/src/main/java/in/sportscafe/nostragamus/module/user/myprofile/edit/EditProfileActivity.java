@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -15,6 +14,7 @@ import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
@@ -28,11 +28,6 @@ import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
  */
 public class EditProfileActivity extends NostragamusActivity implements EditProfileView,
         View.OnClickListener {
-
-    private static final String[] PERMISSIONS_READ_STORAGE = new String[]{
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
 
     private EditText mEtName;
 
@@ -183,8 +178,8 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     }
 
     public void showImagePopup(View view) {
-        if (checker.lacksPermissions(PERMISSIONS_READ_STORAGE)) {
-            startPermissionsActivity(PERMISSIONS_READ_STORAGE);
+        if (new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
+            PermissionsActivity.startActivityForResult(this, 0, AppPermissions.STORAGE);
         } else {
             mEditProfilePresenter.onClickImage();
         }

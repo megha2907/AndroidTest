@@ -24,5 +24,5 @@ public interface MyResultsModel {
 
     String getMatchName();
 
-    void uploadScreenShot(File file);
+    void getShareText();
 }

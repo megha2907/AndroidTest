@@ -22,6 +22,7 @@ import com.jeeva.android.widgets.CustomProgressbar;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.coachmarker.TargetView;
@@ -29,6 +30,8 @@ import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.ShakeListener;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
@@ -463,6 +466,15 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean checkStoragePermission() {
+        if(new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
+            PermissionsActivity.startActivityForResult(this, 0, AppPermissions.STORAGE);
+            return false;
+        }
+        return true;
     }
 
     @Override

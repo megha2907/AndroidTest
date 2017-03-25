@@ -11,17 +11,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.moe.pushlibrary.MoEHelper;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.WebViewActivity;
-import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.paytm.PaytmConnectActivity;
 import in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity;
+import in.sportscafe.nostragamus.module.question.tourlist.TourListActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.user.referral.ReferralActivity;
 
@@ -86,6 +82,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.settings_btn_dummy_game:
                 navigateToDummyGame();
                 break;
+            case R.id.settings_btn_submit_question:
+                navigateToTourList();
+                break;
             case R.id.settings_btn_paytm:
                 navigateToPaytm();
                 break;
@@ -99,6 +98,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 navigateToWebView("https://sportscafe.in/privacy", "Privacy Policy");
                 break;
         }
+    }
+
+    private void navigateToTourList() {
+        Intent intent = new Intent(this, TourListActivity.class);
+        startActivity(intent);
     }
 
     private void navigateToPaytm() {

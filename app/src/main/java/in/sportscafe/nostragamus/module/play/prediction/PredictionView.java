@@ -89,5 +89,7 @@ public interface PredictionView extends InAppView {
 
     void showFirstMatchPlayedPopUp(String firstMatchPlayed, Bundle bundle);
 
+    boolean checkStoragePermission();
+
     void takeScreenshotAndShare();
 }

@@ -2,7 +2,6 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -150,7 +149,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onShake() {
-        if (mPredictionModel.isQuestionAvailable()) {
+        if (mPredictionModel.isQuestionAvailable() && mPredictionView.checkStoragePermission()) {
             mPredictionView.takeScreenshotAndShare();
             mPredictionModel.getShareText(mPredictionView.getContext());
         }
@@ -269,6 +268,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onGetQuestionShareText(String shareText) {
         AppSnippet.copyToClipBoard(mPredictionView.getContext(), shareText);
-        mPredictionView.showMessage("Corresponding share message copied to clipboard!", 15000);
+        mPredictionView.showMessage("Use paste, If you want to use the default share message!", 15000);
     }
 }

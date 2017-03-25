@@ -358,10 +358,10 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId());
 
         LinkProperties linkProperties = new LinkProperties()
-                .addTag("shareQuestion")
-                .setFeature("shareQuestion")
+                .addTag("question")
+                .setFeature("question")
                 .setChannel("App")
-                .addControlParameter("$android_deeplink_path", "app/share/");
+                .addControlParameter("$android_deeplink_path", "question/share/");
 
         buo.generateShortUrl(context, linkProperties,
                 new Branch.BranchLinkCreateListener() {

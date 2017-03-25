@@ -25,8 +25,6 @@ public interface MyResultsView extends InAppView {
 
     void takeScreenShot();
 
-    void showFbShare(String url);
-
     void setMatchName(String matchName);
 
     void setToolbarHeading(String result);
