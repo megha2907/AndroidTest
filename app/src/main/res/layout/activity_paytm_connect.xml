@@ -4,9 +4,18 @@
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/onboarding_bg"
+    android:background="@color/black"
     android:gravity="center_horizontal"
     android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorMedium"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:elevation="4dp"
+        android:id="@+id/paytm_connect_toolbar"
+        />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/dummy_game_tv_top_text"
@@ -24,16 +33,16 @@
         app:typeface="lato_regular" />
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_150"
         android:layout_height="wrap_content"
-        android:src="@drawable/nostragamus_logo" />
+        android:src="@drawable/paytm_icon" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
-        android:src="@drawable/onboard_how_to_play" />
+        android:src="@drawable/cash_rewards_icon" />
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/paytm_connect_btn_connect"

@@ -174,14 +174,17 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mTvTimerText.setText("STARTS IN");
             holder.mRlTimer.setTag(startTimeLeft.totalDiff);
         } else */
-        if (endTimeLeft.totalDiff > 1000) {
-            holder.mRlTimer.setVisibility(View.VISIBLE);
-            holder.mTvTimerText.setText("DURATION");
-            holder.mRlTimer.setTag(endTimeLeft.totalDiff);
-        } else {
-            holder.mRlTimer.setVisibility(View.GONE);
-        }
 
+//
+//        if (endTimeLeft.totalDiff > 1000) {
+//            holder.mRlTimer.setVisibility(View.VISIBLE);
+//            holder.mTvTimerText.setText("DURATION");
+//           // holder.mRlTimer.setTag(endTimeLeft.totalDiff);
+//        } else {
+//            holder.mRlTimer.setVisibility(View.GONE);
+//        }
+
+        holder.mTvTimerText.setText("DURATION");
 
         String startTime = challenge.getStartTime();
         long startTimeMs = TimeUtils.getMillisecondsFromDateString(
