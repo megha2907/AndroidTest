@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
@@ -21,13 +20,13 @@ public class NostragamusUncaughtExceptionHandler implements Thread.UncaughtExcep
             ex.printStackTrace();
         }
 
-        /*if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
+        if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
             startNewIntent(HomeActivity.class);
         } else {
             startNewIntent(LogInActivity.class);
         }
 
-        AppSnippet.closeApp();*/
+        AppSnippet.closeApp();
     }
 
     private void startNewIntent(Class<?> cls) {
