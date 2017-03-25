@@ -62,6 +62,13 @@
         <View style="@style/SettingOptionDivider" />
 
         <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/settings_btn_paytm"
+            style="@style/SettingOptionStyle"
+            android:text="@string/paytm" />
+
+        <View style="@style/SettingOptionDivider" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/settings_btn_logout"
             style="@style/SettingOptionStyle"
             android:text="@string/logout" />

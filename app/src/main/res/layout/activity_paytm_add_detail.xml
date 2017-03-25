@@ -1,114 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/onboarding_bg"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/dp_30"
-    android:paddingRight="@dimen/dp_30">
+    android:background="@color/black">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_30"
-        android:src="@drawable/nostragamus_logo" />
-
-    <android.support.design.widget.TextInputLayout
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_30"
-        app:theme="@style/TextLabel">
+        android:background="@color/colorMedium"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:elevation="4dp"
+        android:id="@+id/paytm_toolbar"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/paytm_toolbar"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/dp_24"
+        android:paddingLeft="@dimen/dp_24">
+
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Mobile Number"
+        android:layout_gravity="left"
+        android:layout_marginTop="@dimen/dp_16"
+        android:textColor="@color/white_60"
+        app:typeface="lato_regular"
+        android:textSize="@dimen/dp_14"/>
 
         <com.jeeva.android.widgets.customfont.CustomEditText
             android:id="@+id/paytm_add_detail_et_number"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/textcolorlight"
-            android:hint="Mobile Number"
+            style="@style/EditTextStyle"
             android:imeOptions="actionNext"
-            android:inputType="phone"
-            android:maxLength="50"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/dp_18"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_16" />
+            android:inputType="phone" />
 
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        app:theme="@style/TextLabel">
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm Mobile Number"
+            android:layout_gravity="left"
+            android:layout_marginTop="@dimen/dp_16"
+            android:textColor="@color/white_60"
+            app:typeface="lato_regular"
+            android:textSize="@dimen/dp_14"/>
 
         <com.jeeva.android.widgets.customfont.CustomEditText
             android:id="@+id/paytm_add_detail_et_confirm_number"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/textcolorlight"
-            android:hint="Confirm Mobile Number"
+            style="@style/EditTextStyle"
             android:imeOptions="actionNext"
-            android:inputType="phone"
-            android:maxLength="50"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/dp_18"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_16" />
+            android:inputType="phone" />
 
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        app:theme="@style/TextLabel">
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter e-mail Id"
+            android:layout_gravity="left"
+            android:layout_marginTop="@dimen/dp_16"
+            android:textColor="@color/white_60"
+            app:typeface="lato_regular"
+            android:textSize="@dimen/dp_14"/>
 
         <com.jeeva.android.widgets.customfont.CustomEditText
             android:id="@+id/paytm_add_detail_et_email"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/textcolorlight"
-            android:hint="Email Id"
+            style="@style/EditTextStyle"
             android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
-            android:maxLength="50"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/dp_18"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_16" />
+            android:inputType="textEmailAddress" />
 
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20"
-        app:theme="@style/TextLabel">
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm e-mail id"
+            android:layout_gravity="left"
+            android:layout_marginTop="@dimen/dp_16"
+            android:textColor="@color/white_60"
+            app:typeface="lato_regular"
+            android:textSize="@dimen/dp_14"/>
 
         <com.jeeva.android.widgets.customfont.CustomEditText
             android:id="@+id/paytm_add_detail_et_confirm_email"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/textcolorlight"
-            android:hint="Confirm Email Id"
-            android:imeOptions="actionDone"
-            android:inputType="textEmailAddress"
-            android:maxLength="50"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/dp_18"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_16" />
+            style="@style/EditTextStyle"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress" />
 
-    </android.support.design.widget.TextInputLayout>
 
-    <com.jeeva.android.widgets.customfont.CustomButton
+        <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/paytm_add_detail_btn_save"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_20"
         android:background="@drawable/tournament_ready_btn_bg"
         android:gravity="center"
         android:minWidth="@dimen/dp_200"
@@ -142,5 +129,6 @@
         android:textSize="@dimen/dp_14"
         app:typeface="lato_bold" />
 
+    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

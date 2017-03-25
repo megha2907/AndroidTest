@@ -20,6 +20,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.WebViewActivity;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
+import in.sportscafe.nostragamus.module.paytm.PaytmConnectActivity;
 import in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.user.referral.ReferralActivity;
@@ -85,6 +86,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.settings_btn_dummy_game:
                 navigateToDummyGame();
                 break;
+            case R.id.settings_btn_paytm:
+                navigateToPaytm();
+                break;
             case R.id.settings_btn_about_us:
                 navigateToWebView("https://sportscafe.in/aboutus", "About Sportscafe");
                 break;
@@ -95,6 +99,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 navigateToWebView("https://sportscafe.in/privacy", "Privacy Policy");
                 break;
         }
+    }
+
+    private void navigateToPaytm() {
+        Intent intent = new Intent(this, PaytmConnectActivity.class);
+        startActivity(intent);
     }
 
     private void getAppVersion() {

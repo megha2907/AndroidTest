@@ -74,8 +74,8 @@ public class NPaytmActivity extends Activity {
         PaytmOrder Order = new PaytmOrder(paramMap);
 
         PaytmMerchant Merchant = new PaytmMerchant(
-                "https://api-stage.sportscafe.in/v2/game/generateChecksum",
-                "https://api-stage.sportscafe.in/v2/game/verifyChecksum");
+                "http://api-stage.sportscafe.in/v2/game/generateChecksum",
+                "http://api-stage.sportscafe.in/v2/game/verifyChecksum");
 
         Service.initialize(Order, Merchant, null);
 

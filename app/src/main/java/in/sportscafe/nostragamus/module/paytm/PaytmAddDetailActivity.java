@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.paytm;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
@@ -19,6 +20,8 @@ public class PaytmAddDetailActivity extends NostragamusActivity implements Paytm
 
     private EditText mEtEmail;
 
+    private Toolbar mtoolbar;
+
     private EditText mEtConfirmEmail;
 
     private PaytmAddDetailPresenter mPaytmAddDetailPresenter;
@@ -32,6 +35,8 @@ public class PaytmAddDetailActivity extends NostragamusActivity implements Paytm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paytm_add_detail);
+
+        initToolBar();
 
         mEtNumber = (EditText) findViewById(R.id.paytm_add_detail_et_number);
         mEtConfirmNumber = (EditText) findViewById(R.id.paytm_add_detail_et_confirm_number);
@@ -58,5 +63,20 @@ public class PaytmAddDetailActivity extends NostragamusActivity implements Paytm
     @Override
     public void goBack() {
         onBackPressed();
+    }
+
+    public void initToolBar() {
+        mtoolbar = (Toolbar) findViewById(R.id.paytm_toolbar);
+        mtoolbar.setTitle("PayTm Details");
+        setSupportActionBar(mtoolbar);
+        mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        mtoolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                }
+        );
     }
 }
