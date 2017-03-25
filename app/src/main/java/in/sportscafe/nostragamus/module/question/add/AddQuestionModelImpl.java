@@ -5,7 +5,6 @@ import android.os.Bundle;
 import com.jeeva.android.ExceptionTracker;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -74,16 +73,11 @@ public class AddQuestionModelImpl implements AddQuestionModel {
             addQuestionRequest.setNeitherOption(neitherOption);
         }
 
-        try {
-            JSONObject createdUser = new JSONObject();
-            UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
-            createdUser.put("user_id", userInfo.getId());
-            createdUser.put("user_name", userInfo.getUserName());
-
-            addQuestionRequest.setCreatedBy(createdUser.toString());
-        } catch (JSONException e) {
-            ExceptionTracker.track(e);
-        }
+        UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
+        QuestionSubmitBy submitBy = new QuestionSubmitBy();
+        submitBy.setUserId(userInfo.getId());
+        submitBy.setUserName(userInfo.getUserName());
+        addQuestionRequest.setCreatedBy(submitBy);
 
         callAddQuestionApi(addQuestionRequest);
     }
