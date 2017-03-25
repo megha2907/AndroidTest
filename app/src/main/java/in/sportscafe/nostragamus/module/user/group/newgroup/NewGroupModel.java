@@ -6,7 +6,8 @@ import android.content.Intent;
 import java.io.File;
 import java.util.List;
 
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentFeedInfo;
+
 
 /**
  * Created by Jeeva on 1/7/16.

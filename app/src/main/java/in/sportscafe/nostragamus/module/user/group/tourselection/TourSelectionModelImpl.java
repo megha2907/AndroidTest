@@ -10,10 +10,10 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GrpTournamentUpdateModelImpl;
 import in.sportscafe.nostragamus.module.user.group.newgroup.TourSelectionAdapter;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentFeedInfo;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentFeedResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;

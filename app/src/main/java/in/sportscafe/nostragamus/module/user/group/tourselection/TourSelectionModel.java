@@ -5,8 +5,8 @@ import android.os.Bundle;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.module.tournamentFeed.dto.TournamentFeedInfo;
 import in.sportscafe.nostragamus.module.user.group.newgroup.TourSelectionAdapter;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentFeedInfo;
 
 /**
  * Created by deepanshi on 1/6/17.

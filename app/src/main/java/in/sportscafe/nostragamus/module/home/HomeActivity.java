@@ -13,7 +13,6 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.tournament.TournamentFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -102,10 +101,6 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
             case R.id.home_rl_challenges:
                 setSelected(findViewById(R.id.home_ibtn_challenge), findViewById(R.id.home_tv_challenge));
                 loadFragment(mCurrentFragment = AllChallengesFragment.newInstance());
-                break;
-            case R.id.home_rl_feed:
-                setSelected(findViewById(R.id.home_ibtn_feed), findViewById(R.id.home_tv_feed));
-                loadFragment(mCurrentFragment = TournamentFragment.newInstance());
                 break;
             case R.id.home_rl_group:
                 setSelected(findViewById(R.id.home_ibtn_group), findViewById(R.id.home_tv_group));

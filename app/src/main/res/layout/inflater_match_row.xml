@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black">
+
+    <!-- date -->
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/schedule_row_tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_12"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textColor="@color/white_80"
+        android:textSize="@dimen/dp_12"
+        app:typeface="lato_light" />
+
+    <LinearLayout
+        android:id="@+id/schedule_row_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/schedule_row_tv_date"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingTop="@dimen/dp_4">
+
+        <RelativeLayout
+            android:id="@+id/image_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/swipe_card_tv_context">
+
+
+            <!-- Challenge Left Image and Name -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_16">
+
+
+                <com.jeeva.android.widgets.HmImageView
+                    android:id="@+id/swipe_card_iv_left"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:scaleType="fitXY"
+                    app:defaultImage="@drawable/placeholder_icon" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/schedule_row_tv_party_a_name"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_12"
+                    android:layout_toRightOf="@+id/swipe_card_iv_left"
+                    android:ellipsize="end"
+                    android:gravity="left"
+                    android:maxLines="2"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white_80"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+            </RelativeLayout>
+
+            <!-- Challenge Right Image and Name -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/schedule_row_tv_party_b_name"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_toLeftOf="@+id/swipe_card_iv_right"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:maxLines="2"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white_80"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.HmImageView
+                    android:id="@+id/swipe_card_iv_right"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:scaleType="fitXY"
+                    app:defaultImage="@drawable/placeholder_icon" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/schedule_row_tv_match_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_6"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/dp_2"
+            android:textColor="@color/white_80"
+            android:textSize="@dimen/dp_12"
+            app:typeface="lato_light" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/schedule_row_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:layout_below="@+id/schedule_row_ll"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:layout_marginRight="@dimen/dp_14"
+        android:background="@color/linecolor" />
+
+</RelativeLayout>

@@ -19,7 +19,7 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 @Parcel
 public class Match {
     @JsonProperty("match_id")
-    private Integer id;
+    private int id;
 
     @JsonProperty("tournament_id")
     private Integer tournamentId;
@@ -127,7 +127,7 @@ public class Match {
      * The id
      */
     @JsonProperty("match_id")
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -137,7 +137,7 @@ public class Match {
      * The match_id
      */
     @JsonProperty("match_id")
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

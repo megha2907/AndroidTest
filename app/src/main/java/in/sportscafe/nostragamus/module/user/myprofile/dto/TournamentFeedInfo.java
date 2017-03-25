@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.tournamentFeed.dto;
+package in.sportscafe.nostragamus.module.user.myprofile.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -15,7 +15,6 @@ public class TournamentFeedInfo {
 
     @JsonProperty("tournament_name")
     private String tournamentName;
-
 
     @JsonProperty("tournament_img_url")
     private String tournamentPhoto;

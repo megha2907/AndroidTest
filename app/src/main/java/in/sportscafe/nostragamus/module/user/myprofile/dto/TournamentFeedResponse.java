@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.tournamentFeed.dto;
+package in.sportscafe.nostragamus.module.user.myprofile.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * Created by deepanshi on 11/14/16.
  */
-
 public class TournamentFeedResponse {
 
     @JsonProperty("data")
@@ -18,6 +17,7 @@ public class TournamentFeedResponse {
     public List<TournamentFeedInfo> getTournamentInfos() {
         return tournamentInfos;
     }
+
     @JsonProperty("data")
     public void setTournamentInfos(List<TournamentFeedInfo> tournamentInfos) {
         this.tournamentInfos = tournamentInfos;
