@@ -15,6 +15,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
     <ScrollView
+        android:id="@+id/add_question_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/add_question_toolbar">
@@ -25,7 +26,8 @@
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp_30"
-            android:paddingRight="@dimen/dp_30">
+            android:paddingRight="@dimen/dp_30"
+            android:focusableInTouchMode="true">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -59,11 +61,15 @@
                     style="@style/AddQuestionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textMultiLine"
+                    android:inputType="textNoSuggestions|textMultiLine"
                     android:maxLength="60"
                     android:maxLines="2"
                     android:minLines="2"
-                    android:paddingBottom="@dimen/dp_18" />
+                    android:overScrollMode="always"
+                    android:paddingBottom="@dimen/dp_9"
+                    android:paddingTop="@dimen/dp_9"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical" />
 
             </com.jeeva.android.widgets.ShadowLayout>
 
@@ -93,11 +99,18 @@
                     style="@style/AddQuestionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textMultiLine"
+                    android:editable="true"
+                    android:ems="10"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:isScrollContainer="true"
                     android:maxLength="200"
                     android:maxLines="4"
                     android:minLines="4"
-                    android:paddingBottom="@dimen/dp_18" />
+                    android:overScrollMode="always"
+                    android:paddingBottom="@dimen/dp_9"
+                    android:paddingTop="@dimen/dp_9"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical" />
 
             </com.jeeva.android.widgets.ShadowLayout>
 
@@ -122,16 +135,18 @@
                 app:sl_shadowRadius="@dimen/dp_4">
 
 
-            <com.jeeva.android.widgets.customfont.CustomEditText
+                <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/add_question_et_left_option"
+                    style="@style/AddQuestionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/AddQuestionEditText"
+                    android:layout_gravity="center"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="text|textNoSuggestions"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:paddingBottom="@dimen/dp_18" />
+                    android:paddingBottom="@dimen/dp_9"
+                    android:paddingTop="@dimen/dp_9" />
 
             </com.jeeva.android.widgets.ShadowLayout>
 
@@ -156,18 +171,20 @@
                 app:sl_shadowRadius="@dimen/dp_4">
 
 
-            <com.jeeva.android.widgets.customfont.CustomEditText
+                <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/add_question_et_right_option"
+                    style="@style/AddQuestionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/AddQuestionEditText"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="text|textNoSuggestions"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:paddingBottom="@dimen/dp_18"/>
+                    android:layout_gravity="center"
+                    android:paddingBottom="@dimen/dp_9"
+                    android:paddingTop="@dimen/dp_9" />
 
-           </com.jeeva.android.widgets.ShadowLayout>
+            </com.jeeva.android.widgets.ShadowLayout>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
@@ -191,16 +208,18 @@
 
                 <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/add_question_et_neither_option"
+                    style="@style/AddQuestionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/AddQuestionEditText"
                     android:imeOptions="actionDone"
-                    android:inputType="text"
+                    android:inputType="text|textNoSuggestions"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:paddingBottom="@dimen/dp_18" />
+                    android:layout_gravity="center"
+                    android:paddingBottom="@dimen/dp_9"
+                    android:paddingTop="@dimen/dp_9" />
 
-           </com.jeeva.android.widgets.ShadowLayout>
+            </com.jeeva.android.widgets.ShadowLayout>
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/add_question_btn_save"
