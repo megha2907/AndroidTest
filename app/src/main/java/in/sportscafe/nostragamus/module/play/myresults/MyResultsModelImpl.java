@@ -2,15 +2,12 @@ package in.sportscafe.nostragamus.module.play.myresults;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import com.jeeva.android.ExceptionTracker;
 
 import org.parceler.Parcels;
 
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
@@ -24,7 +21,6 @@ import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import io.branch.indexing.BranchUniversalObject;
@@ -181,43 +177,10 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     @Override
-    public void uploadScreenShot(File file) {
-        if (checkInternet()) {
-            callUploadScreenShotApi(file, "sportscafetest/nostragamus/", UUID.randomUUID().toString() + file.getName());
-        }
-    }
-
-    private void callUploadScreenShotApi(File file, String filepath, String filename) {
-        MyWebService.getInstance().getUploadPhotoRequest(file, filepath, filename)
-                .enqueue(new NostragamusCallBack<Result>() {
-                    @Override
-                    public void onResponse(Call<Result> call, Response<Result> response) {
-                        super.onResponse(call, response);
-
-                        if (response.isSuccessful()) {
-                            getSharableLink(response.body().getResult());
-                        } else {
-                            mResultsModelListener.onScreenShotFailed();
-                        }
-                    }
-
-                });
-    }
-
-    private void getSharableLink(String screenShotUrl) {
-        Context context = mResultsModelListener.getContext();
+    public void getShareText() {
         BranchUniversalObject buo = new BranchUniversalObject()
-                .setTitle("My Result")
-                .setContentDescription(String.format(
-                        context.getString(R.string.fb_share_result_text),
-                        getMatchResult(),
-                        getMatchName(),
-                        getMatchPoints()
-                ))
-                .setContentImageUrl(screenShotUrl)
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId());
-
 
         LinkProperties linkProperties = new LinkProperties()
                 .addTag("myResult")
@@ -230,9 +193,18 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                     @Override
                     public void onLinkCreate(String url, BranchError error) {
                         if (null == error) {
-                            mResultsModelListener.onScreenShotUploaded(url);
+                            mResultsModelListener.onGetShareText(
+                                    String.format(
+                                            mResultsModelListener.getContext().getString(R.string.fb_share_result_text),
+                                            NostragamusDataHandler.getInstance().getUserInfo().getUserName(),
+                                            getMatchResult(),
+                                            getMatchName(),
+                                            getMatchPoints(),
+                                            url
+                                    )
+                            );
                         } else {
-                            mResultsModelListener.onScreenShotFailed();
+                            mResultsModelListener.onGetShareTextFailed();
                             ExceptionTracker.track(error.getMessage());
                         }
                     }
@@ -299,9 +271,9 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
         void onsetMatchDetails(Match match);
 
-        void onScreenShotUploaded(String url);
+        void onGetShareText(String shareText);
 
-        void onScreenShotFailed();
+        void onGetShareTextFailed();
 
         void setToolbarHeading(String result);
     }

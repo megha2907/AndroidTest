@@ -14,8 +14,6 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
  */
 public class PaytmConnectActivity extends NostragamusActivity {
 
-    private Toolbar mtoolbar;
-
     @Override
     public String getScreenName() {
         return ScreenNames.PAYTM_CONNECT;
@@ -43,11 +41,11 @@ public class PaytmConnectActivity extends NostragamusActivity {
     }
 
     public void initToolBar() {
-        mtoolbar = (Toolbar) findViewById(R.id.paytm_connect_toolbar);
-        mtoolbar.setTitle("Add a wallet");
-        setSupportActionBar(mtoolbar);
-        mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
-        mtoolbar.setNavigationOnClickListener(
+        Toolbar toolbar = (Toolbar) findViewById(R.id.paytm_connect_toolbar);
+        toolbar.setTitle("Add a wallet");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        toolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

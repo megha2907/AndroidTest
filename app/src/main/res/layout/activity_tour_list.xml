@@ -7,75 +7,57 @@
     android:background="@color/black">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/tournament_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorMedium"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        android:id="@+id/tournament_toolbar"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
+    <in.sportscafe.nostragamus.module.common.CustomTabLayout
+        android:id="@+id/tournament_tab_tl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tournament_toolbar"
+        android:layout_gravity="center_horizontal|top"
+        android:background="@color/colorMedium"
         android:elevation="@dimen/dp_4"
-        >
-
-        <ImageView
-            android:layout_width="@dimen/dp_140"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/toolbar_logo"
-            android:src="@drawable/sportscafe_logo"
-
-            />
-
-    </android.support.v7.widget.Toolbar>
-
-                <in.sportscafe.nostragamus.module.common.CustomTabLayout
-                    android:id="@+id/tournament_tab_tl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorMedium"
-                    app:layout_collapseMode="pin"
-                    app:selected_textSize="@dimen/dp_16"
-                    app:selected_typeface="roboto_condensed_bold"
-                    app:tabGravity="fill"
-                    app:tabIndicatorColor="@color/tabcolor"
-                    app:tabIndicatorHeight="@dimen/dp_4"
-                    app:tabMode="scrollable"
-                    app:tabSelectedTextColor="@color/white"
-                    app:tabTextColor="@color/silver_chalice"
-                    app:unselected_textSize="@dimen/dp_14"
-                    app:unselected_typeface="roboto_condensed"
-                    android:layout_gravity="center_horizontal|top"
-                    android:layout_below="@+id/tournament_toolbar"
-                    app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-                    android:elevation="@dimen/dp_4"
-                    />
-
-
+        app:layout_collapseMode="pin"
+        app:selected_textSize="@dimen/dp_16"
+        app:selected_typeface="roboto_condensed_bold"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/tabcolor"
+        app:tabIndicatorHeight="@dimen/dp_4"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+        app:tabTextColor="@color/silver_chalice"
+        app:unselected_textSize="@dimen/dp_14"
+        app:unselected_typeface="roboto_condensed" />
 
 
     <!--<com.gigamole.navigationtabstrip.NavigationTabStrip-->
-        <!--android:id="@+id/nts_bottom"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="56dp"-->
-        <!--app:nts_active_color="#fff"-->
-        <!--app:nts_color="#ff1748"-->
-        <!--app:nts_factor="6"-->
-        <!--app:nts_corners_radius="1.5dp"-->
-        <!--app:nts_inactive_color="#81ffffff"-->
-        <!--app:nts_weight="3dp"-->
-        <!--app:nts_size="13sp"-->
-        <!--app:tabMode="scrollable"-->
-        <!--android:layout_gravity="center_horizontal|top"-->
-        <!--android:layout_below="@+id/tournament_toolbar"/>-->
-
+    <!--android:id="@+id/nts_bottom"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="56dp"-->
+    <!--app:nts_active_color="#fff"-->
+    <!--app:nts_color="#ff1748"-->
+    <!--app:nts_factor="6"-->
+    <!--app:nts_corners_radius="1.5dp"-->
+    <!--app:nts_inactive_color="#81ffffff"-->
+    <!--app:nts_weight="3dp"-->
+    <!--app:nts_size="13sp"-->
+    <!--app:tabMode="scrollable"-->
+    <!--android:layout_gravity="center_horizontal|top"-->
+    <!--android:layout_below="@+id/tournament_toolbar"/>-->
 
 
     <in.sportscafe.nostragamus.module.common.CustomViewPager
         android:id="@+id/tournament_tab_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_below="@+id/tournament_tab_tl"/>
-
-
+        android:layout_below="@+id/tournament_tab_tl"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
 </RelativeLayout>
