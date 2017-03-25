@@ -53,6 +53,7 @@
     <string name="account">Account</string>
     <string name="support">Support</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="paytm">Connect to Paytm</string>
     <string name="logout">Logout</string>
     <string name="refer_friend">Refer a Friend</string>
     <string name="report_problem">Report a Problem</string>

@@ -49,7 +49,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
     private ChallengeTimelineFragment mTimelineFragment;
 
-    private TimerRunnable mTimerRunnable;
+//    private TimerRunnable mTimerRunnable;
 
     public static ChallengeFragment newInstance(List<Challenge> challenges, int tagId) {
         Bundle bundle = new Bundle();
@@ -73,7 +73,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mTimerRunnable = new TimerRunnable();
+//        mTimerRunnable = new TimerRunnable();
 
         getChildFragmentManager().beginTransaction().replace(R.id.challenges_fl_match_holder,
                 mTimelineFragment = ChallengeTimelineFragment.newInstance()).commit();
@@ -412,71 +412,71 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         return animation;
     }
 
-    private class TimerRunnable implements Runnable {
-
-        private int firstTimeSeconds = -1;
-
-        private Handler customHandler;
-
-        private TimerRunnable() {
-            customHandler = new Handler();
-            customHandler.post(this);
-        }
-
-        public void run() {
-            int horCount = mRcvHorizontal.getChildCount();
-            int verCount = mRcvVertical.getChildCount();
-            for (int i = 0; i < horCount || i < verCount; i++) {
-                if (i < horCount) {
-                    updateTimer((ChallengeAdapter.ViewHolder) mRcvHorizontal.getChildViewHolder(mRcvHorizontal.getChildAt(i)));
-                }
-
-                if (i < verCount) {
-                    updateTimer((ChallengeAdapter.ViewHolder) mRcvVertical.getChildViewHolder(mRcvVertical.getChildAt(i)));
-                }
-            }
-
-            firstTimeSeconds = -1;
-
-            customHandler.postDelayed(this, 1000);
-        }
-
-        private void updateTimer(ChallengeAdapter.ViewHolder viewHolder) {
-            if (View.VISIBLE != viewHolder.mRlTimer.getVisibility()) {
-                return;
-            }
-
-            long updatedTime = Long.parseLong(viewHolder.mRlTimer.getTag().toString());
-            if (updatedTime < 1000) {
-                viewHolder.mRlTimer.setVisibility(View.GONE);
-                return;
-            }
-
-            viewHolder.mRlTimer.setTag(updatedTime - 1000);
-
-            int secs = (int) (updatedTime / 1000);
-            int mins = secs / 60;
-            int hours = mins / 60;
-            int days = hours / 24;
-            hours = hours % 24;
-            mins = mins % 60;
-            secs = secs % 60;
-            if(firstTimeSeconds == -1) {
-                firstTimeSeconds = secs;
-            }
-
-            viewHolder.mTvChallengeDaysLeft.setText(String.format("%02d", days) + "d");
-            viewHolder.mTvChallengeHoursLeft.setText(String.format("%02d", hours) + "h");
-            viewHolder.mTvChallengeMinsLeft.setText(String.format("%02d", mins) + "m");
-            viewHolder.mTvChallengeSecsLeft.setText(String.format("%02d", firstTimeSeconds) + "s");
-        }
-
-        private void destroy() {
-            customHandler.removeCallbacks(this);
-            customHandler = null;
-        }
-
-    }
+//    private class TimerRunnable implements Runnable {
+//
+//        private int firstTimeSeconds = -1;
+//
+//        private Handler customHandler;
+//
+//        private TimerRunnable() {
+//            customHandler = new Handler();
+//            customHandler.post(this);
+//        }
+//
+//        public void run() {
+//            int horCount = mRcvHorizontal.getChildCount();
+//            int verCount = mRcvVertical.getChildCount();
+//            for (int i = 0; i < horCount || i < verCount; i++) {
+//                if (i < horCount) {
+//                    updateTimer((ChallengeAdapter.ViewHolder) mRcvHorizontal.getChildViewHolder(mRcvHorizontal.getChildAt(i)));
+//                }
+//
+//                if (i < verCount) {
+//                    updateTimer((ChallengeAdapter.ViewHolder) mRcvVertical.getChildViewHolder(mRcvVertical.getChildAt(i)));
+//                }
+//            }
+//
+//            firstTimeSeconds = -1;
+//
+//            customHandler.postDelayed(this, 1000);
+//        }
+//
+//        private void updateTimer(ChallengeAdapter.ViewHolder viewHolder) {
+//            if (View.VISIBLE != viewHolder.mRlTimer.getVisibility()) {
+//                return;
+//            }
+//
+//            long updatedTime = Long.parseLong(viewHolder.mRlTimer.getTag().toString());
+//            if (updatedTime < 1000) {
+//                viewHolder.mRlTimer.setVisibility(View.GONE);
+//                return;
+//            }
+//
+//            viewHolder.mRlTimer.setTag(updatedTime - 1000);
+//
+//            int secs = (int) (updatedTime / 1000);
+//            int mins = secs / 60;
+//            int hours = mins / 60;
+//            int days = hours / 24;
+//            hours = hours % 24;
+//            mins = mins % 60;
+//            secs = secs % 60;
+//            if(firstTimeSeconds == -1) {
+//                firstTimeSeconds = secs;
+//            }
+//
+//            viewHolder.mTvChallengeDaysLeft.setText(String.format("%02d", days) + "d");
+//            viewHolder.mTvChallengeHoursLeft.setText(String.format("%02d", hours) + "h");
+//            viewHolder.mTvChallengeMinsLeft.setText(String.format("%02d", mins) + "m");
+//            viewHolder.mTvChallengeSecsLeft.setText(String.format("%02d", firstTimeSeconds) + "s");
+//        }
+//
+//        private void destroy() {
+//            customHandler.removeCallbacks(this);
+//            customHandler = null;
+//        }
+//
+//    }
 
     private void test() {
         int count = mRcvHorizontal.getChildCount();
@@ -488,6 +488,6 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mTimerRunnable.destroy();
+        //mTimerRunnable.destroy();
     }
 }
