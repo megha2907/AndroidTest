@@ -6,7 +6,6 @@ import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -16,13 +15,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +41,6 @@ import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
-import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -338,7 +334,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
+        if (RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
             mResultsPresenter.onClickShare();
         }
     }
@@ -448,43 +444,27 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void takeScreenShot() {
-        Resources resources = getResources();
-//        LinearLayout ShareRow = (LinearLayout) findViewById(R.id.my_results_ll_share_score);
-//        int delta = ShareRow.getHeight();
-        final Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth(), mRvMyResults.computeVerticalScrollRange(), Bitmap.Config.ARGB_8888);
+        int totalHeight = mRvMyResults.computeVerticalScrollRange() + getResources().getDimensionPixelSize(R.dimen.dp_60);
 
+        Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth(), totalHeight, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(screenshot);
         mRvMyResults.layout(
                 0,
-                mRvMyResults.getHeight() - mRvMyResults.computeVerticalScrollRange(),
+                mRvMyResults.getHeight() - totalHeight,
                 mRvMyResults.getWidth(),
-                mRvMyResults.computeVerticalScrollRange());
+                totalHeight
+        );
+
+        View logo = findViewById(R.id.my_results_nostra_logo);
+        logo.setVisibility(View.VISIBLE);
 
         mRvMyResults.draw(c);
 
+        logo.setVisibility(View.INVISIBLE);
+
         if (null != screenshot) {
-
-            final ViewGroup parent = (ViewGroup) findViewById(R.id.for_screenshot);
-            final View sharePhoto = getLayoutInflater().inflate(R.layout.inflater_my_result_share_holder, parent, false);
-            parent.addView(sharePhoto);
-
-            ((ImageView) sharePhoto.findViewById(R.id.my_results_share_iv_screenshot))
-                    .setImageBitmap(screenshot);
-
-            sharePhoto.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    sharePhoto.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    Bitmap shareScreenShot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
-                    parent.removeAllViews();
-
-                    if (null != shareScreenShot) {
-                        AppSnippet.doGeneralImageShare(MyResultsActivity.this, shareScreenShot, "");
-                        mResultsPresenter.onDoneScreenShot();
-                    }
-                }
-            });
-
+            AppSnippet.doGeneralImageShare(MyResultsActivity.this, screenshot, "");
+            mResultsPresenter.onDoneScreenShot();
         }
     }
 

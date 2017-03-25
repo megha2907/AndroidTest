@@ -24,23 +24,23 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left">
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dp_14"
-                android:text="Match Results"
-                app:typeface="roboto_condensed"/>
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Match Results"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="roboto_condensed" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/toolbar_match_stage"
                     android:layout_width="@dimen/dp_240"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbar_title"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/dp_12"
-                    android:layout_below="@+id/toolbar_title"
-                    app:typeface="lato_regular"/>
+                    app:typeface="lato_regular" />
 
             </RelativeLayout>
 
@@ -50,14 +50,14 @@
                 android:layout_width="@dimen/dp_110"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="@dimen/dp_20"
-                >
+                android:layout_marginRight="@dimen/dp_20">
 
 
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/my_results_ll_share_score"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_28"
+                    android:layout_alignBaseline="@+id/my_results_iv_share_icon"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="@drawable/compare_btn_bg"
@@ -67,8 +67,7 @@
                     android:text="SHARE"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_12"
-                    app:typeface="roboto_condensed"
-                    android:layout_alignBaseline="@+id/my_results_iv_share_icon"/>
+                    app:typeface="roboto_condensed" />
 
                 <ImageView
                     android:id="@+id/my_results_iv_share_icon"
@@ -193,62 +192,4 @@
 
 
     </RelativeLayout>
-
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/fab_container_share"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_below="@id/fab_container"-->
-    <!--&gt;-->
-
-
-    <!--<android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_share"
-        android:layout_width="@dimen/dp_48"
-        android:layout_height="@dimen/dp_48"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|end"
-        android:layout_marginRight="@dimen/dp_16"
-        android:layout_marginBottom="@dimen/dp_22"
-        android:clipToPadding="false"
-        android:src="@drawable/share_icon_white"
-        app:layout_anchor="@id/my_results_rv"
-        app:layout_anchorGravity="bottom|right|end"
-        app:backgroundTint="@color/btncolor"
-        app:borderWidth="@dimen/dp_0"
-        app:elevation="@dimen/dp_0"
-        android:scaleType="center"/>
-
-    <FrameLayout
-        android:id="@+id/fab_fl_fb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/dp_80"
-        android:layout_marginRight="@dimen/dp_16"
-        android:layout_above="@+id/fab_share"
-        android:visibility="visible"
-       >
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_fb"
-            android:layout_width="@dimen/dp_48"
-            android:layout_height="@dimen/dp_45"
-            android:scaleType="center"
-            android:src="@drawable/share_icon_fb"
-            app:backgroundTint="#3b5998"
-            app:borderWidth="0dp"
-            app:elevation="@dimen/dp_0" />
-
-    </FrameLayout>-->
-
-
-    <!--</RelativeLayout>-->
-
-
 </RelativeLayout>
