@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.question.add;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
@@ -36,6 +37,8 @@ public class AddQuestionActivity extends NostragamusActivity implements AddQuest
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_question);
 
+        initToolBar();
+
         mEtQuestion = (EditText) findViewById(R.id.add_question_et_question);
         mEtContext = (EditText) findViewById(R.id.add_question_et_context);
         mEtLeftOption = (EditText) findViewById(R.id.add_question_et_left_option);
@@ -44,6 +47,21 @@ public class AddQuestionActivity extends NostragamusActivity implements AddQuest
 
         this.mAddQuestionPresenter = AddQuestionPresenterImpl.newInstance(this);
         this.mAddQuestionPresenter.onCreateAddQuestion(getIntent().getExtras());
+    }
+
+    public void initToolBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.add_question_toolbar);
+        toolbar.setTitle("Submit Question");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        toolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                }
+        );
     }
 
     @Override

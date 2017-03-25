@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.user.group.newgroup;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,14 +12,12 @@ import android.widget.EditText;
 import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
-import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
-
-import static com.google.android.gms.analytics.internal.zzy.b;
 
 /**
  * Created by Jeeva on 1/7/16.
@@ -40,20 +37,12 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
 
     private Button mDonebtn;
 
-
-    private static final String[] PERMISSIONS_READ_STORAGE = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-    PermissionsChecker checker;
-
     private String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_group);
-
-        checker = new PermissionsChecker(this);
 
         this.mEtGroupName = (EditText) findViewById(R.id.new_group_et_group_name);
         mDonebtn = (Button) findViewById(R.id.new_group_btn_done);
@@ -128,10 +117,9 @@ public class NewGroupActivity extends NostragamusActivity implements NewGroupVie
 
 
     public void showImagePopup(View view) {
-        if (checker.lacksPermissions(PERMISSIONS_READ_STORAGE)) {
-            startPermissionsActivity(PERMISSIONS_READ_STORAGE);
+        if (new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
+            PermissionsActivity.startActivityForResult(this, 0, AppPermissions.STORAGE);
         } else {
-
             mNewGroupPresenter.onClickImage();
         }
     }

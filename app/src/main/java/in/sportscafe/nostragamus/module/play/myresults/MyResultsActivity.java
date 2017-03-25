@@ -1,23 +1,17 @@
 package in.sportscafe.nostragamus.module.play.myresults;
 
-import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -29,7 +23,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,12 +31,10 @@ import com.jeeva.android.facebook.FacebookHandler;
 
 import org.parceler.Parcels;
 
-import java.io.File;
-
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -92,12 +83,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     private Bundle matchBundle;
 
-    PermissionsChecker checker;
     LinearLayoutManager mlayoutManager;
-
-    private static final String[] PERMISSIONS_READ_STORAGE = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +91,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         setContentView(R.layout.activity_my_results);
 
         initToolBar();
-        checker = new PermissionsChecker(this);
 
         mlayoutManager = new LinearLayoutManager(this);
         this.mRvMyResults = (RecyclerView) findViewById(R.id.my_results_rv);
@@ -331,7 +316,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 break;
 
             case R.id.my_results_ll_share_score:
-                broadcastShareScore(v.getContext());
+                if (new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
+                    PermissionsActivity.startActivityForResult(this, 0, AppPermissions.STORAGE);
+                } else {
+                    mResultsPresenter.onClickFbShare();
+                }
                 break;
 
             /*case R.id.fab_fb:
@@ -339,11 +328,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 break;*/
 
         }
-    }
-
-
-    private void broadcastShareScore(Context context) {
-        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(IntentActions.ACTION_SHARE_SCORE));
     }
 
     private void navigatetoFlipScreen() {
@@ -471,12 +455,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             final View sharePhoto = getLayoutInflater().inflate(R.layout.inflater_my_result_share_holder, parent, false);
             parent.addView(sharePhoto);
 
-            /*((TextView) sharePhoto.findViewById(R.id.my_results_share_tv_content)).setText(String.format(
-                    resources.getString(R.string.fb_share_result_text),
-                    matchResult,
-                    matchPoints
-            ));*/
-
             sharePhoto.findViewById(R.id.my_results_share_iv_screenshot)
                     .setBackground(new BitmapDrawable(resources, screenshot));
 
@@ -485,21 +463,16 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 public void onGlobalLayout() {
                     sharePhoto.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     Bitmap screenshot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
-                    File screenshotFile = AppSnippet.saveBitmap(screenshot, "fb");
                     parent.removeAllViews();
-                    mResultsPresenter.onGetScreenShot(screenshotFile);
+
+                    if (null != screenshot) {
+                        AppSnippet.doGeneralImageShare(MyResultsActivity.this, screenshot, "");
+                        mResultsPresenter.onDoneScreenShot();
+                    }
                 }
             });
 
         }
-
-//        doSomething(matchResult, matchPoints);
-    }
-
-
-    @Override
-    public void showFbShare(String url) {
-        FacebookHandler.getInstance(MyResultsActivity.this).share(MyResultsActivity.this, url);
     }
 
     @Override
@@ -512,15 +485,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mTitle.setText(result);
         mRlshareResults.setVisibility(View.GONE);
     }
-
-    /*public void onClickbtnfbShare() {
-        mResultsPresenter.onClickFbShare();
-    }*/
-
-    private void startPermissionsActivity(String[] permission) {
-        PermissionsActivity.startActivityForResult(this, 0, permission);
-    }
-
 
     private void collapseFab() {
         AnimatorSet animatorSet = new AnimatorSet();
@@ -646,30 +610,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         return ObjectAnimator.ofFloat(view, TRANSLATION_Y, offset, 0)
                 .setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime));
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(mShareScoreReceiver,
-                new IntentFilter(IntentActions.ACTION_SHARE_SCORE));
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mShareScoreReceiver);
-    }
-
-    BroadcastReceiver mShareScoreReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (checker.lacksPermissions(PERMISSIONS_READ_STORAGE)) {
-                startPermissionsActivity(PERMISSIONS_READ_STORAGE);
-            } else {
-                mResultsPresenter.onClickFbShare();
-            }
-        }
-    };
 
     @Override
     public String getScreenName() {

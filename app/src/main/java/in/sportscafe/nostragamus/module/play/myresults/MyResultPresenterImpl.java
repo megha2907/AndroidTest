@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import java.io.File;
-
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -58,13 +57,15 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
-    public void onScreenShotUploaded(String url) {
+    public void onGetShareText(String shareText) {
         mResultsView.dismissProgressbar();
-        mResultsView.showFbShare(url);
+
+        AppSnippet.copyToClipBoard(mResultsView.getContext(), shareText);
+        mResultsView.showMessage("Use paste, If you want to use the default share message!", 15000);
     }
 
     @Override
-    public void onScreenShotFailed() {
+    public void onGetShareTextFailed() {
         mResultsView.dismissProgressbar();
         mResultsView.showMessage("Sharing failed, Try again", Toast.LENGTH_LONG);
     }
@@ -90,9 +91,9 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
-    public void onGetScreenShot(File screenshotFile) {
+    public void onDoneScreenShot() {
         mResultsView.showProgressbar();
-        mResultsModel.uploadScreenShot(screenshotFile);
+        mResultsModel.getShareText();
     }
 
     private void getResultDetails() {

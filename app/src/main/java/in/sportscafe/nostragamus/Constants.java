@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus;
 
+import android.Manifest;
+
 /**
  * Created by Jeeva on 30/3/15.
  */
@@ -79,13 +81,13 @@ public interface Constants {
         String SECOND_MATCH_PLAYED = "secondMatchPlayed";
         String FIFTH_MATCH_PLAYED = "fifthMatchPlayed";
         String SEVENTH_MATCH_PLAYED = "seventhMatchPlayed";
-        String VISITED_LEADERBOARDS= "VisitedLeaderboards";
-        String POWERUP_APPLIED= "PowerUpApplied";
+        String VISITED_LEADERBOARDS = "VisitedLeaderboards";
+        String POWERUP_APPLIED = "PowerUpApplied";
         String DUMMY_GAME_SHOWN = "dummyGameShown";
     }
 
     interface Alerts {
-//        String NO_NETWORK_CONNECTION = "No internet connection available";
+        //        String NO_NETWORK_CONNECTION = "No internet connection available";
         String GROUP_INFO_ERROR = "There was a problem retrieving the Group Information.";
         String RESULTS_INFO_ERROR = "There was a problem retrieving the Results Information.";
         String NO_NETWORK_CONNECTION = "Check your internet connection and try again";
@@ -127,15 +129,15 @@ public interface Constants {
         String LOGIN_CANCELLED = "Facebook login cancelled";
         String LEAVE_GROUP_SUCCESS = "You have been removed from the group successfully";
         String CANNOT_LEAVE_GROUP = "You are the only Admin, you need to add another group member as Admin before you can leave";
-        String PERMISSION_QUIT_TEXT ="Exit App";
-        String PERMISSION_HELP ="Help";
-        String PERMISSION_SETTINGS ="Setting";
+        String PERMISSION_QUIT_TEXT = "Ok";
+        String PERMISSION_HELP = "Help";
+        String PERMISSION_SETTINGS = "Settings";
         String PERMISSION_HELP_TEXT = "The permission is missing.\\n\\nTo grant this permission click on Settings, then Permissions and turn the permission on.\\n\\nThen click back twice to return to the app";
-        String IMAGE_UPLOAD_TEXT="Select Image to Upload";
-        String IMAGE_RESELECT="Click on Image to Reselect";
-        String IMAGE_UNABLE_TO_LOAD="Unable to Load Image";
-        String IMAGE_UNABLE_TO_PICK="Unable to Pick Image";
-        String IMAGE_UPLOADING="Uploading.. Wait for a while...";
+        String IMAGE_UPLOAD_TEXT = "Select Image to Upload";
+        String IMAGE_RESELECT = "Click on Image to Reselect";
+        String IMAGE_UNABLE_TO_LOAD = "Unable to Load Image";
+        String IMAGE_UNABLE_TO_PICK = "Unable to Pick Image";
+        String IMAGE_UPLOADING = "Uploading.. Wait for a while...";
         String IMAGE_FILEPATH_EMPTY = "Please Select Image";
         String AUDIENCE_POLL_FAIL = "Not enough responses for a meaningful poll, you can try after some time";
         String POWERUP_FAIL = "Something went wrong! Please try again!";
@@ -423,5 +425,13 @@ public interface Constants {
         String NOT_VISITED_OTHER_PROFILE = "notVisitedOtherProfile";
 
 
+    }
+
+    interface AppPermissions {
+
+        String[] STORAGE = new String[] {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
     }
 }
