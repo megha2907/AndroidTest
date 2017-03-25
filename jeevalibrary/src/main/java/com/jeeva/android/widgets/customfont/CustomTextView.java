@@ -2,11 +2,9 @@ package com.jeeva.android.widgets.customfont;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.R;
 
 
@@ -15,20 +13,20 @@ public class CustomTextView extends TextView {
     private boolean isDestroyed = false;
 
 
-    public CustomTextView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public CustomTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         if (!isInEditMode())
-            init(context, attrs);
+            init(context, attrs, defStyleAttr);
     }
 
     public CustomTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         if (!isInEditMode())
-            init(context, attrs);
+            init(context, attrs, android.R.attr.textViewStyle);
     }
 
-    private void init(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomTextView);
+    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomTextView, defStyleAttr, 0);
         CustomFont.getInstance().setFont(context, this, a.getInt(R.styleable.CustomTextView_typeface, -1));
     }
 
