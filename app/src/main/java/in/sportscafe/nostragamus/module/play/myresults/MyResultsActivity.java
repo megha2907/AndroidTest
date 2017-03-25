@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,11 +22,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.jeeva.android.facebook.FacebookHandler;
 
 import org.parceler.Parcels;
 
@@ -36,6 +34,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
+import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -226,6 +225,12 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        dismissMessage();
+    }
+
+    @Override
     public void setAdapter(MyResultsAdapter myResultsAdapter) {
         mRvMyResults.setAdapter(myResultsAdapter);
     }
@@ -317,9 +322,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
             case R.id.my_results_ll_share_score:
                 if (new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
-                    PermissionsActivity.startActivityForResult(this, 0, AppPermissions.STORAGE);
+                    PermissionsActivity.startActivityForResult(this, RequestCodes.STORAGE_PERMISSION, AppPermissions.STORAGE);
                 } else {
-                    mResultsPresenter.onClickFbShare();
+                    mResultsPresenter.onClickShare();
                 }
                 break;
 
@@ -327,6 +332,14 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
                 break;*/
 
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
+            mResultsPresenter.onClickShare();
         }
     }
 
@@ -438,7 +451,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         Resources resources = getResources();
 //        LinearLayout ShareRow = (LinearLayout) findViewById(R.id.my_results_ll_share_score);
 //        int delta = ShareRow.getHeight();
-        Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth(), mRvMyResults.computeVerticalScrollRange(), Bitmap.Config.ARGB_8888);
+        final Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth(), mRvMyResults.computeVerticalScrollRange(), Bitmap.Config.ARGB_8888);
 
         Canvas c = new Canvas(screenshot);
         mRvMyResults.layout(
@@ -455,18 +468,18 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             final View sharePhoto = getLayoutInflater().inflate(R.layout.inflater_my_result_share_holder, parent, false);
             parent.addView(sharePhoto);
 
-            sharePhoto.findViewById(R.id.my_results_share_iv_screenshot)
-                    .setBackground(new BitmapDrawable(resources, screenshot));
+            ((ImageView) sharePhoto.findViewById(R.id.my_results_share_iv_screenshot))
+                    .setImageBitmap(screenshot);
 
             sharePhoto.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
                     sharePhoto.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    Bitmap screenshot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
+                    Bitmap shareScreenShot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
                     parent.removeAllViews();
 
-                    if (null != screenshot) {
-                        AppSnippet.doGeneralImageShare(MyResultsActivity.this, screenshot, "");
+                    if (null != shareScreenShot) {
+                        AppSnippet.doGeneralImageShare(MyResultsActivity.this, shareScreenShot, "");
                         mResultsPresenter.onDoneScreenShot();
                     }
                 }

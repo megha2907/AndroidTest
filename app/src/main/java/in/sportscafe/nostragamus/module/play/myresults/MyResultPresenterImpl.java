@@ -86,7 +86,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
-    public void onClickFbShare() {
+    public void onClickShare() {
         mResultsView.takeScreenShot();
     }
 
