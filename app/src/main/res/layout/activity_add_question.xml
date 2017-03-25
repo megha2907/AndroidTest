@@ -4,7 +4,7 @@
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/onboarding_bg">
+    android:background="@color/black">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,117 +24,174 @@
                 android:layout_marginTop="@dimen/dp_20"
                 android:src="@drawable/nostragamus_logo" />
 
-            <android.support.design.widget.TextInputLayout
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="Question *"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.ShadowLayout
+                android:id="@+id/add_question_sl_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                app:theme="@style/TextLabel">
+                android:layout_marginTop="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_4"
+                app:sl_cornerRadius="@dimen/dp_5"
+                app:sl_fillColor="@android:color/transparent"
+                app:sl_shadowRadius="@dimen/dp_4">
+
 
                 <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/add_question_et_question"
+                    style="@style/AddQuestionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/textcolorlight"
-                    android:gravity="top"
-                    android:hint="Question *"
                     android:inputType="textMultiLine"
                     android:maxLength="60"
                     android:maxLines="2"
                     android:minLines="2"
-                    android:paddingBottom="@dimen/dp_18"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_16" />
+                    android:paddingBottom="@dimen/dp_18" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.jeeva.android.widgets.ShadowLayout>
 
-            <android.support.design.widget.TextInputLayout
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="Context *"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.ShadowLayout
+                android:id="@+id/add_question_sl_context"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
-                app:theme="@style/TextLabel">
+                android:layout_marginTop="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_4"
+                app:sl_cornerRadius="@dimen/dp_5"
+                app:sl_fillColor="@android:color/transparent"
+                app:sl_shadowRadius="@dimen/dp_4">
 
                 <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/add_question_et_context"
+                    style="@style/AddQuestionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/textcolorlight"
-                    android:gravity="top"
-                    android:hint="Context *"
                     android:inputType="textMultiLine"
                     android:maxLength="200"
                     android:maxLines="4"
                     android:minLines="4"
-                    android:paddingBottom="@dimen/dp_18"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_16" />
+                    android:paddingBottom="@dimen/dp_18" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.jeeva.android.widgets.ShadowLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="Left Option *"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.ShadowLayout
+                android:id="@+id/add_question_sl_left_option"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
-                app:theme="@style/TextLabel">
+                android:layout_marginTop="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_4"
+                app:sl_cornerRadius="@dimen/dp_5"
+                app:sl_fillColor="@android:color/transparent"
+                app:sl_shadowRadius="@dimen/dp_4">
 
-                <com.jeeva.android.widgets.customfont.CustomEditText
+
+            <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/add_question_et_left_option"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/textcolorlight"
-                    android:hint="Left Option *"
+                    style="@style/AddQuestionEditText"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:paddingBottom="@dimen/dp_18"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_16" />
+                    android:paddingBottom="@dimen/dp_18" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.jeeva.android.widgets.ShadowLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="Right Option *"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.ShadowLayout
+                android:id="@+id/add_question_sl_right_option"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                app:theme="@style/TextLabel">
+                android:layout_marginTop="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_4"
+                app:sl_cornerRadius="@dimen/dp_5"
+                app:sl_fillColor="@android:color/transparent"
+                app:sl_shadowRadius="@dimen/dp_4">
 
-                <com.jeeva.android.widgets.customfont.CustomEditText
+
+            <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/add_question_et_right_option"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/textcolorlight"
-                    android:hint="Right Option *"
+                    style="@style/AddQuestionEditText"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:paddingBottom="@dimen/dp_18"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_16" />
+                    android:paddingBottom="@dimen/dp_18"/>
 
-            </android.support.design.widget.TextInputLayout>
+           </com.jeeva.android.widgets.ShadowLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="Neither Option"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.ShadowLayout
+                android:id="@+id/add_question_sl_neither_option"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                app:theme="@style/TextLabel">
+                android:layout_marginTop="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_4"
+                app:sl_cornerRadius="@dimen/dp_5"
+                app:sl_fillColor="@android:color/transparent"
+                app:sl_shadowRadius="@dimen/dp_4">
 
                 <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/add_question_et_neither_option"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/textcolorlight"
-                    android:hint="Neither Option"
+                    style="@style/AddQuestionEditText"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:paddingBottom="@dimen/dp_18"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_16" />
+                    android:paddingBottom="@dimen/dp_18" />
 
-            </android.support.design.widget.TextInputLayout>
+           </com.jeeva.android.widgets.ShadowLayout>
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/add_question_btn_save"

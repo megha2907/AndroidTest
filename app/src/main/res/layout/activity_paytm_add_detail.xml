@@ -15,12 +15,17 @@
         android:id="@+id/paytm_toolbar"
         />
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/paytm_toolbar"
+        android:background="@color/black">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
         android:gravity="center_horizontal"
-        android:layout_below="@+id/paytm_toolbar"
         android:orientation="vertical"
         android:paddingRight="@dimen/dp_24"
         android:paddingLeft="@dimen/dp_24">
@@ -36,11 +41,26 @@
         app:typeface="lato_regular"
         android:textSize="@dimen/dp_14"/>
 
+        <com.jeeva.android.widgets.ShadowLayout
+            android:id="@+id/paytm_add_detail_sl_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:sl_cornerRadius="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_4"
+            app:sl_fillColor="@android:color/transparent"
+            app:sl_shadowRadius="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_16">
+
         <com.jeeva.android.widgets.customfont.CustomEditText
             android:id="@+id/paytm_add_detail_et_number"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
             style="@style/EditTextStyle"
             android:imeOptions="actionNext"
             android:inputType="phone" />
+
+        </com.jeeva.android.widgets.ShadowLayout>
+
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
@@ -52,11 +72,26 @@
             app:typeface="lato_regular"
             android:textSize="@dimen/dp_14"/>
 
+        <com.jeeva.android.widgets.ShadowLayout
+            android:id="@+id/paytm_add_detail_sl_confirm_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:sl_cornerRadius="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_4"
+            app:sl_fillColor="@color/edittext_selection_bg"
+            app:sl_shadowRadius="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_16">
+
+
         <com.jeeva.android.widgets.customfont.CustomEditText
             android:id="@+id/paytm_add_detail_et_confirm_number"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
             style="@style/EditTextStyle"
             android:imeOptions="actionNext"
             android:inputType="phone" />
+
+        </com.jeeva.android.widgets.ShadowLayout>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
@@ -68,11 +103,26 @@
             app:typeface="lato_regular"
             android:textSize="@dimen/dp_14"/>
 
+        <com.jeeva.android.widgets.ShadowLayout
+            android:id="@+id/paytm_add_detail_sl_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:sl_cornerRadius="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_4"
+            app:sl_fillColor="@color/edittext_selection_bg"
+            app:sl_shadowRadius="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_16">
+
+
         <com.jeeva.android.widgets.customfont.CustomEditText
             android:id="@+id/paytm_add_detail_et_email"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
             style="@style/EditTextStyle"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress" />
+
+        </com.jeeva.android.widgets.ShadowLayout>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
@@ -84,11 +134,26 @@
             app:typeface="lato_regular"
             android:textSize="@dimen/dp_14"/>
 
+        <com.jeeva.android.widgets.ShadowLayout
+            android:id="@+id/paytm_add_detail_sl_confirm_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:sl_cornerRadius="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_4"
+            app:sl_fillColor="@color/edittext_selection_bg"
+            app:sl_shadowRadius="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_16">
+
+
         <com.jeeva.android.widgets.customfont.CustomEditText
             android:id="@+id/paytm_add_detail_et_confirm_email"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
             style="@style/EditTextStyle"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress" />
+
+        </com.jeeva.android.widgets.ShadowLayout>
 
 
         <com.jeeva.android.widgets.customfont.CustomButton
@@ -130,5 +195,7 @@
         app:typeface="lato_bold" />
 
     </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
