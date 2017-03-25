@@ -102,6 +102,7 @@ public class AppSnippet implements Constants {
         shareIntent.putExtra(Intent.EXTRA_TITLE, "Title");
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         context.startActivity(shareIntent);
     }
 

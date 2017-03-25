@@ -1,8 +1,6 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,9 +8,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -21,11 +17,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.CustomProgressbar;
-
-import java.io.OutputStream;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
@@ -485,30 +478,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         if (null != playCardBitmap) {
             AppSnippet.doGeneralImageShare(this, playCardBitmap, "");
         }
-    }
-
-    private void doGeneralImageShare(Context context, Bitmap image, String shareText) {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "title");
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
-
-        ContentResolver contentResolver = context.getContentResolver();
-        Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-        try {
-            OutputStream outstream = contentResolver.openOutputStream(uri);
-            image.compress(Bitmap.CompressFormat.JPEG, 100, outstream);
-            outstream.close();
-        } catch (Exception e) {
-            ExceptionTracker.track(e);
-        }
-
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("image/png");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivityForResult(shareIntent, SHARE_QUESTION_REQUEST_CODE);
     }
 
     private void openPopup(String popUpType) {
