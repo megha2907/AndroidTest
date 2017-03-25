@@ -2,8 +2,11 @@ package in.sportscafe.nostragamus.module.question.add;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ScrollView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
@@ -25,6 +28,8 @@ public class AddQuestionActivity extends NostragamusActivity implements AddQuest
 
     private EditText mEtNeitherOption;
 
+    private ScrollView mScrollMain;
+
     private AddQuestionPresenter mAddQuestionPresenter;
 
     @Override
@@ -39,6 +44,7 @@ public class AddQuestionActivity extends NostragamusActivity implements AddQuest
 
         initToolBar();
 
+        mScrollMain = (ScrollView) findViewById(R.id.add_question_scrollview);
         mEtQuestion = (EditText) findViewById(R.id.add_question_et_question);
         mEtContext = (EditText) findViewById(R.id.add_question_et_context);
         mEtLeftOption = (EditText) findViewById(R.id.add_question_et_left_option);
@@ -47,6 +53,13 @@ public class AddQuestionActivity extends NostragamusActivity implements AddQuest
 
         this.mAddQuestionPresenter = AddQuestionPresenterImpl.newInstance(this);
         this.mAddQuestionPresenter.onCreateAddQuestion(getIntent().getExtras());
+        mEtContext.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                mScrollMain.requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
     }
 
     public void initToolBar() {
