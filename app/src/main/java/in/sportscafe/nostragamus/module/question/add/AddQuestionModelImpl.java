@@ -2,15 +2,13 @@ package in.sportscafe.nostragamus.module.question.add;
 
 import android.os.Bundle;
 
-import com.jeeva.android.ExceptionTracker;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
@@ -22,7 +20,7 @@ import retrofit2.Response;
  */
 public class AddQuestionModelImpl implements AddQuestionModel {
 
-    private int mMatchId;
+    private Match mMatchDetails;
 
     private OnAddQuestionModelListener mAddQuestionModelListener;
 
@@ -37,8 +35,13 @@ public class AddQuestionModelImpl implements AddQuestionModel {
     @Override
     public void init(Bundle bundle) {
         if (null != bundle) {
-            mMatchId = bundle.getInt(BundleKeys.MATCH_ID);
+            mMatchDetails = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_DETAILS));
         }
+    }
+
+    @Override
+    public Match getMatchDetails() {
+        return mMatchDetails;
     }
 
     @Override
@@ -64,7 +67,7 @@ public class AddQuestionModelImpl implements AddQuestionModel {
         }
 
         AddQuestionRequest addQuestionRequest = new AddQuestionRequest();
-        addQuestionRequest.setMatchId(mMatchId);
+        addQuestionRequest.setMatchId(mMatchDetails.getId());
         addQuestionRequest.setQuestion(question);
         addQuestionRequest.setContext(context);
         addQuestionRequest.setLeftOption(leftOption);
@@ -74,16 +77,11 @@ public class AddQuestionModelImpl implements AddQuestionModel {
             addQuestionRequest.setNeitherOption(neitherOption);
         }
 
-        try {
-            JSONObject createdUser = new JSONObject();
-            UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
-            createdUser.put("user_id", userInfo.getId());
-            createdUser.put("user_name", userInfo.getUserName());
-
-            addQuestionRequest.setCreatedBy(createdUser.toString());
-        } catch (JSONException e) {
-            ExceptionTracker.track(e);
-        }
+        UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
+        QuestionSubmitBy submitBy = new QuestionSubmitBy();
+        submitBy.setUserId(userInfo.getId());
+        submitBy.setUserName(userInfo.getUserName());
+        addQuestionRequest.setCreatedBy(submitBy);
 
         callAddQuestionApi(addQuestionRequest);
     }

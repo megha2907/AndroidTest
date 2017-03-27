@@ -434,4 +434,9 @@ public interface Constants {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         };
     }
+
+    interface RequestCodes {
+
+        int STORAGE_PERMISSION = 134;
+    }
 }

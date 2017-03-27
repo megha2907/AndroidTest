@@ -11,6 +11,7 @@ import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
+import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -98,11 +99,15 @@ public class EditGroupInfoActivity extends NostragamusActivity implements EditGr
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mEditGroupInfoPresenter.onGetResult(requestCode, resultCode, data);
+
+        if(RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
+            mEditGroupInfoPresenter.onClickImage();
+        }
     }
 
     public void showImagePopup(View view) {
         if(new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
-            PermissionsActivity.startActivityForResult(this, 0, AppPermissions.STORAGE);
+            PermissionsActivity.startActivityForResult(this, RequestCodes.STORAGE_PERMISSION, AppPermissions.STORAGE);
         } else {
             mEditGroupInfoPresenter.onClickImage();
         }

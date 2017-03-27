@@ -16,6 +16,7 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -179,7 +180,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     public void showImagePopup(View view) {
         if (new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
-            PermissionsActivity.startActivityForResult(this, 0, AppPermissions.STORAGE);
+            PermissionsActivity.startActivityForResult(this, RequestCodes.STORAGE_PERMISSION, AppPermissions.STORAGE);
         } else {
             mEditProfilePresenter.onClickImage();
         }
@@ -191,10 +192,10 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         if(RESULT_OK == resultCode) {
             mEditProfilePresenter.onGetResult(requestCode, resultCode, data);
         }
-    }
 
-    private void startPermissionsActivity(String[] permission) {
-        PermissionsActivity.startActivityForResult(this, 0, permission);
+        if(RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
+            mEditProfilePresenter.onClickImage();
+        }
     }
 
     @Override

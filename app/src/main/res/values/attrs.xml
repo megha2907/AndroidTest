@@ -70,4 +70,13 @@
         <attr name="maxHeight" format="dimension" />
     </declare-styleable>
 
+    <!-- Nostra EditText -->
+    <declare-styleable name="NostraEditText">
+        <attr name="boxStyle" format="reference" />
+        <attr name="hintStyle" format="reference" />
+        <attr name="errorStyle" format="reference" />
+        <attr name="hintText" format="string" />
+        <attr name="errorText" format="string" />
+    </declare-styleable>
+
 </resources>

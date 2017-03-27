@@ -6,10 +6,8 @@ import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +15,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -27,8 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jeeva.android.facebook.FacebookHandler;
-
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -36,6 +31,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
+import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -45,7 +41,6 @@ import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
-import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -226,6 +221,12 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        dismissMessage();
+    }
+
+    @Override
     public void setAdapter(MyResultsAdapter myResultsAdapter) {
         mRvMyResults.setAdapter(myResultsAdapter);
     }
@@ -317,9 +318,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
             case R.id.my_results_ll_share_score:
                 if (new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
-                    PermissionsActivity.startActivityForResult(this, 0, AppPermissions.STORAGE);
+                    PermissionsActivity.startActivityForResult(this, RequestCodes.STORAGE_PERMISSION, AppPermissions.STORAGE);
                 } else {
-                    mResultsPresenter.onClickFbShare();
+                    mResultsPresenter.onClickShare();
                 }
                 break;
 
@@ -327,6 +328,14 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
                 break;*/
 
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
+            mResultsPresenter.onClickShare();
         }
     }
 
@@ -435,43 +444,27 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void takeScreenShot() {
-        Resources resources = getResources();
-//        LinearLayout ShareRow = (LinearLayout) findViewById(R.id.my_results_ll_share_score);
-//        int delta = ShareRow.getHeight();
-        Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth(), mRvMyResults.computeVerticalScrollRange(), Bitmap.Config.ARGB_8888);
+        int totalHeight = mRvMyResults.computeVerticalScrollRange() + getResources().getDimensionPixelSize(R.dimen.dp_60);
 
+        Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth(), totalHeight, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(screenshot);
         mRvMyResults.layout(
                 0,
-                mRvMyResults.getHeight() - mRvMyResults.computeVerticalScrollRange(),
+                mRvMyResults.getHeight() - totalHeight,
                 mRvMyResults.getWidth(),
-                mRvMyResults.computeVerticalScrollRange());
+                totalHeight
+        );
+
+        View logo = findViewById(R.id.my_results_nostra_logo);
+        logo.setVisibility(View.VISIBLE);
 
         mRvMyResults.draw(c);
 
+        logo.setVisibility(View.INVISIBLE);
+
         if (null != screenshot) {
-
-            final ViewGroup parent = (ViewGroup) findViewById(R.id.for_screenshot);
-            final View sharePhoto = getLayoutInflater().inflate(R.layout.inflater_my_result_share_holder, parent, false);
-            parent.addView(sharePhoto);
-
-            sharePhoto.findViewById(R.id.my_results_share_iv_screenshot)
-                    .setBackground(new BitmapDrawable(resources, screenshot));
-
-            sharePhoto.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    sharePhoto.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    Bitmap screenshot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
-                    parent.removeAllViews();
-
-                    if (null != screenshot) {
-                        AppSnippet.doGeneralImageShare(MyResultsActivity.this, screenshot, "");
-                        mResultsPresenter.onDoneScreenShot();
-                    }
-                }
-            });
-
+            AppSnippet.doGeneralImageShare(MyResultsActivity.this, screenshot, "");
+            mResultsPresenter.onDoneScreenShot();
         }
     }
 

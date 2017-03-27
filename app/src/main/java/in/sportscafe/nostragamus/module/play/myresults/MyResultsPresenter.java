@@ -18,7 +18,7 @@ public interface MyResultsPresenter {
 
     void onFlipPowerupApplied();
 
-    void onClickFbShare();
+    void onClickShare();
 
     void onDoneScreenShot();
 }

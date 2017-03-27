@@ -1,17 +1,11 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.View;
 
 import com.jeeva.android.InAppView;
 
-import java.util.HashMap;
-
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
-
-import static android.R.attr.x;
 
 /**
  * Created by Jeeva on 20/5/16.
@@ -88,8 +82,6 @@ public interface PredictionView extends InAppView {
     void showPopUp(String popUpType);
 
     void showFirstMatchPlayedPopUp(String firstMatchPlayed, Bundle bundle);
-
-    boolean checkStoragePermission();
 
     void takeScreenshotAndShare();
 }

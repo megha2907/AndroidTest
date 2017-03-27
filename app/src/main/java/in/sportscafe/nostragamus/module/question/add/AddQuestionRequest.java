@@ -26,7 +26,7 @@ public class AddQuestionRequest {
     private String neitherOption;
 
     @JsonProperty("question_submitted_by")
-    private String createdBy;
+    private QuestionSubmitBy createdBy;
 
     @JsonProperty("match_id")
     public int getMatchId() {
@@ -89,12 +89,12 @@ public class AddQuestionRequest {
     }
 
     @JsonProperty("question_submitted_by")
-    public String getCreatedBy() {
+    public QuestionSubmitBy getCreatedBy() {
         return createdBy;
     }
 
     @JsonProperty("question_submitted_by")
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(QuestionSubmitBy createdBy) {
         this.createdBy = createdBy;
     }
 }

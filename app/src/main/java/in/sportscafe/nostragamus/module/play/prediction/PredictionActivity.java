@@ -17,13 +17,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.CustomProgressbar;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.IntentActions;
+import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.coachmarker.TargetView;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
@@ -87,8 +87,12 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mShakeListener = new ShakeListener() {
             @Override
             public void onShake() {
-                Log.d("PredictionActivity", "Shaked");
-                mPredictionPresenter.onShake();
+                if(new PermissionsChecker(PredictionActivity.this).lacksPermissions(AppPermissions.STORAGE)) {
+                    PermissionsActivity.startActivityForResult(PredictionActivity.this,
+                            RequestCodes.STORAGE_PERMISSION, AppPermissions.STORAGE);
+                } else {
+                    mPredictionPresenter.onShake();
+                }
             }
         };
 
@@ -373,6 +377,10 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         if (DUMMY_GAME_REQUEST_CODE == requestCode) {
             mPredictionPresenter.onGetDummyGameResult();
         }
+
+        if(RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
+            mPredictionPresenter.onShake();
+        }
     }
 
     private TourGuide mCoachMarker;
@@ -466,15 +474,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
         intent.putExtras(bundle);
         startActivity(intent);
-    }
-
-    @Override
-    public boolean checkStoragePermission() {
-        if(new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
-            PermissionsActivity.startActivityForResult(this, 0, AppPermissions.STORAGE);
-            return false;
-        }
-        return true;
     }
 
     @Override

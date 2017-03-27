@@ -329,14 +329,14 @@ public class NostragamusAnalytics {
         JSONObject jsonObject = moeEventBuilder.build();
         mMoEHelper.trackEvent(category, jsonObject);
 
-        try {
+        /*try {
             if (jsonObject.has(ACTION)) {
                 jsonObject.put("_" + ACTION, jsonObject.get(ACTION));
                 jsonObject.remove(ACTION);
             }
         } catch (JSONException e) {
             ExceptionTracker.track(e);
-        }
+        }*/
 
         mAmplitude.logEvent(category, jsonObject);
 
