@@ -238,6 +238,15 @@ public class PointsModelImpl implements PointsModel {
 
     }
 
+    @Override
+    public Bundle getUserProfileBundle() {
+        Bundle bundle = new Bundle();
+        if(null != mChallengeId) {
+            bundle.putInt(BundleKeys.CHALLENGE_ID, mChallengeId);
+        }
+        bundle.putString(BundleKeys.OPEN_PROFILE, "0");
+        return bundle;
+    }
 
     private void updateTimer(long updatedTime) {
 

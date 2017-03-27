@@ -23,7 +23,6 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
-import in.sportscafe.nostragamus.module.paytm.NPaytmActivity;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.settings.SettingActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -40,12 +39,14 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     private ViewPagerAdapter mPagerAdapter;
 
-    public static ProfileFragment newInstance(int tabPosition) {
-        Bundle args = new Bundle();
-        args.putInt(BundleKeys.TAB_POSITION, tabPosition);
+    public static ProfileFragment newInstance(int tabPosition, Bundle bundle) {
+        if(null == bundle) {
+            bundle = new Bundle();
+        }
+        bundle.putInt(BundleKeys.TAB_POSITION, tabPosition);
 
         ProfileFragment fragment = new ProfileFragment();
-        fragment.setArguments(args);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -63,7 +64,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
             initListeners();
 
             this.mProfilePresenter = ProfilePresenterImpl.newInstance(this);
-            this.mProfilePresenter.onCreateProfile();
+            this.mProfilePresenter.onCreateProfile(getArguments());
         }
     }
 

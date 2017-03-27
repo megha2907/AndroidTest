@@ -118,7 +118,7 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
                     return;
                 }
 
-                loadFragment(mCurrentFragment = ProfileFragment.newInstance(mProfileTabPosition));
+                loadFragment(mCurrentFragment = ProfileFragment.newInstance(mProfileTabPosition, getIntent().getExtras()));
 //                mProfileTabPosition = 0;
                 break;
         }

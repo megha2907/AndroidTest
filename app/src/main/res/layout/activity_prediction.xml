@@ -136,11 +136,10 @@
             android:clickable="true"
             android:onClick="onClick"
             android:paddingBottom="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_10"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_16"
             app:typeface="roboto_condensed"
-            android:text="Next"
+            android:text="Shuffle"
             android:visibility="invisible"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -149,7 +148,6 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/prediction_cv_bg_0"
             android:paddingBottom="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_10"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_16"
             app:typeface="roboto_condensed" />
@@ -294,10 +292,9 @@
                 android:layout_height="@dimen/dp_46"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="@dimen/dp_4"
-                android:layout_marginRight="@dimen/dp_22"
                 android:layout_toRightOf="@id/prediction_ll_powerup_layout"
                 android:onClick="onClick"
-                android:padding="@dimen/dp_8"
+                android:padding="@dimen/dp_7"
                 android:src="@drawable/popup_help_icon" />
 
             <ImageView

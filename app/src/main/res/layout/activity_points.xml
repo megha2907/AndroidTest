@@ -376,6 +376,7 @@
             android:id="@+id/points_user_rl"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
+            android:onClick="onClick"
             android:layout_gravity="bottom"
             android:background="@drawable/points_user_blue_bg"
             android:visibility="gone">
