@@ -16,17 +16,17 @@ public class CustomTextView extends TextView {
     public CustomTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         if (!isInEditMode())
-            init(context, attrs, defStyleAttr);
+            init(context, attrs);
     }
 
     public CustomTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         if (!isInEditMode())
-            init(context, attrs, android.R.attr.textViewStyle);
+            init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomTextView, defStyleAttr, 0);
+    private void init(Context context, AttributeSet attrs) {
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomTextView);
         CustomFont.getInstance().setFont(context, this, a.getInt(R.styleable.CustomTextView_typeface, -1));
     }
 

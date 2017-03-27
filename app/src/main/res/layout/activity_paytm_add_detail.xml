@@ -53,9 +53,6 @@
                 <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/paytm_add_detail_et_number"
                     style="@style/EditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_40"
-                    android:imeOptions="actionNext"
                     android:inputType="phone" />
 
             </com.jeeva.android.widgets.ShadowLayout>
@@ -85,9 +82,6 @@
                 <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/paytm_add_detail_et_confirm_number"
                     style="@style/EditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_40"
-                    android:imeOptions="actionNext"
                     android:inputType="phone" />
 
             </com.jeeva.android.widgets.ShadowLayout>
@@ -111,9 +105,6 @@
                 <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/paytm_add_detail_et_email"
                     style="@style/EditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_40"
-                    android:imeOptions="actionNext"
                     android:inputType="textEmailAddress" />
 
             </com.jeeva.android.widgets.ShadowLayout>
@@ -142,21 +133,18 @@
                 <com.jeeva.android.widgets.customfont.CustomEditText
                     android:id="@+id/paytm_add_detail_et_confirm_email"
                     style="@style/EditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_40"
-                    android:imeOptions="actionNext"
                     android:inputType="textEmailAddress" />
 
             </com.jeeva.android.widgets.ShadowLayout>
 
-            <in.sportscafe.nostragamus.module.common.NostraEditText
+            <!--<in.sportscafe.nostragamus.module.common.NostraEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxStyle="@style/EditTextStyle"
                 app:hintStyle="@style/EditTextHintStyle"
                 app:errorStyle="@style/EditTextErrorStyle"
                 app:hintText="Enter your hint"
-                app:errorText="Show your error here"/>
+                app:errorText="Show your error here"/>-->
 
 
             <com.jeeva.android.widgets.customfont.CustomButton
