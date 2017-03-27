@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,12 +27,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeva.android.Log;
+
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.NotificationKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -231,10 +237,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mRvMyResults.setAdapter(myResultsAdapter);
     }
 
-    public void onBack(View view) {
-        onBackPressed();
-    }
-
     public void initToolBar() {
         mtoolbar = (Toolbar) findViewById(R.id.my_results_toolbar);
         mTitle = (TextView) mtoolbar.findViewById(R.id.toolbar_title);
@@ -248,11 +250,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (goback == true) {
-                            onBackPressed();
-                        } else {
-                            gotoHomeActivity();
-                        }
+                        onBackPressed();
                     }
                 }
 
@@ -260,17 +258,23 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     @Override
-    public void goBack() {
-        goback = true;
+    public void onBackPressed() {
+        Intent upIntent = NavUtils.getParentActivityIntent(this);
+        if (shouldUpRecreateTask(this)) {
+            TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
+            finish();
+        } else {
+            super.onBackPressed();
+        }
     }
 
-    /*private void gotoMyResultsTimeline() {
-        Intent intent = new Intent(this, MyResultsTimelineActivity.class);
-        startActivity(intent);
-        finish();
-    }*/
+    private final boolean shouldUpRecreateTask(Activity from) {
+        Bundle bundle = from.getIntent().getExtras();
+        return null != bundle && bundle.getBoolean(NotificationKeys.FROM_NOTIFICATION);
+    }
 
-    private void gotoHomeActivity() {
+    @Override
+    public void navigateToHome() {
         Intent homeIntent = new Intent(this, HomeActivity.class);
         startActivity(homeIntent);
         finish();

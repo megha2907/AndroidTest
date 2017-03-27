@@ -15,24 +15,9 @@ public interface Constants {
         String PROFILE = "Profile_Images";
     }
 
-    interface DatabaseKeys {
-    }
-
     interface NotificationKeys {
-
-        String GROUP_ID = "group_id";
-        String JOIN_GROUP_REQUEST = "join_group_request";
-        String DAILY_NOTIFICATION_REQUEST = "daily_notification";
-        String HOURLY_NOTIFICATION_REQUEST = "hourly_notification";
-        String APPROVED_GROUP_REQUEST = "approved_group_request";
         String RESULTS_LEADERBOARD = "results_leaderboard";
-        String GROUP_PERSONID = "group_personID";
-        String ADMIN_USERID = "admin_userID";
-        String BADGE_REQUEST = "badges";
-        String REQUEST_ACCEPTED = "REQUEST ACCEPTED";
-        String REQUEST_REJECTED = "REQUEST REJECTED";
-        String CHALLENGE_NAME_NOTIFICATION = "challenge_name";
-
+        String FROM_NOTIFICATION = "fromNotification";
     }
 
     interface SharedKeys {
@@ -429,7 +414,7 @@ public interface Constants {
 
     interface AppPermissions {
 
-        String[] STORAGE = new String[] {
+        String[] STORAGE = new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         };
