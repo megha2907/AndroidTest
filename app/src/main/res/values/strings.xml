@@ -108,5 +108,6 @@
     <string name="sample_merchant_id_staging">GAMBIT01441193333466</string>
     <string name="sample_checksum_generation_url">https://api-stage.sportscafe.in/v2/game/generateChecksum</string>
     <string name="sample_checksum_verification_url">https://api-stage.sportscafe.in/v2/game/verifyChecksum</string>
+    <string name="tap_powerup">You can tap on the icon if you need any help with the powerups!</string>
 
 </resources>

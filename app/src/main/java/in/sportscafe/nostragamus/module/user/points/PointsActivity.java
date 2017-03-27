@@ -21,7 +21,9 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.popups.PowerupDialogFragment;
 import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
+import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardModelImpl;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 
@@ -142,7 +144,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
             @Override
             public void onPageSelected(int position) {
-               mPointsPresenter.updateUserLeaderBoard(position);
+                mPointsPresenter.updateUserLeaderBoard(position);
             }
 
             @Override
@@ -197,22 +199,22 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     @Override
     public void setUserLeaderBoardView(UserLeaderBoard userLeaderBoard) {
 
-        RelativeLayout userPoints = (RelativeLayout)findViewById(R.id.points_user_rl);
-        View gradientView = (View)findViewById(R.id.gradient_view);
+        RelativeLayout userPoints = (RelativeLayout) findViewById(R.id.points_user_rl);
+        View gradientView = (View) findViewById(R.id.gradient_view);
         ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_iv_status);
-        TextView  mTvRank = (TextView) findViewById(R.id.leaderboard_tv_rank);
+        TextView mTvRank = (TextView) findViewById(R.id.leaderboard_tv_rank);
         RoundImage mIvUser = (RoundImage) findViewById(R.id.leaderboard_iv_user_img);
         TextView mTvName = (TextView) findViewById(R.id.leaderboard_tv_user_name);
         TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_tv_points);
-        TextView mTvPlayed= (TextView) findViewById(R.id.leaderboard_tv_played);
-        TextView mTvAccuracy = (TextView)findViewById(R.id.leaderboard_tv_accuracy);
-        TextView mTvMatchPoints = (TextView)findViewById(R.id.leaderboard_tv_match_points);
+        TextView mTvPlayed = (TextView) findViewById(R.id.leaderboard_tv_played);
+        TextView mTvAccuracy = (TextView) findViewById(R.id.leaderboard_tv_accuracy);
+        TextView mTvMatchPoints = (TextView) findViewById(R.id.leaderboard_tv_match_points);
 
         userPoints.setVisibility(View.VISIBLE);
         gradientView.setVisibility(View.VISIBLE);
 
 
-        if(null == userLeaderBoard.getRank()) {
+        if (null == userLeaderBoard.getRank()) {
             mTvRank.setText("-");
         } else {
             mTvRank.setText(userLeaderBoard.getRank().toString());
@@ -230,7 +232,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         mTvName.setText(userLeaderBoard.getUserName());
         mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
 
-        if(null!=userLeaderBoard.getRankChange()) {
+        if (null != userLeaderBoard.getRankChange()) {
             if (userLeaderBoard.getRankChange() < 0) {
                 mIvStatus.setImageResource(R.drawable.status_arrow_down);
             } else {
@@ -242,14 +244,14 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
                 userLeaderBoard.getUserPhoto()
         );
 
-        if (userLeaderBoard.getCountPlayed()==1 || userLeaderBoard.getCountPlayed()==0) {
-            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Match");
-        }else {
-            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed())+" Matches");
+        if (userLeaderBoard.getCountPlayed() == 1 || userLeaderBoard.getCountPlayed() == 0) {
+            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed()) + " Match");
+        } else {
+            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed()) + " Matches");
         }
 
-        if (userLeaderBoard.getAccuracy()!=null) {
-            mTvAccuracy.setText(userLeaderBoard.getAccuracy()+"%");
+        if (userLeaderBoard.getAccuracy() != null) {
+            mTvAccuracy.setText(userLeaderBoard.getAccuracy() + "%");
         }
 
     }
@@ -319,9 +321,17 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     }
 
     private void openPopup() {
-        Intent intent = new Intent(this, InAppPopupActivity.class);
-        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE);
-        startActivity(intent);
+//        new InAppPopupFragment().show(getSupportFragmentManager(),"InAppPopup");
+//        Intent intent = new Intent(this, InAppPopupActivity.class);
+//        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE);
+//        startActivity(intent);
+
+        InAppPopupFragment fragment = new InAppPopupFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.InAppPopups.IN_APP_POPUP_TYPE, Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE);
+        fragment.setArguments(bundle);
+        fragment.show(getSupportFragmentManager(), "InAppPopup");
+
     }
 
 

@@ -516,7 +516,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
             if (answerId == 0) {
                 setTextColor(tvAnswer, R.color.tabcolor);
-                tvAnswerPoints.setText("---");
                 tvAnswer.setText(question.getQuestionOption1());
                 tvotheroption.setText(question.getQuestionOption2());
                 setTextColor(tvAnswer, R.color.white_60);
