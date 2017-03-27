@@ -142,6 +142,9 @@
     </style>
 
     <style name="EditTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_40</item>
+        <item name="android:imeOptions">actionNext</item>
         <item name="android:background">@drawable/edittext_rounded_bg</item>
         <item name="android:textCursorDrawable">@drawable/thin_cursor</item>
         <item name="android:paddingLeft">@dimen/dp_16</item>
@@ -151,6 +154,24 @@
         <item name="android:textSize">@dimen/dp_14</item>
         <item name="android:maxLength">50</item>
         <item name="android:maxLines">1</item>
+        <item name="typeface">lato_regular</item>
+    </style>
+
+    <style name="EditTextHintStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:textColor">@color/white_60</item>
+        <item name="android:textSize">@dimen/dp_14</item>
+        <item name="typeface">lato_regular</item>
+    </style>
+
+    <style name="EditTextErrorStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:textColor">@color/white_60</item>
+        <item name="android:textSize">@dimen/dp_12</item>
         <item name="typeface">lato_regular</item>
     </style>
 
@@ -164,7 +185,6 @@
         <item name="android:textSize">@dimen/dp_16</item>
         <item name="typeface">lato_regular</item>
     </style>
-
 
 
     <style name="Widget.Button.Toggle" parent="android:Widget">

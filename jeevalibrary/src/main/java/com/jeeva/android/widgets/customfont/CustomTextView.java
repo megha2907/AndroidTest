@@ -2,11 +2,9 @@ package com.jeeva.android.widgets.customfont;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.R;
 
 
@@ -15,8 +13,8 @@ public class CustomTextView extends TextView {
     private boolean isDestroyed = false;
 
 
-    public CustomTextView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public CustomTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         if (!isInEditMode())
             init(context, attrs);
     }

@@ -39,7 +39,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private static final int LIMIT = 5;
 
-    private int matchId;
+    private int matchId = 135;
 
     private MyResultsAdapter mResultAdapter;
 
@@ -59,22 +59,26 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public void init(Bundle bundle) {
-        if (bundle.containsKey(BundleKeys.MATCH_LIST)) {
-            match = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
-            matchId = match.getId();
-            if (null == match.getResult() || match.getResult().isEmpty()) {
-                mResultsModelListener.setToolbarHeading("Awaiting Results");
+        if(null != bundle) {
+            if (bundle.containsKey(BundleKeys.MATCH_LIST)) {
+                match = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
+                matchId = match.getId();
+                if (null == match.getResult() || match.getResult().isEmpty()) {
+                    mResultsModelListener.setToolbarHeading("Awaiting Results");
+                }
+
+            } else if (bundle.containsKey(BundleKeys.MATCH_ID)) {
+                String match_id = bundle.getString(BundleKeys.MATCH_ID);
+                matchId = Integer.parseInt(match_id);
+            } else {
+                mResultsModelListener.onFailedMyResults(Constants.Alerts.RESULTS_INFO_ERROR);
             }
 
-        } else if (bundle.containsKey(BundleKeys.MATCH_ID)) {
-            String match_id = bundle.getString(BundleKeys.MATCH_ID);
-            matchId = Integer.parseInt(match_id);
+            if (bundle.containsKey(BundleKeys.PLAYER_ID)) {
+                mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_ID);
+            }
         } else {
             mResultsModelListener.onFailedMyResults(Constants.Alerts.RESULTS_INFO_ERROR);
-        }
-
-        if (bundle.containsKey(BundleKeys.PLAYER_ID)) {
-            mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_ID);
         }
 
         //no replay and flip powerup for now
@@ -262,8 +266,6 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         void onEmpty();
 
         Context getContext();
-
-        void gotoResultsTimeline();
 
         void onFailedReplayPowerupResponse();
 

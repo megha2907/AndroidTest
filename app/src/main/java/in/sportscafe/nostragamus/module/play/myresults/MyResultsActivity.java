@@ -3,21 +3,21 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -27,7 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jeeva.android.facebook.FacebookHandler;
+import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
@@ -35,7 +35,9 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.NotificationKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
+import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -45,7 +47,6 @@ import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
-import in.sportscafe.nostragamus.utils.ViewUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -226,12 +227,14 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     @Override
-    public void setAdapter(MyResultsAdapter myResultsAdapter) {
-        mRvMyResults.setAdapter(myResultsAdapter);
+    protected void onResume() {
+        super.onResume();
+        dismissMessage();
     }
 
-    public void onBack(View view) {
-        onBackPressed();
+    @Override
+    public void setAdapter(MyResultsAdapter myResultsAdapter) {
+        mRvMyResults.setAdapter(myResultsAdapter);
     }
 
     public void initToolBar() {
@@ -247,11 +250,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (goback == true) {
-                            onBackPressed();
-                        } else {
-                            gotoHomeActivity();
-                        }
+                        onBackPressed();
                     }
                 }
 
@@ -259,17 +258,23 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     @Override
-    public void goBack() {
-        goback = true;
+    public void onBackPressed() {
+        Intent upIntent = NavUtils.getParentActivityIntent(this);
+        if (shouldUpRecreateTask(this)) {
+            TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
+            finish();
+        } else {
+            super.onBackPressed();
+        }
     }
 
-    /*private void gotoMyResultsTimeline() {
-        Intent intent = new Intent(this, MyResultsTimelineActivity.class);
-        startActivity(intent);
-        finish();
-    }*/
+    private final boolean shouldUpRecreateTask(Activity from) {
+        Bundle bundle = from.getIntent().getExtras();
+        return null != bundle && bundle.getBoolean(NotificationKeys.FROM_NOTIFICATION);
+    }
 
-    private void gotoHomeActivity() {
+    @Override
+    public void navigateToHome() {
         Intent homeIntent = new Intent(this, HomeActivity.class);
         startActivity(homeIntent);
         finish();
@@ -317,9 +322,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
             case R.id.my_results_ll_share_score:
                 if (new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
-                    PermissionsActivity.startActivityForResult(this, 0, AppPermissions.STORAGE);
+                    PermissionsActivity.startActivityForResult(this, RequestCodes.STORAGE_PERMISSION, AppPermissions.STORAGE);
                 } else {
-                    mResultsPresenter.onClickFbShare();
+                    mResultsPresenter.onClickShare();
                 }
                 break;
 
@@ -327,6 +332,14 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
                 break;*/
 
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
+            mResultsPresenter.onClickShare();
         }
     }
 
@@ -435,43 +448,27 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void takeScreenShot() {
-        Resources resources = getResources();
-//        LinearLayout ShareRow = (LinearLayout) findViewById(R.id.my_results_ll_share_score);
-//        int delta = ShareRow.getHeight();
-        Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth(), mRvMyResults.computeVerticalScrollRange(), Bitmap.Config.ARGB_8888);
+        int totalHeight = mRvMyResults.computeVerticalScrollRange() + getResources().getDimensionPixelSize(R.dimen.dp_60);
 
+        Bitmap screenshot = Bitmap.createBitmap(mRvMyResults.getWidth(), totalHeight, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(screenshot);
         mRvMyResults.layout(
                 0,
-                mRvMyResults.getHeight() - mRvMyResults.computeVerticalScrollRange(),
+                mRvMyResults.getHeight() - totalHeight,
                 mRvMyResults.getWidth(),
-                mRvMyResults.computeVerticalScrollRange());
+                totalHeight
+        );
+
+        View logo = findViewById(R.id.my_results_nostra_logo);
+        logo.setVisibility(View.VISIBLE);
 
         mRvMyResults.draw(c);
 
+        logo.setVisibility(View.INVISIBLE);
+
         if (null != screenshot) {
-
-            final ViewGroup parent = (ViewGroup) findViewById(R.id.for_screenshot);
-            final View sharePhoto = getLayoutInflater().inflate(R.layout.inflater_my_result_share_holder, parent, false);
-            parent.addView(sharePhoto);
-
-            sharePhoto.findViewById(R.id.my_results_share_iv_screenshot)
-                    .setBackground(new BitmapDrawable(resources, screenshot));
-
-            sharePhoto.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    sharePhoto.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    Bitmap screenshot = ViewUtils.viewToBitmap(sharePhoto, sharePhoto.getWidth(), sharePhoto.getHeight());
-                    parent.removeAllViews();
-
-                    if (null != screenshot) {
-                        AppSnippet.doGeneralImageShare(MyResultsActivity.this, screenshot, "");
-                        mResultsPresenter.onDoneScreenShot();
-                    }
-                }
-            });
-
+            AppSnippet.doGeneralImageShare(MyResultsActivity.this, screenshot, "");
+            mResultsPresenter.onDoneScreenShot();
         }
     }
 

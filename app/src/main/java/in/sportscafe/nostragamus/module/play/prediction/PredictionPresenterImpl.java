@@ -148,7 +148,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onShake() {
-        if (mPredictionModel.isQuestionAvailable() && mPredictionView.checkStoragePermission()) {
+        if (mPredictionModel.isQuestionAvailable()) {
             mPredictionView.takeScreenshotAndShare();
             mPredictionModel.getShareText(mPredictionView.getContext());
         }

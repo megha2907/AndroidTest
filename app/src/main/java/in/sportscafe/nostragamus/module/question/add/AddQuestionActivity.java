@@ -2,13 +2,14 @@ package in.sportscafe.nostragamus.module.question.add;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
-import in.sportscafe.nostragamus.Constants;
+import com.jeeva.android.widgets.HmImageView;
+
 import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -80,6 +81,36 @@ public class AddQuestionActivity extends NostragamusActivity implements AddQuest
     @Override
     public void goBack() {
         onBackPressed();
+    }
+
+    @Override
+    public void setMatchDate(String matchDate) {
+        ((TextView) findViewById(R.id.schedule_row_tv_date)).setText(matchDate);
+    }
+
+    @Override
+    public void setPartyAName(String name) {
+        ((TextView) findViewById(R.id.schedule_row_tv_party_a_name)).setText(name);
+    }
+
+    @Override
+    public void setPartyBName(String name) {
+        ((TextView) findViewById(R.id.schedule_row_tv_party_b_name)).setText(name);
+    }
+
+    @Override
+    public void setPartyAPhoto(String imageUrl) {
+        ((HmImageView) findViewById(R.id.swipe_card_iv_left)).setImageUrl(imageUrl);
+    }
+
+    @Override
+    public void setPartyBPhoto(String imageUrl) {
+        ((HmImageView) findViewById(R.id.swipe_card_iv_right)).setImageUrl(imageUrl);
+    }
+
+    @Override
+    public void setMatchStage(String stage) {
+        ((TextView) findViewById(R.id.schedule_row_tv_match_result)).setText(stage);
     }
 
     public void onClickSave(View view) {

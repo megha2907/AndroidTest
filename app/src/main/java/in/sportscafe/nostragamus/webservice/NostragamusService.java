@@ -21,7 +21,6 @@ import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse
 import in.sportscafe.nostragamus.module.question.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.question.tourlist.TourListResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
-import in.sportscafe.nostragamus.module.user.group.admin.approve.ApproveRequest;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
@@ -108,9 +107,6 @@ public interface NostragamusService {
     @POST("v1/game/groups/users")
     Call<JoinGroupResponse> joinGroup(@Body AddGroupRequest memberRequest);
 
-    @PUT("v2/game/groups/users")
-    Call<ApiResponse> approveUser(@Body ApproveRequest request);
-
     @HTTP(method = "DELETE", path = "v2/game/users/groups", hasBody = true)
     Call<ApiResponse> leaveGroup(@Body MembersRequest request);
 
@@ -190,7 +186,7 @@ public interface NostragamusService {
     @GET("/v1/game/users/getCommonLeaderboards")
     Call<CompareLeaderBoardResponse> getLeaderBoardComparisonRequest(@Query("player_id") Integer playerId);
 
-    @GET("/v1/game/users/getUserChallenges")
+    @GET("/v2/game/users/getUserChallenges")
     Call<AllChallengesResponse> getAllChallenges();
 
     @POST("v2/game/users/challenges/transferFromBank")

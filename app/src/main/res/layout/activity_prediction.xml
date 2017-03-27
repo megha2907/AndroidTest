@@ -70,7 +70,7 @@
             android:onClick="onClick"
             android:paddingLeft="@dimen/dp_20"
             android:paddingRight="@dimen/dp_20"
-            android:text="Skip"
+            android:text="Next"
             android:textColor="@color/white_70"
             android:textSize="@dimen/dp_16"
             android:visibility="gone"

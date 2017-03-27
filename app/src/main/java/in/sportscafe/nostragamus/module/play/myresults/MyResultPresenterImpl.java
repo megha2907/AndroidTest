@@ -35,10 +35,6 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
         getResultDetails();
         mResultsView.setNumberofPowerups(NostragamusDataHandler.getInstance().getReplayPowerupsCount(),
                 NostragamusDataHandler.getInstance().getFlipPowerupsCount());
-
-        if (bundle.containsKey("screen")) {
-            mResultsView.goBack();
-        }
     }
 
     @Override
@@ -86,7 +82,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
-    public void onClickFbShare() {
+    public void onClickShare() {
         mResultsView.takeScreenShot();
     }
 
@@ -139,11 +135,6 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public Context getContext() {
         return mResultsView.getContext();
-    }
-
-    @Override
-    public void gotoResultsTimeline() {
-        mResultsView.goBack();
     }
 
     @Override
