@@ -1,6 +1,10 @@
 package in.sportscafe.nostragamus.module.popups.inapppopups;
 
+import android.graphics.Color;
+
 import org.parceler.Parcel;
+
+import java.util.List;
 
 /**
  * Created by deepanshi on 3/11/17.
@@ -9,28 +13,34 @@ import org.parceler.Parcel;
 @Parcel
 public class InAppPopup {
 
-    private String title;
+    private String headingTitle;
 
-    private String body;
+    private int headingColor;
 
     private String btnTitle;
 
-    private String screenName;
+    private int btnColor;
 
-    public String getTitle() {
-        return title;
+    private boolean showCrossBtn;
+
+    private String openScreen="";
+
+    private List<PopUpBody> popUpBodyList;
+
+    public String getHeadingTitle() {
+        return headingTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setHeadingTitle(String headingTitle) {
+        this.headingTitle = headingTitle;
     }
 
-    public String getBody() {
-        return body;
+    public int getHeadingColor() {
+        return headingColor;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setHeadingColor(int headingColor) {
+        this.headingColor = headingColor;
     }
 
     public String getBtnTitle() {
@@ -41,12 +51,37 @@ public class InAppPopup {
         this.btnTitle = btnTitle;
     }
 
-    public String getScreenName() {
-        return screenName;
+    public int getBtnColor() {
+        return btnColor;
     }
 
-    public void setScreenName(String screenName) {
-        this.screenName = screenName;
+    public void setBtnColor(int btnColor) {
+        this.btnColor = btnColor;
     }
+
+    public String getOpenScreen() {
+        return openScreen;
+    }
+
+    public void setOpenScreen(String openScreen) {
+        this.openScreen = openScreen;
+    }
+
+    public List<PopUpBody> getPopUpBodyList() {
+        return popUpBodyList;
+    }
+
+    public void setPopUpBodyList(List<PopUpBody> popUpBodyList) {
+        this.popUpBodyList = popUpBodyList;
+    }
+
+    public boolean isShowCrossBtn() {
+        return showCrossBtn;
+    }
+
+    public void setShowCrossBtn(boolean showCrossBtn) {
+        this.showCrossBtn = showCrossBtn;
+    }
+
 
 }
