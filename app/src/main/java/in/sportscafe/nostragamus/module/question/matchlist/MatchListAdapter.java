@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -73,10 +74,6 @@ public class MatchListAdapter extends Adapter<Match, MatchListAdapter.MatchVH> {
 
     class MatchVH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        View mMainView;
-
-        LinearLayout mLlCardLayout;
-
         TextView mTvPartyAName;
 
         TextView mTvPartyBName;
@@ -91,8 +88,6 @@ public class MatchListAdapter extends Adapter<Match, MatchListAdapter.MatchVH> {
 
         public MatchVH(View V) {
             super(V);
-            mMainView = V;
-            mLlCardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
             mTvPartyAName = (TextView) V.findViewById(R.id.schedule_row_tv_party_a_name);
             mTvPartyBName = (TextView) V.findViewById(R.id.schedule_row_tv_party_b_name);
             mIvPartyAPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_left);
@@ -100,7 +95,7 @@ public class MatchListAdapter extends Adapter<Match, MatchListAdapter.MatchVH> {
             mTvDate = (TextView) V.findViewById(R.id.schedule_row_tv_date);
             mTvMatchResult = (TextView) V.findViewById(R.id.schedule_row_tv_match_result);
 
-            mMainView.setOnClickListener(this);
+            V.findViewById(R.id.schedule_row_btn_select).setOnClickListener(this);
         }
 
         @Override
@@ -108,7 +103,7 @@ public class MatchListAdapter extends Adapter<Match, MatchListAdapter.MatchVH> {
             Context context = view.getContext();
 
             Intent intent = new Intent(context, AddQuestionActivity.class);
-            intent.putExtra(BundleKeys.MATCH_ID, getItem(getAdapterPosition()).getId());
+            intent.putExtra(BundleKeys.MATCH_DETAILS, Parcels.wrap(getItem(getAdapterPosition())));
             context.startActivity(intent);
         }
 

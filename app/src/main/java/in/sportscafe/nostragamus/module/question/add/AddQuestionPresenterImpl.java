@@ -2,8 +2,16 @@ package in.sportscafe.nostragamus.module.question.add;
 
 import android.os.Bundle;
 
-import in.sportscafe.nostragamus.Constants;
+import com.jeeva.android.Log;
+
+import java.util.List;
+
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants.Alerts;
+import in.sportscafe.nostragamus.Constants.DateFormats;
+import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.feed.dto.Parties;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by Jeeva on 24/03/17.
@@ -26,6 +34,7 @@ public class AddQuestionPresenterImpl implements AddQuestionPresenter, AddQuesti
     @Override
     public void onCreateAddQuestion(Bundle bundle) {
         mAddQuestionModel.init(bundle);
+        populateMatchDetails(mAddQuestionModel.getMatchDetails());
     }
 
     @Override
@@ -77,5 +86,28 @@ public class AddQuestionPresenterImpl implements AddQuestionPresenter, AddQuesti
     @Override
     public void onQuestionSaveFailed() {
         mAddQuestionView.showMessage(Alerts.API_FAIL);
+    }
+
+    private void populateMatchDetails(Match match) {
+        String startTime = match.getStartTime().replace("+00:00", ".000Z");
+        long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                startTime,
+                DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                DateFormats.GMT
+        );
+
+        int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
+        // Setting date of the match
+        mAddQuestionView.setMatchDate(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
+                TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
+                + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA)
+        );
+
+        List<Parties> parties = match.getParties();
+        mAddQuestionView.setPartyAName(parties.get(0).getPartyName());
+        mAddQuestionView.setPartyBName(parties.get(1).getPartyName());
+        mAddQuestionView.setPartyAPhoto(parties.get(0).getPartyImageUrl());
+        mAddQuestionView.setPartyBPhoto(parties.get(1).getPartyImageUrl());
+        mAddQuestionView.setMatchStage(match.getStage());
     }
 }

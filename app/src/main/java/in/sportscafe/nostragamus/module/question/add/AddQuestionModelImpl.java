@@ -2,14 +2,13 @@ package in.sportscafe.nostragamus.module.question.add;
 
 import android.os.Bundle;
 
-import com.jeeva.android.ExceptionTracker;
-
-import org.json.JSONException;
+import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
@@ -21,7 +20,7 @@ import retrofit2.Response;
  */
 public class AddQuestionModelImpl implements AddQuestionModel {
 
-    private int mMatchId;
+    private Match mMatchDetails;
 
     private OnAddQuestionModelListener mAddQuestionModelListener;
 
@@ -36,8 +35,13 @@ public class AddQuestionModelImpl implements AddQuestionModel {
     @Override
     public void init(Bundle bundle) {
         if (null != bundle) {
-            mMatchId = bundle.getInt(BundleKeys.MATCH_ID);
+            mMatchDetails = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_DETAILS));
         }
+    }
+
+    @Override
+    public Match getMatchDetails() {
+        return mMatchDetails;
     }
 
     @Override
@@ -63,7 +67,7 @@ public class AddQuestionModelImpl implements AddQuestionModel {
         }
 
         AddQuestionRequest addQuestionRequest = new AddQuestionRequest();
-        addQuestionRequest.setMatchId(mMatchId);
+        addQuestionRequest.setMatchId(mMatchDetails.getId());
         addQuestionRequest.setQuestion(question);
         addQuestionRequest.setContext(context);
         addQuestionRequest.setLeftOption(leftOption);

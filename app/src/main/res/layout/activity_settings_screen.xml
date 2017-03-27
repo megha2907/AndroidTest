@@ -63,9 +63,12 @@
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/settings_btn_paytm"
                 style="@style/SettingOptionStyle"
-                android:text="@string/paytm" />
+                android:text="@string/paytm"
+                android:visibility="gone" />
 
-            <View style="@style/SettingOptionDivider" />
+            <View
+                style="@style/SettingOptionDivider"
+                android:visibility="gone" />
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/settings_btn_logout"
@@ -111,7 +114,7 @@
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/settings_btn_submit_question"
                 style="@style/SettingOptionStyle"
-                android:text="Submit Match Question" />
+                android:text="Submit Question for a Match" />
 
 
             <LinearLayout

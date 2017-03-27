@@ -8,4 +8,16 @@ import com.jeeva.android.View;
 public interface AddQuestionView extends View {
 
     void goBack();
+
+    void setMatchDate(String matchDate);
+
+    void setPartyAName(String name);
+
+    void setPartyBName(String name);
+
+    void setPartyAPhoto(String imageUrl);
+
+    void setPartyBPhoto(String imageUrl);
+
+    void setMatchStage(String stage);
 }
