@@ -39,6 +39,7 @@ import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
 import in.sportscafe.nostragamus.module.popups.BankTransferDialogFragment;
 import in.sportscafe.nostragamus.module.popups.PowerupDialogFragment;
 import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
+import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupFragment;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 public class PredictionActivity extends NostragamusActivity implements PredictionView,
@@ -470,10 +471,16 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void showFirstMatchPlayedPopUp(String popUpType, Bundle bundle) {
-        Intent intent = new Intent(this, InAppPopupActivity.class);
-        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
-        intent.putExtras(bundle);
-        startActivity(intent);
+//        Intent intent = new Intent(this, InAppPopupActivity.class);
+//        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+
+        InAppPopupFragment fragment = new InAppPopupFragment();
+        bundle.putString(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
+        fragment.setArguments(bundle);
+        fragment.show(getSupportFragmentManager(), "InAppPopup");
+
     }
 
     @Override
@@ -492,9 +499,16 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     private void openPopup(String popUpType) {
-        Intent intent = new Intent(this, InAppPopupActivity.class);
-        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
-        startActivity(intent);
+
+        InAppPopupFragment fragment = new InAppPopupFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
+        fragment.setArguments(bundle);
+        fragment.show(getSupportFragmentManager(), "InAppPopup");
+
+//        Intent intent = new Intent(this, InAppPopupActivity.class);
+//        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
+//        startActivity(intent);
     }
 
     private Drawable getPowerupDrawable(int colorRes) {

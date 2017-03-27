@@ -48,7 +48,7 @@ public class InAppPopupActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_in_app_popup);
+        setContentView(R.layout.fragment_popups);
 
         ((RelativeLayout) findViewById(R.id.in_app_popup_rl)).setOnClickListener(this);
 

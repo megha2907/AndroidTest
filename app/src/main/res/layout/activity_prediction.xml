@@ -298,7 +298,7 @@
                 android:layout_toRightOf="@id/prediction_ll_powerup_layout"
                 android:onClick="onClick"
                 android:padding="@dimen/dp_8"
-                android:src="@drawable/powerup_info_icon" />
+                android:src="@drawable/popup_help_icon" />
 
             <ImageView
                 android:id="@+id/powerups_iv_bank"
