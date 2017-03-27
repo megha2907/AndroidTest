@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
@@ -57,7 +57,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
         mResultsView.dismissProgressbar();
 
         AppSnippet.copyToClipBoard(mResultsView.getContext(), shareText);
-        mResultsView.showMessage("Use paste, If you want to use the default share message!", 15000);
+        mResultsView.showMessage(Alerts.DEFAULT_SHARE_MESSAGE, 15000);
     }
 
     @Override
@@ -107,13 +107,13 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void onFailedMyResults(String message) {
         mResultsView.dismissProgressbar();
-        showAlertMessage(Constants.Alerts.RESULTS_INFO_ERROR);
+        showAlertMessage(Alerts.RESULTS_INFO_ERROR);
     }
 
     @Override
     public void onNoInternet() {
         mResultsView.dismissProgressbar();
-        showAlertMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+        showAlertMessage(Alerts.NO_NETWORK_CONNECTION);
     }
 
     private void showAlertMessage(String message) {
@@ -129,7 +129,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void onEmpty() {
         mResultsView.dismissProgressbar();
-        mResultsView.showInAppMessage(Constants.Alerts.NO_RESULTS_FOUND);
+        mResultsView.showInAppMessage(Alerts.NO_RESULTS_FOUND);
     }
 
     @Override
@@ -139,7 +139,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
 
     @Override
     public void onFailedReplayPowerupResponse() {
-        mResultsView.showMessage(Constants.Alerts.POWERUP_FAIL);
+        mResultsView.showMessage(Alerts.POWERUP_FAIL);
     }
 
     @Override
