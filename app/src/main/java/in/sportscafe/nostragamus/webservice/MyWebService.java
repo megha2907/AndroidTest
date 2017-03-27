@@ -23,7 +23,6 @@ import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse
 import in.sportscafe.nostragamus.module.question.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.question.tourlist.TourListResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
-import in.sportscafe.nostragamus.module.user.group.admin.approve.ApproveRequest;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
@@ -122,10 +121,6 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<ApiResponse> getMakeAdminRequest(MembersRequest request) {
         return mNostragamusService.makeAdmin(request);
-    }
-
-    public Call<ApiResponse> getApproveMemberRequest(ApproveRequest request) {
-        return mNostragamusService.approveUser(request);
     }
 
     public Call<ApiResponse> getLeaveGroupRequest(MembersRequest request) {

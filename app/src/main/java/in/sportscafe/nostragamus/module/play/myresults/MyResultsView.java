@@ -11,7 +11,7 @@ public interface MyResultsView extends InAppView {
 
     void setAdapter(MyResultsAdapter myResultsAdapter);
 
-    void goBack();
+    void navigateToHome();
 
     void setNumberofPowerups(int numberofReplayPowerups, int numberofFlipPowerups);
 

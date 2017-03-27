@@ -182,9 +182,8 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
     private void openBundle(Bundle bundle) {
         mChallengeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_INFO));
 
-        ChallengeUserInfo challengeUserInfo = mChallengeInfo.getChallengeUserInfo();
-        mMaxTransferCount = challengeUserInfo.getMaxWithdrawLimit();
-        mWithdrawnPowerUps = challengeUserInfo.getWithdrawnPowerUps();
+        mMaxTransferCount = mChallengeInfo.getChallengeInfo().getMaxWithdrawLimit();
+        mWithdrawnPowerUps = mChallengeInfo.getChallengeUserInfo().getWithdrawnPowerUps();
 
         mPowerUpsInBank = NostragamusDataHandler.getInstance().getUserInfo().getPowerUps();
     }
@@ -299,7 +298,7 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
     }
 
     private boolean checkWithdrawLimit(int withdrawAmount, int alreadyWithdrawnAmout) {
-        if(withdrawAmount > 0 && (withdrawAmount + alreadyWithdrawnAmout) > mMaxTransferCount) {
+        if (withdrawAmount > 0 && (withdrawAmount + alreadyWithdrawnAmout) > mMaxTransferCount) {
             showMessage("You can't add more than " + mMaxTransferCount + " powerups in one category");
             return false;
         }

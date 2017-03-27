@@ -15,6 +15,9 @@ public class ChallengeInfo {
     @JsonProperty("payment_info")
     private PaymentInfo paymentInfo;
 
+    @JsonProperty("maxTransferLimit")
+    private int maxWithdrawLimit = 0;
+
     @JsonProperty("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
@@ -36,6 +39,16 @@ public class ChallengeInfo {
     @JsonProperty("payment_info")
     public void setPaymentInfo(PaymentInfo paymentInfo) {
         this.paymentInfo = paymentInfo;
+    }
+
+    @JsonProperty("maxTransferLimit")
+    public int getMaxWithdrawLimit() {
+        return maxWithdrawLimit;
+    }
+
+    @JsonProperty("maxTransferLimit")
+    public void setMaxWithdrawLimit(int maxWithdrawLimit) {
+        this.maxWithdrawLimit = maxWithdrawLimit;
     }
 
 }
