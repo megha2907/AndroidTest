@@ -18,13 +18,17 @@
         android:gravity="center"
         android:orientation="horizontal">
 
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_8"
+            android:src="@drawable/popup_help_icon" />
+
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/popup_tv_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:drawableLeft="@drawable/powerup_title_info_icon"
-            android:drawablePadding="@dimen/dp_8"
             android:text="Gameplay Help"
             android:textAllCaps="true"
             android:textColor="@color/white"

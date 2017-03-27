@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.user.points;
 
+import android.os.Bundle;
+
 import com.jeeva.android.InAppView;
 
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
@@ -29,4 +31,6 @@ public interface PointsView extends InAppView {
     void setTabsView();
 
     void showOtherProfilePopUp();
+
+    void navigateToUserProfile(Bundle bundle);
 }

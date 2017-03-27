@@ -19,6 +19,8 @@ import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
 import io.branch.referral.util.LinkProperties;
 
+import static in.sportscafe.nostragamus.R.id.code;
+
 /**
  * Created by Jeeva on 12/6/16.
  */
@@ -51,12 +53,9 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
 
     @Override
     public void onClickShareCode() {
-        GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
+        final GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
 
         BranchUniversalObject buo = new BranchUniversalObject()
-                .setTitle("Play Nostragamus")
-                .setContentDescription("I challenge you - Click this link to join the ' " + groupInfo.getName() + " ' and prove your love of sports")
-                .setContentImageUrl("https://cdn-images.spcafe.in/img/es3/screact/game-app/game-logo.png")
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode())
                 .addContentMetadata(BundleKeys.GROUP_NAME, groupInfo.getName())
@@ -75,7 +74,14 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
                     public void onLinkCreate(String url, BranchError error) {
                         if (null == error) {
                             NostragamusAnalytics.getInstance().trackGroups(AnalyticsActions.INVITE_GROUP);
-                            AppSnippet.doGeneralShare(mGroupInfoView.getContext(), url);
+
+                            String text = "I’m playing Nostragamus, the sports prediction app. Join my group ‘"
+                                    + groupInfo.getName()
+                                    +"’ and lets see who does better! Use my group code ‘"
+                                    + groupInfo.getGroupCode()
+                                    + "’ or click this link "
+                                    + url;
+                            AppSnippet.doGeneralShare(mGroupInfoView.getContext(), text);
                         } else {
                             ExceptionTracker.track(error.getMessage());
                         }

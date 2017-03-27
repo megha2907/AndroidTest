@@ -1,11 +1,13 @@
 package in.sportscafe.nostragamus.module.user.myprofile;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.bank.BankFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
@@ -21,6 +23,8 @@ import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
  */
 public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUserInfoModelListener {
 
+    private Integer mChallengeId;
+
     private OnProfileModelListener mProfileModelListener;
 
     private ProfileModelImpl(OnProfileModelListener listener) {
@@ -29,6 +33,13 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
 
     public static ProfileModel newInstance(OnProfileModelListener listener) {
         return new ProfileModelImpl(listener);
+    }
+
+    @Override
+    public void init(Bundle bundle) {
+        if(null != bundle && bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
+            mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+        }
     }
 
     @Override
@@ -46,7 +57,7 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fm);
 
         UserInfo userInfo = getUserInfo();
-        pagerAdapter.addFragment(TimelineFragment.newInstance(), "Matches");
+        pagerAdapter.addFragment(TimelineFragment.newInstance(mChallengeId), "Matches");
 
         HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());
 //        pagerAdapter.addFragment(PowerUpFragment.newInstance(powerUpList), AppSnippet.formatIfPlural(getPowerUpTotalCount(powerUpList), "Powerup", "s"));

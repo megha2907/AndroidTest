@@ -65,16 +65,16 @@ public class PowerupDialogFragment extends NostragamusDialogFragment implements 
 
             switch (powerUp) {
                 case Powerups.XX:
-                    powerUpView = getPowerUpView("Doubler", "Double the points scored for one question", R.drawable.powerup_2x_white, R.color.dodger_blue);
+                    powerUpView = getPowerUpView("Doubler Powerup", "This doubles the points scored for a question.\nEg. (+10/-4) becomes (+20/-8)", R.drawable.powerup_2x_white, R.color.dodger_blue);
                     break;
                 case Powerups.NO_NEGATIVE:
-                    powerUpView = getPowerUpView("No Negative", "Removes negative marking for one question", R.drawable.powerup_nonegs_white, R.color.amaranth);
+                    powerUpView = getPowerUpView("No Negative Powerup", "This removes negative marking for a question.\nEg. (+10/-4) becomes (+10)", R.drawable.powerup_nonegs_white, R.color.amaranth);
                     break;
                 case Powerups.AUDIENCE_POLL:
-                    powerUpView = getPowerUpView("Audience Poll", "See how your friends answered", R.drawable.powerup_audience_poll_white, R.color.greencolor);
+                    powerUpView = getPowerUpView("Audience Poll Powerup", "This tells you how other players have answered", R.drawable.powerup_audience_poll_white, R.color.greencolor);
                     break;
                 case SAMPLE_GAME:
-                    powerUpView = getSampleGameView("Sample Game", "Play a game to know more about powerups", R.drawable.powerup_2x_white);
+                    powerUpView = getSampleGameView("How To Play?", "Click the button below to play a sample game", R.drawable.info_sample_game_icon);
                     break;
             }
             mLlPowerUpHolder.addView(powerUpView, i);

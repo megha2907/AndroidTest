@@ -36,7 +36,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     private static final float FOOTER_PERECENTAGE = 23f / 100;
 
-    private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 6f / 100;
+    private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 4f / 100;
 
     private static final float OPTION_PERECENTAGE = 6.25f / 100;
 

@@ -267,6 +267,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     @Override
     public void onGetQuestionShareText(String shareText) {
         AppSnippet.copyToClipBoard(mPredictionView.getContext(), shareText);
-        mPredictionView.showMessage("Use paste, If you want to use the default share message!", 15000);
+        mPredictionView.showMessage(Alerts.DEFAULT_SHARE_MESSAGE, 15000);
     }
 }
