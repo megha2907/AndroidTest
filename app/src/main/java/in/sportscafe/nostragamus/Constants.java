@@ -229,6 +229,7 @@ public interface Constants {
         String DUMMY_INSTRUCTION = "dummyInstruction";
         String DUMMY_QUESTION_TYPE = "dummyQuestionType";
         String DIALOG_REQUEST_CODE = "dialogRequestCode";
+        String IS_SEPARATE_SCREEN = "isSeparateScreen";
     }
 
     interface ParcelableKeys {
@@ -399,6 +400,7 @@ public interface Constants {
         String PAYTM_ADD_DETAIL = "paytm_add_detail"; //in.sportscafe.nostragamus.module.paytm.PaytmAddDetailActivity
         String QUESTION_ADD = "question_add"; //in.sportscafe.nostragamus.module.question.add.AddQuestionActivity
         String QUESTION_ADD_TOUR_LIST = "question_add_tour_list"; //in.sportscafe.nostragamus.module.question.tourlist.TourListActivity
+        String USER_PROFILE = "user_profile"; //in.sportscafe.nostragamus.module.user.myprofile.ProfileActivity
     }
 
     interface InAppPopups {

@@ -18,4 +18,6 @@ public interface ProfileModel {
     UserInfo getUserInfo();
 
     ViewPagerAdapter getAdapter(FragmentManager fm);
+
+    boolean isSeparateScreen();
 }

@@ -26,6 +26,7 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardModelImpl;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+import in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -200,9 +201,18 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     @Override
     public void setUserLeaderBoardView(UserLeaderBoard userLeaderBoard) {
-
         RelativeLayout userPoints = (RelativeLayout) findViewById(R.id.points_user_rl);
-        View gradientView = (View) findViewById(R.id.gradient_view);
+        View gradientView = findViewById(R.id.gradient_view);
+
+        if (null == userLeaderBoard) {
+            userPoints.setVisibility(View.GONE);
+            gradientView.setVisibility(View.GONE);
+            return;
+        }
+
+        userPoints.setVisibility(View.VISIBLE);
+        gradientView.setVisibility(View.VISIBLE);
+
         ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_iv_status);
         TextView mTvRank = (TextView) findViewById(R.id.leaderboard_tv_rank);
         RoundImage mIvUser = (RoundImage) findViewById(R.id.leaderboard_iv_user_img);
@@ -211,10 +221,6 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         TextView mTvPlayed = (TextView) findViewById(R.id.leaderboard_tv_played);
         TextView mTvAccuracy = (TextView) findViewById(R.id.leaderboard_tv_accuracy);
         TextView mTvMatchPoints = (TextView) findViewById(R.id.leaderboard_tv_match_points);
-
-        userPoints.setVisibility(View.VISIBLE);
-        gradientView.setVisibility(View.VISIBLE);
-
 
         if (null == userLeaderBoard.getRank()) {
             mTvRank.setText("-");
@@ -331,11 +337,9 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     @Override
     public void navigateToUserProfile(Bundle bundle) {
-        Intent intent = new Intent(this, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
-        finish();
     }
 
     @Override

@@ -18,6 +18,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
@@ -103,18 +104,19 @@ public class MembersAdapter extends Adapter<GroupPerson, MembersAdapter.ViewHold
 
         @Override
         public void onClick(View v) {
-            Integer playerId = getItem(getAdapterPosition()).getId();
-            if (NostragamusDataHandler.getInstance().getUserId().equals(playerId.toString())) {
-                Intent homeintent = new Intent(v.getContext(), HomeActivity.class);
-                homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                homeintent.putExtra(BundleKeys.OPEN_PROFILE, "0");
-                v.getContext().startActivity(homeintent);
-            } else {
-                Bundle mBundle = new Bundle();
-                mBundle.putInt(BundleKeys.PLAYER_ID, playerId);
-                Intent mintent2 = new Intent(v.getContext(), PlayerProfileActivity.class);
-                mintent2.putExtras(mBundle);
-                v.getContext().startActivity(mintent2);
+            Intent intent = null;
+            Context context = v.getContext();
+
+            if (null != context) {
+                Integer playerId = getItem(getAdapterPosition()).getId();
+                if (NostragamusDataHandler.getInstance().getUserId().equals(playerId.toString())) {
+                    intent = new Intent(context, UserProfileActivity.class);
+                } else {
+                    intent = new Intent(context, PlayerProfileActivity.class);
+                    intent.putExtra(BundleKeys.PLAYER_ID, playerId);
+                }
+
+                context.startActivity(intent);
             }
         }
     }

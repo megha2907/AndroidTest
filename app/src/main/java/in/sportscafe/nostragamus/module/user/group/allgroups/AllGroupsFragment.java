@@ -132,15 +132,6 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
     }
 
     @Override
-    public void navigateToHomeActivity() {
-        Intent homeintent = new Intent(getContext(), HomeActivity.class);
-        homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        homeintent.putExtra("group", "openprofile");
-        startActivity(homeintent);
-        getActivity().finish();
-    }
-
-    @Override
     public void navigateToJoinGroup() {
         startActivityForResult(new Intent(getContext(), JoinGroupActivity.class), JOIN_GROUP);
     }

@@ -25,6 +25,8 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
 
     private Integer mChallengeId;
 
+    private boolean mSeparateScreen = false;
+
     private OnProfileModelListener mProfileModelListener;
 
     private ProfileModelImpl(OnProfileModelListener listener) {
@@ -37,8 +39,12 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
 
     @Override
     public void init(Bundle bundle) {
-        if(null != bundle && bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
-            mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+        if(null != bundle) {
+            if(bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
+                mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+            }
+
+            mSeparateScreen = bundle.getBoolean(BundleKeys.IS_SEPARATE_SCREEN);
         }
     }
 
@@ -69,6 +75,11 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
 //        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), "Sports");
 
         return pagerAdapter;
+    }
+
+    @Override
+    public boolean isSeparateScreen() {
+        return mSeparateScreen;
     }
 
     private HashMap<String, PowerUp> getPowerUpMap(HashMap<String, Integer> powerUps) {

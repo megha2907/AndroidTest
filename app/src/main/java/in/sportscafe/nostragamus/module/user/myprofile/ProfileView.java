@@ -31,4 +31,6 @@ public interface ProfileView extends InAppView {
     void navigateToLogIn();
 
     FragmentManager getChildFragmentManager();
+
+    void changeToSeparateScreenMode();
 }

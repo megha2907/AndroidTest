@@ -88,7 +88,9 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
         Bundle bundle = getArguments();
         if ((null != bundle && bundle.containsKey(BundleKeys.PLAYER_USER_ID)) || null == savedInstanceState) {
 
-            mOnHomeActionListener = (OnHomeActionListener) getActivity();
+            if(getActivity() instanceof OnHomeActionListener) {
+                mOnHomeActionListener = (OnHomeActionListener) getActivity();
+            }
 
             this.mRcvFeed = (RecyclerView) findViewById(R.id.feed_rv);
 
@@ -219,7 +221,9 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.leaderboard_play_challenge_btn:
-                mOnHomeActionListener.onClickChallenges();
+                if(null != mOnHomeActionListener) {
+                    mOnHomeActionListener.onClickChallenges();
+                }
                 break;
             case R.id.timeline_rl_challenge_filter:
                 myResultsTimelinePresenter.onClickFilter();

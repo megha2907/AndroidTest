@@ -40,10 +40,22 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     private ViewPagerAdapter mPagerAdapter;
 
     public static ProfileFragment newInstance(int tabPosition, Bundle bundle) {
-        if(null == bundle) {
+        if (null == bundle) {
             bundle = new Bundle();
         }
         bundle.putInt(BundleKeys.TAB_POSITION, tabPosition);
+
+        ProfileFragment fragment = new ProfileFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    public static ProfileFragment newInstance(int tabPosition, boolean separateScreen, Bundle bundle) {
+        if (null == bundle) {
+            bundle = new Bundle();
+        }
+        bundle.putInt(BundleKeys.TAB_POSITION, tabPosition);
+        bundle.putBoolean(BundleKeys.IS_SEPARATE_SCREEN, separateScreen);
 
         ProfileFragment fragment = new ProfileFragment();
         fragment.setArguments(bundle);
@@ -79,7 +91,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                if(null != mTimelineFragment) {
+                if (null != mTimelineFragment) {
                     if (state == State.EXPANDED) {
                         mTimelineFragment.setAppbarExpanded(false);
                     } else {
@@ -128,7 +140,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     @Override
     public void updateSportTabTitle(String title) {
-       // mPagerAdapter.updateTitle(3, title);
+        // mPagerAdapter.updateTitle(3, title);
     }
 
     @Override
@@ -178,6 +190,17 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     }
 
     @Override
+    public void changeToSeparateScreenMode() {
+        View backBtn = findViewById(R.id.profile_btn_back);
+        backBtn.setVisibility(View.VISIBLE);
+        backBtn.setOnClickListener(this);
+
+        findViewById(R.id.profile_iv_image).setEnabled(false);
+        findViewById(R.id.profile_btn_settings).setVisibility(View.INVISIBLE);
+        findViewById(R.id.profile_btn_edit).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.profile_btn_settings:
@@ -188,6 +211,9 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                 break;
             case R.id.profile_btn_edit:
                 navigateToEditProfile();
+                break;
+            case R.id.profile_btn_back:
+                getActivity().onBackPressed();
                 break;
         }
     }

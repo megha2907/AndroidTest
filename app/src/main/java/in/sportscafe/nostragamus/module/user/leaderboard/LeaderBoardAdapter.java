@@ -16,8 +16,8 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.RoundImage;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+import in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
@@ -148,7 +148,7 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         mSelectedPos = pos;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView mIvStatus;
 
@@ -181,32 +181,31 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             mTvMatchPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_match_points);
             mTvPlayed = (TextView) V.findViewById(R.id.leaderboard_row_tv_played);
             mLlLeaderBoards = (LinearLayout) V.findViewById(R.id.leaderboard_ll);
-            mViewUserLine = (View) V.findViewById(R.id.leaderboard_row_view_user);
+            mViewUserLine = V.findViewById(R.id.leaderboard_row_view_user);
             mTvAccuracy = (TextView) V.findViewById(R.id.leaderboard_row_tv_accuracy);
 
-            V.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Integer playerId = getItem(getAdapterPosition()).getUserId();
-                    if (NostragamusDataHandler.getInstance().getUserId().equals(playerId.toString())) {
-                        Intent homeintent = new Intent(v.getContext(), HomeActivity.class);
-                        homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        homeintent.putExtra(BundleKeys.OPEN_PROFILE, "0");
-                        if(null != mChallengeId) {
-                            homeintent.putExtra(BundleKeys.CHALLENGE_ID, mChallengeId);
-                        }
-                        v.getContext().startActivity(homeintent);
-                    } else {
-                        Intent mintent2 = new Intent(v.getContext(), PlayerProfileActivity.class);
-                        mintent2.putExtra(BundleKeys.PLAYER_ID, playerId);
-                        if(null != mChallengeId) {
-                            mintent2.putExtra(BundleKeys.CHALLENGE_ID, mChallengeId);
-                        }
-                        v.getContext().startActivity(mintent2);
-                    }
-                }
-            });
+            V.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            Intent intent = null;
+            Context context = v.getContext();
+
+            if (null != context) {
+                Integer playerId = getItem(getAdapterPosition()).getUserId();
+                if (NostragamusDataHandler.getInstance().getUserId().equals(playerId.toString())) {
+                    intent = new Intent(context, UserProfileActivity.class);
+                } else {
+                    intent = new Intent(context, PlayerProfileActivity.class);
+                    intent.putExtra(BundleKeys.PLAYER_ID, playerId);
+                }
+
+                if(null != mChallengeId) {
+                    intent.putExtra(BundleKeys.CHALLENGE_ID, mChallengeId);
+                }
+                context.startActivity(intent);
+            }
+        }
     }
 }
