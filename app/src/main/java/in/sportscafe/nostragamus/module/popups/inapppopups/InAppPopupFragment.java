@@ -64,7 +64,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
 
     private OnDismissListener mDismissListener;
 
-    public static InAppPopupFragment newInstance(int requestCode,Bundle bundle) {
+    public static InAppPopupFragment newInstance(int requestCode, Bundle bundle) {
 
         bundle.putInt(BundleKeys.DIALOG_REQUEST_CODE, requestCode);
         InAppPopupFragment fragment = new InAppPopupFragment();
@@ -75,7 +75,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof DialogInterface.OnDismissListener) {
+        if (context instanceof DialogInterface.OnDismissListener) {
             mDismissListener = (OnDismissListener) context;
         }
     }
@@ -110,7 +110,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
 
     private void checkPopupType(String inAppPopUpType) {
 
-       if (inAppPopUpType.equals(Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE)) {
+        if (inAppPopUpType.equals(Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE)) {
             mInAppPopup.setHeadingTitle("Remember!");
             mInAppPopup.setHeadingColor(R.drawable.popup_heading_purple_bg);
             mInAppPopup.setBtnColor(R.drawable.popup_action_purple_btn_bg);
@@ -128,7 +128,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
 
             mInAppPopup.setBtnTitle("Ok, got it!");
             NostragamusDataHandler.getInstance().setPlayedSecondMatchPopUp(true);
-        }else if (inAppPopUpType.equals(Constants.InAppPopups.FIRST_MATCH_PLAYED)) {
+        } else if (inAppPopUpType.equals(Constants.InAppPopups.FIRST_MATCH_PLAYED)) {
 
             mInAppPopup.setHeadingTitle("Great!");
             mInAppPopup.setBtnTitle("Go To Leaderboard");
