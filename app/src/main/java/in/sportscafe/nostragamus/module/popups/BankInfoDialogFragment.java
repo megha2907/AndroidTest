@@ -33,7 +33,7 @@ public class BankInfoDialogFragment extends NostragamusDialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof DialogInterface.OnDismissListener) {
+        if(context instanceof OnDismissListener) {
             mDismissListener = (OnDismissListener) context;
         }
     }

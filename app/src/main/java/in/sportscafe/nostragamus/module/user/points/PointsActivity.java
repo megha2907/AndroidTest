@@ -271,7 +271,11 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         switch (view.getId()) {
             case R.id.points_back_icon:
                 LeaderBoardModelImpl.SORT_TYPE = 0;
-                onBackPressed();
+                if (getIntent().getExtras().containsKey(Constants.BundleKeys.DIALOG_REQUEST_CODE)) {
+                    navigateToHome();
+                } else {
+                    onBackPressed();
+                }
                 break;
 
             case R.id.sort_by_total_points_btn:
@@ -330,6 +334,14 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtras(bundle);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void navigateToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }

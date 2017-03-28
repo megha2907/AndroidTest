@@ -33,4 +33,6 @@ public interface PointsView extends InAppView {
     void showOtherProfilePopUp();
 
     void navigateToUserProfile(Bundle bundle);
+
+    void navigateToHome();
 }
