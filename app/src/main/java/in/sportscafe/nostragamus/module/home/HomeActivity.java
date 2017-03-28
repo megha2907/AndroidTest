@@ -23,7 +23,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
 /**
  * Created by Jeeva on 16/6/16.
  */
-public class HomeActivity extends NostragamusActivity implements UserInfoModelImpl.OnGetUserInfoModelListener ,OnHomeActionListener{
+public class HomeActivity extends NostragamusActivity implements UserInfoModelImpl.OnGetUserInfoModelListener, OnHomeActionListener {
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
@@ -205,8 +205,11 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
                 && mCurrentFragment instanceof LBLandingFragment
                 && ((LBLandingFragment) mCurrentFragment).onBack()) {
             return;
+        } else if (mCurrentFragment instanceof AllChallengesFragment) {
+            super.onBackPressed();
+        } else {
+            showFirstTab();
         }
-        super.onBackPressed();
     }
 
     @Override
