@@ -54,6 +54,10 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     }
 
     private void populateUserInfo() {
+        if(mProfileModel.isSeparateScreen()) {
+            mProfileView.changeToSeparateScreenMode();
+        }
+
         UserInfo userInfo = mProfileModel.getUserInfo();
         updateBasicDetails();
         updateUserRelaventDetails(userInfo.getInfoDetails().getLevel(), userInfo.getAccuracy(), userInfo.getPredictionCount(), userInfo.getTotalPoints());

@@ -217,25 +217,15 @@ public class PointsModelImpl implements PointsModel {
 
     @Override
     public void updateUserLeaderBoard(int position) {
-
-        UserLeaderBoard userLeaderBoard;
-
         Integer userId = Integer.valueOf(NostragamusDataHandler.getInstance().getUserId());
-
-        LeaderBoard mLeaderBoard = mleaderBoardList.get(position);
-
-        for (int i = 0; i < mLeaderBoard.getUserLeaderBoardList().size(); i++) {
-
-            userLeaderBoard = mLeaderBoard.getUserLeaderBoardList().get(i);
-
-            Log.i("userLeaderBoard", String.valueOf(userLeaderBoard));
-
+        for (UserLeaderBoard userLeaderBoard : mleaderBoardList.get(position).getUserLeaderBoardList()) {
             if (userId == userLeaderBoard.getUserId()) {
                 mPointsModelListener.setUserLeaderBoard(userLeaderBoard);
-                break;
+                return;
             }
         }
 
+        mPointsModelListener.setUserLeaderBoard(null);
     }
 
     @Override
@@ -244,7 +234,6 @@ public class PointsModelImpl implements PointsModel {
         if(null != mChallengeId) {
             bundle.putInt(BundleKeys.CHALLENGE_ID, mChallengeId);
         }
-        bundle.putString(BundleKeys.OPEN_PROFILE, "0");
         return bundle;
     }
 

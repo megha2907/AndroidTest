@@ -126,7 +126,11 @@
 
         <activity
             android:name="in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".module.user.comparisons.PlayerComparisonActivity"

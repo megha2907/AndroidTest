@@ -102,9 +102,6 @@ public class BankFragment extends NostragamusFragment implements BankView, View.
     @Override
     public void navigateToReferFriend() {
         BranchUniversalObject buo = new BranchUniversalObject()
-                .setTitle("Refer a Friend")
-                .setContentDescription(NostragamusDataHandler.getInstance().getUserInfo().getUserName() + " just invited you to play Nostragamus (beta), the coolest way to predict the latest happenings in the world of sports!")
-                .setContentImageUrl("https://cdn-images.spcafe.in/img/es3/screact/game-app/game-logo.png")
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId());
 
@@ -119,7 +116,8 @@ public class BankFragment extends NostragamusFragment implements BankView, View.
                     @Override
                     public void onLinkCreate(String url, BranchError error) {
                         if (null == error) {
-                            AppSnippet.doGeneralShare(getApplicationContext(), url);
+                            String shareText = "I’m playing Nostragamus, the sports prediction app. Join and lets see who does better! Click this link to download the app " + url;
+                            AppSnippet.doGeneralShare(getApplicationContext(), shareText);
                         } else {
                             ExceptionTracker.track(error.getMessage());
                         }

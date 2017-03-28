@@ -165,26 +165,29 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     @Override
     public void on2xApplied() {
-        mDummyGameTextFragment.hideBottomText();
-//        addDummyText(getPowerUpInstruction("You just used a 2x powerup.\nSwipe to confirm your answer!"));
-        addDummyText(getPowerUpInstruction("You used a Doubler powerup - this doubles the points you gain (or lose!).\nNow swipe to make a prediction."));
+//        mDummyGameTextFragment.hideBottomText();
+        addDummyText(getPowerUpInstruction("You used a Doubler powerup - this doubles the points you gain (or lose!)."));
+        addDummyText(getSwipeInstruction());
     }
 
     @Override
     public void onNonegsApplied() {
-        mDummyGameTextFragment.hideBottomText();
-        addDummyText(getPowerUpInstruction("You used a No-Negatives powerup -  this means you won’t lose points for a wrong prediction!\nNow swipe to make a prediction."));
+//        mDummyGameTextFragment.hideBottomText();
+        addDummyText(getPowerUpInstruction("You used a No-Negatives powerup -  this means you won’t lose points for a wrong prediction!"));
+        addDummyText(getSwipeInstruction());
     }
 
     @Override
     public void onPollApplied() {
-        mDummyGameTextFragment.hideBottomText();
-        addDummyText(getPowerUpInstruction("You used an Audience Poll - this tells you how other players have answered this question.\nNow swipe to make a prediction."));
+//        mDummyGameTextFragment.hideBottomText();
+        addDummyText(getPowerUpInstruction("You used an Audience Poll - this tells you how other players have answered this question."));
+        addDummyText(getSwipeInstruction());
     }
 
     @Override
     public void onRemovingPowerUps() {
-        mDummyGameTextFragment.showBottomText();
+//        mDummyGameTextFragment.showBottomText();
+        addDummyText(getTapPowerPlayInstruction());
         addDummyText(getRemovePowerUpInstruction());
     }
 
@@ -195,7 +198,8 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
                 readNextInstruction();
                 break;
             case ActionType.GOTO_POWERUPS:
-                mLastReadInstruction = mPowerUpsInstructionPos - 1;
+                mLastReadInstruction = mPowerUpsInstructionPos;
+                mInstructionList.get(mLastReadInstruction).setFreshStart(true);
                 readNextInstruction();
                 break;
             case ActionType.EXIT:
@@ -212,7 +216,39 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     private DGInstruction getPowerUpInstruction(String powerUpText) {
         DGInstruction instruction = new DGInstruction();
         instruction.setName(powerUpText);
+        instruction.setTextType(TextType.BOTTOM_TEXT);
+        instruction.setType(InstructionType.TEXT);
+
+        DGAnimation animation = new DGAnimation();
+        animation.setType(AnimationType.ALPHA);
+        animation.setStart(0);
+        animation.setEnd(1);
+        animation.setDuration(1500);
+
+        instruction.setAnimation(animation);
+        return instruction;
+    }
+
+    private DGInstruction getSwipeInstruction() {
+        DGInstruction instruction = new DGInstruction();
+        instruction.setName("Now swipe to make a prediction");
         instruction.setTextType(TextType.TOP_TEXT);
+        instruction.setType(InstructionType.TEXT);
+
+        DGAnimation animation = new DGAnimation();
+        animation.setType(AnimationType.ALPHA);
+        animation.setStart(0);
+        animation.setEnd(1);
+        animation.setDuration(1500);
+
+        instruction.setAnimation(animation);
+        return instruction;
+    }
+
+    private DGInstruction getTapPowerPlayInstruction() {
+        DGInstruction instruction = new DGInstruction();
+        instruction.setName("Tap on a powerup to apply it.");
+        instruction.setTextType(TextType.BOTTOM_TEXT);
         instruction.setType(InstructionType.TEXT);
 
         DGAnimation animation = new DGAnimation();

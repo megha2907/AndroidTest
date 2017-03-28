@@ -18,8 +18,6 @@ public interface AllGroupsView extends InAppView {
 
     void showGroupsEmpty();
 
-    void navigateToHomeActivity();
-
     void navigateToJoinGroup();
 
     void navigateToGroupInfo(Bundle bundle);
