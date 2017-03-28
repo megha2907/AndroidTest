@@ -110,7 +110,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
             mInAppPopup.setHeadingColor(R.drawable.popup_heading_purple_bg);
             mInAppPopup.setBtnColor(R.drawable.popup_action_purple_btn_bg);
             mInAppPopup.setShowCrossBtn(false);
-            mPopUpBodyList.add(new PopUpBody("Tap on any player in the leaderboard to view their profile and the matches they have played", R.drawable.popup_player_profile_icon));
+            mPopUpBodyList.add(new PopUpBody("Tap on a player in the leaderboard to check out their profile, matches and comparisons", R.drawable.popup_player_profile_icon));
             mInAppPopup.setBtnTitle("Ok, got it!");
             NostragamusDataHandler.getInstance().setVisitedLeaderBoards(true);
         } else if (inAppPopUpType.equals(Constants.InAppPopups.SECOND_MATCH_PLAYED_WITH_NO_POWERUP)) {
@@ -118,8 +118,8 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
             mInAppPopup.setHeadingColor(R.drawable.popup_heading_pink_bg);
             mInAppPopup.setBtnColor(R.drawable.popup_action_pink_btn_bg);
             mInAppPopup.setShowCrossBtn(false);
-            mPopUpBodyList.add(new PopUpBody("Use powerups regularly! Leaderboard toppers often use a powerup in every question", R.drawable.popup_level_icon));
-            mPopUpBodyList.add(new PopUpBody("Tap on the   icon if you need help with using powerups", R.drawable.popup_help_icon, true));
+            mPopUpBodyList.add(new PopUpBody("Use your powerups! Winners often use a powerup with almost every prediction they make", R.drawable.popup_level_icon));
+            mPopUpBodyList.add(new PopUpBody("Tap on the   icon if you need help with understanding powerups", R.drawable.popup_help_icon, true));
 
             mInAppPopup.setBtnTitle("Ok, got it!");
             NostragamusDataHandler.getInstance().setPlayedSecondMatchPopUp(true);
@@ -131,8 +131,8 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
             mInAppPopup.setShowCrossBtn(true);
             mInAppPopup.setHeadingColor(R.drawable.popup_heading_blue_bg);
             mInAppPopup.setBtnColor(R.drawable.popup_action_blue_btn_bg);
-            mPopUpBodyList.add(new PopUpBody("You can see how you performed once this game is over - we will notify you!", R.drawable.popup_thumb_icon));
-            mPopUpBodyList.add(new PopUpBody("Meanwhile, see how others playing this challenge are doing on the leaderboard", R.drawable.popup_leaderboards_icon));
+            mPopUpBodyList.add(new PopUpBody("See how you performed once this event gets over - we will send you a notification", R.drawable.popup_thumb_icon));
+            mPopUpBodyList.add(new PopUpBody("Meanwhile, you can check out the other players in this challenge from the leaderboard", R.drawable.popup_leaderboards_icon));
             NostragamusDataHandler.getInstance().setPlayedFirstMatch(true);
 
             mleaderboardBundle = new Bundle();
@@ -191,7 +191,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
         if (popUpBody.isShowInfoIcon()) {
             SpannableString spannableString = new SpannableString(popUpBody.getDesc());
             Drawable d = getResources().getDrawable(R.drawable.popup_help_icon);
-            d.setBounds(0, 0, 23, 23);
+            d.setBounds(0, 0, 26, 26);
             ImageSpan imageSpan = new ImageSpan(d, ImageSpan.ALIGN_BOTTOM);
             spannableString.setSpan(imageSpan, 11, 12, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             ((TextView) powerUpView.findViewById(R.id.popup_body_tv_desc)).setText(spannableString);
