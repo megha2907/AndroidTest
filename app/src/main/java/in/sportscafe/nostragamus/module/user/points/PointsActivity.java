@@ -30,7 +30,7 @@ import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class PointsActivity extends NostragamusActivity implements PointsView, View.OnClickListener , OnDismissListener {
+public class PointsActivity extends NostragamusActivity implements PointsView, View.OnClickListener, OnDismissListener {
 
     private PointsPresenter mPointsPresenter;
 
@@ -379,6 +379,5 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     @Override
     public void onDismiss(int requestCode) {
-        getActivity().onBackPressed();
     }
 }
