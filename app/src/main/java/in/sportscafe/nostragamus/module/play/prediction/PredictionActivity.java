@@ -28,6 +28,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.coachmarker.TargetView;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.common.ShakeListener;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
@@ -43,11 +44,15 @@ import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupFragment;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 public class PredictionActivity extends NostragamusActivity implements PredictionView,
-        View.OnClickListener, DialogInterface.OnDismissListener {
+        View.OnClickListener, OnDismissListener {
 
     private final static int DUMMY_GAME_REQUEST_CODE = 45;
 
     private final static int SHARE_QUESTION_REQUEST_CODE = 46;
+
+    private final static int BANK_DIALOG_REQUEST_CODE = 47;
+
+    private final static int POPUP_DIALOG_REQUEST_CODE = 48;
 
     private RelativeLayout mRlPlayBg;
 
@@ -88,7 +93,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mShakeListener = new ShakeListener() {
             @Override
             public void onShake() {
-                if(new PermissionsChecker(PredictionActivity.this).lacksPermissions(AppPermissions.STORAGE)) {
+                if (new PermissionsChecker(PredictionActivity.this).lacksPermissions(AppPermissions.STORAGE)) {
                     PermissionsActivity.startActivityForResult(PredictionActivity.this,
                             RequestCodes.STORAGE_PERMISSION, AppPermissions.STORAGE);
                 } else {
@@ -379,7 +384,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             mPredictionPresenter.onGetDummyGameResult();
         }
 
-        if(RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
+        if (RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
             mPredictionPresenter.onShake();
         }
     }
@@ -461,7 +466,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void showBankInfo() {
-        BankInfoDialogFragment.newInstance().show(getSupportFragmentManager(), "BankInfo");
+        BankInfoDialogFragment.newInstance(BANK_DIALOG_REQUEST_CODE).show(getSupportFragmentManager(), "BankInfo");
     }
 
     @Override
@@ -476,10 +481,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 //        intent.putExtras(bundle);
 //        startActivity(intent);
 
-        InAppPopupFragment fragment = new InAppPopupFragment();
+//        InAppPopupFragment fragment = new InAppPopupFragment();
+//        bundle.putString(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
+//        fragment.setArguments(bundle);
+//        fragment.show(getSupportFragmentManager(), "InAppPopup");
+
         bundle.putString(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
-        fragment.setArguments(bundle);
-        fragment.show(getSupportFragmentManager(), "InAppPopup");
+        InAppPopupFragment.newInstance(POPUP_DIALOG_REQUEST_CODE, bundle).show(getSupportFragmentManager(), "InAppPopup");
+
 
     }
 
@@ -568,8 +577,13 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
-        mPredictionPresenter.onBankInfoDismiss();
+    public void onDismiss(int requestCode) {
+
+        if (requestCode == BANK_DIALOG_REQUEST_CODE) {
+            mPredictionPresenter.onBankInfoDismiss();
+        } else if (requestCode == POPUP_DIALOG_REQUEST_CODE) {
+            navigateToFeed();
+        }
     }
 }
 
