@@ -5,14 +5,14 @@
             <!-- SHADOW -->
             <item>
                 <shape>
-                    <solid android:color="@color/javacolor" />
+                    <solid android:color="#6e0e7c" />
                     <corners android:radius="@dimen/dp_4" />
                 </shape>
             </item>
             <!-- BUTTON -->
             <item android:bottom="@dimen/dp_2">
                 <shape android:shape="rectangle">
-                    <solid android:color="@color/javacolor" />
+                    <solid android:color="#a900bc" />
                     <corners android:radius="@dimen/dp_4" />
                 </shape>
             </item>

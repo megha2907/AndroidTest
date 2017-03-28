@@ -228,6 +228,7 @@ public interface Constants {
         String DUMMY_QUESTION = "dummyQuestion";
         String DUMMY_INSTRUCTION = "dummyInstruction";
         String DUMMY_QUESTION_TYPE = "dummyQuestionType";
+        String DIALOG_REQUEST_CODE = "dialogRequestCode";
     }
 
     interface ParcelableKeys {

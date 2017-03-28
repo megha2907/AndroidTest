@@ -19,6 +19,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
@@ -29,7 +30,7 @@ import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class PointsActivity extends NostragamusActivity implements PointsView, View.OnClickListener {
+public class PointsActivity extends NostragamusActivity implements PointsView, View.OnClickListener , OnDismissListener {
 
     private PointsPresenter mPointsPresenter;
 
@@ -56,6 +57,8 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     RelativeLayout mRlChallengeTimer;
 
     private TabLayout mTabLayout;
+
+    private final static int POPUP_DIALOG_REQUEST_CODE = 50;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -337,11 +340,15 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 //        intent.putExtra(Constants.InAppPopups.IN_APP_POPUP_TYPE, Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE);
 //        startActivity(intent);
 
-        InAppPopupFragment fragment = new InAppPopupFragment();
+//        InAppPopupFragment fragment = new InAppPopupFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString(Constants.InAppPopups.IN_APP_POPUP_TYPE, Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE);
+//        fragment.setArguments(bundle);
+//        fragment.show(getSupportFragmentManager(), "InAppPopup");
+
         Bundle bundle = new Bundle();
         bundle.putString(Constants.InAppPopups.IN_APP_POPUP_TYPE, Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE);
-        fragment.setArguments(bundle);
-        fragment.show(getSupportFragmentManager(), "InAppPopup");
+        InAppPopupFragment.newInstance(POPUP_DIALOG_REQUEST_CODE, bundle).show(getSupportFragmentManager(), "InAppPopup");
 
     }
 
@@ -368,5 +375,10 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     @Override
     public String getScreenName() {
         return Constants.ScreenNames.LEADERBOARD_DETAIL;
+    }
+
+    @Override
+    public void onDismiss(int requestCode) {
+        getActivity().onBackPressed();
     }
 }
