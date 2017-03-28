@@ -55,9 +55,11 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
 
     private static final int NEW_GROUP = 25;
 
+    private static final int LEADERBOARD_POPUP = 26;
+
     private OnDismissListener mDismissListener;
 
-    public static InAppPopupFragment newInstance(int requestCode,Bundle bundle) {
+    public static InAppPopupFragment newInstance(int requestCode, Bundle bundle) {
 
         bundle.putInt(BundleKeys.DIALOG_REQUEST_CODE, requestCode);
         InAppPopupFragment fragment = new InAppPopupFragment();
@@ -103,7 +105,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
 
     private void checkPopupType(String inAppPopUpType) {
 
-       if (inAppPopUpType.equals(Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE)) {
+        if (inAppPopUpType.equals(Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE)) {
             mInAppPopup.setHeadingTitle("Remember!");
             mInAppPopup.setHeadingColor(R.drawable.popup_heading_purple_bg);
             mInAppPopup.setBtnColor(R.drawable.popup_action_purple_btn_bg);
@@ -121,11 +123,12 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
 
             mInAppPopup.setBtnTitle("Ok, got it!");
             NostragamusDataHandler.getInstance().setPlayedSecondMatchPopUp(true);
-        }else if (inAppPopUpType.equals(Constants.InAppPopups.FIRST_MATCH_PLAYED)) {
+        } else if (inAppPopUpType.equals(Constants.InAppPopups.FIRST_MATCH_PLAYED)) {
 
             mInAppPopup.setHeadingTitle("Great!");
             mInAppPopup.setBtnTitle("Go To Leaderboard");
             mInAppPopup.setOpenScreen("leaderboards");
+            mInAppPopup.setShowCrossBtn(true);
             mInAppPopup.setHeadingColor(R.drawable.popup_heading_blue_bg);
             mInAppPopup.setBtnColor(R.drawable.popup_action_blue_btn_bg);
             mPopUpBodyList.add(new PopUpBody("You can see how you performed once this game is over - we will notify you!", R.drawable.popup_thumb_icon));
@@ -163,6 +166,8 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
         RelativeLayout mPopupCrossBtn = (RelativeLayout) findViewById(R.id.popup_rl_cross_btn);
         if (!mInAppPopup.isShowCrossBtn()) {
             mPopupCrossBtn.setVisibility(View.GONE);
+        }else {
+            mPopupCrossBtn.setVisibility(View.VISIBLE);
         }
 
     }
@@ -222,6 +227,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
 
     private void navigateToPointsActivity(Bundle bundle) {
         Intent intent = new Intent(getContext(), PointsActivity.class);
+        bundle.putInt(BundleKeys.DIALOG_REQUEST_CODE, LEADERBOARD_POPUP);
         intent.putExtras(bundle);
         startActivity(intent);
     }
