@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
@@ -19,9 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.jeeva.android.Log;
-import com.jeeva.android.widgets.ShadowLayout;
 
 import org.parceler.Parcels;
 
@@ -37,8 +32,6 @@ import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
-
-import static android.R.id.list;
 
 /**
  * Created by deepanshi on 3/25/17.
@@ -75,7 +68,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof DialogInterface.OnDismissListener) {
+        if(context instanceof OnDismissListener) {
             mDismissListener = (OnDismissListener) context;
         }
     }
