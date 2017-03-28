@@ -217,9 +217,9 @@ public class PointsModelImpl implements PointsModel {
 
     @Override
     public void updateUserLeaderBoard(int position) {
-        Integer userId = Integer.valueOf(NostragamusDataHandler.getInstance().getUserId());
+        String userId = NostragamusDataHandler.getInstance().getUserId();
         for (UserLeaderBoard userLeaderBoard : mleaderBoardList.get(position).getUserLeaderBoardList()) {
-            if (userId == userLeaderBoard.getUserId()) {
+            if (userId.equalsIgnoreCase(userLeaderBoard.getUserId() + "")) {
                 mPointsModelListener.setUserLeaderBoard(userLeaderBoard);
                 return;
             }
