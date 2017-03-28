@@ -5,7 +5,7 @@
             <!-- SHADOW -->
             <item>
                 <shape>
-                    <solid android:color="@color/burnt_umber" />
+                    <solid android:color="#661f49" />
                     <corners android:radius="@dimen/dp_4" />
                 </shape>
             </item>

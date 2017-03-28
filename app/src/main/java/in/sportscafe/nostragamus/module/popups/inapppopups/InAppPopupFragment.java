@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.popups.inapppopups;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -27,9 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
+import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
@@ -57,6 +61,24 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
     private List<PopUpBody> mPopUpBodyList;
 
     private static final int NEW_GROUP = 25;
+
+    private OnDismissListener mDismissListener;
+
+    public static InAppPopupFragment newInstance(int requestCode,Bundle bundle) {
+
+        bundle.putInt(BundleKeys.DIALOG_REQUEST_CODE, requestCode);
+        InAppPopupFragment fragment = new InAppPopupFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof DialogInterface.OnDismissListener) {
+            mDismissListener = (OnDismissListener) context;
+        }
+    }
 
 
     @Nullable
@@ -88,31 +110,13 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
 
     private void checkPopupType(String inAppPopUpType) {
 
-        if (inAppPopUpType.equals(Constants.InAppPopups.FIRST_MATCH_PLAYED)) {
-
-            mInAppPopup.setHeadingTitle("Great!");
-            mInAppPopup.setBtnTitle("Go To Leaderboard");
-            mInAppPopup.setOpenScreen("leaderboards");
-            mInAppPopup.setHeadingColor(R.drawable.popup_heading_blue_bg);
-            mInAppPopup.setBtnColor(R.drawable.popup_action_blue_btn_bg);
-            mPopUpBodyList.add(new PopUpBody("You can see how you performed once this game is over - we will notify you!", R.drawable.popup_thumb_icon));
-            mPopUpBodyList.add(new PopUpBody("Meanwhile, see how others playing this challenge are doing on the leaderboard", R.drawable.popup_leaderboards_icon));
-            NostragamusDataHandler.getInstance().setPlayedFirstMatch(true);
-
-            mleaderboardBundle = new Bundle();
-            mleaderboardBundle.putParcelable(Constants.BundleKeys.LB_LANDING_DATA, Parcels.wrap(new LbLanding(
-                    mbundle.getInt(Constants.BundleKeys.CHALLENGE_ID), 0,
-                    mbundle.getString(Constants.BundleKeys.CHALLENGE_NAME),
-                    mbundle.getString(Constants.BundleKeys.CHALLENGE_PHOTO), Constants.LBLandingType.CHALLENGE
-            )));
-
-        } else if (inAppPopUpType.equals(Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE)) {
+       if (inAppPopUpType.equals(Constants.InAppPopups.NOT_VISITED_OTHER_PROFILE)) {
             mInAppPopup.setHeadingTitle("Remember!");
-            mInAppPopup.setHeadingColor(R.drawable.popup_heading_pink_bg);
-            mInAppPopup.setBtnColor(R.drawable.popup_action_pink_btn_bg);
+            mInAppPopup.setHeadingColor(R.drawable.popup_heading_purple_bg);
+            mInAppPopup.setBtnColor(R.drawable.popup_action_purple_btn_bg);
             mInAppPopup.setShowCrossBtn(false);
-            mPopUpBodyList.add(new PopUpBody("Tap on any player in the leaderboard to view their profile, matches and compare your performance with theirs", R.drawable.popup_leaderboards_icon));
-            mInAppPopup.setBtnTitle("Ok!");
+            mPopUpBodyList.add(new PopUpBody("Tap on any player in the leaderboard to view their profile and the matches they have played", R.drawable.popup_player_profile_icon));
+            mInAppPopup.setBtnTitle("Ok, got it!");
             NostragamusDataHandler.getInstance().setVisitedLeaderBoards(true);
         } else if (inAppPopUpType.equals(Constants.InAppPopups.SECOND_MATCH_PLAYED_WITH_NO_POWERUP)) {
             mInAppPopup.setHeadingTitle("Don't Miss Out");
@@ -124,6 +128,24 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
 
             mInAppPopup.setBtnTitle("Ok, got it!");
             NostragamusDataHandler.getInstance().setPlayedSecondMatchPopUp(true);
+        }else if (inAppPopUpType.equals(Constants.InAppPopups.FIRST_MATCH_PLAYED)) {
+
+            mInAppPopup.setHeadingTitle("Great!");
+            mInAppPopup.setBtnTitle("Go To Leaderboard");
+            mInAppPopup.setOpenScreen("leaderboards");
+            mInAppPopup.setHeadingColor(R.drawable.popup_heading_blue_bg);
+            mInAppPopup.setBtnColor(R.drawable.popup_action_blue_btn_bg);
+            mPopUpBodyList.add(new PopUpBody("You can see how you performed once this game is over - we will notify you!", R.drawable.popup_thumb_icon));
+            mPopUpBodyList.add(new PopUpBody("Meanwhile, see how others playing this challenge are doing on the leaderboard", R.drawable.popup_leaderboards_icon));
+            NostragamusDataHandler.getInstance().setPlayedFirstMatch(true);
+
+            mleaderboardBundle = new Bundle();
+            mleaderboardBundle.putParcelable(BundleKeys.LB_LANDING_DATA, Parcels.wrap(new LbLanding(
+                    mbundle.getInt(BundleKeys.CHALLENGE_ID), 0,
+                    mbundle.getString(BundleKeys.CHALLENGE_NAME),
+                    mbundle.getString(BundleKeys.CHALLENGE_PHOTO), Constants.LBLandingType.CHALLENGE
+            )));
+
         }
         showPopUp();
     }
@@ -203,13 +225,17 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
 
     private void navigateToCreateGroup() {
         startActivityForResult(new Intent(getContext(), NewGroupActivity.class), NEW_GROUP);
-        getActivity().finish();
     }
 
     private void navigateToPointsActivity(Bundle bundle) {
         Intent intent = new Intent(getContext(), PointsActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
-        getActivity().finish();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        mDismissListener.onDismiss(getArguments().getInt(BundleKeys.DIALOG_REQUEST_CODE));
     }
 }
