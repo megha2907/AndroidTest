@@ -31,4 +31,6 @@ public interface PointsModel {
     void sortAdapter(String rank);
 
     void updateUserLeaderBoard(int position);
+
+    Bundle getUserProfileBundle();
 }

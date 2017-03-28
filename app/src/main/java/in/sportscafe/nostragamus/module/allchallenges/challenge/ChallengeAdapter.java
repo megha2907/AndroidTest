@@ -92,7 +92,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             if (mChallengeAmount == 0) {
                 holder.mRlCashRewards.setVisibility(View.INVISIBLE);
             } else {
-                holder.mTvChallengePrice.setText("Worth Rs" + mChallengeAmount);
+                holder.mTvChallengePrice.setText("Worth Rs." + mChallengeAmount);
             }
         } catch (Exception e) {
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);

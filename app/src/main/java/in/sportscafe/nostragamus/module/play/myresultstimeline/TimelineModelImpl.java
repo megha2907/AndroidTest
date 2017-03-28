@@ -52,10 +52,13 @@ public class TimelineModelImpl implements TimelineModel {
 
     @Override
     public void init(Bundle bundle) {
-        if (null != bundle && bundle.containsKey(BundleKeys.PLAYER_USER_ID)) {
-            mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_USER_ID);
-            mPlayerName = bundle.getString(BundleKeys.PLAYER_NAME);
-            mPlayerPhoto = bundle.getString(BundleKeys.PLAYER_PHOTO);
+        if (null != bundle) {
+            if (bundle.containsKey(BundleKeys.PLAYER_USER_ID)) {
+                mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_USER_ID);
+                mPlayerName = bundle.getString(BundleKeys.PLAYER_NAME);
+                mPlayerPhoto = bundle.getString(BundleKeys.PLAYER_PHOTO);
+            }
+
             if (bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
                 mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
             }
@@ -97,7 +100,7 @@ public class TimelineModelImpl implements TimelineModel {
 
     @Override
     public String getChallengeNameIfAvailable() {
-        if(null != mChallengeId && null != mTimelineAdapter && mTimelineAdapter.getItemCount() > 0) {
+        if (null != mChallengeId && null != mTimelineAdapter && mTimelineAdapter.getItemCount() > 0) {
             return mTimelineAdapter.getItem(0).getChallengeName();
         }
         return null;

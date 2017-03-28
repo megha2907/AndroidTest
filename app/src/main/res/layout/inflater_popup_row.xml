@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_62"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/dp_62"
     android:paddingLeft="@dimen/dp_18"
     android:paddingRight="@dimen/dp_18">
 
@@ -26,32 +27,36 @@
 
     </com.jeeva.android.widgets.ShadowLayout>
 
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/powerup_tv_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/powerup_sl_icon_bg"
-        android:layout_marginBottom="@dimen/dp_8"
-        android:layout_marginTop="@dimen/dp_2"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
         android:layout_toRightOf="@+id/powerup_sl_icon_bg"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="Audience Poll"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dp_14"
-        app:typeface="lato_light" />
+        android:orientation="vertical">
 
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/powerup_tv_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/powerup_tv_title"
-        android:layout_below="@+id/powerup_tv_title"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="See how your friends answered"
-        android:textColor="@color/white_60"
-        android:textSize="@dimen/dp_11"
-        app:typeface="lato_regular" />
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/powerup_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_2"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Audience Poll"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_14"
+            app:typeface="lato_light" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/powerup_tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:text="See how your friends answered"
+            android:textColor="@color/white_60"
+            android:textSize="@dimen/dp_11"
+            app:typeface="lato_regular" />
+    </LinearLayout>
 
 </RelativeLayout>

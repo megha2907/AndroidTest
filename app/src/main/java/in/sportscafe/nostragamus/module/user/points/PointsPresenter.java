@@ -13,4 +13,5 @@ public interface PointsPresenter {
 
     void updateUserLeaderBoard(int position);
 
+    void onClickUserPoints();
 }

@@ -3,7 +3,6 @@ package in.sportscafe.nostragamus.module.user.leaderboard;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +16,7 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.RoundImage;
+import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
@@ -186,17 +186,24 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
 
             V.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(BundleKeys.PLAYER_ID, getItem(getAdapterPosition()).getUserId());
-
-                    if(null != mChallengeId) {
-                        bundle.putInt(BundleKeys.CHALLENGE_ID, mChallengeId);
+                public void onClick(View v) {
+                    Integer playerId = getItem(getAdapterPosition()).getUserId();
+                    if (NostragamusDataHandler.getInstance().getUserId().equals(playerId.toString())) {
+                        Intent homeintent = new Intent(v.getContext(), HomeActivity.class);
+                        homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        homeintent.putExtra(BundleKeys.OPEN_PROFILE, "0");
+                        if(null != mChallengeId) {
+                            homeintent.putExtra(BundleKeys.CHALLENGE_ID, mChallengeId);
+                        }
+                        v.getContext().startActivity(homeintent);
+                    } else {
+                        Intent mintent2 = new Intent(v.getContext(), PlayerProfileActivity.class);
+                        mintent2.putExtra(BundleKeys.PLAYER_ID, playerId);
+                        if(null != mChallengeId) {
+                            mintent2.putExtra(BundleKeys.CHALLENGE_ID, mChallengeId);
+                        }
+                        v.getContext().startActivity(mintent2);
                     }
-
-                    Intent intent = new Intent(view.getContext(), PlayerProfileActivity.class);
-                    intent.putExtras(bundle);
-                    view.getContext().startActivity(intent);
                 }
             });
         }
