@@ -49,11 +49,11 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     private void showPopUp() {
 
-        if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 1
+        if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 2
                 && !NostragamusDataHandler.getInstance().isPowerUpApplied()
                 && !NostragamusDataHandler.getInstance().isPlayedSecondMatchPopUp()) {
             mPredictionView.showPopUp(Constants.InAppPopups.SECOND_MATCH_PLAYED_WITH_NO_POWERUP);
-        } else if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 2
+        } else if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 3
                 && !NostragamusDataHandler.getInstance().isBankInfoShown()) {
             onClickBankTransfer();
         }
