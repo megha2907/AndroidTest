@@ -53,14 +53,16 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
                 && !NostragamusDataHandler.getInstance().isPowerUpApplied()
                 && !NostragamusDataHandler.getInstance().isPlayedSecondMatchPopUp()) {
             mPredictionView.showPopUp(Constants.InAppPopups.SECOND_MATCH_PLAYED_WITH_NO_POWERUP);
-        } else if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 4
-                && !NostragamusDataHandler.getInstance().isPowerUpApplied()
-                && !NostragamusDataHandler.getInstance().isPlayedFifthMatchPopUp()) {
-            mPredictionView.showPopUp(Constants.InAppPopups.FIFTH_MATCH_PLAYED_WITH_NO_POWERUP);
         } else if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 2
                 && !NostragamusDataHandler.getInstance().isBankInfoShown()) {
             onClickBankTransfer();
         }
+
+//        else if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 4
+//                && !NostragamusDataHandler.getInstance().isPowerUpApplied()
+//                && !NostragamusDataHandler.getInstance().isPlayedFifthMatchPopUp()) {
+//            mPredictionView.showPopUp(Constants.InAppPopups.FIFTH_MATCH_PLAYED_WITH_NO_POWERUP);
+//        }
 
     }
 

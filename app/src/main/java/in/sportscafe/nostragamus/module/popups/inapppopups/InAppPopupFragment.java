@@ -111,7 +111,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
             mInAppPopup.setHeadingColor(R.drawable.popup_heading_pink_bg);
             mInAppPopup.setBtnColor(R.drawable.popup_action_pink_btn_bg);
             mInAppPopup.setShowCrossBtn(false);
-            mPopUpBodyList.add(new PopUpBody("Tap on any player in the leaderboard to view their profile, the matches they have played and compare your performance with theirs", R.drawable.popup_leaderboards_icon));
+            mPopUpBodyList.add(new PopUpBody("Tap on any player in the leaderboard to view their profile, matches and compare your performance with theirs", R.drawable.popup_leaderboards_icon));
             mInAppPopup.setBtnTitle("Ok!");
             NostragamusDataHandler.getInstance().setVisitedLeaderBoards(true);
         } else if (inAppPopUpType.equals(Constants.InAppPopups.SECOND_MATCH_PLAYED_WITH_NO_POWERUP)) {

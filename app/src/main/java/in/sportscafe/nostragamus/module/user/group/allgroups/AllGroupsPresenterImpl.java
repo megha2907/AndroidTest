@@ -37,7 +37,7 @@ public class AllGroupsPresenterImpl implements AllGroupsPresenter, AllGroupsMode
         if (mAllGroupsModel.isAllGroups()) {
             mAllGroupsView.showTitleBar();
         }
-        showPopUp();
+        //showPopUp();
     }
 
     private void showPopUp() {
