@@ -1,9 +1,14 @@
 package in.sportscafe.nostragamus.module.popups;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +32,9 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.popups.banktransfer.BankTranferApiModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
+
+import static android.R.id.replaceText;
+import static com.google.android.gms.analytics.internal.zzy.d;
 
 /**
  * Created by Jeeva on 28/02/17.
@@ -193,7 +201,15 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
         setNonegsInBank(getNonegsInBank());
         setPollInBank(getPollInBank());
 
-        ((TextView) findViewById(R.id.bank_transfer_tv_add_limit)).setText(String.format("You can add %1d of each powerup to", mMaxTransferCount));
+        String transferCount = mMaxTransferCount + "";
+        String challengeName = mChallengeInfo.getName();
+        String text = String.format("Transfer maximum %1s powerups of each type to the %2s challenge", transferCount, challengeName);
+
+        SpannableString spannable = new SpannableString(text);
+        spannable.setSpan(new UnderlineSpan(), text.indexOf(transferCount), text.indexOf(transferCount) + transferCount.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new UnderlineSpan(), text.indexOf(challengeName), text.indexOf(challengeName) + challengeName.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        ((TextView) findViewById(R.id.bank_transfer_tv_add_limit)).setText(spannable);
         ((TextView) findViewById(R.id.bank_transfer_tv_challenge_name)).setText(mChallengeInfo.getName());
     }
 

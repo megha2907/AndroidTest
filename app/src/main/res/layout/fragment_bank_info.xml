@@ -58,9 +58,10 @@
                 android:src="@drawable/bank_popup_grey_icon" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/bank_info_tv_transfer_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Want to use more powerups in challenges?\nGet them from your powerup bank"
+                android:text="Transfer powerups from your bank to a challenge by tapping the tranfer_icon button"
                 android:textColor="@color/white_80"
                 android:textSize="@dimen/dp_12"
                 app:typeface="lato_light" />
@@ -85,7 +86,7 @@
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Refer friends from profile screen and get more \npowerups added to your powerup bank"
+                android:text="Add powerups to your bank by inviting friends to play (Profile Section >> Powerup Bank >> Refer and Earn!)"
                 android:textColor="@color/white_80"
                 android:textSize="@dimen/dp_12"
                 app:typeface="lato_light" />
