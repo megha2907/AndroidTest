@@ -20,13 +20,13 @@ public class NostragamusUncaughtExceptionHandler implements Thread.UncaughtExcep
             ex.printStackTrace();
         }
 
-        if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
+        /*if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
             startNewIntent(HomeActivity.class);
         } else {
             startNewIntent(LogInActivity.class);
         }
 
-        AppSnippet.closeApp();
+        AppSnippet.closeApp();*/
     }
 
     private void startNewIntent(Class<?> cls) {
