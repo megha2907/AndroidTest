@@ -112,10 +112,10 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     private void addDummyPlay(Question dummyQuestion, String questionType) {
         if (null == mDummyGamePlayFragment) {
-            getFragmentTransaction().replace(
+            commitTransaction(getFragmentTransaction().replace(
                     R.id.dummy_game_fl_play_holder,
                     mDummyGamePlayFragment = DGPlayFragment.newInstance(dummyQuestion, questionType)
-            ).commit();
+            ));
         } else {
             mDummyGamePlayFragment.addQuestion(dummyQuestion, questionType);
         }
@@ -123,7 +123,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     private void removeDummyPlay() {
         if (null != mDummyGamePlayFragment) {
-            getFragmentTransaction().remove(mDummyGamePlayFragment).commit();
+            commitTransaction(getFragmentTransaction().remove(mDummyGamePlayFragment));
             mDummyGamePlayFragment = null;
         }
     }
@@ -135,10 +135,10 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
         }
 
         if (null == mDummyGameTextFragment) {
-            getFragmentTransaction().replace(
+            commitTransaction(getFragmentTransaction().replace(
                     R.id.dummy_game_fl_text_holder,
                     mDummyGameTextFragment = DGTextFragment.newInstance(instruction)
-            ).commit();
+            ));
         } else {
             mDummyGameTextFragment.applyInstruction(instruction);
         }
@@ -146,8 +146,14 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     private void removeDummyText() {
         if (null != mDummyGameTextFragment) {
-            getFragmentTransaction().remove(mDummyGameTextFragment).commit();
+            commitTransaction(getFragmentTransaction().remove(mDummyGameTextFragment));
             mDummyGameTextFragment = null;
+        }
+    }
+
+    private void commitTransaction(FragmentTransaction ft) {
+        if(!isDestroyed()) {
+            ft.commitAllowingStateLoss();
         }
     }
 
