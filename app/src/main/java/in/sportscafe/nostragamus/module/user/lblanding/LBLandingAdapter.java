@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +20,6 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
@@ -93,12 +91,12 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
 
             if (currentTimeInMs >= timeInMs) {
                 // If the endtime of the challenge is fell inside the current time, then it is completed challenge
-                holder.btnChallengeCompleted.setVisibility(View.VISIBLE);
+                holder.tvChallengeCompleted.setVisibility(View.VISIBLE);
             } else {
-                holder.btnChallengeCompleted.setVisibility(View.GONE);
+                holder.tvChallengeCompleted.setVisibility(View.GONE);
             }
         }else {
-            holder.btnChallengeCompleted.setVisibility(View.GONE);
+            holder.tvChallengeCompleted.setVisibility(View.GONE);
         }
 
     }
@@ -115,7 +113,7 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
 
         TextView tvMembersCount;
 
-        Button btnChallengeCompleted;
+        TextView tvChallengeCompleted;
 
         ImageView mIvStatus;
 
@@ -128,7 +126,7 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
             tvName = (TextView) view.findViewById(R.id.lb_summary_item_name_tv);
             tvPosTxt = (TextView) view.findViewById(R.id.lb_summary_item_pos_tv);
             tvMembersCount = (TextView) view.findViewById(R.id.lb_summary_item_members_tv);
-            btnChallengeCompleted = (Button) view.findViewById(R.id.lb_summary_item_challenge_completed);
+            tvChallengeCompleted = (TextView) view.findViewById(R.id.lb_summary_item_tv_challenge_completed);
 
             if (!mNeedPadding) {
                 ivImage.setPadding(0, 0, 0, 0);

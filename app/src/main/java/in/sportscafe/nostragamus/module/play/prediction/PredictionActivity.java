@@ -129,14 +129,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     @Override
     protected void onResume() {
         super.onResume();
-        mShakeListener.resume(this);
+//        mShakeListener.resume(this);
         dismissMessage();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mShakeListener.pause();
+//        mShakeListener.pause();
     }
 
     private void initToolbar() {

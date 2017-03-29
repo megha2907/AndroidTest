@@ -41,6 +41,8 @@ public class AddQuestionActivity extends NostragamusActivity implements AddQuest
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.color.black);
+
         setContentView(R.layout.activity_add_question);
 
         initToolBar();
@@ -52,8 +54,14 @@ public class AddQuestionActivity extends NostragamusActivity implements AddQuest
         mEtRightOption = (EditText) findViewById(R.id.add_question_et_right_option);
         mEtNeitherOption = (EditText) findViewById(R.id.add_question_et_neither_option);
 
-        this.mAddQuestionPresenter = AddQuestionPresenterImpl.newInstance(this);
-        this.mAddQuestionPresenter.onCreateAddQuestion(getIntent().getExtras());
+        mEtQuestion.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                mScrollMain.requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
         mEtContext.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -61,6 +69,9 @@ public class AddQuestionActivity extends NostragamusActivity implements AddQuest
                 return false;
             }
         });
+
+        this.mAddQuestionPresenter = AddQuestionPresenterImpl.newInstance(this);
+        this.mAddQuestionPresenter.onCreateAddQuestion(getIntent().getExtras());
     }
 
     public void initToolBar() {
