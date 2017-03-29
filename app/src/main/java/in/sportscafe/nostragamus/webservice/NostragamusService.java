@@ -104,7 +104,7 @@ public interface NostragamusService {
     @PUT("v2/game/groups/admins")
     Call<ApiResponse> makeAdmin(@Body MembersRequest request);
 
-    @POST("v1/game/groups/users")
+    @POST("v2/game/groups/users")
     Call<JoinGroupResponse> joinGroup(@Body AddGroupRequest memberRequest);
 
     @HTTP(method = "DELETE", path = "v2/game/users/groups", hasBody = true)

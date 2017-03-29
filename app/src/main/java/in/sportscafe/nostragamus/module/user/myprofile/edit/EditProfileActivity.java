@@ -3,7 +3,9 @@ package in.sportscafe.nostragamus.module.user.myprofile.edit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -20,6 +22,7 @@ import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
@@ -34,11 +37,15 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private PermissionsChecker checker;
 
+    private Toolbar mtoolbar;
+
+    private TextView mToolbarTitle;
+
     private EditText mEtNickName;
 
-    private TextInputLayout mTilNickName;
+    private TextView mTilNickName;
 
-    private HmImageView mIvProfileImage;
+    private RoundImage mIvProfileImage;
 
     private EditProfilePresenter mEditProfilePresenter;
 
@@ -55,21 +62,27 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
         checker = new PermissionsChecker(this);
 
-        mTilNickName = (TextInputLayout) findViewById(R.id.input_layout_edit_et_nickname);
+        initToolBar();
+
+        mTilNickName = (TextView) findViewById(R.id.edit_tv_error_txt);
         mTvUpdateProfile = (TextView) findViewById(R.id.edit_tv);
         mEtNickName = (EditText) findViewById(R.id.edit_et_nickname);
-        mIvProfileImage = (HmImageView) findViewById(R.id.edit_iv_user_image);
+        mIvProfileImage = (RoundImage) findViewById(R.id.edit_iv_user_image);
         mBtnUpdateDone = (CustomButton) findViewById(R.id.edit_btn_done);
-        mBackBtn = (ImageButton) findViewById(R.id.edit_back_btn);
-        mBackBtn.setOnClickListener(this);
         initListener();
-
         this.mEditProfilePresenter = EditProfilePresenterImpl.newInstance(this);
         this.mEditProfilePresenter.onCreateEditProfile(getIntent().getExtras());
+
+        if (!TextUtils.isEmpty(mEtNickName.getText())) {
+            String editName = mEtNickName.getText().toString();
+            mEtNickName.setSelection(editName.length());
+        }
+
     }
 
 
     private void initListener() {
+
         mEtNickName.addTextChangedListener(new TextWatcher() {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -78,6 +91,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             public void afterTextChanged(Editable arg0) {
@@ -101,9 +115,6 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
                 );
                 break;
 
-            case R.id.edit_back_btn:
-                finish();
-                break;
         }
     }
 
@@ -143,34 +154,42 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void setNicknameEmpty() {
-        mTilNickName.setErrorEnabled(true);
-        mTilNickName.setError(Constants.Alerts.NICKNAME_EMPTY);
+        mTilNickName.setVisibility(View.VISIBLE);
+        mTilNickName.setText(Constants.Alerts.NICKNAME_EMPTY);
     }
 
 
     @Override
     public void setNicknameConflict() {
-        mTilNickName.setErrorEnabled(true);
-        mTilNickName.setError(Constants.Alerts.NICKNAME_CONFLICT);
+        mTilNickName.setVisibility(View.VISIBLE);
+        mTilNickName.setText(Constants.Alerts.NICKNAME_CONFLICT);
     }
 
     @Override
     public void changeViewforProfile() {
-        mTvUpdateProfile.setText("Update your profile here");
+        mToolbarTitle.setText("Profile");
         mBtnUpdateDone.setText("UPDATE");
+        mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
+        mtoolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                }
+        );
     }
 
     @Override
     public void changeViewforLogin(String username) {
-        mTvUpdateProfile.setText("Welcome " + username + "\n" + "Let’s update your profile");
+        mToolbarTitle.setText("Complete your profile");
         mBtnUpdateDone.setText("NEXT");
-        mBackBtn.setVisibility(View.GONE);
     }
 
     @Override
     public void setNicknameNotValid() {
-        mTilNickName.setErrorEnabled(true);
-        mTilNickName.setError(Constants.Alerts.NICKNAME_NOT_VALID);
+        mTilNickName.setVisibility(View.VISIBLE);
+        mTilNickName.setText(Constants.Alerts.NICKNAME_NOT_VALID);
     }
 
     @Override
@@ -196,6 +215,13 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         if(RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
             mEditProfilePresenter.onClickImage();
         }
+    }
+
+    public void initToolBar() {
+        mtoolbar = (Toolbar) findViewById(R.id.edit_profile_toolbar);
+        mToolbarTitle = (TextView)findViewById(R.id.edit_tv);
+        setSupportActionBar(mtoolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
