@@ -1,22 +1,17 @@
 [
   {
-    "title": "How to play?",
-    "desc": "Swipe right to know more",
-    "imageResName": "onboard_how_to_play"
-  },
-  {
-    "title": "Predict match events",
-    "desc": "Read in-game stats. Swipe to predict",
+    "title": "Predict Sports Events",
+    "desc": "Get in-match stats, swipe to predict",
     "imageResName": "onboard_predict_match"
   },
   {
-    "title": "Play weekly challenges",
-    "desc": "Compete for fun, or win cash",
+    "title": "Play Weekly Challenges",
+    "desc": "Win cash prizes, or play for fun",
     "imageResName": "onboard_join_public"
   },
   {
-    "title": "War with Friends",
-    "desc": "Create you own private leagues",
+    "title": "War With Friends",
+    "desc": "Create your own groups",
     "imageResName": "onboard_war_friends"
   }
 ]
