@@ -22,82 +22,79 @@
             android:padding="@dimen/dp_14"
             android:scaleType="centerCrop" />
 
-    <RelativeLayout
-        android:id="@+id/lb_summary_item_rl1"
-        android:layout_width="@dimen/dp_120"
-        android:layout_height="@dimen/dp_120">
-
-
         <RelativeLayout
-            android:id="@+id/lb_summary_item_rl2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/lb_summary_item_rank_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_32"
-                android:shadowColor="@color/black"
-                android:shadowDx="-2"
-                android:shadowDy="-2"
-                android:shadowRadius="15"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dp_26"
-                android:lineSpacingExtra="0dp"
-                android:includeFontPadding="false"
-                android:layout_centerHorizontal="true"
-                app:typeface="roboto_condensed_bold"
-                android:layout_alignParentTop="true"/>
+            android:id="@+id/lb_summary_item_rl1"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="@dimen/dp_120">
 
             <RelativeLayout
-                android:id="@+id/lb_summary_item_pos_rl"
+                android:id="@+id/lb_summary_item_rl2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lb_summary_item_rank_tv">
+                android:layout_centerInParent="true">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/lb_summary_item_pos_tv"
+                    android:id="@+id/lb_summary_item_rank_tv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_height="@dimen/dp_32"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="0dp"
                     android:shadowColor="@color/black"
                     android:shadowDx="-2"
                     android:shadowDy="-2"
                     android:shadowRadius="15"
-                    android:layout_centerHorizontal="true"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white_90"
-                    android:textSize="@dimen/dp_13"
-                    app:typeface="roboto_condensed" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_26"
+                    app:typeface="roboto_condensed_bold" />
 
-                <ImageView
-                    android:id="@+id/lb_summary_item_rank_status_iv"
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_8"
-                    android:layout_marginLeft="@dimen/dp_2"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:layout_toRightOf="@+id/lb_summary_item_pos_tv" />
+                <RelativeLayout
+                    android:id="@+id/lb_summary_item_pos_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lb_summary_item_rank_tv">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/lb_summary_item_pos_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="-2"
+                        android:shadowDy="-2"
+                        android:shadowRadius="15"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white_90"
+                        android:textSize="@dimen/dp_13"
+                        app:typeface="roboto_condensed" />
+
+                    <ImageView
+                        android:id="@+id/lb_summary_item_rank_status_iv"
+                        android:layout_width="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_8"
+                        android:layout_marginLeft="@dimen/dp_2"
+                        android:layout_marginTop="@dimen/dp_6"
+                        android:layout_toRightOf="@+id/lb_summary_item_pos_tv" />
+
+                </RelativeLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/lb_summary_item_tv_challenge_completed"
+                    android:layout_width="@dimen/dp_70"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_below="@+id/lb_summary_item_pos_rl"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:background="@drawable/white_border_btn_bg"
+                    android:gravity="center"
+                    android:text="Completed"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_10"
+                    app:typeface="lato_regular" />
 
             </RelativeLayout>
-
-            <com.jeeva.android.widgets.customfont.CustomButton
-                android:id="@+id/lb_summary_item_challenge_completed"
-                android:layout_width="@dimen/dp_70"
-                android:layout_height="@dimen/dp_20"
-                android:layout_below="@+id/lb_summary_item_pos_rl"
-                android:layout_marginTop="@dimen/dp_5"
-                android:background="@drawable/white_border_btn_bg"
-                android:text="Completed"
-                android:paddingBottom="@dimen/dp_2"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dp_10"
-                android:layout_centerHorizontal="true"
-                app:typeface="lato_regular" />
-
-
-        </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -125,12 +122,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lb_summary_item_name_tv"
+                android:layout_marginTop="@dimen/dp_2"
                 android:ellipsize="end"
                 android:gravity="left"
                 android:maxLines="1"
                 android:paddingLeft="@dimen/dp_8"
                 android:paddingRight="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_2"
                 android:textColor="@color/white_70"
                 android:textSize="@dimen/dp_10"
                 app:typeface="lato_light" />

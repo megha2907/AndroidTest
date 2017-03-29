@@ -29,7 +29,7 @@ import me.relex.circleindicator.CircleIndicator;
 /**
  * Created by Jeeva on 28/3/16.
  */
-public class OnBoardingFragment extends NostragamusFragment implements ViewPager.OnPageChangeListener {
+public class OnBoardingFragment extends NostragamusFragment {
 
     private Button mBtnNext;
 
@@ -73,22 +73,27 @@ public class OnBoardingFragment extends NostragamusFragment implements ViewPager
             viewPagerAdapter.addFragment(OnBoardingTextFragment.newInstance(onBoardingDto), "");
         }
 
-        mViewPager.addOnPageChangeListener(this);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                onPositionChanged(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
         mViewPager.setAdapter(viewPagerAdapter);
 
         CircleIndicator cpi = (CircleIndicator) findViewById(R.id.onboard_cpi_indicator);
         cpi.setViewPager(mViewPager);
 
-        onPageSelected(0);
+        onPositionChanged(0);
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
+    public void onPositionChanged(int position) {
         mIvOnBoardOut.setAlpha(1);
         mIvOnBoardOut.animate().alpha(0).setDuration(1000).setListener(new Animator.AnimatorListener() {
             @Override
@@ -114,11 +119,6 @@ public class OnBoardingFragment extends NostragamusFragment implements ViewPager
         mIvOnBoardIn.animate().alpha(1).setDuration(1000);
 
         startTimer();
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 
     private List<OnBoardingDto> getOnBoardingList() {
@@ -155,7 +155,7 @@ public class OnBoardingFragment extends NostragamusFragment implements ViewPager
     private Runnable mTimerRunnable;
 
     private void startTimer() {
-        if(null != mTimerRunnable) {
+        if (null != mTimerRunnable) {
             mTimerHandler.removeCallbacks(mTimerRunnable);
         }
 
