@@ -110,6 +110,7 @@ public class PermissionsActivity extends AppCompatActivity {
                 startAppSettings();
             }
         });
+        dialogBuilder.setCancelable(false);
         dialogBuilder.show();
     }
 

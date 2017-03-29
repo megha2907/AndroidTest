@@ -114,10 +114,10 @@ public interface Constants {
         String LOGIN_CANCELLED = "Facebook login cancelled";
         String LEAVE_GROUP_SUCCESS = "You have been removed from the group successfully";
         String CANNOT_LEAVE_GROUP = "You are the only Admin, you need to add another group member as Admin before you can leave";
-        String PERMISSION_QUIT_TEXT = "Ok";
+        String PERMISSION_QUIT_TEXT = "Cancel";
         String PERMISSION_HELP = "Help";
         String PERMISSION_SETTINGS = "Settings";
-        String PERMISSION_HELP_TEXT = "The permission is missing.\\n\\nTo grant this permission click on Settings, then Permissions and turn the permission on.\\n\\nThen click back twice to return to the app";
+        String PERMISSION_HELP_TEXT = "The permission is missing.\n\nTo grant this permission click on Settings, then Permissions and turn the permission on.\n\nThen click back twice to return to the app.";
         String IMAGE_UPLOAD_TEXT = "Select Image to Upload";
         String IMAGE_RESELECT = "Click on Image to Reselect";
         String IMAGE_UNABLE_TO_LOAD = "Unable to Load Image";
