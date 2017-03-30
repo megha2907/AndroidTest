@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.play.prediction.PredictionAdapter;
 
 
 public class SwipeFlingAdapterView extends FlingAdapterView {
@@ -92,7 +91,7 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
 
     public void refreshTopLayout() {
 
-        boolean oneLastItem= mAdapter.getCount() == 1;
+        /*boolean oneLastItem= mAdapter.getCount() == 1;
 
         if(oneLastItem){
             removeViewInLayout(mActiveCard);
@@ -106,7 +105,9 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
             addViewToFrame(1);
         }
 
-        setTopView();
+        setTopView();*/
+
+        measureView(mActiveCard);
 
     }
 
@@ -182,9 +183,13 @@ public class SwipeFlingAdapterView extends FlingAdapterView {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void makeAndAddView(View child) {
+        addViewInLayout(child, 0, child.getLayoutParams(), true);
 
+        measureView(child);
+    }
+
+    private void measureView(View child) {
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) child.getLayoutParams();
-        addViewInLayout(child, 0, lp, true);
 
         final boolean needToMeasure = child.isLayoutRequested();
         if (needToMeasure) {

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -30,6 +29,7 @@ import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
 public class DGPlayAdapter extends ArrayAdapter<Question> {
 
@@ -210,9 +210,9 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         if (null == negativePoint || negativePoint == 0) {
             viewHolder.tvquestionNegativePoints.setVisibility(View.GONE);
             viewHolder.viewPoints.setVisibility(View.GONE);
-            viewHolder.tvquestionPositivePoints.setPadding(32, 0, 32, 0);
         } else {
             viewHolder.tvquestionNegativePoints.setText("" + negativePoint);
+            viewHolder.viewPoints.setVisibility(View.VISIBLE);
             viewHolder.tvquestionNegativePoints.setTag(negativePoint);
             viewHolder.tvquestionNegativePoints.setVisibility(View.VISIBLE);
         }
@@ -377,7 +377,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
     }
 
     private int getColor(int colorRes) {
-        return ContextCompat.getColor(mTopViewHolder.mainView.getContext(), colorRes);
+        return ViewUtils.getColor(mTopViewHolder.mainView.getContext(), colorRes);
     }
 
     private String mLockingOption;
@@ -399,30 +399,22 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         if (Math.abs(xPercent) > Math.abs(yPercent)) { // Locking horizontal options
             if (xPercent < 0f) { // Locking left option
                 mLockingOption = mTopQuestion.getQuestionOption1();
-                mTopViewHolder.leftOverlay.setBackgroundColor(getColor(R.color.malachite));
-                mTopViewHolder.rightOverlay.setBackgroundColor(getColor(R.color.radical_red));
 
                 mLeftAlpha = 1f;
                 mRightAlpha = 1f - alpha / 2f;
             } else { // Locking right option
                 mLockingOption = mTopQuestion.getQuestionOption2();
-                mTopViewHolder.leftOverlay.setBackgroundColor(getColor(R.color.radical_red));
-                mTopViewHolder.rightOverlay.setBackgroundColor(getColor(R.color.malachite));
 
                 mLeftAlpha = 1f - alpha / 2f;
                 mRightAlpha = 1f;
             }
         } else if (mNeitherOptionAvailable && yPercent < 0f) { // Locking top option
             mLockingOption = mTopQuestion.getQuestionOption3();
-            mTopViewHolder.leftOverlay.setBackgroundColor(getColor(R.color.radical_red));
-            mTopViewHolder.rightOverlay.setBackgroundColor(getColor(R.color.radical_red));
 
             mLeftAlpha = 1f - alpha / 2f;
             mRightAlpha = 1f - alpha / 2f;
         } else { // No locking
             mLockingOption = "";
-            mTopViewHolder.leftOverlay.setBackgroundColor(getColor(R.color.transparent));
-            mTopViewHolder.rightOverlay.setBackgroundColor(getColor(R.color.transparent));
             alpha = 0f;
 
             mBgUpdateDone = false;
@@ -451,7 +443,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         Log.d("Image Alpha", mLeftAlpha + "  " + mRightAlpha);
     }
 
-    static class ViewHolder {
+    class ViewHolder {
 
         View mainView;
 
@@ -501,12 +493,6 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
         private View rightOptionArrow;
 
-        private View leftOverlay;
-
-        private View rightOverlay;
-
-        private TextView tvPointsLabel;
-
         public ViewHolder(View rootView) {
             mainView = rootView;
             cvMainCard = (CardView) rootView.findViewById(R.id.swipe_card_cv_main);
@@ -533,9 +519,6 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
             leftOptionArrow = rootView.findViewById(R.id.swipe_card_iv_left_arrow);
             rightOptionArrow = rootView.findViewById(R.id.swipe_card_iv_right_arrow);
             llPointsLayout = (LinearLayout) rootView.findViewById(R.id.swipe_card_question_points_rl);
-            leftOverlay = rootView.findViewById(R.id.swipe_card_v_left_overlay);
-            rightOverlay = rootView.findViewById(R.id.swipe_card_v_right_overlay);
-            tvPointsLabel = (TextView) rootView.findViewById(R.id.swipe_card_tv_points_label);
         }
     }
 

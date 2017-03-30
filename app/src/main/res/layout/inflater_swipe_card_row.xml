@@ -289,4 +289,11 @@
         android:textSize="@dimen/dp_16"
         app:typeface="roboto_condensed"/>
 
+    <TextView
+        android:id="@+id/testing_tv_visibility"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:background="@color/apple"
+        android:visibility="gone"/>
+
 </RelativeLayout>
