@@ -155,6 +155,7 @@ public interface Constants {
         String SUBMIT_QUESTION_SUCCESS = "Your question is submitted successfully";
         String EMPTY_MATCHES = "Currently no upcoming matches";
         String DEFAULT_SHARE_MESSAGE = "Use paste, If you want to use the default share message!";
+        String POLL_LIST_EMPTY = "No polls";
     }
 
     interface BundleKeys {

@@ -1,0 +1,101 @@
+{
+  "data": [
+    {
+      "pool_id": 1,
+      "pool_name": "Pool Challenge 1",
+      "entry_fee": 200,
+      "member_details": {
+        "maximum_members_count": 20,
+        "joined_members_count": 4,
+        "joined_members": [
+          {
+            "user_id": 1,
+            "user_nick": "Abcd"
+          },
+          {
+            "user_id": 2,
+            "user_nick": "Efgh"
+          },
+          {
+            "user_id": 3,
+            "user_nick": "Ijkl"
+          },
+          {
+            "user_id": 4,
+            "user_nick": "Mnop"
+          }
+        ]
+      },
+      "reward_details": {
+        "total_reward": "Worth Rs 3000",
+        "rewards": {
+          "Rank 1": "Rs 1500",
+          "Rank 2": "Rs 1000",
+          "Rank 3": "Rs 500"
+        }
+      }
+    },
+    {
+      "pool_id": 2,
+      "pool_name": "Pool Challenge 2",
+      "entry_fee": 150,
+      "member_details": {
+        "maximum_members_count": 100,
+        "joined_members_count": 3,
+        "joined_members": [
+          {
+            "user_id": 21,
+            "user_nick": "Qrst"
+          },
+          {
+            "user_id": 22,
+            "user_nick": "Uvwx"
+          },
+          {
+            "user_id": 23,
+            "user_nick": "Yzab"
+          }
+        ]
+      },
+      "reward_details": {
+        "total_reward": "Worth Rs 5000",
+        "rewards": {
+          "Rank 1": "Rs 2500",
+          "Rank 2": "Rs 1500",
+          "Rank 3": "Rs 1000"
+        }
+      }
+    },
+    {
+      "pool_id": 3,
+      "pool_name": "Pool Challenge 3",
+      "entry_fee": 500,
+      "member_details": {
+        "maximum_members_count": 10,
+        "joined_members_count": 2,
+        "joined_members": [
+          {
+            "user_id": 41,
+            "user_nick": "Cdef"
+          },
+          {
+            "user_id": 42,
+            "user_nick": "Ghij"
+          },
+          {
+            "user_id": 43,
+            "user_nick": "Klmn"
+          }
+        ]
+      },
+      "reward_details": {
+        "total_reward": "Worth Rs 1000",
+        "rewards": {
+          "Rank 1": "Rs 500",
+          "Rank 2": "Rs 300",
+          "Rank 3": "Rs 200"
+        }
+      }
+    }
+  ]
+}
