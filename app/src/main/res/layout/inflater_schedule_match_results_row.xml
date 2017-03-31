@@ -237,7 +237,7 @@
                 android:layout_height="wrap_content"
                 app:sl_cornerRadius="@dimen/dp_8"
                 android:paddingBottom="@dimen/dp_4"
-                app:sl_fillColor="@color/challenges_card_color"
+                app:sl_fillColor="@color/chathams_blue"
                 app:sl_shadowRadius="@dimen/dp_4">
 
                 <LinearLayout

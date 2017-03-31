@@ -49,7 +49,7 @@
     <color name="profile_tab_color">#33000000</color>
     <color name="profile_tab_line_color">#22ffffff</color>
     <color name="ready_btn_color">#186AA2</color>
-    <color name="challenges_card_color">#104469</color>
+    <color name="chathams_blue">#104469</color>
     <color name="challenges_bg_card_color">#0F2F45</color>
     <color name="tournament_divider_color">#202020</color>
     <color name="search_bar">#101010</color>
@@ -111,5 +111,8 @@
     <color name="javacolor">#189398</color>
     <color name="affair">#674889</color>
     <color name="black_currant">#312A3D</color>
+    <color name="jungle_green">#23B574</color>
+    <color name="code_gray_1d">#1D1D1D</color>
+    <color name="code_gray_17">#171717</color>
 
 </resources>
