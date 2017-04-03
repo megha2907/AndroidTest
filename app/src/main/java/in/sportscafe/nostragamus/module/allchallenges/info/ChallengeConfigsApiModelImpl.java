@@ -1,14 +1,12 @@
 package in.sportscafe.nostragamus.module.allchallenges.info;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Pool;
-import in.sportscafe.nostragamus.module.allchallenges.dto.PoolListResponse;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -17,35 +15,33 @@ import retrofit2.Response;
 /**
  * Created by Jeeva on 14/6/16.
  */
-public class PoolListApiModelImpl {
+public class ChallengeConfigsApiModelImpl {
 
-    private OnPoolListApiModelListener mApiModelListener;
+    private OnConfigsApiModelListener mApiModelListener;
 
-    public PoolListApiModelImpl(OnPoolListApiModelListener listener) {
+    public ChallengeConfigsApiModelImpl(OnConfigsApiModelListener listener) {
         this.mApiModelListener = listener;
     }
 
-    public static PoolListApiModelImpl newInstance(OnPoolListApiModelListener listener) {
-        return new PoolListApiModelImpl(listener);
+    public static ChallengeConfigsApiModelImpl newInstance(OnConfigsApiModelListener listener) {
+        return new ChallengeConfigsApiModelImpl(listener);
     }
 
-    public void getPoolList(int challengeId) {
-        /*if (Nostragamus.getInstance().hasNetworkConnection()) {
-            callPoolListApi(challengeId);
+    public void getConfigs(int challengeId) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            callConfigsApi(challengeId);
         } else {
             mApiModelListener.onNoInternet();
-        }*/
-
-        mApiModelListener.onSuccessPoolListApi(getDummyPoolList());
+        }
     }
 
-    private void callPoolListApi(int challengeId) {
+    private void callConfigsApi(int challengeId) {
         mApiModelListener.onApiCallStarted();
 
-        MyWebService.getInstance().getPoolListRequest(challengeId).enqueue(
-                new NostragamusCallBack<PoolListResponse>() {
+        MyWebService.getInstance().getChallengeConfigsRequest(challengeId).enqueue(
+                new NostragamusCallBack<ChallengeConfigsResponse>() {
                     @Override
-                    public void onResponse(Call<PoolListResponse> call, Response<PoolListResponse> response) {
+                    public void onResponse(Call<ChallengeConfigsResponse> call, Response<ChallengeConfigsResponse> response) {
                         super.onResponse(call, response);
 
                         if (!mApiModelListener.onApiCallStopped()) {
@@ -53,25 +49,25 @@ public class PoolListApiModelImpl {
                         }
 
                         if (response.isSuccessful()) {
-                            handlePoolListResponse(response.body().getPoolList());
+                            handlePoolListResponse(response.body().getConfigs());
                         } else {
-                            mApiModelListener.onFailedPoolListApi();
+                            mApiModelListener.onFailedConfigsApi();
                         }
                     }
                 }
         );
     }
 
-    private void handlePoolListResponse(List<Pool> poolList) {
-        if (null == poolList || poolList.isEmpty()) {
+    private void handlePoolListResponse(List<ChallengeConfig> configs) {
+        if (null == configs || configs.isEmpty()) {
             mApiModelListener.onEmpty();
             return;
         }
 
-        mApiModelListener.onSuccessPoolListApi(poolList);
+        mApiModelListener.onSuccessConfigsApi(configs);
     }
 
-    private List<Pool> getDummyPoolList() {
+    private List<ChallengeConfig> getDummyPoolList() {
         String json = null;
         try {
             InputStream is = Nostragamus.getInstance().getAssets().open("json/pool_list.json");
@@ -86,19 +82,19 @@ public class PoolListApiModelImpl {
         if (null != json) {
             return MyWebService.getInstance().getObjectFromJson(
                     json,
-                    PoolListResponse.class
-            ).getPoolList();
+                    ChallengeConfigsResponse.class
+            ).getConfigs();
         }
         return null;
     }
 
-    public interface OnPoolListApiModelListener {
+    public interface OnConfigsApiModelListener {
 
-        void onSuccessPoolListApi(List<Pool> poolList);
+        void onSuccessConfigsApi(List<ChallengeConfig> poolList);
 
         void onEmpty();
 
-        void onFailedPoolListApi();
+        void onFailedConfigsApi();
 
         void onNoInternet();
 

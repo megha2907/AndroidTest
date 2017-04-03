@@ -1,10 +1,15 @@
 package in.sportscafe.nostragamus.module.allchallenges.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import in.sportscafe.nostragamus.Constants.Powerups;
 
 /**
  * Created by deepanshi on 2/21/17.
@@ -21,15 +26,8 @@ public class ChallengeInfo {
     @JsonProperty("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
-    @JsonProperty("powerups")
-    public HashMap<String, Integer> getPowerUps() {
-        return powerUps;
-    }
-
-    @JsonProperty("powerups")
-    public void setPowerUps(HashMap<String, Integer> powerUps) {
-        this.powerUps = powerUps;
-    }
+    @JsonProperty("configs")
+    private List<ChallengeConfig> configs = new ArrayList<>();
 
     @JsonProperty("payment_info")
     public PaymentInfo getPaymentInfo() {
@@ -51,4 +49,46 @@ public class ChallengeInfo {
         this.maxWithdrawLimit = maxWithdrawLimit;
     }
 
+    @JsonProperty("powerups")
+    public HashMap<String, Integer> getPowerUps() {
+        return powerUps = initPowerUps(powerUps);
+    }
+
+    @JsonProperty("powerups")
+    public void setPowerUps(HashMap<String, Integer> powerUps) {
+        this.powerUps = powerUps;
+    }
+
+    @JsonProperty("configs")
+    public List<ChallengeConfig> getConfigs() {
+        return configs;
+    }
+
+    @JsonProperty("configs")
+    public void setConfigs(List<ChallengeConfig> configs) {
+        this.configs = configs;
+    }
+
+    @JsonIgnore
+    private HashMap<String, Integer> initPowerUps(HashMap<String, Integer> powerUpMap) {
+        if (null == powerUpMap) {
+            powerUpMap = new HashMap<>();
+        }
+
+        boolean isEmptyInitially = powerUpMap.size() == 0;
+
+        if (isEmptyInitially || !powerUpMap.containsKey(Powerups.XX)) {
+            powerUpMap.put(Powerups.XX, 0);
+        }
+
+        if (isEmptyInitially || !powerUpMap.containsKey(Powerups.NO_NEGATIVE)) {
+            powerUpMap.put(Powerups.NO_NEGATIVE, 0);
+        }
+
+        if (isEmptyInitially || !powerUpMap.containsKey(Powerups.AUDIENCE_POLL)) {
+            powerUpMap.put(Powerups.AUDIENCE_POLL, 0);
+        }
+
+        return powerUpMap;
+    }
 }

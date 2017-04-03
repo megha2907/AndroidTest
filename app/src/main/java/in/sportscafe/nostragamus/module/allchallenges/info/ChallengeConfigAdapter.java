@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Pool;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Pool.DropDownIds;
-import in.sportscafe.nostragamus.module.allchallenges.dto.PoolMemberDetails;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig.DropDownIds;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ConfigPlayersDetails;
+import in.sportscafe.nostragamus.module.allchallenges.dto.RewardBreakUp;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.utils.ViewUtils;
@@ -22,33 +22,41 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 /**
  * Created by Jeeva on 31/03/17.
  */
-public class PoolAdapter extends Adapter<Pool, PoolAdapter.PoolVH> {
+public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeConfigAdapter.ConfigVH> {
 
-    public PoolAdapter(Context context, List<Pool> poolList) {
+    private OnConfigAccessListener mAccessListener;
+
+    public ChallengeConfigAdapter(Context context, List<ChallengeConfig> configs, OnConfigAccessListener accessListener) {
         super(context);
-        addAll(poolList);
+        mAccessListener = accessListener;
+        addAll(configs);
     }
 
     @Override
-    public Pool getItem(int position) {
+    public ChallengeConfig getItem(int position) {
         return super.getItem(position);
     }
 
     @Override
-    public PoolVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PoolVH(getLayoutInflater().inflate(R.layout.inflater_pool_row, parent, false));
+    public ConfigVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ConfigVH(getLayoutInflater().inflate(R.layout.inflater_pool_row, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(PoolVH holder, int position) {
-        Pool pool = getItem(position);
+    public void onBindViewHolder(ConfigVH holder, int position) {
+        ChallengeConfig config = getItem(position);
 
-        holder.mTvPoolName.setText(pool.getPoolName());
-        holder.mTvEntryFee.setText("Rs " + pool.getEntryFee());
-        holder.mTvReward.setText(pool.getRewardDetails().getTotalReward());
+        ConfigPlayersDetails memberDetails = config.getPlayersDetails();
+        if(config.isFreeEntry()) {
+            holder.mTvEntryFee.setText("Free");
+            holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + "");
+        } else {
+            holder.mTvEntryFee.setText("Rs " + config.getEntryFee());
+            holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + "/" + memberDetails.getMaxCount());
+        }
 
-        PoolMemberDetails memberDetails = pool.getMemberDetails();
-        holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + "/" + memberDetails.getMaxCount());
+        holder.mTvPoolName.setText(config.getConfigName());
+        holder.mTvReward.setText(config.getRewardDetails().getTotalReward());
 
         int colorRes = R.color.code_gray_17;
         if (position % 2 == 0) {
@@ -58,10 +66,10 @@ public class PoolAdapter extends Adapter<Pool, PoolAdapter.PoolVH> {
         holder.mMainView.setBackgroundColor(ViewUtils.getColor(holder.mMainView.getContext(), colorRes));
 
         holder.mLlDropDownHolder.removeAllViews();
-        if (DropDownIds.MEMBER == pool.getDropDownId()) {
-            createMemberDropDownList(memberDetails.getJoinedMembers(), holder.mLlDropDownHolder);
-        } else if (DropDownIds.REWARD == pool.getDropDownId()) {
-            createRewardDropDownList(pool.getRewardDetails().getRewards(), holder.mLlDropDownHolder);
+        if (DropDownIds.MEMBER == config.getDropDownId()) {
+            createMemberDropDownList(memberDetails.getPlayers(), holder.mLlDropDownHolder);
+        } else if (DropDownIds.REWARD == config.getDropDownId()) {
+            createRewardDropDownList(config.getRewardDetails().getBreakUps(), holder.mLlDropDownHolder);
         }
     }
 
@@ -71,9 +79,9 @@ public class PoolAdapter extends Adapter<Pool, PoolAdapter.PoolVH> {
         }
     }
 
-    private void createRewardDropDownList(LinkedHashMap<String, String> rewardsMap, ViewGroup parent) {
-        for (String key : rewardsMap.keySet()) {
-            parent.addView(getDropDownView(key, rewardsMap.get(key), parent));
+    private void createRewardDropDownList(List<RewardBreakUp> breakUps, ViewGroup parent) {
+        for (RewardBreakUp breakUp : breakUps) {
+            parent.addView(getDropDownView(breakUp.getRank(), breakUp.getAmount(), parent));
         }
     }
 
@@ -93,7 +101,7 @@ public class PoolAdapter extends Adapter<Pool, PoolAdapter.PoolVH> {
         return dropDownView;
     }
 
-    class PoolVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ConfigVH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         View mMainView;
 
@@ -107,7 +115,7 @@ public class PoolAdapter extends Adapter<Pool, PoolAdapter.PoolVH> {
 
         LinearLayout mLlDropDownHolder;
 
-        public PoolVH(View view) {
+        public ConfigVH(View view) {
             super(view);
 
             mMainView = view;
@@ -126,6 +134,7 @@ public class PoolAdapter extends Adapter<Pool, PoolAdapter.PoolVH> {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.pool_row_btn_join:
+                    mAccessListener.onJoinClick(getAdapterPosition());
                     break;
                 case R.id.pool_row_ll_member_layout:
                     handleMemberDropDown(getAdapterPosition());
@@ -137,23 +146,34 @@ public class PoolAdapter extends Adapter<Pool, PoolAdapter.PoolVH> {
         }
 
         private void handleMemberDropDown(int position) {
-            Pool pool = getItem(position);
+            ChallengeConfig pool = getItem(position);
             if (DropDownIds.MEMBER == pool.getDropDownId()) {
                 pool.setDropDownId(DropDownIds.NONE);
             } else {
                 pool.setDropDownId(DropDownIds.MEMBER);
             }
             notifyItemChanged(position);
+
+            mAccessListener.onConfigHeightChanged();
         }
 
         private void handleRewardDropDown(int position) {
-            Pool pool = getItem(position);
+            ChallengeConfig pool = getItem(position);
             if (DropDownIds.REWARD == pool.getDropDownId()) {
                 pool.setDropDownId(DropDownIds.NONE);
             } else {
                 pool.setDropDownId(DropDownIds.REWARD);
             }
             notifyItemChanged(position);
+
+            mAccessListener.onConfigHeightChanged();
         }
+    }
+
+    public interface OnConfigAccessListener {
+
+        void onJoinClick(int position);
+
+        void onConfigHeightChanged();
     }
 }

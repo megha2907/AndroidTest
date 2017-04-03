@@ -394,6 +394,6 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     }
 
     @Override
-    public void onDismiss(int requestCode) {
+    public void onDismiss(int requestCode, Bundle bundle) {
     }
 }

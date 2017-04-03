@@ -24,6 +24,9 @@ public class ChallengeUserInfo {
     @JsonProperty("powerups_from_bank")
     private HashMap<String, Integer> withdrawnPowerUps = new HashMap<>();
 
+    @JsonProperty("config_index")
+    private Integer configIndex;
+
     @JsonProperty("paid_amount")
     public Integer getPaidAmount() {
         return paidAmount;
@@ -56,24 +59,39 @@ public class ChallengeUserInfo {
 
     @JsonIgnore
     private HashMap<String, Integer> initPowerUps(HashMap<String, Integer> powerUpMap) {
-        if(null == powerUpMap) {
+        if (null == powerUpMap) {
             powerUpMap = new HashMap<>();
         }
 
         boolean isEmptyInitially = powerUpMap.size() == 0;
 
-        if(isEmptyInitially || !powerUpMap.containsKey(Powerups.XX)) {
+        if (isEmptyInitially || !powerUpMap.containsKey(Powerups.XX)) {
             powerUpMap.put(Powerups.XX, 0);
         }
 
-        if(isEmptyInitially || !powerUpMap.containsKey(Powerups.NO_NEGATIVE)) {
+        if (isEmptyInitially || !powerUpMap.containsKey(Powerups.NO_NEGATIVE)) {
             powerUpMap.put(Powerups.NO_NEGATIVE, 0);
         }
 
-        if(isEmptyInitially || !powerUpMap.containsKey(Powerups.AUDIENCE_POLL)) {
+        if (isEmptyInitially || !powerUpMap.containsKey(Powerups.AUDIENCE_POLL)) {
             powerUpMap.put(Powerups.AUDIENCE_POLL, 0);
         }
 
         return powerUpMap;
+    }
+
+    @JsonProperty("config_index")
+    public Integer getConfigIndex() {
+        return configIndex;
+    }
+
+    @JsonProperty("config_index")
+    public void setConfigIndex(Integer configIndex) {
+        this.configIndex = configIndex;
+    }
+
+    @JsonIgnore
+    public boolean isUserJoined() {
+        return null != configIndex;
     }
 }

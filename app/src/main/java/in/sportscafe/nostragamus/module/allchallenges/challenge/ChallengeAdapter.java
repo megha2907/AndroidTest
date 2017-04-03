@@ -7,7 +7,9 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,8 @@ import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialogFragment;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeInfoDialogFragment;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
@@ -303,6 +307,17 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     navigateToPointsActivity(context, bundle);
                     break;
             }
+        }
+    }
+
+    private void showChallengeInfo(Context context, Challenge challenge) {
+        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+        if (challenge.getChallengeUserInfo().isUserJoined()) {
+            ChallengeInfoDialogFragment.newInstance(42, "Joined Challenge", challenge)
+                    .show(fragmentManager, "challenge_info");
+        } else {
+            ChallengeConfigsDialogFragment.newInstance(43, challenge.getChallengeId(), challenge.getName())
+                    .show(fragmentManager, "challenge_configs");
         }
     }
 

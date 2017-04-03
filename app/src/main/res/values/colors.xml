@@ -114,5 +114,7 @@
     <color name="jungle_green">#23B574</color>
     <color name="code_gray_1d">#1D1D1D</color>
     <color name="code_gray_17">#171717</color>
+    <color name="code_gray_1a">#1A1A1A</color>
+    <color name="code_gray_12">#121212</color>
 
 </resources>
