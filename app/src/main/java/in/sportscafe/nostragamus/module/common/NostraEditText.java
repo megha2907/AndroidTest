@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.jeeva.android.widgets.customfont.CustomEditText;
@@ -42,14 +43,13 @@ public class NostraEditText extends LinearLayout {
 
     private void createTextBox(Context context, int style) {
         ContextThemeWrapper themeWrapper = new ContextThemeWrapper(context, style);
-        mEtTextBox = new CustomEditText(themeWrapper, null);
+        mEtTextBox = new CustomEditText(themeWrapper, null,style);
         mEtTextBox.setLayoutParams(new LayoutParams(themeWrapper, null));
         addView(mEtTextBox);
     }
 
-    private void createError(Context context, int style, String text) {
+    private void createError(Context context, int style) {
         mTvError = new CustomTextView(new ContextThemeWrapper(context, style), null, style);
-        mTvError.setText(text);
         addView(mTvError);
     }
 
@@ -69,10 +69,18 @@ public class NostraEditText extends LinearLayout {
 
         createError(
                 context,
-                a.getResourceId(R.styleable.NostraEditText_errorStyle, -1),
-                a.getString(R.styleable.NostraEditText_errorText)
+                a.getResourceId(R.styleable.NostraEditText_errorStyle, -1)
         );
 
         a.recycle();
     }
+
+    public void setErrorText(String text){
+        mTvError.setText(text);
+    }
+
+    public EditText getEditText(){
+        return mEtTextBox;
+    }
+
 }
