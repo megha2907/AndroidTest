@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -29,6 +28,7 @@ import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
+import in.sportscafe.nostragamus.utils.ViewUtils;
 
 public class PredictionAdapter extends ArrayAdapter<Question> {
 
@@ -48,43 +48,21 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
     private LayoutInflater mLayoutInflater;
 
-    private boolean mBgUpdateDone = false;
-
-    private int mTopMargin;
-
-    private View vBgFrame0;
-
     private View vBgFrame1;
 
     private View vBgFrame2;
+
+    private ViewHolder mTopViewHolder;
+
+    private boolean mBgUpdateDone = false;
+
+    private int mTopMargin;
 
     private FlingCardListener mFlingCardListener;
 
     private Question mTopQuestion;
 
     private boolean mNeitherOptionAvailable = false;
-
-    private View mTopView;
-
-    private CardView mCvMain;
-
-    private View mLeftOption;
-
-    private View mRightOption;
-
-    private View mLeftOptionArrow;
-
-    private View mRightOptionArrow;
-
-    private View mLeftOverlay;
-
-    private View mRightOverlay;
-
-    private View mLeftImage;
-
-    private View mRightImage;
-
-    private TextView mTvLockingOption;
 
     private float mOptionHeight;
 
@@ -124,7 +102,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         mImageWidth = mCardWidth / 2f;
         mImageHeight = mImageWidth;
 
-        vBgFrame0 = rootView.findViewById(R.id.prediction_cv_bg_0);
+        View vBgFrame0 = rootView.findViewById(R.id.prediction_cv_bg_0);
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) vBgFrame0.getLayoutParams();
         rlp.width = (int) mCardWidth;
         rlp.height = (int) (mCardHeight + mOptionHeight);
@@ -195,6 +173,23 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         viewHolder.tvLeftOption.setText(question.getQuestionOption1());
         viewHolder.tvRightOption.setText(question.getQuestionOption2());
 
+        updatePowerUpDetails(viewHolder, question);
+
+        /*viewHolder.tvQuestion.post(new Runnable() {
+            @Override
+            public void run() {
+                viewHolder.tvContext.setMaxLines(6 - viewHolder.tvQuestion.getLineCount());
+            }
+        });*/
+
+        return convertView;
+    }
+
+    public void refreshPowerUps() {
+        updatePowerUpDetails(mTopViewHolder, mTopQuestion);
+    }
+
+    private void updatePowerUpDetails(ViewHolder viewHolder, Question question) {
         Integer positivePoint = question.getUpdatedPositivePoints();
         if (null == positivePoint || positivePoint == 0) {
             viewHolder.tvquestionPositivePoints.setVisibility(View.GONE);
@@ -209,9 +204,9 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         if (null == negativePoint || negativePoint == 0) {
             viewHolder.tvquestionNegativePoints.setVisibility(View.GONE);
             viewHolder.viewPoints.setVisibility(View.GONE);
-            viewHolder.tvquestionPositivePoints.setPadding(32, 0, 32, 0);
         } else {
             viewHolder.tvquestionNegativePoints.setText("" + negativePoint);
+            viewHolder.viewPoints.setVisibility(View.VISIBLE);
             viewHolder.tvquestionNegativePoints.setTag(negativePoint);
             viewHolder.tvquestionNegativePoints.setVisibility(View.VISIBLE);
         }
@@ -255,15 +250,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
                 question.setMinorityAnswerId(-1);
             }
         }
-
-        viewHolder.tvQuestion.post(new Runnable() {
-            @Override
-            public void run() {
-                viewHolder.tvContext.setMaxLines(6 - viewHolder.tvQuestion.getLineCount());
-            }
-        });
-
-        return convertView;
     }
 
     private View getPowerUpAppliedView(String powerupId, ViewGroup parent) {
@@ -339,7 +325,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
                     vBgFrame2.setVisibility(View.VISIBLE);
                 }
             }
-            mCvMain.setCardElevation(elevation);
+            mTopViewHolder.cvMainCard.setCardElevation(elevation);
         }
     }
 
@@ -347,52 +333,19 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         return getItem(0);
     }
 
-    public void onCardMovedRight() {
-        setOptionVisibility(View.INVISIBLE, View.VISIBLE);
-    }
-
-    public void onCardMovedLeft() {
-        setOptionVisibility(View.VISIBLE, View.INVISIBLE);
-    }
-
-    public void onCardMoveStopped() {
-        setOptionVisibility(View.VISIBLE, View.VISIBLE);
-    }
-
     public void setFlingCardListener(FlingCardListener listener) {
         this.mFlingCardListener = listener;
         this.mTopQuestion = getItem(0);
         this.mNeitherOptionAvailable = !TextUtils.isEmpty(mTopQuestion.getQuestionOption3());
-        this.mTopView = mFlingCardListener.getFrame();
-        this.mCvMain = (CardView) mTopView.findViewById(R.id.swipe_card_cv_main);
-        this.mLeftOption = mTopView.findViewById(R.id.swipe_card_tv_left);
-        this.mRightOption = mTopView.findViewById(R.id.swipe_card_tv_right);
-        this.mLeftOptionArrow = mTopView.findViewById(R.id.swipe_card_iv_left_arrow);
-        this.mRightOptionArrow = mTopView.findViewById(R.id.swipe_card_iv_right_arrow);
-        this.mLeftOverlay = mTopView.findViewById(R.id.swipe_card_v_left_overlay);
-        this.mRightOverlay = mTopView.findViewById(R.id.swipe_card_v_right_overlay);
-        this.mLeftImage = mTopView.findViewById(R.id.swipe_card_iv_left);
-        this.mRightImage = mTopView.findViewById(R.id.swipe_card_iv_right);
-        this.mTvLockingOption = (TextView) mTopView.findViewById(R.id.swipe_card_tv_locking_option);
+
+        this.mTopViewHolder = new ViewHolder(mFlingCardListener.getFrame());
 
         mBgUpdateDone = false;
         updateBg(0);
     }
 
-    private void setOptionVisibility(int leftVis, int rightVis) {
-        if (leftVis != mLeftOption.getVisibility()) {
-            mLeftOption.setVisibility(leftVis);
-            mLeftOptionArrow.setVisibility(leftVis);
-        }
-
-        if (rightVis != mRightOption.getVisibility()) {
-            mRightOption.setVisibility(rightVis);
-            mRightOptionArrow.setVisibility(rightVis);
-        }
-    }
-
     private int getColor(int colorRes) {
-        return ContextCompat.getColor(mTopView.getContext(), colorRes);
+        return ViewUtils.getColor(mTopViewHolder.cvMainCard.getContext(), colorRes);
     }
 
     private String mLockingOption;
@@ -414,30 +367,22 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         if (Math.abs(xPercent) > Math.abs(yPercent)) { // Locking horizontal options
             if (xPercent < 0f) { // Locking left option
                 mLockingOption = mTopQuestion.getQuestionOption1();
-                mLeftOverlay.setBackgroundColor(getColor(R.color.malachite));
-                mRightOverlay.setBackgroundColor(getColor(R.color.radical_red));
 
                 mLeftAlpha = 1f;
                 mRightAlpha = 1f - alpha / 2f;
             } else { // Locking right option
                 mLockingOption = mTopQuestion.getQuestionOption2();
-                mLeftOverlay.setBackgroundColor(getColor(R.color.radical_red));
-                mRightOverlay.setBackgroundColor(getColor(R.color.malachite));
 
                 mLeftAlpha = 1f - alpha / 2f;
                 mRightAlpha = 1f;
             }
         } else if (mNeitherOptionAvailable && yPercent < 0f) { // Locking top option
             mLockingOption = mTopQuestion.getQuestionOption3();
-            mLeftOverlay.setBackgroundColor(getColor(R.color.radical_red));
-            mRightOverlay.setBackgroundColor(getColor(R.color.radical_red));
 
             mLeftAlpha = 1f - alpha / 2f;
             mRightAlpha = 1f - alpha / 2f;
         } else { // No locking
             mLockingOption = "";
-            mLeftOverlay.setBackgroundColor(getColor(R.color.transparent));
-            mRightOverlay.setBackgroundColor(getColor(R.color.transparent));
             alpha = 0f;
 
             mBgUpdateDone = false;
@@ -449,24 +394,24 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         alpha = 1f - alpha;
 
-        mTvLockingOption.setText(mLockingOption);
+        mTopViewHolder.tvLockingOption.setText(mLockingOption);
 
-        mLeftOption.setAlpha(alpha);
-        mRightOption.setAlpha(alpha);
-        mLeftOptionArrow.setAlpha(alpha);
-        mRightOptionArrow.setAlpha(alpha);
+        mTopViewHolder.tvLeftOption.setAlpha(alpha);
+        mTopViewHolder.tvRightOption.setAlpha(alpha);
+        mTopViewHolder.leftOptionArrow.setAlpha(alpha);
+        mTopViewHolder.rightOptionArrow.setAlpha(alpha);
         /*mLeftImage.setAlpha(mLeftAlpha);
         mRightImage.setAlpha(mRightAlpha);*/
 
         alpha = 1f - alpha;
         /*mLeftOverlay.setAlpha(alpha / 2f);
         mRightOverlay.setAlpha(alpha / 2f);*/
-        mTvLockingOption.setAlpha(alpha);
+        mTopViewHolder.tvLockingOption.setAlpha(alpha);
 
         Log.d("Image Alpha", mLeftAlpha + "  " + mRightAlpha);
     }
 
-    static class ViewHolder {
+    class ViewHolder {
 
         CardView cvMainCard;
 
@@ -506,6 +451,10 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         LinearLayout llPowerUpHolder;
 
+        private View leftOptionArrow;
+
+        private View rightOptionArrow;
+
         public ViewHolder(View rootView) {
             cvMainCard = (CardView) rootView.findViewById(R.id.swipe_card_cv_main);
             tvQuestion = (TextView) rootView.findViewById(R.id.swipe_card_tv_question);
@@ -526,14 +475,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             llOptionLabels = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_option_labels);
             llQuestionDesc = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_question_desc);
             llPowerUpHolder = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_powerup_holder);
-
-            cvMainCard.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    Log.d("PredictionAdapter", "Card long clicked");
-                    return true;
-                }
-            });
+            leftOptionArrow = rootView.findViewById(R.id.swipe_card_iv_left_arrow);
+            rightOptionArrow = rootView.findViewById(R.id.swipe_card_iv_right_arrow);
         }
     }
 }

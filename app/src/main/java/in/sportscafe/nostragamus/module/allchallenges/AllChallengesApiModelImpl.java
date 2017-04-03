@@ -1,23 +1,17 @@
 package in.sportscafe.nostragamus.module.allchallenges;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Constants.DateFormats;
 import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
-
-import static in.sportscafe.nostragamus.utils.timeutils.TimeUtils.getMillisecondsFromDateString;
 
 /**
  * Created by Jeeva on 14/6/16.
@@ -109,16 +103,8 @@ public class AllChallengesApiModelImpl {
     }
 
     private void categorizeChallenges() {
-        long currentTimeInMs = Calendar.getInstance().getTimeInMillis();
-        long timeInMs;
         for (Challenge challenge : mAllChallenges) {
-            timeInMs = TimeUtils.getMillisecondsFromDateString(
-                    challenge.getEndTime(),
-                    DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                    DateFormats.GMT
-            );
-
-            if (currentTimeInMs >= timeInMs) {
+            if (challenge.getCountMatchesLeft().equals("0")) {
                 // If the endtime of the challenge is fell inside the current time, then it is completed challenge
                 mCompletedChallenges.add(challenge);
             } else if (isChallengeInitiatedByUser(challenge)) {

@@ -47,9 +47,11 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void updateProgressbar() {
     }
 
-    public void dismissProgressbar() {
-        if(getActivityView() != null)
-            getActivityView().dismissProgressbar();
+    public boolean dismissProgressbar() {
+        if(getActivityView() != null) {
+            return getActivityView().dismissProgressbar();
+        }
+        return false;
     }
 
     public void showSoftKeyboard(android.view.View view) {

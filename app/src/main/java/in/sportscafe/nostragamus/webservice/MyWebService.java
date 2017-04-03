@@ -6,6 +6,7 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
+import in.sportscafe.nostragamus.module.allchallenges.dto.PoolListResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
@@ -251,5 +252,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<TourListResponse> getTourListRequest() {
         return mNostragamusService.getTourList();
+    }
+
+    public Call<PoolListResponse> getPoolListRequest(int challengeId) {
+        return mNostragamusService.getPoolList();
     }
 }

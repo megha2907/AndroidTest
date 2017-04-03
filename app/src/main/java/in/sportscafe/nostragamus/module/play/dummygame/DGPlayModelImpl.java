@@ -229,9 +229,9 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
     }
 
     private void notifyPowerUps() {
-        mPredictionAdapter.notifyDataSetChanged();
+        mPredictionAdapter.refreshPowerUps();
+//        mPredictionAdapter.notifyDataSetChanged();
         mModelListener.notifyTopQuestion();
-//        mPredictionAdapter.refreshPowerUps();
     }
 
     private void handleAudiencePollResponse(List<AudiencePoll> audiencePoll) {

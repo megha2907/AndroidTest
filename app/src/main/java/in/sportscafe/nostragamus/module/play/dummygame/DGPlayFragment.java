@@ -201,7 +201,7 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
     @Override
     public void notifyTopView() {
         mSwipeFlingAdapterView.refreshTopLayout();
-        invokeCardListener();
+//        invokeCardListener();
     }
 
     @Override
