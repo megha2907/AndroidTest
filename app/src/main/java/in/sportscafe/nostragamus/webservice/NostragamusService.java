@@ -4,7 +4,8 @@ package in.sportscafe.nostragamus.webservice;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
-import in.sportscafe.nostragamus.module.allchallenges.dto.PoolListResponse;
+import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
@@ -199,6 +200,12 @@ public interface NostragamusService {
     @GET("v2/game/getUpcomingMatches")
     Call<TourListResponse> getTourList();
 
-    @GET("/v2/game/users/challenges/polls")
-    Call<PoolListResponse> getPoolList();
+    @GET("/v2/game/challenges/getConfigs")
+    Call<ChallengeConfigsResponse> getConfigs(@Query("challenge_id") int challengeId);
+
+    @GET("/v2/game/users/joinUserChallenge")
+    Call<Challenge> getJoinChallenge(
+            @Query("challenge_id") int challengeId,
+            @Query("config_index") int configIndex
+    );
 }

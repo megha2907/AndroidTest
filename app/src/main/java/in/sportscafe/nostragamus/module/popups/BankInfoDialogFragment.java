@@ -79,6 +79,6 @@ public class BankInfoDialogFragment extends NostragamusDialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        mDismissListener.onDismiss(getArguments().getInt(BundleKeys.DIALOG_REQUEST_CODE));
+        mDismissListener.onDismiss(getArguments().getInt(BundleKeys.DIALOG_REQUEST_CODE), null);
     }
 }

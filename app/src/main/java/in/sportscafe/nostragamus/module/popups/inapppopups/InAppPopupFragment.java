@@ -235,6 +235,6 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        mDismissListener.onDismiss(getArguments().getInt(BundleKeys.DIALOG_REQUEST_CODE));
+        mDismissListener.onDismiss(getArguments().getInt(BundleKeys.DIALOG_REQUEST_CODE), null);
     }
 }
