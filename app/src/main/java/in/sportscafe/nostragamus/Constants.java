@@ -67,6 +67,7 @@ public interface Constants {
         String FIFTH_MATCH_PLAYED = "fifthMatchPlayed";
         String SEVENTH_MATCH_PLAYED = "seventhMatchPlayed";
         String VISITED_LEADERBOARDS = "VisitedLeaderboards";
+        String VISITED_SUBMIT_QUESTION = "VisitedSubmitQuestion";
         String POWERUP_APPLIED = "PowerUpApplied";
         String DUMMY_GAME_SHOWN = "dummyGameShown";
     }
@@ -416,6 +417,7 @@ public interface Constants {
         String SEVENTH_MATCH_PLAYED_WITH_NO_GROUPS = "seventhMatchPlayedWithNoGroups";
         String LESS_POWERUPS = "lessPowerUps";
         String NOT_VISITED_OTHER_PROFILE = "notVisitedOtherProfile";
+        String SUBMIT_QUESTION = "submitQuestion";
 
 
     }

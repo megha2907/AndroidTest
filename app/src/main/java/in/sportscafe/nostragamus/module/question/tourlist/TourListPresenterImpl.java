@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants.Alerts;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 
 /**
@@ -27,6 +28,9 @@ public class TourListPresenterImpl implements TourListPresenter, TourListModelIm
     @Override
     public void onCreateTournaments() {
         mTournamentModel.getTourList();
+        if (!NostragamusDataHandler.getInstance().isVisitedSubmitQuestion()) {
+            mTournamentView.showExplainSubmitQuesPopUp();
+        }
     }
 
     @Override

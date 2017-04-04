@@ -215,7 +215,9 @@
                         android:paddingBottom="@dimen/dp_9"
                         android:paddingTop="@dimen/dp_9"
                         android:scrollbarStyle="insideInset"
-                        android:scrollbars="vertical" />
+                        android:scrollbars="vertical"
+                        android:hint="@string/question_hint"
+                        android:textColorHint="@color/white_60"/>
 
                 </com.jeeva.android.widgets.ShadowLayout>
 
@@ -255,7 +257,9 @@
                         android:paddingBottom="@dimen/dp_9"
                         android:paddingTop="@dimen/dp_9"
                         android:scrollbarStyle="insideInset"
-                        android:scrollbars="vertical" />
+                        android:scrollbars="vertical"
+                        android:hint="@string/question_context_hint"
+                        android:textColorHint="@color/white_60"/>
 
                 </com.jeeva.android.widgets.ShadowLayout>
 
@@ -291,7 +295,9 @@
                         android:maxLength="20"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/dp_9"
-                        android:paddingTop="@dimen/dp_9" />
+                        android:paddingTop="@dimen/dp_9"
+                        android:hint="@string/question_left_optn_hint"
+                        android:textColorHint="@color/white_60"/>
 
                 </com.jeeva.android.widgets.ShadowLayout>
 
@@ -327,7 +333,9 @@
                         android:maxLength="20"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/dp_9"
-                        android:paddingTop="@dimen/dp_9" />
+                        android:paddingTop="@dimen/dp_9"
+                        android:hint="@string/question_right_optn_hint"
+                        android:textColorHint="@color/white_60"/>
 
                 </com.jeeva.android.widgets.ShadowLayout>
 
@@ -362,7 +370,10 @@
                         android:maxLength="20"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/dp_9"
-                        android:paddingTop="@dimen/dp_9" />
+                        android:paddingTop="@dimen/dp_9"
+                        android:hint="@string/question_neither_optn_hint"
+                        android:textColorHint="@color/white_60"/>
+
 
                 </com.jeeva.android.widgets.ShadowLayout>
 

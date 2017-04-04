@@ -93,6 +93,17 @@
                     android:textSize="@dimen/dp_14"
                     app:typeface="lato_regular" />
 
+                <ImageView
+                    android:id="@+id/challenge_iv_info"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_7"
+                    android:layout_marginTop="@dimen/dp_7"
+                    android:onClick="onClick"
+                    android:padding="@dimen/dp_6"
+                    android:src="@drawable/popup_help_icon" />
+
                 <LinearLayout
                     android:id="@+id/all_challenges_row_tournament_ll"
                     android:layout_width="wrap_content"
