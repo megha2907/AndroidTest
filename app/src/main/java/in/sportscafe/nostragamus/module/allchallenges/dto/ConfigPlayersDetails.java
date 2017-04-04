@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.allchallenges.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,44 +12,45 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 /**
  * Created by Jeeva on 31/03/17.
  */
-public class PoolMemberDetails {
+@Parcel
+public class ConfigPlayersDetails {
 
-    @JsonProperty("maximum_members_count")
+    @JsonProperty("max_count")
     private int maxCount;
 
-    @JsonProperty("joined_members_count")
+    @JsonProperty("joined_count")
     private int joinedCount;
 
-    @JsonProperty("joined_members")
-    private List<GroupPerson> joinedMembers = new ArrayList<>();
+    @JsonProperty("players")
+    private List<GroupPerson> players = new ArrayList<>();
 
-    @JsonProperty("maximum_members_count")
+    @JsonProperty("max_count")
     public int getMaxCount() {
         return maxCount;
     }
 
-    @JsonProperty("maximum_members_count")
+    @JsonProperty("max_count")
     public void setMaxCount(int maxCount) {
         this.maxCount = maxCount;
     }
 
-    @JsonProperty("joined_members_count")
+    @JsonProperty("joined_count")
     public int getJoinedCount() {
         return joinedCount;
     }
 
-    @JsonProperty("joined_members_count")
+    @JsonProperty("joined_count")
     public void setJoinedCount(int joinedCount) {
         this.joinedCount = joinedCount;
     }
 
-    @JsonProperty("joined_members")
-    public List<GroupPerson> getJoinedMembers() {
-        return joinedMembers;
+    @JsonProperty("players")
+    public List<GroupPerson> getPlayers() {
+        return players;
     }
 
-    @JsonProperty("joined_members")
-    public void setJoinedMembers(List<GroupPerson> joinedMembers) {
-        this.joinedMembers = joinedMembers;
+    @JsonProperty("players")
+    public void setPlayers(List<GroupPerson> players) {
+        this.players = players;
     }
 }

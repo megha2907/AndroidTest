@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.test;
 import android.os.Bundle;
 
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeInfoDialogFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.question.tourlist.TourListActivity;
 
@@ -22,5 +23,7 @@ public class TestActivity extends NostragamusActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
+//        ChallengeInfoDialogFragment.newInstance(42).show(getSupportFragmentManager(), "challenge_info");
     }
 }

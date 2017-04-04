@@ -2,7 +2,6 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -39,7 +38,6 @@ import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
 import in.sportscafe.nostragamus.module.popups.BankTransferDialogFragment;
 import in.sportscafe.nostragamus.module.popups.PowerupDialogFragment;
-import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
 import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupFragment;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
@@ -577,7 +575,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void onDismiss(int requestCode) {
+    public void onDismiss(int requestCode, Bundle bundle) {
 
         if (requestCode == BANK_DIALOG_REQUEST_CODE) {
             mPredictionPresenter.onBankInfoDismiss();

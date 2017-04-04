@@ -8,18 +8,18 @@ import java.util.List;
 /**
  * Created by Jeeva on 31/03/17.
  */
-public class PoolListResponse {
+public class ChallengeConfigsResponse {
 
     @JsonProperty("data")
-    private List<Pool> poolList = new ArrayList<>();
+    private List<ChallengeConfig> configs = new ArrayList<>();
 
     @JsonProperty("data")
-    public List<Pool> getPoolList() {
-        return poolList;
+    public List<ChallengeConfig> getConfigs() {
+        return configs;
     }
 
     @JsonProperty("data")
-    public void setPoolList(List<Pool> poolList) {
-        this.poolList = poolList;
+    public void setConfigs(List<ChallengeConfig> configs) {
+        this.configs = configs;
     }
 }

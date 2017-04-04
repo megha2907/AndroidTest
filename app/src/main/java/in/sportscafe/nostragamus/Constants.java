@@ -156,6 +156,7 @@ public interface Constants {
         String EMPTY_MATCHES = "Currently no upcoming matches";
         String DEFAULT_SHARE_MESSAGE = "Use paste, If you want to use the default share message!";
         String POLL_LIST_EMPTY = "No polls";
+        String NOT_FREE_CHALLENGE = "Paid challenge not implemented";
     }
 
     interface BundleKeys {
@@ -231,6 +232,8 @@ public interface Constants {
         String DUMMY_QUESTION_TYPE = "dummyQuestionType";
         String DIALOG_REQUEST_CODE = "dialogRequestCode";
         String IS_SEPARATE_SCREEN = "isSeparateScreen";
+        String CHALLENGE_DATA = "challengeData";
+        String TITLE = "title";
     }
 
     interface ParcelableKeys {
