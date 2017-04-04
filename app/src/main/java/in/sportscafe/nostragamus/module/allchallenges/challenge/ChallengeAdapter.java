@@ -96,7 +96,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             if (mChallengeAmount == 0) {
                 holder.mRlCashRewards.setVisibility(View.INVISIBLE);
             } else {
-                holder.mTvChallengePrice.setText("Worth Rs." + mChallengeAmount +" to be won!");
+                holder.mTvChallengePrice.setText("Worth Rs." + mChallengeAmount);
             }
         } catch (Exception e) {
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);
@@ -227,6 +227,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         TextView mTvChallengeName;
         HmImageView mIvChallengeImage;
 
+        ImageView mIvChallengeInfo;
+
         TextView mTvChallengeUserRank;
 
         TextView mTvTimerText;
@@ -279,7 +281,9 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlShowGames = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_show_games);
             mRlCashRewards = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_cash_rewards);
             mTvTimerText = (TextView) V.findViewById(id.all_challenges_row_tv_timer_txt);
+            mIvChallengeInfo = (ImageView) V.findViewById(id.challenge_iv_info);
             mRlShowGames.setOnClickListener(this);
+            mIvChallengeInfo.setOnClickListener(this);
 
             V.findViewById(R.id.all_challenges_rl_leadboard).setOnClickListener(this);
 //            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
@@ -306,19 +310,25 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     )));
                     navigateToPointsActivity(context, bundle);
                     break;
+                case R.id.challenge_iv_info:
+                    Challenge joinChallenge = getItem(getAdapterPosition());
+                    showChallengeInfo(context,joinChallenge);
             }
         }
     }
 
     private void showChallengeInfo(Context context, Challenge challenge) {
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-        if (challenge.getChallengeUserInfo().isUserJoined()) {
-            ChallengeInfoDialogFragment.newInstance(42, "Joined Challenge", challenge)
-                    .show(fragmentManager, "challenge_info");
-        } else {
-            ChallengeConfigsDialogFragment.newInstance(43, challenge.getChallengeId(), challenge.getName())
-                    .show(fragmentManager, "challenge_configs");
-        }
+//        if (challenge.getChallengeUserInfo().isUserJoined()) {
+//            ChallengeInfoDialogFragment.newInstance(42, "Joined Challenge", challenge)
+//                    .show(fragmentManager, "challenge_info");
+//        } else {
+//            ChallengeConfigsDialogFragment.newInstance(43, challenge.getChallengeId(), challenge.getName())
+//                    .show(fragmentManager, "challenge_configs");
+//        }
+
+        ChallengeInfoDialogFragment.newInstance(42, challenge.getName(), challenge)
+                .show(fragmentManager, "challenge_info");
     }
 
     private void navigateToPointsActivity(Context context, Bundle bundle) {

@@ -313,6 +313,14 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedBooleanData(SharedKeys.VISITED_LEADERBOARDS, visitedLeaderBoards);
     }
 
+    public boolean isVisitedSubmitQuestion() {
+        return getSharedBooleanData(SharedKeys.VISITED_SUBMIT_QUESTION, false);
+    }
+
+    public void setVisitedSubmitQuestion(boolean visitedSubmitQuestion) {
+        setSharedBooleanData(SharedKeys.VISITED_SUBMIT_QUESTION, visitedSubmitQuestion);
+    }
+
     public boolean isPowerUpApplied() {
         return getSharedBooleanData(SharedKeys.POWERUP_APPLIED, false);
     }

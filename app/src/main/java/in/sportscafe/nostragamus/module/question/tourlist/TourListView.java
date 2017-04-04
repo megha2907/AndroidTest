@@ -11,4 +11,6 @@ import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 public interface TourListView extends InAppView {
 
     void setAdapter(ViewPagerAdapter adapter);
+
+    void showExplainSubmitQuesPopUp();
 }

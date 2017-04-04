@@ -92,9 +92,9 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
         ((TextView) findViewById(R.id.challenge_info_tv_title)).setText(mTitle);
 
         ChallengeInfo challengeInfo = mChallenge.getChallengeInfo();
-        ChallengeConfig challengeConfig = challengeInfo.getConfigs().get(mChallenge.getChallengeUserInfo().getConfigIndex());
-
-        ((TextView) findViewById(R.id.challenge_info_tv_challenge_name)).setText(challengeConfig.getConfigName());
+//        ChallengeConfig challengeConfig = challengeInfo.getConfigs().get(mChallenge.getChallengeUserInfo().getConfigIndex());
+//
+//        ((TextView) findViewById(R.id.challenge_info_tv_challenge_name)).setText(challengeConfig.getConfigName());
         ((TextView) findViewById(R.id.challenge_info_tv_challenge_desc)).setText(mChallenge.getDescription());
 
         int powerUpCount = 0;
