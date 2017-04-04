@@ -80,6 +80,7 @@
     <color name="white_10">#1AFFFFFF</color>
     <color name="white_50">#80FFFFFF</color>
 
+    <color name="challenge_join_bg">#009245</color>
     <color name="timer_color_bg">#0e3a59</color>
     <color name="rewards_btn_bg">#06ba64</color>
     <color name="switch_btn_color">#5E5E5E</color>

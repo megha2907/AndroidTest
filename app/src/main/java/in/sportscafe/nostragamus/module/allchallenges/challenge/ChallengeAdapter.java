@@ -96,7 +96,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             if (mChallengeAmount == 0) {
                 holder.mRlCashRewards.setVisibility(View.INVISIBLE);
             } else {
-                holder.mTvChallengePrice.setText("Worth Rs." + mChallengeAmount);
+                holder.mTvChallengePrice.setText("Worth Rs." + mChallengeAmount +" to be won!");
             }
         } catch (Exception e) {
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);
@@ -152,7 +152,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             textview.setTextColor(Color.WHITE);
             textview.setPadding(10, 5, 10, 10);
             textview.setBackground(holder.mLlTournament.getContext().getResources().getDrawable(R.drawable.btn_not_played_bg));
-            textview.setTextSize(12);
+            textview.setTextSize(10);
             textview.setTypeface(tf, Typeface.NORMAL);
 
         }
@@ -230,7 +230,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         TextView mTvChallengeUserRank;
 
         TextView mTvTimerText;
-        Button mBtnTimeLeft;
+        TextView mBtnTimeLeft;
         Button mTvChallengeDaysLeft;
         Button mTvChallengeHoursLeft;
         Button mTvChallengeMinsLeft;
@@ -259,7 +259,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mMainView = V;
             mTvChallengeName = (TextView) V.findViewById(id.all_challenges_row_matchstage_tv);
             mTvChallengePrice = (CustomButton) V.findViewById(id.all_challenges_row_tv_price);
-            mBtnTimeLeft = (Button) V.findViewById(id.all_challenges_row_btn_time_left);
+            mBtnTimeLeft = (TextView) V.findViewById(id.all_challenges_row_btn_time_left);
             mIvChallengeImage = (HmImageView) V.findViewById(id.all_challenges_row_iv_image);
             mIv2xPowerup = (ImageView) V.findViewById(id.powerups_iv_2x);
             mIvNonegsPowerup = (ImageView) V.findViewById(id.powerups_iv_nonegs);
@@ -270,7 +270,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mTvChallengeUserRank = (TextView) V.findViewById(id.all_challenges_row_tv_leaderboard_rank);
             mTvChallengeHoursLeft = (Button) V.findViewById(id.all_challenges_row_btn_hours_left);
             mTvChallengeDaysLeft = (Button) V.findViewById(id.all_challenges_row_btn_days_left);
-            mTvTimerText = (TextView) V.findViewById(id.all_challenges_row_tv_timer_txt);
             mTvChallengeMinsLeft = (Button) V.findViewById(id.all_challenges_row_btn_mins_left);
             mTvChallengeSecsLeft = (Button) V.findViewById(id.all_challenges_row_btn_secs_left);
             mLlTournament = (LinearLayout) V.findViewById(id.all_challenges_row_tournament_ll);
@@ -279,6 +278,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mTvShowGames = (TextView) V.findViewById(id.all_challenges_row_tv_show_games);
             mRlShowGames = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_show_games);
             mRlCashRewards = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_cash_rewards);
+            mTvTimerText = (TextView) V.findViewById(id.all_challenges_row_tv_timer_txt);
             mRlShowGames.setOnClickListener(this);
 
             V.findViewById(R.id.all_challenges_rl_leadboard).setOnClickListener(this);

@@ -21,8 +21,8 @@
             android:alpha="0.9"
             android:background="@android:color/transparent"
             android:onClick="showImagePopup"
-            app:defaultImage="@drawable/placeholder_icon"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            app:defaultImage="@drawable/placeholder_icon" />
 
         <ImageView
             android:id="@+id/edit_iv_camera_image"
@@ -56,10 +56,10 @@
         android:id="@+id/edit_btn_done"
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/blue_button_height"
-        android:layout_below="@+id/edit_et_shadow_nickname"
+        android:layout_below="@+id/edit_et_nickname_new"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_25"
         android:background="@drawable/tournament_ready_btn_bg"
         android:onClick="onClick"
         android:text="UPDATE"
@@ -80,6 +80,7 @@
         android:text="Enter a Username"
         android:textColor="@color/white_60"
         android:textSize="@dimen/dp_14"
+        android:visibility="gone"
         app:typeface="lato_regular" />
 
     <com.jeeva.android.widgets.ShadowLayout
@@ -91,6 +92,7 @@
         android:layout_marginRight="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_4"
+        android:visibility="gone"
         app:sl_cornerRadius="@dimen/dp_5"
         app:sl_fillColor="@android:color/transparent"
         app:sl_shadowRadius="@dimen/dp_4">
@@ -98,10 +100,24 @@
         <com.jeeva.android.widgets.customfont.CustomEditText
             android:id="@+id/edit_et_nickname"
             style="@style/EditTextStyle"
-            android:inputType="text"
-            android:imeOptions="actionDone"/>
+            android:imeOptions="actionDone"
+            android:inputType="text" />
 
     </com.jeeva.android.widgets.ShadowLayout>
+
+    <in.sportscafe.nostragamus.module.common.NostraEditText
+        android:id="@+id/edit_et_nickname_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl1"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        app:boxStyle="@style/CustomEditTextStyle"
+        app:errorStyle="@style/EditTextErrorStyle"
+        app:errorText="Show your error here"
+        app:hintStyle="@style/EditTextHintStyle"
+        app:hintText="Enter a Username" />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/edit_tv_error_txt"
@@ -123,16 +139,16 @@
         android:layout_height="wrap_content"
         android:background="@color/colorMedium"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark" >
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/edit_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dp_16"
-        app:typeface="lato_regular" />
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/edit_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_16"
+            app:typeface="lato_regular" />
 
     </android.support.v7.widget.Toolbar>
 

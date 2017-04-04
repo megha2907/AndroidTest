@@ -21,6 +21,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
+import in.sportscafe.nostragamus.module.common.NostraEditText;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
@@ -41,7 +42,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private TextView mToolbarTitle;
 
-    private EditText mEtNickName;
+    private NostraEditText mEtNickName;
 
     private TextView mTilNickName;
 
@@ -66,16 +67,16 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
         mTilNickName = (TextView) findViewById(R.id.edit_tv_error_txt);
         mTvUpdateProfile = (TextView) findViewById(R.id.edit_tv);
-        mEtNickName = (EditText) findViewById(R.id.edit_et_nickname);
+        mEtNickName = (NostraEditText) findViewById(R.id.edit_et_nickname_new);
         mIvProfileImage = (RoundImage) findViewById(R.id.edit_iv_user_image);
         mBtnUpdateDone = (CustomButton) findViewById(R.id.edit_btn_done);
         initListener();
         this.mEditProfilePresenter = EditProfilePresenterImpl.newInstance(this);
         this.mEditProfilePresenter.onCreateEditProfile(getIntent().getExtras());
 
-        if (!TextUtils.isEmpty(mEtNickName.getText())) {
-            String editName = mEtNickName.getText().toString();
-            mEtNickName.setSelection(editName.length());
+        if (!TextUtils.isEmpty(mEtNickName.getEditText().getText())) {
+            String editName = mEtNickName.getEditText().getText().toString();
+            mEtNickName.getEditText().setSelection(editName.length());
         }
 
     }
@@ -83,11 +84,16 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private void initListener() {
 
-        mEtNickName.addTextChangedListener(new TextWatcher() {
+        mEtNickName.getEditText().addTextChangedListener(new TextWatcher() {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 //size as per your requirement
+                if (mEtNickName.getEditText().length() < 3 || mEtNickName.getEditText().length() > 15){
+                    setNicknameNotValid();
+                }else {
+                    mEtNickName.setErrorText("");
+                }
+
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -98,8 +104,8 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
                 String s = arg0.toString();
                 if (!s.equals(s.toLowerCase())) {
                     s = s.toLowerCase();
-                    mEtNickName.setText(s);
-                    mEtNickName.setSelection(mEtNickName.getText().length());
+                    mEtNickName.getEditText().setText(s);
+                    mEtNickName.getEditText().setSelection(mEtNickName.getEditText().getText().length());
                 }
             }
         });
@@ -110,7 +116,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         switch (view.getId()) {
             case R.id.edit_btn_done:
                 mEditProfilePresenter.onClickDone(
-                        getTrimmedText(mEtNickName)
+                        getTrimmedText(mEtNickName.getEditText())
 
                 );
                 break;
@@ -127,7 +133,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void setNickName(String nickname) {
-        mEtNickName.setText(nickname);
+        mEtNickName.getEditText().setText(nickname);
     }
 
     @Override
@@ -154,15 +160,15 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void setNicknameEmpty() {
-        mTilNickName.setVisibility(View.VISIBLE);
-        mTilNickName.setText(Constants.Alerts.NICKNAME_EMPTY);
+        //mTilNickName.setVisibility(View.VISIBLE);
+        mEtNickName.setErrorText(Constants.Alerts.NICKNAME_EMPTY);
     }
 
 
     @Override
     public void setNicknameConflict() {
-        mTilNickName.setVisibility(View.VISIBLE);
-        mTilNickName.setText(Constants.Alerts.NICKNAME_CONFLICT);
+       // mTilNickName.setVisibility(View.VISIBLE);
+        mEtNickName.setErrorText(Constants.Alerts.NICKNAME_CONFLICT);
     }
 
     @Override
@@ -188,8 +194,8 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void setNicknameNotValid() {
-        mTilNickName.setVisibility(View.VISIBLE);
-        mTilNickName.setText(Constants.Alerts.NICKNAME_NOT_VALID);
+       // mTilNickName.setVisibility(View.VISIBLE);
+        mEtNickName.setErrorText(Constants.Alerts.NICKNAME_NOT_VALID);
     }
 
     @Override

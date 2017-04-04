@@ -137,14 +137,14 @@
 
             </com.jeeva.android.widgets.ShadowLayout>
 
-            <!--<in.sportscafe.nostragamus.module.common.NostraEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:boxStyle="@style/EditTextStyle"
-                app:hintStyle="@style/EditTextHintStyle"
-                app:errorStyle="@style/EditTextErrorStyle"
-                app:hintText="Enter your hint"
-                app:errorText="Show your error here"/>-->
+            <!--<in.sportscafe.nostragamus.module.common.NostraEditText-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:boxStyle="@style/EditTextStyle"-->
+                <!--app:hintStyle="@style/EditTextHintStyle"-->
+                <!--app:errorStyle="@style/EditTextErrorStyle"-->
+                <!--app:hintText="Enter your hint"-->
+                <!--app:errorText="Show your error here"/>-->
 
 
             <com.jeeva.android.widgets.customfont.CustomButton

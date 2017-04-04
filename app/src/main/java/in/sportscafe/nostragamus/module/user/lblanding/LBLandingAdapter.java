@@ -78,7 +78,7 @@ public class LBLandingAdapter extends Adapter<LbLanding, LBLandingAdapter.MyView
         holder.tvName.setText(lbLandingDto.getName());
 
         if (null != lbLandingDto.getCountParticipants()) {
-            holder.tvMembersCount.setText(lbLandingDto.getCountParticipants().toString()+" Members");
+            holder.tvMembersCount.setText(lbLandingDto.getCountParticipants().toString()+" Participants");
         }
 
 
