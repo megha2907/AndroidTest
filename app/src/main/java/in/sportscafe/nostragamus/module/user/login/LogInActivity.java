@@ -28,10 +28,11 @@ import java.io.IOException;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.NostragamusDialogBox;
 import in.sportscafe.nostragamus.module.common.TermsConditions;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.onboard.OnBoardingFragment;
+import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
 public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -300,6 +301,35 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         /*if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
         }*/
+    }
+
+    private NostragamusDialogBox mAlertDialog;
+
+    @Override
+    public void showEmailDialog() {
+        mAlertDialog = new NostragamusDialogBox(this)
+                .title(R.string.need_email_title)
+                .message(R.string.need_email_message)
+                .positiveButton(R.string.proceed, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mLogInPresenter.onGetEmail(mAlertDialog.getInputBoxText());
+                    }
+                })
+                .negativeButton(R.string.cancel, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mAlertDialog.dismiss();
+                    }
+                })
+                .inputBox(R.string.email_address_hint);
+
+        mAlertDialog.show();
+    }
+
+    @Override
+    public void dismissEmailDialog() {
+        mAlertDialog.dismiss();
     }
 
     @Override
