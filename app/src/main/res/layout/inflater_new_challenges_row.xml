@@ -3,10 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:paddingLeft="@dimen/dp_6"
     android:paddingRight="@dimen/dp_6">
+
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:id="@+id/card_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:cardBackgroundColor="@color/challenges_bg_card_color"-->
+        <!--app:cardCornerRadius="@dimen/dp_8">-->
 
 
     <com.jeeva.android.widgets.ShadowLayout
@@ -19,6 +28,7 @@
         android:padding="@dimen/dp_4"
         app:sl_cornerRadius="@dimen/dp_8"
         app:sl_fillColor="@color/challenges_bg_card_color">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -404,7 +414,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/schedule_row_scores_ll"
@@ -503,7 +513,7 @@
                 android:id="@+id/all_challenges_rl_join_challenge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/schedule_row_join_ll"
@@ -564,5 +574,7 @@
 
         </LinearLayout>
     </com.jeeva.android.widgets.ShadowLayout>
+
+    <!--</android.support.v7.widget.CardView>-->
 
 </RelativeLayout>

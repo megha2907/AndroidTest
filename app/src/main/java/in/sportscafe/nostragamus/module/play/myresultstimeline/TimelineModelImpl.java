@@ -146,7 +146,11 @@ public class TimelineModelImpl implements TimelineModel {
     private void handleMatches(List<Match> matchList) {
 
         if (null == matchList || matchList.isEmpty()) {
-            mMyResultsTimelineModelListener.onEmpty();
+            if (null==mPlayerUserId) {
+                mMyResultsTimelineModelListener.onEmpty(true);
+            }else {
+                mMyResultsTimelineModelListener.onEmpty(false);
+            }
             return;
         }
 
@@ -166,7 +170,7 @@ public class TimelineModelImpl implements TimelineModel {
 
         void onNoInternet();
 
-        void onEmpty();
+        void onEmpty(Boolean isMyProfile);
 
         boolean isThreadAlive();
 

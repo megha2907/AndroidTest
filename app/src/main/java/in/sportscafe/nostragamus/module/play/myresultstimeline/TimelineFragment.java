@@ -196,14 +196,21 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
     }
 
     @Override
-    public void showTimelineEmpty() {
+    public void showTimelineEmpty(Boolean isMyProfile) {
         TextView mTvEmptyResultsTimeline = (TextView) findViewById(R.id.result_timeline_empty_tv);
         ImageView mIvEmptyResultsTimeline = (ImageView) findViewById(R.id.result_timeline_empty_iv);
         Button mBtnPlayChallenge = (Button) findViewById(R.id.leaderboard_play_challenge_btn);
-        mTvEmptyResultsTimeline.setVisibility(View.VISIBLE);
-        mIvEmptyResultsTimeline.setVisibility(View.VISIBLE);
-        mBtnPlayChallenge.setVisibility(View.VISIBLE);
-        mBtnPlayChallenge.setOnClickListener(this);
+
+        if (isMyProfile) {
+            mTvEmptyResultsTimeline.setVisibility(View.VISIBLE);
+            mIvEmptyResultsTimeline.setVisibility(View.VISIBLE);
+            mBtnPlayChallenge.setVisibility(View.VISIBLE);
+            mBtnPlayChallenge.setOnClickListener(this);
+        }else {
+            mTvEmptyResultsTimeline.setVisibility(View.VISIBLE);
+            mIvEmptyResultsTimeline.setVisibility(View.VISIBLE);
+            mTvEmptyResultsTimeline.setText("User has not played any matches yet.");
+        }
     }
 
     @Override
