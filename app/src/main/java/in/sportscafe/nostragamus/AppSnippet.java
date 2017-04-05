@@ -199,6 +199,7 @@ public class AppSnippet implements Constants {
 
         CheckBox checkBox = (CheckBox) dialogView.findViewById(R.id.dialog_tv_show_again);
         if(null != dontShowListener) {
+            checkBox.setVisibility(View.VISIBLE);
             checkBox.setOnCheckedChangeListener(dontShowListener);
         } else {
             checkBox.setVisibility(View.GONE);

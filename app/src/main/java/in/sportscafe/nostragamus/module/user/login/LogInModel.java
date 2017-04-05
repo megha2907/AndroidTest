@@ -9,4 +9,6 @@ public interface LogInModel {
     void onLoggedInGoogle(String token, String personId, String personName, String persongender, String profileUrl, String personEmail, String personPhoto);
 
     void onGetResult(int requestCode, int resultCode, Intent data);
+
+    void proceedLogin(String email);
 }
