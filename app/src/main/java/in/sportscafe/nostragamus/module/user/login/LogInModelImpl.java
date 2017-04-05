@@ -3,9 +3,12 @@ package in.sportscafe.nostragamus.module.user.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Patterns;
 
 import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
+import com.jeeva.android.facebook.OnPermissionListener;
+import com.jeeva.android.facebook.user.FacebookPermission;
 import com.jeeva.android.facebook.user.FacebookProfile;
 import com.jeeva.android.facebook.user.GetProfileModelImpl;
 import com.jeeva.android.facebook.user.UserModelImpl;
@@ -40,6 +43,8 @@ public class LogInModelImpl implements LogInModel {
     private LogInModelListener mLogInModelListener;
 
     private FacebookHandler mFacebookHandler;
+
+    private String mEmailId;
 
     protected LogInModelImpl(LogInModelListener modelListener) {
         this.mLogInModelListener = modelListener;
@@ -78,7 +83,7 @@ public class LogInModelImpl implements LogInModel {
         mFacebookHandler.login(mLogInModelListener.getActivity(), new UserModelImpl.UserModelListener() {
                     @Override
                     public void onFbLoginSuccess() {
-                        getProfile();
+                        getFbProfile();
                     }
 
                     @Override
@@ -99,11 +104,46 @@ public class LogInModelImpl implements LogInModel {
         mFacebookHandler.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void getProfile() {
+    @Override
+    public void proceedLogin(String email) {
+        if(email.isEmpty()
+                || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mLogInModelListener.onInvalidEmail();
+            return;
+        }
+
+        mEmailId = email;
+        mLogInModelListener.onValidEmail();
+
+        getFbProfile();
+    }
+
+    private void getFbProfile() {
         mLogInModelListener.onGettingProfile();
         mFacebookHandler.getProfile(new GetProfileModelImpl.GetProfileModelListener() {
             @Override
             public void onGetProfileSuccess(FacebookProfile facebookProfile) {
+
+                if(null == facebookProfile.getEmail()) {
+                    if(null == mEmailId) {
+                        mFacebookHandler.isPermissionAvailable(FacebookPermission.EMAIL,
+                                new OnPermissionListener() {
+                                    @Override
+                                    public void permissionAvailable() {
+                                        mLogInModelListener.requestEmail();
+                                    }
+
+                                    @Override
+                                    public void permissionNotAvailable() {
+                                        mLogInModelListener.requestEmailPermission();
+                                        loginWithFacebook();
+                                    }
+                                });
+                        return;
+                    }
+                    facebookProfile.setEmail(mEmailId);
+                }
+
                 callNostragamusLoginApi(PROVIDER_FB, facebookProfile.getAccessToken(),
                         facebookProfile.getId(), facebookProfile.getFirst_name(),
                         facebookProfile.getGender(), "https://facebook.com/" + facebookProfile.getId(),
@@ -218,5 +258,13 @@ public class LogInModelImpl implements LogInModel {
         void onLoginFailed();
 
         void onNoInternet();
+
+        void requestEmail();
+
+        void requestEmailPermission();
+
+        void onInvalidEmail();
+
+        void onValidEmail();
     }
 }

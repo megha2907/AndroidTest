@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Constants.AnalyticsActions;
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.R;
 
 public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInModelListener {
 
@@ -56,6 +54,11 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
     }
 
     @Override
+    public void onGetEmail(String email) {
+        mLogInModel.proceedLogin(email);
+    }
+
+    @Override
     public Activity getActivity() {
         return mLogInView.getActivity();
     }
@@ -87,6 +90,28 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
     public void onNoInternet() {
         mLogInView.hideProgressDialog();
         mLogInView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+    }
+
+    @Override
+    public void requestEmail() {
+        mLogInView.hideProgressDialog();
+        mLogInView.showEmailDialog();
+    }
+
+    @Override
+    public void requestEmailPermission() {
+        mLogInView.hideProgressDialog();
+        mLogInView.showMessage(mLogInView.getContext().getString(R.string.request_email_permission));
+    }
+
+    @Override
+    public void onValidEmail() {
+        mLogInView.dismissEmailDialog();
+    }
+
+    @Override
+    public void onInvalidEmail() {
+        mLogInView.showMessage(mLogInView.getContext().getString(R.string.invalid_email));
     }
 
     @Override

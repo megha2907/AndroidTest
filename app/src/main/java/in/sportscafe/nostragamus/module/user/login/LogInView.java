@@ -19,4 +19,8 @@ public interface LogInView extends View {
     void showProgressDialog();
 
     void hideProgressDialog();
+
+    void showEmailDialog();
+
+    void dismissEmailDialog();
 }

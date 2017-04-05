@@ -115,5 +115,13 @@
     <string name="question_left_optn_hint"><font size="12">Less than 270</font></string>
     <string name="question_right_optn_hint"><font size="12">270-330</font></string>
     <string name="question_neither_optn_hint"><font size="12">330 or more</font></string>
+    <string name="request_email_permission">Kindly provide permission to access your email id</string>
+
+    <!-- dialog alerts -->
+    <string name="need_email_title">Your email address is missing</string>
+    <string name="need_email_message">Unfortunately we couldn’t retrieve your email address from Facebook. We need your email address to save all your preferences.</string>
+    <string name="email_address_hint">Email Address</string>
+    <string name="proceed">Proceed</string>
+    <string name="invalid_email">Enter valid email id</string>
 
 </resources>

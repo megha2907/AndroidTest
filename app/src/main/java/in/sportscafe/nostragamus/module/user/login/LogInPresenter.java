@@ -17,5 +17,5 @@ public interface LogInPresenter {
 
 	void onActivityResult(int requestCode, int resultCode, Intent data);
 
-
+    void onGetEmail(String email);
 }
