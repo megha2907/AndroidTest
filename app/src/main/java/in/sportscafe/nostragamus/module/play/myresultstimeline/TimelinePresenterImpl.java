@@ -83,10 +83,10 @@ public class TimelinePresenterImpl implements TimelinePresenter, TimelineModelIm
     }
 
     @Override
-    public void onEmpty() {
+    public void onEmpty(Boolean isMyProfile) {
         myResultsTimelineView.dismissProgressbar();
         if (myResultsTimelineModel.isAdapterEmpty()) {
-            myResultsTimelineView.showTimelineEmpty();
+            myResultsTimelineView.showTimelineEmpty(isMyProfile);
         }
     }
 

@@ -20,6 +20,7 @@
         app:sl_cornerRadius="@dimen/dp_8"
         app:sl_fillColor="@color/challenges_bg_card_color">
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_219"
@@ -404,7 +405,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/schedule_row_scores_ll"
@@ -503,7 +504,7 @@
                 android:id="@+id/all_challenges_rl_join_challenge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/schedule_row_join_ll"
@@ -564,5 +565,6 @@
 
         </LinearLayout>
     </com.jeeva.android.widgets.ShadowLayout>
+
 
 </RelativeLayout>

@@ -14,7 +14,7 @@ public interface TimelineView extends InAppView {
 
     void dismissSwipeRefresh();
 
-    void showTimelineEmpty();
+    void showTimelineEmpty(Boolean isMyProfile);
 
     void setChallengeFilter(String challengeName);
 
