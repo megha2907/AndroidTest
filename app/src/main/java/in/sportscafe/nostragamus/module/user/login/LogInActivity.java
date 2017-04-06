@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
+import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 
 import java.io.IOException;
@@ -268,19 +269,25 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         signOut();
+        super.onBackPressed();
     }
 
     @Override
     public void signOut() {
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
+        try {
+            if (mGoogleApiClient.isConnected()) {
+                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                        new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(Status status) {
 
-                    }
-                });
+                            }
+                        });
+            }
+        } catch (Exception e) {
+            ExceptionTracker.track(e);
+        }
     }
 
     @Override
