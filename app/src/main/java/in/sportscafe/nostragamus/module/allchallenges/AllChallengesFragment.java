@@ -47,6 +47,10 @@ public class AllChallengesFragment extends NostragamusFragment
 
     private boolean mSwipeViewSelected = true;
 
+    private int SWIPE_VIEW = 0;
+
+    private int LIST_VIEW = 1;
+
     public static AllChallengesFragment newInstance() {
         return new AllChallengesFragment();
     }
@@ -73,22 +77,28 @@ public class AllChallengesFragment extends NostragamusFragment
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.challenges_switch_view_rl:
-                if (mSwipeViewSelected) {
-                    for (ChallengeFragment fragment : mChallengeFragmentList) {
-                        fragment.switchToListView();
-                    }
-                    moveSeekToList();
-                } else {
-                    for (ChallengeFragment fragment : mChallengeFragmentList) {
-                        fragment.switchToSwipeView(-1);
-                    }
-                    moveSeekToSwipe();
-                }
-                mSwipeViewSelected = !mSwipeViewSelected;
-
-                NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.SWITCH);
+                moveSeek();
                 break;
         }
+    }
+
+    private void moveSeek(){
+
+        if (mSwipeViewSelected) {
+            for (ChallengeFragment fragment : mChallengeFragmentList) {
+                fragment.switchToListView();
+            }
+            moveSeekToList();
+        } else {
+            for (ChallengeFragment fragment : mChallengeFragmentList) {
+                fragment.switchToSwipeView(-1);
+            }
+            moveSeekToSwipe();
+        }
+        mSwipeViewSelected = !mSwipeViewSelected;
+
+        NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.SWITCH);
+
     }
 
     private void moveSeekToSwipe() {
@@ -201,13 +211,18 @@ public class AllChallengesFragment extends NostragamusFragment
         public void onReceive(Context context, Intent intent) {
             int tagId = intent.getIntExtra(BundleKeys.CHALLENGE_TAG_ID, -1);
             int clickPosition = intent.getIntExtra(BundleKeys.CLICK_POSITION, -1);
+            boolean swipeView = intent.getBooleanExtra(BundleKeys.CHALLENGE_SWITCH_POS,false);
 
-            for (int i = 0; i < mChallengeFragmentList.size(); i++) {
-                mChallengeFragmentList.get(i).switchToSwipeView(i == tagId ? clickPosition : -1);
+            if (swipeView) {
+                for (int i = 0; i < mChallengeFragmentList.size(); i++) {
+                    mChallengeFragmentList.get(i).switchToSwipeView(i == tagId ? clickPosition : -1);
+                }
+
+                moveSeekToSwipe();
+                mSwipeViewSelected = true;
+            }else {
+                moveSeek();
             }
-
-            moveSeekToSwipe();
-            mSwipeViewSelected = true;
         }
     };
 }

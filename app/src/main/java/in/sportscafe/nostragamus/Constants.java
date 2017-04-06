@@ -235,6 +235,7 @@ public interface Constants {
         String IS_SEPARATE_SCREEN = "isSeparateScreen";
         String CHALLENGE_DATA = "challengeData";
         String TITLE = "title";
+        String CHALLENGE_SWITCH_POS = "challengeSwitchPos";
     }
 
     interface ParcelableKeys {

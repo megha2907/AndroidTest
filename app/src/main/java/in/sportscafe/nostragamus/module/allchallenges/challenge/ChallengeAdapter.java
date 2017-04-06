@@ -59,6 +59,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     private boolean mSwipeView = true;
 
+    private int SWIPE_VIEW = 0;
+
+    private int LIST_VIEW = 1;
+
     private int mTagId;
 
     public ChallengeAdapter(Context context, List<Challenge> challenges, boolean swipeView, int tagId) {
@@ -75,16 +79,18 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(getLayoutInflater().inflate(layout.inflater_all_challenges_row, parent, false));
+        return new ViewHolder(getLayoutInflater().inflate(layout.inflater_new_challenges_row, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         if (mSwipeView/* || position == 0*/) {
-            holder.mSlShowGameBg.setVisibility(View.GONE);
+            //holder.mSlShowGameBg.setVisibility(View.GONE);
+            holder.mTvShowGamesNew.setText("HIDE GAMES");
         } else {
-            holder.mSlShowGameBg.setVisibility(View.VISIBLE);
+            //holder.mSlShowGameBg.setVisibility(View.VISIBLE);
+            holder.mTvShowGamesNew.setText("SHOW GAMES");
         }
 
         Challenge challenge = getItem(position);
@@ -96,16 +102,16 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             if (mChallengeAmount == 0) {
                 holder.mRlCashRewards.setVisibility(View.INVISIBLE);
             } else {
-                holder.mTvChallengePrice.setText("Worth Rs." + mChallengeAmount);
+                holder.mTvChallengePrice.setText("Worth Rs." + mChallengeAmount + " to be won!");
             }
         } catch (Exception e) {
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);
         }
 
-        Context context = holder.mIv2xPowerup.getContext();
-        holder.mIv2xPowerup.setBackground(getPowerupDrawable(context, color.dodger_blue));
-        holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(context, color.amaranth));
-        holder.mIvPollPowerup.setBackground(getPowerupDrawable(context, color.greencolor));
+//        Context context = holder.mIv2xPowerup.getContext();
+//        holder.mIv2xPowerup.setBackground(getPowerupDrawable(context, color.dodger_blue));
+//        holder.mIvNonegsPowerup.setBackground(getPowerupDrawable(context, color.amaranth));
+//        holder.mIvPollPowerup.setBackground(getPowerupDrawable(context, color.greencolor));
 
         try {
             HashMap<String, Integer> powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
@@ -188,7 +194,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 //            holder.mRlTimer.setVisibility(View.GONE);
 //        }
 
-        holder.mTvTimerText.setText("DURATION");
+        // holder.mTvTimerText.setText("DURATION");
 
         String startTime = challenge.getStartTime();
         long startTimeMs = TimeUtils.getMillisecondsFromDateString(
@@ -231,7 +237,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         TextView mTvChallengeUserRank;
 
-        TextView mTvTimerText;
+        //TextView mTvTimerText;
         TextView mBtnTimeLeft;
         Button mTvChallengeDaysLeft;
         Button mTvChallengeHoursLeft;
@@ -249,6 +255,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         ShadowLayout mSlShowGameBg;
         TextView mTvShowGames;
 
+        TextView mTvShowGamesNew;
         RelativeLayout mRlShowGames;
         RelativeLayout mRlTimer;
 
@@ -278,9 +285,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mSlShowGameBg = (ShadowLayout) V.findViewById(id.all_challenges_sl_anim_bg);
             mRlTimer = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_timer);
             mTvShowGames = (TextView) V.findViewById(id.all_challenges_row_tv_show_games);
-            mRlShowGames = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_show_games);
+            mRlShowGames = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_show_games_new);
+            mTvShowGamesNew = (TextView) V.findViewById(id.all_challenges_row_tv_show_games_new);
             mRlCashRewards = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_cash_rewards);
-            mTvTimerText = (TextView) V.findViewById(id.all_challenges_row_tv_timer_txt);
+            // mTvTimerText = (TextView) V.findViewById(id.all_challenges_row_tv_timer_txt);
             mIvChallengeInfo = (ImageView) V.findViewById(id.challenge_iv_info);
             mRlShowGames.setOnClickListener(this);
             mIvChallengeInfo.setOnClickListener(this);
@@ -293,11 +301,18 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         public void onClick(View view) {
             Context context = view.getContext();
             switch (view.getId()) {
-                case R.id.all_challenges_row_rl_show_games:
+                case R.id.all_challenges_row_rl_show_games_new:
                     Intent intent = new Intent(IntentActions.ACTION_CHALLENGE_CLICK);
                     intent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
                     intent.putExtra(BundleKeys.CHALLENGE_TAG_ID, mTagId);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
+                    if (mSwipeView){
+                        intent.putExtra(BundleKeys.CHALLENGE_SWITCH_POS, false);
+                    }else {
+                        intent.putExtra(BundleKeys.CHALLENGE_SWITCH_POS, true);
+                    }
+
                     break;
                 case R.id.all_challenges_rl_leadboard:
                     NostragamusAnalytics.getInstance().trackLeaderboard(LBLandingType.CHALLENGE);
@@ -312,7 +327,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     break;
                 case R.id.challenge_iv_info:
                     Challenge joinChallenge = getItem(getAdapterPosition());
-                    showChallengeInfo(context,joinChallenge);
+                    showChallengeInfo(context, joinChallenge);
             }
         }
     }

@@ -23,7 +23,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_219"
+            android:layout_height="@dimen/dp_180"
             android:layout_alignParentTop="true">
 
             <RelativeLayout
@@ -31,7 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"
                 android:layout_alignParentBottom="true"
-                android:clickable="true">
+                android:clickable="true"
+                android:visibility="gone">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/all_challenges_row_tv_show_games"
@@ -510,15 +511,15 @@
                     android:id="@+id/schedule_row_join_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="@drawable/challenge_join_bg">
 
                     <RelativeLayout
                         android:id="@+id/all_challenges_row_rl_join_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:background="@color/challenge_join_bg">
+                        android:gravity="center">
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:id="@+id/all_challenges_row_tv_join_challenge"
@@ -527,7 +528,8 @@
                             android:text="JOIN"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dp_12"
-                            app:typeface="lato_regular" />
+                            app:typeface="lato_regular"
+                            android:paddingBottom="@dimen/dp_3"/>
 
                     </RelativeLayout>
 
@@ -540,21 +542,23 @@
                         android:background="@color/black_20" />
 
                     <RelativeLayout
-                        android:id="@+id/all_challenges_row_rl_hide_games"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/all_challenges_row_rl_show_games_new"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:background="@color/challenge_join_bg">
+                        android:clickable="true"
+                        android:gravity="center">
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/all_challenges_row_btn_hide_games"
+                            android:id="@+id/all_challenges_row_tv_show_games_new"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="HIDE GAMES"
+                            android:text="SHOW GAMES"
+                            android:clickable="false"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dp_12"
-                            app:typeface="lato_regular" />
+                            app:typeface="lato_regular"
+                            android:paddingBottom="@dimen/dp_3"/>
 
 
                     </RelativeLayout>
