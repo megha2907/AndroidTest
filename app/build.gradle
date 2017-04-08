@@ -75,18 +75,36 @@ android {
     }
 
     productFlavors {
-        local {
-            resValue "string", "app_name", "Nostragamus"
-        }
+
         stage {
             resValue "string", "app_name", "Nostragamus"
+            buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
+        stagePaid {
+//            applicationIdSuffix ".paid"
+
+            resValue "string", "app_name", "Nostragamus"
+            buildConfigField("boolean", "IS_PAID_VERSION", "true")
+        }
+
         production {
             resValue "string", "app_name", "Nostragamus"
+            buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
+        productionPaid {
+//            applicationIdSuffix ".paid"
+
+            resValue "string", "app_name", "Nostragamus"
+            buildConfigField("boolean", "IS_PAID_VERSION", "true")
+        }
+
+        /*local {
+            resValue "string", "app_name", "Nostragamus"
+        }
+
         dev {
             resValue "string", "app_name", "Nostragamus Dev"
-        }
+        }*/
     }
 }
 
@@ -126,6 +144,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     // Circle page indicator for zoom in/out circle
     compile 'me.relex:circleindicator:1.2.2'
-    compile files('libs/PGSDK_v1.0.1.jar')
+//    compile files('libs/PGSDK_v1.0.1.jar')
 }
 apply plugin: 'com.google.gms.google-services'

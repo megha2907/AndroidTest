@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.jeeva.android.ExceptionTracker;
 
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 
 /**
  * Created by Jeeva on 27/5/15.
@@ -42,5 +44,15 @@ public class CodeSnippet {
             }
         }
         return false;
+    }
+
+    /**
+     * Used temporary for Paytm transactions
+     * @return
+     */
+    @NonNull
+    public static String getOrderId() {
+        Random r = new Random(System.currentTimeMillis());
+        return "ORDER" + (1 + r.nextInt(2)) * 10000 + r.nextInt(10000);
     }
 }

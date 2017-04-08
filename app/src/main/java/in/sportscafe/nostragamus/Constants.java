@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus;
 
 import android.Manifest;
+import android.bluetooth.le.ScanRecord;
 
 /**
  * Created by Jeeva on 30/3/15.
@@ -158,6 +159,11 @@ public interface Constants {
         String DEFAULT_SHARE_MESSAGE = "Use paste, If you want to use the default share message!";
         String POLL_LIST_EMPTY = "No polls";
         String NOT_FREE_CHALLENGE = "Paid challenge not implemented";
+
+        /*--- Paytm Msg ---*/
+        String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";
+        String PAYTM_TRANSACTION_CANCELLED = "You have cancelled transaction, can not continue to join";
+        String PAYTM_FAILURE = "Could not initiate transaction, please try again";
     }
 
     interface BundleKeys {
@@ -435,4 +441,49 @@ public interface Constants {
 
         int STORAGE_PERMISSION = 134;
     }
+
+    interface PaytmParamsKeys {
+        String REQUEST_TYPE = "REQUEST_TYPE";
+        String MID = "MID";
+        String ORDER_ID = "ORDER_ID";
+        String CUST_ID = "CUST_ID";
+        String CHANNEL_ID = "CHANNEL_ID";
+        String INDUSTRY_TYPE_ID = "INDUSTRY_TYPE_ID";
+        String WEBSITE = "WEBSITE";
+        String TXN_AMOUNT = "TXN_AMOUNT";
+        String EMAIL = "EMAIL";
+        String MOBILE_NO = "MOBILE_NO";
+        String CHECKSUMHASH = "CHECKSUMHASH";
+        String CALLBACK_URL = "CALLBACK_URL";
+    }
+
+    interface PaytmParamValues {
+        String REQUEST_TYPE_DEFAULT = "DEFAULT";
+        String MID_VALUE = "GAMBIT01441193333466";
+        String CHANNEL_ID_VALUE = "WAP";
+        String INDUSTRY_TYPE_ID_VALUE = "Retail";
+        String WEBSITE_VALUE = "APP_STAGING";
+        String CALLBACK_URL_VALUE = "https://api-stage.sportscafe.in/v2/game/callBackPaytm";
+        String EMAIL_VALUE = "";
+        String MOBILE_NO_VALUE = "";
+    }
+
+    interface PaytmSuccessResponseParamKeys {
+        /* Taken from Paytm API documentation */
+
+        String MID = "MID";
+        String ORDER_ID = "ORDERID";
+        String TRANSACTION_ID = "TXNID";
+        String BANK_TRANSACTION_ID = "BANKTXNID";
+        String TRANSACTION_AMOUNT = "TXNAMOUNT";
+        String CURRENCY = "CURRENCY";
+        String STATUS = "STATUS";
+        String RESPONSE_CODE = "RESPCODE";
+        String RESPONSE_MESSAGE = "RESPMSG";
+        String TRANSACTION_DATE = "TXNDATE";
+        String GATEWAY_NAME = "GATEWAYNAME";
+        String BANK_NAME = "BANK_NAME";
+        String PAYMENT_MODE = "PAYMENTMODE";
+        String CHECKSUM_HASH = "CHECKSUMHASH";
+     }
 }

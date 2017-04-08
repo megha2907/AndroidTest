@@ -19,18 +19,28 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
+import in.sportscafe.nostragamus.module.paytm.PaytmApiModelImpl;
+import in.sportscafe.nostragamus.module.paytm.PaytmTransactionSuccessResponse;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 /**
  * Created by Jeeva on 28/02/17.
  */
-public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment implements ChallengeConfigsApiModelImpl.OnConfigsApiModelListener, ChallengeConfigAdapter.OnConfigAccessListener {
+public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment implements ChallengeConfigsApiModelImpl.OnConfigsApiModelListener,
+        ChallengeConfigAdapter.OnConfigAccessListener {
+
+    private static final String TAG = ChallengeConfigsDialogFragment.class.getSimpleName();
 
     private OnDismissListener mDismissListener;
 
@@ -165,10 +175,41 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     @Override
     public void onJoinClick(int position) {
         ChallengeConfig challengeConfig = mConfigAdapter.getItem(position);
+
         if(challengeConfig.isFreeEntry()) {
+            Log.d(TAG, "Free challenge selected... ");
             joinChallenge(challengeConfig);
         } else {
-            showMessage(Alerts.NOT_FREE_CHALLENGE, Toast.LENGTH_LONG);
+
+            Log.d(TAG, "Paid challenge selected... ");
+
+            if (BuildConfig.IS_PAID_VERSION) {
+                Log.d(TAG, "Paid / Full App Version... ");
+                performTransaction(challengeConfig);
+
+            } else {
+                Log.d(TAG, "Free App Version, Can't continue... ");
+                showMessage(Alerts.NOT_FREE_CHALLENGE, Toast.LENGTH_LONG);
+            }
+        }
+    }
+
+    /**
+     * Performs paytm transaction
+     * @param challengeConfig - selected Challenge
+     */
+    private void performTransaction(ChallengeConfig challengeConfig) {
+        PaytmApiModelImpl paytmApiModel = PaytmApiModelImpl.newInstance(getPaytmApiListener(challengeConfig), getContext());
+
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            showProgressbar();  // Dismissed at all type of callback i.e. at getPaytmApiListener()
+
+            paytmApiModel.onStartTransaction(CodeSnippet.getOrderId(),
+                    NostragamusDataHandler.getInstance().getUserId(),
+                    String.valueOf(challengeConfig.getEntryFee()));
+
+        } else {
+            showMessage(Alerts.NO_NETWORK_CONNECTION);
         }
     }
 
@@ -189,6 +230,10 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         }, 250);
     }
 
+    /**
+     * Used for both the purpose as free or
+     * @param config
+     */
     private void joinChallenge(ChallengeConfig config) {
         new JoinChallengeApiModelImpl(new JoinChallengeApiModelImpl.OnJoinChallengeApiModelListener() {
             @Override
@@ -217,5 +262,68 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                 return dismissProgressbar();
             }
         }).joinChallenge(mChallengeId, config.getConfigIndex());
+    }
+
+    /**
+     * Handles call back
+     * @param challengeConfigToJoin
+     * @return
+     */
+    private PaytmApiModelImpl.OnPaytmApiModelListener getPaytmApiListener(final ChallengeConfig challengeConfigToJoin) {
+        return new PaytmApiModelImpl.OnPaytmApiModelListener() {
+            @Override
+            public void onApiSuccess() {
+                // This is for non transaction api call
+                dismissProgressbar();
+            }
+
+            @Override
+            public void onApiFailure() {
+                dismissProgressbar();
+                showMessage(Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onTransactionUiError() {
+                dismissProgressbar();
+                showMessage(Alerts.PAYTM_FAILURE);
+            }
+
+            @Override
+            public void onTransactionNoNetwork() {
+                dismissProgressbar();
+                showMessage(Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onTransactionClientAuthenticationFailed() {
+                dismissProgressbar();
+                showMessage(Alerts.PAYTM_AUTHENTICATION_FAILED);
+            }
+
+            @Override
+            public void onTransactionPageLoadingError() {
+                dismissProgressbar();
+                showMessage(Alerts.PAYTM_FAILURE);
+            }
+
+            @Override
+            public void onTransactionCancelledByBackPressed() {
+                dismissProgressbar();
+                showMessage(Alerts.PAYTM_TRANSACTION_CANCELLED);
+            }
+
+            @Override
+            public void onTransactionCancelled() {
+                dismissProgressbar();
+                showMessage(Alerts.PAYTM_TRANSACTION_CANCELLED);
+            }
+
+            @Override
+            public void onTransactionResponse(PaytmTransactionSuccessResponse successResponse) {
+                dismissProgressbar();
+                joinChallenge(challengeConfigToJoin);
+            }
+        };
     }
 }

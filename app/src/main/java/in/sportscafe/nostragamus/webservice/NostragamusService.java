@@ -12,6 +12,8 @@ import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
 import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
+import in.sportscafe.nostragamus.module.paytm.GenerateCheckSumRequest;
+import in.sportscafe.nostragamus.module.paytm.GenerateCheckSumResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
@@ -208,4 +210,7 @@ public interface NostragamusService {
             @Query("challenge_id") int challengeId,
             @Query("config_index") int configIndex
     );
+
+    @POST("v2/game/generateChecksum")
+    Call<GenerateCheckSumResponse> generatePaytmCheckSum(@Body GenerateCheckSumRequest request);
 }
