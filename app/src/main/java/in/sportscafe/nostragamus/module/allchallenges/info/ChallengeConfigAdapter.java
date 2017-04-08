@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.HmImageView;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
@@ -75,20 +77,27 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
 
     private void createMemberDropDownList(List<GroupPerson> memberList, ViewGroup parent) {
         for (GroupPerson member : memberList) {
-            parent.addView(getDropDownView(member.getUserName(), null, parent));
+            parent.addView(getDropDownView(member.getUserName(), null, member.getPhoto(), parent));
         }
     }
 
     private void createRewardDropDownList(List<RewardBreakUp> breakUps, ViewGroup parent) {
         for (RewardBreakUp breakUp : breakUps) {
-            parent.addView(getDropDownView(breakUp.getRank(), breakUp.getAmount(), parent));
+            parent.addView(getDropDownView(breakUp.getRank(), breakUp.getAmount(),null, parent));
         }
     }
 
-    private View getDropDownView(String key, String value, ViewGroup parent) {
+    private View getDropDownView(String key, String value, String memberPhoto ,ViewGroup parent) {
         View dropDownView = getLayoutInflater().inflate(R.layout.inflater_reward_row, parent, false);
 
         ((TextView) dropDownView.findViewById(R.id.reward_row_tv_name)).setText(key);
+
+        HmImageView memberPic = (HmImageView) dropDownView.findViewById(R.id.reward_row_iv_member_photo);
+        if (!TextUtils.isEmpty(memberPhoto)) {
+            memberPic.setImageUrl(memberPhoto);
+        }else {
+            memberPic.setVisibility(View.GONE);
+        }
 
         TextView tvValue = (TextView) dropDownView.findViewById(R.id.reward_row_tv_value);
         if (TextUtils.isEmpty(value)) {

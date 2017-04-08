@@ -30,8 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_40"
         android:clipToPadding="false"
-        android:paddingLeft="@dimen/dp_16"
-        android:paddingRight="@dimen/dp_16" />
+        android:paddingLeft="@dimen/dp_17"
+        android:paddingRight="@dimen/dp_17" />
 
     <RelativeLayout
         android:id="@+id/challenges_rl_one"
