@@ -611,7 +611,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 }
             }
 
-
             // IF USER ANSWER = THIRD OPTION (NEITHER OR DRAW)
             if (answerId == 3) {
                 tvAnswer.setVisibility(View.VISIBLE);
@@ -707,6 +706,25 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
             }
 
+        }
+
+        /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/
+        if (question.getQuestionAnswer() == -1) {
+            tvAnswer.setText(question.getQuestionOption1());
+            tvotheroption.setText(question.getQuestionOption2());
+
+            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                tvNeitherAnswer.setText(question.getQuestionOption3());
+                setTextColor(tvNeitherAnswer, R.color.white_60);
+                tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            }
+
+            setTextColor(tvNeitherAnswer, R.color.white_60);
+            setTextColor(tvAnswer, R.color.white_60);
+            convertView.findViewById(R.id.my_predictions_row_splitView).setVisibility(View.VISIBLE);
         }
 
 

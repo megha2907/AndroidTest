@@ -144,6 +144,12 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
 
             }
 
+            /* If questionAns == -1, means question was incorrect / invalid -- SPLIT Question  */
+            if (myQuestion.getQuestionAnswer() == -1) {
+                setTextColor(tvPlayerOneAnswer, R.color.white_60);
+                convertView.findViewById(R.id.results_peek_row_player_one_points_splitView).setVisibility(View.VISIBLE);
+            }
+
             if (myQuestion.getAnswerPoints() != null) {
 
                 if (myQuestion.getAnswerPoints().equals(0)) {
@@ -155,7 +161,6 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
                 } else {
                     tvPlayerOneAnswerPoints.setText(myQuestion.getAnswerPoints() + " Points");
                 }
-
             }
 
             int powerUpMyIcons = PowerUp.getResultPowerupIcons(myQuestion.getAnswerPowerUpId());
@@ -228,6 +233,11 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
 
             }
 
+            /* If questionAns == -1, means question was incorrect / invalid -- SPLIT Question  */
+            if (myQuestion.getQuestionAnswer() == -1) {
+                setTextColor(tvPlayerTwoAnswer, R.color.white_60);
+                convertView.findViewById(R.id.results_peek_row_player_two_points_splitView).setVisibility(View.VISIBLE);
+            }
 
             if (playerQuestion.getAnswerPoints() != null) {
 
@@ -240,7 +250,6 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
                 } else {
                     tvPlayerTwoAnswerPoints.setText(playerQuestion.getAnswerPoints() + " Points");
                 }
-
             }
 
             int powerUpOtherPlayerIcons = PowerUp.getResultPowerupIcons(playerQuestion.getAnswerPowerUpId());

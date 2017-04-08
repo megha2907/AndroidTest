@@ -126,6 +126,23 @@
             app:typeface="lato_regular" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/my_predictions_row_splitView"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_22"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/my_predictions_row_tv_answer_points"
+            android:layout_marginTop="@dimen/dp_2"
+            android:gravity="right|center_vertical"
+            android:maxLines="1"
+            android:layout_marginRight="@dimen/dp_18"
+            android:text="@string/split_str"
+            android:textColor="@color/white_60"
+            android:textSize="@dimen/dp_12"
+            android:visibility="gone"
+            app:typeface="lato_regular" />
+
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/my_predictions_row_tv_perc_1"
             android:layout_width="@dimen/dp_150"
             android:layout_height="@dimen/dp_22"

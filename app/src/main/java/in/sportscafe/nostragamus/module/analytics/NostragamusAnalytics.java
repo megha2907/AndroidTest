@@ -62,6 +62,7 @@ public class NostragamusAnalytics {
 
             // Initializing the google analytics
             this.mTracker = ga.newTracker(R.xml.app_tracker);
+            this.mTracker.enableAdvertisingIdCollection(true);
 
             // Initializing the MoEngage
             this.mMoEHelper = MoEHelper.getInstance(context);
