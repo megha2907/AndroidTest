@@ -120,99 +120,103 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
             holder.mTvMatchResult.setText(match.getStage());
 
+            if (mChallengeInfo.getChallengeUserInfo().isUserJoined()) {
 
-            if (match.getMatchQuestionCount() > 0) {
+                if (match.getMatchQuestionCount() > 0) {
 
-                if (match.isResultPublished()) { // if match Result Published
+                    if (match.isResultPublished()) { // if match Result Published
 
-                    //if match Completely Attempted then IsAttempted = 2 else if Partially Attempted then is Attempted =1
-                    //show Match Results
-                    if (GameAttemptedStatus.COMPLETELY == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
+                        //if match Completely Attempted then IsAttempted = 2 else if Partially Attempted then is Attempted =1
+                        //show Match Results
+                        if (GameAttemptedStatus.COMPLETELY == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
 
-                        holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
+                            holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
 
-                        holder.mTvMatchResult.setVisibility(View.VISIBLE);
-                        holder.mTvMatchResult.setText(match.getStage()+" - "+Html.fromHtml(match.getResult()));
-                        holder.mBtnMatchPoints.setTag(match);
-                        holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
+                            holder.mTvMatchResult.setVisibility(View.VISIBLE);
+                            holder.mTvMatchResult.setText(match.getStage() + " - " + Html.fromHtml(match.getResult()));
+                            holder.mBtnMatchPoints.setTag(match);
+                            holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
 
-                        Integer winnerPartyId = match.getWinnerPartyId();
-                        if (null != winnerPartyId) {
-                            int whiteSixty = ViewUtils.getColor(holder.mTvPartyAName.getContext(), R.color.white_60);
-                            Typeface latoBold = Typefaces.get(holder.mTvPartyAName.getContext(), "fonts/lato/Lato-Bold.ttf");
-                            if (winnerPartyId.equals(parties.get(0).getPartyId())) {
-                                holder.mTvPartyAName.setTypeface(latoBold);
-                                holder.mTvPartyBName.setTextColor(whiteSixty);
-                            } else if (winnerPartyId.equals(parties.get(1).getPartyId())) {
-                                holder.mTvPartyBName.setTypeface(latoBold);
-                                holder.mTvPartyAName.setTextColor(whiteSixty);
+                            Integer winnerPartyId = match.getWinnerPartyId();
+                            if (null != winnerPartyId) {
+                                int whiteSixty = ViewUtils.getColor(holder.mTvPartyAName.getContext(), R.color.white_60);
+                                Typeface latoBold = Typefaces.get(holder.mTvPartyAName.getContext(), "fonts/lato/Lato-Bold.ttf");
+                                if (winnerPartyId.equals(parties.get(0).getPartyId())) {
+                                    holder.mTvPartyAName.setTypeface(latoBold);
+                                    holder.mTvPartyBName.setTextColor(whiteSixty);
+                                } else if (winnerPartyId.equals(parties.get(1).getPartyId())) {
+                                    holder.mTvPartyBName.setTypeface(latoBold);
+                                    holder.mTvPartyAName.setTextColor(whiteSixty);
+                                }
                             }
                         }
-                    }
 
-                    //if match not Attempted then IsAttempted=0
-                    if (GameAttemptedStatus.NOT == attemptedStatus) {
-                        // Show Opportunity missed at scoring!
-                        holder.mTvMatchResult.setVisibility(View.VISIBLE);
-                        holder.mTvMatchResult.setText(match.getStage()+" - "+Html.fromHtml(match.getResult()));
-                        holder.mTvInfo.setVisibility(View.VISIBLE);
-                        holder.mTvInfo.setText("Did Not Play");
-                        holder.mTvInfo.setTag(match);
-                        holder.mTvInfo.setClickable(true);
-                        holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
-                    }
+                        //if match not Attempted then IsAttempted=0
+                        if (GameAttemptedStatus.NOT == attemptedStatus) {
+                            // Show Opportunity missed at scoring!
+                            holder.mTvMatchResult.setVisibility(View.VISIBLE);
+                            holder.mTvMatchResult.setText(match.getStage() + " - " + Html.fromHtml(match.getResult()));
+                            holder.mTvInfo.setVisibility(View.VISIBLE);
+                            holder.mTvInfo.setText("Did Not Play");
+                            holder.mTvInfo.setTag(match);
+                            holder.mTvInfo.setClickable(true);
+                            holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
+                        }
 
-                } else { // if Results not published
-                    if (GameAttemptedStatus.NOT == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
-                        if (isMatchStarted) {
-                            if (attemptedStatus == GameAttemptedStatus.PARTIALLY) {
+                    } else { // if Results not published
+                        if (GameAttemptedStatus.NOT == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
+                            if (isMatchStarted) {
+                                if (attemptedStatus == GameAttemptedStatus.PARTIALLY) {
 
-                                //  Waiting for results
-                                holder.mLlResultWait.setVisibility(View.VISIBLE);
-                                holder.mTvMatchResult.setVisibility(View.VISIBLE);
+                                    //  Waiting for results
+                                    holder.mLlResultWait.setVisibility(View.VISIBLE);
+                                    holder.mTvMatchResult.setVisibility(View.VISIBLE);
 //                                holder.mTvMatchResult.setText(match.getStage());
-                               holder.mLlResultWait.setTag(match);
+                                    holder.mLlResultWait.setTag(match);
+                                } else {
+
+                                    // You cannot play the match as the match already started
+                                    holder.mTvInfo.setVisibility(View.VISIBLE);
+                                    holder.mTvInfo.setText("Did Not Play");
+                                    holder.mTvInfo.setTag(match);
+                                    holder.mTvInfo.setClickable(true);
+                                    holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
+                                }
                             } else {
 
-                                // You cannot play the match as the match already started
-                                holder.mTvInfo.setVisibility(View.VISIBLE);
-                                holder.mTvInfo.setText("Did Not Play");
-                                holder.mTvInfo.setTag(match);
-                                holder.mTvInfo.setClickable(true);
-                                holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
-                            }
-                        } else {
-
-                            // show Play button
-                            holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
-                            holder.mBtnPlayMatch.setTag(match);
+                                // show Play button
+                                holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
+                                holder.mBtnPlayMatch.setTag(match);
 //                            holder.mTvMatchResult.setVisibility(View.VISIBLE);
 //                            holder.mTvMatchResult.setText(match.getStage());
 
 
-                            if (GameAttemptedStatus.PARTIALLY == attemptedStatus) {
-                                holder.mBtnPlayMatch.setAllCaps(false);
-                                holder.mBtnPlayMatch.setText(("Continue"));
+                                if (GameAttemptedStatus.PARTIALLY == attemptedStatus) {
+                                    holder.mBtnPlayMatch.setAllCaps(false);
+                                    holder.mBtnPlayMatch.setText(("Continue"));
+                                }
                             }
-                        }
-                    } else if (attemptedStatus == GameAttemptedStatus.COMPLETELY) {
-                        //  Waiting for results
-                        holder.mLlResultWait.setVisibility(View.VISIBLE);
+                        } else if (attemptedStatus == GameAttemptedStatus.COMPLETELY) {
+                            //  Waiting for results
+                            holder.mLlResultWait.setVisibility(View.VISIBLE);
 //                        holder.mTvMatchResult.setVisibility(View.VISIBLE);
 //                        holder.mTvMatchResult.setText(match.getStage());
-                        holder.mLlResultWait.setTag(match);
-                    }
+                            holder.mLlResultWait.setTag(match);
+                        }
 
-                }
-            } else { // No questions prepared
-                if (!isMatchStarted) { // Still the question is not prepared for these matches
-                    holder.mTvInfo.setVisibility(View.VISIBLE);
-                    holder.mTvInfo.setText("Coming Up");
-                    holder.mTvInfo.setClickable(false);
-                    holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_bg));
+                    }
+                } else { // No questions prepared
+                    if (!isMatchStarted) { // Still the question is not prepared for these matches
+                        holder.mTvInfo.setVisibility(View.VISIBLE);
+                        holder.mTvInfo.setText("Coming Up");
+                        holder.mTvInfo.setClickable(false);
+                        holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_bg));
 //                    holder.mTvMatchResult.setVisibility(View.VISIBLE);
 //                    holder.mTvMatchResult.setText(match.getStage());
+                    }
                 }
+            }else {
+                holder.mBtnMatchLocked.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -249,6 +253,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
         TextView mTvDate;
 
+        CustomButton mBtnMatchLocked;
+
         public ScheduleViewHolder(View V) {
             super(V);
 
@@ -264,6 +270,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             mLlResultWait = (RelativeLayout) V.findViewById(R.id.schedule_row_ll_waiting_for_result);
             mBtnPlayMatch = (CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
             mBtnMatchPoints = (CustomButton) V.findViewById(R.id.schedule_row_btn_points);
+            mBtnMatchLocked = (CustomButton) V.findViewById(R.id.schedule_row_btn_match_locked);
 
             mLlCardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
 

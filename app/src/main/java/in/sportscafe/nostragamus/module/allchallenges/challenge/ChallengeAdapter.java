@@ -8,9 +8,15 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.ShadowLayout;
 import com.jeeva.android.widgets.customfont.CustomButton;
@@ -47,7 +54,6 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
-import static in.sportscafe.nostragamus.R.color;
 import static in.sportscafe.nostragamus.R.dimen;
 import static in.sportscafe.nostragamus.R.id;
 import static in.sportscafe.nostragamus.R.layout;
@@ -86,11 +92,13 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         if (mSwipeView/* || position == 0*/) {
-            //holder.mSlShowGameBg.setVisibility(View.GONE);
             holder.mTvShowGamesNew.setText("HIDE GAMES");
+            holder.mTvAfrJoinedShowGames.setText("Hide games");
+            holder.mTvAfrJoinedShowGames.setCompoundDrawablesWithIntrinsicBounds(R.drawable.challenge_hide_game,0,0,0);
         } else {
-            //holder.mSlShowGameBg.setVisibility(View.VISIBLE);
             holder.mTvShowGamesNew.setText("SHOW GAMES");
+            holder.mTvAfrJoinedShowGames.setText("Show games");
+            holder.mTvAfrJoinedShowGames.setCompoundDrawablesWithIntrinsicBounds(R.drawable.challenge_show_game,0,0,0);
         }
 
         Challenge challenge = getItem(position);
@@ -102,10 +110,39 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             if (mChallengeAmount == 0) {
                 holder.mRlCashRewards.setVisibility(View.INVISIBLE);
             } else {
-                holder.mTvChallengePrice.setText("Worth Rs." + mChallengeAmount + " to be won!");
+                SpannableStringBuilder builder = new SpannableStringBuilder();
+
+                String priceTxt1 = "Worth ";
+                SpannableString priceTxt1Spannable= new SpannableString(priceTxt1);
+                priceTxt1Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, priceTxt1.length(), 0);
+                builder.append(priceTxt1Spannable);
+
+                String priceTxt2 = "₹" + mChallengeAmount;
+                SpannableString priceTxt2Spannable= new SpannableString(priceTxt2);
+                priceTxt2Spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#04B554")), 0, priceTxt2.length(), 0);
+                builder.append(priceTxt2Spannable);
+
+                String priceTxt3 = " to be won!";
+                SpannableString priceTxt3Spannable = new SpannableString(priceTxt3);
+                priceTxt3Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, priceTxt3.length(), 0);
+                builder.append(priceTxt3Spannable);
+
+                holder.mTvChallengePrice.setText(builder, TextView.BufferType.SPANNABLE);
+
             }
         } catch (Exception e) {
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);
+        }
+
+        if (challenge.getChallengeUserInfo().isUserJoined()) {
+            holder.mRlAfterJoinedChallenge.setVisibility(View.VISIBLE);
+            holder.mRlMatchesLeft.setVisibility(View.INVISIBLE);
+            holder.mRlMainPowerup.setVisibility(View.VISIBLE);
+        }else {
+            holder.mRlAfterJoinedChallenge.setVisibility(View.GONE);
+            holder.mRlMatchesLeft.setVisibility(View.VISIBLE);
+            holder.mTvMatchesLeft.setText(String.valueOf(challenge.getCountMatchesLeft())+"/"+String.valueOf(challenge.getMatches().size()) + " Games Left to score!");
+            holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
         }
 
 //        Context context = holder.mIv2xPowerup.getContext();
@@ -162,6 +199,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             textview.setTypeface(tf, Typeface.NORMAL);
 
         }
+
+
 
         /*TimeAgo startTimeLeft = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(),
                 TimeUtils.getMillisecondsFromDateString(
@@ -244,6 +283,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         Button mTvChallengeMinsLeft;
         Button mTvChallengeSecsLeft;
 
+        RelativeLayout mRlMainPowerup;
         ImageView mIv2xPowerup;
         ImageView mIvNonegsPowerup;
         ImageView mIvPollPowerup;
@@ -259,9 +299,19 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         RelativeLayout mRlShowGames;
         RelativeLayout mRlTimer;
 
+        RelativeLayout mRlAfrJoinedShowGames;
+        TextView mTvAfrJoinedShowGames;
+
         TextView mTvGamesLeftCount;
 
         RelativeLayout mRlCashRewards;
+
+        RelativeLayout mRlJoinChallenge;
+
+        RelativeLayout mRlAfterJoinedChallenge;
+
+        RelativeLayout mRlMatchesLeft;
+        TextView mTvMatchesLeft;
 
         public ViewHolder(View V) {
             super(V);
@@ -276,6 +326,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mTv2xPowerupCount = (TextView) V.findViewById(id.powerup_tv_2x_count);
             mTvNonegsPowerupCount = (TextView) V.findViewById(id.powerup_tv_nonegs_count);
             mTvPollPowerupCount = (TextView) V.findViewById(id.powerup_tv_poll_count);
+            mRlMainPowerup = (RelativeLayout) V.findViewById(id.all_challenges_row_powerup_main_rl);
             mTvChallengeUserRank = (TextView) V.findViewById(id.all_challenges_row_tv_leaderboard_rank);
             mTvChallengeHoursLeft = (Button) V.findViewById(id.all_challenges_row_btn_hours_left);
             mTvChallengeDaysLeft = (Button) V.findViewById(id.all_challenges_row_btn_days_left);
@@ -290,10 +341,19 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlCashRewards = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_cash_rewards);
             // mTvTimerText = (TextView) V.findViewById(id.all_challenges_row_tv_timer_txt);
             mIvChallengeInfo = (ImageView) V.findViewById(id.challenge_iv_info);
+            mRlJoinChallenge = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_join_btn);
+            mRlAfterJoinedChallenge = (RelativeLayout) V.findViewById(id.all_challenges_rl_after_joined_challenge);
+            mTvAfrJoinedShowGames = (TextView) V.findViewById(id.all_challenges_row_btn_show_games);
+            mRlAfrJoinedShowGames = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_show_games_btn);
+            mTvMatchesLeft = (TextView) V.findViewById(id.all_challenges_row_tv_matches_left);
+            mRlMatchesLeft = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_matches_left);
+
             mRlShowGames.setOnClickListener(this);
             mIvChallengeInfo.setOnClickListener(this);
+            mRlJoinChallenge.setOnClickListener(this);
+            mRlAfrJoinedShowGames.setOnClickListener(this);
 
-            V.findViewById(R.id.all_challenges_rl_leadboard).setOnClickListener(this);
+            V.findViewById(R.id.all_challenges_rl_after_joined_challenge).setOnClickListener(this);
 //            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
         }
 
@@ -312,9 +372,9 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     }else {
                         intent.putExtra(BundleKeys.CHALLENGE_SWITCH_POS, true);
                     }
-
                     break;
-                case R.id.all_challenges_rl_leadboard:
+
+                case R.id.all_challenges_rl_after_joined_challenge:
                     NostragamusAnalytics.getInstance().trackLeaderboard(LBLandingType.CHALLENGE);
 
                     Challenge challenge = getItem(getAdapterPosition());
@@ -325,25 +385,48 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     )));
                     navigateToPointsActivity(context, bundle);
                     break;
+
                 case R.id.challenge_iv_info:
-                    Challenge joinChallenge = getItem(getAdapterPosition());
-                    showChallengeInfo(context, joinChallenge);
+                    Challenge challengeInfo = getItem(getAdapterPosition());
+                    showChallengeInfo(context, challengeInfo,true);
+                    break;
+
+                case R.id.all_challenges_row_rl_join_btn:
+                    Challenge challengeJoin = getItem(getAdapterPosition());
+                    showChallengeInfo(context, challengeJoin,false);
+                    break;
+
+                case R.id.all_challenges_row_rl_show_games_btn:
+                    Intent switchIntent = new Intent(IntentActions.ACTION_CHALLENGE_CLICK);
+                    switchIntent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
+                    switchIntent.putExtra(BundleKeys.CHALLENGE_TAG_ID, mTagId);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(switchIntent);
+
+                    if (mSwipeView){
+                        switchIntent.putExtra(BundleKeys.CHALLENGE_SWITCH_POS, false);
+                    }else {
+                        switchIntent.putExtra(BundleKeys.CHALLENGE_SWITCH_POS, true);
+                    }
+
             }
         }
     }
 
-    private void showChallengeInfo(Context context, Challenge challenge) {
+    private void showChallengeInfo(Context context, Challenge challenge,boolean isChallengeInfo) {
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-//        if (challenge.getChallengeUserInfo().isUserJoined()) {
-//            ChallengeInfoDialogFragment.newInstance(42, "Joined Challenge", challenge)
-//                    .show(fragmentManager, "challenge_info");
-//        } else {
-//            ChallengeConfigsDialogFragment.newInstance(43, challenge.getChallengeId(), challenge.getName())
-//                    .show(fragmentManager, "challenge_configs");
-//        }
 
-        ChallengeInfoDialogFragment.newInstance(42, challenge.getName(), challenge)
-                .show(fragmentManager, "challenge_info");
+        if (!isChallengeInfo) {
+            if (challenge.getChallengeUserInfo().isUserJoined()) {
+                ChallengeInfoDialogFragment.newInstance(42, "Joined Challenge", challenge)
+                        .show(fragmentManager, "challenge_info");
+            } else {
+                ChallengeConfigsDialogFragment.newInstance(43, challenge.getChallengeId(), challenge.getName())
+                        .show(fragmentManager, "challenge_configs");
+            }
+        }else {
+            ChallengeInfoDialogFragment.newInstance(42, challenge.getName(), challenge)
+                    .show(fragmentManager, "challenge_info");
+        }
     }
 
     private void navigateToPointsActivity(Context context, Bundle bundle) {

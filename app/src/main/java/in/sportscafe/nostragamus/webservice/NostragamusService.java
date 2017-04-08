@@ -203,7 +203,7 @@ public interface NostragamusService {
     @GET("/v2/game/challenges/getConfigs")
     Call<ChallengeConfigsResponse> getConfigs(@Query("challenge_id") int challengeId);
 
-    @GET("/v2/game/users/joinUserChallenge")
+    @PUT("/v2/game/users/joinUserChallenge")
     Call<Challenge> getJoinChallenge(
             @Query("challenge_id") int challengeId,
             @Query("config_index") int configIndex
