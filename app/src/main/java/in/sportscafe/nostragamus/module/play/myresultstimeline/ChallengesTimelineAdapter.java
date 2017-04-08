@@ -122,6 +122,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
             if (mChallengeInfo.getChallengeUserInfo().isUserJoined()) {
 
+                holder.mBtnMatchLocked.setVisibility(View.GONE);
+
                 if (match.getMatchQuestionCount() > 0) {
 
                     if (match.isResultPublished()) { // if match Result Published

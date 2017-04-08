@@ -13,6 +13,7 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -23,9 +24,11 @@ import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
 /**
  * Created by Jeeva on 16/6/16.
  */
-public class HomeActivity extends NostragamusActivity implements UserInfoModelImpl.OnGetUserInfoModelListener, OnHomeActionListener {
+public class HomeActivity extends NostragamusActivity implements UserInfoModelImpl.OnGetUserInfoModelListener, OnHomeActionListener ,OnDismissListener {
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
+
+    private static final int JOIN_CHALLENGE_REQUEST_CODE = 43;
 
     private int mProfileTabPosition = 0;
 
@@ -229,5 +232,12 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
     @Override
     public void onClickChallenges() {
         showChallenges();
+    }
+
+    @Override
+    public void onDismiss(int requestCode, Bundle bundle) {
+        if (requestCode == JOIN_CHALLENGE_REQUEST_CODE) {
+            showChallenges();
+        }
     }
 }

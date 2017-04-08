@@ -107,7 +107,7 @@ public class AllChallengesApiModelImpl {
             if (challenge.getCountMatchesLeft().equals("0")) {
                 // If the endtime of the challenge is fell inside the current time, then it is completed challenge
                 mCompletedChallenges.add(challenge);
-            } else if (isChallengeInitiatedByUser(challenge)) {
+            } else if (isChallengeInitiatedByUser(challenge) || challenge.getChallengeUserInfo().isUserJoined()) {
                 mInPlayChallenges.add(challenge);
             } else {
                 mNewChallenges.add(challenge);
