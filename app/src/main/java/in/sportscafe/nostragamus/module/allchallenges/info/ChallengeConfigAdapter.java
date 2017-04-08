@@ -53,7 +53,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             holder.mTvEntryFee.setText("Free");
             holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + "");
         } else {
-            holder.mTvEntryFee.setText("Rs " + config.getEntryFee());
+            holder.mTvEntryFee.setText("₹ " + config.getEntryFee());
             holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + "/" + memberDetails.getMaxCount());
         }
 
@@ -65,12 +65,21 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             colorRes = R.color.code_gray_1d;
         }
 
+        holder.mVDropDown.setVisibility(View.GONE);
+        holder.mTvDropDownTitle.setVisibility(View.GONE);
+
         holder.mMainView.setBackgroundColor(ViewUtils.getColor(holder.mMainView.getContext(), colorRes));
 
         holder.mLlDropDownHolder.removeAllViews();
         if (DropDownIds.MEMBER == config.getDropDownId()) {
+            holder.mVDropDown.setVisibility(View.VISIBLE);
+            holder.mTvDropDownTitle.setVisibility(View.VISIBLE);
+            holder.mTvDropDownTitle.setText("MEMBERS");
             createMemberDropDownList(memberDetails.getPlayers(), holder.mLlDropDownHolder);
         } else if (DropDownIds.REWARD == config.getDropDownId()) {
+            holder.mVDropDown.setVisibility(View.VISIBLE);
+            holder.mTvDropDownTitle.setVisibility(View.VISIBLE);
+            holder.mTvDropDownTitle.setText("REWARDS");
             createRewardDropDownList(config.getRewardDetails().getBreakUps(), holder.mLlDropDownHolder);
         }
     }
@@ -100,6 +109,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
         }
 
         TextView tvValue = (TextView) dropDownView.findViewById(R.id.reward_row_tv_value);
+
         if (TextUtils.isEmpty(value)) {
             tvValue.setVisibility(View.GONE);
         } else {
@@ -124,6 +134,10 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
 
         LinearLayout mLlDropDownHolder;
 
+        TextView mTvDropDownTitle;
+
+        View mVDropDown;
+
         public ConfigVH(View view) {
             super(view);
 
@@ -133,6 +147,8 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             mTvMembersCount = (TextView) view.findViewById(R.id.pool_row_tv_member_count);
             mTvReward = (TextView) view.findViewById(R.id.pool_row_tv_reward);
             mLlDropDownHolder = (LinearLayout) view.findViewById(R.id.pool_row_ll_drop_down);
+            mTvDropDownTitle = (TextView) view.findViewById(R.id.pool_row_tv_dropdown_title);
+            mVDropDown = (View) view.findViewById(R.id.pool_row_v_separator_drop_down);
 
             view.findViewById(R.id.pool_row_btn_join).setOnClickListener(this);
             view.findViewById(R.id.pool_row_ll_member_layout).setOnClickListener(this);

@@ -12,7 +12,7 @@
             <!-- BUTTON -->
             <item android:bottom="@dimen/dp_3">
                 <shape android:shape="rectangle">
-                    <solid android:color="@color/jungle_green" />
+                    <solid android:color="@color/challenge_join_bg" />
                     <corners android:radius="@dimen/dp_4" />
                 </shape>
             </item>

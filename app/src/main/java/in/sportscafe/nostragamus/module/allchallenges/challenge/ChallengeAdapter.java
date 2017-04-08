@@ -126,7 +126,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 SpannableString priceTxt3Spannable = new SpannableString(priceTxt3);
                 priceTxt3Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, priceTxt3.length(), 0);
                 builder.append(priceTxt3Spannable);
-
                 holder.mTvChallengePrice.setText(builder, TextView.BufferType.SPANNABLE);
 
             }
