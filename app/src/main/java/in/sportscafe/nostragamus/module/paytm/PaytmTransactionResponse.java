@@ -4,7 +4,7 @@ package in.sportscafe.nostragamus.module.paytm;
  * Created by sandip on 8/4/17.
  */
 
-public class PaytmTransactionSuccessResponse {
+public class PaytmTransactionResponse {
 
     String mid;
     String orderId;
