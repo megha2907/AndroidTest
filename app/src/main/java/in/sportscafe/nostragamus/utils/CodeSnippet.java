@@ -46,13 +46,4 @@ public class CodeSnippet {
         return false;
     }
 
-    /**
-     * Used temporary for Paytm transactions
-     * @return
-     */
-    @NonNull
-    public static String getOrderId() {
-        Random r = new Random(System.currentTimeMillis());
-        return "ORDER" + (1 + r.nextInt(2)) * 10000 + r.nextInt(10000);
-    }
 }

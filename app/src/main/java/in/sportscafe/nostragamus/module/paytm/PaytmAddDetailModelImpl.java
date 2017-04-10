@@ -1,9 +1,14 @@
 package in.sportscafe.nostragamus.module.paytm;
 
-import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.Patterns;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.webservice.MyWebService;
+import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by Jeeva on 23/03/17.
@@ -42,10 +47,11 @@ public class PaytmAddDetailModelImpl implements PaytmAddDetailModel {
             return;
         }
 
-        callAddDetailApi(mobNumber, email);
+//        callAddDetailApi(mobNumber, email);
     }
 
-    private void callAddDetailApi(String mobileNumber, String email) {
+    private void callAddDetailApi(UserPaymentModes userPaymentModes, String mobileNumber,
+                                  String accountNo, String name, String ifsCode) {
         if (!Nostragamus.getInstance().hasNetworkConnection()) {
             mAddDetailModelListener.onNoInternet();
             return;
@@ -53,7 +59,26 @@ public class PaytmAddDetailModelImpl implements PaytmAddDetailModel {
 
         mAddDetailModelListener.onApiCallStarted();
 
-        new Handler().postDelayed(new Runnable() {
+        switch (userPaymentModes) {
+            case BANK:
+                AddUserPaymentBankRequest bankRequest = new AddUserPaymentBankRequest();
+                bankRequest.setPaymentMode(Constants.AddUserPaymentDetailsPaymentModes.BANK);
+                bankRequest.setAccountNo(accountNo);
+                bankRequest.setName(name);
+                bankRequest.setIfscCode(ifsCode);
+
+                MyWebService.getInstance().addUserPaymentBankDetails(bankRequest).enqueue(getUserPaymentCallBack());
+                break;
+            case PAYTM:
+                AddUserPaymentPaytmRequest paytmRequest = new AddUserPaymentPaytmRequest();
+                paytmRequest.setPaymentMode(Constants.AddUserPaymentDetailsPaymentModes.BANK);
+                paytmRequest.setMobile(mobileNumber);
+
+                MyWebService.getInstance().addUserPaymentPaytmDetails(paytmRequest).enqueue(getUserPaymentCallBack());
+                break;
+        }
+
+        /*new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if(!mAddDetailModelListener.onApiCallStopped()) {
@@ -62,7 +87,28 @@ public class PaytmAddDetailModelImpl implements PaytmAddDetailModel {
 
                 mAddDetailModelListener.onAddDetailSuccess();
             }
-        }, 3000);
+        }, 3000);*/
+    }
+
+    @NonNull
+    private NostragamusCallBack<AddUserPaymentDetailsResponse> getUserPaymentCallBack() {
+        return new NostragamusCallBack<AddUserPaymentDetailsResponse>() {
+            @Override
+            public void onResponse(Call<AddUserPaymentDetailsResponse> call, Response<AddUserPaymentDetailsResponse> response) {
+                super.onResponse(call, response);
+
+                if (!mAddDetailModelListener.onApiCallStopped()) {
+                    return;
+                }
+
+                if (response.isSuccessful()) {
+                    mAddDetailModelListener.onAddDetailSuccess();
+                } else {
+                    mAddDetailModelListener.onAddDetailFailed();
+                }
+
+            }
+        };
     }
 
     public interface OnPaytmAddDetailModelListener {

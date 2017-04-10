@@ -12,8 +12,11 @@ import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
 import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
-import in.sportscafe.nostragamus.module.paytm.GenerateCheckSumRequest;
-import in.sportscafe.nostragamus.module.paytm.GenerateCheckSumResponse;
+import in.sportscafe.nostragamus.module.paytm.AddUserPaymentBankRequest;
+import in.sportscafe.nostragamus.module.paytm.AddUserPaymentDetailsResponse;
+import in.sportscafe.nostragamus.module.paytm.AddUserPaymentPaytmRequest;
+import in.sportscafe.nostragamus.module.paytm.GenerateOrderRequest;
+import in.sportscafe.nostragamus.module.paytm.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
@@ -212,5 +215,11 @@ public interface NostragamusService {
     );
 
     @POST("v2/game/generateChecksum")
-    Call<GenerateCheckSumResponse> generatePaytmCheckSum(@Body GenerateCheckSumRequest request);
+    Call<GenerateOrderResponse> generatePaytmCheckSum(@Body GenerateOrderRequest request);
+
+    @PUT("v2/game/users/paymentInfo")
+    Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(@Body AddUserPaymentBankRequest request);
+
+    @PUT("v2/game/users/paymentInfo")
+    Call<AddUserPaymentDetailsResponse> addUserPaymentPaytmDetails(@Body AddUserPaymentPaytmRequest request);
 }
