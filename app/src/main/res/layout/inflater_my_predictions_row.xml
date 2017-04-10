@@ -133,11 +133,10 @@
             android:layout_below="@+id/my_predictions_row_tv_answer_points"
             android:layout_marginTop="@dimen/dp_2"
             android:gravity="right|center_vertical"
-            android:maxLines="1"
             android:layout_marginRight="@dimen/dp_18"
             android:text="@string/split_str"
             android:textColor="@color/white_60"
-            android:textSize="@dimen/dp_12"
+            android:textSize="@dimen/dp_8"
             android:visibility="gone"
             app:typeface="lato_regular" />
 
