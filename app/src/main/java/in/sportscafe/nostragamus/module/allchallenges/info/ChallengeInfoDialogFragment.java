@@ -121,6 +121,10 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
 //                )
 //        );
 
+
+        TextView powerUpDesc = (TextView) findViewById(R.id.challenge_info_tv_powerup_desc);
+        powerUpDesc.setText("You have been give 30 powerups for this challenge, Use them to score higher!");
+
         TextView challengePayoutDate = (TextView) findViewById(R.id.challenge_info_tv_challenge_payout_date);
         challengePayoutDate.setText("The Challenge ends on the 7th of March, rewards will be updated within a week of that date");
 
