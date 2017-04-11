@@ -13,6 +13,9 @@ public class Version {
     @JsonProperty("message")
     private String message;
 
+    @JsonProperty("apkLink")
+    private String apkLink;
+
     @JsonProperty("version")
     public int getVersion() {
         return version;
@@ -31,5 +34,15 @@ public class Version {
     @JsonProperty("message")
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @JsonProperty("apkLink")
+    public String getApkLink() {
+        return apkLink;
+    }
+
+    @JsonProperty("apkLink")
+    public void setApkLink(String apkLink) {
+        this.apkLink = apkLink;
     }
 }

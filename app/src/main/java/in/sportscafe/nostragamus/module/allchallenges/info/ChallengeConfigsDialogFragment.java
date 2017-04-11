@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jeeva.android.Log;
 
@@ -21,8 +20,6 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -32,9 +29,9 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
+import in.sportscafe.nostragamus.module.paytm.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.paytm.PaytmApiModelImpl;
-import in.sportscafe.nostragamus.module.paytm.PaytmTransactionSuccessResponse;
-import in.sportscafe.nostragamus.utils.CodeSnippet;
+import in.sportscafe.nostragamus.module.paytm.PaytmTransactionResponse;
 
 /**
  * Created by Jeeva on 28/02/17.
@@ -178,37 +175,47 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     public void onJoinClick(int position) {
         ChallengeConfig challengeConfig = mConfigAdapter.getItem(position);
 
-        if(challengeConfig.isFreeEntry()) {
-            Log.d(TAG, "Free challenge selected... ");
-            joinChallenge(challengeConfig);
+        generateOrderAndProceedToJoin(challengeConfig);
+    }
+
+    /**
+     * GenerateOrder requires call for all free & paid challenges.
+     * Server will appropriately manage joining itself which will be reflected while challenges are refreshed.
+     * If Free, server will update challenge as joined
+     * If Paid, based on paytm transaction success, server'll update challenge for user
+     *
+     * Client app just does refresh at the end.
+     *
+     * @param challengeConfig
+     */
+    private void generateOrderAndProceedToJoin(ChallengeConfig challengeConfig) {
+        GenerateOderApiModelImpl generateOderApiModel =
+                GenerateOderApiModelImpl.newInstance(getGenerateOrderApiListener(challengeConfig));
+
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            showProgressbar();  // Dismissed at all type of callback
+
+            generateOderApiModel.callGenerateOrder(
+                    Long.valueOf(NostragamusDataHandler.getInstance().getUserId()),
+                    mChallengeId,
+                    challengeConfig.getConfigIndex()
+            );
+
         } else {
-
-            Log.d(TAG, "Paid challenge selected... ");
-
-            if (BuildConfig.IS_PAID_VERSION) {
-                Log.d(TAG, "Paid / Full App Version... ");
-                performTransaction(challengeConfig);
-
-            } else {
-                Log.d(TAG, "Free App Version, Can't continue... ");
-                showMessage(Alerts.NOT_FREE_CHALLENGE, Toast.LENGTH_LONG);
-            }
+            showMessage(Alerts.NO_NETWORK_CONNECTION);
         }
+
     }
 
     /**
      * Performs paytm transaction
      * @param challengeConfig - selected Challenge
      */
-    private void performTransaction(ChallengeConfig challengeConfig) {
+    private void performPaytmTransaction(ChallengeConfig challengeConfig, GenerateOrderResponse generateOrderResponse) {
         PaytmApiModelImpl paytmApiModel = PaytmApiModelImpl.newInstance(getPaytmApiListener(challengeConfig), getContext());
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            showProgressbar();  // Dismissed at all type of callback i.e. at getPaytmApiListener()
-
-            paytmApiModel.onStartTransaction(CodeSnippet.getOrderId(),
-                    NostragamusDataHandler.getInstance().getUserId(),
-                    String.valueOf(challengeConfig.getEntryFee()));
+            paytmApiModel.initPaytmTransaction(generateOrderResponse);
 
         } else {
             showMessage(Alerts.NO_NETWORK_CONNECTION);
@@ -233,37 +240,39 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     }
 
     /**
-     * Used for both the purpose as free or
-     * @param config
+     * Generate Order and perform task based on challenge type as paid (paytm trans) , free (direct join)
+     * @param selectedChallenge - user chosen challenge
+     * @return
      */
-    private void joinChallenge(ChallengeConfig config) {
-        new JoinChallengeApiModelImpl(new JoinChallengeApiModelImpl.OnJoinChallengeApiModelListener() {
+    private GenerateOderApiModelImpl.OnGenerateOrderApiModelListener getGenerateOrderApiListener(final ChallengeConfig selectedChallenge) {
+        return new GenerateOderApiModelImpl.OnGenerateOrderApiModelListener() {
             @Override
-            public void onSuccessJoinApi(Challenge challenge) {
-                mChallenge = challenge;
-                dismiss();
+            public void makePaytmTransaction(GenerateOrderResponse generateOrderResponse) {
+                dismissProgressbar();
+                performPaytmTransaction(selectedChallenge, generateOrderResponse);
             }
 
             @Override
-            public void onFailedJoinApi() {
+            public void joinFreeChallenge() {
+                dismissProgressbar();
+                 /*Server will manage joining based on generateOrder api if it's free
+                 * No Need to call any api here for joining */
+
+                 onJoinActionSuccess();
+            }
+
+            @Override
+            public void onApiFailure() {
+                dismissProgressbar();
                 showMessage(Alerts.API_FAIL);
             }
 
             @Override
-            public void onNoInternet() {
+            public void noInternet() {
+                dismissProgressbar();
                 showMessage(Alerts.NO_NETWORK_CONNECTION);
             }
-
-            @Override
-            public void onApiCallStarted() {
-                showProgressbar();
-            }
-
-            @Override
-            public boolean onApiCallStopped() {
-                return dismissProgressbar();
-            }
-        }).joinChallenge(mChallengeId, config.getConfigIndex());
+        };
     }
 
     /**
@@ -274,59 +283,60 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     private PaytmApiModelImpl.OnPaytmApiModelListener getPaytmApiListener(final ChallengeConfig challengeConfigToJoin) {
         return new PaytmApiModelImpl.OnPaytmApiModelListener() {
             @Override
-            public void onApiSuccess() {
-                // This is for non transaction api call
-                dismissProgressbar();
-            }
-
-            @Override
-            public void onApiFailure() {
-                dismissProgressbar();
-                showMessage(Alerts.API_FAIL);
-            }
-
-            @Override
             public void onTransactionUiError() {
-                dismissProgressbar();
+                Log.d(TAG, Alerts.PAYTM_FAILURE);
                 showMessage(Alerts.PAYTM_FAILURE);
             }
 
             @Override
             public void onTransactionNoNetwork() {
-                dismissProgressbar();
+                Log.d(TAG, Alerts.NO_NETWORK_CONNECTION);
                 showMessage(Alerts.NO_NETWORK_CONNECTION);
             }
 
             @Override
             public void onTransactionClientAuthenticationFailed() {
-                dismissProgressbar();
+                Log.d(TAG, Alerts.PAYTM_AUTHENTICATION_FAILED);
                 showMessage(Alerts.PAYTM_AUTHENTICATION_FAILED);
             }
 
             @Override
             public void onTransactionPageLoadingError() {
-                dismissProgressbar();
+                Log.d(TAG, Alerts.PAYTM_FAILURE);
                 showMessage(Alerts.PAYTM_FAILURE);
             }
 
             @Override
             public void onTransactionCancelledByBackPressed() {
-                dismissProgressbar();
+                Log.d(TAG, Alerts.PAYTM_TRANSACTION_CANCELLED);
                 showMessage(Alerts.PAYTM_TRANSACTION_CANCELLED);
             }
 
             @Override
             public void onTransactionCancelled() {
-                dismissProgressbar();
+                Log.d(TAG, Alerts.PAYTM_TRANSACTION_CANCELLED);
                 showMessage(Alerts.PAYTM_TRANSACTION_CANCELLED);
             }
 
             @Override
-            public void onTransactionResponse(PaytmTransactionSuccessResponse successResponse) {
-                dismissProgressbar();
-                joinChallenge(challengeConfigToJoin);
+            public void onTransactionSuccessResponse(PaytmTransactionResponse successResponse) {
+                Log.d(TAG, "Transaction Response - Success (Joining Challenge)");
+                /* Server will arrange all joining, No need of any api here.  */
+                onJoinActionSuccess();
+            }
+
+            @Override
+            public void onTransactionFailureResponse(PaytmTransactionResponse response) {
+                Log.d(TAG, Alerts.PAYTM_TRANSACTION_FAILED);
+                showMessage(Alerts.PAYTM_TRANSACTION_FAILED);
             }
         };
     }
 
+    /**
+     * Used to indicate join action completed either for free or paid and should be refreshed (onDismiss).
+     */
+    private void onJoinActionSuccess() {
+        dismiss();
+    }
 }

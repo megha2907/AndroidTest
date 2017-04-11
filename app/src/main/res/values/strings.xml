@@ -124,6 +124,6 @@
     <string name="proceed">Proceed</string>
     <string name="invalid_email">Enter valid email id</string>
 
-    <string name="split_str">(Split)</string>
+    <string name="split_str">Question cancelled,\n half points awarded</string>
 
 </resources>

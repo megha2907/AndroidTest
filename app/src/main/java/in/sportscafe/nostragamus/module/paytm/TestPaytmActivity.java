@@ -82,22 +82,22 @@ public class TestPaytmActivity extends Activity implements Constants {
         final String custId = "C001";
         final String txnAmount = "1";
 
-        GenerateCheckSumRequest paytmCheckSumRequest = getGenerateCheckSumRequest();
-        paytmCheckSumRequest.setoRDERID(orderId);
+        GenerateOrderRequest paytmCheckSumRequest = getGenerateCheckSumRequest();
+        /*paytmCheckSumRequest.setoRDERID(orderId);
         paytmCheckSumRequest.setCUSTID(custId);
-        paytmCheckSumRequest.setTXNAMOUNT(txnAmount);
+        paytmCheckSumRequest.setTXNAMOUNT(txnAmount);*/
 
 
-        MyWebService.getInstance().getGeneratePaytmCheckSumRequest(paytmCheckSumRequest)
-                .enqueue(new NostragamusCallBack<GenerateCheckSumResponse>() {
+        /*MyWebService.getInstance().getGenerateOrderRequest(paytmCheckSumRequest)
+                .enqueue(new NostragamusCallBack<GenerateOrderResponse>() {
                     @Override
-                    public void onResponse(Call<GenerateCheckSumResponse> call, Response<GenerateCheckSumResponse> response) {
+                    public void onResponse(Call<GenerateOrderResponse> call, Response<GenerateOrderResponse> response) {
                         super.onResponse(call, response);
 
                         if (response != null && response.isSuccessful() && response.body() != null) {
-                            GenerateCheckSumResponse generateCheckSumResponse = response.body();
-                            if (generateCheckSumResponse != null && !TextUtils.isEmpty(generateCheckSumResponse.getCHECKSUMHASH())) {
-                                onSuccessResponse(generateCheckSumResponse.getCHECKSUMHASH(), orderId, custId, txnAmount);
+                            GenerateOrderResponse generateOrderResponse = response.body();
+                            if (generateOrderResponse != null && !TextUtils.isEmpty(generateOrderResponse.getCHECKSUMHASH())) {
+                                onSuccessResponse(generateOrderResponse.getCHECKSUMHASH(), orderId, custId, txnAmount);
 
                             } else {
                                 com.jeeva.android.Log.d(TAG, "CheckSumHash can not be empty!");
@@ -109,7 +109,7 @@ public class TestPaytmActivity extends Activity implements Constants {
 //                            showMessage(Alerts.API_FAIL);
                         }
                     }
-                });
+                });*/
 
     }
 
@@ -118,16 +118,16 @@ public class TestPaytmActivity extends Activity implements Constants {
      * @return Generate checksum request
      */
     @NonNull
-    private GenerateCheckSumRequest getGenerateCheckSumRequest() {
-        GenerateCheckSumRequest paytmCheckSumRequest = new GenerateCheckSumRequest();
-        paytmCheckSumRequest.setRequestType(PaytmParamValues.REQUEST_TYPE_DEFAULT);
+    private GenerateOrderRequest getGenerateCheckSumRequest() {
+        GenerateOrderRequest paytmCheckSumRequest = new GenerateOrderRequest();
+        /*paytmCheckSumRequest.setRequestType(PaytmParamValues.REQUEST_TYPE_DEFAULT);
         paytmCheckSumRequest.setEMAIL(PaytmParamValues.EMAIL_VALUE);
         paytmCheckSumRequest.setMOBILENO(PaytmParamValues.MOBILE_NO_VALUE);
         paytmCheckSumRequest.setCALLBACKURL(PaytmParamValues.CALLBACK_URL_VALUE);
         paytmCheckSumRequest.setCHANNELID(PaytmParamValues.CHANNEL_ID_VALUE);
         paytmCheckSumRequest.setINDUSTRYTYPEID(PaytmParamValues.INDUSTRY_TYPE_ID_VALUE);
         paytmCheckSumRequest.setWEBSITE(PaytmParamValues.WEBSITE_VALUE);
-        paytmCheckSumRequest.setMID(PaytmParamValues.MID_VALUE);
+        paytmCheckSumRequest.setMID(PaytmParamValues.MID_VALUE);*/
         return paytmCheckSumRequest;
     }
 

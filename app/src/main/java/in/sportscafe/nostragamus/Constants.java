@@ -57,6 +57,15 @@ public interface Constants {
         String NORMAL_UPDATE_MESSAGE = "normalUpdateMessage";
         String FORCE_UPDATE_MESSAGE = "forceUpdateMessage";
         String NORMAL_UPDATE_SHOWN_TIME = "normalUpdateShownTime";
+        String NORMAL_PAID_UPDATE_VERSION = "normalPaidUpdateVersion";
+        String FORCE_PAID_UPDATE_VERSION = "forcePaidUpdateVersion";
+        String NORMAL_PAID_UPDATE_ENABLED = "normalPaidUpdateEnabled";
+        String NORMAL_PAID_UPDATE_MESSAGE = "normalPaidUpdateMessage";
+        String FORCE_PAID_UPDATE_MESSAGE = "forcePaidUpdateMessage";
+        String NORMAL_PAID_UPDATE_SHOWN_TIME = "normalPaidUpdateShownTime";
+        String PAID_FORCE_UPDATE_APK_LINK = "paidForceUpdateApkLink";
+        String PAID_NORMAL_UPDATE_APK_LINK = "paidNormalUpdateApkLink";
+
         String INITIAL_FORM_SHOWN = "initialFormShown";
         String ACCESS_TOKEN = "accessToken";
         String TOKEN_EXPIRY = "tokenExpiry";
@@ -158,11 +167,12 @@ public interface Constants {
         String EMPTY_MATCHES = "Currently no upcoming matches";
         String DEFAULT_SHARE_MESSAGE = "Use paste, If you want to use the default share message!";
         String POLL_LIST_EMPTY = "No polls";
-        String NOT_FREE_CHALLENGE = "Paid challenge not implemented";
+        String NOT_FREE_CHALLENGE = "Please use full version for the paid challenges";
 
         /*--- Paytm Msg ---*/
         String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";
         String PAYTM_TRANSACTION_CANCELLED = "You have cancelled transaction, can not continue to join";
+        String PAYTM_TRANSACTION_FAILED = "Transaction failed, please try again";
         String PAYTM_FAILURE = "Could not initiate transaction, please try again";
     }
 
@@ -465,7 +475,7 @@ public interface Constants {
         String CHANNEL_ID_VALUE = "WAP";
         String INDUSTRY_TYPE_ID_VALUE = "Retail";
         String WEBSITE_VALUE = "APP_STAGING";
-        String CALLBACK_URL_VALUE = "https://api-stage.sportscafe.in/v2/game/callBackPaytm";
+        String CALLBACK_URL_VALUE = "https://api-stage.sportscafe.in/v2/game/verifyChecksum"; //"https://api-stage.sportscafe.in/v2/game/callBackPaytm";
         String EMAIL_VALUE = "";
         String MOBILE_NO_VALUE = "";
     }
@@ -487,5 +497,27 @@ public interface Constants {
         String BANK_NAME = "BANK_NAME";
         String PAYMENT_MODE = "PAYMENTMODE";
         String CHECKSUM_HASH = "CHECKSUMHASH";
+     }
+
+     interface PaytmTransactionResponseStatusValues {
+          /* NOTE: Values are from Paytm API documentation, should be compared against response_status to know transaction status
+          * DO NOT CHANGE VALUES ... */
+
+         String TRANSACTION_SUCCESS = "TXN_SUCCESS";
+         String TRANSACTION_FAILURE = "TXN_FAILURE";
+         String TRANSACTION_PENDING = "PENDING";
+         String TRANSACTION_OPEN = "OPEN";
+     }
+
+     interface AddUserPaymentDetailsPaymentModes {
+         String BANK = "bank";
+         String PAYTM = "paytm";
+     }
+
+     interface AppUpdateTypes {
+         String NORMAL_UPDATE = "Normal";
+         String FORCE_UPDATE = "Force";
+         String NORMAL_PAID_UPDATE = "Normal_Paid";
+         String FORCE_PAID_UPDATE = "Force_Paid";
      }
 }

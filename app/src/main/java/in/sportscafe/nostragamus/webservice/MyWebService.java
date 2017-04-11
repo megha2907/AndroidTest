@@ -14,8 +14,11 @@ import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
 import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
-import in.sportscafe.nostragamus.module.paytm.GenerateCheckSumRequest;
-import in.sportscafe.nostragamus.module.paytm.GenerateCheckSumResponse;
+import in.sportscafe.nostragamus.module.paytm.AddUserPaymentBankRequest;
+import in.sportscafe.nostragamus.module.paytm.AddUserPaymentDetailsResponse;
+import in.sportscafe.nostragamus.module.paytm.AddUserPaymentPaytmRequest;
+import in.sportscafe.nostragamus.module.paytm.GenerateOrderRequest;
+import in.sportscafe.nostragamus.module.paytm.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
@@ -265,7 +268,15 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getJoinChallenge(challengeId, configIndex);
     }
 
-    public Call<GenerateCheckSumResponse> getGeneratePaytmCheckSumRequest(GenerateCheckSumRequest request) {
-        return mNostragamusService.generatePaytmCheckSum(request);
+    public Call<GenerateOrderResponse> getGenerateOrderRequest(GenerateOrderRequest request) {
+        return mNostragamusService.generateOrder(request);
+    }
+
+    public Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(AddUserPaymentBankRequest request) {
+        return mNostragamusService.addUserPaymentBankDetails(request);
+    }
+
+    public Call<AddUserPaymentDetailsResponse> addUserPaymentPaytmDetails(AddUserPaymentPaytmRequest request) {
+        return mNostragamusService.addUserPaymentPaytmDetails(request);
     }
 }
