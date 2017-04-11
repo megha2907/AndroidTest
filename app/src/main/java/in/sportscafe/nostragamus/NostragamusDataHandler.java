@@ -191,12 +191,28 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedIntData(SharedKeys.NORMAL_UPDATE_VERSION, version);
     }
 
+    public int getNormalPaidUpdateVersion() {
+        return getSharedIntData(SharedKeys.NORMAL_PAID_UPDATE_VERSION, -1);
+    }
+
+    public void setNormalPaidUpdateVersion(int version) {
+        setSharedIntData(SharedKeys.NORMAL_PAID_UPDATE_VERSION, version);
+    }
+
     public String getNormalUpdateMessage() {
         return getSharedStringData(SharedKeys.NORMAL_UPDATE_MESSAGE);
     }
 
     public void setNormalUpdateMessage(String message) {
         setSharedStringData(SharedKeys.NORMAL_UPDATE_MESSAGE, message);
+    }
+
+    public String getNormalPaidUpdateMessage() {
+        return getSharedStringData(SharedKeys.NORMAL_PAID_UPDATE_MESSAGE);
+    }
+
+    public void setNormalPaidUpdateMessage(String message) {
+        setSharedStringData(SharedKeys.NORMAL_PAID_UPDATE_MESSAGE, message);
     }
 
     public Integer getForceUpdateVersion() {
@@ -207,12 +223,28 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedIntData(SharedKeys.FORCE_UPDATE_VERSION, version);
     }
 
+    public Integer getForcePaidUpdateVersion() {
+        return getSharedIntData(SharedKeys.FORCE_PAID_UPDATE_VERSION, -1);
+    }
+
+    public void setForcePaidUpdateVersion(int version) {
+        setSharedIntData(SharedKeys.FORCE_PAID_UPDATE_VERSION, version);
+    }
+
     public String getForceUpdateMessage() {
         return getSharedStringData(SharedKeys.FORCE_UPDATE_MESSAGE);
     }
 
     public void setForceUpdateMessage(String message) {
         setSharedStringData(SharedKeys.FORCE_UPDATE_MESSAGE, message);
+    }
+
+    public String getForcePaidUpdateMessage() {
+        return getSharedStringData(SharedKeys.FORCE_PAID_UPDATE_MESSAGE);
+    }
+
+    public void setForcePaidUpdateMessage(String message) {
+        setSharedStringData(SharedKeys.FORCE_PAID_UPDATE_MESSAGE, message);
     }
 
     public boolean isNormalUpdateEnabled() {
@@ -229,8 +261,26 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return false;
     }
 
+    public boolean isNormalPaidUpdateEnabled() {
+        if (getSharedBooleanData(SharedKeys.NORMAL_PAID_UPDATE_ENABLED, true)) {
+            long currentTimeMs = Calendar.getInstance().getTimeInMillis();
+            long updateShownTimeMs = getNormalPaidUpdateShownTime();
+            if (updateShownTimeMs == -1
+                    || TimeUtils.getDaysDifference(currentTimeMs - updateShownTimeMs) > 0) {
+                setNormalPaidUpdateShownTime(currentTimeMs);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void setNormalUpdateEnabled(boolean enabled) {
         setSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, enabled);
+    }
+
+    public void setNormalPaidUpdateEnabled(boolean enabled) {
+        setSharedBooleanData(SharedKeys.NORMAL_PAID_UPDATE_ENABLED, enabled);
     }
 
     private long getNormalUpdateShownTime() {
@@ -239,6 +289,30 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     private void setNormalUpdateShownTime(long normalUpdateShownTime) {
         setSharedLongData(SharedKeys.NORMAL_UPDATE_SHOWN_TIME, normalUpdateShownTime);
+    }
+
+    private long getNormalPaidUpdateShownTime() {
+        return getSharedLongData(SharedKeys.NORMAL_PAID_UPDATE_SHOWN_TIME, -1);
+    }
+
+    private void setNormalPaidUpdateShownTime(long normalPaidUpdateShownTime) {
+        setSharedLongData(SharedKeys.NORMAL_PAID_UPDATE_SHOWN_TIME, normalPaidUpdateShownTime);
+    }
+
+    public void setPaidForceApkLink(String apkLink) {
+        setSharedStringData(SharedKeys.PAID_FORCE_UPDATE_APK_LINK, apkLink);
+    }
+
+    public String getPaidForceApkLink() {
+        return getSharedStringData(SharedKeys.PAID_FORCE_UPDATE_APK_LINK);
+    }
+
+    public void setPaidNormalApkLink(String apkLink) {
+        setSharedStringData(SharedKeys.PAID_NORMAL_UPDATE_APK_LINK, apkLink);
+    }
+
+    public String getPaidNormalApkLink() {
+        return getSharedStringData(SharedKeys.PAID_NORMAL_UPDATE_APK_LINK);
     }
 
     public boolean isInitialFeedbackFormShown() {

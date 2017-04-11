@@ -269,7 +269,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<GenerateOrderResponse> getGenerateOrderRequest(GenerateOrderRequest request) {
-        return mNostragamusService.generatePaytmCheckSum(request);
+        return mNostragamusService.generateOrder(request);
     }
 
     public Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(AddUserPaymentBankRequest request) {

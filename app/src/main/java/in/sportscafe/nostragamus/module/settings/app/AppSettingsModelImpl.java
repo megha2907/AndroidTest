@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.settings.app;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
@@ -52,6 +54,8 @@ public class AppSettingsModelImpl implements AppSettingsModel {
 
     private void handleVersion(VersionDetails versionDetails) {
         if(null != versionDetails) {
+            Log.d("Version", versionDetails.toString());
+
             NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
 
             int oldNormalUpdateVersion = dataHandler.getNormalUpdateVersion();
@@ -67,6 +71,28 @@ public class AppSettingsModelImpl implements AppSettingsModel {
             if (oldNormalUpdateVersion != version.getVersion()) {
                 dataHandler.setNormalUpdateEnabled(true);
             }
+
+            /*  Paid version */
+            int oldPaidNormalUpdateVersion = dataHandler.getNormalPaidUpdateVersion();
+
+            Version versionPaid = versionDetails.getPaidForceUpdateVersion();
+            if (versionPaid != null) {
+                dataHandler.setForcePaidUpdateVersion(versionPaid.getVersion());
+                dataHandler.setForcePaidUpdateMessage(versionPaid.getMessage());
+                dataHandler.setPaidForceApkLink(versionPaid.getApkLink());
+            }
+
+            versionPaid = versionDetails.getPaidNormalUpdateVersion();
+            if (versionPaid != null) {
+                dataHandler.setNormalPaidUpdateVersion(versionPaid.getVersion());
+                dataHandler.setNormalPaidUpdateMessage(versionPaid.getMessage());
+                dataHandler.setPaidNormalApkLink(versionPaid.getApkLink());
+            }
+
+            if (versionPaid != null && oldPaidNormalUpdateVersion != versionPaid.getVersion()) {
+                dataHandler.setNormalPaidUpdateEnabled(true);
+            }
+
         }
     }
 }

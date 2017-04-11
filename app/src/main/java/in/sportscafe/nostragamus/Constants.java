@@ -57,6 +57,15 @@ public interface Constants {
         String NORMAL_UPDATE_MESSAGE = "normalUpdateMessage";
         String FORCE_UPDATE_MESSAGE = "forceUpdateMessage";
         String NORMAL_UPDATE_SHOWN_TIME = "normalUpdateShownTime";
+        String NORMAL_PAID_UPDATE_VERSION = "normalPaidUpdateVersion";
+        String FORCE_PAID_UPDATE_VERSION = "forcePaidUpdateVersion";
+        String NORMAL_PAID_UPDATE_ENABLED = "normalPaidUpdateEnabled";
+        String NORMAL_PAID_UPDATE_MESSAGE = "normalPaidUpdateMessage";
+        String FORCE_PAID_UPDATE_MESSAGE = "forcePaidUpdateMessage";
+        String NORMAL_PAID_UPDATE_SHOWN_TIME = "normalPaidUpdateShownTime";
+        String PAID_FORCE_UPDATE_APK_LINK = "paidForceUpdateApkLink";
+        String PAID_NORMAL_UPDATE_APK_LINK = "paidNormalUpdateApkLink";
+
         String INITIAL_FORM_SHOWN = "initialFormShown";
         String ACCESS_TOKEN = "accessToken";
         String TOKEN_EXPIRY = "tokenExpiry";
@@ -501,5 +510,12 @@ public interface Constants {
      interface AddUserPaymentDetailsPaymentModes {
          String BANK = "bank";
          String PAYTM = "paytm";
+     }
+
+     interface AppUpdateTypes {
+         String NORMAL_UPDATE = "Normal";
+         String FORCE_UPDATE = "Force";
+         String NORMAL_PAID_UPDATE = "Normal_Paid";
+         String FORCE_PAID_UPDATE = "Force_Paid";
      }
 }

@@ -36,7 +36,7 @@ public class GenerateOderApiModelImpl {
      * @param challengeId - challengeId
      * @param configIndex - configIndex
      */
-    public void callGenerateOrder(final String userId, String challengeId, String configIndex) {
+    public void callGenerateOrder(final long userId, long challengeId, long configIndex) {
 
         GenerateOrderRequest generateOrderRequest = new GenerateOrderRequest();
         generateOrderRequest.setUserId(userId);
@@ -53,14 +53,14 @@ public class GenerateOderApiModelImpl {
                             if (response != null && response.isSuccessful() && response.body() != null) {
                                 GenerateOrderResponse generateOrderResponse = response.body();
 
-                                if (!TextUtils.isEmpty(generateOrderResponse.getCHECKSUMHASH())) {
+                                if (!TextUtils.isEmpty(generateOrderResponse.getCheckSumHash())) {
                                     com.jeeva.android.Log.d(TAG, "CheckSumHash returned - continue for paytm transaction");
                                     if (mListener != null) {
                                         mListener.makePaytmTransaction(generateOrderResponse);
                                     }
 
                                 } else {
-                                    com.jeeva.android.Log.d(TAG, "CheckSumHash Empty");
+                                    com.jeeva.android.Log.d(TAG, "CheckSumHash Empty - continue to join free challenge");
                                     if (mListener != null) {
                                         mListener.joinFreeChallenge();
                                     }

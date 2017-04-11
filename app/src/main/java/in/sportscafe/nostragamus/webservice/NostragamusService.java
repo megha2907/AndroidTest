@@ -214,8 +214,8 @@ public interface NostragamusService {
             @Query("config_index") int configIndex
     );
 
-    @POST("v2/game/generateChecksum")
-    Call<GenerateOrderResponse> generatePaytmCheckSum(@Body GenerateOrderRequest request);
+    @POST("v2/game/generateOrder")
+    Call<GenerateOrderResponse> generateOrder(@Body GenerateOrderRequest request);
 
     @PUT("v2/game/users/paymentInfo")
     Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(@Body AddUserPaymentBankRequest request);

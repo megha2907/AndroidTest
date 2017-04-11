@@ -8,36 +8,36 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class GenerateOrderRequest {
 
-    @JsonProperty("USER_ID")
-    private String userId;
+    @JsonProperty("user_id")
+    private long userId;
 
-    @JsonProperty("CHALLENGE_ID")
-    private String challengeId;
+    @JsonProperty("challenge_id")
+    private long challengeId;
 
-    @JsonProperty("CONFIG_INDEX")
-    private String configIndex;
+    @JsonProperty("config_index")
+    private long configIndex;
 
-    public String getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public String getChallengeId() {
+    public long getChallengeId() {
         return challengeId;
     }
 
-    public void setChallengeId(String challengeId) {
+    public void setChallengeId(long challengeId) {
         this.challengeId = challengeId;
     }
 
-    public String getConfigIndex() {
+    public long getConfigIndex() {
         return configIndex;
     }
 
-    public void setConfigIndex(String configIndex) {
+    public void setConfigIndex(long configIndex) {
         this.configIndex = configIndex;
     }
 }

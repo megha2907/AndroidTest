@@ -88,7 +88,7 @@ public class TestPaytmActivity extends Activity implements Constants {
         paytmCheckSumRequest.setTXNAMOUNT(txnAmount);*/
 
 
-        MyWebService.getInstance().getGenerateOrderRequest(paytmCheckSumRequest)
+        /*MyWebService.getInstance().getGenerateOrderRequest(paytmCheckSumRequest)
                 .enqueue(new NostragamusCallBack<GenerateOrderResponse>() {
                     @Override
                     public void onResponse(Call<GenerateOrderResponse> call, Response<GenerateOrderResponse> response) {
@@ -109,7 +109,7 @@ public class TestPaytmActivity extends Activity implements Constants {
 //                            showMessage(Alerts.API_FAIL);
                         }
                     }
-                });
+                });*/
 
     }
 

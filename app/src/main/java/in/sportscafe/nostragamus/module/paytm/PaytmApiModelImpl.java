@@ -36,6 +36,14 @@ public class PaytmApiModelImpl {
     }
 
     public void initPaytmTransaction(GenerateOrderResponse generateOrderResponse) {
+        if (generateOrderResponse == null) {
+            com.jeeva.android.Log.d(TAG, "GenerateOrder response found null");
+            if (mListener != null) {
+                mListener.onTransactionUiError();
+            }
+            return;
+        }
+
         PaytmPGService paytmPGService = PaytmPGService.getStagingService();
 
         if (BuildConfig.DEBUG) {
@@ -152,21 +160,21 @@ public class PaytmApiModelImpl {
         return response;
     }
 
-    private Map<String, String> getParams(GenerateOrderResponse generateOrderResponse) {
+    private Map<String, String> getParams(@NonNull  GenerateOrderResponse generateOrderResponse) {
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put(Constants.PaytmParamsKeys.REQUEST_TYPE, Constants.PaytmParamValues.REQUEST_TYPE_DEFAULT);
-        paramMap.put(Constants.PaytmParamsKeys.CHANNEL_ID, Constants.PaytmParamValues.CHANNEL_ID_VALUE);
-        paramMap.put(Constants.PaytmParamsKeys.INDUSTRY_TYPE_ID, Constants.PaytmParamValues.INDUSTRY_TYPE_ID_VALUE);
-        paramMap.put(Constants.PaytmParamsKeys.WEBSITE, Constants.PaytmParamValues.WEBSITE_VALUE);
-        paramMap.put(Constants.PaytmParamsKeys.MID, Constants.PaytmParamValues.MID_VALUE);
-        paramMap.put(Constants.PaytmParamsKeys.CALLBACK_URL, Constants.PaytmParamValues.CALLBACK_URL_VALUE);
-        paramMap.put(Constants.PaytmParamsKeys.EMAIL, Constants.PaytmParamValues.EMAIL_VALUE);
-        paramMap.put(Constants.PaytmParamsKeys.MOBILE_NO, Constants.PaytmParamValues.MOBILE_NO_VALUE);
 
-        /*paramMap.put(Constants.PaytmParamsKeys.CHECKSUMHASH, checkSumHash);
-        paramMap.put(Constants.PaytmParamsKeys.ORDER_ID, orderId);
-        paramMap.put(Constants.PaytmParamsKeys.CUST_ID, custId);
-        paramMap.put(Constants.PaytmParamsKeys.TXN_AMOUNT, amount);*/
+        paramMap.put(Constants.PaytmParamsKeys.REQUEST_TYPE, generateOrderResponse.getRequestType());
+        paramMap.put(Constants.PaytmParamsKeys.CHANNEL_ID, generateOrderResponse.getChallengeId());
+        paramMap.put(Constants.PaytmParamsKeys.INDUSTRY_TYPE_ID, generateOrderResponse.getIndustryTypeId());
+        paramMap.put(Constants.PaytmParamsKeys.WEBSITE, generateOrderResponse.getWebsite());
+        paramMap.put(Constants.PaytmParamsKeys.MID, generateOrderResponse.getmId());
+        paramMap.put(Constants.PaytmParamsKeys.CALLBACK_URL, generateOrderResponse.getCallbackUrl());
+        paramMap.put(Constants.PaytmParamsKeys.EMAIL, generateOrderResponse.getEmail());
+        paramMap.put(Constants.PaytmParamsKeys.MOBILE_NO, generateOrderResponse.getMobileNo());
+        paramMap.put(Constants.PaytmParamsKeys.CHECKSUMHASH, generateOrderResponse.getCheckSumHash());
+        paramMap.put(Constants.PaytmParamsKeys.ORDER_ID, generateOrderResponse.getOrderId());
+        paramMap.put(Constants.PaytmParamsKeys.CUST_ID, String.valueOf(generateOrderResponse.getCustId()));
+        paramMap.put(Constants.PaytmParamsKeys.TXN_AMOUNT, String.valueOf(generateOrderResponse.getTxnAmount()));
 
         return paramMap;
     }
