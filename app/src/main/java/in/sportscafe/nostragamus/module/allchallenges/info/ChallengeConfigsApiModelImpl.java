@@ -27,18 +27,18 @@ public class ChallengeConfigsApiModelImpl {
         return new ChallengeConfigsApiModelImpl(listener);
     }
 
-    public void getConfigs(int challengeId) {
+    public void getConfigs(int challengeId,Integer configIndex) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            callConfigsApi(challengeId);
+            callConfigsApi(challengeId,configIndex);
         } else {
             mApiModelListener.onNoInternet();
         }
     }
 
-    private void callConfigsApi(int challengeId) {
+    private void callConfigsApi(int challengeId,Integer configIndex) {
         mApiModelListener.onApiCallStarted();
 
-        MyWebService.getInstance().getChallengeConfigsRequest(challengeId).enqueue(
+        MyWebService.getInstance().getChallengeConfigsRequest(challengeId,configIndex).enqueue(
                 new NostragamusCallBack<ChallengeConfigsResponse>() {
                     @Override
                     public void onResponse(Call<ChallengeConfigsResponse> call, Response<ChallengeConfigsResponse> response) {

@@ -242,6 +242,8 @@ public interface Constants {
         String CHALLENGE_DATA = "challengeData";
         String TITLE = "title";
         String CHALLENGE_SWITCH_POS = "challengeSwitchPos";
+        String CONFIG_INDEX = "configIndex";
+        String CHALLENGE_END_TIME = "challengeEndTime";
     }
 
     interface ParcelableKeys {

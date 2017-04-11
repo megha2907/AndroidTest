@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -46,6 +47,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialogFragment;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeInfoDialogFragment;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeRewardsFragment;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
@@ -65,11 +67,15 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     private boolean mSwipeView = true;
 
-    private int SWIPE_VIEW = 0;
+    private int CHALLENGE_INFO_DIALOG_TYPE = 0;
 
-    private int LIST_VIEW = 1;
+    private int CHALLENGE_REWARDS_DIALOG_TYPE = 1;
+
+    private int CHALLENGE_CONFIG_DIALOG_TYPE = 2;
 
     private int mTagId;
+
+    private int dialogType=0;
 
     public ChallengeAdapter(Context context, List<Challenge> challenges, boolean swipeView, int tagId) {
         super(context);
@@ -270,18 +276,14 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         CustomButton mTvChallengePrice;
         TextView mTvChallengeName;
         HmImageView mIvChallengeImage;
-
         ImageView mIvChallengeInfo;
-
         TextView mTvChallengeUserRank;
-
         //TextView mTvTimerText;
         TextView mBtnTimeLeft;
         Button mTvChallengeDaysLeft;
         Button mTvChallengeHoursLeft;
         Button mTvChallengeMinsLeft;
         Button mTvChallengeSecsLeft;
-
         RelativeLayout mRlMainPowerup;
         ImageView mIv2xPowerup;
         ImageView mIvNonegsPowerup;
@@ -289,27 +291,20 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         TextView mTv2xPowerupCount;
         TextView mTvNonegsPowerupCount;
         TextView mTvPollPowerupCount;
-
         LinearLayout mLlTournament;
         ShadowLayout mSlShowGameBg;
         TextView mTvShowGames;
-
         TextView mTvShowGamesNew;
         RelativeLayout mRlShowGames;
         RelativeLayout mRlTimer;
-
         RelativeLayout mRlAfrJoinedShowGames;
         TextView mTvAfrJoinedShowGames;
-
         TextView mTvGamesLeftCount;
-
         RelativeLayout mRlCashRewards;
-
         RelativeLayout mRlJoinChallenge;
-
         RelativeLayout mRlAfterJoinedChallenge;
-
         RelativeLayout mRlMatchesLeft;
+        RelativeLayout mRlRewardsBtn;
         TextView mTvMatchesLeft;
 
         public ViewHolder(View V) {
@@ -346,11 +341,13 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlAfrJoinedShowGames = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_show_games_btn);
             mTvMatchesLeft = (TextView) V.findViewById(id.all_challenges_row_tv_matches_left);
             mRlMatchesLeft = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_matches_left);
+            mRlRewardsBtn = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_rewards);
 
             mRlShowGames.setOnClickListener(this);
             mIvChallengeInfo.setOnClickListener(this);
             mRlJoinChallenge.setOnClickListener(this);
             mRlAfrJoinedShowGames.setOnClickListener(this);
+            mRlRewardsBtn.setOnClickListener(this);
 
             V.findViewById(R.id.all_challenges_rl_after_joined_challenge).setOnClickListener(this);
 //            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
@@ -387,12 +384,20 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
                 case R.id.challenge_iv_info:
                     Challenge challengeInfo = getItem(getAdapterPosition());
-                    showChallengeInfo(context, challengeInfo,true);
+                    dialogType = CHALLENGE_INFO_DIALOG_TYPE;
+                    showChallengeInfo(context, challengeInfo);
                     break;
 
                 case R.id.all_challenges_row_rl_join_btn:
                     Challenge challengeJoin = getItem(getAdapterPosition());
-                    showChallengeInfo(context, challengeJoin,false);
+                    dialogType = CHALLENGE_CONFIG_DIALOG_TYPE;
+                    showChallengeInfo(context, challengeJoin);
+                    break;
+
+                case R.id.all_challenges_row_rl_rewards:
+                    Challenge challengeRewards = getItem(getAdapterPosition());
+                    dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
+                    showChallengeInfo(context, challengeRewards);
                     break;
 
                 case R.id.all_challenges_row_rl_show_games_btn:
@@ -411,17 +416,21 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         }
     }
 
-    private void showChallengeInfo(Context context, Challenge challenge,boolean isChallengeInfo) {
+    private void showChallengeInfo(Context context, Challenge challenge) {
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
 
-        if (!isChallengeInfo) {
+        if (dialogType == CHALLENGE_CONFIG_DIALOG_TYPE) {
             if (challenge.getChallengeUserInfo().isUserJoined()) {
                 ChallengeInfoDialogFragment.newInstance(42, "Joined Challenge", challenge)
                         .show(fragmentManager, "challenge_info");
             } else {
-                ChallengeConfigsDialogFragment.newInstance(43, challenge.getChallengeId(), challenge.getName())
+                ChallengeConfigsDialogFragment.newInstance(43, challenge.getChallengeId(), "Modes of "+challenge.getName())
                         .show(fragmentManager, "challenge_configs");
             }
+        }else if (dialogType == CHALLENGE_REWARDS_DIALOG_TYPE){
+            ChallengeRewardsFragment.newInstance(44, challenge.getChallengeId(), challenge.getName()+" Rewards",
+                    challenge.getChallengeUserInfo().getConfigIndex(),challenge.getEndTime())
+                    .show(fragmentManager, "challenge_rewards");
         }else {
             ChallengeInfoDialogFragment.newInstance(42, challenge.getName(), challenge)
                     .show(fragmentManager, "challenge_info");
