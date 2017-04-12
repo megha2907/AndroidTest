@@ -22,14 +22,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_20"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_20"
         android:gravity="center"
-        android:text="Connect to PayTm to make sure you can\nreceive Cash Rewards at the end of\nchallenges"
+        android:text="Connect to PayTm to get Cash Rewards at the\n end of challenge! Or else provide\n your bank details"
         android:textColor="@color/white"
-        android:textSize="@dimen/dp_16"
+        android:textSize="@dimen/dp_13"
         app:typeface="lato_regular" />
 
     <ImageView
@@ -47,7 +47,7 @@
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/paytm_connect_btn_connect"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="@dimen/dp_48"
         android:background="@drawable/tournament_ready_btn_bg"
         android:gravity="center"
         android:minWidth="@dimen/dp_200"
@@ -63,9 +63,28 @@
         app:typeface="lato_bold" />
 
     <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/paytm_no_paytm_ac_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_48"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/dg_skip_btn_bg"
+        android:gravity="center"
+        android:minWidth="@dimen/dp_200"
+        android:onClick="onClickNoPaytmAccount"
+        android:paddingBottom="@dimen/dp_2"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_0"
+        android:text="I don't have Paytm account"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:typeface="lato_bold" />
+
+    <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/paytm_connect_btn_skip"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="@dimen/dp_48"
         android:layout_marginTop="@dimen/dp_20"
         android:background="@drawable/dg_skip_btn_bg"
         android:gravity="center"

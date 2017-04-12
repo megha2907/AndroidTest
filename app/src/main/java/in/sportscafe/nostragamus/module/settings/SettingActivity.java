@@ -15,7 +15,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.WebViewActivity;
-import in.sportscafe.nostragamus.module.paytm.PaytmConnectActivity;
+import in.sportscafe.nostragamus.module.paytm.WalletOrBankConnectActivity;
 import in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.question.tourlist.TourListActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
@@ -106,7 +106,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void navigateToPaytm() {
-        Intent intent = new Intent(this, PaytmConnectActivity.class);
+        Intent intent = new Intent(this, WalletOrBankConnectActivity.class);
         startActivity(intent);
     }
 

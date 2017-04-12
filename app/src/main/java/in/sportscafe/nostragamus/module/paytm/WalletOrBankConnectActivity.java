@@ -12,7 +12,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 /**
  * Created by Jeeva on 23/03/17.
  */
-public class PaytmConnectActivity extends NostragamusActivity {
+public class WalletOrBankConnectActivity extends NostragamusActivity {
 
     @Override
     public String getScreenName() {
@@ -27,16 +27,37 @@ public class PaytmConnectActivity extends NostragamusActivity {
         initToolBar();
     }
 
+    /**
+     * called from xml layout
+     * @param view
+     */
     public void onClickConnect(View view) {
         navigateToAddPaytmDetail();
     }
 
+    /**
+     * Invoked from xml directly
+     * @param view
+     */
+    public void onClickNoPaytmAccount(View view) {
+        navigateToAddBankDetails();
+    }
+
+    /**
+     * Invoked from xml
+     * @param view
+     */
     public void onClickSkip(View view) {
         onBackPressed();
     }
 
+    private void navigateToAddBankDetails() {
+        startActivity(new Intent(this, AddPaymentBankActivity.class));
+        onBackPressed();
+    }
+
     private void navigateToAddPaytmDetail() {
-        startActivity(new Intent(this, PaytmAddDetailActivity.class));
+        startActivity(new Intent(this, AddPaytmDetailsActivity.class));
         onBackPressed();
     }
 

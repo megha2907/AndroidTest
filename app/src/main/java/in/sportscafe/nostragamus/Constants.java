@@ -424,11 +424,12 @@ public interface Constants {
         String PLAYER_COMPARISON = "player_comparison"; //in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity
         String RESULTS_PEEK = "results_peek"; //in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity
         String DUMMY_GAME = "dummy_game"; //in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity
-        String PAYTM_CONNECT = "paytm_connect"; //in.sportscafe.nostragamus.module.paytm.PaytmConnectActivity
-        String PAYTM_ADD_DETAIL = "paytm_add_detail"; //in.sportscafe.nostragamus.module.paytm.PaytmAddDetailActivity
+        String PAYTM_CONNECT = "paytm_connect"; //in.sportscafe.nostragamus.module.paytm.WalletOrBankConnectActivity
+        String PAYTM_ADD_DETAIL = "paytm_add_detail"; //in.sportscafe.nostragamus.module.paytm.AddPaytmDetailsActivity
         String QUESTION_ADD = "question_add"; //in.sportscafe.nostragamus.module.question.add.AddQuestionActivity
         String QUESTION_ADD_TOUR_LIST = "question_add_tour_list"; //in.sportscafe.nostragamus.module.question.tourlist.TourListActivity
         String USER_PROFILE = "user_profile"; //in.sportscafe.nostragamus.module.user.myprofile.ProfileActivity
+        String ADD_PAYMENT_BANK_DETAILS = "add_payment_bank_details";
     }
 
     interface InAppPopups {

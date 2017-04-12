@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -18,6 +19,7 @@ import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeJoinDialogFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
+import in.sportscafe.nostragamus.module.paytm.WalletOrBankConnectActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -28,13 +30,13 @@ import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
 /**
  * Created by Jeeva on 16/6/16.
  */
-public class HomeActivity extends NostragamusActivity implements UserInfoModelImpl.OnGetUserInfoModelListener, OnHomeActionListener ,OnDismissListener {
+public class HomeActivity extends NostragamusActivity implements OnHomeActionListener ,OnDismissListener {
+
+    private static final String TAG = HomeActivity.class.getSimpleName();
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
-
-    private static final int JOIN_CHALLENGE_REQUEST_CODE = 53;
-
-    private static final int JOINED_CHALLENGE_DISMISS_CODE = 56;
+    private static final int CHALLENGE_JOINED_INFO_REQUEST_CODE = 42;
+    private static final int JOIN_CHALLENGE_REQUEST_CODE = 43;
 
     private int mProfileTabPosition = 0;
 
@@ -54,7 +56,7 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
             return;
         }
 
-        UserInfoModelImpl.newInstance(this).getUserInfo();
+        UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
 
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
@@ -68,6 +70,23 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
             }
         }
         showFirstTab();
+    }
+
+    /**
+     * If user has not yet provided payment info (either paytm or bank) then he'll be asked to provide
+     * @param userInfo
+     */
+    private void checkPaymentInfoProvidedOrRequired(UserInfo userInfo) {
+        if (userInfo != null) {
+            if (userInfo.getUserPaymentInfo() == null) {
+
+                Log.d(TAG, "User Payment details are not provided yet...");
+                Intent intent = new Intent(this, WalletOrBankConnectActivity.class);
+                startActivity(intent);
+            } else {
+                Log.d(TAG, "User payment details are provided...");
+            }
+        }
     }
 
     private void showProfile() {
@@ -193,19 +212,34 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
         }
     }
 
-    @Override
-    public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {
+    /**
+     * Used to get User Info from server, which will provide payment bank / paytm details
+     * so that it can be identified that to show Connect to Paytm/Bank screen to capture such data
+     * @return
+     */
+    private UserInfoModelImpl.OnGetUserInfoModelListener getUserInfoCallBackListener() {
+        return new UserInfoModelImpl.OnGetUserInfoModelListener() {
+            @Override
+            public void onSuccessGetUpdatedUserInfo(UserInfo userInfo) {
+                if (userInfo != null) {
+                    checkPaymentInfoProvidedOrRequired(userInfo);
+                } else {
+                    Log.d(TAG, "User Payment info null");
+                    // Do not perform any action
+                }
+            }
 
-    }
+            @Override
+            public void onFailedGetUpdateUserInfo(String message) {
+                // Initial call, Api fails but can not be taken action
+                Log.d(TAG, "Get UserInfo API failed.");
+            }
 
-    @Override
-    public void onFailedGetUpdateUserInfo(String message) {
-
-    }
-
-    @Override
-    public void onNoInternet() {
-
+            @Override
+            public void onNoInternet() {
+                // Initial call, Not required to show any msg
+            }
+        };
     }
 
     @Override
@@ -242,16 +276,21 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
 
     @Override
     public void onDismiss(int requestCode, Bundle bundle) {
-        if (requestCode == JOIN_CHALLENGE_REQUEST_CODE) {
-           showJoinedChallenge(getContext(),bundle);
-        }else if (requestCode == JOINED_CHALLENGE_DISMISS_CODE){
-            showChallenges();
+        
+        switch (requestCode) {
+            case JOIN_CHALLENGE_REQUEST_CODE:
+                showJoinedChallenge(getContext(),bundle);
+                break;
+
+            case CHALLENGE_JOINED_INFO_REQUEST_CODE:
+                showChallenges(); // This will refresh the screen
+                break;
         }
     }
 
     private void showJoinedChallenge(Context context,Bundle bundle) {
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-        ChallengeJoinDialogFragment.newInstance(42, "JOINED CHALLENGE!", bundle)
+        ChallengeJoinDialogFragment.newInstance(CHALLENGE_JOINED_INFO_REQUEST_CODE, "JOINED CHALLENGE!", bundle)
                 .show(fragmentManager, "challenge_info");
     }
 }
