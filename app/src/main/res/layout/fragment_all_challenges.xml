@@ -16,14 +16,15 @@
         android:elevation="@dimen/dp_4"
         >
 
-        <ImageView
-            android:layout_width="@dimen/dp_140"
-            android:layout_height="@dimen/dp_24"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/toolbar_logo"
-            android:src="@drawable/sportscafe_logo"
-
-            />
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Challenges"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_16"
+            app:typeface="lato_regular" />
 
     </android.support.v7.widget.Toolbar>
 

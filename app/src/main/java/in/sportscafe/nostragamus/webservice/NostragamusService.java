@@ -206,7 +206,7 @@ public interface NostragamusService {
     Call<TourListResponse> getTourList();
 
     @GET("/v2/game/challenges/getConfigs")
-    Call<ChallengeConfigsResponse> getConfigs(@Query("challenge_id") int challengeId);
+    Call<ChallengeConfigsResponse> getConfigs(@Query("challenge_id") int challengeId , @Query("config_index") Integer configIndex);
 
     @PUT("/v2/game/users/joinUserChallenge")
     Call<Challenge> getJoinChallenge(

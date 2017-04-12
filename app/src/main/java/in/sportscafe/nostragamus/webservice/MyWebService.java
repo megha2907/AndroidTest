@@ -260,8 +260,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getTourList();
     }
 
-    public Call<ChallengeConfigsResponse> getChallengeConfigsRequest(int challengeId) {
-        return mNostragamusService.getConfigs(challengeId);
+    public Call<ChallengeConfigsResponse> getChallengeConfigsRequest(int challengeId,Integer configIndex) {
+        return mNostragamusService.getConfigs(challengeId ,configIndex);
     }
 
     public Call<Challenge> getJoinChallengeRequest(int challengeId, int configIndex) {

@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import org.parceler.Parcels;
 
 import java.util.HashMap;
@@ -91,26 +93,41 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
     private void populateChallengeDetails() {
         ((TextView) findViewById(R.id.challenge_info_tv_title)).setText(mTitle);
 
-        ChallengeInfo challengeInfo = mChallenge.getChallengeInfo();
+//        ChallengeInfo challengeInfo = mChallenge.getChallengeInfo();
 //        ChallengeConfig challengeConfig = challengeInfo.getConfigs().get(mChallenge.getChallengeUserInfo().getConfigIndex());
 //
 //        ((TextView) findViewById(R.id.challenge_info_tv_challenge_name)).setText(challengeConfig.getConfigName());
-        ((TextView) findViewById(R.id.challenge_info_tv_challenge_desc)).setText(mChallenge.getDescription());
+
+
+        TextView challengeDesc = (TextView) findViewById(R.id.challenge_info_tv_challenge_desc);
+        if (null != mChallenge) {
+            challengeDesc.setText(mChallenge.getDescription());
+        }
+
+        challengeDesc.setText("You have successfully joined this challenge,Rs 150 has been deducted from your wallet.Best of luck!");
 
         int powerUpCount = 0;
-        HashMap<String, Integer> powerUps = challengeInfo.getPowerUps();
-        ((TextView) findViewById(R.id.challenge_info_tv_2x)).setText(powerUps.get(Powerups.XX) + "");
-        ((TextView) findViewById(R.id.challenge_info_tv_nonegs)).setText(powerUps.get(Powerups.NO_NEGATIVE) + "");
-        ((TextView) findViewById(R.id.challenge_info_tv_poll)).setText(powerUps.get(Powerups.AUDIENCE_POLL) + "");
+//        HashMap<String, Integer> powerUps = challengeInfo.getPowerUps();
+//        ((TextView) findViewById(R.id.challenge_info_tv_2x)).setText(powerUps.get(Powerups.XX) + "");
+//        ((TextView) findViewById(R.id.challenge_info_tv_nonegs)).setText(powerUps.get(Powerups.NO_NEGATIVE) + "");
+//        ((TextView) findViewById(R.id.challenge_info_tv_poll)).setText(powerUps.get(Powerups.AUDIENCE_POLL) + "");
+//
+//        ((TextView) findViewById(R.id.challenge_info_tv_powerup_desc)).setText(
+//                String.format(
+//                        getString(R.string.info_powerup_desc),
+//                        powerUps.get(Powerups.XX)
+//                                + powerUps.get(Powerups.NO_NEGATIVE)
+//                                + powerUps.get(Powerups.AUDIENCE_POLL)
+//                )
+//        );
 
-        ((TextView) findViewById(R.id.challenge_info_tv_powerup_desc)).setText(
-                String.format(
-                        getString(R.string.info_powerup_desc),
-                        powerUps.get(Powerups.XX)
-                                + powerUps.get(Powerups.NO_NEGATIVE)
-                                + powerUps.get(Powerups.AUDIENCE_POLL)
-                )
-        );
+
+        TextView powerUpDesc = (TextView) findViewById(R.id.challenge_info_tv_powerup_desc);
+        powerUpDesc.setText("You have been give 30 powerups for this challenge, Use them to score higher!");
+
+        TextView challengePayoutDate = (TextView) findViewById(R.id.challenge_info_tv_challenge_payout_date);
+        challengePayoutDate.setText("The Challenge ends on the 7th of March, rewards will be updated within a week of that date");
+
     }
 
     @Override

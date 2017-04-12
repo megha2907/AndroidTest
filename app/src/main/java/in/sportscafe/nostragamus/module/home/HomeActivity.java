@@ -1,17 +1,26 @@
 package in.sportscafe.nostragamus.module.home;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
+
+import com.jeeva.android.Log;
+
+import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
+import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeInfoDialogFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
@@ -237,7 +246,14 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
     @Override
     public void onDismiss(int requestCode, Bundle bundle) {
         if (requestCode == JOIN_CHALLENGE_REQUEST_CODE) {
-            showChallenges();
+           Challenge mChallengeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_DATA));
+           showJoinedChallenge(getContext(),mChallengeInfo);
         }
+    }
+
+    private void showJoinedChallenge(Context context, Challenge challenge) {
+        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+        ChallengeInfoDialogFragment.newInstance(42, "JOINED CHALLENGE!", challenge)
+                .show(fragmentManager, "challenge_info");
     }
 }

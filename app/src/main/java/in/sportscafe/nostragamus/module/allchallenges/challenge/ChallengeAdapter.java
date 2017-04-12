@@ -8,14 +8,11 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.ShadowLayout;
 import com.jeeva.android.widgets.customfont.CustomButton;
@@ -46,6 +42,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialogFragment;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeInfoDialogFragment;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeRewardsFragment;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
@@ -65,11 +62,15 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     private boolean mSwipeView = true;
 
-    private int SWIPE_VIEW = 0;
+    private int CHALLENGE_INFO_DIALOG_TYPE = 0;
 
-    private int LIST_VIEW = 1;
+    private int CHALLENGE_REWARDS_DIALOG_TYPE = 1;
+
+    private int CHALLENGE_CONFIG_DIALOG_TYPE = 2;
 
     private int mTagId;
+
+    private int dialogType = 0;
 
     public ChallengeAdapter(Context context, List<Challenge> challenges, boolean swipeView, int tagId) {
         super(context);
@@ -94,11 +95,11 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         if (mSwipeView/* || position == 0*/) {
             holder.mTvShowGamesNew.setText("HIDE GAMES");
             holder.mTvAfrJoinedShowGames.setText("Hide games");
-            holder.mTvAfrJoinedShowGames.setCompoundDrawablesWithIntrinsicBounds(R.drawable.challenge_hide_game,0,0,0);
+            holder.mTvAfrJoinedShowGames.setCompoundDrawablesWithIntrinsicBounds(R.drawable.challenge_hide_game, 0, 0, 0);
         } else {
             holder.mTvShowGamesNew.setText("SHOW GAMES");
             holder.mTvAfrJoinedShowGames.setText("Show games");
-            holder.mTvAfrJoinedShowGames.setCompoundDrawablesWithIntrinsicBounds(R.drawable.challenge_show_game,0,0,0);
+            holder.mTvAfrJoinedShowGames.setCompoundDrawablesWithIntrinsicBounds(R.drawable.challenge_show_game, 0, 0, 0);
         }
 
         Challenge challenge = getItem(position);
@@ -113,12 +114,12 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 SpannableStringBuilder builder = new SpannableStringBuilder();
 
                 String priceTxt1 = "Worth ";
-                SpannableString priceTxt1Spannable= new SpannableString(priceTxt1);
+                SpannableString priceTxt1Spannable = new SpannableString(priceTxt1);
                 priceTxt1Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, priceTxt1.length(), 0);
                 builder.append(priceTxt1Spannable);
 
                 String priceTxt2 = "₹" + mChallengeAmount;
-                SpannableString priceTxt2Spannable= new SpannableString(priceTxt2);
+                SpannableString priceTxt2Spannable = new SpannableString(priceTxt2);
                 priceTxt2Spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#04B554")), 0, priceTxt2.length(), 0);
                 builder.append(priceTxt2Spannable);
 
@@ -137,10 +138,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mRlAfterJoinedChallenge.setVisibility(View.VISIBLE);
             holder.mRlMatchesLeft.setVisibility(View.INVISIBLE);
             holder.mRlMainPowerup.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.mRlAfterJoinedChallenge.setVisibility(View.GONE);
             holder.mRlMatchesLeft.setVisibility(View.VISIBLE);
-            holder.mTvMatchesLeft.setText(String.valueOf(challenge.getCountMatchesLeft())+"/"+String.valueOf(challenge.getMatches().size()) + " Games Left to score!");
+            holder.mTvMatchesLeft.setText(String.valueOf(challenge.getCountMatchesLeft()) + "/" + String.valueOf(challenge.getMatches().size()) + " Games Left to score!");
             holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
         }
 
@@ -261,6 +262,11 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                         TimeUtils.getDateStringFromMs(endTimeMs, "MMM")
         );
 
+        //for completed challenges
+        if (challenge.getCountMatchesLeft().equals("0")) {
+            holder.mTvRewards.setText("Winners");
+        }
+
 
     }
 
@@ -270,18 +276,14 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         CustomButton mTvChallengePrice;
         TextView mTvChallengeName;
         HmImageView mIvChallengeImage;
-
         ImageView mIvChallengeInfo;
-
         TextView mTvChallengeUserRank;
-
         //TextView mTvTimerText;
         TextView mBtnTimeLeft;
         Button mTvChallengeDaysLeft;
         Button mTvChallengeHoursLeft;
         Button mTvChallengeMinsLeft;
         Button mTvChallengeSecsLeft;
-
         RelativeLayout mRlMainPowerup;
         ImageView mIv2xPowerup;
         ImageView mIvNonegsPowerup;
@@ -289,27 +291,21 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         TextView mTv2xPowerupCount;
         TextView mTvNonegsPowerupCount;
         TextView mTvPollPowerupCount;
-
         LinearLayout mLlTournament;
         ShadowLayout mSlShowGameBg;
         TextView mTvShowGames;
-
         TextView mTvShowGamesNew;
         RelativeLayout mRlShowGames;
         RelativeLayout mRlTimer;
-
         RelativeLayout mRlAfrJoinedShowGames;
         TextView mTvAfrJoinedShowGames;
-
         TextView mTvGamesLeftCount;
-
         RelativeLayout mRlCashRewards;
-
         RelativeLayout mRlJoinChallenge;
-
         RelativeLayout mRlAfterJoinedChallenge;
-
         RelativeLayout mRlMatchesLeft;
+        RelativeLayout mRlRewards;
+        TextView mTvRewards;
         TextView mTvMatchesLeft;
 
         public ViewHolder(View V) {
@@ -346,11 +342,14 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlAfrJoinedShowGames = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_show_games_btn);
             mTvMatchesLeft = (TextView) V.findViewById(id.all_challenges_row_tv_matches_left);
             mRlMatchesLeft = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_matches_left);
+            mRlRewards = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_rewards);
+            mTvRewards = (TextView) V.findViewById(id.all_challenges_row_btn_rewards);
 
             mRlShowGames.setOnClickListener(this);
             mIvChallengeInfo.setOnClickListener(this);
             mRlJoinChallenge.setOnClickListener(this);
             mRlAfrJoinedShowGames.setOnClickListener(this);
+            mRlRewards.setOnClickListener(this);
 
             V.findViewById(R.id.all_challenges_rl_after_joined_challenge).setOnClickListener(this);
 //            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
@@ -366,9 +365,9 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     intent.putExtra(BundleKeys.CHALLENGE_TAG_ID, mTagId);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
-                    if (mSwipeView){
+                    if (mSwipeView) {
                         intent.putExtra(BundleKeys.CHALLENGE_SWITCH_POS, false);
-                    }else {
+                    } else {
                         intent.putExtra(BundleKeys.CHALLENGE_SWITCH_POS, true);
                     }
                     break;
@@ -387,12 +386,20 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
                 case R.id.challenge_iv_info:
                     Challenge challengeInfo = getItem(getAdapterPosition());
-                    showChallengeInfo(context, challengeInfo,true);
+                    dialogType = CHALLENGE_INFO_DIALOG_TYPE;
+                    showChallengeInfo(context, challengeInfo);
                     break;
 
                 case R.id.all_challenges_row_rl_join_btn:
                     Challenge challengeJoin = getItem(getAdapterPosition());
-                    showChallengeInfo(context, challengeJoin,false);
+                    dialogType = CHALLENGE_CONFIG_DIALOG_TYPE;
+                    showChallengeInfo(context, challengeJoin);
+                    break;
+
+                case R.id.all_challenges_row_rl_rewards:
+                    Challenge challengeRewards = getItem(getAdapterPosition());
+                    dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
+                    showChallengeInfo(context, challengeRewards);
                     break;
 
                 case R.id.all_challenges_row_rl_show_games_btn:
@@ -401,9 +408,9 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     switchIntent.putExtra(BundleKeys.CHALLENGE_TAG_ID, mTagId);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(switchIntent);
 
-                    if (mSwipeView){
+                    if (mSwipeView) {
                         switchIntent.putExtra(BundleKeys.CHALLENGE_SWITCH_POS, false);
-                    }else {
+                    } else {
                         switchIntent.putExtra(BundleKeys.CHALLENGE_SWITCH_POS, true);
                     }
 
@@ -411,18 +418,22 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         }
     }
 
-    private void showChallengeInfo(Context context, Challenge challenge,boolean isChallengeInfo) {
+    private void showChallengeInfo(Context context, Challenge challenge) {
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
 
-        if (!isChallengeInfo) {
+        if (dialogType == CHALLENGE_CONFIG_DIALOG_TYPE) {
             if (challenge.getChallengeUserInfo().isUserJoined()) {
                 ChallengeInfoDialogFragment.newInstance(42, "Joined Challenge", challenge)
                         .show(fragmentManager, "challenge_info");
             } else {
-                ChallengeConfigsDialogFragment.newInstance(43, challenge.getChallengeId(), challenge.getName())
+                ChallengeConfigsDialogFragment.newInstance(43, challenge.getChallengeId(), "Modes of " + challenge.getName())
                         .show(fragmentManager, "challenge_configs");
             }
-        }else {
+        } else if (dialogType == CHALLENGE_REWARDS_DIALOG_TYPE) {
+            ChallengeRewardsFragment.newInstance(44, challenge.getChallengeId(), challenge.getName() + " Rewards",
+                    challenge.getChallengeUserInfo().getConfigIndex(), challenge.getEndTime())
+                    .show(fragmentManager, "challenge_rewards");
+        } else {
             ChallengeInfoDialogFragment.newInstance(42, challenge.getName(), challenge)
                     .show(fragmentManager, "challenge_info");
         }
