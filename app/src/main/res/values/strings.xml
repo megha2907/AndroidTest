@@ -108,7 +108,7 @@
     <string name="sample_checksum_generation_url">https://api-stage.sportscafe.in/v2/game/generateChecksum</string>
     <string name="sample_checksum_verification_url">https://api-stage.sportscafe.in/v2/game/verifyChecksum</string>
     <string name="tap_powerup">You can tap on the icon if you need any help with the powerups!</string>
-    <string name="info_powerup_desc">You have been given %1$s powerups for this challenge, Use them to score higher!</string>
+    <string name="info_powerup_desc">You have %1$s powerups to use across 5 matches in this challenge, Use them to score higher!</string>
     <string name="question_context_hint"><font size="12">Avg. 1st innings score at this venue in the IPL is 154 compared to 146 in the 2nd innings. However, RCB haven’t managed to score more than 150 runs in their last 3 matches here.</font></string>
     <string name="question_hint"><font size="12">How many aggregate runs will be scored?</font></string>
     <string name="question_left_optn_hint"><font size="12">Less than 270</font></string>

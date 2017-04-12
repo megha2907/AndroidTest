@@ -20,7 +20,7 @@ public class ChallengeConfig {
     @JsonProperty("fee")
     private Integer entryFee;
 
-    @JsonProperty("config_label")
+    @JsonProperty("name")
     private String configName;
 
     @JsonProperty("mode")
@@ -45,12 +45,12 @@ public class ChallengeConfig {
         this.entryFee = entryFee;
     }
 
-    @JsonProperty("config_label")
+    @JsonProperty("name")
     public String getConfigName() {
         return configName;
     }
 
-    @JsonProperty("config_label")
+    @JsonProperty("name")
     public void setConfigName(String configName) {
         this.configName = configName;
     }

@@ -15,7 +15,7 @@ public class GenerateOrderRequest {
     private long challengeId;
 
     @JsonProperty("config_index")
-    private long configIndex;
+    private int configIndex;
 
     public long getUserId() {
         return userId;
@@ -33,11 +33,11 @@ public class GenerateOrderRequest {
         this.challengeId = challengeId;
     }
 
-    public long getConfigIndex() {
+    public int getConfigIndex() {
         return configIndex;
     }
 
-    public void setConfigIndex(long configIndex) {
+    public void setConfigIndex(int configIndex) {
         this.configIndex = configIndex;
     }
 }

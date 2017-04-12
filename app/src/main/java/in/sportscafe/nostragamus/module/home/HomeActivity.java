@@ -10,17 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 
-import com.jeeva.android.Log;
-
-import org.parceler.Parcels;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
-import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeInfoDialogFragment;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeJoinDialogFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
@@ -37,7 +32,9 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
-    private static final int JOIN_CHALLENGE_REQUEST_CODE = 43;
+    private static final int JOIN_CHALLENGE_REQUEST_CODE = 53;
+
+    private static final int JOINED_CHALLENGE_DISMISS_CODE = 56;
 
     private int mProfileTabPosition = 0;
 
@@ -246,14 +243,15 @@ public class HomeActivity extends NostragamusActivity implements UserInfoModelIm
     @Override
     public void onDismiss(int requestCode, Bundle bundle) {
         if (requestCode == JOIN_CHALLENGE_REQUEST_CODE) {
-           Challenge mChallengeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_DATA));
-           showJoinedChallenge(getContext(),mChallengeInfo);
+           showJoinedChallenge(getContext(),bundle);
+        }else if (requestCode == JOINED_CHALLENGE_DISMISS_CODE){
+            showChallenges();
         }
     }
 
-    private void showJoinedChallenge(Context context, Challenge challenge) {
+    private void showJoinedChallenge(Context context,Bundle bundle) {
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-        ChallengeInfoDialogFragment.newInstance(42, "JOINED CHALLENGE!", challenge)
+        ChallengeJoinDialogFragment.newInstance(42, "JOINED CHALLENGE!", bundle)
                 .show(fragmentManager, "challenge_info");
     }
 }

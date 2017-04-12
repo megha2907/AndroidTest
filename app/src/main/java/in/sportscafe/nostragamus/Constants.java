@@ -253,8 +253,11 @@ public interface Constants {
         String TITLE = "title";
         String CHALLENGE_SWITCH_POS = "challengeSwitchPos";
         String CONFIG_INDEX = "configIndex";
+        String CONFIG_NAME = "configName";
         String CHALLENGE_END_TIME = "challengeEndTime";
         String CHALLENGE = "challenge";
+        String ENTRY_FEE = "entryFee";
+        String JOINED_CHALLENGE_INFO = "joinedChallenegInfo";
     }
 
     interface ParcelableKeys {
@@ -498,6 +501,7 @@ public interface Constants {
         String BANK_NAME = "BANK_NAME";
         String PAYMENT_MODE = "PAYMENTMODE";
         String CHECKSUM_HASH = "CHECKSUMHASH";
+        String JOINED_CHALLENGE_INFO = "joined_challenge_info";
      }
 
      interface PaytmTransactionResponseStatusValues {

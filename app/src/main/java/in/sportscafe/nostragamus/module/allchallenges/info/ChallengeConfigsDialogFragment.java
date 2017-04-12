@@ -19,6 +19,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -43,9 +44,15 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     private OnDismissListener mDismissListener;
 
-    private int mDialogRequestCode;
+    private int OPEN_JOINED_CHALLENGE_DIALOG = 53;
+
+    private boolean mJoinedChallenge = false;
 
     private Challenge mChallenge;
+
+    private Bundle mChallengeDetailsBundle;
+
+    private int mConfigIndex;
 
     private ChallengeConfigAdapter mConfigAdapter;
 
@@ -93,7 +100,6 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     }
 
     private void openBundle(Bundle bundle) {
-        mDialogRequestCode = bundle.getInt(BundleKeys.DIALOG_REQUEST_CODE);
         mChallenge = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE));
     }
 
@@ -118,13 +124,12 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     @Override
     public void onDismiss(DialogInterface dialog) {
         if (null != mDismissListener) {
-            Bundle bundle = new Bundle();
-            if(null != mChallenge) {
-                bundle.putParcelable(BundleKeys.CHALLENGE_DATA, Parcels.wrap(mChallenge));
+            if (mJoinedChallenge) {
+                if (null != mChallengeDetailsBundle) {
+                    mDismissListener.onDismiss(OPEN_JOINED_CHALLENGE_DIALOG, mChallengeDetailsBundle);
+                }
             }
-            mDismissListener.onDismiss(mDialogRequestCode, bundle);
         }
-
         super.onDismiss(dialog);
     }
 
@@ -178,7 +183,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
      * Server will appropriately manage joining itself which will be reflected while challenges are refreshed.
      * If Free, server will update challenge as joined
      * If Paid, based on paytm transaction success, server'll update challenge for user
-     *
+     * <p>
      * Client app just does refresh at the end.
      *
      * @param challengeConfig
@@ -223,7 +228,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             public void run() {
                 int configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight;
                 Log.d("ChallengeConfigsDialogFragment", "MaxHeight --> " + mMaxHeight + ", " + "ScrollHeight --> " + configsHeight);
-                if(configsHeight > mMaxHeight) {
+                if (configsHeight > mMaxHeight) {
                     configsHeight = mMaxHeight;
                 }
 
@@ -235,6 +240,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     /**
      * Generate Order and perform task based on challenge type as paid (paytm trans) , free (direct join)
+     *
      * @return
      */
     private GenerateOderApiModelImpl.OnGenerateOrderApiModelListener getGenerateOrderApiListener() {
@@ -246,12 +252,12 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             }
 
             @Override
-            public void joinFreeChallenge() {
+            public void joinFreeChallenge(Bundle bundle) {
                 dismissProgressbar();
                  /*Server will manage joining based on generateOrder api if it's free
                  * No Need to call any api here for joining */
 
-                 onJoinActionSuccess();
+                onJoinActionSuccess(bundle);
             }
 
             @Override
@@ -270,6 +276,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     /**
      * Handles call back
+     *
      * @return
      */
     private PaytmApiModelImpl.OnPaytmApiModelListener getPaytmApiListener() {
@@ -314,7 +321,10 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             public void onTransactionSuccessResponse(@Nullable PaytmTransactionResponse successResponse) {
                 Log.d(TAG, "Transaction Response - Success");
                 /* Server will arrange all joining, No need of any api here.  */
-                onJoinActionSuccess();
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constants.BundleKeys.JOINED_CHALLENGE_INFO,Parcels.wrap(successResponse.getJoinedChallengeInfo()));
+                onJoinActionSuccess(bundle);
             }
 
             @Override
@@ -328,7 +338,9 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     /**
      * Used to indicate join action completed either for free or paid and should be refreshed (onDismiss).
      */
-    private void onJoinActionSuccess() {
+    private void onJoinActionSuccess(Bundle bundle) {
+        mJoinedChallenge = true;
+        mChallengeDetailsBundle = bundle;
         dismissThisDialog();
     }
 
@@ -351,6 +363,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     @Override
     public void onBackToHomeClicked() {
+        mJoinedChallenge = false;
         dismissThisDialog();
     }
 
