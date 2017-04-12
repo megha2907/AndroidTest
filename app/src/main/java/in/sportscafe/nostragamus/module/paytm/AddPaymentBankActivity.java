@@ -1,17 +1,23 @@
 package in.sportscafe.nostragamus.module.paytm;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 
-public class AddPaymentBankActivity extends NostragamusActivity {
+public class AddPaymentBankActivity extends NostragamusActivity implements View.OnFocusChangeListener {
+
+    private EditText mAccHolderNameEditText;
+    private EditText mAccNumberEditText;
+    private EditText mIfscodeEditText;
 
     @Override
     public String getScreenName() {
@@ -25,28 +31,29 @@ public class AddPaymentBankActivity extends NostragamusActivity {
 
         initToolBar();
         initViews();
-
     }
 
     private void initViews() {
+        mAccHolderNameEditText = (EditText) findViewById(R.id.add_bank_acc_holder_name_edittext);
+        mAccNumberEditText = (EditText) findViewById(R.id.add_bank_acc_number_edittext);
+        mIfscodeEditText = (EditText) findViewById(R.id.add_bank_ifsc_edittext);
 
+        mAccHolderNameEditText.setOnFocusChangeListener(this);
+        mAccNumberEditText.setOnFocusChangeListener(this);
+        mIfscodeEditText.setOnFocusChangeListener(this);
     }
 
     public void onAddBankSaveClicked(View view) {
-        EditText accHolderNameEditText = (EditText) findViewById(R.id.add_bank_acc_holder_name_edittext);
-        EditText accNumberEditText = (EditText) findViewById(R.id.add_bank_acc_number_edittext);
-        EditText ifscodeEditText = (EditText) findViewById(R.id.add_bank_ifsc_edittext);
-
-        String name = getTrimmedText(accHolderNameEditText);
-        String accNumber = getTrimmedText(accNumberEditText);
-        String ifsCode = getTrimmedText(ifscodeEditText);
+        String name = getTrimmedText(mAccHolderNameEditText);
+        String accNumber = getTrimmedText(mAccNumberEditText);
+        String ifsCode = getTrimmedText(mIfscodeEditText);
 
         if (name.length() == 0) {
-            accHolderNameEditText.setError("Please provide account holder's name");
+            mAccHolderNameEditText.setError("Please provide account holder's name");
         } else if (accNumber.length() == 0) {
-            accNumberEditText.setError("Please provide account number");
+            mAccNumberEditText.setError("Please provide account number");
         } else if (ifsCode.length() == 0) {
-            ifscodeEditText.setError("Please provide IFSC code");
+            mIfscodeEditText.setError("Please provide IFSC code");
         } else {
             // Make api call to save details
 
@@ -114,5 +121,35 @@ public class AddPaymentBankActivity extends NostragamusActivity {
         );
     }
 
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case R.id.add_bank_acc_holder_name_edittext:
+                TextView textView = (TextView) findViewById(R.id.add_bank_accHolder_head_textview);
+                if (hasFocus) {
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                } else {
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.white_60));
+                }
+                break;
 
+            case R.id.add_bank_acc_number_edittext:
+                textView = (TextView) findViewById(R.id.add_bank_accNumber_head_textview);
+                if (hasFocus) {
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                } else {
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.white_60));
+                }
+                break;
+
+            case R.id.add_bank_ifsc_edittext:
+                textView = (TextView) findViewById(R.id.add_bank_ifsc_head_textview);
+                if (hasFocus) {
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                } else {
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.white_60));
+                }
+                break;
+        }
+    }
 }
