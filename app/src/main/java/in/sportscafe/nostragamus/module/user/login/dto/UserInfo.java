@@ -36,6 +36,9 @@ public class UserInfo extends PlayerInfo {
     @JsonProperty("count_groups")
     private Integer totalGroups;
 
+    @JsonProperty("payment_info")
+    private UserPaymentInfo userPaymentInfo;
+
     /**
      * @return The email
      */
@@ -136,6 +139,15 @@ public class UserInfo extends PlayerInfo {
         this.totalGroups = totalGroups;
     }
 
+    @JsonProperty("payment_info")
+    public UserPaymentInfo getUserPaymentInfo() {
+        return userPaymentInfo;
+    }
+
+    @JsonProperty("payment_info")
+    public void setUserPaymentInfo(UserPaymentInfo userPaymentInfo) {
+        this.userPaymentInfo = userPaymentInfo;
+    }
 
     @JsonIgnore
     public HashMap<String, Integer> getPowerUps() {

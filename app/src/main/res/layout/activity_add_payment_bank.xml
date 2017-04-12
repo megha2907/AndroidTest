@@ -7,18 +7,17 @@
     android:background="@color/black">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/paytm_toolbar"
+        android:id="@+id/bank_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorMedium"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/paytm_toolbar"
+        android:layout_below="@+id/bank_toolbar"
         android:background="@color/black">
 
         <LinearLayout
@@ -35,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginTop="@dimen/dp_16"
-                android:text="Enter Mobile Number"
+                android:text="Acount Holder's Name"
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/dp_14"
                 app:typeface="lato_regular" />
@@ -51,10 +50,9 @@
                 app:sl_shadowRadius="@dimen/dp_4">
 
                 <com.jeeva.android.widgets.customfont.CustomEditText
-                    android:id="@+id/paytm_add_detail_et_number"
+                    android:id="@+id/add_bank_acc_holder_name_edittext"
                     style="@style/EditTextStyle"
-                    android:inputType="phone"
-                    android:maxLength="10"/>
+                    android:inputType="textPersonName" />
 
             </com.jeeva.android.widgets.ShadowLayout>
 
@@ -64,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginTop="@dimen/dp_16"
-                android:text="Confirm Mobile Number"
+                android:text="Account Number"
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/dp_14"
                 app:typeface="lato_regular" />
@@ -79,24 +77,61 @@
                 app:sl_fillColor="@color/edittext_selection_bg"
                 app:sl_shadowRadius="@dimen/dp_4">
 
-
                 <com.jeeva.android.widgets.customfont.CustomEditText
-                    android:id="@+id/paytm_add_detail_et_confirm_number"
+                    android:id="@+id/add_bank_acc_number_edittext"
                     style="@style/EditTextStyle"
-                    android:inputType="phone"
-                    android:maxLength="10"/>
+                    android:inputType="text" />
 
             </com.jeeva.android.widgets.ShadowLayout>
 
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="@dimen/dp_16"
+                android:text="IFSC Code"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.ShadowLayout
+                android:id="@+id/paytm_add_detail_sl_confirm_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_4"
+                app:sl_cornerRadius="@dimen/dp_5"
+                app:sl_fillColor="@color/edittext_selection_bg"
+                app:sl_shadowRadius="@dimen/dp_4">
+
+
+                <com.jeeva.android.widgets.customfont.CustomEditText
+                    android:id="@+id/add_bank_ifsc_edittext"
+                    style="@style/EditTextStyle"
+                    android:inputType="text" />
+
+            </com.jeeva.android.widgets.ShadowLayout>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_16"
+                android:gravity="center"
+                android:text="Paytm transactions are faster than NEFT transactions.\nPlease add your Paytm details for faster payouts!"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/dp_12"
+                app:typeface="lato_regular" />
+
             <com.jeeva.android.widgets.customfont.CustomButton
-                android:id="@+id/paytm_add_detail_btn_save"
+                android:id="@+id/add_bank_detail_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_40"
                 android:layout_marginTop="@dimen/dp_20"
                 android:background="@drawable/tournament_ready_btn_bg"
                 android:gravity="center"
                 android:minWidth="@dimen/dp_200"
-                android:onClick="onClickSave"
+                android:onClick="onAddBankSaveClicked"
                 android:paddingBottom="@dimen/dp_2"
                 android:paddingLeft="@dimen/dp_15"
                 android:paddingRight="@dimen/dp_15"
@@ -108,14 +143,14 @@
                 app:typeface="lato_bold" />
 
             <com.jeeva.android.widgets.customfont.CustomButton
-                android:id="@+id/paytm_add_detail_btn_skip"
+                android:id="@+id/add_bank_detail_skip_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_40"
                 android:layout_marginTop="@dimen/dp_20"
                 android:background="@drawable/dg_skip_btn_bg"
                 android:gravity="center"
                 android:minWidth="@dimen/dp_200"
-                android:onClick="onClickSkip"
+                android:onClick="onAddBankSkipClicked"
                 android:paddingBottom="@dimen/dp_2"
                 android:paddingLeft="@dimen/dp_15"
                 android:paddingRight="@dimen/dp_15"
