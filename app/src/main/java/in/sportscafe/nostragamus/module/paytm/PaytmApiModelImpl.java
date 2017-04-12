@@ -125,7 +125,7 @@ public class PaytmApiModelImpl {
                                 mListener.onTransactionSuccessResponse(transactionSuccessResponse);
                             }
                         } else {
-                            com.jeeva.android.Log.d(TAG, "Paytm Transaction status NOT SUCCESS - " + transactionSuccessResponse.getStatus());
+                            com.jeeva.android.Log.d(TAG, "Paytm Transaction status NOT / OTHER than SUCCESS ");
                             if (mListener != null) {
                                 mListener.onTransactionFailureResponse(transactionSuccessResponse);
                             }

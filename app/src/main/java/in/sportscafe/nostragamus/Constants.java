@@ -254,6 +254,7 @@ public interface Constants {
         String CHALLENGE_SWITCH_POS = "challengeSwitchPos";
         String CONFIG_INDEX = "configIndex";
         String CHALLENGE_END_TIME = "challengeEndTime";
+        String CHALLENGE = "challenge";
     }
 
     interface ParcelableKeys {

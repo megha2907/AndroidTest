@@ -3,9 +3,8 @@ package in.sportscafe.nostragamus.module.allchallenges.info;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,23 +30,20 @@ import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.paytm.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.paytm.PaytmApiModelImpl;
+import in.sportscafe.nostragamus.module.paytm.PaytmTransactionFailureDialogFragment;
 import in.sportscafe.nostragamus.module.paytm.PaytmTransactionResponse;
 
 /**
  * Created by Jeeva on 28/02/17.
  */
 public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment implements ChallengeConfigsApiModelImpl.OnConfigsApiModelListener,
-        ChallengeConfigAdapter.OnConfigAccessListener {
+        ChallengeConfigAdapter.OnConfigAccessListener, PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener {
 
     private static final String TAG = ChallengeConfigsDialogFragment.class.getSimpleName();
 
     private OnDismissListener mDismissListener;
 
     private int mDialogRequestCode;
-
-    private int mChallengeId;
-
-    private String mChallengeName;
 
     private Challenge mChallenge;
 
@@ -59,11 +55,10 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     private int mMaxHeight;
 
-    public static ChallengeConfigsDialogFragment newInstance(int requestCode, int challengeId, String challengeName) {
+    public static ChallengeConfigsDialogFragment newInstance(int requestCode, Challenge challenge) {
         Bundle bundle = new Bundle();
         bundle.putInt(BundleKeys.DIALOG_REQUEST_CODE, requestCode);
-        bundle.putInt(BundleKeys.CHALLENGE_ID, challengeId);
-        bundle.putString(BundleKeys.CHALLENGE_NAME, challengeName);
+        bundle.putParcelable(BundleKeys.CHALLENGE, Parcels.wrap(challenge));
 
         ChallengeConfigsDialogFragment fragment = new ChallengeConfigsDialogFragment();
         fragment.setArguments(bundle);
@@ -99,8 +94,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     private void openBundle(Bundle bundle) {
         mDialogRequestCode = bundle.getInt(BundleKeys.DIALOG_REQUEST_CODE);
-        mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
-        mChallengeName = bundle.getString(BundleKeys.CHALLENGE_NAME);
+        mChallenge = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE));
     }
 
     private void initViews() {
@@ -114,7 +108,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     }
 
     private void getConfigs() {
-        new ChallengeConfigsApiModelImpl(this).getConfigs(mChallengeId, null);
+        new ChallengeConfigsApiModelImpl(this).getConfigs(mChallenge.getChallengeId(), null);
     }
 
     private ChallengeConfigAdapter createAdapter(List<ChallengeConfig> configs) {
@@ -123,7 +117,6 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
         if (null != mDismissListener) {
             Bundle bundle = new Bundle();
             if(null != mChallenge) {
@@ -131,6 +124,8 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             }
             mDismissListener.onDismiss(mDialogRequestCode, bundle);
         }
+
+        super.onDismiss(dialog);
     }
 
     @Override
@@ -140,7 +135,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
 
         findViewById(R.id.configs_ll_title).setVisibility(View.VISIBLE);
-        ((TextView) findViewById(R.id.configs_tv_challenge_name)).setText(mChallengeName);
+        ((TextView) findViewById(R.id.configs_tv_challenge_name)).setText(mChallenge.getName());
     }
 
     @Override
@@ -190,14 +185,14 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
      */
     private void generateOrderAndProceedToJoin(ChallengeConfig challengeConfig) {
         GenerateOderApiModelImpl generateOderApiModel =
-                GenerateOderApiModelImpl.newInstance(getGenerateOrderApiListener(challengeConfig));
+                GenerateOderApiModelImpl.newInstance(getGenerateOrderApiListener());
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             showProgressbar();  // Dismissed at all type of callback
 
             generateOderApiModel.callGenerateOrder(
                     Long.valueOf(NostragamusDataHandler.getInstance().getUserId()),
-                    mChallengeId,
+                    mChallenge.getChallengeId(),
                     challengeConfig.getConfigIndex()
             );
 
@@ -209,10 +204,9 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     /**
      * Performs paytm transaction
-     * @param challengeConfig - selected Challenge
      */
-    private void performPaytmTransaction(ChallengeConfig challengeConfig, GenerateOrderResponse generateOrderResponse) {
-        PaytmApiModelImpl paytmApiModel = PaytmApiModelImpl.newInstance(getPaytmApiListener(challengeConfig), getContext());
+    private void performPaytmTransaction(GenerateOrderResponse generateOrderResponse) {
+        PaytmApiModelImpl paytmApiModel = PaytmApiModelImpl.newInstance(getPaytmApiListener(), getContext());
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             paytmApiModel.initPaytmTransaction(generateOrderResponse);
@@ -241,15 +235,14 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     /**
      * Generate Order and perform task based on challenge type as paid (paytm trans) , free (direct join)
-     * @param selectedChallenge - user chosen challenge
      * @return
      */
-    private GenerateOderApiModelImpl.OnGenerateOrderApiModelListener getGenerateOrderApiListener(final ChallengeConfig selectedChallenge) {
+    private GenerateOderApiModelImpl.OnGenerateOrderApiModelListener getGenerateOrderApiListener() {
         return new GenerateOderApiModelImpl.OnGenerateOrderApiModelListener() {
             @Override
             public void makePaytmTransaction(GenerateOrderResponse generateOrderResponse) {
                 dismissProgressbar();
-                performPaytmTransaction(selectedChallenge, generateOrderResponse);
+                performPaytmTransaction(generateOrderResponse);
             }
 
             @Override
@@ -277,58 +270,57 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     /**
      * Handles call back
-     * @param challengeConfigToJoin
      * @return
      */
-    private PaytmApiModelImpl.OnPaytmApiModelListener getPaytmApiListener(final ChallengeConfig challengeConfigToJoin) {
+    private PaytmApiModelImpl.OnPaytmApiModelListener getPaytmApiListener() {
         return new PaytmApiModelImpl.OnPaytmApiModelListener() {
             @Override
             public void onTransactionUiError() {
                 Log.d(TAG, Alerts.PAYTM_FAILURE);
-                showMessage(Alerts.PAYTM_FAILURE);
+                showPaytmTransactionFailureDialog();
             }
 
             @Override
             public void onTransactionNoNetwork() {
                 Log.d(TAG, Alerts.NO_NETWORK_CONNECTION);
-                showMessage(Alerts.NO_NETWORK_CONNECTION);
+                showPaytmTransactionFailureDialog();
             }
 
             @Override
             public void onTransactionClientAuthenticationFailed() {
                 Log.d(TAG, Alerts.PAYTM_AUTHENTICATION_FAILED);
-                showMessage(Alerts.PAYTM_AUTHENTICATION_FAILED);
+                showPaytmTransactionFailureDialog();
             }
 
             @Override
             public void onTransactionPageLoadingError() {
                 Log.d(TAG, Alerts.PAYTM_FAILURE);
-                showMessage(Alerts.PAYTM_FAILURE);
+                showPaytmTransactionFailureDialog();
             }
 
             @Override
             public void onTransactionCancelledByBackPressed() {
                 Log.d(TAG, Alerts.PAYTM_TRANSACTION_CANCELLED);
-                showMessage(Alerts.PAYTM_TRANSACTION_CANCELLED);
+                showPaytmTransactionFailureDialog();
             }
 
             @Override
             public void onTransactionCancelled() {
                 Log.d(TAG, Alerts.PAYTM_TRANSACTION_CANCELLED);
-                showMessage(Alerts.PAYTM_TRANSACTION_CANCELLED);
+                showPaytmTransactionFailureDialog();
             }
 
             @Override
-            public void onTransactionSuccessResponse(PaytmTransactionResponse successResponse) {
-                Log.d(TAG, "Transaction Response - Success (Joining Challenge)");
+            public void onTransactionSuccessResponse(@Nullable PaytmTransactionResponse successResponse) {
+                Log.d(TAG, "Transaction Response - Success");
                 /* Server will arrange all joining, No need of any api here.  */
                 onJoinActionSuccess();
             }
 
             @Override
-            public void onTransactionFailureResponse(PaytmTransactionResponse response) {
+            public void onTransactionFailureResponse(@Nullable PaytmTransactionResponse response) {
                 Log.d(TAG, Alerts.PAYTM_TRANSACTION_FAILED);
-                showMessage(Alerts.PAYTM_TRANSACTION_FAILED);
+                showPaytmTransactionFailureDialog();
             }
         };
     }
@@ -337,6 +329,43 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
      * Used to indicate join action completed either for free or paid and should be refreshed (onDismiss).
      */
     private void onJoinActionSuccess() {
-        dismiss();
+        dismissThisDialog();
     }
+
+    private void showPaytmTransactionFailureDialog() {
+
+        if (mChallenge != null) {
+            PaytmTransactionFailureDialogFragment failureDialogFragment =
+                    PaytmTransactionFailureDialogFragment.newInstance(1199, mChallenge, this);
+            failureDialogFragment.show(getChildFragmentManager(), "FAILURE_DIALOG");
+        } else {
+            showMessage(Alerts.PAYTM_TRANSACTION_FAILED);
+        }
+    }
+
+    @Override
+    public void onRejoinClicked() {
+        /* User can click 'Join' button again to re-try transaction
+        * No action required here */
+    }
+
+    @Override
+    public void onBackToHomeClicked() {
+        dismissThisDialog();
+    }
+
+    /**
+     * This method allows slow and visible dialog dismissal, should be used same for same purpose instead directly calling dismiss.
+     */
+    private void dismissThisDialog() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "Dismissing this...");
+                ChallengeConfigsDialogFragment.this.dismiss();
+            }
+        }, 200);
+    }
+
 }

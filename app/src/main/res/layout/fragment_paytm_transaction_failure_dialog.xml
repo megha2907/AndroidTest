@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp_20"
+    android:layout_marginRight="@dimen/dp_20"
+    app:cardBackgroundColor="@color/transparent"
+    app:cardCornerRadius="@dimen/dp_4"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/code_gray_1a"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_42"
+            android:background="@color/chathams_blue"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/challenge_info_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:text="Transaction failed!"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp_15">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_52"
+                android:src="@drawable/paytm_failed_img"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:text="Something went wrong!"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_bold"
+                android:layout_marginTop="@dimen/dp_10"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/paytm_failed_challenge_str_Textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/dusty_gray"
+                android:gravity="center"
+                android:text="Transaction to join challenge has failed."
+                android:textSize="@dimen/dp_12"
+                app:typeface="lato_regular"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginRight="@dimen/dp_30"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/dusty_gray"
+                android:gravity="center"
+                android:text="If money has been debited from your \naccount, it will be refunded shortly."
+                android:textSize="@dimen/dp_12"
+                app:typeface="lato_light"
+                android:layout_marginTop="@dimen/dp_10"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/paytm_failure_backToHome_button"
+                android:layout_width="@dimen/dp_130"
+                android:layout_height="@dimen/dp_38"
+                android:background="@drawable/btn_not_played_shadow_bg"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp_3"
+                android:paddingTop="@dimen/dp_0"
+                android:text="Back to home"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_bold" />
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/paytm_failure_rejoin_button"
+                android:layout_width="@dimen/dp_130"
+                android:layout_height="@dimen/dp_38"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@drawable/tournament_ready_btn_bg"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp_3"
+                android:paddingTop="@dimen/dp_0"
+                android:text="Rejoin Challenge"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_14"
+                app:typeface="lato_bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

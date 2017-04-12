@@ -426,7 +426,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 ChallengeInfoDialogFragment.newInstance(42, "Joined Challenge", challenge)
                         .show(fragmentManager, "challenge_info");
             } else {
-                ChallengeConfigsDialogFragment.newInstance(43, challenge.getChallengeId(), "Modes of " + challenge.getName())
+                ChallengeConfigsDialogFragment.newInstance(43, challenge)
                         .show(fragmentManager, "challenge_configs");
             }
         } else if (dialogType == CHALLENGE_REWARDS_DIALOG_TYPE) {
