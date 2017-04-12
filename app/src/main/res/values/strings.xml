@@ -129,5 +129,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_add_payment_bank">AddPaymentBankActivity</string>
+    <string name="profile_disclaimer"> By clicking here, you confirm that you are above 18 years of age and not from either
+        Assam or Orissa.</string>
+    <string name="download_app_text">You could win cash prizes worth ₹ 1lac with the paid version of Nostragamus! Don\'t worry it\'s still free to download!</string>
 
 </resources>

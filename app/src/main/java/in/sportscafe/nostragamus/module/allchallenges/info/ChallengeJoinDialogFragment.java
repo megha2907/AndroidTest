@@ -97,7 +97,7 @@ public class ChallengeJoinDialogFragment extends NostragamusDialogFragment {
 
         if (mJoinedChallengeInfo != null) {
 
-            ((TextView) findViewById(R.id.challenge_info_tv_title)).setText("JOINED" + mJoinedChallengeInfo.getConfigName());
+            ((TextView) findViewById(R.id.challenge_info_tv_title)).setText("Joined " + mJoinedChallengeInfo.getConfigName());
             challengeName.setText("Joined");
 
             if (null == mJoinedChallengeInfo.getEntryFee() || mJoinedChallengeInfo.getEntryFee() == 0) {

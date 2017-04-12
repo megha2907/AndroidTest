@@ -19,6 +19,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -46,7 +47,11 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     private int OPEN_JOINED_CHALLENGE_DIALOG = 53;
 
+    private int OPEN_DOWNLOAD_APP_DIALOG = 54;
+
     private boolean mJoinedChallenge = false;
+
+    private boolean mOpenDownloadDialog = false;
 
     private Challenge mChallenge;
 
@@ -128,6 +133,8 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                 if (null != mChallengeDetailsBundle) {
                     mDismissListener.onDismiss(OPEN_JOINED_CHALLENGE_DIALOG, mChallengeDetailsBundle);
                 }
+            }else if(mOpenDownloadDialog){
+                mDismissListener.onDismiss(OPEN_DOWNLOAD_APP_DIALOG,null);
             }
         }
         super.onDismiss(dialog);
@@ -173,9 +180,13 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     @Override
     public void onJoinClick(int position) {
-        ChallengeConfig challengeConfig = mConfigAdapter.getItem(position);
-
-        generateOrderAndProceedToJoin(challengeConfig);
+        if (BuildConfig.IS_PAID_VERSION) {
+            ChallengeConfig challengeConfig = mConfigAdapter.getItem(position);
+            generateOrderAndProceedToJoin(challengeConfig);
+        }else {
+            mOpenDownloadDialog = true;
+            dismissThisDialog();
+        }
     }
 
     /**

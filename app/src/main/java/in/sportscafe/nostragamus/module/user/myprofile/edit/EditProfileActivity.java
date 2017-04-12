@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -44,9 +45,11 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private NostraEditText mEtNickName;
 
-    private TextView mTilNickName;
-
     private RoundImage mIvProfileImage;
+
+    private CheckBox mCbProfileDisclaimer;
+
+    private TextView mTvEmail;
 
     private EditProfilePresenter mEditProfilePresenter;
 
@@ -65,14 +68,15 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
         initToolBar();
 
-        mTilNickName = (TextView) findViewById(R.id.edit_tv_error_txt);
         mTvUpdateProfile = (TextView) findViewById(R.id.edit_tv);
         mEtNickName = (NostraEditText) findViewById(R.id.edit_et_nickname_new);
         mIvProfileImage = (RoundImage) findViewById(R.id.edit_iv_user_image);
         mBtnUpdateDone = (CustomButton) findViewById(R.id.edit_btn_done);
+        mCbProfileDisclaimer = (CheckBox) findViewById(R.id.edit_disclaimer_checkbox);
         initListener();
         this.mEditProfilePresenter = EditProfilePresenterImpl.newInstance(this);
         this.mEditProfilePresenter.onCreateEditProfile(getIntent().getExtras());
+        mCbProfileDisclaimer.setOnClickListener(this);
 
         if (!TextUtils.isEmpty(mEtNickName.getEditText().getText())) {
             String editName = mEtNickName.getEditText().getText().toString();
@@ -160,14 +164,12 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void setNicknameEmpty() {
-        //mTilNickName.setVisibility(View.VISIBLE);
         mEtNickName.setErrorText(Constants.Alerts.NICKNAME_EMPTY);
     }
 
 
     @Override
     public void setNicknameConflict() {
-       // mTilNickName.setVisibility(View.VISIBLE);
         mEtNickName.setErrorText(Constants.Alerts.NICKNAME_CONFLICT);
     }
 
@@ -194,7 +196,6 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void setNicknameNotValid() {
-       // mTilNickName.setVisibility(View.VISIBLE);
         mEtNickName.setErrorText(Constants.Alerts.NICKNAME_NOT_VALID);
     }
 

@@ -16,6 +16,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeDownloadAppFragment;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeJoinDialogFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
@@ -37,6 +38,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     private static final int CODE_PROFILE_ACTIVITY = 1;
     private static final int REFRESH_CHALLENGES_CODE = 42;
     private static final int OPEN_JOINED_CHALLENGE_DIALOG_CODE = 53;
+    private static final int OPEN_DOWNLOAD_APP_DIALOG = 54;
 
     private int mProfileTabPosition = 0;
 
@@ -285,7 +287,17 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             case REFRESH_CHALLENGES_CODE:
                 showChallenges(); // This will refresh the screen
                 break;
+
+            case OPEN_DOWNLOAD_APP_DIALOG:
+                showDownloadPaidApk(getContext());
+                break;
         }
+    }
+
+    private void showDownloadPaidApk(Context context) {
+        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+        ChallengeDownloadAppFragment.newInstance(REFRESH_CHALLENGES_CODE)
+                .show(fragmentManager, "paid_app_download");
     }
 
     private void showJoinedChallenge(Context context,Bundle bundle) {
