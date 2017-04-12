@@ -35,8 +35,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
-    private static final int CHALLENGE_JOINED_INFO_REQUEST_CODE = 42;
-    private static final int JOIN_CHALLENGE_REQUEST_CODE = 43;
+    private static final int REFRESH_CHALLENGES_CODE = 42;
+    private static final int OPEN_JOINED_CHALLENGE_DIALOG_CODE = 53;
 
     private int mProfileTabPosition = 0;
 
@@ -276,13 +276,13 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     @Override
     public void onDismiss(int requestCode, Bundle bundle) {
-        
+
         switch (requestCode) {
-            case JOIN_CHALLENGE_REQUEST_CODE:
+            case OPEN_JOINED_CHALLENGE_DIALOG_CODE:
                 showJoinedChallenge(getContext(),bundle);
                 break;
 
-            case CHALLENGE_JOINED_INFO_REQUEST_CODE:
+            case REFRESH_CHALLENGES_CODE:
                 showChallenges(); // This will refresh the screen
                 break;
         }
@@ -290,7 +290,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private void showJoinedChallenge(Context context,Bundle bundle) {
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-        ChallengeJoinDialogFragment.newInstance(CHALLENGE_JOINED_INFO_REQUEST_CODE, "JOINED CHALLENGE!", bundle)
+        ChallengeJoinDialogFragment.newInstance(REFRESH_CHALLENGES_CODE, "JOINED CHALLENGE!", bundle)
                 .show(fragmentManager, "challenge_info");
     }
 }

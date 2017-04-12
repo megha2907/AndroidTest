@@ -33,7 +33,7 @@ public class ChallengeJoinDialogFragment extends NostragamusDialogFragment {
 
     private OnDismissListener mDismissListener;
 
-    private int JOINED_CHALLENGE_DISMISS_CODE = 56;
+    private int mRequestCode;
 
     private JoinedChallengeInfo mJoinedChallengeInfo;
 
@@ -77,6 +77,7 @@ public class ChallengeJoinDialogFragment extends NostragamusDialogFragment {
     private void openBundle(Bundle bundle) {
 
         mJoinedChallengeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.JOINED_CHALLENGE_INFO));
+        mRequestCode = bundle.getInt(BundleKeys.DIALOG_REQUEST_CODE);
     }
 
     private void initViews() {
@@ -148,7 +149,7 @@ public class ChallengeJoinDialogFragment extends NostragamusDialogFragment {
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         if (null != mDismissListener) {
-            mDismissListener.onDismiss(JOINED_CHALLENGE_DISMISS_CODE, null);
+            mDismissListener.onDismiss(mRequestCode, null);
         }
     }
 }
