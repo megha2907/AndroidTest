@@ -10,8 +10,8 @@
 
     <com.jeeva.android.widgets.HmImageView
         android:id="@+id/reward_row_iv_member_photo"
-        android:layout_width="@dimen/dp_32"
-        android:layout_height="@dimen/dp_32"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
         android:maxLines="1"
         android:text="Name"
         android:layout_marginLeft="@dimen/dp_15"

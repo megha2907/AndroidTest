@@ -104,7 +104,7 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
 
             ((TextView) findViewById(R.id.challenge_info_tv_title)).setText(mChallenge.getName()+mTitle);
             challengeName.setVisibility(View.GONE);
-            challengeDesc.setText(mChallenge.getName());
+            challengeDesc.setText(mChallenge.getDescription());
             challengeDesc.setPadding(0,15,0,0);
             ChallengeUserInfo challengeUserInfo = mChallenge.getChallengeUserInfo();
 

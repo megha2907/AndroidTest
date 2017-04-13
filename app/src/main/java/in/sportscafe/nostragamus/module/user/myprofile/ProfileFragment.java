@@ -40,6 +40,8 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     private ViewPagerAdapter mPagerAdapter;
 
+    private TimelineFragment mTimelineFragment;
+
     public static ProfileFragment newInstance(int tabPosition, Bundle bundle) {
         if (null == bundle) {
             bundle = new Bundle();
@@ -80,8 +82,6 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
             this.mProfilePresenter.onCreateProfile(getArguments());
         }
     }
-
-    private TimelineFragment mTimelineFragment;
 
     private void initListeners() {
         findViewById(R.id.profile_btn_settings).setOnClickListener(this);

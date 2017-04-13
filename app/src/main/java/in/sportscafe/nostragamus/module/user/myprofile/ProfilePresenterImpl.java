@@ -31,7 +31,7 @@ public class ProfilePresenterImpl implements ProfilePresenter, ProfileModelImpl.
     @Override
     public void onCreateProfile(Bundle bundle) {
         mProfileModel.init(bundle);
-        populateUserInfo();
+       // populateUserInfo();
         getProfile();
     }
 
