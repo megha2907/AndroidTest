@@ -124,7 +124,7 @@ public class AddPaymentBankActivity extends NostragamusActivity implements View.
     }
 
     private void onApiSuccess() {
-        AlertDialog alertDialog = AppSnippet.getAlertDialog(this,
+        /*AlertDialog alertDialog = AppSnippet.getAlertDialog(this,
                 "Details Saved",
                 "Your bank details have been saved",
                 getString(R.string.ok),
@@ -135,7 +135,10 @@ public class AddPaymentBankActivity extends NostragamusActivity implements View.
             }
         });
 
-        alertDialog.show();
+        alertDialog.show();*/
+
+        showMessage("Your bank details have been saved");
+        finishThisAndGotoPaymentHome();
     }
 
     private void finishThisAndGotoPaymentHome() {
