@@ -62,6 +62,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     private boolean mSwipeView = true;
 
+    private boolean mOpenJoin = false;
+
     private int CHALLENGE_INFO_DIALOG_TYPE = 0;
 
     private int CHALLENGE_REWARDS_DIALOG_TYPE = 1;
@@ -143,6 +145,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mRlMatchesLeft.setVisibility(View.VISIBLE);
             holder.mTvMatchesLeft.setText(String.valueOf(challenge.getCountMatchesLeft()) + "/" + String.valueOf(challenge.getMatches().size()) + " Games Left to score!");
             holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
+            mOpenJoin=true;
         }
 
 //        Context context = holder.mIv2xPowerup.getContext();
@@ -350,6 +353,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlJoinChallenge.setOnClickListener(this);
             mRlAfrJoinedShowGames.setOnClickListener(this);
             mRlRewards.setOnClickListener(this);
+            mRlCashRewards.setOnClickListener(this);
 
             V.findViewById(R.id.all_challenges_rl_after_joined_challenge).setOnClickListener(this);
 //            mTvGamesLeftCount = (TextView) V.findViewById(R.id.all_challenges_row_tv_show_games);
@@ -400,6 +404,18 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     Challenge challengeRewards = getItem(getAdapterPosition());
                     dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
                     showChallengeInfo(context, challengeRewards);
+                    break;
+
+                case R.id.all_challenges_row_rl_cash_rewards:
+                    if (mOpenJoin) {
+                        Challenge challengeJoinNew = getItem(getAdapterPosition());
+                        dialogType = CHALLENGE_CONFIG_DIALOG_TYPE;
+                        showChallengeInfo(context, challengeJoinNew);
+                    }else {
+                        Challenge challengeRewardsNew = getItem(getAdapterPosition());
+                        dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
+                        showChallengeInfo(context, challengeRewardsNew);
+                    }
                     break;
 
                 case R.id.all_challenges_row_rl_show_games_btn:

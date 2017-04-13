@@ -71,6 +71,10 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             holder.mTvSlotsLeft.setText(String.valueOf(memberDetails.getMaxCount() - memberDetails.getJoinedCount()) + " SLOTS LEFT");
         }
 
+
+        holder.mIvDropDownReward.setRotation(0);
+        holder.mIvDropDownMember.setRotation(0);
+
         holder.mTvPoolName.setText(config.getConfigName());
         holder.mTvReward.setText("Worth "+config.getRewardDetails().getTotalReward());
 
@@ -84,6 +88,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
         holder.mTvDisclaimerTxt.setVisibility(View.GONE);
         holder.mTvDisclaimer.setVisibility(View.GONE);
         holder.mVDisclaimerSeparator.setVisibility(View.GONE);
+        holder.mTvSlotsLeft.setVisibility(View.GONE);
 
         holder.mMainView.setBackgroundColor(ViewUtils.getColor(holder.mMainView.getContext(), colorRes));
 
@@ -93,10 +98,10 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             holder.mTvDropDownTitle.setVisibility(View.VISIBLE);
             holder.mTvDropDownTitle.setText("JOINED");
             holder.mIvDropDownMember.setRotation(180);
-            holder.mTvDisclaimerTxt.setVisibility(View.VISIBLE);
-            holder.mTvDisclaimer.setVisibility(View.VISIBLE);
-            holder.mVDisclaimerSeparator.setVisibility(View.VISIBLE);
-            holder.mTvDisclaimer.setText("The money you win ultimately will be decided by the number of people who join the challenge");
+//            holder.mTvDisclaimerTxt.setVisibility(View.VISIBLE);
+//            holder.mTvDisclaimer.setVisibility(View.VISIBLE);
+//            holder.mVDisclaimerSeparator.setVisibility(View.VISIBLE);
+//            holder.mTvDisclaimer.setText("The money you win ultimately will be decided by the number of people who join the challenge");
             holder.mTvSlotsLeft.setVisibility(View.VISIBLE);
             createMemberDropDownList(memberDetails.getPlayers(), holder.mLlDropDownHolder);
         } else if (DropDownIds.REWARD == config.getDropDownId()) {
@@ -104,10 +109,10 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             holder.mTvDropDownTitle.setVisibility(View.VISIBLE);
             holder.mTvDropDownTitle.setText("REWARDS");
             holder.mIvDropDownReward.setRotation(180);
-            holder.mTvDisclaimerTxt.setVisibility(View.VISIBLE);
-            holder.mTvDisclaimer.setVisibility(View.VISIBLE);
-            holder.mVDisclaimerSeparator.setVisibility(View.VISIBLE);
-            holder.mTvDisclaimer.setText("The money you win ultimately will be decided by the number of people who join the challenge");
+//            holder.mTvDisclaimerTxt.setVisibility(View.VISIBLE);
+//            holder.mTvDisclaimer.setVisibility(View.VISIBLE);
+//            holder.mVDisclaimerSeparator.setVisibility(View.VISIBLE);
+//            holder.mTvDisclaimer.setText("The money you win ultimately will be decided by the number of people who join the challenge");
             holder.mTvSlotsLeft.setVisibility(View.GONE);
             createRewardDropDownList(config.getRewardDetails().getBreakUps(), holder.mLlDropDownHolder);
         }
