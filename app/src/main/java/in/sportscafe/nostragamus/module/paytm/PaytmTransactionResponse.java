@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.paytm;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by sandip on 8/4/17.
  */
@@ -20,6 +22,7 @@ public class PaytmTransactionResponse {
     String bankName;
     String paymentMode;
     String checkSumHash;
+    JoinedChallengeInfo joinedChallengeInfo;
 
     public String getMid() {
         return mid;
@@ -131,5 +134,13 @@ public class PaytmTransactionResponse {
 
     public void setCheckSumHash(String checkSumHash) {
         this.checkSumHash = checkSumHash;
+    }
+
+    public JoinedChallengeInfo getJoinedChallengeInfo() {
+        return joinedChallengeInfo;
+    }
+
+    public void setJoinedChallengeInfo(JoinedChallengeInfo joinedChallengeInfo) {
+        this.joinedChallengeInfo = joinedChallengeInfo;
     }
 }

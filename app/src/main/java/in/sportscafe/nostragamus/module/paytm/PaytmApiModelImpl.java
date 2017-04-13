@@ -9,11 +9,14 @@ import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 
+import org.parceler.Parcels;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.webservice.MyWebService;
 
 /**
  * Created by sandip on 8/4/17.
@@ -154,7 +157,7 @@ public class PaytmApiModelImpl {
             response.setStatus(bundle.getString(Constants.PaytmSuccessResponseParamKeys.STATUS));
             response.setTransactionDate(bundle.getString(Constants.PaytmSuccessResponseParamKeys.TRANSACTION_DATE));
             response.setTransactionAmount(bundle.getString(Constants.PaytmSuccessResponseParamKeys.TRANSACTION_AMOUNT));
-
+            response.setJoinedChallengeInfo(MyWebService.getInstance().getObjectFromJson(bundle.getString(Constants.PaytmSuccessResponseParamKeys.JOINED_CHALLENGE_INFO), JoinedChallengeInfo.class));
         }
 
         return response;
@@ -164,7 +167,7 @@ public class PaytmApiModelImpl {
         Map<String, String> paramMap = new HashMap<>();
 
         paramMap.put(Constants.PaytmParamsKeys.REQUEST_TYPE, generateOrderResponse.getRequestType());
-        paramMap.put(Constants.PaytmParamsKeys.CHANNEL_ID, generateOrderResponse.getChallengeId());
+        paramMap.put(Constants.PaytmParamsKeys.CHANNEL_ID, generateOrderResponse.getChannelId());
         paramMap.put(Constants.PaytmParamsKeys.INDUSTRY_TYPE_ID, generateOrderResponse.getIndustryTypeId());
         paramMap.put(Constants.PaytmParamsKeys.WEBSITE, generateOrderResponse.getWebsite());
         paramMap.put(Constants.PaytmParamsKeys.MID, generateOrderResponse.getmId());

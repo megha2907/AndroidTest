@@ -422,19 +422,14 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
 
         if (dialogType == CHALLENGE_CONFIG_DIALOG_TYPE) {
-            if (challenge.getChallengeUserInfo().isUserJoined()) {
-                ChallengeInfoDialogFragment.newInstance(42, "Joined Challenge", challenge)
-                        .show(fragmentManager, "challenge_info");
-            } else {
-                ChallengeConfigsDialogFragment.newInstance(43, challenge)
-                        .show(fragmentManager, "challenge_configs");
-            }
+            ChallengeConfigsDialogFragment.newInstance(43, challenge)
+                    .show(fragmentManager, "challenge_configs");
         } else if (dialogType == CHALLENGE_REWARDS_DIALOG_TYPE) {
             ChallengeRewardsFragment.newInstance(44, challenge.getChallengeId(), challenge.getName() + " Rewards",
                     challenge.getChallengeUserInfo().getConfigIndex(), challenge.getEndTime())
                     .show(fragmentManager, "challenge_rewards");
         } else {
-            ChallengeInfoDialogFragment.newInstance(42, challenge.getName(), challenge)
+            ChallengeInfoDialogFragment.newInstance(58, " Info", challenge)
                     .show(fragmentManager, "challenge_info");
         }
     }

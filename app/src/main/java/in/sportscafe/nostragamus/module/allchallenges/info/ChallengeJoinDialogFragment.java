@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -18,8 +17,9 @@ import java.util.HashMap;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
@@ -27,27 +27,22 @@ import in.sportscafe.nostragamus.module.paytm.JoinedChallengeInfo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
- * Created by deepanshi on 4/12/17.
+ * Created by Jeeva on 28/02/17.
  */
-
-public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
+public class ChallengeJoinDialogFragment extends NostragamusDialogFragment {
 
     private OnDismissListener mDismissListener;
 
-    private int CHALLENGE_INFO_REQUEST_CODE = 58;
+    private int mRequestCode;
 
-    private Challenge mChallenge;
+    private JoinedChallengeInfo mJoinedChallengeInfo;
 
-    private String mTitle;
+    public static ChallengeJoinDialogFragment newInstance(int requestCode, String title, Bundle bundle) {
 
-    public static ChallengeInfoDialogFragment newInstance(int requestCode, String title, Challenge challenge) {
+        bundle.putString(BundleKeys.TITLE, title);
+        bundle.putInt(BundleKeys.DIALOG_REQUEST_CODE, requestCode);
 
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.BundleKeys.TITLE, title);
-        bundle.putInt(Constants.BundleKeys.DIALOG_REQUEST_CODE, requestCode);
-        bundle.putParcelable(Constants.BundleKeys.CHALLENGE_DATA, Parcels.wrap(challenge));
-
-        ChallengeInfoDialogFragment fragment = new ChallengeInfoDialogFragment();
+        ChallengeJoinDialogFragment fragment = new ChallengeJoinDialogFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -80,8 +75,9 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
     }
 
     private void openBundle(Bundle bundle) {
-        mTitle = bundle.getString(Constants.BundleKeys.TITLE);
-        mChallenge = Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.CHALLENGE_DATA));
+
+        mJoinedChallengeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.JOINED_CHALLENGE_INFO));
+        mRequestCode = bundle.getInt(BundleKeys.DIALOG_REQUEST_CODE);
     }
 
     private void initViews() {
@@ -98,34 +94,39 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
         TextView challengeName = (TextView) findViewById(R.id.challenge_info_tv_challenge_name);
         TextView challengeDesc = (TextView) findViewById(R.id.challenge_info_tv_challenge_desc);
         TextView challengePayoutDate = (TextView) findViewById(R.id.challenge_info_tv_challenge_payout_date);
-        Button challengeBtnClose = (Button)findViewById(R.id.challenge_info_btn_close);
 
-        if (mChallenge != null) {
+        if (mJoinedChallengeInfo != null) {
 
-            ((TextView) findViewById(R.id.challenge_info_tv_title)).setText(mChallenge.getName()+mTitle);
-            challengeName.setVisibility(View.GONE);
-            challengeDesc.setText(mChallenge.getName());
-            challengeDesc.setPadding(0,15,0,0);
-            ChallengeUserInfo challengeUserInfo = mChallenge.getChallengeUserInfo();
+            ((TextView) findViewById(R.id.challenge_info_tv_title)).setText("Joined " + mJoinedChallengeInfo.getConfigName());
+            challengeName.setText("Joined");
+
+            if (null == mJoinedChallengeInfo.getEntryFee() || mJoinedChallengeInfo.getEntryFee() == 0) {
+                challengeDesc.setText("You have successfully joined this challenge for FREE.");
+            } else {
+                challengeDesc.setText("₹" + mJoinedChallengeInfo.getEntryFee()
+                        + " has been deducted from your wallet."+" You have successfully joined this challenge. Best of luck!");
+            }
+
+            ChallengeUserInfo challengeUserInfo = mJoinedChallengeInfo.getChallengeUserInfo();
 
             int powerUpCount = 0;
             HashMap<String, Integer> powerUps = challengeUserInfo.getPowerUps();
-            ((TextView) findViewById(R.id.challenge_info_tv_2x)).setText(powerUps.get(Constants.Powerups.XX) + "");
-            ((TextView) findViewById(R.id.challenge_info_tv_nonegs)).setText(powerUps.get(Constants.Powerups.NO_NEGATIVE) + "");
-            ((TextView) findViewById(R.id.challenge_info_tv_poll)).setText(powerUps.get(Constants.Powerups.AUDIENCE_POLL) + "");
+            ((TextView) findViewById(R.id.challenge_info_tv_2x)).setText(powerUps.get(Powerups.XX) + "");
+            ((TextView) findViewById(R.id.challenge_info_tv_nonegs)).setText(powerUps.get(Powerups.NO_NEGATIVE) + "");
+            ((TextView) findViewById(R.id.challenge_info_tv_poll)).setText(powerUps.get(Powerups.AUDIENCE_POLL) + "");
 
             ((TextView) findViewById(R.id.challenge_info_tv_powerup_desc)).setText(
                     String.format(
                             getString(R.string.info_powerup_desc),
-                            powerUps.get(Constants.Powerups.XX)
-                                    + powerUps.get(Constants.Powerups.NO_NEGATIVE)
-                                    + powerUps.get(Constants.Powerups.AUDIENCE_POLL)
+                            powerUps.get(Powerups.XX)
+                                    + powerUps.get(Powerups.NO_NEGATIVE)
+                                    + powerUps.get(Powerups.AUDIENCE_POLL)
                     )
             );
 
 
             long endTimeMs = TimeUtils.getMillisecondsFromDateString(
-                    mChallenge.getEndTime(),
+                    mJoinedChallengeInfo.getEndTime(),
                     Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
                     Constants.DateFormats.GMT
             );
@@ -141,8 +142,6 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
             Log.d("Dialog", "ChallengeUserInfo Null");
         }
 
-        challengeBtnClose.setText("ok, got it!");
-
 
     }
 
@@ -150,7 +149,7 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         if (null != mDismissListener) {
-            mDismissListener.onDismiss(CHALLENGE_INFO_REQUEST_CODE, null);
+            mDismissListener.onDismiss(mRequestCode, null);
         }
     }
 }
