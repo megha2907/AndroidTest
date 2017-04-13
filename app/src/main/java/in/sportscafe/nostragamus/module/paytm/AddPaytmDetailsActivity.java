@@ -114,7 +114,7 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
     }
 
     private void onApiSuccess() {
-        AlertDialog alertDialog = AppSnippet.getAlertDialog(this,
+        /*AlertDialog alertDialog = AppSnippet.getAlertDialog(this,
                 "Details Saved",
                 "Your Paytm details have been saved",
                 getString(R.string.ok),
@@ -125,7 +125,10 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
                     }
                 });
 
-        alertDialog.show();
+        alertDialog.show();*/
+
+        showMessage("Your Paytm details have been saved");
+        finishAndGotoPaymentHome();
     }
 
     public void onClickSkip(View view) {
