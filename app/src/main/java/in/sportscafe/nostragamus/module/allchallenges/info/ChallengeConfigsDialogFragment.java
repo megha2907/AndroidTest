@@ -185,8 +185,13 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             ChallengeConfig challengeConfig = mConfigAdapter.getItem(position);
             generateOrderAndProceedToJoin(challengeConfig);
         }else {
-            mOpenDownloadDialog = true;
-            dismissThisDialog();
+            if (mConfigAdapter.getItem(position).isFreeEntry()){
+                ChallengeConfig challengeConfig = mConfigAdapter.getItem(position);
+                generateOrderAndProceedToJoin(challengeConfig);
+            }else {
+                mOpenDownloadDialog = true;
+                dismissThisDialog();
+            }
         }
     }
 
