@@ -226,6 +226,6 @@ public interface NostragamusService {
     @PUT("v2/game/users/paymentInfo")
     Call<AddUserPaymentDetailsResponse> addUserPaymentPaytmDetails(@Body AddUserPaymentPaytmRequest request);
 
-    @POST("v2/game/getUserTransaction")
-    Call<List<WalletTransaction>> getWalletTransactionHistory(@Body WalletTransactionRequest request);
+    @GET("v2/game/getUserTransaction")
+    Call<List<WalletTransaction>> getWalletTransactionHistory();
 }

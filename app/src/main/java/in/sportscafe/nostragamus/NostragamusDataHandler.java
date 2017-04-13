@@ -451,5 +451,11 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(SharedKeys.DOWNLOAD_PAID_APP, downloadPaidApp);
     }
 
+    public void setIsPaymentDetailsShownAtHome(boolean isShownOnHome) {
+        setSharedBooleanData(SharedKeys.PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME, isShownOnHome);
+    }
 
+    public boolean isPaymentDetailsShownAtHome() {
+        return getSharedBooleanData(SharedKeys.PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME, false);
+    }
 }

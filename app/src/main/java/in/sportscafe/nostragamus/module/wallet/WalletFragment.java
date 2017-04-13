@@ -10,19 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.module.home.HomeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WalletFragment extends NostragamusFragment implements WalletModel {
+public class WalletFragment extends NostragamusFragment implements WalletModel, View.OnClickListener {
 
     private RecyclerView mWalletHistoryRecyclerView;
+    private TextView mAmountWonTextView;
 
     public WalletFragment() {
     }
@@ -46,6 +49,11 @@ public class WalletFragment extends NostragamusFragment implements WalletModel {
     }
 
     private void initViews(View view) {
+        view.findViewById(R.id.wallet_update_payment_btn).setOnClickListener(this);
+        view.findViewById(R.id.wallet_update_payment_btn1).setOnClickListener(this);
+
+        mAmountWonTextView = (TextView) view.findViewById(R.id.wallet_amount_won_textview);
+
         mWalletHistoryRecyclerView = (RecyclerView) view.findViewById(R.id.walletRecyclerView);
         mWalletHistoryRecyclerView.setHasFixedSize(true);
         mWalletHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -91,6 +99,37 @@ public class WalletFragment extends NostragamusFragment implements WalletModel {
             return;
         }
 
+        setAmountWon(transactionList);
         mWalletHistoryRecyclerView.setAdapter(new WalletHistoryAdapter(getContext(), transactionList));
+    }
+
+    private void setAmountWon(List<WalletTransaction> transactionList) {
+        double amountWon = 0;
+        for (WalletTransaction transaction : transactionList) {
+            if (transaction.getMoneyFlow().equals(Constants.MoneyFlow.OUT)) {   // MoneyFlow == OUT means, user got amount (Credit for user)
+                amountWon += transaction.getAmount();
+            }
+        }
+
+        if (amountWon > 0) {
+            mAmountWonTextView.setText(String.valueOf(amountWon));
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.wallet_update_payment_btn:
+            case R.id.wallet_update_payment_btn1:
+                launchPaymentDetails();
+                break;
+
+        }
+    }
+
+    private void launchPaymentDetails() {
+        if (getActivity() != null && getActivity() instanceof HomeActivity) {
+            ((HomeActivity) getActivity()).launchPaymentDetailsActivity();
+        }
     }
 }

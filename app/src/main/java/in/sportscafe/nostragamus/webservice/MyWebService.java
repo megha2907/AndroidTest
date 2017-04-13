@@ -283,7 +283,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.addUserPaymentPaytmDetails(request);
     }
 
-    public Call<List<WalletTransaction>> getWalletTransactionHistory(WalletTransactionRequest request) {
-        return mNostragamusService.getWalletTransactionHistory(request);
+    public Call<List<WalletTransaction>> getWalletTransactionHistory() {
+        return mNostragamusService.getWalletTransactionHistory();
     }
 }

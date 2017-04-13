@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
+import org.parceler.Parcel;
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -26,6 +29,7 @@ import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
 
 /**
@@ -83,15 +87,28 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
      */
     private void checkPaymentInfoProvidedOrRequired(UserInfo userInfo) {
         if (userInfo != null) {
-            if (userInfo.getUserPaymentInfo() == null) {
 
-                Log.d(TAG, "User Payment details are not provided yet...");
-                Intent intent = new Intent(this, WalletOrBankConnectActivity.class);
-                startActivity(intent);
+            /* If user info is null AND paymentDetails never shown to user on HomeScreen, then only (once only) */
+            if (userInfo.getUserPaymentInfo() == null &&
+                    !NostragamusDataHandler.getInstance().isPaymentDetailsShownAtHome()) {
+
+                Log.d(TAG, "User Payment details screen shown at home");
+                launchPaymentDetailsActivity();
+
+                // Save that payment details are shown at home
+                NostragamusDataHandler.getInstance().setIsPaymentDetailsShownAtHome(true);
             } else {
-                Log.d(TAG, "User payment details are provided...");
+                Log.d(TAG, "User payment details screen not required to show at home");
             }
         }
+    }
+
+    /**
+     * Also gets invoked by wallet Transaction - updatePaymentDetails
+     */
+    public void launchPaymentDetailsActivity() {
+        Intent intent = new Intent(this, WalletOrBankConnectActivity.class);
+        startActivity(intent);
     }
 
     private void showProfile() {

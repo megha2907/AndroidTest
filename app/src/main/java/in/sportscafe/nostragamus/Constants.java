@@ -80,8 +80,12 @@ public interface Constants {
         String VISITED_SUBMIT_QUESTION = "VisitedSubmitQuestion";
         String POWERUP_APPLIED = "PowerUpApplied";
         String DUMMY_GAME_SHOWN = "dummyGameShown";
+<<<<<<< HEAD
         String FEEDBACK = "feedback";
         String DOWNLOAD_PAID_APP = "downloadPaidApp";
+=======
+        String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
+>>>>>>> upstream/master
     }
 
     interface Alerts {
@@ -261,6 +265,7 @@ public interface Constants {
         String ENTRY_FEE = "entryFee";
         String JOINED_CHALLENGE_INFO = "joinedChallenegInfo";
         String OPEN_LEADERBOARD = "openLeaderboard";
+        String USER_PAYMENT_INFO_PARCEL = "userPaymentInfoParcel";
     }
 
     interface ParcelableKeys {
@@ -529,4 +534,9 @@ public interface Constants {
          String NORMAL_PAID_UPDATE = "Normal_Paid";
          String FORCE_PAID_UPDATE = "Force_Paid";
      }
+
+    public interface MoneyFlow {
+        String IN = "in";   // Debit
+        String OUT = "out"; // credit
+    }
 }

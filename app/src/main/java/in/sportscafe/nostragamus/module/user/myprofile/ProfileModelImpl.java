@@ -11,6 +11,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.bank.BankFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
@@ -63,6 +64,8 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fm);
 
         UserInfo userInfo = getUserInfo();
+        pagerAdapter.addFragment(TimelineFragment.newInstance(mChallengeId), "Matches");
+
         pagerAdapter.addFragment(WalletFragment.newInstance(), "Wallet");
 
         HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());

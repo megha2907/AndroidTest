@@ -35,10 +35,7 @@ public class WalletApiModelImpl {
 
     public void fetchWalletTransactionsFromServer() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            WalletTransactionRequest request = new WalletTransactionRequest();
-            request.setUserId(Integer.valueOf(NostragamusDataHandler.getInstance().getUserId()));
-
-            MyWebService.getInstance().getWalletTransactionHistory(request).enqueue(getUserPaymentCallBack());
+            MyWebService.getInstance().getWalletTransactionHistory().enqueue(getUserPaymentCallBack());
         } else {
             modelListener.noInternet();
         }
