@@ -27,6 +27,7 @@ import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.settings.SettingActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
+import in.sportscafe.nostragamus.module.wallet.WalletFragment;
 
 /**
  * Created by Jeeva on 14/6/16.
@@ -80,7 +81,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         }
     }
 
-    private TimelineFragment mTimelineFragment;
+    private WalletFragment mTimelineFragment;
 
     private void initListeners() {
         findViewById(R.id.profile_btn_settings).setOnClickListener(this);
@@ -91,13 +92,13 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                if (null != mTimelineFragment) {
+                /*if (null != mTimelineFragment) {
                     if (state == State.EXPANDED) {
                         mTimelineFragment.setAppbarExpanded(false);
                     } else {
                         mTimelineFragment.setAppbarExpanded(true);
                     }
-                }
+                }*/
             }
         });
     }
@@ -179,7 +180,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
         viewPager.setCurrentItem(getArguments().getInt(BundleKeys.TAB_POSITION));
 
-        mTimelineFragment = (TimelineFragment) mPagerAdapter.getItem(0);
+        mTimelineFragment = (WalletFragment) mPagerAdapter.getItem(0);
     }
 
     @Override

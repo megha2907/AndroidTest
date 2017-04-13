@@ -58,9 +58,9 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             onClickBankTransfer();
         }
 
-//        else if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 4
-//                && !NostragamusDataHandler.getInstance().isPowerUpApplied()
-//                && !NostragamusDataHandler.getInstance().isPlayedFifthMatchPopUp()) {
+//        else if (NostragamusDataHandler.newInstance().getMatchPlayedCount() == 4
+//                && !NostragamusDataHandler.newInstance().isPowerUpApplied()
+//                && !NostragamusDataHandler.newInstance().isPlayedFifthMatchPopUp()) {
 //            mPredictionView.showPopUp(Constants.InAppPopups.FIFTH_MATCH_PLAYED_WITH_NO_POWERUP);
 //        }
 

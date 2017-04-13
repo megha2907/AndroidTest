@@ -191,7 +191,7 @@ public class NewGroupModelImpl implements NewGroupModel {
                             NostragamusAnalytics.getInstance().trackGroups(
                                     AnalyticsActions.NEW_GROUP,
                                     // Todo remove later
-                                    /*MyWebService.getInstance().getJsonStringFromObject(newGroupRequest.getfollowedTournaments())*/"{}"
+                                    /*MyWebService.newInstance().getJsonStringFromObject(newGroupRequest.getfollowedTournaments())*/"{}"
                             );
 
                             Bundle bundle = new Bundle();

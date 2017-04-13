@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.paytm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -64,7 +65,7 @@ public class AddPaymentBankActivity extends NostragamusActivity implements View.
     }
 
     public void onAddBankSkipClicked(View view) {
-        onBackPressed();
+        finishThisAndGotoPaymentHome();
     }
 
     private AddPaytmOrBankDetailModelModelImpl.PaytmOrBankDetailModelListener getCallBackListener() {
@@ -99,11 +100,17 @@ public class AddPaymentBankActivity extends NostragamusActivity implements View.
                 new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finishThisAndGotoPaymentHome();
             }
         });
 
         alertDialog.show();
+    }
+
+    private void finishThisAndGotoPaymentHome() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void initToolBar() {

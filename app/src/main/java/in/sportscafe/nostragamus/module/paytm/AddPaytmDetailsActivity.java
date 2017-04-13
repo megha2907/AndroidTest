@@ -1,10 +1,10 @@
 package in.sportscafe.nostragamus.module.paytm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -97,14 +97,15 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onBackPressed();
+                        finishAndGotoPaymentHome();
                     }
                 });
 
         alertDialog.show();
     }
+
     public void onClickSkip(View view) {
-        onBackPressed();
+        finishAndGotoPaymentHome();
     }
 
     public void initToolBar() {
@@ -120,6 +121,12 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
                     }
                 }
         );
+    }
+
+    private void finishAndGotoPaymentHome() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override

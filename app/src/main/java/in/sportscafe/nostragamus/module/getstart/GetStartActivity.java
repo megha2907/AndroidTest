@@ -25,7 +25,7 @@ public class GetStartActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*if (NostragamusDataHandler.getInstance().isInitialFeedbackFormShown()) {*/
+        /*if (NostragamusDataHandler.newInstance().isInitialFeedbackFormShown()) {*/
         handleGetStart();
         /*} else {
             navigateToForm();
