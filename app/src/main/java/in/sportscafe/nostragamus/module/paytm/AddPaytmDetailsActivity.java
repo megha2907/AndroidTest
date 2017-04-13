@@ -5,15 +5,21 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoBankDto;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoPaytmDto;
 
 /**
  * Created by Jeeva on 23/03/17.
@@ -36,6 +42,24 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
 
         initToolBar();
         initViews();
+        getUserPaymentInfoIfAvailable();
+    }
+
+    private void getUserPaymentInfoIfAvailable() {
+        if (getIntent() != null &&
+                getIntent().getExtras() != null &&
+                getIntent().getExtras().containsKey(Constants.BundleKeys.USER_PAYMENT_INFO_PARCEL)) {
+
+            UserPaymentInfo userPaymentInfo = Parcels.unwrap(getIntent().getExtras().getParcelable(Constants.BundleKeys.USER_PAYMENT_INFO_PARCEL));
+            if (userPaymentInfo != null && userPaymentInfo.getPaytm() != null) {
+                UserPaymentInfoPaytmDto paytm = userPaymentInfo.getPaytm();
+
+                mMobileNoEditText.setText(String.valueOf(paytm.getMobile()));
+                mMobileNoEditText.setSelection(mMobileNoEditText.getText().toString().length());
+                mConfirmMobileNoEditText.setText(String.valueOf(paytm.getMobile()));
+                mConfirmMobileNoEditText.setSelection(mConfirmMobileNoEditText.getText().toString().length());
+            }
+        }
     }
 
     private void initViews() {

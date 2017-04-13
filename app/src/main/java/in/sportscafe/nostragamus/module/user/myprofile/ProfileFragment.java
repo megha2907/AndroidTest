@@ -81,7 +81,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         }
     }
 
-    private WalletFragment mTimelineFragment;
+    private TimelineFragment mTimelineFragment;
 
     private void initListeners() {
         findViewById(R.id.profile_btn_settings).setOnClickListener(this);
@@ -92,13 +92,13 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                /*if (null != mTimelineFragment) {
+                if (null != mTimelineFragment) {
                     if (state == State.EXPANDED) {
                         mTimelineFragment.setAppbarExpanded(false);
                     } else {
                         mTimelineFragment.setAppbarExpanded(true);
                     }
-                }*/
+                }
             }
         });
     }
@@ -180,7 +180,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
         viewPager.setCurrentItem(getArguments().getInt(BundleKeys.TAB_POSITION));
 
-        mTimelineFragment = (WalletFragment) mPagerAdapter.getItem(0);
+        mTimelineFragment = (TimelineFragment) mPagerAdapter.getItem(0);
     }
 
     @Override

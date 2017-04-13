@@ -17,8 +17,8 @@ public class WalletTransaction {
     @JsonProperty("amount")
     private Integer amount;
 
-    @JsonProperty("challenge_id")
-    private Integer challengeId;
+    @JsonProperty("challenge_name")
+    private String challengeName;
 
     @JsonProperty("money_flow")
     private String moneyFlow;
@@ -47,12 +47,12 @@ public class WalletTransaction {
         this.amount = amount;
     }
 
-    public Integer getChallengeId() {
-        return challengeId;
+    public String getChallengeName() {
+        return challengeName;
     }
 
-    public void setChallengeId(Integer challengeId) {
-        this.challengeId = challengeId;
+    public void setChallengeName(String challengeName) {
+        this.challengeName = challengeName;
     }
 
     public String getMoneyFlow() {

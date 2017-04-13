@@ -5,14 +5,19 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoBankDto;
 
 public class AddPaymentBankActivity extends NostragamusActivity implements View.OnFocusChangeListener {
 
@@ -32,6 +37,32 @@ public class AddPaymentBankActivity extends NostragamusActivity implements View.
 
         initToolBar();
         initViews();
+        getUserPaymentInfoIfAvailable();
+    }
+
+    private void getUserPaymentInfoIfAvailable() {
+        if (getIntent() != null &&
+                getIntent().getExtras() != null &&
+                getIntent().getExtras().containsKey(Constants.BundleKeys.USER_PAYMENT_INFO_PARCEL)) {
+
+            UserPaymentInfo userPaymentInfo = Parcels.unwrap(getIntent().getExtras().getParcelable(Constants.BundleKeys.USER_PAYMENT_INFO_PARCEL));
+            if (userPaymentInfo != null && userPaymentInfo.getBank() != null) {
+                UserPaymentInfoBankDto bank = userPaymentInfo.getBank();
+
+                if (!TextUtils.isEmpty(bank.getName())) {
+                    mAccHolderNameEditText.setText(bank.getName());
+                    mAccHolderNameEditText.setSelection(mAccHolderNameEditText.getText().toString().length());
+                }
+                if (!TextUtils.isEmpty(bank.getAccountNo())) {
+                    mAccNumberEditText.setText(bank.getAccountNo());
+                    mAccNumberEditText.setSelection(mAccNumberEditText.getText().toString().length());
+                }
+                if (!TextUtils.isEmpty(bank.getIfscCode())) {
+                    mIfscodeEditText.setText(bank.getIfscCode());
+                    mIfscodeEditText.setSelection(mIfscodeEditText.getText().toString().length());
+                }
+            }
+        }
     }
 
     private void initViews() {

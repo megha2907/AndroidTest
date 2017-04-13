@@ -6,8 +6,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +15,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by sandip on 12/04/17.
  */
 
 public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdapter.WalletHistoryViewHolder> {
-
-    private interface MoneyFlow {
-        String IN = "in";   // Debit
-        String OUT = "out"; // credit
-    }
 
     private List<WalletTransaction> mTransactionList;
     private Context mContext;
@@ -51,11 +53,15 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
         if (mTransactionList != null && mTransactionList.size() > position) {
             WalletTransaction transaction = mTransactionList.get(position);
 
+            // Background color
             if (position % 2 == 0) {
-                holder.itemRootLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black_10));
+                holder.itemRootLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.grey));
+            } else {
+                holder.itemRootLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black));
             }
 
-            if (transaction.getMoneyFlow().equals(MoneyFlow.IN)) {
+            // Debit-credit , set values
+            if (transaction.getMoneyFlow().equals(Constants.MoneyFlow.IN)) {
                 holder.txnImageView.setImageResource(R.drawable.wallet_debit);
                 holder.titleTextView.setText(getSpannedText(true, String.valueOf(transaction.getAmount())));
             } else {
@@ -63,9 +69,32 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
                 holder.titleTextView.setText(getSpannedText(false, String.valueOf(transaction.getAmount())));
             }
 
-            holder.detailsTextView.setText(String.valueOf(transaction.getChallengeId()));
-            holder.dateTextView.setText(transaction.getCreatedAt());
-            holder.txnIdTextView.setText(String.valueOf(transaction.getOrderId()));
+            // Date format
+            try {
+                if (!TextUtils.isEmpty(transaction.getCreatedAt())) {
+                    String dateStr = "-";
+
+                    String dateTime = transaction.getCreatedAt();
+                    long dateTimeMs = TimeUtils.getMillisecondsFromDateString(
+                            dateTime,
+                            Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                            Constants.DateFormats.GMT
+                    );
+
+                    int dayStr = Integer.parseInt(TimeUtils.getDateStringFromMs(dateTimeMs, "d"));
+                    dateStr = dayStr + AppSnippet.ordinalOnly(dayStr) + " " +
+                            TimeUtils.getDateStringFromMs(dateTimeMs, "MMM") + " \'" +
+                            TimeUtils.getDateStringFromMs(dateTimeMs, "yy");
+
+                    holder.dateTextView.setText(dateStr);
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            holder.detailsTextView.setText(transaction.getChallengeName());
+            holder.txnIdTextView.setText("Transaction ID - " + String.valueOf(transaction.getOrderId()));
         }
     }
 
@@ -110,7 +139,6 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
         TextView detailsTextView;
         TextView dateTextView;
         TextView txnIdTextView;
-        TextView txnTimeTextView;
         ImageView moreDetailBtnImageView;
         LinearLayout moreDetailsLayout;
         LinearLayout itemRootLayout;
@@ -125,7 +153,6 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
             detailsTextView = (TextView) itemView.findViewById(R.id.wallet_history_detail_textview);
             dateTextView = (TextView) itemView.findViewById(R.id.wallet_item_date_textview);
             txnIdTextView = (TextView) itemView.findViewById(R.id.wallet_item_txn_id_textview);
-            txnTimeTextView = (TextView) itemView.findViewById(R.id.wallet_item_txn_time_textview);
             moreDetailBtnImageView = (ImageView) itemView.findViewById(R.id.wallet_more_details_imgBtn);
             moreDetailBtnImageView.setOnClickListener(this);
         }
@@ -136,8 +163,10 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
                 case R.id.wallet_more_details_imgBtn:
                     if (moreDetailsLayout.getVisibility() == View.GONE) {
                         moreDetailsLayout.setVisibility(View.VISIBLE);
+                        moreDetailBtnImageView.setImageResource(R.drawable.thin_arrow_up_min);
                     } else {
                         moreDetailsLayout.setVisibility(View.GONE);
+                        moreDetailBtnImageView.setImageResource(R.drawable.thin_arrow_min);
                     }
                     break;
             }
