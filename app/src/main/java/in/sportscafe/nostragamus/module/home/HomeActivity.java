@@ -7,20 +7,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-
-import com.jeeva.android.Log;
-
-import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
-import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeInfoDialogFragment;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeDownloadAppFragment;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeJoinDialogFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.paytm.WalletOrBankConnectActivity;
@@ -39,9 +36,9 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
-
-    private static final int CHALLENGE_JOINED_INFO_REQUEST_CODE = 42;
-    private static final int JOIN_CHALLENGE_REQUEST_CODE = 43;
+    private static final int REFRESH_CHALLENGES_CODE = 42;
+    private static final int OPEN_JOINED_CHALLENGE_DIALOG_CODE = 53;
+    private static final int OPEN_DOWNLOAD_APP_DIALOG = 54;
 
     private int mProfileTabPosition = 0;
 
@@ -281,21 +278,31 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     @Override
     public void onDismiss(int requestCode, Bundle bundle) {
+
         switch (requestCode) {
-            case JOIN_CHALLENGE_REQUEST_CODE:
-                Challenge mChallengeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_DATA));
-                showJoinedChallenge(getContext(),mChallengeInfo);
+            case OPEN_JOINED_CHALLENGE_DIALOG_CODE:
+                showJoinedChallenge(getContext(),bundle);
                 break;
 
-            case CHALLENGE_JOINED_INFO_REQUEST_CODE:
+            case REFRESH_CHALLENGES_CODE:
                 showChallenges(); // This will refresh the screen
+                break;
+
+            case OPEN_DOWNLOAD_APP_DIALOG:
+                showDownloadPaidApk(getContext());
                 break;
         }
     }
 
-    private void showJoinedChallenge(Context context, Challenge challenge) {
+    private void showDownloadPaidApk(Context context) {
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-        ChallengeInfoDialogFragment.newInstance(CHALLENGE_JOINED_INFO_REQUEST_CODE, "JOINED CHALLENGE!", challenge)
+        ChallengeDownloadAppFragment.newInstance(REFRESH_CHALLENGES_CODE)
+                .show(fragmentManager, "paid_app_download");
+    }
+
+    private void showJoinedChallenge(Context context,Bundle bundle) {
+        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+        ChallengeJoinDialogFragment.newInstance(REFRESH_CHALLENGES_CODE, "JOINED CHALLENGE!", bundle)
                 .show(fragmentManager, "challenge_info");
     }
 }

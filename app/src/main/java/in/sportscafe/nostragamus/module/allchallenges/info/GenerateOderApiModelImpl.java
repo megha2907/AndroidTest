@@ -1,8 +1,14 @@
 package in.sportscafe.nostragamus.module.allchallenges.info;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import org.parceler.Parcels;
+
+import java.nio.BufferUnderflowException;
+
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.paytm.GenerateOrderRequest;
 import in.sportscafe.nostragamus.module.paytm.GenerateOrderResponse;
@@ -36,9 +42,9 @@ public class GenerateOderApiModelImpl {
      * @param challengeId - challengeId
      * @param configIndex - configIndex
      */
-    public void callGenerateOrder(final long userId, long challengeId, long configIndex) {
+    public void callGenerateOrder(final long userId, final long challengeId, final int configIndex) {
 
-        GenerateOrderRequest generateOrderRequest = new GenerateOrderRequest();
+        final GenerateOrderRequest generateOrderRequest = new GenerateOrderRequest();
         generateOrderRequest.setUserId(userId);
         generateOrderRequest.setChallengeId(challengeId);
         generateOrderRequest.setConfigIndex(configIndex);
@@ -62,7 +68,9 @@ public class GenerateOderApiModelImpl {
                                 } else {
                                     com.jeeva.android.Log.d(TAG, "CheckSumHash Empty - continue to join free challenge");
                                     if (mListener != null) {
-                                        mListener.joinFreeChallenge();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putParcelable(Constants.BundleKeys.JOINED_CHALLENGE_INFO,Parcels.wrap(generateOrderResponse.getJoinedChallengeInfo()));
+                                        mListener.joinFreeChallenge(bundle);
                                     }
                                 }
 
@@ -83,7 +91,7 @@ public class GenerateOderApiModelImpl {
 
     public interface OnGenerateOrderApiModelListener {
         void makePaytmTransaction(GenerateOrderResponse generateOrderResponse);
-        void joinFreeChallenge();
+        void joinFreeChallenge(Bundle bundle);
         void onApiFailure();
         void noInternet();
     }
