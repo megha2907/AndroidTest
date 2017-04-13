@@ -210,7 +210,6 @@
         android:textAllCaps="true"
         android:textColor="@color/white_50"
         android:textSize="@dimen/dp_9"
-        android:text="5 SLOTS LEFT"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dp_16"
         android:layout_below="@+id/pool_row_v_separator_drop_down"

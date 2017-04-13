@@ -49,6 +49,7 @@
             android:scrollbarThumbVertical="@drawable/custom_scrollbar"
             android:scrollbarTrackVertical="@drawable/custom_scrollbar_track"
             android:scrollbarSize="@dimen/dp_2"
+            android:background="@color/code_gray_1d"
             />
 
     </RelativeLayout>

@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -234,11 +235,20 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     @Override
     public void onConfigHeightChanged() {
+
+        ((SimpleItemAnimator) mRcvConfigs.getItemAnimator()).setSupportsChangeAnimations(false);
+
         mRcvConfigs.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mTitleHeight = getResources().getDimensionPixelSize(R.dimen.dp_42);
-                int configsHeight = mMaxHeight + mTitleHeight;
+
+                int configsHeight;
+                if (mRcvConfigs.getAdapter().getItemCount()>=3) {
+                     configsHeight = mMaxHeight + mTitleHeight;
+                }else {
+                    configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight;
+                }
                 Log.d("ChallengeConfigsDialogFragment", "MaxHeight --> " + mMaxHeight + ", " + "ScrollHeight --> " + configsHeight);
                 if (configsHeight > mMaxHeight) {
                     configsHeight = mMaxHeight;

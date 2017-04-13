@@ -76,7 +76,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
                         TimeUtils.getDateStringFromMs(endTimeMs, "MMM")
         );
 
-        holder.mTvDisclaimer.setText("The money you win ultimately will be decided by the number of people who join the challenge");
+       // holder.mTvDisclaimer.setText("The money you win ultimately will be decided by the number of people who join the challenge");
 
         int colorRes = R.color.code_gray_17;
 
