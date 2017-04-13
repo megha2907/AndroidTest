@@ -11,9 +11,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
-import org.parceler.Parcel;
-import org.parceler.Parcels;
-
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -29,8 +27,8 @@ import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
+import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
 /**
  * Created by Jeeva on 16/6/16.
@@ -70,6 +68,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 mProfileTabPosition = Integer.parseInt(bundle.getString(BundleKeys.OPEN_PROFILE));
                 showProfile();
                 return;
+
             } else if (bundle.containsKey(BundleKeys.GROUP)) {
                 showGroups();
                 return;
@@ -83,6 +82,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     /**
      * If user has not yet provided payment info (either paytm or bank) then he'll be asked to provide
      *
+     * But only once
      * @param userInfo
      */
     private void checkPaymentInfoProvidedOrRequired(UserInfo userInfo) {
@@ -92,13 +92,13 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             if (userInfo.getUserPaymentInfo() == null &&
                     !NostragamusDataHandler.getInstance().isPaymentDetailsShownAtHome()) {
 
-                Log.d(TAG, "User Payment details screen shown at home");
+                Log.d(TAG, "[onBoard] User Payment details screen shown at home");
                 launchPaymentDetailsActivity();
 
                 // Save that payment details are shown at home
                 NostragamusDataHandler.getInstance().setIsPaymentDetailsShownAtHome(true);
             } else {
-                Log.d(TAG, "User payment details screen not required to show at home");
+                Log.d(TAG, "[onBoard] User payment details screen not required to show at home");
             }
         }
     }
@@ -249,9 +249,23 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             @Override
             public void onSuccessGetUpdatedUserInfo(UserInfo userInfo) {
                 if (userInfo != null) {
-                    checkPaymentInfoProvidedOrRequired(userInfo);
+
+                    if (!BuildConfig.IS_PAID_VERSION && !NostragamusDataHandler.getInstance().isFirstTimeUser()) {
+
+                        com.jeeva.android.Log.d(TAG, "[onBoard] Free App & Not a first time user..");
+                        checkPaymentInfoProvidedOrRequired(userInfo);
+                    } else {
+
+                        if (!NostragamusDataHandler.getInstance().isProfileDisclaimerAccepted()) {
+                            launchEditProfile();
+                            com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
+                        } else {
+                            checkPaymentInfoProvidedOrRequired(userInfo);
+                            com.jeeva.android.Log.d(TAG, "[onBoard] Launch PaymentDetails(if required) for once");
+                        }
+                    }
                 } else {
-                    Log.d(TAG, "User Payment info null");
+                    Log.d(TAG, "[onBoard] User Payment info null");
                     // Do not perform any action
                 }
             }
@@ -267,6 +281,17 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 // Initial call, Not required to show any msg
             }
         };
+    }
+
+    /**
+     * If disclaimer not accepted, then only show editProfile
+     */
+    private void launchEditProfile() {
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("screen", BundleKeys.HOME_SCREEN);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override

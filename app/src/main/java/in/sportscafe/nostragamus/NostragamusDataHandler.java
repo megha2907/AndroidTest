@@ -458,4 +458,12 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public boolean isPaymentDetailsShownAtHome() {
         return getSharedBooleanData(SharedKeys.PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME, false);
     }
+
+    public void setIsProfileDisclaimerAccepted(boolean disclaimerAccepted) {
+        setSharedBooleanData(SharedKeys.IS_PROFILE_DISCLAIMER_ACCEPTED, disclaimerAccepted);
+    }
+
+    public boolean isProfileDisclaimerAccepted() {
+        return getSharedBooleanData(SharedKeys.IS_PROFILE_DISCLAIMER_ACCEPTED, false);
+    }
 }

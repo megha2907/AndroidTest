@@ -105,14 +105,16 @@ public class WalletFragment extends NostragamusFragment implements WalletModel, 
 
     private void setAmountWon(List<WalletTransaction> transactionList) {
         double amountWon = 0;
-        for (WalletTransaction transaction : transactionList) {
-            if (transaction.getMoneyFlow().equals(Constants.MoneyFlow.OUT)) {   // MoneyFlow == OUT means, user got amount (Credit for user)
-                amountWon += transaction.getAmount();
+        if (transactionList != null) {
+            for (WalletTransaction transaction : transactionList) {
+                if (transaction.getMoneyFlow().equals(Constants.MoneyFlow.OUT)) {   // MoneyFlow == OUT means, user got amount (Credit for user)
+                    amountWon += transaction.getAmount();
+                }
             }
-        }
 
-        if (amountWon > 0) {
-            mAmountWonTextView.setText(String.valueOf(amountWon));
+            if (amountWon > 0) {
+                mAmountWonTextView.setText(String.valueOf(amountWon));
+            }
         }
     }
 

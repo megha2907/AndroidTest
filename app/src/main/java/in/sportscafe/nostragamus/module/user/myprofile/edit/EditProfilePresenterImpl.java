@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.user.myprofile.edit;
 import android.content.Intent;
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
@@ -51,11 +52,15 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     }
 
     @Override
-    public void onClickDone(String nickname) {
+    public void onClickDone(String nickname, boolean isDisclaimerChecked) {
         if (nickname.equals("")) {
             mEditProfileView.setNicknameEmpty();
         } else {
-            mEditProfileModel.updateProfile(nickname);
+            if (BuildConfig.IS_PAID_VERSION && isDisclaimerChecked) {
+                mEditProfileModel.updateProfile(nickname);
+            } else {
+                mEditProfileView.disclaimerConfirmationRequired();
+            }
         }
 
         NostragamusAnalytics.getInstance().trackEditProfile(AnalyticsActions.OTHERS, AnalyticsLabels.UPDATE);

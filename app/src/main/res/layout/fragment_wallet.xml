@@ -43,7 +43,7 @@
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/wallet_update_payment_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_48"
+                android:layout_height="@dimen/dp_40"
                 android:background="@drawable/paid_join_btn_bg"
                 android:gravity="center"
                 android:minWidth="@dimen/dp_200"
@@ -99,15 +99,16 @@
             android:layout_width="@dimen/dp_160"
             android:layout_height="@dimen/dp_160"
             android:src="@drawable/wallet_no_history"
-            android:layout_marginTop="@dimen/dp_15"/>
+            android:layout_marginTop="@dimen/dp_15"
+            android:alpha="0.3"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Please add/update your Payment details to receive cash prizes!"
+            android:text="Please add/update your payment details to receive cash prizes!"
             android:textColor="@color/white"
-            android:textSize="@dimen/dp_10"
+            android:textSize="@dimen/dp_13"
             app:typeface="lato_regular"
             android:layout_marginTop="@dimen/dp_15"
             android:layout_marginBottom="@dimen/dp_10"/>
@@ -115,7 +116,7 @@
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/wallet_update_payment_btn1"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_48"
+            android:layout_height="@dimen/dp_40"
             android:background="@drawable/paid_join_btn_bg"
             android:gravity="center"
             android:minWidth="@dimen/dp_200"

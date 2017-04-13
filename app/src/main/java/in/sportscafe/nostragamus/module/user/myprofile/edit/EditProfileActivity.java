@@ -76,7 +76,6 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         initListener();
         this.mEditProfilePresenter = EditProfilePresenterImpl.newInstance(this);
         this.mEditProfilePresenter.onCreateEditProfile(getIntent().getExtras());
-        mCbProfileDisclaimer.setOnClickListener(this);
 
         if (!TextUtils.isEmpty(mEtNickName.getEditText().getText())) {
             String editName = mEtNickName.getEditText().getText().toString();
@@ -119,10 +118,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.edit_btn_done:
-                mEditProfilePresenter.onClickDone(
-                        getTrimmedText(mEtNickName.getEditText())
-
-                );
+                mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()), mCbProfileDisclaimer.isChecked());
                 break;
 
         }
@@ -157,6 +153,10 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         if(fromHome) {
             intent.putExtra(BundleKeys.OPEN_PROFILE, "0");
+        }
+        if (getIntent() != null) {
+            /* To launch paymentScreen after updating editProfile, some params are in bundle to identify */
+            intent.putExtras(getIntent().getExtras());
         }
         startActivity(intent);
         finish();
@@ -202,6 +202,12 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     @Override
     public void navigateToAddPhoto(int requestCode) {
         startActivityForResult(new Intent(this, AddPhotoActivity.class), requestCode);
+    }
+
+    @Override
+    public void disclaimerConfirmationRequired() {
+//        mCbProfileDisclaimer.setError(Constants.Alerts.EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED);
+        showMessage(Constants.Alerts.EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED);
     }
 
     public void showImagePopup(View view) {
