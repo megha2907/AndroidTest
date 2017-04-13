@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.webservice;
 
 
+import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
@@ -47,6 +48,8 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
+import in.sportscafe.nostragamus.module.wallet.WalletTransaction;
+import in.sportscafe.nostragamus.module.wallet.WalletTransactionRequest;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -222,4 +225,7 @@ public interface NostragamusService {
 
     @PUT("v2/game/users/paymentInfo")
     Call<AddUserPaymentDetailsResponse> addUserPaymentPaytmDetails(@Body AddUserPaymentPaytmRequest request);
+
+    @POST("v2/game/getUserTransaction")
+    Call<List<WalletTransaction>> getWalletTransactionHistory(@Body WalletTransactionRequest request);
 }

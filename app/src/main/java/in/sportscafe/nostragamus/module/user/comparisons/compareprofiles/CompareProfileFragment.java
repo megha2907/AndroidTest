@@ -99,7 +99,7 @@ public class CompareProfileFragment extends NostragamusFragment {
         setAccuracy(NostragamusDataHandler.getInstance().getUserInfo().getAccuracy(), playerAccuracy);
         setPredictionCount(NostragamusDataHandler.getInstance().getUserInfo().getPredictionCount(), playerPredictions);
         setBadgesCount(NostragamusDataHandler.getInstance().getUserInfo().getBadges().size(), playerBadgeCount);
-//        setSportsFollowedCount(NostragamusDataHandler.getInstance().getFavoriteSportsIdList().size(), playerSportsFollowed);
+//        setSportsFollowedCount(NostragamusDataHandler.newInstance().getFavoriteSportsIdList().size(), playerSportsFollowed);
 
     }
 

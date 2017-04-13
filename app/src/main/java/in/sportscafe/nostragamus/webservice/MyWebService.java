@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.webservice;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.Config;
@@ -49,6 +50,8 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
+import in.sportscafe.nostragamus.module.wallet.WalletTransaction;
+import in.sportscafe.nostragamus.module.wallet.WalletTransactionRequest;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -278,5 +281,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<AddUserPaymentDetailsResponse> addUserPaymentPaytmDetails(AddUserPaymentPaytmRequest request) {
         return mNostragamusService.addUserPaymentPaytmDetails(request);
+    }
+
+    public Call<List<WalletTransaction>> getWalletTransactionHistory(WalletTransactionRequest request) {
+        return mNostragamusService.getWalletTransactionHistory(request);
     }
 }

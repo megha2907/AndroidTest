@@ -14,6 +14,9 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
  */
 public class WalletOrBankConnectActivity extends NostragamusActivity {
 
+    private static final int BANK_REQUEST_CODE = 1001;
+    private static final int PAYTM_REQUEST_CODE = 1002;
+
     @Override
     public String getScreenName() {
         return ScreenNames.PAYTM_CONNECT;
@@ -52,27 +55,25 @@ public class WalletOrBankConnectActivity extends NostragamusActivity {
     }
 
     private void navigateToAddBankDetails() {
-        startActivity(new Intent(this, AddPaymentBankActivity.class));
-        onBackPressed();
+        startActivityForResult(new Intent(this, AddPaymentBankActivity.class), BANK_REQUEST_CODE);
     }
 
     private void navigateToAddPaytmDetail() {
-        startActivity(new Intent(this, AddPaytmDetailsActivity.class));
-        onBackPressed();
+        startActivityForResult(new Intent(this, AddPaytmDetailsActivity.class), PAYTM_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && (requestCode == BANK_REQUEST_CODE || requestCode == PAYTM_REQUEST_CODE)) {
+            onBackPressed();
+        }
     }
 
     public void initToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.paytm_connect_toolbar);
         toolbar.setTitle("Add a wallet");
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back_icon_grey);
-        toolbar.setNavigationOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                }
-        );
     }
 }

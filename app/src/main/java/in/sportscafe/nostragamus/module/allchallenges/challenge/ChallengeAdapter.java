@@ -202,7 +202,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
 
 
-        /*TimeAgo startTimeLeft = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(),
+        /*TimeAgo startTimeLeft = TimeUtils.calcTimeAgo(Calendar.newInstance().getTimeInMillis(),
                 TimeUtils.getMillisecondsFromDateString(
                         challenge.getStartTime(),
                         DateFormats.FORMAT_DATE_T_TIME_ZONE,

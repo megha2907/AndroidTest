@@ -179,7 +179,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 Constants.DateFormats.GMT
         );
 
-        TimeAgo timeAgo = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(), startTimeMs);
+        TimeAgo timeAgo = TimeUtils.calcTimeAgo(Calendar.newInstance().getTimeInMillis(), startTimeMs);
         boolean isMatchStarted = timeAgo.timeDiff <= 0
                 || timeAgo.timeUnit == TimeUnit.MILLISECOND
                 || timeAgo.timeUnit == TimeUnit.SECOND;

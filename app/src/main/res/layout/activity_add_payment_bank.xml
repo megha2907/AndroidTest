@@ -30,6 +30,7 @@
 
 
             <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/add_bank_accHolder_head_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -56,8 +57,8 @@
 
             </com.jeeva.android.widgets.ShadowLayout>
 
-
             <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/add_bank_accNumber_head_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -85,6 +86,7 @@
             </com.jeeva.android.widgets.ShadowLayout>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/add_bank_ifsc_head_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"

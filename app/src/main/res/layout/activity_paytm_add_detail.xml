@@ -29,8 +29,8 @@
             android:paddingLeft="@dimen/dp_24"
             android:paddingRight="@dimen/dp_24">
 
-
             <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/add_paytm_mobile_no_heading_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -58,8 +58,8 @@
 
             </com.jeeva.android.widgets.ShadowLayout>
 
-
             <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/add_paytm_confirm_mob_no_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"

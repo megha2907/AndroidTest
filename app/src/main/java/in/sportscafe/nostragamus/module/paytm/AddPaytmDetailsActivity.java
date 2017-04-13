@@ -1,11 +1,13 @@
 package in.sportscafe.nostragamus.module.paytm;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
@@ -16,7 +18,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 /**
  * Created by Jeeva on 23/03/17.
  */
-public class AddPaytmDetailsActivity extends NostragamusActivity {
+public class AddPaytmDetailsActivity extends NostragamusActivity implements View.OnFocusChangeListener {
 
     private EditText mMobileNoEditText;
     private EditText mConfirmMobileNoEditText;
@@ -33,9 +35,14 @@ public class AddPaytmDetailsActivity extends NostragamusActivity {
         setContentView(R.layout.activity_paytm_add_detail);
 
         initToolBar();
+        initViews();
+    }
 
+    private void initViews() {
         mMobileNoEditText = (EditText) findViewById(R.id.paytm_add_detail_et_number);
         mConfirmMobileNoEditText = (EditText) findViewById(R.id.paytm_add_detail_et_confirm_number);
+        mMobileNoEditText.setOnFocusChangeListener(this);
+        mConfirmMobileNoEditText.setOnFocusChangeListener(this);
     }
 
     public void onClickSave(View view) {
@@ -90,14 +97,15 @@ public class AddPaytmDetailsActivity extends NostragamusActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onBackPressed();
+                        finishAndGotoPaymentHome();
                     }
                 });
 
         alertDialog.show();
     }
+
     public void onClickSkip(View view) {
-        onBackPressed();
+        finishAndGotoPaymentHome();
     }
 
     public void initToolBar() {
@@ -113,5 +121,34 @@ public class AddPaytmDetailsActivity extends NostragamusActivity {
                     }
                 }
         );
+    }
+
+    private void finishAndGotoPaymentHome() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case R.id.paytm_add_detail_et_number:
+                TextView textView = (TextView) findViewById(R.id.add_paytm_mobile_no_heading_textview);
+                if (hasFocus) {
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                } else {
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.white_60));
+                }
+                break;
+
+            case R.id.paytm_add_detail_et_confirm_number:
+                textView = (TextView) findViewById(R.id.add_paytm_confirm_mob_no_textview);
+                if (hasFocus) {
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                } else {
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.white_60));
+                }
+                break;
+        }
     }
 }
