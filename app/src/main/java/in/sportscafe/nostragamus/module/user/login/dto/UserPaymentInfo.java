@@ -16,18 +16,22 @@ public class UserPaymentInfo {
     @JsonProperty("paytm")
     private UserPaymentInfoPaytmDto paytm;
 
+    @JsonProperty("bank")
     public UserPaymentInfoBankDto getBank() {
         return bank;
     }
 
+    @JsonProperty("bank")
     public void setBank(UserPaymentInfoBankDto bank) {
         this.bank = bank;
     }
 
+    @JsonProperty("paytm")
     public UserPaymentInfoPaytmDto getPaytm() {
         return paytm;
     }
 
+    @JsonProperty("paytm")
     public void setPaytm(UserPaymentInfoPaytmDto paytm) {
         this.paytm = paytm;
     }

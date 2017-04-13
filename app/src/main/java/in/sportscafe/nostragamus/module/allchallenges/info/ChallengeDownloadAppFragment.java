@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jeeva.android.ExceptionTracker;
 
@@ -77,6 +80,21 @@ public class ChallengeDownloadAppFragment extends NostragamusDialogFragment {
                 navigateToAppUrl(NostragamusDataHandler.getInstance().getPaidNormalApkLink());
             }
         });
+
+        TextView downloadText = (TextView)findViewById(R.id.challenge_dw_app_tv);
+        if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getDownloadPaidApp())) {
+            downloadText.setText(NostragamusDataHandler.getInstance().getDownloadPaidApp());
+        }else {
+            downloadText.setText(getResources().getString(R.string.download_app_text));
+        }
+
+        findViewById(R.id.challenge_dw_rl_popup_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
     }
 
     private void navigateToAppUrl(String appUrl) {

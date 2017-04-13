@@ -434,4 +434,22 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public void setDummyGameShown(boolean dummyGameShown) {
         setSharedBooleanData(SharedKeys.DUMMY_GAME_SHOWN, dummyGameShown);
     }
+
+    public String getFeedBack() {
+        return getSharedStringData(SharedKeys.FEEDBACK);
+    }
+
+    public void setFeedBack(String feedBack) {
+        setSharedStringData(SharedKeys.FEEDBACK, feedBack);
+    }
+
+    public String getDownloadPaidApp() {
+        return getSharedStringData(SharedKeys.DOWNLOAD_PAID_APP);
+    }
+
+    public void setDownloadPaidApp(String downloadPaidApp) {
+        setSharedStringData(SharedKeys.DOWNLOAD_PAID_APP, downloadPaidApp);
+    }
+
+
 }

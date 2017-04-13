@@ -13,10 +13,12 @@ public class UserPaymentInfoPaytmDto {
     @JsonProperty("mobile")
     private Integer mobile;
 
+    @JsonProperty("mobile")
     public Integer getMobile() {
         return mobile;
     }
 
+    @JsonProperty("mobile")
     public void setMobile(Integer mobile) {
         this.mobile = mobile;
     }

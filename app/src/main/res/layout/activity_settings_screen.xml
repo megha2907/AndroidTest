@@ -109,6 +109,7 @@
                 style="@style/SettingOptionStyle"
                 android:text="@string/dummy_game" />
 
+
             <View style="@style/SettingOptionDivider" />
 
             <com.jeeva.android.widgets.customfont.CustomButton
@@ -136,6 +137,7 @@
                 <View style="@style/SettingHeadingDivider" />
             </LinearLayout>
 
+
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/settings_btn_about_us"
                 style="@style/SettingOptionStyle"
@@ -154,6 +156,18 @@
                 android:id="@+id/settings_btn_privacy"
                 style="@style/SettingOptionStyle"
                 android:text="@string/privacy" />
+
+            <View style="@style/SettingOptionDivider" />
+
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/settings_tv_app_feedback"
+                style="@style/SettingOptionStyle"
+                android:alpha="0.6"
+                android:textSize="@dimen/dp_12"
+                android:clickable="false"
+                android:text="For any bugs, clarifications about prizes, errors, please reach out to marketing@sportscafe.in"/>
+
 
             <View style="@style/SettingOptionDivider" />
 

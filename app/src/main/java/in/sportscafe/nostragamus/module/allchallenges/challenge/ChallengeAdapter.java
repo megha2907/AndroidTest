@@ -169,7 +169,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             String rank = AppSnippet.ordinal(challenge.getUserRank());
             holder.mTvChallengeUserRank.setText(rank + " Rank");
         } else {
-            holder.mTvChallengeUserRank.setText("Did Not Play");
+            holder.mTvChallengeUserRank.setText("No Rank");
         }
 
         LinearLayout.LayoutParams layoutParams = null;

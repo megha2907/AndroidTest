@@ -80,6 +80,8 @@ public interface Constants {
         String VISITED_SUBMIT_QUESTION = "VisitedSubmitQuestion";
         String POWERUP_APPLIED = "PowerUpApplied";
         String DUMMY_GAME_SHOWN = "dummyGameShown";
+        String FEEDBACK = "feedback";
+        String DOWNLOAD_PAID_APP = "downloadPaidApp";
     }
 
     interface Alerts {
@@ -258,6 +260,7 @@ public interface Constants {
         String CHALLENGE = "challenge";
         String ENTRY_FEE = "entryFee";
         String JOINED_CHALLENGE_INFO = "joinedChallenegInfo";
+        String OPEN_LEADERBOARD = "openLeaderboard";
     }
 
     interface ParcelableKeys {

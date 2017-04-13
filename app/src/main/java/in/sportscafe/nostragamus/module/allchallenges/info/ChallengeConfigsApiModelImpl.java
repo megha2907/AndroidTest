@@ -22,6 +22,8 @@ public class ChallengeConfigsApiModelImpl {
 
     private OnConfigsApiModelListener mApiModelListener;
 
+    private String mAppFlavor;
+
     public ChallengeConfigsApiModelImpl(OnConfigsApiModelListener listener) {
         this.mApiModelListener = listener;
     }
@@ -42,9 +44,13 @@ public class ChallengeConfigsApiModelImpl {
 
         mApiModelListener.onApiCallStarted();
 
-        //Log.d("appflavor", getAppFlavor());
+        if (BuildConfig.IS_PAID_VERSION){
+            mAppFlavor = "FULL";
+        }else {
+            mAppFlavor = "RESTRICTED";
+        }
 
-        MyWebService.getInstance().getChallengeConfigsRequest(challengeId, configIndex).enqueue(
+        MyWebService.getInstance().getChallengeConfigsRequest(challengeId, configIndex,mAppFlavor).enqueue(
 
                 new NostragamusCallBack<ChallengeConfigsResponse>() {
                     @Override

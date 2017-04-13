@@ -11,8 +11,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.WebViewActivity;
 import in.sportscafe.nostragamus.module.paytm.WalletOrBankConnectActivity;
@@ -41,6 +44,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         getAppVersion();
 
         mLlActionLayout = (LinearLayout) findViewById(R.id.settings_ll_action_layout);
+
+        ((TextView) findViewById(R.id.settings_tv_app_feedback))
+                .setText(NostragamusDataHandler.getInstance().getFeedBack());
+
     }
 
     public void initToolBar() {
@@ -89,13 +96,13 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 navigateToPaytm();
                 break;
             case R.id.settings_btn_about_us:
-                navigateToWebView("https://sportscafe.in/aboutus", "About Sportscafe");
+                navigateToWebView("http://nostragamus.in/about.html", "About NostraGamus");
                 break;
             case R.id.settings_btn_terms_service:
-                navigateToWebView("https://sportscafe.in/termsandconditions", "Terms of Service");
+                navigateToWebView("http://nostragamus.in/terms.html", "Terms of Service");
                 break;
             case R.id.settings_btn_privacy:
-                navigateToWebView("https://sportscafe.in/privacy", "Privacy Policy");
+                navigateToWebView("http://nostragamus.in/privacy.html", "Privacy Policy");
                 break;
         }
     }

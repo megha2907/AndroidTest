@@ -19,6 +19,12 @@ public class VersionDetails {
     @JsonProperty("paidNormalUpdateVersion")
     private Version paidNormalUpdateVersion;
 
+    @JsonProperty("feedback_text")
+    private String feedbackText;
+
+    @JsonProperty("download_paid_text")
+    private String downloadPaidText;
+
     @JsonProperty("forceUpdateVersion")
     public Version getForceUpdateVersion() {
         return forceUpdateVersion;
@@ -57,5 +63,25 @@ public class VersionDetails {
     @JsonProperty("paidNormalUpdateVersion")
     public void setPaidNormalUpdateVersion(Version paidNormalUpdateVersion) {
         this.paidNormalUpdateVersion = paidNormalUpdateVersion;
+    }
+
+    @JsonProperty("feedback_text")
+    public String getFeedbackText() {
+        return feedbackText;
+    }
+
+    @JsonProperty("feedback_text")
+    public void setFeedbackText(String feedbackText) {
+        this.feedbackText = feedbackText;
+    }
+
+    @JsonProperty("download_paid_text")
+    public String getDownloadPaidText() {
+        return downloadPaidText;
+    }
+
+    @JsonProperty("download_paid_text")
+    public void setDownloadPaidText(String downloadPaidText) {
+        this.downloadPaidText = downloadPaidText;
     }
 }

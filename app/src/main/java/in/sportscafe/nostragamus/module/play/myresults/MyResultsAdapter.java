@@ -644,6 +644,23 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
             setTextColor(tvAnswer, R.color.greencolor);
 
+        }     /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/
+        else if (question.getQuestionAnswer() == -1) {
+            tvAnswer.setText(question.getQuestionOption1());
+            tvotheroption.setText(question.getQuestionOption2());
+
+            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                tvNeitherAnswer.setText(question.getQuestionOption3());
+                setTextColor(tvNeitherAnswer, R.color.white_60);
+                tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            }
+
+            setTextColor(tvNeitherAnswer, R.color.white_60);
+            setTextColor(tvAnswer, R.color.white_60);
+            convertView.findViewById(R.id.my_predictions_row_splitView).setVisibility(View.VISIBLE);
         }  // if your answer is incorrect and other option is correct
         else {
             setTextColor(tvAnswer, R.color.tabcolor);
@@ -651,7 +668,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             tvotheroption.setVisibility(View.VISIBLE);
             setTextColor(tvotheroption, R.color.white_60);
             tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
-
 
             // IF USER ANSWER = OPTION 1 OR OPTION 2
 
@@ -708,24 +724,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         }
 
-        /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/
-        if (question.getQuestionAnswer() == -1) {
-            tvAnswer.setText(question.getQuestionOption1());
-            tvotheroption.setText(question.getQuestionOption2());
-
-            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-
-            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                tvNeitherAnswer.setText(question.getQuestionOption3());
-                setTextColor(tvNeitherAnswer, R.color.white_60);
-                tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-            }
-
-            setTextColor(tvNeitherAnswer, R.color.white_60);
-            setTextColor(tvAnswer, R.color.white_60);
-            convertView.findViewById(R.id.my_predictions_row_splitView).setVisibility(View.VISIBLE);
-        }
 
 
         return convertView;
