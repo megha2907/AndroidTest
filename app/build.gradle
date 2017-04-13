@@ -98,13 +98,15 @@ android {
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
 
-        /*local {
+        local {
             resValue "string", "app_name", "Nostragamus"
+            buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
 
         dev {
             resValue "string", "app_name", "Nostragamus Dev"
-        }*/
+            buildConfigField("boolean", "IS_PAID_VERSION", "false")
+        }
     }
 }
 
