@@ -80,12 +80,9 @@ public interface Constants {
         String VISITED_SUBMIT_QUESTION = "VisitedSubmitQuestion";
         String POWERUP_APPLIED = "PowerUpApplied";
         String DUMMY_GAME_SHOWN = "dummyGameShown";
-<<<<<<< HEAD
         String FEEDBACK = "feedback";
         String DOWNLOAD_PAID_APP = "downloadPaidApp";
-=======
         String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
->>>>>>> upstream/master
     }
 
     interface Alerts {
