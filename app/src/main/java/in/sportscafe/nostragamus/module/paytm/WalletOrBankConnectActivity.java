@@ -38,7 +38,6 @@ public class WalletOrBankConnectActivity extends NostragamusActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paytm_connect);
 
-        initToolBar();
         loadUserInfo();
     }
 
@@ -126,9 +125,4 @@ public class WalletOrBankConnectActivity extends NostragamusActivity {
         }
     }
 
-    public void initToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.paytm_connect_toolbar);
-        toolbar.setTitle("Add a wallet");
-        setSupportActionBar(toolbar);
-    }
 }
