@@ -113,7 +113,7 @@ public class WalletFragment extends NostragamusFragment implements WalletModel, 
             }
 
             if (amountWon > 0) {
-                mAmountWonTextView.setText(String.valueOf(amountWon));
+                mAmountWonTextView.setText("₹ " + String.valueOf(amountWon));
             }
         }
     }

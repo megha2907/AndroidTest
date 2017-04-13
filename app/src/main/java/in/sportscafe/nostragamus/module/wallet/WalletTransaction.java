@@ -23,6 +23,12 @@ public class WalletTransaction {
     @JsonProperty("money_flow")
     private String moneyFlow;
 
+    @JsonProperty("status_code")
+    private String statusCode;
+
+    @JsonProperty("rank")
+    private String rank;
+
     public String getOrderId() {
         return orderId;
     }
@@ -61,5 +67,21 @@ public class WalletTransaction {
 
     public void setMoneyFlow(String moneyFlow) {
         this.moneyFlow = moneyFlow;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
     }
 }

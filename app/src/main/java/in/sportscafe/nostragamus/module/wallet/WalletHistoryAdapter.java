@@ -55,19 +55,27 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
 
             // Background color
             if (position % 2 == 0) {
-                holder.itemRootLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.grey));
+                holder.itemRootLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.grey1));
             } else {
                 holder.itemRootLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black));
             }
+
+            String txnDetails = transaction.getChallengeName();
 
             // Debit-credit , set values
             if (transaction.getMoneyFlow().equals(Constants.MoneyFlow.IN)) {
                 holder.txnImageView.setImageResource(R.drawable.wallet_debit);
                 holder.titleTextView.setText(getSpannedText(true, String.valueOf(transaction.getAmount())));
+                txnDetails = "Joined " + transaction.getChallengeName();
             } else {
                 holder.txnImageView.setImageResource(R.drawable.wallet_credit);
                 holder.titleTextView.setText(getSpannedText(false, String.valueOf(transaction.getAmount())));
+                if (!TextUtils.isEmpty(transaction.getRank())) {
+                    txnDetails = "Rank " + transaction.getRank() + " in " + transaction.getChallengeName();
+                }
             }
+
+            holder.detailsTextView.setText(txnDetails);
 
             // Date format
             try {
@@ -93,7 +101,6 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
                 ex.printStackTrace();
             }
 
-            holder.detailsTextView.setText(transaction.getChallengeName());
             holder.txnIdTextView.setText("Transaction ID - " + String.valueOf(transaction.getOrderId()));
         }
     }
@@ -115,7 +122,7 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
         priceTxt1Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, txt1.length(), 0);
         builder.append(priceTxt1Spannable);
 
-        String txt2 = amount;
+        String txt2 = "₹" + amount;
         SpannableString priceTxt2Spannable= new SpannableString(txt2);
         priceTxt2Spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#22b573")), 0, txt2.length(), 0);
         builder.append(priceTxt2Spannable);
