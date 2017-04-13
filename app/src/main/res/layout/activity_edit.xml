@@ -103,7 +103,7 @@
         app:hintStyle="@style/EditTextHintStyle"
         app:hintText="Enter a Username" />
 
-    <in.sportscafe.nostragamus.module.common.NostraEditText
+    <!--<in.sportscafe.nostragamus.module.common.NostraEditText
         android:id="@+id/edit_et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
         app:errorText="Show your error here"
         android:visibility="visible"
         app:hintStyle="@style/EditTextHintStyle"
-        app:hintText="Enter email Id" />
+        app:hintText="Enter email Id" />-->
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/edit_profile_toolbar"
@@ -141,7 +141,7 @@
         android:id="@+id/edit_disclaimer_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_et_email"
+        android:layout_below="@+id/edit_et_nickname_new"
         android:textColor="@color/white_60"
         android:buttonTint="@color/white_90"
         android:text="@string/profile_disclaimer"

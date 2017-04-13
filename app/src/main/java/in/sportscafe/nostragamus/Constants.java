@@ -83,6 +83,7 @@ public interface Constants {
         String FEEDBACK = "feedback";
         String DOWNLOAD_PAID_APP = "downloadPaidApp";
         String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
+        String IS_PROFILE_DISCLAIMER_ACCEPTED = "isProfileDisclaimerAccepted";
     }
 
     interface Alerts {
@@ -171,6 +172,7 @@ public interface Constants {
         String DEFAULT_SHARE_MESSAGE = "Use paste, If you want to use the default share message!";
         String POLL_LIST_EMPTY = "No polls";
         String NOT_FREE_CHALLENGE = "Please use full version for the paid challenges";
+        String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Click on the check box to proceed";
 
         /*--- Paytm Msg ---*/
         String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";

@@ -117,6 +117,7 @@ public class EditProfileModelImpl implements EditProfileModel {
                                 NostragamusDataHandler.getInstance().setUserInfo(mUserInfo);
 
                                 NostragamusDataHandler.getInstance().setFirstTimeUser(false);
+                                NostragamusDataHandler.getInstance().setIsProfileDisclaimerAccepted(true);
 
                                 mEditProfileListener.onEditSuccess();
                             }

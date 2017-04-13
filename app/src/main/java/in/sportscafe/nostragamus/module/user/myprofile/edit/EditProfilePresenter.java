@@ -15,7 +15,7 @@ public interface EditProfilePresenter {
 
     void onCreateEditProfile(Bundle bundle);
 
-    void onClickDone(String about);
+    void onClickDone(String about, boolean isDisclaimerChecked);
 
     void onClickImage();
 
