@@ -19,26 +19,32 @@ public class UserPaymentInfoBankDto {
     @JsonProperty("account_no")
     private String accountNo;
 
+    @JsonProperty("name")
     public String getName() {
         return name;
     }
 
+    @JsonProperty("name")
     public void setName(String name) {
         this.name = name;
     }
 
+    @JsonProperty("ifsc_code")
     public String getIfscCode() {
         return ifscCode;
     }
 
+    @JsonProperty("ifsc_code")
     public void setIfscCode(String ifscCode) {
         this.ifscCode = ifscCode;
     }
 
+    @JsonProperty("account_no")
     public String getAccountNo() {
         return accountNo;
     }
 
+    @JsonProperty("account_no")
     public void setAccountNo(String accountNo) {
         this.accountNo = accountNo;
     }

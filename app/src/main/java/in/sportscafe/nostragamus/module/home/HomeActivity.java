@@ -35,7 +35,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
 /**
  * Created by Jeeva on 16/6/16.
  */
-public class HomeActivity extends NostragamusActivity implements OnHomeActionListener ,OnDismissListener {
+public class HomeActivity extends NostragamusActivity implements OnHomeActionListener, OnDismissListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -73,6 +73,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             } else if (bundle.containsKey(BundleKeys.GROUP)) {
                 showGroups();
                 return;
+            } else if (bundle.containsKey(BundleKeys.OPEN_LEADERBOARD)) {
+                showLeaderBoards();
             }
         }
         showFirstTab();
@@ -80,6 +82,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     /**
      * If user has not yet provided payment info (either paytm or bank) then he'll be asked to provide
+     *
      * @param userInfo
      */
     private void checkPaymentInfoProvidedOrRequired(UserInfo userInfo) {
@@ -110,6 +113,10 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private void showProfile() {
         onClickTab(findViewById(R.id.home_rl_profile));
+    }
+
+    private void showLeaderBoards() {
+        onClickTab(findViewById(R.id.home_rl_leaderboard));
     }
 
     private void showGroups() {
@@ -234,6 +241,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     /**
      * Used to get User Info from server, which will provide payment bank / paytm details
      * so that it can be identified that to show Connect to Paytm/Bank screen to capture such data
+     *
      * @return
      */
     private UserInfoModelImpl.OnGetUserInfoModelListener getUserInfoCallBackListener() {
@@ -298,7 +306,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
         switch (requestCode) {
             case OPEN_JOINED_CHALLENGE_DIALOG_CODE:
-                showJoinedChallenge(getContext(),bundle);
+                showJoinedChallenge(getContext(), bundle);
                 break;
 
             case REFRESH_CHALLENGES_CODE:
@@ -317,7 +325,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 .show(fragmentManager, "paid_app_download");
     }
 
-    private void showJoinedChallenge(Context context,Bundle bundle) {
+    private void showJoinedChallenge(Context context, Bundle bundle) {
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
         ChallengeJoinDialogFragment.newInstance(REFRESH_CHALLENGES_CODE, "JOINED CHALLENGE!", bundle)
                 .show(fragmentManager, "challenge_info");

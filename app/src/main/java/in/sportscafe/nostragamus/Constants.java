@@ -80,6 +80,8 @@ public interface Constants {
         String VISITED_SUBMIT_QUESTION = "VisitedSubmitQuestion";
         String POWERUP_APPLIED = "PowerUpApplied";
         String DUMMY_GAME_SHOWN = "dummyGameShown";
+        String FEEDBACK = "feedback";
+        String DOWNLOAD_PAID_APP = "downloadPaidApp";
         String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
     }
 
@@ -259,6 +261,7 @@ public interface Constants {
         String CHALLENGE = "challenge";
         String ENTRY_FEE = "entryFee";
         String JOINED_CHALLENGE_INFO = "joinedChallenegInfo";
+        String OPEN_LEADERBOARD = "openLeaderboard";
         String USER_PAYMENT_INFO_PARCEL = "userPaymentInfoParcel";
     }
 

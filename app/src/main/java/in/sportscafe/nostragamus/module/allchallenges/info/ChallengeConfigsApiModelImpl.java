@@ -1,9 +1,12 @@
 package in.sportscafe.nostragamus.module.allchallenges.info;
 
+import com.jeeva.android.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
@@ -19,6 +22,8 @@ public class ChallengeConfigsApiModelImpl {
 
     private OnConfigsApiModelListener mApiModelListener;
 
+    private String mAppFlavor;
+
     public ChallengeConfigsApiModelImpl(OnConfigsApiModelListener listener) {
         this.mApiModelListener = listener;
     }
@@ -27,18 +32,26 @@ public class ChallengeConfigsApiModelImpl {
         return new ChallengeConfigsApiModelImpl(listener);
     }
 
-    public void getConfigs(int challengeId,Integer configIndex) {
+    public void getConfigs(int challengeId, Integer configIndex) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            callConfigsApi(challengeId,configIndex);
+            callConfigsApi(challengeId, configIndex);
         } else {
             mApiModelListener.onNoInternet();
         }
     }
 
-    private void callConfigsApi(int challengeId,Integer configIndex) {
+    private void callConfigsApi(int challengeId, Integer configIndex) {
+
         mApiModelListener.onApiCallStarted();
 
-        MyWebService.getInstance().getChallengeConfigsRequest(challengeId,configIndex).enqueue(
+        if (BuildConfig.IS_PAID_VERSION){
+            mAppFlavor = "FULL";
+        }else {
+            mAppFlavor = "RESTRICTED";
+        }
+
+        MyWebService.getInstance().getChallengeConfigsRequest(challengeId, configIndex,mAppFlavor).enqueue(
+
                 new NostragamusCallBack<ChallengeConfigsResponse>() {
                     @Override
                     public void onResponse(Call<ChallengeConfigsResponse> call, Response<ChallengeConfigsResponse> response) {
@@ -86,6 +99,38 @@ public class ChallengeConfigsApiModelImpl {
             ).getConfigs();
         }
         return null;
+    }
+
+    public String getAppFlavor() {
+
+        String appFlavor ="";
+        switch (BuildConfig.FLAVOR) {
+            case "productionPaidRelease":
+                appFlavor = "productionPaidRelease";
+                break;
+            case "productionRelease":
+                appFlavor = "productionRelease";
+                break;
+            case "stagePaidRelease":
+                appFlavor = "stagePaidRelease";
+                break;
+            case "stageRelease":
+                appFlavor = "stageRelease";
+                break;
+            case "stagePaidDebug":
+                appFlavor = "stagePaidDebug";
+                break;
+            case "stageDebug":
+                appFlavor = "stageDebug";
+                break;
+            case "prodDebug":
+                appFlavor = "prodDebug";
+                break;
+            case "prodPaidDebug":
+                appFlavor = "prodPaidDebug";
+                break;
+        }
+        return appFlavor;
     }
 
     public interface OnConfigsApiModelListener {

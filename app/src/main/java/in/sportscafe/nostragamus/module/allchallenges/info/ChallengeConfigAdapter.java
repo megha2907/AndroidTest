@@ -63,11 +63,12 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.free_join_btn_bg));
         } else {
             holder.mTvEntryFee.setText("₹ " + config.getEntryFee());
-            holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + "/" + memberDetails.getMaxCount());
             holder.mTvEntryFee.setTextColor(ContextCompat.getColor(holder.mTvEntryFee.getContext(),R.color.paid_entry_tv_color));
             holder.mTvMembersCount.setTextColor(ContextCompat.getColor(holder.mTvMembersCount.getContext(),R.color.paid_entry_tv_color));
             holder.mTvReward.setTextColor(ContextCompat.getColor(holder.mTvReward.getContext(),R.color.paid_entry_tv_color));
             holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.paid_join_btn_bg));
+            holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + "/" + memberDetails.getMaxCount());
+            holder.mTvSlotsLeft.setText(String.valueOf(memberDetails.getMaxCount() - memberDetails.getJoinedCount()) + " SLOTS LEFT");
         }
 
         holder.mTvPoolName.setText(config.getConfigName());
@@ -96,6 +97,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             holder.mTvDisclaimer.setVisibility(View.VISIBLE);
             holder.mVDisclaimerSeparator.setVisibility(View.VISIBLE);
             holder.mTvDisclaimer.setText("The money you win ultimately will be decided by the number of people who join the challenge");
+            holder.mTvSlotsLeft.setVisibility(View.VISIBLE);
             createMemberDropDownList(memberDetails.getPlayers(), holder.mLlDropDownHolder);
         } else if (DropDownIds.REWARD == config.getDropDownId()) {
             holder.mVDropDown.setVisibility(View.VISIBLE);
@@ -106,6 +108,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             holder.mTvDisclaimer.setVisibility(View.VISIBLE);
             holder.mVDisclaimerSeparator.setVisibility(View.VISIBLE);
             holder.mTvDisclaimer.setText("The money you win ultimately will be decided by the number of people who join the challenge");
+            holder.mTvSlotsLeft.setVisibility(View.GONE);
             createRewardDropDownList(config.getRewardDetails().getBreakUps(), holder.mLlDropDownHolder);
         }
     }
@@ -166,6 +169,8 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
 
         TextView mTvDisclaimer;
 
+        TextView mTvSlotsLeft;
+
         View mVDisclaimerSeparator;
 
         LinearLayout mLlDropDownHolder;
@@ -186,6 +191,8 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             mTvEntryFee = (TextView) view.findViewById(R.id.pool_row_tv_entry_fee);
             mTvMembersCount = (TextView) view.findViewById(R.id.pool_row_tv_member_count);
             mTvReward = (TextView) view.findViewById(R.id.pool_row_tv_reward);
+            mTvSlotsLeft = (TextView) view.findViewById(R.id.pool_row_tv_dropdown_member_slots_left);
+            mTvMembersCount = (TextView) view.findViewById(R.id.pool_row_tv_member_count);
             mLlDropDownHolder = (LinearLayout) view.findViewById(R.id.pool_row_ll_drop_down);
             mTvDropDownTitle = (TextView) view.findViewById(R.id.pool_row_tv_dropdown_title);
             mVDropDown = (View) view.findViewById(R.id.pool_row_v_separator_drop_down);
