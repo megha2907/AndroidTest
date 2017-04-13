@@ -26,7 +26,7 @@ public class NostragamusUncaughtExceptionHandler implements Thread.UncaughtExcep
             startNewIntent(LogInActivity.class);
         }
 
-//        AppSnippet.closeApp();
+        AppSnippet.closeApp();
     }
 
     private void startNewIntent(Class<?> cls) {
