@@ -11,15 +11,15 @@ import org.parceler.Parcel;
 public class UserPaymentInfoPaytmDto {
 
     @JsonProperty("mobile")
-    private Integer mobile;
+    private String mobile;
 
     @JsonProperty("mobile")
-    public Integer getMobile() {
+    public String getMobile() {
         return mobile;
     }
 
     @JsonProperty("mobile")
-    public void setMobile(Integer mobile) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 }

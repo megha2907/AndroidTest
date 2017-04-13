@@ -12,6 +12,7 @@ import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
 import in.sportscafe.nostragamus.module.user.login.dto.BasicUserInfo;
 import in.sportscafe.nostragamus.module.user.login.dto.InfoDetails;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 
 /**
  * Created by deepanshi on 12/22/16.
@@ -27,6 +28,9 @@ public class PlayerInfo extends BasicUserInfo {
 
     @JsonProperty("info")
     private InfoDetails infoDetails;
+
+    @JsonProperty("payment_info")
+    private UserPaymentInfo userPaymentInfo;
 
     @JsonProperty("count_matches")
     private Integer totalMatchesPlayed = 0;
@@ -161,6 +165,16 @@ public class PlayerInfo extends BasicUserInfo {
     @JsonProperty("count_powerups")
     public void setPowerupsUsedCount(Integer powerupsUsedCount) {
         this.powerupsUsedCount = powerupsUsedCount;
+    }
+
+    @JsonProperty("payment_info")
+    public UserPaymentInfo getUserPaymentInfo() {
+        return userPaymentInfo;
+    }
+
+    @JsonProperty("payment_info")
+    public void setUserPaymentInfo(UserPaymentInfo userPaymentInfo) {
+        this.userPaymentInfo = userPaymentInfo;
     }
 
 }

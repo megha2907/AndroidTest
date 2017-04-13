@@ -147,7 +147,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
 
         findViewById(R.id.configs_ll_title).setVisibility(View.VISIBLE);
-        ((TextView) findViewById(R.id.configs_tv_challenge_name)).setText(mChallenge.getName());
+        ((TextView) findViewById(R.id.configs_tv_challenge_name)).setText(mChallenge.getName()+" - Pick contest");
     }
 
     @Override
@@ -237,7 +237,8 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         mRcvConfigs.postDelayed(new Runnable() {
             @Override
             public void run() {
-                int configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight;
+                mTitleHeight = getResources().getDimensionPixelSize(R.dimen.dp_42);
+                int configsHeight = mMaxHeight + mTitleHeight;
                 Log.d("ChallengeConfigsDialogFragment", "MaxHeight --> " + mMaxHeight + ", " + "ScrollHeight --> " + configsHeight);
                 if (configsHeight > mMaxHeight) {
                     configsHeight = mMaxHeight;
