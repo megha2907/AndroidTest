@@ -131,8 +131,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     private void navigateToEditProfile() {
         Intent intent = new Intent(this, EditProfileActivity.class);
+        intent.putExtra(Constants.BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, EditProfileActivity.ILaunchedFrom.SETTINGS_ACTIVITY);
         Bundle bundle = new Bundle();
         bundle.putString("screen", Constants.BundleKeys.HOME_SCREEN);
+
         intent.putExtras(bundle);
         startActivityForResult(intent, EDIT_PROFILE_CODE);
     }

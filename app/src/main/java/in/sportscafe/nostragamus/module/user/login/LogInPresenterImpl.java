@@ -66,12 +66,13 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
     @Override
     public void onLoginCompleted() {
         mLogInView.hideProgressDialog();
+        mLogInView.navigateToHome();
 
-        if (NostragamusDataHandler.getInstance().isFirstTimeUser()) {
+        /*if (NostragamusDataHandler.getInstance().isFirstTimeUser()) {
             mLogInView.navigateToEditProfile();
         } else {
             mLogInView.navigateToHome();
-        }
+        }*/
     }
 
     @Override

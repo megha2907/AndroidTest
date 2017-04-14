@@ -225,6 +225,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     private void navigateToEditProfile() {
         Intent intent = new Intent(getContext(), EditProfileActivity.class);
+        intent.putExtra(BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, EditProfileActivity.ILaunchedFrom.PROFILE_FRAGMENT);
         intent.putExtra("screen", BundleKeys.HOME_SCREEN);
         startActivityForResult(intent, EDIT_PROFILE_CODE);
     }

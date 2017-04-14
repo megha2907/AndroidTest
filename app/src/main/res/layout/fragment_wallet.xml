@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="-"
+                android:text="Yet to Win"
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/dp_26"
                 app:typeface="lato_light"
@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black_10"
-                android:layout_marginTop="@dimen/dp_15"/>
+                android:layout_marginTop="@dimen/dp_10"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
@@ -74,10 +74,11 @@
                 android:textSize="@dimen/dp_10"
                 app:typeface="lato_regular"
                 android:layout_marginTop="@dimen/dp_15"
-                android:layout_marginBottom="@dimen/dp_15"/>
+                android:layout_marginBottom="@dimen/dp_10"/>
 
         </LinearLayout>
 
+        <!-- Recycler List view  -->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/walletRecyclerView"
             android:layout_width="match_parent"
@@ -85,11 +86,38 @@
             android:background="@color/black"
             />
 
+        <!-- No transaction history empty view -->
+        <LinearLayout
+            android:id="@+id/wallet_no_transaction_history_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/dp_124"
+                android:layout_height="@dimen/dp_124"
+                android:src="@drawable/no_transaction_history"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No transactions recorded yet!"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/dp_13"
+                app:typeface="lato_regular"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    <!-- When list empty -->
+    <!-- Add payment details -->
     <LinearLayout
-        android:id="@+id/wallet_no_history_layout"
+        android:id="@+id/wallet_add_payment_details_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -107,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Please add/update your payment details to receive cash prizes!"
+            android:text="Please add your payment details to receive cash prizes!"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_13"
             app:typeface="lato_regular"
@@ -124,7 +152,7 @@
             android:paddingBottom="@dimen/dp_2"
             android:paddingLeft="@dimen/dp_15"
             android:paddingRight="@dimen/dp_15"
-            android:text="Update Payment Details"
+            android:text="Add Payment Details"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_14"

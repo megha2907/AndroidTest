@@ -250,18 +250,21 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             public void onSuccessGetUpdatedUserInfo(UserInfo userInfo) {
                 if (userInfo != null) {
 
-                    if (!BuildConfig.IS_PAID_VERSION && !NostragamusDataHandler.getInstance().isFirstTimeUser()) {
+                    if (BuildConfig.IS_PAID_VERSION) {
+                        com.jeeva.android.Log.d(TAG, "[onBoard] Paid app..");
+                        performOnBoardFlow(userInfo);
 
-                        com.jeeva.android.Log.d(TAG, "[onBoard] Free App & Not a first time user..");
-                        checkPaymentInfoProvidedOrRequired(userInfo);
                     } else {
-
-                        if (!NostragamusDataHandler.getInstance().isProfileDisclaimerAccepted()) {
-                            launchEditProfile();
-                            com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
-                        } else {
+                        /**
+                         * For Free version, if user is NOT new (existing) then don't show UpdateProfile
+                         * else show
+                         */
+                        if (!NostragamusDataHandler.getInstance().isFirstTimeUser()) {
                             checkPaymentInfoProvidedOrRequired(userInfo);
-                            com.jeeva.android.Log.d(TAG, "[onBoard] Launch PaymentDetails(if required) for once");
+                            com.jeeva.android.Log.d(TAG, "[onBoard] Free App & Not a first time user..");
+                        } else {
+                            performOnBoardFlow(userInfo);
+                            com.jeeva.android.Log.d(TAG, "[onBoard] Free App & first time user..");
                         }
                     }
                 } else {
@@ -283,6 +286,16 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         };
     }
 
+    private void performOnBoardFlow(UserInfo userInfo) {
+        if (!NostragamusDataHandler.getInstance().isProfileDisclaimerAccepted()) {
+            launchEditProfile();
+            com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
+        } else {
+            checkPaymentInfoProvidedOrRequired(userInfo);
+            com.jeeva.android.Log.d(TAG, "[onBoard] Launch PaymentDetails(if required) for once");
+        }
+    }
+
     /**
      * If disclaimer not accepted, then only show editProfile
      */
@@ -290,6 +303,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         Intent intent = new Intent(this, EditProfileActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("screen", BundleKeys.HOME_SCREEN);
+        intent.putExtra(BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, EditProfileActivity.ILaunchedFrom.HOME_ACTIVITY);
         intent.putExtras(bundle);
         startActivity(intent);
     }

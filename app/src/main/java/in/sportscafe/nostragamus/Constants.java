@@ -172,7 +172,8 @@ public interface Constants {
         String DEFAULT_SHARE_MESSAGE = "Use paste, If you want to use the default share message!";
         String POLL_LIST_EMPTY = "No polls";
         String NOT_FREE_CHALLENGE = "Please use full version for the paid challenges";
-        String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Click on the check box to proceed";
+        String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Oops! Select the checkbox to proceed as if you do not meet these restrictions, you are not allowed to play the full version of the game";
+        String FORCE_UPDATE_PROFILE_MSG_FOR_PAID_VERSION = "Please update your profile";
 
         /*--- Paytm Msg ---*/
         String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";
@@ -265,6 +266,7 @@ public interface Constants {
         String JOINED_CHALLENGE_INFO = "joinedChallenegInfo";
         String OPEN_LEADERBOARD = "openLeaderboard";
         String USER_PAYMENT_INFO_PARCEL = "userPaymentInfoParcel";
+        String EDIT_PROFILE_LAUNCHED_FROM = "editProfileLaunchedFrom";
     }
 
     interface ParcelableKeys {

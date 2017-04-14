@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.feedback.GoogleFormActivity;
@@ -67,6 +68,7 @@ public class GetStartActivity extends Activity {
     private void navigateToEditProfile() {
         Intent intent = new Intent(this, EditProfileActivity.class);
         intent.putExtra("screen", BundleKeys.LOGIN_SCREEN);
+        intent.putExtra(BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, EditProfileActivity.ILaunchedFrom.GET_STARTED_ACTIVITY);
         startActivity(intent);
     }
 

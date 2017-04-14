@@ -12,26 +12,38 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class WalletFragment extends NostragamusFragment implements WalletModel, View.OnClickListener {
 
+    private static final String TAG = WalletFragment.class.getSimpleName();
+
     private RecyclerView mWalletHistoryRecyclerView;
     private TextView mAmountWonTextView;
+    private UserPaymentInfo mUserPaymentInfo;
 
     public WalletFragment() {
     }
 
-    public static WalletFragment newInstance() {
-        return new WalletFragment();
+    public void setUserPaymentInfo(UserPaymentInfo userPaymentInfo) {
+        mUserPaymentInfo = userPaymentInfo;
+    }
+
+    public static WalletFragment newInstance(@NonNull UserPaymentInfo userPaymentInfo) {
+        WalletFragment fragment = new WalletFragment();
+        fragment.setUserPaymentInfo(userPaymentInfo);
+        return fragment;
     }
 
     @Override
@@ -45,7 +57,25 @@ public class WalletFragment extends NostragamusFragment implements WalletModel, 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loadTransactionDetails();
+
+        if (mUserPaymentInfo == null ||
+                (mUserPaymentInfo.getBank() == null && mUserPaymentInfo.getPaytm() == null)) {
+
+            Log.d(TAG, "It seems that paymentInfo not available");
+            showAddPaymentInfoButton();
+        } else {
+            loadTransactionDetails();
+        }
+    }
+
+    private void showAddPaymentInfoButton() {
+        if (getActivity() != null && getView() != null) {
+            LinearLayout addPaymentDetailsLayout = (LinearLayout) getView().findViewById(R.id.wallet_add_payment_details_layout);
+            addPaymentDetailsLayout.setVisibility(View.VISIBLE);
+
+            LinearLayout historyLayout = (LinearLayout) getView().findViewById(R.id.wallet_history_layout);
+            historyLayout.setVisibility(View.GONE);
+        }
     }
 
     private void initViews(View view) {
@@ -89,18 +119,25 @@ public class WalletFragment extends NostragamusFragment implements WalletModel, 
     }
 
     private void onTransactionListFetchedSuccessful(List<WalletTransaction> transactionList) {
-        if (transactionList == null || transactionList.isEmpty()) {
-            LinearLayout noHistoryLayout = (LinearLayout) findViewById(R.id.wallet_no_history_layout);
-            noHistoryLayout.setVisibility(View.VISIBLE);
+        if (getActivity() != null && getView() != null) {
 
-            LinearLayout historyLayout = (LinearLayout) findViewById(R.id.wallet_history_layout);
-            historyLayout.setVisibility(View.GONE);
+            if (transactionList == null || transactionList.isEmpty()) {
 
-            return;
+                mWalletHistoryRecyclerView.setVisibility(View.GONE);
+                LinearLayout addPaymentDetailsLayout = (LinearLayout) getView().findViewById(R.id.wallet_add_payment_details_layout);
+                addPaymentDetailsLayout.setVisibility(View.GONE);
+
+                LinearLayout noHistoryLayout = (LinearLayout) getView().findViewById(R.id.wallet_no_transaction_history_layout);
+                noHistoryLayout.setVisibility(View.VISIBLE);
+
+                return;
+            } else {
+                mWalletHistoryRecyclerView.setVisibility(View.VISIBLE);
+            }
+
+            setAmountWon(transactionList);
+            mWalletHistoryRecyclerView.setAdapter(new WalletHistoryAdapter(getContext(), transactionList));
         }
-
-        setAmountWon(transactionList);
-        mWalletHistoryRecyclerView.setAdapter(new WalletHistoryAdapter(getContext(), transactionList));
     }
 
     private void setAmountWon(List<WalletTransaction> transactionList) {

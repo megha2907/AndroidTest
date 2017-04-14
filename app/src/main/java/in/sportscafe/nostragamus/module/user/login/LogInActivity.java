@@ -128,6 +128,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     @Override
     public void navigateToEditProfile() {
         Intent intent = new Intent(this, EditProfileActivity.class);
+        intent.putExtra(Constants.BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, EditProfileActivity.ILaunchedFrom.LOG_IN_ACTIVITY);
         Bundle bundle = new Bundle();
         bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);

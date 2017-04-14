@@ -16,6 +16,7 @@ import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 import in.sportscafe.nostragamus.module.wallet.WalletFragment;
 
@@ -66,7 +67,11 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         UserInfo userInfo = getUserInfo();
         pagerAdapter.addFragment(TimelineFragment.newInstance(mChallengeId), "Matches");
 
-        pagerAdapter.addFragment(WalletFragment.newInstance(), "Wallet");
+        UserPaymentInfo paymentInfo = null;
+        if (userInfo != null) {
+            paymentInfo = userInfo.getUserPaymentInfo();
+        }
+        pagerAdapter.addFragment(WalletFragment.newInstance(paymentInfo), "Wallet");
 
         HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());
 //        pagerAdapter.addFragment(PowerUpFragment.newInstance(powerUpList), AppSnippet.formatIfPlural(getPowerUpTotalCount(powerUpList), "Powerup", "s"));
