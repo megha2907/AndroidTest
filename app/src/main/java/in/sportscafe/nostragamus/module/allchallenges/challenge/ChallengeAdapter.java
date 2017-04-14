@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.ShadowLayout;
 import com.jeeva.android.widgets.customfont.CustomButton;
@@ -113,6 +114,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             if (mChallengeAmount == 0) {
                 holder.mRlCashRewards.setVisibility(View.INVISIBLE);
             } else {
+                holder.mRlCashRewards.setVisibility(View.VISIBLE);
                 SpannableStringBuilder builder = new SpannableStringBuilder();
 
                 String priceTxt1 = "Worth ";
@@ -136,7 +138,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);
         }
 
-        if (challenge.getChallengeUserInfo().isUserJoined()) {
+        if (challenge.getChallengeUserInfo().isUserJoined()|| challenge.getCountMatchesLeft().equals("0")) {
             holder.mRlAfterJoinedChallenge.setVisibility(View.VISIBLE);
             holder.mRlMatchesLeft.setVisibility(View.INVISIBLE);
             holder.mRlMainPowerup.setVisibility(View.VISIBLE);
@@ -204,40 +206,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         }
 
 
-
-        /*TimeAgo startTimeLeft = TimeUtils.calcTimeAgo(Calendar.newInstance().getTimeInMillis(),
-                TimeUtils.getMillisecondsFromDateString(
-                        challenge.getStartTime(),
-                        DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                        DateFormats.GMT
-                )
-        );*/
-
-        TimeAgo endTimeLeft = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(),
-                TimeUtils.getMillisecondsFromDateString(
-                        challenge.getEndTime(),
-                        DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                        DateFormats.GMT
-                )
-        );
-
-        /*if(startTimeLeft.totalDiff > 1000) {
-            holder.mRlTimer.setVisibility(View.VISIBLE);
-            holder.mTvTimerText.setText("STARTS IN");
-            holder.mRlTimer.setTag(startTimeLeft.totalDiff);
-        } else */
-
-//
-//        if (endTimeLeft.totalDiff > 1000) {
-//            holder.mRlTimer.setVisibility(View.VISIBLE);
-//            holder.mTvTimerText.setText("DURATION");
-//           // holder.mRlTimer.setTag(endTimeLeft.totalDiff);
-//        } else {
-//            holder.mRlTimer.setVisibility(View.GONE);
-//        }
-
-        // holder.mTvTimerText.setText("DURATION");
-
         String startTime = challenge.getStartTime();
         long startTimeMs = TimeUtils.getMillisecondsFromDateString(
                 startTime,
@@ -267,7 +235,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         //for completed challenges
         if (challenge.getCountMatchesLeft().equals("0")) {
-            holder.mTvRewards.setText("Winners");
+            holder.mTvRewards.setText("Prizes");
         }
 
 
@@ -402,8 +370,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
                 case R.id.all_challenges_row_rl_rewards:
                     Challenge challengeRewards = getItem(getAdapterPosition());
-                    dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
-                    showChallengeInfo(context, challengeRewards);
+                    if (challengeRewards.getChallengeUserInfo().getConfigIndex()!=null) {
+                        dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
+                        showChallengeInfo(context, challengeRewards);
+                    }
                     break;
 
                 case R.id.all_challenges_row_rl_cash_rewards:
@@ -413,8 +383,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                         showChallengeInfo(context, challengeJoinNew);
                     }else {
                         Challenge challengeRewardsNew = getItem(getAdapterPosition());
-                        dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
-                        showChallengeInfo(context, challengeRewardsNew);
+                        if (challengeRewardsNew.getChallengeUserInfo().getConfigIndex()!=null) {
+                            dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
+                            showChallengeInfo(context, challengeRewardsNew);
+                        }
                     }
                     break;
 
@@ -441,7 +413,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             ChallengeConfigsDialogFragment.newInstance(43, challenge)
                     .show(fragmentManager, "challenge_configs");
         } else if (dialogType == CHALLENGE_REWARDS_DIALOG_TYPE) {
-            ChallengeRewardsFragment.newInstance(44, challenge.getChallengeId(), challenge.getName() + " Rewards",
+            ChallengeRewardsFragment.newInstance(44, challenge.getChallengeId(), challenge.getName() + " Prizes",
                     challenge.getChallengeUserInfo().getConfigIndex(), challenge.getEndTime())
                     .show(fragmentManager, "challenge_rewards");
         } else {

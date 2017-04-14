@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
@@ -71,7 +72,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
         int dayOfMonthinEndTime = Integer.parseInt(TimeUtils.getDateStringFromMs(endTimeMs, "d"));
 
         // Setting end date of the challenge
-        holder.mTvChallengeEndTime.setText("Rewards will be announced once challenge ends on the "+
+        holder.mTvChallengeEndTime.setText("Prizes will be announced once challenge ends on the "+
                        dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
                         TimeUtils.getDateStringFromMs(endTimeMs, "MMM")
         );
@@ -84,7 +85,12 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
 
         holder.mLlDropDownHolder.removeAllViews();
 
-        createRewardDropDownList(config.getRewardDetails().getBreakUps(), holder.mLlDropDownHolder);
+        try {
+            createRewardDropDownList(config.getRewardDetails().getBreakUps(), holder.mLlDropDownHolder);
+        }catch (Exception e) {
+            holder.mTvChallengeEndTime.setText("Prizes data not Available");
+            holder.mRlRewardsLayout.setVisibility(View.GONE);
+        }
 
         mAccessListener.onConfigHeightChanged();
     }
@@ -126,6 +132,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
 
         View mMainView;
 
+        RelativeLayout mRlRewardsLayout;
         TextView mTvEntryFeePaid;
         TextView mTvChallengeEndTime;
         LinearLayout mLlDropDownHolder;
@@ -137,6 +144,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
 
             mMainView = view;
             mTvEntryFeePaid = (TextView) view.findViewById(R.id.config_reward_tv_amount_paid);
+            mRlRewardsLayout = (RelativeLayout) view.findViewById(R.id.config_reward_rl_rewards_layout);
             mTvChallengeEndTime = (TextView) view.findViewById(R.id.config_reward_tv_announcement);
             mLlDropDownHolder = (LinearLayout) view.findViewById(R.id.config_reward_row_ll_rewards);
             mTvDisclaimerTxt = (TextView) view.findViewById(R.id.config_reward_row_tv_disclaimer_txt);

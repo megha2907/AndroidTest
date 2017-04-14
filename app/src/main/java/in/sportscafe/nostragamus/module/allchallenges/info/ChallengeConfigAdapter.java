@@ -107,7 +107,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
         } else if (DropDownIds.REWARD == config.getDropDownId()) {
             holder.mVDropDown.setVisibility(View.VISIBLE);
             holder.mTvDropDownTitle.setVisibility(View.VISIBLE);
-            holder.mTvDropDownTitle.setText("REWARDS");
+            holder.mTvDropDownTitle.setText("PRIZES");
             holder.mIvDropDownReward.setRotation(180);
 //            holder.mTvDisclaimerTxt.setVisibility(View.VISIBLE);
 //            holder.mTvDisclaimer.setVisibility(View.VISIBLE);
