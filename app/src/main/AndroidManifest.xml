@@ -232,7 +232,6 @@
         <provider
             android:name="com.moe.pushlibrary.providers.MoEProvider"
             android:authorities="in.sportscafe.nostragamus.moengage.provider"
-            tools:replace="android:authorities"
             android:exported="false" />
 
         <!-- MANDATORY FIELD: APP ID AS SEEN ON MOENGAGE DASHBOARD APP SETTINGS PAGE -->
