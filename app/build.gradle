@@ -81,8 +81,7 @@ android {
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
         stagePaid {
-//            applicationIdSuffix ".paid"
-
+            applicationIdSuffix ".full"
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
@@ -92,8 +91,7 @@ android {
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
         productionPaid {
-//            applicationIdSuffix ".paid"
-
+            applicationIdSuffix ".full"
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
