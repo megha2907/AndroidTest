@@ -50,7 +50,7 @@ node {
     stage 'Building'
     env.ANDROID_HOME="/mnt/disk1/data/android/sdk"
     env.JAVA_HOME="/usr/java/default/jre"
-    sh './gradlew clean :app:assembleProductionRelease :app:assembleStageRelease :app:assembleDevRelease'
+    sh './gradlew clean :app:assembleProductionRelease :app:assembleproductionPaidRelease  :app:assembleStageRelease :app:assemblestagePaidRelease'
 
     stage 'Upload to S3'
     build job: 'upload_to_s3', wait: false, parameters: [
@@ -61,9 +61,12 @@ node {
     def S3_PATH_DEV = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-dev-release.apk"
     def S3_PATH_STAGE = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-stage-release.apk"
     def S3_PATH_PROD = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-production-release.apk"
+    def S3_PATH_STAGEPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-stagePaid-release.apk"
+    def S3_PATH_PRODPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-productionPaid-release.apk"
+    
     slackSend channel: "#auto-jenkins",
       color: "good",
-      message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *nostragamus | Download ${VER} <${S3_PATH_DEV}|Dev>,<${S3_PATH_STAGE}|Stage>,<${S3_PATH_PROD}|Prod>*"
+      message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *nostragamus | Download ${VER} <${S3_PATH_DEV}|Dev>,<${S3_PATH_STAGE}|Stage>,<${S3_PATH_STAGEPAID}|StagePaid>,<${S3_PATH_PROD}|Prod>,<${S3_PATH_PRODPAID}|PaidProd>*"
 
     stage 'Upload to Google Play'
     if(BRANCH_NAME == 'master') {
