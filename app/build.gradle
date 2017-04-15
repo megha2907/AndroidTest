@@ -32,7 +32,6 @@ android {
 
         defaultConfig {
             applicationId "in.sportscafe.nostragamus"
-            manifestPlaceholders = [manifestApplicationId : "${applicationId}"]
             minSdkVersion 19
             targetSdkVersion 25
             versionCode vCode
