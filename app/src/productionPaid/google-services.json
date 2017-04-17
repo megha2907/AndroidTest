@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_number": "156003938547",
+    "project_id": "nostragamus-pro"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156003938547:android:594bf837ae093db4",
+        "android_client_info": {
+          "package_name": "in.sportscafe.nostragamus.pro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156003938547-7hh2mjojkcmftvi1strv1005rnvf45ni.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.sportscafe.nostragamus.pro",
+            "certificate_hash": "4e88639a3a79f061c5a4dd908d27bedc3ee1c336"
+          }
+        },
+        {
+          "client_id": "156003938547-g7q0m8jsa9o5o92jptkbpeksho5jc49r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLtgTYOVfPxQAlvoIdXul9ZJOxpnxxKmQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-65340625-16"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

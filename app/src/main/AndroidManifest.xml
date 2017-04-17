@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="in.sportscafe.nostragamus">
 
     <!-- To access the internet -->
@@ -11,10 +12,10 @@
     <!-- Start MoEngage Permissions -->
     <!-- If you have specified applicationId in build.gradle file then replace [YOUR_PACKAGE_NAME] with applicationId -->
     <permission
-        android:name="in.sportscafe.nostragamus.permission.C2D_MESSAGE"
+        android:name="in.sportscafe.nostragamus${buildTypeSuffix}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="in.sportscafe.nostragamus.permission.C2D_MESSAGE" />
+    <uses-permission android:name="in.sportscafe.nostragamus${buildTypeSuffix}.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -25,6 +26,7 @@
         android:name=".Nostragamus"
         android:allowBackup="true"
         android:icon="@drawable/launcher_logo"
+        tools:node="replace"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
@@ -200,6 +202,10 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
+        <activity
+            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -214,7 +220,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="in.sportscafe.nostragamus.module.home.HomeActivity" />
+                android:value="in.sportscafe.nostragamus${buildTypeSuffix}.module.home.HomeActivity" />
         </activity>
 
         <!-- MOENGAGE RECEIVER FOR RECEIVING APP UPDATE INTENT -->
@@ -223,7 +229,7 @@
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
 
                 <data
-                    android:path="in.sportscafe.nostragamus"
+                    android:path="in.sportscafe.nostragamus${buildTypeSuffix}"
                     android:scheme="package" />
             </intent-filter>
         </receiver>
@@ -231,7 +237,7 @@
         <!-- The underlying content provider -->
         <provider
             android:name="com.moe.pushlibrary.providers.MoEProvider"
-            android:authorities="in.sportscafe.nostragamus.moengage.provider"
+            android:authorities="in.sportscafe.nostragamus${buildTypeSuffix}.moengage.provider"
             android:exported="false" />
 
         <!-- MANDATORY FIELD: APP ID AS SEEN ON MOENGAGE DASHBOARD APP SETTINGS PAGE -->
@@ -261,7 +267,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="in.sportscafe.nostragamus" />
+                <category android:name="in.sportscafe.nostragamus${buildTypeSuffix}" />
             </intent-filter>
         </receiver>
 
