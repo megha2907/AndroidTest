@@ -26,6 +26,7 @@ import com.jeeva.android.Log;
 
 import java.io.IOException;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
