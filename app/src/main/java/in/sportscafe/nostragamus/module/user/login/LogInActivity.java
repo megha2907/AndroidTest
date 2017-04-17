@@ -24,6 +24,8 @@ import com.google.android.gms.common.api.Status;
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 
+import org.parceler.Parcel;
+
 import java.io.IOException;
 
 import in.sportscafe.nostragamus.BuildConfig;
@@ -58,6 +60,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     private String persongender;
     private String profileUrl;
     private String personPhoto;
+    private String oAuthServerId="";
 
 
     @Override
@@ -79,9 +82,11 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         mLogInPresenter = LogInPresenterImpl.newInstance(LogInActivity.this);
         mLogInPresenter.onCreateLogIn(getIntent().getExtras());
 
+
     }
 
     private void initGoogle() {
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestScopes(new Scope("https://www.googleapis.com/auth/plus.login"))
