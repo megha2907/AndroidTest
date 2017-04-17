@@ -69,6 +69,12 @@
 -keep class com.moengage.push.PushManager
 -keep class com.moengage.inapp.InAppController
 
+-keep class com.moengage.pushbase.activities.PushTracker
+-keep class com.moengage.pushbase.activities.SnoozeTracker
+-keep class com.moengage.pushbase.push.MoEPushWorker
+-keep class com.moe.pushlibrary.MoEWorker
+-keep class com.moe.pushlibrary.AppUpdateReceiver
+-keep class com.moengage.core.MoEAlarmReceiver
 
 -dontwarn com.moengage.location.GeoManager
 -dontwarn com.moengage.core.GeoTask
