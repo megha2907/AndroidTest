@@ -73,6 +73,10 @@ public class Nostragamus extends Application {
         // Initializing custom fonts
         initCustomFonts();
 
+        MoEHelper.getInstance(getApplicationContext()).setLogStatus(true);
+
+        MoEHelper.getInstance(getApplicationContext()).setLogLevel(5);
+
         // Initializing the SportsCafe analytics
         NostragamusAnalytics.getInstance().init(getApplicationContext(), mDebuggable).autoTrack(this);
 
@@ -87,6 +91,7 @@ public class Nostragamus extends Application {
 
         // Initializing the Branch
         Branch.getAutoInstance(this);
+
 
     }
 
