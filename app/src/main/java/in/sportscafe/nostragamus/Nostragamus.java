@@ -11,6 +11,7 @@ import android.support.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
 import com.jeeva.android.facebook.user.FacebookPermission;
 import com.jeeva.android.volley.Volley;
@@ -72,10 +73,6 @@ public class Nostragamus extends Application {
 
         // Initializing custom fonts
         initCustomFonts();
-
-        MoEHelper.getInstance(getApplicationContext()).setLogStatus(true);
-
-        MoEHelper.getInstance(getApplicationContext()).setLogLevel(5);
 
         // Initializing the SportsCafe analytics
         NostragamusAnalytics.getInstance().init(getApplicationContext(), mDebuggable).autoTrack(this);

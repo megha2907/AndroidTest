@@ -293,9 +293,9 @@
             android:name="NOTIFICATION_LARGE_ICON"
             android:value="@drawable/notification_large_icon" />
 
-<!--        <meta-data
-            android:name="SKIP_GCM_REGISTRATION"
-            android:value="true" />-->
+        <!--        <meta-data
+                    android:name="SKIP_GCM_REGISTRATION"
+                    android:value="true" />-->
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
