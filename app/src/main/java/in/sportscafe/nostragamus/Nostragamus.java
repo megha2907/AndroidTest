@@ -11,6 +11,7 @@ import android.support.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
 import com.jeeva.android.facebook.user.FacebookPermission;
 import com.jeeva.android.volley.Volley;
@@ -39,7 +40,7 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Created by Jeeva on 14/3/16.
  */
-public class Nostragamus extends Application {
+public class Nostragamus extends Application implements PushManager.OnTokenReceivedListener {
 
     private static final boolean mDebuggable = BuildConfig.DEBUG;
 
@@ -72,6 +73,8 @@ public class Nostragamus extends Application {
 
         // Initializing custom fonts
         initCustomFonts();
+
+        PushManager.getInstance().setTokenObserver(this);
 
         MoEHelper.getInstance(getApplicationContext()).setLogStatus(true);
 
@@ -233,4 +236,8 @@ public class Nostragamus extends Application {
         startActivity(intent);
     }
 
+    @Override
+    public void onTokenReceived(String s) {
+        Log.d("TOKEN : ",s);
+    }
 }

@@ -260,20 +260,16 @@
             android:name="NOTIFICATION_LARGE_ICON"
             android:value="@drawable/notification_large_icon" />
 
-        <meta-data
-            android:name="SKIP_GCM_REGISTRATION"
-            android:value="true" />
-
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
                 <category android:name="in.sportscafe.nostragamus${buildTypeSuffix}" />
             </intent-filter>
         </receiver>
+
 
         <service
             android:name="com.moengage.worker.MoEGCMListenerService"

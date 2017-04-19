@@ -112,7 +112,9 @@ android {
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
     }
+
 }
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
