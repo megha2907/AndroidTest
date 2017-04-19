@@ -84,7 +84,7 @@ android {
         stagePaid {
             applicationIdSuffix ".pro"
             manifestPlaceholders = [ buildTypeSuffix:".pro" ]
-            resValue "string", "app_name", "Nostragamus"
+            resValue "string", "app_name", "Nostra Pro"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
 
@@ -96,7 +96,7 @@ android {
         productionPaid {
             applicationIdSuffix ".pro"
             manifestPlaceholders = [ buildTypeSuffix:".pro" ]
-            resValue "string", "app_name", "Nostragamus"
+            resValue "string", "app_name", "Nostra Pro"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
 
