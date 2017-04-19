@@ -40,7 +40,7 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Created by Jeeva on 14/3/16.
  */
-public class Nostragamus extends Application implements PushManager.OnTokenReceivedListener {
+public class Nostragamus extends Application {
 
     private static final boolean mDebuggable = BuildConfig.DEBUG;
 
@@ -73,12 +73,6 @@ public class Nostragamus extends Application implements PushManager.OnTokenRecei
 
         // Initializing custom fonts
         initCustomFonts();
-
-        PushManager.getInstance().setTokenObserver(this);
-
-        MoEHelper.getInstance(getApplicationContext()).setLogStatus(true);
-
-        MoEHelper.getInstance(getApplicationContext()).setLogLevel(5);
 
         // Initializing the SportsCafe analytics
         NostragamusAnalytics.getInstance().init(getApplicationContext(), mDebuggable).autoTrack(this);
@@ -236,8 +230,4 @@ public class Nostragamus extends Application implements PushManager.OnTokenRecei
         startActivity(intent);
     }
 
-    @Override
-    public void onTokenReceived(String s) {
-        Log.d("TOKEN : ",s);
-    }
 }
