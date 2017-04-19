@@ -25,7 +25,8 @@
             <ImageView
                 android:layout_width="@dimen/dp_12"
                 android:layout_height="@dimen/dp_12"
-                android:src="@drawable/powerup_title_info_icon" />
+                android:src="@drawable/powerup_title_info_icon"
+                android:visibility="gone"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/configs_tv_challenge_name"

@@ -409,7 +409,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     } else {
                         switchIntent.putExtra(BundleKeys.CHALLENGE_SWITCH_POS, true);
                     }
-
             }
         }
     }
