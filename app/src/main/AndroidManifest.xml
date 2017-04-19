@@ -215,12 +215,12 @@
         <activity
             android:name="com.moengage.addon.inbox.MoEInboxActivity"
             android:label="Notification"
-            android:parentActivityName="in.sportscafe.nostragamus.module.home.HomeActivity">
+            android:parentActivityName="in.sportscafe.nostragamus${buildTypeSuffix}.module.home.HomeActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="in.sportscafe.nostragamus.module.home.HomeActivity" />
+                android:value="in.sportscafe.nostragamus${buildTypeSuffix}.module.home.HomeActivity" />
         </activity>
 
         <!-- MOENGAGE RECEIVER FOR RECEIVING APP UPDATE INTENT -->
@@ -233,6 +233,39 @@
                     android:scheme="package" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="com.moengage.pushbase.activities.PushTracker"
+            android:configChanges="orientation|screenSize"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <meta-data
+                android:name="showInApp"
+                android:value="false"/>
+        </activity>
+        <activity
+            android:name="com.moengage.pushbase.activities.SnoozeTracker"
+            android:configChanges="orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=":NotificationDialog"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <meta-data
+                android:name="showInApp"
+                android:value="false"/>
+        </activity>
+
+        <service
+            android:name="com.moengage.pushbase.push.MoEPushWorker"
+            android:exported="false"/>
+        <receiver
+            android:name="com.moengage.core.MoEAlarmReceiver"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <service
+            android:name="com.moe.pushlibrary.MoEWorker"
+            android:exported="false"/>
 
         <!-- The underlying content provider -->
         <provider
@@ -260,9 +293,9 @@
             android:name="NOTIFICATION_LARGE_ICON"
             android:value="@drawable/notification_large_icon" />
 
-        <meta-data
-            android:name="SKIP_GCM_REGISTRATION"
-            android:value="true" />
+        <!--        <meta-data
+                    android:name="SKIP_GCM_REGISTRATION"
+                    android:value="true" />-->
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -361,7 +394,7 @@
             android:name=".module.common.CustomInstallListener"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
+                <action android:name="com.android.vending.INSTALL_REFERRER" />t
             </intent-filter>
         </receiver>
 

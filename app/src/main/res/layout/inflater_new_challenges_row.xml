@@ -152,8 +152,8 @@
                     android:id="@+id/all_challenges_row_powerup_main_rl"
                     android:layout_width="@dimen/dp_150"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/dp_6"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/dp_4"
                     android:layout_marginTop="@dimen/dp_15"
                     android:visibility="visible"
                     android:layout_below="@+id/all_challenges_row_iv_image">
@@ -208,7 +208,6 @@
                         android:layout_toRightOf="@id/powerups_iv_2x_cross"
                         android:alpha="0.9"
                         android:gravity="center"
-                        android:text="122"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_9"
                         app:typeface="lato_regular" />
@@ -241,7 +240,6 @@
                         android:layout_toRightOf="@id/powerups_iv_nonegs_cross"
                         android:alpha="0.9"
                         android:gravity="center"
-                        android:text="122"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_9"
                         app:typeface="lato_regular" />
@@ -274,7 +272,6 @@
                         android:layout_toRightOf="@id/powerups_iv_poll_cross"
                         android:alpha="0.9"
                         android:gravity="center"
-                        android:text="122"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_9"
                         app:typeface="lato_regular" />
@@ -290,8 +287,8 @@
                     android:layout_width="@dimen/dp_140"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/all_challenges_row_view"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/dp_6"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/dp_8"
                     android:layout_marginTop="@dimen/dp_10"
                     android:visibility="invisible">
 
@@ -305,19 +302,35 @@
                         app:typeface="lato_light" />
 
                     <com.jeeva.android.widgets.customfont.CustomButton
-                        android:id="@+id/all_challenges_row_tv_matches_left"
+                        android:id="@+id/all_challenges_row_btn_matches_left_bg"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_24"
                         android:layout_alignParentRight="true"
                         android:layout_below="@+id/all_challenges_row_tv_matches_left_txt"
                         android:layout_marginTop="@dimen/dp_2"
-                        android:background="@drawable/grey_border_btn_bg"
+                        android:background="@drawable/games_left_btn_bg"
                         android:paddingLeft="@dimen/dp_2"
                         android:paddingRight="@dimen/dp_2"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_10"
                         app:typeface="lato_regular" />
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/all_challenges_row_tv_matches_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_24"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/all_challenges_row_tv_matches_left_txt"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:paddingLeft="@dimen/dp_2"
+                        android:background="@color/transparent"
+                        android:paddingRight="@dimen/dp_2"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_10"
+                        app:typeface="lato_regular" />
+
 
                 </RelativeLayout>
 
@@ -326,12 +339,10 @@
                     android:layout_width="@dimen/dp_140"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/all_challenges_row_view"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="@dimen/dp_2"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_10"
                     android:clickable="true"
                     android:paddingTop="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_10"
-                    android:paddingLeft="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
                     android:visibility="visible">
 
@@ -344,6 +355,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_10"
                         app:typeface="lato_light" />
+
 
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/all_challenges_row_tv_price"
@@ -361,6 +373,8 @@
                         android:textSize="@dimen/dp_10"
                         android:visibility="visible"
                         app:typeface="lato_regular" />
+
+
 
                 </RelativeLayout>
 
