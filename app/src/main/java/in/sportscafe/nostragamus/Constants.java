@@ -540,4 +540,10 @@ public interface Constants {
         String IN = "in";   // Debit
         String OUT = "out"; // credit
     }
+
+    interface ChallengeTabs {
+        String NEW = "New";
+        String IN_PLAY = "In Play";
+        String COMPLETED = "Completed";
+    }
 }

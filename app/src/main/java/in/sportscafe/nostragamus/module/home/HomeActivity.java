@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     private static final int REFRESH_CHALLENGES_CODE = 42;
     private static final int OPEN_JOINED_CHALLENGE_DIALOG_CODE = 53;
     private static final int OPEN_DOWNLOAD_APP_DIALOG = 54;
+    public static final int DOUBLE_BACK_PRESSED_DELAY_ALLOWED = 3000;
 
     private int mProfileTabPosition = 0;
 
@@ -49,6 +51,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     private View mSelectedText;
 
     private Fragment mCurrentFragment;
+
+    private boolean mIsFirstBackPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -308,6 +312,10 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         startActivity(intent);
     }
 
+    /**
+     * super.onBackPressed() is called in side handleDoubleBackPressLogicToExit().
+     * Here no where required to call the same method.
+     */
     @Override
     public void onBackPressed() {
         if (null != mCurrentFragment
@@ -315,9 +323,30 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 && ((LBLandingFragment) mCurrentFragment).onBack()) {
             return;
         } else if (mCurrentFragment instanceof AllChallengesFragment) {
-            super.onBackPressed();
+            handleDoubleBackPressLogicToExit();
         } else {
             showFirstTab();
+        }
+    }
+
+    /**
+     * Application exit happens only when user clicks back button twice within specified time interval
+     */
+    private void handleDoubleBackPressLogicToExit() {
+        if (mIsFirstBackPressed) {
+            super.onBackPressed();
+        } else {
+
+            showMessage(getString(R.string.double_back_press_msg));
+            mIsFirstBackPressed = true;
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mIsFirstBackPressed = false;
+                }
+            }, DOUBLE_BACK_PRESSED_DELAY_ALLOWED);
         }
     }
 
