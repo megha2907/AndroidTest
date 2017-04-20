@@ -272,11 +272,11 @@ public class AllChallengesFragment extends NostragamusFragment
                         /* 'NEW' tab will always be in red irrespective of selection */
                         if (tv.getText().toString().equalsIgnoreCase(Constants.ChallengeTabs.NEW)) {
                             tv.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
-                            msgTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_60));
+                            msgTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                             msgTextView.setBackgroundResource(R.drawable.challenge_tab_counter_bg);
                         } else {
                             tv.setTextColor(ContextCompat.getColor(getContext(), R.color.white_60));
-                            msgTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_60));
+                            msgTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                             msgTextView.setBackgroundResource(R.drawable.challenge_tab_counter_unselected);
                         }
                     }
