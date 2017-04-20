@@ -16,9 +16,6 @@ public class RewardBreakUp {
     @JsonProperty("amount")
     private String amount;
 
-//    @JsonProperty("winner_name")
-//    private String winnerName;
-
     @JsonProperty("rank")
     public String getRank() {
         return rank;
@@ -39,13 +36,4 @@ public class RewardBreakUp {
         this.amount = amount;
     }
 
-//    @JsonProperty("winner_name")
-//    public String getWinnerName() {
-//        return winnerName;
-//    }
-//
-//    @JsonProperty("winner_name")
-//    public void setWinnerName(String winnerName) {
-//        this.winnerName = winnerName;
-//    }
 }

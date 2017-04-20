@@ -40,6 +40,8 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
 
     private int mChallengeId;
 
+    private Challenge mChallengeInfo;
+
     private String mChallengeName;
 
     private int mConfigIndex;
@@ -56,13 +58,14 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
 
     private int mMaxHeight;
 
-    public static ChallengeRewardsFragment newInstance(int requestCode, int challengeId, String challengeName, int configIndex, String endTime) {
+    public static ChallengeRewardsFragment newInstance(int requestCode, Challenge challenge, String challengeName, int configIndex, String endTime) {
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.BundleKeys.DIALOG_REQUEST_CODE, requestCode);
-        bundle.putInt(Constants.BundleKeys.CHALLENGE_ID, challengeId);
+        bundle.putInt(Constants.BundleKeys.CHALLENGE_ID, challenge.getChallengeId());
         bundle.putString(Constants.BundleKeys.CHALLENGE_NAME, challengeName);
         bundle.putInt(Constants.BundleKeys.CONFIG_INDEX, configIndex);
         bundle.putString(Constants.BundleKeys.CHALLENGE_END_TIME, endTime);
+        bundle.putParcelable(Constants.BundleKeys.CHALLENGE_INFO, Parcels.wrap(challenge));
 
         ChallengeRewardsFragment fragment = new ChallengeRewardsFragment();
         fragment.setArguments(bundle);
@@ -102,6 +105,7 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
         mChallengeName = bundle.getString(Constants.BundleKeys.CHALLENGE_NAME);
         mConfigIndex = bundle.getInt(Constants.BundleKeys.CONFIG_INDEX);
         mChallengeEndTime = bundle.getString(Constants.BundleKeys.CHALLENGE_END_TIME);
+        mChallengeInfo=Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.CHALLENGE_INFO));
     }
 
     private void initViews() {
@@ -119,7 +123,7 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
     }
 
     private ChallengeRewardAdapter createAdapter(List<ChallengeConfig> configs) {
-        return new ChallengeRewardAdapter(getContext(), configs,mChallengeEndTime,this);
+        return new ChallengeRewardAdapter(getContext(), configs,mChallengeEndTime,mChallengeInfo,this);
     }
 
     @Override
