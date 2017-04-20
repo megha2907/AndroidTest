@@ -21,8 +21,8 @@ public class ConfigRewardDetails {
     @JsonProperty("breakup")
     private List<RewardBreakUp> breakUps = new ArrayList<>();
 
-    @JsonProperty("winners")
-    private List<WinnersRewards> winnersRewardsList = new ArrayList<>();
+//    @JsonProperty("winners")
+//    private List<WinnersRewards> winnersRewardsList = new ArrayList<>();
 
     @JsonProperty("total")
     public String getTotalReward() {
@@ -44,11 +44,11 @@ public class ConfigRewardDetails {
         this.breakUps = breakUps;
     }
 
-    public List<WinnersRewards> getWinnersRewardsList() {
-        return winnersRewardsList;
-    }
-
-    public void setWinnersRewardsList(List<WinnersRewards> winnersRewardsList) {
-        this.winnersRewardsList = winnersRewardsList;
-    }
+//    public List<WinnersRewards> getWinnersRewardsList() {
+//        return winnersRewardsList;
+//    }
+//
+//    public void setWinnersRewardsList(List<WinnersRewards> winnersRewardsList) {
+//        this.winnersRewardsList = winnersRewardsList;
+//    }
 }
