@@ -11,9 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white_60"
-        android:textSize="@dimen/dp_14"
+        android:textSize="@dimen/dp_12"
         android:textAllCaps="true"
-        app:typeface="lato_light" />
+        app:typeface="lato_regular" />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/msgCount"
@@ -21,12 +21,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center"
-        android:textColor="@color/white_60"
+        android:textColor="@color/white"
         android:paddingRight="@dimen/dp_2"
         android:paddingLeft="@dimen/dp_2"
         android:textSize="@dimen/dp_10"
         android:layout_marginLeft="@dimen/dp_5"
-        app:typeface="lato_light"
+        app:typeface="lato_regular"
         android:background="@drawable/challenge_tab_counter_bg"
         android:visibility="gone"/>
 
