@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white_60"
+        android:textSize="@dimen/dp_14"
+        android:textAllCaps="true"
+        app:typeface="lato_light" />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/msgCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:textColor="@color/white_60"
+        android:paddingRight="@dimen/dp_2"
+        android:paddingLeft="@dimen/dp_2"
+        android:textSize="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_5"
+        app:typeface="lato_light"
+        android:background="@drawable/challenge_tab_counter_bg"
+        android:visibility="gone"/>
+
+</LinearLayout>

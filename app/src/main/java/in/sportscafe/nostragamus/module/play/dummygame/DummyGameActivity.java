@@ -24,6 +24,8 @@ import in.sportscafe.nostragamus.webservice.MyWebService;
 public class DummyGameActivity extends NostragamusActivity implements DGPlayFragment.OnDGPlayActionListener,
         DGTextFragment.OnDGTextActionListener {
 
+    public static final int DELAY_TO_PERFORM_BACK_PRESS = 1000;
+
     interface InstructionType {
         String TEXT = "text";
         String QUESTION = "question";
@@ -48,6 +50,8 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     private Integer mLastScoredPoints;
 
     private int mPowerUpsInstructionPos = 0;
+
+    private boolean mIsBackAlreadyPressed = false;
 
     @Override
     public String getScreenName() {
@@ -309,6 +313,23 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
         } else {
             NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.SKIPPED, mLastReadInstruction);
         }
-        super.onBackPressed();
+
+        if (!mIsBackAlreadyPressed) {
+            handleMultipleFastBackPressAndPerformBack();
+        }
+    }
+
+    /**
+     * In case user clicks so fast back button (it takes multiple back action) which is not accepted for Dummy-game back flow.
+     * so fast back-press happens within fraction (a second) which is block for sometime to delay back-press behaviour.
+     */
+    private void handleMultipleFastBackPressAndPerformBack() {
+        mIsBackAlreadyPressed = true;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                DummyGameActivity.super.onBackPressed();
+            }
+        }, DELAY_TO_PERFORM_BACK_PRESS);
     }
 }
