@@ -155,7 +155,7 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
                         }
                     }
                 });
-        alertDialog.setCancelable(true);
+        alertDialog.setCancelable(false);
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
