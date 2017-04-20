@@ -17,9 +17,11 @@ import java.util.List;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ConfigPlayersDetails;
 import in.sportscafe.nostragamus.module.allchallenges.dto.RewardBreakUp;
+import in.sportscafe.nostragamus.module.allchallenges.dto.WinnersRewards;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.utils.ViewUtils;
@@ -35,10 +37,13 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
 
     private String mChallengeEndTime;
 
-    public ChallengeRewardAdapter(Context context, List<ChallengeConfig> configs, String ChallengeEndTime, OnConfigAccessListener accessListener) {
+    private Challenge mChallengeInfo;
+
+    public ChallengeRewardAdapter(Context context, List<ChallengeConfig> configs, String ChallengeEndTime, Challenge challengeInfo, OnConfigAccessListener accessListener) {
         super(context);
         mAccessListener = accessListener;
         mChallengeEndTime = ChallengeEndTime;
+        mChallengeInfo = challengeInfo;
         addAll(configs);
     }
 
@@ -86,7 +91,11 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
         holder.mLlDropDownHolder.removeAllViews();
 
         try {
-            createRewardDropDownList(config.getRewardDetails().getBreakUps(), holder.mLlDropDownHolder);
+//            if (mChallengeInfo.getCountMatchesLeft().equals("0")) {
+//                createWinnersDropDownList(config.getRewardDetails().getWinnersRewardsList(), holder.mLlDropDownHolder);
+//            }else {
+                createRewardDropDownList(config.getRewardDetails().getBreakUps(), holder.mLlDropDownHolder);
+           // }
         }catch (Exception e) {
             holder.mTvChallengeEndTime.setText("Prizes data not Available");
             holder.mRlRewardsLayout.setVisibility(View.GONE);
@@ -98,11 +107,17 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
 
     private void createRewardDropDownList(List<RewardBreakUp> breakUps, ViewGroup parent) {
         for (RewardBreakUp breakUp : breakUps) {
-            parent.addView(getDropDownView(breakUp.getRank(),breakUp.getAmount(), null, parent));
+            parent.addView(getDropDownView(breakUp.getRank(),breakUp.getAmount(),null, null, parent));
         }
     }
 
-    private View getDropDownView(String key, String value,String memberPhoto, ViewGroup parent) {
+    private void createWinnersDropDownList(List<WinnersRewards> winnersRewardsList, ViewGroup parent) {
+        for (WinnersRewards winnersRewards : winnersRewardsList) {
+            parent.addView(getDropDownView(winnersRewards.getWinnerName(),winnersRewards.getAmountWon(),winnersRewards.getWinnerRank(), null, parent));
+        }
+    }
+
+    private View getDropDownView(String key, String value,String winnerRank,String memberPhoto, ViewGroup parent) {
         View dropDownView = getLayoutInflater().inflate(R.layout.inflater_reward_row, parent, false);
 
         TextView tvKey = (TextView) dropDownView.findViewById(R.id.reward_row_tv_name);
@@ -114,6 +129,14 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
         } else {
             memberPic.setVisibility(View.GONE);
         }
+
+//        TextView tvWinnerRank = (TextView) dropDownView.findViewById(R.id.reward_row_tv_winner_rank);
+//        if (!TextUtils.isEmpty(winnerRank)){
+//            tvWinnerRank.setVisibility(View.VISIBLE);
+//            tvWinnerRank.setText(winnerRank);
+//        }else {
+//            tvWinnerRank.setVisibility(View.GONE);
+//        }
 
         TextView tvValue = (TextView) dropDownView.findViewById(R.id.reward_row_tv_value);
 

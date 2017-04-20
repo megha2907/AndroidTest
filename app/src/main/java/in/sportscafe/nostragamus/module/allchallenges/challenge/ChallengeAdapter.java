@@ -420,7 +420,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             ChallengeConfigsDialogFragment.newInstance(43, challenge)
                     .show(fragmentManager, "challenge_configs");
         } else if (dialogType == CHALLENGE_REWARDS_DIALOG_TYPE) {
-            ChallengeRewardsFragment.newInstance(44, challenge.getChallengeId(), challenge.getName() + " Prizes",
+            ChallengeRewardsFragment.newInstance(44, challenge, challenge.getName() + " Prizes",
                     challenge.getChallengeUserInfo().getConfigIndex(), challenge.getEndTime())
                     .show(fragmentManager, "challenge_rewards");
         } else {
