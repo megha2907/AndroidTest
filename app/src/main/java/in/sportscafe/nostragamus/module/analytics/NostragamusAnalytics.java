@@ -387,10 +387,8 @@ public class NostragamusAnalytics {
 
                 if (BuildConfig.IS_PAID_VERSION) {
                     userProperties.put(UserProperties.PRO_APP, "yes");
-                    Log.d(UserProperties.PRO_APP,"yes");
                 }else {
                     userProperties.put(UserProperties.PRO_APP,"No");
-                    Log.d(UserProperties.PRO_APP,"no");
                 }
 
                 mAmplitude.setUserProperties(userProperties);
