@@ -10,12 +10,14 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.PayloadBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.EventListener;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
@@ -378,11 +380,17 @@ public class NostragamusAnalytics {
         }
     }
 
-    public void setUserProperties(int groupCount) {
+    public void setUserProperties() {
         if (null != mAmplitude) {
             try {
                 JSONObject userProperties = new JSONObject();
-                userProperties.put(UserProperties.NUMBER_OF_GROUPS, groupCount);
+
+                if (BuildConfig.IS_PAID_VERSION) {
+                    userProperties.put(UserProperties.PRO_APP, "yes");
+                }else {
+                    userProperties.put(UserProperties.PRO_APP,"No");
+                }
+
                 mAmplitude.setUserProperties(userProperties);
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -98,11 +98,11 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
 
     private void createRewardDropDownList(List<RewardBreakUp> breakUps, ViewGroup parent) {
         for (RewardBreakUp breakUp : breakUps) {
-            parent.addView(getDropDownView(breakUp.getRank(), breakUp.getAmount(), null, parent));
+            parent.addView(getDropDownView(breakUp.getRank(),breakUp.getAmount(), null, parent));
         }
     }
 
-    private View getDropDownView(String key, String value, String memberPhoto, ViewGroup parent) {
+    private View getDropDownView(String key, String value,String memberPhoto, ViewGroup parent) {
         View dropDownView = getLayoutInflater().inflate(R.layout.inflater_reward_row, parent, false);
 
         TextView tvKey = (TextView) dropDownView.findViewById(R.id.reward_row_tv_name);

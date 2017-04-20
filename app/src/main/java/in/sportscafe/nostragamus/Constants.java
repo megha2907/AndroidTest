@@ -384,6 +384,8 @@ public interface Constants {
         String APPLIED = "Applied";
         String ADDED = "Added";
         String SWITCH = "Switch";
+        String PRO_APP = "Pro App";
+        String NORMAL_APP = "Normal App";
     }
 
     interface AnalyticsLabels {
@@ -406,6 +408,7 @@ public interface Constants {
 
     interface UserProperties {
         String NUMBER_OF_GROUPS = "No of Groups";
+        String PRO_APP = "Pro App";
     }
 
     interface ScreenNames {

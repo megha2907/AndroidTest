@@ -69,6 +69,19 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.paid_join_btn_bg));
             holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + "/" + memberDetails.getMaxCount());
             holder.mTvSlotsLeft.setText(String.valueOf(memberDetails.getMaxCount() - memberDetails.getJoinedCount()) + " SLOTS LEFT");
+
+            if(memberDetails.getJoinedCount() >= memberDetails.getMaxCount()){
+                holder.mBtnJoin.setText("Slots Filled");
+                holder.mBtnJoin.setTextSize(10);
+                holder.mBtnJoin.setAlpha((float) 0.7);
+                holder.mBtnJoin.setClickable(false);
+            }else {
+                holder.mBtnJoin.setText("Join");
+                holder.mBtnJoin.setTextSize(12);
+                holder.mBtnJoin.setAlpha((float) 1);
+                holder.mBtnJoin.setClickable(true);
+            }
+
         }
 
 

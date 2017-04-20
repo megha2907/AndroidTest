@@ -33,6 +33,7 @@ public class SplashActivity extends Activity {
         Nostragamus.getInstance().startPeriodJobs();
 
         NostragamusAnalytics.getInstance().trackAppOpening(AnalyticsLabels.LAUNCHER);
+        NostragamusAnalytics.getInstance().setUserProperties();
     }
 
     @Override

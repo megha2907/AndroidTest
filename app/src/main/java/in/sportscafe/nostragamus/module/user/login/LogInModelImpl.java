@@ -13,6 +13,7 @@ import com.jeeva.android.facebook.user.FacebookProfile;
 import com.jeeva.android.facebook.user.GetProfileModelImpl;
 import com.jeeva.android.facebook.user.UserModelImpl;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Nostragamus;
