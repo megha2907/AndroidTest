@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.analytics;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.amplitude.api.Amplitude;
 import com.amplitude.api.AmplitudeClient;
@@ -25,6 +26,7 @@ import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsCategory;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.UserProperties;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 
 
@@ -380,6 +382,10 @@ public class NostragamusAnalytics {
         }
     }
 
+    /**
+     * Every time UserProperties are set, the recent one will be used to send with next tracking logs
+     * If Null / empty value is set for property, then it won't be sent
+     */
     public void setUserProperties() {
         if (null != mAmplitude) {
             try {
@@ -389,6 +395,15 @@ public class NostragamusAnalytics {
                     userProperties.put(UserProperties.PRO_APP, "yes");
                 }else {
                     userProperties.put(UserProperties.PRO_APP,"No");
+                }
+
+                String channel = NostragamusDataHandler.getInstance().getInstallChannel();
+                if (!TextUtils.isEmpty(channel)) {
+                    userProperties.put(UserProperties.REFERRAL_CHANNEL, channel);
+                }
+                String campaign = NostragamusDataHandler.getInstance().getInstallReferralCampaign();
+                if (!TextUtils.isEmpty(campaign)) {
+                    userProperties.put(UserProperties.REFERRAL_CAMPAIGN, campaign);
                 }
 
                 mAmplitude.setUserProperties(userProperties);

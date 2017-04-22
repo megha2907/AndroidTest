@@ -1,7 +1,6 @@
 package in.sportscafe.nostragamus.module.allchallenges.challenge;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.recyclerviewpager.RecyclerViewPager;
 
 import org.parceler.Parcels;
@@ -32,6 +32,8 @@ import in.sportscafe.nostragamus.module.common.NostragamusFragment;
  * Created by Jeeva on 17/02/17.
  */
 public class ChallengeFragment extends NostragamusFragment implements ChallengeView {
+
+    private static final String TAG = ChallengeFragment.class.getSimpleName();
 
     private ChallengePresenter mChallengePresenter;
 
@@ -49,12 +51,15 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
     private ChallengeTimelineFragment mTimelineFragment;
 
+    private int mNewChallengeIdFromNotification = -1;
+
 //    private TimerRunnable mTimerRunnable;
 
-    public static ChallengeFragment newInstance(List<Challenge> challenges, int tagId) {
+    public static ChallengeFragment newInstance(List<Challenge> challenges, int tagId, int newChallengeIdFromNotification) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(BundleKeys.CHALLENGE_LIST, Parcels.wrap(challenges));
         bundle.putInt(BundleKeys.CHALLENGE_TAG_ID, tagId);
+        bundle.putInt(BundleKeys.NOTIFICATION_CHALLENGE_ID, newChallengeIdFromNotification);
 
         ChallengeFragment fragment = new ChallengeFragment();
         fragment.setArguments(bundle);
@@ -101,11 +106,49 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
         this.mChallengePresenter = ChallengePresenterImpl.newInstance(this);
         this.mChallengePresenter.onCreateChallenge(getArguments());
+
+    }
+
+    private void performScrollingIfFromNotification() {
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(BundleKeys.NOTIFICATION_CHALLENGE_ID)) {
+            mNewChallengeIdFromNotification = args.getInt(BundleKeys.NOTIFICATION_CHALLENGE_ID, -1);
+        }
+
+        if (mNewChallengeIdFromNotification >= 0 && mRcvHorizontal != null && mRcvHorizontal.getAdapter() != null) {
+            int pos = getChallengePositionFromId();
+            Log.d("Temp", "Item position in challenge list : " + pos);
+            if (pos >= 0) {
+                mRcvHorizontal.scrollToPosition(pos);
+                mCurrentPosition = pos;
+            }
+        }
+    }
+
+    private int getChallengePositionFromId() {
+        int pos = -1;
+        if (mNewChallengeIdFromNotification >= 0) {
+            Bundle args = getArguments();
+            if (args != null && args.containsKey(BundleKeys.CHALLENGE_LIST)) {
+                List<Challenge> challengeList = Parcels.unwrap(args.getParcelable(BundleKeys.CHALLENGE_LIST));
+
+                if (challengeList != null && !challengeList.isEmpty()) {
+                    for (int temp = 0; temp < challengeList.size(); temp++) {
+                        if (challengeList.get(temp).getChallengeId() == mNewChallengeIdFromNotification) {
+                            pos = temp;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return pos;
     }
 
     @Override
     public void setSwipeAdapter(RecyclerView.Adapter adapter) {
         mRcvHorizontal.setAdapter(adapter, true);
+        performScrollingIfFromNotification();
 
         tvChallengeTotalCount.setText("/ " + String.valueOf(adapter.getItemCount()));
 

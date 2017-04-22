@@ -163,6 +163,14 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(SharedKeys.INSTALL_CHANNEL, installChannel);
     }
 
+    public void setInstallReferralCampaign(String referralCampaign) {
+        setSharedStringData(SharedKeys.INSTALL_REFERRAL_CAMPAIGN_KEY, referralCampaign);
+    }
+
+    public String getInstallReferralCampaign() {
+        return getSharedStringData(SharedKeys.INSTALL_REFERRAL_CAMPAIGN_KEY);
+    }
+
     public String getInstallChannel() {
         return getSharedStringData(SharedKeys.INSTALL_CHANNEL);
     }
@@ -175,13 +183,17 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         clearData(SharedKeys.INSTALL_GROUP_NAME);
     }
 
-    public void removeInstallChannel() {
+    /*public void removeInstallChannel() {
         clearData(SharedKeys.INSTALL_CHANNEL);
+    }
+
+    public void removeInstallCampaign() {
+        clearData(SharedKeys.INSTALL_REFERRAL_CAMPAIGN_KEY);
     }
 
     public void removeReferralUserId() {
         clearData(BundleKeys.USER_REFERRAL_ID);
-    }
+    }*/
 
     public int getNormalUpdateVersion() {
         return getSharedIntData(SharedKeys.NORMAL_UPDATE_VERSION, -1);
