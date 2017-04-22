@@ -57,6 +57,7 @@ public class SplashActivity extends Activity {
                     if (null != linkProperties) {
                         Log.d("Install Channel", linkProperties.getChannel() + "");
                         nostragamusDataHandler.setInstallChannel(linkProperties.getChannel());
+                        nostragamusDataHandler.setInstallReferralCampaign(linkProperties.getCampaign());
                     }
 
                     String path = metadata.get("$android_deeplink_path");

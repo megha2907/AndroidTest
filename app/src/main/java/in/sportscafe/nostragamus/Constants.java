@@ -19,6 +19,8 @@ public interface Constants {
     interface NotificationKeys {
         String RESULTS_LEADERBOARD = "results_leaderboard";
         String FROM_NOTIFICATION = "fromNotification";
+
+        String NEW_CHALLENGE_ID = "challenge_id";
     }
 
     interface SharedKeys {
@@ -84,6 +86,7 @@ public interface Constants {
         String DOWNLOAD_PAID_APP = "downloadPaidApp";
         String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
         String IS_PROFILE_DISCLAIMER_ACCEPTED = "isProfileDisclaimerAccepted";
+        String INSTALL_REFERRAL_CAMPAIGN_KEY = "installReferralCampaignKey";
     }
 
     interface Alerts {
@@ -267,6 +270,8 @@ public interface Constants {
         String OPEN_LEADERBOARD = "openLeaderboard";
         String USER_PAYMENT_INFO_PARCEL = "userPaymentInfoParcel";
         String EDIT_PROFILE_LAUNCHED_FROM = "editProfileLaunchedFrom";
+        String NOTIFICATION_CHALLENGE_ID = "notificationChallengeId";
+        String SHOULD_LAUNCH_NEW_TAB = "shouldLaunchNewTab";
     }
 
     interface ParcelableKeys {
@@ -409,6 +414,8 @@ public interface Constants {
     interface UserProperties {
         String NUMBER_OF_GROUPS = "No of Groups";
         String PRO_APP = "Pro App";
+        String REFERRAL_CHANNEL = "Referral Channel";
+        String REFERRAL_CAMPAIGN = "Referral Campaign";
     }
 
     interface ScreenNames {
