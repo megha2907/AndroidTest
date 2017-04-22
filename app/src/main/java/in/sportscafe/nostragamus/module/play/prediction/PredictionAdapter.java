@@ -2,11 +2,20 @@ package in.sportscafe.nostragamus.module.play.prediction;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.CardView;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.URLSpan;
+import android.text.util.Linkify;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +35,10 @@ import com.jeeva.android.widgets.HmImageView;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
+import in.sportscafe.nostragamus.module.common.WebViewActivity;
+import in.sportscafe.nostragamus.module.feed.FeedWebView;
+import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
@@ -167,11 +180,28 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         Question question = getItem(position);
 
         viewHolder.tvQuestion.setText(question.getQuestionText());
-        viewHolder.tvContext.setText(Html.fromHtml(question.getQuestionContext()));
         viewHolder.ivLeftOption.setImageUrl(question.getQuestionImage1());
         viewHolder.ivRightOption.setImageUrl(question.getQuestionImage2());
         viewHolder.tvLeftOption.setText(question.getQuestionOption1());
         viewHolder.tvRightOption.setText(question.getQuestionOption2());
+
+        String questionContext = question.getQuestionContext();
+        viewHolder.tvContext.setText(Html.fromHtml(questionContext));
+        viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
+
+        CharSequence text = viewHolder.tvContext.getText();
+        if (text instanceof Spannable) {
+            int end = text.length();
+            Spannable sp = (Spannable) viewHolder.tvContext.getText();
+            URLSpan[] urls = sp.getSpans(0, end, URLSpan.class);
+            SpannableStringBuilder style = new SpannableStringBuilder(text);
+            style.clearSpans();//should clear old spans
+            for (URLSpan url : urls) {
+                LinkSpan click = new LinkSpan(url.getURL());
+                style.setSpan(click, sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            viewHolder.tvContext.setText(style);
+        }
 
         updatePowerUpDetails(viewHolder, question);
 
@@ -479,4 +509,20 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             rightOptionArrow = rootView.findViewById(R.id.swipe_card_iv_right_arrow);
         }
     }
+
+    private class LinkSpan extends URLSpan {
+
+        private LinkSpan(String url) {
+            super(url);
+        }
+
+        @Override
+        public void onClick(View view) {
+            String url = getURL();
+            if (url != null) {
+                view.getContext().startActivity(new Intent(view.getContext(), FeedWebView.class).putExtra("url", url));
+            }
+        }
+    }
+
 }

@@ -3,13 +3,16 @@ package in.sportscafe.nostragamus.module.allchallenges.info;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -30,7 +33,7 @@ import in.sportscafe.nostragamus.module.common.OnDismissListener;
  */
 
 public class ChallengeRewardsFragment extends NostragamusDialogFragment implements ChallengeConfigsApiModelImpl.OnConfigsApiModelListener,
-        ChallengeRewardAdapter.OnConfigAccessListener {
+        ChallengeRewardAdapter.OnConfigAccessListener, View.OnClickListener {
 
     private static final String TAG = ChallengeConfigsDialogFragment.class.getSimpleName();
 
@@ -57,6 +60,10 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
     private int mTitleHeight;
 
     private int mMaxHeight;
+
+    private int mExtraHeight;
+
+    private ImageView mBtnPopupClose;
 
     public static ChallengeRewardsFragment newInstance(int requestCode, Challenge challenge, String challengeName, int configIndex, String endTime) {
         Bundle bundle = new Bundle();
@@ -97,6 +104,7 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
         initViews();
 
         getConfigs();
+
     }
 
     private void openBundle(Bundle bundle) {
@@ -105,7 +113,7 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
         mChallengeName = bundle.getString(Constants.BundleKeys.CHALLENGE_NAME);
         mConfigIndex = bundle.getInt(Constants.BundleKeys.CONFIG_INDEX);
         mChallengeEndTime = bundle.getString(Constants.BundleKeys.CHALLENGE_END_TIME);
-        mChallengeInfo=Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.CHALLENGE_INFO));
+        mChallengeInfo = Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.CHALLENGE_INFO));
     }
 
     private void initViews() {
@@ -116,14 +124,18 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
 
         mTitleHeight = getResources().getDimensionPixelSize(R.dimen.dp_42);
         mMaxHeight = getResources().getDimensionPixelSize(R.dimen.dp_360);
+        mExtraHeight = getResources().getDimensionPixelSize(R.dimen.dp_80);
+
+        mBtnPopupClose = (ImageView) findViewById(R.id.popup_cross_btn);
+        mBtnPopupClose.setOnClickListener(this);
     }
 
     private void getConfigs() {
-        new ChallengeConfigsApiModelImpl(this).getConfigs(mChallengeId,mConfigIndex);
+        new ChallengeConfigsApiModelImpl(this).getConfigs(mChallengeId, mConfigIndex);
     }
 
     private ChallengeRewardAdapter createAdapter(List<ChallengeConfig> configs) {
-        return new ChallengeRewardAdapter(getContext(), configs,mChallengeEndTime,mChallengeInfo,this);
+        return new ChallengeRewardAdapter(getContext(), configs, mChallengeEndTime, mChallengeInfo, this);
     }
 
     @Override
@@ -142,6 +154,7 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
     public void onSuccessConfigsApi(List<ChallengeConfig> configs) {
         mConfigAdapter = createAdapter(configs);
         mRcvConfigs.setAdapter(mConfigAdapter);
+        mBtnPopupClose.setVisibility(View.VISIBLE);
 
 
         findViewById(R.id.configs_ll_title).setVisibility(View.VISIBLE);
@@ -179,20 +192,30 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
 
     @Override
     public void onConfigHeightChanged() {
+
         mRcvConfigs.postDelayed(new Runnable() {
             @Override
             public void run() {
-                int configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight;
+                int configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight+ mExtraHeight;
                 Log.d("ChallengeConfigsDialogFragment", "MaxHeight --> " + mMaxHeight + ", " + "ScrollHeight --> " + configsHeight);
                 if (configsHeight > mMaxHeight) {
                     configsHeight = mMaxHeight;
                 }
 
                 WindowManager.LayoutParams attributes = getDialog().getWindow().getAttributes();
+                attributes.windowAnimations = R.style.DialogAnimation;
                 getDialog().getWindow().setLayout(attributes.width, configsHeight);
             }
         }, 250);
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.popup_cross_btn:
+                dismiss();
+                break;
+        }
+    }
 }

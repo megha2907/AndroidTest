@@ -95,7 +95,8 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
         mInAppPopup = new InAppPopup();
 
         findViewById(R.id.popup_btn).setOnClickListener(this);
-        findViewById(R.id.popup_iv_close).setOnClickListener(this);
+        ImageView mPopupCrossBtn = (ImageView) findViewById(R.id.popup_cross_btn);
+        mPopupCrossBtn.setOnClickListener(this);
 
         mbundle = this.getArguments();
         inAppPopUpType = mbundle.getString(Constants.InAppPopups.IN_APP_POPUP_TYPE);
@@ -173,12 +174,6 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
             mPopupHeading.setBackgroundResource(mInAppPopup.getHeadingColor());
         }
 
-        RelativeLayout mPopupCrossBtn = (RelativeLayout) findViewById(R.id.popup_rl_cross_btn);
-        if (!mInAppPopup.isShowCrossBtn()) {
-            mPopupCrossBtn.setVisibility(View.GONE);
-        }else {
-            mPopupCrossBtn.setVisibility(View.VISIBLE);
-        }
 
     }
 
@@ -225,7 +220,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
                     dismiss();
                 }
                 break;
-            case R.id.popup_iv_close:
+            case R.id.popup_cross_btn:
                 dismiss();
                 break;
         }

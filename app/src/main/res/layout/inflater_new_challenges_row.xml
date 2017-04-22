@@ -16,7 +16,7 @@
         android:layout_marginBottom="@dimen/dp_4"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/dp_3"
+        android:padding="@dimen/dp_3"
         app:sl_cornerRadius="@dimen/dp_8"
         app:sl_fillColor="@color/challenges_bg_card_color">
 
@@ -59,6 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:sl_cornerRadius="@dimen/dp_8"
+        android:padding="@dimen/dp_2"
         app:sl_fillColor="@color/chathams_blue">
 
         <LinearLayout

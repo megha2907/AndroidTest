@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -41,7 +42,7 @@ import in.sportscafe.nostragamus.module.paytm.PaytmTransactionResponse;
  * Created by Jeeva on 28/02/17.
  */
 public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment implements ChallengeConfigsApiModelImpl.OnConfigsApiModelListener,
-        ChallengeConfigAdapter.OnConfigAccessListener, PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener {
+        ChallengeConfigAdapter.OnConfigAccessListener, PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener, View.OnClickListener {
 
     private static final String TAG = ChallengeConfigsDialogFragment.class.getSimpleName();
 
@@ -70,6 +71,8 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     private int mExtraHeight;
 
     private int mMaxHeight;
+
+    private ImageView mBtnPopupClose;
 
     public static ChallengeConfigsDialogFragment newInstance(int requestCode, Challenge challenge) {
         Bundle bundle = new Bundle();
@@ -118,9 +121,11 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                 LinearLayoutManager.VERTICAL, false));
         this.mRcvConfigs.setHasFixedSize(true);
 
+        mBtnPopupClose = (ImageView)findViewById(R.id.popup_cross_btn);
+
         mTitleHeight = getResources().getDimensionPixelSize(R.dimen.dp_42);
         mMaxHeight = getResources().getDimensionPixelSize(R.dimen.dp_360);
-        mExtraHeight = getResources().getDimensionPixelSize(R.dimen.dp_40);
+        mExtraHeight = getResources().getDimensionPixelSize(R.dimen.dp_80);
     }
 
     private void getConfigs() {
@@ -150,9 +155,11 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         mConfigAdapter = createAdapter(configs);
         mRcvConfigs.setAdapter(mConfigAdapter);
 
-
         findViewById(R.id.configs_ll_title).setVisibility(View.VISIBLE);
         ((TextView) findViewById(R.id.configs_tv_challenge_name)).setText(mChallenge.getName() + " - Pick contest");
+        mBtnPopupClose.setVisibility(View.VISIBLE);
+        mBtnPopupClose.setOnClickListener(this);
+
     }
 
     @Override
@@ -256,7 +263,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                     configsHeight = mMaxHeight + mTitleHeight;
                 } else {
                     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight;
+                        configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight+ mExtraHeight;
                     }else {
                         configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight + mExtraHeight;
                     }
@@ -416,4 +423,12 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         }, 200);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.popup_cross_btn:
+                dismiss();
+                break;
+        }
+    }
 }
