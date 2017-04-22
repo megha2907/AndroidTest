@@ -1,6 +1,8 @@
 package in.sportscafe.nostragamus.module.common;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.view.ViewGroup;
 import android.view.Window;
 
 import com.jeeva.android.BaseDialogFragment;
@@ -18,6 +20,7 @@ public class NostragamusDialogFragment extends BaseDialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Window window = getDialog().getWindow();
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawableResource(R.color.transparent);
         window.getAttributes().windowAnimations = R.style.DialogAnimation;
         window.getAttributes().dimAmount = 0.7f;

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ import in.sportscafe.nostragamus.module.common.OnDismissListener;
  * Created by deepanshi on 4/13/17.
  */
 
-public class ChallengeDownloadAppFragment extends NostragamusDialogFragment {
+public class ChallengeDownloadAppFragment extends NostragamusDialogFragment implements View.OnClickListener {
 
     private OnDismissListener mDismissListener;
 
@@ -88,12 +89,9 @@ public class ChallengeDownloadAppFragment extends NostragamusDialogFragment {
             downloadText.setText(getResources().getString(R.string.download_app_text));
         }
 
-        findViewById(R.id.challenge_dw_rl_popup_close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        ImageView mBtnPopupClose = (ImageView)findViewById(R.id.popup_cross_btn);
+        mBtnPopupClose.setVisibility(View.VISIBLE);
+        mBtnPopupClose.setOnClickListener(this);
 
     }
 
@@ -110,6 +108,15 @@ public class ChallengeDownloadAppFragment extends NostragamusDialogFragment {
         super.onDismiss(dialog);
         if (null != mDismissListener) {
             mDismissListener.onDismiss(CHALLENGE_DOWNLOAD_REQUEST_CODE, null);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.popup_cross_btn:
+                dismiss();
+                break;
         }
     }
 }

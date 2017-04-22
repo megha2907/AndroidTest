@@ -91,13 +91,19 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
         holder.mLlDropDownHolder.removeAllViews();
 
         try {
-//            if (mChallengeInfo.getCountMatchesLeft().equals("0")) {
-//                createWinnersDropDownList(config.getRewardDetails().getWinnersRewardsList(), holder.mLlDropDownHolder);
-//            }else {
+            if (mChallengeInfo.getCountMatchesLeft().equals("0")) {
+                if (!config.getRewardDetails().getWinnersRewardsList().isEmpty()) {
+                    createWinnersDropDownList(config.getRewardDetails().getWinnersRewardsList(), holder.mLlDropDownHolder);
+                    holder.mTvChallengeEndTime.setVisibility(View.GONE);
+                }else {
+                    holder.mTvChallengeEndTime.setText("Prizes Info not Available");
+                    holder.mRlRewardsLayout.setVisibility(View.GONE);
+                }
+            }else {
                 createRewardDropDownList(config.getRewardDetails().getBreakUps(), holder.mLlDropDownHolder);
-           // }
+            }
         }catch (Exception e) {
-            holder.mTvChallengeEndTime.setText("Prizes data not Available");
+            holder.mTvChallengeEndTime.setText("Prizes Info not Available");
             holder.mRlRewardsLayout.setVisibility(View.GONE);
         }
 
@@ -130,13 +136,13 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
             memberPic.setVisibility(View.GONE);
         }
 
-//        TextView tvWinnerRank = (TextView) dropDownView.findViewById(R.id.reward_row_tv_winner_rank);
-//        if (!TextUtils.isEmpty(winnerRank)){
-//            tvWinnerRank.setVisibility(View.VISIBLE);
-//            tvWinnerRank.setText(winnerRank);
-//        }else {
-//            tvWinnerRank.setVisibility(View.GONE);
-//        }
+        TextView tvWinnerRank = (TextView) dropDownView.findViewById(R.id.reward_row_tv_winner_rank);
+        if (!TextUtils.isEmpty(winnerRank)){
+            tvWinnerRank.setVisibility(View.VISIBLE);
+            tvWinnerRank.setText(winnerRank);
+        }else {
+            tvWinnerRank.setVisibility(View.GONE);
+        }
 
         TextView tvValue = (TextView) dropDownView.findViewById(R.id.reward_row_tv_value);
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -30,7 +31,7 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
  * Created by deepanshi on 4/12/17.
  */
 
-public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
+public class ChallengeInfoDialogFragment extends NostragamusDialogFragment implements View.OnClickListener {
 
     private OnDismissListener mDismissListener;
 
@@ -99,6 +100,9 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
         TextView challengeDesc = (TextView) findViewById(R.id.challenge_info_tv_challenge_desc);
         TextView challengePayoutDate = (TextView) findViewById(R.id.challenge_info_tv_challenge_payout_date);
         Button challengeBtnClose = (Button)findViewById(R.id.challenge_info_btn_close);
+        ImageView mBtnPopupClose = (ImageView)findViewById(R.id.popup_cross_btn);
+        mBtnPopupClose.setVisibility(View.VISIBLE);
+        mBtnPopupClose.setOnClickListener(this);
 
         if (mChallenge != null) {
 
@@ -141,7 +145,7 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
             Log.d("Dialog", "ChallengeUserInfo Null");
         }
 
-        challengeBtnClose.setText("ok, got it!");
+        challengeBtnClose.setText("Ok, got it!");
 
 
     }
@@ -151,6 +155,15 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment {
         super.onDismiss(dialog);
         if (null != mDismissListener) {
             mDismissListener.onDismiss(CHALLENGE_INFO_REQUEST_CODE, null);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.popup_cross_btn:
+                dismiss();
+                break;
         }
     }
 }
