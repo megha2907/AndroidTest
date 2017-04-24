@@ -40,7 +40,7 @@
             android:id="@+id/pool_row_btn_join"
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_24"
-            android:layout_marginTop="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_2"
             android:background="@drawable/paid_join_btn_bg"
             android:onClick="onClick"
             android:paddingBottom="@dimen/dp_4"
@@ -55,7 +55,7 @@
     <View
         android:id="@+id/pool_row_v_line_separator"
         android:layout_width="@dimen/dp_0.7"
-        android:layout_height="@dimen/dp_100"
+        android:layout_height="@dimen/dp_80"
         android:layout_marginLeft="@dimen/dp_15"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_toLeftOf="@id/pool_row_ll_join_layout"
@@ -89,7 +89,8 @@
             android:text="Assured Prizes for Top 100!"
             android:textColor="@color/white_60"
             android:textSize="@dimen/dp_12"
-            app:typeface="lato_regular" />
+            app:typeface="lato_regular"
+            android:visibility="gone"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/pool_row_tv_max_entries"
@@ -100,7 +101,8 @@
             android:text="Max Entries 50"
             android:textColor="@color/white_60"
             android:textSize="@dimen/dp_12"
-            app:typeface="lato_regular" />
+            app:typeface="lato_regular"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/pool_row_ll_member_layout"

@@ -92,18 +92,18 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     @Override
     public void init(Bundle bundle) {
-        mMyResult = Nostragamus.getInstance().getServerDataManager().getMatchInfo();
-        //mMyResult = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
+        //mMyResult = Nostragamus.getInstance().getServerDataManager().getMatchInfo();
+        mMyResult = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
         mMatchId = mMyResult.getId();
 
         if (bundle.containsKey(BundleKeys.SPORT_ID)) {
             mPredictionModelListener.onGetSport(bundle.getInt(BundleKeys.SPORT_ID));
         }
 
-//        if (bundle.containsKey(BundleKeys.CHALLENGE_INFO)) {
-           // mChallegeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_INFO));
+        if (bundle.containsKey(BundleKeys.CHALLENGE_INFO)) {
+            mChallegeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_INFO));
 
-            mChallegeInfo = Nostragamus.getInstance().getServerDataManager().getChallengeInfo();
+            //mChallegeInfo = Nostragamus.getInstance().getServerDataManager().getChallengeInfo();
 
             HashMap<String, Integer> userPowerUpMap = mChallegeInfo.getChallengeUserInfo().getPowerUps();
             m2xPowerups = userPowerUpMap.get(Powerups.XX);
@@ -128,7 +128,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 //
 //            }
 
-        //}
+        }
 
         NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.STARTED);
     }
