@@ -61,7 +61,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     public void init(Bundle bundle) {
         if(null != bundle) {
             if (bundle.containsKey(BundleKeys.MATCH_LIST)) {
-                match = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
+//                match = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
+                match=Nostragamus.getInstance().getServerDataManager().getMatchInfo();
                 matchId = match.getId();
                 if (null == match.getResult() || match.getResult().isEmpty()) {
                     mResultsModelListener.setToolbarHeading("Awaiting Results");

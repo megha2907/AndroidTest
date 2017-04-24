@@ -29,6 +29,7 @@ import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.DateFormats;
 import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
@@ -290,7 +291,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             Match match = (Match) view.getTag();
             if (null != match) {
                 bundle = new Bundle();
-                bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
+                Nostragamus.getInstance().getServerDataManager().setMatchInfo(match);
+                bundle.putString(BundleKeys.MATCH_LIST, BundleKeys.MATCH_LIST);
                 bundle.putString(BundleKeys.SCREEN, Constants.ScreenNames.PROFILE);
 
                 if(null != match.getSportId()) {
@@ -305,7 +307,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     );
 
                     if(null != mChallengeInfo) {
-                        bundle.putParcelable(BundleKeys.CHALLENGE_INFO, Parcels.wrap(mChallengeInfo));
+                        Nostragamus.getInstance().getServerDataManager().setChallengeInfo(mChallengeInfo);
+                       // bundle.putParcelable(BundleKeys.CHALLENGE_INFO, Parcels.wrap(mChallengeInfo));
                     }
                     navigateToPrediction(context, bundle);
                     break;

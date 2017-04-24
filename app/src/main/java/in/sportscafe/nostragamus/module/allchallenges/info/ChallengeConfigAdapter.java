@@ -67,23 +67,20 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             holder.mTvMembersCount.setTextColor(ContextCompat.getColor(holder.mTvMembersCount.getContext(),R.color.paid_entry_tv_color));
             holder.mTvReward.setTextColor(ContextCompat.getColor(holder.mTvReward.getContext(),R.color.paid_entry_tv_color));
             holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.paid_join_btn_bg));
-            holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + "/" + memberDetails.getMaxCount());
+            holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + " / " + memberDetails.getMaxCount());
             holder.mTvSlotsLeft.setText(String.valueOf(memberDetails.getMaxCount() - memberDetails.getJoinedCount()) + " SLOTS LEFT");
 
             if(memberDetails.getJoinedCount() >= memberDetails.getMaxCount()){
-                holder.mBtnJoin.setText("Slots Filled");
-                holder.mBtnJoin.setTextSize(10);
-                holder.mBtnJoin.setAlpha((float) 0.7);
+                holder.mBtnJoin.setText("Full");
+                holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.btn_not_played_bg));
                 holder.mBtnJoin.setClickable(false);
             }else {
                 holder.mBtnJoin.setText("Join");
-                holder.mBtnJoin.setTextSize(12);
-                holder.mBtnJoin.setAlpha((float) 1);
+                holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.paid_join_btn_bg));
                 holder.mBtnJoin.setClickable(true);
             }
 
         }
-
 
         holder.mIvDropDownReward.setRotation(0);
         holder.mIvDropDownMember.setRotation(0);
@@ -186,6 +183,10 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
         TextView mTvDisclaimerTxt;
 
         TextView mTvDisclaimer;
+
+        TextView mTvMaxEntries;
+
+        TextView mTvNumberOfPrizes;
 
         TextView mTvSlotsLeft;
 
