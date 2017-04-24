@@ -10,13 +10,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.jeeva.android.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,6 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 
 /**
  * Created by Jeeva on 17/02/17.
@@ -56,8 +55,10 @@ public class AllChallengesFragment extends NostragamusFragment
 
     private int LIST_VIEW = 1;
 
+
     public static AllChallengesFragment newInstance() {
-        return new AllChallengesFragment();
+        AllChallengesFragment fragment = new AllChallengesFragment();
+        return fragment;
     }
 
     @Nullable
@@ -163,21 +164,34 @@ public class AllChallengesFragment extends NostragamusFragment
         List<Challenge> challenges = mAllChallengesApiModel.getCompletedChallenges();
         int count = 0;
         boolean completedAvailable = false;
+        boolean shouldShowNewTab = false;
+
         if (challenges.size() > 0) {
             completedAvailable = true;
-            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(challenges, count++), Constants.ChallengeTabs.COMPLETED);
+            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(challenges, count++, -1), Constants.ChallengeTabs.COMPLETED);
             mChallengeFragmentList.add(challengeFragment);
         }
 
         List<Challenge> inPlayChallenges = mAllChallengesApiModel.getInPlayChallenges();
         if (inPlayChallenges.size() > 0) {
-            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(inPlayChallenges, count++), Constants.ChallengeTabs.IN_PLAY);
+            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(inPlayChallenges, count++, -1), Constants.ChallengeTabs.IN_PLAY);
             mChallengeFragmentList.add(challengeFragment);
         }
 
         List<Challenge> newChallenges = mAllChallengesApiModel.getNewChallenges();
         if (newChallenges.size() > 0) {
-            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(newChallenges, count++), Constants.ChallengeTabs.NEW);
+
+            int newChallengeIdFromNotification = -1;
+            Bundle args = getArguments();
+            if (args != null) {
+                newChallengeIdFromNotification = args.getInt(BundleKeys.NOTIFICATION_CHALLENGE_ID, -1);
+                shouldShowNewTab = args.getBoolean(BundleKeys.SHOULD_LAUNCH_NEW_TAB, false);
+                Log.d("Temp", "all challenge fragment : id " + newChallengeIdFromNotification +
+                        " newTab? : " + shouldShowNewTab);
+            }
+
+            challengeFragment = ChallengeFragment.newInstance(newChallenges, count++, newChallengeIdFromNotification);
+            mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.NEW);
             mChallengeFragmentList.add(challengeFragment);
         }
 
@@ -194,6 +208,13 @@ public class AllChallengesFragment extends NostragamusFragment
             if (count > 1 && count == 3 || completedAvailable) {
                 viewPager.setCurrentItem(1);
             }
+        }
+
+        /* If launched from notification, 'NEW' tab should be shown */
+        if (shouldShowNewTab) {
+            viewPager.setCurrentItem(2);
+        } else {
+            Log.d("Temp", "should not launch new tab");
         }
     }
 
