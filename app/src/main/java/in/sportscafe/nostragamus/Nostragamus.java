@@ -47,7 +47,7 @@ public class Nostragamus extends Application {
     private static Nostragamus sNostragamus;
     private ServerDataManager mServerDataManager;
 
-    private Nostragamus () {
+    private void initMembers() {
         // Assigning the Nostragamus instance
         sNostragamus = Nostragamus.this;
 
@@ -65,7 +65,7 @@ public class Nostragamus extends Application {
      *
      * @return
      */
-    public ServerDataManager getServerDataManager() {
+    public synchronized ServerDataManager getServerDataManager() {
         if (mServerDataManager == null) {
             mServerDataManager = new ServerDataManager();
         }
@@ -77,9 +77,8 @@ public class Nostragamus extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-/*
-        // Assigning the Nostragamus instance
-        sNostragamus = Nostragamus.this;*/
+
+        initMembers();
 
         // Initializing the SportsCafe Uncaught Exception handler
         initCrashHandler(mDebuggable);
@@ -251,5 +250,6 @@ public class Nostragamus extends Application {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
 
 }
