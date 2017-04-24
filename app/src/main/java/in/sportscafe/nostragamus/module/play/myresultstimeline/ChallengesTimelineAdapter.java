@@ -292,7 +292,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             if (null != match) {
                 bundle = new Bundle();
                 Nostragamus.getInstance().getServerDataManager().setMatchInfo(match);
-                bundle.putString(BundleKeys.MATCH_LIST, BundleKeys.MATCH_LIST);
+                bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
                 bundle.putString(BundleKeys.SCREEN, Constants.ScreenNames.PROFILE);
 
                 if(null != match.getSportId()) {
@@ -307,8 +307,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     );
 
                     if(null != mChallengeInfo) {
-                        Nostragamus.getInstance().getServerDataManager().setChallengeInfo(mChallengeInfo);
-                       // bundle.putParcelable(BundleKeys.CHALLENGE_INFO, Parcels.wrap(mChallengeInfo));
+                        //Nostragamus.getInstance().getServerDataManager().setChallengeInfo(mChallengeInfo);
+                       bundle.putParcelable(BundleKeys.CHALLENGE_INFO, Parcels.wrap(mChallengeInfo));
                     }
                     navigateToPrediction(context, bundle);
                     break;

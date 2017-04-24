@@ -187,21 +187,22 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         String questionContext = question.getQuestionContext();
         viewHolder.tvContext.setText(Html.fromHtml(questionContext));
-        viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
 
-        CharSequence text = viewHolder.tvContext.getText();
-        if (text instanceof Spannable) {
-            int end = text.length();
-            Spannable sp = (Spannable) viewHolder.tvContext.getText();
-            URLSpan[] urls = sp.getSpans(0, end, URLSpan.class);
-            SpannableStringBuilder style = new SpannableStringBuilder(text);
-            style.clearSpans();//should clear old spans
-            for (URLSpan url : urls) {
-                LinkSpan click = new LinkSpan(url.getURL());
-                style.setSpan(click, sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-            viewHolder.tvContext.setText(style);
-        }
+//        viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
+//
+//        CharSequence text = viewHolder.tvContext.getText();
+//        if (text instanceof Spannable) {
+//            int end = text.length();
+//            Spannable sp = (Spannable) viewHolder.tvContext.getText();
+//            URLSpan[] urls = sp.getSpans(0, end, URLSpan.class);
+//            SpannableStringBuilder style = new SpannableStringBuilder(text);
+//            style.clearSpans();//should clear old spans
+//            for (URLSpan url : urls) {
+//                LinkSpan click = new LinkSpan(url.getURL());
+//                style.setSpan(click, sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//            }
+//            viewHolder.tvContext.setText(style);
+//        }
 
         updatePowerUpDetails(viewHolder, question);
 

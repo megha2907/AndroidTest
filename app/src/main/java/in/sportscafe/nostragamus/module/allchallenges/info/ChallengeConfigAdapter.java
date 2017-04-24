@@ -70,15 +70,28 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + " / " + memberDetails.getMaxCount());
             holder.mTvSlotsLeft.setText(String.valueOf(memberDetails.getMaxCount() - memberDetails.getJoinedCount()) + " SLOTS LEFT");
 
+//            if(memberDetails.getJoinedCount() >= memberDetails.getMaxCount()){
+//                holder.mBtnJoin.setText("Full");
+//                holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.btn_not_played_bg));
+//                holder.mBtnJoin.setClickable(false);
+//            }else {
+//                holder.mBtnJoin.setText("Join");
+//                holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.paid_join_btn_bg));
+//                holder.mBtnJoin.setClickable(true);
+//            }
+
             if(memberDetails.getJoinedCount() >= memberDetails.getMaxCount()){
-                holder.mBtnJoin.setText("Full");
-                holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.btn_not_played_bg));
+                holder.mBtnJoin.setText("Slots Filled");
+                holder.mBtnJoin.setTextSize(10);
+                holder.mBtnJoin.setAlpha((float) 0.7);
                 holder.mBtnJoin.setClickable(false);
             }else {
                 holder.mBtnJoin.setText("Join");
-                holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.paid_join_btn_bg));
+                holder.mBtnJoin.setTextSize(12);
+                holder.mBtnJoin.setAlpha((float) 1);
                 holder.mBtnJoin.setClickable(true);
             }
+
 
         }
 

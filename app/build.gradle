@@ -33,7 +33,7 @@ android {
         defaultConfig {
             applicationId "in.sportscafe.nostragamus"
             minSdkVersion 19
-            targetSdkVersion 25
+            targetSdkVersion 23
             versionCode vCode
             versionName vName
         }
