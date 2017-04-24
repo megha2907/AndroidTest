@@ -45,9 +45,31 @@ public class Nostragamus extends Application {
     private static final boolean mDebuggable = BuildConfig.DEBUG;
 
     private static Nostragamus sNostragamus;
+    private ServerDataManager mServerDataManager;
 
-    public static Nostragamus getInstance() {
+    private Nostragamus () {
+        // Assigning the Nostragamus instance
+        sNostragamus = Nostragamus.this;
+
+        mServerDataManager = new ServerDataManager();
+    }
+
+    public static synchronized Nostragamus getInstance() {
         return sNostragamus;
+    }
+
+    /**
+     * Used for app-session data tracking (Fetched from server)
+     *
+     * Maintains references to all freshly/recently fetched server data.
+     *
+     * @return
+     */
+    public ServerDataManager getServerDataManager() {
+        if (mServerDataManager == null) {
+            mServerDataManager = new ServerDataManager();
+        }
+        return mServerDataManager;
     }
 
     private static final long ONE_HOUR_IN_MILLIS = 60 * 60 * 1000;
@@ -55,9 +77,9 @@ public class Nostragamus extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+/*
         // Assigning the Nostragamus instance
-        sNostragamus = Nostragamus.this;
+        sNostragamus = Nostragamus.this;*/
 
         // Initializing the SportsCafe Uncaught Exception handler
         initCrashHandler(mDebuggable);

@@ -86,8 +86,11 @@ public class AllChallengesApiModelImpl {
                             return;
                         }
 
-                        if (response.isSuccessful()) {
+                        if (response.isSuccessful() && response.body() != null) {
                             mAllChallenges = response.body().getChallenges();
+
+                            saveChallengesToServerDataManager(mAllChallenges);
+
                             if (mAllChallenges.isEmpty()) {
                                 mAllChallengesApiModelListener.onEmpty();
                             } else {
@@ -100,6 +103,10 @@ public class AllChallengesApiModelImpl {
                     }
                 }
         );
+    }
+
+    private void saveChallengesToServerDataManager(List<Challenge> challenges) {
+        Nostragamus.getInstance().getServerDataManager().setChallengeList(challenges);
     }
 
     private void categorizeChallenges() {
