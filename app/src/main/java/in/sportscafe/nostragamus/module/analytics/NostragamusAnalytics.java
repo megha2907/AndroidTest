@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.analytics;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.amplitude.api.Amplitude;
 import com.amplitude.api.AmplitudeClient;
@@ -10,12 +11,14 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.PayloadBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.EventListener;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
@@ -23,6 +26,7 @@ import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsCategory;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.UserProperties;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 
 
@@ -378,11 +382,30 @@ public class NostragamusAnalytics {
         }
     }
 
-    public void setUserProperties(int groupCount) {
+    /**
+     * Every time UserProperties are set, the recent one will be used to send with next tracking logs
+     * If Null / empty value is set for property, then it won't be sent
+     */
+    public void setUserProperties() {
         if (null != mAmplitude) {
             try {
                 JSONObject userProperties = new JSONObject();
-                userProperties.put(UserProperties.NUMBER_OF_GROUPS, groupCount);
+
+                if (BuildConfig.IS_PAID_VERSION) {
+                    userProperties.put(UserProperties.PRO_APP, "yes");
+                }else {
+                    userProperties.put(UserProperties.PRO_APP,"No");
+                }
+
+                String channel = NostragamusDataHandler.getInstance().getInstallChannel();
+                if (!TextUtils.isEmpty(channel)) {
+                    userProperties.put(UserProperties.REFERRAL_CHANNEL, channel);
+                }
+                String campaign = NostragamusDataHandler.getInstance().getInstallReferralCampaign();
+                if (!TextUtils.isEmpty(campaign)) {
+                    userProperties.put(UserProperties.REFERRAL_CAMPAIGN, campaign);
+                }
+
                 mAmplitude.setUserProperties(userProperties);
             } catch (JSONException e) {
                 e.printStackTrace();

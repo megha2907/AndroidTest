@@ -288,6 +288,7 @@
                 android:layout_gravity="center_horizontal|top"
                 android:background="@color/profile_tab_color"
                 android:elevation="@dimen/dp_0"
+                app:tabMode="scrollable"
                 app:layout_collapseMode="pin"
                 app:selected_typeface="lato_bold"
                 app:tabIndicatorColor="@color/tabcolor"

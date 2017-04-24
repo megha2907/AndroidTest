@@ -52,15 +52,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     }
 
     @Override
-    public void onClickDone(String nickname, boolean isDisclaimerChecked) {
+    public void onClickDone(String nickname) {
         if (nickname.equals("")) {
             mEditProfileView.setNicknameEmpty();
         } else {
-            if (BuildConfig.IS_PAID_VERSION && isDisclaimerChecked) {
-                mEditProfileModel.updateProfile(nickname);
-            } else {
-                mEditProfileView.disclaimerConfirmationRequired();
-            }
+            mEditProfileModel.updateProfile(nickname);
         }
 
         NostragamusAnalytics.getInstance().trackEditProfile(AnalyticsActions.OTHERS, AnalyticsLabels.UPDATE);

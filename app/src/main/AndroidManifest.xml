@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="in.sportscafe.nostragamus">
 
     <!-- To access the internet -->
@@ -11,10 +12,10 @@
     <!-- Start MoEngage Permissions -->
     <!-- If you have specified applicationId in build.gradle file then replace [YOUR_PACKAGE_NAME] with applicationId -->
     <permission
-        android:name="in.sportscafe.nostragamus.permission.C2D_MESSAGE"
+        android:name="in.sportscafe.nostragamus${buildTypeSuffix}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="in.sportscafe.nostragamus.permission.C2D_MESSAGE" />
+    <uses-permission android:name="in.sportscafe.nostragamus${buildTypeSuffix}.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -25,6 +26,7 @@
         android:name=".Nostragamus"
         android:allowBackup="true"
         android:icon="@drawable/launcher_logo"
+        tools:node="replace"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
@@ -200,6 +202,10 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
+        <activity
+            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -209,12 +215,12 @@
         <activity
             android:name="com.moengage.addon.inbox.MoEInboxActivity"
             android:label="Notification"
-            android:parentActivityName=".module.home.HomeActivity">
+            android:parentActivityName="in.sportscafe.nostragamus${buildTypeSuffix}.module.home.HomeActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="in.sportscafe.nostragamus.module.home.HomeActivity" />
+                android:value="in.sportscafe.nostragamus${buildTypeSuffix}.module.home.HomeActivity" />
         </activity>
 
         <!-- MOENGAGE RECEIVER FOR RECEIVING APP UPDATE INTENT -->
@@ -223,15 +229,48 @@
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
 
                 <data
-                    android:path="in.sportscafe.nostragamus"
+                    android:path="in.sportscafe.nostragamus${buildTypeSuffix}"
                     android:scheme="package" />
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name="com.moengage.pushbase.activities.PushTracker"
+            android:configChanges="orientation|screenSize"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <meta-data
+                android:name="showInApp"
+                android:value="false"/>
+        </activity>
+        <activity
+            android:name="com.moengage.pushbase.activities.SnoozeTracker"
+            android:configChanges="orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=":NotificationDialog"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <meta-data
+                android:name="showInApp"
+                android:value="false"/>
+        </activity>
+
+        <service
+            android:name="com.moengage.pushbase.push.MoEPushWorker"
+            android:exported="false"/>
+        <receiver
+            android:name="com.moengage.core.MoEAlarmReceiver"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <service
+            android:name="com.moe.pushlibrary.MoEWorker"
+            android:exported="false"/>
+
         <!-- The underlying content provider -->
         <provider
             android:name="com.moe.pushlibrary.providers.MoEProvider"
-            android:authorities="in.sportscafe.nostragamus.moengage.provider"
+            android:authorities="in.sportscafe.nostragamus${buildTypeSuffix}.moengage.provider"
             android:exported="false" />
 
         <!-- MANDATORY FIELD: APP ID AS SEEN ON MOENGAGE DASHBOARD APP SETTINGS PAGE -->
@@ -254,6 +293,10 @@
             android:name="NOTIFICATION_LARGE_ICON"
             android:value="@drawable/notification_large_icon" />
 
+        <!--        <meta-data
+                    android:name="SKIP_GCM_REGISTRATION"
+                    android:value="true" />-->
+
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
@@ -261,7 +304,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="in.sportscafe.nostragamus" />
+                <category android:name="in.sportscafe.nostragamus${buildTypeSuffix}" />
             </intent-filter>
         </receiver>
 
@@ -351,7 +394,7 @@
             android:name=".module.common.CustomInstallListener"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
+                <action android:name="com.android.vending.INSTALL_REFERRER" />t
             </intent-filter>
         </receiver>
 

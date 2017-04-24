@@ -522,7 +522,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         return commentary;
     }
 
-    private class LinkSpan extends URLSpan {
+    public class LinkSpan extends URLSpan {
 
         private LinkSpan(String url) {
             super(url);

@@ -5,15 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.jeeva.android.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +31,6 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 
 /**
  * Created by Jeeva on 17/02/17.
@@ -39,7 +41,7 @@ public class AllChallengesFragment extends NostragamusFragment
 
     private List<ChallengeFragment> mChallengeFragmentList = new ArrayList<>();
 
-    private ViewPagerAdapter mViewPagerAdapter;
+    private ChallengeViewPagerAdapter mViewPagerAdapter;
 
     private AllChallengesApiModelImpl mAllChallengesApiModel;
 
@@ -53,8 +55,10 @@ public class AllChallengesFragment extends NostragamusFragment
 
     private int LIST_VIEW = 1;
 
+
     public static AllChallengesFragment newInstance() {
-        return new AllChallengesFragment();
+        AllChallengesFragment fragment = new AllChallengesFragment();
+        return fragment;
     }
 
     @Nullable
@@ -154,27 +158,40 @@ public class AllChallengesFragment extends NostragamusFragment
     }
 
     private void createAdapter() {
-        mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        mViewPagerAdapter = new ChallengeViewPagerAdapter(getChildFragmentManager(), getContext());
 
         ChallengeFragment challengeFragment;
         List<Challenge> challenges = mAllChallengesApiModel.getCompletedChallenges();
         int count = 0;
         boolean completedAvailable = false;
+        boolean shouldShowNewTab = false;
+
         if (challenges.size() > 0) {
             completedAvailable = true;
-            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(challenges, count++), "Completed");
+            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(challenges, count++, -1), Constants.ChallengeTabs.COMPLETED);
             mChallengeFragmentList.add(challengeFragment);
         }
 
-        challenges = mAllChallengesApiModel.getInPlayChallenges();
-        if (challenges.size() > 0) {
-            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(challenges, count++), "In Play");
+        List<Challenge> inPlayChallenges = mAllChallengesApiModel.getInPlayChallenges();
+        if (inPlayChallenges.size() > 0) {
+            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(inPlayChallenges, count++, -1), Constants.ChallengeTabs.IN_PLAY);
             mChallengeFragmentList.add(challengeFragment);
         }
 
-        challenges = mAllChallengesApiModel.getNewChallenges();
-        if (challenges.size() > 0) {
-            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(challenges, count++), "New");
+        List<Challenge> newChallenges = mAllChallengesApiModel.getNewChallenges();
+        if (newChallenges.size() > 0) {
+
+            int newChallengeIdFromNotification = -1;
+            Bundle args = getArguments();
+            if (args != null) {
+                newChallengeIdFromNotification = args.getInt(BundleKeys.NOTIFICATION_CHALLENGE_ID, -1);
+                shouldShowNewTab = args.getBoolean(BundleKeys.SHOULD_LAUNCH_NEW_TAB, false);
+                Log.d("Temp", "all challenge fragment : id " + newChallengeIdFromNotification +
+                        " newTab? : " + shouldShowNewTab);
+            }
+
+            challengeFragment = ChallengeFragment.newInstance(newChallenges, count++, newChallengeIdFromNotification);
+            mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.NEW);
             mChallengeFragmentList.add(challengeFragment);
         }
 
@@ -183,8 +200,7 @@ public class AllChallengesFragment extends NostragamusFragment
         viewPager.setAdapter(mViewPagerAdapter);
         viewPager.setOffscreenPageLimit(3);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
-        tabLayout.setupWithViewPager(viewPager);
+        setTabLayout(viewPager, inPlayChallenges.size(), newChallenges.size());
 
         if (count > 0) {
             mRlSwitch.setVisibility(View.VISIBLE);
@@ -193,6 +209,106 @@ public class AllChallengesFragment extends NostragamusFragment
                 viewPager.setCurrentItem(1);
             }
         }
+
+        /* If launched from notification, 'NEW' tab should be shown */
+        if (shouldShowNewTab) {
+            viewPager.setCurrentItem(2);
+        } else {
+            Log.d("Temp", "should not launch new tab");
+        }
+    }
+
+    /**
+     * Tab layout created dynamically (Custom tabs), any change in tabs or fragment would need change here.
+     * @param viewPager
+     * @param inPlayChallengeSize
+     * @param newChallengeSize
+     */
+    private void setTabLayout(CustomViewPager viewPager, int inPlayChallengeSize, int newChallengeSize) {
+        try {
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
+            tabLayout.setupWithViewPager(viewPager);
+            tabLayout.addOnTabSelectedListener(getTabListener());
+
+            if (mViewPagerAdapter != null) {
+                // Completed tab (should sync with addFragments in pagerAdapter)
+                TabLayout.Tab tab = tabLayout.getTabAt(0);
+                if (tab != null) {
+                    tab.setCustomView(mViewPagerAdapter.getTabView(0, false, 0));
+                }
+
+                // InPlay tab
+                TabLayout.Tab inPlayTab = tabLayout.getTabAt(1);
+                if (inPlayTab != null) {
+                    inPlayTab.setCustomView(mViewPagerAdapter.getTabView(1, true, inPlayChallengeSize));
+                }
+
+                // New tab
+                TabLayout.Tab newTab = tabLayout.getTabAt(2);
+                if (newTab != null) {
+                    newTab.setCustomView(mViewPagerAdapter.getTabView(2, true, newChallengeSize));
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @NonNull
+    private TabLayout.OnTabSelectedListener getTabListener() {
+        return new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab != null) {
+                    View tabView = tab.getCustomView();
+
+                    if (tabView != null) {
+                        TextView tv = (TextView) tabView.findViewById(R.id.text1);
+                        TextView msgTextView = (TextView) tabView.findViewById(R.id.msgCount);
+
+                        /* 'NEW' tab will always be in red irrespective of selection */
+                        if (tv.getText().toString().equalsIgnoreCase(Constants.ChallengeTabs.NEW)) {
+                            tv.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
+                            msgTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                            msgTextView.setBackgroundResource(R.drawable.challenge_tab_counter_bg);
+
+                        } else {
+                            tv.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                            msgTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                            msgTextView.setBackgroundResource(R.drawable.challenge_tab_counter_unselected);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                if (tab != null) {
+                    View tabView = tab.getCustomView();
+
+                    if (tabView != null) {
+                        TextView tv = (TextView) tabView.findViewById(R.id.text1);
+                        TextView msgTextView = (TextView) tabView.findViewById(R.id.msgCount);
+
+                        /* 'NEW' tab will always be in red irrespective of selection */
+                        if (tv.getText().toString().equalsIgnoreCase(Constants.ChallengeTabs.NEW)) {
+                            tv.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
+                            msgTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                            msgTextView.setBackgroundResource(R.drawable.challenge_tab_counter_bg);
+                        } else {
+                            tv.setTextColor(ContextCompat.getColor(getContext(), R.color.white_60));
+                            msgTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                            msgTextView.setBackgroundResource(R.drawable.challenge_tab_counter_unselected);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        };
     }
 
     @Override

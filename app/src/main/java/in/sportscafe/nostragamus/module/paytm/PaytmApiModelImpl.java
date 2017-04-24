@@ -48,16 +48,17 @@ public class PaytmApiModelImpl {
         }
 
         PaytmPGService paytmPGService = PaytmPGService.getStagingService();
+        if (mContext != null) {
+            paytmPGService.enableLog(mContext);
+        }
 
         if (BuildConfig.DEBUG) {
             com.jeeva.android.Log.d(TAG, "Debug enabled...");
-            if (mContext != null) {
-                paytmPGService.enableLog(mContext);
-            }
 
         } else {
-            com.jeeva.android.Log.d(TAG, "Production paytm servicec...");
+            com.jeeva.android.Log.d(TAG, "Production PG service...");
              /* NOTE: Production service results into real transaction which results into originally payment done. * */
+
             paytmPGService = PaytmPGService.getProductionService();
         }
 
@@ -157,7 +158,13 @@ public class PaytmApiModelImpl {
             response.setStatus(bundle.getString(Constants.PaytmSuccessResponseParamKeys.STATUS));
             response.setTransactionDate(bundle.getString(Constants.PaytmSuccessResponseParamKeys.TRANSACTION_DATE));
             response.setTransactionAmount(bundle.getString(Constants.PaytmSuccessResponseParamKeys.TRANSACTION_AMOUNT));
-            response.setJoinedChallengeInfo(MyWebService.getInstance().getObjectFromJson(bundle.getString(Constants.PaytmSuccessResponseParamKeys.JOINED_CHALLENGE_INFO), JoinedChallengeInfo.class));
+
+            /* Joined challenge info */
+            String joinedChallengeInfoStr = bundle.getString(Constants.PaytmSuccessResponseParamKeys.JOINED_CHALLENGE_INFO);
+            if (joinedChallengeInfoStr != null) {
+                JoinedChallengeInfo joinedChallengeInfo = MyWebService.getInstance().getObjectFromJson(joinedChallengeInfoStr, JoinedChallengeInfo.class);
+                response.setJoinedChallengeInfo(joinedChallengeInfo);
+            }
         }
 
         return response;

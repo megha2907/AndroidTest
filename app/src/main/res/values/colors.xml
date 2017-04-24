@@ -71,6 +71,7 @@
     <color name="cerulean">#11B0DE</color>
     <color name="grey">#404040</color>
     <color name="grey1">#222222</color>
+    <color name="grey3">#333333</color>
 
 
     <color name="white_70">#B3FFFFFF</color>
@@ -85,7 +86,8 @@
     <color name="challenge_join_bg">#04b554</color>
     <color name="paid_entry_tv_color">#22b573</color>
     <color name="free_entry_tv_color">#0071bd</color>
-    <color name="timer_color_bg">#0e3a59</color>
+    <color name="timer_color_bg">#0e3755</color>
+    <color name="games_left_color_bg">#0b2b44</color>
     <color name="rewards_btn_bg">#06ba64</color>
     <color name="switch_btn_color">#5E5E5E</color>
     <color name="sort_unselected_color">#212121</color>
@@ -122,6 +124,7 @@
     <color name="code_gray_1a">#1A1A1A</color>
     <color name="code_gray_12">#121212</color>
     <color name="scrollbar_indicator">#666666</color>
+    <color name="hyperlink_color">#29abe2</color>
 
     <color name="elephant">#13374D</color>
 

@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.allchallenges.info;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -40,7 +42,7 @@ import in.sportscafe.nostragamus.module.paytm.PaytmTransactionResponse;
  * Created by Jeeva on 28/02/17.
  */
 public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment implements ChallengeConfigsApiModelImpl.OnConfigsApiModelListener,
-        ChallengeConfigAdapter.OnConfigAccessListener, PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener {
+        ChallengeConfigAdapter.OnConfigAccessListener, PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener, View.OnClickListener {
 
     private static final String TAG = ChallengeConfigsDialogFragment.class.getSimpleName();
 
@@ -66,7 +68,11 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     private int mTitleHeight;
 
+    private int mExtraHeight;
+
     private int mMaxHeight;
+
+    private ImageView mBtnPopupClose;
 
     public static ChallengeConfigsDialogFragment newInstance(int requestCode, Challenge challenge) {
         Bundle bundle = new Bundle();
@@ -115,8 +121,11 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                 LinearLayoutManager.VERTICAL, false));
         this.mRcvConfigs.setHasFixedSize(true);
 
+        mBtnPopupClose = (ImageView)findViewById(R.id.popup_cross_btn);
+
         mTitleHeight = getResources().getDimensionPixelSize(R.dimen.dp_42);
         mMaxHeight = getResources().getDimensionPixelSize(R.dimen.dp_360);
+        mExtraHeight = getResources().getDimensionPixelSize(R.dimen.dp_80);
     }
 
     private void getConfigs() {
@@ -134,8 +143,8 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                 if (null != mChallengeDetailsBundle) {
                     mDismissListener.onDismiss(OPEN_JOINED_CHALLENGE_DIALOG, mChallengeDetailsBundle);
                 }
-            }else if(mOpenDownloadDialog){
-                mDismissListener.onDismiss(OPEN_DOWNLOAD_APP_DIALOG,null);
+            } else if (mOpenDownloadDialog) {
+                mDismissListener.onDismiss(OPEN_DOWNLOAD_APP_DIALOG, null);
             }
         }
         super.onDismiss(dialog);
@@ -146,9 +155,11 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         mConfigAdapter = createAdapter(configs);
         mRcvConfigs.setAdapter(mConfigAdapter);
 
-
         findViewById(R.id.configs_ll_title).setVisibility(View.VISIBLE);
-        ((TextView) findViewById(R.id.configs_tv_challenge_name)).setText(mChallenge.getName()+" - Pick contest");
+        ((TextView) findViewById(R.id.configs_tv_challenge_name)).setText(mChallenge.getName() + " - Pick contest");
+        mBtnPopupClose.setVisibility(View.VISIBLE);
+        mBtnPopupClose.setOnClickListener(this);
+
     }
 
     @Override
@@ -184,11 +195,11 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         if (BuildConfig.IS_PAID_VERSION) {
             ChallengeConfig challengeConfig = mConfigAdapter.getItem(position);
             generateOrderAndProceedToJoin(challengeConfig);
-        }else {
-            if (mConfigAdapter.getItem(position).isFreeEntry()){
+        } else {
+            if (mConfigAdapter.getItem(position).isFreeEntry()) {
                 ChallengeConfig challengeConfig = mConfigAdapter.getItem(position);
                 generateOrderAndProceedToJoin(challengeConfig);
-            }else {
+            } else {
                 mOpenDownloadDialog = true;
                 dismissThisDialog();
             }
@@ -246,18 +257,22 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         mRcvConfigs.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mTitleHeight = getResources().getDimensionPixelSize(R.dimen.dp_42);
 
                 int configsHeight;
-                if (mRcvConfigs.getAdapter().getItemCount()>=3) {
-                     configsHeight = mMaxHeight + mTitleHeight;
-                }else {
-                    configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight;
+                if (mRcvConfigs.getAdapter().getItemCount() >= 3) {
+                    configsHeight = mMaxHeight + mTitleHeight;
+                } else {
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight+ mExtraHeight;
+                    }else {
+                        configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight + mExtraHeight;
+                    }
                 }
                 Log.d("ChallengeConfigsDialogFragment", "MaxHeight --> " + mMaxHeight + ", " + "ScrollHeight --> " + configsHeight);
                 if (configsHeight > mMaxHeight) {
                     configsHeight = mMaxHeight;
                 }
+
 
                 WindowManager.LayoutParams attributes = getDialog().getWindow().getAttributes();
                 getDialog().getWindow().setLayout(attributes.width, configsHeight);
@@ -350,7 +365,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                 /* Server will arrange all joining, No need of any api here.  */
 
                 Bundle bundle = new Bundle();
-                bundle.putParcelable(Constants.BundleKeys.JOINED_CHALLENGE_INFO,Parcels.wrap(successResponse.getJoinedChallengeInfo()));
+                bundle.putParcelable(Constants.BundleKeys.JOINED_CHALLENGE_INFO, Parcels.wrap(successResponse.getJoinedChallengeInfo()));
                 onJoinActionSuccess(bundle);
             }
 
@@ -408,4 +423,12 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         }, 200);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.popup_cross_btn:
+                dismiss();
+                break;
+        }
+    }
 }

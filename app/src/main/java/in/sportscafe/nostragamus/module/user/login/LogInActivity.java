@@ -24,8 +24,11 @@ import com.google.android.gms.common.api.Status;
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 
+import org.parceler.Parcel;
+
 import java.io.IOException;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -57,6 +60,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     private String persongender;
     private String profileUrl;
     private String personPhoto;
+    private String oAuthServerId="";
 
 
     @Override
@@ -78,9 +82,11 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         mLogInPresenter = LogInPresenterImpl.newInstance(LogInActivity.this);
         mLogInPresenter.onCreateLogIn(getIntent().getExtras());
 
+
     }
 
     private void initGoogle() {
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestScopes(new Scope("https://www.googleapis.com/auth/plus.login"))
@@ -128,6 +134,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     @Override
     public void navigateToEditProfile() {
         Intent intent = new Intent(this, EditProfileActivity.class);
+        intent.putExtra(Constants.BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, EditProfileActivity.ILaunchedFrom.LOG_IN_ACTIVITY);
         Bundle bundle = new Bundle();
         bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);

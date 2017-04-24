@@ -33,6 +33,7 @@ public class SplashActivity extends Activity {
         Nostragamus.getInstance().startPeriodJobs();
 
         NostragamusAnalytics.getInstance().trackAppOpening(AnalyticsLabels.LAUNCHER);
+        NostragamusAnalytics.getInstance().setUserProperties();
     }
 
     @Override
@@ -56,6 +57,7 @@ public class SplashActivity extends Activity {
                     if (null != linkProperties) {
                         Log.d("Install Channel", linkProperties.getChannel() + "");
                         nostragamusDataHandler.setInstallChannel(linkProperties.getChannel());
+                        nostragamusDataHandler.setInstallReferralCampaign(linkProperties.getCampaign());
                     }
 
                     String path = metadata.get("$android_deeplink_path");

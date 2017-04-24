@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -34,6 +35,14 @@ import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
  */
 public class EditProfileActivity extends NostragamusActivity implements EditProfileView,
         View.OnClickListener {
+
+    public interface ILaunchedFrom {
+        int HOME_ACTIVITY = 1;
+        int GET_STARTED_ACTIVITY = 2;
+        int LOG_IN_ACTIVITY = 3;
+        int PROFILE_FRAGMENT = 4;
+        int SETTINGS_ACTIVITY = 5;
+    }
 
     private EditText mEtName;
 
@@ -59,6 +68,11 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private ImageButton mBackBtn;
 
+    /**
+     * If only On-board (HomeActivity) && paid version, then only true
+     */
+    private boolean mIsOnBoardFlow = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +96,26 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
             mEtNickName.getEditText().setSelection(editName.length());
         }
 
+        initOnBoardFlow();
+
     }
 
+    /**
+     * If only on-board flow, and only paid version, then show age-disclaimer; else not
+     */
+    private void initOnBoardFlow() {
+        Intent thisIntent = getIntent();
+        if (thisIntent != null && thisIntent.hasExtra(Constants.BundleKeys.EDIT_PROFILE_LAUNCHED_FROM)) {
+            int thisLaunchedFrom = thisIntent.getIntExtra(Constants.BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, -1);
+            if (thisLaunchedFrom == ILaunchedFrom.HOME_ACTIVITY) {
+
+                if (BuildConfig.IS_PAID_VERSION) {
+                    mIsOnBoardFlow = true;
+                    mCbProfileDisclaimer.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
 
     private void initListener() {
 
@@ -118,12 +150,23 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.edit_btn_done:
-                mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()), mCbProfileDisclaimer.isChecked());
+                onUpdateButtonClicked();
                 break;
 
         }
     }
 
+    private void onUpdateButtonClicked() {
+        if (mIsOnBoardFlow) {
+            if (!mCbProfileDisclaimer.isChecked()) {
+                showMessage(Constants.Alerts.EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED);
+            } else {
+                mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()));
+            }
+        } else {
+            mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()));
+        }
+    }
 
     @Override
     public void setProfileImage(String imageUrl) {
@@ -151,13 +194,10 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     public void navigateToHome(boolean fromHome) {
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        if(fromHome) {
+        /*if(fromHome) {
             intent.putExtra(BundleKeys.OPEN_PROFILE, "0");
-        }
-        if (getIntent() != null) {
-            /* To launch paymentScreen after updating editProfile, some params are in bundle to identify */
-            intent.putExtras(getIntent().getExtras());
-        }
+        }*/
+
         startActivity(intent);
         finish();
     }
@@ -175,9 +215,10 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void changeViewforProfile() {
-        mToolbarTitle.setText("Profile");
+        mToolbarTitle.setText("Update Your Profile");
         mBtnUpdateDone.setText("UPDATE");
-        mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
+
+        /*mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
         mtoolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -185,7 +226,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
                         finish();
                     }
                 }
-        );
+        );*/
     }
 
     @Override
@@ -202,12 +243,6 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     @Override
     public void navigateToAddPhoto(int requestCode) {
         startActivityForResult(new Intent(this, AddPhotoActivity.class), requestCode);
-    }
-
-    @Override
-    public void disclaimerConfirmationRequired() {
-//        mCbProfileDisclaimer.setError(Constants.Alerts.EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED);
-        showMessage(Constants.Alerts.EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED);
     }
 
     public void showImagePopup(View view) {
@@ -240,5 +275,14 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     @Override
     public String getScreenName() {
         return Constants.ScreenNames.PROFILE_EDIT;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mIsOnBoardFlow) {
+            showMessage(Constants.Alerts.FORCE_UPDATE_PROFILE_MSG_FOR_PAID_VERSION);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

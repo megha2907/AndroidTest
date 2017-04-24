@@ -77,33 +77,37 @@ android {
     productFlavors {
 
         stage {
+            manifestPlaceholders = [ buildTypeSuffix:"" ]
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
         stagePaid {
-//            applicationIdSuffix ".paid"
-
-            resValue "string", "app_name", "Nostragamus"
+            applicationIdSuffix ".pro"
+            manifestPlaceholders = [ buildTypeSuffix:".pro" ]
+            resValue "string", "app_name", "Nostra Pro"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
 
         production {
+            manifestPlaceholders = [ buildTypeSuffix:"" ]
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
         productionPaid {
-//            applicationIdSuffix ".paid"
-
-            resValue "string", "app_name", "Nostragamus"
+            applicationIdSuffix ".pro"
+            manifestPlaceholders = [ buildTypeSuffix:".pro" ]
+            resValue "string", "app_name", "Nostra Pro"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
 
         local {
+            manifestPlaceholders = [ buildTypeSuffix:"" ]
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
 
         dev {
+            manifestPlaceholders = [ buildTypeSuffix:"" ]
             resValue "string", "app_name", "Nostragamus Dev"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }

@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,7 +36,8 @@ import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 /**
  * Created by Jeeva on 16/6/16.
  */
-public class HomeActivity extends NostragamusActivity implements OnHomeActionListener, OnDismissListener {
+public class HomeActivity extends NostragamusActivity implements OnHomeActionListener,
+        OnDismissListener, View.OnClickListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -41,6 +45,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     private static final int REFRESH_CHALLENGES_CODE = 42;
     private static final int OPEN_JOINED_CHALLENGE_DIALOG_CODE = 53;
     private static final int OPEN_DOWNLOAD_APP_DIALOG = 54;
+    public static final int DOUBLE_BACK_PRESSED_DELAY_ALLOWED = 3000;
 
     private int mProfileTabPosition = 0;
 
@@ -50,10 +55,13 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private Fragment mCurrentFragment;
 
+    private boolean mIsFirstBackPressed = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        initViews();
 
         if (null == NostragamusDataHandler.getInstance().getUserId()) {
             navigateToLogIn();
@@ -64,7 +72,10 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
-            if (bundle.containsKey(BundleKeys.OPEN_PROFILE)) {
+            if (bundle.containsKey(Constants.NotificationKeys.FROM_NOTIFICATION)) {
+                handleNotification(bundle);
+
+            } else if (bundle.containsKey(BundleKeys.OPEN_PROFILE)) {
                 mProfileTabPosition = Integer.parseInt(bundle.getString(BundleKeys.OPEN_PROFILE));
                 showProfile();
                 return;
@@ -76,7 +87,31 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 showLeaderBoards();
             }
         }
-        showFirstTab();
+        showFirstTab(-1);
+    }
+
+    private void handleNotification(Bundle bundle) {
+        com.jeeva.android.Log.d("Temp", "From Notification : " + bundle);
+
+        boolean isFromNotification = bundle.getBoolean(Constants.NotificationKeys.FROM_NOTIFICATION, false);
+        if (isFromNotification) {
+            String challengeIdStr = bundle.getString(Constants.NotificationKeys.NEW_CHALLENGE_ID, "");
+
+            if (!TextUtils.isEmpty(challengeIdStr)) {
+                int challengeId = Integer.parseInt(challengeIdStr);
+                if (challengeId > 0) {
+                    com.jeeva.android.Log.d("Temp", "New challenge Id " + challengeId);
+                    showFirstTab(challengeId);
+                }
+            }
+        }
+    }
+
+    private void initViews() {
+        findViewById(R.id.home_rl_challenges).setOnClickListener(this);
+        findViewById(R.id.home_rl_group).setOnClickListener(this);
+        findViewById(R.id.home_rl_leaderboard).setOnClickListener(this);
+        findViewById(R.id.home_rl_profile).setOnClickListener(this);
     }
 
     /**
@@ -112,19 +147,19 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     }
 
     private void showProfile() {
-        onClickTab(findViewById(R.id.home_rl_profile));
+        onClickTab(findViewById(R.id.home_rl_profile), -1);
     }
 
     private void showLeaderBoards() {
-        onClickTab(findViewById(R.id.home_rl_leaderboard));
+        onClickTab(findViewById(R.id.home_rl_leaderboard), -1);
     }
 
     private void showGroups() {
-        onClickTab(findViewById(R.id.home_rl_group));
+        onClickTab(findViewById(R.id.home_rl_group), -1);
     }
 
     private void showChallenges() {
-        onClickTab(findViewById(R.id.home_rl_challenges));
+        onClickTab(findViewById(R.id.home_rl_challenges), -1);
     }
 
 //    private void getunReadNotificationCount() {
@@ -150,20 +185,26 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 //        }
 //    }
 
-    public void onClickTab(View view) {
+    public void onClickTab(View view, int newChallengeIdAsSelected) {
         switch (view.getId()) {
+
             case R.id.home_rl_challenges:
                 setSelected(findViewById(R.id.home_ibtn_challenge), findViewById(R.id.home_tv_challenge));
-                loadFragment(mCurrentFragment = AllChallengesFragment.newInstance());
+                mCurrentFragment = AllChallengesFragment.newInstance();
+                mCurrentFragment.setArguments(getArgsForAllChallengeFragment(newChallengeIdAsSelected));
+                loadFragment(mCurrentFragment);
                 break;
+
             case R.id.home_rl_group:
                 setSelected(findViewById(R.id.home_ibtn_group), findViewById(R.id.home_tv_group));
                 loadFragment(mCurrentFragment = AllGroupsFragment.newInstance());
                 break;
+
             case R.id.home_rl_leaderboard:
                 setSelected(findViewById(R.id.home_ibtn_leaderboard), findViewById(R.id.home_tv_leaderboard));
                 loadFragment(mCurrentFragment = new LBLandingFragment());
                 break;
+
             case R.id.home_rl_profile:
                 setSelected(findViewById(R.id.home_ibtn_profile), findViewById(R.id.home_tv_profile));
 
@@ -176,6 +217,17 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 //                mProfileTabPosition = 0;
                 break;
         }
+    }
+
+    @NonNull
+    private Bundle getArgsForAllChallengeFragment(int newChallengeIdAsSelected) {
+        Bundle args = new Bundle();
+        if (newChallengeIdAsSelected >= 0) {
+            com.jeeva.android.Log.d("Temp", "Adding ne challenge id");
+            args.putInt(BundleKeys.NOTIFICATION_CHALLENGE_ID, newChallengeIdAsSelected);
+            args.putBoolean(BundleKeys.SHOULD_LAUNCH_NEW_TAB, true);
+        }
+        return args;
     }
 
     private void setSelected(View selImg, View selText) {
@@ -219,8 +271,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fl_holder, fragment).commit();
     }
 
-    private void showFirstTab() {
-        onClickTab(findViewById(R.id.home_rl_challenges));
+    private void showFirstTab(int newChallengeIdAsSelected) {
+        onClickTab(findViewById(R.id.home_rl_challenges), newChallengeIdAsSelected);
     }
 
     private void navigateToLogIn() {
@@ -250,18 +302,21 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             public void onSuccessGetUpdatedUserInfo(UserInfo userInfo) {
                 if (userInfo != null) {
 
-                    if (!BuildConfig.IS_PAID_VERSION && !NostragamusDataHandler.getInstance().isFirstTimeUser()) {
+                    if (BuildConfig.IS_PAID_VERSION) {
+                        com.jeeva.android.Log.d(TAG, "[onBoard] Paid app..");
+                        performOnBoardFlow(userInfo);
 
-                        com.jeeva.android.Log.d(TAG, "[onBoard] Free App & Not a first time user..");
-                        checkPaymentInfoProvidedOrRequired(userInfo);
                     } else {
-
-                        if (!NostragamusDataHandler.getInstance().isProfileDisclaimerAccepted()) {
-                            launchEditProfile();
-                            com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
-                        } else {
+                        /**
+                         * For Free version, if user is NOT new (existing) then don't show UpdateProfile
+                         * else show
+                         */
+                        if (!NostragamusDataHandler.getInstance().isFirstTimeUser()) {
                             checkPaymentInfoProvidedOrRequired(userInfo);
-                            com.jeeva.android.Log.d(TAG, "[onBoard] Launch PaymentDetails(if required) for once");
+                            com.jeeva.android.Log.d(TAG, "[onBoard] Free App & Not a first time user..");
+                        } else {
+                            performOnBoardFlow(userInfo);
+                            com.jeeva.android.Log.d(TAG, "[onBoard] Free App & first time user..");
                         }
                     }
                 } else {
@@ -283,6 +338,16 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         };
     }
 
+    private void performOnBoardFlow(UserInfo userInfo) {
+        if (!NostragamusDataHandler.getInstance().isProfileDisclaimerAccepted()) {
+            launchEditProfile();
+            com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
+        } else {
+            checkPaymentInfoProvidedOrRequired(userInfo);
+            com.jeeva.android.Log.d(TAG, "[onBoard] Launch PaymentDetails(if required) for once");
+        }
+    }
+
     /**
      * If disclaimer not accepted, then only show editProfile
      */
@@ -290,10 +355,15 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         Intent intent = new Intent(this, EditProfileActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("screen", BundleKeys.HOME_SCREEN);
+        intent.putExtra(BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, EditProfileActivity.ILaunchedFrom.HOME_ACTIVITY);
         intent.putExtras(bundle);
         startActivity(intent);
     }
 
+    /**
+     * super.onBackPressed() is called in side handleDoubleBackPressLogicToExit().
+     * Here no where required to call the same method.
+     */
     @Override
     public void onBackPressed() {
         if (null != mCurrentFragment
@@ -301,9 +371,30 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 && ((LBLandingFragment) mCurrentFragment).onBack()) {
             return;
         } else if (mCurrentFragment instanceof AllChallengesFragment) {
+            handleDoubleBackPressLogicToExit();
+        } else {
+            showFirstTab(-1);
+        }
+    }
+
+    /**
+     * Application exit happens only when user clicks back button twice within specified time interval
+     */
+    private void handleDoubleBackPressLogicToExit() {
+        if (mIsFirstBackPressed) {
             super.onBackPressed();
         } else {
-            showFirstTab();
+
+            showMessage(getString(R.string.double_back_press_msg));
+            mIsFirstBackPressed = true;
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mIsFirstBackPressed = false;
+                }
+            }, DOUBLE_BACK_PRESSED_DELAY_ALLOWED);
         }
     }
 
@@ -354,5 +445,26 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
         ChallengeJoinDialogFragment.newInstance(REFRESH_CHALLENGES_CODE, "JOINED CHALLENGE!", bundle)
                 .show(fragmentManager, "challenge_info");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.home_rl_challenges:
+                showFirstTab(-1);
+                break;
+
+            case R.id.home_rl_group:
+                showGroups();
+                break;
+
+            case R.id.home_rl_leaderboard:
+                showLeaderBoards();
+                break;
+
+            case R.id.home_rl_profile:
+                showProfile();
+                break;
+        }
     }
 }

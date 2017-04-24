@@ -19,6 +19,8 @@ public interface Constants {
     interface NotificationKeys {
         String RESULTS_LEADERBOARD = "results_leaderboard";
         String FROM_NOTIFICATION = "fromNotification";
+
+        String NEW_CHALLENGE_ID = "challenge_id";
     }
 
     interface SharedKeys {
@@ -84,6 +86,7 @@ public interface Constants {
         String DOWNLOAD_PAID_APP = "downloadPaidApp";
         String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
         String IS_PROFILE_DISCLAIMER_ACCEPTED = "isProfileDisclaimerAccepted";
+        String INSTALL_REFERRAL_CAMPAIGN_KEY = "installReferralCampaignKey";
     }
 
     interface Alerts {
@@ -172,7 +175,8 @@ public interface Constants {
         String DEFAULT_SHARE_MESSAGE = "Use paste, If you want to use the default share message!";
         String POLL_LIST_EMPTY = "No polls";
         String NOT_FREE_CHALLENGE = "Please use full version for the paid challenges";
-        String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Click on the check box to proceed";
+        String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Oops! Select the checkbox to proceed as if you do not meet these restrictions, you are not allowed to play the full version of the game";
+        String FORCE_UPDATE_PROFILE_MSG_FOR_PAID_VERSION = "Please update your profile";
 
         /*--- Paytm Msg ---*/
         String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";
@@ -265,6 +269,9 @@ public interface Constants {
         String JOINED_CHALLENGE_INFO = "joinedChallenegInfo";
         String OPEN_LEADERBOARD = "openLeaderboard";
         String USER_PAYMENT_INFO_PARCEL = "userPaymentInfoParcel";
+        String EDIT_PROFILE_LAUNCHED_FROM = "editProfileLaunchedFrom";
+        String NOTIFICATION_CHALLENGE_ID = "notificationChallengeId";
+        String SHOULD_LAUNCH_NEW_TAB = "shouldLaunchNewTab";
     }
 
     interface ParcelableKeys {
@@ -382,6 +389,8 @@ public interface Constants {
         String APPLIED = "Applied";
         String ADDED = "Added";
         String SWITCH = "Switch";
+        String PRO_APP = "Pro App";
+        String NORMAL_APP = "Normal App";
     }
 
     interface AnalyticsLabels {
@@ -404,6 +413,9 @@ public interface Constants {
 
     interface UserProperties {
         String NUMBER_OF_GROUPS = "No of Groups";
+        String PRO_APP = "Pro App";
+        String REFERRAL_CHANNEL = "Referral Channel";
+        String REFERRAL_CAMPAIGN = "Referral Campaign";
     }
 
     interface ScreenNames {
@@ -537,5 +549,11 @@ public interface Constants {
     public interface MoneyFlow {
         String IN = "in";   // Debit
         String OUT = "out"; // credit
+    }
+
+    interface ChallengeTabs {
+        String NEW = "New";
+        String IN_PLAY = "In Play";
+        String COMPLETED = "Completed";
     }
 }

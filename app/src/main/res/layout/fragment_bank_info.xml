@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/dp_350"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/dp_20"
-    android:layout_marginRight="@dimen/dp_20">
+    android:layout_gravity="center_horizontal">
 
     <LinearLayout
         android:id="@+id/bank_info_ll_heading_layout"
@@ -12,7 +11,10 @@
         android:layout_height="@dimen/dp_42"
         android:background="@drawable/bank_popup_heading_bg"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20">
 
         <ImageView
             android:layout_width="@dimen/dp_12"
@@ -40,6 +42,8 @@
         android:background="@drawable/popup_content_bg"
         android:divider="@drawable/grey_divider_padding"
         android:orientation="vertical"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
         android:showDividers="middle">
 
         <LinearLayout

@@ -13,6 +13,11 @@ import com.jeeva.android.facebook.user.FacebookProfile;
 import com.jeeva.android.facebook.user.GetProfileModelImpl;
 import com.jeeva.android.facebook.user.UserModelImpl;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -210,17 +215,22 @@ public class LogInModelImpl implements LogInModel {
         }
 
         if (userLoginInResponse.isNewUser()) {
+
+            String label = NostragamusDataHandler.getInstance().getInstallChannel();
+            if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getInstallReferralCampaign())) {
+                label = label + " - " + NostragamusDataHandler.getInstance().getInstallReferralCampaign();
+            }
+
             NostragamusAnalytics.getInstance().trackNewUsers(
                     TextUtils.isEmpty(nostragamusDataHandler.getReferralUserId()) ? AnalyticsActions.ORGANIC : AnalyticsActions.REFERRAL,
-                    NostragamusDataHandler.getInstance().getInstallChannel()
+                     label
             );
         }
 
-        // Removing referral user id since user logged in
-        nostragamusDataHandler.removeReferralUserId();
-
-        // Removing channel since user logged in
+        // NOTE : As this data used for UserProperties (NostragamusAnalytics.setUserProperties() - Amplitude), DON'T remove it
+        /*nostragamusDataHandler.removeReferralUserId();
         nostragamusDataHandler.removeInstallChannel();
+        nostragamusDataHandler.removeInstallCampaign();*/
 
         mLogInModelListener.onLoginCompleted();
     }

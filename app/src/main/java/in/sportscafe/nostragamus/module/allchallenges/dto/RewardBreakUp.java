@@ -35,4 +35,5 @@ public class RewardBreakUp {
     public void setAmount(String amount) {
         this.amount = amount;
     }
+
 }
