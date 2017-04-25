@@ -76,6 +76,8 @@ public class AddPaymentBankActivity extends NostragamusActivity implements View.
     }
 
     public void onAddBankSaveClicked(View view) {
+        hideSoftKeyboard();
+
         String name = getTrimmedText(mAccHolderNameEditText);
         String accNumber = getTrimmedText(mAccNumberEditText);
         String ifsCode = getTrimmedText(mIfscodeEditText);
@@ -142,6 +144,8 @@ public class AddPaymentBankActivity extends NostragamusActivity implements View.
     }
 
     private void finishThisAndGotoPaymentHome() {
+        hideSoftKeyboard();
+
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
@@ -156,6 +160,7 @@ public class AddPaymentBankActivity extends NostragamusActivity implements View.
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        hideSoftKeyboard();
                         finish();
                     }
                 }

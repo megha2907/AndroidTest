@@ -81,10 +81,14 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
     private int dialogType = 0;
 
-    public ChallengeAdapter(Context context, List<Challenge> challenges, boolean swipeView, int tagId) {
+    private String mTabName = "";
+
+    public ChallengeAdapter(Context context, List<Challenge> challenges,
+                            boolean swipeView, int tagId, String tabName) {
         super(context);
         mSwipeView = swipeView;
         mTagId = tagId;
+        mTabName = tabName;
         addAll(challenges);
     }
 
@@ -343,6 +347,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     Intent intent = new Intent(IntentActions.ACTION_CHALLENGE_CLICK);
                     intent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
                     intent.putExtra(BundleKeys.CHALLENGE_TAG_ID, mTagId);
+                    intent.putExtra(BundleKeys.TAB_ITEM_NAME, mTabName);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
                     if (mSwipeView) {
@@ -402,6 +407,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     Intent switchIntent = new Intent(IntentActions.ACTION_CHALLENGE_CLICK);
                     switchIntent.putExtra(BundleKeys.CLICK_POSITION, getAdapterPosition());
                     switchIntent.putExtra(BundleKeys.CHALLENGE_TAG_ID, mTagId);
+                    switchIntent.putExtra(BundleKeys.TAB_ITEM_NAME, mTabName);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(switchIntent);
 
                     if (mSwipeView) {

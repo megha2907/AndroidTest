@@ -70,6 +70,8 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
     }
 
     public void onClickSave(View view) {
+        hideSoftKeyboard();
+
         String mobNo = getTrimmedText(mMobileNoEditText);
         String confirmMobNumber = getTrimmedText(mConfirmMobileNoEditText);
 
@@ -144,6 +146,7 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        hideSoftKeyboard();
                         finish();
                     }
                 }
@@ -151,6 +154,7 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
     }
 
     private void finishAndGotoPaymentHome() {
+        hideSoftKeyboard();
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();

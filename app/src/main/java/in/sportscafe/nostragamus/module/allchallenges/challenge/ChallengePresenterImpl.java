@@ -22,8 +22,8 @@ public class ChallengePresenterImpl implements ChallengePresenter, ChallengeMode
     }
 
     @Override
-    public void onCreateChallenge(Bundle bundle) {
-        mChallengeModel.init(bundle);
+    public void onCreateChallenge(Bundle bundle, String tabName) {
+        mChallengeModel.init(bundle, tabName);
         mChallengeView.setSwipeAdapter(mChallengeModel.getSwipeAdapter(mChallengeView.getContext()));
         mChallengeView.setListAdapter(mChallengeModel.getListAdapter(mChallengeView.getContext()));
     }

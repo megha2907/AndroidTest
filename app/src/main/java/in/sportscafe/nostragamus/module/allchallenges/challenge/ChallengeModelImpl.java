@@ -22,6 +22,8 @@ public class ChallengeModelImpl implements ChallengeModel {
 
     private int mTagId;
 
+    private String mTabName = "";
+
     private ChallengeAdapter mSwipeAdapter;
 
     private ChallengeAdapter mListAdapter;
@@ -37,19 +39,20 @@ public class ChallengeModelImpl implements ChallengeModel {
     }
 
     @Override
-    public void init(Bundle bundle) {
+    public void init(Bundle bundle, String tabName) {
         mChallenges = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_LIST));
         mTagId = bundle.getInt(BundleKeys.CHALLENGE_TAG_ID);
+        mTabName = tabName;
     }
 
     @Override
     public RecyclerView.Adapter getSwipeAdapter(Context context) {
-        return mSwipeAdapter = new ChallengeAdapter(context, mChallenges, true, mTagId);
+        return mSwipeAdapter = new ChallengeAdapter(context, mChallenges, true, mTagId, mTabName);
     }
 
     @Override
     public RecyclerView.Adapter getListAdapter(Context context) {
-        return mListAdapter = new ChallengeAdapter(context, mChallenges, false, mTagId);
+        return mListAdapter = new ChallengeAdapter(context, mChallenges, false, mTagId, mTabName);
     }
 
     public interface OnChallengeModelListener {
