@@ -354,9 +354,12 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     @Override
     public void clearAll() {
         boolean formShown = isInitialFeedbackFormShown();
+        boolean isProfileDisclaimerAccepted = isProfileDisclaimerAccepted();
+
         super.clearAll();
 
         setInitialFeedbackFormShown(formShown);
+        setIsProfileDisclaimerAccepted(isProfileDisclaimerAccepted);
     }
 
     public boolean isPlayedFirstMatch() {

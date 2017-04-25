@@ -272,6 +272,7 @@ public interface Constants {
         String EDIT_PROFILE_LAUNCHED_FROM = "editProfileLaunchedFrom";
         String NOTIFICATION_CHALLENGE_ID = "notificationChallengeId";
         String SHOULD_LAUNCH_NEW_TAB = "shouldLaunchNewTab";
+        String TAB_ITEM_NAME = "tabItemName";
     }
 
     interface ParcelableKeys {

@@ -45,15 +45,7 @@ public class AllChallengesFragment extends NostragamusFragment
 
     private AllChallengesApiModelImpl mAllChallengesApiModel;
 
-    private RelativeLayout mRlSwitch;
-
-    private View mVSwitchSeek;
-
-    private boolean mSwipeViewSelected = true;
-
-    private int SWIPE_VIEW = 0;
-
-    private int LIST_VIEW = 1;
+    private CustomViewPager mViewPager;
 
 
     public static AllChallengesFragment newInstance() {
@@ -71,48 +63,14 @@ public class AllChallengesFragment extends NostragamusFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mRlSwitch = (RelativeLayout) findViewById(R.id.challenges_switch_view_rl);
-        mRlSwitch.setOnClickListener(this);
-        mVSwitchSeek = findViewById(R.id.challenges_v_switch_seek);
-
+        mViewPager = (CustomViewPager) findViewById(R.id.tab_challenge_vp);
         mAllChallengesApiModel = AllChallengesApiModelImpl.newInstance(this);
         mAllChallengesApiModel.getAllChallenges();
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.challenges_switch_view_rl:
-                moveSeek();
-                break;
-        }
-    }
 
-    private void moveSeek(){
-
-        if (mSwipeViewSelected) {
-            for (ChallengeFragment fragment : mChallengeFragmentList) {
-                fragment.switchToListView();
-            }
-            moveSeekToList();
-        } else {
-            for (ChallengeFragment fragment : mChallengeFragmentList) {
-                fragment.switchToSwipeView(-1);
-            }
-            moveSeekToSwipe();
-        }
-        mSwipeViewSelected = !mSwipeViewSelected;
-
-        NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.SWITCH);
-
-    }
-
-    private void moveSeekToSwipe() {
-        mVSwitchSeek.animate().translationXBy(-getResources().getDimensionPixelSize(R.dimen.dp_26)).setDuration(500);
-    }
-
-    private void moveSeekToList() {
-        mVSwitchSeek.animate().translationXBy(getResources().getDimensionPixelSize(R.dimen.dp_26)).setDuration(500);
     }
 
     @Override
@@ -168,13 +126,15 @@ public class AllChallengesFragment extends NostragamusFragment
 
         if (challenges.size() > 0) {
             completedAvailable = true;
-            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(challenges, count++, -1), Constants.ChallengeTabs.COMPLETED);
+            challengeFragment = ChallengeFragment.newInstance(challenges, count++, -1, Constants.ChallengeTabs.COMPLETED);
+            mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.COMPLETED);
             mChallengeFragmentList.add(challengeFragment);
         }
 
         List<Challenge> inPlayChallenges = mAllChallengesApiModel.getInPlayChallenges();
         if (inPlayChallenges.size() > 0) {
-            mViewPagerAdapter.addFragment(challengeFragment = ChallengeFragment.newInstance(inPlayChallenges, count++, -1), Constants.ChallengeTabs.IN_PLAY);
+            challengeFragment = ChallengeFragment.newInstance(inPlayChallenges, count++, -1, Constants.ChallengeTabs.IN_PLAY);
+            mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.IN_PLAY);
             mChallengeFragmentList.add(challengeFragment);
         }
 
@@ -190,29 +150,27 @@ public class AllChallengesFragment extends NostragamusFragment
                         " newTab? : " + shouldShowNewTab);
             }
 
-            challengeFragment = ChallengeFragment.newInstance(newChallenges, count++, newChallengeIdFromNotification);
+            challengeFragment = ChallengeFragment.newInstance(newChallenges, count++,
+                    newChallengeIdFromNotification, Constants.ChallengeTabs.NEW);
             mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.NEW);
             mChallengeFragmentList.add(challengeFragment);
         }
 
-        CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.tab_challenge_vp);
-        viewPager.setPagingEnabled(false);
-        viewPager.setAdapter(mViewPagerAdapter);
-        viewPager.setOffscreenPageLimit(3);
+        mViewPager.setPagingEnabled(false);
+        mViewPager.setAdapter(mViewPagerAdapter);
+        mViewPager.setOffscreenPageLimit(3);
 
-        setTabLayout(viewPager, inPlayChallenges.size(), newChallenges.size());
+        setTabLayout(mViewPager, inPlayChallenges.size(), newChallenges.size());
 
         if (count > 0) {
-            mRlSwitch.setVisibility(View.VISIBLE);
-
             if (count > 1 && count == 3 || completedAvailable) {
-                viewPager.setCurrentItem(1);
+                mViewPager.setCurrentItem(1);
             }
         }
 
         /* If launched from notification, 'NEW' tab should be shown */
         if (shouldShowNewTab) {
-            viewPager.setCurrentItem(2);
+            mViewPager.setCurrentItem(2);
         } else {
             Log.d("Temp", "should not launch new tab");
         }
@@ -310,37 +268,4 @@ public class AllChallengesFragment extends NostragamusFragment
             }
         };
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mChallengeItemClickReceiver,
-                new IntentFilter(Constants.IntentActions.ACTION_CHALLENGE_CLICK));
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mChallengeItemClickReceiver);
-    }
-
-    BroadcastReceiver mChallengeItemClickReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int tagId = intent.getIntExtra(BundleKeys.CHALLENGE_TAG_ID, -1);
-            int clickPosition = intent.getIntExtra(BundleKeys.CLICK_POSITION, -1);
-            boolean swipeView = intent.getBooleanExtra(BundleKeys.CHALLENGE_SWITCH_POS,false);
-
-            if (swipeView) {
-                for (int i = 0; i < mChallengeFragmentList.size(); i++) {
-                    mChallengeFragmentList.get(i).switchToSwipeView(i == tagId ? clickPosition : -1);
-                }
-
-                moveSeekToSwipe();
-                mSwipeViewSelected = true;
-            }else {
-                moveSeek();
-            }
-        }
-    };
 }
