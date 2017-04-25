@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 
 public interface ChallengeModel {
 
-    void init(Bundle bundle);
+    void init(Bundle bundle, String tabName);
 
     RecyclerView.Adapter getSwipeAdapter(Context context);
 

@@ -11,7 +11,7 @@ import static com.google.android.gms.analytics.internal.zzy.o;
 
 public interface ChallengePresenter {
 
-    void onCreateChallenge(Bundle bundle);
+    void onCreateChallenge(Bundle bundle, String tabName);
 
     void changeAdapterLayout(boolean swipeView);
 }
