@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.allchallenges.info;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
@@ -31,6 +32,7 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
+import in.sportscafe.nostragamus.module.common.CustomLayoutManagerWithSmoothScroll;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.paytm.GenerateOrderResponse;
@@ -117,8 +119,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     private void initViews() {
         this.mRcvConfigs = (RecyclerView) findViewById(R.id.configs_rcv);
-        this.mRcvConfigs.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false));
+        this.mRcvConfigs.setLayoutManager(new CustomLayoutManagerWithSmoothScroll(getContext()));
         this.mRcvConfigs.setHasFixedSize(true);
 
         mBtnPopupClose = (ImageView)findViewById(R.id.popup_cross_btn);
@@ -250,17 +251,16 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     }
 
     @Override
-    public void onConfigHeightChanged() {
+    public void onConfigHeightChanged(final int pos) {
 
         ((SimpleItemAnimator) mRcvConfigs.getItemAnimator()).setSupportsChangeAnimations(false);
-
         mRcvConfigs.postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 int configsHeight;
                 if (mRcvConfigs.getAdapter().getItemCount() >= 3) {
-                    configsHeight = mMaxHeight + mTitleHeight;
+                    configsHeight = mMaxHeight + mTitleHeight + mExtraHeight;
                 } else {
                     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight+ mExtraHeight;
@@ -276,6 +276,10 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
                 WindowManager.LayoutParams attributes = getDialog().getWindow().getAttributes();
                 getDialog().getWindow().setLayout(attributes.width, configsHeight);
+                //mRcvConfigs.smoothScrollBy(0, 234);
+                //mRcvConfigs.setLayoutManager(new CustomLayoutManagerWithSmoothScroll(getContext()));
+                mRcvConfigs.smoothScrollToPosition(pos);
+
             }
         }, 250);
     }

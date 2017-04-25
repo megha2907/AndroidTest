@@ -11,8 +11,8 @@
         android:id="@+id/pool_row_ll_join_layout"
         android:layout_width="@dimen/dp_120"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_22"
-        android:layout_marginBottom="@dimen/dp_22"
+        android:layout_marginTop="@dimen/dp_11"
+        android:layout_marginBottom="@dimen/dp_16"
         android:layout_alignParentRight="true"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="Rs 200"
             android:textColor="@color/paid_entry_tv_color"
-            android:textSize="@dimen/dp_12"
+            android:textSize="@dimen/dp_14"
             android:layout_marginTop="@dimen/dp_2"
             app:typeface="lato_light" />
 
@@ -40,7 +40,7 @@
             android:id="@+id/pool_row_btn_join"
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_24"
-            android:layout_marginTop="@dimen/dp_2"
+            android:layout_marginTop="@dimen/dp_34"
             android:background="@drawable/paid_join_btn_bg"
             android:onClick="onClick"
             android:paddingBottom="@dimen/dp_4"
@@ -55,9 +55,9 @@
     <View
         android:id="@+id/pool_row_v_line_separator"
         android:layout_width="@dimen/dp_0.7"
-        android:layout_height="@dimen/dp_80"
+        android:layout_height="@dimen/dp_100"
         android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_8"
         android:layout_toLeftOf="@id/pool_row_ll_join_layout"
         android:background="@color/white_20" />
 
@@ -85,24 +85,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
+            android:includeFontPadding="false"
             android:layout_below="@+id/pool_row_tv_name"
             android:text="Assured Prizes for Top 100!"
             android:textColor="@color/white_60"
             android:textSize="@dimen/dp_12"
             app:typeface="lato_regular"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/pool_row_tv_max_entries"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:layout_below="@+id/pool_row_tv_number_of_prizes"
             android:text="Max Entries 50"
+            android:includeFontPadding="false"
+            android:layout_below="@+id/pool_row_tv_number_of_prizes"
             android:textColor="@color/white_60"
             android:textSize="@dimen/dp_12"
             app:typeface="lato_regular"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
         <LinearLayout
             android:id="@+id/pool_row_ll_member_layout"
@@ -110,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/pool_row_tv_max_entries"
             android:layout_marginRight="@dimen/dp_30"
-            android:layout_marginTop="@dimen/dp_2"
+            android:layout_marginTop="@dimen/dp_12"
             android:clickable="true"
             android:paddingTop="@dimen/dp_7"
             android:paddingBottom="@dimen/dp_7"
@@ -136,6 +138,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="1/10"
+                    android:includeFontPadding="false"
                     android:textColor="@color/free_entry_tv_color"
                     android:textSize="@dimen/dp_10"
                     app:typeface="lato_bold" />
@@ -144,7 +147,6 @@
                     android:id="@+id/pool_row_iv_member_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/challenge_down_arrow"
                     android:layout_toRightOf="@+id/pool_row_tv_member_count"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_4"/>
@@ -183,6 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:includeFontPadding="false"
                     android:text="Worth Rs. 2400"
                     android:textColor="#1A6AA1"
                     android:textSize="@dimen/dp_10"
@@ -192,7 +195,6 @@
                     android:id="@+id/pool_row_iv_reward_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/challenge_down_arrow"
                     android:layout_toRightOf="@+id/pool_row_tv_reward"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_4"/>

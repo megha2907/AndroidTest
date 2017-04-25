@@ -1,9 +1,13 @@
 package in.sportscafe.nostragamus.module.allchallenges.info;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,6 +36,8 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
 
     private OnConfigAccessListener mAccessListener;
 
+    private String mTvMaxEntriesCount;
+
     public ChallengeConfigAdapter(Context context, List<ChallengeConfig> configs, OnConfigAccessListener accessListener) {
         super(context);
         mAccessListener = accessListener;
@@ -53,53 +59,70 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
         ChallengeConfig config = getItem(position);
 
         ConfigPlayersDetails memberDetails = config.getPlayersDetails();
-        if(config.isFreeEntry()) {
+
+
+        if (config.isFreeEntry()) {
             holder.mTvEntryFee.setText("Free");
             holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + "");
-            holder.mTvEntryFee.setTextColor(ContextCompat.getColor(holder.mTvEntryFee.getContext(),R.color.free_entry_tv_color));
+            holder.mTvEntryFee.setTextColor(ContextCompat.getColor(holder.mTvEntryFee.getContext(), R.color.free_entry_tv_color));
             holder.mTvEntryFee.setAllCaps(true);
-            holder.mTvMembersCount.setTextColor(ContextCompat.getColor(holder.mTvMembersCount.getContext(),R.color.free_entry_tv_color));
-            holder.mTvReward.setTextColor(ContextCompat.getColor(holder.mTvReward.getContext(),R.color.free_entry_tv_color));
+            holder.mTvMembersCount.setTextColor(ContextCompat.getColor(holder.mTvMembersCount.getContext(), R.color.free_entry_tv_color));
+            holder.mTvReward.setTextColor(ContextCompat.getColor(holder.mTvReward.getContext(), R.color.free_entry_tv_color));
             holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.free_join_btn_bg));
+            mTvMaxEntriesCount = "unlimited";
+            holder.mIvDropDownReward.setBackground(ContextCompat.getDrawable(holder.mIvDropDownReward.getContext(), R.drawable.config_down_arrow_blue));
+            holder.mIvDropDownMember.setBackground(ContextCompat.getDrawable(holder.mIvDropDownReward.getContext(), R.drawable.config_down_arrow_blue));
+
         } else {
             holder.mTvEntryFee.setText("₹ " + config.getEntryFee());
-            holder.mTvEntryFee.setTextColor(ContextCompat.getColor(holder.mTvEntryFee.getContext(),R.color.paid_entry_tv_color));
-            holder.mTvMembersCount.setTextColor(ContextCompat.getColor(holder.mTvMembersCount.getContext(),R.color.paid_entry_tv_color));
-            holder.mTvReward.setTextColor(ContextCompat.getColor(holder.mTvReward.getContext(),R.color.paid_entry_tv_color));
+            holder.mTvEntryFee.setTextColor(ContextCompat.getColor(holder.mTvEntryFee.getContext(), R.color.paid_entry_tv_color));
+            holder.mTvMembersCount.setTextColor(ContextCompat.getColor(holder.mTvMembersCount.getContext(), R.color.paid_entry_tv_color));
+            holder.mTvReward.setTextColor(ContextCompat.getColor(holder.mTvReward.getContext(), R.color.paid_entry_tv_color));
             holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.paid_join_btn_bg));
             holder.mTvMembersCount.setText(memberDetails.getJoinedCount() + " / " + memberDetails.getMaxCount());
             holder.mTvSlotsLeft.setText(String.valueOf(memberDetails.getMaxCount() - memberDetails.getJoinedCount()) + " SLOTS LEFT");
+            holder.mIvDropDownReward.setBackground(ContextCompat.getDrawable(holder.mIvDropDownReward.getContext(), R.drawable.config_down_arrow_green));
+            holder.mIvDropDownMember.setBackground(ContextCompat.getDrawable(holder.mIvDropDownReward.getContext(), R.drawable.config_down_arrow_green));
 
-//            if(memberDetails.getJoinedCount() >= memberDetails.getMaxCount()){
-//                holder.mBtnJoin.setText("Full");
-//                holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.btn_not_played_bg));
-//                holder.mBtnJoin.setClickable(false);
-//            }else {
-//                holder.mBtnJoin.setText("Join");
-//                holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.paid_join_btn_bg));
-//                holder.mBtnJoin.setClickable(true);
-//            }
-
-            if(memberDetails.getJoinedCount() >= memberDetails.getMaxCount()){
-                holder.mBtnJoin.setText("Slots Filled");
-                holder.mBtnJoin.setTextSize(10);
-                holder.mBtnJoin.setAlpha((float) 0.7);
+            if (memberDetails.getJoinedCount() >= memberDetails.getMaxCount()) {
+                holder.mBtnJoin.setText("Full");
+                holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.btn_not_played_bg));
                 holder.mBtnJoin.setClickable(false);
-            }else {
+            } else {
                 holder.mBtnJoin.setText("Join");
-                holder.mBtnJoin.setTextSize(12);
-                holder.mBtnJoin.setAlpha((float) 1);
+                holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.paid_join_btn_bg));
                 holder.mBtnJoin.setClickable(true);
             }
-
-
+            mTvMaxEntriesCount = String.valueOf(memberDetails.getMaxCount());
         }
+
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        String maxEntries = "Max Entries ";
+        SpannableString spannableOne = new SpannableString(maxEntries);
+        spannableOne.setSpan(new ForegroundColorSpan(Color.parseColor("#99FFFFFF")), 0, maxEntries.length(), 0);
+        builder.append(spannableOne);
+        SpannableString spannableTwo = new SpannableString(mTvMaxEntriesCount);
+        spannableTwo.setSpan(new ForegroundColorSpan(Color.WHITE), 0, mTvMaxEntriesCount.length(), 0);
+        builder.append(spannableTwo);
+        holder.mTvMaxEntries.setText(builder, TextView.BufferType.SPANNABLE);
+
+        SpannableStringBuilder builderTwo = new SpannableStringBuilder();
+        String assuredPrizes = "Assured Prizes for ";
+        SpannableString spannableThree = new SpannableString(assuredPrizes);
+        spannableThree.setSpan(new ForegroundColorSpan(Color.parseColor("#99FFFFFF")), 0, assuredPrizes.length(), 0);
+        builderTwo.append(spannableThree);
+
+        String numberOfPrizes = "Top "+String.valueOf(config.getRewardDetails().getBreakUps().size())+"!";
+        SpannableString spannableFour = new SpannableString(numberOfPrizes);
+        spannableFour.setSpan(new ForegroundColorSpan(Color.WHITE), 0, numberOfPrizes.length(), 0);
+        builderTwo.append(spannableFour);
+        holder.mTvNumberOfPrizes.setText(builderTwo, TextView.BufferType.SPANNABLE);
 
         holder.mIvDropDownReward.setRotation(0);
         holder.mIvDropDownMember.setRotation(0);
 
         holder.mTvPoolName.setText(config.getConfigName());
-        holder.mTvReward.setText("Worth "+config.getRewardDetails().getTotalReward());
+        holder.mTvReward.setText("Worth " + config.getRewardDetails().getTotalReward());
 
         int colorRes = R.color.code_gray_17;
         if (position % 2 == 0) {
@@ -149,11 +172,11 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
 
     private void createRewardDropDownList(List<RewardBreakUp> breakUps, ViewGroup parent) {
         for (RewardBreakUp breakUp : breakUps) {
-            parent.addView(getDropDownView(breakUp.getRank(), breakUp.getAmount(),null, parent));
+            parent.addView(getDropDownView(breakUp.getRank(), breakUp.getAmount(), null, parent));
         }
     }
 
-    private View getDropDownView(String key, String value, String memberPhoto ,ViewGroup parent) {
+    private View getDropDownView(String key, String value, String memberPhoto, ViewGroup parent) {
         View dropDownView = getLayoutInflater().inflate(R.layout.inflater_reward_row, parent, false);
 
         TextView tvKey = (TextView) dropDownView.findViewById(R.id.reward_row_tv_name);
@@ -162,7 +185,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
         HmImageView memberPic = (HmImageView) dropDownView.findViewById(R.id.reward_row_iv_member_photo);
         if (!TextUtils.isEmpty(memberPhoto)) {
             memberPic.setImageUrl(memberPhoto);
-        }else {
+        } else {
             memberPic.setVisibility(View.GONE);
         }
 
@@ -173,7 +196,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
         } else {
             tvValue.setVisibility(View.VISIBLE);
             tvValue.setText(value);
-            tvKey.setPadding(15,0,0,0);
+            tvKey.setPadding(15, 0, 0, 0);
         }
 
         return dropDownView;
@@ -234,6 +257,8 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             mTvDisclaimer = (TextView) view.findViewById(R.id.pool_row_tv_disclaimer);
             mVDisclaimerSeparator = (View) view.findViewById(R.id.pool_row_v_disclaimer);
             mBtnJoin = (Button) view.findViewById(R.id.pool_row_btn_join);
+            mTvMaxEntries = (TextView) view.findViewById(R.id.pool_row_tv_max_entries);
+            mTvNumberOfPrizes = (TextView) view.findViewById(R.id.pool_row_tv_number_of_prizes);
 
             mBtnJoin.setOnClickListener(this);
             view.findViewById(R.id.pool_row_ll_member_layout).setOnClickListener(this);
@@ -264,7 +289,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             }
             notifyItemChanged(position);
 
-            mAccessListener.onConfigHeightChanged();
+            mAccessListener.onConfigHeightChanged(position);
         }
 
         private void handleRewardDropDown(int position) {
@@ -276,7 +301,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             }
             notifyItemChanged(position);
 
-            mAccessListener.onConfigHeightChanged();
+            mAccessListener.onConfigHeightChanged(position);
         }
     }
 
@@ -284,6 +309,6 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
 
         void onJoinClick(int position);
 
-        void onConfigHeightChanged();
+        void onConfigHeightChanged(int pos);
     }
 }
