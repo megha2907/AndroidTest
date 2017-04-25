@@ -91,17 +91,17 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
         holder.mLlDropDownHolder.removeAllViews();
 
         try {
-//            if (mChallengeInfo.getCountMatchesLeft().equals("0")) {
-//                if (!config.getRewardDetails().getWinnersRewardsList().isEmpty()) {
-//                    createWinnersDropDownList(config.getRewardDetails().getWinnersRewardsList(), holder.mLlDropDownHolder);
-//                    holder.mTvChallengeEndTime.setVisibility(View.GONE);
-//                }else {
-//                    holder.mTvChallengeEndTime.setText("Prizes Info not Available");
-//                    holder.mRlRewardsLayout.setVisibility(View.GONE);
-//                }
-//            }else {
+            if (mChallengeInfo.getCountMatchesLeft().equals("0")) {
+                if (!config.getRewardDetails().getWinnersRewardsList().isEmpty()) {
+                    createWinnersDropDownList(config.getRewardDetails().getWinnersRewardsList(), holder.mLlDropDownHolder);
+                    holder.mTvChallengeEndTime.setVisibility(View.GONE);
+                }else {
+                    holder.mTvChallengeEndTime.setText("Prizes Info not Available");
+                    holder.mRlRewardsLayout.setVisibility(View.GONE);
+                }
+            }else {
                 createRewardDropDownList(config.getRewardDetails().getBreakUps(), holder.mLlDropDownHolder);
-            //}
+            }
         }catch (Exception e) {
             holder.mTvChallengeEndTime.setText("Prizes Info not Available");
             holder.mRlRewardsLayout.setVisibility(View.GONE);
