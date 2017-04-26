@@ -47,6 +47,8 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     private View mSelectedImage;
 
+    private TextView mGroupSubHeading;
+
     private TextView mTvLeaderBoardHeading;
 
     private boolean ismMatchPoints = false;
@@ -191,7 +193,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     @Override
     public void setGroupHeadings(String groupName, String heading) {
         TextView mGroupHeading = (TextView) findViewById(R.id.points_group_heading);
-        TextView mGroupSubHeading = (TextView) findViewById(R.id.points_group_sub_heading);
+        mGroupSubHeading = (TextView) findViewById(R.id.points_group_sub_heading);
         mTvLeaderBoardHeading.setVisibility(View.GONE);
         mGroupHeading.setVisibility(View.VISIBLE);
         mGroupSubHeading.setVisibility(View.VISIBLE);

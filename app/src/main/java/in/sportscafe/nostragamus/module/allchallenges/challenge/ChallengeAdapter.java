@@ -247,7 +247,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         //for completed challenges
         if (challenge.getCountMatchesLeft().equals("0")) {
-            holder.mTvRewards.setText("Prizes");
+            holder.mTvRewards.setText("Winners");
         }
 
 

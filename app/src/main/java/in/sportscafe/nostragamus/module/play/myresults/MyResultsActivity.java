@@ -483,6 +483,26 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mRlshareResults.setVisibility(View.GONE);
     }
 
+    @Override
+    public void showResultsToBeDeclaredView(Boolean playedFirstMatch) {
+        RelativeLayout llResultsDeclaration = (RelativeLayout)findViewById(R.id.my_results_declaration_rl);
+        TextView tvResultsDeclarationHeading = (TextView) findViewById(R.id.my_results_declaration_tv_heading);
+        TextView tvResultsDeclarationDesc = (TextView) findViewById(R.id.my_results_declaration_tv_desc);
+        TextView tvResultsChallengeBtn = (TextView) findViewById(R.id.my_results_challenge_btn);
+        llResultsDeclaration.setVisibility(View.VISIBLE);
+
+        if (playedFirstMatch){
+            tvResultsDeclarationHeading.setText("You just predicted your first game!");
+            tvResultsDeclarationDesc.setText("Results will be declared on"+" 7th March,8pm "+" " +
+                    "We'll update your score,Meanwhile you can play other live games!"); /*change date to challenge end date*/
+            tvResultsChallengeBtn.setVisibility(View.VISIBLE);
+        }else {
+            tvResultsDeclarationHeading.setText("Done");
+            tvResultsDeclarationDesc.setText("Results will be declared on"+" 7th March,8pm"); /*change date to challenge end date*/
+            tvResultsChallengeBtn.setVisibility(View.GONE);
+        }
+    }
+
     private void collapseFab() {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(createCollapseAnimator(powerupFlipFab, offset1),

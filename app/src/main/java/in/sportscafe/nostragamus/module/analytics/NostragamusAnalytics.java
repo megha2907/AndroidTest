@@ -224,6 +224,15 @@ public class NostragamusAnalytics {
     }
 
     /**
+     * track Don't want cash rewards
+     *
+     * @param actions - Paytm , cash rewards
+     */
+    public void trackNoCashRewards(String actions) {
+        track(AnalyticsCategory.CASH_REWARDS, actions, null, null);
+    }
+
+    /**
      * track play games
      *
      * @param actions - Started, completed

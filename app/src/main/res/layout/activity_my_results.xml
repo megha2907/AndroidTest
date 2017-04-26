@@ -84,11 +84,71 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/my_results_declaration_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/my_results_toolbar_rl"
+        android:layout_marginTop="@dimen/dp_12"
+        android:visibility="gone">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/my_results_declaration_tv_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You just predicted your first game!"
+            android:textColor="@color/greenresults"
+            app:typeface="lato_bold"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_16"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/dp_14"/>
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/my_results_declaration_tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="Results will be declared on 7th Mar,8pm"
+            android:textColor="#e1e1e1"
+            app:typeface="lato_regular"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_below="@+id/my_results_declaration_tv_heading"
+            android:textSize="@dimen/dp_13"/>
+
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/my_results_challenge_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back to Challenges"
+            android:textColor="@color/cerulean"
+            app:typeface="lato_bold"
+            android:padding="@dimen/dp_5"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_below="@+id/my_results_declaration_tv_desc"
+            android:textSize="@dimen/dp_13"/>
+
+        <View
+            android:id="@+id/pool_row_v_disclaimer"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#333333"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_below="@id/my_results_challenge_btn" />
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_results_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/my_results_toolbar_rl"
+        android:layout_below="@+id/my_results_declaration_rl"
         android:background="@color/black" />
 
     <RelativeLayout
