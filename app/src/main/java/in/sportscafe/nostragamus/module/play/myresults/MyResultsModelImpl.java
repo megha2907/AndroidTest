@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
@@ -66,6 +67,14 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 matchId = match.getId();
                 if (null == match.getResult() || match.getResult().isEmpty()) {
                     mResultsModelListener.setToolbarHeading("Awaiting Results");
+                }
+                if (bundle.containsKey(Constants.ScreenNames.PLAY)){
+                    Boolean playedFirstMatch = bundle.getBoolean(BundleKeys.PLAYED_FIRST_MATCH);
+                    if (playedFirstMatch){
+                       mResultsModelListener.showResultsToBeDeclared(true);
+                    }else {
+                        mResultsModelListener.showResultsToBeDeclared(false);
+                    }
                 }
 
             } else if (bundle.containsKey(BundleKeys.MATCH_ID)) {
@@ -279,5 +288,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         void onGetShareTextFailed();
 
         void setToolbarHeading(String result);
+
+        void showResultsToBeDeclared(boolean playedFirstMatch);
     }
 }

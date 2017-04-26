@@ -11,6 +11,7 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -101,6 +102,7 @@ public class WalletOrBankConnectActivity extends NostragamusActivity {
      * @param view
      */
     public void onClickSkip(View view) {
+        NostragamusAnalytics.getInstance().trackNoCashRewards(Constants.AnalyticsActions.NO_CASH_REWARDS);
         onBackPressed();
     }
 

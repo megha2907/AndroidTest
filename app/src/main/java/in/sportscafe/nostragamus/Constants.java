@@ -278,6 +278,7 @@ public interface Constants {
         String USER_PAYMENT_INFO_PARCEL = "userPaymentInfoParcel";
         String EDIT_PROFILE_LAUNCHED_FROM = "editProfileLaunchedFrom";
         String TAB_ITEM_NAME = "tabItemName";
+        String PLAYED_FIRST_MATCH = "PlayedFirstMatch";
     }
 
     interface ParcelableKeys {
@@ -367,6 +368,7 @@ public interface Constants {
         String POWER_BANK = "Power Bank";
         String APP_OPENING = "App Opening";
         String REFERRAL_ACTION = "Referral Action";
+        String CASH_REWARDS = "Cash Rewards";
     }
 
     interface AnalyticsActions {
@@ -400,6 +402,7 @@ public interface Constants {
         String SWITCH = "Switch";
         String PRO_APP = "Pro App";
         String NORMAL_APP = "Normal App";
+        String NO_CASH_REWARDS = "Don't Want Cash Rewards";
     }
 
     interface AnalyticsLabels {

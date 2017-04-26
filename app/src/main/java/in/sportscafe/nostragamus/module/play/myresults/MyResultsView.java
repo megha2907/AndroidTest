@@ -28,4 +28,6 @@ public interface MyResultsView extends InAppView {
     void setMatchName(String matchName);
 
     void setToolbarHeading(String result);
+
+    void showResultsToBeDeclaredView(Boolean playedFirstMatch);
 }
