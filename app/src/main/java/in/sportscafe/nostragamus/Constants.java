@@ -23,6 +23,13 @@ public interface Constants {
         String NEW_CHALLENGE_ID = "challenge_id";
     }
 
+    interface Screens {
+        int CHALLENGES = 1;
+        int GROUP = 2;
+        int LEADER_BOARD = 3;
+        int PROFILE = 4;
+    }
+
     interface SharedKeys {
         String PREVIOUS_APP_VERSION_CODE = "previousAppVersionCode";
         String ALL_SPORTS = "allSports";
@@ -270,8 +277,6 @@ public interface Constants {
         String OPEN_LEADERBOARD = "openLeaderboard";
         String USER_PAYMENT_INFO_PARCEL = "userPaymentInfoParcel";
         String EDIT_PROFILE_LAUNCHED_FROM = "editProfileLaunchedFrom";
-        String NOTIFICATION_CHALLENGE_ID = "notificationChallengeId";
-        String SHOULD_LAUNCH_NEW_TAB = "shouldLaunchNewTab";
         String TAB_ITEM_NAME = "tabItemName";
     }
 
@@ -305,6 +310,9 @@ public interface Constants {
         String ACTION_GROUP_CLICK = "in.sportscafe.nostragamus.intent.action.GROUP_CLICK";
         String ACTION_CHALLENGE_CLICK = "in.sportscafe.nostragamus.intent.action.CHALLENGE_CLICK";
         String ACTION_POWERUPS_UPDATED = "in.sportscafe.nostragamus.intent.action.POWERUPS_UPDATED";
+        String ACTION_NEW_CHALLENGE_ID = "in.sportscafe.nostragamus.intent.action.NEW_CHALLENGE_ID";
+        String ACTION_ALL_CHALLENGE_DATA_LOADED = "in.sportscafe.nostragamus.intent.action.ALL_CHALLENGE_DATA_LOADED";
+        String ACTION_SCROLL_CHALLENGE = "in.sportscafe.nostragamus.intent.action.SCROLL_CHALLENGE";
     }
 
     interface LeaderBoardPeriods {
