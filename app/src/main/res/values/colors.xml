@@ -26,6 +26,7 @@
 
     <color name="greencolor">#00CE61</color>
     <color name="greencoloropacity">#5500CE61</color>
+    <color name="greenresults">#3cb878</color>
     <color name="tabcolor">#FE3555</color>
     <color name="tabcolor_blue">#246584</color>
     <color name="tabcoloropacity">#55FE3555</color>

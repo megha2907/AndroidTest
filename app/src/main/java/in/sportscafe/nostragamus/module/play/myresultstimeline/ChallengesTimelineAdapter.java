@@ -291,7 +291,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             Match match = (Match) view.getTag();
             if (null != match) {
                 bundle = new Bundle();
-                Nostragamus.getInstance().getServerDataManager().setMatchInfo(match);
+               // Nostragamus.getInstance().getServerDataManager().setMatchInfo(match);
                 bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
                 bundle.putString(BundleKeys.SCREEN, Constants.ScreenNames.PROFILE);
 
@@ -324,7 +324,6 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     break;
                 case R.id.schedule_row_tv_info:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.DID_NOT_PLAY);
-
                     navigateToMyResults(context, bundle);
                     break;
             }

@@ -16,6 +16,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoBankDto;
@@ -134,6 +135,7 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
     }
 
     public void onClickSkip(View view) {
+        NostragamusAnalytics.getInstance().trackNoCashRewards(Constants.AnalyticsActions.NO_CASH_REWARDS);
         finishAndGotoPaymentHome();
     }
 

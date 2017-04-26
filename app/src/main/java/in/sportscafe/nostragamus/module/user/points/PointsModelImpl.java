@@ -188,6 +188,7 @@ public class PointsModelImpl implements PointsModel {
         //for challenges change tab to overall
         if (mChallengeId == 0) {
             mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoardList.get(0)), leaderBoardList.get(0).getTournamentName());
+            Log.i("name",leaderBoardList.get(0).getTournamentName());
             mPointsModelListener.changeTabsView();
         } else {
 

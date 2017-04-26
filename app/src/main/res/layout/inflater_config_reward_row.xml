@@ -62,7 +62,7 @@
             android:layout_marginTop="@dimen/dp_12"
             android:layout_marginBottom="@dimen/dp_12"
             android:background="@color/white_20"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
         <RelativeLayout
             android:id="@+id/config_reward_rl_winning_layout"
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_weight="1">
 
             <RelativeLayout
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/config_reward_tv_winning_txt"
                     android:layout_marginTop="@dimen/dp_2"
-                    android:text="TBD"
+                    android:text="TBA"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/paid_entry_tv_color"
                     android:textSize="@dimen/dp_12"

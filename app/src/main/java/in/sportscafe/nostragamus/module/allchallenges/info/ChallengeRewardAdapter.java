@@ -95,6 +95,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
                 if (!config.getRewardDetails().getWinnersRewardsList().isEmpty()) {
                     createWinnersDropDownList(config.getRewardDetails().getWinnersRewardsList(), holder.mLlDropDownHolder);
                     holder.mTvChallengeEndTime.setVisibility(View.GONE);
+                    holder.mTvUserWinningAmount.setText(config.getRewardDetails().getAmountWonByUser());
                 }else {
                     holder.mTvChallengeEndTime.setText("Prizes Info not Available");
                     holder.mRlRewardsLayout.setVisibility(View.GONE);
@@ -167,6 +168,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
         LinearLayout mLlDropDownHolder;
         TextView mTvDisclaimerTxt;
         TextView mTvDisclaimer;
+        TextView mTvUserWinningAmount;
 
         public ConfigVH(View view) {
             super(view);
@@ -178,6 +180,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
             mLlDropDownHolder = (LinearLayout) view.findViewById(R.id.config_reward_row_ll_rewards);
             mTvDisclaimerTxt = (TextView) view.findViewById(R.id.config_reward_row_tv_disclaimer_txt);
             mTvDisclaimer = (TextView) view.findViewById(R.id.config_reward_row_tv_disclaimer);
+            mTvUserWinningAmount = (TextView) view.findViewById(R.id.config_reward_tv_winning);
 
         }
 

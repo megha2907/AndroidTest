@@ -122,7 +122,7 @@
                 android:id="@+id/pool_row_tv_label_members"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Joined"
+                android:text="Entries"
                 android:textAllCaps="true"
                 android:textColor="@color/white_50"
                 android:textSize="@dimen/dp_9"

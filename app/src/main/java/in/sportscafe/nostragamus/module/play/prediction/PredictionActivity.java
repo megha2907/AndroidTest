@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.CustomProgressbar;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -35,6 +33,7 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity;
+import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
@@ -505,6 +504,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         if (null != playCardBitmap) {
             AppSnippet.doGeneralImageShare(this, playCardBitmap, "");
         }
+    }
+
+    @Override
+    public void navigateToResults(Bundle bundle) {
+        Intent intent = new Intent(this, MyResultsActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finish();
     }
 
     private void openPopup(String popUpType) {

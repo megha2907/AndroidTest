@@ -72,6 +72,11 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
+    public void showResultsToBeDeclared(boolean playedFirstMatch) {
+        mResultsView.showResultsToBeDeclaredView(playedFirstMatch);
+    }
+
+    @Override
     public void onReplayPowerupApplied() {
         mResultsModel.callReplayPowerupApplied();
     }
