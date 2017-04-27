@@ -1,13 +1,15 @@
 package in.sportscafe.nostragamus.module.home;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -45,65 +47,51 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     private static final int REFRESH_CHALLENGES_CODE = 42;
     private static final int OPEN_JOINED_CHALLENGE_DIALOG_CODE = 53;
     private static final int OPEN_DOWNLOAD_APP_DIALOG = 54;
+    private static final int CHALLENGE_JOINED = 55;
+
     public static final int DOUBLE_BACK_PRESSED_DELAY_ALLOWED = 3000;
 
     private int mProfileTabPosition = 0;
-
     private View mSelectedImage;
-
     private View mSelectedText;
-
-    private Fragment mCurrentFragment;
-
     private boolean mIsFirstBackPressed = false;
+    private int mScrollToChallengeId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        initViews();
 
         if (null == NostragamusDataHandler.getInstance().getUserId()) {
             navigateToLogIn();
             return;
         }
 
+        initViews();
         UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
+        showScreenAsRequired();
 
-        Bundle bundle = getIntent().getExtras();
-        if (null != bundle) {
-            if (bundle.containsKey(Constants.NotificationKeys.FROM_NOTIFICATION)) {
-                handleNotification(bundle);
-
-            } else if (bundle.containsKey(BundleKeys.OPEN_PROFILE)) {
-                mProfileTabPosition = Integer.parseInt(bundle.getString(BundleKeys.OPEN_PROFILE));
-                showProfile();
-                return;
-
-            } else if (bundle.containsKey(BundleKeys.GROUP)) {
-                showGroups();
-                return;
-            } else if (bundle.containsKey(BundleKeys.OPEN_LEADERBOARD)) {
-                showLeaderBoards();
-            }
-        }
-        showFirstTab(-1);
     }
 
-    private void handleNotification(Bundle bundle) {
-        com.jeeva.android.Log.d("Temp", "From Notification : " + bundle);
+    private void showScreenAsRequired() {
+        Bundle bundle = getIntent().getExtras();
+        if (null != bundle) {
 
-        boolean isFromNotification = bundle.getBoolean(Constants.NotificationKeys.FROM_NOTIFICATION, false);
-        if (isFromNotification) {
-            String challengeIdStr = bundle.getString(Constants.NotificationKeys.NEW_CHALLENGE_ID, "");
+            if (bundle.containsKey(BundleKeys.OPEN_PROFILE)) {
+                mProfileTabPosition = Integer.parseInt(bundle.getString(BundleKeys.OPEN_PROFILE));
+                showProfileScreen();
 
-            if (!TextUtils.isEmpty(challengeIdStr)) {
-                int challengeId = Integer.parseInt(challengeIdStr);
-                if (challengeId > 0) {
-                    com.jeeva.android.Log.d("Temp", "New challenge Id " + challengeId);
-                    showFirstTab(challengeId);
-                }
+            } else if (bundle.containsKey(BundleKeys.GROUP)) {
+                showGroupsScreen();
+
+            } else if (bundle.containsKey(BundleKeys.OPEN_LEADERBOARD)) {
+                showLeaderBoardScreen();
+
+            } else {
+                showChallengesScreen();
             }
+        } else {
+            showChallengesScreen();
         }
     }
 
@@ -146,20 +134,16 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         startActivity(intent);
     }
 
-    private void showProfile() {
-        onClickTab(findViewById(R.id.home_rl_profile), -1);
+    private void showProfileScreen() {
+        onClickTab(Constants.Screens.PROFILE);
     }
 
-    private void showLeaderBoards() {
-        onClickTab(findViewById(R.id.home_rl_leaderboard), -1);
+    private void showLeaderBoardScreen() {
+        onClickTab(Constants.Screens.LEADER_BOARD);
     }
 
-    private void showGroups() {
-        onClickTab(findViewById(R.id.home_rl_group), -1);
-    }
-
-    private void showChallenges() {
-        onClickTab(findViewById(R.id.home_rl_challenges), -1);
+    private void showGroupsScreen() {
+        onClickTab(Constants.Screens.GROUP);
     }
 
 //    private void getunReadNotificationCount() {
@@ -185,27 +169,25 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 //        }
 //    }
 
-    public void onClickTab(View view, int newChallengeIdAsSelected) {
-        switch (view.getId()) {
+    private void onClickTab(int screen) {
+        switch (screen) {
 
-            case R.id.home_rl_challenges:
+            case Constants.Screens.CHALLENGES:
                 setSelected(findViewById(R.id.home_ibtn_challenge), findViewById(R.id.home_tv_challenge));
-                mCurrentFragment = AllChallengesFragment.newInstance();
-                mCurrentFragment.setArguments(getArgsForAllChallengeFragment(newChallengeIdAsSelected));
-                loadFragment(mCurrentFragment);
+                loadFragment(AllChallengesFragment.newInstance());
                 break;
 
-            case R.id.home_rl_group:
+            case Constants.Screens.GROUP:
                 setSelected(findViewById(R.id.home_ibtn_group), findViewById(R.id.home_tv_group));
-                loadFragment(mCurrentFragment = AllGroupsFragment.newInstance());
+                loadFragment(AllGroupsFragment.newInstance());
                 break;
 
-            case R.id.home_rl_leaderboard:
+            case Constants.Screens.LEADER_BOARD:
                 setSelected(findViewById(R.id.home_ibtn_leaderboard), findViewById(R.id.home_tv_leaderboard));
-                loadFragment(mCurrentFragment = new LBLandingFragment());
+                loadFragment(new LBLandingFragment());
                 break;
 
-            case R.id.home_rl_profile:
+            case Constants.Screens.PROFILE:
                 setSelected(findViewById(R.id.home_ibtn_profile), findViewById(R.id.home_tv_profile));
 
                 if (null == NostragamusDataHandler.getInstance().getUserId()) {
@@ -213,21 +195,9 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                     return;
                 }
 
-                loadFragment(mCurrentFragment = ProfileFragment.newInstance(mProfileTabPosition, getIntent().getExtras()));
-//                mProfileTabPosition = 0;
+                loadFragment(ProfileFragment.newInstance(mProfileTabPosition, getIntent().getExtras()));
                 break;
         }
-    }
-
-    @NonNull
-    private Bundle getArgsForAllChallengeFragment(int newChallengeIdAsSelected) {
-        Bundle args = new Bundle();
-        if (newChallengeIdAsSelected >= 0) {
-            com.jeeva.android.Log.d("Temp", "Adding ne challenge id");
-            args.putInt(BundleKeys.NOTIFICATION_CHALLENGE_ID, newChallengeIdAsSelected);
-            args.putBoolean(BundleKeys.SHOULD_LAUNCH_NEW_TAB, true);
-        }
-        return args;
     }
 
     private void setSelected(View selImg, View selText) {
@@ -271,8 +241,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fl_holder, fragment).commit();
     }
 
-    private void showFirstTab(int newChallengeIdAsSelected) {
-        onClickTab(findViewById(R.id.home_rl_challenges), newChallengeIdAsSelected);
+    private void showChallengesScreen() {
+        onClickTab(Constants.Screens.CHALLENGES);
     }
 
     private void navigateToLogIn() {
@@ -366,14 +336,17 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
      */
     @Override
     public void onBackPressed() {
-        if (null != mCurrentFragment
-                && mCurrentFragment instanceof LBLandingFragment
-                && ((LBLandingFragment) mCurrentFragment).onBack()) {
-            return;
-        } else if (mCurrentFragment instanceof AllChallengesFragment) {
+        Fragment visibleCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.home_fl_holder);
+
+        if (null != visibleCurrentFragment &&
+                visibleCurrentFragment instanceof LBLandingFragment &&
+                ((LBLandingFragment) visibleCurrentFragment).onBack()) {
+            // No action here
+
+        } else if (visibleCurrentFragment instanceof AllChallengesFragment) {
             handleDoubleBackPressLogicToExit();
         } else {
-            showFirstTab(-1);
+            showChallengesScreen();
         }
     }
 
@@ -414,7 +387,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     @Override
     public void onClickChallenges() {
-        showChallenges();
+        showChallengesScreen();
     }
 
     @Override
@@ -426,11 +399,22 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 break;
 
             case REFRESH_CHALLENGES_CODE:
-                showChallenges(); // This will refresh the screen
+                showChallengesScreen(); // This will refresh the screen
                 break;
 
             case OPEN_DOWNLOAD_APP_DIALOG:
                 showDownloadPaidApk(getContext());
+                break;
+
+            case CHALLENGE_JOINED:
+                if (bundle != null) {
+                    int challengeId = bundle.getInt(BundleKeys.CHALLENGE_ID, -1);
+                    if (challengeId >= 0) {
+                        mScrollToChallengeId = challengeId;
+                        com.jeeva.android.Log.d(TAG, "Scroll item - challenge id : " + mScrollToChallengeId);
+                    }
+                }
+                showChallengesScreen();
                 break;
         }
     }
@@ -443,7 +427,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private void showJoinedChallenge(Context context, Bundle bundle) {
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-        ChallengeJoinDialogFragment.newInstance(REFRESH_CHALLENGES_CODE, "JOINED CHALLENGE!", bundle)
+        ChallengeJoinDialogFragment.newInstance(CHALLENGE_JOINED, "JOINED CHALLENGE!", bundle)
                 .show(fragmentManager, "challenge_info");
     }
 
@@ -451,20 +435,80 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.home_rl_challenges:
-                showFirstTab(-1);
+                showChallengesScreen();
                 break;
 
             case R.id.home_rl_group:
-                showGroups();
+                showGroupsScreen();
                 break;
 
             case R.id.home_rl_leaderboard:
-                showLeaderBoards();
+                showLeaderBoardScreen();
                 break;
 
             case R.id.home_rl_profile:
-                showProfile();
+                showProfileScreen();
                 break;
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mAllChallengeDataLoaded,
+                new IntentFilter(Constants.IntentActions.ACTION_ALL_CHALLENGE_DATA_LOADED));
+    }
+
+    @Override
+    public void onStop() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mAllChallengeDataLoaded);
+        super.onStop();
+    }
+
+    BroadcastReceiver mAllChallengeDataLoaded = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            /*Intent homeActivityIntent = getIntent();
+            if (homeActivityIntent != null && homeActivityIntent.getExtras() != null) {
+                Bundle bundle = homeActivityIntent.getExtras();
+                boolean isFromNotification = bundle.getBoolean(Constants.NotificationKeys.FROM_NOTIFICATION, false);
+//                bundle.putBoolean(Constants.NotificationKeys.FROM_NOTIFICATION, false);
+
+                if (isFromNotification) {
+                    String challengeIdStr = bundle.getString(Constants.NotificationKeys.NEW_CHALLENGE_ID, "");
+
+                    if (!TextUtils.isEmpty(challengeIdStr)) {
+                        final int challengeId = Integer.parseInt(challengeIdStr);
+                        if (challengeId > 0) {
+                            com.jeeva.android.Log.d("Temp", "New challenge Id " + challengeId);
+
+                            Intent newBroadcastForNotification = new Intent(Constants.IntentActions.ACTION_NEW_CHALLENGE_ID);
+                            newBroadcastForNotification.putExtra(BundleKeys.CHALLENGE_ID, challengeId);
+                            newBroadcastForNotification.putExtra(Constants.NotificationKeys.FROM_NOTIFICATION, true);
+                            LocalBroadcastManager.getInstance(getContext().getApplicationContext()).sendBroadcast(newBroadcastForNotification);
+
+                            return;
+                        }
+                    }
+                }
+            }*/
+
+            /* Once challenge has been joined, let it to be scrolled to visible position into InPlay tab  */
+            com.jeeva.android.Log.d(TAG, "scroll - last joined : " + mScrollToChallengeId);
+            if (mScrollToChallengeId >= 0) {
+                Intent newBroadcastForNotification = new Intent(Constants.IntentActions.ACTION_SCROLL_CHALLENGE);
+                newBroadcastForNotification.putExtra(BundleKeys.CHALLENGE_ID, mScrollToChallengeId);
+                LocalBroadcastManager.getInstance(getContext().getApplicationContext()).sendBroadcast(newBroadcastForNotification);
+
+                /* Reset as once it's scrolled */
+                mScrollToChallengeId = -1;
+
+                return;
+            }
+
+
+        }
+    };
+
 }
