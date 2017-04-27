@@ -68,14 +68,16 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 if (null == match.getResult() || match.getResult().isEmpty()) {
                     mResultsModelListener.setToolbarHeading("Awaiting Results");
                 }
-                if (bundle.containsKey(Constants.ScreenNames.PLAY)){
+//                if (bundle.containsKey(Constants.ScreenNames.PLAY)){
+
+
                     Boolean playedFirstMatch = bundle.getBoolean(BundleKeys.PLAYED_FIRST_MATCH);
                     if (playedFirstMatch){
-                       mResultsModelListener.showResultsToBeDeclared(true);
+                       mResultsModelListener.showResultsToBeDeclared(true, match);
                     }else {
-                        mResultsModelListener.showResultsToBeDeclared(false);
+                        mResultsModelListener.showResultsToBeDeclared(false, match);
                     }
-                }
+//                }
 
             } else if (bundle.containsKey(BundleKeys.MATCH_ID)) {
                 String match_id = bundle.getString(BundleKeys.MATCH_ID);
@@ -289,6 +291,6 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
         void setToolbarHeading(String result);
 
-        void showResultsToBeDeclared(boolean playedFirstMatch);
+        void showResultsToBeDeclared(boolean playedFirstMatchm, Match match);
     }
 }

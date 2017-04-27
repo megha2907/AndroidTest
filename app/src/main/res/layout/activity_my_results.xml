@@ -90,19 +90,37 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/my_results_toolbar_rl"
         android:layout_marginTop="@dimen/dp_12"
-        android:visibility="gone">
+        >
 
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/my_results_declaration_tv_heading"
+        <LinearLayout
+            android:id="@+id/head_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You just predicted your first game!"
-            android:textColor="@color/greenresults"
-            app:typeface="lato_bold"
-            android:layout_marginLeft="@dimen/dp_16"
-            android:layout_marginRight="@dimen/dp_16"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_centerHorizontal="true"
-            android:textSize="@dimen/dp_14"/>
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_12">
+
+            <ImageView
+                android:id="@+id/correct_icon"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:src="@drawable/correct_done"
+                android:visibility="gone"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/my_results_declaration_tv_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/greenresults"
+                app:typeface="lato_bold"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:layout_marginRight="@dimen/dp_16"
+                android:textSize="@dimen/dp_14"/>
+
+        </LinearLayout>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/my_results_declaration_tv_desc"
@@ -110,27 +128,40 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
-            android:text="Results will be declared on 7th Mar,8pm"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:text=""
             android:textColor="#e1e1e1"
             app:typeface="lato_regular"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_below="@+id/my_results_declaration_tv_heading"
+            android:layout_below="@+id/head_layout"
             android:textSize="@dimen/dp_13"/>
 
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/my_results_challenge_btn"
+        <LinearLayout
+            android:id="@+id/my_results_challenge_back_btn_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back to Challenges"
-            android:textColor="@color/cerulean"
-            app:typeface="lato_bold"
-            android:padding="@dimen/dp_5"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_5"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_below="@+id/my_results_declaration_tv_desc"
-            android:textSize="@dimen/dp_13"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_12"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:src="@drawable/left_arrow"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/my_results_challenge_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back to Challenges"
+                android:textColor="@color/cerulean"
+                app:typeface="lato_bold"
+                android:textSize="@dimen/dp_13"/>
+
+        </LinearLayout>
 
         <View
             android:id="@+id/pool_row_v_disclaimer"
@@ -140,7 +171,7 @@
             android:layout_marginLeft="@dimen/dp_16"
             android:layout_marginRight="@dimen/dp_16"
             android:layout_marginTop="@dimen/dp_5"
-            android:layout_below="@id/my_results_challenge_btn" />
+            android:layout_below="@id/my_results_challenge_back_btn_layout" />
 
     </RelativeLayout>
 

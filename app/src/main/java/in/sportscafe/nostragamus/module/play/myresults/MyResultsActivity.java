@@ -9,13 +9,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -23,11 +30,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
@@ -47,6 +53,7 @@ import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -265,6 +272,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             finish();
         } else {
             super.onBackPressed();
+            sendReloadChallengeBroadcast();
         }
     }
 
@@ -275,9 +283,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void navigateToHome() {
-        Intent homeIntent = new Intent(this, HomeActivity.class);
+        /*Intent homeIntent = new Intent(this, HomeActivity.class);
         startActivity(homeIntent);
-        finish();
+        finish();*/
     }
 
     @Override
@@ -326,6 +334,10 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 } else {
                     mResultsPresenter.onClickShare();
                 }
+                break;
+
+            case R.id.my_results_challenge_back_btn_layout:
+                onBackPressed();
                 break;
 
             /*case R.id.fab_fb:
@@ -484,22 +496,67 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     @Override
-    public void showResultsToBeDeclaredView(Boolean playedFirstMatch) {
-        RelativeLayout llResultsDeclaration = (RelativeLayout)findViewById(R.id.my_results_declaration_rl);
+    public void showResultsToBeDeclaredView(Boolean playedFirstMatch, Match match) {
+//        RelativeLayout llResultsDeclaration = (RelativeLayout)findViewById(R.id.my_results_declaration_rl);
         TextView tvResultsDeclarationHeading = (TextView) findViewById(R.id.my_results_declaration_tv_heading);
         TextView tvResultsDeclarationDesc = (TextView) findViewById(R.id.my_results_declaration_tv_desc);
-        TextView tvResultsChallengeBtn = (TextView) findViewById(R.id.my_results_challenge_btn);
-        llResultsDeclaration.setVisibility(View.VISIBLE);
+        LinearLayout backButtonLayout = (LinearLayout) findViewById(R.id.my_results_challenge_back_btn_layout);
+        backButtonLayout.setOnClickListener(this);
 
-        if (playedFirstMatch){
-            tvResultsDeclarationHeading.setText("You just predicted your first game!");
-            tvResultsDeclarationDesc.setText("Results will be declared on"+" 7th March,8pm "+" " +
-                    "We'll update your score,Meanwhile you can play other live games!"); /*change date to challenge end date*/
-            tvResultsChallengeBtn.setVisibility(View.VISIBLE);
-        }else {
-            tvResultsDeclarationHeading.setText("Done");
-            tvResultsDeclarationDesc.setText("Results will be declared on"+" 7th March,8pm"); /*change date to challenge end date*/
-            tvResultsChallengeBtn.setVisibility(View.GONE);
+        if (match != null) {
+            String endDateStr = match.getEndTime();
+            if (!TextUtils.isEmpty(endDateStr)) {
+//                llResultsDeclaration.setVisibility(View.VISIBLE);
+
+                // format date
+                String endDateFormatted = "";
+
+                long endDateMs = TimeUtils.getMillisecondsFromDateString(endDateStr,
+                        Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE_ZZ_ZZ, Constants.DateFormats.GMT);
+                int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(endDateMs, "d"));
+                String month = TimeUtils.getDateStringFromMs(endDateMs, "MMM");
+
+                endDateFormatted = dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " + month + ", " +
+                        TimeUtils.getDateStringFromMs(endDateMs, Constants.DateFormats.HH_MM_AA);
+
+                SpannableStringBuilder builder = new SpannableStringBuilder();
+
+                if (playedFirstMatch) {
+                    String t1 = "Results will be declared on ";
+                    SpannableString st1 = new SpannableString(t1);
+                    builder.append(st1);
+
+                    String t2 = endDateFormatted;
+                    SpannableString st2 = new SpannableString(t2);
+                    st2.setSpan(new ForegroundColorSpan(Color.WHITE), 0, t2.length(), 0);
+                    builder.append(st2);
+
+                    String t3 = " We'll update your score, Meanwhile you can play other live games!";
+                    SpannableString st3 = new SpannableString(t3);
+                    builder.append(st3);
+
+                    tvResultsDeclarationHeading.setText("You just predicted your first game!");
+                    tvResultsDeclarationDesc.setText(builder, TextView.BufferType.SPANNABLE);
+                    backButtonLayout.setVisibility(View.VISIBLE);
+
+                } else {
+                    tvResultsDeclarationHeading.setText("Done!");
+                    findViewById(R.id.correct_icon).setVisibility(View.VISIBLE);
+
+                    // set text
+                    String t1 = "Results will be declared on ";
+                    SpannableString st1 = new SpannableString(t1);
+                    builder.append(st1);
+
+                    String t2 = endDateFormatted;
+                    SpannableString st2 = new SpannableString(t2);
+                    st2.setSpan(new ForegroundColorSpan(Color.WHITE), 0, t2.length(), 0);
+                    builder.append(st2);
+
+                    tvResultsDeclarationDesc.setText(builder, TextView.BufferType.SPANNABLE );
+                    backButtonLayout.setVisibility(View.GONE);
+                }
+            }
         }
     }
 
@@ -631,5 +688,18 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public String getScreenName() {
         return Constants.ScreenNames.RESULTS;
+    }
+
+    private void sendReloadChallengeBroadcast() {
+        /*  Send broadcast after some time so that homeActivity broadcast receivers are registered (onStart) */
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Constants.IntentActions.ACTION_RELOAD_CHALLENGES);
+                LocalBroadcastManager.getInstance(MyResultsActivity.this.getApplicationContext()).sendBroadcast(intent);
+            }
+        }, 500);
+
     }
 }

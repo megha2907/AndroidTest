@@ -300,6 +300,7 @@ public interface Constants {
         String HH_MM_AA = "hh:mm aa";
         String HH_MM_AA_D_MMM = "hh:mm aa, d'th' MMM";
         String YYYY_MMM_DD = "yyyy/MMM/dd";
+        String FORMAT_DATE_T_TIME_ZONE_ZZ_ZZ = "yyyy-MM-dd'T'HH:mm:ssZ";
     }
 
     interface IntentActions {
@@ -314,6 +315,7 @@ public interface Constants {
         String ACTION_NEW_CHALLENGE_ID = "in.sportscafe.nostragamus.intent.action.NEW_CHALLENGE_ID";
         String ACTION_ALL_CHALLENGE_DATA_LOADED = "in.sportscafe.nostragamus.intent.action.ALL_CHALLENGE_DATA_LOADED";
         String ACTION_SCROLL_CHALLENGE = "in.sportscafe.nostragamus.intent.action.SCROLL_CHALLENGE";
+        String ACTION_RELOAD_CHALLENGES = "in.sportscafe.nostragamus.intent.action.RELOAD_CHALLENGES";
     }
 
     interface LeaderBoardPeriods {
