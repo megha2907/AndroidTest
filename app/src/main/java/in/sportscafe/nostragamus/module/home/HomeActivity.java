@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -457,13 +456,23 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         super.onStart();
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mAllChallengeDataLoaded,
                 new IntentFilter(Constants.IntentActions.ACTION_ALL_CHALLENGE_DATA_LOADED));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReloadChallenges,
+                new IntentFilter(Constants.IntentActions.ACTION_RELOAD_CHALLENGES));
     }
 
     @Override
     public void onStop() {
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mAllChallengeDataLoaded);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReloadChallenges);
         super.onStop();
     }
+
+    BroadcastReceiver mReloadChallenges = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            showChallengesScreen();
+        }
+    };
 
     BroadcastReceiver mAllChallengeDataLoaded = new BroadcastReceiver() {
         @Override

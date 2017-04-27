@@ -17,8 +17,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,6 +146,14 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 holder.mTvChallengePrice.setText(builder, TextView.BufferType.SPANNABLE);
 
             }
+
+            /*String prizeMoneyTopLine = challenge.getChallengeInfo().getPrizeMoneyTopline();
+            if (TextUtils.isEmpty(prizeMoneyTopLine)) {
+                holder.mRlCashRewards.setVisibility(View.INVISIBLE);
+            } else {
+                holder.mRlCashRewards.setVisibility(View.VISIBLE);
+                holder.mTvChallengePrice.setText(Html.fromHtml(prizeMoneyTopLine));
+            }*/
         } catch (Exception e) {
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);
         }

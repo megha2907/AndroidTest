@@ -72,8 +72,8 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
-    public void showResultsToBeDeclared(boolean playedFirstMatch) {
-        mResultsView.showResultsToBeDeclaredView(playedFirstMatch);
+    public void showResultsToBeDeclared(boolean playedFirstMatch, Match match) {
+        mResultsView.showResultsToBeDeclaredView(playedFirstMatch, match);
     }
 
     @Override
