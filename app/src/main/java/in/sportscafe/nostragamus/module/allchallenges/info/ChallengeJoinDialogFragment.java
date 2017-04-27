@@ -153,7 +153,7 @@ public class ChallengeJoinDialogFragment extends NostragamusDialogFragment imple
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         if (null != mDismissListener) {
-            mDismissListener.onDismiss(mRequestCode, null);
+            mDismissListener.onDismiss(mRequestCode, getArguments());
         }
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -77,6 +78,7 @@ public class AllChallengesFragment extends NostragamusFragment
     public void onSuccessAllChallengesApi() {
         dismissProgressbar();
         createAdapter();
+        broadcastAllChallengeDataLoaded();
     }
 
     @Override
@@ -122,36 +124,24 @@ public class AllChallengesFragment extends NostragamusFragment
         List<Challenge> challenges = mAllChallengesApiModel.getCompletedChallenges();
         int count = 0;
         boolean completedAvailable = false;
-        boolean shouldShowNewTab = false;
 
         if (challenges.size() > 0) {
             completedAvailable = true;
-            challengeFragment = ChallengeFragment.newInstance(challenges, count++, -1, Constants.ChallengeTabs.COMPLETED);
+            challengeFragment = ChallengeFragment.newInstance(challenges, count++,Constants.ChallengeTabs.COMPLETED);
             mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.COMPLETED);
             mChallengeFragmentList.add(challengeFragment);
         }
 
         List<Challenge> inPlayChallenges = mAllChallengesApiModel.getInPlayChallenges();
         if (inPlayChallenges.size() > 0) {
-            challengeFragment = ChallengeFragment.newInstance(inPlayChallenges, count++, -1, Constants.ChallengeTabs.IN_PLAY);
+            challengeFragment = ChallengeFragment.newInstance(inPlayChallenges, count++, Constants.ChallengeTabs.IN_PLAY);
             mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.IN_PLAY);
             mChallengeFragmentList.add(challengeFragment);
         }
 
         List<Challenge> newChallenges = mAllChallengesApiModel.getNewChallenges();
         if (newChallenges.size() > 0) {
-
-            int newChallengeIdFromNotification = -1;
-            Bundle args = getArguments();
-            if (args != null) {
-                newChallengeIdFromNotification = args.getInt(BundleKeys.NOTIFICATION_CHALLENGE_ID, -1);
-                shouldShowNewTab = args.getBoolean(BundleKeys.SHOULD_LAUNCH_NEW_TAB, false);
-                Log.d("Temp", "all challenge fragment : id " + newChallengeIdFromNotification +
-                        " newTab? : " + shouldShowNewTab);
-            }
-
-            challengeFragment = ChallengeFragment.newInstance(newChallenges, count++,
-                    newChallengeIdFromNotification, Constants.ChallengeTabs.NEW);
+            challengeFragment = ChallengeFragment.newInstance(newChallenges, count++, Constants.ChallengeTabs.NEW);
             mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.NEW);
             mChallengeFragmentList.add(challengeFragment);
         }
@@ -166,13 +156,6 @@ public class AllChallengesFragment extends NostragamusFragment
             if (count > 1 && count == 3 || completedAvailable) {
                 mViewPager.setCurrentItem(1);
             }
-        }
-
-        /* If launched from notification, 'NEW' tab should be shown */
-        if (shouldShowNewTab) {
-            mViewPager.setCurrentItem(2);
-        } else {
-            Log.d("Temp", "should not launch new tab");
         }
     }
 
@@ -267,5 +250,46 @@ public class AllChallengesFragment extends NostragamusFragment
 
             }
         };
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        /*LocalBroadcastManager.getInstance(getContext()).registerReceiver(mNewChallengeFromNotificationReceiver,
+                new IntentFilter(Constants.IntentActions.ACTION_NEW_CHALLENGE_ID));*/
+    }
+
+    @Override
+    public void onStop() {
+        /*LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mNewChallengeFromNotificationReceiver);*/
+        super.onStop();
+    }
+
+    /*BroadcastReceiver mNewChallengeFromNotificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null) {
+                boolean isNotification = intent.getBooleanExtra(Constants.NotificationKeys.FROM_NOTIFICATION, false);
+                if (isNotification) {
+                    mViewPager.setCurrentItem(2);   // 'NEW' tab
+                }
+            }
+        }
+    };*/
+
+    /**
+     * On successfully data loaded from server, broadcast
+     * Used at HomeActivity for handling new-challenge notification
+     */
+    private void broadcastAllChallengeDataLoaded() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Constants.IntentActions.ACTION_ALL_CHALLENGE_DATA_LOADED);
+                LocalBroadcastManager.getInstance(getContext().getApplicationContext()).sendBroadcast(intent);
+            }
+        }, 1000);
+
     }
 }

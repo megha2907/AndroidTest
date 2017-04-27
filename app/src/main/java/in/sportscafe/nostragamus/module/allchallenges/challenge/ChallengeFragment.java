@@ -34,6 +34,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.common.CustomLayoutManagerWithSmoothScroll;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 
 /**
@@ -59,8 +60,6 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
     private ChallengeTimelineFragment mTimelineFragment;
 
-    private int mNewChallengeIdFromNotification = -1;
-
     private boolean mIsViewLayoutSwipe = false;
 
     private RelativeLayout mRlSwitch;
@@ -73,12 +72,10 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
     public static ChallengeFragment newInstance(List<Challenge> challenges,
                                                 int tagId,
-                                                int newChallengeIdFromNotification,
                                                 String thisTabItemName) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(BundleKeys.CHALLENGE_LIST, Parcels.wrap(challenges));
         bundle.putInt(BundleKeys.CHALLENGE_TAG_ID, tagId);
-        bundle.putInt(BundleKeys.NOTIFICATION_CHALLENGE_ID, newChallengeIdFromNotification);
         bundle.putString(BundleKeys.TAB_ITEM_NAME, thisTabItemName);
 
         ChallengeFragment fragment = new ChallengeFragment();
@@ -107,7 +104,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
                 mTimelineFragment = ChallengeTimelineFragment.newInstance()).commit();
 
         mRcvHorizontal = (RecyclerViewPager) findViewById(R.id.challenges_rcv_horizontal);
-        mRcvHorizontal.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mRcvHorizontal.setLayoutManager(new CustomLayoutManagerWithSmoothScroll(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mRcvHorizontal.addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
             @Override
             public void OnPageChanged(int fromPosition, int toPosition) {
@@ -119,7 +116,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         mRcvHorizontal.setHasFixedSize(true);
 
         mRcvVertical = (RecyclerView) findViewById(R.id.challenges_rcv_vertical);
-        mRcvVertical.setLayoutManager(mVerticalManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mRcvVertical.setLayoutManager(mVerticalManager = new CustomLayoutManagerWithSmoothScroll(getContext(), LinearLayoutManager.VERTICAL, false));
         mRcvVertical.setHasFixedSize(true);
 
         mRlChallengeCount = (RelativeLayout) findViewById(R.id.challenges_count_rl);
@@ -138,32 +135,33 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         }
     }
 
-    private void performScrollingIfFromNotification() {
-        Bundle args = getArguments();
-        if (args != null && args.containsKey(BundleKeys.NOTIFICATION_CHALLENGE_ID)) {
-            mNewChallengeIdFromNotification = args.getInt(BundleKeys.NOTIFICATION_CHALLENGE_ID, -1);
-        }
-
-        if (mNewChallengeIdFromNotification >= 0 && mRcvHorizontal != null && mRcvHorizontal.getAdapter() != null) {
-            int pos = getChallengePositionFromId();
+    private void performScrolling(int newChallengeId) {
+        if (newChallengeId >= 0 && mRcvHorizontal != null && mRcvHorizontal.getAdapter() != null) {
+            int pos = getChallengePositionFromId(newChallengeId);
             Log.d("Temp", "Item position in challenge list : " + pos);
+
             if (pos >= 0) {
-                mRcvHorizontal.scrollToPosition(pos);
                 mCurrentPosition = pos;
+                if (mThisTabItemName.equalsIgnoreCase(Constants.ChallengeTabs.IN_PLAY)) {
+                    mRcvHorizontal.smoothScrollToPosition(mCurrentPosition);
+
+                } else if (mThisTabItemName.equalsIgnoreCase(Constants.ChallengeTabs.NEW)) {
+                    mRcvVertical.smoothScrollToPosition(mCurrentPosition);
+                }
             }
         }
     }
 
-    private int getChallengePositionFromId() {
+    private int getChallengePositionFromId(int newChallengeId) {
         int pos = -1;
-        if (mNewChallengeIdFromNotification >= 0) {
+        if (newChallengeId >= 0) {
             Bundle args = getArguments();
             if (args != null && args.containsKey(BundleKeys.CHALLENGE_LIST)) {
                 List<Challenge> challengeList = Parcels.unwrap(args.getParcelable(BundleKeys.CHALLENGE_LIST));
 
                 if (challengeList != null && !challengeList.isEmpty()) {
                     for (int temp = 0; temp < challengeList.size(); temp++) {
-                        if (challengeList.get(temp).getChallengeId() == mNewChallengeIdFromNotification) {
+                        if (challengeList.get(temp).getChallengeId() == newChallengeId) {
                             pos = temp;
                             break;
                         }
@@ -177,7 +175,6 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     @Override
     public void setSwipeAdapter(RecyclerView.Adapter adapter) {
         mRcvHorizontal.setAdapter(adapter, true);
-        performScrollingIfFromNotification();
 
         tvChallengeTotalCount.setText("/ " + String.valueOf(adapter.getItemCount()));
 
@@ -200,17 +197,23 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     }
 
     private void changeChallengesView() {
-        if (mThisTabItemName.equalsIgnoreCase(Constants.ChallengeTabs.COMPLETED)) {
-            mIsViewLayoutSwipe = false;
-            switchToListView();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mThisTabItemName.equalsIgnoreCase(Constants.ChallengeTabs.COMPLETED)) {
+                    mIsViewLayoutSwipe = false;
+                    switchToListView();
 
-        } else if (mThisTabItemName.equalsIgnoreCase(Constants.ChallengeTabs.IN_PLAY)) {
-            mIsViewLayoutSwipe = true;
+                } else if (mThisTabItemName.equalsIgnoreCase(Constants.ChallengeTabs.IN_PLAY)) {
+                    mIsViewLayoutSwipe = true;
 
-        } else if (mThisTabItemName.equalsIgnoreCase(Constants.ChallengeTabs.NEW)) {
-            mIsViewLayoutSwipe = false;
-            switchToListView();
-        }
+                } else if (mThisTabItemName.equalsIgnoreCase(Constants.ChallengeTabs.NEW)) {
+                    mIsViewLayoutSwipe = false;
+                    switchToListView();
+                }
+            }
+        }, 100);
     }
 
     private void updateChallengeCount() {
@@ -542,14 +545,18 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     @Override
     public void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mChallengeItemClickReceiver,
-                new IntentFilter(Constants.IntentActions.ACTION_CHALLENGE_CLICK));
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        localBroadcastManager.registerReceiver(mChallengeItemClickReceiver, new IntentFilter(Constants.IntentActions.ACTION_CHALLENGE_CLICK));
+        localBroadcastManager.registerReceiver(mScrollChallengeReceiver, new IntentFilter(Constants.IntentActions.ACTION_SCROLL_CHALLENGE));
+//        localBroadcastManager.registerReceiver(mNewChallengeFromNotificationReceiver, new IntentFilter(Constants.IntentActions.ACTION_NEW_CHALLENGE_ID));
     }
 
     @Override
     public void onStop() {
-        super.onStop();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mChallengeItemClickReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mScrollChallengeReceiver);
+//        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mNewChallengeFromNotificationReceiver);
+        super.onStop();
     }
 
     BroadcastReceiver mChallengeItemClickReceiver = new BroadcastReceiver() {
@@ -557,11 +564,55 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         public void onReceive(Context context, Intent intent) {
             int tagId = intent.getIntExtra(BundleKeys.CHALLENGE_TAG_ID, -1);
             int clickPosition = intent.getIntExtra(BundleKeys.CLICK_POSITION, -1);
-            boolean swipeView = intent.getBooleanExtra(BundleKeys.CHALLENGE_SWITCH_POS,false);
+            boolean isSwipeView = intent.getBooleanExtra(BundleKeys.CHALLENGE_SWITCH_POS,false);
             String tabName = intent.getStringExtra(BundleKeys.TAB_ITEM_NAME);
 
             if (mThisTabItemName.equalsIgnoreCase(tabName)) {
-                switchView();
+                if (isSwipeView) {
+                    mIsViewLayoutSwipe = true;
+                    mCurrentPosition = clickPosition;
+                    switchToSwipeView(mCurrentPosition);
+
+                } else {
+                    switchView();
+                }
+            }
+        }
+    };
+
+    BroadcastReceiver mNewChallengeFromNotificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            /* Only for NEW tab in challenge-screen */
+            if (intent != null && mThisTabItemName.equalsIgnoreCase(Constants.ChallengeTabs.NEW)) {
+                final int newChallengeId = intent.getIntExtra(BundleKeys.CHALLENGE_ID, -1);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        performScrolling(newChallengeId);
+                    }
+                }, 200);
+            }
+        }
+    };
+
+    BroadcastReceiver mScrollChallengeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null) {
+                if (mThisTabItemName.equalsIgnoreCase(Constants.ChallengeTabs.IN_PLAY)) {
+                    final int newChallengeId = intent.getIntExtra(BundleKeys.CHALLENGE_ID, -1);
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            performScrolling(newChallengeId);
+                        }
+                    }, 100);
+                }
             }
         }
     };

@@ -14,6 +14,9 @@ public class UpdateUserRequest {
     @JsonProperty("user_nick")
     private String userNickName;
 
+    @JsonProperty("user_accepted")
+    private boolean userAccepted;
+
     @JsonProperty("user_photo")
     public String getUserPhoto() {
         return userPhoto;
@@ -33,5 +36,13 @@ public class UpdateUserRequest {
     @JsonProperty("user_nick")
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
+    }
+
+    public boolean isUserAccepted() {
+        return userAccepted;
+    }
+
+    public void setUserAccepted(boolean userAccepted) {
+        this.userAccepted = userAccepted;
     }
 }

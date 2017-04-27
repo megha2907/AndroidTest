@@ -42,7 +42,7 @@ public class GenerateOderApiModelImpl {
      * @param challengeId - challengeId
      * @param configIndex - configIndex
      */
-    public void callGenerateOrder(final long userId, final long challengeId, final int configIndex) {
+    public void callGenerateOrder(final long userId, final int challengeId, final int configIndex) {
 
         final GenerateOrderRequest generateOrderRequest = new GenerateOrderRequest();
         generateOrderRequest.setUserId(userId);
@@ -69,7 +69,10 @@ public class GenerateOderApiModelImpl {
                                     com.jeeva.android.Log.d(TAG, "CheckSumHash Empty - continue to join free challenge");
                                     if (mListener != null) {
                                         Bundle bundle = new Bundle();
-                                        bundle.putParcelable(Constants.BundleKeys.JOINED_CHALLENGE_INFO,Parcels.wrap(generateOrderResponse.getJoinedChallengeInfo()));
+                                        bundle.putInt(Constants.BundleKeys.CHALLENGE_ID, challengeId);
+                                        bundle.putParcelable(Constants.BundleKeys.JOINED_CHALLENGE_INFO,
+                                                Parcels.wrap(generateOrderResponse.getJoinedChallengeInfo()));
+
                                         mListener.joinFreeChallenge(bundle);
                                     }
                                 }
