@@ -32,6 +32,7 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomLayoutManagerWithSmoothScroll;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
@@ -240,7 +241,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
      * Performs paytm transaction
      */
     private void performPaytmTransaction(GenerateOrderResponse generateOrderResponse) {
-        PaytmApiModelImpl paytmApiModel = PaytmApiModelImpl.newInstance(getPaytmApiListener(), getContext());
+        PaytmApiModelImpl paytmApiModel = PaytmApiModelImpl.newInstance(getPaytmApiListener(generateOrderResponse), getContext());
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             paytmApiModel.initPaytmTransaction(generateOrderResponse);
@@ -325,7 +326,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
      *
      * @return
      */
-    private PaytmApiModelImpl.OnPaytmApiModelListener getPaytmApiListener() {
+    private PaytmApiModelImpl.OnPaytmApiModelListener getPaytmApiListener(final GenerateOrderResponse generateOrderResponse) {
         return new PaytmApiModelImpl.OnPaytmApiModelListener() {
             @Override
             public void onTransactionUiError() {
@@ -367,6 +368,13 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             public void onTransactionSuccessResponse(@Nullable PaytmTransactionResponse successResponse) {
                 Log.d(TAG, "Transaction Response - Success");
                 /* Server will arrange all joining, No need of any api here.  */
+
+                if (generateOrderResponse != null  && mChallenge != null) {
+                    NostragamusAnalytics.getInstance().trackRevenue(
+                            generateOrderResponse.getTxnAmount(),
+                            mChallenge.getChallengeId(),
+                            mChallenge.getName());
+                }
 
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Constants.BundleKeys.JOINED_CHALLENGE_INFO, Parcels.wrap(successResponse.getJoinedChallengeInfo()));

@@ -7,15 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class UpdateUserRequest {
 
-
     @JsonProperty("user_photo")
     private String userPhoto;
 
     @JsonProperty("user_nick")
     private String userNickName;
-
-    @JsonProperty("user_accepted")
-    private boolean userAccepted;
 
     @JsonProperty("user_photo")
     public String getUserPhoto() {
@@ -38,11 +34,4 @@ public class UpdateUserRequest {
         this.userNickName = userNickName;
     }
 
-    public boolean isUserAccepted() {
-        return userAccepted;
-    }
-
-    public void setUserAccepted(boolean userAccepted) {
-        this.userAccepted = userAccepted;
-    }
 }
