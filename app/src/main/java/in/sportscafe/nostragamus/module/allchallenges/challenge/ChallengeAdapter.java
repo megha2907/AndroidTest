@@ -393,10 +393,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
                 case R.id.all_challenges_row_rl_rewards:
                     Challenge challengeRewards = getItem(getAdapterPosition());
-                    if (challengeRewards.getChallengeUserInfo().getConfigIndex()!=null) {
+//                    if (challengeRewards.getChallengeUserInfo().getConfigIndex()!=null) {
                         dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
                         showChallengeInfo(context, challengeRewards);
-                    }
+//                    }
                     break;
 
                 case R.id.all_challenges_row_rl_cash_rewards:
@@ -406,10 +406,10 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                         showChallengeInfo(context, challengeJoinNew);
                     }else {
                         Challenge challengeRewardsNew = getItem(getAdapterPosition());
-                        if (challengeRewardsNew.getChallengeUserInfo().getConfigIndex()!=null) {
+//                        if (challengeRewardsNew.getChallengeUserInfo().getConfigIndex()!=null) {
                             dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
                             showChallengeInfo(context, challengeRewardsNew);
-                        }
+//                        }
                     }
                     break;
 
@@ -435,10 +435,16 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         if (dialogType == CHALLENGE_CONFIG_DIALOG_TYPE) {
             ChallengeConfigsDialogFragment.newInstance(43, challenge)
                     .show(fragmentManager, "challenge_configs");
+
         } else if (dialogType == CHALLENGE_REWARDS_DIALOG_TYPE) {
+            int configIndex = 0;
+            if (challenge.getChallengeUserInfo() != null && challenge.getChallengeUserInfo().getConfigIndex() != null) {
+                configIndex = challenge.getChallengeUserInfo().getConfigIndex();
+            }
             ChallengeRewardsFragment.newInstance(44, challenge, challenge.getName() + " Prizes",
-                    challenge.getChallengeUserInfo().getConfigIndex(), challenge.getEndTime())
+                    configIndex, challenge.getEndTime())
                     .show(fragmentManager, "challenge_rewards");
+
         } else {
             ChallengeInfoDialogFragment.newInstance(58, " Info", challenge)
                     .show(fragmentManager, "challenge_info");

@@ -109,17 +109,45 @@ public class AllChallengesApiModelImpl {
         Nostragamus.getInstance().getServerDataManager().setChallengeList(challenges);
     }
 
+    /*
+    * Logic to filter challenges provided by Vignesh
+    *
+        //assuming c is each row of the response
+    if(c.challenge_info.isClosed){ //closed and executed
+      return 'Completed';
+    }else if(!c.user_challenge_info){ //user not joined
+      if(c.count_matches_left == 0 )return 'Completed';
+      else return 'New';
+    }else { //user joined and challenge not closed
+      return 'In Play';
+    }
+     */
     private void categorizeChallenges() {
         for (Challenge challenge : mAllChallenges) {
-            if (challenge.getCountMatchesLeft().equals("0")) {
+            /*if (challenge.getCountMatchesLeft().equals("0")) {
                 // If the endtime of the challenge is fell inside the current time, then it is completed challenge
                 mCompletedChallenges.add(challenge);
             } else if (isChallengeInitiatedByUser(challenge) || challenge.getChallengeUserInfo().isUserJoined()) {
                 mInPlayChallenges.add(challenge);
             } else {
                 mNewChallenges.add(challenge);
-            }
+            }*/
 
+
+            if (challenge.getChallengeInfo().isClosed()) {
+                mCompletedChallenges.add(challenge);        // Completed
+
+            } else if (!challenge.getChallengeUserInfo().isUserJoined()) {
+
+                if (challenge.getCountMatchesLeft().equals("0")) {
+                    mCompletedChallenges.add(challenge);        // Completed
+
+                } else {
+                    mNewChallenges.add(challenge);      // New
+                }
+            } else {
+                mInPlayChallenges.add(challenge);       // InPlay
+            }
         }
     }
 

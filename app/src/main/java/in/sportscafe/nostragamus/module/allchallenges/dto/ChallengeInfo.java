@@ -37,6 +37,9 @@ public class ChallengeInfo {
     @JsonProperty("prize_money_topline")
     private String prizeMoneyTopline;
 
+    @JsonProperty("isClosed")
+    private boolean isClosed;
+
     @JsonProperty("payment_info")
     public void setPaymentInfo(PaymentInfo paymentInfo) {
         this.paymentInfo = paymentInfo;
@@ -80,6 +83,16 @@ public class ChallengeInfo {
     @JsonProperty("prize_money_topline")
     public void setPrizeMoneyTopline(String prizeMoneyTopline) {
         this.prizeMoneyTopline = prizeMoneyTopline;
+    }
+
+    @JsonProperty("isClosed")
+    public boolean isClosed() {
+        return isClosed;
+    }
+
+    @JsonProperty("isClosed")
+    public void setClosed(boolean closed) {
+        isClosed = closed;
     }
 
     @JsonIgnore

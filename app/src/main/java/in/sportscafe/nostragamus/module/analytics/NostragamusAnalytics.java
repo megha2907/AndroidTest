@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.amplitude.api.Amplitude;
 import com.amplitude.api.AmplitudeClient;
+import com.amplitude.api.Revenue;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -419,6 +420,30 @@ public class NostragamusAnalytics {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Tracks revenue
+     * Once paytm payment is successful - Only for paid app
+     * @param price
+     */
+    public void trackRevenue(double price, int challengeId, String challengeName) {
+        if (BuildConfig.IS_PAID_VERSION) {
+            JSONObject eventPropertiesJson = new JSONObject();
+            try {
+                eventPropertiesJson.put("challengeId", challengeId);
+                eventPropertiesJson.put("challengeName", challengeName);
+            } catch (JSONException jEx) {
+                jEx.printStackTrace();
+            }
+
+            Revenue revenue = new Revenue();
+            revenue.setQuantity(1);     // Aways one
+            revenue.setPrice(price);
+            revenue.setEventProperties(eventPropertiesJson);
+
+            mAmplitude.logRevenueV2(revenue);
         }
     }
 }

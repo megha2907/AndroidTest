@@ -147,7 +147,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
 
         TextView tvValue = (TextView) dropDownView.findViewById(R.id.reward_row_tv_value);
 
-        if (TextUtils.isEmpty(value)) {
+        if (TextUtils.isEmpty(value) || value.equalsIgnoreCase("₹ null")) {
             tvValue.setVisibility(View.GONE);
         } else {
             tvValue.setVisibility(View.VISIBLE);
