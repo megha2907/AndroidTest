@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class AllChallengesResponse {
 
-    @JsonProperty("data")
+    /*@JsonProperty("data")
     private List<Challenge> challenges = new ArrayList<>();
 
     @JsonProperty("data")
@@ -21,5 +21,18 @@ public class AllChallengesResponse {
     @JsonProperty("data")
     public void setChallenges(List<Challenge> challenges) {
         this.challenges = challenges;
+    }*/
+
+    @JsonProperty("data")
+    private ChallengesDataResponse response;
+
+    @JsonProperty("data")
+    public ChallengesDataResponse getResponse() {
+        return response;
+    }
+
+    @JsonProperty("data")
+    public void setResponse(ChallengesDataResponse response) {
+        this.response = response;
     }
 }

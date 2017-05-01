@@ -41,7 +41,7 @@ public class Challenge {
     private String countMatchesLeft;
 
     @JsonProperty("matches")
-    private List<Match> matches = new ArrayList<>();
+    private MatchesCategorized matchesCategorized = new MatchesCategorized();
 
     @JsonProperty("rank")
     private Integer userRank;
@@ -116,13 +116,13 @@ public class Challenge {
     }
 
     @JsonProperty("matches")
-    public List<Match> getMatches() {
-        return matches;
+    public MatchesCategorized getMatchesCategorized() {
+        return matchesCategorized;
     }
 
     @JsonProperty("matches")
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
+    public void setMatchesCategorized(MatchesCategorized matchesCategorized) {
+        this.matchesCategorized = matchesCategorized;
     }
 
     @JsonProperty("challenge_image_url")

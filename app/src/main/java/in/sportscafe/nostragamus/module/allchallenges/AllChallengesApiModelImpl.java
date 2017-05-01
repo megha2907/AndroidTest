@@ -7,6 +7,7 @@ import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengesDataResponse;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
@@ -38,7 +39,7 @@ public class AllChallengesApiModelImpl {
 
     public void getAllChallenges() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            callAllChallengesApi();
+            callChallengesApi();
         } else {
             mAllChallengesApiModelListener.onNoInternet();
         }
@@ -73,10 +74,40 @@ public class AllChallengesApiModelImpl {
         return mNewChallenges;
     }
 
-    private void callAllChallengesApi() {
+    private void callChallengesApi() {
         mAllChallengesApiModelListener.onApiCallStarted();
 
         MyWebService.getInstance().getAllChallengesRequest().enqueue(
+                new NostragamusCallBack<AllChallengesResponse>() {
+                    @Override
+                    public void onResponse(Call<AllChallengesResponse> call, Response<AllChallengesResponse> response) {
+                        super.onResponse(call, response);
+
+                        if (!mAllChallengesApiModelListener.onApiCallStopped()) {
+                            return;
+                        }
+
+                        if (response.isSuccessful() && response.body() != null && response.body().getResponse() != null) {
+                            ChallengesDataResponse dataResponse = response.body().getResponse();
+
+                            mCompletedChallenges = dataResponse.getCompletedChallenges();
+                            mNewChallenges = dataResponse.getNewChallenges();
+                            mInPlayChallenges = dataResponse.getInPlayChallenges();
+
+                            mAllChallengesApiModelListener.onSuccessAllChallengesApi();
+
+                        } else {
+                            mAllChallengesApiModelListener.onFailedAllChallengesApi(response.message());
+                        }
+                    }
+                }
+        );
+    }
+
+    private void callAllChallengesApi() {
+        mAllChallengesApiModelListener.onApiCallStarted();
+
+        /*MyWebService.getInstance().getAllChallengesRequest().enqueue(
                 new NostragamusCallBack<AllChallengesResponse>() {
                     @Override
                     public void onResponse(Call<AllChallengesResponse> call, Response<AllChallengesResponse> response) {
@@ -102,7 +133,7 @@ public class AllChallengesApiModelImpl {
                         }
                     }
                 }
-        );
+        );*/
     }
 
     private void saveChallengesToServerDataManager(List<Challenge> challenges) {
@@ -152,9 +183,14 @@ public class AllChallengesApiModelImpl {
     }
 
     private boolean isChallengeInitiatedByUser(Challenge challenge) {
-        for (Match match : challenge.getMatches()) {
-            if (GameAttemptedStatus.NOT != match.getisAttempted()) {
-                return true;
+        if (challenge.getMatchesCategorized() != null) {
+            List<Match> matches = challenge.getMatchesCategorized().getAllMatches();
+            if (matches != null && !matches.isEmpty()) {
+                for (Match match : matches) {
+                    if (GameAttemptedStatus.NOT != match.getisAttempted()) {
+                        return true;
+                    }
+                }
             }
         }
         return false;

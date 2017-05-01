@@ -196,7 +196,10 @@ public interface NostragamusService {
     @GET("/v2/game/users/getCommonLeaderboards")
     Call<CompareLeaderBoardResponse> getLeaderBoardComparisonRequest(@Query("player_id") Integer playerId);
 
-    @GET("/v2/game/users/getUserChallenges")
+    /*@GET("/v2/game/users/getUserChallenges")
+    Call<AllChallengesResponse> getAllChallenges();*/
+
+    @GET("/v2/game/users/getHomeChallenges")
     Call<AllChallengesResponse> getAllChallenges();
 
     @POST("v2/game/users/challenges/transferFromBank")

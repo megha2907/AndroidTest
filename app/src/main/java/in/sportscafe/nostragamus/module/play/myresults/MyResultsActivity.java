@@ -92,6 +92,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     private Bundle matchBundle;
 
     LinearLayoutManager mlayoutManager;
+    private boolean mIsResultAwaitingScreen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -248,7 +249,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mtoolbar = (Toolbar) findViewById(R.id.my_results_toolbar);
         mTitle = (TextView) mtoolbar.findViewById(R.id.toolbar_title);
         mMatchStage = (TextView) mtoolbar.findViewById(R.id.toolbar_match_stage);
-        mTitle.setText("Match Result");
+        mTitle.setText(getString(R.string.match_results));
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
@@ -272,7 +273,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             finish();
         } else {
             super.onBackPressed();
-            sendReloadChallengeBroadcast();
+
+            /* Refresh only for results awaiting screen, NOT for other like Results */
+            if (! mTitle.getText().toString().equalsIgnoreCase(getString(R.string.match_results))) {
+                sendReloadChallengeBroadcast();
+            }
         }
     }
 
@@ -492,12 +497,13 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public void setToolbarHeading(String result) {
         mTitle.setText(result);
+        mIsResultAwaitingScreen = true;
         mRlshareResults.setVisibility(View.GONE);
     }
 
     @Override
     public void showResultsToBeDeclaredView(Boolean playedFirstMatch, Match match) {
-//        RelativeLayout llResultsDeclaration = (RelativeLayout)findViewById(R.id.my_results_declaration_rl);
+        RelativeLayout llResultsDeclaration = (RelativeLayout)findViewById(R.id.my_results_declaration_rl);
         TextView tvResultsDeclarationHeading = (TextView) findViewById(R.id.my_results_declaration_tv_heading);
         TextView tvResultsDeclarationDesc = (TextView) findViewById(R.id.my_results_declaration_tv_desc);
         LinearLayout backButtonLayout = (LinearLayout) findViewById(R.id.my_results_challenge_back_btn_layout);
@@ -506,7 +512,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         if (match != null) {
             String endDateStr = match.getEndTime();
             if (!TextUtils.isEmpty(endDateStr)) {
-//                llResultsDeclaration.setVisibility(View.VISIBLE);
+                llResultsDeclaration.setVisibility(View.VISIBLE);
 
                 // format date
                 String endDateFormatted = "";
