@@ -50,7 +50,7 @@ node {
     stage 'Building'
     env.ANDROID_HOME="/mnt/disk1/data/android/sdk"
     env.JAVA_HOME="/usr/java/default/jre"
-    sh './gradlew clean :app:assembleNostragamusProRelease :app:assembleNostragamusRelease :app:assemblestagerelease :app:assemblestageProrelease'
+    sh './gradlew clean :app:assembleNostragamusProRelease :app:assembleNostragamusRelease :app:assemblestageRelease :app:assemblestageProRelease'
 
     stage 'Upload to S3'
     build job: 'upload_to_s3', wait: false, parameters: [
@@ -62,7 +62,7 @@ node {
     def S3_PATH_STAGE = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/stage-${VER}.apk"
     def S3_PATH_PROD = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/Nostragamus-${VER}.apk"
     def S3_PATH_STAGEPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/stagePro-${VER}.apk"
-    def S3_PATH_PRODPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/NostragamysPro-${VER}.apk"
+    def S3_PATH_PRODPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/NostragamusPro-${VER}.apk"
     
     slackSend channel: "#auto-jenkins",
       color: "good",
