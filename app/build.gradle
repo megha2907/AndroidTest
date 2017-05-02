@@ -49,15 +49,6 @@ android {
             storePassword 'nostragamus'
         }
     }
-    
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def flavor = variant.productFlavors[0].name
-            def ver = variant.versionName
-            def newApkName = flavor + "-"  + ver + ".apk"
-            output.outputFile = new File(output.outputFile.parent, newApkName )
-        }
-    }
 
     buildTypes {
         release {
@@ -119,6 +110,15 @@ android {
             manifestPlaceholders = [ buildTypeSuffix:"" ]
             resValue "string", "app_name", "Nostragamus Dev"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def flavor = variant.productFlavors[0].name
+            def ver = variant.versionName
+            def newApkName = flavor + "-"  + ver + ".apk"
+            output.outputFile = new File(output.outputFile.parent, newApkName )
         }
     }
 }
