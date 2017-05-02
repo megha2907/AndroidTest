@@ -55,7 +55,7 @@ node {
     stage 'Upload to S3'
     build job: 'upload_to_s3', wait: false, parameters: [
             string(name: 'FILE_PATH', value: FILE_PATH),
-            string(name: 'FILE_NAME', value: "*-release.apk"),
+            string(name: 'FILE_NAME', value: "*-${VER}.apk"),
             string(name: 'UPLOAD_PATH', value: UPLOAD_PATH)
     ]
     def S3_PATH_DEV = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-dev-release.apk"
