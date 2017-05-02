@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.CustomProgressbar;
+import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
@@ -59,7 +60,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     private SwipeFlingAdapterView mSwipeFlingAdapterView;
 
-    private TextView mTvNumberOfCards;
+    private TextView mCardNumberTextView;
 
     private ImageView mIv2xPowerup;
 
@@ -88,6 +89,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prediction);
+        setImmersiveFullScreenMode();
 
         mShakeListener = new ShakeListener() {
             @Override
@@ -107,7 +109,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mVgPlayPage = (ViewGroup) findViewById(R.id.prediction_rl_play_page);
         mSwipeFlingAdapterView = (SwipeFlingAdapterView) findViewById(R.id.activity_prediction_swipe);
 
-        mTvNumberOfCards = (TextView) findViewById(R.id.prediction_tv_number_of_cards);
+        mCardNumberTextView = (TextView) findViewById(R.id.card_number_textview);
         mIv2xPowerup = (ImageView) findViewById(R.id.powerups_iv_2x);
         mIvNonegsPowerup = (ImageView) findViewById(R.id.powerups_iv_nonegs);
         mIvPollPowerup = (ImageView) findViewById(R.id.powerups_iv_poll);
@@ -124,6 +126,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         this.mPredictionPresenter = PredictionPresenterImpl.newInstance(this);
         this.mPredictionPresenter.onCreatePrediction(getIntent().getExtras());
     }
+
+
 
     @Override
     protected void onResume() {
@@ -146,9 +150,18 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void setContestName(String contestName, String matchStage) {
-        ((TextView) findViewById(R.id.prediction_tv_contest_name)).setText(contestName);
-        TextView tvMatchStage = (TextView) findViewById(R.id.prediction_tv_match_stage);
+    public void setContestName(String leftContestName, String rightContestName,
+                               String leftImageUrl, String rightImageUrl,
+                               String matchStage) {
+
+        ((TextView) findViewById(R.id.prediction_contest_name_left_textview)).setText(leftContestName);
+        ((TextView) findViewById(R.id.prediction_contest_name_right_textview)).setText(rightContestName);
+        ((HmImageView) findViewById(R.id.prediction_contest_left_imageView)).setImageUrl(leftImageUrl);
+        ((HmImageView) findViewById(R.id.prediction_contest_right_imageView)).setImageUrl(rightImageUrl);
+
+
+        /*((TextView) findViewById(R.id.prediction_tv_contest_name)).setText(leftContestName);
+        TextView tvMatchStage = (TextView) findViewById(R.id.prediction_tv_match_stage);*/
 //        tvMatchStage.setVisibility(View.VISIBLE);
 //        tvMatchStage.setText(matchStage);
     }
@@ -226,6 +239,9 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 mPredictionPresenter.onClickBankTransfer();
 //                new BankInfoDialogFragment().show(getSupportFragmentManager(), "BankInfo");
                 break;
+            case R.id.prediction_share_layout:
+                takeScreenshotAndShare();
+                break;
         }
     }
 
@@ -245,7 +261,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void setNumberofCards(String numberofCards) {
-        mTvNumberOfCards.setText(numberofCards);
+        mCardNumberTextView.setText(numberofCards);
     }
 
     @Override

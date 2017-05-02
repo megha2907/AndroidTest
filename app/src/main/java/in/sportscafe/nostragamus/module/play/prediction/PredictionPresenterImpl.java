@@ -36,7 +36,9 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
         mPredictionModel.init(bundle);
 
 
-        mPredictionView.setContestName(mPredictionModel.getContestName(), mPredictionModel.getMatchStage());
+        mPredictionView.setContestName(mPredictionModel.getLeftContestName(), mPredictionModel.getRightContestName(),
+                mPredictionModel.getLeftContestImageUrl(), mPredictionModel.getRightContestImageUrl(),
+                mPredictionModel.getMatchStage());
         showPopUp();
         updatePowerups();
 

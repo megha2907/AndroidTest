@@ -8,14 +8,10 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
-import android.text.util.Linkify;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,21 +31,18 @@ import com.jeeva.android.widgets.HmImageView;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
-import in.sportscafe.nostragamus.module.common.WebViewActivity;
 import in.sportscafe.nostragamus.module.feed.FeedWebView;
-import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 public class PredictionAdapter extends ArrayAdapter<Question> {
 
-    private static final float HEADER_PERECENTAGE = 10f / 100;
+    private static final float HEADER_PERECENTAGE = 8f / 100;
 
-    private static final float FOOTER_PERECENTAGE = 23f / 100;
+    private static final float FOOTER_PERECENTAGE = 22f / 100;
 
-    private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 4f / 100;
+    private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 7f / 100;
 
     private static final float OPTION_PERECENTAGE = 6.25f / 100;
 
@@ -188,6 +181,14 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         String questionContext = question.getQuestionContext();
         viewHolder.tvContext.setText(Html.fromHtml(questionContext));
 
+        String submittedBy = question.getQuestionSubmittedBy();
+        if (!TextUtils.isEmpty(submittedBy)) {
+            viewHolder.questionBy.setText(submittedBy);
+            viewHolder.questionByLayout.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.questionByLayout.setVisibility(View.GONE);
+        }
+
         viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
 
         CharSequence text = viewHolder.tvContext.getText();
@@ -223,23 +224,23 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
     private void updatePowerUpDetails(ViewHolder viewHolder, Question question) {
         Integer positivePoint = question.getUpdatedPositivePoints();
         if (null == positivePoint || positivePoint == 0) {
-            viewHolder.tvquestionPositivePoints.setVisibility(View.GONE);
+            viewHolder.positivePointsCardView.setVisibility(View.GONE);
             viewHolder.cardViewpoints.setVisibility(View.GONE);
         } else {
-            viewHolder.tvquestionPositivePoints.setText("+" + positivePoint);
+            viewHolder.tvquestionPositivePoints.setText("+" + positivePoint + " pts");
             viewHolder.tvquestionPositivePoints.setTag(positivePoint);
-            viewHolder.tvquestionPositivePoints.setVisibility(View.VISIBLE);
+            viewHolder.positivePointsCardView.setVisibility(View.VISIBLE);
         }
 
         Integer negativePoint = question.getUpdatedNegativePoints();
         if (null == negativePoint || negativePoint == 0) {
-            viewHolder.tvquestionNegativePoints.setVisibility(View.GONE);
-            viewHolder.viewPoints.setVisibility(View.GONE);
+            viewHolder.negativePointsCardView.setVisibility(View.GONE);
+//            viewHolder.viewPoints.setVisibility(View.GONE);
         } else {
-            viewHolder.tvquestionNegativePoints.setText("" + negativePoint);
-            viewHolder.viewPoints.setVisibility(View.VISIBLE);
+            viewHolder.tvquestionNegativePoints.setText("" + negativePoint + " pts");
+//            viewHolder.viewPoints.setVisibility(View.VISIBLE);
             viewHolder.tvquestionNegativePoints.setTag(negativePoint);
-            viewHolder.tvquestionNegativePoints.setVisibility(View.VISIBLE);
+            viewHolder.negativePointsCardView.setVisibility(View.VISIBLE);
         }
 
         String powerupId = question.getPowerUpId();
@@ -470,7 +471,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         TextView tvquestionNegativePoints;
 
-        CardView cardViewpoints;
+        LinearLayout cardViewpoints;
 
         View viewPoints;
 
@@ -486,6 +487,13 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         private View rightOptionArrow;
 
+        TextView questionBy;
+
+        LinearLayout questionByLayout;
+
+        CardView positivePointsCardView;
+        CardView negativePointsCardView;
+
         public ViewHolder(View rootView) {
             cvMainCard = (CardView) rootView.findViewById(R.id.swipe_card_cv_main);
             tvQuestion = (TextView) rootView.findViewById(R.id.swipe_card_tv_question);
@@ -498,16 +506,20 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             tvRightOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_right);
             btnanswer1Percentage = (TextView) rootView.findViewById(R.id.swipe_card_tv_left_poll);
             btnanswer2Percentage = (TextView) rootView.findViewById(R.id.swipe_card_answer2_percentage);
-            tvquestionPositivePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_positive_points);
-            tvquestionNegativePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_negative_points);
-            viewPoints = rootView.findViewById(R.id.swipe_card_question_points_line);
-            cardViewpoints = (CardView) rootView.findViewById(R.id.points_cardview);
+            tvquestionPositivePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_positive_points_textview);
+            tvquestionNegativePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_negative_points_textview);
+            positivePointsCardView = (CardView) rootView.findViewById(R.id.positive_points_cardview);
+            negativePointsCardView = (CardView) rootView.findViewById(R.id.negative_points_cardview);
+//            viewPoints = rootView.findViewById(R.id.swipe_card_question_points_line);
+            cardViewpoints = (LinearLayout) rootView.findViewById(R.id.points_layout);
             tvLockingOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_locking_option);
             llOptionLabels = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_option_labels);
             llQuestionDesc = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_question_desc);
             llPowerUpHolder = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_powerup_holder);
             leftOptionArrow = rootView.findViewById(R.id.swipe_card_iv_left_arrow);
             rightOptionArrow = rootView.findViewById(R.id.swipe_card_iv_right_arrow);
+            questionBy = (TextView) rootView.findViewById(R.id.question_by_textview);
+            questionByLayout = (LinearLayout) rootView.findViewById(R.id.question_by_layout);
         }
     }
 

@@ -151,8 +151,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 holder.mRlCashRewards.setVisibility(View.INVISIBLE);
             } else {
                 holder.mRlCashRewards.setVisibility(View.VISIBLE);
-                Spanned spannedString = Html.fromHtml("<![CDATA["+ prizeMoneyTopLine +"]]>");
-                holder.mTvChallengePrice.setText(spannedString);
+                holder.mTvChallengePrice.setText(Html.fromHtml(prizeMoneyTopLine));
             }
         } catch (Exception e) {
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);

@@ -62,6 +62,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dummy_game);
+        setImmersiveFullScreenMode();
 
         NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.STARTED);
 
