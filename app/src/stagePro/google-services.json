@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "576361348926",
+    "project_id": "sportscafe-scgame-prod"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576361348926:android:3c3bd6e49df59227",
+        "android_client_info": {
+          "package_name": "in.sportscafe.nostragamus.pro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "576361348926-ttp2rkf2d9obi8e2je8c4q55rrpjobkr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.sportscafe.nostragamus",
+            "certificate_hash": "B3EDAE127F97CC504C7EC8ACDF057358557CBC9C"
+          }
+        },
+        {
+          "client_id": "576361348926-vafu19q75uk74qivf4qr091dehdkg9hu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.sportscafe.nostragamus",
+            "certificate_hash": "5A5C81B9932DBEFE0137E6C9019FB10D575DB54C"
+          }
+        },
+        {
+          "client_id": "576361348926-ef040f3his3jfe3pchhqigjvrfjoejtp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBumYUYYWTJmMs8gGL87Ad_GQj4VraZis"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
