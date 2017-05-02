@@ -43,26 +43,26 @@ node {
     }
     def DIR = (sh(returnStdout: true, script: 'pwd')).trim()
     def FILE_PATH = "${DIR}/app/build/outputs/apk"
-    def SOURCE_FILE_PROD = "${FILE_PATH}/app-production-release.apk"
+    def SOURCE_FILE_PROD = "${FILE_PATH}/Nostragamus-${VER}.apk"
     def UPLOAD_PATH = "nostragamus/${VER}"
     echo "SOURCE_FILE: ${SOURCE_FILE_PROD} and UPLOAD_PATH: ${UPLOAD_PATH}"
 
     stage 'Building'
     env.ANDROID_HOME="/mnt/disk1/data/android/sdk"
     env.JAVA_HOME="/usr/java/default/jre"
-    sh './gradlew clean :app:assembleProductionRelease :app:assembleproductionPaidRelease  :app:assembleStageRelease :app:assemblestagePaidRelease'
+    sh './gradlew clean :app:assembleNostragamusProRelease :app:assembleNostragamusRelease :app:assemblestageRelease :app:assemblestageProRelease'
 
     stage 'Upload to S3'
     build job: 'upload_to_s3', wait: false, parameters: [
             string(name: 'FILE_PATH', value: FILE_PATH),
-            string(name: 'FILE_NAME', value: "*-release.apk"),
+            string(name: 'FILE_NAME', value: "*-${VER}.apk"),
             string(name: 'UPLOAD_PATH', value: UPLOAD_PATH)
     ]
     def S3_PATH_DEV = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-dev-release.apk"
-    def S3_PATH_STAGE = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-stage-release.apk"
-    def S3_PATH_PROD = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-production-release.apk"
-    def S3_PATH_STAGEPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-stagePaid-release.apk"
-    def S3_PATH_PRODPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-productionPaid-release.apk"
+    def S3_PATH_STAGE = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/stage-${VER}.apk"
+    def S3_PATH_PROD = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/Nostragamus-${VER}.apk"
+    def S3_PATH_STAGEPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/stagePro-${VER}.apk"
+    def S3_PATH_PRODPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/NostragamusPro-${VER}.apk"
     
     slackSend channel: "#auto-jenkins",
       color: "good",

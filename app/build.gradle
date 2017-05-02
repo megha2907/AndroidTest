@@ -78,22 +78,22 @@ android {
 
         stage {
             manifestPlaceholders = [ buildTypeSuffix:"" ]
-            resValue "string", "app_name", "Nostragamus"
+            resValue "string", "app_name", "Nostra Stage"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
-        stagePaid {
+        stagePro {
             applicationIdSuffix ".pro"
             manifestPlaceholders = [ buildTypeSuffix:".pro" ]
-            resValue "string", "app_name", "Nostra Pro"
+            resValue "string", "app_name", "NostraPro Stage"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
 
-        production {
+        Nostragamus {
             manifestPlaceholders = [ buildTypeSuffix:"" ]
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
-        productionPaid {
+        NostragamusPro {
             applicationIdSuffix ".pro"
             manifestPlaceholders = [ buildTypeSuffix:".pro" ]
             resValue "string", "app_name", "Nostra Pro"
@@ -110,6 +110,15 @@ android {
             manifestPlaceholders = [ buildTypeSuffix:"" ]
             resValue "string", "app_name", "Nostragamus Dev"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def flavor = variant.productFlavors[0].name
+            def ver = variant.versionName
+            def newApkName = flavor + "-"  + ver + ".apk"
+            output.outputFile = new File(output.outputFile.parent, newApkName )
         }
     }
 }
