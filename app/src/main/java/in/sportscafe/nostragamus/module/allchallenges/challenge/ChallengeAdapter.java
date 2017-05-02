@@ -17,8 +17,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.SpannedString;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,7 +121,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         holder.mIvChallengeImage.setImageUrl(challenge.getImage());
 
         try {
-            int mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getPrizeMoney();
+            /*int mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getPrizeMoney();
             if (mChallengeAmount == 0) {
                 holder.mRlCashRewards.setVisibility(View.INVISIBLE);
             } else {
@@ -141,14 +145,15 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 holder.mTvChallengePrice.setText(builder, TextView.BufferType.SPANNABLE);
 
             }
-
-            /*String prizeMoneyTopLine = challenge.getChallengeInfo().getPrizeMoneyTopline();
+*/
+            String prizeMoneyTopLine = challenge.getPrizeMoneyTopline();
             if (TextUtils.isEmpty(prizeMoneyTopLine)) {
                 holder.mRlCashRewards.setVisibility(View.INVISIBLE);
             } else {
                 holder.mRlCashRewards.setVisibility(View.VISIBLE);
-                holder.mTvChallengePrice.setText(Html.fromHtml(prizeMoneyTopLine));
-            }*/
+                Spanned spannedString = Html.fromHtml("<![CDATA["+ prizeMoneyTopLine +"]]>");
+                holder.mTvChallengePrice.setText(spannedString);
+            }
         } catch (Exception e) {
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);
         }
@@ -437,7 +442,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 configIndex = challenge.getChallengeUserInfo().getConfigIndex();
             }
             ChallengeRewardsFragment.newInstance(44, challenge, challenge.getName() + " Prizes",
-                    configIndex, challenge.getEndTime())
+                    configIndex, challenge.getEndTime(), mTabName)
                     .show(fragmentManager, "challenge_rewards");
 
         } else {

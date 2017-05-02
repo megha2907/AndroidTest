@@ -55,6 +55,9 @@ public class Challenge {
     @JsonProperty("challenge_info")
     private ChallengeInfo challengeInfo;
 
+    @JsonProperty("prize_money_topline")
+    private String prizeMoneyTopline;
+
     @JsonProperty("challenge_id")
     public int getChallengeId() {
         return challengeId;
@@ -187,6 +190,16 @@ public class Challenge {
     @JsonProperty("count_matches_left")
     public void setCountMatchesLeft(String countMatchesLeft) {
         this.countMatchesLeft = countMatchesLeft;
+    }
+
+    @JsonProperty("prize_money_topline")
+    public String getPrizeMoneyTopline() {
+        return prizeMoneyTopline;
+    }
+
+    @JsonProperty("prize_money_topline")
+    public void setPrizeMoneyTopline(String prizeMoneyTopline) {
+        this.prizeMoneyTopline = prizeMoneyTopline;
     }
 
 }
