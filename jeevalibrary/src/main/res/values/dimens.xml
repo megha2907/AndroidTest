@@ -134,6 +134,8 @@
     <dimen name="dp_195">195dp</dimen>
     <dimen name="dp_199">199dp</dimen>
     <dimen name="dp_219">219dp</dimen>
+    <dimen name="_dp_16">-16dp</dimen>
+    <dimen name="_dp_14">-14dp</dimen>
 
     <dimen name="default_corner_radius">4dp</dimen>
     <dimen name="default_shadow_radius">4dp</dimen>

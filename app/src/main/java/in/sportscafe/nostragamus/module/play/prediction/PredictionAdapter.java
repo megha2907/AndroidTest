@@ -38,9 +38,9 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 
 public class PredictionAdapter extends ArrayAdapter<Question> {
 
-    private static final float HEADER_PERECENTAGE = 8f / 100;
+    private static final float HEADER_PERECENTAGE = 8.75f / 100;
 
-    private static final float FOOTER_PERECENTAGE = 22f / 100;
+    private static final float FOOTER_PERECENTAGE = 25f / 100;
 
     private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 7f / 100;
 
@@ -189,7 +189,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             viewHolder.questionByLayout.setVisibility(View.GONE);
         }
 
-        viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
+//        viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
 
         CharSequence text = viewHolder.tvContext.getText();
         if (text instanceof Spannable) {
