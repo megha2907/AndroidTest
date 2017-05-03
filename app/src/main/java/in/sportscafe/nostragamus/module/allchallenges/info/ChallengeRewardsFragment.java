@@ -65,7 +65,12 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
 
     private ImageView mBtnPopupClose;
 
-    public static ChallengeRewardsFragment newInstance(int requestCode, Challenge challenge, String challengeName, int configIndex, String endTime) {
+    private String mTabName = "";
+
+    public static ChallengeRewardsFragment newInstance(int requestCode,
+                                                       Challenge challenge, String challengeName,
+                                                       int configIndex, String endTime,
+                                                       String tabName) {
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.BundleKeys.DIALOG_REQUEST_CODE, requestCode);
         bundle.putInt(Constants.BundleKeys.CHALLENGE_ID, challenge.getChallengeId());
@@ -73,6 +78,7 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
         bundle.putInt(Constants.BundleKeys.CONFIG_INDEX, configIndex);
         bundle.putString(Constants.BundleKeys.CHALLENGE_END_TIME, endTime);
         bundle.putParcelable(Constants.BundleKeys.CHALLENGE_INFO, Parcels.wrap(challenge));
+        bundle.putString(Constants.BundleKeys.TAB_ITEM_NAME, tabName);
 
         ChallengeRewardsFragment fragment = new ChallengeRewardsFragment();
         fragment.setArguments(bundle);
@@ -114,6 +120,7 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
         mConfigIndex = bundle.getInt(Constants.BundleKeys.CONFIG_INDEX);
         mChallengeEndTime = bundle.getString(Constants.BundleKeys.CHALLENGE_END_TIME);
         mChallengeInfo = Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.CHALLENGE_INFO));
+        mTabName = bundle.getString(Constants.BundleKeys.TAB_ITEM_NAME);
     }
 
     private void initViews() {
@@ -135,7 +142,10 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
     }
 
     private ChallengeRewardAdapter createAdapter(List<ChallengeConfig> configs) {
-        return new ChallengeRewardAdapter(getContext(), configs, mChallengeEndTime, mChallengeInfo, this);
+        return new ChallengeRewardAdapter(getContext(),
+                configs, mChallengeEndTime,
+                mChallengeInfo, mTabName,
+                this);
     }
 
     @Override

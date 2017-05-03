@@ -25,6 +25,14 @@ public interface PredictionModel {
 
     String getContestName();
 
+    String getLeftContestName();
+
+    String getRightContestName();
+
+    String getLeftContestImageUrl();
+
+    String getRightContestImageUrl();
+
     int get2xPowerupCount();
 
     int getNonegsPowerupCount();

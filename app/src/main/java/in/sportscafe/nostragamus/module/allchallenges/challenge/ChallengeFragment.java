@@ -103,6 +103,8 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         getChildFragmentManager().beginTransaction().replace(R.id.challenges_fl_match_holder,
                 mTimelineFragment = ChallengeTimelineFragment.newInstance()).commit();
 
+        mTimelineFragment.setThisInstantCategory(mThisTabItemName);
+
         mRcvHorizontal = (RecyclerViewPager) findViewById(R.id.challenges_rcv_horizontal);
         mRcvHorizontal.setLayoutManager(new CustomLayoutManagerWithSmoothScroll(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mRcvHorizontal.addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {

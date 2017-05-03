@@ -47,6 +47,9 @@ public class Question {
     @JsonProperty("question_live")
     private boolean questionLive;
 
+    @JsonProperty("submitted_by_name")
+    private String questionSubmittedBy;
+
     @JsonProperty("question_answer")
     private Integer questionAnswer;
 
@@ -510,4 +513,12 @@ public class Question {
         this.playerPoll = playerPoll;
     }
 
+
+    public String getQuestionSubmittedBy() {
+        return questionSubmittedBy;
+    }
+
+    public void setQuestionSubmittedBy(String questionSubmittedBy) {
+        this.questionSubmittedBy = questionSubmittedBy;
+    }
 }

@@ -19,14 +19,17 @@ import java.util.HashMap;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialogFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.ChallengesTimelineAdapter;
 
 /**
  * Created by Jeeva on 15/6/16.
  */
-public class ChallengeTimelineFragment extends NostragamusFragment {
+public class ChallengeTimelineFragment extends NostragamusFragment implements ChallengeTimelineAdapterListener {
 
+
+    private String mThisInstanceCategory = "";
     private TextView mTvMatchesLeft;
 
     private RecyclerView mRcvFeed;
@@ -35,6 +38,10 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
 
     public static ChallengeTimelineFragment newInstance() {
         return new ChallengeTimelineFragment();
+    }
+
+    public void setThisInstantCategory(String thisInstantCategory) {
+        mThisInstanceCategory = thisInstantCategory;
     }
 
     @Nullable
@@ -55,7 +62,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
                     LinearLayoutManager.VERTICAL, false));
             this.mRcvFeed.setHasFixedSize(true);
 
-            mTimelineAdapter = new ChallengesTimelineAdapter(getContext());
+            mTimelineAdapter = new ChallengesTimelineAdapter(getContext(), this, mThisInstanceCategory);
             mRcvFeed.setAdapter(mTimelineAdapter);
         }
     }
@@ -75,7 +82,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
 
     public void refreshChallengeMatches(Challenge challenge) {
         mTimelineAdapter.clear();
-        setMatchesLeft(String.valueOf(challenge.getCountMatchesLeft()),String.valueOf(challenge.getMatches().size()),challenge);
+        setMatchesLeft(String.valueOf(challenge.getCountMatchesLeft()),String.valueOf(challenge.getMatchesCategorized().getAllMatches().size()),challenge);
 
         HashMap<String, Integer> powerupInfo = null;
         try {
@@ -85,7 +92,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
 
         mTimelineAdapter.updateChallengeInfo(challenge);
 
-        mTimelineAdapter.addAll(challenge.getMatches());
+        mTimelineAdapter.addAll(challenge.getMatchesCategorized().getAllMatches());
 
         mRcvFeed.scrollToPosition(0);
     }
@@ -103,5 +110,11 @@ public class ChallengeTimelineFragment extends NostragamusFragment {
         }else {
             mTvMatchesLeft.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void showChallengeJoinDialog(Challenge challenge) {
+        ChallengeConfigsDialogFragment.newInstance(43, challenge)
+                .show(getChildFragmentManager(), "challenge_configs");
     }
 }

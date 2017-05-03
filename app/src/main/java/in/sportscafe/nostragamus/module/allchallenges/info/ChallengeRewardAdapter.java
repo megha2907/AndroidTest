@@ -39,11 +39,17 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
 
     private Challenge mChallengeInfo;
 
-    public ChallengeRewardAdapter(Context context, List<ChallengeConfig> configs, String ChallengeEndTime, Challenge challengeInfo, OnConfigAccessListener accessListener) {
+    private String mTabName;
+
+    public ChallengeRewardAdapter(Context context, List<ChallengeConfig> configs,
+                                  String ChallengeEndTime, Challenge challengeInfo,
+                                  String tabName,
+                                  OnConfigAccessListener accessListener) {
         super(context);
         mAccessListener = accessListener;
         mChallengeEndTime = ChallengeEndTime;
         mChallengeInfo = challengeInfo;
+        mTabName = tabName;
         addAll(configs);
     }
 
@@ -76,11 +82,11 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
 
         int dayOfMonthinEndTime = Integer.parseInt(TimeUtils.getDateStringFromMs(endTimeMs, "d"));
 
+        String prizesHandOutDate = dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
+                TimeUtils.getDateStringFromMs(endTimeMs, "MMM");
+
         // Setting end date of the challenge
-        holder.mTvChallengeEndTime.setText("Prizes will be announced once challenge ends on the "+
-                       dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
-                        TimeUtils.getDateStringFromMs(endTimeMs, "MMM")
-        );
+        holder.mTvChallengeEndTime.setText("Prizes will be handed out within a day when the challenge ends on " + prizesHandOutDate);
 
        // holder.mTvDisclaimer.setText("The money you win ultimately will be decided by the number of people who join the challenge");
 
@@ -109,6 +115,18 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
         }
 
         mAccessListener.onConfigHeightChanged();
+
+
+        /*Only for COMPLETED tab */
+        if (mTabName.equalsIgnoreCase(Constants.ChallengeTabs.COMPLETED)) {
+            if (mChallengeInfo.getChallengeUserInfo().isUserJoined()) {
+                holder.mFreePaidLinerLayout.setVisibility(View.VISIBLE);
+            } else {
+                holder.mFreePaidLinerLayout.setVisibility(View.GONE);
+            }
+            holder.mTvChallengeEndTime.setText("Prizes handed out on " + prizesHandOutDate);
+            holder.mTvChallengeEndTime.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -169,6 +187,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
         TextView mTvDisclaimerTxt;
         TextView mTvDisclaimer;
         TextView mTvUserWinningAmount;
+        LinearLayout mFreePaidLinerLayout;
 
         public ConfigVH(View view) {
             super(view);
@@ -181,6 +200,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
             mTvDisclaimerTxt = (TextView) view.findViewById(R.id.config_reward_row_tv_disclaimer_txt);
             mTvDisclaimer = (TextView) view.findViewById(R.id.config_reward_row_tv_disclaimer);
             mTvUserWinningAmount = (TextView) view.findViewById(R.id.config_reward_tv_winning);
+            mFreePaidLinerLayout = (LinearLayout) view.findViewById(R.id.config_reward_ll_paid_layout);
 
         }
 

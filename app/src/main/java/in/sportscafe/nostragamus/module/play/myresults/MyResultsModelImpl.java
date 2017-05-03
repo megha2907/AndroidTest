@@ -67,16 +67,23 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 matchId = match.getId();
                 if (null == match.getResult() || match.getResult().isEmpty()) {
                     mResultsModelListener.setToolbarHeading("Awaiting Results");
+
+                    Boolean playedFirstMatch = bundle.getBoolean(BundleKeys.PLAYED_FIRST_MATCH);
+                    if (playedFirstMatch){
+                        mResultsModelListener.showResultsToBeDeclared(true, match);
+                    }else {
+                        mResultsModelListener.showResultsToBeDeclared(false, match);
+                    }
                 }
 //                if (bundle.containsKey(Constants.ScreenNames.PLAY)){
 
 
-                    Boolean playedFirstMatch = bundle.getBoolean(BundleKeys.PLAYED_FIRST_MATCH);
+                    /*Boolean playedFirstMatch = bundle.getBoolean(BundleKeys.PLAYED_FIRST_MATCH);
                     if (playedFirstMatch){
                        mResultsModelListener.showResultsToBeDeclared(true, match);
                     }else {
                         mResultsModelListener.showResultsToBeDeclared(false, match);
-                    }
+                    }*/
 //                }
 
             } else if (bundle.containsKey(BundleKeys.MATCH_ID)) {

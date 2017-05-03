@@ -41,7 +41,7 @@ public class Challenge {
     private String countMatchesLeft;
 
     @JsonProperty("matches")
-    private List<Match> matches = new ArrayList<>();
+    private MatchesCategorized matchesCategorized = new MatchesCategorized();
 
     @JsonProperty("rank")
     private Integer userRank;
@@ -54,6 +54,9 @@ public class Challenge {
 
     @JsonProperty("challenge_info")
     private ChallengeInfo challengeInfo;
+
+    @JsonProperty("prize_money_topline")
+    private String prizeMoneyTopline;
 
     @JsonProperty("challenge_id")
     public int getChallengeId() {
@@ -116,13 +119,13 @@ public class Challenge {
     }
 
     @JsonProperty("matches")
-    public List<Match> getMatches() {
-        return matches;
+    public MatchesCategorized getMatchesCategorized() {
+        return matchesCategorized;
     }
 
     @JsonProperty("matches")
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
+    public void setMatchesCategorized(MatchesCategorized matchesCategorized) {
+        this.matchesCategorized = matchesCategorized;
     }
 
     @JsonProperty("challenge_image_url")
@@ -187,6 +190,16 @@ public class Challenge {
     @JsonProperty("count_matches_left")
     public void setCountMatchesLeft(String countMatchesLeft) {
         this.countMatchesLeft = countMatchesLeft;
+    }
+
+    @JsonProperty("prize_money_topline")
+    public String getPrizeMoneyTopline() {
+        return prizeMoneyTopline;
+    }
+
+    @JsonProperty("prize_money_topline")
+    public void setPrizeMoneyTopline(String prizeMoneyTopline) {
+        this.prizeMoneyTopline = prizeMoneyTopline;
     }
 
 }

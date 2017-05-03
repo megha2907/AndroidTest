@@ -39,11 +39,11 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         String POINTS = "points";
     }
 
-    private static final float HEADER_PERECENTAGE = 10f / 100;
+    private static final float HEADER_PERECENTAGE = 8f / 100;
 
-    private static final float FOOTER_PERECENTAGE = 23f / 100;
+    private static final float FOOTER_PERECENTAGE = 22f / 100;
 
-    private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 6f / 100;
+    private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 7f / 100;
 
     private static final float OPTION_PERECENTAGE = 6.25f / 100;
 
@@ -177,7 +177,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         viewHolder.mainView.setVisibility(View.INVISIBLE);
 
         // It is to highlight the points layer
-        viewHolder.llPointsLayout.setBackgroundResource(R.drawable.dg_points_bg);
+//        viewHolder.llPointsLayout.setBackgroundResource(R.drawable.dg_points_bg);
 
         viewHolder.tvQuestion.setText(question.getQuestionText());
         viewHolder.tvContext.setText(Html.fromHtml(question.getQuestionContext()));
@@ -198,23 +198,23 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
     private void updatePowerUpDetails(ViewHolder viewHolder, Question question) {
         Integer positivePoint = question.getUpdatedPositivePoints();
         if (null == positivePoint || positivePoint == 0) {
-            viewHolder.tvquestionPositivePoints.setVisibility(View.GONE);
+            viewHolder.positivePointsCardView.setVisibility(View.GONE);
             viewHolder.cardViewpoints.setVisibility(View.GONE);
         } else {
-            viewHolder.tvquestionPositivePoints.setText("+" + positivePoint);
+            viewHolder.tvquestionPositivePoints.setText("+" + positivePoint + " pts");
             viewHolder.tvquestionPositivePoints.setTag(positivePoint);
-            viewHolder.tvquestionPositivePoints.setVisibility(View.VISIBLE);
+            viewHolder.positivePointsCardView.setVisibility(View.VISIBLE);
         }
 
         Integer negativePoint = question.getUpdatedNegativePoints();
         if (null == negativePoint || negativePoint == 0) {
-            viewHolder.tvquestionNegativePoints.setVisibility(View.GONE);
-            viewHolder.viewPoints.setVisibility(View.GONE);
+            viewHolder.negativePointsCardView.setVisibility(View.GONE);
+//            viewHolder.viewPoints.setVisibility(View.GONE);
         } else {
-            viewHolder.tvquestionNegativePoints.setText("" + negativePoint);
-            viewHolder.viewPoints.setVisibility(View.VISIBLE);
+            viewHolder.tvquestionNegativePoints.setText("" + negativePoint + " pts");
+//            viewHolder.viewPoints.setVisibility(View.VISIBLE);
             viewHolder.tvquestionNegativePoints.setTag(negativePoint);
-            viewHolder.tvquestionNegativePoints.setVisibility(View.VISIBLE);
+            viewHolder.negativePointsCardView.setVisibility(View.VISIBLE);
         }
 
         String powerupId = question.getPowerUpId();
@@ -471,7 +471,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
         TextView tvquestionNegativePoints;
 
-        CardView cardViewpoints;
+        LinearLayout cardViewpoints;
 
         View viewPoints;
 
@@ -493,10 +493,13 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
         private View rightOptionArrow;
 
+        CardView positivePointsCardView;
+        CardView negativePointsCardView;
+
         public ViewHolder(View rootView) {
             mainView = rootView;
             cvMainCard = (CardView) rootView.findViewById(R.id.swipe_card_cv_main);
-            llPointsLayout = (LinearLayout) rootView.findViewById(R.id.swipe_card_question_points_rl);
+//            llPointsLayout = (LinearLayout) rootView.findViewById(R.id.swipe_card_question_points_rl);
             tvQuestion = (TextView) rootView.findViewById(R.id.swipe_card_tv_question);
             tvContext = (TextView) rootView.findViewById(R.id.swipe_card_tv_context);
             flLeftArea = (FrameLayout) rootView.findViewById(R.id.swipe_card_fl_left_area);
@@ -505,10 +508,12 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
             ivRightOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_right);
             btnanswer1Percentage = (TextView) rootView.findViewById(R.id.swipe_card_tv_left_poll);
             btnanswer2Percentage = (TextView) rootView.findViewById(R.id.swipe_card_answer2_percentage);
-            tvquestionPositivePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_positive_points);
-            tvquestionNegativePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_negative_points);
-            viewPoints = rootView.findViewById(R.id.swipe_card_question_points_line);
-            cardViewpoints = (CardView) rootView.findViewById(R.id.points_cardview);
+            tvquestionPositivePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_positive_points_textview);
+            tvquestionNegativePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_negative_points_textview);
+            positivePointsCardView = (CardView) rootView.findViewById(R.id.positive_points_cardview);
+            negativePointsCardView = (CardView) rootView.findViewById(R.id.negative_points_cardview);
+//            viewPoints = rootView.findViewById(R.id.swipe_card_question_points_line);
+            cardViewpoints = (LinearLayout) rootView.findViewById(R.id.points_layout);
             tvLockingOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_locking_option);
             llOptionLabels = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_option_labels);
             llQuestionDesc = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_question_desc);
@@ -518,7 +523,6 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
             tvRightOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_right);
             leftOptionArrow = rootView.findViewById(R.id.swipe_card_iv_left_arrow);
             rightOptionArrow = rootView.findViewById(R.id.swipe_card_iv_right_arrow);
-            llPointsLayout = (LinearLayout) rootView.findViewById(R.id.swipe_card_question_points_rl);
         }
     }
 

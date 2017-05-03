@@ -20,6 +20,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
@@ -30,14 +32,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.ShadowLayout;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import org.parceler.Parcels;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,7 +57,6 @@ import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
-import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 import static in.sportscafe.nostragamus.R.dimen;
@@ -122,7 +121,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         holder.mIvChallengeImage.setImageUrl(challenge.getImage());
 
         try {
-            int mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getPrizeMoney();
+            /*int mChallengeAmount = challenge.getChallengeInfo().getPaymentInfo().getPrizeMoney();
             if (mChallengeAmount == 0) {
                 holder.mRlCashRewards.setVisibility(View.INVISIBLE);
             } else {
@@ -146,14 +145,14 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 holder.mTvChallengePrice.setText(builder, TextView.BufferType.SPANNABLE);
 
             }
-
-            /*String prizeMoneyTopLine = challenge.getChallengeInfo().getPrizeMoneyTopline();
+*/
+            String prizeMoneyTopLine = challenge.getPrizeMoneyTopline();
             if (TextUtils.isEmpty(prizeMoneyTopLine)) {
                 holder.mRlCashRewards.setVisibility(View.INVISIBLE);
             } else {
                 holder.mRlCashRewards.setVisibility(View.VISIBLE);
                 holder.mTvChallengePrice.setText(Html.fromHtml(prizeMoneyTopLine));
-            }*/
+            }
         } catch (Exception e) {
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);
         }
@@ -165,9 +164,9 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         } else {
             holder.mRlAfterJoinedChallenge.setVisibility(View.GONE);
             holder.mRlMatchesLeft.setVisibility(View.VISIBLE);
-            holder.mTvMatchesLeft.setText(String.valueOf(challenge.getCountMatchesLeft()) + "/" + String.valueOf(challenge.getMatches().size()) + " Games Left to score!");
+            holder.mTvMatchesLeft.setText(String.valueOf(challenge.getCountMatchesLeft()) + "/" + String.valueOf(challenge.getMatchesCategorized().getAllMatches().size()) + " Games Left to score!");
             holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
-            int percentage = (Integer.parseInt(challenge.getCountMatchesLeft()) * 100) / challenge.getMatches().size();
+            int percentage = (Integer.parseInt(challenge.getCountMatchesLeft()) * 100) / challenge.getMatchesCategorized().getAllMatches().size();
             setPercentPoll(holder.mTvMatchesLeft,percentage ,holder.mTvMatchesLeft.getContext());
             mOpenJoin=true;
         }
@@ -442,7 +441,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 configIndex = challenge.getChallengeUserInfo().getConfigIndex();
             }
             ChallengeRewardsFragment.newInstance(44, challenge, challenge.getName() + " Prizes",
-                    configIndex, challenge.getEndTime())
+                    configIndex, challenge.getEndTime(), mTabName)
                     .show(fragmentManager, "challenge_rewards");
 
         } else {

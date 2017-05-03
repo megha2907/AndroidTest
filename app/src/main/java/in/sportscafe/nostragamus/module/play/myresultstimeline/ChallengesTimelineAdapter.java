@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
@@ -31,7 +32,9 @@ import in.sportscafe.nostragamus.Constants.DateFormats;
 import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeTimelineAdapterListener;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialogFragment;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
@@ -51,10 +54,18 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
     private static final String COMMENTARY = "commentary";
 
+    private ChallengeTimelineAdapterListener mChallengeTimelineAdapterListener;
+    private Context mContext;
     private Challenge mChallengeInfo;
+    private String mThisScreenCategory = "";
 
-    public ChallengesTimelineAdapter(Context context) {
+    public ChallengesTimelineAdapter(Context context,
+                                     @NonNull ChallengeTimelineAdapterListener listener,
+                                     String thisScreenCategory) {
         super(context);
+        mContext = context;
+        mChallengeTimelineAdapterListener = listener;
+        mThisScreenCategory = thisScreenCategory;
     }
 
     public void updateChallengeInfo(Challenge challengeInfo) {
@@ -117,11 +128,14 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     || timeAgo.timeUnit == TimeUnit.SECOND;
 
             Integer attemptedStatus = match.getisAttempted();
+            if (attemptedStatus == null) {
+                attemptedStatus = 0;
+            }
 
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
             holder.mTvMatchResult.setText(match.getStage());
 
-            if (mChallengeInfo.getChallengeUserInfo().isUserJoined()) {
+//            if (mChallengeInfo.getChallengeUserInfo().isUserJoined()) {
 
                 holder.mBtnMatchLocked.setVisibility(View.GONE);
 
@@ -218,9 +232,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 //                    holder.mTvMatchResult.setText(match.getStage());
                     }
                 }
-            }else {
+            /*}else {
                 holder.mBtnMatchLocked.setVisibility(View.VISIBLE);
-            }
+            }*/
         }
     }
 
@@ -285,6 +299,18 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
         @Override
         public void onClick(View view) {
+
+            /* Only for 'NEW' screen/section, no click action should be listened as No match is yet Joined
+             * But Joining (on play clicked) should be allowed */
+            if (mThisScreenCategory.equalsIgnoreCase(Constants.ChallengeTabs.NEW)) {
+                if (view.getId() ==  R.id.schedule_row_btn_playmatch &&
+                        ! mChallengeInfo.getChallengeUserInfo().isUserJoined()) {
+
+                    mChallengeTimelineAdapterListener.showChallengeJoinDialog(mChallengeInfo);
+                }
+                return;
+            }
+
             Context context = view.getContext();
             Bundle bundle = null;
 
@@ -312,16 +338,17 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     }
                     navigateToPrediction(context, bundle);
                     break;
+
                 case R.id.schedule_row_btn_points:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.VIEW_ANSWERS);
-
                     navigateToMyResults(context, bundle);
                     break;
+
                 case R.id.schedule_row_ll_waiting_for_result:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.RESULT_WAITING);
-
                     navigateToMyResults(context, bundle);
                     break;
+
                 case R.id.schedule_row_tv_info:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.DID_NOT_PLAY);
                     navigateToMyResults(context, bundle);

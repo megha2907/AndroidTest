@@ -12,7 +12,9 @@ import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
  */
 public interface PredictionView extends InAppView {
 
-    void setContestName(String contestName, String matchStage);
+    void setContestName(String leftContestName, String rightContestName,
+                        String leftContestImageUrl, String rightContestImageUrl,
+                        String matchStage);
 
     void setAdapter(PredictionAdapter predictionAdapter,
                     SwipeFlingAdapterView.OnSwipeListener<Question> swipeListener);

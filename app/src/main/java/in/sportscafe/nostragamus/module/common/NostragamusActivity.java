@@ -210,4 +210,11 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
 
     }
 
+    protected void setImmersiveFullScreenMode() {
+        int visibility =  View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        getWindow().getDecorView().setSystemUiVisibility(visibility);
+    }
+
 }
