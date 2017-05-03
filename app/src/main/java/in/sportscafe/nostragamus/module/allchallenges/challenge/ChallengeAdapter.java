@@ -157,7 +157,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);
         }
 
-        if (challenge.getChallengeUserInfo().isUserJoined()|| challenge.getCountMatchesLeft().equals("0")) {
+        if (challenge.getChallengeUserInfo().isUserJoined() || challenge.getCountMatchesLeft().equals("0")) {
             holder.mRlAfterJoinedChallenge.setVisibility(View.VISIBLE);
             holder.mRlMatchesLeft.setVisibility(View.INVISIBLE);
             holder.mRlMainPowerup.setVisibility(View.VISIBLE);
@@ -167,8 +167,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mTvMatchesLeft.setText(String.valueOf(challenge.getCountMatchesLeft()) + "/" + String.valueOf(challenge.getMatchesCategorized().getAllMatches().size()) + " Games Left to score!");
             holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
             int percentage = (Integer.parseInt(challenge.getCountMatchesLeft()) * 100) / challenge.getMatchesCategorized().getAllMatches().size();
-            setPercentPoll(holder.mTvMatchesLeft,percentage ,holder.mTvMatchesLeft.getContext());
-            mOpenJoin=true;
+            setPercentPoll(holder.mTvMatchesLeft, percentage, holder.mTvMatchesLeft.getContext());
+            mOpenJoin = true;
         }
 
 //        Context context = holder.mIv2xPowerup.getContext();
@@ -257,6 +257,20 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         //for completed challenges
         if (challenge.getCountMatchesLeft().equals("0")) {
             holder.mTvRewards.setText("Winners");
+
+            if (challenge.getChallengeUserInfo().isUserJoined()) {
+                holder.mRlLeaderBoardRank.setVisibility(View.VISIBLE);
+                holder.mRlMatchesLeft.setVisibility(View.INVISIBLE);
+                holder.mRlMainPowerup.setVisibility(View.VISIBLE);
+                holder.mVLeaderBoardRank.setVisibility(View.VISIBLE);
+            } else {
+                holder.mRlLeaderBoardRank.setVisibility(View.GONE);
+                holder.mRlMatchesLeft.setVisibility(View.VISIBLE);
+                holder.mTvMatchesLeft.setText("0" + "/" + String.valueOf(challenge.getMatchesCategorized().getAllMatches().size()) + " Games Left to score!");
+                holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
+                holder.mVLeaderBoardRank.setVisibility(View.GONE);
+            }
+
         }
 
 
@@ -297,6 +311,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         RelativeLayout mRlAfterJoinedChallenge;
         RelativeLayout mRlMatchesLeft;
         RelativeLayout mRlRewards;
+        RelativeLayout mRlLeaderBoardRank;
+        View mVLeaderBoardRank;
         TextView mTvRewards;
         Button mTvMatchesLeft;
 
@@ -336,6 +352,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlMatchesLeft = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_matches_left);
             mRlRewards = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_rewards);
             mTvRewards = (TextView) V.findViewById(id.all_challenges_row_btn_rewards);
+            mRlLeaderBoardRank = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_leaderboard_rank);
+            mVLeaderBoardRank = (View) V.findViewById(id.all_challenges_row_v_leaderboard_rank);
 
             mRlShowGames.setOnClickListener(this);
             mIvChallengeInfo.setOnClickListener(this);
@@ -393,8 +411,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 case R.id.all_challenges_row_rl_rewards:
                     Challenge challengeRewards = getItem(getAdapterPosition());
 //                    if (challengeRewards.getChallengeUserInfo().getConfigIndex()!=null) {
-                        dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
-                        showChallengeInfo(context, challengeRewards);
+                    dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
+                    showChallengeInfo(context, challengeRewards);
 //                    }
                     break;
 
@@ -403,11 +421,11 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                         Challenge challengeJoinNew = getItem(getAdapterPosition());
                         dialogType = CHALLENGE_CONFIG_DIALOG_TYPE;
                         showChallengeInfo(context, challengeJoinNew);
-                    }else {
+                    } else {
                         Challenge challengeRewardsNew = getItem(getAdapterPosition());
 //                        if (challengeRewardsNew.getChallengeUserInfo().getConfigIndex()!=null) {
-                            dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
-                            showChallengeInfo(context, challengeRewardsNew);
+                        dialogType = CHALLENGE_REWARDS_DIALOG_TYPE;
+                        showChallengeInfo(context, challengeRewardsNew);
 //                        }
                     }
                     break;
@@ -466,7 +484,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
     }
 
 
-    private void setPercentPoll(Button button, int percent,Context context) {
+    private void setPercentPoll(Button button, int percent, Context context) {
         int width = context.getResources().getDimensionPixelSize(R.dimen.dp_140);
         int height = context.getResources().getDimensionPixelOffset(R.dimen.dp_24);
 
@@ -479,7 +497,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         ));
     }
 
-    private Drawable getPercentDrawable(int fullWidth, int fullHeight, int percentWidth, int percentColor,Context context) {
+    private Drawable getPercentDrawable(int fullWidth, int fullHeight, int percentWidth, int percentColor, Context context) {
         Bitmap outputBitmap = Bitmap.createBitmap(fullWidth, fullHeight, Bitmap.Config.ARGB_4444);
         Canvas outputCanvas = new Canvas(outputBitmap);
 

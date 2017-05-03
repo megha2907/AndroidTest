@@ -203,6 +203,7 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
     @Override
     public void onConfigHeightChanged() {
 
+        ((SimpleItemAnimator) mRcvConfigs.getItemAnimator()).setSupportsChangeAnimations(false);
         mRcvConfigs.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -213,7 +214,6 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
                 }
 
                 WindowManager.LayoutParams attributes = getDialog().getWindow().getAttributes();
-                attributes.windowAnimations = R.style.DialogAnimation;
                 getDialog().getWindow().setLayout(attributes.width, configsHeight);
             }
         }, 250);
