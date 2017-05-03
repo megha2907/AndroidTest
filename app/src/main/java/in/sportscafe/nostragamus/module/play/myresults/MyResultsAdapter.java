@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -740,7 +741,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()) {
             TextView tvcommentary = (TextView) leaderboardView.findViewById(R.id.schedule_row_tv_match_result_commentary);
             tvcommentary.setVisibility(View.VISIBLE);
-            tvcommentary.setText(match.getResultdesc());
+            tvcommentary.setText(Html.fromHtml(match.getResultdesc()));
         }
 
         return leaderboardView;
