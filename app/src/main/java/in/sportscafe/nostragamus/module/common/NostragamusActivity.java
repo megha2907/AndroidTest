@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
@@ -210,11 +211,42 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
 
     }
 
+    /**
+     * Sets Immersive mode
+     * Status bar and navigation bar gets hidden
+     */
     protected void setImmersiveFullScreenMode() {
-        int visibility =  View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        int visibility =   View.SYSTEM_UI_FLAG_IMMERSIVE |
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+                View.SYSTEM_UI_FLAG_FULLSCREEN |
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(visibility);
+
+        setSystemUiChangeListenerForImmersiveMode(visibility);
+    }
+
+    private void setSystemUiChangeListenerForImmersiveMode(final int visibilityApplied) {
+        final Runnable hideSystemUiCallback = new Runnable() {
+            @Override
+            public void run() {
+                setImmersiveFullScreenMode();
+            }
+        };
+
+        final Handler mSystemUiHandler = new Handler();
+
+        getWindow().getDecorView().
+                setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+                    @Override
+                    public void onSystemUiVisibilityChange(int visibility) {
+                        if ((visibility & visibilityApplied) == 0) {
+                            mSystemUiHandler.removeCallbacks(hideSystemUiCallback);
+                            mSystemUiHandler.postDelayed(hideSystemUiCallback, 1000);
+                        }
+                    }
+                });
     }
 
 }
