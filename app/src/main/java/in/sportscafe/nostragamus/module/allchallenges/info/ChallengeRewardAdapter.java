@@ -96,6 +96,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
 
         holder.mLlDropDownHolder.removeAllViews();
 
+
         try {
             if (mChallengeInfo.getCountMatchesLeft().equals("0")) {
                 if (!config.getRewardDetails().getWinnersRewardsList().isEmpty()) {
@@ -115,7 +116,6 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
         }
 
         mAccessListener.onConfigHeightChanged();
-
 
         /*Only for COMPLETED tab */
         if (mTabName.equalsIgnoreCase(Constants.ChallengeTabs.COMPLETED)) {

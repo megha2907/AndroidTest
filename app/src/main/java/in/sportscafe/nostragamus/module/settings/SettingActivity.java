@@ -95,6 +95,15 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.settings_btn_paytm:
                 navigateToPaytm();
                 break;
+            case R.id.settings_btn_game_play:
+                navigateToWebView("http://nostragamus.in/gameplayapp.html", "Gameplay");
+                break;
+            case R.id.settings_btn_rules:
+                navigateToWebView("http://nostragamus.in/rulesapp.html", "Rules");
+                break;
+            case R.id.settings_btn_faq:
+                navigateToWebView("http://nostragamus.in/faqapp.html", "FAQ");
+                break;
             case R.id.settings_btn_about_us:
                 navigateToWebView("http://nostragamus.in/about.html", "About NostraGamus");
                 break;

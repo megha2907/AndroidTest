@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -105,7 +106,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
         // Setting date of the match
-        holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) +" "+
+        holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
                 + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA)
         );
@@ -135,9 +136,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
             holder.mTvMatchResult.setText(match.getStage());
 
-//            if (mChallengeInfo.getChallengeUserInfo().isUserJoined()) {
+            if (mChallengeInfo.getChallengeUserInfo().isUserJoined()) {
 
-                holder.mBtnMatchLocked.setVisibility(View.GONE);
+                holder.mBtnMatchLock.setVisibility(View.GONE);
 
                 if (match.getMatchQuestionCount() > 0) {
 
@@ -232,9 +233,37 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 //                    holder.mTvMatchResult.setText(match.getStage());
                     }
                 }
-            /*}else {
-                holder.mBtnMatchLocked.setVisibility(View.VISIBLE);
-            }*/
+            } else {
+                holder.mBtnMatchLock.setVisibility(View.VISIBLE);
+
+                if (match.getMatchQuestionCount() > 0) {
+
+                    if (match.isResultPublished()) { // if match Result Published
+
+                        //if match not Attempted then IsAttempted=0
+                        if (GameAttemptedStatus.NOT == attemptedStatus) {
+                            // Show Opportunity missed at scoring!
+                            holder.mBtnMatchLock.setText("COMPLETED");
+                        }
+
+                    } else { // if Results not published
+                        if (GameAttemptedStatus.NOT == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
+                            if (isMatchStarted) {
+                                // You cannot play the match as the match already started
+                                holder.mBtnMatchLock.setText("COMPLETED");
+                            } else {
+                                // show Play button
+                                holder.mBtnMatchLock.setText("PLAY");
+                            }
+                        }
+                    }
+                } else { // No questions prepared
+                    if (!isMatchStarted) { // Still the question is not prepared for these matches
+                        holder.mBtnMatchLock.setText("Coming Up");
+                    }
+                }
+
+            }
         }
     }
 
@@ -270,7 +299,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
         TextView mTvDate;
 
-        CustomButton mBtnMatchLocked;
+        Button mBtnMatchLock;
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -287,10 +316,11 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             mLlResultWait = (RelativeLayout) V.findViewById(R.id.schedule_row_ll_waiting_for_result);
             mBtnPlayMatch = (CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
             mBtnMatchPoints = (CustomButton) V.findViewById(R.id.schedule_row_btn_points);
-            mBtnMatchLocked = (CustomButton) V.findViewById(R.id.schedule_row_btn_match_locked);
+            mBtnMatchLock = (Button) V.findViewById(R.id.schedule_row_btn_match_locked);
 
             mLlCardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
 
+            mBtnMatchLock.setOnClickListener(this);
             mBtnPlayMatch.setOnClickListener(this);
             mBtnMatchPoints.setOnClickListener(this);
             mLlResultWait.setOnClickListener(this);
@@ -300,16 +330,16 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         @Override
         public void onClick(View view) {
 
-            /* Only for 'NEW' screen/section, no click action should be listened as No match is yet Joined
-             * But Joining (on play clicked) should be allowed */
-            if (mThisScreenCategory.equalsIgnoreCase(Constants.ChallengeTabs.NEW)) {
-                if (view.getId() ==  R.id.schedule_row_btn_playmatch &&
-                        ! mChallengeInfo.getChallengeUserInfo().isUserJoined()) {
-
-                    mChallengeTimelineAdapterListener.showChallengeJoinDialog(mChallengeInfo);
-                }
-                return;
-            }
+//            /* Only for 'NEW' screen/section, no click action should be listened as No match is yet Joined
+//             * But Joining (on play clicked) should be allowed */
+//            if (mThisScreenCategory.equalsIgnoreCase(Constants.ChallengeTabs.NEW)) {
+//                if (view.getId() == R.id.schedule_row_btn_playmatch &&
+//                        !mChallengeInfo.getChallengeUserInfo().isUserJoined()) {
+//
+//                    mChallengeTimelineAdapterListener.showChallengeJoinDialog(mChallengeInfo);
+//                }
+//                return;
+//            }
 
             Context context = view.getContext();
             Bundle bundle = null;
@@ -317,11 +347,11 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             Match match = (Match) view.getTag();
             if (null != match) {
                 bundle = new Bundle();
-               // Nostragamus.getInstance().getServerDataManager().setMatchInfo(match);
+                // Nostragamus.getInstance().getServerDataManager().setMatchInfo(match);
                 bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
                 bundle.putString(BundleKeys.SCREEN, Constants.ScreenNames.PROFILE);
 
-                if(null != match.getSportId()) {
+                if (null != match.getSportId()) {
                     bundle.putInt(BundleKeys.SPORT_ID, match.getSportId());
                 }
             }
@@ -332,9 +362,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             GameAttemptedStatus.PARTIALLY == match.getisAttempted() ? AnalyticsActions.CONTINUE : AnalyticsActions.PLAY
                     );
 
-                    if(null != mChallengeInfo) {
+                    if (null != mChallengeInfo) {
                         //Nostragamus.getInstance().getServerDataManager().setChallengeInfo(mChallengeInfo);
-                       bundle.putParcelable(BundleKeys.CHALLENGE_INFO, Parcels.wrap(mChallengeInfo));
+                        bundle.putParcelable(BundleKeys.CHALLENGE_INFO, Parcels.wrap(mChallengeInfo));
                     }
                     navigateToPrediction(context, bundle);
                     break;
@@ -352,6 +382,11 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                 case R.id.schedule_row_tv_info:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.DID_NOT_PLAY);
                     navigateToMyResults(context, bundle);
+                    break;
+
+                case R.id.schedule_row_btn_match_locked:
+                    Log.i("onclick","matchcliced");
+                    mChallengeTimelineAdapterListener.showChallengeJoinDialog(mChallengeInfo);
                     break;
             }
         }

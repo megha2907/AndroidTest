@@ -61,6 +61,8 @@
     <string name="about">About</string>
     <string name="about_us">About Nostragamus</string>
     <string name="terms_of_service">Terms of Service</string>
+    <string name="game_play">Gameplay</string>
+    <string name="rules">Rules</string>
     <string name="privacy">Privacy</string>
     <string name="dummy_game">Play Sample Game</string>
 

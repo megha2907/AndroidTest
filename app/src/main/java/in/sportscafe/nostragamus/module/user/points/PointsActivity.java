@@ -194,9 +194,9 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
     public void setGroupHeadings(String groupName, String heading) {
         TextView mGroupHeading = (TextView) findViewById(R.id.points_group_heading);
         mGroupSubHeading = (TextView) findViewById(R.id.points_group_sub_heading);
-        mTvLeaderBoardHeading.setVisibility(View.GONE);
-        mGroupHeading.setVisibility(View.VISIBLE);
-        mGroupSubHeading.setVisibility(View.VISIBLE);
+        mTvLeaderBoardHeading.setVisibility(View.VISIBLE);
+        mGroupHeading.setVisibility(View.GONE);
+        mGroupSubHeading.setVisibility(View.GONE);
         mGroupHeading.setText(groupName);
         mGroupSubHeading.setText(heading);
     }
