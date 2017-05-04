@@ -39,19 +39,18 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         String POINTS = "points";
     }
 
-    private static final float HEADER_PERECENTAGE = 8f / 100;
+    /* Layout dynamic height is same as in Play (PredictionActivity) */
+    private static final float HEADER_PERECENTAGE = 8.75f / 100;
 
-    private static final float FOOTER_PERECENTAGE = 22f / 100;
-
-    private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 7f / 100;
-
-    private static final float OPTION_PERECENTAGE = 6.25f / 100;
+    private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 8.5f / 100;
 
     private static final float CARD_HEIGHT_PERECENTAGE = 53f / 100;
 
-    private static final float L_R_DELTA_PERECENTAGE = 1.5f / 100;
+    private static final float OPTION_PERECENTAGE = 6.25f / 100;
 
-    private static final float NEITHER_DELTA_PERECENTAGE = 1.5f / 100;
+    private static final float FOOTER_POWERUP_LAYOUT_PERCENTAGE = 10f / 100;
+
+    private static final float FOOTER_NEITHER_BUTTON_PERCENTAGE = 9.75f / 100;
 
     private LayoutInflater mLayoutInflater;
 
@@ -137,8 +136,11 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
 //        rootView.findViewById(R.id.prediction_rl_play_page).setPadding(0, rlp.height, 0, 0);
 
-        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_footer).getLayoutParams();
-        rlp.height = (int) (screenHeight * FOOTER_PERECENTAGE);
+        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.neither_btn_layout).getLayoutParams();
+        rlp.height = (int) (screenHeight * FOOTER_NEITHER_BUTTON_PERCENTAGE);
+
+        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_ll_powerup_layout).getLayoutParams();
+        rlp.height = (int) (screenHeight * FOOTER_POWERUP_LAYOUT_PERCENTAGE);
     }
 
     private void applyMainCardPercentages(ViewHolder viewHolder) {
