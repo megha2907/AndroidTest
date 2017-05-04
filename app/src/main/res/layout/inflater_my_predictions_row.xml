@@ -73,7 +73,7 @@
                 android:layout_marginTop="@dimen/dp_2"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:textColor="@color/my_answer_text_selector"
+                android:textColor="@color/white_60"
                 android:textSize="@dimen/dp_13"
                 android:visibility="gone"
                 app:typeface="lato_regular" />
@@ -86,7 +86,7 @@
                 android:layout_marginTop="@dimen/dp_2"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:textColor="@color/my_answer_text_selector"
+                android:textColor="@color/white_60"
                 android:textSize="@dimen/dp_13"
                 android:visibility="gone"
                 app:typeface="lato_regular" />

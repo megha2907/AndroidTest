@@ -34,7 +34,7 @@ public class WebViewActivity extends AppCompatActivity {
         mtoolbarHeading= mbundle.getString("heading");
 
         startWebView(mUrl);
-       // initToolBar();
+        initToolBar();
 
     }
 
@@ -102,7 +102,7 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     public void initToolBar() {
-        mtoolbar = (Toolbar) findViewById(R.id.settings_toolbar);
+        mtoolbar = (Toolbar) findViewById(R.id.webview_toolbar);
         mtoolbar.setTitle(mtoolbarHeading);
         setSupportActionBar(mtoolbar);
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);

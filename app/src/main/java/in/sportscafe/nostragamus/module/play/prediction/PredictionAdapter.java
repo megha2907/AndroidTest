@@ -189,7 +189,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             viewHolder.questionByLayout.setVisibility(View.GONE);
         }
 
-//        viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
+        viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
 
         CharSequence text = viewHolder.tvContext.getText();
         if (text instanceof Spannable) {

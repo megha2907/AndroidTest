@@ -264,7 +264,11 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
                 int configsHeight;
                 if (mRcvConfigs.getAdapter().getItemCount() >= 3) {
-                    configsHeight = mMaxHeight + mTitleHeight+ mGreaterHeight;
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        configsHeight = mMaxHeight + mTitleHeight+ mGreaterHeight;
+                    }else {
+                        configsHeight = mMaxHeight + mTitleHeight+ 3*mGreaterHeight;
+                    }
                 } else {
                     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight+ mExtraHeight;
