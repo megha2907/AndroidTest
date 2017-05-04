@@ -197,40 +197,51 @@
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/prediction_ll_neither"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_36"
+            <!-- Neither button layout -->
+            <RelativeLayout
+                android:id="@+id/neither_btn_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_above="@id/prediction_ll_powerup_layout"
-                android:layout_centerHorizontal="true"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10"
-                android:minWidth="@dimen/dp_90"
-                android:background="@drawable/shape_neither_bg"
-                android:clickable="true"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:visibility="invisible">
+                android:orientation="vertical"
+                android:gravity="center">
 
-                <ImageView
-                    android:layout_width="@dimen/dp_16"
-                    android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/neither_icon" />
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/prediction_tv_neither_text"
+                <LinearLayout
+                    android:id="@+id/prediction_ll_neither"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/dp_5"
-                    android:text="@string/neither"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_12"
-                    android:visibility="visible"
-                    app:typeface="lato_regular" />
+                    android:layout_height="@dimen/dp_36"
+                    android:layout_above="@id/prediction_ll_powerup_layout"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:minWidth="@dimen/dp_90"
+                    android:background="@drawable/shape_neither_bg"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
 
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:src="@drawable/neither_icn" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/prediction_tv_neither_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/dp_5"
+                        android:text="@string/neither"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_12"
+                        android:visibility="visible"
+                        app:typeface="lato_regular" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </RelativeLayout>
     </RelativeLayout>
