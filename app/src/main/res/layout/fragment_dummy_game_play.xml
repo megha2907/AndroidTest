@@ -210,7 +210,6 @@
                     android:id="@+id/prediction_ll_neither"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_36"
-                    android:layout_above="@id/prediction_ll_powerup_layout"
                     android:layout_centerHorizontal="true"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
