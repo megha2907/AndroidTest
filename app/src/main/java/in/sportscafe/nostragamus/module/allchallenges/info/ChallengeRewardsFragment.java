@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.allchallenges.info;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
@@ -131,7 +132,7 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
 
         mTitleHeight = getResources().getDimensionPixelSize(R.dimen.dp_42);
         mMaxHeight = getResources().getDimensionPixelSize(R.dimen.dp_360);
-        mExtraHeight = getResources().getDimensionPixelSize(R.dimen.dp_80);
+        mExtraHeight = getResources().getDimensionPixelSize(R.dimen.dp_20);
 
         mBtnPopupClose = (ImageView) findViewById(R.id.popup_cross_btn);
         mBtnPopupClose.setOnClickListener(this);
@@ -166,9 +167,29 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
         mRcvConfigs.setAdapter(mConfigAdapter);
         mBtnPopupClose.setVisibility(View.VISIBLE);
 
-
         findViewById(R.id.configs_ll_title).setVisibility(View.VISIBLE);
         ((TextView) findViewById(R.id.configs_tv_challenge_name)).setText(mChallengeName);
+
+//        mRcvConfigs.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                int rvHeight = mRcvConfigs.getHeight();
+//                Log.i("rvHeight", rvHeight + "");
+//
+//                if (rvHeight > mMaxHeight) {
+//                    Log.i("inside", "maxheight");
+//                    ViewGroup.LayoutParams params = mRcvConfigs.getLayoutParams();
+//                    params.height = mMaxHeight;
+//                    mRcvConfigs.setLayoutParams(params);
+//                } else {
+//                    Log.i("inside", "wrapcontent");
+//                    ViewGroup.LayoutParams params = mRcvConfigs.getLayoutParams();
+//                    params.height = RecyclerView.LayoutParams.WRAP_CONTENT;
+//                    mRcvConfigs.setLayoutParams(params);
+//                }
+//            }
+//        }, 100);
+
     }
 
     @Override
@@ -207,16 +228,23 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
         mRcvConfigs.postDelayed(new Runnable() {
             @Override
             public void run() {
-                int configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight+ mExtraHeight;
-                Log.d("ChallengeConfigsDialogFragment", "MaxHeight --> " + mMaxHeight + ", " + "ScrollHeight --> " + configsHeight);
-                if (configsHeight > mMaxHeight) {
-                    configsHeight = mMaxHeight;
+                int configsHeight;
+
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    configsHeight =  mMaxHeight + mTitleHeight+ mExtraHeight;
+                }else {
+                    configsHeight = mMaxHeight + mTitleHeight+ 4*mExtraHeight;
                 }
+                Log.d("ChallengeConfigsDialogFragment", "MaxHeight --> " + mMaxHeight + ", " + "ScrollHeight --> " + configsHeight);
+//                if (configsHeight > mMaxHeight) {
+//                    configsHeight = mMaxHeight;
+//                }
 
                 WindowManager.LayoutParams attributes = getDialog().getWindow().getAttributes();
                 getDialog().getWindow().setLayout(attributes.width, configsHeight);
             }
-        }, 250);
+        }, 100);
+
     }
 
 

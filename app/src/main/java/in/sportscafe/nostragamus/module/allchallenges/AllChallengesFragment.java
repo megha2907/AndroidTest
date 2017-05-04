@@ -167,6 +167,7 @@ public class AllChallengesFragment extends NostragamusFragment
      */
     private void setTabLayout(CustomViewPager viewPager, int inPlayChallengeSize, int newChallengeSize) {
         try {
+
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tl);
             tabLayout.setupWithViewPager(viewPager);
             tabLayout.addOnTabSelectedListener(getTabListener());
@@ -180,8 +181,12 @@ public class AllChallengesFragment extends NostragamusFragment
 
                 // InPlay tab
                 TabLayout.Tab inPlayTab = tabLayout.getTabAt(1);
-                if (inPlayTab != null) {
-                    inPlayTab.setCustomView(mViewPagerAdapter.getTabView(1, true, inPlayChallengeSize));
+                if (inPlayChallengeSize !=0) {
+                    if (inPlayTab != null) {
+                        inPlayTab.setCustomView(mViewPagerAdapter.getTabView(1, true, inPlayChallengeSize));
+                    }
+                }else {
+                    inPlayTab.setCustomView(mViewPagerAdapter.getTabView(1, true, newChallengeSize));
                 }
 
                 // New tab

@@ -146,6 +146,27 @@
             <View style="@style/SettingOptionDivider" />
 
             <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/settings_btn_game_play"
+                style="@style/SettingOptionStyle"
+                android:text="@string/game_play" />
+
+            <View style="@style/SettingOptionDivider" />
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/settings_btn_rules"
+                style="@style/SettingOptionStyle"
+                android:text="@string/rules" />
+
+            <View style="@style/SettingOptionDivider" />
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/settings_btn_faq"
+                style="@style/SettingOptionStyle"
+                android:text="FAQ" />
+
+            <View style="@style/SettingOptionDivider" />
+
+            <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/settings_btn_terms_service"
                 style="@style/SettingOptionStyle"
                 android:text="@string/terms_of_service" />
