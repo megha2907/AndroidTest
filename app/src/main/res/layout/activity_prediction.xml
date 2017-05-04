@@ -166,7 +166,7 @@
                     android:layout_width="@dimen/dp_26"
                     android:layout_height="@dimen/dp_26"
                     android:textColor="@color/white"
-                    android:padding="@dimen/dp_5"
+                    android:padding="@dimen/dp_7"
                     android:src="@drawable/play_share_icn"
                     android:background="@drawable/round_button_bg"/>
 
@@ -185,7 +185,7 @@
                     android:layout_width="@dimen/dp_8"
                     android:layout_height="@dimen/dp_8"
                     android:src="@drawable/right_arrow_feedicon"
-                    />
+                    android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 
@@ -228,7 +228,7 @@
                     android:layout_width="@dimen/dp_8"
                     android:layout_height="@dimen/dp_8"
                     android:src="@drawable/right_arrow_feedicon"
-                    />
+                    android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
 

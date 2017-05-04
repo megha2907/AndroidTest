@@ -133,6 +133,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         super.onResume();
 //        mShakeListener.resume(this);
         dismissMessage();
+        setImmersiveFullScreenMode();
     }
 
     @Override
