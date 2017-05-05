@@ -404,7 +404,6 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     break;
 
                 case R.id.schedule_row_btn_match_locked:
-                    Log.i("onclick", "matchcliced");
                     mChallengeTimelineAdapterListener.showChallengeJoinDialog(mChallengeInfo);
                     break;
             }

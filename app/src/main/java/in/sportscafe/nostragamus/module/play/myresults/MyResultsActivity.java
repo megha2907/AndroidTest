@@ -71,6 +71,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     private Button btnFlipPowerUpCount;
 
     private Toolbar mtoolbar;
+    private Bundle mbundle;
     private TextView mTitle;
     private TextView mMatchStage;
     private boolean goback = false;
@@ -177,6 +178,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
         powerupMainFab.setVisibility(View.GONE);
 
+        mbundle = new Bundle();
+        mbundle = getIntent().getExtras();
+
        /* Bundle mbundle = new Bundle();
         mbundle = getIntent().getExtras();
         Match match = Parcels.unwrap(mbundle.getParcelable(Constants.BundleKeys.MATCH_LIST));
@@ -274,8 +278,13 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         } else {
             super.onBackPressed();
 
-            /* Refresh only for results awaiting screen, NOT for other like Results */
-            if (! mTitle.getText().toString().equalsIgnoreCase(getString(R.string.match_results))) {
+
+//            if (! mTitle.getText().toString().equalsIgnoreCase(getString(R.string.match_results))) {
+//                sendReloadChallengeBroadcast();
+//            }
+
+             /* Refresh only when coming from play screen to results awaiting , NOT for other like Results */
+            if (!mbundle.containsKey(BundleKeys.SCREEN)){
                 sendReloadChallengeBroadcast();
             }
         }
