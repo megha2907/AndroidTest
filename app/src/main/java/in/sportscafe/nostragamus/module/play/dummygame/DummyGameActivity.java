@@ -171,21 +171,21 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     @Override
     public void on2xApplied() {
 //        mDummyGameTextFragment.hideBottomText();
-        addDummyText(getPowerUpInstruction("You used a Doubler powerup - this doubles the points you gain (or lose!)."));
+        addDummyText(getPowerUpInstruction("You used a Doubler powerup - this doubles the points you gain (or lose). Now swipe!."));
         addDummyText(getSwipeInstruction());
     }
 
     @Override
     public void onNonegsApplied() {
 //        mDummyGameTextFragment.hideBottomText();
-        addDummyText(getPowerUpInstruction("You used a No-Negatives powerup -  this means you won’t lose points for a wrong prediction!"));
+        addDummyText(getPowerUpInstruction("You used a No-Negatives powerup - this means NO points lost for a wrong prediction. Now swipe!"));
         addDummyText(getSwipeInstruction());
     }
 
     @Override
     public void onPollApplied() {
 //        mDummyGameTextFragment.hideBottomText();
-        addDummyText(getPowerUpInstruction("You used an Audience Poll - this tells you how other players have answered this question."));
+        addDummyText(getPowerUpInstruction("You used an Audience Poll - this shows you how others predicted this question. Now swipe!"));
         addDummyText(getSwipeInstruction());
     }
 
@@ -236,7 +236,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     private DGInstruction getSwipeInstruction() {
         DGInstruction instruction = new DGInstruction();
-        instruction.setName("Now swipe to make a prediction");
+        instruction.setName("");
         instruction.setTextType(TextType.TOP_TEXT);
         instruction.setType(InstructionType.TEXT);
 
