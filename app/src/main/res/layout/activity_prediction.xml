@@ -311,7 +311,7 @@
         <RelativeLayout
             android:id="@+id/prediction_rl_footer"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_150"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true">
 
             <ImageView
@@ -326,7 +326,6 @@
                 android:layout_height="@dimen/dp_65"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp_10"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/dp_22">
 
@@ -471,7 +470,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/prediction_ll_powerup_layout"
                 android:orientation="vertical"
-                android:gravity="center_horizontal|bottom"
+                android:gravity="center"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_marginBottom="@dimen/dp_5">
 
@@ -480,7 +479,7 @@
                     android:id="@+id/prediction_ll_neither"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_36"
-                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
                     android:minWidth="@dimen/dp_90"

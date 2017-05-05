@@ -50,7 +50,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
     private static final float FOOTER_POWERUP_LAYOUT_PERCENTAGE = 10f / 100;
 
-    private static final float FOOTER_NEITHER_BUTTON_PERCENTAGE = 9.75f / 100;
+    private static final float FOOTER_NEITHER_BUTTON_PERCENTAGE = 12f / 100;
 
     private LayoutInflater mLayoutInflater;
 
@@ -136,11 +136,14 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
 //        rootView.findViewById(R.id.prediction_rl_play_page).setPadding(0, rlp.height, 0, 0);
 
-        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.neither_btn_layout).getLayoutParams();
-        rlp.height = (int) (screenHeight * FOOTER_NEITHER_BUTTON_PERCENTAGE);
+        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_footer).getLayoutParams();
+        rlp.height = (int) (screenHeight * (FOOTER_NEITHER_BUTTON_PERCENTAGE + FOOTER_POWERUP_LAYOUT_PERCENTAGE));
 
         rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_ll_powerup_layout).getLayoutParams();
         rlp.height = (int) (screenHeight * FOOTER_POWERUP_LAYOUT_PERCENTAGE);
+
+        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.neither_btn_layout).getLayoutParams();
+        rlp.height = (int) (screenHeight * FOOTER_NEITHER_BUTTON_PERCENTAGE);
     }
 
     private void applyMainCardPercentages(ViewHolder viewHolder) {

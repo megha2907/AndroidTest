@@ -157,6 +157,8 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     }
 
     private void onUpdateButtonClicked() {
+        hideSoftKeyboard();
+
         if (mIsOnBoardFlow) {
             if (!mCbProfileDisclaimer.isChecked()) {
                 showMessage(Constants.Alerts.EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED);

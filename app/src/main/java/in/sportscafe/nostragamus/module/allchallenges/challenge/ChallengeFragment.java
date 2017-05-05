@@ -341,6 +341,9 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
             if (mRcvVertical.getChildAt(i + 1) != null) {
                 mRcvVertical.getChildAt(i + 1).startAnimation(animationSet);
             }
+            if (mRcvVertical.getChildAt(i + 2) != null) {
+                mRcvVertical.getChildAt(i + 2).startAnimation(animationSet);
+            }
         }
 
         if (mRcvVertical.getChildAt(i) != null) {
