@@ -292,7 +292,7 @@
                 android:id="@+id/positive_points_cardview"
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="@dimen/dp_26"
-                android:alpha="0.8"
+                android:alpha="0.9"
                 app:cardBackgroundColor="#22b572"
                 app:cardCornerRadius="@dimen/dp_5"
                 app:cardElevation="@dimen/dp_1"
@@ -352,7 +352,7 @@
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="@dimen/dp_26"
                 app:cardBackgroundColor="#c1272d"
-                android:alpha="0.8"
+                android:alpha="0.9"
                 app:cardCornerRadius="@dimen/dp_5"
                 app:cardElevation="@dimen/dp_1"
                 android:layout_marginLeft="@dimen/dp_5">
