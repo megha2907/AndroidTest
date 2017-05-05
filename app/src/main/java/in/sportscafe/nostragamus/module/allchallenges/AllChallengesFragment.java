@@ -292,7 +292,9 @@ public class AllChallengesFragment extends NostragamusFragment
             @Override
             public void run() {
                 Intent intent = new Intent(Constants.IntentActions.ACTION_ALL_CHALLENGE_DATA_LOADED);
-                LocalBroadcastManager.getInstance(getContext().getApplicationContext()).sendBroadcast(intent);
+                if (null != getContext()) {
+                    LocalBroadcastManager.getInstance(getContext().getApplicationContext()).sendBroadcast(intent);
+                }
             }
         }, 1000);
 

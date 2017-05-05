@@ -83,6 +83,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
                 && !NostragamusDataHandler.getInstance().isPlayedFirstMatch()) {
             //mPredictionView.showFirstMatchPlayedPopUp(Constants.InAppPopups.FIRST_MATCH_PLAYED, bundle);
             bundle.putBoolean(Constants.BundleKeys.PLAYED_FIRST_MATCH,true);
+            NostragamusDataHandler.getInstance().setPlayedFirstMatch(true);
             mPredictionView.navigateToResults(bundle);
         }else {
             mPredictionView.navigateToResults(bundle);
