@@ -105,6 +105,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mlayoutManager = new LinearLayoutManager(this);
         this.mRvMyResults = (RecyclerView) findViewById(R.id.my_results_rv);
         this.mRvMyResults.setLayoutManager(mlayoutManager);
+        mRvMyResults.setNestedScrollingEnabled(false);
 
 
         shareResultsBtn = (Button) findViewById(R.id.my_results_ll_share_score);
