@@ -3,6 +3,8 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.os.Bundle;
 import android.view.View;
 
+import com.jeeva.android.Log;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
