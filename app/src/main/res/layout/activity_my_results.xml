@@ -84,13 +84,22 @@
 
     </RelativeLayout>
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/my_results_toolbar_rl">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
     <!-- Result declaration layout -->
     <LinearLayout
         android:id="@+id/my_results_declaration_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@+id/my_results_toolbar_rl">
+        android:visibility="gone">
 
         <!-- Heading text -->
         <LinearLayout
@@ -147,6 +156,7 @@
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp_12"
+            android:visibility="gone"
             >
 
             <ImageView
@@ -183,7 +193,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/my_results_declaration_rl"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:background="@color/black" />
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
         android:id="@+id/fab_container"

@@ -118,14 +118,14 @@
                 android:gravity="center"
                 android:onClick="onClick"
                 android:drawableLeft="@drawable/match_locked_icon"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_12"
+                android:paddingLeft="@dimen/dp_8"
+                android:paddingRight="@dimen/dp_9"
                 android:paddingBottom="@dimen/dp_2"
                 android:text="Join"
+                android:textAllCaps="false"
                 android:layout_centerVertical="true"
-                android:textAllCaps="true"
                 android:textColor="@color/white_60"
-                android:textSize="@dimen/dp_13"
+                android:textSize="@dimen/dp_12"
                 android:visibility="gone"
                 app:typeface="lato_regular" />
 
@@ -149,7 +149,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_13"
                 android:visibility="gone"
-                app:typeface="roboto_condensed" />
+                app:typeface="lato_bold" />
 
             <!-- Points Button -->
             <com.jeeva.android.widgets.customfont.CustomButton

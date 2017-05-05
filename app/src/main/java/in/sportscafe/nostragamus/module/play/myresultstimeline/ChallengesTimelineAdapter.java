@@ -234,33 +234,52 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     }
                 }
             } else {
-                holder.mBtnMatchLock.setVisibility(View.VISIBLE);
+                if (!mChallengeInfo.getCountMatchesLeft().equals("0")) {
 
-                if (match.getMatchQuestionCount() > 0) {
+                    holder.mBtnMatchLock.setVisibility(View.VISIBLE);
+                    holder.mBtnMatchLock.setAllCaps(false);
+                    holder.mBtnMatchLock.setTextSize(12);
+                    Typeface newFont1=Typeface.createFromAsset(holder.mBtnMatchLock.getContext().getAssets(), "fonts/lato/Lato-Regular.ttf");
+                    holder.mBtnMatchLock.setTypeface(newFont1);
 
-                    if (match.isResultPublished()) { // if match Result Published
+                    if (match.getMatchQuestionCount() > 0) {
 
-                        //if match not Attempted then IsAttempted=0
-                        if (GameAttemptedStatus.NOT == attemptedStatus) {
-                            // Show Opportunity missed at scoring!
-                            holder.mBtnMatchLock.setText("COMPLETED");
-                        }
+                        if (match.isResultPublished()) { // if match Result Published
 
-                    } else { // if Results not published
-                        if (GameAttemptedStatus.NOT == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
-                            if (isMatchStarted) {
-                                // You cannot play the match as the match already started
-                                holder.mBtnMatchLock.setText("COMPLETED");
-                            } else {
-                                // show Play button
-                                holder.mBtnMatchLock.setText("PLAY");
+                            //if match not Attempted then IsAttempted=0
+                            if (GameAttemptedStatus.NOT == attemptedStatus) {
+                                // Show Opportunity missed at scoring!
+                                holder.mBtnMatchLock.setText("Completed");
+                            }
+
+                        } else { // if Results not published
+                            if (GameAttemptedStatus.NOT == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
+                                if (isMatchStarted) {
+                                    // You cannot play the match as the match already started
+                                    holder.mBtnMatchLock.setText("Completed");
+                                } else {
+                                    // show Play button
+                                    holder.mBtnMatchLock.setText("PLAY");
+                                    holder.mBtnMatchLock.setTextSize(13);
+                                    holder.mBtnMatchLock.setPadding(25,0,25,5);
+                                    holder.mBtnMatchLock.setAllCaps(true);
+                                    Typeface newFont=Typeface.createFromAsset(holder.mBtnMatchLock.getContext().getAssets(), "fonts/lato/Lato-Bold.ttf");
+                                    holder.mBtnMatchLock.setTypeface(newFont);
+                                }
                             }
                         }
+                    } else { // No questions prepared
+                        if (!isMatchStarted) { // Still the question is not prepared for these matches
+                            holder.mBtnMatchLock.setText("Coming up");
+                        }
                     }
-                } else { // No questions prepared
-                    if (!isMatchStarted) { // Still the question is not prepared for these matches
-                        holder.mBtnMatchLock.setText("Coming Up");
-                    }
+                } else {
+                    holder.mBtnMatchLock.setVisibility(View.GONE);
+                    holder.mTvInfo.setVisibility(View.VISIBLE);
+                    holder.mTvInfo.setText("Did Not Play");
+                    holder.mTvInfo.setTag(match);
+                    holder.mTvInfo.setClickable(true);
+                    holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
                 }
 
             }
@@ -385,7 +404,6 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     break;
 
                 case R.id.schedule_row_btn_match_locked:
-                    Log.i("onclick","matchcliced");
                     mChallengeTimelineAdapterListener.showChallengeJoinDialog(mChallengeInfo);
                     break;
             }
