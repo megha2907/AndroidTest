@@ -49,7 +49,7 @@
     "type": "text"
   },
   {
-    "name": "Each card poses a question along with some background information/stats. Read through and swipe left or right on the card to make a choice.",
+    "name": "Each card poses a question along with background information and stats. Read through and swipe left or right on the card to make a choice.",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -57,7 +57,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 3500,
     "freshStart": true,
     "type": "text"
   },
@@ -95,7 +95,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 4000,
     "freshStart": true,
     "type": "text"
   },
@@ -180,7 +180,7 @@
     "type": "text"
   },
   {
-    "name": "Use powerups to maximise your score and push your way to the top of leaderboards. Find them at the bottom of the screen.",
+    "name": "Use powerups to maximise your score and climb to the top of leaderboards. You'll find them at the bottom of your screen.",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -254,7 +254,7 @@
     "type": "text"
   },
   {
-    "name": "Thats it! You can go back and explore using the other powerups. Or start playing!",
+    "name": "Thats it! Go back and try using the other powerups. Or start playing!",
     "textType": "centerBottomText",
     "animation": {
       "start": 0,

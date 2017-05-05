@@ -171,7 +171,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     @Override
     public void on2xApplied() {
 //        mDummyGameTextFragment.hideBottomText();
-        addDummyText(getPowerUpInstruction("You used a Doubler powerup - this doubles the points you gain (or lose). Now swipe!."));
+        addDummyText(getPowerUpInstruction("You used a Doubler powerup - this doubles the points you gain (or lose). Now swipe!"));
         addDummyText(getSwipeInstruction());
     }
 
