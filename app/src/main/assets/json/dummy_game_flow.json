@@ -8,7 +8,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 2000,
     "freshStart": true,
     "type": "text"
   },
@@ -57,7 +57,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4500,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -95,7 +95,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4500,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -134,7 +134,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4000,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -175,7 +175,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 2000,
     "freshStart": true,
     "type": "text"
   },
@@ -188,7 +188,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4500,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -249,12 +249,12 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 2000,
+    "waitingTime": 1500,
     "freshStart": true,
     "type": "text"
   },
   {
-    "name": "Easy as that! You can go back and try using other powerups. Or start playing your first game!",
+    "name": "Thats it! You can go back and explore using the other powerups. Or start playing!",
     "textType": "centerBottomText",
     "animation": {
       "start": 0,
