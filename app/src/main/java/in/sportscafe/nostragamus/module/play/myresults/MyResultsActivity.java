@@ -503,7 +503,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void showResultsToBeDeclaredView(Boolean playedFirstMatch, Match match) {
-        RelativeLayout llResultsDeclaration = (RelativeLayout)findViewById(R.id.my_results_declaration_rl);
+        LinearLayout llResultsDeclaration = (LinearLayout) findViewById(R.id.my_results_declaration_rl);
         TextView tvResultsDeclarationHeading = (TextView) findViewById(R.id.my_results_declaration_tv_heading);
         TextView tvResultsDeclarationDesc = (TextView) findViewById(R.id.my_results_declaration_tv_desc);
         LinearLayout backButtonLayout = (LinearLayout) findViewById(R.id.my_results_challenge_back_btn_layout);
