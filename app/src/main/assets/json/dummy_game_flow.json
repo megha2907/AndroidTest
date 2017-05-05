@@ -8,7 +8,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 2000,
     "freshStart": true,
     "type": "text"
   },
@@ -57,7 +57,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4500,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -95,7 +95,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4500,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -134,7 +134,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4000,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -175,7 +175,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
+    "waitingTime": 2000,
     "freshStart": true,
     "type": "text"
   },
@@ -188,7 +188,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4500,
+    "waitingTime": 3000,
     "freshStart": true,
     "type": "text"
   },
@@ -249,7 +249,7 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 2000,
+    "waitingTime": 1500,
     "freshStart": true,
     "type": "text"
   },
