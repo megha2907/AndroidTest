@@ -240,8 +240,16 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 //                new BankInfoDialogFragment().show(getSupportFragmentManager(), "BankInfo");
                 break;
             case R.id.prediction_share_layout:
-                takeScreenshotAndShare();
+                onAskFriendClicked();
                 break;
+        }
+    }
+
+    private void onAskFriendClicked() {
+        if (new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
+            PermissionsActivity.startActivityForResult(this, RequestCodes.STORAGE_PERMISSION, AppPermissions.STORAGE);
+        } else {
+            takeScreenshotAndShare();
         }
     }
 
