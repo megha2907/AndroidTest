@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 
 import com.jeeva.android.ExceptionTracker;
@@ -222,7 +224,15 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-        getWindow().getDecorView().setSystemUiVisibility(visibility);
+
+        Window window = getWindow();
+        window.getDecorView().setSystemUiVisibility(visibility);
+
+        /* set transparent system bars */
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         setSystemUiChangeListenerForImmersiveMode(visibility);
     }
