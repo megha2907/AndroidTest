@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -34,6 +35,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
@@ -285,7 +288,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 //            }
 
              /* Refresh only when coming from play screen to results awaiting , NOT for other like Results */
-            if (!mbundle.containsKey(BundleKeys.SCREEN)){
+            if (!mbundle.containsKey(BundleKeys.SCREEN)) {
                 sendReloadChallengeBroadcast();
             }
         }
@@ -526,14 +529,26 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
                 // format date
                 String endDateFormatted = "";
+                long endDateMs = 0;
 
-                long endDateMs = TimeUtils.getMillisecondsFromDateString(endDateStr,
-                        Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE_ZZ_ZZ, Constants.DateFormats.GMT);
-                int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(endDateMs, "d"));
-                String month = TimeUtils.getDateStringFromMs(endDateMs, "MMM");
+                try {
+                    endDateMs = TimeUtils.getMillisecondsFromDateString(endDateStr,
+                            Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT);
+                    int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(endDateMs, "d"));
+                    String month = TimeUtils.getDateStringFromMs(endDateMs, "MMM");
 
-                endDateFormatted = dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " + month + ", " +
-                        TimeUtils.getDateStringFromMs(endDateMs, Constants.DateFormats.HH_MM_AA);
+                    endDateFormatted = dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " + month + ", " +
+                            TimeUtils.getDateStringFromMs(endDateMs, Constants.DateFormats.HH_MM_AA);
+                } catch (Exception e) {
+
+                    endDateMs = TimeUtils.getMillisecondsFromDateString(endDateStr,
+                            Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE_ZZ_ZZ, Constants.DateFormats.GMT);
+                    int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(endDateMs, "d"));
+                    String month = TimeUtils.getDateStringFromMs(endDateMs, "MMM");
+
+                    endDateFormatted = dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " + month + ", " +
+                            TimeUtils.getDateStringFromMs(endDateMs, Constants.DateFormats.HH_MM_AA);
+                }
 
                 SpannableStringBuilder builder = new SpannableStringBuilder();
 
@@ -569,7 +584,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                     st2.setSpan(new ForegroundColorSpan(Color.WHITE), 0, t2.length(), 0);
                     builder.append(st2);
 
-                    tvResultsDeclarationDesc.setText(builder, TextView.BufferType.SPANNABLE );
+                    tvResultsDeclarationDesc.setText(builder, TextView.BufferType.SPANNABLE);
                     backButtonLayout.setVisibility(View.GONE);
                 }
             }

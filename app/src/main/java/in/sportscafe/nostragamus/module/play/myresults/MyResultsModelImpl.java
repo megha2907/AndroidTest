@@ -69,6 +69,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                     mResultsModelListener.setToolbarHeading("Awaiting Results");
 
                     Boolean playedFirstMatch = bundle.getBoolean(BundleKeys.PLAYED_FIRST_MATCH);
+
                     if (playedFirstMatch){
                         mResultsModelListener.showResultsToBeDeclared(true, match);
                     }else {

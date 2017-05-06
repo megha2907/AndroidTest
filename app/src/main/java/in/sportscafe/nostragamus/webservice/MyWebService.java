@@ -10,6 +10,7 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.common.TimeResponse;
 import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
@@ -285,5 +286,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<List<WalletTransaction>> getWalletTransactionHistory() {
         return mNostragamusService.getWalletTransactionHistory();
+    }
+
+    public Call<TimeResponse> getServerTime() {
+        return mNostragamusService.getServerTime();
     }
 }

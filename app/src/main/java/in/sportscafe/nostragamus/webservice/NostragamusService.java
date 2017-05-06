@@ -8,6 +8,7 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.common.TimeResponse;
 import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
@@ -231,4 +232,7 @@ public interface NostragamusService {
 
     @GET("v2/game/getUserTransaction")
     Call<List<WalletTransaction>> getWalletTransactionHistory();
+
+    @GET("v1/utility/getServerTime")
+    Call<TimeResponse> getServerTime();
 }
