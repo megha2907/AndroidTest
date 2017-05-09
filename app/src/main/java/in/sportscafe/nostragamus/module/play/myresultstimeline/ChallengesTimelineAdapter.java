@@ -52,6 +52,7 @@ import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialo
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.CountDownTimer;
+import in.sportscafe.nostragamus.module.common.CustomTypefaceSpan;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.Parties;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
@@ -71,8 +72,6 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
     private static final long ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
-    private String mServerTimeStamp;
-
     private TimerRunnable mTimerRunnable;
 
     private ChallengeTimelineAdapterListener mChallengeTimelineAdapterListener;
@@ -82,12 +81,11 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
     public ChallengesTimelineAdapter(Context context,
                                      @NonNull ChallengeTimelineAdapterListener listener,
-                                     String thisScreenCategory, String serverTime) {
+                                     String thisScreenCategory) {
         super(context);
         mContext = context;
         mChallengeTimelineAdapterListener = listener;
         mThisScreenCategory = thisScreenCategory;
-        mServerTimeStamp = serverTime;
         mTimerRunnable = new TimerRunnable();
     }
 
@@ -153,8 +151,6 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             holder.mIvPartyBPhoto.setImageUrl(parties.get(1).getPartyImageUrl());
 
 
-            //String time = "1494241184976";
-            long timestampLong = Long.parseLong(mServerTimeStamp);
             Date d = new Date(Nostragamus.getInstance().getServerTime());
             Calendar c = Calendar.getInstance();
             c.setTime(d);
@@ -550,11 +546,14 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 //            );
 
             SpannableStringBuilder builder = new SpannableStringBuilder();
-            final StyleSpan boldSpan = new StyleSpan(android.graphics.Typeface.BOLD);
+            //final StyleSpan boldSpan = new StyleSpan(android.graphics.Typeface.BOLD);
+
+            Typeface latoBold = Typeface.createFromAsset(tvTimerValue.getContext().getAssets(), "fonts/lato/Lato-Bold.ttf");
+            TypefaceSpan latoBoldSpan = new CustomTypefaceSpan("", latoBold);
 
             String hoursTxt = " "+ String.format("%02d", hours);
             SpannableString hoursTxtSpannable = new SpannableString(hoursTxt);
-            hoursTxtSpannable.setSpan(boldSpan, 0, hoursTxt.length(), 0);
+            hoursTxtSpannable.setSpan(latoBoldSpan, 0, hoursTxt.length(), 0);
             builder.append(hoursTxtSpannable);
 
             String hoursTxt2 = "h ";
@@ -564,17 +563,17 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
             String minsTxt = " "+ String.format("%02d", mins);
             SpannableString minsTxtSpannable = new SpannableString(minsTxt);
-            minsTxtSpannable.setSpan(boldSpan, 0, minsTxt.length(), 0);
+            minsTxtSpannable.setSpan(latoBoldSpan, 0, minsTxt.length(), 0);
             builder.append(minsTxtSpannable);
 
-            String minsTxt2 = "h ";
+            String minsTxt2 = "m ";
             SpannableString minsTxt2Spannable = new SpannableString(minsTxt2);
             minsTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, minsTxt2.length(), 0);
             builder.append(minsTxt2Spannable);
 
             String secTxt = " "+ String.format("%02d", secs);
             SpannableString secTxtSpannable = new SpannableString(secTxt);
-            secTxtSpannable.setSpan(boldSpan, 0, secTxt.length(), 0);
+            secTxtSpannable.setSpan(latoBoldSpan, 0, secTxt.length(), 0);
             builder.append(secTxtSpannable);
 
             String secTxt2 = "s";

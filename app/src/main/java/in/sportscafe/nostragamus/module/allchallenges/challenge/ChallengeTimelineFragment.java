@@ -34,17 +34,10 @@ public class ChallengeTimelineFragment extends NostragamusFragment implements Ch
     private String mThisInstanceCategory = "";
     private TextView mTvMatchesLeft;
     private RecyclerView mRcvFeed;
-
-    private String mServerTime = "";
     private ChallengesTimelineAdapter mTimelineAdapter;
 
-    public static ChallengeTimelineFragment newInstance(String serverTime) {
-
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.BundleKeys.SERVER_TIME, serverTime);
-
+    public static ChallengeTimelineFragment newInstance() {
         ChallengeTimelineFragment fragment = new ChallengeTimelineFragment();
-        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -63,7 +56,6 @@ public class ChallengeTimelineFragment extends NostragamusFragment implements Ch
         super.onActivityCreated(savedInstanceState);
 
         if (null == savedInstanceState) {
-            initServerTime();
             mTvMatchesLeft = (TextView) findViewById(R.id.challenge_timeline_tv_match_left);
 
             mRcvFeed = (RecyclerView) findViewById(R.id.challenge_timeline_rv);
@@ -71,15 +63,10 @@ public class ChallengeTimelineFragment extends NostragamusFragment implements Ch
                     LinearLayoutManager.VERTICAL, false));
             this.mRcvFeed.setHasFixedSize(true);
 
-            mTimelineAdapter = new ChallengesTimelineAdapter(getContext(), this, mThisInstanceCategory, mServerTime);
+            mTimelineAdapter = new ChallengesTimelineAdapter(getContext(), this, mThisInstanceCategory);
             mRcvFeed.setAdapter(mTimelineAdapter);
 
         }
-    }
-
-    private void initServerTime() {
-        Bundle args = getArguments();
-        mServerTime = args.getString(Constants.BundleKeys.SERVER_TIME, "");
     }
 
     public void addInitialMatches(final Challenge challenge) {
