@@ -567,7 +567,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             minsTxtSpannable.setSpan(boldSpan, 0, minsTxt.length(), 0);
             builder.append(minsTxtSpannable);
 
-            String minsTxt2 = "h ";
+            String minsTxt2 = "m ";
             SpannableString minsTxt2Spannable = new SpannableString(minsTxt2);
             minsTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, minsTxt2.length(), 0);
             builder.append(minsTxt2Spannable);
