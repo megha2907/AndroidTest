@@ -126,7 +126,7 @@
     <string name="proceed">Proceed</string>
     <string name="invalid_email">Enter valid email id</string>
 
-    <string name="split_str">Split points, see\nresults for more info</string>
+    <string name="split_str">Question cancelled, half the points were awarded</string>
     <string name="ok">OK</string>
     <string name="double_back_press_msg">Press back button again to exit</string>
     <string name="match_results">Match Result</string>
