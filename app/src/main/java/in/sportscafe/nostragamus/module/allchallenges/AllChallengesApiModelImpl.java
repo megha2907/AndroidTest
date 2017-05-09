@@ -8,6 +8,7 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengesDataResponse;
+import in.sportscafe.nostragamus.module.common.TimeResponse;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
@@ -94,7 +95,7 @@ public class AllChallengesApiModelImpl {
                             mNewChallenges = dataResponse.getNewChallenges();
                             mInPlayChallenges = dataResponse.getInPlayChallenges();
 
-                            mAllChallengesApiModelListener.onSuccessAllChallengesApi();
+                            callServerTimeApi();
 
                         } else {
                             mAllChallengesApiModelListener.onFailedAllChallengesApi(response.message());
@@ -103,6 +104,31 @@ public class AllChallengesApiModelImpl {
                 }
         );
     }
+
+
+    private void callServerTimeApi() {
+
+        MyWebService.getInstance().getServerTime().enqueue(
+                new NostragamusCallBack<TimeResponse>() {
+                    @Override
+                    public void onResponse(Call<TimeResponse> call, Response<TimeResponse> response) {
+                        super.onResponse(call, response);
+
+                        if (response.isSuccessful() && response.body() != null && response.body().getServerTime() != null) {
+
+                            String serverTime = response.body().getServerTime();
+
+                            mAllChallengesApiModelListener.onSuccessAllChallengesApi(serverTime);
+
+                        } else {
+                            mAllChallengesApiModelListener.onSuccessAllChallengesApi("");
+                        }
+                    }
+                }
+        );
+    }
+
+
 
     private void callAllChallengesApi() {
         mAllChallengesApiModelListener.onApiCallStarted();
@@ -198,7 +224,7 @@ public class AllChallengesApiModelImpl {
 
     public interface OnAllChallengesApiModelListener {
 
-        void onSuccessAllChallengesApi();
+        void onSuccessAllChallengesApi(String serverTime);
 
         void onEmpty();
 

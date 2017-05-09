@@ -1,9 +1,6 @@
 package in.sportscafe.nostragamus.module.allchallenges;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -14,22 +11,16 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.jeeva.android.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
-import in.sportscafe.nostragamus.Constants.AnalyticsActions;
-import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeFragment;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 
@@ -75,9 +66,9 @@ public class AllChallengesFragment extends NostragamusFragment
     }
 
     @Override
-    public void onSuccessAllChallengesApi() {
+    public void onSuccessAllChallengesApi(String serverTime) {
         dismissProgressbar();
-        createAdapter();
+        createAdapter(serverTime);
         broadcastAllChallengeDataLoaded();
     }
 
@@ -117,7 +108,7 @@ public class AllChallengesFragment extends NostragamusFragment
         });
     }
 
-    private void createAdapter() {
+    private void createAdapter(String serverTime) {
         mViewPagerAdapter = new ChallengeViewPagerAdapter(getChildFragmentManager(), getContext());
 
         ChallengeFragment challengeFragment;
@@ -127,21 +118,21 @@ public class AllChallengesFragment extends NostragamusFragment
 
         if (challenges.size() > 0) {
             completedAvailable = true;
-            challengeFragment = ChallengeFragment.newInstance(challenges, count++,Constants.ChallengeTabs.COMPLETED);
+            challengeFragment = ChallengeFragment.newInstance(challenges, count++,Constants.ChallengeTabs.COMPLETED,serverTime);
             mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.COMPLETED);
             mChallengeFragmentList.add(challengeFragment);
         }
 
         List<Challenge> inPlayChallenges = mAllChallengesApiModel.getInPlayChallenges();
         if (inPlayChallenges.size() > 0) {
-            challengeFragment = ChallengeFragment.newInstance(inPlayChallenges, count++, Constants.ChallengeTabs.IN_PLAY);
+            challengeFragment = ChallengeFragment.newInstance(inPlayChallenges, count++, Constants.ChallengeTabs.IN_PLAY,serverTime);
             mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.IN_PLAY);
             mChallengeFragmentList.add(challengeFragment);
         }
 
         List<Challenge> newChallenges = mAllChallengesApiModel.getNewChallenges();
         if (newChallenges.size() > 0) {
-            challengeFragment = ChallengeFragment.newInstance(newChallenges, count++, Constants.ChallengeTabs.NEW);
+            challengeFragment = ChallengeFragment.newInstance(newChallenges, count++, Constants.ChallengeTabs.NEW,serverTime);
             mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.NEW);
             mChallengeFragmentList.add(challengeFragment);
         }

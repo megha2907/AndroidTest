@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -17,13 +18,18 @@ import android.widget.TextView;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
+import com.jeeva.android.widgets.customfont.CustomTextView;
 import com.jeeva.android.widgets.customfont.Typefaces;
 
 import org.parceler.Parcels;
 
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
@@ -33,11 +39,13 @@ import in.sportscafe.nostragamus.Constants.DateFormats;
 import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeAdapter;
 import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeTimelineAdapterListener;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialogFragment;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
+import in.sportscafe.nostragamus.module.common.CountDownTimer;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.Parties;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
@@ -55,6 +63,12 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
     private static final String COMMENTARY = "commentary";
 
+    private static final long ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+
+    private String mServerTimeStamp;
+
+    private TimerRunnable mTimerRunnable;
+
     private ChallengeTimelineAdapterListener mChallengeTimelineAdapterListener;
     private Context mContext;
     private Challenge mChallengeInfo;
@@ -62,11 +76,13 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
     public ChallengesTimelineAdapter(Context context,
                                      @NonNull ChallengeTimelineAdapterListener listener,
-                                     String thisScreenCategory) {
+                                     String thisScreenCategory, String serverTime) {
         super(context);
         mContext = context;
         mChallengeTimelineAdapterListener = listener;
         mThisScreenCategory = thisScreenCategory;
+        mServerTimeStamp = serverTime;
+        mTimerRunnable = new TimerRunnable();
     }
 
     public void updateChallengeInfo(Challenge challengeInfo) {
@@ -86,6 +102,10 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
     @Override
     public void onBindViewHolder(ScheduleViewHolder holder, int position) {
         populateMatchDetails(getItem(position), holder);
+        if (View.VISIBLE == holder.mTvExpiresIn.getVisibility()) {
+            mScheduleVHList.add(holder);
+            mScheduleMap.put(holder.mMainView, holder);
+        }
     }
 
     private void populateMatchDetails(Match match, ScheduleViewHolder holder) {
@@ -111,6 +131,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                 + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA)
         );
 
+
         String matchStage = match.getStage();
         if (COMMENTARY.equalsIgnoreCase(matchStage)) {
             holder.mLlCardLayout.setVisibility(View.GONE);
@@ -123,7 +144,16 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             holder.mIvPartyAPhoto.setImageUrl(parties.get(0).getPartyImageUrl());
             holder.mIvPartyBPhoto.setImageUrl(parties.get(1).getPartyImageUrl());
 
-            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(), startTimeMs);
+
+            //String time = "1494241184976";
+            long timestampLong = Long.parseLong(mServerTimeStamp);
+            Date d = new Date(timestampLong);
+            Calendar c = Calendar.getInstance();
+            c.setTime(d);
+            long serverTime = c.getTimeInMillis();
+
+            TimeAgo timeAgo = TimeUtils.calcTimeAgo(serverTime, startTimeMs);
+
             boolean isMatchStarted = timeAgo.timeDiff <= 0
                     || timeAgo.timeUnit == TimeUnit.MILLISECOND
                     || timeAgo.timeUnit == TimeUnit.SECOND;
@@ -208,10 +238,21 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 //                            holder.mTvMatchResult.setVisibility(View.VISIBLE);
 //                            holder.mTvMatchResult.setText(match.getStage());
 
-
                                 if (GameAttemptedStatus.PARTIALLY == attemptedStatus) {
                                     holder.mBtnPlayMatch.setAllCaps(false);
                                     holder.mBtnPlayMatch.setText(("Continue"));
+                                }
+
+                                if (timeAgo.totalDiff < ONE_DAY_IN_MS) {
+//                                    long updatedTime = Long.parseLong(String.valueOf(timeAgo.totalDiff));
+//                                    if (updatedTime > 0){
+//                                        updateTimer(holder, updatedTime);
+//                                    }
+
+                                    holder.mTvExpiresIn.setVisibility(View.VISIBLE);
+                                    holder.mTvExpiresIn.setTag(timeAgo.totalDiff);
+                                    holder.mTvDate.setVisibility(View.INVISIBLE);
+
                                 }
                             }
                         } else if (attemptedStatus == GameAttemptedStatus.COMPLETELY) {
@@ -286,7 +327,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         }
     }
 
-    class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         View mMainView;
 
@@ -316,9 +357,11 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
         CustomButton mBtnPlayMatch;
 
-        TextView mTvDate;
+        public TextView mTvDate;
 
         Button mBtnMatchLock;
+
+        CustomTextView mTvExpiresIn;
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -336,6 +379,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             mBtnPlayMatch = (CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
             mBtnMatchPoints = (CustomButton) V.findViewById(R.id.schedule_row_btn_points);
             mBtnMatchLock = (Button) V.findViewById(R.id.schedule_row_btn_match_locked);
+            mTvExpiresIn = (CustomTextView) V.findViewById(R.id.schedule_row_tv_expires_in);
 
             mLlCardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
 
@@ -428,4 +472,76 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
+
+
+    @Override
+    public void clear() {
+        super.clear();
+        mScheduleMap.clear();
+        mScheduleVHList.clear();
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        mScheduleVHList.clear();
+        mScheduleMap.clear();
+        mTimerRunnable.destroy();
+    }
+
+    private Map<View, ChallengesTimelineAdapter.ScheduleViewHolder> mScheduleMap = new HashMap<>();
+
+    private List<ChallengesTimelineAdapter.ScheduleViewHolder> mScheduleVHList = new ArrayList<>();
+
+    private class TimerRunnable implements Runnable {
+
+        private Handler customHandler;
+
+        private TimerRunnable() {
+            customHandler = new Handler();
+            customHandler.postDelayed(this, 0);
+        }
+
+        public void run() {
+            for (ChallengesTimelineAdapter.ScheduleViewHolder scheduleVH : mScheduleVHList) {
+                if (View.VISIBLE == scheduleVH.mTvExpiresIn.getVisibility()) {
+                    Log.d("TimelineAdapter", "Atleast one");
+
+                    long updatedTime = Long.parseLong(scheduleVH.mTvExpiresIn.getTag().toString());
+                    if (updatedTime > 1000) {
+                        updateTimer(scheduleVH.mTvExpiresIn, updatedTime);
+                    } else {
+                        scheduleVH.mTvExpiresIn.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            customHandler.postDelayed(this, 800);
+        }
+
+        private void updateTimer(TextView tvTimerValue, long updatedTime) {
+            tvTimerValue.setTag(updatedTime - 1000);
+
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            int hours = mins / 60;
+            int days = hours / 24;
+            hours = hours % 24;
+            mins = mins % 60;
+            secs = secs % 60;
+
+            tvTimerValue.setText(
+                    String.format("%02d", hours) + "h "
+                    + String.format("%02d", mins) + "m "
+                    + String.format("%02d", secs) +"s"
+            );
+        }
+
+        private void destroy() {
+            customHandler.removeCallbacks(this);
+            customHandler = null;
+        }
+
+    }
+
 }
