@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.allchallenges;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,6 +120,8 @@ public class AllChallengesApiModelImpl {
 
                             String serverTime = response.body().getServerTime();
 
+                            setServerTimeForGloballyAvailability(serverTime);
+
                             mAllChallengesApiModelListener.onSuccessAllChallengesApi(serverTime);
 
                         } else {
@@ -128,6 +132,20 @@ public class AllChallengesApiModelImpl {
         );
     }
 
+    /**
+     * Always set newly received server-time
+     * @param serverTime
+     */
+    private void setServerTimeForGloballyAvailability(String serverTime) {
+        if (!TextUtils.isEmpty(serverTime)) {
+            try {
+                long time = Long.parseLong(serverTime);
+                Nostragamus.getInstance().setServerTime(time);
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 
 
     private void callAllChallengesApi() {

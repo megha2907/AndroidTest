@@ -47,6 +47,9 @@ public class Nostragamus extends Application {
     private static Nostragamus sNostragamus;
     private ServerDataManager mServerDataManager;
 
+    private static long serverTimeMillis;
+    private static long systemTimeMillis;
+
     private void initMembers() {
         // Assigning the Nostragamus instance
         sNostragamus = Nostragamus.this;
@@ -251,5 +254,25 @@ public class Nostragamus extends Application {
         startActivity(intent);
     }
 
+    /**
+     * Keeps reference for serverTime & localTime when system received it.
+     * @param serverTime
+     */
+    public synchronized void setServerTime(long serverTime) {
+        serverTimeMillis = serverTime;
+        systemTimeMillis = System.currentTimeMillis();
+    }
+
+    /**
+     * NOTE: DO NOT MAKE ANY KIND OF CHANGE IN THIS FUNCTION. IT CAN RESULT INTO IMPROPER OUTPUT
+     *
+     * @return servertime - updated locally after set once
+     */
+    public synchronized long getServerTime() {
+        long elapsedSystemTime = System.currentTimeMillis() - systemTimeMillis;     // get elapsed time from current local time to last operation
+        systemTimeMillis = System.currentTimeMillis();                              // Update system time (local time updated ultimately)
+        serverTimeMillis = serverTimeMillis + elapsedSystemTime;                    // add elapsed local time to serverTime (serverTime updated ultimately)
+        return serverTimeMillis;
+    }
 
 }

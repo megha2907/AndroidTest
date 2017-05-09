@@ -147,12 +147,12 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
             //String time = "1494241184976";
             long timestampLong = Long.parseLong(mServerTimeStamp);
-            Date d = new Date(timestampLong);
+            Date d = new Date(Nostragamus.getInstance().getServerTime());
             Calendar c = Calendar.getInstance();
             c.setTime(d);
             long serverTime = c.getTimeInMillis();
 
-            TimeAgo timeAgo = TimeUtils.calcTimeAgo(serverTime, startTimeMs);
+            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
 
             boolean isMatchStarted = timeAgo.timeDiff <= 0
                     || timeAgo.timeUnit == TimeUnit.MILLISECOND
