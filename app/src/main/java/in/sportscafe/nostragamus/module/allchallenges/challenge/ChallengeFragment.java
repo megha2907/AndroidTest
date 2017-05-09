@@ -70,16 +70,13 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
      * To identify that this instance is serving which tab */
     private String mThisTabItemName = "";
 
-    private String mServerTime = "";
-
     public static ChallengeFragment newInstance(List<Challenge> challenges,
                                                 int tagId,
-                                                String thisTabItemName, String serverTime) {
+                                                String thisTabItemName) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(BundleKeys.CHALLENGE_LIST, Parcels.wrap(challenges));
         bundle.putInt(BundleKeys.CHALLENGE_TAG_ID, tagId);
         bundle.putString(BundleKeys.TAB_ITEM_NAME, thisTabItemName);
-        bundle.putString(BundleKeys.SERVER_TIME,serverTime);
 
         ChallengeFragment fragment = new ChallengeFragment();
         fragment.setArguments(bundle);
@@ -104,7 +101,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         mVSwitchSeek = findViewById(R.id.challenges_v_switch_seek);
 
         getChildFragmentManager().beginTransaction().replace(R.id.challenges_fl_match_holder,
-                mTimelineFragment = ChallengeTimelineFragment.newInstance(mServerTime)).commit();
+                mTimelineFragment = ChallengeTimelineFragment.newInstance()).commit();
 
         mTimelineFragment.setThisInstantCategory(mThisTabItemName);
 
@@ -138,7 +135,6 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
         if (args != null && args.containsKey(BundleKeys.TAB_ITEM_NAME)) {
             mThisTabItemName = args.getString(BundleKeys.TAB_ITEM_NAME, "");
         }
-        mServerTime = args.getString(BundleKeys.SERVER_TIME,"");
     }
 
     private void performScrolling(int newChallengeId) {

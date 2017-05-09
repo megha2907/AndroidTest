@@ -122,10 +122,10 @@ public class AllChallengesApiModelImpl {
 
                             setServerTimeForGloballyAvailability(serverTime);
 
-                            mAllChallengesApiModelListener.onSuccessAllChallengesApi(serverTime);
+                            mAllChallengesApiModelListener.onSuccessAllChallengesApi();
 
                         } else {
-                            mAllChallengesApiModelListener.onSuccessAllChallengesApi("");
+                            mAllChallengesApiModelListener.onSuccessAllChallengesApi();
                         }
                     }
                 }
@@ -242,7 +242,7 @@ public class AllChallengesApiModelImpl {
 
     public interface OnAllChallengesApiModelListener {
 
-        void onSuccessAllChallengesApi(String serverTime);
+        void onSuccessAllChallengesApi();
 
         void onEmpty();
 
