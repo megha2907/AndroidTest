@@ -2,12 +2,18 @@ package in.sportscafe.nostragamus.module.play.myresultstimeline;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.text.style.TypefaceSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -114,6 +120,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         holder.mTvMatchResult.setVisibility(View.GONE);
         holder.mLlResultWait.setVisibility(View.GONE);
         holder.mBtnPlayMatch.setVisibility(View.GONE);
+        holder.mTvDate.setVisibility(View.VISIBLE);
+        holder.mTvExpiresIn.setVisibility(View.INVISIBLE);
 
         String startTime = match.getStartTime().replace("+00:00", ".000Z");
         Log.d("StartTime", startTime);
@@ -184,6 +192,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             holder.mTvMatchResult.setText(match.getStage() + " - " + Html.fromHtml(match.getResult()));
                             holder.mBtnMatchPoints.setTag(match);
                             holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
+                            holder.mTvDate.setText("Completed");
 
                             Integer winnerPartyId = match.getWinnerPartyId();
                             if (null != winnerPartyId) {
@@ -209,6 +218,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             holder.mTvInfo.setTag(match);
                             holder.mTvInfo.setClickable(true);
                             holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
+                            holder.mTvDate.setText("Completed");
                         }
 
                     } else { // if Results not published
@@ -229,6 +239,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                     holder.mTvInfo.setTag(match);
                                     holder.mTvInfo.setClickable(true);
                                     holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
+                                    holder.mTvDate.setText("Completed");
                                 }
                             } else {
 
@@ -258,6 +269,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                         } else if (attemptedStatus == GameAttemptedStatus.COMPLETELY) {
                             //  Waiting for results
                             holder.mLlResultWait.setVisibility(View.VISIBLE);
+                            holder.mTvDate.setText("In Progress");
 //                        holder.mTvMatchResult.setVisibility(View.VISIBLE);
 //                        holder.mTvMatchResult.setText(match.getStage());
                             holder.mLlResultWait.setTag(match);
@@ -321,6 +333,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     holder.mTvInfo.setTag(match);
                     holder.mTvInfo.setClickable(true);
                     holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
+                    holder.mTvDate.setText("Completed");
                 }
 
             }
@@ -529,12 +542,49 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             hours = hours % 24;
             mins = mins % 60;
             secs = secs % 60;
+//
+//            tvTimerValue.setText(" "+
+//                    String.format("%02d", hours) + "h "
+//                    + String.format("%02d", mins) + "m "
+//                    + String.format("%02d", secs) +"s"
+//            );
 
-            tvTimerValue.setText(
-                    String.format("%02d", hours) + "h "
-                    + String.format("%02d", mins) + "m "
-                    + String.format("%02d", secs) +"s"
-            );
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            final StyleSpan boldSpan = new StyleSpan(android.graphics.Typeface.BOLD);
+
+            String hoursTxt = " "+ String.format("%02d", hours);
+            SpannableString hoursTxtSpannable = new SpannableString(hoursTxt);
+            hoursTxtSpannable.setSpan(boldSpan, 0, hoursTxt.length(), 0);
+            builder.append(hoursTxtSpannable);
+
+            String hoursTxt2 = "h ";
+            SpannableString hoursTxt2Spannable = new SpannableString(hoursTxt2);
+            hoursTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, hoursTxt2.length(), 0);
+            builder.append(hoursTxt2Spannable);
+
+            String minsTxt = " "+ String.format("%02d", mins);
+            SpannableString minsTxtSpannable = new SpannableString(minsTxt);
+            minsTxtSpannable.setSpan(boldSpan, 0, minsTxt.length(), 0);
+            builder.append(minsTxtSpannable);
+
+            String minsTxt2 = "h ";
+            SpannableString minsTxt2Spannable = new SpannableString(minsTxt2);
+            minsTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, minsTxt2.length(), 0);
+            builder.append(minsTxt2Spannable);
+
+            String secTxt = " "+ String.format("%02d", secs);
+            SpannableString secTxtSpannable = new SpannableString(secTxt);
+            secTxtSpannable.setSpan(boldSpan, 0, secTxt.length(), 0);
+            builder.append(secTxtSpannable);
+
+            String secTxt2 = "s";
+            SpannableString secTxt2Spannable = new SpannableString(secTxt2);
+            secTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, secTxt2.length(), 0);
+            builder.append(secTxt2Spannable);
+
+            tvTimerValue.setText(builder, TextView.BufferType.SPANNABLE);
+
+            tvTimerValue.setCompoundDrawablesWithIntrinsicBounds(R.drawable.timer_icon, 0, 0, 0);
         }
 
         private void destroy() {
