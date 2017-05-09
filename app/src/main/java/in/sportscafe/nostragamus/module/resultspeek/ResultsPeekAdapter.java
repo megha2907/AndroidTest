@@ -145,10 +145,10 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
             }
 
             /* If questionAns == -1, means question was incorrect / invalid -- SPLIT Question  */
-            if (myQuestion.getQuestionAnswer() == -1) {
+            /*if (myQuestion.getQuestionAnswer() == -1) {
                 setTextColor(tvPlayerOneAnswer, R.color.white_60);
                 convertView.findViewById(R.id.results_peek_row_player_one_points_splitView).setVisibility(View.VISIBLE);
-            }
+            }*/
 
             if (myQuestion.getAnswerPoints() != null) {
 
@@ -234,10 +234,10 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
             }
 
             /* If questionAns == -1, means question was incorrect / invalid -- SPLIT Question  */
-            if (myQuestion.getQuestionAnswer() == -1) {
+            /*if (myQuestion.getQuestionAnswer() == -1) {
                 setTextColor(tvPlayerTwoAnswer, R.color.white_60);
                 convertView.findViewById(R.id.results_peek_row_player_two_points_splitView).setVisibility(View.VISIBLE);
-            }
+            }*/
 
             if (playerQuestion.getAnswerPoints() != null) {
 

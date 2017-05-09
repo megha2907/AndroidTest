@@ -15,29 +15,64 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/dp_10">
 
+        <!-- Question Row -->
         <RelativeLayout
             android:id="@+id/my_predictions_row_rl_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:id="@+id/question_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_6">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/my_predictions_row_tv_question"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:textColor="@color/white"
+                    app:typeface="roboto_condensed" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/my_predictions_row_tv_answer_points"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular"
+                    android:layout_gravity="right"
+                    android:gravity="right"/>
+
+            </LinearLayout>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/my_predictions_row_tv_question"
+                android:id="@+id/my_predictions_row_splitView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_8"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/question_linear"
                 android:layout_marginLeft="@dimen/dp_20"
-                android:layout_marginRight="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_8"
                 android:gravity="left"
-                android:textColor="@color/white"
-                app:typeface="roboto_condensed" />
+                android:text="@string/split_str"
+                android:textColor="#8f8f8f"
+                android:textSize="@dimen/dp_11"
+                android:visibility="gone"
+                app:typeface="lato_regular" />
+
 
             <View
                 android:id="@+id/results_peek_row_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
-                android:layout_below="@+id/my_predictions_row_tv_question"
+                android:layout_below="@+id/my_predictions_row_splitView"
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginRight="@dimen/dp_12"
                 android:background="@color/linecolor"
@@ -45,6 +80,7 @@
 
         </RelativeLayout>
 
+        <!-- Answers Row -->
         <RelativeLayout
             android:id="@+id/my_predictions_row_rl_answer"
             android:layout_width="wrap_content"
@@ -110,7 +146,7 @@
 
         </RelativeLayout>
 
-        <com.jeeva.android.widgets.customfont.CustomTextView
+        <!--<com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/my_predictions_row_tv_answer_points"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_22"
@@ -123,9 +159,9 @@
             android:maxLines="1"
             android:textColor="@color/white_60"
             android:textSize="@dimen/dp_12"
-            app:typeface="lato_regular" />
+            app:typeface="lato_regular" />-->
 
-        <com.jeeva.android.widgets.customfont.CustomTextView
+        <!--<com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/my_predictions_row_splitView"
             android:layout_width="@dimen/dp_150"
             android:layout_height="@dimen/dp_22"
@@ -138,8 +174,7 @@
             android:textColor="@color/white_60"
             android:textSize="@dimen/dp_8"
             android:visibility="gone"
-            app:typeface="lato_regular" />
-
+            app:typeface="lato_regular" />-->
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/my_predictions_row_tv_perc_1"
