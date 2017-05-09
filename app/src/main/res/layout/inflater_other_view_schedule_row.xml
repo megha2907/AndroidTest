@@ -11,11 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_7"
         android:gravity="center"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="@dimen/dp_11"
+        android:textSize="@dimen/dp_11.5"
         app:typeface="lato_regular" />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -23,12 +23,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_7"
         android:gravity="center"
         android:visibility="gone"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="@dimen/dp_11"
+        android:textSize="@dimen/dp_11.5"
         app:typeface="lato_regular" />
 
 
@@ -39,7 +39,7 @@
         android:layout_below="@+id/schedule_row_tv_date"
         android:orientation="vertical"
         android:paddingBottom="@dimen/dp_8"
-        android:paddingTop="@dimen/dp_4">
+        android:paddingTop="@dimen/dp_7">
 
         <RelativeLayout
             android:id="@+id/image_layout"
@@ -247,13 +247,13 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dp_30"
             android:layout_marginRight="@dimen/dp_30"
-            android:layout_marginTop="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_3"
             android:gravity="center"
             android:lineSpacingExtra="@dimen/dp_2"
-            android:textColor="@color/white_80"
-            android:textSize="@dimen/dp_12"
+            android:textColor="@color/grey4"
+            android:textSize="@dimen/dp_11.5"
             android:visibility="gone"
-            app:typeface="lato_light" />
+            app:typeface="lato_regular" />
 
         <!-- MATCH RESULT LINE TWO -->
         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -266,10 +266,10 @@
             android:layout_marginTop="@dimen/dp_2"
             android:gravity="center"
             android:lineSpacingExtra="@dimen/dp_2"
-            android:textColor="@color/white_60"
-            android:textSize="@dimen/dp_12"
+            android:textColor="@color/grey4"
+            android:textSize="@dimen/dp_11.5"
             android:visibility="gone"
-            app:typeface="lato_light" />
+            app:typeface="lato_regular" />
 
 
     </LinearLayout>
@@ -280,6 +280,7 @@
         android:layout_height="@dimen/dp_0.5"
         android:background="@color/linecolor"
         android:visibility="visible"
+        android:layout_marginTop="@dimen/dp_2"
         android:layout_marginRight="@dimen/dp_14"
         android:layout_marginLeft="@dimen/dp_14"
         android:layout_below="@+id/schedule_row_ll"

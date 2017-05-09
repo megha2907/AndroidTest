@@ -66,9 +66,9 @@ public class AllChallengesFragment extends NostragamusFragment
     }
 
     @Override
-    public void onSuccessAllChallengesApi(String serverTime) {
+    public void onSuccessAllChallengesApi() {
         dismissProgressbar();
-        createAdapter(serverTime);
+        createAdapter();
         broadcastAllChallengeDataLoaded();
     }
 
@@ -108,7 +108,7 @@ public class AllChallengesFragment extends NostragamusFragment
         });
     }
 
-    private void createAdapter(String serverTime) {
+    private void createAdapter() {
         mViewPagerAdapter = new ChallengeViewPagerAdapter(getChildFragmentManager(), getContext());
 
         ChallengeFragment challengeFragment;
@@ -118,21 +118,21 @@ public class AllChallengesFragment extends NostragamusFragment
 
         if (challenges.size() > 0) {
             completedAvailable = true;
-            challengeFragment = ChallengeFragment.newInstance(challenges, count++,Constants.ChallengeTabs.COMPLETED,serverTime);
+            challengeFragment = ChallengeFragment.newInstance(challenges, count++,Constants.ChallengeTabs.COMPLETED);
             mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.COMPLETED);
             mChallengeFragmentList.add(challengeFragment);
         }
 
         List<Challenge> inPlayChallenges = mAllChallengesApiModel.getInPlayChallenges();
         if (inPlayChallenges.size() > 0) {
-            challengeFragment = ChallengeFragment.newInstance(inPlayChallenges, count++, Constants.ChallengeTabs.IN_PLAY,serverTime);
+            challengeFragment = ChallengeFragment.newInstance(inPlayChallenges, count++, Constants.ChallengeTabs.IN_PLAY);
             mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.IN_PLAY);
             mChallengeFragmentList.add(challengeFragment);
         }
 
         List<Challenge> newChallenges = mAllChallengesApiModel.getNewChallenges();
         if (newChallenges.size() > 0) {
-            challengeFragment = ChallengeFragment.newInstance(newChallenges, count++, Constants.ChallengeTabs.NEW,serverTime);
+            challengeFragment = ChallengeFragment.newInstance(newChallenges, count++, Constants.ChallengeTabs.NEW);
             mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.NEW);
             mChallengeFragmentList.add(challengeFragment);
         }
