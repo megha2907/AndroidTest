@@ -279,6 +279,7 @@ public interface Constants {
         String EDIT_PROFILE_LAUNCHED_FROM = "editProfileLaunchedFrom";
         String TAB_ITEM_NAME = "tabItemName";
         String PLAYED_FIRST_MATCH = "PlayedFirstMatch";
+        String SERVER_TIME = "serverTime";
     }
 
     interface ParcelableKeys {

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialogFragment;
@@ -28,16 +29,23 @@ import in.sportscafe.nostragamus.module.play.myresultstimeline.ChallengesTimelin
  */
 public class ChallengeTimelineFragment extends NostragamusFragment implements ChallengeTimelineAdapterListener {
 
+    private static final long ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
     private String mThisInstanceCategory = "";
     private TextView mTvMatchesLeft;
-
     private RecyclerView mRcvFeed;
 
+    private String mServerTime = "";
     private ChallengesTimelineAdapter mTimelineAdapter;
 
-    public static ChallengeTimelineFragment newInstance() {
-        return new ChallengeTimelineFragment();
+    public static ChallengeTimelineFragment newInstance(String serverTime) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.BundleKeys.SERVER_TIME, serverTime);
+
+        ChallengeTimelineFragment fragment = new ChallengeTimelineFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     public void setThisInstantCategory(String thisInstantCategory) {
@@ -55,6 +63,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment implements Ch
         super.onActivityCreated(savedInstanceState);
 
         if (null == savedInstanceState) {
+            initServerTime();
             mTvMatchesLeft = (TextView) findViewById(R.id.challenge_timeline_tv_match_left);
 
             mRcvFeed = (RecyclerView) findViewById(R.id.challenge_timeline_rv);
@@ -62,9 +71,15 @@ public class ChallengeTimelineFragment extends NostragamusFragment implements Ch
                     LinearLayoutManager.VERTICAL, false));
             this.mRcvFeed.setHasFixedSize(true);
 
-            mTimelineAdapter = new ChallengesTimelineAdapter(getContext(), this, mThisInstanceCategory);
+            mTimelineAdapter = new ChallengesTimelineAdapter(getContext(), this, mThisInstanceCategory, mServerTime);
             mRcvFeed.setAdapter(mTimelineAdapter);
+
         }
+    }
+
+    private void initServerTime() {
+        Bundle args = getArguments();
+        mServerTime = args.getString(Constants.BundleKeys.SERVER_TIME, "");
     }
 
     public void addInitialMatches(final Challenge challenge) {
@@ -82,7 +97,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment implements Ch
 
     public void refreshChallengeMatches(Challenge challenge) {
         mTimelineAdapter.clear();
-        setMatchesLeft(String.valueOf(challenge.getCountMatchesLeft()),String.valueOf(challenge.getMatchesCategorized().getAllMatches().size()),challenge);
+        setMatchesLeft(String.valueOf(challenge.getCountMatchesLeft()), String.valueOf(challenge.getMatchesCategorized().getAllMatches().size()), challenge);
 
         HashMap<String, Integer> powerupInfo = null;
         try {
@@ -97,7 +112,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment implements Ch
         mRcvFeed.scrollToPosition(0);
     }
 
-    private void setMatchesLeft(String matchesLeft, String matches,Challenge challenge) {
+    private void setMatchesLeft(String matchesLeft, String matches, Challenge challenge) {
 
         if (challenge.getChallengeUserInfo().isUserJoined()) {
             if (!TextUtils.isEmpty(matchesLeft)) {
@@ -107,7 +122,7 @@ public class ChallengeTimelineFragment extends NostragamusFragment implements Ch
                     mTvMatchesLeft.setText(matchesLeft + "/" + matches + " Games Left");
                 }
             }
-        }else {
+        } else {
             mTvMatchesLeft.setVisibility(View.GONE);
         }
     }
@@ -117,4 +132,5 @@ public class ChallengeTimelineFragment extends NostragamusFragment implements Ch
         ChallengeConfigsDialogFragment.newInstance(43, challenge)
                 .show(getChildFragmentManager(), "challenge_configs");
     }
+
 }
