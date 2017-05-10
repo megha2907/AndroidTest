@@ -253,7 +253,7 @@
             android:textColor="@color/grey4"
             android:textSize="@dimen/dp_11.5"
             android:visibility="gone"
-            app:typeface="lato_regular" />
+            app:typeface="lato_light" />
 
         <!-- MATCH RESULT LINE TWO -->
         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -269,7 +269,7 @@
             android:textColor="@color/grey4"
             android:textSize="@dimen/dp_11.5"
             android:visibility="gone"
-            app:typeface="lato_regular" />
+            app:typeface="lato_light" />
 
 
     </LinearLayout>

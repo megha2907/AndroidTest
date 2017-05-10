@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.SpannableString;
@@ -134,9 +135,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         // Setting date of the match
         holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
-                + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA)
+                + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA).replace("AM", "am").replace("PM","pm")
         );
-
 
         String matchStage = match.getStage();
         if (COMMENTARY.equalsIgnoreCase(matchStage)) {
@@ -149,6 +149,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             holder.mTvPartyBName.setText(parties.get(1).getPartyName());
             holder.mIvPartyAPhoto.setImageUrl(parties.get(0).getPartyImageUrl());
             holder.mIvPartyBPhoto.setImageUrl(parties.get(1).getPartyImageUrl());
+            holder.mTvDate.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(),R.color.white));
 
 
             Date d = new Date(Nostragamus.getInstance().getServerTime());
@@ -189,6 +190,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             holder.mBtnMatchPoints.setTag(match);
                             holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
                             holder.mTvDate.setText("Completed");
+                            holder.mTvDate.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(),R.color.grey4));
 
                             Integer winnerPartyId = match.getWinnerPartyId();
                             if (null != winnerPartyId) {
@@ -215,6 +217,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             holder.mTvInfo.setClickable(true);
                             holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
                             holder.mTvDate.setText("Completed");
+                            holder.mTvDate.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(),R.color.grey4));
                         }
 
                     } else { // if Results not published
@@ -235,7 +238,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                     holder.mTvInfo.setTag(match);
                                     holder.mTvInfo.setClickable(true);
                                     holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
-                                    holder.mTvDate.setText("Completed");
+                                    holder.mTvDate.setText("In Progress");
                                 }
                             } else {
 
