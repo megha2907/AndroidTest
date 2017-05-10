@@ -5,7 +5,13 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
@@ -508,6 +514,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         answerId = question.getAnswerId();
 
 
+
         //BEFORE THE RESULT IS PUBLISHED SHOW ANSWERS
         if (null == question.getQuestionAnswer()) {
 
@@ -725,9 +732,49 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         }
 
+        /* Showing graph based on percentage */
+        if (question.getAnswer1percent() != null && question.getAnswer2percent() != null) {
+            int maxPercent = Math.max(Math.max(question.getAnswer1percent(), question.getAnswer2percent()), question.getAnswer3percent());
 
+            setPercentPoll((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_1), question.getAnswer1percent(), maxPercent);
+            setPercentPoll((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_2), question.getAnswer2percent(), maxPercent);
+
+            if (question.getAnswer3percent() != null && question.getAnswer3percent() > 0) {
+                setPercentPoll((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_3), question.getAnswer3percent(), maxPercent);
+            }
+        }
 
         return convertView;
+    }
+
+    private void setPercentPoll(TextView textView, int percent, int maxPercent) {
+        Resources resources = textView.getContext().getResources();
+
+        int width = resources.getDimensionPixelSize(R.dimen.dp_150);
+        int height = resources.getDimensionPixelOffset(R.dimen.dp_16);
+
+        textView.setVisibility(View.VISIBLE);
+        textView.setText(percent + "%");
+        textView.setBackground(getPercentDrawable(resources,
+                width,
+                height,
+                width * percent / 100,
+                resources.getColor(percent >= maxPercent ? R.color.mine_shaft_3d : R.color.mine_shaft_32)
+        ));
+    }
+
+    private Drawable getPercentDrawable(Resources resources,
+                                        int fullWidth, int fullHeight, int percentWidth, int percentColor) {
+        Bitmap outputBitmap = Bitmap.createBitmap(fullWidth, fullHeight, Bitmap.Config.ARGB_4444);
+        Canvas outputCanvas = new Canvas(outputBitmap);
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(percentColor);
+        paint.setStyle(Paint.Style.FILL);
+
+        outputCanvas.drawRect(fullWidth - percentWidth, 0, fullWidth, fullHeight, paint);
+        return new BitmapDrawable(resources, outputBitmap);
     }
 
 

@@ -77,6 +77,15 @@ public class Question {
     @JsonProperty("poll")
     private List<AudiencePoll> playerPoll;
 
+    @JsonProperty("answer1")
+    private Integer answer1percent;
+
+    @JsonProperty("answer2")
+    private Integer answer2percent;
+
+    @JsonProperty("answer3")
+    private Integer answer3percent;
+
     @JsonIgnore
     private int questionTime = 30;
 
@@ -520,5 +529,29 @@ public class Question {
 
     public void setQuestionSubmittedBy(String questionSubmittedBy) {
         this.questionSubmittedBy = questionSubmittedBy;
+    }
+
+    public Integer getAnswer1percent() {
+        return answer1percent;
+    }
+
+    public void setAnswer1percent(Integer answer1percent) {
+        this.answer1percent = answer1percent;
+    }
+
+    public Integer getAnswer2percent() {
+        return answer2percent;
+    }
+
+    public void setAnswer2percent(Integer answer2percent) {
+        this.answer2percent = answer2percent;
+    }
+
+    public Integer getAnswer3percent() {
+        return answer3percent;
+    }
+
+    public void setAnswer3percent(Integer answer3percent) {
+        this.answer3percent = answer3percent;
     }
 }
