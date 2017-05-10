@@ -515,7 +515,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
 
 
-        //BEFORE THE RESULT IS PUBLISHED SHOW ANSWERS
+        /* BEFORE THE RESULT IS PUBLISHED SHOW ANSWERS */
         if (null == question.getQuestionAnswer()) {
 
             tvotheroption.setVisibility(View.VISIBLE);
@@ -557,7 +557,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             }
 
         }
-        // if played match but not attempted Question
+        /* if played match but not attempted Question */
         else if (answerId == 0) {
             setTextColor(tvAnswer, R.color.tabcolor);
             tvotheroption.setVisibility(View.VISIBLE);
@@ -588,7 +588,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
 
         }
-        //if your answer = correct answer
+        /* if your answer = correct answer */
         else if (answerId == question.getQuestionAnswer()) {
 
             setTextColor(tvAnswer, R.color.greencolor);

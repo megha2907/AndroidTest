@@ -373,7 +373,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
         Button mBtnMatchLock;
 
-        CustomTextView mTvExpiresIn;
+        TextView mTvExpiresIn;
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -391,7 +391,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             mBtnPlayMatch = (CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
             mBtnMatchPoints = (CustomButton) V.findViewById(R.id.schedule_row_btn_points);
             mBtnMatchLock = (Button) V.findViewById(R.id.schedule_row_btn_match_locked);
-            mTvExpiresIn = (CustomTextView) V.findViewById(R.id.schedule_row_tv_expires_in);
+            mTvExpiresIn = (TextView) V.findViewById(R.id.schedule_row_tv_expires_in);
 
             mLlCardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
 
@@ -551,7 +551,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             SpannableStringBuilder builder = new SpannableStringBuilder();
             //final StyleSpan boldSpan = new StyleSpan(android.graphics.Typeface.BOLD);
 
-            Typeface latoBold = Typeface.createFromAsset(tvTimerValue.getContext().getAssets(), "fonts/lato/Lato-Bold.ttf");
+            Typeface latoBold = Typeface.createFromAsset(tvTimerValue.getContext().getAssets(), "fonts/lato/Lato-Light.ttf");
             TypefaceSpan latoBoldSpan = new CustomTypefaceSpan("", latoBold);
 
             String hoursTxt = " "+ String.format("%02d", hours);
@@ -564,9 +564,10 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             hoursTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, hoursTxt2.length(), 0);
             builder.append(hoursTxt2Spannable);
 
+            TypefaceSpan latoBoldSpan2 = new CustomTypefaceSpan("", latoBold);
             String minsTxt = " "+ String.format("%02d", mins);
             SpannableString minsTxtSpannable = new SpannableString(minsTxt);
-            minsTxtSpannable.setSpan(latoBoldSpan, 0, minsTxt.length(), 0);
+            minsTxtSpannable.setSpan(latoBoldSpan2, 0, minsTxt.length(), 0);
             builder.append(minsTxtSpannable);
 
             String minsTxt2 = "m ";
@@ -574,9 +575,10 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             minsTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, minsTxt2.length(), 0);
             builder.append(minsTxt2Spannable);
 
+            TypefaceSpan latoBoldSpan3 = new CustomTypefaceSpan("", latoBold);
             String secTxt = " "+ String.format("%02d", secs);
             SpannableString secTxtSpannable = new SpannableString(secTxt);
-            secTxtSpannable.setSpan(latoBoldSpan, 0, secTxt.length(), 0);
+            secTxtSpannable.setSpan(latoBoldSpan3, 0, secTxt.length(), 0);
             builder.append(secTxtSpannable);
 
             String secTxt2 = "s";
