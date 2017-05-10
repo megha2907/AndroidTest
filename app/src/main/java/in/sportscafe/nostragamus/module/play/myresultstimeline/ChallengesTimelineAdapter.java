@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.SpannableString;
@@ -134,9 +135,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         // Setting date of the match
         holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
-                + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA)
+                + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA).replace("AM", "am").replace("PM", "pm")
         );
-
 
         String matchStage = match.getStage();
         if (COMMENTARY.equalsIgnoreCase(matchStage)) {
@@ -149,6 +149,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             holder.mTvPartyBName.setText(parties.get(1).getPartyName());
             holder.mIvPartyAPhoto.setImageUrl(parties.get(0).getPartyImageUrl());
             holder.mIvPartyBPhoto.setImageUrl(parties.get(1).getPartyImageUrl());
+            holder.mTvDate.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(), R.color.white));
 
 
             Date d = new Date(Nostragamus.getInstance().getServerTime());
@@ -189,6 +190,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             holder.mBtnMatchPoints.setTag(match);
                             holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
                             holder.mTvDate.setText("Completed");
+                            holder.mTvDate.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(), R.color.grey4));
 
                             Integer winnerPartyId = match.getWinnerPartyId();
                             if (null != winnerPartyId) {
@@ -215,6 +217,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             holder.mTvInfo.setClickable(true);
                             holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
                             holder.mTvDate.setText("Completed");
+                            holder.mTvDate.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(), R.color.grey4));
                         }
 
                     } else { // if Results not published
@@ -222,40 +225,36 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             if (isMatchStarted) {
                                 if (attemptedStatus == GameAttemptedStatus.PARTIALLY) {
 
-                                    //  Waiting for results
+                                    /*  Waiting for results */
                                     holder.mLlResultWait.setVisibility(View.VISIBLE);
                                     holder.mTvMatchResult.setVisibility(View.VISIBLE);
 //                                holder.mTvMatchResult.setText(match.getStage());
                                     holder.mLlResultWait.setTag(match);
+                                    holder.mTvDate.setText("In Progress");
                                 } else {
 
-                                    // You cannot play the match as the match already started
+                                    /* You cannot play the match as the match already started */
                                     holder.mTvInfo.setVisibility(View.VISIBLE);
                                     holder.mTvInfo.setText("Did Not Play");
                                     holder.mTvInfo.setTag(match);
                                     holder.mTvInfo.setClickable(true);
                                     holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_shadow_bg));
-                                    holder.mTvDate.setText("Completed");
+                                    holder.mTvDate.setText("In Progress");
                                 }
                             } else {
 
-                                // show Play button
+                                /* show Play button */
                                 holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
                                 holder.mBtnPlayMatch.setTag(match);
-//                            holder.mTvMatchResult.setVisibility(View.VISIBLE);
-//                            holder.mTvMatchResult.setText(match.getStage());
 
+                                /* check if has partially played a match */
                                 if (GameAttemptedStatus.PARTIALLY == attemptedStatus) {
                                     holder.mBtnPlayMatch.setAllCaps(false);
                                     holder.mBtnPlayMatch.setText(("Continue"));
                                 }
 
+                                /* check if one day left and match not started , show countdown timer */
                                 if (timeAgo.totalDiff < ONE_DAY_IN_MS) {
-//                                    long updatedTime = Long.parseLong(String.valueOf(timeAgo.totalDiff));
-//                                    if (updatedTime > 0){
-//                                        updateTimer(holder, updatedTime);
-//                                    }
-
                                     holder.mTvExpiresIn.setVisibility(View.VISIBLE);
                                     holder.mTvExpiresIn.setTag(timeAgo.totalDiff);
                                     holder.mTvDate.setVisibility(View.INVISIBLE);
@@ -263,16 +262,22 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                 }
                             }
                         } else if (attemptedStatus == GameAttemptedStatus.COMPLETELY) {
-                            //  Waiting for results
+                             /*   Waiting for results */
                             holder.mLlResultWait.setVisibility(View.VISIBLE);
-                            holder.mTvDate.setText("In Progress");
+
+                             /* check if one day left and match not started and show countdown timer */
+                            if (timeAgo.totalDiff < ONE_DAY_IN_MS) {
+                                holder.mTvExpiresIn.setVisibility(View.VISIBLE);
+                                holder.mTvExpiresIn.setTag(timeAgo.totalDiff);
+                                holder.mTvDate.setVisibility(View.INVISIBLE);
+                            }
 //                        holder.mTvMatchResult.setVisibility(View.VISIBLE);
 //                        holder.mTvMatchResult.setText(match.getStage());
                             holder.mLlResultWait.setTag(match);
                         }
 
                     }
-                } else { // No questions prepared
+                } else {   /* No questions prepared */
                     if (!isMatchStarted) { // Still the question is not prepared for these matches
                         holder.mTvInfo.setVisibility(View.VISIBLE);
                         holder.mTvInfo.setText("Coming Up");
@@ -288,7 +293,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                     holder.mBtnMatchLock.setVisibility(View.VISIBLE);
                     holder.mBtnMatchLock.setAllCaps(false);
                     holder.mBtnMatchLock.setTextSize(12);
-                    Typeface newFont1=Typeface.createFromAsset(holder.mBtnMatchLock.getContext().getAssets(), "fonts/lato/Lato-Regular.ttf");
+                    Typeface newFont1 = Typeface.createFromAsset(holder.mBtnMatchLock.getContext().getAssets(), "fonts/lato/Lato-Black.ttf");
                     holder.mBtnMatchLock.setTypeface(newFont1);
 
                     if (match.getMatchQuestionCount() > 0) {
@@ -310,9 +315,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                     // show Play button
                                     holder.mBtnMatchLock.setText("PLAY");
                                     holder.mBtnMatchLock.setTextSize(13);
-                                    holder.mBtnMatchLock.setPadding(25,0,25,5);
+                                    holder.mBtnMatchLock.setPadding(25, 0, 25, 5);
                                     holder.mBtnMatchLock.setAllCaps(true);
-                                    Typeface newFont=Typeface.createFromAsset(holder.mBtnMatchLock.getContext().getAssets(), "fonts/lato/Lato-Bold.ttf");
+                                    Typeface newFont = Typeface.createFromAsset(holder.mBtnMatchLock.getContext().getAssets(), "fonts/lato/Lato-Bold.ttf");
                                     holder.mBtnMatchLock.setTypeface(newFont);
                                 }
                             }
@@ -370,7 +375,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
         Button mBtnMatchLock;
 
-        CustomTextView mTvExpiresIn;
+        TextView mTvExpiresIn;
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -388,7 +393,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             mBtnPlayMatch = (CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
             mBtnMatchPoints = (CustomButton) V.findViewById(R.id.schedule_row_btn_points);
             mBtnMatchLock = (Button) V.findViewById(R.id.schedule_row_btn_match_locked);
-            mTvExpiresIn = (CustomTextView) V.findViewById(R.id.schedule_row_tv_expires_in);
+            mTvExpiresIn = (TextView) V.findViewById(R.id.schedule_row_tv_expires_in);
 
             mLlCardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
 
@@ -551,7 +556,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             Typeface latoBold = Typeface.createFromAsset(tvTimerValue.getContext().getAssets(), "fonts/lato/Lato-Bold.ttf");
             TypefaceSpan latoBoldSpan = new CustomTypefaceSpan("", latoBold);
 
-            String hoursTxt = " "+ String.format("%02d", hours);
+            String hoursTxt = " " + String.format("%02d", hours);
             SpannableString hoursTxtSpannable = new SpannableString(hoursTxt);
             hoursTxtSpannable.setSpan(latoBoldSpan, 0, hoursTxt.length(), 0);
             builder.append(hoursTxtSpannable);
@@ -561,9 +566,10 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             hoursTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, hoursTxt2.length(), 0);
             builder.append(hoursTxt2Spannable);
 
-            String minsTxt = " "+ String.format("%02d", mins);
+            TypefaceSpan latoBoldSpan2 = new CustomTypefaceSpan("", latoBold);
+            String minsTxt = " " + String.format("%02d", mins);
             SpannableString minsTxtSpannable = new SpannableString(minsTxt);
-            minsTxtSpannable.setSpan(latoBoldSpan, 0, minsTxt.length(), 0);
+            minsTxtSpannable.setSpan(latoBoldSpan2, 0, minsTxt.length(), 0);
             builder.append(minsTxtSpannable);
 
             String minsTxt2 = "m ";
@@ -571,9 +577,10 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             minsTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, minsTxt2.length(), 0);
             builder.append(minsTxt2Spannable);
 
-            String secTxt = " "+ String.format("%02d", secs);
+            TypefaceSpan latoBoldSpan3 = new CustomTypefaceSpan("", latoBold);
+            String secTxt = " " + String.format("%02d", secs);
             SpannableString secTxtSpannable = new SpannableString(secTxt);
-            secTxtSpannable.setSpan(latoBoldSpan, 0, secTxt.length(), 0);
+            secTxtSpannable.setSpan(latoBoldSpan3, 0, secTxt.length(), 0);
             builder.append(secTxtSpannable);
 
             String secTxt2 = "s";
