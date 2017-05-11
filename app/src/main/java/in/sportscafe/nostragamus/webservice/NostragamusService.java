@@ -201,7 +201,7 @@ public interface NostragamusService {
     Call<AllChallengesResponse> getAllChallenges();*/
 
     @GET("/v2/game/users/getHomeChallenges")
-    Call<AllChallengesResponse> getAllChallenges();
+    Call<AllChallengesResponse> getAllChallenges(@Query("filter") String filter);
 
     @POST("v2/game/users/challenges/transferFromBank")
     Call<BankTransferResponse> bankTransfer(@Body BankTransferRequest bankTransferRequest);
@@ -235,4 +235,9 @@ public interface NostragamusService {
 
     @GET("v1/utility/getServerTime")
     Call<TimeResponse> getServerTime();
+
+    @GET("/v2/game/users/getHomeChallenges")
+    Call<AllChallengesResponse> getCompletedChallengesRequest( @Query("filter") String filter,
+                                                               @Query("skip") int skip,
+                                                               @Query("limit") int limit);
 }
