@@ -12,6 +12,8 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengesDataResponse;
 import in.sportscafe.nostragamus.module.common.TimeResponse;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.settings.app.AppSettingsModel;
+import in.sportscafe.nostragamus.module.settings.app.AppSettingsModelImpl;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -21,7 +23,7 @@ import retrofit2.http.Query;
 /**
  * Created by Jeeva on 14/6/16.
  */
-public class AllChallengesApiModelImpl {
+public class AllChallengesApiModelImpl implements AllChallengesApiModel {
 
     private String CURRENT_CHALLENGES = "current";
 
@@ -47,11 +49,22 @@ public class AllChallengesApiModelImpl {
         return new AllChallengesApiModelImpl(listener);
     }
 
+    public AllChallengesApiModelImpl() {
+    }
+
+    public static AllChallengesApiModelImpl newInstance() {
+        return new AllChallengesApiModelImpl();
+    }
+
+
     public void getAllChallenges() {
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
             callChallengesApi(CURRENT_CHALLENGES);
-        } else {
-            mAllChallengesApiModelListener.onNoInternet();
+    }
+
+    @Override
+    public void getAllCompletedChallenge() {
+        if(Nostragamus.getInstance().hasNetworkConnection()) {
+            callCompletedChallengesApi(COMPLETED_CHALLENGES,0,DEFAULT_LIMIT,false);
         }
     }
 
@@ -61,6 +74,7 @@ public class AllChallengesApiModelImpl {
      * @return the completed challenge list
      */
     public List<Challenge> getCompletedChallenges() {
+        mCompletedChallenges = Nostragamus.getInstance().getServerDataManager().getCompletedChallenges();
         return mCompletedChallenges;
     }
 
@@ -93,10 +107,6 @@ public class AllChallengesApiModelImpl {
                     public void onResponse(Call<AllChallengesResponse> call, Response<AllChallengesResponse> response) {
                         super.onResponse(call, response);
 
-                        if (!mAllChallengesApiModelListener.onApiCallStopped()) {
-                            return;
-                        }
-
                         if (response.isSuccessful() && response.body() != null && response.body().getResponse() != null) {
                             ChallengesDataResponse dataResponse = response.body().getResponse();
 
@@ -113,7 +123,7 @@ public class AllChallengesApiModelImpl {
         );
     }
 
-    private void callCompletedChallengesApi(String filter , int skip, int limit) {
+    private void callCompletedChallengesApi(String filter , int skip, int limit , final boolean showChallenge) {
 
         MyWebService.getInstance().getCompletedChallengesRequest(filter,skip,limit).enqueue(
                 new NostragamusCallBack<AllChallengesResponse>() {
@@ -121,18 +131,13 @@ public class AllChallengesApiModelImpl {
                     public void onResponse(Call<AllChallengesResponse> call, Response<AllChallengesResponse> response) {
                         super.onResponse(call, response);
 
-                        if (!mAllChallengesApiModelListener.onApiCallStopped()) {
-                            return;
-                        }
-
                         if (response.isSuccessful() && response.body() != null && response.body().getResponse() != null) {
                             ChallengesDataResponse dataResponse = response.body().getResponse();
                             mCompletedChallenges = dataResponse.getCompletedChallenges();
-
-                            mAllChallengesApiModelListener.onSuccessAllChallengesApi();
-
-                        } else {
-                            mAllChallengesApiModelListener.onFailedAllChallengesApi(response.message());
+                            Nostragamus.getInstance().getServerDataManager().setCompletedChallenges(mCompletedChallenges);
+                            if (showChallenge){
+                                mAllChallengesApiModelListener.onSuccessAllChallengesApi();
+                            }
                         }
                     }
                 }
@@ -148,13 +153,21 @@ public class AllChallengesApiModelImpl {
                     public void onResponse(Call<TimeResponse> call, Response<TimeResponse> response) {
                         super.onResponse(call, response);
 
+                        if (!mAllChallengesApiModelListener.onApiCallStopped()) {
+                            return;
+                        }
+
                         if (response.isSuccessful() && response.body() != null && response.body().getServerTime() != null) {
 
                             String serverTime = response.body().getServerTime();
 
                             setServerTimeForGloballyAvailability(serverTime);
 
-                            callCompletedChallengesApi(COMPLETED_CHALLENGES,0, DEFAULT_LIMIT);
+                            if (mCompletedChallenges.size()  > 0){
+                                mAllChallengesApiModelListener.onSuccessAllChallengesApi();
+                            }else {
+                                callCompletedChallengesApi(COMPLETED_CHALLENGES,0, DEFAULT_LIMIT,true);
+                            }
 
                         } else {
                             mAllChallengesApiModelListener.onSuccessAllChallengesApi();

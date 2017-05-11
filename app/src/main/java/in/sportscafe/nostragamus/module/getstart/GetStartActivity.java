@@ -3,11 +3,14 @@ package in.sportscafe.nostragamus.module.getstart;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.allchallenges.AllChallengesApiModelImpl;
 import in.sportscafe.nostragamus.module.feedback.GoogleFormActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -38,6 +41,9 @@ public class GetStartActivity extends Activity {
             if (NostragamusDataHandler.getInstance().isFirstTimeUser()) {
                 navigateToEditProfile();
             } else {
+                if (Nostragamus.getInstance().hasNetworkConnection()) {
+                    AllChallengesApiModelImpl.newInstance().getAllCompletedChallenge();
+                }
                 navigateToHome();
             }
         } else {

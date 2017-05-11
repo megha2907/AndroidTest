@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus;
 
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
@@ -15,6 +16,8 @@ public class ServerDataManager {
 
     private List<Challenge> challengeList;
 
+    private List<Challenge> completedChallenges = new ArrayList<>();
+
     private Challenge challengeInfo;
 
     private Match matchInfo;
@@ -25,6 +28,14 @@ public class ServerDataManager {
 
     public void setChallengeList(List<Challenge> challengeList) {
         this.challengeList = challengeList;
+    }
+
+    public @Nullable List<Challenge> getCompletedChallenges() {
+        return completedChallenges;
+    }
+
+    public void setCompletedChallenges(List<Challenge> completedChallenges) {
+        this.completedChallenges = completedChallenges;
     }
 
     public Challenge getChallengeInfo() {
