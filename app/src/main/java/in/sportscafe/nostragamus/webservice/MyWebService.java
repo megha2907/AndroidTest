@@ -248,8 +248,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getLeaderBoardComparisonRequest(playerId);
     }
 
-    public Call<AllChallengesResponse> getAllChallengesRequest() {
-        return mNostragamusService.getAllChallenges();
+    public Call<AllChallengesResponse> getAllChallengesRequest(String filter) {
+        return mNostragamusService.getAllChallenges(filter);
     }
 
     public Call<BankTransferResponse> getBankTransferRequest(BankTransferRequest request) {
@@ -290,5 +290,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<TimeResponse> getServerTime() {
         return mNostragamusService.getServerTime();
+    }
+
+    public Call<AllChallengesResponse> getCompletedChallengesRequest(String filter , int skip, int limit) {
+        return mNostragamusService.getCompletedChallengesRequest(filter,skip,limit);
     }
 }

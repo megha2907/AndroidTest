@@ -112,13 +112,13 @@ public class AllChallengesFragment extends NostragamusFragment
         mViewPagerAdapter = new ChallengeViewPagerAdapter(getChildFragmentManager(), getContext());
 
         ChallengeFragment challengeFragment;
-        List<Challenge> challenges = mAllChallengesApiModel.getCompletedChallenges();
+        List<Challenge> completedChallenges = mAllChallengesApiModel.getCompletedChallenges();
         int count = 0;
         boolean completedAvailable = false;
 
-        if (challenges.size() > 0) {
+        if (completedChallenges.size() > 0) {
             completedAvailable = true;
-            challengeFragment = ChallengeFragment.newInstance(challenges, count++,Constants.ChallengeTabs.COMPLETED);
+            challengeFragment = ChallengeFragment.newInstance(completedChallenges, count++,Constants.ChallengeTabs.COMPLETED);
             mViewPagerAdapter.addFragment(challengeFragment, Constants.ChallengeTabs.COMPLETED);
             mChallengeFragmentList.add(challengeFragment);
         }
