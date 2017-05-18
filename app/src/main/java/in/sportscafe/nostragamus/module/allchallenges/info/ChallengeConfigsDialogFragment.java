@@ -161,7 +161,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         mRcvConfigs.setAdapter(mConfigAdapter);
 
         findViewById(R.id.configs_ll_title).setVisibility(View.VISIBLE);
-        ((TextView) findViewById(R.id.configs_tv_challenge_name)).setText(mChallenge.getName() + " - Pick contest");
+        ((TextView) findViewById(R.id.configs_tv_challenge_name)).setText(mChallenge.getName() + ": Pick a contest");
         mBtnPopupClose.setVisibility(View.VISIBLE);
         mBtnPopupClose.setOnClickListener(this);
 
