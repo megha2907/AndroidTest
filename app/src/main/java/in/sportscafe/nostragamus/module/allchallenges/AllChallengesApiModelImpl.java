@@ -1,12 +1,17 @@
 package in.sportscafe.nostragamus.module.allchallenges;
 
+import android.os.Bundle;
 import android.text.TextUtils;
+
+import com.jeeva.android.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengesDataResponse;
@@ -31,6 +36,8 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
 
     private static final int DEFAULT_LIMIT = 10;
 
+    private ChallengesDataResponse mDataResponse;
+
     private List<Challenge> mAllChallenges = new ArrayList<>();
 
     private List<Challenge> mCompletedChallenges = new ArrayList<>();
@@ -40,6 +47,8 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
     private List<Challenge> mNewChallenges = new ArrayList<>();
 
     private OnAllChallengesApiModelListener mAllChallengesApiModelListener;
+
+    private Bundle mbundle;
 
     public AllChallengesApiModelImpl(OnAllChallengesApiModelListener listener) {
         this.mAllChallengesApiModelListener = listener;
@@ -57,14 +66,23 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
     }
 
 
-    public void getAllChallenges() {
+    public void getAllChallenges(Bundle bundle) {
+        mbundle = bundle;
+        if (null != mbundle) {
+            if (mbundle.containsKey(Constants.BundleKeys.LOGIN_SCREEN)) {
+                Log.i("insidee", "nullfilter");
+                callChallengesApi(null);
+            }
+        } else {
+            Log.i("insidee", "currentfilter");
             callChallengesApi(CURRENT_CHALLENGES);
+        }
     }
 
     @Override
     public void getAllCompletedChallenge() {
-        if(Nostragamus.getInstance().hasNetworkConnection()) {
-            callCompletedChallengesApi(COMPLETED_CHALLENGES,0,DEFAULT_LIMIT,false);
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            callCompletedChallengesApi(COMPLETED_CHALLENGES, 0, DEFAULT_LIMIT, false);
         }
     }
 
@@ -108,11 +126,16 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
                         super.onResponse(call, response);
 
                         if (response.isSuccessful() && response.body() != null && response.body().getResponse() != null) {
-                            ChallengesDataResponse dataResponse = response.body().getResponse();
+                            mDataResponse = response.body().getResponse();
 
-                            mNewChallenges = dataResponse.getNewChallenges();
-                            mInPlayChallenges = dataResponse.getInPlayChallenges();
-
+                            mNewChallenges = mDataResponse.getNewChallenges();
+                            mInPlayChallenges = mDataResponse.getInPlayChallenges();
+                            if (null != mbundle) {
+                                if (mbundle.containsKey(Constants.BundleKeys.LOGIN_SCREEN)) {
+                                    mCompletedChallenges = mDataResponse.getCompletedChallenges();
+                                    Nostragamus.getInstance().getServerDataManager().setCompletedChallenges(mCompletedChallenges);
+                                }
+                            }
                             callServerTimeApi();
 
                         } else {
@@ -123,9 +146,9 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
         );
     }
 
-    private void callCompletedChallengesApi(String filter , int skip, int limit , final boolean showChallenge) {
+    private void callCompletedChallengesApi(String filter, int skip, int limit, final boolean showChallenge) {
 
-        MyWebService.getInstance().getCompletedChallengesRequest(filter,skip,limit).enqueue(
+        MyWebService.getInstance().getCompletedChallengesRequest(filter, skip, limit).enqueue(
                 new NostragamusCallBack<AllChallengesResponse>() {
                     @Override
                     public void onResponse(Call<AllChallengesResponse> call, Response<AllChallengesResponse> response) {
@@ -135,7 +158,7 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
                             ChallengesDataResponse dataResponse = response.body().getResponse();
                             mCompletedChallenges = dataResponse.getCompletedChallenges();
                             Nostragamus.getInstance().getServerDataManager().setCompletedChallenges(mCompletedChallenges);
-                            if (showChallenge){
+                            if (showChallenge) {
                                 mAllChallengesApiModelListener.onSuccessAllChallengesApi();
                             }
                         }
@@ -163,11 +186,7 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
 
                             setServerTimeForGloballyAvailability(serverTime);
 
-                            if (mCompletedChallenges.size()  > 0){
-                                mAllChallengesApiModelListener.onSuccessAllChallengesApi();
-                            }else {
-                                callCompletedChallengesApi(COMPLETED_CHALLENGES,0, DEFAULT_LIMIT,true);
-                            }
+                            mAllChallengesApiModelListener.onSuccessAllChallengesApi();
 
                         } else {
                             mAllChallengesApiModelListener.onSuccessAllChallengesApi();
@@ -179,6 +198,7 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
 
     /**
      * Always set newly received server-time
+     *
      * @param serverTime
      */
     private void setServerTimeForGloballyAvailability(String serverTime) {

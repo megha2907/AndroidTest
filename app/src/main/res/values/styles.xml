@@ -170,6 +170,8 @@
 
     <style name="CustomEditTextStyle" parent="@style/EditTextStyle">
         <item name="android:layout_marginTop">@dimen/dp_10</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:imeOptions">actionDone</item>
     </style>
 
     <style name="CustomEditTextEmailStyle" parent="@style/EditTextStyle">

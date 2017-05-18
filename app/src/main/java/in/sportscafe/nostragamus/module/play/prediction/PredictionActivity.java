@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -526,7 +527,9 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         );
 
         if (null != playCardBitmap) {
-            AppSnippet.doGeneralImageShare(this, playCardBitmap, "");
+            AppSnippet.doGeneralImageShare(this, playCardBitmap, "Help your friend win great prizes and learn more about sports in" +
+                    " Nostragamus by answering this simple question. If you want to join too, " +
+                    "download the game at " +"https://play.google.com/store/apps/details?id=in.sportscafe.nostragamus");
         }
     }
 

@@ -25,4 +25,5 @@ public interface MyResultsModel {
     String getMatchName();
 
     void getShareText();
+
 }

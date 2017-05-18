@@ -125,6 +125,9 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     @Override
     public void navigateToHome() {
         Intent intent = new Intent(this, HomeActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.BundleKeys.LOGIN_SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
+        intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
@@ -136,7 +139,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         Intent intent = new Intent(this, EditProfileActivity.class);
         intent.putExtra(Constants.BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, EditProfileActivity.ILaunchedFrom.LOG_IN_ACTIVITY);
         Bundle bundle = new Bundle();
-        bundle.putString("screen", Constants.BundleKeys.LOGIN_SCREEN);
+        bundle.putString(Constants.BundleKeys.SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

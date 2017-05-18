@@ -136,5 +136,6 @@
     <string name="title_activity_add_payment_bank">AddPaymentBankActivity</string>
     <string name="profile_disclaimer"> By clicking here, you confirm that you are above 18 years of age and are not from either Assam or Odisha (as Games of Skills are allowed in these states).</string>
     <string name="download_app_text">Gain access to contests with prizes upto ₹ 10,000 on the full version of Nostragamus!</string>
+    <string name="prize_money_disclaimer">In case two or more people tie for a particular rank, the prize money will be re-calculated and may (or) may not be the same. Please refer to Section 7 in <![CDATA[<a href="http://nostragamus.in/rules.html">Nostragamus Rules</a>]]></string>
 
 </resources>

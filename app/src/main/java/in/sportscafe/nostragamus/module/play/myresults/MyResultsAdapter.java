@@ -13,6 +13,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -21,8 +22,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,15 +65,27 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     private static final int CODE_PROFILE_ACTIVITY = 1;
 
+    private boolean mSaveAnswer = false;
+
     private Boolean isShowFlipOptn = false;
 
     private Boolean isFlipclicked = true;
 
     private int answerId;
 
-    private int mAnsweredQuestionCount=0;
+    private int pos;
+
+    private boolean changeAnswers = false;
+
+    private RadioGroup mRadioGroup;
+
+    private int mAnsweredQuestionCount = 0;
 
     private boolean mIsMyResults = true;
+
+    private RelativeLayout mRlEditAnswers;
+
+    private int mEditAnswerQuestionId;
 
     public MyResultsAdapter(Context context, boolean isMyResults) {
         super(context);
@@ -409,7 +426,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
 
     private View getMyPrediction(ViewGroup parent, final Question question) {
-        View convertView = getLayoutInflater().inflate(R.layout.inflater_my_predictions_row, parent, false);
+
+        final View convertView = getLayoutInflater().inflate(R.layout.inflater_my_predictions_row, parent, false);
 
         ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_question))
                 .setText(question.getQuestionText().replace("\n", ""));
@@ -419,9 +437,14 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         final TextView tvNeitherAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_neither_answer);
         HmImageView powerupUsed = (HmImageView) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
         RelativeLayout powerup = (RelativeLayout) convertView.findViewById(R.id.my_predictions_row_rl);
-        TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
+        final TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
         final TextView tvotheroption = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
         final ImageView mFlipPowerUp = (ImageView) convertView.findViewById(R.id.powerup_flip);
+
+        mRlEditAnswers = (RelativeLayout) convertView.findViewById(R.id.my_results_rl_edit_answers);
+        final Button editAnswersBtn = (Button) convertView.findViewById(R.id.my_results_btn_edit_answers);
+        final ImageView mIvEditAnswers = (ImageView) convertView.findViewById(R.id.my_results_iv_edit_answers_icon);
+        mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_icon));
 
         tvAnswer.setCompoundDrawablePadding(10);
         tvotheroption.setCompoundDrawablePadding(10);
@@ -439,7 +462,13 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 tvAnswerPoints.setText(question.getAnswerPoints() + " Points");
             }
 
+            tvAnswerPoints.setVisibility(View.VISIBLE);
+            mRlEditAnswers.setVisibility(View.GONE);
+
         } else {
+            tvAnswerPoints.setVisibility(View.GONE);
+            mRlEditAnswers.setVisibility(View.VISIBLE);
+
             if (isShowFlipOptn == true) {
                 mFlipPowerUp.setVisibility(View.VISIBLE);
                 ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(convertView.getContext(), R.animator.flip_anim);
@@ -541,14 +570,13 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     tvAnswer.setText(question.getQuestionOption1());
                     tvotheroption.setText(question.getQuestionOption2());
 
-                }  /* if answer is 2nd option */
-                else {
+                }  /* if answer is 2nd option */ else {
                     tvAnswer.setText(question.getQuestionOption2());
                     tvotheroption.setText(question.getQuestionOption1());
                 }
 
                  /* if answer is 3rd option */
-                 if (!TextUtils.isEmpty(question.getQuestionOption3()) && answerId == 3) {
+                if (!TextUtils.isEmpty(question.getQuestionOption3()) && answerId == 3) {
                     tvNeitherAnswer.setVisibility(View.VISIBLE);
                     tvAnswer.setText(question.getQuestionOption3());
                     tvotheroption.setText(question.getQuestionOption1());
@@ -562,6 +590,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         }
         /* if played match but not attempted Question */
         else if (answerId == 0) {
+            mRlEditAnswers.setVisibility(View.GONE);
             setTextColor(tvAnswer, R.color.tabcolor);
             tvotheroption.setVisibility(View.VISIBLE);
             tvAnswer.setText(question.getQuestionOption1());
@@ -630,8 +659,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 tvNeitherAnswer.setText(question.getQuestionOption2());
             }
 
-        }  /* if your answer & other option both are correct */
-        else if (question.getQuestionAnswer() == 0) {
+        }  /* if your answer & other option both are correct */ else if (question.getQuestionAnswer() == 0) {
 
             Log.i("answer", "both correct");
 
@@ -648,8 +676,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
             setTextColor(tvAnswer, R.color.greencolor);
 
-        }     /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/
-        else if (question.getQuestionAnswer() == -1) {
+        }     /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/ else if (question.getQuestionAnswer() == -1) {
             tvAnswer.setText(question.getQuestionOption1());
             tvotheroption.setText(question.getQuestionOption2());
 
@@ -665,8 +692,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             setTextColor(tvNeitherAnswer, R.color.white_60);
             setTextColor(tvAnswer, R.color.white_60);
             convertView.findViewById(R.id.my_predictions_row_splitView).setVisibility(View.VISIBLE);
-        }  /* if your answer is incorrect and other option is correct */
-        else {
+        }  /* if your answer is incorrect and other option is correct */ else {
             setTextColor(tvAnswer, R.color.tabcolor);
             tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
             tvotheroption.setVisibility(View.VISIBLE);
@@ -739,7 +765,131 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             }
         }
 
+        /* edit Answer on click of Button and change edit Answer to save answer, If saving Answer ,call api */
+        editAnswersBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                
+                /* check if btn is save Answer , call save Answer Api , hide radio buttons , show Answers View. */
+                if (mSaveAnswer) {
+                    
+                    /* check if other Question edit Answer btn is clicked, if yes don't do anything else save Answer */
+                    if (question.getEditAnswerQuestionId() == question.getQuestionId()) {
+                        int selectedId = mRadioGroup.getCheckedRadioButtonId();
+                        View radioButton = mRadioGroup.findViewById(selectedId);
+                        int selectedIdx = mRadioGroup.indexOfChild(radioButton);
+                        int selectedAnswerId = 0;
+
+                        if (selectedIdx == 0) {
+                            selectedAnswerId = 1;
+                        } else if (selectedIdx == 1) {
+                            selectedAnswerId = 2;
+                        } else if (selectedIdx == 2) {
+                            selectedAnswerId = 3;
+                        }
+
+                        onClickSaveAnswer(question, selectedAnswerId, tvAnswer, tvotheroption, tvNeitherAnswer);
+
+                        /* call save Answer Api */
+                        mResultsActionListener.saveUpdatedAnswer(question.getQuestionId(), selectedAnswerId);
+
+                        /* change save Answer btn back to edit Answer */
+                        editAnswersBtn.setText("Edit Answer");
+                        mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_icon));
+
+                    } else {
+                        // TODO: 5/19/17 The moment a guys clicks on edit answer hide the other edit answer options . the moment he saves it the other edit options comeback
+                        Log.i("save:-->", "save Answer First then Edit Other Question Answer");
+                    }
+                } else { /* Show radio buttons , hide Answers View and change edit Answer btn to Save Answer */
+                    tvAnswer.setVisibility(View.GONE);
+                    tvotheroption.setVisibility(View.GONE);
+                    tvNeitherAnswer.setVisibility(View.GONE);
+                    mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_tick));
+                    editAnswersBtn.setText("Save Answer");
+                    question.setEditAnswerQuestionId(question.getQuestionId());
+                    onClickEditAnswer(convertView, question);
+                }
+            }
+        });
+
+
         return convertView;
+    }
+
+    /* Update Answer and set Selected AnswerId */
+    private void onClickSaveAnswer(Question question, int selectedAnswerId, TextView tvAnswer, TextView tvOtherOption, TextView tvNeitherAnswer) {
+
+        mSaveAnswer = false;
+        mRadioGroup.setVisibility(View.GONE);
+        tvAnswer.setVisibility(View.VISIBLE);
+        tvOtherOption.setVisibility(View.VISIBLE);
+        tvNeitherAnswer.setVisibility(View.VISIBLE);
+
+        question.setAnswerId(selectedAnswerId);
+
+        if (selectedAnswerId == 1) {
+            tvAnswer.setText(question.getQuestionOption1());
+            tvOtherOption.setText(question.getQuestionOption2());
+
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                tvNeitherAnswer.setText(question.getQuestionOption3());
+            }
+
+        } else if (selectedAnswerId == 2) {
+
+            tvAnswer.setText(question.getQuestionOption2());
+            tvOtherOption.setText(question.getQuestionOption1());
+
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                tvNeitherAnswer.setText(question.getQuestionOption3());
+            }
+
+        } else if (selectedAnswerId == 3) {
+
+            tvAnswer.setText(question.getQuestionOption3());
+            tvOtherOption.setText(question.getQuestionOption1());
+
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                tvNeitherAnswer.setText(question.getQuestionOption2());
+            }
+        }
+
+    }
+
+    /* Show Radio Buttons to change Answer */
+    private void onClickEditAnswer(View convertView, Question question) {
+
+        mSaveAnswer = true;
+        mRadioGroup = (RadioGroup) convertView.findViewById(R.id.my_predictions_rg);
+        final RadioButton cbAnswer = (RadioButton) convertView.findViewById(R.id.my_predictions_row_rb_answer);
+        final RadioButton cbOtherAnswer = (RadioButton) convertView.findViewById(R.id.my_predictions_row_rb_correct_answer);
+        final RadioButton cbNeitherAnswer = (RadioButton) convertView.findViewById(R.id.my_predictions_row_rb_neither_answer);
+
+        mRadioGroup.setVisibility(View.VISIBLE);
+        cbAnswer.setText(question.getQuestionOption1());
+        cbOtherAnswer.setText(question.getQuestionOption2());
+
+        if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+            cbNeitherAnswer.setVisibility(View.VISIBLE);
+            cbNeitherAnswer.setText(question.getQuestionOption3());
+        } else {
+            cbNeitherAnswer.setVisibility(View.GONE);
+        }
+
+        if (question.getAnswerId() == 1) {
+            cbAnswer.setChecked(true);
+            cbOtherAnswer.setChecked(false);
+            cbNeitherAnswer.setChecked(false);
+        } else if (question.getAnswerId() == 2) {
+            cbOtherAnswer.setChecked(true);
+            cbAnswer.setChecked(false);
+            cbNeitherAnswer.setChecked(false);
+        } else if (question.getAnswerId() == 3) {
+            cbNeitherAnswer.setChecked(true);
+            cbOtherAnswer.setChecked(false);
+            cbAnswer.setChecked(false);
+        }
+
     }
 
     private void setPercentPoll(TextView textView, int percent, int maxPercent) {
@@ -851,5 +1001,13 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     public interface OnMyResultsActionListener {
 
         void onClickLeaderBoard(int position);
+
+        void onClickEditAnswer(int selectedQuestionId, Question question);
+
+        void saveUpdatedAnswer(int QuestionId, int AnswerId);
+    }
+
+    public void changeToEditAnswers(int selectedQuestionId, Question question) {
+
     }
 }

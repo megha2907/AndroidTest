@@ -40,8 +40,9 @@ public class AllChallengesFragment extends NostragamusFragment
     private CustomViewPager mViewPager;
 
 
-    public static AllChallengesFragment newInstance() {
+    public static AllChallengesFragment newInstance(Bundle bundle) {
         AllChallengesFragment fragment = new AllChallengesFragment();
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -57,7 +58,7 @@ public class AllChallengesFragment extends NostragamusFragment
 
         mViewPager = (CustomViewPager) findViewById(R.id.tab_challenge_vp);
         mAllChallengesApiModel = AllChallengesApiModelImpl.newInstance(this);
-        mAllChallengesApiModel.getAllChallenges();
+        mAllChallengesApiModel.getAllChallenges(getArguments());
     }
 
     @Override
@@ -103,7 +104,7 @@ public class AllChallengesFragment extends NostragamusFragment
         showMessage(message, "RETRY", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAllChallengesApiModel.getAllChallenges();
+                mAllChallengesApiModel.getAllChallenges(getArguments());
             }
         });
     }

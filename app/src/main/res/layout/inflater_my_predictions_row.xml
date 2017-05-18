@@ -26,16 +26,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_8"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:layout_marginRight="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_6">
+                android:layout_marginBottom="@dimen/dp_8">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/my_predictions_row_tv_question"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/white"
                     app:typeface="roboto_condensed" />
 
@@ -46,9 +47,48 @@
                     android:layout_weight="1"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/dp_12"
+                    android:visibility="gone"
                     app:typeface="lato_regular"
                     android:layout_gravity="right"
                     android:gravity="right"/>
+
+                <RelativeLayout
+                    android:id="@+id/my_results_rl_edit_answers"
+                    android:layout_width="@dimen/dp_115"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:visibility="gone"
+                    android:layout_marginRight="@dimen/dp_8">
+
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/my_results_btn_edit_answers"
+                        android:layout_width="@dimen/dp_92"
+                        android:layout_height="@dimen/dp_25"
+                        android:layout_alignBaseline="@+id/my_results_iv_edit_answers_icon"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/compare_btn_bg"
+                        android:gravity="center"
+                        android:textAllCaps="false"
+                        android:onClick="onClick"
+                        android:paddingLeft="@dimen/dp_18"
+                        android:stateListAnimator="@null"
+                        android:text="Edit Answer"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_11"
+                        app:typeface="lato_regular" />
+
+                    <ImageView
+                        android:id="@+id/my_results_iv_edit_answers_icon"
+                        android:layout_width="@dimen/dp_27"
+                        android:layout_height="@dimen/dp_27"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/dp_70"
+                        android:paddingTop="@dimen/dp_1"
+                        android:elevation="@dimen/dp_2" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -143,8 +183,57 @@
 
             </RelativeLayout>
 
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/my_predictions_row_rl_radio_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/my_predictions_row_rl_question"
+        android:layout_gravity="left"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10">
+
+        <RadioGroup
+            android:id="@+id/my_predictions_rg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/my_predictions_row_rb_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/sort_radio_icon"
+                android:textColor="@drawable/radio_btn_tv_selector"
+                android:textSize="@dimen/dp_13"/>
+
+            <RadioButton
+                android:id="@+id/my_predictions_row_rb_correct_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/sort_radio_icon"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_below="@+id/my_predictions_row_tv_answer"
+                android:textColor="@drawable/radio_btn_tv_selector"
+                android:textSize="@dimen/dp_13"/>
+
+            <RadioButton
+                android:id="@+id/my_predictions_row_rb_neither_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/sort_radio_icon"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_below="@+id/my_predictions_row_tv_correct_answer"
+                android:textColor="@drawable/radio_btn_tv_selector"
+                android:textSize="@dimen/dp_13"
+                android:visibility="gone"/>
+
+        </RadioGroup>
 
         </RelativeLayout>
+
 
         <!--<com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/my_predictions_row_tv_answer_points"
