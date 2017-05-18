@@ -798,7 +798,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
                     } else {
                         // TODO: 5/19/17 The moment a guys clicks on edit answer hide the other edit answer options . the moment he saves it the other edit options comeback
-                        Log.i("save:-->", "save Answer First then Edit Other Question Answer");
+                        Log.i("save:-->", "save Answer First then only allow to Edit Other Answer");
                     }
                 } else { /* Show radio buttons , hide Answers View and change edit Answer btn to Save Answer */
                     tvAnswer.setVisibility(View.GONE);
