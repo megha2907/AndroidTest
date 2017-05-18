@@ -765,7 +765,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             }
         }
 
-        /* edit Answer on click of Button and change edit Answer to save answer, If saving Answer ,call api */
+        /* edit Answer on click of Button and change edit Answer to save answer, If saving Answer ,callapi*/
         editAnswersBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 
