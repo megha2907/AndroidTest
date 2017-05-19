@@ -402,6 +402,15 @@
             android:name=".module.paytm.AddPaymentBankActivity"
             android:label="@string/title_activity_add_payment_bank"
             android:theme="@style/AppTheme"></activity>
+
+        <!-- Google AdWords Conversion Tracking Code -->
+        <receiver android:name="com.google.ads.conversiontracking.InstallReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
