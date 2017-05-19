@@ -240,4 +240,7 @@ public interface NostragamusService {
     Call<AllChallengesResponse> getCompletedChallengesRequest( @Query("filter") String filter,
                                                                @Query("skip") int skip,
                                                                @Query("limit") int limit);
+
+    @POST("v2/game/users/editAnswer")
+    Call<ApiResponse> changeAnswer(@Body ChangeAnswer changeAnswer);
 }

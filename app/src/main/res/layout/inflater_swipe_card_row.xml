@@ -47,6 +47,7 @@
                     android:layout_marginRight="@dimen/dp_24"
                     android:layout_marginTop="@dimen/dp_3"
                     android:layout_marginBottom="@dimen/dp_5"
+                    android:textAllCaps="false"
                     android:gravity="center_horizontal"
                     android:textColor="@color/black_80"
                     android:textSize="@dimen/dp_13"

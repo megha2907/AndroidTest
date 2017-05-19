@@ -11,6 +11,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.text.method.MovementMethod;
 import android.text.style.URLSpan;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -195,21 +196,23 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             viewHolder.questionByLayout.setVisibility(View.GONE);
         }
 
-        viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
+        /* Commented for now till hyperlink onclick doesn't work properly with bolding text */
 
-        CharSequence text = viewHolder.tvContext.getText();
-        if (text instanceof Spannable) {
-            int end = text.length();
-            Spannable sp = (Spannable) viewHolder.tvContext.getText();
-            URLSpan[] urls = sp.getSpans(0, end, URLSpan.class);
-            SpannableStringBuilder style = new SpannableStringBuilder(text);
-            style.clearSpans();//should clear old spans
-            for (URLSpan url : urls) {
-                LinkSpan click = new LinkSpan(url.getURL());
-                style.setSpan(click, sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-            viewHolder.tvContext.setText(style);
-        }
+//        CharSequence text = viewHolder.tvContext.getText();
+//        if (text instanceof Spannable) {
+//            int end = text.length();
+//            Spannable sp = (Spannable) viewHolder.tvContext.getText();
+//            URLSpan[] urls = sp.getSpans(0, end, URLSpan.class);
+//            SpannableStringBuilder style = new SpannableStringBuilder(text);
+//            style.clearSpans();//should clear old spans
+//            for (URLSpan url : urls) {
+//                LinkSpan click = new LinkSpan(url.getURL());
+//                style.setSpan(click, sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//            }
+//            viewHolder.tvContext.setText(style);
+//        }
+
+   //     viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
 
         updatePowerUpDetails(viewHolder, question);
 

@@ -295,4 +295,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<AllChallengesResponse> getCompletedChallengesRequest(String filter , int skip, int limit) {
         return mNostragamusService.getCompletedChallengesRequest(filter,skip,limit);
     }
+
+    public Call<ApiResponse> getChangeAnswerRequest(ChangeAnswer changeAnswer) {
+        return mNostragamusService.changeAnswer(changeAnswer);
+    }
 }

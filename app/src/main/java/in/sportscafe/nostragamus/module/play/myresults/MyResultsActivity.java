@@ -31,6 +31,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -354,6 +355,14 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 }
                 break;
 
+//            case R.id.my_results_btn_edit_answers:
+//                if (mSaveAnswer) {
+//                   mResultsPresenter.saveUpdatedAnswers();
+//                } else {
+//                    mResultsPresenter.onClickEditAnswers();
+//                }
+//                break;
+
             case R.id.my_results_challenge_back_btn_layout:
                 onBackPressed();
                 break;
@@ -591,6 +600,18 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         }
     }
 
+    @Override
+    public void updateAnswers(Match match) {
+      refresh(match);
+    }
+
+//    @Override
+//    public void changeEditToSaveAnswer() {
+//        mSaveAnswer = true;
+//        editAnswersBtn.setText("Save Answer");
+//        mIvEditAnswers.setBackground(getContext().getResources().getDrawable(R.drawable.edit_answers_tick));
+//    }
+
     private void collapseFab() {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(createCollapseAnimator(powerupFlipFab, offset1),
@@ -732,5 +753,18 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             }
         }, 500);
 
+    }
+
+    public void refresh(Match match){
+        navigateToResultsActivity(match);
+    }
+
+    public void navigateToResultsActivity(Match match) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
+        Intent intent = new Intent(this, MyResultsActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finish();
     }
 }

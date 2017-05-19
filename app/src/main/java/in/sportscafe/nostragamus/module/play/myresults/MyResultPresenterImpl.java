@@ -77,6 +77,23 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
+    public void onSuccessChangeAnswerResponse(Match match) {
+        //mResultsView.updateAnswers(match);
+        mResultsView.dismissProgressbar();
+    }
+
+    @Override
+    public void onFailedChangeAnswerResponse() {
+        mResultsView.dismissProgressbar();
+        mResultsView.showMessage(Alerts.SOMETHING_WRONG);
+    }
+
+    @Override
+    public void StartProgressbar() {
+        mResultsView.showProgressbar();
+    }
+
+    @Override
     public void onReplayPowerupApplied() {
         mResultsModel.callReplayPowerupApplied();
     }

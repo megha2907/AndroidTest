@@ -1,8 +1,15 @@
 package in.sportscafe.nostragamus.module.allchallenges.info;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.MenuItemHoverListener;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,6 +30,8 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.ConfigPlayersDetails;
 import in.sportscafe.nostragamus.module.allchallenges.dto.RewardBreakUp;
 import in.sportscafe.nostragamus.module.allchallenges.dto.WinnersRewards;
 import in.sportscafe.nostragamus.module.common.Adapter;
+import in.sportscafe.nostragamus.module.feed.FeedWebView;
+import in.sportscafe.nostragamus.module.play.prediction.PredictionAdapter;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -95,6 +104,25 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
         holder.mMainView.setBackgroundColor(ViewUtils.getColor(holder.mMainView.getContext(), colorRes));
 
         holder.mLlDropDownHolder.removeAllViews();
+
+        holder.mTvDisclaimer.setText(Html.fromHtml(holder.mTvDisclaimer.getResources().getString(R.string.prize_money_disclaimer)));
+        holder.mTvDisclaimer.setMovementMethod(LinkMovementMethod.getInstance());
+        holder.mTvDisclaimerTxt.setVisibility(View.VISIBLE);
+        holder.mTvDisclaimer.setVisibility(View.VISIBLE);
+
+        CharSequence text = holder.mTvDisclaimer.getText();
+        if (text instanceof Spannable) {
+            int end = text.length();
+            Spannable sp = (Spannable) holder.mTvDisclaimer.getText();
+            URLSpan[] urls = sp.getSpans(0, end, URLSpan.class);
+            SpannableStringBuilder style = new SpannableStringBuilder(text);
+            style.clearSpans();//should clear old spans
+            for (URLSpan url : urls) {
+                LinkSpan click = new LinkSpan(url.getURL());
+                style.setSpan(click, sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            holder.mTvDisclaimer.setText(style);
+        }
 
 
         try {
@@ -209,5 +237,20 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
     public interface OnConfigAccessListener {
 
         void onConfigHeightChanged();
+    }
+
+    private class LinkSpan extends URLSpan {
+
+        private LinkSpan(String url) {
+            super(url);
+        }
+
+        @Override
+        public void onClick(View view) {
+            String url = getURL();
+            if (url != null) {
+                view.getContext().startActivity(new Intent(view.getContext(), FeedWebView.class).putExtra("url", url));
+            }
+        }
     }
 }

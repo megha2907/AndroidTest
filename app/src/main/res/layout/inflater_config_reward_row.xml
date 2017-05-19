@@ -182,6 +182,8 @@
         android:layout_marginBottom="@dimen/dp_10"
         android:textColor="@color/white_50"
         android:textSize="@dimen/dp_10"
+        android:textColorLink="@color/hyperlink_color"
+        android:linksClickable="true"
         android:visibility="gone"
         app:typeface="lato_regular" />
 
