@@ -96,43 +96,47 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
 
     @Override
     public void apply2xPowerup() {
-        if (isNotPowerupApplied()) {
+//        if (isNotPowerupApplied()) {
             if (m2xPowerups > 0) {
-                mPredictionAdapter.getTopQuestion().apply2xPowerUp();
-                notifyPowerUps();
+                boolean isApplied = mPredictionAdapter.getTopQuestion().apply2xPowerUp();
+                if (isApplied) {
+                    notifyPowerUps();
 
-                m2xPowerups--;
-                mModelListener.on2xApplied(m2xPowerups, false);
+                    m2xPowerups--;
+                    mModelListener.on2xApplied(m2xPowerups, false);
+                }
             } else {
                 mModelListener.onNoPowerUps();
             }
-        }
+//        }
     }
 
     @Override
     public void applyNonegsPowerup() {
-        if (isNotPowerupApplied()) {
+//        if (isNotPowerupApplied()) {
             if (mNonegsPowerups > 0) {
-                mPredictionAdapter.getTopQuestion().applyNonegsPowerUp();
-                notifyPowerUps();
+                boolean isApplied = mPredictionAdapter.getTopQuestion().applyNonegsPowerUp();
+                if (isApplied) {
+                    notifyPowerUps();
 
-                mNonegsPowerups--;
-                mModelListener.onNonegsApplied(mNonegsPowerups, false);
+                    mNonegsPowerups--;
+                    mModelListener.onNonegsApplied(mNonegsPowerups, false);
+                }
             } else {
                 mModelListener.onNoPowerUps();
             }
-        }
+//        }
     }
 
     @Override
     public void applyPollPowerup() {
-        if (isNotPowerupApplied()) {
+//        if (isNotPowerupApplied()) {
             if (mPollPowerups > 0) {
                 handleAudiencePollResponse(getDummyGameAudiencePoll().getAudiencePoll());
             } else {
                 mModelListener.onNoPowerUps();
             }
-        }
+//        }
     }
 
     @Override
@@ -177,7 +181,8 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
             }
 
             mLastAnsweredQuestion.setAnswerId(null);
-            mLastAnsweredQuestion.removeAppliedPowerUp();
+            mLastAnsweredQuestion.removeAppliedPowerUp(Powerups.XX);
+            mLastAnsweredQuestion.removeAppliedPowerUp(Powerups.NO_NEGATIVE);
             mLastAnsweredQuestion.removePollPowerUp();
 
             mModelListener.onQuestionAnswered(scoredPoints);
@@ -189,7 +194,12 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
             mLastQuestionNumber = topQuestion.getQuestionNumber();
 
             mNeitherOptionAvailable = !TextUtils.isEmpty(topQuestion.getQuestionOption3());
-            updatePowerUpStatus(topQuestion.getPowerUpId());
+            ArrayList<String> powerupArr = topQuestion.getPowerUpArrayList();
+            if (powerupArr != null) {
+                for (String powerupStr : powerupArr) {
+                    updatePowerUpStatus(powerupStr);
+                }
+            }
             mModelListener.onQuestionChanged(topQuestion, mNeitherOptionAvailable);
         }
     }
@@ -221,7 +231,7 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
 
     private boolean isNotPowerupApplied() {
         try {
-            return null == mPredictionAdapter.getTopQuestion().getPowerUpId();
+            return null == mPredictionAdapter.getTopQuestion().getPowerUpArrayList();
         } catch (Exception e) {
             ExceptionTracker.track(e);
         }
@@ -238,11 +248,13 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
         int leftAnswerPercent = Integer.parseInt(audiencePoll.get(0).getAnswerPercentage().replaceAll("%", ""));
         int rightAnswerPercent = Integer.parseInt(audiencePoll.get(1).getAnswerPercentage().replaceAll("%", ""));
 
-        mPredictionAdapter.getTopQuestion().applyAudiencePollPowerUp(leftAnswerPercent, rightAnswerPercent);
-        notifyPowerUps();
+        boolean isApplied = mPredictionAdapter.getTopQuestion().applyAudiencePollPowerUp(leftAnswerPercent, rightAnswerPercent);
+        if (isApplied) {
+            notifyPowerUps();
 
-        mPollPowerups--;
-        mModelListener.onAudiencePollApplied(mPollPowerups, false);
+            mPollPowerups--;
+            mModelListener.onAudiencePollApplied(mPollPowerups, false);
+        }
     }
 
     private void dismissPowerUpAnimation(final View view) {
@@ -254,7 +266,7 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
             @Override
             public void onAnimationEnd(Animation animation) {
                 view.setVisibility(View.INVISIBLE);
-                removeAppliedPowerUp();
+                removeAppliedPowerUp(view);
             }
 
             @Override
@@ -264,12 +276,18 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
         });
     }
 
-    private void removeAppliedPowerUp() {
-        Question topQuestion = mPredictionAdapter.getTopQuestion();
-        increasePowerUpCount(topQuestion.getPowerUpId());
-        topQuestion.removeAppliedPowerUp();
+    private void removeAppliedPowerUp(View view) {
+        if (view != null) {
+            String powerUpOfThisView = (String) view.getTag();
+            if (!TextUtils.isEmpty(powerUpOfThisView)) {
 
-        notifyPowerUps();
+                Question topQuestion = mPredictionAdapter.getTopQuestion();
+                increasePowerUpCount(powerUpOfThisView);
+                topQuestion.removeAppliedPowerUp(powerUpOfThisView);
+
+                notifyPowerUps();
+            }
+        }
     }
 
     private void increasePowerUpCount(String powerUpId) {
@@ -284,9 +302,17 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
     }
 
     private void updatePowerUpStatus(String powerUpId) {
-        mModelListener.on2xApplied(m2xPowerups, !(Powerups.XX == powerUpId));
-        mModelListener.onNonegsApplied(mNonegsPowerups, !(Powerups.NO_NEGATIVE == powerUpId));
-        mModelListener.onAudiencePollApplied(mPollPowerups, !(Powerups.AUDIENCE_POLL == powerUpId));
+        switch (powerUpId) {
+            case Powerups.XX:
+                mModelListener.on2xApplied(m2xPowerups, !(Powerups.XX == powerUpId));
+                break;
+            case Powerups.NO_NEGATIVE:
+                mModelListener.onNonegsApplied(mNonegsPowerups, !(Powerups.NO_NEGATIVE == powerUpId));
+                break;
+            case Powerups.AUDIENCE_POLL:
+                mModelListener.onAudiencePollApplied(mPollPowerups, !(Powerups.AUDIENCE_POLL == powerUpId));
+                break;
+        }
     }
 
     private AudiencePollResponse getDummyGameAudiencePoll() {

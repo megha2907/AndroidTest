@@ -224,11 +224,12 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/swipe_card_ll_powerup_holder"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/swipe_card_ll_image"
+                android:gravity="center"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_dp_23"
                 android:divider="@drawable/transparent_shape"
@@ -236,7 +237,7 @@
                 android:showDividers="middle">
 
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/swipe_card_iv_pointer"

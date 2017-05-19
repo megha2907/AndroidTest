@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
+import java.util.ArrayList;
+
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
@@ -38,7 +40,7 @@ public class PostAnswerModelImpl {
                     question.getQuestionId(),
                     question.getAnswerId(),
                     TimeUtils.getCurrentTime(DateFormats.FORMAT_DATE_T_TIME_ZONE, DateFormats.GMT),
-                    question.getPowerUpId(),
+                    question.getPowerUpArrayList(),
                     challengeId
             );
             callPostAnswerApi(answer, question.isMinorityAnswer(), matchComplete);
@@ -69,9 +71,13 @@ public class PostAnswerModelImpl {
     }
 
     private void handlePostAnswerResponse(Answer answer) {
-        String powerupId = answer.getPowerUpId();
-        if (null != powerupId) {
-            NostragamusAnalytics.getInstance().trackPowerups(AnalyticsActions.APPLIED, powerupId);
+        ArrayList<String> powerupsArray = answer.getPowerupsArray();
+        if (null != powerupsArray) {
+            String powerUpTrackStr = "";
+            for (String str : powerupsArray) {
+                powerUpTrackStr = powerUpTrackStr + str + ", ";
+            }
+            NostragamusAnalytics.getInstance().trackPowerups(AnalyticsActions.APPLIED, powerUpTrackStr);
             NostragamusDataHandler.getInstance().setPowerUpApplied(true);
         }
 

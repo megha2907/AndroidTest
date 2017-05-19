@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -93,7 +94,7 @@ public class Question {
     private int questionNumber;
 
     @JsonIgnore
-    private String powerUpId = null;
+    private ArrayList<String> powerUpArrayList = new ArrayList<>();
 
     @JsonIgnore
     private int option1AudPollPer = -1;
@@ -350,13 +351,16 @@ public class Question {
     }
 
     @JsonIgnore
-    public String getPowerUpId() {
-        return powerUpId;
+    public ArrayList<String> getPowerUpArrayList() {
+        /*if (powerUpArrayList == null) {
+            powerUpArrayList = new ArrayList<>();
+        }*/
+        return powerUpArrayList;
     }
 
     @JsonIgnore
-    public void setPowerUpId(String powerUpId) {
-        this.powerUpId = powerUpId;
+    public void setPowerUpArrayList(ArrayList<String> powerUpArrayList) {
+        this.powerUpArrayList = powerUpArrayList;
     }
 
     @JsonProperty("user_answer_points")
@@ -470,21 +474,55 @@ public class Question {
     }
 
     @JsonIgnore
-    public void apply2xPowerUp() {
-        setPowerUpId(Powerups.XX);
-        setUpdatedPositivePoints(2 * getQuestionPositivePoints());
-        setUpdatedNegativePoints(2 * getQuestionNegativePoints());
+    public boolean apply2xPowerUp() {
+        ArrayList<String> powerups = getPowerUpArrayList();
+        if (powerups != null) {
+            for (String str : powerups) {
+                if (str.equalsIgnoreCase(Powerups.XX)) {
+                    return false;  // powerup already applied once
+                }
+            }
+        }
+
+        // If not applied, apply it
+        powerups.add(Powerups.XX);
+        setPowerUpArrayList(powerups);
+        // Reset points based on applied powerups
+        resetPowerupPoints();
+        return true;
     }
 
     @JsonIgnore
-    public void applyNonegsPowerUp() {
-        setPowerUpId(Powerups.NO_NEGATIVE);
-        setUpdatedNegativePoints(0);
+    public boolean applyNonegsPowerUp() {
+        ArrayList<String> powerups = getPowerUpArrayList();
+        if (powerups != null) {
+            for (String str : powerups) {
+                if (str.equalsIgnoreCase(Powerups.NO_NEGATIVE)) {
+                    return false;  // powerup already applied once
+                }
+            }
+        }
+
+        powerups.add(Powerups.NO_NEGATIVE);
+        setPowerUpArrayList(powerups);
+        // Reset points based on applied powerups
+        resetPowerupPoints();
+        return true;
     }
 
     @JsonIgnore
-    public void applyAudiencePollPowerUp(int leftAnswerPercent, int rightAnswerPercent) {
-        setPowerUpId(Powerups.AUDIENCE_POLL);
+    public boolean applyAudiencePollPowerUp(int leftAnswerPercent, int rightAnswerPercent) {
+//        setPowerUpArrayList(Powerups.AUDIENCE_POLL);
+        ArrayList<String> powerups = getPowerUpArrayList();
+        if (powerups != null) {
+            for (String str : powerups) {
+                if (str.equalsIgnoreCase(Powerups.AUDIENCE_POLL)) {
+                    return false;  // powerup already applied once
+                }
+            }
+        }
+
+        powerups.add(Powerups.AUDIENCE_POLL);
         setOption1AudPollPer(leftAnswerPercent);
         setOption2AudPollPer(rightAnswerPercent);
 
@@ -495,18 +533,105 @@ public class Question {
         } else {
             setMinorityAnswerId(-1);
         }
+
+        return true;
     }
 
     @JsonIgnore
-    public void removeAppliedPowerUp() {
-        setPowerUpId(null);
-        setUpdatedPositivePoints(getQuestionPositivePoints());
-        setUpdatedNegativePoints(getQuestionNegativePoints());
+    public void removeAppliedPowerUp(String powerupToRemove) {
+        // Once Audiance poll is applied, can not be removed
+        if (powerupToRemove.equals(Powerups.AUDIENCE_POLL)) {
+            return;
+        }
+
+        ArrayList<String> appliedPowerUp = getPowerUpArrayList();
+        if (appliedPowerUp != null) {
+            // First remove item from applied powerups
+            for (int temp = 0; temp < appliedPowerUp.size(); temp++) {
+                if (appliedPowerUp.get(temp).equalsIgnoreCase(powerupToRemove)) {
+                    appliedPowerUp.remove(temp);
+                }
+            }
+        }
+
+        // Reset points based on remaining applied powerups
+        resetPowerupPoints();
+    }
+
+    /**
+     * This method is used to update points on UI when powerups are either added or removed
+     */
+    private void resetPowerupPoints() {
+        ArrayList<String> appliedPowerUp = getPowerUpArrayList();
+        if (appliedPowerUp == null || appliedPowerUp.isEmpty()) {
+            setUpdatedPositivePoints(getQuestionPositivePoints());
+            setUpdatedNegativePoints(getQuestionNegativePoints());
+
+        } else {
+            /* Only one powerup available */
+            if (powerUpArrayList.size() == 1) {
+                String powerup = powerUpArrayList.get(0);
+                switch (powerup) {
+                    case Powerups.XX:
+                        setUpdatedPositivePoints(2 * getQuestionPositivePoints());
+                        setUpdatedNegativePoints(2 * getQuestionNegativePoints());
+                        break;
+
+                    case Powerups.NO_NEGATIVE:
+                        setUpdatedPositivePoints(getQuestionPositivePoints());
+                        setUpdatedNegativePoints(0);
+                        break;
+
+                    case Powerups.AUDIENCE_POLL:
+                        // No operation for points
+                        break;
+                }
+
+            } else if (powerUpArrayList.size() == 2) {              /* Any 2 powerups */
+                String powerup1 = powerUpArrayList.get(0);
+                String powerup2 = powerUpArrayList.get(1);
+
+                boolean is2x = false;
+                boolean noNegative = false;
+
+                if (powerup1.equals(Powerups.XX) || powerup2.equals(Powerups.XX)) {
+                    is2x = true;
+                }
+                if (powerup1.equals(Powerups.NO_NEGATIVE) || powerup2.equals(Powerups.NO_NEGATIVE)) {
+                    noNegative = true;
+                }
+
+                if (is2x && noNegative) {
+                    setUpdatedPositivePoints(2 * getQuestionPositivePoints());
+                    setUpdatedNegativePoints(0);
+                }
+
+            } else if (powerUpArrayList.size() == 3) {      /* All the 3 powerups */
+                String powerup1 = powerUpArrayList.get(0);
+                String powerup2 = powerUpArrayList.get(1);
+                String powerup3 = powerUpArrayList.get(2);
+
+                boolean is2x = false;
+                boolean noNegative = false;
+
+                if (powerup1.equals(Powerups.XX) || powerup2.equals(Powerups.XX) || powerup3.equals(Powerups.XX)) {
+                    is2x = true;
+                }
+                if (powerup1.equals(Powerups.NO_NEGATIVE) || powerup2.equals(Powerups.NO_NEGATIVE) || powerup3.equals(Powerups.NO_NEGATIVE)) {
+                    noNegative = true;
+                }
+
+                if (is2x && noNegative) {
+                    setUpdatedPositivePoints(2 * getQuestionPositivePoints());
+                    setUpdatedNegativePoints(0);
+                }
+            }
+        }
     }
 
     @JsonIgnore
     public void removePollPowerUp() {
-        removeAppliedPowerUp();
+        removeAppliedPowerUp(Powerups.AUDIENCE_POLL);
         setOption1AudPollPer(-1);
         setOption2AudPollPer(-1);
         setMinorityAnswerId(-1);

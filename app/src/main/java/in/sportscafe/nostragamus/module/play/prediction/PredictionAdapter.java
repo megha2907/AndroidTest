@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +18,9 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -27,6 +31,8 @@ import android.widget.TextView;
 
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
+
+import java.util.ArrayList;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
@@ -241,36 +247,56 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         Integer negativePoint = question.getUpdatedNegativePoints();
         if (null == negativePoint || negativePoint == 0) {
             viewHolder.negativePointsCardView.setVisibility(View.GONE);
-//            viewHolder.viewPoints.setVisibility(View.GONE);
         } else {
             viewHolder.tvquestionNegativePoints.setText("" + negativePoint + " pts");
-//            viewHolder.viewPoints.setVisibility(View.VISIBLE);
             viewHolder.tvquestionNegativePoints.setTag(negativePoint);
             viewHolder.negativePointsCardView.setVisibility(View.VISIBLE);
         }
 
-        String powerupId = question.getPowerUpId();
+        ArrayList<String> powerupArray = question.getPowerUpArrayList();
         viewHolder.llPowerUpHolder.removeAllViews();
-        if (!TextUtils.isEmpty(powerupId)) {
-            if (Powerups.AUDIENCE_POLL.equalsIgnoreCase(powerupId)) {
-                viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
-                viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
+        if (powerupArray != null) {
+            for (String str : powerupArray) {
+                if (Powerups.AUDIENCE_POLL.equalsIgnoreCase(str)) {
+                    viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
+                    viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
 
-                viewHolder.btnanswer1Percentage.setText(question.getOption1AudPollPer() + "%");
-                viewHolder.btnanswer2Percentage.setText(question.getOption2AudPollPer() + "%");
-            } else {
-                View powerUpAppliedView = getPowerUpAppliedView(powerupId, viewHolder.llPowerUpHolder);
-                if (null != powerUpAppliedView) {
-                    viewHolder.llPowerUpHolder.addView(powerUpAppliedView);
-                    powerUpAppliedView.setOnClickListener(mRemovePowerUpListener);
-                    showPowerUpAnimation(powerUpAppliedView);
+                    viewHolder.btnanswer1Percentage.setText(question.getOption1AudPollPer() + "%");
+                    viewHolder.btnanswer2Percentage.setText(question.getOption2AudPollPer() + "%");
+                } else {
+
+                    View powerUpAppliedView = getPowerUpAppliedView(str, mTopViewHolder.llPowerUpHolder);
+                    if (null != powerUpAppliedView) {
+                        mTopViewHolder.llPowerUpHolder.addView(powerUpAppliedView);
+                        powerUpAppliedView.setOnClickListener(mRemovePowerUpListener);
+//                        showPowerUpAnimation(powerUpAppliedView);
+                    }
+
+                    if (mTopViewHolder.llPowerUpHolder.getChildCount() > 1) {
+                        View childView1 = mTopViewHolder.llPowerUpHolder.getChildAt(0);
+                        View childView2 = mTopViewHolder.llPowerUpHolder.getChildAt(1);
+
+                        childView1.animate().setDuration(750).translationX(-50).start();
+                        childView2.animate().setDuration(750).translationX(50).start();
+
+                        /*
+                        * ---- Translate animation moves view but it takes click at it's original place
+                        *
+                        Animation animationLeft = AnimationUtils.loadAnimation(mTopViewHolder.llPowerUpHolder.getContext(), R.anim.move_view_left);
+                        childView1.startAnimation(animationLeft);
+
+                        Animation animationRight = AnimationUtils.loadAnimation(mTopViewHolder.llPowerUpHolder.getContext(), R.anim.move_view_right);
+                        childView2.startAnimation(animationRight);*/
+                    }
                 }
             }
         }
 
-
         if (null != question.getAudiencePoll()) {
-            question.setPowerUpId(Powerups.AUDIENCE_POLL);
+            ArrayList<String> powerups = new ArrayList<>();
+            powerups.add(Powerups.AUDIENCE_POLL);
+            question.setPowerUpArrayList(powerups);
+
             int leftAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(0).getAnswerPercentage().replaceAll("%", ""));
             int rightAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(1).getAnswerPercentage().replaceAll("%", ""));
 
@@ -290,10 +316,12 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         }
     }
 
-    private View getPowerUpAppliedView(String powerupId, ViewGroup parent) {
+    private View getPowerUpAppliedView(String powerup, ViewGroup parent) {
         View powerUpView = mLayoutInflater.inflate(R.layout.inflater_powerup_applied, parent, false);
         ImageView icon = (ImageView) powerUpView.findViewById(R.id.powerup_applied_iv_icon);
-        switch (powerupId) {
+        powerUpView.setTag(powerup);
+
+        switch (powerup) {
             case Powerups.XX:
             case Powerups.XX_GLOBAL:
                 icon.setImageResource(R.drawable.powerup_2x_white);
@@ -487,7 +515,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         LinearLayout llQuestionDesc;
 
-        LinearLayout llPowerUpHolder;
+        RelativeLayout llPowerUpHolder;
 
         private View leftOptionArrow;
 
@@ -521,7 +549,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             tvLockingOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_locking_option);
             llOptionLabels = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_option_labels);
             llQuestionDesc = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_question_desc);
-            llPowerUpHolder = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_powerup_holder);
+            llPowerUpHolder = (RelativeLayout) rootView.findViewById(R.id.swipe_card_ll_powerup_holder);
             leftOptionArrow = rootView.findViewById(R.id.swipe_card_iv_left_arrow);
             rightOptionArrow = rootView.findViewById(R.id.swipe_card_iv_right_arrow);
             questionBy = (TextView) rootView.findViewById(R.id.question_by_textview);
