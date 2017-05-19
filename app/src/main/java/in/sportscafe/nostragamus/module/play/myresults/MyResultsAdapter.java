@@ -8,13 +8,11 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -23,7 +21,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -32,7 +29,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
-import com.jeeva.android.widgets.customfont.CustomButton;
 
 import org.parceler.Parcels;
 
@@ -41,7 +37,6 @@ import java.util.List;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
@@ -59,6 +54,7 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
  */
 public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder> implements View.OnClickListener {
 
+    public static final String SAVE_ANSWER_STR = "Save Answer";
     private OnMyResultsActionListener mResultsActionListener;
 
     private AlertDialog mAlertDialog;
@@ -110,14 +106,14 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mPosition = position;
         holder.mLlTourParent.removeAllViews();
-        holder.mLlTourParent.addView(getMyResultView(getItem(position), holder.mLlTourParent));
+        holder.mLlTourParent.addView(getMyResultView(getItem(position), holder.mLlTourParent, position));
     }
 
     public void showFlipOptnforQuestion() {
         isShowFlipOptn = true;
     }
 
-    private View getMyResultView(Match match, ViewGroup parent) {
+    private View getMyResultView(Match match, ViewGroup parent, int position) {
         View myResultView = getLayoutInflater().inflate(R.layout.inflater_schedule_match_results_row, parent, false);
         MyResultViewHolder holder = new MyResultViewHolder(myResultView);
 
@@ -312,7 +308,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         List<Question> questions = match.getQuestions();
         for (Question question : questions) {
-            holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question));
+            holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question, position));
         }
 
         if (match.isResultPublished() && mIsMyResults) {
@@ -425,9 +421,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     }
 
 
-    private View getMyPrediction(ViewGroup parent, final Question question) {
+    private View getMyPrediction(final ViewGroup parent, final Question question, final int position) {
 
         final View convertView = getLayoutInflater().inflate(R.layout.inflater_my_predictions_row, parent, false);
+        convertView.setId(position);    // A unique id of dynamically created view
 
         ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_question))
                 .setText(question.getQuestionText().replace("\n", ""));
@@ -796,24 +793,51 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                         editAnswersBtn.setText("Edit Answer");
                         mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_icon));
 
+                        showEditQuestionButtons(parent);
                     } else {
                         // TODO: 5/19/17 The moment a guys clicks on edit answer hide the other edit answer options . the moment he saves it the other edit options comeback
                         Log.i("save:-->", "save Answer First then only allow to Edit Other Answer");
+
+
                     }
                 } else { /* Show radio buttons , hide Answers View and change edit Answer btn to Save Answer */
                     tvAnswer.setVisibility(View.GONE);
                     tvotheroption.setVisibility(View.GONE);
                     tvNeitherAnswer.setVisibility(View.GONE);
                     mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_tick));
-                    editAnswersBtn.setText("Save Answer");
+                    editAnswersBtn.setText(SAVE_ANSWER_STR);
                     question.setEditAnswerQuestionId(question.getQuestionId());
                     onClickEditAnswer(convertView, question);
+
+                    hideEditQuestionButtons(parent);
                 }
             }
         });
 
 
         return convertView;
+    }
+
+    private void hideEditQuestionButtons(ViewGroup parentView) {
+        if (parentView != null) {
+            for (int i = 0; i < parentView.getChildCount(); i++) {
+                View view = parentView.getChildAt(i);
+                Button button = (Button) view.findViewById(R.id.my_results_btn_edit_answers);
+                String btnText = button.getText().toString().trim();
+                if (!TextUtils.isEmpty(btnText) && !btnText.equals(SAVE_ANSWER_STR)) {
+                    view.findViewById(R.id.my_results_rl_edit_answers).setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    private void showEditQuestionButtons(ViewGroup parentView) {
+        if (parentView != null) {
+            for (int i = 0; i < parentView.getChildCount(); i++) {
+                View view = parentView.getChildAt(i);
+                view.findViewById(R.id.my_results_rl_edit_answers).setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     /* Update Answer and set Selected AnswerId */
