@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.google.android.gms.common.api.Api;
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 
@@ -18,10 +19,14 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
+import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
+import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
+import in.sportscafe.nostragamus.webservice.ChangeAnswer;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import io.branch.indexing.BranchUniversalObject;
@@ -37,6 +42,8 @@ import retrofit2.Response;
 public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMyResultsActionListener, UserInfoModelImpl.OnGetUserInfoModelListener {
 
     private static final int PAGINATION_START_AT = 5;
+
+    private MyResultsAdapter.OnMyResultsActionListener mResultsActionListener;
 
     private static final int LIMIT = 5;
 
@@ -155,7 +162,9 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     private MyResultsAdapter createAdapter(Context context) {
-        return mResultAdapter = new MyResultsAdapter(context, null == mPlayerUserId);
+        mResultAdapter = new MyResultsAdapter(context, null == mPlayerUserId);
+        mResultAdapter.setResultsActionListener(this);
+        return  mResultAdapter;
     }
 
     private void destroyAdapter() {
@@ -235,6 +244,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 });
     }
 
+
     private void callReplayPowerupAppliedApi(final String powerupId, Integer matchId) {
         MyWebService.getInstance().getReplayPowerup(powerupId, matchId).enqueue(new NostragamusCallBack<ReplayPowerupResponse>() {
             @Override
@@ -257,10 +267,44 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     }
 
+    private void callChangeAnswerApi(Integer questionId, Integer answerId) {
+
+        ChangeAnswer changeAnswer = new ChangeAnswer(questionId,answerId);
+        mResultsModelListener.StartProgressbar();
+        MyWebService.getInstance().getChangeAnswerRequest(changeAnswer).enqueue(new NostragamusCallBack<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    if (response.body().equals(null)) {
+                        mResultsModelListener.onFailedChangeAnswerResponse();
+                    } else {
+                        mResultsModelListener.onSuccessChangeAnswerResponse(match);
+                    }
+
+                } else {
+                    mResultsModelListener.onFailedReplayPowerupResponse();
+                }
+            }
+        });
+
+    }
+
     @Override
     public void onClickLeaderBoard(int position) {
 
     }
+
+    @Override
+    public void onClickEditAnswer(int selectedQuestionId,Question question) {
+        mResultAdapter.changeToEditAnswers(selectedQuestionId,question);
+    }
+
+    @Override
+    public void saveUpdatedAnswer(int QuestionId, int AnswerId) {
+       callChangeAnswerApi(QuestionId,AnswerId);
+    }
+
 
     @Override
     public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {
@@ -300,5 +344,11 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         void setToolbarHeading(String result);
 
         void showResultsToBeDeclared(boolean playedFirstMatchm, Match match);
+
+        void onSuccessChangeAnswerResponse(Match match);
+
+        void onFailedChangeAnswerResponse();
+
+        void StartProgressbar();
     }
 }

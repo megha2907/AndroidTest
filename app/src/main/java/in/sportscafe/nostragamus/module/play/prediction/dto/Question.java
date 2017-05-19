@@ -114,6 +114,9 @@ public class Question {
     @JsonIgnore
     private Integer updatedNegativePoints;
 
+    @JsonIgnore
+    private Integer editAnswerQuestionId;
+
     /**
      * @return The questionId
      */
@@ -679,4 +682,15 @@ public class Question {
     public void setAnswer3percent(Integer answer3percent) {
         this.answer3percent = answer3percent;
     }
+
+    @JsonIgnore
+    public Integer getEditAnswerQuestionId() {
+        return editAnswerQuestionId;
+    }
+
+    @JsonIgnore
+    public void setEditAnswerQuestionId(Integer editAnswerQuestionId) {
+        this.editAnswerQuestionId = editAnswerQuestionId;
+    }
+
 }

@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_8"
-                android:text="Get the full Nostragamus experience!"
+                android:text="Go Pro!"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_14"
                 app:typeface="lato_bold" />
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"
-                android:text="Win Big with full version!"
+                android:text="Win big with Nostragamus Pro!"
                 android:textSize="@dimen/dp_14"
                 app:typeface="lato_bold" />
 
@@ -107,7 +107,7 @@
                     android:drawableLeft="@drawable/download_icon"
                     android:paddingLeft="@dimen/dp_12"
                     android:paddingRight="@dimen/dp_5"
-                    android:text="Download App"
+                    android:text="Download Pro"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_14"

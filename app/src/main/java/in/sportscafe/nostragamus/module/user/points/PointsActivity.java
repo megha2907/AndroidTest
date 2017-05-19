@@ -112,7 +112,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 //        };
 //
 //        // Drop down layout style - list view with radio button
-//        dataAdapter.setDropDownViewResource(R.layout.custom_radio_btn_spinner);
+ //       dataAdapter.setDropDownViewResource(R.layout.custom_radio_btn_spinner);
 //
 //        AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.points_sp_sport);
 //        spinner.setOnItemSelectedListener(this);

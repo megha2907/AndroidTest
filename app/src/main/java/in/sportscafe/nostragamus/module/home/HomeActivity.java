@@ -173,7 +173,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
             case Constants.Screens.CHALLENGES:
                 setSelected(findViewById(R.id.home_ibtn_challenge), findViewById(R.id.home_tv_challenge));
-                loadFragment(AllChallengesFragment.newInstance());
+                loadFragment(AllChallengesFragment.newInstance(getIntent().getExtras()));
                 break;
 
             case Constants.Screens.GROUP:

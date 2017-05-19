@@ -190,6 +190,7 @@ public interface Constants {
         String PAYTM_TRANSACTION_CANCELLED = "You have cancelled transaction, can not continue to join";
         String PAYTM_TRANSACTION_FAILED = "Transaction failed, please try again";
         String PAYTM_FAILURE = "Could not initiate transaction, please try again";
+        String SOMETHING_WRONG ="Something went wrong! Please try again!";
     }
 
     interface BundleKeys {
