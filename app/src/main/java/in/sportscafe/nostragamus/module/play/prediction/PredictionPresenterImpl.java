@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.play.prediction;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.ads.conversiontracking.AdWordsConversionReporter;
 import com.jeeva.android.Log;
 
 import java.util.List;
@@ -87,6 +88,10 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             bundle.putBoolean(Constants.BundleKeys.PLAYED_FIRST_MATCH,true);
             NostragamusDataHandler.getInstance().setPlayedFirstMatch(true);
             mPredictionView.navigateToResults(bundle);
+
+            AdWordsConversionReporter.reportWithConversionId(mPredictionView.getContext().getApplicationContext(),
+                    "934797470", "tIBCCIK8pHEQnsHfvQM", "1.00", true);
+
         }else {
             mPredictionView.navigateToResults(bundle);
             bundle.putBoolean(Constants.BundleKeys.PLAYED_FIRST_MATCH,false);
