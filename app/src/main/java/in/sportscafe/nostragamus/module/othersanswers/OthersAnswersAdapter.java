@@ -277,7 +277,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
 
 
     private View getMyPrediction(ViewGroup parent, final Question question) {
-        View convertView = getLayoutInflater().inflate(R.layout.inflater_my_predictions_row, parent, false);
+        View convertView = getLayoutInflater().inflate(R.layout.others_answer_adapter_row_item, parent, false);
 
         ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_question))
                 .setText(question.getQuestionText().replace("\n", ""));
