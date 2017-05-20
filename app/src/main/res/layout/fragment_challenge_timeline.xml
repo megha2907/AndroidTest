@@ -11,6 +11,7 @@
         android:gravity="center"
         android:textColor="@color/white_80"
         android:textSize="@dimen/dp_12"
+        android:visibility="gone"
         android:paddingBottom="@dimen/dp_10"
         app:typeface="lato_regular" />
 
@@ -20,6 +21,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/challenge_timeline_tv_match_left"
         android:background="@color/black"
+        android:paddingTop="@dimen/dp_5"
         android:clipToPadding="false" />
 
     <View

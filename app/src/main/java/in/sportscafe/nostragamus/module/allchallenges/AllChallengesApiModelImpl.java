@@ -70,11 +70,9 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
         mbundle = bundle;
         if (null != mbundle) {
             if (mbundle.containsKey(Constants.BundleKeys.LOGIN_SCREEN)) {
-                Log.i("insidee", "nullfilter");
                 callChallengesApi(null);
             }
         } else {
-            Log.i("insidee", "currentfilter");
             callChallengesApi(CURRENT_CHALLENGES);
         }
     }

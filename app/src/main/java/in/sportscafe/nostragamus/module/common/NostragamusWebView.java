@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.feed;
+package in.sportscafe.nostragamus.module.common;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,13 +7,15 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.R;
 
 /**
- * Created by deepanshi on 12/5/16.
+ * Created by deepanshi on 5/20/17.
  */
 
-public class FeedWebView extends AppCompatActivity {
+public class NostragamusWebView extends AppCompatActivity {
 
     private WebView webView;
     private Toolbar mtoolbar;
@@ -26,10 +28,10 @@ public class FeedWebView extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webView);
 
         if( savedInstanceState == null ) {
-            String mUrl = getIntent().getStringExtra("url");
-            startWebView(mUrl);
+            String url =
+                    getIntent().getDataString().replace("myscheme://", "http://");
+            startWebView(url);
         }
-
     }
 
     private void startWebView(String url) {
@@ -40,6 +42,7 @@ public class FeedWebView extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
 
             //If you will not use this method url links are opeen in new brower not in webview
+            @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
