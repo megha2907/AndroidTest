@@ -190,7 +190,6 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public void showFlipQuestion() {
-        mResultAdapter.showFlipOptnforQuestion();
         mResultAdapter.notifyDataSetChanged();
     }
 

@@ -3,7 +3,6 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -13,7 +12,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -38,6 +36,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
@@ -47,6 +46,8 @@ import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
+import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -57,21 +58,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     public static final String SAVE_ANSWER_STR = "Save Answer";
     private OnMyResultsActionListener mResultsActionListener;
 
-    private AlertDialog mAlertDialog;
-
-    private static final int CODE_PROFILE_ACTIVITY = 1;
-
     private boolean mSaveAnswer = false;
 
-    private Boolean isShowFlipOptn = false;
-
-    private Boolean isFlipclicked = true;
-
     private int answerId;
-
-    private int pos;
-
-    private boolean changeAnswers = false;
 
     private RadioGroup mRadioGroup;
 
@@ -81,7 +70,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     private RelativeLayout mRlEditAnswers;
 
-    private int mEditAnswerQuestionId;
+    private boolean mIsMatchStarted = false;
 
     public MyResultsAdapter(Context context, boolean isMyResults) {
         super(context);
@@ -107,10 +96,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         holder.mPosition = position;
         holder.mLlTourParent.removeAllViews();
         holder.mLlTourParent.addView(getMyResultView(getItem(position), holder.mLlTourParent, position));
-    }
-
-    public void showFlipOptnforQuestion() {
-        isShowFlipOptn = true;
     }
 
     private View getMyResultView(Match match, ViewGroup parent, int position) {
@@ -306,6 +291,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             }
         }
 
+        initMatchStarted(startTimeMs);
+
         List<Question> questions = match.getQuestions();
         for (Question question : questions) {
             holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question, position));
@@ -318,6 +305,17 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         return myResultView;
     }
 
+    /**
+     * Check that the match started or not
+     * @param startTimeMs
+     */
+    private void initMatchStarted(long startTimeMs) {
+        TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
+
+        mIsMatchStarted = timeAgo.timeDiff <= 0
+                || timeAgo.timeUnit == TimeUnit.MILLISECOND
+                || timeAgo.timeUnit == TimeUnit.SECOND;
+    }
 
     class MyResultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -429,23 +427,19 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_question))
                 .setText(question.getQuestionText().replace("\n", ""));
 
-
         final TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
         final TextView tvNeitherAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_neither_answer);
-        HmImageView powerupUsed = (HmImageView) convertView.findViewById(R.id.my_predictions_row_btn_answer_powerup_used);
-        RelativeLayout powerup = (RelativeLayout) convertView.findViewById(R.id.my_predictions_row_rl);
         final TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
         final TextView tvotheroption = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
-        final ImageView mFlipPowerUp = (ImageView) convertView.findViewById(R.id.powerup_flip);
 
-        mRlEditAnswers = (RelativeLayout) convertView.findViewById(R.id.my_results_rl_edit_answers);
-        final Button editAnswersBtn = (Button) convertView.findViewById(R.id.my_results_btn_edit_answers);
-        final ImageView mIvEditAnswers = (ImageView) convertView.findViewById(R.id.my_results_iv_edit_answers_icon);
-        mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_icon));
+        showOrHidePowerUps(question, convertView);
+        showOrHideEditAnswerButton(convertView);
 
-        tvAnswer.setCompoundDrawablePadding(10);
+        /*tvAnswer.setCompoundDrawablePadding(10);
         tvotheroption.setCompoundDrawablePadding(10);
-        tvNeitherAnswer.setCompoundDrawablePadding(10);
+        tvNeitherAnswer.setCompoundDrawablePadding(10);*/
+
+        answerId = question.getAnswerId();
 
         if (question.getAnswerPoints() != null) {
 
@@ -466,80 +460,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             tvAnswerPoints.setVisibility(View.GONE);
             mRlEditAnswers.setVisibility(View.VISIBLE);
 
-            if (isShowFlipOptn == true) {
-                mFlipPowerUp.setVisibility(View.VISIBLE);
-                ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(convertView.getContext(), R.animator.flip_anim);
-                anim.setTarget(mFlipPowerUp);
-                anim.setDuration(3000);
-                anim.setRepeatCount(ObjectAnimator.INFINITE);
-                anim.setRepeatMode(ObjectAnimator.REVERSE);
-                anim.start();
-
-                final int answerId = question.getAnswerId();
-                if (answerId == 1) {
-                    tvotheroption.setText(question.getQuestionOption2());
-                } else {
-                    tvotheroption.setText(question.getQuestionOption1());
-                }
-
-
-                mFlipPowerUp.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-
-                        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(v.getContext());
-                        alertDialogBuilder.setMessage("Are you sure, You want to apply Flip Powerup on this Question?");
-                        alertDialogBuilder.setPositiveButton("yes",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface arg0, int arg1) {
-                                        if (answerId == 1) {
-                                            tvAnswer.setText(question.getQuestionOption2());
-                                            tvotheroption.setText(question.getQuestionOption1());
-                                        } else {
-                                            tvAnswer.setText(question.getQuestionOption1());
-                                            tvotheroption.setText(question.getQuestionOption2());
-                                        }
-
-                                    }
-                                });
-
-                        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
-                        alertDialog.show();
-
-//                        if(isFlipclicked==true)
-//                        {
-//                            mFlipPowerUp.setEnabled(false);
-//                        }
-//                        isFlipclicked =false;
-//                        notifyDataSetChanged();
-                    }
-                });
-
-                tvotheroption.setVisibility(View.VISIBLE);
-                setTextColor(tvotheroption, R.color.white_60);
-            }
         }
-
-
-        answerId = question.getAnswerId();
-
-
-        int powerupIcons = PowerUp.getResultPowerupIcons(question.getAnswerPowerUpId());
-        if (powerupIcons == -1) {
-            powerupUsed.setVisibility(View.GONE);
-            powerup.setVisibility(View.GONE);
-        } else {
-            powerupUsed.setVisibility(View.VISIBLE);
-            powerupUsed.setBackgroundResource(powerupIcons);
-        }
-
 
         /* BEFORE THE RESULT IS PUBLISHED SHOW ANSWERS */
         if (null == question.getQuestionAnswer()) {
@@ -751,6 +672,16 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         }
 
         /* Showing graph based on percentage */
+        showGraphPercentage(question, convertView);
+
+        /* edit Answer on click of Button and change edit Answer to save answer, If saving Answer ,callapi*/
+        handleEditAnswerButtonClick(parent, question, convertView, tvAnswer,
+                tvNeitherAnswer, tvotheroption);
+
+        return convertView;
+    }
+
+    private void showGraphPercentage(Question question, View convertView) {
         if (question.getAnswer1percent() != null && question.getAnswer2percent() != null) {
             int maxPercent = Math.max(Math.max(question.getAnswer1percent(), question.getAnswer2percent()), question.getAnswer3percent());
 
@@ -761,14 +692,73 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 setPercentPoll((TextView) convertView.findViewById(R.id.my_predictions_row_tv_perc_3), question.getAnswer3percent(), maxPercent);
             }
         }
+    }
 
-        /* edit Answer on click of Button and change edit Answer to save answer, If saving Answer ,callapi*/
+    private void showOrHideEditAnswerButton(View convertView) {
+        mRlEditAnswers = (RelativeLayout) convertView.findViewById(R.id.my_results_rl_edit_answers);
+        if (mIsMatchStarted) {
+            // If match started, answers can not be edited
+            mRlEditAnswers.setVisibility(View.GONE);
+        }
+    }
+
+    private void showOrHidePowerUps(Question question, View convertView) {
+        LinearLayout powerUpLayout = (LinearLayout) convertView.findViewById(R.id.powerup_bottom_layout);
+        ImageView powerUp2xImageView = (ImageView) convertView.findViewById(R.id.my_predictions_answer_powerup_used_2x);
+        ImageView powerUpNoNegativeImageView = (ImageView) convertView.findViewById(R.id.my_predictions_answer_powerup_used_noNeg);
+        ImageView powerUpAudienceImageView = (ImageView) convertView.findViewById(R.id.my_predictions_answer_powerup_used_audience);
+
+        String powerupId = question.getAnswerPowerUpId();
+        if (!TextUtils.isEmpty(powerupId)) {
+            switch (powerupId) {
+
+                case Constants.Powerups.XX:
+                case Constants.Powerups.XX_GLOBAL:
+                    powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup);
+                    powerUp2xImageView.setVisibility(View.VISIBLE);
+                    powerUpLayout.setVisibility(View.VISIBLE);
+                    break;
+
+                case Constants.Powerups.NO_NEGATIVE:
+                    powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup);
+                    powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+                    powerUpLayout.setVisibility(View.VISIBLE);
+                    break;
+
+                case Constants.Powerups.AUDIENCE_POLL:
+                    powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup);
+                    powerUpAudienceImageView.setVisibility(View.VISIBLE);
+                    powerUpLayout.setVisibility(View.VISIBLE);
+                    break;
+            }
+        } else {
+            powerUpLayout.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Edit Answers clicks
+     * @param parent
+     * @param question
+     * @param convertView
+     * @param tvAnswer
+     * @param tvNeitherAnswer
+     * @param tvotheroption
+     */
+    private void handleEditAnswerButtonClick(final ViewGroup parent, final Question question,
+                                             final View convertView, final TextView tvAnswer,
+                                             final TextView tvNeitherAnswer, final TextView tvotheroption) {
+
+        final Button editAnswersBtn = (Button) convertView.findViewById(R.id.my_results_btn_edit_answers);
+        final ImageView mIvEditAnswers = (ImageView) convertView.findViewById(R.id.my_results_iv_edit_answers_icon);
+        mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_icon));
+
         editAnswersBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                
+
                 /* check if btn is save Answer , call save Answer Api , hide radio buttons , show Answers View. */
                 if (mSaveAnswer) {
-                    
+
                     /* check if other Question edit Answer btn is clicked, if yes don't do anything else save Answer */
                     if (question.getEditAnswerQuestionId() == question.getQuestionId()) {
                         int selectedId = mRadioGroup.getCheckedRadioButtonId();
@@ -795,9 +785,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
                         showEditQuestionButtons(parent);
                     } else {
-                        // TODO: 5/19/17 The moment a guys clicks on edit answer hide the other edit answer options . the moment he saves it the other edit options comeback
-                        Log.i("save:-->", "save Answer First then only allow to Edit Other Answer");
-
 
                     }
                 } else { /* Show radio buttons , hide Answers View and change edit Answer btn to Save Answer */
@@ -813,9 +800,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 }
             }
         });
-
-
-        return convertView;
     }
 
     private void hideEditQuestionButtons(ViewGroup parentView) {
@@ -825,7 +809,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 Button button = (Button) view.findViewById(R.id.my_results_btn_edit_answers);
                 String btnText = button.getText().toString().trim();
                 if (!TextUtils.isEmpty(btnText) && !btnText.equals(SAVE_ANSWER_STR)) {
-                    view.findViewById(R.id.my_results_rl_edit_answers).setVisibility(View.GONE);
+                    View editAnswerView = view.findViewById(R.id.my_results_rl_edit_answers);
+                    editAnswerView.setVisibility(View.INVISIBLE);
                 }
             }
         }
@@ -847,7 +832,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         mRadioGroup.setVisibility(View.GONE);
         tvAnswer.setVisibility(View.VISIBLE);
         tvOtherOption.setVisibility(View.VISIBLE);
-        tvNeitherAnswer.setVisibility(View.VISIBLE);
 
         question.setAnswerId(selectedAnswerId);
 
@@ -857,6 +841,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                 tvNeitherAnswer.setText(question.getQuestionOption3());
+                tvNeitherAnswer.setVisibility(View.VISIBLE);
             }
 
         } else if (selectedAnswerId == 2) {
@@ -866,6 +851,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                 tvNeitherAnswer.setText(question.getQuestionOption3());
+                tvNeitherAnswer.setVisibility(View.VISIBLE);
             }
 
         } else if (selectedAnswerId == 3) {
@@ -875,6 +861,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                 tvNeitherAnswer.setText(question.getQuestionOption2());
+                tvNeitherAnswer.setVisibility(View.VISIBLE);
             }
         }
 

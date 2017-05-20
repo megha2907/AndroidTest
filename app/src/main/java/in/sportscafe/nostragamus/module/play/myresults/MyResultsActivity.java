@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.net.ParseException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -31,13 +30,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
@@ -52,10 +48,8 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
-import in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -383,9 +377,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     private void navigatetoFlipScreen() {
-        Intent mintent = new Intent(this, FlipActivity.class);
+        /*Intent mintent = new Intent(this, FlipActivity.class);
         mintent.putExtras(matchBundle);
-        startActivity(mintent);
+        startActivity(mintent);*/
     }
 
     @Override
