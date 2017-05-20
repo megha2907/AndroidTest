@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.feed;
+package in.sportscafe.nostragamus.module.common;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +10,10 @@ import android.webkit.WebViewClient;
 import in.sportscafe.nostragamus.R;
 
 /**
- * Created by deepanshi on 12/5/16.
+ * Created by deepanshi on 5/20/17.
  */
 
-public class FeedWebView extends AppCompatActivity {
+public class NostragamusWebView extends AppCompatActivity {
 
     private WebView webView;
     private Toolbar mtoolbar;
@@ -26,10 +26,10 @@ public class FeedWebView extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webView);
 
         if( savedInstanceState == null ) {
-            String mUrl = getIntent().getStringExtra("url");
-            startWebView(mUrl);
+            String url =
+                    getIntent().getDataString().replace("myscheme://", "http://");
+            startWebView(url);
         }
-
     }
 
     private void startWebView(String url) {

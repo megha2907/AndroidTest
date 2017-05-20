@@ -26,9 +26,9 @@
         android:name=".Nostragamus"
         android:allowBackup="true"
         android:icon="@drawable/launcher_logo"
-        tools:node="replace"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:node="replace">
         <activity
             android:name=".module.test.TestActivity"
             android:screenOrientation="portrait" />
@@ -90,9 +90,20 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".module.feed.FeedWebView"
-            android:screenOrientation="portrait" />
+
+        <activity android:name=".module.feed.FeedWebView"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".module.common.NostragamusWebView">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="myscheme" />
+                <data android:scheme="https" />
+                <data android:scheme="http" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".module.getstart.GetStartActivity"
             android:screenOrientation="portrait" />
@@ -142,7 +153,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.play.prediction.PredictionActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" ></activity>
         <activity
             android:name=".module.play.prediction.AllDoneActivity"
             android:screenOrientation="portrait" />
@@ -241,7 +252,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <meta-data
                 android:name="showInApp"
-                android:value="false"/>
+                android:value="false" />
         </activity>
         <activity
             android:name="com.moengage.pushbase.activities.SnoozeTracker"
@@ -252,20 +263,20 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <meta-data
                 android:name="showInApp"
-                android:value="false"/>
+                android:value="false" />
         </activity>
 
         <service
             android:name="com.moengage.pushbase.push.MoEPushWorker"
-            android:exported="false"/>
+            android:exported="false" />
         <receiver
             android:name="com.moengage.core.MoEAlarmReceiver"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
         <service
             android:name="com.moe.pushlibrary.MoEWorker"
-            android:exported="false"/>
+            android:exported="false" />
 
         <!-- The underlying content provider -->
         <provider
@@ -404,7 +415,8 @@
             android:theme="@style/AppTheme"></activity>
 
         <!-- Google AdWords Conversion Tracking Code -->
-        <receiver android:name="com.google.ads.conversiontracking.InstallReceiver"
+        <receiver
+            android:name="com.google.ads.conversiontracking.InstallReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
