@@ -7,6 +7,8 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.R;
 
 /**
@@ -40,6 +42,7 @@ public class NostragamusWebView extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
 
             //If you will not use this method url links are opeen in new brower not in webview
+            @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
