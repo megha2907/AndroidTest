@@ -244,6 +244,7 @@
             android:textColor="@color/white_60"
             android:textSize="@dimen/dp_12"
             android:visibility="invisible"
+            android:layout_marginTop="@dimen/dp_10"
             app:typeface="lato_regular" />
 
         <!-- Percentage graph - option 2 -->
