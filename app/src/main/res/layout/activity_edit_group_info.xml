@@ -54,7 +54,7 @@
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
                     android:onClick="showImagePopup"
-                    app:defaultImage="@drawable/placeholder_icon"
+                    app:defaultImage="@drawable/left_placeholder_icon"
                     android:alpha="0.8"
                     />
 

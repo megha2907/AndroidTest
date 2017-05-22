@@ -25,6 +25,12 @@ public class VersionDetails {
     @JsonProperty("download_paid_text")
     private String downloadPaidText;
 
+    @JsonProperty("ask_friend_text")
+    private String askFriendText;
+
+    @JsonProperty("disclaimer_text")
+    private String disclaimerText;
+
     @JsonProperty("forceUpdateVersion")
     public Version getForceUpdateVersion() {
         return forceUpdateVersion;
@@ -83,5 +89,25 @@ public class VersionDetails {
     @JsonProperty("download_paid_text")
     public void setDownloadPaidText(String downloadPaidText) {
         this.downloadPaidText = downloadPaidText;
+    }
+
+    @JsonProperty("ask_friend_text")
+    public String getAskFriendText() {
+        return askFriendText;
+    }
+
+    @JsonProperty("ask_friend_text")
+    public void setAskFriendText(String askFriendText) {
+        this.askFriendText = askFriendText;
+    }
+
+    @JsonProperty("disclaimer_text")
+    public String getDisclaimerText() {
+        return disclaimerText;
+    }
+
+    @JsonProperty("disclaimer_text")
+    public void setDisclaimerText(String disclaimerText) {
+        this.disclaimerText = disclaimerText;
     }
 }

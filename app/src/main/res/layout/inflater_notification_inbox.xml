@@ -36,7 +36,7 @@
             android:id="@+id/notification_icon"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
-            android:src="@drawable/placeholder_icon"
+            android:src="@drawable/left_placeholder_icon"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/dp_20"

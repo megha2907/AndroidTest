@@ -60,6 +60,8 @@ public class AppSettingsModelImpl implements AppSettingsModel {
 
             dataHandler.setFeedBack(versionDetails.getFeedbackText());
             dataHandler.setDownloadPaidApp(versionDetails.getDownloadPaidText());
+            dataHandler.setAskFriendText(versionDetails.getAskFriendText());
+            dataHandler.setDisclaimerText(versionDetails.getDisclaimerText());
 
             int oldNormalUpdateVersion = dataHandler.getNormalUpdateVersion();
 

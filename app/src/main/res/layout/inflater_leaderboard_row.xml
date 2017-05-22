@@ -45,7 +45,7 @@
             android:id="@+id/leaderboard_row_iv_user_img"
             android:layout_width="@dimen/dp_32"
             android:layout_height="@dimen/dp_32"
-            android:src="@drawable/placeholder_icon" />
+            android:src="@drawable/left_placeholder_icon" />
 
         <RelativeLayout
             android:layout_width="@dimen/dp_0"

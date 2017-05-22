@@ -80,7 +80,7 @@
                     android:layout_marginTop="@dimen/dp_15"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
-                    app:defaultImage="@drawable/placeholder_icon" />
+                    app:defaultImage="@drawable/left_placeholder_icon" />
 
                 <ImageView
                     android:id="@+id/challenge_iv_info"
