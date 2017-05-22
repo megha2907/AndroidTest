@@ -84,7 +84,7 @@
                         android:alpha="0.8"
                         android:scaleType="centerCrop"
                         android:visibility="visible"
-                        app:defaultImage="@drawable/placeholder_icon" />
+                        app:defaultImage="@drawable/left_placeholder_icon" />
 
 
                 </RelativeLayout>

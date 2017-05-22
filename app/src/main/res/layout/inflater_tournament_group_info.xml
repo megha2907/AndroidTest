@@ -13,7 +13,7 @@
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
         android:layout_margin="@dimen/dp_10"
-        android:src="@drawable/placeholder_icon"
+        android:src="@drawable/left_placeholder_icon"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"/>
 

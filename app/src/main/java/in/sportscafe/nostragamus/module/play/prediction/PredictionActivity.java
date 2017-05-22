@@ -31,6 +31,8 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
+import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.coachmarker.TargetView;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
@@ -519,7 +521,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         bundle.putString(Constants.InAppPopups.IN_APP_POPUP_TYPE, popUpType);
         InAppPopupFragment.newInstance(POPUP_DIALOG_REQUEST_CODE, bundle).show(getSupportFragmentManager(), "InAppPopup");
 
-
     }
 
     @Override
@@ -533,9 +534,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         );
 
         if (null != playCardBitmap) {
-            AppSnippet.doGeneralImageShare(this, playCardBitmap, "Help your friend win great prizes and learn more about sports in" +
-                    " Nostragamus by answering this simple question. If you want to join too, " +
-                    "download the game at " +"https://play.google.com/store/apps/details?id=in.sportscafe.nostragamus");
+            AppSnippet.doGeneralImageShare(this, playCardBitmap, String.valueOf(NostragamusDataHandler.getInstance().getAskFriendText()));
         }
     }
 

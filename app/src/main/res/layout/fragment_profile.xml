@@ -67,7 +67,7 @@
                         android:layout_marginTop="@dimen/dp_20"
                         android:layout_toRightOf="@id/profile_btn_back"
                         android:onClick="onClick"
-                        android:src="@drawable/placeholder_icon" />
+                        android:src="@drawable/left_placeholder_icon" />
 
                     <ImageButton
                         android:id="@+id/profile_btn_edit"

@@ -21,6 +21,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostraEditText;
@@ -112,6 +113,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
                 if (BuildConfig.IS_PAID_VERSION) {
                     mIsOnBoardFlow = true;
                     mCbProfileDisclaimer.setVisibility(View.VISIBLE);
+                    mCbProfileDisclaimer.setText(String.valueOf(NostragamusDataHandler.getInstance().getDisclaimerText()));
                 }
             }
         }

@@ -22,7 +22,7 @@
             android:background="@android:color/transparent"
             android:onClick="showImagePopup"
             android:scaleType="centerCrop"
-            app:defaultImage="@drawable/placeholder_icon" />
+            app:defaultImage="@drawable/left_placeholder_icon" />
 
         <ImageView
             android:id="@+id/edit_iv_camera_image"

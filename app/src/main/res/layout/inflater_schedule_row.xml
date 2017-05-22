@@ -123,7 +123,7 @@
                         android:layout_height="@dimen/dp_60"
                         android:layout_marginTop="@dimen/dp_6"
                         android:scaleType="fitXY"
-                        app:defaultImage="@drawable/placeholder_icon" />
+                        app:defaultImage="@drawable/left_placeholder_icon" />
 
                 </LinearLayout>
 
@@ -155,7 +155,7 @@
                         android:layout_height="@dimen/dp_60"
                         android:layout_marginTop="@dimen/dp_6"
                         android:scaleType="fitXY"
-                        app:defaultImage="@drawable/placeholder_icon" />
+                        app:defaultImage="@drawable/right_placeholder_icon" />
                 </LinearLayout>
 
                 <com.jeeva.android.widgets.customfont.CustomButton

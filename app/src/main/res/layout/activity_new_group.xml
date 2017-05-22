@@ -51,7 +51,7 @@
                     android:alpha="0.8"
                     android:onClick="showImagePopup"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/placeholder_icon" />
+                    android:src="@drawable/left_placeholder_icon" />
 
                 <ImageView
                     android:id="@+id/group_iv_camera_image"

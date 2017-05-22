@@ -99,7 +99,7 @@
                                 android:layout_height="@dimen/dp_60"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="@dimen/dp_18"
-                                android:src="@drawable/placeholder_icon" />
+                                android:src="@drawable/left_placeholder_icon" />
 
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -159,7 +159,7 @@
                                 android:layout_height="@dimen/dp_60"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="@dimen/dp_18"
-                                android:src="@drawable/placeholder_icon" />
+                                android:src="@drawable/right_placeholder_icon" />
 
 
                             <com.jeeva.android.widgets.customfont.CustomTextView

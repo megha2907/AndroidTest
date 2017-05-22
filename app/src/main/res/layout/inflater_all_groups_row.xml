@@ -25,7 +25,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            app:defaultImage="@drawable/placeholder_icon" />
+            app:defaultImage="@drawable/left_placeholder_icon" />
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -108,7 +108,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:defaultImage="@drawable/placeholder_icon"
+                        app:defaultImage="@drawable/left_play_placeholder"
                         app:showAnimation="false" />
 
                     <View
@@ -142,7 +142,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:defaultImage="@drawable/placeholder_icon"
+                        app:defaultImage="@drawable/right_play_placeholder"
                         app:showAnimation="false" />
 
                     <View

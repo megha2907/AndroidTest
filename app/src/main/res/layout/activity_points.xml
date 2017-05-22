@@ -61,7 +61,7 @@
                             android:adjustViewBounds="true"
                             android:scaleType="fitXY"
                             android:visibility="gone"
-                            app:defaultImage="@drawable/placeholder_icon" />
+                            app:defaultImage="@drawable/left_placeholder_icon" />
 
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -418,7 +418,7 @@
                 android:id="@+id/leaderboard_iv_user_img"
                 android:layout_width="@dimen/dp_32"
                 android:layout_height="@dimen/dp_32"
-                android:src="@drawable/placeholder_icon" />
+                android:src="@drawable/left_placeholder_icon" />
 
             <RelativeLayout
                 android:layout_width="@dimen/dp_0"

@@ -57,7 +57,7 @@ public class PlayerBadgeAdapter extends Adapter<String, PlayerBadgeAdapter.ViewH
                 holder.mTvBadgeDesc.setText(R.string.table_topper);
                 break;
             default:
-                holder.mIvBadge.setBackgroundResource(R.drawable.placeholder_icon);
+                holder.mIvBadge.setBackgroundResource(R.drawable.left_placeholder_icon);
                 holder.mTvBadgeDesc.setText("You won" + " " + badge_id + " badge");
                 break;
         }

@@ -23,7 +23,7 @@
                 android:layout_width="@dimen/dp_70"
                 android:layout_height="@dimen/dp_70"
                 android:layout_centerInParent="true"
-                app:defaultImage="@drawable/placeholder_icon" />
+                app:defaultImage="@drawable/left_placeholder_icon" />
 
         </RelativeLayout>
 

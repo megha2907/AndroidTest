@@ -13,7 +13,7 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_10"
         android:scaleType="centerCrop"
-        app:defaultImage="@drawable/placeholder_icon" />
+        app:defaultImage="@drawable/left_placeholder_icon" />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/player_points_tv_name"
