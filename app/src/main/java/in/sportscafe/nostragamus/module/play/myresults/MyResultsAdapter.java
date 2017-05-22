@@ -605,6 +605,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                 tvNeitherAnswer.setText(question.getQuestionOption3());
+                tvNeitherAnswer.setVisibility(View.VISIBLE);
                 setTextColor(tvNeitherAnswer, R.color.white_60);
                 tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             }
