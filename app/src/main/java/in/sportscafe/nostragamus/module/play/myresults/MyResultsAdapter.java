@@ -594,9 +594,11 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
             setTextColor(tvAnswer, R.color.greencolor);
 
-        }     /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/ else if (question.getQuestionAnswer() == -1) {
+        }     /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/
+        else if (question.getQuestionAnswer() == -1) {
             tvAnswer.setText(question.getQuestionOption1());
             tvotheroption.setText(question.getQuestionOption2());
+            tvotheroption.setVisibility(View.VISIBLE);
 
             tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
