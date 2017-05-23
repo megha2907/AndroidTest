@@ -1,7 +1,5 @@
 package in.sportscafe.nostragamus.module.play.myresults;
 
-import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -25,6 +23,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeeva.android.widgets.HmImageView;
 
@@ -45,7 +44,6 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -71,6 +69,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     private RelativeLayout mRlEditAnswers;
 
     private boolean mIsMatchStarted = false;
+    private long mMatchStartTimeMs = 0;
 
     public MyResultsAdapter(Context context, boolean isMyResults) {
         super(context);
@@ -110,6 +109,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
                 Constants.DateFormats.GMT
         );
+
+        mMatchStartTimeMs = startTimeMs;
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
         // Setting date of the match
@@ -427,13 +428,13 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         ((TextView) convertView.findViewById(R.id.my_predictions_row_tv_question))
                 .setText(question.getQuestionText().replace("\n", ""));
 
+        mRlEditAnswers = (RelativeLayout) convertView.findViewById(R.id.my_results_rl_edit_answers);
         final TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
         final TextView tvNeitherAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_neither_answer);
         final TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
         final TextView tvotheroption = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
 
         showOrHidePowerUps(question, convertView);
-        showOrHideEditAnswerButton(convertView);
 
         /*tvAnswer.setCompoundDrawablePadding(10);
         tvotheroption.setCompoundDrawablePadding(10);
@@ -674,6 +675,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         }
 
+        /* Hide Edit button if match started  */
+        showOrHideEditAnswerButton();
+
         /* Showing graph based on percentage */
         showGraphPercentage(question, convertView);
 
@@ -697,9 +701,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         }
     }
 
-    private void showOrHideEditAnswerButton(View convertView) {
-        mRlEditAnswers = (RelativeLayout) convertView.findViewById(R.id.my_results_rl_edit_answers);
-        if (mIsMatchStarted) {
+    private void showOrHideEditAnswerButton() {
+        if (mIsMatchStarted && mRlEditAnswers != null) {
             // If match started, answers can not be edited
             mRlEditAnswers.setVisibility(View.GONE);
         }
@@ -759,46 +762,58 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         editAnswersBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                /* If match not started, then only save */
+                initMatchStarted(mMatchStartTimeMs);
+                if (! mIsMatchStarted) {
+
                 /* check if btn is save Answer , call save Answer Api , hide radio buttons , show Answers View. */
-                if (mSaveAnswer) {
+                    if (mSaveAnswer) {
 
                     /* check if other Question edit Answer btn is clicked, if yes don't do anything else save Answer */
-                    if (question.getEditAnswerQuestionId() == question.getQuestionId()) {
-                        int selectedId = mRadioGroup.getCheckedRadioButtonId();
-                        View radioButton = mRadioGroup.findViewById(selectedId);
-                        int selectedIdx = mRadioGroup.indexOfChild(radioButton);
-                        int selectedAnswerId = 0;
+                        if (question.getEditAnswerQuestionId() == question.getQuestionId()) {
+                            int selectedId = mRadioGroup.getCheckedRadioButtonId();
+                            View radioButton = mRadioGroup.findViewById(selectedId);
+                            int selectedIdx = mRadioGroup.indexOfChild(radioButton);
+                            int selectedAnswerId = 0;
 
-                        if (selectedIdx == 0) {
-                            selectedAnswerId = 1;
-                        } else if (selectedIdx == 1) {
-                            selectedAnswerId = 2;
-                        } else if (selectedIdx == 2) {
-                            selectedAnswerId = 3;
-                        }
+                            if (selectedIdx == 0) {
+                                selectedAnswerId = 1;
+                            } else if (selectedIdx == 1) {
+                                selectedAnswerId = 2;
+                            } else if (selectedIdx == 2) {
+                                selectedAnswerId = 3;
+                            }
 
-                        onClickSaveAnswer(question, selectedAnswerId, tvAnswer, tvotheroption, tvNeitherAnswer);
+
+                            onClickSaveAnswer(question, selectedAnswerId, tvAnswer, tvotheroption, tvNeitherAnswer);
+
 
                         /* call save Answer Api */
-                        mResultsActionListener.saveUpdatedAnswer(question.getQuestionId(), selectedAnswerId);
+                            mResultsActionListener.saveUpdatedAnswer(question.getQuestionId(), selectedAnswerId);
 
                         /* change save Answer btn back to edit Answer */
-                        editAnswersBtn.setText("Edit Answer");
-                        mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_icon));
+                            editAnswersBtn.setText("Edit Answer");
+                            mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_icon));
 
-                        showEditQuestionButtons(parent);
-                    } else {
+                            showEditQuestionButtons(parent);
 
+                        } else {
+
+                        }
+                    } else { /* Show radio buttons , hide Answers View and change edit Answer btn to Save Answer */
+                        tvAnswer.setVisibility(View.GONE);
+                        tvotheroption.setVisibility(View.GONE);
+                        tvNeitherAnswer.setVisibility(View.GONE);
+                        mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_tick));
+                        editAnswersBtn.setText(SAVE_ANSWER_STR);
+                        question.setEditAnswerQuestionId(question.getQuestionId());
+                        onClickEditAnswer(convertView, question);
+
+                        hideEditQuestionButtons(parent);
                     }
-                } else { /* Show radio buttons , hide Answers View and change edit Answer btn to Save Answer */
-                    tvAnswer.setVisibility(View.GONE);
-                    tvotheroption.setVisibility(View.GONE);
-                    tvNeitherAnswer.setVisibility(View.GONE);
-                    mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_tick));
-                    editAnswersBtn.setText(SAVE_ANSWER_STR);
-                    question.setEditAnswerQuestionId(question.getQuestionId());
-                    onClickEditAnswer(convertView, question);
 
+                } else {
+                    Toast.makeText(parent.getContext(), "Oops! Match already started.", Toast.LENGTH_SHORT).show();
                     hideEditQuestionButtons(parent);
                 }
             }
