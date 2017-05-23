@@ -191,6 +191,7 @@
                 android:visibility="visible" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/challenge_info_tv_challenge_payout_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Prizes"

@@ -47,7 +47,7 @@ public class ChallengeConfigsApiModelImpl {
         if (BuildConfig.IS_PAID_VERSION){
             mAppFlavor = "FULL";
         }else {
-            mAppFlavor = "RESTRICTED";
+            mAppFlavor = "PLAYSTORE";
         }
 
         MyWebService.getInstance().getChallengeConfigsRequest(challengeId, configIndex,mAppFlavor).enqueue(

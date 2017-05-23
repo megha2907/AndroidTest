@@ -458,6 +458,14 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(SharedKeys.FEEDBACK, feedBack);
     }
 
+    public String getProFeedBack() {
+        return getSharedStringData(SharedKeys.PRO_FEEDBACK);
+    }
+
+    public void setProFeedBack(String proFeedBack) {
+        setSharedStringData(SharedKeys.PRO_FEEDBACK, proFeedBack);
+    }
+
     public String getDownloadPaidApp() {
         return getSharedStringData(SharedKeys.DOWNLOAD_PAID_APP);
     }

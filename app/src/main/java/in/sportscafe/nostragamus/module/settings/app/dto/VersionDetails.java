@@ -22,6 +22,9 @@ public class VersionDetails {
     @JsonProperty("feedback_text")
     private String feedbackText;
 
+    @JsonProperty("feedback_paid_text")
+    private String feedbackProText;
+
     @JsonProperty("download_paid_text")
     private String downloadPaidText;
 
@@ -79,6 +82,17 @@ public class VersionDetails {
     @JsonProperty("feedback_text")
     public void setFeedbackText(String feedbackText) {
         this.feedbackText = feedbackText;
+    }
+
+
+    @JsonProperty("feedback_paid_text")
+    public String getFeedbackProText() {
+        return feedbackProText;
+    }
+
+    @JsonProperty("feedback_paid_text")
+    public void setFeedbackProText(String feedbackProText) {
+        this.feedbackProText = feedbackProText;
     }
 
     @JsonProperty("download_paid_text")
