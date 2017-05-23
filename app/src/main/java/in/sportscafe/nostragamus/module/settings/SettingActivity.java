@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.jeeva.android.Log;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -45,8 +46,13 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
         mLlActionLayout = (LinearLayout) findViewById(R.id.settings_ll_action_layout);
 
-        ((TextView) findViewById(R.id.settings_tv_app_feedback))
-                .setText(NostragamusDataHandler.getInstance().getFeedBack());
+        TextView feedback = (TextView) findViewById(R.id.settings_tv_app_feedback);
+
+        if (BuildConfig.IS_PAID_VERSION) {
+            feedback.setText(NostragamusDataHandler.getInstance().getProFeedBack());
+        } else {
+            feedback.setText(NostragamusDataHandler.getInstance().getFeedBack());
+        }
 
     }
 

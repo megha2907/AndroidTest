@@ -90,6 +90,7 @@ public interface Constants {
         String POWERUP_APPLIED = "PowerUpApplied";
         String DUMMY_GAME_SHOWN = "dummyGameShown";
         String FEEDBACK = "feedback";
+        String PRO_FEEDBACK = "proFeedback";
         String DOWNLOAD_PAID_APP = "downloadPaidApp";
         String ASK_FRIEND = "askFriendText";
         String DISCLAIMER_TEXT = "disclaimerText";

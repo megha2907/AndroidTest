@@ -59,6 +59,7 @@ public class AppSettingsModelImpl implements AppSettingsModel {
             NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
 
             dataHandler.setFeedBack(versionDetails.getFeedbackText());
+            dataHandler.setProFeedBack(versionDetails.getFeedbackProText());
             dataHandler.setDownloadPaidApp(versionDetails.getDownloadPaidText());
             dataHandler.setAskFriendText(versionDetails.getAskFriendText());
             dataHandler.setDisclaimerText(versionDetails.getDisclaimerText());

@@ -112,7 +112,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
             /* If user info is null AND paymentDetails never shown to user on HomeScreen, then only (once only) */
             if (userInfo.getUserPaymentInfo() == null &&
-                    !NostragamusDataHandler.getInstance().isPaymentDetailsShownAtHome()) {
+                    !NostragamusDataHandler.getInstance().isPaymentDetailsShownAtHome() && BuildConfig.IS_PAID_VERSION) {
 
                 Log.d(TAG, "[onBoard] User Payment details screen shown at home");
                 launchPaymentDetailsActivity();

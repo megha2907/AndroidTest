@@ -17,6 +17,7 @@ import org.parceler.Parcels;
 import java.util.HashMap;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
@@ -95,6 +96,7 @@ public class ChallengeJoinDialogFragment extends NostragamusDialogFragment imple
         TextView challengeName = (TextView) findViewById(R.id.challenge_info_tv_challenge_name);
         TextView challengeDesc = (TextView) findViewById(R.id.challenge_info_tv_challenge_desc);
         TextView challengePayoutDate = (TextView) findViewById(R.id.challenge_info_tv_challenge_payout_date);
+        TextView challengePayoutDateTxt = (TextView) findViewById(R.id.challenge_info_tv_challenge_payout_txt);
         ImageView mBtnPopupClose = (ImageView)findViewById(R.id.popup_cross_btn);
         mBtnPopupClose.setVisibility(View.VISIBLE);
         mBtnPopupClose.setOnClickListener(this);
@@ -137,11 +139,23 @@ public class ChallengeJoinDialogFragment extends NostragamusDialogFragment imple
 
             int dayOfMonthinEndTime = Integer.parseInt(TimeUtils.getDateStringFromMs(endTimeMs, "d"));
 
-            // Setting end date of the challenge
-            challengePayoutDate.setText("The Challenge ends on the " +
-                    dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
-                    TimeUtils.getDateStringFromMs(endTimeMs, "MMM") + " , Prizes will be handed out within 3 days."
-            );
+            if (BuildConfig.IS_PAID_VERSION){
+                challengePayoutDateTxt.setText("Prizes");
+                // Setting end date of the challenge
+                challengePayoutDate.setText("The Challenge ends on the " +
+                        dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
+                        TimeUtils.getDateStringFromMs(endTimeMs, "MMM") + " , Prizes will be handed out within 3 days."
+                );
+
+            }else {
+                challengePayoutDateTxt.setText("Results");
+
+                // Setting end date of the challenge
+                challengePayoutDate.setText("The Challenge ends on the " +
+                        dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
+                        TimeUtils.getDateStringFromMs(endTimeMs, "MMM") + " , Results will be out within few hours."
+                );
+            }
         } else {
             Log.d("Dialog", "ChallengeUserInfo Null");
         }

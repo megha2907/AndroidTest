@@ -137,7 +137,7 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <com.jeeva.android.widgets.customfont.CustomCheckbox
+    <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/edit_disclaimer_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -151,6 +151,7 @@
         android:layout_marginRight="@dimen/dp_16"
         android:textSize="@dimen/dp_12"
         android:gravity="left"
+        android:checked="false"
         app:typeface="lato_regular"
         android:visibility="gone"/>
 

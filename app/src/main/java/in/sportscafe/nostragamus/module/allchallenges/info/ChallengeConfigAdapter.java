@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -20,12 +21,14 @@ import com.jeeva.android.widgets.HmImageView;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig.DropDownIds;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ConfigPlayersDetails;
 import in.sportscafe.nostragamus.module.allchallenges.dto.RewardBreakUp;
 import in.sportscafe.nostragamus.module.common.Adapter;
+import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
@@ -112,7 +115,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
         spannableThree.setSpan(new ForegroundColorSpan(Color.parseColor("#99FFFFFF")), 0, assuredPrizes.length(), 0);
         builderTwo.append(spannableThree);
 
-        String numberOfPrizes = "Top "+String.valueOf(config.getRewardDetails().getBreakUps().size())+"!";
+        String numberOfPrizes = "Top " + String.valueOf(config.getRewardDetails().getBreakUps().size()) + "!";
         SpannableString spannableFour = new SpannableString(numberOfPrizes);
         spannableFour.setSpan(new ForegroundColorSpan(Color.WHITE), 0, numberOfPrizes.length(), 0);
         builderTwo.append(spannableFour);
@@ -135,6 +138,17 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
         holder.mTvDisclaimer.setVisibility(View.GONE);
         holder.mVDisclaimerSeparator.setVisibility(View.GONE);
         holder.mTvSlotsLeft.setVisibility(View.GONE);
+
+        if (BuildConfig.IS_PAID_VERSION) {
+            holder.mLlRewardDropDown.setVisibility(View.VISIBLE);
+            holder.mTvNumberOfPrizes.setVisibility(View.VISIBLE);
+        } else {
+            holder.mLlRewardDropDown.setVisibility(View.GONE);
+            holder.mTvNumberOfPrizes.setVisibility(View.GONE);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.mTvMaxEntries.getLayoutParams();
+            params.setMargins(0, 0, 0, 22);
+            holder.mTvMaxEntries.setLayoutParams(params);
+        }
 
         holder.mMainView.setBackgroundColor(ViewUtils.getColor(holder.mMainView.getContext(), colorRes));
 
@@ -230,6 +244,10 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
 
         LinearLayout mLlDropDownHolder;
 
+        LinearLayout mLlRewardDropDown;
+
+        LinearLayout mLlMemberDropDown;
+
         TextView mTvDropDownTitle;
 
         ImageView mIvDropDownReward;
@@ -259,6 +277,8 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             mBtnJoin = (Button) view.findViewById(R.id.pool_row_btn_join);
             mTvMaxEntries = (TextView) view.findViewById(R.id.pool_row_tv_max_entries);
             mTvNumberOfPrizes = (TextView) view.findViewById(R.id.pool_row_tv_number_of_prizes);
+            mLlRewardDropDown = (LinearLayout) view.findViewById(R.id.pool_row_ll_reward_layout);
+            mLlMemberDropDown = (LinearLayout) view.findViewById(R.id.pool_row_ll_member_layout);
 
             mBtnJoin.setOnClickListener(this);
             view.findViewById(R.id.pool_row_ll_member_layout).setOnClickListener(this);
