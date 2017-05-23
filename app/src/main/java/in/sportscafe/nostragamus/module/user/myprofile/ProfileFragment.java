@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.animator.AppBarStateChangeListener;
@@ -177,6 +178,12 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         drawable.setSize(1, 1);
         linearLayout.setDividerPadding(10);
         linearLayout.setDividerDrawable(drawable);
+
+        if (!BuildConfig.IS_PAID_VERSION) {
+            // For free app, there are only 3 fragment-items/tab available, make them fix-sized
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+            tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }
 
         viewPager.setCurrentItem(getArguments().getInt(BundleKeys.TAB_POSITION));
 
