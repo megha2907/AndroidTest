@@ -471,14 +471,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
+                android:background="@drawable/challenge_afr_joined_bg"
                 android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/schedule_row_scores_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@drawable/challenge_afr_joined_bg">
+                    android:orientation="horizontal">
 
                     <RelativeLayout
                         android:id="@+id/all_challenges_row_rl_show_games_btn"

@@ -133,6 +133,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             holder.mRlCashRewards.setVisibility(View.INVISIBLE);
         }
 
+        HashMap<String, Integer> powerUpMap = null;
+
         if (challenge.getChallengeUserInfo().isUserJoined() || challenge.getCountMatchesLeft().equals("0")) {
             holder.mRlAfterJoinedChallenge.setVisibility(View.VISIBLE);
             holder.mRlMainPowerup.setVisibility(View.VISIBLE);
@@ -148,6 +150,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 holder.mRlMainPowerup.setLayoutParams(params);
             }
+
+            powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
 
 
         } else {
@@ -167,6 +171,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 holder.mRlMainPowerup.setLayoutParams(params);
             }
 
+            powerUpMap = challenge.getChallengeInfo().getPowerUps();
         }
 
 //        Context context = holder.mIv2xPowerup.getContext();
@@ -175,7 +180,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 //        holder.mIvPollPowerup.setBackground(getPowerupDrawable(context, color.greencolor));
 
         try {
-            HashMap<String, Integer> powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
             Integer powerUp2x = powerUpMap.get(Constants.Powerups.XX);
             Integer powerUpNoNegative = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
             Integer powerUpAudiencePoll = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
@@ -272,8 +276,13 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                 holder.mRlLeaderBoardRank.setVisibility(View.GONE);
                 holder.mRlMatchesLeft.setVisibility(View.VISIBLE);
                 holder.mTvMatchesLeft.setText("0" + "/" + String.valueOf(challenge.getMatchesCategorized().getAllMatches().size()) + " Games Left to score!");
-                holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
-                holder.mVLeaderBoardRank.setVisibility(View.GONE);
+
+                if (BuildConfig.IS_PAID_VERSION) {
+                    holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
+                }else {
+                    holder.mRlMainPowerup.setVisibility(View.VISIBLE);
+                }
+                holder.mJoinChallengeLayout.setVisibility(View.GONE);
             }
 
         }
@@ -327,6 +336,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         RelativeLayout mRlMatchesLeft;
         RelativeLayout mRlRewards;
         RelativeLayout mRlLeaderBoardRank;
+        RelativeLayout mJoinChallengeLayout;
         View mVLeaderBoardRank;
         TextView mTvRewards;
         Button mTvMatchesLeft;
@@ -371,6 +381,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlLeaderBoardRank = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_leaderboard_rank);
             mVLeaderBoardRank = (View) V.findViewById(id.all_challenges_row_v_leaderboard_rank);
             mRewardsLine = (View) V.findViewById(id.all_challenges_row_v_rewards);
+            mJoinChallengeLayout = (RelativeLayout) V.findViewById(id.all_challenges_rl_join_challenge);
 
             mRlShowGames.setOnClickListener(this);
             mIvChallengeInfo.setOnClickListener(this);
