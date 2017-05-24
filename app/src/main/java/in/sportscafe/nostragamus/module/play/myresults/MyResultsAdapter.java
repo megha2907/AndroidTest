@@ -308,14 +308,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     /**
      * Check that the match started or not
-     * @param startTimeMs
      */
-    private void initMatchStarted(long startTimeMs) {
-        TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
-
-        mIsMatchStarted = timeAgo.timeDiff <= 0
-                || timeAgo.timeUnit == TimeUnit.MILLISECOND
-                || timeAgo.timeUnit == TimeUnit.SECOND;
+    private void initMatchStarted(long matchStartTimeMs) {
+        long timeSpent = matchStartTimeMs - Nostragamus.getInstance().getServerTime();
+        mIsMatchStarted = timeSpent <= 0;
     }
 
     class MyResultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -828,7 +824,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 String btnText = button.getText().toString().trim();
                 if (!TextUtils.isEmpty(btnText) && !btnText.equals(SAVE_ANSWER_STR)) {
                     View editAnswerView = view.findViewById(R.id.my_results_rl_edit_answers);
-                    editAnswerView.setVisibility(View.INVISIBLE);
+                    editAnswerView.setVisibility(View.INVISIBLE);   // This operation is performed with all added views
                 }
             }
         }
