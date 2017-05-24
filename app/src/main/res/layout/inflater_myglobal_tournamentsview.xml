@@ -12,7 +12,7 @@
         android:id="@+id/myglobal_tournaments_iv_photo"
         android:layout_width="@dimen/dp_35"
         android:layout_height="@dimen/dp_38"
-        android:src="@drawable/placeholder_icon" />
+        android:src="@drawable/left_placeholder_icon" />
 
     <TextView
         android:id="@+id/myglobal_tournaments_tv"

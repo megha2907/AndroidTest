@@ -26,10 +26,10 @@ public class FeedWebView extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webView);
 
         if( savedInstanceState == null ) {
-            String mUrl =
-                    getIntent().getStringExtra("url");
+            String mUrl = getIntent().getStringExtra("url");
             startWebView(mUrl);
         }
+
     }
 
     private void startWebView(String url) {

@@ -91,7 +91,7 @@ public class NotificationInboxAdapter extends InboxManager.InboxAdapter<Notifica
                holder.notificationIcon.setImageResource(R.drawable.notification_topper_badge);
             }
             else {
-                holder.notificationIcon.setImageResource(R.drawable.placeholder_icon);
+                holder.notificationIcon.setImageResource(R.drawable.left_placeholder_icon);
             }
 
         } catch (JSONException e) {

@@ -19,7 +19,7 @@
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
             android:background="@android:color/transparent"
-            app:defaultImage="@drawable/placeholder_icon" />
+            app:defaultImage="@drawable/left_placeholder_icon" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/badge_tv_name"

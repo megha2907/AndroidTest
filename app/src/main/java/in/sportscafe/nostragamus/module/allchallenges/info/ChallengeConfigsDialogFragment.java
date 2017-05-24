@@ -160,6 +160,10 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         mConfigAdapter = createAdapter(configs);
         mRcvConfigs.setAdapter(mConfigAdapter);
 
+        if (mRcvConfigs.getAdapter().getItemCount() >= 3) {
+            changeHeight();
+        }
+
         findViewById(R.id.configs_ll_title).setVisibility(View.VISIBLE);
         ((TextView) findViewById(R.id.configs_tv_challenge_name)).setText(mChallenge.getName() + ": Pick a contest");
         mBtnPopupClose.setVisibility(View.VISIBLE);
@@ -276,7 +280,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                         configsHeight = mRcvConfigs.computeVerticalScrollRange() + mTitleHeight + mExtraHeight;
                     }
 
-                    Log.d("ChallengeConfigsDialogFragment", "MaxHeight --> " + mMaxHeight + ", " + "ScrollHeight --> " + configsHeight);
+                    Log.d("ChallengeConfigsDialogFragment5", "MaxHeight --> " + mMaxHeight + ", " + "ScrollHeight --> " + configsHeight);
                 if (configsHeight > mMaxHeight) {
                     configsHeight = mMaxHeight;
                 }
@@ -290,6 +294,18 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             }
         }, 250);
     }
+
+    private void changeHeight(){
+        int configsHeight = 0;
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+             configsHeight = mMaxHeight + mTitleHeight + mGreaterHeight;
+        }else {
+            configsHeight = mMaxHeight + mTitleHeight+ 3*mGreaterHeight;
+        }
+        WindowManager.LayoutParams attributes = getDialog().getWindow().getAttributes();
+        getDialog().getWindow().setLayout(attributes.width, configsHeight);
+    }
+
 
     /**
      * Generate Order and perform task based on challenge type as paid (paytm trans) , free (direct join)

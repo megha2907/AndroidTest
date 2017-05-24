@@ -519,13 +519,14 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         public void run() {
             for (ChallengesTimelineAdapter.ScheduleViewHolder scheduleVH : mScheduleVHList) {
                 if (View.VISIBLE == scheduleVH.mTvExpiresIn.getVisibility()) {
-                    Log.d("TimelineAdapter", "Atleast one");
 
                     long updatedTime = Long.parseLong(scheduleVH.mTvExpiresIn.getTag().toString());
                     if (updatedTime > 1000) {
                         updateTimer(scheduleVH.mTvExpiresIn, updatedTime);
                     } else {
                         scheduleVH.mTvExpiresIn.setVisibility(View.GONE);
+                        scheduleVH.mTvDate.setVisibility(View.VISIBLE);
+                        scheduleVH.mTvDate.setText("In Progress");
                     }
                 }
             }

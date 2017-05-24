@@ -18,7 +18,7 @@
             android:id="@+id/profile_sport_row_iv_sport_image"
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
-            android:src="@drawable/placeholder_icon"
+            android:src="@drawable/left_placeholder_icon"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:layout_marginLeft="@dimen/dp_15"

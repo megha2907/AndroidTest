@@ -22,8 +22,17 @@ public class VersionDetails {
     @JsonProperty("feedback_text")
     private String feedbackText;
 
+    @JsonProperty("feedback_paid_text")
+    private String feedbackProText;
+
     @JsonProperty("download_paid_text")
     private String downloadPaidText;
+
+    @JsonProperty("ask_friend_text")
+    private String askFriendText;
+
+    @JsonProperty("disclaimer_text")
+    private String disclaimerText;
 
     @JsonProperty("forceUpdateVersion")
     public Version getForceUpdateVersion() {
@@ -75,6 +84,17 @@ public class VersionDetails {
         this.feedbackText = feedbackText;
     }
 
+
+    @JsonProperty("feedback_paid_text")
+    public String getFeedbackProText() {
+        return feedbackProText;
+    }
+
+    @JsonProperty("feedback_paid_text")
+    public void setFeedbackProText(String feedbackProText) {
+        this.feedbackProText = feedbackProText;
+    }
+
     @JsonProperty("download_paid_text")
     public String getDownloadPaidText() {
         return downloadPaidText;
@@ -83,5 +103,25 @@ public class VersionDetails {
     @JsonProperty("download_paid_text")
     public void setDownloadPaidText(String downloadPaidText) {
         this.downloadPaidText = downloadPaidText;
+    }
+
+    @JsonProperty("ask_friend_text")
+    public String getAskFriendText() {
+        return askFriendText;
+    }
+
+    @JsonProperty("ask_friend_text")
+    public void setAskFriendText(String askFriendText) {
+        this.askFriendText = askFriendText;
+    }
+
+    @JsonProperty("disclaimer_text")
+    public String getDisclaimerText() {
+        return disclaimerText;
+    }
+
+    @JsonProperty("disclaimer_text")
+    public void setDisclaimerText(String disclaimerText) {
+        this.disclaimerText = disclaimerText;
     }
 }

@@ -76,7 +76,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginTop="@dimen/dp_6"
                                 android:scaleType="fitXY"
-                                app:defaultImage="@drawable/placeholder_icon" />
+                                app:defaultImage="@drawable/left_placeholder_icon" />
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:id="@+id/schedule_row_tv_party_a_name"
@@ -128,7 +128,7 @@
                                 android:layout_marginRight="@dimen/dp_16"
                                 android:layout_marginTop="@dimen/dp_6"
                                 android:scaleType="fitXY"
-                                app:defaultImage="@drawable/placeholder_icon" />
+                                app:defaultImage="@drawable/right_placeholder_icon" />
                         </RelativeLayout>
 
                         <Button

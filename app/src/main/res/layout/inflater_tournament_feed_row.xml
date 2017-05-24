@@ -57,7 +57,7 @@
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
         android:adjustViewBounds="true"
-        android:src="@drawable/placeholder_icon"
+        android:src="@drawable/left_placeholder_icon"
         android:layout_marginLeft="@dimen/dp_10"
         android:scaleType="fitXY"
         android:layout_centerVertical="true"/>

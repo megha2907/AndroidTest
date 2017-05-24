@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.bank.BankFragment;
@@ -67,14 +69,17 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         UserInfo userInfo = getUserInfo();
         pagerAdapter.addFragment(TimelineFragment.newInstance(mChallengeId), "Matches");
 
-        UserPaymentInfo paymentInfo = null;
-        if (userInfo != null) {
-            paymentInfo = userInfo.getUserPaymentInfo();
+        // Wallet should NOT be displayed for free app version
+        if (BuildConfig.IS_PAID_VERSION) {
+            UserPaymentInfo paymentInfo = null;
+            if (userInfo != null) {
+                paymentInfo = userInfo.getUserPaymentInfo();
+            }
+            pagerAdapter.addFragment(WalletFragment.newInstance(paymentInfo), "Wallet");
         }
-        pagerAdapter.addFragment(WalletFragment.newInstance(paymentInfo), "Wallet");
 
         HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());
-//        pagerAdapter.addFragment(PowerUpFragment.newInstance(powerUpList), AppSnippet.formatIfPlural(getPowerUpTotalCount(powerUpList), "Powerup", "s"));
+
         pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Powerup Bank");
 
         List<Badge> badgeList = userInfo.getBadges();

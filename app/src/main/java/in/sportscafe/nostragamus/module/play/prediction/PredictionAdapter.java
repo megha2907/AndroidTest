@@ -5,16 +5,22 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
+import android.text.style.StyleSpan;
 import android.text.style.URLSpan;
+import android.text.util.Linkify;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,15 +35,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+import java.util.regex.Pattern;
+>>>>>>> upstream/master
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
+import in.sportscafe.nostragamus.module.common.PatternEditableBuilder;
 import in.sportscafe.nostragamus.module.feed.FeedWebView;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
@@ -204,6 +217,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         /* Commented for now till hyperlink onclick doesn't work properly with bolding text */
 
+        viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
+
 //        CharSequence text = viewHolder.tvContext.getText();
 //        if (text instanceof Spannable) {
 //            int end = text.length();
@@ -218,7 +233,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 //            viewHolder.tvContext.setText(style);
 //        }
 
-   //     viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
 
         updatePowerUpDetails(viewHolder, question);
 
@@ -573,6 +587,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
                 view.getContext().startActivity(new Intent(view.getContext(), FeedWebView.class).putExtra("url", url));
             }
         }
+
     }
 
 }
