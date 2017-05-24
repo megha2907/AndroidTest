@@ -37,14 +37,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/schedule_row_tv_date"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/dp_8"
-        android:paddingTop="@dimen/dp_7">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/image_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_7"
             android:layout_below="@+id/swipe_card_tv_context">
 
 
@@ -248,7 +247,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dp_30"
             android:layout_marginRight="@dimen/dp_30"
-            android:layout_marginTop="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_7"
             android:gravity="center"
             android:lineSpacingExtra="@dimen/dp_2"
             android:textColor="@color/grey4"
@@ -281,7 +280,7 @@
         android:layout_height="@dimen/dp_0.5"
         android:background="@color/linecolor"
         android:visibility="visible"
-        android:layout_marginTop="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_6"
         android:layout_marginRight="@dimen/dp_14"
         android:layout_marginLeft="@dimen/dp_14"
         android:layout_below="@+id/schedule_row_ll"
