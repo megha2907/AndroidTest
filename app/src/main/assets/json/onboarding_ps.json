@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Predict Sports Events",
+    "desc": "Get in-match stats, swipe to predict",
+    "imageResName": "onboard_predict_match"
+  },
+  {
+    "title": "Play Weekly Challenges",
+    "desc": "Play for fun",
+    "imageResName": "onboard_join_public"
+  },
+  {
+    "title": "War With Friends",
+    "desc": "Create your own groups",
+    "imageResName": "onboard_war_friends"
+  }
+]

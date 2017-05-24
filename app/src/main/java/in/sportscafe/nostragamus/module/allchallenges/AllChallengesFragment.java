@@ -192,6 +192,7 @@ public class AllChallengesFragment extends NostragamusFragment
         }
     }
 
+
     @NonNull
     private TabLayout.OnTabSelectedListener getTabListener() {
         return new TabLayout.OnTabSelectedListener() {
