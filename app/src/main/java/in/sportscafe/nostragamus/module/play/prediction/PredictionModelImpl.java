@@ -208,12 +208,21 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     public PredictionAdapter getAdapter(Context context, List<Question> questions) {
         mInitialCount = questions.size();
 
-        mPredictionAdapter = new PredictionAdapter(context, new View.OnClickListener() {
+        /*mPredictionAdapter = new PredictionAdapter(context, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismissPowerUpAnimation(view);
             }
+        });*/
+
+        mPredictionAdapter = new PredictionAdapter(context, new PowerupRemoveListener() {
+            @Override
+            public void onPwerupRemoved(String powerup) {
+                increasePowerUpCount(powerup);
+                mPredictionModelListener.notifyTopQuestion();
+            }
         });
+
         int count = 1;
         for (Question question : questions) {
             question.setQuestionNumber(count++);
@@ -228,7 +237,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPredictionAdapter.setFlingCardListener(flingCardListener);
     }
 
-    private void dismissPowerUpAnimation(final View view) {
+    /*private void dismissPowerUpAnimation(final View view) {
         mPredictionAdapter.dismissPowerUpAnimation(view, new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -245,7 +254,7 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
             }
         });
-    }
+    }*/
 
     private void removeAppliedPowerUp(View view) {
         if (view != null) {
@@ -256,7 +265,13 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 increasePowerUpCount(powerUpOfThisView);
                 topQuestion.removeAppliedPowerUp(powerUpOfThisView);
 
-                notifyPowerUps();
+//                notifyPowerUps();
+                /*if (powerUpOfThisView.equals(Powerups.XX)) {
+                    mPredictionAdapter.remove2xPowerup();
+                } else if (powerUpOfThisView.equals(Powerups.NO_NEGATIVE)) {
+                    mPredictionAdapter.removeNonegativePowerup();
+                }*/
+                mPredictionModelListener.notifyTopQuestion();
             }
         }
     }
@@ -292,7 +307,9 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             if (m2xPowerups > 0) {
                 boolean isApplied = mPredictionAdapter.getTopQuestion().apply2xPowerUp();
                 if (isApplied) {
-                    notifyPowerUps();
+//                    notifyPowerUps();
+                    mPredictionAdapter.add2xPowerup();
+                    mPredictionModelListener.notifyTopQuestion();
 
                     m2xPowerups--;
                     mPredictionModelListener.on2xApplied(m2xPowerups, false);
@@ -309,7 +326,9 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             if (mNonegsPowerups > 0) {
                 boolean isApplied = mPredictionAdapter.getTopQuestion().applyNonegsPowerUp();
                 if (isApplied) {
-                    notifyPowerUps();
+//                    notifyPowerUps();
+                    mPredictionAdapter.addNoNegativePowerup();
+                    mPredictionModelListener.notifyTopQuestion();
 
                     mNonegsPowerups--;
                     mPredictionModelListener.onNonegsApplied(mNonegsPowerups, false);
@@ -332,11 +351,13 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     private boolean isPowerUpApplied(String powerup) {
-        ArrayList<String> powerupList = mPredictionAdapter.getTopQuestion().getPowerUpArrayList();
-        if (powerupList != null) {
-            for (String str : powerupList) {
-                if (str.equalsIgnoreCase(powerup)) {
-                    return true;  // powerup already applied once
+        if (mPredictionAdapter != null && mPredictionAdapter.getTopQuestion() != null) {
+            ArrayList<String> powerupList = mPredictionAdapter.getTopQuestion().getPowerUpArrayList();
+            if (powerupList != null) {
+                for (String str : powerupList) {
+                    if (str.equalsIgnoreCase(powerup)) {
+                        return true;  // powerup already applied once
+                    }
                 }
             }
         }
@@ -606,7 +627,9 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         boolean isApplied = mPredictionAdapter.getTopQuestion().applyAudiencePollPowerUp(leftAnswerPercent, rightAnswerPercent);
         if (isApplied) {
-            notifyPowerUps();
+//            notifyPowerUps();
+            mPredictionAdapter.addAudiencePoll();
+            mPredictionModelListener.notifyTopQuestion();
 
             mPollPowerups--;
             mPredictionModelListener.onAudiencePollApplied(mPollPowerups, false);

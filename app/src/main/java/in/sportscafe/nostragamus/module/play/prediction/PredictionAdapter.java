@@ -1,33 +1,22 @@
 package in.sportscafe.nostragamus.module.play.prediction;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.text.method.MovementMethod;
-import android.text.style.StyleSpan;
 import android.text.style.URLSpan;
-import android.text.util.Linkify;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -35,22 +24,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
-import java.util.regex.Pattern;
->>>>>>> upstream/master
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
-import in.sportscafe.nostragamus.module.common.PatternEditableBuilder;
 import in.sportscafe.nostragamus.module.feed.FeedWebView;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
@@ -58,53 +40,36 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 
 public class PredictionAdapter extends ArrayAdapter<Question> {
 
-    /* Layouts height params are similarly given in dummyGame (DGAdapter) also */
-    private static final float HEADER_PERECENTAGE = 8.75f / 100;
-
-    private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 8.5f / 100;
-
-    private static final float CARD_HEIGHT_PERECENTAGE = 53f / 100;
-
-    private static final float OPTION_PERECENTAGE = 6.25f / 100;
-
+    /* Layouts height params are similarly given in dummyGame (DGAdapter) */
+    private static final float HEADER_PERCENTAGE = 8.75f / 100;
+    private static final float GAP_BW_HEADER_CARD_PERCENTAGE = 8.5f / 100;
+    private static final float CARD_HEIGHT_PERCENTAGE = 53f / 100;
+    private static final float CARD_BOTTOM_OPTION_PERCENTAGE = 6.25f / 100;
     private static final float FOOTER_POWERUP_LAYOUT_PERCENTAGE = 10f / 100;
-
     private static final float FOOTER_NEITHER_BUTTON_PERCENTAGE = 12f / 100;
+    private static final float EXTRA_PERCENTAGE = 1.5f / 100;
 
     private LayoutInflater mLayoutInflater;
-
     private View vBgFrame1;
-
     private View vBgFrame2;
-
     private ViewHolder mTopViewHolder;
 
     private boolean mBgUpdateDone = false;
-
     private int mTopMargin;
-
     private FlingCardListener mFlingCardListener;
-
     private Question mTopQuestion;
-
     private boolean mNeitherOptionAvailable = false;
-
-    private float mOptionHeight;
-
+    private float mCardBottomOptionHeight;
     private float mCardWidth;
-
     private float mCardHeight;
-
-    private float mCardMargin;
-
     private float mImageWidth;
-
     private float mImageHeight;
+    private PowerupRemoveListener mRemovePowerUpListener;
+    private Context mContext;
 
-    private View.OnClickListener mRemovePowerUpListener;
-
-    public PredictionAdapter(Context context, View.OnClickListener removePowerUpListener) {
+    public PredictionAdapter(Context context, PowerupRemoveListener removePowerUpListener) {
         super(context, android.R.layout.simple_list_item_1);
+        this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mRemovePowerUpListener = removePowerUpListener;
     }
@@ -121,36 +86,36 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
     }
 
     private void applyFrameCardPercentages(View rootView, float screenHeight) {
-        mCardHeight = screenHeight * CARD_HEIGHT_PERECENTAGE;
+        mCardHeight = screenHeight * CARD_HEIGHT_PERCENTAGE;
         mCardWidth = mCardHeight;
-        mOptionHeight = screenHeight * OPTION_PERECENTAGE;
+        mCardBottomOptionHeight = screenHeight * CARD_BOTTOM_OPTION_PERCENTAGE;
         mImageWidth = mCardWidth / 2f;
         mImageHeight = mImageWidth;
 
         View vBgFrame0 = rootView.findViewById(R.id.prediction_cv_bg_0);
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) vBgFrame0.getLayoutParams();
         rlp.width = (int) mCardWidth;
-        rlp.height = (int) (mCardHeight + mOptionHeight);
-        mTopMargin = (int) (screenHeight * GAP_BW_HEADER_CARD_PERECENTAGE);
+        rlp.height = (int) (mCardHeight + mCardBottomOptionHeight);
+        mTopMargin = (int) (screenHeight * GAP_BW_HEADER_CARD_PERCENTAGE);
         rlp.topMargin = mTopMargin;
 
-        int headerHeight = rootView.findViewById(R.id.prediction_rl_header).getMeasuredHeight();
+        /*int headerHeight = rootView.findViewById(R.id.prediction_rl_header).getMeasuredHeight();
         ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_left_right_indicator).getLayoutParams())
                 .topMargin = (int) (mTopMargin + rlp.height - screenHeight * 1.5f / 100 - mOptionHeight / 2f + headerHeight);
 
         ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_neither_indicator).getLayoutParams())
-                .topMargin = (int) (mTopMargin + rlp.height - mOptionHeight + headerHeight);
+                .topMargin = (int) (mTopMargin + rlp.height - mOptionHeight + headerHeight);*/
 
         vBgFrame1 = rootView.findViewById(R.id.prediction_cv_bg_1);
-        vBgFrame1.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
+        vBgFrame1.getLayoutParams().height = (int) (mCardHeight + mCardBottomOptionHeight);
 
         vBgFrame2 = rootView.findViewById(R.id.prediction_cv_bg_2);
-        vBgFrame2.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
+        vBgFrame2.getLayoutParams().height = (int) (mCardHeight + mCardBottomOptionHeight);
 
         rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_header).getLayoutParams();
-        rlp.height = (int) (screenHeight * HEADER_PERECENTAGE);
+        rlp.height = (int) (screenHeight * HEADER_PERCENTAGE);
 
-        mTopMargin += (int) (screenHeight * HEADER_PERECENTAGE);
+        mTopMargin += (int) (screenHeight * HEADER_PERCENTAGE);
 
 //        rootView.findViewById(R.id.prediction_rl_play_page).setPadding(0, rlp.height, 0, 0);
 
@@ -174,13 +139,13 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         lp.height = (int) mImageHeight;
 
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) viewHolder.llOptionLabels.getLayoutParams();
-        rlp.height = (int) mOptionHeight;
+        rlp.height = (int) mCardBottomOptionHeight;
 
         rlp = (RelativeLayout.LayoutParams) viewHolder.llQuestionDesc.getLayoutParams();
         rlp.height = (int) mImageHeight;
 
         rlp = (RelativeLayout.LayoutParams) viewHolder.tvLockingOption.getLayoutParams();
-        rlp.height = (int) mOptionHeight;
+        rlp.height = (int) mCardBottomOptionHeight;
 
         rlp = (RelativeLayout.LayoutParams) viewHolder.cvMainCard.getLayoutParams();
         rlp.width = (int) mCardWidth;
@@ -219,38 +184,143 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
         viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
 
-//        CharSequence text = viewHolder.tvContext.getText();
-//        if (text instanceof Spannable) {
-//            int end = text.length();
-//            Spannable sp = (Spannable) viewHolder.tvContext.getText();
-//            URLSpan[] urls = sp.getSpans(0, end, URLSpan.class);
-//            SpannableStringBuilder style = new SpannableStringBuilder(text);
-//            style.clearSpans();//should clear old spans
-//            for (URLSpan url : urls) {
-//                LinkSpan click = new LinkSpan(url.getURL());
-//                style.setSpan(click, sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//            }
-//            viewHolder.tvContext.setText(style);
-//        }
-
-
-        updatePowerUpDetails(viewHolder, question);
-
-        /*viewHolder.tvQuestion.post(new Runnable() {
-            @Override
-            public void run() {
-                viewHolder.tvContext.setMaxLines(6 - viewHolder.tvQuestion.getLineCount());
-            }
-        });*/
+        showAudiencePollIfAlreadyAppliedForThisQuestion(viewHolder, question);
+        updatePowerUpPointsOnUi(viewHolder, question);
 
         return convertView;
     }
 
-    public void refreshPowerUps() {
-        updatePowerUpDetails(mTopViewHolder, mTopQuestion);
+    private void showAudiencePollIfAlreadyAppliedForThisQuestion(ViewHolder viewHolder, Question question) {
+        ArrayList<String> powerupArray = question.getPowerUpArrayList();
+        viewHolder.llPowerUpHolder.removeAllViews();
+        if (powerupArray != null) {
+            for (String str : powerupArray) {
+                if (Powerups.AUDIENCE_POLL.equalsIgnoreCase(str)) {
+                    /*viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
+                    viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
+
+                    viewHolder.btnanswer1Percentage.setText(question.getOption1AudPollPer() + "%");
+                    viewHolder.btnanswer2Percentage.setText(question.getOption2AudPollPer() + "%");*/
+                    addAudiencePoll();
+                }
+            }
+        }
     }
 
-    private void updatePowerUpDetails(ViewHolder viewHolder, Question question) {
+    public void refreshPowerUps() {
+//        updatePowerUpPointsOnUi(mTopViewHolder, mTopQuestion);
+    }
+
+    public void add2xPowerup() {
+        final View powerUpAppliedView = getPowerUpAppliedView(Powerups.XX, mTopViewHolder.llPowerUpHolder);
+        if (null != powerUpAppliedView) {
+            powerUpAppliedView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View powerupClickedView) {
+                    // Animate powerup view removal
+                    dismissPowerUpAnimation(powerupClickedView, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            remove2xPowerup(powerUpAppliedView);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+                    });
+                }
+            });
+
+            mTopViewHolder.llPowerUpHolder.addView(powerUpAppliedView);
+            showPowerUpAnimation(powerUpAppliedView);
+            updatePowerUpPointsOnUi(mTopViewHolder, mTopQuestion);
+        }
+    }
+
+    private void remove2xPowerup(View powerUpAppliedView) {
+        mTopViewHolder.llPowerUpHolder.removeView(powerUpAppliedView);
+        animateOtherPowerupWhenAnyOneRemoved();
+        mTopQuestion.removeAppliedPowerUp(Powerups.XX);
+        mRemovePowerUpListener.onPwerupRemoved(Powerups.XX);
+        updatePowerUpPointsOnUi(mTopViewHolder, mTopQuestion);
+    }
+
+    private void removeNoNegativePowerup(View powerUpAppliedView) {
+        mTopViewHolder.llPowerUpHolder.removeView(powerUpAppliedView);
+        animateOtherPowerupWhenAnyOneRemoved();
+        mTopQuestion.removeAppliedPowerUp(Powerups.NO_NEGATIVE);
+        mRemovePowerUpListener.onPwerupRemoved(Powerups.NO_NEGATIVE);
+        updatePowerUpPointsOnUi(mTopViewHolder, mTopQuestion);
+    }
+
+    public void addNoNegativePowerup() {
+        final View powerUpAppliedView = getPowerUpAppliedView(Powerups.NO_NEGATIVE, mTopViewHolder.llPowerUpHolder);
+        if (null != powerUpAppliedView) {
+            powerUpAppliedView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View powerupClickedView) {
+                    // Animate powerup view removal
+                    dismissPowerUpAnimation(powerupClickedView, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            removeNoNegativePowerup(powerUpAppliedView);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+                    });
+                }
+            });
+
+            mTopViewHolder.llPowerUpHolder.addView(powerUpAppliedView);
+            showPowerUpAnimation(powerUpAppliedView);
+            updatePowerUpPointsOnUi(mTopViewHolder, mTopQuestion);
+        }
+    }
+
+    private void animatePowerupViewsIfAddedMoreThanOne() {
+        if (mTopViewHolder.llPowerUpHolder.getChildCount() > 1) {
+            View childView1 = mTopViewHolder.llPowerUpHolder.getChildAt(0);
+            View childView2 = mTopViewHolder.llPowerUpHolder.getChildAt(1);
+
+            int moveUpt0Dp = (int)getContext().getResources().getDimension(R.dimen.dp_30);
+            childView1.animate().setDuration(750).translationX(-moveUpt0Dp).start();
+            childView2.animate().setDuration(750).translationX(moveUpt0Dp).start();
+        }
+    }
+
+    private void animateOtherPowerupWhenAnyOneRemoved() {
+        if (mTopViewHolder.llPowerUpHolder.getChildCount() == 1) {
+            View childView1 = mTopViewHolder.llPowerUpHolder.getChildAt(0);
+            int center = mTopViewHolder.llPowerUpHolder.getLayoutParams().width / 2;
+            childView1.animate().setDuration(750).translationX(center).start();
+        }
+    }
+
+    public void addAudiencePoll() {
+        if (mTopQuestion != null) {
+            mTopViewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
+            mTopViewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
+
+            mTopViewHolder.btnanswer1Percentage.setText(mTopQuestion.getOption1AudPollPer() + "%");
+            mTopViewHolder.btnanswer2Percentage.setText(mTopQuestion.getOption2AudPollPer() + "%");
+
+            /* Update powerup points on ui */
+            updatePowerUpPointsOnUi(mTopViewHolder, mTopQuestion);
+        }
+    }
+
+    private void updatePowerUpPointsOnUi(final ViewHolder viewHolder, Question question) {
+        /* Update positive points */
         Integer positivePoint = question.getUpdatedPositivePoints();
         if (null == positivePoint || positivePoint == 0) {
             viewHolder.positivePointsCardView.setVisibility(View.GONE);
@@ -261,6 +331,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             viewHolder.positivePointsCardView.setVisibility(View.VISIBLE);
         }
 
+        /* Update negative points */
         Integer negativePoint = question.getUpdatedNegativePoints();
         if (null == negativePoint || negativePoint == 0) {
             viewHolder.negativePointsCardView.setVisibility(View.GONE);
@@ -270,50 +341,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             viewHolder.negativePointsCardView.setVisibility(View.VISIBLE);
         }
 
-        ArrayList<String> powerupArray = question.getPowerUpArrayList();
-        viewHolder.llPowerUpHolder.removeAllViews();
-        if (powerupArray != null) {
-            for (String str : powerupArray) {
-                if (Powerups.AUDIENCE_POLL.equalsIgnoreCase(str)) {
-                    viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
-                    viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
-
-                    viewHolder.btnanswer1Percentage.setText(question.getOption1AudPollPer() + "%");
-                    viewHolder.btnanswer2Percentage.setText(question.getOption2AudPollPer() + "%");
-                } else {
-
-                    View powerUpAppliedView = getPowerUpAppliedView(str, mTopViewHolder.llPowerUpHolder);
-                    if (null != powerUpAppliedView) {
-                        mTopViewHolder.llPowerUpHolder.addView(powerUpAppliedView);
-                        powerUpAppliedView.setOnClickListener(mRemovePowerUpListener);
-//                        showPowerUpAnimation(powerUpAppliedView);
-                    }
-
-                    if (mTopViewHolder.llPowerUpHolder.getChildCount() > 1) {
-                        View childView1 = mTopViewHolder.llPowerUpHolder.getChildAt(0);
-                        View childView2 = mTopViewHolder.llPowerUpHolder.getChildAt(1);
-
-                        childView1.animate().setDuration(750).translationX(-50).start();
-                        childView2.animate().setDuration(750).translationX(50).start();
-
-                        /*
-                        * ---- Translate animation moves view but it takes click at it's original place
-                        *
-                        Animation animationLeft = AnimationUtils.loadAnimation(mTopViewHolder.llPowerUpHolder.getContext(), R.anim.move_view_left);
-                        childView1.startAnimation(animationLeft);
-
-                        Animation animationRight = AnimationUtils.loadAnimation(mTopViewHolder.llPowerUpHolder.getContext(), R.anim.move_view_right);
-                        childView2.startAnimation(animationRight);*/
-                    }
-                }
-            }
-        }
-
+        /* Update Audience-poll details */
         if (null != question.getAudiencePoll()) {
-            ArrayList<String> powerups = new ArrayList<>();
-            powerups.add(Powerups.AUDIENCE_POLL);
-            question.setPowerUpArrayList(powerups);
-
             int leftAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(0).getAnswerPercentage().replaceAll("%", ""));
             int rightAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(1).getAnswerPercentage().replaceAll("%", ""));
 
@@ -333,8 +362,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         }
     }
 
-    private View getPowerUpAppliedView(String powerup, ViewGroup parent) {
-        View powerUpView = mLayoutInflater.inflate(R.layout.inflater_powerup_applied, parent, false);
+    private View getPowerUpAppliedView(final String powerup, ViewGroup parent) {
+        final View powerUpView = mLayoutInflater.inflate(R.layout.inflater_powerup_applied, parent, false);
         ImageView icon = (ImageView) powerUpView.findViewById(R.id.powerup_applied_iv_icon);
         powerUpView.setTag(powerup);
 
@@ -351,6 +380,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             default:
                 return null;
         }
+
         return powerUpView;
     }
 
@@ -372,6 +402,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             @Override
             public void onAnimationEnd(Animation animation) {
                 view.setVisibility(View.VISIBLE);
+                animatePowerupViewsIfAddedMoreThanOne();
             }
 
             @Override
@@ -382,10 +413,10 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         view.startAnimation(scaleAnimation);
     }
 
-    public void dismissPowerUpAnimation(final View view, Animation.AnimationListener listener) {
+    public void dismissPowerUpAnimation(final View view, Animation.AnimationListener animationListener) {
         ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(500);
-        scaleAnimation.setAnimationListener(listener);
+        scaleAnimation.setAnimationListener(animationListener);
         view.startAnimation(scaleAnimation);
     }
 

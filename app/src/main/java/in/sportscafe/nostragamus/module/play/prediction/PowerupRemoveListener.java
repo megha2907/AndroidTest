@@ -5,4 +5,5 @@ package in.sportscafe.nostragamus.module.play.prediction;
  */
 
 public interface PowerupRemoveListener {
+    void onPwerupRemoved(String viewTag);
 }

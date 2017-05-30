@@ -87,14 +87,14 @@ public class Question {
     @JsonProperty("answer3")
     private Integer answer3percent;
 
+    @JsonProperty("powerup_id_arr")
+    private ArrayList<String> powerUpArrayList = new ArrayList<>();
+
     @JsonIgnore
     private int questionTime = 30;
 
     @JsonIgnore
     private int questionNumber;
-
-    @JsonIgnore
-    private ArrayList<String> powerUpArrayList = new ArrayList<>();
 
     @JsonIgnore
     private int option1AudPollPer = -1;
@@ -485,12 +485,13 @@ public class Question {
                     return false;  // powerup already applied once
                 }
             }
+        } else {
+            powerups = new ArrayList<>();
         }
 
         // If not applied, apply it
         powerups.add(Powerups.XX);
         setPowerUpArrayList(powerups);
-        // Reset points based on applied powerups
         resetPowerupPoints();
         return true;
     }
@@ -504,11 +505,12 @@ public class Question {
                     return false;  // powerup already applied once
                 }
             }
+        } else {
+            powerups = new ArrayList<>();
         }
 
         powerups.add(Powerups.NO_NEGATIVE);
         setPowerUpArrayList(powerups);
-        // Reset points based on applied powerups
         resetPowerupPoints();
         return true;
     }
@@ -523,9 +525,12 @@ public class Question {
                     return false;  // powerup already applied once
                 }
             }
+        } else {
+            powerups = new ArrayList<>();
         }
 
         powerups.add(Powerups.AUDIENCE_POLL);
+        setPowerUpArrayList(powerups);
         setOption1AudPollPer(leftAnswerPercent);
         setOption2AudPollPer(rightAnswerPercent);
 
@@ -587,6 +592,8 @@ public class Question {
 
                     case Powerups.AUDIENCE_POLL:
                         // No operation for points
+                        setUpdatedPositivePoints(getQuestionPositivePoints());
+                        setUpdatedNegativePoints(getQuestionNegativePoints());
                         break;
                 }
 
@@ -604,6 +611,14 @@ public class Question {
                     noNegative = true;
                 }
 
+                if (is2x) {
+                    setUpdatedPositivePoints(2 * getQuestionPositivePoints());
+                    setUpdatedNegativePoints(2 * getQuestionNegativePoints());
+                }
+                if (noNegative) {
+                    setUpdatedPositivePoints(getQuestionPositivePoints());
+                    setUpdatedNegativePoints(0);
+                }
                 if (is2x && noNegative) {
                     setUpdatedPositivePoints(2 * getQuestionPositivePoints());
                     setUpdatedNegativePoints(0);
@@ -624,6 +639,14 @@ public class Question {
                     noNegative = true;
                 }
 
+                if (is2x) {
+                    setUpdatedPositivePoints(2 * getQuestionPositivePoints());
+                    setUpdatedNegativePoints(2 * getQuestionNegativePoints());
+                }
+                if (noNegative) {
+                    setUpdatedPositivePoints(getQuestionPositivePoints());
+                    setUpdatedNegativePoints(0);
+                }
                 if (is2x && noNegative) {
                     setUpdatedPositivePoints(2 * getQuestionPositivePoints());
                     setUpdatedNegativePoints(0);

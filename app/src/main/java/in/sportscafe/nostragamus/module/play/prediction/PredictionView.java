@@ -45,37 +45,13 @@ public interface PredictionView extends InAppView {
 
     void goBack();
 
-    void enableLeftRightOptions();
-
-    void disableLeftRightOptions();
-
-    void showPowerups();
-
-    void hidePowerups();
-
-    void showLeftRightIndicator();
-
     void hideLeftRightIndicator();
 
-    void showNeitherIndicator();
-
     void hideNeitherIndicator();
-
-    void showPowerupsHint();
-
-    void hidePowerupsHint();
 
     void navigateToHome();
 
     void navigateToDummyGame();
-
-    void showLeftRightCoach();
-
-    void showNeitherCoach();
-
-    void showPowerupsCoach();
-
-    boolean dismissCoach();
 
     void navigateToBankTransfer(Bundle bundle);
 

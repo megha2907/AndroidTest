@@ -54,6 +54,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
     private static final float FOOTER_POWERUP_LAYOUT_PERCENTAGE = 10f / 100;
 
     private static final float FOOTER_NEITHER_BUTTON_PERCENTAGE = 12f / 100;
+    private static final float EXTRA = 1.5f / 100;
 
     private LayoutInflater mLayoutInflater;
 
@@ -264,10 +265,6 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         }
 
         if (null != question.getAudiencePoll()) {
-            ArrayList<String> powerups = new ArrayList<>();
-            powerups.add(Powerups.AUDIENCE_POLL);
-            question.setPowerUpArrayList(powerups);
-
             int leftAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(0).getAnswerPercentage().replaceAll("%", ""));
             int rightAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(1).getAnswerPercentage().replaceAll("%", ""));
 
@@ -598,6 +595,14 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
                     }
                 }
             }, 1500);
+        }
+    }
+
+    private void animateOtherPowerupWhenAnyOneRemoved() {
+        if (mTopViewHolder.llPowerUpHolder.getChildCount() == 1) {
+            View childView1 = mTopViewHolder.llPowerUpHolder.getChildAt(0);
+            int center = mTopViewHolder.llPowerUpHolder.getLayoutParams().width / 2;
+            childView1.animate().setDuration(750).translationX(center).start();
         }
     }
 

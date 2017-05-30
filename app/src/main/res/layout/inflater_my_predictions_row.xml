@@ -346,7 +346,7 @@
                         android:background="@android:color/transparent"
                         android:src="@drawable/no_negative_powerup"
                         android:visibility="gone"
-                        android:layout_marginLeft="@dimen/dp_40"/>
+                        android:layout_marginLeft="@dimen/dp_20"/>
 
                     <com.jeeva.android.widgets.HmImageView
                         android:id="@+id/my_predictions_answer_powerup_used_audience"
@@ -355,7 +355,7 @@
                         android:background="@android:color/transparent"
                         android:src="@drawable/audience_poll_powerup"
                         android:visibility="gone"
-                        android:layout_marginLeft="@dimen/dp_40"/>
+                        android:layout_marginLeft="@dimen/dp_20"/>
 
                 </LinearLayout>
 

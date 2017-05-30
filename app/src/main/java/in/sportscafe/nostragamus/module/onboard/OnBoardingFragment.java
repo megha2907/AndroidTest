@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
@@ -75,7 +76,8 @@ public class OnBoardingFragment extends NostragamusFragment {
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
             public void onPageSelected(int position) {
@@ -83,7 +85,8 @@ public class OnBoardingFragment extends NostragamusFragment {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
         mViewPager.setAdapter(viewPagerAdapter);
 
@@ -124,7 +127,12 @@ public class OnBoardingFragment extends NostragamusFragment {
     private List<OnBoardingDto> getOnBoardingList() {
         String json = null;
         try {
-            InputStream is = getContext().getAssets().open("json/onboarding.json");
+            InputStream is = null;
+            if (BuildConfig.IS_PAID_VERSION) {
+                is = getContext().getAssets().open("json/onboarding.json");
+            } else {
+                is = getContext().getAssets().open("json/onboarding_ps.json");
+            }
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
             is.close();
