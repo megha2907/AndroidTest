@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import com.jeeva.android.Log;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import in.sportscafe.nostragamus.Constants;
@@ -47,6 +49,13 @@ public class SplashActivity extends Activity {
                  * Launch Monster viewer activity if a link clicked without $android_deeplink_path
                  */
                 if (null != branchUniversalObject) {
+
+                    JSONObject firstParams = Branch.getInstance().getFirstReferringParams();
+                    JSONObject lastParams = Branch.getInstance().getLatestReferringParams();
+
+                    Log.d("firstparams", firstParams.toString());
+                    Log.d("lastParams", lastParams.toString());
+
                     NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
                     HashMap<String, String> metadata = branchUniversalObject.getMetadata();
 

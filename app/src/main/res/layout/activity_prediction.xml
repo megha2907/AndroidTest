@@ -59,6 +59,7 @@
                     android:scaleType="fitXY"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/prediction_contest_vs_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_6"

@@ -111,7 +111,7 @@ public class Nostragamus extends Application {
         InboxManager.getInstance().setInboxAdapter(new NotificationInboxAdapter());
 
         // Initializing the Branch
-        Branch.getAutoInstance(this);
+       Branch.getAutoInstance(this);
 
 
     }

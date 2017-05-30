@@ -80,7 +80,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         mTimerRunnable = new TimerRunnable();
     }
 
-    public TimelineAdapter(Context context, Integer playerId,String playerName ,String playerPhoto) {
+    public TimelineAdapter(Context context, Integer playerId, String playerName, String playerPhoto) {
         this(context);
         this.mPlayerId = playerId;
         this.mPlayerName = playerName;
@@ -185,11 +185,20 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             holder.mTvStartTime.setText(TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA));
 
             // Setting party details
-            List<Parties> parties = match.getParties();
-            holder.mTvPartyAName.setText(parties.get(0).getPartyName());
-            holder.mTvPartyBName.setText(parties.get(1).getPartyName());
-            holder.mIvPartyAPhoto.setImageUrl(parties.get(0).getPartyImageUrl());
-            holder.mIvPartyBPhoto.setImageUrl(parties.get(1).getPartyImageUrl());
+            List<Parties> parties = new ArrayList<>();
+
+            // Setting party details : if one party view then set topics for one party match
+            if (match.getParties() == null) {
+                holder.mTvPartyAName.setText(match.getTopics().getTopicName());
+                holder.mIvPartyAPhoto.setImageUrl(match.getTopics().getTopicUrl());
+            } else {
+                parties = match.getParties();
+                holder.mTvPartyAName.setText(parties.get(0).getPartyName());
+                holder.mTvPartyBName.setText(parties.get(1).getPartyName());
+                holder.mIvPartyAPhoto.setImageUrl(parties.get(0).getPartyImageUrl());
+                holder.mIvPartyBPhoto.setImageUrl(parties.get(1).getPartyImageUrl());
+            }
+
 
             TimeAgo timeAgo = TimeUtils.calcTimeAgo(Calendar.getInstance().getTimeInMillis(), startTimeMs);
             boolean isMatchStarted = timeAgo.timeDiff <= 0
@@ -420,15 +429,15 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
                 bundle.putString(BundleKeys.SCREEN, Constants.ScreenNames.PROFILE);
 
-                if(null != match.getSportId()) {
+                if (null != match.getSportId()) {
                     bundle.putInt(BundleKeys.SPORT_ID, match.getSportId());
                 }
 
                 if (null != mPlayerId) {
                     bundle.putInt(BundleKeys.PLAYER_ID, mPlayerId);
-                    bundle.putInt(BundleKeys.MATCH_ID,match.getId());
-                    bundle.putString(BundleKeys.PLAYER_NAME,mPlayerName);
-                    bundle.putString(BundleKeys.PLAYER_PHOTO,mPlayerPhoto);
+                    bundle.putInt(BundleKeys.MATCH_ID, match.getId());
+                    bundle.putString(BundleKeys.PLAYER_NAME, mPlayerName);
+                    bundle.putString(BundleKeys.PLAYER_PHOTO, mPlayerPhoto);
                 }
             }
 
@@ -444,9 +453,9 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 case R.id.rl_points:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.VIEW_ANSWERS);
 
-                    if (mPlayerId!=null){
+                    if (mPlayerId != null) {
                         navigateToResultsPeek(context, bundle);
-                    }else {
+                    } else {
                         navigateToMyResults(context, bundle);
                     }
 

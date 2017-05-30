@@ -24,6 +24,8 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.CustomProgressbar;
 import com.jeeva.android.widgets.HmImageView;
 
+import org.w3c.dom.Text;
+
 import java.net.URL;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -167,6 +169,11 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         ((TextView) findViewById(R.id.prediction_contest_name_right_textview)).setText(rightContestName);
         ((HmImageView) findViewById(R.id.prediction_contest_left_imageView)).setImageUrl(leftImageUrl);
         ((HmImageView) findViewById(R.id.prediction_contest_right_imageView)).setImageUrl(rightImageUrl);
+
+
+        if (TextUtils.isEmpty(rightContestName)){
+            ((TextView) findViewById(R.id.prediction_contest_vs_textView)).setVisibility(View.GONE);
+        }
 
 
         /*((TextView) findViewById(R.id.prediction_tv_contest_name)).setText(leftContestName);

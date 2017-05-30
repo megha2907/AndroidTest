@@ -155,26 +155,41 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
     @Override
     public String getContestName() {
+        if (mMyResult.getParties() == null){
+            return String.valueOf(mMyResult.getTopics().getTopicName());
+        }
         return String.valueOf(mMyResult.getParties().get(0).getPartyName() + "  vs  " + mMyResult.getParties().get(1).getPartyName());
     }
 
     @Override
     public String getLeftContestName() {
+        if (mMyResult.getParties() == null){
+            return String.valueOf(mMyResult.getTopics().getTopicName());
+        }
         return String.valueOf(mMyResult.getParties().get(0).getPartyName());
     }
 
     @Override
     public String getRightContestName() {
+        if (mMyResult.getParties() == null){
+            return "";
+        }
         return String.valueOf(mMyResult.getParties().get(1).getPartyName());
     }
 
     @Override
     public String getLeftContestImageUrl() {
+        if (mMyResult.getParties() == null){
+            return String.valueOf(mMyResult.getTopics().getTopicUrl());
+        }
         return String.valueOf(mMyResult.getParties().get(0).getPartyImageUrl());
     }
 
     @Override
     public String getRightContestImageUrl() {
+        if (mMyResult.getParties() == null){
+            return "";
+        }
         return String.valueOf(mMyResult.getParties().get(1).getPartyImageUrl());
     }
 

@@ -19,7 +19,6 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
-
         <RelativeLayout
             android:id="@+id/schedule_row_rl_match_stage"
             android:layout_width="match_parent"
@@ -210,6 +209,97 @@
             android:textSize="@dimen/dp_13"
             android:visibility="gone"
             app:typeface="lato_regular" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/schedule_row_one_party_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+            <!-- Challenge Left Image and Name -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_16">
+
+                <com.jeeva.android.widgets.HmImageView
+                    android:id="@+id/swipe_card_one_party_iv_left"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:scaleType="fitXY"
+                    android:layout_centerVertical="true"
+                    app:defaultImage="@drawable/left_placeholder_icon" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/schedule_row_tv_one_party_a_name"
+                    android:layout_width="@dimen/dp_220"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:ellipsize="end"
+                    android:gravity="left"
+                    android:maxLines="2"
+                    android:layout_marginTop="@dimen/dp_1"
+                    android:textAllCaps="false"
+                    android:layout_toRightOf="@+id/swipe_card_one_party_iv_left"
+                    android:textColor="@color/white_80"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/schedule_row_tv_one_party_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:layout_marginTop="@dimen/dp_1"
+                    android:layout_below="@+id/schedule_row_tv_one_party_a_name"
+                    android:layout_toRightOf="@+id/swipe_card_one_party_iv_left"
+                    android:textAllCaps="false"
+                    android:textColor="@color/grey4"
+                    android:textSize="@dimen/dp_11.5"
+                    app:typeface="lato_regular" />
+
+            </RelativeLayout>
+
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/schedule_row_one_party_tv_match_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_12"
+            android:gravity="left"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_12"
+            android:visibility="gone"
+            app:typeface="lato_light" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/schedule_row_one_party_tv_match_result_wait"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_12"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="left"
+            android:textColor="@color/white_60"
+            android:textSize="@dimen/dp_13"
+            android:visibility="visible"
+            app:typeface="lato_regular" />
+
 
     </LinearLayout>
 
