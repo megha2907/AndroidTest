@@ -59,13 +59,13 @@ public class Match {
     @JsonProperty("match_result_desc")
     private String resultdesc;
 
-    @JsonProperty("match_question_count")
+    @JsonProperty("count_questions")
     private Integer matchQuestionCount = 0;
 
     @JsonProperty("match_points")
     private Integer matchPoints;
 
-    @JsonProperty("correct_count")
+    @JsonProperty("count_correct")
     private Integer correctCount = 0;
 
     @JsonProperty("is_attempted")
@@ -130,6 +130,10 @@ public class Match {
 
     @JsonIgnore
     private boolean isOnePartyMatch;
+
+    @JsonProperty("count_answers")
+    private Integer noOfQuestionsAnswered = 0;
+
 
     /**
      *
@@ -324,12 +328,12 @@ public class Match {
         this.questions = questions;
     }
 
-    @JsonProperty("match_question_count")
+    @JsonProperty("count_questions")
     public Integer getMatchQuestionCount() {
         return matchQuestionCount;
     }
 
-    @JsonProperty("match_question_count")
+    @JsonProperty("count_questions")
     public void setMatchQuestionCount(int matchQuestionCount) {
         this.matchQuestionCount = matchQuestionCount;
     }
@@ -344,7 +348,7 @@ public class Match {
         this.matchPoints = matchPoints;
     }
 
-    @JsonProperty("correct_count")
+    @JsonProperty("count_correct")
     public Integer getCorrectCount() {
         if(null == correctCount) {
             return 0;
@@ -352,7 +356,7 @@ public class Match {
         return correctCount;
     }
 
-    @JsonProperty("correct_count")
+    @JsonProperty("count_correct")
     public void setCorrectCount(Integer correctCount) {
         this.correctCount = correctCount;
     }
@@ -593,6 +597,17 @@ public class Match {
     @JsonProperty("match_topic")
     public void setTopics(Topics topics) {
         this.topics = topics;
+    }
+
+
+    @JsonProperty("count_answers")
+    public Integer getNoOfQuestionsAnswered() {
+        return noOfQuestionsAnswered;
+    }
+
+    @JsonProperty("count_answers")
+    public void setNoOfQuestionsAnswered(Integer noOfQuestionsAnswered) {
+        this.noOfQuestionsAnswered = noOfQuestionsAnswered;
     }
 
 

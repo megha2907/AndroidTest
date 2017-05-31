@@ -14,7 +14,7 @@ public class Topics {
     @JsonProperty("topic_name")
     private String topicName;
 
-    @JsonProperty("topic_url")
+    @JsonProperty("topic_img_url")
     private String topicUrl;
 
     @JsonProperty("topic_name")
@@ -27,12 +27,12 @@ public class Topics {
         this.topicName = topicName;
     }
 
-    @JsonProperty("topic_url")
+    @JsonProperty("topic_img_url")
     public String getTopicUrl() {
         return topicUrl;
     }
 
-    @JsonProperty("topic_url")
+    @JsonProperty("topic_img_url")
     public void setTopicUrl(String topicUrl) {
         this.topicUrl = topicUrl;
     }

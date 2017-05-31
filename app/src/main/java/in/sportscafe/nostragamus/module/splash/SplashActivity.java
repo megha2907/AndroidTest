@@ -3,9 +3,11 @@ package in.sportscafe.nostragamus.module.splash;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.jeeva.android.Log;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -53,39 +55,84 @@ public class SplashActivity extends Activity {
                     JSONObject firstParams = Branch.getInstance().getFirstReferringParams();
                     JSONObject lastParams = Branch.getInstance().getLatestReferringParams();
 
-                    Log.d("firstparams", firstParams.toString());
-                    Log.d("lastParams", lastParams.toString());
-
                     NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
+
+                    try {
+                        if (lastParams.has(BundleKeys.USER_REFERRAL_ID)) {
+                            nostragamusDataHandler.setReferralUserId(lastParams.getString(BundleKeys.USER_REFERRAL_ID));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        if (lastParams.has("~channel")) {
+                            nostragamusDataHandler.setInstallChannel(lastParams.getString("~channel"));
+                        }
+
+                        if (lastParams.has("~campaign")){
+                            nostragamusDataHandler.setInstallReferralCampaign(lastParams.getString("~campaign"));
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        if (lastParams.has("$android_deeplink_path")) {
+                            String deepLinkPath = lastParams.getString("$android_deeplink_path");
+                            if (null != deepLinkPath) {
+                                if (deepLinkPath.equalsIgnoreCase("group/invite/")) {
+                                    if (nostragamusDataHandler.isLoggedInUser()) {
+                                        navigateToJoinGroup(lastParams.getString(BundleKeys.GROUP_CODE));
+                                        return;
+                                    }
+
+                                    nostragamusDataHandler.setInstallGroupCode(lastParams.getString(BundleKeys.GROUP_CODE));
+                                    nostragamusDataHandler.setInstallGroupName(lastParams.getString(BundleKeys.GROUP_NAME));
+                                }
+
+                                if (deepLinkPath.equalsIgnoreCase("app/invite/")) {
+                                    navigateToGetStarted();
+                                    return;
+                                }
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
                     HashMap<String, String> metadata = branchUniversalObject.getMetadata();
 
-                    if (metadata.containsKey(BundleKeys.USER_REFERRAL_ID)) {
-                        nostragamusDataHandler.setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
-                    }
+//                    if (metadata.containsKey(BundleKeys.USER_REFERRAL_ID)) {
+//                        nostragamusDataHandler.setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
+//                    }
 
-                    if (null != linkProperties) {
-                        Log.d("Install Channel", linkProperties.getChannel() + "");
-                        nostragamusDataHandler.setInstallChannel(linkProperties.getChannel());
-                        nostragamusDataHandler.setInstallReferralCampaign(linkProperties.getCampaign());
-                    }
+//                    if (null != linkProperties) {
+//                        Log.d("Install Channel", linkProperties.getChannel() + "");
+//                        nostragamusDataHandler.setInstallChannel(linkProperties.getChannel());
+//                        nostragamusDataHandler.setInstallReferralCampaign(linkProperties.getCampaign());
+//                    }
 
-                    String path = metadata.get("$android_deeplink_path");
-                    if (null != path) {
-                        if (path.equalsIgnoreCase("group/invite/")) {
-                            if (nostragamusDataHandler.isLoggedInUser()) {
-                                navigateToJoinGroup(metadata.get(BundleKeys.GROUP_CODE));
-                                return;
-                            }
-                            
-                            nostragamusDataHandler.setInstallGroupCode(metadata.get(BundleKeys.GROUP_CODE));
-                            nostragamusDataHandler.setInstallGroupName(metadata.get(BundleKeys.GROUP_NAME));
-                        }
-
-                        if (path.equalsIgnoreCase("app/invite/")) {
-                            navigateToGetStarted();
-                            return;
-                        }
-                    }
+//                    String path = metadata.get("$android_deeplink_path");
+//                    if (null != path) {
+//                        if (path.equalsIgnoreCase("group/invite/")) {
+//                            if (nostragamusDataHandler.isLoggedInUser()) {
+//                                navigateToJoinGroup(metadata.get(BundleKeys.GROUP_CODE));
+//                                return;
+//                            }
+//
+//                            nostragamusDataHandler.setInstallGroupCode(metadata.get(BundleKeys.GROUP_CODE));
+//                            nostragamusDataHandler.setInstallGroupName(metadata.get(BundleKeys.GROUP_NAME));
+//                        }
+//
+//                        if (path.equalsIgnoreCase("app/invite/")) {
+//                            navigateToGetStarted();
+//                            return;
+//                        }
+//                    }
                 }
 
                 navigateToGetStarted();

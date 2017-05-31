@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spannable;
@@ -48,6 +49,7 @@ import in.sportscafe.nostragamus.module.feed.dto.Parties;
 import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
@@ -66,6 +68,8 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
     private List<Match> mMyResultList = new ArrayList<>();
 
     private TimerRunnable mTimerRunnable;
+
+    private int mAnsweredQuestionCount = 0;
 
     private Integer mPlayerId;
 
@@ -191,12 +195,27 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             if (match.getParties() == null) {
                 holder.mTvPartyAName.setText(match.getTopics().getTopicName());
                 holder.mIvPartyAPhoto.setImageUrl(match.getTopics().getTopicUrl());
+                holder.mTvVs.setVisibility(View.GONE);
+                holder.mLlRightPartyLayout.setVisibility(View.GONE);
+
+                RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) holder.mLlLeftPartyLayout.getLayoutParams();
+                paramsFour.addRule(RelativeLayout.ALIGN_PARENT_LEFT,0);
+                paramsFour.addRule(RelativeLayout.CENTER_IN_PARENT);
+                holder.mLlLeftPartyLayout.setLayoutParams(paramsFour);
+
             } else {
                 parties = match.getParties();
+                holder.mLlRightPartyLayout.setVisibility(View.VISIBLE);
                 holder.mTvPartyAName.setText(parties.get(0).getPartyName());
                 holder.mTvPartyBName.setText(parties.get(1).getPartyName());
                 holder.mIvPartyAPhoto.setImageUrl(parties.get(0).getPartyImageUrl());
                 holder.mIvPartyBPhoto.setImageUrl(parties.get(1).getPartyImageUrl());
+                holder.mTvVs.setVisibility(View.VISIBLE);
+
+                RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) holder.mLlLeftPartyLayout.getLayoutParams();
+                paramsFour.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                paramsFour.addRule(RelativeLayout.LEFT_OF,R.id.schedule_row_btn_vs);
+                holder.mLlLeftPartyLayout.setLayoutParams(paramsFour);
             }
 
 
@@ -260,6 +279,11 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                             if (attemptedStatus == GameAttemptedStatus.PARTIALLY) {
 
                                 //  Waiting for results
+                                holder.mVResultLine.setVisibility(View.VISIBLE);
+                                holder.mTvMatchResult.setVisibility(View.VISIBLE);
+                                holder.mTvMatchResult.setText("Awaiting Results");
+                                holder.mTvMatchResult.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(), R.color.white_60));
+                                holder.mQuestionsAnswered.setText(match.getNoOfQuestionsAnswered() +"/" + match.getMatchQuestionCount() + " Questions Answered");
                                 holder.mLlResultWait.setVisibility(View.VISIBLE);
                                 holder.mLlResultWait.setTag(match);
                             } else {
@@ -290,6 +314,11 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                         }
                     } else if (attemptedStatus == GameAttemptedStatus.COMPLETELY) {
                         //  Waiting for results
+                        holder.mVResultLine.setVisibility(View.VISIBLE);
+                        holder.mTvMatchResult.setVisibility(View.VISIBLE);
+                        holder.mTvMatchResult.setText("Awaiting Results");
+                        holder.mTvMatchResult.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(), R.color.white_60));
+                        holder.mQuestionsAnswered.setText(match.getNoOfQuestionsAnswered() +"/" + match.getMatchQuestionCount() + " Questions Answered");
                         holder.mLlResultWait.setVisibility(View.VISIBLE);
                         holder.mLlResultWait.setTag(match);
                     }
@@ -386,6 +415,12 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
         TextView mTvVs;
 
+        TextView mQuestionsAnswered;
+
+        LinearLayout mLlRightPartyLayout;
+
+        LinearLayout mLlLeftPartyLayout;
+
         public ScheduleViewHolder(View V) {
             super(V);
 
@@ -406,12 +441,15 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
             mBtnPlayMatch = (CustomButton) V.findViewById(R.id.schedule_row_btn_playmatch);
             mBtnMatchPoints = (CustomButton) V.findViewById(R.id.schedule_row_btn_points);
             mTvVs = (TextView) V.findViewById(R.id.schedule_row_btn_vs);
+            mQuestionsAnswered = (TextView) V.findViewById(R.id.schedule_row_ll_questions_answered);
 
 
             mLlCardLayout = (ShadowLayout) V.findViewById(R.id.schedule_row_ll);
             mVResultLine = V.findViewById(R.id.schedule_row_v_result_line);
             mLlMatchCommentaryParent = (LinearLayout) V.findViewById(R.id.schedule_row_ll_match_commentary_parent);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.rl_points);
+            mLlRightPartyLayout = (LinearLayout) V.findViewById(R.id.schedule_row_ll_right_party);
+            mLlLeftPartyLayout = (LinearLayout) V.findViewById(R.id.schedule_row_ll_left_party);
 
             mBtnPlayMatch.setOnClickListener(this);
             mRlMatchPoints.setOnClickListener(this);
