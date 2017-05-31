@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.feed.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jeeva.android.Log;
 
 import org.parceler.Parcel;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
 import in.sportscafe.nostragamus.module.othersanswers.AnswerPercentage;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 
@@ -39,6 +41,12 @@ public class Match {
     @JsonProperty("match_parties")
     private List<Parties> parties = new ArrayList<>();
 
+    @JsonProperty("match_type")
+    private String matchType;
+
+    @JsonProperty("match_topic")
+    private Topics topics;
+
     @JsonProperty("match_starttime")
     private String startTime;
 
@@ -51,13 +59,13 @@ public class Match {
     @JsonProperty("match_result_desc")
     private String resultdesc;
 
-    @JsonProperty("match_question_count")
+    @JsonProperty("count_questions")
     private Integer matchQuestionCount = 0;
 
     @JsonProperty("match_points")
     private Integer matchPoints;
 
-    @JsonProperty("correct_count")
+    @JsonProperty("count_correct")
     private Integer correctCount = 0;
 
     @JsonProperty("is_attempted")
@@ -119,6 +127,12 @@ public class Match {
 
     @JsonProperty("highest_player_photo")
     private String highestScorerPhoto;
+
+    @JsonIgnore
+    private boolean isOnePartyMatch;
+
+    @JsonProperty("count_answers")
+    private Integer noOfQuestionsAnswered = 0;
 
 
     /**
@@ -213,6 +227,9 @@ public class Match {
 
     @JsonProperty("match_parties")
     public List<Parties> getParties() {
+        if (parties==null || parties.isEmpty()){
+            parties = null;
+        }
         return parties;
     }
 
@@ -311,12 +328,12 @@ public class Match {
         this.questions = questions;
     }
 
-    @JsonProperty("match_question_count")
+    @JsonProperty("count_questions")
     public Integer getMatchQuestionCount() {
         return matchQuestionCount;
     }
 
-    @JsonProperty("match_question_count")
+    @JsonProperty("count_questions")
     public void setMatchQuestionCount(int matchQuestionCount) {
         this.matchQuestionCount = matchQuestionCount;
     }
@@ -331,7 +348,7 @@ public class Match {
         this.matchPoints = matchPoints;
     }
 
-    @JsonProperty("correct_count")
+    @JsonProperty("count_correct")
     public Integer getCorrectCount() {
         if(null == correctCount) {
             return 0;
@@ -339,7 +356,7 @@ public class Match {
         return correctCount;
     }
 
-    @JsonProperty("correct_count")
+    @JsonProperty("count_correct")
     public void setCorrectCount(Integer correctCount) {
         this.correctCount = correctCount;
     }
@@ -549,6 +566,48 @@ public class Match {
     @JsonProperty("rank_change")
     public void setRankChange(Integer rankChange) {
         this.rankChange = rankChange;
+    }
+
+
+    public boolean isOnePartyMatch() {
+        return isOnePartyMatch;
+    }
+
+    public void setOnePartyMatch(boolean onePartyMatch) {
+        isOnePartyMatch = onePartyMatch;
+    }
+
+    @JsonProperty("match_type")
+    public String getMatchType() {
+        return matchType;
+    }
+    @JsonProperty("match_type")
+    public void setMatchType(String matchType) {
+        this.matchType = matchType;
+    }
+
+    @JsonProperty("match_topic")
+    public Topics getTopics() {
+        if(null == topics) {
+            topics = null;
+        }
+        return topics;
+    }
+
+    @JsonProperty("match_topic")
+    public void setTopics(Topics topics) {
+        this.topics = topics;
+    }
+
+
+    @JsonProperty("count_answers")
+    public Integer getNoOfQuestionsAnswered() {
+        return noOfQuestionsAnswered;
+    }
+
+    @JsonProperty("count_answers")
+    public void setNoOfQuestionsAnswered(Integer noOfQuestionsAnswered) {
+        this.noOfQuestionsAnswered = noOfQuestionsAnswered;
     }
 
 

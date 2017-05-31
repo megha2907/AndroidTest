@@ -77,38 +77,38 @@ android {
     productFlavors {
 
         stage {
-            manifestPlaceholders = [ buildTypeSuffix:"" ]
+            manifestPlaceholders = [ buildTypeSuffix:"" , branchState: "true"]
             resValue "string", "app_name", "Nostra Stage"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
         stagePro {
             applicationIdSuffix ".pro"
-            manifestPlaceholders = [ buildTypeSuffix:".pro" ]
+            manifestPlaceholders = [ buildTypeSuffix:".pro" , branchState: "true"]
             resValue "string", "app_name", "NostraPro Stage"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
 
         NostragamusPS {
             applicationIdSuffix ".ps"
-            manifestPlaceholders = [ buildTypeSuffix:".ps" ]
+            manifestPlaceholders = [ buildTypeSuffix:".ps", branchState: "false" ]
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
         NostragamusPro {
             applicationIdSuffix ".pro"
-            manifestPlaceholders = [ buildTypeSuffix:".pro" ]
+            manifestPlaceholders = [ buildTypeSuffix:".pro", branchState: "false" ]
             resValue "string", "app_name", "Nostra Pro"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
 
         local {
-            manifestPlaceholders = [ buildTypeSuffix:"" ]
+            manifestPlaceholders = [ buildTypeSuffix:"", branchState: "false"  ]
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
 
         dev {
-            manifestPlaceholders = [ buildTypeSuffix:"" ]
+            manifestPlaceholders = [ buildTypeSuffix:"" , branchState: "false" ]
             resValue "string", "app_name", "Nostragamus Dev"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }

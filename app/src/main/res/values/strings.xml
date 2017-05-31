@@ -126,7 +126,7 @@
     <string name="proceed">Proceed</string>
     <string name="invalid_email">Enter valid email id</string>
 
-    <string name="split_str">Question cancelled, half the points were awarded</string>
+    <string name="split_str">Options had a tie , Split points were awarded.</string>
     <string name="ok">OK</string>
     <string name="double_back_press_msg">Press back button again to exit</string>
     <string name="match_results">Match Result</string>
@@ -137,5 +137,9 @@
     <string name="profile_disclaimer"> We\'ve built NostraGamus to be a "Game of Skill" which is 100% legal in India. But, our users need to be above 18 years of age and not from Assam or Odisha (States that do not allow such games). Click here to confirm the same and get a seamless, hassle-free experience.</string>
     <string name="download_app_text">Gain access to contests with prizes upto ₹ 10,000 on the full version of Nostragamus!</string>
     <string name="prize_money_disclaimer">In case two or more people tie for a particular rank, the prize money will be re-calculated and may (or) may not be the same. Please refer to Section 7 in <![CDATA[<a href="http://nostragamus.in/rules.html">Nostragamus Rules</a>]]></string>
+
+    <item type="id" name="timeAgo" />
+    <item type="id" name="onePartyMatch" />
+
 
 </resources>

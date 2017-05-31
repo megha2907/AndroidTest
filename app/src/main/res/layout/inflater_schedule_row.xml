@@ -96,6 +96,7 @@
                     app:typeface="lato_bold" />
 
                 <LinearLayout
+                    android:id="@+id/schedule_row_ll_left_party"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -128,6 +129,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/schedule_row_ll_right_party"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -179,40 +181,6 @@
                     android:visibility="gone"
                     app:typeface="roboto_condensed" />
 
-                <RelativeLayout
-                    android:id="@+id/schedule_row_ll_waiting_for_result"
-                    android:layout_width="@dimen/dp_72"
-                    android:layout_height="@dimen/dp_36"
-                    android:layout_below="@id/schedule_row_btn_vs"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/tournament_ready_btn_bg"
-                    android:clickable="true"
-                    android:paddingTop="@dimen/dp_8"
-                    android:visibility="gone">
-
-
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/schedule_row_ll_waiting_for_result_answers"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:text="Answers"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_12"
-                        android:visibility="visible"
-                        app:typeface="lato_regular" />
-
-                    <ImageView
-                        android:layout_width="@dimen/dp_8"
-                        android:layout_height="@dimen/dp_8"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/dp_2"
-                        android:layout_toRightOf="@+id/schedule_row_ll_waiting_for_result_answers"
-                        android:src="@drawable/timeline_points_arrow"
-                        android:visibility="visible" />
-
-                </RelativeLayout>
-
             </RelativeLayout>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -239,6 +207,67 @@
                 android:layout_marginTop="@dimen/feed_screen_spacing"
                 android:background="#151515"
                 android:visibility="gone" />
+
+
+            <RelativeLayout
+                android:id="@+id/schedule_row_ll_waiting_for_result"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_36"
+                android:layout_marginLeft="@dimen/dp_14"
+                android:layout_marginRight="@dimen/dp_14"
+                android:layout_marginTop="@dimen/dp_14"
+                android:clickable="true"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:id="@+id/schedule_row_rl_waiting_for_result"
+                    android:layout_width="@dimen/dp_72"
+                    android:layout_height="@dimen/dp_36"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/tournament_ready_btn_bg"
+                    android:clickable="false"
+                    android:paddingTop="@dimen/dp_8"
+                    android:visibility="visible">
+
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/schedule_row_ll_waiting_for_result_answers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:text="Answers"
+                        android:clickable="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_12"
+                        android:visibility="visible"
+                        app:typeface="lato_regular" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_8"
+                        android:layout_height="@dimen/dp_8"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_2"
+                        android:layout_toRightOf="@+id/schedule_row_ll_waiting_for_result_answers"
+                        android:src="@drawable/timeline_points_arrow"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/schedule_row_ll_questions_answered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="@dimen/dp_14"
+                    android:layout_toLeftOf="@+id/schedule_row_rl_waiting_for_result"
+                    android:gravity="left|center_vertical"
+                    android:maxLines="2"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/dp_12"
+                    app:typeface="lato_bold" />
+
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/rl_points"
