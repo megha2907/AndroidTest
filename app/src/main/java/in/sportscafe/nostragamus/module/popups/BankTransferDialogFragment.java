@@ -188,10 +188,14 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
     }
 
     private void openBundle(Bundle bundle) {
-        mChallengeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_INFO));
+        if (bundle != null) {
+            mChallengeInfo = Parcels.unwrap(bundle.getParcelable(BundleKeys.CHALLENGE_INFO));
 
-        mMaxTransferCount = mChallengeInfo.getChallengeInfo().getMaxWithdrawLimit();
-        mWithdrawnPowerUps = mChallengeInfo.getChallengeUserInfo().getWithdrawnPowerUps();
+            if (mChallengeInfo != null && mChallengeInfo.getChallengeInfo() != null) {
+                mMaxTransferCount = mChallengeInfo.getChallengeInfo().getMaxWithdrawLimit();
+                mWithdrawnPowerUps = mChallengeInfo.getChallengeUserInfo().getWithdrawnPowerUps();
+            }
+        }
 
         mPowerUpsInBank = NostragamusDataHandler.getInstance().getUserInfo().getPowerUps();
     }
@@ -202,7 +206,7 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
         setPollInBank(getPollInBank());
 
         String transferCount = mMaxTransferCount + "";
-        String challengeName = mChallengeInfo.getName();
+        String challengeName = (mChallengeInfo != null) ? mChallengeInfo.getName() : "";
         String text = String.format("Transfer maximum %1s powerups of each type to the %2s challenge", transferCount, challengeName);
 
         SpannableString spannable = new SpannableString(text);
@@ -210,7 +214,7 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
         spannable.setSpan(new UnderlineSpan(), text.indexOf(challengeName), text.indexOf(challengeName) + challengeName.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
         ((TextView) findViewById(R.id.bank_transfer_tv_add_limit)).setText(spannable);
-        ((TextView) findViewById(R.id.bank_transfer_tv_challenge_name)).setText(mChallengeInfo.getName());
+        ((TextView) findViewById(R.id.bank_transfer_tv_challenge_name)).setText(challengeName);
     }
 
     private void transferToChallenge() {
@@ -243,7 +247,8 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
                 dismissProgressbar();
                 showMessage(message, Toast.LENGTH_LONG);
             }
-        }).transferToChallenge(mPowerUpsToWithdraw, mChallengeInfo.getChallengeId());
+        }).transferToChallenge(mPowerUpsToWithdraw,
+                (mChallengeInfo != null) ? mChallengeInfo.getChallengeId() : 0);
 
         NostragamusAnalytics.getInstance().trackPowerBank(AnalyticsActions.ADDED);
     }

@@ -239,6 +239,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        mPredictionView.hideInApp();
                         mPredictionModel.getAllQuestions();
                     }
                 });
