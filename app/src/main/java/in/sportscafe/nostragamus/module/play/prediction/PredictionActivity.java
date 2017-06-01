@@ -14,6 +14,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 
 import com.jeeva.android.widgets.CustomProgressbar;
 import com.jeeva.android.widgets.HmImageView;
+
+import org.w3c.dom.Text;
 
 import java.net.URL;
 
@@ -167,10 +170,26 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                                String leftImageUrl, String rightImageUrl,
                                String matchStage) {
 
-        ((TextView) findViewById(R.id.prediction_contest_name_left_textview)).setText(leftContestName);
-        ((TextView) findViewById(R.id.prediction_contest_name_right_textview)).setText(rightContestName);
-        ((HmImageView) findViewById(R.id.prediction_contest_left_imageView)).setImageUrl(leftImageUrl);
-        ((HmImageView) findViewById(R.id.prediction_contest_right_imageView)).setImageUrl(rightImageUrl);
+        TextView mLeftContestName = (TextView) findViewById(R.id.prediction_contest_name_left_textview);
+        mLeftContestName.setText(leftContestName);
+        TextView mRightContestName = (TextView) findViewById(R.id.prediction_contest_name_right_textview);
+        mRightContestName.setText(rightContestName);
+        HmImageView mLeftContestImage = (HmImageView) findViewById(R.id.prediction_contest_left_imageView);
+        mLeftContestImage.setImageUrl(leftImageUrl);
+        HmImageView mRightContestImage = (HmImageView) findViewById(R.id.prediction_contest_right_imageView);
+        mRightContestImage.setImageUrl(rightImageUrl);
+
+
+        if (TextUtils.isEmpty(rightContestName)){
+            ((TextView) findViewById(R.id.prediction_contest_vs_textView)).setVisibility(View.GONE);
+            mRightContestImage.setVisibility(View.GONE);
+            mRightContestName.setVisibility(View.GONE);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.CENTER;
+            mLeftContestName.setLayoutParams(params);
+        }
 
 
         /*((TextView) findViewById(R.id.prediction_tv_contest_name)).setText(leftContestName);

@@ -15,6 +15,8 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,6 +30,7 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 import com.jeeva.android.widgets.customfont.CustomTextView;
 import com.jeeva.android.widgets.customfont.Typefaces;
 
+import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.sql.Time;
@@ -39,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -54,11 +58,14 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.CountDownTimer;
 import in.sportscafe.nostragamus.module.common.CustomTypefaceSpan;
+import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.Parties;
+import in.sportscafe.nostragamus.module.feed.dto.Topics;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
+import in.sportscafe.nostragamus.module.user.group.newgroup.TourSelectionAdapter;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -74,6 +81,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
     private static final long ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
     private TimerRunnable mTimerRunnable;
+
+    private final static int ONE_PARTY_VIEW = 0;
+    private final static int MULTI_PARTY_VIEW = 1;
 
     private ChallengeTimelineAdapterListener mChallengeTimelineAdapterListener;
     private Context mContext;
@@ -99,21 +109,44 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         return super.getItem(position);
     }
 
+
+    @Override
+    public int getItemViewType(int position) {
+
+        if (getItem(position).getParties() == null) {
+            return ONE_PARTY_VIEW;
+        }
+
+        return MULTI_PARTY_VIEW;
+    }
+
     @Override
     public ScheduleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ScheduleViewHolder(getLayoutInflater().inflate(R.layout.inflater_other_view_schedule_row, parent, false));
+
+        switch (viewType) {
+            case ONE_PARTY_VIEW:
+                View viewONE = LayoutInflater.from(parent.getContext()).inflate(R.layout.inflater_one_party_schedule_row, parent, false);
+                ScheduleViewHolder rowONE = new ScheduleViewHolder(viewONE);
+                return rowONE;
+
+            default:
+                View viewTWO = LayoutInflater.from(parent.getContext()).inflate(R.layout.inflater_other_view_schedule_row, parent, false);
+                ScheduleViewHolder rowTWO = new ScheduleViewHolder(viewTWO);
+                return rowTWO;
+        }
+
     }
 
     @Override
     public void onBindViewHolder(ScheduleViewHolder holder, int position) {
-        populateMatchDetails(getItem(position), holder);
+        populateMatchDetails(getItem(position), holder, position);
         if (View.VISIBLE == holder.mTvExpiresIn.getVisibility()) {
             mScheduleVHList.add(holder);
             mScheduleMap.put(holder.mMainView, holder);
         }
     }
 
-    private void populateMatchDetails(Match match, ScheduleViewHolder holder) {
+    private void populateMatchDetails(Match match, ScheduleViewHolder holder, int pos) {
         holder.mBtnMatchPoints.setVisibility(View.GONE);
         holder.mTvInfo.setVisibility(View.GONE);
         holder.mTvMatchResult.setVisibility(View.GONE);
@@ -121,6 +154,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         holder.mBtnPlayMatch.setVisibility(View.GONE);
         holder.mTvDate.setVisibility(View.VISIBLE);
         holder.mTvExpiresIn.setVisibility(View.INVISIBLE);
+        holder.mTvOnePartyDate.setVisibility(View.GONE);
 
         String startTime = match.getStartTime().replace("+00:00", ".000Z");
         Log.d("StartTime", startTime);
@@ -143,14 +177,21 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             holder.mLlCardLayout.setVisibility(View.GONE);
         } else {
 
-            // Setting party details
-            List<Parties> parties = match.getParties();
-            holder.mTvPartyAName.setText(parties.get(0).getPartyName());
-            holder.mTvPartyBName.setText(parties.get(1).getPartyName());
-            holder.mIvPartyAPhoto.setImageUrl(parties.get(0).getPartyImageUrl());
-            holder.mIvPartyBPhoto.setImageUrl(parties.get(1).getPartyImageUrl());
-            holder.mTvDate.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(), R.color.white));
+            List<Parties> parties = new ArrayList<>();
 
+            // Setting party details : if one party view then set topics for one party match
+            if (getItemViewType(pos) == ONE_PARTY_VIEW) {
+                holder.mTvPartyAName.setText(match.getTopics().getTopicName());
+                holder.mIvPartyAPhoto.setImageUrl(match.getTopics().getTopicUrl());
+            } else {
+                parties = match.getParties();
+                holder.mTvPartyAName.setText(parties.get(0).getPartyName());
+                holder.mTvPartyBName.setText(parties.get(1).getPartyName());
+                holder.mIvPartyAPhoto.setImageUrl(parties.get(0).getPartyImageUrl());
+                holder.mIvPartyBPhoto.setImageUrl(parties.get(1).getPartyImageUrl());
+            }
+
+            holder.mTvDate.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(), R.color.white));
 
             Date d = new Date(Nostragamus.getInstance().getServerTime());
             Calendar c = Calendar.getInstance();
@@ -168,8 +209,13 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                 attemptedStatus = 0;
             }
 
-            holder.mTvMatchResult.setVisibility(View.VISIBLE);
-            holder.mTvMatchResult.setText(match.getStage());
+            if (getItemViewType(pos) == ONE_PARTY_VIEW) {
+                holder.mTvMatchResult.setVisibility(View.VISIBLE);
+                holder.mTvMatchResult.setText(match.getStage());
+            } else {
+                holder.mTvMatchResult.setVisibility(View.VISIBLE);
+                holder.mTvMatchResult.setText(match.getStage());
+            }
 
             if (mChallengeInfo.getChallengeUserInfo().isUserJoined()) {
 
@@ -186,7 +232,11 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
 
                             holder.mTvMatchResult.setVisibility(View.VISIBLE);
-                            holder.mTvMatchResult.setText(match.getStage() + " - " + Html.fromHtml(match.getResult()));
+                            if (getItemViewType(pos) == ONE_PARTY_VIEW) {
+                                holder.mTvMatchResult.setText(Html.fromHtml(match.getResult()));
+                            } else {
+                                holder.mTvMatchResult.setText(match.getStage() + " - " + Html.fromHtml(match.getResult()));
+                            }
                             holder.mBtnMatchPoints.setTag(match);
                             holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
                             holder.mTvDate.setText("Completed");
@@ -210,7 +260,11 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                         if (GameAttemptedStatus.NOT == attemptedStatus) {
                             // Show Opportunity missed at scoring!
                             holder.mTvMatchResult.setVisibility(View.VISIBLE);
-                            holder.mTvMatchResult.setText(match.getStage() + " - " + Html.fromHtml(match.getResult()));
+                            if (getItemViewType(pos) == ONE_PARTY_VIEW) {
+                                holder.mTvMatchResult.setText(Html.fromHtml(match.getResult()));
+                            } else {
+                                holder.mTvMatchResult.setText(match.getStage() + " - " + Html.fromHtml(match.getResult()));
+                            }
                             holder.mTvInfo.setVisibility(View.VISIBLE);
                             holder.mTvInfo.setText("Did Not Play");
                             holder.mTvInfo.setTag(match);
@@ -228,7 +282,6 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                     /*  Waiting for results */
                                     holder.mLlResultWait.setVisibility(View.VISIBLE);
                                     holder.mTvMatchResult.setVisibility(View.VISIBLE);
-//                                holder.mTvMatchResult.setText(match.getStage());
                                     holder.mLlResultWait.setTag(match);
                                     holder.mTvDate.setText("In Progress");
                                 } else {
@@ -256,8 +309,15 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                 /* check if one day left and match not started , show countdown timer */
                                 if (timeAgo.totalDiff < ONE_DAY_IN_MS) {
                                     holder.mTvExpiresIn.setVisibility(View.VISIBLE);
-                                    holder.mTvExpiresIn.setTag(timeAgo.totalDiff);
-                                    holder.mTvDate.setVisibility(View.INVISIBLE);
+
+                                    /* If one party view then set expiresIn on OnePartyDate */
+                                    if (getItemViewType(pos) == ONE_PARTY_VIEW) {
+                                        holder.mTvDate.setVisibility(View.GONE);
+                                        holder.mTvOnePartyDate.setTag(timeAgo.totalDiff);
+                                    } else {
+                                        holder.mTvDate.setVisibility(View.INVISIBLE);
+                                        holder.mTvExpiresIn.setTag(timeAgo.totalDiff);
+                                    }
 
                                 }
                             }
@@ -268,8 +328,15 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                              /* check if one day left and match not started and show countdown timer */
                             if (timeAgo.totalDiff < ONE_DAY_IN_MS) {
                                 holder.mTvExpiresIn.setVisibility(View.VISIBLE);
-                                holder.mTvExpiresIn.setTag(timeAgo.totalDiff);
-                                holder.mTvDate.setVisibility(View.INVISIBLE);
+
+                            /* If one party view then set expiresIn on OnePartyDate */
+                                if (getItemViewType(pos) == ONE_PARTY_VIEW) {
+                                    holder.mTvDate.setVisibility(View.GONE);
+                                    holder.mTvOnePartyDate.setTag(timeAgo.totalDiff);
+                                } else {
+                                    holder.mTvDate.setVisibility(View.INVISIBLE);
+                                    holder.mTvExpiresIn.setTag(timeAgo.totalDiff);
+                                }
                             }
 //                        holder.mTvMatchResult.setVisibility(View.VISIBLE);
 //                        holder.mTvMatchResult.setText(match.getStage());
@@ -338,7 +405,24 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                 }
 
             }
+
+
+            /* If one party view then set date on OnePartyDate */
+            if (getItemViewType(pos) == ONE_PARTY_VIEW) {
+
+                if (View.VISIBLE == holder.mTvDate.getVisibility()) {
+                    String tvDateText = holder.mTvDate.getText().toString();
+                    holder.mTvOnePartyDate.setText(tvDateText);
+                    holder.mTvOnePartyDate.setVisibility(View.VISIBLE);
+                    holder.mTvExpiresIn.setVisibility(View.GONE);
+                    holder.mTvDate.setVisibility(View.GONE);
+                    holder.mTvOnePartyDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }
+
+            }
+
         }
+
     }
 
     public class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -363,6 +447,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
         RelativeLayout mLlResultWait;
 
+        RelativeLayout mRlPartyBLayout;
+
         HmImageView mIvPartyAPhoto;
 
         HmImageView mIvPartyBPhoto;
@@ -376,6 +462,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         Button mBtnMatchLock;
 
         TextView mTvExpiresIn;
+
+        TextView mTvOnePartyDate;
 
         public ScheduleViewHolder(View V) {
             super(V);
@@ -394,6 +482,8 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             mBtnMatchPoints = (CustomButton) V.findViewById(R.id.schedule_row_btn_points);
             mBtnMatchLock = (Button) V.findViewById(R.id.schedule_row_btn_match_locked);
             mTvExpiresIn = (TextView) V.findViewById(R.id.schedule_row_tv_expires_in);
+            mRlPartyBLayout = (RelativeLayout) V.findViewById(R.id.schedule_rl_party_b);
+            mTvOnePartyDate = (TextView) V.findViewById(R.id.schedule_row_tv_one_party_date);
 
             mLlCardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
 
@@ -520,13 +610,31 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             for (ChallengesTimelineAdapter.ScheduleViewHolder scheduleVH : mScheduleVHList) {
                 if (View.VISIBLE == scheduleVH.mTvExpiresIn.getVisibility()) {
 
-                    long updatedTime = Long.parseLong(scheduleVH.mTvExpiresIn.getTag().toString());
+                    long updatedTime;
+                    boolean isOnePartyMatch = false;
+                    if (scheduleVH.mTvExpiresIn.getTag() != null) {
+                        updatedTime = Long.parseLong(scheduleVH.mTvExpiresIn.getTag().toString());
+                    } else {
+                        updatedTime = Long.parseLong(scheduleVH.mTvOnePartyDate.getTag().toString());
+                        isOnePartyMatch = true;
+                    }
+
                     if (updatedTime > 1000) {
-                        updateTimer(scheduleVH.mTvExpiresIn, updatedTime);
+                        if (isOnePartyMatch) {
+                            scheduleVH.mTvOnePartyDate.setVisibility(View.VISIBLE);
+                            updateTimer(scheduleVH.mTvOnePartyDate, updatedTime);
+                        } else {
+                            updateTimer(scheduleVH.mTvExpiresIn, updatedTime);
+                        }
                     } else {
                         scheduleVH.mTvExpiresIn.setVisibility(View.GONE);
-                        scheduleVH.mTvDate.setVisibility(View.VISIBLE);
-                        scheduleVH.mTvDate.setText("In Progress");
+                        if (isOnePartyMatch) {
+                            scheduleVH.mTvOnePartyDate.setVisibility(View.VISIBLE);
+                            scheduleVH.mTvOnePartyDate.setText("In Progress");
+                        }else {
+                            scheduleVH.mTvDate.setVisibility(View.VISIBLE);
+                            scheduleVH.mTvDate.setText("In Progress");
+                        }
                     }
                 }
             }
@@ -552,7 +660,6 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 //            );
 
             SpannableStringBuilder builder = new SpannableStringBuilder();
-            //final StyleSpan boldSpan = new StyleSpan(android.graphics.Typeface.BOLD);
 
             Typeface latoBold = Typeface.createFromAsset(tvTimerValue.getContext().getAssets(), "fonts/lato/Lato-Bold.ttf");
             TypefaceSpan latoBoldSpan = new CustomTypefaceSpan("", latoBold);

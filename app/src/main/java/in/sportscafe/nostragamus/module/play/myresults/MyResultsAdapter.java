@@ -26,7 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeeva.android.widgets.HmImageView;
+import com.jeeva.android.widgets.ShadowLayout;
 
+import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -127,16 +129,29 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             holder.mTvMatchStage.setText(match.getStage());
         }
 
-        holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
-        holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
+        if (match.getParties() == null) {
+            holder.mTvOnePartyName.setText(match.getTopics().getTopicName());
+            holder.mIvOnePartyImage.setImageUrl(match.getTopics().getTopicUrl());
+            holder.mLlMultiParty.setVisibility(View.GONE);
+            holder.mLlOneParty.setVisibility(View.VISIBLE);
+            holder.mTvOnePartyDate.setText(holder.mTvDate.getText().toString());
 
-        holder.mIvPartyAPhoto.setImageUrl(
-                match.getParties().get(0).getPartyImageUrl()
-        );
+            RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) holder.mLeaderBoardLayout.getLayoutParams();
+            paramsFour.addRule(RelativeLayout.BELOW, R.id.schedule_row_one_party_ll);
+            paramsFour.setMargins(20, 30, 20, 20);
+            holder.mLeaderBoardLayout.setLayoutParams(paramsFour);
 
-        holder.mIvPartyBPhoto.setImageUrl(
-                match.getParties().get(1).getPartyImageUrl()
-        );
+        } else {
+            holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
+            holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
+            holder.mIvPartyAPhoto.setImageUrl(
+                    match.getParties().get(0).getPartyImageUrl()
+            );
+
+            holder.mIvPartyBPhoto.setImageUrl(
+                    match.getParties().get(1).getPartyImageUrl()
+            );
+        }
 
 
 //        if (null == match.getResult() || match.getResult().isEmpty()) {
@@ -208,7 +223,11 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             if (match.isResultPublished()) {
 
                 holder.mTvMatchResult.setVisibility(View.VISIBLE);
-                holder.mTvMatchResult.setText(match.getStage() + " - " + match.getResult());
+                if (match.getParties()==null) {
+                    holder.mTvOnePartyMatchResult.setText(match.getResult());
+                }else {
+                    holder.mTvMatchResult.setText(match.getStage() + " - " + match.getResult());
+                }
                 holder.mTvAvgMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
                 holder.mTvHighestMatchPoints.setText(String.valueOf(match.getHighestMatchPoints()));
                 holder.mRlHighestMatchPoints.setTag(match);
@@ -257,9 +276,17 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 holder.mBtnMatchPoints.setVisibility(View.GONE);
                 holder.mLlMatchScores.setVisibility(View.GONE);
                 holder.mTvMatchResult.setVisibility(View.GONE);
-                holder.mTvResultWait.setVisibility(View.VISIBLE);
-                holder.mTvResultWait.setText(match.getStage() + " - " + "Awaiting Results");
-                holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                holder.mTvOnePartyMatchResultWait.setVisibility(View.GONE);
+
+                if (match.getParties() == null) {
+                    holder.mTvOnePartyMatchResultWait.setVisibility(View.VISIBLE);
+                    holder.mTvOnePartyMatchResultWait.setText("Awaiting Results");
+                    holder.mTvOnePartyMatchResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }else {
+                    holder.mTvResultWait.setVisibility(View.VISIBLE);
+                    holder.mTvResultWait.setText(match.getStage() + " - " + "Awaiting Results");
+                    holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }
 
                 if (null != match.getQuestions()) {
                     for (Question question : match.getQuestions()) {
@@ -355,6 +382,18 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         ImageView mIvRankStatus;
         TextView mTvMatchPointsTxt;
 
+        LinearLayout mLlMultiParty;
+
+        LinearLayout mLlOneParty;
+        HmImageView mIvOnePartyImage;
+        TextView mTvOnePartyName;
+        TextView mTvOnePartyDate;
+        TextView mTvOnePartyMatchResultWait;
+        TextView mTvOnePartyMatchResult;
+
+
+        ShadowLayout mLeaderBoardLayout;
+
 
         public MyResultViewHolder(View V) {
             super(V);
@@ -382,6 +421,18 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mLlMatchScores = (LinearLayout) V.findViewById(R.id.schedule_row_scores_ll);
             mIvRankStatus = (ImageView) V.findViewById(R.id.schedule_row_rank_status_iv);
+
+            mLlMultiParty = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
+
+            mLlOneParty = (LinearLayout) V.findViewById(R.id.schedule_row_one_party_ll);
+            mIvOnePartyImage = (HmImageView) V.findViewById(R.id.swipe_card_one_party_iv_left);
+            mTvOnePartyName = (TextView) V.findViewById(R.id.schedule_row_tv_one_party_a_name);
+            mTvOnePartyDate = (TextView) V.findViewById(R.id.schedule_row_tv_one_party_date);
+            mTvOnePartyMatchResultWait = (TextView) V.findViewById(R.id.schedule_row_one_party_tv_match_result_wait);
+            mTvOnePartyMatchResult = (TextView) V.findViewById(R.id.schedule_row_one_party_tv_match_result);
+
+            mLeaderBoardLayout = (ShadowLayout) V.findViewById(R.id.schedule_row_rl_points_summary);
+
 
             mRlLeaderBoard.setOnClickListener(this);
             mRlAvgMatchPoints.setOnClickListener(this);
@@ -592,8 +643,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
             setTextColor(tvAnswer, R.color.greencolor);
 
-        }     /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/
-        else if (question.getQuestionAnswer() == -1) {
+        }     /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/ else if (question.getQuestionAnswer() == -1) {
             tvAnswer.setText(question.getQuestionOption1());
             tvotheroption.setText(question.getQuestionOption2());
             tvotheroption.setVisibility(View.VISIBLE);
@@ -737,6 +787,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     /**
      * Edit Answers clicks
+     *
      * @param parent
      * @param question
      * @param convertView
@@ -757,7 +808,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
                 /* If match not started, then only save */
                 initMatchStarted(mMatchStartTimeMs);
-                if (! mIsMatchStarted) {
+                if (!mIsMatchStarted) {
 
                 /* check if btn is save Answer , call save Answer Api , hide radio buttons , show Answers View. */
                     if (mSaveAnswer) {

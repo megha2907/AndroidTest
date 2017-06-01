@@ -38,7 +38,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
     public void onCreatePrediction(Bundle bundle) {
         mPredictionModel.init(bundle);
 
-
         mPredictionView.setContestName(mPredictionModel.getLeftContestName(), mPredictionModel.getRightContestName(),
                 mPredictionModel.getLeftContestImageUrl(), mPredictionModel.getRightContestImageUrl(),
                 mPredictionModel.getMatchStage());
