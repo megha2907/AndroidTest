@@ -110,25 +110,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             m2xPowerups = userPowerUpMap.get(Powerups.XX);
             mNonegsPowerups = userPowerUpMap.get(Powerups.NO_NEGATIVE);
             mPollPowerups = userPowerUpMap.get(Powerups.AUDIENCE_POLL);
-
-//            HashMap<String, Integer> initialPowerUpMap = mChallegeInfo.getChallengeInfo().getPowerUps();
-//
-//            if (null != initialPowerUpMap.get(Powerups.XX)) {
-//
-//                Integer mIl2xPowerups = initialPowerUpMap.get(Powerups.XX);
-//                Integer mIlNonegsPowerups = initialPowerUpMap.get(Powerups.NO_NEGATIVE);
-//                Integer mIlPollPowerups = initialPowerUpMap.get(Powerups.AUDIENCE_POLL);
-//
-//                int m2xPowerUpPercent = (m2xPowerups * 100) / mIl2xPowerups;
-//                int mNonegsPercent = (mNonegsPowerups * 100) / mIlNonegsPowerups;
-//                int mPollPercent = (mPollPowerups * 100) / mIlPollPowerups;
-//
-//                if (m2xPowerUpPercent < 25 || mNonegsPercent < 25 || mPollPercent < 25){
-//                    mPredictionModelListener.showPowerUpCountLessPopUp();
-//                }
-//
-//            }
-
         }
 
         NostragamusAnalytics.getInstance().trackPlay(AnalyticsActions.STARTED);
@@ -208,18 +189,10 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     public PredictionAdapter getAdapter(Context context, List<Question> questions) {
         mInitialCount = questions.size();
 
-        /*mPredictionAdapter = new PredictionAdapter(context, new View.OnClickListener() {
+        mPredictionAdapter = new PredictionAdapter(context, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dismissPowerUpAnimation(view);
-            }
-        });*/
-
-        mPredictionAdapter = new PredictionAdapter(context, new PowerupRemoveListener() {
-            @Override
-            public void onPwerupRemoved(String powerup) {
-                increasePowerUpCount(powerup);
-                mPredictionModelListener.notifyTopQuestion();
+                removeAppliedPowerUp(view);
             }
         });
 
@@ -237,25 +210,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         mPredictionAdapter.setFlingCardListener(flingCardListener);
     }
 
-    /*private void dismissPowerUpAnimation(final View view) {
-        mPredictionAdapter.dismissPowerUpAnimation(view, new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                view.setVisibility(View.INVISIBLE);
-                removeAppliedPowerUp(view);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-    }*/
-
     private void removeAppliedPowerUp(View view) {
         if (view != null) {
             String powerUpOfThisView = (String) view.getTag();
@@ -265,12 +219,11 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
                 increasePowerUpCount(powerUpOfThisView);
                 topQuestion.removeAppliedPowerUp(powerUpOfThisView);
 
-//                notifyPowerUps();
-                /*if (powerUpOfThisView.equals(Powerups.XX)) {
-                    mPredictionAdapter.remove2xPowerup();
+                if (powerUpOfThisView.equals(Powerups.XX)) {
+                    mPredictionAdapter.remove2xPowerup(view);
                 } else if (powerUpOfThisView.equals(Powerups.NO_NEGATIVE)) {
-                    mPredictionAdapter.removeNonegativePowerup();
-                }*/
+                    mPredictionAdapter.removeNoNegativePowerup(view);
+                }
                 mPredictionModelListener.notifyTopQuestion();
             }
         }
@@ -307,7 +260,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             if (m2xPowerups > 0) {
                 boolean isApplied = mPredictionAdapter.getTopQuestion().apply2xPowerUp();
                 if (isApplied) {
-//                    notifyPowerUps();
                     mPredictionAdapter.add2xPowerup();
                     mPredictionModelListener.notifyTopQuestion();
 
@@ -326,7 +278,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             if (mNonegsPowerups > 0) {
                 boolean isApplied = mPredictionAdapter.getTopQuestion().applyNonegsPowerUp();
                 if (isApplied) {
-//                    notifyPowerUps();
                     mPredictionAdapter.addNoNegativePowerup();
                     mPredictionModelListener.notifyTopQuestion();
 
@@ -387,7 +338,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
             mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
             mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
 
-            String powerUpId;
             for (int i = 0; i < mPredictionAdapter.getCount(); i++) {
                 // It's for handling the temporary powerups which the user has already applied
                 ArrayList<String> powerupsUsed = mPredictionAdapter.getItem(i).getPowerUpArrayList();
@@ -575,15 +525,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
         });
     }
 
-    private boolean isNotPowerupApplied() {
-        return null == mPredictionAdapter.getTopQuestion().getPowerUpArrayList();
-    }
-
-    private void notifyPowerUps() {
-        mPredictionAdapter.refreshPowerUps();
-        mPredictionModelListener.notifyTopQuestion();
-    }
-
     private void getAudiencePollPercent() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             mPredictionModelListener.onApiCallStarted();
@@ -627,7 +568,6 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
 
         boolean isApplied = mPredictionAdapter.getTopQuestion().applyAudiencePollPowerUp(leftAnswerPercent, rightAnswerPercent);
         if (isApplied) {
-//            notifyPowerUps();
             mPredictionAdapter.addAudiencePoll();
             mPredictionModelListener.notifyTopQuestion();
 

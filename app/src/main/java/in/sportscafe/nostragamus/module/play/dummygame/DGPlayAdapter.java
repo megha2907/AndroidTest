@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -30,6 +29,7 @@ import java.util.ArrayList;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.play.prediction.PowerupRemoveListener;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.utils.ViewUtils;
@@ -195,16 +195,135 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         viewHolder.tvLeftOption.setText(question.getQuestionOption1());
         viewHolder.tvRightOption.setText(question.getQuestionOption2());
 
-        updatePowerUpDetails(viewHolder, question);
+        showAudiencePollIfAlreadyAppliedForThisQuestion(viewHolder, question);
+        updatePowerUpOmUi(viewHolder, question);
 
         return convertView;
     }
 
-    public void refreshPowerUps() {
-        updatePowerUpDetails(mTopViewHolder, mTopQuestion);
+    private void showAudiencePollIfAlreadyAppliedForThisQuestion(DGPlayAdapter.ViewHolder viewHolder, Question question) {
+        ArrayList<String> powerupArray = question.getPowerUpArrayList();
+        viewHolder.llPowerUpHolder.removeAllViews();
+        if (powerupArray != null) {
+            for (String str : powerupArray) {
+                if (Powerups.AUDIENCE_POLL.equalsIgnoreCase(str)) {
+                    addAudiencePoll();
+                }
+            }
+        }
     }
 
-    private void updatePowerUpDetails(ViewHolder viewHolder, Question question) {
+    public void refreshPowerUps(String powerupTag) {
+//        updatePowerUpOmUi(mTopViewHolder, mTopQuestion);
+    }
+
+    public void add2xPowerup() {
+        final View powerUpAppliedView = getPowerUpAppliedView(Powerups.XX, mTopViewHolder.llPowerUpHolder);
+        if (null != powerUpAppliedView) {
+            powerUpAppliedView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View powerupClickedView) {
+                    // Animate powerup view removal
+                    dismissPowerUpAnimation(powerupClickedView, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            mRemovePowerUpListener.onClick(powerUpAppliedView);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+                    });
+                }
+            });
+
+            mTopViewHolder.llPowerUpHolder.addView(powerUpAppliedView);
+            showPowerUpAnimation(powerUpAppliedView);
+            updatePowerUpOmUi(mTopViewHolder, mTopQuestion);
+        }
+    }
+
+    public void remove2xPowerup(View powerUpAppliedView) {
+        mTopViewHolder.llPowerUpHolder.removeView(powerUpAppliedView);
+        animateOtherPowerupWhenAnyOneRemoved();
+        mTopQuestion.removeAppliedPowerUp(Powerups.XX);
+        updatePowerUpOmUi(mTopViewHolder, mTopQuestion);
+    }
+
+    public void removeNoNegativePowerup(View powerUpAppliedView) {
+        mTopViewHolder.llPowerUpHolder.removeView(powerUpAppliedView);
+        animateOtherPowerupWhenAnyOneRemoved();
+        mTopQuestion.removeAppliedPowerUp(Powerups.NO_NEGATIVE);
+        updatePowerUpOmUi(mTopViewHolder, mTopQuestion);
+    }
+
+    public void addNoNegativePowerup() {
+        final View powerUpAppliedView = getPowerUpAppliedView(Powerups.NO_NEGATIVE, mTopViewHolder.llPowerUpHolder);
+        if (null != powerUpAppliedView) {
+            powerUpAppliedView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View powerupClickedView) {
+                    // Animate powerup view removal
+                    dismissPowerUpAnimation(powerupClickedView, new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            mRemovePowerUpListener.onClick(powerUpAppliedView);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+                    });
+                }
+            });
+
+            mTopViewHolder.llPowerUpHolder.addView(powerUpAppliedView);
+            showPowerUpAnimation(powerUpAppliedView);
+            updatePowerUpOmUi(mTopViewHolder, mTopQuestion);
+        }
+    }
+
+    private void animatePowerupViewsIfAddedMoreThanOne() {
+        if (mTopViewHolder.llPowerUpHolder.getChildCount() > 1) {
+            View childView1 = mTopViewHolder.llPowerUpHolder.getChildAt(0);
+            View childView2 = mTopViewHolder.llPowerUpHolder.getChildAt(1);
+
+            int moveUpt0Dp = (int)getContext().getResources().getDimension(R.dimen.dp_30);
+            childView1.animate().setDuration(750).translationX(-moveUpt0Dp).start();
+            childView2.animate().setDuration(750).translationX(moveUpt0Dp).start();
+        }
+    }
+
+    private void animateOtherPowerupWhenAnyOneRemoved() {
+        if (mTopViewHolder.llPowerUpHolder.getChildCount() == 1) {
+            View childView1 = mTopViewHolder.llPowerUpHolder.getChildAt(0);
+            int center = mTopViewHolder.llPowerUpHolder.getLayoutParams().width / 2;
+            childView1.animate().setDuration(750).translationX(center).start();
+        }
+    }
+
+    public void addAudiencePoll() {
+        if (mTopQuestion != null) {
+            mTopViewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
+            mTopViewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
+
+            mTopViewHolder.btnanswer1Percentage.setText(mTopQuestion.getOption1AudPollPer() + "%");
+            mTopViewHolder.btnanswer2Percentage.setText(mTopQuestion.getOption2AudPollPer() + "%");
+
+            /* Update powerup points on ui */
+            updatePowerUpOmUi(mTopViewHolder, mTopQuestion);
+        }
+    }
+
+    private void updatePowerUpOmUi(ViewHolder viewHolder, Question question) {
         Integer positivePoint = question.getUpdatedPositivePoints();
         if (null == positivePoint || positivePoint == 0) {
             viewHolder.positivePointsCardView.setVisibility(View.GONE);
@@ -218,50 +337,10 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         Integer negativePoint = question.getUpdatedNegativePoints();
         if (null == negativePoint || negativePoint == 0) {
             viewHolder.negativePointsCardView.setVisibility(View.GONE);
-//            viewHolder.viewPoints.setVisibility(View.GONE);
         } else {
             viewHolder.tvquestionNegativePoints.setText("" + negativePoint + " pts");
-//            viewHolder.viewPoints.setVisibility(View.VISIBLE);
             viewHolder.tvquestionNegativePoints.setTag(negativePoint);
             viewHolder.negativePointsCardView.setVisibility(View.VISIBLE);
-        }
-
-        ArrayList<String> powerupArray = question.getPowerUpArrayList();
-        viewHolder.llPowerUpHolder.removeAllViews();
-        if (powerupArray != null) {
-            for (String str : powerupArray) {
-                if (Powerups.AUDIENCE_POLL.equalsIgnoreCase(str)) {
-                    viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
-                    viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
-
-                    viewHolder.btnanswer1Percentage.setText(question.getOption1AudPollPer() + "%");
-                    viewHolder.btnanswer2Percentage.setText(question.getOption2AudPollPer() + "%");
-                } else {
-                    View powerUpAppliedView = getPowerUpAppliedView(str, mTopViewHolder.llPowerUpHolder);
-                    if (null != powerUpAppliedView) {
-                        mTopViewHolder.llPowerUpHolder.addView(powerUpAppliedView);
-                        powerUpAppliedView.setOnClickListener(mRemovePowerUpListener);
-//                        showPowerUpAnimation(powerUpAppliedView);
-                    }
-
-                    if (mTopViewHolder.llPowerUpHolder.getChildCount() > 1) {
-                        View childView1 = mTopViewHolder.llPowerUpHolder.getChildAt(0);
-                        View childView2 = mTopViewHolder.llPowerUpHolder.getChildAt(1);
-
-                        /*
-                        * ---- Translate animation moves view but it takes click at it's original place
-                        *
-                        Animation animationLeft = AnimationUtils.loadAnimation(mTopViewHolder.llPowerUpHolder.getContext(), R.anim.move_view_left);
-                        childView1.startAnimation(animationLeft);
-
-                        Animation animationRight = AnimationUtils.loadAnimation(mTopViewHolder.llPowerUpHolder.getContext(), R.anim.move_view_right);
-                        childView2.startAnimation(animationRight);*/
-
-                        childView1.animate().setDuration(750).translationX(-50).start();
-                        childView2.animate().setDuration(750).translationX(50).start();
-                    }
-                }
-            }
         }
 
         if (null != question.getAudiencePoll()) {
@@ -323,6 +402,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
             @Override
             public void onAnimationEnd(Animation animation) {
                 view.setVisibility(View.VISIBLE);
+                animatePowerupViewsIfAddedMoreThanOne();
             }
 
             @Override
@@ -595,14 +675,6 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
                     }
                 }
             }, 1500);
-        }
-    }
-
-    private void animateOtherPowerupWhenAnyOneRemoved() {
-        if (mTopViewHolder.llPowerUpHolder.getChildCount() == 1) {
-            View childView1 = mTopViewHolder.llPowerUpHolder.getChildAt(0);
-            int center = mTopViewHolder.llPowerUpHolder.getLayoutParams().width / 2;
-            childView1.animate().setDuration(750).translationX(center).start();
         }
     }
 

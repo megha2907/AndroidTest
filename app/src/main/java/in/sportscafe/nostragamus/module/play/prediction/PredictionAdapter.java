@@ -64,10 +64,10 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
     private float mCardHeight;
     private float mImageWidth;
     private float mImageHeight;
-    private PowerupRemoveListener mRemovePowerUpListener;
+    private View.OnClickListener mRemovePowerUpListener;
     private Context mContext;
 
-    public PredictionAdapter(Context context, PowerupRemoveListener removePowerUpListener) {
+    public PredictionAdapter(Context context, View.OnClickListener removePowerUpListener) {
         super(context, android.R.layout.simple_list_item_1);
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
@@ -75,10 +75,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
     }
 
     public void setRootView(View rootView) {
-        /*Rect rect = new Rect();
-        rootView.getLocalVisibleRect(rect);
-
-        applyFrameCardPercentages(rootView, rect.height());*/
         DisplayMetrics dm = new DisplayMetrics();
         ((Activity) rootView.getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -99,13 +95,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         mTopMargin = (int) (screenHeight * GAP_BW_HEADER_CARD_PERCENTAGE);
         rlp.topMargin = mTopMargin;
 
-        /*int headerHeight = rootView.findViewById(R.id.prediction_rl_header).getMeasuredHeight();
-        ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_left_right_indicator).getLayoutParams())
-                .topMargin = (int) (mTopMargin + rlp.height - screenHeight * 1.5f / 100 - mOptionHeight / 2f + headerHeight);
-
-        ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_neither_indicator).getLayoutParams())
-                .topMargin = (int) (mTopMargin + rlp.height - mOptionHeight + headerHeight);*/
-
         vBgFrame1 = rootView.findViewById(R.id.prediction_cv_bg_1);
         vBgFrame1.getLayoutParams().height = (int) (mCardHeight + mCardBottomOptionHeight);
 
@@ -116,8 +105,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         rlp.height = (int) (screenHeight * HEADER_PERCENTAGE);
 
         mTopMargin += (int) (screenHeight * HEADER_PERCENTAGE);
-
-//        rootView.findViewById(R.id.prediction_rl_play_page).setPadding(0, rlp.height, 0, 0);
 
         rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_footer).getLayoutParams();
         rlp.height = (int) (screenHeight * (FOOTER_NEITHER_BUTTON_PERCENTAGE + FOOTER_POWERUP_LAYOUT_PERCENTAGE));
@@ -202,6 +189,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
                     viewHolder.btnanswer1Percentage.setText(question.getOption1AudPollPer() + "%");
                     viewHolder.btnanswer2Percentage.setText(question.getOption2AudPollPer() + "%");*/
                     addAudiencePoll();
+                    break;
                 }
             }
         }
@@ -217,7 +205,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             powerUpAppliedView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View powerupClickedView) {
-                    // Animate powerup view removal
                     dismissPowerUpAnimation(powerupClickedView, new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
@@ -225,7 +212,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            remove2xPowerup(powerUpAppliedView);
+                            mRemovePowerUpListener.onClick(powerUpAppliedView);
                         }
 
                         @Override
@@ -241,19 +228,17 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         }
     }
 
-    private void remove2xPowerup(View powerUpAppliedView) {
+    public void remove2xPowerup(View powerUpAppliedView) {
         mTopViewHolder.llPowerUpHolder.removeView(powerUpAppliedView);
         animateOtherPowerupWhenAnyOneRemoved();
         mTopQuestion.removeAppliedPowerUp(Powerups.XX);
-        mRemovePowerUpListener.onPwerupRemoved(Powerups.XX);
         updatePowerUpPointsOnUi(mTopViewHolder, mTopQuestion);
     }
 
-    private void removeNoNegativePowerup(View powerUpAppliedView) {
+    public void removeNoNegativePowerup(View powerUpAppliedView) {
         mTopViewHolder.llPowerUpHolder.removeView(powerUpAppliedView);
         animateOtherPowerupWhenAnyOneRemoved();
         mTopQuestion.removeAppliedPowerUp(Powerups.NO_NEGATIVE);
-        mRemovePowerUpListener.onPwerupRemoved(Powerups.NO_NEGATIVE);
         updatePowerUpPointsOnUi(mTopViewHolder, mTopQuestion);
     }
 
@@ -263,7 +248,6 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             powerUpAppliedView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View powerupClickedView) {
-                    // Animate powerup view removal
                     dismissPowerUpAnimation(powerupClickedView, new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
@@ -271,7 +255,7 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            removeNoNegativePowerup(powerUpAppliedView);
+                            mRemovePowerUpListener.onClick(powerUpAppliedView);
                         }
 
                         @Override
@@ -345,6 +329,8 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
         if (null != question.getAudiencePoll()) {
             int leftAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(0).getAnswerPercentage().replaceAll("%", ""));
             int rightAnswerPercent = Integer.parseInt(question.getAudiencePoll().get(1).getAnswerPercentage().replaceAll("%", ""));
+
+            question.applyAudiencePollPowerUp(leftAnswerPercent, rightAnswerPercent);
 
             viewHolder.btnanswer1Percentage.setVisibility(View.VISIBLE);
             viewHolder.btnanswer2Percentage.setVisibility(View.VISIBLE);
