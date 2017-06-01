@@ -21,6 +21,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!-- Used for Samsung Store -->
+    <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY"/>
+
     <!-- End MoEngage Permissions -->
     <application
         android:name=".Nostragamus"

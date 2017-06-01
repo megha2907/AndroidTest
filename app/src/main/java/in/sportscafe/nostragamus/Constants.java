@@ -355,6 +355,8 @@ public interface Constants {
         String AUDIENCE_POLL = "player_poll";
         String MATCH_REPLAY = "match_replay";
         String ANSWER_FLIP = "answer_flip";
+
+        int POWER_UP_TYPE_TAG = 11;
     }
 
     interface AnalyticsCategory {

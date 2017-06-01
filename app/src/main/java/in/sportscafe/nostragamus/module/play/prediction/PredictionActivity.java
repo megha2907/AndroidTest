@@ -17,7 +17,10 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -117,7 +120,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             }
         };
 
-        initToolbar();
+//        initToolbar();
 
         mRlPlayBg = (RelativeLayout) findViewById(R.id.content);
         mVgPlayPage = (ViewGroup) findViewById(R.id.prediction_rl_play_page);
@@ -253,12 +256,15 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 mSwipeFlingAdapterView.getTopCardListener().selectRight();
                 break;
             case R.id.powerups_iv_2x:
+                makeClickAnimation(findViewById(R.id.powerup_2x_view));
                 mPredictionPresenter.onClick2xPowerup();
                 break;
             case R.id.powerups_iv_nonegs:
+                makeClickAnimation(findViewById(R.id.powerup_no_negative_view));
                 mPredictionPresenter.onClickNonegsPowerup();
                 break;
             case R.id.powerups_iv_poll:
+                makeClickAnimation(findViewById(R.id.powerup_audience_poll_view));
                 mPredictionPresenter.onClickPollPowerup();
                 break;
             case R.id.powerups_iv_info:
@@ -272,6 +278,29 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 onAskFriendClicked();
                 break;
         }
+    }
+
+    private void makeClickAnimation(final View view) {
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0.7f, 1f, 0.7f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(200);
+        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ScaleAnimation scaleAnimation = new ScaleAnimation(0.7f, 1f, 0.7f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                scaleAnimation.setDuration(200);
+                view.startAnimation(scaleAnimation);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        view.startAnimation(scaleAnimation);
     }
 
     private void onAskFriendClicked() {
@@ -355,16 +384,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mPredictionPresenter.onClickBack();
     }
 
-    @Override
-    public void enableLeftRightOptions() {
-        setLeftRightOption(true, 1f);
-    }
-
-    @Override
-    public void disableLeftRightOptions() {
-        setLeftRightOption(false, 0.5f);
-    }
-
     private void setLeftRightOption(boolean enabled, float alpha) {
         View arrow = findViewById(R.id.prediction_iv_left_arrow);
         arrow.setEnabled(enabled);
@@ -376,45 +395,13 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void showPowerups() {
-        findViewById(R.id.prediction_ll_powerup_layout).setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hidePowerups() {
-        findViewById(R.id.prediction_ll_powerup_layout).setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void showLeftRightIndicator() {
-        findViewById(R.id.prediction_iv_dummy_left_right_indicator).setVisibility(View.VISIBLE);
-    }
-
-    @Override
     public void hideLeftRightIndicator() {
-        findViewById(R.id.prediction_iv_dummy_left_right_indicator).setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showNeitherIndicator() {
-        findViewById(R.id.prediction_iv_dummy_neither_indicator).setVisibility(View.VISIBLE);
+//        findViewById(R.id.prediction_iv_dummy_left_right_indicator).setVisibility(View.GONE);
     }
 
     @Override
     public void hideNeitherIndicator() {
-        findViewById(R.id.prediction_iv_dummy_neither_indicator).setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showPowerupsHint() {
-        findViewById(R.id.powerups_iv_info).setVisibility(View.VISIBLE);
-//        findViewById(R.id.prediction_rl_powerup_hints).setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hidePowerupsHint() {
-        findViewById(R.id.powerups_iv_info).setVisibility(View.GONE);
-//        findViewById(R.id.prediction_rl_powerup_hints).setVisibility(View.GONE);
+//        findViewById(R.id.prediction_iv_dummy_neither_indicator).setVisibility(View.GONE);
     }
 
     @Override
@@ -442,74 +429,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     private TourGuide mCoachMarker;
-
-    @Override
-    public void showLeftRightCoach() {
-        /*View leftArrow = findViewById(R.id.prediction_iv_left_arrow);
-        View rightArrow = findViewById(R.id.prediction_iv_right_arrow);*/
-        mCoachMarker = ViewUtils.showCoachMarker(
-                this,
-                mVgPlayPage,
-                R.string.left_right_coach_title,
-                R.string.left_right_coach_desc,
-                false,
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        hideLeftRightIndicator();
-                    }
-                }/*,
-                new TargetView(leftArrow, leftArrow.getWidth(), leftArrow.getHeight()),
-                new TargetView(rightArrow, rightArrow.getWidth(), rightArrow.getHeight())*/
-        );
-    }
-
-    @Override
-    public void showNeitherCoach() {
-        View neitherOption = findViewById(R.id.prediction_ll_neither);
-        mCoachMarker = ViewUtils.showCoachMarker(
-                this,
-                mVgPlayPage,
-                R.string.neither_coach_title,
-                R.string.neither_coach_desc,
-                false,
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        hideNeitherIndicator();
-                    }
-                },
-                new TargetView(neitherOption, neitherOption.getWidth(), neitherOption.getHeight())
-        );
-    }
-
-    @Override
-    public void showPowerupsCoach() {
-        mCoachMarker = ViewUtils.showCoachMarker(
-                this,
-                mVgPlayPage,
-                R.string.powerups_coach_title,
-                R.string.powerups_coach_desc,
-                true,
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        hideLeftRightIndicator();
-                    }
-                },
-                new TargetView(mIv2xPowerup, mIv2xPowerup.getWidth(), mIv2xPowerup.getHeight()),
-                new TargetView(mIvNonegsPowerup, mIvNonegsPowerup.getWidth(), mIvNonegsPowerup.getHeight()),
-                new TargetView(mIvPollPowerup, mIvPollPowerup.getWidth(), mIvPollPowerup.getHeight())
-        );
-    }
-
-    @Override
-    public boolean dismissCoach() {
-        if (null != mCoachMarker) {
-            return mCoachMarker.dismiss();
-        }
-        return false;
-    }
 
     @Override
     public void navigateToBankTransfer(Bundle bundle) {
@@ -649,53 +568,3 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
 
 }
-
-
-
-    /*
-
-    , View.OnTouchListener, View.OnDragListener
-
-    @Override
-    public boolean onTouch(View v, MotionEvent arg1) {
-        if (!m2xpowerUpApplied) {
-            ClipData data = ClipData.newPlainText("", "");
-            View.DragShadowBuilder shadow = new View.DragShadowBuilder(v);
-            v.startDrag(data, shadow, null, 0);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onDrag(View view, DragEvent dragEvent) {
-        final int action = dragEvent.getAction();
-        switch (action) {
-
-            case DragEvent.ACTION_DRAG_STARTED:
-                break;
-
-            case DragEvent.ACTION_DRAG_EXITED:
-                break;
-
-            case DragEvent.ACTION_DRAG_ENTERED:
-                break;
-
-            case DragEvent.ACTION_DROP:
-                break;
-
-            case DragEvent.ACTION_DRAG_ENDED:
-                if (!m2xpowerUpApplied) {
-                    if (NostragamusDataHandler.newInstance().get2xPowerupsCount() > 0) {
-                        m2xpowerUpApplied = true;
-                        mPredictionPresenter.onPowerUp("2x");
-                        NostragamusDataHandler.newInstance().setNumberof2xPowerups(NostragamusDataHandler.newInstance().get2xPowerupsCount() - 1);
-                        String UpdatedPowerUps = String.valueOf(NostragamusDataHandler.newInstance().get2xPowerupsCount());
-                        mTv2xPowerupCount.setText(UpdatedPowerUps);
-                    }
-                }
-                break;
-        }
-        return true;
-    }*/
-
-

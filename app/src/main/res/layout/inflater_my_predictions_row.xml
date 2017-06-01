@@ -154,7 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/my_predictions_row_tv_answer"
-                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textColor="@color/white_60"
@@ -168,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/my_predictions_row_tv_correct_answer"
-                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textColor="@color/white_60"
@@ -209,7 +209,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@drawable/sort_radio_icon"
-                        android:layout_marginTop="@dimen/dp_4"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:layout_below="@+id/my_predictions_row_tv_answer"
                         android:textColor="@drawable/radio_btn_tv_selector"
                         android:textSize="@dimen/dp_13"/>
@@ -219,7 +219,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@drawable/sort_radio_icon"
-                        android:layout_marginTop="@dimen/dp_4"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:layout_below="@+id/my_predictions_row_tv_correct_answer"
                         android:textColor="@drawable/radio_btn_tv_selector"
                         android:textSize="@dimen/dp_13"
@@ -346,7 +346,7 @@
                         android:background="@android:color/transparent"
                         android:src="@drawable/no_negative_powerup"
                         android:visibility="gone"
-                        android:layout_marginLeft="@dimen/dp_40"/>
+                        android:layout_marginLeft="@dimen/dp_20"/>
 
                     <com.jeeva.android.widgets.HmImageView
                         android:id="@+id/my_predictions_answer_powerup_used_audience"
@@ -355,7 +355,7 @@
                         android:background="@android:color/transparent"
                         android:src="@drawable/audience_poll_powerup"
                         android:visibility="gone"
-                        android:layout_marginLeft="@dimen/dp_40"/>
+                        android:layout_marginLeft="@dimen/dp_20"/>
 
                 </LinearLayout>
 

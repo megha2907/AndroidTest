@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.play.prediction.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+
 /**
  * Created by Jeeva on 15/6/16.
  */
@@ -19,21 +21,26 @@ public class Answer {
     @JsonProperty("answer_time")
     private String answerTime;
 
-    @JsonProperty("powerup_id")
-    private String powerUpId;
+    /*@JsonProperty("powerup_id")
+    private String powerUpId;*/
 
     @JsonProperty("challenge_id")
     private int challengeId;
 
+    @JsonProperty("powerup_id_arr")
+    private ArrayList<String> powerupsArray;
+
     public Answer() {
     }
 
-    public Answer(Integer matchId, Integer questionId, Integer answerId, String answerTime, String powerUpId, int challengeId) {
+    public Answer(Integer matchId, Integer questionId,
+                  Integer answerId, String answerTime,
+                  ArrayList<String> powerUpArray, int challengeId) {
         this.matchId = matchId;
         this.questionId = questionId;
         this.answerId = answerId;
         this.answerTime = answerTime;
-        this.powerUpId = powerUpId;
+        this.powerupsArray = powerUpArray;
         this.challengeId = challengeId;
     }
 
@@ -79,15 +86,15 @@ public class Answer {
         this.answerTime = answerTime;
     }
 
-    @JsonProperty("powerup_id")
-    public String getPowerUpId() {
+    /*@JsonProperty("powerup_id")
+    public String getPowerUpArrayList() {
         return powerUpId;
     }
 
     @JsonProperty("powerup_id")
-    public void setPowerUpId(String powerUpId) {
+    public void setPowerUpArrayList(String powerUpId) {
         this.powerUpId = powerUpId;
-    }
+    }*/
 
     @JsonProperty("challenge_id")
     public int getChallengeId() {
@@ -97,5 +104,15 @@ public class Answer {
     @JsonProperty("challenge_id")
     public void setChallengeId(int challengeId) {
         this.challengeId = challengeId;
+    }
+
+    @JsonProperty("powerup_id_arr")
+    public ArrayList<String> getPowerupsArray() {
+        return powerupsArray;
+    }
+
+    @JsonProperty("powerup_id_arr")
+    public void setPowerupsArray(ArrayList<String> powerupsArray) {
+        this.powerupsArray = powerupsArray;
     }
 }

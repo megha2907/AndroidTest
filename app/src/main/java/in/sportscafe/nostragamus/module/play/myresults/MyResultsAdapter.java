@@ -31,6 +31,7 @@ import com.jeeva.android.widgets.ShadowLayout;
 import org.parceler.Parcel;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -760,28 +761,24 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         ImageView powerUpNoNegativeImageView = (ImageView) convertView.findViewById(R.id.my_predictions_answer_powerup_used_noNeg);
         ImageView powerUpAudienceImageView = (ImageView) convertView.findViewById(R.id.my_predictions_answer_powerup_used_audience);
 
-        String powerupId = question.getAnswerPowerUpId();
-        if (!TextUtils.isEmpty(powerupId)) {
-            switch (powerupId) {
+        ArrayList<String> powerUpArrayList = question.getPowerUpArrayList();
+        if (powerUpArrayList != null && !powerUpArrayList.isEmpty()) {
+            for (int temp = 0; temp < powerUpArrayList.size(); temp++) {
 
-                case Constants.Powerups.XX:
-                case Constants.Powerups.XX_GLOBAL:
+                String powerUp = powerUpArrayList.get(temp);
+                if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
                     powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup);
                     powerUp2xImageView.setVisibility(View.VISIBLE);
                     powerUpLayout.setVisibility(View.VISIBLE);
-                    break;
-
-                case Constants.Powerups.NO_NEGATIVE:
+                } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
                     powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup);
                     powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
                     powerUpLayout.setVisibility(View.VISIBLE);
-                    break;
-
-                case Constants.Powerups.AUDIENCE_POLL:
+                } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
                     powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup);
                     powerUpAudienceImageView.setVisibility(View.VISIBLE);
                     powerUpLayout.setVisibility(View.VISIBLE);
-                    break;
+                }
             }
         } else {
             powerUpLayout.setVisibility(View.GONE);
