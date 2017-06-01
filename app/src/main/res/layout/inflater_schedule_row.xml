@@ -160,26 +160,6 @@
                         app:defaultImage="@drawable/right_placeholder_icon" />
                 </LinearLayout>
 
-                <com.jeeva.android.widgets.customfont.CustomButton
-                    android:id="@+id/schedule_row_btn_playmatch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_36"
-                    android:layout_below="@id/schedule_row_btn_vs"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:background="@drawable/tournament_ready_btn_bg"
-                    android:gravity="center"
-                    android:minWidth="@dimen/dp_72"
-                    android:onClick="onClick"
-                    android:paddingBottom="@dimen/dp_2"
-                    android:paddingLeft="@dimen/dp_15"
-                    android:paddingRight="@dimen/dp_15"
-                    android:text="@string/play"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_13"
-                    android:visibility="gone"
-                    app:typeface="roboto_condensed" />
 
             </RelativeLayout>
 
@@ -218,6 +198,25 @@
                 android:layout_marginTop="@dimen/dp_14"
                 android:clickable="true"
                 android:visibility="gone">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/schedule_row_btn_playmatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_36"
+                    android:gravity="center"
+                    android:background="@drawable/tournament_ready_btn_bg"
+                    android:layout_alignParentRight="true"
+                    android:minWidth="@dimen/dp_72"
+                    android:onClick="onClick"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:text="@string/play"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_13"
+                    android:visibility="gone"
+                    app:typeface="lato_bold" />
 
                 <RelativeLayout
                     android:id="@+id/schedule_row_rl_waiting_for_result"
