@@ -42,7 +42,7 @@
                 android:ellipsize="end"
                 android:gravity="right"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dp_12"
+                android:textSize="@dimen/sp_12"
                 app:typeface="roboto_condensed_bold" />
 
             <LinearLayout
@@ -66,7 +66,7 @@
                     android:layout_marginRight="@dimen/dp_6"
                     android:ellipsize="end"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_12"
+                    android:textSize="@dimen/sp_12"
                     android:text="vs"
                     app:typeface="roboto_condensed" />
 
@@ -87,7 +87,7 @@
                 android:ellipsize="end"
                 android:gravity="left"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dp_12"
+                android:textSize="@dimen/sp_12"
                 app:typeface="roboto_condensed_bold" />
 
         </LinearLayout>
@@ -100,35 +100,6 @@
             android:onClick="onClick"
             android:src="@drawable/back_icon_grey"
             android:layout_alignParentLeft="true"/>
-
-        <!--<com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/prediction_tv_contest_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/dp_45"
-            android:layout_marginRight="@dimen/dp_45"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Learn to play!"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_16"
-            app:typeface="roboto_condensed" />
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/prediction_tv_match_stage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="@dimen/dp_45"
-            android:layout_marginRight="@dimen/dp_45"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:visibility="gone"
-            android:layout_below="@+id/prediction_tv_contest_name"
-            android:textColor="@color/white_60"
-            android:textSize="@dimen/dp_14"
-            app:typeface="lato_light" />-->
 
     </RelativeLayout>
 
@@ -175,7 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_12"
+                    android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular"
                     android:text="Ask Friend"
                     android:padding="@dimen/dp_3"
@@ -208,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_12"
+                    android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular"
                     android:padding="@dimen/dp_5"
                     android:text="1/5"
@@ -219,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_12"
+                    android:textSize="@dimen/sp_12"
                     android:padding="@dimen/dp_3"
                     app:typeface="lato_regular"
                     android:text="Next Card"
@@ -304,7 +275,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/dp_10"
             android:textColor="@color/white"
-            android:textSize="@dimen/dp_16"
+            android:textSize="@dimen/sp_16"
             android:background="@drawable/btn_not_played_shadow_bg"
             app:typeface="roboto_condensed" />
 
@@ -341,104 +312,104 @@
                     android:src="@drawable/powerup_2x_white"
                     android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/powerups_iv_2x"
-                    android:layout_width="@dimen/dp_46"
-                    android:layout_height="@dimen/dp_46"
+                <!-- 2x view -->
+                <FrameLayout
+                    android:id="@+id/powerup_2x_view"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_48"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/dp_8"
-                    android:layout_toRightOf="@id/powerups_iv_2x_global"
-                    android:onClick="onClick"
-                    android:padding="@dimen/dp_10"
-                    android:src="@drawable/powerup_2x_white" />
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="@dimen/dp_8">
 
-                <ImageView
-                    android:id="@+id/powerups_iv_nonegs"
-                    android:layout_width="@dimen/dp_46"
-                    android:layout_height="@dimen/dp_46"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/dp_16"
+                    <ImageView
+                        android:id="@+id/powerups_iv_2x"
+                        android:layout_width="@dimen/dp_46"
+                        android:layout_height="@dimen/dp_46"
+                        android:onClick="onClick"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/powerup_2x_white" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/powerup_tv_2x_count"
+                        android:layout_width="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_15"
+                        android:layout_gravity="top|right"
+                        android:alpha="0.8"
+                        android:background="@drawable/powerup_count_bg"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_8"
+                        app:typeface="lato_regular" />
+
+                </FrameLayout>
+
+                <!-- No negative View -->
+                <FrameLayout
+                    android:id="@+id/powerup_no_negative_view"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginBottom="@dimen/dp_12"
                     android:layout_marginLeft="@dimen/dp_26"
                     android:layout_marginRight="@dimen/dp_26"
-                    android:layout_toRightOf="@id/powerups_iv_2x"
-                    android:onClick="onClick"
-                    android:padding="@dimen/dp_10"
-                    android:src="@drawable/powerup_nonegs_white" />
+                    android:layout_toRightOf="@id/powerup_2x_view">
 
-                <ImageView
-                    android:id="@+id/powerups_iv_poll"
-                    android:layout_width="@dimen/dp_46"
-                    android:layout_height="@dimen/dp_46"
+                    <ImageView
+                        android:id="@+id/powerups_iv_nonegs"
+                        android:layout_width="@dimen/dp_46"
+                        android:layout_height="@dimen/dp_46"
+                        android:onClick="onClick"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/powerup_nonegs_white" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/powerup_tv_nonegs_count"
+                        android:layout_width="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_15"
+                        android:layout_gravity="top|right"
+                        android:alpha="0.8"
+                        android:background="@drawable/powerup_count_bg"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_8"
+                        app:typeface="lato_regular" />
+
+                </FrameLayout>
+
+                <!-- Audience poll view -->
+                <FrameLayout
+                    android:id="@+id/powerup_audience_poll_view"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_48"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/dp_8"
                     android:layout_marginRight="@dimen/dp_22"
-                    android:layout_toRightOf="@id/powerups_iv_nonegs"
-                    android:onClick="onClick"
-                    android:padding="@dimen/dp_10"
-                    android:src="@drawable/powerup_audience_poll_white" />
+                    android:layout_marginBottom="@dimen/dp_8"
+                    android:layout_gravity="bottom"
+                    android:layout_toRightOf="@id/powerup_no_negative_view">
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/powerup_tv_2x_global_count"
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_15"
-                    android:layout_alignRight="@id/powerups_iv_2x_global"
-                    android:layout_alignTop="@id/powerups_iv_2x_global"
-                    android:layout_marginRight="@dimen/_dp_7"
-                    android:layout_marginTop="@dimen/_dp_7"
-                    android:alpha="0.8"
-                    android:background="@drawable/powerup_count_bg"
-                    android:gravity="center"
-                    android:text="3"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_8"
-                    android:visibility="gone"
-                    app:typeface="lato_regular" />
+                    <ImageView
+                        android:id="@+id/powerups_iv_poll"
+                        android:layout_width="@dimen/dp_46"
+                        android:layout_height="@dimen/dp_46"
+                        android:onClick="onClick"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/powerup_audience_poll_white" />
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/powerup_tv_2x_count"
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_15"
-                    android:layout_alignRight="@id/powerups_iv_2x"
-                    android:layout_alignTop="@id/powerups_iv_2x"
-                    android:layout_marginRight="@dimen/_dp_2"
-                    android:alpha="0.8"
-                    android:background="@drawable/powerup_count_bg"
-                    android:gravity="center"
-                    android:text="3"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_8"
-                    app:typeface="lato_regular" />
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/powerup_tv_poll_count"
+                        android:layout_width="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_15"
+                        android:layout_gravity="top|right"
+                        android:alpha="0.8"
+                        android:background="@drawable/powerup_count_bg"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_8"
+                        app:typeface="lato_regular" />
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/powerup_tv_nonegs_count"
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_15"
-                    android:layout_alignRight="@id/powerups_iv_nonegs"
-                    android:layout_alignTop="@id/powerups_iv_nonegs"
-                    android:layout_marginRight="@dimen/_dp_2"
-                    android:alpha="0.8"
-                    android:background="@drawable/powerup_count_bg"
-                    android:gravity="center"
-                    android:text="3"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_8"
-                    app:typeface="lato_regular" />
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/powerup_tv_poll_count"
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_15"
-                    android:layout_alignRight="@id/powerups_iv_poll"
-                    android:layout_alignTop="@id/powerups_iv_poll"
-                    android:layout_marginRight="@dimen/_dp_2"
-                    android:alpha="0.8"
-                    android:background="@drawable/powerup_count_bg"
-                    android:gravity="center"
-                    android:text="3"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_8"
-                    app:typeface="lato_regular" />
-
+                </FrameLayout>
 
             </RelativeLayout>
 
@@ -504,7 +475,7 @@
                         android:text="@string/neither"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_12"
+                        android:textSize="@dimen/sp_12"
                         android:visibility="visible"
                         app:typeface="lato_regular" />
 
@@ -556,7 +527,7 @@
                     android:layout_marginRight="@dimen/dp_32"
                     android:text="No Negative"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_10"
+                    android:textSize="@dimen/sp_10"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -565,7 +536,7 @@
                     android:layout_toLeftOf="@id/prediction_tv_nonegs_hint"
                     android:text="2X Bonus"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_10"
+                    android:textSize="@dimen/sp_10"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -574,7 +545,7 @@
                     android:layout_toRightOf="@id/prediction_tv_nonegs_hint"
                     android:text="Poll"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_10"
+                    android:textSize="@dimen/sp_10"
                     app:typeface="lato_regular" />
 
 
