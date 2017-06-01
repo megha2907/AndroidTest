@@ -304,6 +304,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                 if (GameAttemptedStatus.PARTIALLY == attemptedStatus) {
                                     holder.mBtnPlayMatch.setAllCaps(false);
                                     holder.mBtnPlayMatch.setText(("Continue"));
+                                }else {
+                                    holder.mBtnPlayMatch.setAllCaps(true);
+                                    holder.mBtnPlayMatch.setText(("Play"));
                                 }
 
                                 /* check if one day left and match not started , show countdown timer */

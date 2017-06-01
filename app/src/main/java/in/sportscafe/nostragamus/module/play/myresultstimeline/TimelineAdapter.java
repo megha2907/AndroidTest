@@ -299,18 +299,13 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                         } else {
 
                             // show Play button
-                            holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
+                            holder.mBtnPlayMatch.setVisibility(View.GONE);
                             holder.mBtnPlayMatch.setTag(match);
 
                             if (GameAttemptedStatus.PARTIALLY == attemptedStatus) {
-                                Log.i("inside","continue");
                                 holder.mBtnPlayMatch.setAllCaps(false);
                                 holder.mBtnPlayMatch.setText(("Continue"));
-                                holder.mVResultLine.setVisibility(View.VISIBLE);
-                                holder.mQuestionsAnswered.setText(match.getNoOfQuestionsAnswered() +"/" + match.getMatchQuestionCount() + " Questions Answered");
-                                holder.mLlResultWait.setVisibility(View.VISIBLE);
                             }
-
 //                            if (timeAgo.totalDiff < ONE_DAY_IN_MS) {
 //                                holder.mTvExpiresIn.setVisibility(View.VISIBLE);
 //                                holder.mTvExpiresIn.setTag(timeAgo.totalDiff);
