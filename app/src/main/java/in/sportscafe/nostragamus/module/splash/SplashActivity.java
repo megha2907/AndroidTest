@@ -35,9 +35,7 @@ public class SplashActivity extends Activity {
 
         // To get the updated app settings like version details
         Nostragamus.getInstance().startPeriodJobs();
-
         NostragamusAnalytics.getInstance().trackAppOpening(AnalyticsLabels.LAUNCHER);
-        NostragamusAnalytics.getInstance().setUserProperties();
     }
 
     @Override
@@ -52,8 +50,9 @@ public class SplashActivity extends Activity {
                  */
                 if (null != branchUniversalObject) {
 
-                    JSONObject firstParams = Branch.getInstance().getFirstReferringParams();
                     JSONObject lastParams = Branch.getInstance().getLatestReferringParams();
+
+                    Log.d("BranchParams:--",Branch.getInstance().getLatestReferringParams().toString());
 
                     NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
 
@@ -77,67 +76,13 @@ public class SplashActivity extends Activity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    try {
-                        if (lastParams.has("$android_deeplink_path")) {
-                            String deepLinkPath = lastParams.getString("$android_deeplink_path");
-                            if (null != deepLinkPath) {
-                                if (deepLinkPath.equalsIgnoreCase("group/invite/")) {
-                                    if (nostragamusDataHandler.isLoggedInUser()) {
-                                        navigateToJoinGroup(lastParams.getString(BundleKeys.GROUP_CODE));
-                                        return;
-                                    }
-
-                                    nostragamusDataHandler.setInstallGroupCode(lastParams.getString(BundleKeys.GROUP_CODE));
-                                    nostragamusDataHandler.setInstallGroupName(lastParams.getString(BundleKeys.GROUP_NAME));
-                                }
-
-                                if (deepLinkPath.equalsIgnoreCase("app/invite/")) {
-                                    navigateToGetStarted();
-                                    return;
-                                }
-                            }
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    HashMap<String, String> metadata = branchUniversalObject.getMetadata();
-
-//                    if (metadata.containsKey(BundleKeys.USER_REFERRAL_ID)) {
-//                        nostragamusDataHandler.setReferralUserId(metadata.get(BundleKeys.USER_REFERRAL_ID));
-//                    }
-
-//                    if (null != linkProperties) {
-//                        Log.d("Install Channel", linkProperties.getChannel() + "");
-//                        nostragamusDataHandler.setInstallChannel(linkProperties.getChannel());
-//                        nostragamusDataHandler.setInstallReferralCampaign(linkProperties.getCampaign());
-//                    }
-
-//                    String path = metadata.get("$android_deeplink_path");
-//                    if (null != path) {
-//                        if (path.equalsIgnoreCase("group/invite/")) {
-//                            if (nostragamusDataHandler.isLoggedInUser()) {
-//                                navigateToJoinGroup(metadata.get(BundleKeys.GROUP_CODE));
-//                                return;
-//                            }
-//
-//                            nostragamusDataHandler.setInstallGroupCode(metadata.get(BundleKeys.GROUP_CODE));
-//                            nostragamusDataHandler.setInstallGroupName(metadata.get(BundleKeys.GROUP_NAME));
-//                        }
-//
-//                        if (path.equalsIgnoreCase("app/invite/")) {
-//                            navigateToGetStarted();
-//                            return;
-//                        }
-//                    }
                 }
 
                 navigateToGetStarted();
+                NostragamusAnalytics.getInstance().setUserProperties();
             }
         }, this.getIntent().getData(), this);
+
     }
 
     private void navigateToGetStarted() {
@@ -156,6 +101,7 @@ public class SplashActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
+
     }
 
     @Override

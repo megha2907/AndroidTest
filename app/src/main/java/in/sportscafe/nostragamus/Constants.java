@@ -435,8 +435,8 @@ public interface Constants {
     interface UserProperties {
         String NUMBER_OF_GROUPS = "No of Groups";
         String PRO_APP = "Pro App";
-        String REFERRAL_CHANNEL = "Referral Channel";
-        String REFERRAL_CAMPAIGN = "Referral Campaign";
+        String REFERRAL_CHANNEL = "Channel";
+        String REFERRAL_CAMPAIGN = "Campaign";
     }
 
     interface ScreenNames {
