@@ -179,6 +179,10 @@
         <activity
             android:name=".module.user.points.PointsActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.appupdate.AppUpdateActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.user.group.newgroup.NewGroupActivity"
             android:screenOrientation="portrait"
