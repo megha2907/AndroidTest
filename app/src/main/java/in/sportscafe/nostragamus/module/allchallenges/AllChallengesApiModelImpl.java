@@ -71,6 +71,12 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
         if (null != mbundle) {
             if (mbundle.containsKey(Constants.BundleKeys.LOGIN_SCREEN)) {
                 callChallengesApi(null);
+            }else{
+                if (mCompletedChallenges.isEmpty()){
+                    callChallengesApi(null);
+                }else {
+                    callChallengesApi(CURRENT_CHALLENGES);
+                }
             }
         } else {
             callChallengesApi(CURRENT_CHALLENGES);
@@ -129,7 +135,7 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
                             mNewChallenges = mDataResponse.getNewChallenges();
                             mInPlayChallenges = mDataResponse.getInPlayChallenges();
                             if (null != mbundle) {
-                                if (mbundle.containsKey(Constants.BundleKeys.LOGIN_SCREEN)) {
+                                if (mCompletedChallenges.isEmpty()) {
                                     mCompletedChallenges = mDataResponse.getCompletedChallenges();
                                     Nostragamus.getInstance().getServerDataManager().setCompletedChallenges(mCompletedChallenges);
                                 }

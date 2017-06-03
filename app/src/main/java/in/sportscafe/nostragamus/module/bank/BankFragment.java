@@ -109,6 +109,7 @@ public class BankFragment extends NostragamusFragment implements BankView, View.
                 .addTag("inviteApp")
                 .setFeature("inviteApp")
                 .setChannel("App")
+                .setCampaign("App Normal Invite")
                 .addControlParameter("$android_deeplink_path", "app/invite/");
 
         buo.generateShortUrl(getContext(), linkProperties,
