@@ -66,6 +66,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
                 .addTag("inviteGroup")
                 .setFeature("inviteGroup")
                 .setChannel("App")
+                .setCampaign("Group Invite")
                 .addControlParameter("$android_deeplink_path", "group/invite/");
 
         buo.generateShortUrl(mGroupInfoView.getContext(), linkProperties,

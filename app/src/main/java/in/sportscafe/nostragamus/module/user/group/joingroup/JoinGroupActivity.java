@@ -11,14 +11,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
+
+import org.json.JSONException;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity;
+import io.branch.referral.Branch;
 
 /**
  * Created by Jeeva on 1/7/16.
@@ -225,6 +231,16 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
     }
 
     @Override
+    public void navigateToLogin() {
+       navigateToGetStarted();
+    }
+
+    private void navigateToGetStarted() {
+        startActivity(new Intent(this, GetStartActivity.class));
+        finish();
+    }
+
+    @Override
     public void onBackPressed() {
         mJoinGroupPresenter.onBack();
     }
@@ -241,4 +257,22 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
             mJoinGroupPresenter.onGetNewGroupResult(data.getExtras());
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (Branch.isAutoDeepLinkLaunch(this)) {
+            try {
+                Log.i("lastparams", Branch.getInstance().getLatestReferringParams().toString());
+                NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
+                nostragamusDataHandler.setInstallGroupCode(Branch.getInstance().getLatestReferringParams().getString(BundleKeys.GROUP_CODE));
+                nostragamusDataHandler.setInstallGroupName(Branch.getInstance().getLatestReferringParams().getString(BundleKeys.GROUP_NAME));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 }

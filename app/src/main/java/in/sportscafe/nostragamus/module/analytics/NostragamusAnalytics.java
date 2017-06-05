@@ -417,6 +417,7 @@ public class NostragamusAnalytics {
                 }
 
                 mAmplitude.setUserProperties(userProperties);
+                Log.d("userProperties--",userProperties.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
