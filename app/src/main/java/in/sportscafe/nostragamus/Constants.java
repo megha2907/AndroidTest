@@ -194,6 +194,7 @@ public interface Constants {
         String PAYTM_TRANSACTION_FAILED = "Transaction failed, please try again";
         String PAYTM_FAILURE = "Could not initiate transaction, please try again";
         String SOMETHING_WRONG ="Something went wrong! Please try again!";
+        String NO_UPDATES = "No New Updates Available";
     }
 
     interface BundleKeys {

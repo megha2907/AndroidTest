@@ -184,7 +184,7 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
     }
 
     private void navigateAppHostedUrl(String paidApkLink) {
-        String apkLink = "http://sportscafe.in/app";
+        String apkLink = "http://nostragamus.in/pro/";
 
         if (!TextUtils.isEmpty(paidApkLink)) {
             apkLink = paidApkLink;

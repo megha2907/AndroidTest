@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/dp_10">
 
     <me.relex.circleindicator.CircleIndicator
         android:id="@+id/update_app_cpi_indicator"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dp_56"
+        android:layout_above="@+id/update_app_btn"
         app:ci_drawable="@drawable/ob_indicator_selected"
         app:ci_drawable_unselected="@drawable/ob_indicator_unselected"
         app:ci_gravity="center"
@@ -18,28 +18,68 @@
         app:ci_height="@dimen/dp_8"
         app:ci_margin="@dimen/dp_8"/>
 
-    <ImageView
-        android:id="@+id/update_app_iv_image_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/update_app_cpi_indicator"
-        android:layout_alignParentTop="true"
+    <RelativeLayout
+        android:layout_width="@dimen/dp_320"
+        android:layout_height="@dimen/dp_320"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_75" />
+        android:layout_alignParentTop="true">
 
-    <ImageView
+    <com.jeeva.android.widgets.HmImageView
+        android:id="@+id/update_app_iv_image_out"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.jeeva.android.widgets.HmImageView
         android:id="@+id/update_app_iv_image_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignBottom="@id/update_app_iv_image_out"
-        android:layout_alignParentTop="true"
         android:layout_alignTop="@id/update_app_iv_image_out"
-        android:layout_centerHorizontal="true"
         android:alpha="0" />
+
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/update_app_vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/update_app_btn"/>
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/update_app_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_42"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/update_app_later"
+        android:background="@drawable/orange_btn_bg"
+        android:gravity="center"
+        android:minWidth="@dimen/dp_72"
+        android:onClick="onClick"
+        android:paddingBottom="@dimen/dp_2"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_15"
+        android:text="Update the App"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_16"
+        android:visibility="visible"
+        app:typeface="lato_bold" />
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/update_app_later"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_30"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:text="Update Later"
+        android:textAllCaps="false"
+        android:onClick="onClick"
+        android:layout_centerHorizontal="true"
+        android:background="@color/transparent"
+        android:textColor="@color/white_60"
+        android:textSize="@dimen/dp_15"
+        app:typeface="lato_regular" />
 
 </RelativeLayout>

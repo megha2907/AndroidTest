@@ -10,22 +10,28 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_124"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_45"
         android:text="Description"
+        android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/dp_14"
-        app:typeface="lato_light" />
+        android:textSize="@dimen/dp_13"
+        app:typeface="lato_regular" />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/app_update_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/app_update_tv_desc"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_8"
         android:text="Description"
+        android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/dp_22"
-        app:typeface="lato_light" />
+        android:textSize="@dimen/dp_16"
+        app:typeface="lato_regular" />
 
 </RelativeLayout>

@@ -14,10 +14,10 @@ public class AppUpdateDto {
     @JsonProperty("title")
     private String title;
 
-    @JsonProperty("desc")
+    @JsonProperty("description")
     private String desc;
 
-    @JsonProperty("imageResName")
+    @JsonProperty("image_url")
     private String imageUrl;
 
     @JsonProperty("heading")
@@ -42,22 +42,22 @@ public class AppUpdateDto {
         this.title = title;
     }
 
-    @JsonProperty("desc")
+    @JsonProperty("description")
     public String getDesc() {
         return desc;
     }
 
-    @JsonProperty("desc")
+    @JsonProperty("description")
     public void setDesc(String desc) {
         this.desc = desc;
     }
 
-    @JsonProperty("imageResName")
+    @JsonProperty("image_url")
     public String getImageUrl() {
         return imageUrl;
     }
 
-    @JsonProperty("imageResName")
+    @JsonProperty("image_url")
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }

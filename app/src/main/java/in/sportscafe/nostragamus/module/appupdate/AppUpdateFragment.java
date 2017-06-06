@@ -1,10 +1,15 @@
 package in.sportscafe.nostragamus.module.appupdate;
 
 import android.animation.Animator;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +18,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
+import com.jeeva.android.widgets.HmImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,26 +28,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengesDataResponse;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
+import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import me.relex.circleindicator.CircleIndicator;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by deepanshi on 6/2/17.
  */
 
-public class AppUpdateFragment extends NostragamusFragment {
+public class AppUpdateFragment extends NostragamusFragment implements View.OnClickListener {
 
     private Button mBtnNext;
 
-    private ImageView mIvUpdateIn;
+    private HmImageView mIvUpdateIn;
 
-    private ImageView mIvUpdateOut;
+    private HmImageView mIvUpdateOut;
 
     private ViewPager mViewPager;
+
+    private AppUpdateResponse mAppUpdateResponse;
 
     private List<AppUpdateDto> mAppUpdateList = new ArrayList<>();
 
@@ -47,8 +66,22 @@ public class AppUpdateFragment extends NostragamusFragment {
 
     private AlphaAnimation mAnimOut;
 
+    private int DISMISS_SCREEN = 58;
+
+    private String mAppLink;
+
+    private OnDismissListener mDismissListener;
+
     public static AppUpdateFragment newInstance() {
         return new AppUpdateFragment();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnDismissListener) {
+            mDismissListener = (OnDismissListener) context;
+        }
     }
 
     @Nullable
@@ -61,12 +94,16 @@ public class AppUpdateFragment extends NostragamusFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mIvUpdateIn = (ImageView) findViewById(R.id.update_app_iv_image_in);
-        mIvUpdateOut = (ImageView) findViewById(R.id.update_app_iv_image_out);
+        mIvUpdateIn = (HmImageView) findViewById(R.id.update_app_iv_image_in);
+        mIvUpdateOut = (HmImageView) findViewById(R.id.update_app_iv_image_out);
         mViewPager = (ViewPager) findViewById(R.id.update_app_vp);
+        Button updateAppBtn =  (Button) findViewById(R.id.update_app_btn);
+        Button updateAppLater =  (Button) findViewById(R.id.update_app_later);
+        updateAppBtn.setOnClickListener(this);
+        updateAppLater.setOnClickListener(this);
 
-        mAppUpdateList = getAppUpdateDetailsList();
-        initAppUpdateSlides();
+        getAppUpdateDetailsList();
+
     }
 
     private void initAppUpdateSlides() {
@@ -106,7 +143,7 @@ public class AppUpdateFragment extends NostragamusFragment {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                mIvUpdateOut.setImageResource(getImageRes(mViewPager.getCurrentItem()));
+                mIvUpdateOut.setImageUrl(getImage(mViewPager.getCurrentItem()));
             }
 
             @Override
@@ -118,45 +155,55 @@ public class AppUpdateFragment extends NostragamusFragment {
             }
         });
 
-        mIvUpdateIn.setImageResource(getImageRes(position));
+        mIvUpdateIn.setImageUrl(getImage(position));
         mIvUpdateIn.setAlpha(0.1f);
         mIvUpdateIn.animate().alpha(1).setDuration(1000);
 
         startTimer();
     }
 
-    private List<AppUpdateDto> getAppUpdateDetailsList() {
-        String json = null;
-        try {
-            InputStream is = null;
-            if (BuildConfig.IS_PAID_VERSION) {
-                is = getContext().getAssets().open("json/onboarding.json");
-            } else {
-                is = getContext().getAssets().open("json/onboarding_ps.json");
-            }
-            byte[] buffer = new byte[is.available()];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+    private void getAppUpdateDetailsList() {
 
-        if (null != json) {
-            return MyWebService.getInstance().getObjectFromJson(
-                    json,
-                    new TypeReference<List<AppUpdateDto>>() {
-                    }
-            );
+        if (BuildConfig.IS_PAID_VERSION) {
+            callAppUpdatesApi("FULL");
+        } else {
+            callAppUpdatesApi(null);
         }
-        return null;
     }
 
-    private int getImageRes(int position) {
-        return ViewUtils.getDrawableIdFromResName(
-                getContext(),
-                mAppUpdateList.get(position).getImageUrl()
+    private void callAppUpdatesApi(String flavor) {
+
+        showProgressbar();
+
+        MyWebService.getInstance().getAppUpdatesRequest(flavor).enqueue(
+                new NostragamusCallBack<AppUpdateResponse>() {
+                    @Override
+                    public void onResponse(Call<AppUpdateResponse> call, Response<AppUpdateResponse> response) {
+                        super.onResponse(call, response);
+
+                        if (response.isSuccessful() && response.body() != null && response.body().getAppUpdateDetails() != null) {
+
+                            mAppUpdateResponse = response.body();
+                            mAppUpdateList = mAppUpdateResponse.getAppUpdateDetails().getAppUpdateSlides();
+                            mAppLink = mAppUpdateResponse.getAppUpdateDetails().getUpdateUrl();
+                            initAppUpdateSlides();
+
+                        } else {
+                            NoUpdatesAvailable();
+                        }
+
+                        dismissProgressbar();
+                    }
+                }
         );
+    }
+
+    private void NoUpdatesAvailable() {
+        showMessage(Constants.Alerts.NO_UPDATES);
+    }
+
+    private String getImage(int position) {
+        return mAppUpdateList.get(position).getImageUrl();
     }
 
     private Handler mTimerHandler = new Handler();
@@ -180,6 +227,34 @@ public class AppUpdateFragment extends NostragamusFragment {
         int currentPosition = mViewPager.getCurrentItem();
         if (currentPosition < mAppUpdateList.size() - 1) {
             mViewPager.setCurrentItem(currentPosition + 1);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.update_app_later:
+                mDismissListener.onDismiss(DISMISS_SCREEN, null);
+                break;
+
+            case R.id.update_app_btn:
+                navigateAppHostedUrl(mAppLink);
+                break;
+
+        }
+    }
+
+    private void navigateAppHostedUrl(String apkLink) {
+        String fixedApkLink = "http://nostragamus.in/pro/";
+
+        if (TextUtils.isEmpty(apkLink)) {
+            apkLink = fixedApkLink;
+        }
+
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(apkLink)));
+        } catch (ActivityNotFoundException e) {
+            ExceptionTracker.track(e);
         }
     }
 }
