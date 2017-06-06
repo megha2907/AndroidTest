@@ -31,8 +31,8 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse
 import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
 import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferRequest;
 import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse;
-import in.sportscafe.nostragamus.module.question.add.AddQuestionRequest;
-import in.sportscafe.nostragamus.module.question.tourlist.TourListResponse;
+import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
+import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
@@ -54,7 +54,6 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.wallet.WalletTransaction;
-import in.sportscafe.nostragamus.module.wallet.WalletTransactionRequest;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;

@@ -76,7 +76,7 @@
     <color name="grey1">#222222</color>
     <color name="grey3">#333333</color>
     <color name="grey4">#cecece</color>
-
+    <color name="line_separator">#303030</color>
 
     <color name="white_70">#B3FFFFFF</color>
     <color name="white_80">#CCFFFFFF</color>

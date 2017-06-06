@@ -32,6 +32,7 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.popups.PopUp;
 import in.sportscafe.nostragamus.module.popups.PopUpActivity;
 import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
+import in.sportscafe.nostragamus.module.settings.SettingActivity;
 
 /**
  * Created by Jeeva on 6/4/16.
@@ -40,17 +41,48 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
 
     public abstract String getScreenName();
     private String mScreenName;
+    private boolean mShouldAnimateActivity = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        performActivityEntryAnimation();
 
         // Checking the version code to request update or force update the application
         checkAnyUpdate();
 
-        PopUpModelImpl.newInstance(this).getPopUps(getScreenName());
+        String screenName = getScreenName();
+        if (!TextUtils.isEmpty(screenName)) {
+            PopUpModelImpl.newInstance(this).getPopUps(screenName);
+        }
 
         NostragamusAnalytics.getInstance().trackAppOpening(AnalyticsLabels.NOTIFICATION);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        performActivityExitAnimation();
+    }
+
+    /**
+     * Set to true for activity if animation for entry/exit required
+     * @param shouldAnimate
+     */
+    protected void setShouldAnimateActivity(boolean shouldAnimate) {
+        mShouldAnimateActivity = shouldAnimate;
+    }
+
+    private void performActivityExitAnimation() {
+        if (mShouldAnimateActivity) {
+            overridePendingTransition(R.anim.activity_anim_stay, R.anim.slide_right_from_right);
+        }
+    }
+
+    private void performActivityEntryAnimation() {
+        if (mShouldAnimateActivity) {
+            overridePendingTransition(R.anim.slide_left_from_right, R.anim.activity_anim_stay);
+        }
     }
 
     private void checkAnyUpdate() {
@@ -257,6 +289,20 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
                         }
                     }
                 });
+    }
+
+    /**
+     * Launching Webview screen
+     * @param url
+     * @param heading
+     */
+    protected void navigateToWebView(String url, String heading) {
+        Intent intent = new Intent(NostragamusActivity.this, WebViewActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("url", url);
+        bundle.putString("heading", heading);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 }

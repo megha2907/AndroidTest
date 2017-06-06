@@ -70,7 +70,7 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         pagerAdapter.addFragment(TimelineFragment.newInstance(mChallengeId), "Matches");
 
         // Wallet should NOT be displayed for free app version
-        if (BuildConfig.IS_PAID_VERSION) {
+        /*if (BuildConfig.IS_PAID_VERSION) {
             UserPaymentInfo paymentInfo = null;
             if (userInfo != null) {
                 paymentInfo = userInfo.getUserPaymentInfo();
@@ -80,7 +80,7 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
 
         HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());
 
-        pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Powerup Bank");
+        pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Powerup Bank");*/
 
         List<Badge> badgeList = userInfo.getBadges();
         pagerAdapter.addFragment(BadgeFragment.newInstance(badgeList), "Achievements");

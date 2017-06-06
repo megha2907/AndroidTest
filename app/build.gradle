@@ -81,38 +81,38 @@ android {
     productFlavors {
 
         stage {
-            manifestPlaceholders = [ buildTypeSuffix:"" , branchState: "true"]
+            manifestPlaceholders = [buildTypeSuffix: "", branchState: "true"]
             resValue "string", "app_name", "Nostra Stage"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
         stagePro {
             applicationIdSuffix ".pro"
-            manifestPlaceholders = [ buildTypeSuffix:".pro" , branchState: "true"]
+            manifestPlaceholders = [buildTypeSuffix: ".pro", branchState: "true"]
             resValue "string", "app_name", "NostraPro Stage"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
 
         NostragamusPS {
             applicationIdSuffix ".ps"
-            manifestPlaceholders = [ buildTypeSuffix:".ps", branchState: "false" ]
+            manifestPlaceholders = [buildTypeSuffix: ".ps", branchState: "false"]
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
         NostragamusPro {
             applicationIdSuffix ".pro"
-            manifestPlaceholders = [ buildTypeSuffix:".pro", branchState: "false" ]
+            manifestPlaceholders = [buildTypeSuffix: ".pro", branchState: "false"]
             resValue "string", "app_name", "Nostra Pro"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
         }
 
         local {
-            manifestPlaceholders = [ buildTypeSuffix:"", branchState: "false"  ]
+            manifestPlaceholders = [buildTypeSuffix: "", branchState: "false"]
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
 
         dev {
-            manifestPlaceholders = [ buildTypeSuffix:"" , branchState: "false" ]
+            manifestPlaceholders = [buildTypeSuffix: "", branchState: "false"]
             resValue "string", "app_name", "Nostragamus Dev"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
         }
@@ -122,8 +122,8 @@ android {
         variant.outputs.each { output ->
             def flavor = variant.productFlavors[0].name
             def ver = variant.versionName
-            def newApkName = flavor + "-"  + ver + ".apk"
-            output.outputFile = new File(output.outputFile.parent, newApkName )
+            def newApkName = flavor + "-" + ver + ".apk"
+            output.outputFile = new File(output.outputFile.parent, newApkName)
         }
     }
 }

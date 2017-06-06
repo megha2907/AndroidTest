@@ -464,13 +464,17 @@ public interface Constants {
         String SPORT_SELECTION = "sport_selection"; //in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity
         String PLAYER_COMPARISON = "player_comparison"; //in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity
         String RESULTS_PEEK = "results_peek"; //in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity
-        String DUMMY_GAME = "dummy_game"; //in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity
+        String DUMMY_GAME = "dummy_game"; //DummyGameActivity
         String PAYTM_CONNECT = "paytm_connect"; //in.sportscafe.nostragamus.module.paytm.WalletOrBankConnectActivity
         String PAYTM_ADD_DETAIL = "paytm_add_detail"; //in.sportscafe.nostragamus.module.paytm.AddPaytmDetailsActivity
-        String QUESTION_ADD = "question_add"; //in.sportscafe.nostragamus.module.question.add.AddQuestionActivity
-        String QUESTION_ADD_TOUR_LIST = "question_add_tour_list"; //in.sportscafe.nostragamus.module.question.tourlist.TourListActivity
+        String QUESTION_ADD = "question_add"; //AddQuestionActivity
+        String QUESTION_ADD_TOUR_LIST = "question_add_tour_list"; //TourListActivity
         String USER_PROFILE = "user_profile"; //in.sportscafe.nostragamus.module.user.myprofile.ProfileActivity
         String ADD_PAYMENT_BANK_DETAILS = "add_payment_bank_details";
+
+        String SETTINGS = "settings";
+        String ABOUT = "about";
+        String HELP = "help";
     }
 
     interface InAppPopups {
@@ -577,5 +581,15 @@ public interface Constants {
         String NEW = "New";
         String IN_PLAY = "In Play";
         String COMPLETED = "Completed";
+    }
+
+    interface WebPageUrls {
+        String GAME_PLAY = "http://nostragamus.in/gameplayapp.html";
+        String RULES = "http://nostragamus.in/rulesapp.html";
+        String FAQ = "http://nostragamus.in/faqapp.html";
+        String ABOUT_NOSTRAGAMUS = "http://nostragamus.in/about.html";
+        String TERMS_SERVICE = "http://nostragamus.in/terms.html";
+        String PRIVACY = "http://nostragamus.in/privacy.html";
+
     }
 }

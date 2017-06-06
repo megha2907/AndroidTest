@@ -13,7 +13,7 @@ import android.webkit.WebViewClient;
 
 import in.sportscafe.nostragamus.R;
 
-public class WebViewActivity extends AppCompatActivity {
+public class WebViewActivity extends NostragamusActivity {
 
     private WebView webView;
     private Toolbar mtoolbar;
@@ -22,8 +22,13 @@ public class WebViewActivity extends AppCompatActivity {
     private  String mtoolbarHeading;
 
 
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public String getScreenName() {
+        return null;
+    }
 
+    public void onCreate(Bundle savedInstanceState) {
+        setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
 
