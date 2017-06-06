@@ -81,4 +81,9 @@ public class JoinGroupPresenterImpl implements JoinGroupPresenter, JoinGroupMode
     public void onGetGroupCode(String groupCode) {
         mJoinGroupView.populateGroupCode(groupCode);
     }
+
+    @Override
+    public void onNotLoggedIn() {
+        mJoinGroupView.navigateToLogin();
+    }
 }

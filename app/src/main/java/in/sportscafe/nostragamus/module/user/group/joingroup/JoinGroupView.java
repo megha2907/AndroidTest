@@ -22,4 +22,6 @@ public interface JoinGroupView extends View {
     void goBack();
 
     void goToHome();
+
+    void navigateToLogin();
 }

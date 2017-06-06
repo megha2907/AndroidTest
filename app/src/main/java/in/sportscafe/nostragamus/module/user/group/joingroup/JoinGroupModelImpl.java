@@ -2,9 +2,12 @@ package in.sportscafe.nostragamus.module.user.group.joingroup;
 
 import android.os.Bundle;
 
+import com.jeeva.android.Log;
+
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.group.JoinGroupApiModelImpl;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
@@ -30,10 +33,17 @@ public class JoinGroupModelImpl implements JoinGroupModel, JoinGroupApiModelImpl
 
     @Override
     public void init(Bundle bundle) {
-        if(null != bundle && bundle.containsKey(BundleKeys.GROUP_CODE)) {
+        NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
+        if (null != bundle && bundle.containsKey(BundleKeys.GROUP_CODE)) {
             mGroupCode = bundle.getString(BundleKeys.GROUP_CODE);
-            if(mJoinGroupApiModel.isValidGroupCode(mGroupCode)) {
+            if (mJoinGroupApiModel.isValidGroupCode(mGroupCode)) {
                 mJoinGroupModelListener.onGetGroupCode(mGroupCode);
+            }
+
+            if (!nostragamusDataHandler.isLoggedInUser()) {
+                nostragamusDataHandler.setInstallGroupCode(bundle.getString(BundleKeys.GROUP_CODE));
+                nostragamusDataHandler.setInstallGroupName(bundle.getString(BundleKeys.GROUP_NAME));
+                mJoinGroupModelListener.onNotLoggedIn();
             }
         }
     }
@@ -41,7 +51,6 @@ public class JoinGroupModelImpl implements JoinGroupModel, JoinGroupApiModelImpl
     @Override
     public void joinGroup(String groupCode) {
         mJoinGroupApiModel.joinGroup(groupCode, false);
-
         /*GroupInfo groupInfo = new GroupInfo();
         groupInfo.setId(2323);
         groupInfo.setName("Dummy Group");
@@ -86,5 +95,7 @@ public class JoinGroupModelImpl implements JoinGroupModel, JoinGroupApiModelImpl
         void onFailed(String message);
 
         void onGetGroupCode(String groupCode);
+
+        void onNotLoggedIn();
     }
 }
