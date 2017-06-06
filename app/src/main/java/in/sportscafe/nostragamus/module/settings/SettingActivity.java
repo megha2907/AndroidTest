@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
-
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -20,14 +18,15 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.WebViewActivity;
 import in.sportscafe.nostragamus.module.paytm.WalletOrBankConnectActivity;
-import in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity;
-import in.sportscafe.nostragamus.module.question.tourlist.TourListActivity;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
+import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.user.referral.ReferralActivity;
 
 /**
  * Created by deepanshi on 2/10/17.
  */
+@Deprecated
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private LinearLayout mLlActionLayout;

@@ -43,6 +43,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         int LOG_IN_ACTIVITY = 3;
         int PROFILE_FRAGMENT = 4;
         int SETTINGS_ACTIVITY = 5;
+        int NAVIGATION_SCREEN = 6;
     }
 
     private EditText mEtName;
@@ -76,6 +77,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 

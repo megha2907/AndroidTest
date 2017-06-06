@@ -593,7 +593,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             setTextColor(tvAnswer, R.color.greencolor);
             setTextColor(tvNeitherAnswer, R.color.white_60);
             setTextColor(tvotheroption, R.color.white_60);
-            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
             tvotheroption.setVisibility(View.VISIBLE);
             tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
             tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
@@ -639,8 +639,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 setTextColor(tvotheroption, R.color.white_60);
             }
             tvotheroption.setVisibility(View.VISIBLE);
-            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
-            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
+            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
             setTextColor(tvAnswer, R.color.greencolor);
 
         }     /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/ else if (question.getQuestionAnswer() == -1) {

@@ -85,7 +85,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     }
 
     private void initListeners() {
-        findViewById(R.id.profile_btn_settings).setOnClickListener(this);
+//        findViewById(R.id.profile_btn_settings).setOnClickListener(this);
         findViewById(R.id.profile_iv_image).setOnClickListener(this);
         findViewById(R.id.profile_btn_edit).setOnClickListener(this);
 
@@ -179,11 +179,11 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         linearLayout.setDividerPadding(10);
         linearLayout.setDividerDrawable(drawable);
 
-        if (!BuildConfig.IS_PAID_VERSION) {
+        /*if (!BuildConfig.IS_PAID_VERSION) {
             // For free app, there are only 3 fragment-items/tab available, make them fix-sized
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        }
+        }*/
 
         viewPager.setCurrentItem(getArguments().getInt(BundleKeys.TAB_POSITION));
 
@@ -204,16 +204,16 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         backBtn.setOnClickListener(this);
 
         findViewById(R.id.profile_iv_image).setEnabled(false);
-        findViewById(R.id.profile_btn_settings).setVisibility(View.INVISIBLE);
+//        findViewById(R.id.profile_btn_settings).setVisibility(View.INVISIBLE);
         findViewById(R.id.profile_btn_edit).setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.profile_btn_settings:
+            /*case R.id.profile_btn_settings:
                 navigateToSettings();
-                break;
+                break;*/
             case R.id.profile_iv_image:
                 navigateToEditProfile();
                 break;
