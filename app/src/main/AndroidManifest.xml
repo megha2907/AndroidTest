@@ -22,7 +22,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- Used for Samsung Store -->
-    <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY"/>
+    <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" />
 
     <!-- End MoEngage Permissions -->
     <application
@@ -30,17 +30,17 @@
         android:allowBackup="true"
         android:icon="@drawable/launcher_logo"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:theme="@style/AppTheme"
-        tools:node="replace"
-        android:largeHeap="true">
+        tools:node="replace">
         <activity
             android:name=".module.test.TestActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.question.tourlist.TourListActivity"
+            android:name=".module.navigation.submitquestion.tourlist.TourListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.play.dummygame.DummyGameActivity"
+            android:name=".module.navigation.help.dummygame.DummyGameActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.paytm.WalletOrBankConnectActivity"
@@ -49,12 +49,12 @@
             android:name=".module.paytm.AddPaytmDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.question.matchlist.MatchListFragment"
+            android:name=".module.navigation.submitquestion.matchlist.MatchListFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.question.add.AddQuestionActivity"
+            android:name=".module.navigation.submitquestion.add.AddQuestionActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".module.othersanswers.OthersAnswersActivity"
             android:screenOrientation="portrait"
@@ -85,6 +85,7 @@
             <!-- AppLink config -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- <data android:scheme="https" android:host="bnc.lt" android:pathPrefix="/your_app_id_obtained form Branch dash board " /> -->
@@ -94,20 +95,20 @@
             </intent-filter>
 
         </activity>
-
-        <activity android:name=".module.feed.FeedWebView"
-                  android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".module.feed.FeedWebView"
+            android:screenOrientation="portrait" />
         <activity android:name=".module.common.NostragamusWebView">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="myscheme" />
                 <data android:scheme="https" />
                 <data android:scheme="http" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".module.getstart.GetStartActivity"
             android:screenOrientation="portrait" />
@@ -157,7 +158,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.play.prediction.PredictionActivity"
-            android:screenOrientation="portrait" ></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.play.prediction.AllDoneActivity"
             android:screenOrientation="portrait" />
@@ -225,6 +226,15 @@
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".module.navigation.settings.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.navigation.settings.about.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.navigation.help.HelpActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -277,6 +287,7 @@
         <service
             android:name="com.moengage.pushbase.push.MoEPushWorker"
             android:exported="false" />
+
         <receiver
             android:name="com.moengage.core.MoEAlarmReceiver"
             android:enabled="true"
@@ -312,9 +323,11 @@
             android:name="NOTIFICATION_LARGE_ICON"
             android:value="@drawable/notification_large_icon" />
 
-        <!--        <meta-data
+        <!--
+                    <meta-data
                     android:name="SKIP_GCM_REGISTRATION"
-                    android:value="true" />-->
+                    android:value="true" />
+        -->
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -413,14 +426,15 @@
             android:name=".module.common.CustomInstallListener"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />t
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+                t
             </intent-filter>
         </receiver>
 
         <activity
             android:name=".module.paytm.AddPaymentBankActivity"
             android:label="@string/title_activity_add_payment_bank"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
 
         <!-- Google AdWords Conversion Tracking Code -->
         <receiver
@@ -430,7 +444,6 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ public class UserProfileActivity extends NostragamusActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 

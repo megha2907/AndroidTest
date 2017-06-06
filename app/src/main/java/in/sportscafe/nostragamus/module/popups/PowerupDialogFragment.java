@@ -16,7 +16,7 @@ import com.jeeva.android.widgets.ShadowLayout;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
-import in.sportscafe.nostragamus.module.play.dummygame.DummyGameActivity;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
 
 /**
  * Created by Jeeva on 28/02/17.
