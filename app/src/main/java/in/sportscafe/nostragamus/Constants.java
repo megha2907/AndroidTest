@@ -284,6 +284,9 @@ public interface Constants {
         String TAB_ITEM_NAME = "tabItemName";
         String PLAYED_FIRST_MATCH = "PlayedFirstMatch";
         String SERVER_TIME = "serverTime";
+
+        /* Wallet */
+        String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
     }
 
     interface ParcelableKeys {
@@ -378,6 +381,8 @@ public interface Constants {
         String APP_OPENING = "App Opening";
         String REFERRAL_ACTION = "Referral Action";
         String CASH_REWARDS = "Cash Rewards";
+        String WALLET_ADD_MONEY = "Add Money into Wallet";
+        String WALLET_WITHDRAW_MONEY = "Withdraw from Wallet";
     }
 
     interface AnalyticsActions {
@@ -464,8 +469,8 @@ public interface Constants {
         String PLAYER_COMPARISON = "player_comparison"; //in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity
         String RESULTS_PEEK = "results_peek"; //in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity
         String DUMMY_GAME = "dummy_game"; //DummyGameActivity
-        String PAYTM_CONNECT = "paytm_connect"; //in.sportscafe.nostragamus.module.paytm.WalletOrBankConnectActivity
-        String PAYTM_ADD_DETAIL = "paytm_add_detail"; //in.sportscafe.nostragamus.module.paytm.AddPaytmDetailsActivity
+        String PAYTM_CONNECT = "paytm_connect"; //WalletOrBankConnectActivity
+        String PAYTM_ADD_DETAIL = "paytm_add_detail"; //AddPaytmDetailsActivity
         String QUESTION_ADD = "question_add"; //AddQuestionActivity
         String QUESTION_ADD_TOUR_LIST = "question_add_tour_list"; //TourListActivity
         String USER_PROFILE = "user_profile"; //in.sportscafe.nostragamus.module.user.myprofile.ProfileActivity
@@ -474,6 +479,12 @@ public interface Constants {
         String SETTINGS = "settings";
         String ABOUT = "about";
         String HELP = "help";
+        String WALLET_HOME = "wallet";
+        String WALLET_ADD_MONEY = "addWalletMoney";
+        String WALLET_WITHDRAW_MONEY = "withdrawWalletMoney";
+        String WALLET_HISTORY = "walletHistory";
+        String WALLET_PAYOUT = "walletPayout";
+        String WALLET_PAYOUT_CHOICE = "walletPayoutChoice";
     }
 
     interface InAppPopups {

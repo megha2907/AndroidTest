@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.animator.AppBarStateChangeListener;
@@ -28,7 +27,6 @@ import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.settings.SettingActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
-import in.sportscafe.nostragamus.module.wallet.WalletFragment;
 
 /**
  * Created by Jeeva on 14/6/16.

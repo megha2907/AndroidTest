@@ -15,12 +15,13 @@ import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyToWalletRequest;
 import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
-import in.sportscafe.nostragamus.module.paytm.AddUserPaymentBankRequest;
-import in.sportscafe.nostragamus.module.paytm.AddUserPaymentDetailsResponse;
-import in.sportscafe.nostragamus.module.paytm.AddUserPaymentPaytmRequest;
-import in.sportscafe.nostragamus.module.paytm.GenerateOrderRequest;
-import in.sportscafe.nostragamus.module.paytm.GenerateOrderResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentBankRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentDetailsResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentPaytmRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
@@ -51,7 +52,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
-import in.sportscafe.nostragamus.module.wallet.WalletTransaction;
+import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletTransaction;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -297,5 +298,13 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<ApiResponse> getChangeAnswerRequest(ChangeAnswer changeAnswer) {
         return mNostragamusService.changeAnswer(changeAnswer);
+    }
+
+    public Call<GenerateOrderResponse> addMoneyToWalletRequest(AddMoneyToWalletRequest request) {
+        return mNostragamusService.addMoneyToWallet(request);
+    }
+
+    public Call<ApiResponse> getUserWallet() {
+        return mNostragamusService.getUserWallet();
     }
 }

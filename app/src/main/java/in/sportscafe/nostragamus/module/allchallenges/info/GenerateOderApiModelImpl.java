@@ -6,12 +6,10 @@ import android.text.TextUtils;
 
 import org.parceler.Parcels;
 
-import java.nio.BufferUnderflowException;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.paytm.GenerateOrderRequest;
-import in.sportscafe.nostragamus.module.paytm.GenerateOrderResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;

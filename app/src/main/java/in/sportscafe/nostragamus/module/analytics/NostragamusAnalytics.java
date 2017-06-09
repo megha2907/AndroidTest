@@ -23,6 +23,7 @@ import java.util.EventListener;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsCategory;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
@@ -445,6 +446,31 @@ public class NostragamusAnalytics {
             revenue.setEventProperties(eventPropertiesJson);
 
             mAmplitude.logRevenueV2(revenue);
+        }
+    }
+
+    /**
+     *
+     * @param isAddMoney - if true, tracks as ADD-MONEY else WITHDRAW-MONEY
+     * @param amount - amount of transaction
+     */
+    public void trackWalletTransaction(boolean isAddMoney, double amount) {
+        if (BuildConfig.IS_PAID_VERSION) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("Amount", amount);
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+            }
+
+            String category = AnalyticsCategory.WALLET_WITHDRAW_MONEY;
+            if (isAddMoney) {
+                category = AnalyticsCategory.WALLET_ADD_MONEY;
+            }
+
+            mAmplitude.logEvent(category, jsonObject);
+            mMoEHelper.trackEvent(category, jsonObject);
         }
     }
 }

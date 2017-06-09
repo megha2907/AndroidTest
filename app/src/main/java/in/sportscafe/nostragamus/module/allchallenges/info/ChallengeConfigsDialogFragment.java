@@ -1,13 +1,11 @@
 package in.sportscafe.nostragamus.module.allchallenges.info;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
@@ -36,10 +34,10 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomLayoutManagerWithSmoothScroll;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
-import in.sportscafe.nostragamus.module.paytm.GenerateOrderResponse;
-import in.sportscafe.nostragamus.module.paytm.PaytmApiModelImpl;
-import in.sportscafe.nostragamus.module.paytm.PaytmTransactionFailureDialogFragment;
-import in.sportscafe.nostragamus.module.paytm.PaytmTransactionResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmApiModelImpl;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionFailureDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.PaytmTransactionResponse;
 
 /**
  * Created by Jeeva on 28/02/17.

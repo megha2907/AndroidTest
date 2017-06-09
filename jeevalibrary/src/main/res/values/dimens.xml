@@ -7,6 +7,10 @@
     <dimen name="blue_button_height">40dp</dimen>
     <dimen name="blue_button_width">200dp</dimen>
     <dimen name="blue_button_text">15dp</dimen>
+    <dimen name="button_width">140dp</dimen>
+    <dimen name="button_width_80">80dp</dimen>
+    <dimen name="button_width_104">104dp</dimen>
+    <dimen name="button_height_48">48dp</dimen>
 
     <dimen name="feed_screen_spacing">14dp</dimen>
 
@@ -74,6 +78,7 @@
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_64">64dp</dimen>
     <dimen name="dp_65">65dp</dimen>
+    <dimen name="dp_68">68dp</dimen>
     <dimen name="dp_70">70dp</dimen>
     <dimen name="dp_75">75dp</dimen>
     <dimen name="dp_76">76dp</dimen>

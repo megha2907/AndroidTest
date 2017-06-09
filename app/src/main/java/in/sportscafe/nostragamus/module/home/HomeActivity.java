@@ -26,7 +26,7 @@ import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeJoinDialogFr
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
-import in.sportscafe.nostragamus.module.paytm.WalletOrBankConnectActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.WalletOrBankConnectActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -336,7 +336,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     }
 
     /**
-     * super.onBackPressed() is called in side handleDoubleBackPressLogicToExit().
+     * super.onBackClicked() is called in side handleDoubleBackPressLogicToExit().
      * Here no where required to call the same method.
      */
     @Override
