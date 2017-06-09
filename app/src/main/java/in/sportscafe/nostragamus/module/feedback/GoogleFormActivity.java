@@ -27,7 +27,7 @@ public class GoogleFormActivity extends NostragamusActivity implements GoogleFor
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+//        super.onBackClicked();
     }
 
     @Override

@@ -43,10 +43,10 @@
             android:name=".module.navigation.help.dummygame.DummyGameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.paytm.WalletOrBankConnectActivity"
+            android:name=".module.navigation.wallet.paytmAndBank.WalletOrBankConnectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.paytm.AddPaytmDetailsActivity"
+            android:name=".module.navigation.wallet.paytmAndBank.AddPaytmDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.navigation.submitquestion.matchlist.MatchListFragment"
@@ -93,7 +93,6 @@
                     android:host="sportscafe.app.link"
                     android:scheme="https" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".module.feed.FeedWebView"
@@ -201,11 +200,11 @@
             android:name=".module.user.group.joingroup.JoinGroupActivity"
             android:parentActivityName=".module.user.group.groupinfo.GroupInfoActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" >
-
-            <meta-data android:name="io.branch.sdk.auto_link_keys" android:value="groupCode" />
-
-            </activity>
+            android:windowSoftInputMode="stateHidden|adjustPan">
+            <meta-data
+                android:name="io.branch.sdk.auto_link_keys"
+                android:value="groupCode" />
+        </activity>
         <activity
             android:name=".module.permission.PermissionsActivity"
             android:label="@string/app_name"
@@ -215,7 +214,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".module.paytm.TestPaytmActivity"
+            android:name=".module.navigation.wallet.paytmAndBank.TestPaytmActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
@@ -238,7 +237,27 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.navigation.help.HelpActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.navigation.wallet.WalletHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.navigation.wallet.addMoney.AddWalletMoneyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".module.navigation.wallet.withdrawMoney.WithdrawWalletMoneyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".module.navigation.wallet.walletHistory.WalletHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.navigation.wallet.payoutDetails.PayoutWalletHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.navigation.wallet.payoutDetails.PayoutWalletChoiceActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -436,7 +455,7 @@
         </receiver>
 
         <activity
-            android:name=".module.paytm.AddPaymentBankActivity"
+            android:name=".module.navigation.wallet.paytmAndBank.AddPaymentBankActivity"
             android:label="@string/title_activity_add_payment_bank"
             android:theme="@style/AppTheme" />
 

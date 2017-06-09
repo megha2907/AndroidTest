@@ -58,10 +58,11 @@
     <color name="search_bar">#101010</color>
     <color name="search_bar_stroke">#202020</color>
     <color name="group_btn_color">#32b742</color>
-
+    <color name="color_5b5b5b">#5b5b5b</color>
 
 
     <color name="black">#151515</color>
+    <color name="black_1">#252525</color>
     <color name="black_10">#1A000000</color>
     <color name="black_20">#33000000</color>
     <color name="black_30">#4D000000</color>
@@ -77,6 +78,7 @@
     <color name="grey3">#333333</color>
     <color name="grey4">#cecece</color>
     <color name="line_separator">#303030</color>
+    <color name="grey5">#999999</color>
 
     <color name="white_70">#B3FFFFFF</color>
     <color name="white_80">#CCFFFFFF</color>

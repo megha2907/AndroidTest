@@ -4,7 +4,7 @@
     android:id="@+id/sport_row_rl"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/card_bg"
+    android:background="@drawable/card_bg_img"
     android:descendantFocusability="blocksDescendants"
     android:gravity="center_horizontal"
     android:orientation="vertical">

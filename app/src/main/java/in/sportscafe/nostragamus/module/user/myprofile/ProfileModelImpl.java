@@ -7,20 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import in.sportscafe.nostragamus.BuildConfig;
-import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.bank.BankFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
-import in.sportscafe.nostragamus.module.wallet.WalletFragment;
 
 /**
  * Created by Jeeva on 14/6/16.
@@ -75,7 +70,7 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
             if (userInfo != null) {
                 paymentInfo = userInfo.getUserPaymentInfo();
             }
-            pagerAdapter.addFragment(WalletFragment.newInstance(paymentInfo), "Wallet");
+            pagerAdapter.addFragment(WalletHistoryFragment.newInstance(paymentInfo), "Wallet");
         }
 
         HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());

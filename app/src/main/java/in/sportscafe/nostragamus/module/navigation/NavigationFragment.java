@@ -24,6 +24,7 @@ import in.sportscafe.nostragamus.module.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.navigation.help.HelpActivity;
 import in.sportscafe.nostragamus.module.navigation.settings.SettingsActivity;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
@@ -70,11 +71,11 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
 
     private void showOrHideContentBasedOnAppType() {
         /* Hide wallet section for free (ps - play store) app */
-        if (!BuildConfig.IS_PAID_VERSION) {
+        /*if (!BuildConfig.IS_PAID_VERSION) {
             if (getView() != null) {
                 getView().findViewById(R.id.navigation_wallet_layout).setVisibility(View.GONE);
             }
-        }
+        }*/
     }
 
     private void showVersionOrAppUpdateMsg() {
@@ -209,7 +210,10 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void onWalletClicked() {
-
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), WalletHomeActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void onProfileClicked() {

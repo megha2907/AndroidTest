@@ -290,6 +290,9 @@ public interface Constants {
         String TAB_ITEM_NAME = "tabItemName";
         String PLAYED_FIRST_MATCH = "PlayedFirstMatch";
         String SERVER_TIME = "serverTime";
+
+        /* Wallet */
+        String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
     }
 
     interface ParcelableKeys {
@@ -387,6 +390,8 @@ public interface Constants {
         String CONFIGS = "Configs";
         String WHATS_NEW = "Whats New";
         String UPDATE_LATER = "Update Later";
+        String WALLET_ADD_MONEY = "Add Money into Wallet";
+        String WALLET_WITHDRAW_MONEY = "Withdraw from Wallet";
     }
 
     interface AnalyticsActions {
@@ -488,6 +493,12 @@ public interface Constants {
         String WHATS_NEW = "whatsNew";
         String APP_UPDATE = "AppUpdate";
         String APP_FORCE_UPDATE = "AppForceUpdate";
+        String WALLET_HOME = "wallet";
+        String WALLET_ADD_MONEY = "addWalletMoney";
+        String WALLET_WITHDRAW_MONEY = "withdrawWalletMoney";
+        String WALLET_HISTORY = "walletHistory";
+        String WALLET_PAYOUT = "walletPayout";
+        String WALLET_PAYOUT_CHOICE = "walletPayoutChoice";
     }
 
     interface InAppPopups {

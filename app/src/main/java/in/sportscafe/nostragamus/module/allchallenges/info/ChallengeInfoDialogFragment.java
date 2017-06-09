@@ -25,7 +25,6 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
-import in.sportscafe.nostragamus.module.paytm.JoinedChallengeInfo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
