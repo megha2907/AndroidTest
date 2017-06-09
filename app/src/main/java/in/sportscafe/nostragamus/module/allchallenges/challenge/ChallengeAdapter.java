@@ -480,6 +480,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         if (dialogType == CHALLENGE_CONFIG_DIALOG_TYPE) {
             ChallengeConfigsDialogFragment.newInstance(43, challenge)
                     .show(fragmentManager, "challenge_configs");
+            NostragamusAnalytics.getInstance().trackConfigs(Constants.AnalyticsActions.OPENED);
 
         } else if (dialogType == CHALLENGE_REWARDS_DIALOG_TYPE) {
             int configIndex = 0;
@@ -489,7 +490,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             ChallengeRewardsFragment.newInstance(44, challenge, challenge.getName() + " Prizes",
                     configIndex, challenge.getEndTime(), mTabName)
                     .show(fragmentManager, "challenge_rewards");
-
+            NostragamusAnalytics.getInstance().trackRewards(Constants.AnalyticsActions.OPENED);
         } else {
             ChallengeInfoDialogFragment.newInstance(58, " Info", challenge)
                     .show(fragmentManager, "challenge_info");

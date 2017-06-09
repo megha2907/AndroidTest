@@ -89,7 +89,7 @@ public class NostragamusAnalytics {
      * @param openingFrom - launcher, notification
      */
     public void trackAppOpening(String openingFrom) {
-        if(!mAppOpeningTracked) {
+        if (!mAppOpeningTracked) {
             track(AnalyticsCategory.APP_OPENING, null, openingFrom, null);
             mAppOpeningTracked = true;
         }
@@ -195,6 +195,53 @@ public class NostragamusAnalytics {
     public void trackBadges(String actions, String label) {
         track(AnalyticsCategory.BADGE, actions, label, null);
     }
+
+    /**
+     * track No. of times challenge Config popup opened
+     *
+     * @param actions - config popup opened
+     */
+    public void trackConfigs(String actions) {
+        track(AnalyticsCategory.CONFIGS, actions, null, null);
+    }
+
+
+    /**
+     * track No. of times Rewards popup opened
+     *
+     * @param actions - Rewards popup opened
+     */
+    public void trackRewards(String actions) {
+        track(AnalyticsCategory.CASH_REWARDS, actions, null, null);
+    }
+
+    /**
+     * track No. of times What's New opened
+     *
+     * @param actions - What's New Screen button click
+     */
+    public void trackWhatsNew(String actions) {
+        track(AnalyticsCategory.WHATS_NEW, actions, null, null);
+    }
+
+    /**
+     * track No. of times Update App opened
+     *
+     * @param actions - Update App Screen opened
+     */
+    public void trackUpdateApp(String actions) {
+        track(AnalyticsCategory.APP_UPDATE, actions, null, null);
+    }
+
+    /**
+     * track No. of times Update Later clicked
+     *
+     * @param actions - Update Later Clicked
+     */
+    public void trackUpdateLater(String actions) {
+        track(AnalyticsCategory.UPDATE_LATER, actions, null, null);
+    }
+
 
     /**
      * track timeline
@@ -403,8 +450,8 @@ public class NostragamusAnalytics {
 
                 if (BuildConfig.IS_PAID_VERSION) {
                     userProperties.put(UserProperties.PRO_APP, "yes");
-                }else {
-                    userProperties.put(UserProperties.PRO_APP,"No");
+                } else {
+                    userProperties.put(UserProperties.PRO_APP, "No");
                 }
 
                 String channel = NostragamusDataHandler.getInstance().getInstallChannel();
@@ -417,7 +464,7 @@ public class NostragamusAnalytics {
                 }
 
                 mAmplitude.setUserProperties(userProperties);
-                Log.d("userProperties--",userProperties.toString());
+                Log.d("userProperties--", userProperties.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -427,6 +474,7 @@ public class NostragamusAnalytics {
     /**
      * Tracks revenue
      * Once paytm payment is successful - Only for paid app
+     *
      * @param price
      */
     public void trackRevenue(double price, int challengeId, String challengeName) {
@@ -447,4 +495,5 @@ public class NostragamusAnalytics {
             mAmplitude.logRevenueV2(revenue);
         }
     }
+
 }

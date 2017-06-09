@@ -240,10 +240,12 @@ public class ChallengeRewardsFragment extends NostragamusDialogFragment implemen
 //                    configsHeight = mMaxHeight;
 //                }
 
-                WindowManager.LayoutParams attributes = getDialog().getWindow().getAttributes();
-                getDialog().getWindow().setLayout(attributes.width, configsHeight);
+                if(getDialog() !=null) {
+                    WindowManager.LayoutParams attributes = getDialog().getWindow().getAttributes();
+                    getDialog().getWindow().setLayout(attributes.width, configsHeight);
+                }
             }
-        }, 100);
+        }, 150);
 
     }
 

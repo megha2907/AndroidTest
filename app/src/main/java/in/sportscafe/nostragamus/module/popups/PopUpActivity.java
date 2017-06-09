@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseActivity;
@@ -28,7 +30,7 @@ public class PopUpActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_popup);
+        setContentView(R.layout.activity_popup_new);
 
         mPopUpList = Parcels.unwrap(getIntent().getExtras().getParcelable(BundleKeys.POPUP_DATA));
         showTopLevelPopup();
@@ -40,6 +42,10 @@ public class PopUpActivity extends BaseActivity implements View.OnClickListener 
         ((HmImageView) findViewById(R.id.popup_image)).setImageUrl(popUp.getImageUrl());
         ((TextView) findViewById(R.id.popup_title)).setText(popUp.getTitle());
         ((TextView) findViewById(R.id.popup_desc)).setText(popUp.getDescription());
+        Button exitBtn = (Button) findViewById(R.id.popup_exit_btn);
+        ImageView crossBtn = (ImageView) findViewById(R.id.popup_cross_btn);
+        exitBtn.setOnClickListener(this);
+        crossBtn.setOnClickListener(this);
 
         PopUpModelImpl.newInstance().acknowledgePopups(popUp);
         mPopUpList.remove(0);
@@ -49,6 +55,9 @@ public class PopUpActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.popup_exit_btn:
+                onBackPressed();
+                break;
+            case R.id.popup_cross_btn:
                 onBackPressed();
                 break;
         }

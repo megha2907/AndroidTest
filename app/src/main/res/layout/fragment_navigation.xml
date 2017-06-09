@@ -139,6 +139,7 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/navigation_whats_new_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
                 android:background="@color/line_separator"
@@ -155,6 +156,7 @@
                 android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_24"
                 android:layout_marginRight="@dimen/dp_24"
+                android:visibility="visible"
                 android:background="?android:attr/selectableItemBackground">
 
                 <ImageView
@@ -304,9 +306,8 @@
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/navigation_update_str_textView"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Update the App"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/sp_13"
@@ -317,6 +318,7 @@
                     android:id="@+id/navigation_app_update_available_imageView"
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
+                    android:layout_marginLeft="@dimen/dp_13"
                     android:src="@drawable/app_update_red_icn"
                     android:visibility="gone"/>
 

@@ -2,10 +2,12 @@ package in.sportscafe.nostragamus.module.settings.app.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
 /**
  * Created by deepanshu on 4/8/16.
  */
-public class VersionDetails {
+public class SettingsDetails {
 
     @JsonProperty("forceUpdateVersion")
     private Version forceUpdateVersion;

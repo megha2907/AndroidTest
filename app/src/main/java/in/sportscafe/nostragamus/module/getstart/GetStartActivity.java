@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesApiModelImpl;
+import in.sportscafe.nostragamus.module.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.feedback.GoogleFormActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -30,7 +33,7 @@ public class GetStartActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         /*if (NostragamusDataHandler.newInstance().isInitialFeedbackFormShown()) {*/
-        handleGetStart();
+        checkAnyUpdate();
         /*} else {
             navigateToForm();
         }*/
@@ -80,6 +83,50 @@ public class GetStartActivity extends Activity {
 
     private void navigateToLogin() {
         startActivity(new Intent(this, LogInActivity.class));
+        finish();
+    }
+
+    private void checkAnyUpdate() {
+
+        NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
+        int lastShownAppVersion = NostragamusDataHandler.getInstance().getLastShownAppVersionCode();
+
+        /*check App update Type */
+        if (dataHandler.getAppUpdateType() != null) {
+
+            /* check if it is a force update or a normal update &
+              Check if New Update App version is greater than the last Shown App Update Version */
+
+            if (dataHandler.getAppUpdateType().equalsIgnoreCase(Constants.AppUpdateTypes.FORCE_UPDATE)
+                    && lastShownAppVersion < dataHandler.getReqUpdateVersion()) {
+                showForceUpdateScreen();
+                Log.d("inside", "forceUpdate");
+            } else if (dataHandler.getAppUpdateType().equalsIgnoreCase(Constants.AppUpdateTypes.NORMAL_UPDATE)
+                    && lastShownAppVersion < dataHandler.getReqUpdateVersion()) {
+                showNormalUpdateScreen();
+                NostragamusDataHandler.getInstance().setLastShownAppVersionCode(dataHandler.getReqUpdateVersion());
+                Log.d("inside", "NormalUpdate");
+            } else {
+                Log.d("inside", "getstarted");
+                handleGetStart();
+            }
+        } else {
+            Log.d("inside", "getstarted");
+            handleGetStart();
+        }
+    }
+
+    private void showNormalUpdateScreen() {
+        Intent intent = new Intent(this, AppUpdateActivity.class);
+        intent.putExtra(Constants.BundleKeys.SCREEN, Constants.ScreenNames.APP_UPDATE);
+        startActivity(intent);
+        finish();
+    }
+
+    private void showForceUpdateScreen() {
+        Intent intent = new Intent(this, AppUpdateActivity.class);
+        intent.putExtra(Constants.BundleKeys.SCREEN, Constants.ScreenNames.APP_FORCE_UPDATE);
+        startActivity(intent);
         finish();
     }
 }

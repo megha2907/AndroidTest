@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.InAppActivity;
+import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
@@ -29,6 +30,7 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.popups.PopUp;
 import in.sportscafe.nostragamus.module.popups.PopUpActivity;
 import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
@@ -40,6 +42,7 @@ import in.sportscafe.nostragamus.module.settings.SettingActivity;
 public abstract class NostragamusActivity extends InAppActivity implements PopUpModelImpl.OnGetPopUpModelListener {
 
     public abstract String getScreenName();
+
     private String mScreenName;
     private boolean mShouldAnimateActivity = false;
 
@@ -49,7 +52,7 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
         performActivityEntryAnimation();
 
         // Checking the version code to request update or force update the application
-        checkAnyUpdate();
+        //checkAnyUpdate();
 
         String screenName = getScreenName();
         if (!TextUtils.isEmpty(screenName)) {
@@ -67,6 +70,7 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
 
     /**
      * Set to true for activity if animation for entry/exit required
+     *
      * @param shouldAnimate
      */
     protected void setShouldAnimateActivity(boolean shouldAnimate) {
@@ -85,30 +89,57 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
         }
     }
 
-    private void checkAnyUpdate() {
+//    private void checkAnyUpdate() {
+//
+//        NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
+//
+//        /* NEW UPDATE APP CODE */
+//
+//        int currentVersion = Nostragamus.getInstance().getAppVersionCode();
+//
+//        if (dataHandler.isForceUpdateEnabled() && currentVersion < dataHandler.getReqUpdateVersion()) {
+//            Log.i("insiderforceVersion", "currentAppVersion<reqAppVersion");
+//            showForceUpdateScreen();
+//        } else if (dataHandler.isNormalUpdateEnabled() && currentVersion < dataHandler.getReqUpdateVersion()) {
+//            Log.i("insiderVersion", "currentAppVersion<reqAppVersion");
+//            showNormalUpdateScreen();
+//        }
+//
+//
+////        /* OLD UPDATE APP CODE */
+////        if (BuildConfig.IS_PAID_VERSION) {
+////            int currentAppVersion = Nostragamus.getInstance().getAppVersionCode();
+////            if (currentAppVersion < dataHandler.getForcePaidUpdateVersion()) {
+////                showForceUpdateDialog(dataHandler.getForcePaidUpdateMessage(), true, dataHandler.getPaidForceApkLink());
+////            } else if (dataHandler.isNormalPaidUpdateEnabled()
+////                    && currentAppVersion < dataHandler.getNormalPaidUpdateVersion()) {
+////                showNormalUpdateDialog(dataHandler.getNormalPaidUpdateMessage(), true, dataHandler.getPaidNormalApkLink());
+////            }
+////
+////        } else {
+////
+////            int currentAppVersion = Nostragamus.getInstance().getAppVersionCode();
+////            if (currentAppVersion < dataHandler.getForceUpdateVersion()) {
+////                showForceUpdateDialog(dataHandler.getForceUpdateMessage(), false, "");
+////            } else if (dataHandler.isNormalUpdateEnabled()
+////                    && currentAppVersion < dataHandler.getNormalUpdateVersion()) {
+////                showNormalUpdateDialog(dataHandler.getNormalUpdateMessage(), false, "");
+////            }
+////        }
+//    }
+//
+//    private void showNormalUpdateScreen() {
+//            Intent intent = new Intent(getActivity(), AppUpdateActivity.class);
+//            intent.putExtra(Constants.BundleKeys.SCREEN, Constants.ScreenNames.APP_UPDATE);
+//            startActivity(intent);
+//    }
+//
+//    private void showForceUpdateScreen() {
+//            Intent intent = new Intent(getActivity(), AppUpdateActivity.class);
+//            intent.putExtra(Constants.BundleKeys.SCREEN, Constants.ScreenNames.APP_FORCE_UPDATE);
+//            startActivity(intent);
+//    }
 
-        NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
-
-        if (BuildConfig.IS_PAID_VERSION) {
-            int currentAppVersion = Nostragamus.getInstance().getAppVersionCode();
-            if (currentAppVersion < dataHandler.getForcePaidUpdateVersion()) {
-                showForceUpdateDialog(dataHandler.getForcePaidUpdateMessage(), true, dataHandler.getPaidForceApkLink());
-            } else if (dataHandler.isNormalPaidUpdateEnabled()
-                    && currentAppVersion < dataHandler.getNormalPaidUpdateVersion()) {
-                showNormalUpdateDialog(dataHandler.getNormalPaidUpdateMessage(), true, dataHandler.getPaidNormalApkLink());
-            }
-
-        } else {
-
-            int currentAppVersion = Nostragamus.getInstance().getAppVersionCode();
-            if (currentAppVersion < dataHandler.getForceUpdateVersion()) {
-                showForceUpdateDialog(dataHandler.getForceUpdateMessage(), false, "");
-            } else if (dataHandler.isNormalUpdateEnabled()
-                    && currentAppVersion < dataHandler.getNormalUpdateVersion()) {
-                showNormalUpdateDialog(dataHandler.getNormalUpdateMessage(), false, "");
-            }
-        }
-    }
 
     private AlertDialog mUpdateDialog;
 
@@ -159,7 +190,7 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
         mUpdateDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                if(null != mUpdateDialog) {
+                if (null != mUpdateDialog) {
                     mUpdateDialog = null;
 
                     if (isPaidVersion) {
@@ -197,7 +228,7 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
             public void onDismiss(DialogInterface dialogInterface) {
                 if (isPaidVersion) {
                     NostragamusAnalytics.getInstance().trackUpdate(Constants.AppUpdateTypes.FORCE_PAID_UPDATE, 0);
-                }  else {
+                } else {
                     NostragamusAnalytics.getInstance().trackUpdate(Constants.AppUpdateTypes.FORCE_UPDATE, 0);
                 }
 
@@ -216,7 +247,7 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
     }
 
     private void navigateAppHostedUrl(String paidApkLink) {
-        String apkLink = "http://sportscafe.in/app";
+        String apkLink = "http://nostragamus.in/pro/";
 
         if (!TextUtils.isEmpty(paidApkLink)) {
             apkLink = paidApkLink;
@@ -250,7 +281,7 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
      * Status bar and navigation bar gets hidden
      */
     protected void setImmersiveFullScreenMode() {
-        int visibility =   View.SYSTEM_UI_FLAG_IMMERSIVE |
+        int visibility = View.SYSTEM_UI_FLAG_IMMERSIVE |
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
                 View.SYSTEM_UI_FLAG_FULLSCREEN |
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
@@ -293,6 +324,7 @@ public abstract class NostragamusActivity extends InAppActivity implements PopUp
 
     /**
      * Launching Webview screen
+     *
      * @param url
      * @param heading
      */

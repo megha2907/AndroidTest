@@ -19,7 +19,9 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
+import in.sportscafe.nostragamus.module.settings.app.AppSettingsModelImpl;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
@@ -36,6 +38,7 @@ public class SplashActivity extends Activity {
         // To get the updated app settings like version details
         Nostragamus.getInstance().startPeriodJobs();
         NostragamusAnalytics.getInstance().trackAppOpening(AnalyticsLabels.LAUNCHER);
+
     }
 
     @Override
@@ -52,7 +55,7 @@ public class SplashActivity extends Activity {
 
                     JSONObject lastParams = Branch.getInstance().getLatestReferringParams();
 
-                    Log.d("BranchParams:--",Branch.getInstance().getLatestReferringParams().toString());
+                    Log.d("BranchParams:--", Branch.getInstance().getLatestReferringParams().toString());
 
                     NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
 
@@ -69,7 +72,7 @@ public class SplashActivity extends Activity {
                             nostragamusDataHandler.setInstallChannel(lastParams.getString("~channel"));
                         }
 
-                        if (lastParams.has("~campaign")){
+                        if (lastParams.has("~campaign")) {
                             nostragamusDataHandler.setInstallReferralCampaign(lastParams.getString("~campaign"));
                         }
 
@@ -77,7 +80,6 @@ public class SplashActivity extends Activity {
                         e.printStackTrace();
                     }
                 }
-
                 navigateToGetStarted();
                 NostragamusAnalytics.getInstance().setUserProperties();
             }

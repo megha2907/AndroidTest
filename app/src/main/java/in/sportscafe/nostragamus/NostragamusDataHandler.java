@@ -195,6 +195,14 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         clearData(BundleKeys.USER_REFERRAL_ID);
     }*/
 
+    public int getReqUpdateVersion() {
+        return getSharedIntData(SharedKeys.REQUIRED_UPDATE_VERSION, -1);
+    }
+
+    public void setReqUpdateVersion(int reqUpdateVersion) {
+        setSharedIntData(SharedKeys.REQUIRED_UPDATE_VERSION, reqUpdateVersion);
+    }
+
     public int getNormalUpdateVersion() {
         return getSharedIntData(SharedKeys.NORMAL_UPDATE_VERSION, -1);
     }
@@ -259,20 +267,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(SharedKeys.FORCE_PAID_UPDATE_MESSAGE, message);
     }
 
-    public boolean isNormalUpdateEnabled() {
-        if (getSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, true)) {
-            long currentTimeMs = Calendar.getInstance().getTimeInMillis();
-            long updateShownTimeMs = getNormalUpdateShownTime();
-            if (updateShownTimeMs == -1
-                    || TimeUtils.getDaysDifference(currentTimeMs - updateShownTimeMs) > 0) {
-                setNormalUpdateShownTime(currentTimeMs);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public boolean isNormalPaidUpdateEnabled() {
         if (getSharedBooleanData(SharedKeys.NORMAL_PAID_UPDATE_ENABLED, true)) {
             long currentTimeMs = Calendar.getInstance().getTimeInMillis();
@@ -287,8 +281,20 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return false;
     }
 
+    public boolean isNormalUpdateEnabled() {
+        return getSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, false);
+    }
+
     public void setNormalUpdateEnabled(boolean enabled) {
         setSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, enabled);
+    }
+
+    public boolean isForceUpdateEnabled() {
+        return getSharedBooleanData(SharedKeys.FORCE_UPDATE_ENABLED, false);
+    }
+
+    public void setForceUpdateEnabled(boolean forceUpdateEnabled) {
+        setSharedBooleanData(SharedKeys.FORCE_UPDATE_ENABLED, forceUpdateEnabled);
     }
 
     public void setNormalPaidUpdateEnabled(boolean enabled) {
@@ -505,4 +511,22 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public boolean isProfileDisclaimerAccepted() {
         return getSharedBooleanData(SharedKeys.IS_PROFILE_DISCLAIMER_ACCEPTED, false);
     }
+
+    public int getLastShownAppVersionCode() {
+        return getSharedIntData(SharedKeys.LAST_SHOWN_APP_VERSION_CODE, Nostragamus.getInstance().getAppVersionCode());
+    }
+
+    public void setLastShownAppVersionCode(int lastShownAppVersionCode) {
+        setSharedIntData(SharedKeys.LAST_SHOWN_APP_VERSION_CODE, lastShownAppVersionCode);
+    }
+
+    public String getAppUpdateType() {
+        return getSharedStringData(SharedKeys.UPDATE_TYPE);
+    }
+
+    public void setAppUpdateType(String appUpdateType) {
+        setSharedStringData(SharedKeys.UPDATE_TYPE, appUpdateType);
+    }
+
+
 }

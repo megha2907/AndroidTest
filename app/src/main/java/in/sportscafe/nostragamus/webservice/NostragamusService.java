@@ -7,6 +7,7 @@ import java.util.Map;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
+import in.sportscafe.nostragamus.module.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.common.TimeResponse;
 import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
@@ -140,7 +141,7 @@ public interface NostragamusService {
     Call<AllGroupsResponse> getAllGroups();
 
     @GET("v1/setting/getSettingsBody")
-    Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId);
+    Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId,@Query("app_type") String flavor);
 
     @POST("v2/game/users/poll")
     Call<AudiencePollResponse> getAudiencePoll(@Body AudiencePollRequest request);
@@ -242,4 +243,7 @@ public interface NostragamusService {
 
     @POST("v2/game/users/editAnswer")
     Call<ApiResponse> changeAnswer(@Body ChangeAnswer changeAnswer);
+
+    @GET("v2/game/appUpdate")
+    Call<AppUpdateResponse> getAppUpdates(@Query("app_type") String flavor);
 }
