@@ -172,8 +172,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
                 RequestBody.create(MediaType.parse("multipart/form-data"), filename));
     }
 
-    public Call<AppSettingsResponse> getAppSettingsRequest(String uniqueId) {
-        return mNostragamusService.getAppSettings(uniqueId);
+    public Call<AppSettingsResponse> getAppSettingsRequest(String uniqueId,String flavor) {
+        return mNostragamusService.getAppSettings(uniqueId,flavor);
     }
 
     public Call<AudiencePollResponse> getAudiencePoll(AudiencePollRequest request) {

@@ -74,6 +74,8 @@ public interface Constants {
         String NORMAL_PAID_UPDATE_SHOWN_TIME = "normalPaidUpdateShownTime";
         String PAID_FORCE_UPDATE_APK_LINK = "paidForceUpdateApkLink";
         String PAID_NORMAL_UPDATE_APK_LINK = "paidNormalUpdateApkLink";
+        String FORCE_UPDATE_ENABLED = "forceUpdateEnabled";
+        String REQUIRED_UPDATE_VERSION = "requiredUpdateVersion";
 
         String INITIAL_FORM_SHOWN = "initialFormShown";
         String ACCESS_TOKEN = "accessToken";
@@ -97,6 +99,9 @@ public interface Constants {
         String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
         String IS_PROFILE_DISCLAIMER_ACCEPTED = "isProfileDisclaimerAccepted";
         String INSTALL_REFERRAL_CAMPAIGN_KEY = "installReferralCampaignKey";
+
+        String LAST_SHOWN_APP_VERSION_CODE = "lastShownAppVersionCode";
+        String UPDATE_TYPE = "updateType";
     }
 
     interface Alerts {
@@ -379,6 +384,9 @@ public interface Constants {
         String APP_OPENING = "App Opening";
         String REFERRAL_ACTION = "Referral Action";
         String CASH_REWARDS = "Cash Rewards";
+        String CONFIGS = "Configs";
+        String WHATS_NEW = "Whats New";
+        String UPDATE_LATER = "Update Later";
     }
 
     interface AnalyticsActions {
@@ -413,6 +421,8 @@ public interface Constants {
         String PRO_APP = "Pro App";
         String NORMAL_APP = "Normal App";
         String NO_CASH_REWARDS = "Don't Want Cash Rewards";
+        String OPENED = "Opened";
+        String CLICKED = "Clicked";
     }
 
     interface AnalyticsLabels {
@@ -475,6 +485,9 @@ public interface Constants {
         String SETTINGS = "settings";
         String ABOUT = "about";
         String HELP = "help";
+        String WHATS_NEW = "whatsNew";
+        String APP_UPDATE = "AppUpdate";
+        String APP_FORCE_UPDATE = "AppForceUpdate";
     }
 
     interface InAppPopups {

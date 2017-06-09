@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.appupdate.AppUpdateDetails;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 
 /**
@@ -53,5 +54,6 @@ public class ServerDataManager {
     public void setMatchInfo(Match matchInfo) {
         this.matchInfo = matchInfo;
     }
+
 
 }

@@ -2,8 +2,6 @@ package in.sportscafe.nostragamus.module.appupdate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import in.sportscafe.nostragamus.module.settings.app.dto.VersionDetails;
-
 /**
  * Created by deepanshi on 6/2/17.
  */

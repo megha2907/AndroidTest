@@ -141,7 +141,7 @@ public interface NostragamusService {
     Call<AllGroupsResponse> getAllGroups();
 
     @GET("v1/setting/getSettingsBody")
-    Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId);
+    Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId,@Query("app_type") String flavor);
 
     @POST("v2/game/users/poll")
     Call<AudiencePollResponse> getAudiencePoll(@Body AudiencePollRequest request);
