@@ -9,6 +9,8 @@ import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
+import in.sportscafe.nostragamus.module.appupdate.AppUpdateActivity;
+import in.sportscafe.nostragamus.module.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.common.TimeResponse;
 import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
@@ -171,8 +173,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
                 RequestBody.create(MediaType.parse("multipart/form-data"), filename));
     }
 
-    public Call<AppSettingsResponse> getAppSettingsRequest(String uniqueId) {
-        return mNostragamusService.getAppSettings(uniqueId);
+    public Call<AppSettingsResponse> getAppSettingsRequest(String uniqueId,String flavor) {
+        return mNostragamusService.getAppSettings(uniqueId,flavor);
     }
 
     public Call<AudiencePollResponse> getAudiencePoll(AudiencePollRequest request) {
@@ -298,6 +300,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<ApiResponse> getChangeAnswerRequest(ChangeAnswer changeAnswer) {
         return mNostragamusService.changeAnswer(changeAnswer);
+    }
+
+    public Call<AppUpdateResponse> getAppUpdatesRequest(String flavor) {
+        return mNostragamusService.getAppUpdates(flavor);
     }
 
     public Call<GenerateOrderResponse> addMoneyToWalletRequest(AddMoneyToWalletRequest request) {

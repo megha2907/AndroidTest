@@ -2,11 +2,17 @@ package in.sportscafe.nostragamus.module.settings.app;
 
 import com.jeeva.android.Log;
 
+import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.ServerDataManager;
+import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.appupdate.AppUpdateDetails;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
+import in.sportscafe.nostragamus.module.settings.app.dto.AppUpdateInfo;
 import in.sportscafe.nostragamus.module.settings.app.dto.Version;
-import in.sportscafe.nostragamus.module.settings.app.dto.VersionDetails;
+import in.sportscafe.nostragamus.module.settings.app.dto.SettingsDetails;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -26,13 +32,21 @@ public class AppSettingsModelImpl implements AppSettingsModel {
 
     @Override
     public void getAppSettings() {
-        if(Nostragamus.getInstance().hasNetworkConnection()) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
             callAppSettingsApi();
         }
     }
 
     private void callAppSettingsApi() {
-        MyWebService.getInstance().getAppSettingsRequest("nostragamus_settings").enqueue(
+
+        String flavor;
+        if (BuildConfig.IS_PAID_VERSION) {
+            flavor = "FULL";
+        } else {
+            flavor = "PLAYSTORE";
+        }
+
+        MyWebService.getInstance().getAppSettingsRequest("nostragamus_settings", flavor).enqueue(
                 new NostragamusCallBack<AppSettingsResponse>() {
                     @Override
                     public void onResponse(Call<AppSettingsResponse> call, Response<AppSettingsResponse> response) {
@@ -46,57 +60,35 @@ public class AppSettingsModelImpl implements AppSettingsModel {
     private void handleAppSettingsResponse(Response<AppSettingsResponse> response) {
         if (null != response && response.isSuccessful()) {
             AppSettingsResponse appSettings = response.body();
-            if(null != appSettings) {
-                handleVersion(appSettings.getVersion());
+            if (null != appSettings) {
+                handleVersion(appSettings.getSettingsDetails(), appSettings.getAppUpdateInfo());
             }
         }
     }
 
-    private void handleVersion(VersionDetails versionDetails) {
-        if(null != versionDetails) {
-            Log.d("Version", versionDetails.toString());
+    private void handleVersion(SettingsDetails settingsDetails, AppUpdateInfo appUpdateInfo) {
+        if (null != settingsDetails) {
+            Log.d("Settings--", settingsDetails.toString());
 
             NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
 
-            dataHandler.setFeedBack(versionDetails.getFeedbackText());
-            dataHandler.setProFeedBack(versionDetails.getFeedbackProText());
-            dataHandler.setDownloadPaidApp(versionDetails.getDownloadPaidText());
-            dataHandler.setAskFriendText(versionDetails.getAskFriendText());
-            dataHandler.setDisclaimerText(versionDetails.getDisclaimerText());
+            dataHandler.setFeedBack(settingsDetails.getFeedbackText());
+            dataHandler.setProFeedBack(settingsDetails.getFeedbackProText());
+            dataHandler.setDownloadPaidApp(settingsDetails.getDownloadPaidText());
+            dataHandler.setAskFriendText(settingsDetails.getAskFriendText());
+            dataHandler.setDisclaimerText(settingsDetails.getDisclaimerText());
 
-            int oldNormalUpdateVersion = dataHandler.getNormalUpdateVersion();
 
-            Version version = versionDetails.getForceUpdateVersion();
-            dataHandler.setForceUpdateVersion(version.getVersion());
-            dataHandler.setForceUpdateMessage(version.getMessage());
+            /* New App Update Code */
 
-            version = versionDetails.getNormalUpdateVersion();
-            dataHandler.setNormalUpdateVersion(version.getVersion());
-            dataHandler.setNormalUpdateMessage(version.getMessage());
+            int lastShownAppVersion = NostragamusDataHandler.getInstance().getLastShownAppVersionCode();
+            int reqAppVersion = appUpdateInfo.getReqVersion();
+            dataHandler.setReqUpdateVersion(appUpdateInfo.getReqVersion());
 
-            if (oldNormalUpdateVersion != version.getVersion()) {
-                dataHandler.setNormalUpdateEnabled(true);
-            }
-
-            /*  Paid version */
-            int oldPaidNormalUpdateVersion = dataHandler.getNormalPaidUpdateVersion();
-
-            Version versionPaid = versionDetails.getPaidForceUpdateVersion();
-            if (versionPaid != null) {
-                dataHandler.setForcePaidUpdateVersion(versionPaid.getVersion());
-                dataHandler.setForcePaidUpdateMessage(versionPaid.getMessage());
-                dataHandler.setPaidForceApkLink(versionPaid.getApkLink());
-            }
-
-            versionPaid = versionDetails.getPaidNormalUpdateVersion();
-            if (versionPaid != null) {
-                dataHandler.setNormalPaidUpdateVersion(versionPaid.getVersion());
-                dataHandler.setNormalPaidUpdateMessage(versionPaid.getMessage());
-                dataHandler.setPaidNormalApkLink(versionPaid.getApkLink());
-            }
-
-            if (versionPaid != null && oldPaidNormalUpdateVersion != versionPaid.getVersion()) {
-                dataHandler.setNormalPaidUpdateEnabled(true);
+            /* Check if current Ver is not equal to Required App Version */
+            if (lastShownAppVersion != reqAppVersion) {
+                Log.d("inside", "currentAppVersion!=reqAppVersion");
+                dataHandler.setAppUpdateType(appUpdateInfo.getUpdateType());
             }
 
         }

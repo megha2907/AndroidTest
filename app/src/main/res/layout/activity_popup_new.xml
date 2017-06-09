@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -7,138 +6,144 @@
     android:background="#CC000000">
 
     <RelativeLayout
-        android:id="@+id/popup"
-        android:layout_width="@dimen/dp_320"
-        android:layout_height="@dimen/dp_350"
-        android:layout_centerInParent="true"
-        android:background="@color/transparent">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginRight="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_15"
-        app:cardBackgroundColor="@color/transparent"
-        app:cardCornerRadius="@dimen/dp_4"
-        app:cardUseCompatPadding="true">
+        android:layout_centerInParent="true">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/popup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/code_gray_1a"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_42"
-                android:background="@color/chathams_blue"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/challenge_dw_app_tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_8"
-                    android:text="Go Pro!"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dp_14"
-                    app:typeface="lato_bold" />
-
-            </LinearLayout>
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            app:cardBackgroundColor="#CC000000"
+            app:cardCornerRadius="@dimen/dp_4"
+            app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_150"
-                    android:src="@drawable/cash_rewards_image"/>
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/white"
-                    android:text="Win big with Nostragamus Pro!"
-                    android:textSize="@dimen/dp_14"
-                    app:typeface="lato_bold" />
-
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/challenge_dw_app_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="#cecece"
-                    android:gravity="center"
-                    android:layout_marginLeft="@dimen/dp_15"
-                    android:layout_marginRight="@dimen/dp_15"
-                    android:text="@string/download_app_text"
-                    android:textSize="@dimen/dp_12"
-                    app:typeface="lato_light"
-                    android:layout_marginTop="@dimen/dp_10"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_toRightOf="@+id/popup_iv_close"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0.5"
-                android:background="#121212"
-                android:layout_marginTop="@dimen/dp_10"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_54"
-                android:orientation="horizontal">
+                android:background="@color/code_gray_13"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_42"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <com.jeeva.android.widgets.customfont.CustomButton
-                        android:id="@+id/challenge_dw_app_button"
-                        android:layout_width="@dimen/dp_140"
-                        android:layout_height="@dimen/dp_36"
-                        android:background="@drawable/tournament_ready_btn_bg"
-                        android:gravity="center"
-                        android:minWidth="@dimen/dp_72"
-                        android:paddingBottom="@dimen/dp_2"
-                        android:drawableLeft="@drawable/download_icon"
-                        android:paddingLeft="@dimen/dp_12"
-                        android:paddingRight="@dimen/dp_5"
-                        android:text="Download Pro"
-                        android:textAllCaps="false"
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/challenge_dw_app_tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_8"
+                        android:text="Achievement Unlocked!"
+                        android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_14"
                         app:typeface="lato_bold" />
+
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_170"
+                            android:layout_height="@dimen/dp_170"
+                            android:src="@drawable/achievement_bg" />
+
+                        <com.jeeva.android.widgets.HmImageView
+                            android:id="@+id/popup_image"
+                            android:layout_width="@dimen/dp_128"
+                            android:layout_height="@dimen/dp_128"
+                            android:layout_centerInParent="true"
+                            android:scaleType="fitXY" />
+
+                    </RelativeLayout>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/popup_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Against the odds"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_14"
+                        app:typeface="lato_bold" />
+
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/popup_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_marginRight="@dimen/dp_15"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:gravity="center"
+                        android:text="you have successfully gone against the majority using the Audience Poll powerup."
+                        android:textColor="#cecece"
+                        android:textSize="@dimen/dp_12"
+                        app:typeface="lato_regular" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <com.jeeva.android.widgets.customfont.CustomButton
+                            android:id="@+id/popup_exit_btn"
+                            android:layout_width="@dimen/dp_70"
+                            android:layout_height="@dimen/dp_36"
+                            android:background="@drawable/green_btn_bg"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp_72"
+                            android:text="Okay!"
+                            android:layout_marginTop="@dimen/dp_14"
+                            android:layout_marginBottom="@dimen/dp_15"
+                            android:paddingBottom="@dimen/dp_2"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dp_14"
+                            app:typeface="lato_bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-    </android.support.v7.widget.CardView>
-
-    <ImageView
-        android:id="@+id/popup_cross_btn"
-        android:layout_width="@dimen/dp_32"
-        android:layout_height="@dimen/dp_32"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_7"
-        android:layout_marginTop="@dimen/dp_7"
-        android:elevation="@dimen/dp_4"
-        android:padding="@dimen/dp_5"
-        android:src="@drawable/popup_cross_icon"
-        android:visibility="invisible" />
-
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/popup_cross_btn"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:elevation="@dimen/dp_4"
+            android:padding="@dimen/dp_5"
+            android:src="@drawable/popup_cross_icon"
+            android:visibility="visible" />
 
     </RelativeLayout>
+
+</RelativeLayout>

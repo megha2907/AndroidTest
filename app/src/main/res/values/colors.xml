@@ -17,6 +17,8 @@
     <color name="lima">#7ED321</color>
     <color name="monza">#c94646</color>
     <color name="orange">#FF681F</color>
+    <color name="orange_btn">#DC7027</color>
+    <color name="orange_btn_shadow">#9d5a2d</color>
     <color name="pink_swan">#C2BABA</color>
     <color name="scorpion">#656161</color>
     <color name="valencia">#D44837</color>
@@ -127,6 +129,7 @@
     <color name="code_gray_17">#171717</color>
     <color name="code_gray_1a">#1A1A1A</color>
     <color name="code_gray_12">#121212</color>
+    <color name="code_gray_13">#353535</color>
     <color name="scrollbar_indicator">#666666</color>
     <color name="hyperlink_color">#29abe2</color>
 

@@ -19,6 +19,8 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.navigation.help.HelpActivity;
 import in.sportscafe.nostragamus.module.navigation.settings.SettingsActivity;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListActivity;
@@ -82,6 +84,8 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
             if (isNewVersionAvailable()) {
                 view.findViewById(R.id.navigation_app_update_layout).setOnClickListener(this);
                 view.findViewById(R.id.navigation_app_update_available_imageView).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.navigation_whats_new_layout).setVisibility(View.GONE);
+                view.findViewById(R.id.navigation_whats_new_separator).setVisibility(View.GONE);
 
                 TextView versionNameTextView = (TextView) view.findViewById(R.id.navigation_version_textView);
                 versionNameTextView.setText("New Version Available");
@@ -139,6 +143,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
 
             case R.id.navigation_whats_new_layout:
                 onWhatsNewClicked();
+                NostragamusAnalytics.getInstance().trackWhatsNew(Constants.AnalyticsActions.OPENED);
                 break;
 
             case R.id.navigation_submit_question_layout:
@@ -155,6 +160,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
 
             case R.id.navigation_app_update_layout:
                 onUpdateAppClicked();
+                NostragamusAnalytics.getInstance().trackUpdateApp(Constants.AnalyticsActions.OPENED);
                 break;
 
         }
@@ -164,7 +170,10 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
      * The method has been only called when update is available, else listener is not registered for callback.
      */
     private void onUpdateAppClicked() {
-        // TODO: Update app UI / flow
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), AppUpdateActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void onSettingsClicked() {
@@ -189,7 +198,11 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void onWhatsNewClicked() {
-
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), AppUpdateActivity.class);
+            intent.putExtra(Constants.BundleKeys.SCREEN,Constants.ScreenNames.WHATS_NEW);
+            startActivity(intent);
+        }
     }
 
     private void onPowerUpsClicked() {
@@ -221,22 +234,9 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
         NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
         int currentAppVersion = Nostragamus.getInstance().getAppVersionCode();
 
-        if (BuildConfig.IS_PAID_VERSION) {
-            /* Same conditions as checked for newAppVersion - NostragamusActivity */
-            if ((currentAppVersion < dataHandler.getForcePaidUpdateVersion()) ||
-                    (dataHandler.isNormalPaidUpdateEnabled() && currentAppVersion < dataHandler.getNormalPaidUpdateVersion())) {
-
-                isNewVersion = true;
-            }
-
-        } else {
-            if ((currentAppVersion < dataHandler.getForceUpdateVersion()) ||
-                    (dataHandler.isNormalUpdateEnabled() && currentAppVersion < dataHandler.getNormalUpdateVersion())) {
-
-                isNewVersion = true;
-            }
+        if ((currentAppVersion < dataHandler.getReqUpdateVersion())) {
+            isNewVersion = true;
         }
-
         return isNewVersion;
     }
 }

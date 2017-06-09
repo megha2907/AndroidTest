@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Created by Jeeva on 25/8/16.
  */
+
 public class Version {
 
     @JsonProperty("version")

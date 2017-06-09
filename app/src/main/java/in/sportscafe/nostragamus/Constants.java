@@ -74,6 +74,8 @@ public interface Constants {
         String NORMAL_PAID_UPDATE_SHOWN_TIME = "normalPaidUpdateShownTime";
         String PAID_FORCE_UPDATE_APK_LINK = "paidForceUpdateApkLink";
         String PAID_NORMAL_UPDATE_APK_LINK = "paidNormalUpdateApkLink";
+        String FORCE_UPDATE_ENABLED = "forceUpdateEnabled";
+        String REQUIRED_UPDATE_VERSION = "requiredUpdateVersion";
 
         String INITIAL_FORM_SHOWN = "initialFormShown";
         String ACCESS_TOKEN = "accessToken";
@@ -97,6 +99,9 @@ public interface Constants {
         String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
         String IS_PROFILE_DISCLAIMER_ACCEPTED = "isProfileDisclaimerAccepted";
         String INSTALL_REFERRAL_CAMPAIGN_KEY = "installReferralCampaignKey";
+
+        String LAST_SHOWN_APP_VERSION_CODE = "lastShownAppVersionCode";
+        String UPDATE_TYPE = "updateType";
     }
 
     interface Alerts {
@@ -194,6 +199,7 @@ public interface Constants {
         String PAYTM_TRANSACTION_FAILED = "Transaction failed, please try again";
         String PAYTM_FAILURE = "Could not initiate transaction, please try again";
         String SOMETHING_WRONG ="Something went wrong! Please try again!";
+        String NO_UPDATES = "No New Updates Available";
     }
 
     interface BundleKeys {
@@ -381,6 +387,9 @@ public interface Constants {
         String APP_OPENING = "App Opening";
         String REFERRAL_ACTION = "Referral Action";
         String CASH_REWARDS = "Cash Rewards";
+        String CONFIGS = "Configs";
+        String WHATS_NEW = "Whats New";
+        String UPDATE_LATER = "Update Later";
         String WALLET_ADD_MONEY = "Add Money into Wallet";
         String WALLET_WITHDRAW_MONEY = "Withdraw from Wallet";
     }
@@ -417,6 +426,8 @@ public interface Constants {
         String PRO_APP = "Pro App";
         String NORMAL_APP = "Normal App";
         String NO_CASH_REWARDS = "Don't Want Cash Rewards";
+        String OPENED = "Opened";
+        String CLICKED = "Clicked";
     }
 
     interface AnalyticsLabels {
@@ -469,8 +480,8 @@ public interface Constants {
         String PLAYER_COMPARISON = "player_comparison"; //in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity
         String RESULTS_PEEK = "results_peek"; //in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity
         String DUMMY_GAME = "dummy_game"; //DummyGameActivity
-        String PAYTM_CONNECT = "paytm_connect"; //WalletOrBankConnectActivity
-        String PAYTM_ADD_DETAIL = "paytm_add_detail"; //AddPaytmDetailsActivity
+        String PAYTM_CONNECT = "paytm_connect"; //in.sportscafe.nostragamus.module.paytm.WalletOrBankConnectActivity
+        String PAYTM_ADD_DETAIL = "paytm_add_detail"; //in.sportscafe.nostragamus.module.paytm.AddPaytmDetailsActivity
         String QUESTION_ADD = "question_add"; //AddQuestionActivity
         String QUESTION_ADD_TOUR_LIST = "question_add_tour_list"; //TourListActivity
         String USER_PROFILE = "user_profile"; //in.sportscafe.nostragamus.module.user.myprofile.ProfileActivity
@@ -479,6 +490,9 @@ public interface Constants {
         String SETTINGS = "settings";
         String ABOUT = "about";
         String HELP = "help";
+        String WHATS_NEW = "whatsNew";
+        String APP_UPDATE = "AppUpdate";
+        String APP_FORCE_UPDATE = "AppForceUpdate";
         String WALLET_HOME = "wallet";
         String WALLET_ADD_MONEY = "addWalletMoney";
         String WALLET_WITHDRAW_MONEY = "withdrawWalletMoney";
