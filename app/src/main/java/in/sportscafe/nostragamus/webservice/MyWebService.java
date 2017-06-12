@@ -313,4 +313,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<ApiResponse> getUserWallet() {
         return mNostragamusService.getUserWallet();
     }
+
+    public Call<String> getLatestApk() {
+        return mNostragamusService.getLatestApk();
+    }
 }
