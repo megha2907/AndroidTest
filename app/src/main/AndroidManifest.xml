@@ -467,6 +467,16 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
+
+        <!-- File Download complete / result receiver -->
+        <service android:name=".service.NostraFileDownloadService" />
+
+        <receiver android:name=".receiver.NostraFileDownloadReceiver" android:enabled="true">
+            <intent-filter>
+                <!-- Take action from NostraFileDownloadService.FILE_DOWNLOAD_BROADCAST_ACTION -->
+                <action android:name="in.sportscafe.nostragamus.broadcast.action.fileDownloadBroadcast" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
