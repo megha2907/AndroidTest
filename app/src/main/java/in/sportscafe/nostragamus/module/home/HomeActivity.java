@@ -27,6 +27,8 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.WalletOrBankConnectActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -71,6 +73,13 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
         showScreenAsRequired();
 
+        checkAndAskStoragePermission();
+    }
+
+    private void checkAndAskStoragePermission() {
+        if (new PermissionsChecker(getActivity()).lacksPermissions(Constants.AppPermissions.STORAGE)) {
+            PermissionsActivity.startActivityForResult(getActivity(), Constants.RequestCodes.STORAGE_PERMISSION, Constants.AppPermissions.STORAGE);
+        }
     }
 
     private void showScreenAsRequired() {
@@ -262,6 +271,12 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             if (CODE_PROFILE_ACTIVITY == requestCode) {
                 loadFragment(new ProfileFragment());
             }
+        }
+
+        if (Constants.RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
+            com.jeeva.android.Log.d(TAG, "Storage permission granted");
+        } else {
+            com.jeeva.android.Log.d(TAG, "Storage permission NOT granted");
         }
     }
 
