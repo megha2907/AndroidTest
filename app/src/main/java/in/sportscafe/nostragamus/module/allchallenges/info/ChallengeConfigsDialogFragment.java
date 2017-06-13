@@ -36,14 +36,14 @@ import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmApiModelImpl;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionFailureDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.JoinChallengeFailureDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.PaytmTransactionResponse;
 
 /**
  * Created by Jeeva on 28/02/17.
  */
 public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment implements ChallengeConfigsApiModelImpl.OnConfigsApiModelListener,
-        ChallengeConfigAdapter.OnConfigAccessListener, PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener, View.OnClickListener {
+        ChallengeConfigAdapter.OnConfigAccessListener, JoinChallengeFailureDialogFragment.IPaytmFailureActionListener, View.OnClickListener {
 
     private static final String TAG = ChallengeConfigsDialogFragment.class.getSimpleName();
 
@@ -421,8 +421,8 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     private void showPaytmTransactionFailureDialog() {
 
         if (mChallenge != null) {
-            PaytmTransactionFailureDialogFragment failureDialogFragment =
-                    PaytmTransactionFailureDialogFragment.newInstance(1199, mChallenge, this);
+            JoinChallengeFailureDialogFragment failureDialogFragment =
+                    JoinChallengeFailureDialogFragment.newInstance(1199, mChallenge, this);
             failureDialogFragment.show(getChildFragmentManager(), "FAILURE_DIALOG");
         } else {
             showMessage(Alerts.PAYTM_TRANSACTION_FAILED);

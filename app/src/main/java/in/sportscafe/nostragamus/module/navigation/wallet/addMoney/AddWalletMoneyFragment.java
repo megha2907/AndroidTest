@@ -18,9 +18,11 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionFailureDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmApiModelImpl;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionFailureDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.JoinChallengeFailureDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.PaytmTransactionResponse;
 
 public class AddWalletMoneyFragment extends BaseFragment implements View.OnClickListener {
@@ -30,7 +32,8 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
     private AddWalletMoneyFragmentListener mFragmentListener;
     private EditText mAmountEditText;
 
-    public AddWalletMoneyFragment() {}
+    public AddWalletMoneyFragment() {
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -38,7 +41,7 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
         if (context instanceof AddWalletMoneyFragmentListener) {
             mFragmentListener = (AddWalletMoneyFragmentListener) context;
         } else {
-            throw  new RuntimeException("Activity must implement " +
+            throw new RuntimeException("Activity must implement " +
                     AddWalletMoneyFragmentListener.class.getSimpleName());
         }
     }
@@ -101,6 +104,7 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
     /**
      * Initiate transaction
+     *
      * @param amount
      */
     private void initTransaction(double amount) {
@@ -115,6 +119,7 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
     /**
      * Action handler based on AddMoneyApi response
+     *
      * @return
      */
     private AddMoneyToWalletApiModelImpl.AddMoneyToWalletApiListener getAddMoneyApiListener(final double amount) {
@@ -148,6 +153,7 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
     /**
      * A specific case when AddMoneyToWallet successful
+     *
      * @param response
      */
     private void handleAddMoneyApiResponse(GenerateOrderResponse response, double amount) {
@@ -161,7 +167,6 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
     }
 
     /**
-     *
      * @param generateOrderResponse
      */
     private void performPaytmTransaction(GenerateOrderResponse generateOrderResponse, double amount) {
@@ -219,7 +224,7 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
                 NostragamusAnalytics.getInstance().trackWalletTransaction(true, amount);
 
-                showPaytmSuccessDialog();
+                showPaytmSuccessDialog(amount);
             }
 
             @Override
@@ -230,32 +235,51 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
         };
     }
 
-    private void showPaytmSuccessDialog() {
-        // TODO: paytm success receipt
-        showMessage("Paytm Successful");
+    private void showPaytmSuccessDialog(final double amount) {
+        PaytmTransactionSuccessDialogFragment successDialogFragment =
+                PaytmTransactionSuccessDialogFragment.newInstance(1200, amount, getPaytmSuccessActionListener());
+        successDialogFragment.show(getChildFragmentManager(), "SUCCESS_DIALOG");
     }
 
     private void showPaytmTransactionFailureDialog() {
-            /*PaytmTransactionFailureDialogFragment failureDialogFragment =
-                    PaytmTransactionFailureDialogFragment.newInstance(1199, null, getPaytmFailureActionListener());
-            failureDialogFragment.show(getChildFragmentManager(), "FAILURE_DIALOG");*/
-            showMessage("Transaction Failed");
+        PaytmTransactionFailureDialogFragment failureDialogFragment =
+                PaytmTransactionFailureDialogFragment.newInstance(1199, getPaytmFailureActionListener());
+        failureDialogFragment.show(getChildFragmentManager(), "FAILURE_DIALOG");
     }
 
     /**
      * Paytm transaction failed, then failure dialog button click handler
+     *
      * @return
      */
     private PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener getPaytmFailureActionListener() {
-        // TODO : need some change in handling, as design get changed
         return new PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener() {
+
             @Override
-            public void onRejoinClicked() {
-                showMessage("Rejoin Clicked");
+            public void onBackToAddMoney() {
+                // TODO : navigate to Add Money
+                showMessage("Back To Add Money clicked");
             }
 
             @Override
+            public void onRetryPayment() {
+                // TODO : navigate to Retry Payment Screen
+                showMessage("Retry Payment");
+            }
+        };
+    }
+
+    /**
+     * Paytm transaction success, then success dialog button click handler
+     *
+     * @return
+     */
+    private PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener getPaytmSuccessActionListener() {
+
+        return new PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener() {
+            @Override
             public void onBackToHomeClicked() {
+                // TODO : navigate to Home
                 showMessage("Back To Home Clicked");
             }
         };
@@ -267,7 +291,7 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
         String str = mAmountEditText.getText().toString().trim();
         if (!TextUtils.isEmpty(str)) {
             try {
-                 amount = Double.parseDouble(str);
+                amount = Double.parseDouble(str);
             } catch (NumberFormatException nfe) {
                 nfe.printStackTrace();
             }
