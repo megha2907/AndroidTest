@@ -290,6 +290,7 @@ public interface Constants {
         String TAB_ITEM_NAME = "tabItemName";
         String PLAYED_FIRST_MATCH = "PlayedFirstMatch";
         String SERVER_TIME = "serverTime";
+        String TRANSACTION_AMOUNT = "transactionAmount";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
