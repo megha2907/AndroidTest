@@ -22,31 +22,30 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeFragment;
-import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeFragmentListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WalletHistoryFragment extends NostragamusFragment implements WalletModel, View.OnClickListener {
+public class WalletHistoryHistoryFragment extends NostragamusFragment implements WalletHistoryModel, View.OnClickListener {
 
-    private static final String TAG = WalletHistoryFragment.class.getSimpleName();
+    private static final String TAG = WalletHistoryHistoryFragment.class.getSimpleName();
 
     private WalletHistoryFragmentListener mFragmentListener;
     private RecyclerView mWalletHistoryRecyclerView;
     private TextView mAmountWonTextView;
     private UserPaymentInfo mUserPaymentInfo;
 
-    public WalletHistoryFragment() {
+    public WalletHistoryHistoryFragment() {
     }
 
     public void setUserPaymentInfo(UserPaymentInfo userPaymentInfo) {
         mUserPaymentInfo = userPaymentInfo;
     }
 
-    public static WalletHistoryFragment newInstance() {
-        WalletHistoryFragment fragment = new WalletHistoryFragment();
+    public static WalletHistoryHistoryFragment newInstance() {
+        WalletHistoryHistoryFragment fragment = new WalletHistoryHistoryFragment();
         return fragment;
     }
 
@@ -73,6 +72,8 @@ public class WalletHistoryFragment extends NostragamusFragment implements Wallet
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        showWalletBalance();
+
         if (NostragamusDataHandler.getInstance().getUserInfo() != null) {
             mUserPaymentInfo = NostragamusDataHandler.getInstance().getUserInfo().getUserPaymentInfo();
         }
@@ -84,6 +85,23 @@ public class WalletHistoryFragment extends NostragamusFragment implements Wallet
             showAddPaymentInfoButton();
         } else {
             loadTransactionDetails();
+        }
+    }
+
+    private void showWalletBalance() {
+        if (getView() != null) {
+            double amount = WalletHelper.getBalanceAmount();
+            if (amount > 0) {
+                TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_history_bal_amount_textView);
+                balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
+            }
+
+            // Withdrawals in progress
+            int withdrawProgress = WalletHelper.getWithdrawalsInProgress();
+            if (withdrawProgress > 0) {
+                TextView withdrawProgressTextView = (TextView) getView().findViewById(R.id.wallet_history_withdraw_progress_textView);
+                withdrawProgressTextView.setText(withdrawProgress + " withdrawals in progress");
+            }
         }
     }
 
@@ -111,13 +129,13 @@ public class WalletHistoryFragment extends NostragamusFragment implements Wallet
 
     private void loadTransactionDetails() {
         showProgressbar();
-        WalletApiModelImpl apiModel = WalletApiModelImpl.getInstance(getWalletTransactionApiListener());
+        WalletHistoryApiModelImpl apiModel = WalletHistoryApiModelImpl.getInstance(getWalletTransactionApiListener());
         apiModel.fetchWalletTransactionsFromServer();
     }
 
     @NonNull
-    private WalletApiModelImpl.WalletApiModelListener getWalletTransactionApiListener() {
-        return new WalletApiModelImpl.WalletApiModelListener() {
+    private WalletHistoryApiModelImpl.WalletApiModelListener getWalletTransactionApiListener() {
+        return new WalletHistoryApiModelImpl.WalletApiModelListener() {
             @Override
             public void noInternet() {
                 dismissProgressbar();
@@ -125,7 +143,7 @@ public class WalletHistoryFragment extends NostragamusFragment implements Wallet
             }
 
             @Override
-            public void onSuccess(List<WalletTransaction> transactionList) {
+            public void onSuccess(List<WalletHistoryTransaction> transactionList) {
                 dismissProgressbar();
                 onTransactionListFetchedSuccessful(transactionList);
             }
@@ -138,7 +156,7 @@ public class WalletHistoryFragment extends NostragamusFragment implements Wallet
         };
     }
 
-    private void onTransactionListFetchedSuccessful(List<WalletTransaction> transactionList) {
+    private void onTransactionListFetchedSuccessful(List<WalletHistoryTransaction> transactionList) {
         if (getActivity() != null && getView() != null) {
 
             if (transactionList == null || transactionList.isEmpty()) {
@@ -160,10 +178,10 @@ public class WalletHistoryFragment extends NostragamusFragment implements Wallet
         }
     }
 
-    private void setAmountWon(List<WalletTransaction> transactionList) {
+    private void setAmountWon(List<WalletHistoryTransaction> transactionList) {
         double amountWon = 0;
         if (transactionList != null) {
-            for (WalletTransaction transaction : transactionList) {
+            for (WalletHistoryTransaction transaction : transactionList) {
                 if (transaction.getMoneyFlow().equals(Constants.MoneyFlow.OUT)) {   // MoneyFlow == OUT means, user got amount (Credit for user)
                     amountWon += transaction.getAmount();
                 }

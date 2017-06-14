@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.navigation.wallet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -29,6 +30,21 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
 
         initToolbar();
         loadWalletFragment();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+
+        notifyWalletHomeFragment();
+    }
+
+    private void notifyWalletHomeFragment() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment != null &&  fragment instanceof WalletHomeFragment) {
+            ((WalletHomeFragment) fragment).refreshWalletDetails();
+        }
     }
 
     private void initToolbar() {

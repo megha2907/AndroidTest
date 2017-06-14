@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -10,12 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyFragmentListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,10 +52,32 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
 
     private void initRoot(View rootView) {
         rootView.findViewById(R.id.back_button).setOnClickListener(this);
-        rootView.findViewById(R.id.wallet_withdraw_amount_button).setOnClickListener(this);
+        rootView.findViewById(R.id.wallet_withdraw_next_button).setOnClickListener(this);
 
         mAmountEditText = (EditText) rootView.findViewById(R.id.wallet_withdraw_amount_editText);
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        initialize();
+    }
+
+    private void initialize() {
+        showWalletBalance();
+    }
+
+    private void showWalletBalance() {
+        if (getView() != null) {
+            double amount = WalletHelper.getBalanceAmount();
+            if (amount > 0) {
+                TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_withdraw_money_amount_textView);
+                balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
+            }
+        }
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -64,8 +88,8 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
                 }
                 break;
 
-            case R.id.wallet_withdraw_amount_button:
-                onWithdrawButtonClicked();
+            case R.id.wallet_withdraw_next_button:
+                onWithdrawNextButtonClicked();
                 break;
         }
     }
@@ -85,7 +109,7 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
         return amount;
     }
 
-    private void onWithdrawButtonClicked() {
+    private void onWithdrawNextButtonClicked() {
         double amount = validateAmount();
         if (amount > 99) {
 
@@ -96,9 +120,10 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
                 mFragmentListener.onWithdrawButtonClicked(args);
             }
         } else {
-            if (getView() != null) {
+            /*if (getView() != null) {
                 Snackbar.make(getView(), "Please enter amount more or 100", Snackbar.LENGTH_SHORT).show();
-            }
+            }*/
+            mAmountEditText.setError("Please enter amount more or 100");
         }
     }
 

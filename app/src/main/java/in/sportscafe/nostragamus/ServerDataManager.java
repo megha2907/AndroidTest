@@ -8,6 +8,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.appupdate.AppUpdateDetails;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 
 /**
  * Created by sandip on 24/04/17.
@@ -22,6 +23,8 @@ public class ServerDataManager {
     private Challenge challengeInfo;
 
     private Match matchInfo;
+
+    private UserWalletResponse userWalletResponse;
 
     public @Nullable List<Challenge> getChallengeList() {
         return challengeList;
@@ -55,5 +58,11 @@ public class ServerDataManager {
         this.matchInfo = matchInfo;
     }
 
+    public UserWalletResponse getUserWalletResponse() {
+        return userWalletResponse;
+    }
 
+    public void setUserWalletResponse(UserWalletResponse userWalletResponse) {
+        this.userWalletResponse = userWalletResponse;
+    }
 }

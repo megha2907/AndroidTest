@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
@@ -8,9 +8,42 @@
     android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawWalletMoneyFragment">
 
+    <!-- Withdraw Money bottom layout -->
+    <FrameLayout
+        android:id="@+id/withdraw_money_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <!-- Add Amount layout -->
+        <LinearLayout
+            android:id="@+id/wallet_withdraw_next_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/button_height_48"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/blue_button_selector">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                app:typeface="lato_bold" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!-- Background layout -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@id/withdraw_money_bottom_layout"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -132,31 +165,8 @@
 
             </LinearLayout>
 
-            <!-- Add Amount layout -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/dp_36"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:layout_marginRight="@dimen/dp_20">
-
-                <com.jeeva.android.widgets.customfont.CustomButton
-                    android:id="@+id/wallet_withdraw_amount_button"
-                    android:layout_width="@dimen/button_width"
-                    android:layout_height="@dimen/button_height_48"
-                    android:background="@drawable/blue_button_selector"
-                    android:text="Withdraw Money"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_16"
-                    app:typeface="lato_bold" />
-
-            </LinearLayout>
-
         </LinearLayout>
 
     </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>

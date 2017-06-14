@@ -3,13 +3,19 @@ package in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutWalletChoiceActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutWalletHomeActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class WithdrawWalletMoneyActivity extends NostragamusActivity implements WithdrawWalletMoneyFragmentListener {
+
+    private static final String TAG = WithdrawWalletMoneyActivity.class.getSimpleName();
 
     @Override
     public String getScreenName() {
@@ -37,11 +43,23 @@ public class WithdrawWalletMoneyActivity extends NostragamusActivity implements 
 
     @Override
     public void onWithdrawButtonClicked(Bundle args) {
-        Intent intent = new Intent(this, PayoutWalletChoiceActivity.class);
-        if (args != null) {
-            intent.putExtras(args);
-        }
+//        if (WalletHelper.isPaytmPayoutDetailsProvided() || WalletHelper.isBankPayoutDetailsProvided()) {
 
-        startActivity(intent);
+            Log.d(TAG, "Payout details available");
+            Intent intent = new Intent(this, PayoutWalletChoiceActivity.class);
+            if (args != null) {
+                intent.putExtras(args);
+            }
+            startActivity(intent);
+
+        /*} else {
+
+            Log.d(TAG, "Payout details NOT available");
+            Intent intent = new Intent(this, PayoutWalletHomeActivity.class);
+            if (args != null) {
+                intent.putExtras(args);
+            }
+            startActivity(intent);
+        }*/
     }
 }

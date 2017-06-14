@@ -14,22 +14,22 @@ import retrofit2.Response;
  * Created by sandip on 12/04/17.
  */
 
-public class WalletApiModelImpl {
+public class WalletHistoryApiModelImpl {
 
     public interface WalletApiModelListener {
         void noInternet();
-        void onSuccess(List<WalletTransaction> transactionList);
+        void onSuccess(List<WalletHistoryTransaction> transactionList);
         void onFailure();
     }
 
     private WalletApiModelListener modelListener;
 
-    private WalletApiModelImpl(WalletApiModelListener listener) {
+    private WalletHistoryApiModelImpl(WalletApiModelListener listener) {
         modelListener = listener;
     }
 
-    public static WalletApiModelImpl getInstance(WalletApiModelListener listener) {
-        return new WalletApiModelImpl(listener);
+    public static WalletHistoryApiModelImpl getInstance(WalletApiModelListener listener) {
+        return new WalletHistoryApiModelImpl(listener);
     }
 
     public void fetchWalletTransactionsFromServer() {
@@ -41,13 +41,13 @@ public class WalletApiModelImpl {
     }
 
     @NonNull
-    private NostragamusCallBack<List<WalletTransaction>> getUserPaymentCallBack() {
-        return new NostragamusCallBack<List<WalletTransaction>>() {
+    private NostragamusCallBack<List<WalletHistoryTransaction>> getUserPaymentCallBack() {
+        return new NostragamusCallBack<List<WalletHistoryTransaction>>() {
             @Override
-            public void onResponse(Call<List<WalletTransaction>> call, Response<List<WalletTransaction>> response) {
+            public void onResponse(Call<List<WalletHistoryTransaction>> call, Response<List<WalletHistoryTransaction>> response) {
                 super.onResponse(call, response);
                 if (response != null && response.isSuccessful()) {
-                    List<WalletTransaction> transactionList = (List<WalletTransaction>) response.body();
+                    List<WalletHistoryTransaction> transactionList = (List<WalletHistoryTransaction>) response.body();
                     modelListener.onSuccess(transactionList);
                 } else {
                     modelListener.onFailure();

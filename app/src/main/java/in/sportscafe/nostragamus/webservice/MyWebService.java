@@ -9,7 +9,6 @@ import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
-import in.sportscafe.nostragamus.module.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.common.TimeResponse;
@@ -18,6 +17,9 @@ import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyToWalletRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
 import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentBankRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentDetailsResponse;
@@ -54,7 +56,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletTransaction;
+import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryTransaction;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -286,7 +288,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.addUserPaymentPaytmDetails(request);
     }
 
-    public Call<List<WalletTransaction>> getWalletTransactionHistory() {
+    public Call<List<WalletHistoryTransaction>> getWalletTransactionHistory() {
         return mNostragamusService.getWalletTransactionHistory();
     }
 
@@ -310,8 +312,12 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.addMoneyToWallet(request);
     }
 
-    public Call<ApiResponse> getUserWallet() {
+    public Call<UserWalletResponse> getUserWallet() {
         return mNostragamusService.getUserWallet();
+    }
+
+    public Call<WithdrawFromWalletResponse> withdrawFromWallet(WithdrawFromWalletRequest request) {
+        return mNostragamusService.withdrawFromWallet(request);
     }
 
     public Call<String> getLatestApk() {

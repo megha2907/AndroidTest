@@ -70,7 +70,7 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
             if (userInfo != null) {
                 paymentInfo = userInfo.getUserPaymentInfo();
             }
-            pagerAdapter.addFragment(WalletHistoryFragment.newInstance(paymentInfo), "Wallet");
+            pagerAdapter.addFragment(WalletHistoryHistoryFragment.newInstance(paymentInfo), "Wallet");
         }
 
         HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());

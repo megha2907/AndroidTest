@@ -28,10 +28,10 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdapter.WalletHistoryViewHolder> {
 
-    private List<WalletTransaction> mTransactionList;
+    private List<WalletHistoryTransaction> mTransactionList;
     private Context mContext;
 
-    public WalletHistoryAdapter(Context context, List<WalletTransaction> transactions) {
+    public WalletHistoryAdapter(Context context, List<WalletHistoryTransaction> transactions) {
         mContext = context;
         mTransactionList = transactions;
     }
@@ -47,7 +47,7 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
     @Override
     public void onBindViewHolder(WalletHistoryViewHolder holder, int position) {
         if (mTransactionList != null && mTransactionList.size() > position) {
-            WalletTransaction transaction = mTransactionList.get(position);
+            WalletHistoryTransaction transaction = mTransactionList.get(position);
 
             // Background color
             if (position % 2 == 0) {

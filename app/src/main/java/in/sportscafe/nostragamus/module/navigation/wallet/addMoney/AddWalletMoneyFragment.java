@@ -4,12 +4,12 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
@@ -18,11 +18,11 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionFailureDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmApiModelImpl;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.JoinChallengeFailureDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.PaytmTransactionResponse;
 
 public class AddWalletMoneyFragment extends BaseFragment implements View.OnClickListener {
@@ -65,6 +65,26 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initialize();
+    }
+
+    private void initialize() {
+        showWalletBalance();
+    }
+
+    private void showWalletBalance() {
+        if (getView() != null) {
+            double amount = WalletHelper.getBalanceAmount();
+            if (amount > 0) {
+                TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_add_money_amount_textView);
+                balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
+            }
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_button:
@@ -96,9 +116,10 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
         if (amount > 0) {
             initTransaction(amount);
         } else {
-            if (getView() != null) {
+            /*if (getView() != null) {
                 Snackbar.make(getView(), "Please enter amount", Snackbar.LENGTH_SHORT).show();
-            }
+            }*/
+            mAmountEditText.setError("Please enter amount");
         }
     }
 
@@ -235,6 +256,14 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
         };
     }
 
+    private void showPaytmSuccessDialog() {
+        // TODO: paytm success receipt
+        showMessage("Paytm Successful");
+        if (mFragmentListener != null) {
+            mFragmentListener.onSuccess();
+        }
+    }
+    
     private void showPaytmSuccessDialog(final double amount) {
         PaytmTransactionSuccessDialogFragment successDialogFragment =
                 PaytmTransactionSuccessDialogFragment.newInstance(1200, amount, getPaytmSuccessActionListener());
