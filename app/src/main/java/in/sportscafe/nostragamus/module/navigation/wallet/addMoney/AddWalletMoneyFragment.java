@@ -4,7 +4,6 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,23 +14,15 @@ import android.widget.TextView;
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
 
-import java.text.DecimalFormat;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.ServerDataManager;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-<<<<<<< HEAD
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
-=======
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionFailureDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
->>>>>>> upstream/master
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmApiModelImpl;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.JoinChallengeFailureDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.PaytmTransactionResponse;
 
 public class AddWalletMoneyFragment extends BaseFragment implements View.OnClickListener {
@@ -265,19 +256,18 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
         };
     }
 
-<<<<<<< HEAD
     private void showPaytmSuccessDialog() {
         // TODO: paytm success receipt
         showMessage("Paytm Successful");
         if (mFragmentListener != null) {
             mFragmentListener.onSuccess();
         }
-=======
+    }
+    
     private void showPaytmSuccessDialog(final double amount) {
         PaytmTransactionSuccessDialogFragment successDialogFragment =
                 PaytmTransactionSuccessDialogFragment.newInstance(1200, amount, getPaytmSuccessActionListener());
         successDialogFragment.show(getChildFragmentManager(), "SUCCESS_DIALOG");
->>>>>>> upstream/master
     }
 
     private void showPaytmTransactionFailureDialog() {
