@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,8 +111,9 @@ public class PayoutHomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
         if (mPayoutInfoList != null && position < mPayoutInfoList.size()) {
             PayoutAddEditItemDto payoutAddEditItemDto = mPayoutInfoList.get(position);
 
-            if (payoutAddEditItemDto.getViewType() == PayoutViewType.SHOW_PAYTM) {
-                holder.mAccDetailTextView.setText("XXXXX X1234");
+            if (payoutAddEditItemDto.getViewType() == PayoutViewType.SHOW_PAYTM &&
+                    !TextUtils.isEmpty(payoutAddEditItemDto.getAccountNumber())) {
+                holder.mAccDetailTextView.setText(payoutAddEditItemDto.getAccountNumber());
             }
         }
     }
@@ -122,8 +124,9 @@ public class PayoutHomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
         if (mPayoutInfoList != null && position < mPayoutInfoList.size()) {
             PayoutAddEditItemDto payoutAddEditItemDto = mPayoutInfoList.get(position);
 
-            if (payoutAddEditItemDto.getViewType() == PayoutViewType.SHOW_BANK) {
-                holder.mAccDetailTextView.setText("XXXX-XXXX-XXXX-1234");
+            if (payoutAddEditItemDto.getViewType() == PayoutViewType.SHOW_BANK &&
+                    !TextUtils.isEmpty(payoutAddEditItemDto.getAccountNumber())) {
+                holder.mAccDetailTextView.setText(payoutAddEditItemDto.getAccountNumber());
             }
         }
     }

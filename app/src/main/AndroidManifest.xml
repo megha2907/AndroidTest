@@ -240,7 +240,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.navigation.wallet.WalletHomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".module.navigation.wallet.addMoney.AddWalletMoneyActivity"
             android:screenOrientation="portrait"

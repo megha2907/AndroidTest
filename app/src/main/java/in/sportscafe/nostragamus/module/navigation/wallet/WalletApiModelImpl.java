@@ -6,6 +6,7 @@ import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -30,13 +31,21 @@ public class WalletApiModelImpl {
 
     public void performApiCall() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getUserWallet().enqueue(new NostragamusCallBack<ApiResponse>() {
+            MyWebService.getInstance().getUserWallet().enqueue(new NostragamusCallBack<UserWalletResponse>() {
                 @Override
-                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                public void onResponse(Call<UserWalletResponse> call, Response<UserWalletResponse> response) {
                     super.onResponse(call, response);
 
                     if (response != null && response.isSuccessful() && response.body() != null) {
                         Log.d(TAG, "Response : " + response.body());
+                        UserWalletResponse userWalletResponse = response.body();
+
+                        /* Keep reference as these values are used from serverDataManager for every screen */
+                        Nostragamus.getInstance().getServerDataManager().setUserWalletResponse(userWalletResponse);
+
+                        if (mListener != null) {
+                            mListener.onSuccessResponse(userWalletResponse);
+                        }
 
                     } else {
                         Log.d(TAG, "Api response not proper/null");
@@ -56,7 +65,7 @@ public class WalletApiModelImpl {
     public interface WalletApiListener {
         void noInternet();
         void onApiFailed();
-        void onSuccessResponse();
+        void onSuccessResponse(UserWalletResponse response);
     }
 
 }

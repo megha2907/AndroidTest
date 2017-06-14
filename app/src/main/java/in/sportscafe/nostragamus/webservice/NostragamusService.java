@@ -15,6 +15,9 @@ import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyToWalletRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
 import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentBankRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentDetailsResponse;
@@ -51,10 +54,9 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletTransaction;
+import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryTransaction;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -67,8 +69,6 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-import retrofit2.http.Streaming;
-import retrofit2.http.Url;
 
 /**
  * Created by Jeeva on 14/3/16.
@@ -235,7 +235,7 @@ public interface NostragamusService {
     Call<AddUserPaymentDetailsResponse> addUserPaymentPaytmDetails(@Body AddUserPaymentPaytmRequest request);
 
     @GET("v2/game/getUserTransaction")
-    Call<List<WalletTransaction>> getWalletTransactionHistory();
+    Call<List<WalletHistoryTransaction>> getWalletTransactionHistory();
 
     @GET("v1/utility/getServerTime")
     Call<TimeResponse> getServerTime();
@@ -255,7 +255,10 @@ public interface NostragamusService {
     Call<GenerateOrderResponse> addMoneyToWallet(@Body AddMoneyToWalletRequest request);
 
     @POST("/v1/wallet/getUserWallet")
-    Call<ApiResponse> getUserWallet();
+    Call<UserWalletResponse> getUserWallet();
+
+    @POST("/v1/wallet/withdraw")
+    Call<WithdrawFromWalletResponse> withdrawFromWallet(@Body WithdrawFromWalletRequest request);
 
     @GET("/v1/setting/getLatestApk")
     Call<String> getLatestApk();

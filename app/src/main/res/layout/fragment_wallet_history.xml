@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryFragment">
+    tools:context="in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryHistoryFragment">
 
     <!-- Wallet Details -->
     <LinearLayout
@@ -79,10 +79,10 @@
                 android:layout_marginTop="@dimen/dp_12"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/wallet_history_msg_textView"
+                android:id="@+id/wallet_history_withdraw_progress_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Withdrawal in progress"
+                android:text="0 withdrawals in progress"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/sp_12"

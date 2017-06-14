@@ -1,7 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.walletHistory;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -25,7 +24,7 @@ public class WalletHistoryActivity extends NostragamusActivity implements Wallet
     }
 
     private void loadHistoryFragment() {
-        WalletHistoryFragment fragment = WalletHistoryFragment.newInstance();
+        WalletHistoryHistoryFragment fragment = WalletHistoryHistoryFragment.newInstance();
         FragmentHelper.replaceFragment(this, R.id.fragment_container, fragment);
     }
 

@@ -9,6 +9,8 @@ import org.parceler.Parcel;
 public class PayoutAddEditItemDto {
 
     private int viewType;
+    private String accountName;
+    private String accountNumber;
 
     public int getViewType() {
         return viewType;
@@ -16,5 +18,21 @@ public class PayoutAddEditItemDto {
 
     public void setViewType(int viewType) {
         this.viewType = viewType;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }
