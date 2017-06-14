@@ -5,31 +5,35 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 
 import com.jeeva.android.BaseFragment;
 
-import java.util.ArrayList;
-
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.dto.PayoutAddEditItemDto;
-import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.dto.PayoutChoiceDto;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawFromWalletApiModelImpl;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PayoutWalletChoiceFragment extends BaseFragment {
+public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+
+    private static final String TAG = PayoutWalletChoiceFragment.class.getSimpleName();
 
     private PayoutWalletChoiceFragmentListener mFragmentListener;
-    private PayoutChoiceRecyclerAdapter mPayoutChoiceRecyclerAdapter;
-    private RecyclerView mChoiceRecyclerView;
+
+    private RadioButton mPaytmRadioButton;
+    private RadioButton mBankRadioButton;
 
     public PayoutWalletChoiceFragment() {}
 
@@ -53,7 +57,15 @@ public class PayoutWalletChoiceFragment extends BaseFragment {
     }
 
     private void initRootView(View rootView) {
-        mChoiceRecyclerView = (RecyclerView) rootView.findViewById(R.id.payout_choice_recyclerView);
+        rootView.findViewById(R.id.withdraw_bottom_button).setOnClickListener(this);
+        rootView.findViewById(R.id.payout_choice_paytm_button).setOnClickListener(this);
+        rootView.findViewById(R.id.payout_choice_bank_button).setOnClickListener(this);
+        rootView.findViewById(R.id.payout_choice_no_account_button).setOnClickListener(this);
+
+        mPaytmRadioButton = (RadioButton) rootView.findViewById(R.id.payout_choice_paytm_radio_button);
+        mBankRadioButton = (RadioButton) rootView.findViewById(R.id.payout_choice_bank_radio_button);
+        mPaytmRadioButton.setOnCheckedChangeListener(this);
+        mBankRadioButton.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -64,65 +76,200 @@ public class PayoutWalletChoiceFragment extends BaseFragment {
     }
 
     private void init() {
-        initMembers();
+        showPayoutAccounts();
         initWithdrawalAmount();
-
-        // Todo: populate withdraw info
     }
 
-    private void initMembers() {
-        /*mPayoutChoiceRecyclerAdapter = new PayoutChoiceRecyclerAdapter(getTestList(), getAdapterListener());
+    private void showPayoutAccounts() {
+        boolean isPaytmProvided = WalletHelper.isPaytmPayoutDetailsProvided();
+        boolean isBankProvided = WalletHelper.isBankPayoutDetailsProvided();
+        View view = getView();
 
-        mChoiceRecyclerView.setLayoutManager(new LinearLayoutManager(mChoiceRecyclerView.getContext()));
-        mChoiceRecyclerView.setAdapter(mPayoutChoiceRecyclerAdapter);*/
-    }
+        if (view != null) {
+            if (isPaytmProvided) {
+                view.findViewById(R.id.payout_choice_paytm_button).setVisibility(View.VISIBLE);
+                mPaytmRadioButton.setChecked(true);
+            }
+            if (isBankProvided) {
+                view.findViewById(R.id.payout_choice_bank_button).setVisibility(View.VISIBLE);
+                if (mPaytmRadioButton.getVisibility() != View.VISIBLE) {
+                    mBankRadioButton.setChecked(true);
+                }
+            }
 
-    private void initWithdrawalAmount() {
-        Bundle args = getArguments();
-        if (args != null) {
-            double amount = args.getDouble(Constants.BundleKeys.WALLET_WITHDRAWAL_AMT, -1);
-            if (amount > 0) {
-                // TODO :  flow & ui
+            // If no account details available
+            if (!isPaytmProvided && !isBankProvided) {
+                view.findViewById(R.id.payout_choice_no_account_button).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.withdraw_bottom_button).setEnabled(false);
             }
         }
     }
 
-    private PayoutChoiceRecyclerAdapter.IPayoutChoiceAdapterListener getAdapterListener() {
-        return new PayoutChoiceRecyclerAdapter.IPayoutChoiceAdapterListener() {
+    /**
+     * If user was directed to add payout details in case of no payout-account provided, once the details are added;
+     * Fetch and show payout details again
+     */
+    public void onPayoutDetailsAdded() {
+        fetchWalletDetails();
+    }
+
+    private void fetchWalletDetails() {
+        showProgressbar();
+        WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
             @Override
-            public void onItemClicked(PayoutChoiceDto payoutChoiceDto, int position) {
+            public void noInternet() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+            }
 
-                if (mPayoutChoiceRecyclerAdapter != null) {
-                    ArrayList<PayoutChoiceDto> dataList = mPayoutChoiceRecyclerAdapter.getDataList();
-                    if (dataList != null) {
-                        for (PayoutChoiceDto item : dataList) {
-                            item.setSelected(false);
-                        }
+            @Override
+            public void onApiFailed() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.API_FAIL);
+            }
 
-                        if (position >= 0 && position < dataList.size()) {
-                            dataList.get(position).setSelected(true);
-                            mPayoutChoiceRecyclerAdapter.notifyDataSetChanged();
-                        }
-                    }
-                }
+            @Override
+            public void onSuccessResponse(UserWalletResponse response) {
+                dismissProgressbar();
+                showPayoutAccounts();
+            }
+        }).performApiCall();
+    }
+
+    private void initWithdrawalAmount() {
+        double amount = getWithdrawalAmount();
+    }
+
+    private double getWithdrawalAmount() {
+        double amount = 0;
+        Bundle args = getArguments();
+        if (args != null) {
+            amount = args.getDouble(Constants.BundleKeys.WALLET_WITHDRAWAL_AMT, -1);
+        }
+        return amount;
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.withdraw_bottom_button:
+                onWithdrawClicked();
+                break;
+
+            case R.id.payout_choice_paytm_button:
+                mPaytmRadioButton.setChecked(true);
+                break;
+
+            case R.id.payout_choice_bank_button:
+                mBankRadioButton.setChecked(true);
+                break;
+
+            case R.id.payout_choice_no_account_button:
+                onAddPayoutButtonClicked();
+                break;
+        }
+    }
+
+    private void onAddPayoutButtonClicked() {
+        if (mFragmentListener != null) {
+            mFragmentListener.onAddPayoutDetailsClicked();
+        }
+    }
+
+    private void onWithdrawClicked() {
+        double amount = getWithdrawalAmount();
+        String payout = getPayoutChoice();
+
+        if (amount > 0 && !TextUtils.isEmpty(payout)) {
+            performTransaction(amount, payout);
+        } else {
+            showMessage("Invalid amount or choose payout account");
+        }
+    }
+
+    private String getPayoutChoice() {
+        String payout = PayoutChoiceType.PAYTM;
+
+        if (mBankRadioButton.isChecked()) {
+            payout = PayoutChoiceType.BANK;
+        }
+
+        return payout;
+    }
+
+    private void performTransaction(double amount, String type) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+
+            showProgressbar();
+            WithdrawFromWalletApiModelImpl.newInstance(getListener()).callWithdrawMoneyApi(amount, type);
+        } else {
+            showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+        }
+    }
+
+    private WithdrawFromWalletApiModelImpl.WithdrawMoneyFromWalletApiListener getListener() {
+        return new WithdrawFromWalletApiModelImpl.WithdrawMoneyFromWalletApiListener() {
+            @Override
+            public void noInternet() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onNoApiResponse() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onSuccessResponse(WithdrawFromWalletResponse response) {
+                dismissProgressbar();
+                handleWithdrawSuccessResponse(response);
             }
         };
     }
 
-    private ArrayList<PayoutChoiceDto> getTestList () {
-        ArrayList<PayoutChoiceDto> list = new ArrayList<>();
+    private void handleWithdrawSuccessResponse(WithdrawFromWalletResponse response) {
+        if (response != null) {
+            switch (response.getCode()) {
+                case Constants.WithdrawFromWalletResponseCode.SUCCESS:
+                    showSuccessDialog();
+                    break;
 
-        PayoutChoiceDto d1 = new PayoutChoiceDto();
-        d1.setAccountName("Paytm Account");
-        d1.setAccountNumber("1234512345");
+                case Constants.WithdrawFromWalletResponseCode.ERROR_INSUFICIENT_BALANCE:
+                    break;
 
-        PayoutChoiceDto d2 = new PayoutChoiceDto();
-        d2.setAccountName("HDFC Bank A/c");
-        d2.setAccountNumber("XXXX-XXXX-XXXX-1234");
+                case Constants.WithdrawFromWalletResponseCode.ERROR_MIN_BALANCE_REQUIRED:
+                    break;
 
-        list.add(d1);
-        list.add(d2);
+                case Constants.WithdrawFromWalletResponseCode.ERROR_UNKNOWN:
+                    break;
+            }
+        }
 
-        return list;
+    }
+
+    private void showSuccessDialog() {
+        if (mFragmentListener != null) {
+            mFragmentListener.onWithdrawSuccessful();
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()) {
+            case R.id.payout_choice_paytm_radio_button:
+                if (isChecked) {
+                    mBankRadioButton.setChecked(false);
+                }
+                break;
+
+            case R.id.payout_choice_bank_radio_button:
+                if (isChecked) {
+                    mPaytmRadioButton.setChecked(false);
+                }
+                break;
+        }
     }
 }

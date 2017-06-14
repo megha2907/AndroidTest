@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by sandip on 12/04/17.
  */
 
-public class WalletTransaction {
+public class WalletHistoryTransaction {
 
     @JsonProperty("order_id")
     private String orderId;

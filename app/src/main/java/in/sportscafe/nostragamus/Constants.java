@@ -616,4 +616,15 @@ public interface Constants {
         String PRIVACY = "http://nostragamus.in/privacy.html";
 
     }
+
+    /* Sync with server */
+    interface WithdrawFromWalletResponseCode {
+        int SUCCESS = 1; // Payment will be made within 24 hrs
+        int ERROR_INSUFICIENT_BALANCE = 2; // Withdrawal more than wallet balance
+        int ERROR_MIN_BALANCE_REQUIRED = 3; // Need to maintain min balance
+        int ERROR_UNKNOWN = 4;      // Unknown server side error
+    }
+
+    public static final String AMOUNT_DECIMAL_PATTERN = "#.00";
+    public static final String RUPEE_SYMBOL = "₹ ";
 }

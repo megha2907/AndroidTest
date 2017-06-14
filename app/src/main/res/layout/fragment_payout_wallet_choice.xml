@@ -1,26 +1,177 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutWalletChoiceFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/payout_choice_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
     <!-- Withdraw button -->
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/withdraw_bottom_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/dp_80"
-        android:background="@color/tabcolor_blue">
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="@dimen/dp_48"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/blue_button_selector">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Withdraw Money"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_regular"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!--<android.support.v7.widget.RecyclerView
+        android:id="@+id/payout_choice_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/withdraw_bottom_button"/>-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/withdraw_bottom_button">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5">
+
+            <!-- Paytm button -->
+            <RelativeLayout
+                android:id="@+id/payout_choice_paytm_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_80"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/payout_choice_paytm_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:checked="true"
+                    android:layout_alignParentLeft="true"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/payout_choice_paytm_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Paytm Wallet"
+                    android:layout_toRightOf="@id/payout_choice_paytm_radio_button"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16"
+                    app:typeface="lato_regular"
+                    android:layout_marginLeft="@dimen/dp_10"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/payout_choice_paytm_number_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:text="XXXXX XXX123"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16"
+                    app:typeface="lato_regular"
+                    android:layout_marginLeft="@dimen/dp_10"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0.5"
+                android:background="@color/grey"/>
+
+            <!-- Bank button -->
+            <RelativeLayout
+                android:id="@+id/payout_choice_bank_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_80"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/payout_choice_bank_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/payout_choice_bank_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Your Bank"
+                    android:layout_toRightOf="@id/payout_choice_bank_radio_button"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16"
+                    app:typeface="lato_regular"
+                    android:layout_marginLeft="@dimen/dp_10"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/payout_choice_bank_number_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:text="XXXXX XXX123"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16"
+                    app:typeface="lato_regular"
+                    android:layout_marginLeft="@dimen/dp_10"/>
+
+            </RelativeLayout>
+
+            <!-- No Payout account button -->
+            <LinearLayout
+                android:id="@+id/payout_choice_no_account_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_80"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Payout Account"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16"
+                    app:typeface="lato_regular"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You have not added any payout details"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular"
+                    android:layout_marginTop="@dimen/dp_5"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

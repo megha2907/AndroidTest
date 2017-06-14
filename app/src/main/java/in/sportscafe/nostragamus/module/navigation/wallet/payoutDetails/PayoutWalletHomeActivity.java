@@ -3,12 +3,20 @@ package in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
+import org.parceler.Parcels;
+
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.AddPaymentBankActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.AddPaytmDetailsActivity;
+import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class PayoutWalletHomeActivity extends NostragamusActivity implements PayoutWalletHomeFragmentListener {
@@ -73,15 +81,24 @@ public class PayoutWalletHomeActivity extends NostragamusActivity implements Pay
     @Override
     public void onEditPaytmClicked() {
         Intent intent = new Intent(this, AddPaytmDetailsActivity.class);
-        // TODO : add userPaymentInfo into bundle... to make it edit
+        intent.putExtras(getExtras());
         startActivityForResult(intent, ActivityResultRequestCode.EDIT_PAYTM);
     }
 
     @Override
     public void onEditBankClicked() {
         Intent intent = new Intent(this, AddPaymentBankActivity.class);
-        // TODO : add userPaymentInfo into bundle... to make it edit
+        intent.putExtras(getExtras());
         startActivityForResult(intent, ActivityResultRequestCode.EDIT_BANK);
+    }
+
+    private Bundle getExtras() {
+        Bundle args = new Bundle();
+        UserPaymentInfo userPaymentInfo = WalletHelper.getUserPaymentInfo();
+        if (userPaymentInfo != null) {
+            args.putParcelable(Constants.BundleKeys.USER_PAYMENT_INFO_PARCEL, Parcels.wrap(userPaymentInfo));
+        }
+        return  args;
     }
 
     @Override

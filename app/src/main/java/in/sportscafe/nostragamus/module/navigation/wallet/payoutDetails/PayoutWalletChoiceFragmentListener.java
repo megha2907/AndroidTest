@@ -5,5 +5,6 @@ package in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails;
  */
 
 public interface PayoutWalletChoiceFragmentListener {
-
+    void onAddPayoutDetailsClicked();
+    void onWithdrawSuccessful();
 }

@@ -5,17 +5,21 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
+import java.text.DecimalFormat;
+
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 
 /**
@@ -64,26 +68,79 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
         mPromoMoneyInfoLayout.setOnClickListener(this);
     }
 
+    /**
+     * Whenever userWallet api to be fetched/refreshed; this method is invoked
+     */
+    public void refreshWalletDetails() {
+        fetchUserWalletFromServer();
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        fetchUserWalletFromServer();
+    }
+
+    private void fetchUserWalletFromServer() {
+        showProgressbar();
         WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
             @Override
             public void noInternet() {
-                showMessage("No Net");
+                dismissProgressbar();
+                showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
             }
 
             @Override
             public void onApiFailed() {
-                showMessage("API failed");
+                dismissProgressbar();
+                showMessage(Constants.Alerts.API_FAIL);
             }
 
             @Override
-            public void onSuccessResponse() {
-                showMessage("API Success");
+            public void onSuccessResponse(UserWalletResponse response) {
+                dismissProgressbar();
+                handleSuccessfulWalletResponse();
             }
         }).performApiCall();
+    }
+
+    private void handleSuccessfulWalletResponse() {
+        View rootView = getView();
+        if (rootView != null && getActivity() != null) {
+            TextView totalWalletBalanceTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_total_amount_textView);
+            TextView balanceTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_amount_textView);
+            TextView promoBalanceTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_promo_amount_textView);
+
+            double amount = WalletHelper.getBalanceAmount();
+            double promoAmount = WalletHelper.getPromoAmount();
+
+            if (amount > 0) {
+                balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
+            }
+            if (promoAmount > 0) {
+                promoBalanceTextView.setText(WalletHelper.getFormattedStringOfAmount(promoAmount));
+            }
+
+            double total = amount + promoAmount;
+            if (total > 0) {
+                totalWalletBalanceTextView.setText(WalletHelper.getFormattedStringOfAmount(total));
+            }
+
+            // Withdraw in progress
+            int withdrawInProgress = WalletHelper.getWithdrawalsInProgress();
+            if (withdrawInProgress > 0) {
+                TextView withdrawProgressTextView = (TextView) rootView.findViewById(R.id.wallet_home_withdraw_progress_textView);
+                withdrawProgressTextView.setText(withdrawInProgress + " withdrawals in progress");
+            }
+
+            // Payout accounts
+            int payoutAccount = WalletHelper.getPayoutAccountsAdded();
+            if (payoutAccount > 0) {
+                TextView payoutAccountsTextView = (TextView) rootView.findViewById(R.id.wallet_home_account_added_textView);
+                payoutAccountsTextView.setText(payoutAccount + " account added");
+            }
+        }
     }
 
     @Override
@@ -124,11 +181,11 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
     }
 
     private void onMoneyInfoLayoutClicked() {
-         if (mWalletMoneyInfoLayout.getVisibility() == View.VISIBLE) {
-             AnimationHelper.collapse(mWalletMoneyInfoLayout);
-         } else {
-             AnimationHelper.expand(mWalletMoneyInfoLayout);
-         }
+        if (mWalletMoneyInfoLayout.getVisibility() == View.VISIBLE) {
+            AnimationHelper.collapse(mWalletMoneyInfoLayout);
+        } else {
+            AnimationHelper.expand(mWalletMoneyInfoLayout);
+        }
     }
 
     private void onPayoutDetailsClicked() {

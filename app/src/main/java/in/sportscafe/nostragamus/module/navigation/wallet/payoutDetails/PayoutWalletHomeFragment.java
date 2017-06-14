@@ -15,7 +15,10 @@ import com.jeeva.android.BaseFragment;
 import java.util.ArrayList;
 
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.dto.PayoutAddEditItemDto;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoBankDto;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoPaytmDto;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,18 +91,46 @@ public class PayoutWalletHomeFragment extends BaseFragment {
     private ArrayList<PayoutAddEditItemDto> getAdapterItemList() {
         ArrayList<PayoutAddEditItemDto> list = new ArrayList<>();
 
+        boolean isPaytmAdded = WalletHelper.isPaytmPayoutDetailsProvided();
+        boolean isBankAdded = WalletHelper.isBankPayoutDetailsProvided();
 
-        /* Only one item can be in the whole list */
-        PayoutAddEditItemDto addPaytmDetailDto = new PayoutAddEditItemDto();
-        addPaytmDetailDto.setViewType(PayoutHomeRecyclerAdapter.PayoutViewType.ADD_PAYTM);
+        /* Paytm */
+        if (!isPaytmAdded) {
+            /* Only one item can be in the whole list */
+            PayoutAddEditItemDto addPaytmDetailDto = new PayoutAddEditItemDto();
+            addPaytmDetailDto.setViewType(PayoutHomeRecyclerAdapter.PayoutViewType.ADD_PAYTM);
 
-        /* Show only when user NOT ready for Paytm
-         * Only one item can be in the whole list */
-        PayoutAddEditItemDto addBankDetailDto = new PayoutAddEditItemDto();
-        addBankDetailDto.setViewType(PayoutHomeRecyclerAdapter.PayoutViewType.ADD_BANK);
+            list.add(addPaytmDetailDto);
+        } else {
+            UserPaymentInfoPaytmDto paytmDto = WalletHelper.getPaytm();
+            if (paytmDto != null) {
+                PayoutAddEditItemDto addPaytmDetailDto = new PayoutAddEditItemDto();
+                addPaytmDetailDto.setViewType(PayoutHomeRecyclerAdapter.PayoutViewType.SHOW_PAYTM);
+                addPaytmDetailDto.setAccountNumber(paytmDto.getMobile());
 
-        list.add(addPaytmDetailDto);
-        list.add(addBankDetailDto);
+                list.add(addPaytmDetailDto);
+            }
+        }
+
+        /* Bank */
+        if (!isBankAdded) {
+            /* Show only when user NOT ready for Paytm
+             * Only one item can be in the whole list */
+            PayoutAddEditItemDto addBankDetailDto = new PayoutAddEditItemDto();
+            addBankDetailDto.setViewType(PayoutHomeRecyclerAdapter.PayoutViewType.ADD_BANK);
+
+            list.add(addBankDetailDto);
+        } else {
+            UserPaymentInfoBankDto bankDto = WalletHelper.getBank();
+            if (bankDto != null) {
+                PayoutAddEditItemDto addBankDetailDto = new PayoutAddEditItemDto();
+                addBankDetailDto.setViewType(PayoutHomeRecyclerAdapter.PayoutViewType.SHOW_BANK);
+                addBankDetailDto.setAccountName(bankDto.getName());
+                addBankDetailDto.setAccountNumber(bankDto.getAccountNo());
+
+                list.add(addBankDetailDto);
+            }
+        }
 
         return list;
     }
