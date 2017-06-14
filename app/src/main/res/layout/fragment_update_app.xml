@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     android:paddingTop="@dimen/dp_10">
 
     <RelativeLayout
@@ -82,12 +81,14 @@
     <com.jeeva.android.widgets.HmImageView
         android:id="@+id/update_app_iv_image_out"
         android:layout_width="match_parent"
+        app:defaultImage="@drawable/placeholder_icon"
         android:layout_height="match_parent" />
 
     <com.jeeva.android.widgets.HmImageView
         android:id="@+id/update_app_iv_image_in"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:defaultImage="@drawable/placeholder_icon"
         android:layout_alignBottom="@id/update_app_iv_image_out"
         android:layout_alignTop="@id/update_app_iv_image_out"
         android:alpha="0" />

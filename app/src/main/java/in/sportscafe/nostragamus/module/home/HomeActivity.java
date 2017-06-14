@@ -73,13 +73,6 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
         showScreenAsRequired();
 
-        checkAndAskStoragePermission();
-    }
-
-    private void checkAndAskStoragePermission() {
-        if (new PermissionsChecker(getActivity()).lacksPermissions(Constants.AppPermissions.STORAGE)) {
-            PermissionsActivity.startActivityForResult(getActivity(), Constants.RequestCodes.STORAGE_PERMISSION, Constants.AppPermissions.STORAGE);
-        }
     }
 
     private void showScreenAsRequired() {

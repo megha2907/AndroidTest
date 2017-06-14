@@ -214,38 +214,8 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void onPowerUpsClicked() {
-        downloadAndInstallApp();
     }
 
-    private void downloadAndInstallApp() {
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getLatestApk().enqueue(new NostragamusCallBack<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    super.onResponse(call, response);
-
-                    if (response != null && response.isSuccessful()) {
-                        String url = response.body();
-                        if (!TextUtils.isEmpty(url)) {
-
-                            Intent intent = new Intent(getContext().getApplicationContext(), NostraFileDownloadService.class);
-                            intent.putExtra(NostraFileDownloadService.FILE_DOWNLOAD_URL, url);
-                            intent.putExtra(NostraFileDownloadService.FILE_NAME_WITH_EXTENSION, StorageUtility.getFileNameWithSuffix(url));
-
-                            getContext().startService(intent);
-
-                        } else {
-                            showMessage(Constants.Alerts.API_FAIL);
-                        }
-                    } else {
-                        showMessage(Constants.Alerts.API_FAIL);
-                    }
-                }
-            });
-        } else {
-            showMessage("No internet");
-        }
-    }
 
     private void onWalletClicked() {
         if (getActivity() != null) {
