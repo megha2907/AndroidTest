@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.appupdate;
+package in.sportscafe.nostragamus.module.navigation.appupdate;
 
 import android.animation.Animator;
 import android.content.ActivityNotFoundException;
@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.ExceptionTracker;
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import java.util.ArrayList;
@@ -29,14 +28,11 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionFailureDialogFragment;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.service.NostraFileDownloadService;

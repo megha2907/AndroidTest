@@ -3,15 +3,10 @@ package in.sportscafe.nostragamus.module.settings.app;
 import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.BuildConfig;
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.ServerDataManager;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
-import in.sportscafe.nostragamus.module.appupdate.AppUpdateDetails;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppUpdateInfo;
-import in.sportscafe.nostragamus.module.settings.app.dto.Version;
 import in.sportscafe.nostragamus.module.settings.app.dto.SettingsDetails;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;

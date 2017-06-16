@@ -2,10 +2,6 @@ package in.sportscafe.nostragamus.module.settings.app.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.parceler.Parcel;
-
-import in.sportscafe.nostragamus.module.appupdate.AppUpdateDetails;
-
 /**
  * Created by Jeeva on 3/10/16.
  */

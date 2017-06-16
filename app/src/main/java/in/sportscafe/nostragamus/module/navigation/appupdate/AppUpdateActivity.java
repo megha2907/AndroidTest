@@ -1,13 +1,11 @@
-package in.sportscafe.nostragamus.module.appupdate;
+package in.sportscafe.nostragamus.module.navigation.appupdate;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -16,9 +14,6 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.navigation.help.HelpFragmentListener;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
-import in.sportscafe.nostragamus.module.onboard.OnBoardingFragment;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**

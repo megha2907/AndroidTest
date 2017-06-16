@@ -1,17 +1,13 @@
-package in.sportscafe.nostragamus.module.appupdate;
+package in.sportscafe.nostragamus.module.navigation.appupdate;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.jeeva.android.BaseFragment;
-import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;

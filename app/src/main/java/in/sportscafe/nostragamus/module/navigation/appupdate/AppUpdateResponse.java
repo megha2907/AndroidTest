@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.appupdate;
+package in.sportscafe.nostragamus.module.navigation.appupdate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
