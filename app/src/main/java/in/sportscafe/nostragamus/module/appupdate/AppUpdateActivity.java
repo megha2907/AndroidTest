@@ -10,13 +10,16 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
+import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.navigation.help.HelpFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
 import in.sportscafe.nostragamus.module.onboard.OnBoardingFragment;
+import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
  * Created by deepanshi on 6/2/17.
@@ -52,22 +55,17 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
         if (extras != null) {
             if (extras.containsKey(Constants.BundleKeys.SCREEN)) {
                 if (extras.get(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.WHATS_NEW)) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.WHATS_NEW, getAppUpdateActionListener())).commit();
+                    FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.WHATS_NEW, getAppUpdateActionListener()));
                 } else if (extras.getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_FORCE_UPDATE)) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_FORCE_UPDATE, getAppUpdateActionListener())).commit();
+                    FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_FORCE_UPDATE, getAppUpdateActionListener()));
                 } else {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_UPDATE, getAppUpdateActionListener())).commit();
+                    FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_UPDATE, getAppUpdateActionListener()));
                 }
             } else {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_UPDATE, getAppUpdateActionListener())).commit();
+                FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_UPDATE, getAppUpdateActionListener()));
             }
         } else {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.update_app_fl_holder, AppUpdateFragment.newInstance(null, getAppUpdateActionListener())).commit();
+            FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, AppUpdateFragment.newInstance(null, getAppUpdateActionListener()));
         }
     }
 
@@ -94,10 +92,7 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
     private void openDownloadAppScreen(String screenType) {
 
         DownloadingAppFragment downloadingApp = new DownloadingAppFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.update_app_fl_holder, downloadingApp.newInstance(screenType))
-                .addToBackStack(null)
-                .commit();
+        FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, downloadingApp.newInstance(screenType));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow();
@@ -118,10 +113,15 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
     public void onBackPressed() {
 
         if (getIntent().getExtras() != null) {
+
             if (getIntent().getExtras().getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_FORCE_UPDATE)) {
                 handleDoubleBackPressLogicToExit();
             } else if (getIntent().getExtras().getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_UPDATE)) {
-                navigateToHome();
+                if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
+                    navigateToHome();
+                } else {
+                    navigateToGetStarted();
+                }
             } else {
                 finish();
             }
@@ -130,7 +130,6 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
         }
 
     }
-
 
     /**
      * Application exit happens only when user clicks back button twice within specified time interval
@@ -151,6 +150,12 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
                 }
             }, DOUBLE_BACK_PRESSED_DELAY_ALLOWED);
         }
+    }
+
+
+    private void navigateToGetStarted() {
+        startActivity(new Intent(this, GetStartActivity.class));
+        finish();
     }
 
 

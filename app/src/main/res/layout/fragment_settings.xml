@@ -32,7 +32,7 @@
                 <ImageView
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/about_report_icn"/>
+                    android:src="@drawable/navigation_about_icon"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
                 <ImageView
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/logout_icn"/>
+                    android:src="@drawable/navigation_logout_icon"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"

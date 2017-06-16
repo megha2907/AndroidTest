@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.appupdate;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -26,6 +28,9 @@ public class DownloadingAppFragment extends BaseFragment implements View.OnClick
     private OnDismissListener mDismissListener;
 
     private static final int DISMISS_SCREEN = 58;
+
+    private boolean mIsFirstBackPressed = false;
+    public static final int DOUBLE_BACK_PRESSED_DELAY_ALLOWED = 3000;
 
     public DownloadingAppFragment() {
     }
@@ -77,7 +82,7 @@ public class DownloadingAppFragment extends BaseFragment implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.downloading_app_iv_back:
-                mDismissListener.onDismiss(DISMISS_SCREEN, null);
+                mDismissListener.onDismiss(DISMISS_SCREEN, getArguments());
                 break;
 
         }

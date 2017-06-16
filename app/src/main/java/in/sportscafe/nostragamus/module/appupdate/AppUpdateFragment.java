@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.BaseFragment;
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
@@ -50,7 +51,7 @@ import retrofit2.Response;
  * Created by deepanshi on 6/2/17.
  */
 
-public class AppUpdateFragment extends NostragamusFragment implements View.OnClickListener {
+public class AppUpdateFragment extends BaseFragment implements View.OnClickListener {
 
     private Button mBtnNext;
 

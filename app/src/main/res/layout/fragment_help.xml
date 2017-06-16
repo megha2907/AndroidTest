@@ -31,7 +31,7 @@
                 <ImageView
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/about_report_icn"/>
+                    android:src="@drawable/navigation_rules_icn"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
                 <ImageView
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/gameplay_icn"/>
+                    android:src="@drawable/navigation_gameplay_icn"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
                 <ImageView
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/faq_icn"/>
+                    android:src="@drawable/navigation_faq_icn"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
@@ -136,7 +136,7 @@
                 <ImageView
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/dummy_gane_icn"/>
+                    android:src="@drawable/navigation_dummy_game_icn"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"

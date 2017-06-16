@@ -500,6 +500,7 @@ public interface Constants {
         String WALLET_HISTORY = "walletHistory";
         String WALLET_PAYOUT = "walletPayout";
         String WALLET_PAYOUT_CHOICE = "walletPayoutChoice";
+        String DOWNLOADING_APP = "DownloadingApp";
     }
 
     interface InAppPopups {
