@@ -158,7 +158,7 @@
                     <com.jeeva.android.widgets.customfont.CustomEditText
                         android:id="@+id/wallet_withdraw_amount_editText"
                         style="@style/EditTextStyle"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:imeOptions="actionDone"/>
 
                 </com.jeeva.android.widgets.ShadowLayout>

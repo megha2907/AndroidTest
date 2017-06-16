@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -119,7 +120,9 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
             /*if (getView() != null) {
                 Snackbar.make(getView(), "Please enter amount", Snackbar.LENGTH_SHORT).show();
             }*/
-            mAmountEditText.setError("Please enter amount");
+            if (mAmountEditText != null) {
+                mAmountEditText.setError("Please enter amount");
+            }
         }
     }
 
@@ -206,37 +209,37 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
             @Override
             public void onTransactionUiError() {
                 Log.d(TAG, Constants.Alerts.PAYTM_FAILURE);
-                showPaytmTransactionFailureDialog();
+                showPaytmTransactionFailureDialog(amount);
             }
 
             @Override
             public void onTransactionNoNetwork() {
                 Log.d(TAG, Constants.Alerts.NO_NETWORK_CONNECTION);
-                showPaytmTransactionFailureDialog();
+                showPaytmTransactionFailureDialog(amount);
             }
 
             @Override
             public void onTransactionClientAuthenticationFailed() {
                 Log.d(TAG, Constants.Alerts.PAYTM_AUTHENTICATION_FAILED);
-                showPaytmTransactionFailureDialog();
+                showPaytmTransactionFailureDialog(amount);
             }
 
             @Override
             public void onTransactionPageLoadingError() {
                 Log.d(TAG, Constants.Alerts.PAYTM_FAILURE);
-                showPaytmTransactionFailureDialog();
+                showPaytmTransactionFailureDialog(amount);
             }
 
             @Override
             public void onTransactionCancelledByBackPressed() {
                 Log.d(TAG, Constants.Alerts.PAYTM_TRANSACTION_CANCELLED);
-                showPaytmTransactionFailureDialog();
+                showPaytmTransactionFailureDialog(amount);
             }
 
             @Override
             public void onTransactionCancelled() {
                 Log.d(TAG, Constants.Alerts.PAYTM_TRANSACTION_CANCELLED);
-                showPaytmTransactionFailureDialog();
+                showPaytmTransactionFailureDialog(amount);
             }
 
             @Override
@@ -251,29 +254,32 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
             @Override
             public void onTransactionFailureResponse(@Nullable PaytmTransactionResponse response) {
                 Log.d(TAG, Constants.Alerts.PAYTM_TRANSACTION_FAILED);
-                showPaytmTransactionFailureDialog();
+                showPaytmTransactionFailureDialog(amount);
             }
         };
     }
 
-    private void showPaytmSuccessDialog() {
-        // TODO: paytm success receipt
-        showMessage("Paytm Successful");
-        if (mFragmentListener != null) {
-            mFragmentListener.onSuccess();
-        }
-    }
-    
     private void showPaytmSuccessDialog(final double amount) {
-        PaytmTransactionSuccessDialogFragment successDialogFragment =
-                PaytmTransactionSuccessDialogFragment.newInstance(1200, amount, getPaytmSuccessActionListener());
-        successDialogFragment.show(getChildFragmentManager(), "SUCCESS_DIALOG");
+        // As fragment resume may take some time, launch fragment after some time
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                PaytmTransactionSuccessDialogFragment successDialogFragment =
+                        PaytmTransactionSuccessDialogFragment.newInstance(1200, amount, getPaytmSuccessActionListener());
+                successDialogFragment.show(getChildFragmentManager(), "SUCCESS_DIALOG");
+            }
+        }, 200);
     }
 
-    private void showPaytmTransactionFailureDialog() {
-        PaytmTransactionFailureDialogFragment failureDialogFragment =
-                PaytmTransactionFailureDialogFragment.newInstance(1199, getPaytmFailureActionListener());
-        failureDialogFragment.show(getChildFragmentManager(), "FAILURE_DIALOG");
+    private void showPaytmTransactionFailureDialog(final double amount) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                PaytmTransactionFailureDialogFragment failureDialogFragment =
+                        PaytmTransactionFailureDialogFragment.newInstance(1199, getPaytmFailureActionListener(amount));
+                failureDialogFragment.show(getChildFragmentManager(), "FAILURE_DIALOG");
+            }
+        }, 200);
     }
 
     /**
@@ -281,19 +287,18 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
      *
      * @return
      */
-    private PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener getPaytmFailureActionListener() {
+    private PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener getPaytmFailureActionListener(final double amount) {
         return new PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener() {
 
             @Override
             public void onBackToAddMoney() {
-                // TODO : navigate to Add Money
-                showMessage("Back To Add Money clicked");
+                Log.d(TAG, "On Paytm transaction failed ");
             }
 
             @Override
             public void onRetryPayment() {
-                // TODO : navigate to Retry Payment Screen
-                showMessage("Retry Payment");
+                Log.d(TAG, "On Paytm transaction failed - Retrying... ");
+                initTransaction(amount);
             }
         };
     }
@@ -304,12 +309,12 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
      * @return
      */
     private PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener getPaytmSuccessActionListener() {
-
         return new PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener() {
             @Override
             public void onBackToHomeClicked() {
-                // TODO : navigate to Home
-                showMessage("Back To Home Clicked");
+                if (mFragmentListener != null) {
+                    mFragmentListener.onSuccess();
+                }
             }
         };
     }
