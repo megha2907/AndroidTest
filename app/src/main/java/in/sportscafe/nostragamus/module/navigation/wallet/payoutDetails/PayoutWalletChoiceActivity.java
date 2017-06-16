@@ -6,9 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawApiDialogListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawFromWalletApiResponseDialogFragment;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class PayoutWalletChoiceActivity extends NostragamusActivity implements PayoutWalletChoiceFragmentListener {
@@ -62,9 +65,41 @@ public class PayoutWalletChoiceActivity extends NostragamusActivity implements P
     }
 
     @Override
-    public void onWithdrawSuccessful() {
+    public void onWithdrawSuccessful(Bundle args) {
+        showConfirmationDialog(args);
+    }
+
+    @Override
+    public void onWithdrawFailure(Bundle args) {
+        showConfirmationDialog(args);
+    }
+
+    private void showConfirmationDialog(Bundle args) {
+        int requestCode = 1390;
+        if (args == null) {
+            args = new Bundle();
+        }
+        args.putInt(Constants.BundleKeys.DIALOG_REQUEST_CODE, requestCode);
+
+
+        WithdrawFromWalletApiResponseDialogFragment dialogFragment =
+                WithdrawFromWalletApiResponseDialogFragment.newInstance(getDialogListener());
+        dialogFragment.setArguments(args);
+        dialogFragment.show(getSupportFragmentManager(), "WITHDRAW_DIALOG");
+    }
+
+    private WithdrawApiDialogListener getDialogListener() {
+        return new WithdrawApiDialogListener() {
+            @Override
+            public void onOkClicked() {
+                gotoWalletHome();
+            }
+        };
+    }
+
+    private void gotoWalletHome() {
         Intent intent = new Intent(this, WalletHomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

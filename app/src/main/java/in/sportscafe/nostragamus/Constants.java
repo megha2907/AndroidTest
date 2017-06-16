@@ -294,6 +294,9 @@ public interface Constants {
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
+        String WITHDRAW_STATUS_CODE = "withdrawFailureCode";
+        String WITHDRAW_AMOUNT = "withdrawAmount";
+        String WITHDRAW_PAYOUT_TYPE = "withdrawPayoutType";
     }
 
     interface ParcelableKeys {

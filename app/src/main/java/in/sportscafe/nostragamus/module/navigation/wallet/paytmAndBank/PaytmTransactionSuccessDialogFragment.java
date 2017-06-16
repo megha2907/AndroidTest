@@ -14,6 +14,7 @@ import android.widget.TextView;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,7 +83,8 @@ public class PaytmTransactionSuccessDialogFragment extends NostragamusDialogFrag
 
         TextView tvPaytmTransactionSuccess = (TextView) findViewById(R.id.paytm_transaction_success_tv_desc);
         if (mTransactionAmount != 0) {
-            tvPaytmTransactionSuccess.setText("₹" + String.valueOf(mTransactionAmount) + "has been successfully added to your game wallet!");
+            tvPaytmTransactionSuccess.setText(WalletHelper.getFormattedStringOfAmount(mTransactionAmount) +
+                    " has been successfully added to your game wallet!");
         }
     }
 
