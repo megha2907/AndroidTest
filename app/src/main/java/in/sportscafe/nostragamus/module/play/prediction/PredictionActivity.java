@@ -33,6 +33,7 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.NostragamusWebView;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.common.ShakeListener;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
@@ -509,12 +510,16 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         super.onStart();
         LocalBroadcastManager.getInstance(this).registerReceiver(mPowerUpUpdatedReceiver,
                 new IntentFilter(IntentActions.ACTION_POWERUPS_UPDATED));
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mOpenWebView,
+                new IntentFilter(IntentActions.ACTION_OPEN_WEBVIEW));
     }
 
     @Override
     public void onStop() {
         super.onStop();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mPowerUpUpdatedReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mOpenWebView);
     }
 
     BroadcastReceiver mPowerUpUpdatedReceiver = new BroadcastReceiver() {
@@ -551,6 +556,19 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         } else if (requestCode == POPUP_DIALOG_REQUEST_CODE) {
             navigateToFeed();
         }
+    }
+
+
+    BroadcastReceiver mOpenWebView = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            showNostragamusWebView();
+        }
+    };
+
+    private void showNostragamusWebView() {
+        Intent intent = new Intent(this, NostragamusWebView.class);
+        startActivity(intent);
     }
 
 

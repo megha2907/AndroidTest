@@ -334,6 +334,7 @@ public interface Constants {
         String ACTION_ALL_CHALLENGE_DATA_LOADED = "in.sportscafe.nostragamus.intent.action.ALL_CHALLENGE_DATA_LOADED";
         String ACTION_SCROLL_CHALLENGE = "in.sportscafe.nostragamus.intent.action.SCROLL_CHALLENGE";
         String ACTION_RELOAD_CHALLENGES = "in.sportscafe.nostragamus.intent.action.RELOAD_CHALLENGES";
+        String ACTION_OPEN_WEBVIEW= "in.sportscafe.nostragamus.intent.action.OPEN_WEBVIEW";
     }
 
     interface LeaderBoardPeriods {

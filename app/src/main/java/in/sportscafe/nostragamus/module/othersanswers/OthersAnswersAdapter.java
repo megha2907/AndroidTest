@@ -384,7 +384,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         else if (answerId == question.getQuestionAnswer()) {
 
             setTextColor(tvAnswer, R.color.greencolor);
-            tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
+            tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.correct_ans_drawable, 0);
             tvotheroption.setVisibility(View.VISIBLE);
             tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_cross_icon, 0);
 
@@ -441,8 +441,8 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
                 setTextColor(tvotheroption, R.color.white_60);
             }
             tvotheroption.setVisibility(View.VISIBLE);
-            tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
-            tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.result_tick_icon, 0);
+            tvotheroption.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.correct_ans_drawable, 0);
+            tvAnswer.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.correct_ans_drawable, 0);
             setTextColor(tvAnswer, R.color.greencolor);
 
         }  // if your answer is incorrect and other option is correct
