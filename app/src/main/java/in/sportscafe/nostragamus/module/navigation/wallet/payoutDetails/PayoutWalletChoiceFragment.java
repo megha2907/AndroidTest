@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import com.jeeva.android.BaseFragment;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
@@ -202,13 +204,13 @@ public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnC
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 
             showProgressbar();
-            WithdrawFromWalletApiModelImpl.newInstance(getListener()).callWithdrawMoneyApi(amount, type);
+            WithdrawFromWalletApiModelImpl.newInstance(getWithdrawApiListener(amount, type)).callWithdrawMoneyApi(amount, type);
         } else {
             showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
         }
     }
 
-    private WithdrawFromWalletApiModelImpl.WithdrawMoneyFromWalletApiListener getListener() {
+    private WithdrawFromWalletApiModelImpl.WithdrawMoneyFromWalletApiListener getWithdrawApiListener(final double amount, final String payoutType) {
         return new WithdrawFromWalletApiModelImpl.WithdrawMoneyFromWalletApiListener() {
             @Override
             public void noInternet() {
@@ -225,34 +227,46 @@ public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnC
             @Override
             public void onSuccessResponse(WithdrawFromWalletResponse response) {
                 dismissProgressbar();
-                handleWithdrawSuccessResponse(response);
+                handleWithdrawSuccessResponse(response, amount, payoutType);
             }
         };
     }
 
-    private void handleWithdrawSuccessResponse(WithdrawFromWalletResponse response) {
+    private void handleWithdrawSuccessResponse(WithdrawFromWalletResponse response, double amount, String payoutType) {
         if (response != null) {
             switch (response.getCode()) {
                 case Constants.WithdrawFromWalletResponseCode.SUCCESS:
-                    showSuccessDialog();
+                    NostragamusAnalytics.getInstance().trackWalletTransaction(false, amount);
+                    showSuccessDialog(response.getCode(), amount, payoutType);
                     break;
 
                 case Constants.WithdrawFromWalletResponseCode.ERROR_INSUFICIENT_BALANCE:
-                    break;
-
                 case Constants.WithdrawFromWalletResponseCode.ERROR_MIN_BALANCE_REQUIRED:
-                    break;
-
                 case Constants.WithdrawFromWalletResponseCode.ERROR_UNKNOWN:
+                    showFailureDialog(response.getCode(), amount, payoutType);
                     break;
             }
         }
-
     }
 
-    private void showSuccessDialog() {
+    private void showFailureDialog(int code,  double amount, String payoutType) {
         if (mFragmentListener != null) {
-            mFragmentListener.onWithdrawSuccessful();
+            mFragmentListener.onWithdrawFailure(getArgs(code, amount, payoutType));
+        }
+    }
+
+    @NonNull
+    private Bundle getArgs(int code, double amount, String payoutType) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.BundleKeys.WITHDRAW_STATUS_CODE, code);
+        bundle.putDouble(Constants.BundleKeys.WITHDRAW_AMOUNT, amount);
+        bundle.putString(Constants.BundleKeys.WITHDRAW_PAYOUT_TYPE, payoutType);
+        return bundle;
+    }
+
+    private void showSuccessDialog(int code, double amount, String payoutType) {
+        if (mFragmentListener != null) {
+            mFragmentListener.onWithdrawSuccessful(getArgs(code, amount, payoutType));
         }
     }
 
