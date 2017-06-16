@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.appupdate;
+package in.sportscafe.nostragamus.module.navigation.appupdate;
 
 import android.animation.Animator;
 import android.content.ActivityNotFoundException;
@@ -19,8 +19,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.BaseFragment;
 import com.jeeva.android.ExceptionTracker;
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import java.util.ArrayList;
@@ -30,10 +30,13 @@ import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
+import in.sportscafe.nostragamus.service.NostraFileDownloadService;
+import in.sportscafe.nostragamus.utils.StorageUtility;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import me.relex.circleindicator.CircleIndicator;
@@ -44,7 +47,7 @@ import retrofit2.Response;
  * Created by deepanshi on 6/2/17.
  */
 
-public class AppUpdateFragment extends NostragamusFragment implements View.OnClickListener {
+public class AppUpdateFragment extends BaseFragment implements View.OnClickListener {
 
     private Button mBtnNext;
 
@@ -74,11 +77,22 @@ public class AppUpdateFragment extends NostragamusFragment implements View.OnCli
 
     private OnDismissListener mDismissListener;
 
-    public static AppUpdateFragment newInstance(String screenType) {
+    private AppUpdateActionListener mAppUpdateActionListener;
+
+    public interface AppUpdateActionListener {
+        void onAppDownload(String screenType);
+    }
+
+    public void setFailureListener(AppUpdateFragment.AppUpdateActionListener listener) {
+        mAppUpdateActionListener = listener;
+    }
+
+    public static AppUpdateFragment newInstance(String screenType,AppUpdateActionListener listener) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.BundleKeys.SCREEN, screenType);
 
         AppUpdateFragment fragment = new AppUpdateFragment();
+        fragment.setFailureListener(listener);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -124,37 +138,37 @@ public class AppUpdateFragment extends NostragamusFragment implements View.OnCli
         mTvUpdateAppNext.setOnClickListener(this);
 
 
-            if (bundle.getString(Constants.BundleKeys.SCREEN)!=null) {
+        if (bundle.getString(Constants.BundleKeys.SCREEN) != null) {
 
             /* check if it's a What's NEW Screen or a Force Update Screen or a Normal Update Screen */
-                if (bundle.getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.WHATS_NEW)) {
-                    mUpdateAppLater.setVisibility(View.GONE);
-                    mUpdateAppBtn.setVisibility(View.GONE);
-                    screenHeading.setText("What's New !");
-                    RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) rlViewPager.getLayoutParams();
-                    paramsFour.setMargins(0, 50, 0, 100);
-                    rlViewPager.setLayoutParams(paramsFour);
-                } else if (bundle.getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_FORCE_UPDATE)) {
-                    screenHeading.setText("Update the App !");
-                    mUpdateAppLater.setVisibility(View.VISIBLE);
-                    backBtn.setVisibility(View.INVISIBLE);
-                    ViewGroup.LayoutParams params = mUpdateAppLater.getLayoutParams();
-                    params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-                    mUpdateAppLater.setLayoutParams(params);
-                    mUpdateAppLater.setText("You need to update the app to continue Playing!");
-                    mUpdateAppLater.setTextSize(13);
-                    mUpdateAppLater.setOnClickListener(null);
-                    mUpdateAppBtn.setVisibility(View.VISIBLE);
-                } else {
-                    screenHeading.setText("Update the App !");
-                    mUpdateAppLater.setVisibility(View.VISIBLE);
-                    mUpdateAppBtn.setVisibility(View.VISIBLE);
-                }
+            if (bundle.getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.WHATS_NEW)) {
+                mUpdateAppLater.setVisibility(View.GONE);
+                mUpdateAppBtn.setVisibility(View.GONE);
+                screenHeading.setText("What's New !");
+                RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) rlViewPager.getLayoutParams();
+                paramsFour.setMargins(0, 50, 0, 100);
+                rlViewPager.setLayoutParams(paramsFour);
+            } else if (bundle.getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_FORCE_UPDATE)) {
+                screenHeading.setText("Update the App !");
+                mUpdateAppLater.setVisibility(View.VISIBLE);
+                backBtn.setVisibility(View.INVISIBLE);
+                ViewGroup.LayoutParams params = mUpdateAppLater.getLayoutParams();
+                params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                mUpdateAppLater.setLayoutParams(params);
+                mUpdateAppLater.setText("You need to update the app to continue Playing!");
+                mUpdateAppLater.setTextSize(13);
+                mUpdateAppLater.setOnClickListener(null);
+                mUpdateAppBtn.setVisibility(View.VISIBLE);
             } else {
                 screenHeading.setText("Update the App !");
                 mUpdateAppLater.setVisibility(View.VISIBLE);
                 mUpdateAppBtn.setVisibility(View.VISIBLE);
             }
+        } else {
+            screenHeading.setText("Update the App !");
+            mUpdateAppLater.setVisibility(View.VISIBLE);
+            mUpdateAppBtn.setVisibility(View.VISIBLE);
+        }
 
 
     }
@@ -313,7 +327,15 @@ public class AppUpdateFragment extends NostragamusFragment implements View.OnCli
                 break;
 
             case R.id.update_app_btn:
-                navigateAppHostedUrl(mAppLink);
+                if (new PermissionsChecker(getActivity()).lacksPermissions(Constants.AppPermissions.STORAGE)) {
+                    PermissionsActivity.startActivityForResult(getActivity(), Constants.RequestCodes.STORAGE_PERMISSION, Constants.AppPermissions.STORAGE);
+                } else {
+                    if (BuildConfig.IS_PAID_VERSION) {
+                        downloadAndInstallApp(mAppLink);
+                    } else {
+                        navigateAppHostedUrl(mAppLink);
+                    }
+                }
                 NostragamusAnalytics.getInstance().trackUpdateApp(Constants.AnalyticsActions.CLICKED);
                 break;
 
@@ -324,7 +346,25 @@ public class AppUpdateFragment extends NostragamusFragment implements View.OnCli
         }
     }
 
-    /* Download Apk on click of update App btn */
+    /* If it's a Pro App , download and install using NostraFileDownloadService */
+    private void downloadAndInstallApp(String apkLink) {
+
+        String fixedApkLink = "http://nostragamus.in/pro/";
+
+        if (TextUtils.isEmpty(apkLink)) {
+            apkLink = fixedApkLink;
+        }
+
+        Intent intent = new Intent(getContext().getApplicationContext(), NostraFileDownloadService.class);
+        intent.putExtra(NostraFileDownloadService.FILE_DOWNLOAD_URL, apkLink);
+        intent.putExtra(NostraFileDownloadService.FILE_NAME_WITH_EXTENSION, StorageUtility.getFileNameWithSuffix(apkLink));
+        getContext().startService(intent);
+
+        mAppUpdateActionListener.onAppDownload(getArguments().getString(Constants.BundleKeys.SCREEN));
+    }
+
+
+    /* If it's a Playstore ver. ,then navigate to playstore */
     private void navigateAppHostedUrl(String apkLink) {
         String fixedApkLink = "http://nostragamus.in/pro/";
 
@@ -338,6 +378,7 @@ public class AppUpdateFragment extends NostragamusFragment implements View.OnCli
             ExceptionTracker.track(e);
         }
     }
+
 
     private void navigateToHome() {
         Intent intent = new Intent(getContext(), HomeActivity.class);

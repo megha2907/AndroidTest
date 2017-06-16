@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/dp_22">
+
+    <RelativeLayout
+        android:id="@+id/downloading_app_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_5">
+
+        <ImageView
+            android:id="@+id/downloading_app_iv_back"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_40"
+            android:layout_centerVertical="true"
+            android:onClick="onClick"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingLeft="@dimen/dp_14"
+            android:paddingRight="@dimen/dp_14"
+            android:paddingTop="@dimen/dp_5"
+            android:src="@drawable/back_icon_grey" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/downloading_app_tv_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Update the App !"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_16"
+            app:typeface="lato_regular" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/downloading_app_rl_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/update_app_btn"
+        android:layout_below="@+id/downloading_app_rl"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp_320"
+            android:layout_height="@dimen/dp_320"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/downloading_app_iv_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/downloading_app_icon" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/downloading_app_rl_image"
+        android:layout_marginTop="@dimen/dp_30">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/downloading_app_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:gravity="center"
+            android:text="Your App is being updated!"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_16"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/downloading_app_tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/downloading_app_tv_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_45"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:gravity="center"
+            android:text="@string/app_downloading"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_13"
+            app:typeface="lato_regular" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

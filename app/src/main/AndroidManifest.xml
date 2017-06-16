@@ -182,7 +182,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.appupdate.AppUpdateActivity"
+            android:name=".module.navigation.appupdate.AppUpdateActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.user.group.newgroup.NewGroupActivity"

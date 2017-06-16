@@ -14,28 +14,18 @@ import android.widget.TextView;
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.widgets.HmImageView;
 
-import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.appupdate.AppUpdateActivity;
+import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.navigation.help.HelpActivity;
 import in.sportscafe.nostragamus.module.navigation.settings.SettingsActivity;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
-import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
-import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity;
-import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
-import in.sportscafe.nostragamus.service.NostraFileDownloadService;
-import in.sportscafe.nostragamus.utils.StorageUtility;
-import in.sportscafe.nostragamus.webservice.MyWebService;
-import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
-import retrofit2.Call;
-import retrofit2.Response;
 
 public class NavigationFragment extends BaseFragment implements View.OnClickListener{
 
@@ -214,38 +204,8 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void onPowerUpsClicked() {
-        downloadAndInstallApp();
     }
 
-    private void downloadAndInstallApp() {
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getLatestApk().enqueue(new NostragamusCallBack<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    super.onResponse(call, response);
-
-                    if (response != null && response.isSuccessful()) {
-                        String url = response.body();
-                        if (!TextUtils.isEmpty(url)) {
-
-                            Intent intent = new Intent(getContext().getApplicationContext(), NostraFileDownloadService.class);
-                            intent.putExtra(NostraFileDownloadService.FILE_DOWNLOAD_URL, url);
-                            intent.putExtra(NostraFileDownloadService.FILE_NAME_WITH_EXTENSION, StorageUtility.getFileNameWithSuffix(url));
-
-                            getContext().startService(intent);
-
-                        } else {
-                            showMessage(Constants.Alerts.API_FAIL);
-                        }
-                    } else {
-                        showMessage(Constants.Alerts.API_FAIL);
-                    }
-                }
-            });
-        } else {
-            showMessage("No internet");
-        }
-    }
 
     private void onWalletClicked() {
         if (getActivity() != null) {

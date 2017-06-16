@@ -1,19 +1,20 @@
-package in.sportscafe.nostragamus.module.appupdate;
+package in.sportscafe.nostragamus.module.navigation.appupdate;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
+import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.navigation.help.HelpFragmentListener;
-import in.sportscafe.nostragamus.module.onboard.OnBoardingFragment;
+import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
  * Created by deepanshi on 6/2/17.
@@ -40,7 +41,6 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
     }
 
     private void initView(Bundle extras) {
@@ -50,22 +50,17 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
         if (extras != null) {
             if (extras.containsKey(Constants.BundleKeys.SCREEN)) {
                 if (extras.get(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.WHATS_NEW)) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.WHATS_NEW)).commit();
+                    FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.WHATS_NEW, getAppUpdateActionListener()));
                 } else if (extras.getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_FORCE_UPDATE)) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_FORCE_UPDATE)).commit();
+                    FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_FORCE_UPDATE, getAppUpdateActionListener()));
                 } else {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_UPDATE)).commit();
+                    FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_UPDATE, getAppUpdateActionListener()));
                 }
-            }else {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_UPDATE)).commit();
+            } else {
+                FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, AppUpdateFragment.newInstance(Constants.ScreenNames.APP_UPDATE, getAppUpdateActionListener()));
             }
         } else {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.update_app_fl_holder, AppUpdateFragment.newInstance(null)).commit();
+            FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, AppUpdateFragment.newInstance(null, getAppUpdateActionListener()));
         }
     }
 
@@ -78,20 +73,50 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
         }
     }
 
+    private AppUpdateFragment.AppUpdateActionListener getAppUpdateActionListener() {
+
+        return new AppUpdateFragment.AppUpdateActionListener() {
+
+            @Override
+            public void onAppDownload(String screenType) {
+                openDownloadAppScreen(screenType);
+            }
+        };
+    }
+
+    private void openDownloadAppScreen(String screenType) {
+
+        DownloadingAppFragment downloadingApp = new DownloadingAppFragment();
+        FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, downloadingApp.newInstance(screenType));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+    }
+
+
     private void navigateToHome() {
         Intent intent = new Intent(getContext(), HomeActivity.class);
         intent.putExtra(Constants.BundleKeys.SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         startActivity(intent);
+        finish();
     }
 
     @Override
     public void onBackPressed() {
 
         if (getIntent().getExtras() != null) {
+
             if (getIntent().getExtras().getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_FORCE_UPDATE)) {
                 handleDoubleBackPressLogicToExit();
             } else if (getIntent().getExtras().getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_UPDATE)) {
-                navigateToHome();
+                if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
+                    navigateToHome();
+                } else {
+                    navigateToGetStarted();
+                }
             } else {
                 finish();
             }
@@ -100,7 +125,6 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
         }
 
     }
-
 
     /**
      * Application exit happens only when user clicks back button twice within specified time interval
@@ -121,6 +145,12 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
                 }
             }, DOUBLE_BACK_PRESSED_DELAY_ALLOWED);
         }
+    }
+
+
+    private void navigateToGetStarted() {
+        startActivity(new Intent(this, GetStartActivity.class));
+        finish();
     }
 
 

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
-import in.sportscafe.nostragamus.module.appupdate.AppUpdateDetails;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 
