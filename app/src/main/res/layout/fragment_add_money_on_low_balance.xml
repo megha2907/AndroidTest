@@ -1,0 +1,291 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceFragment">
+
+    <!-- Add Money bottom layout -->
+    <FrameLayout
+        android:id="@+id/add_money_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <!-- Add Amount layout -->
+        <LinearLayout
+            android:id="@+id/low_bal_add_amount_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/button_height_48"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/blue_button_selector">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Amount"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                app:typeface="lato_bold" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!-- Scrollable top layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/add_money_bottom_layout"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Wallet Details -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:minHeight="@dimen/dp_240"
+                android:background="@drawable/card_bg_img_small">
+
+                <!-- Header layout -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="@dimen/dp_68">
+
+                    <ImageView
+                        android:id="@+id/back_button"
+                        android:layout_width="@dimen/dp_32"
+                        android:layout_height="@dimen/dp_32"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/back_icon_grey"
+                        android:padding="@dimen/dp_8"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="@dimen/dp_16"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Low Balance"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_16"
+                        app:typeface="lato_regular"
+                        android:layout_centerInParent="true"/>
+
+                </RelativeLayout>
+
+                <!-- Balance details row -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dp_45"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/bal_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="Balance"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular" />
+
+                    <ImageView
+                        android:id="@+id/navigation_app_update_available_imageView"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_marginLeft="@dimen/dp_13"
+                        android:layout_toRightOf="@id/bal_textView"
+                        android:src="@drawable/app_update_red_icn"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/low_bal_amount_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:gravity="right"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_black" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/grey4"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"/>
+
+                <!-- Contest details -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dp_45"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="Contest Entry Fee"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/low_bal_contest_entry_fee_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:gravity="right"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_black" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/grey4"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"/>
+
+                <!-- msg text -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dp_45"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/low_bal_details_msg_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <!-- Add amounts buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_16">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/add_money_50_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/blue_button_height"
+                    android:layout_weight="1"
+                    android:text="+ ₹50"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular"
+                    android:background="@drawable/button_selector"/>
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/add_money_100_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/blue_button_height"
+                    android:layout_weight="1"
+                    android:text="+ ₹100"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular"
+                    android:background="@drawable/button_selector"
+                    android:layout_marginLeft="@dimen/dp_12"/>
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/add_money_250_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/blue_button_height"
+                    android:layout_weight="1"
+                    android:text="+ ₹250"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular"
+                    android:background="@drawable/button_selector"
+                    android:layout_marginLeft="@dimen/dp_12"/>
+
+            </LinearLayout>
+
+            <!-- Enter Amount layout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_24">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/add_bank_accNumber_head_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="Enter Amount"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.ShadowLayout
+                    android:id="@+id/paytm_add_detail_sl_confirm_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:paddingBottom="@dimen/dp_4"
+                    app:sl_cornerRadius="@dimen/dp_5"
+                    app:sl_fillColor="@color/edittext_selection_bg"
+                    app:sl_shadowRadius="@dimen/dp_4">
+
+                    <com.jeeva.android.widgets.customfont.CustomEditText
+                        android:id="@+id/low_bal_add_amount_editText"
+                        style="@style/EditTextStyle"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionDone"/>
+
+                </com.jeeva.android.widgets.ShadowLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -103,6 +103,9 @@ public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnC
             if (!isPaytmProvided && !isBankProvided) {
                 view.findViewById(R.id.payout_choice_no_account_button).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.withdraw_bottom_button).setEnabled(false);
+            } else {
+                view.findViewById(R.id.payout_choice_no_account_button).setVisibility(View.GONE);
+                view.findViewById(R.id.withdraw_bottom_button).setEnabled(true);
             }
         }
     }

@@ -1,10 +1,13 @@
 package in.sportscafe.nostragamus.module.allchallenges.info;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
@@ -26,18 +29,20 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
+import in.sportscafe.nostragamus.module.allchallenges.join.JoinChallengeUseWalletApiModelImpl;
+import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomLayoutManagerWithSmoothScroll;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmApiModelImpl;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.JoinChallengeFailureDialogFragment;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.PaytmTransactionResponse;
 
 /**
  * Created by Jeeva on 28/02/17.
@@ -46,6 +51,8 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         ChallengeConfigAdapter.OnConfigAccessListener, JoinChallengeFailureDialogFragment.IPaytmFailureActionListener, View.OnClickListener {
 
     private static final String TAG = ChallengeConfigsDialogFragment.class.getSimpleName();
+
+    private static final int ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE = 2180;
 
     private OnDismissListener mDismissListener;
 
@@ -172,19 +179,19 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     @Override
     public void onEmpty() {
         showMessage(Alerts.POLL_LIST_EMPTY);
-        dismiss();
+        dismissThisDialog();
     }
 
     @Override
     public void onFailedConfigsApi() {
         showMessage(Alerts.API_FAIL);
-        dismiss();
+        dismissThisDialog();
     }
 
     @Override
     public void onNoInternet() {
         showMessage(Alerts.NO_NETWORK_CONNECTION);
-        dismiss();
+        dismissThisDialog();
     }
 
     @Override
@@ -199,61 +206,150 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     @Override
     public void onJoinClick(int position) {
-        if (BuildConfig.IS_PAID_VERSION) {
+        if (mConfigAdapter != null && mChallenge != null) {
             ChallengeConfig challengeConfig = mConfigAdapter.getItem(position);
-            generateOrderAndProceedToJoin(challengeConfig);
+            int challengeId = mChallenge.getChallengeId();
+
+            if (BuildConfig.IS_PAID_VERSION) {
+                joinChallengeOnPaidVersion(challengeConfig, challengeId);
+            } else {
+                joinChallengeOnFreeVersion(challengeConfig, challengeId);
+            }
         } else {
-            if (mConfigAdapter.getItem(position).isFreeEntry()) {
-                ChallengeConfig challengeConfig = mConfigAdapter.getItem(position);
-                generateOrderAndProceedToJoin(challengeConfig);
+            showMessage(Alerts.SOMETHING_WRONG);
+        }
+    }
+
+    private void fetchUserWalletFromServer(final ChallengeConfig challengeConfig, final int challengeId) {
+        showProgressbar();
+        WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
+            @Override
+            public void noInternet() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onApiFailed() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onSuccessResponse(UserWalletResponse response) {
+                dismissProgressbar();
+                payAndJoinChallenge(challengeConfig, challengeId);
+            }
+        }).performApiCall();
+    }
+
+    private void joinChallengeOnPaidVersion(ChallengeConfig challengeConfig, int challengeId) {
+        if (challengeConfig != null) {
+            if (challengeConfig.isFreeEntry()) {
+                performJoinChallengeAction(challengeId, challengeConfig);
+            } else {
+                // Paid entry, check wallet balance, fetch wallet and then continue
+                fetchUserWalletFromServer(challengeConfig, challengeId);
+            }
+        } else {
+            showMessage(Alerts.SOMETHING_WRONG);
+        }
+    }
+
+    private void payAndJoinChallenge(ChallengeConfig challengeConfig, int challengeId) {
+        if (WalletHelper.isSufficientBalAvailableInWallet(challengeConfig.getEntryFee())) {
+            // Make join call
+            performJoinChallengeAction(challengeId, challengeConfig);
+
+        } else {
+            // Add money into wallet to join
+            addMoneyInWalletAsLowBalance(challengeId, challengeConfig);
+        }
+    }
+
+    private void addMoneyInWalletAsLowBalance(int challengeId, ChallengeConfig challengeConfig) {
+        Bundle args = new Bundle();
+        args.putParcelable(BundleKeys.CHALLENGE_CONFIG, Parcels.wrap(challengeConfig));
+        args.putInt(BundleKeys.CHALLENGE_ID, challengeId);
+
+        Intent intent = new Intent(getActivity(), AddMoneyOnLowBalanceActivity.class);
+        intent.putExtras(args);
+        if (getActivity() != null) {
+            getActivity().startActivityForResult(intent, ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE);
+        }
+    }
+
+    private void joinChallengeOnFreeVersion(ChallengeConfig challengeConfig, int challengeId) {
+        if (challengeConfig != null) {
+
+            if (challengeConfig.isFreeEntry()) {
+                performJoinChallengeAction(challengeId, challengeConfig);
             } else {
                 mOpenDownloadDialog = true;
                 dismissThisDialog();
             }
+        } else {
+            showMessage(Alerts.SOMETHING_WRONG);
         }
     }
 
     /**
-     * GenerateOrder requires call for all free & paid challenges.
-     * Server will appropriately manage joining itself which will be reflected while challenges are refreshed.
-     * If Free, server will update challenge as joined
-     * If Paid, based on paytm transaction success, server'll update challenge for user
-     * <p>
-     * Client app just does refresh at the end.
-     *
+     * Make api call for joining
+     * @param challengeId
      * @param challengeConfig
      */
-    private void generateOrderAndProceedToJoin(ChallengeConfig challengeConfig) {
-        GenerateOderApiModelImpl generateOderApiModel =
-                GenerateOderApiModelImpl.newInstance(getGenerateOrderApiListener());
+    private void performJoinChallengeAction(int challengeId, ChallengeConfig challengeConfig) {
+        if (challengeConfig != null) {
+            JoinChallengeUseWalletApiModelImpl joinChallenge = JoinChallengeUseWalletApiModelImpl.newInstance(getJoinChallengeListener());
 
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
-            showProgressbar();  // Dismissed at all type of callback
-
-            generateOderApiModel.callGenerateOrder(
-                    Long.valueOf(NostragamusDataHandler.getInstance().getUserId()),
-                    mChallenge.getChallengeId(),
-                    challengeConfig.getConfigIndex()
-            );
-
-        } else {
-            showMessage(Alerts.NO_NETWORK_CONNECTION);
+            if (Nostragamus.getInstance().hasNetworkConnection()) {
+                showProgressbar();
+                joinChallenge.makeApiCall(challengeId, challengeConfig.getConfigIndex());
+            } else {
+                showMessage(Alerts.NO_NETWORK_CONNECTION);
+            }
         }
-
     }
 
-    /**
-     * Performs paytm transaction
-     */
-    private void performPaytmTransaction(GenerateOrderResponse generateOrderResponse) {
-        PaytmApiModelImpl paytmApiModel = PaytmApiModelImpl.newInstance(getPaytmApiListener(generateOrderResponse), getContext());
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE &&
+                resultCode == Activity.RESULT_OK &&
+                data != null && data.getExtras() != null) {
 
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
-            paytmApiModel.initPaytmTransaction(generateOrderResponse);
+            Log.d(TAG, "Money add successfully (on low balance) ; performing join challenge");
+            ChallengeConfig challengeConfig = Parcels.unwrap(data.getExtras().getParcelable(BundleKeys.CHALLENGE_CONFIG));
+            int challengeId = data.getExtras().getInt(BundleKeys.CHALLENGE_ID, -1);
 
-        } else {
-            showMessage(Alerts.NO_NETWORK_CONNECTION);
+            if (challengeConfig != null && challengeId != -1) {
+                performJoinChallengeAction(challengeId, challengeConfig);
+            } else {
+                showMessage(Alerts.SOMETHING_WRONG);
+            }
         }
+    }
+
+    private JoinChallengeUseWalletApiModelImpl.JoinChallengeUseWalletApiListener getJoinChallengeListener() {
+        return new JoinChallengeUseWalletApiModelImpl.JoinChallengeUseWalletApiListener() {
+            @Override
+            public void noInternet() {
+                dismissProgressbar();
+                showMessage(Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onNoApiResponse() {
+                dismissProgressbar();
+                showMessage(Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onSuccessResponse(JoinChallengeResponse joinChallengeResponse) {
+                dismissProgressbar();
+                onChallengeJoinedSuccessfully(joinChallengeResponse);
+            }
+        };
     }
 
     @Override
@@ -279,9 +375,9 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                     }
 
                     Log.d("ChallengeConfigsDialogFragment5", "MaxHeight --> " + mMaxHeight + ", " + "ScrollHeight --> " + configsHeight);
-                if (configsHeight > mMaxHeight) {
-                    configsHeight = mMaxHeight;
-                }
+                    if (configsHeight > mMaxHeight) {
+                        configsHeight = mMaxHeight;
+                    }
 
                 }
 
@@ -296,7 +392,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     private void changeHeight(){
         int configsHeight = 0;
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-             configsHeight = mMaxHeight + mTitleHeight + mGreaterHeight;
+            configsHeight = mMaxHeight + mTitleHeight + mGreaterHeight;
         }else {
             configsHeight = mMaxHeight + mTitleHeight+ 3*mGreaterHeight;
         }
@@ -304,109 +400,20 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         getDialog().getWindow().setLayout(attributes.width, configsHeight);
     }
 
+    private void onChallengeJoinedSuccessfully(@NonNull JoinChallengeResponse joinChallengeResponse) {
+        if (joinChallengeResponse != null) {
 
-    /**
-     * Generate Order and perform task based on challenge type as paid (paytm trans) , free (direct join)
-     *
-     * @return
-     */
-    private GenerateOderApiModelImpl.OnGenerateOrderApiModelListener getGenerateOrderApiListener() {
-        return new GenerateOderApiModelImpl.OnGenerateOrderApiModelListener() {
-            @Override
-            public void makePaytmTransaction(GenerateOrderResponse generateOrderResponse) {
-                dismissProgressbar();
-                performPaytmTransaction(generateOrderResponse);
+            double amount = joinChallengeResponse.getJoinedChallengeInfo().getEntryFee();
+            if ( BuildConfig.IS_PAID_VERSION &&
+                    !joinChallengeResponse.getJoinedChallengeInfo().isFreeEntry() &&
+                    amount > 0 && mChallenge != null) {
+                NostragamusAnalytics.getInstance().trackRevenue(amount, mChallenge.getChallengeId(), mChallenge.getName());
             }
 
-            @Override
-            public void joinFreeChallenge(Bundle bundle) {
-                dismissProgressbar();
-                 /*Server will manage joining based on generateOrder api if it's free
-                 * No Need to call any api here for joining */
-
-                onJoinActionSuccess(bundle);
-            }
-
-            @Override
-            public void onApiFailure() {
-                dismissProgressbar();
-                showMessage(Alerts.API_FAIL);
-            }
-
-            @Override
-            public void noInternet() {
-                dismissProgressbar();
-                showMessage(Alerts.NO_NETWORK_CONNECTION);
-            }
-        };
-    }
-
-    /**
-     * Handles call back
-     *
-     * @return
-     */
-    private PaytmApiModelImpl.OnPaytmApiModelListener getPaytmApiListener(final GenerateOrderResponse generateOrderResponse) {
-        return new PaytmApiModelImpl.OnPaytmApiModelListener() {
-            @Override
-            public void onTransactionUiError() {
-                Log.d(TAG, Alerts.PAYTM_FAILURE);
-                showPaytmTransactionFailureDialog();
-            }
-
-            @Override
-            public void onTransactionNoNetwork() {
-                Log.d(TAG, Alerts.NO_NETWORK_CONNECTION);
-                showPaytmTransactionFailureDialog();
-            }
-
-            @Override
-            public void onTransactionClientAuthenticationFailed() {
-                Log.d(TAG, Alerts.PAYTM_AUTHENTICATION_FAILED);
-                showPaytmTransactionFailureDialog();
-            }
-
-            @Override
-            public void onTransactionPageLoadingError() {
-                Log.d(TAG, Alerts.PAYTM_FAILURE);
-                showPaytmTransactionFailureDialog();
-            }
-
-            @Override
-            public void onTransactionCancelledByBackPressed() {
-                Log.d(TAG, Alerts.PAYTM_TRANSACTION_CANCELLED);
-                showPaytmTransactionFailureDialog();
-            }
-
-            @Override
-            public void onTransactionCancelled() {
-                Log.d(TAG, Alerts.PAYTM_TRANSACTION_CANCELLED);
-                showPaytmTransactionFailureDialog();
-            }
-
-            @Override
-            public void onTransactionSuccessResponse(@Nullable PaytmTransactionResponse successResponse) {
-                Log.d(TAG, "Transaction Response - Success");
-                /* Server will arrange all joining, No need of any api here.  */
-
-                if (generateOrderResponse != null  && mChallenge != null) {
-                    NostragamusAnalytics.getInstance().trackRevenue(
-                            generateOrderResponse.getTxnAmount(),
-                            mChallenge.getChallengeId(),
-                            mChallenge.getName());
-                }
-
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(Constants.BundleKeys.JOINED_CHALLENGE_INFO, Parcels.wrap(successResponse.getJoinedChallengeInfo()));
-                onJoinActionSuccess(bundle);
-            }
-
-            @Override
-            public void onTransactionFailureResponse(@Nullable PaytmTransactionResponse response) {
-                Log.d(TAG, Alerts.PAYTM_TRANSACTION_FAILED);
-                showPaytmTransactionFailureDialog();
-            }
-        };
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(BundleKeys.JOINED_CHALLENGE_INFO, Parcels.wrap(joinChallengeResponse.getJoinedChallengeInfo()));
+            onJoinActionSuccess(bundle);
+        }
     }
 
     /**
@@ -416,17 +423,6 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         mJoinedChallenge = true;
         mChallengeDetailsBundle = bundle;
         dismissThisDialog();
-    }
-
-    private void showPaytmTransactionFailureDialog() {
-
-        if (mChallenge != null) {
-            JoinChallengeFailureDialogFragment failureDialogFragment =
-                    JoinChallengeFailureDialogFragment.newInstance(1199, mChallenge, this);
-            failureDialogFragment.show(getChildFragmentManager(), "FAILURE_DIALOG");
-        } else {
-            showMessage(Alerts.PAYTM_TRANSACTION_FAILED);
-        }
     }
 
     @Override
@@ -452,14 +448,14 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                 Log.d(TAG, "Dismissing this...");
                 ChallengeConfigsDialogFragment.this.dismiss();
             }
-        }, 200);
+        }, 300);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.popup_cross_btn:
-                dismiss();
+                dismissThisDialog();
                 break;
         }
     }
