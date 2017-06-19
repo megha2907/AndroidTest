@@ -479,7 +479,7 @@ public class NostragamusAnalytics {
      * @param price
      */
     public void trackRevenue(double price, int challengeId, String challengeName) {
-        if (BuildConfig.IS_PAID_VERSION) {
+        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
             JSONObject eventPropertiesJson = new JSONObject();
             try {
                 eventPropertiesJson.put("challengeId", challengeId);
@@ -494,6 +494,8 @@ public class NostragamusAnalytics {
             revenue.setEventProperties(eventPropertiesJson);
 
             mAmplitude.logRevenueV2(revenue);
+        } else {
+            Log.d("App", "Can't log revenue, Amplitude null!");
         }
     }
 
@@ -517,8 +519,12 @@ public class NostragamusAnalytics {
                 category = AnalyticsCategory.WALLET_ADD_MONEY;
             }
 
-            mAmplitude.logEvent(category, jsonObject);
-            mMoEHelper.trackEvent(category, jsonObject);
+            if (mAmplitude != null) {
+                mAmplitude.logEvent(category, jsonObject);
+            }
+            if (mMoEHelper != null) {
+                mMoEHelper.trackEvent(category, jsonObject);
+            }
         }
     }
 }

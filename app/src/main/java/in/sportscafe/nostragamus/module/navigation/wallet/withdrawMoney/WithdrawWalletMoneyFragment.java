@@ -4,7 +4,6 @@ package in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -70,7 +69,7 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
 
     private void showWalletBalance() {
         if (getView() != null) {
-            double amount = WalletHelper.getBalanceAmount();
+            double amount = WalletHelper.getDepositAmount();
             if (amount > 0) {
                 TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_withdraw_money_amount_textView);
                 balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
