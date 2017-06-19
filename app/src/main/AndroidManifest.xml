@@ -98,15 +98,15 @@
             android:name=".module.feed.FeedWebView"
             android:screenOrientation="portrait" />
         <activity android:name=".module.common.NostragamusWebView">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-                <data android:scheme="myscheme" />
-                <data android:scheme="https" />
-                <data android:scheme="http" />
-            </intent-filter>
+                <!--<data android:scheme="myscheme" />-->
+                <!--<data android:scheme="https" />-->
+                <!--<data android:scheme="http" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".module.getstart.GetStartActivity"
@@ -181,7 +181,7 @@
             android:name=".module.user.points.PointsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.appupdate.AppUpdateActivity"
+            android:name=".module.navigation.appupdate.AppUpdateActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.user.group.newgroup.NewGroupActivity"

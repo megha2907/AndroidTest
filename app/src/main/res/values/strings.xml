@@ -147,5 +147,6 @@
         You could also call/sms/whatsapp - <b>+91-9901129509</b>
     ]]>
     </string>
+    <string name="app_downloading">Your app is being downloaded in the background, click on Install after the download is over!</string>
 
 </resources>

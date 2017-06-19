@@ -15,26 +15,21 @@ import android.widget.CompoundButton;
 
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.InAppActivity;
-import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.popups.PopUp;
 import in.sportscafe.nostragamus.module.popups.PopUpActivity;
 import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
-import in.sportscafe.nostragamus.module.settings.SettingActivity;
 
 /**
  * Created by Jeeva on 6/4/16.

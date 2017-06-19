@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -33,6 +34,8 @@ import java.util.ArrayList;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
+import in.sportscafe.nostragamus.module.common.NostragamusWebView;
 import in.sportscafe.nostragamus.module.feed.FeedWebView;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
@@ -167,9 +170,12 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             viewHolder.questionByLayout.setVisibility(View.GONE);
         }
 
-        /* Commented for now till hyperlink onclick doesn't work properly with bolding text */
-
-        viewHolder.tvContext.setMovementMethod(LinkMovementMethod.getInstance());
+        viewHolder.tvContext.setMovementMethod(new NostraTextViewLinkClickMovementMethod() {
+            @Override
+            public void onLinkClick(String url) {
+                OpenWebView(viewHolder.tvContext,url);
+            }
+        });
 
         showAudiencePollIfAlreadyAppliedForThisQuestion(viewHolder, question);
         updatePowerUpPointsOnUi(viewHolder, question);
@@ -605,6 +611,15 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
             }
         }
 
+    }
+
+    /**
+     * On on click of link open NostragamusWebView Activity for handling links
+     */
+    private void OpenWebView(View view,String url) {
+        if (url != null) {
+            view.getContext().startActivity(new Intent(view.getContext(), FeedWebView.class).putExtra("url", url));
+        }
     }
 
 }
