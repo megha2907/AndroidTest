@@ -180,7 +180,6 @@
         <activity
             android:name=".module.user.points.PointsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".module.navigation.appupdate.AppUpdateActivity"
             android:screenOrientation="portrait" />
@@ -240,8 +239,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.navigation.wallet.WalletHomeActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.navigation.wallet.addMoney.AddWalletMoneyActivity"
             android:screenOrientation="portrait"
@@ -259,6 +258,10 @@
         <activity
             android:name=".module.navigation.wallet.payoutDetails.PayoutWalletChoiceActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -472,8 +475,11 @@
         <!-- File Download complete / result receiver -->
         <service android:name=".service.NostraFileDownloadService" />
 
-        <receiver android:name=".receiver.NostraFileDownloadReceiver" android:enabled="true">
+        <receiver
+            android:name=".receiver.NostraFileDownloadReceiver"
+            android:enabled="true">
             <intent-filter>
+
                 <!-- Take action from NostraFileDownloadService.FILE_DOWNLOAD_BROADCAST_ACTION -->
                 <action android:name="in.sportscafe.nostragamus.broadcast.action.fileDownloadBroadcast" />
             </intent-filter>

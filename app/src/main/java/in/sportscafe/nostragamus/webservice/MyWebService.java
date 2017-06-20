@@ -9,6 +9,8 @@ import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
+import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeRequest;
+import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.common.TimeResponse;
@@ -318,6 +320,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<WithdrawFromWalletResponse> withdrawFromWallet(WithdrawFromWalletRequest request) {
         return mNostragamusService.withdrawFromWallet(request);
+    }
+
+    public Call<JoinChallengeResponse> joinChallenge(JoinChallengeRequest request) {
+        return mNostragamusService.useWalletToJoinChallenge(request);
     }
 
     public Call<String> getLatestApk() {

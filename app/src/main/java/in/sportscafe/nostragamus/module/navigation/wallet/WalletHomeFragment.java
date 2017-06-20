@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,8 @@ import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
-import java.text.DecimalFormat;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 
@@ -32,6 +28,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
     private WalletHomeFragmentListener mFragmentListener;
     private LinearLayout mWalletMoneyInfoLayout;
     private LinearLayout mPromoMoneyInfoLayout;
+    private LinearLayout mWinningInfoLayout;
 
     public WalletHomeFragment() {}
 
@@ -61,11 +58,14 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
         rootView.findViewById(R.id.wallet_payout_detail_card).setOnClickListener(this);
         rootView.findViewById(R.id.wallet_home_card_money_layout).setOnClickListener(this);
         rootView.findViewById(R.id.wallet_home_card_promo_layout).setOnClickListener(this);
+        rootView.findViewById(R.id.wallet_home_card_winning_layout).setOnClickListener(this);
 
-        mWalletMoneyInfoLayout = (LinearLayout) rootView.findViewById(R.id.wallet_money_info_layout);
+        mWalletMoneyInfoLayout = (LinearLayout) rootView.findViewById(R.id.wallet_deposit_info_layout);
         mPromoMoneyInfoLayout = (LinearLayout) rootView.findViewById(R.id.wallet_promo_info_layout);
+        mWinningInfoLayout = (LinearLayout) rootView.findViewById(R.id.wallet_winning_info_layout);
         mWalletMoneyInfoLayout.setOnClickListener(this);
         mPromoMoneyInfoLayout.setOnClickListener(this);
+        mWalletMoneyInfoLayout.setOnClickListener(this);
     }
 
     /**
@@ -109,20 +109,24 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
         View rootView = getView();
         if (rootView != null && getActivity() != null) {
             TextView totalWalletBalanceTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_total_amount_textView);
-            TextView balanceTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_amount_textView);
+            TextView depositTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_deposit_textView);
             TextView promoBalanceTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_promo_amount_textView);
 
-            double amount = WalletHelper.getBalanceAmount();
+            double depositAmount = WalletHelper.getDepositAmount();
             double promoAmount = WalletHelper.getPromoAmount();
+            double winningAmount = WalletHelper.getWinningAmount();
 
-            if (amount > 0) {
-                balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
+            if (depositAmount > 0) {
+                depositTextView.setText(WalletHelper.getFormattedStringOfAmount(depositAmount));
             }
             if (promoAmount > 0) {
                 promoBalanceTextView.setText(WalletHelper.getFormattedStringOfAmount(promoAmount));
             }
+            if (winningAmount > 0) {
+                depositTextView.setText(WalletHelper.getFormattedStringOfAmount(winningAmount));
+            }
 
-            double total = amount + promoAmount;
+            double total = WalletHelper.getTotalBalance();
             if (total > 0) {
                 totalWalletBalanceTextView.setText(WalletHelper.getFormattedStringOfAmount(total));
             }
@@ -169,6 +173,18 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
             case R.id.wallet_home_card_promo_layout:
                 onPayoutInfoLayoutClicked();
                 break;
+
+            case R.id.wallet_home_card_winning_layout:
+                onWinningInfoLayoutClicked();
+                break;
+        }
+    }
+
+    private void onWinningInfoLayoutClicked() {
+        if (mWinningInfoLayout.getVisibility() == View.VISIBLE) {
+            AnimationHelper.collapse(mWinningInfoLayout);
+        } else {
+            AnimationHelper.expand(mWinningInfoLayout);
         }
     }
 

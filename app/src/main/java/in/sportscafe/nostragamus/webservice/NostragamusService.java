@@ -7,6 +7,8 @@ import java.util.Map;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
+import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeRequest;
+import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.common.TimeResponse;
@@ -259,6 +261,9 @@ public interface NostragamusService {
 
     @POST("/v1/wallet/withdraw")
     Call<WithdrawFromWalletResponse> withdrawFromWallet(@Body WithdrawFromWalletRequest request);
+
+    @POST("/v1/wallet/useWallet")
+    Call<JoinChallengeResponse> useWalletToJoinChallenge(@Body JoinChallengeRequest request);
 
     @GET("/v1/setting/getLatestApk")
     Call<String> getLatestApk();

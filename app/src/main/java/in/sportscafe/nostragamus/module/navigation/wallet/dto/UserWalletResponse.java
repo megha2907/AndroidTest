@@ -10,8 +10,11 @@ import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 
 public class UserWalletResponse {
 
-    @JsonProperty("amount")
-    private double amount;
+    @JsonProperty("winningsAmount")
+    private double winningsAmount;
+
+    @JsonProperty("depositAmount")
+    private double depositAmount;
 
     @JsonProperty("promoAmount")
     private double promoAmount;
@@ -25,14 +28,24 @@ public class UserWalletResponse {
     @JsonProperty("payment_info")
     private UserPaymentInfo userPaymentInfo;
 
-    @JsonProperty("amount")
-    public double getAmount() {
-        return amount;
+    @JsonProperty("winningsAmount")
+    public double getWinningsAmount() {
+        return winningsAmount;
     }
 
-    @JsonProperty("amount")
-    public void setAmount(double amount) {
-        this.amount = amount;
+    @JsonProperty("winningsAmount")
+    public void setWinningsAmount(double winningsAmount) {
+        this.winningsAmount = winningsAmount;
+    }
+
+    @JsonProperty("depositAmount")
+    public double getDepositAmount() {
+        return depositAmount;
+    }
+
+    @JsonProperty("depositAmount")
+    public void setDepositAmount(double depositAmount) {
+        this.depositAmount = depositAmount;
     }
 
     @JsonProperty("promoAmount")

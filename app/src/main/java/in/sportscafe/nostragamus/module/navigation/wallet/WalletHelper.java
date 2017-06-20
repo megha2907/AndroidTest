@@ -4,12 +4,10 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.text.DecimalFormat;
-import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.dto.WalletBankDto;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoBankDto;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoPaytmDto;
@@ -40,12 +38,12 @@ public class WalletHelper {
      *
      * @return balance amount from ServerDataManager
      */
-    public synchronized static double getBalanceAmount() {
+    public synchronized static double getDepositAmount() {
         double amount = 0;
 
         UserWalletResponse userWalletResponse = Nostragamus.getInstance().getServerDataManager().getUserWalletResponse();
         if (userWalletResponse != null) {
-            amount = userWalletResponse.getAmount();
+            amount = userWalletResponse.getDepositAmount();
         }
 
         return amount;
@@ -65,6 +63,18 @@ public class WalletHelper {
 
         return promoAmount;
     }
+
+    public synchronized static double getWinningAmount() {
+        double winningAmount = 0;
+
+        UserWalletResponse userWalletResponse = Nostragamus.getInstance().getServerDataManager().getUserWalletResponse();
+        if (userWalletResponse != null) {
+            winningAmount = userWalletResponse.getWinningsAmount();
+        }
+
+        return winningAmount;
+    }
+
 
     public synchronized static boolean isPaytmPayoutDetailsProvided() {
         boolean isProvided = false;
@@ -148,5 +158,43 @@ public class WalletHelper {
         return accountAdded;
     }
 
+    /**
+     * NOTE: This considers only BALANCE-AMOUNT and PROMO-MONEY
+     * @param balRequired bal required to join challenge
+     * @return true if sufficient bal available in wallet
+     */
+    public synchronized static boolean isSufficientBalAvailableInWallet(int balRequired) {
+        boolean balAvailable = false;
+
+        double total = getTotalBalance();
+        if (total >= 0 && balRequired >= 0 && balRequired <= total) {
+            balAvailable = true;
+        }
+
+        return balAvailable;
+    }
+
+    public synchronized static double getTotalBalance() {
+        double total = 0;
+
+        UserWalletResponse userWalletResponse = Nostragamus.getInstance().getServerDataManager().getUserWalletResponse();
+        if (userWalletResponse != null) {
+            double depositAmount = WalletHelper.getDepositAmount();
+            double promoMoney = WalletHelper.getPromoAmount();
+            double winningAmount = WalletHelper.getWinningAmount();
+
+            if (depositAmount > 0) {
+                total += depositAmount;
+            }
+            if (promoMoney > 0) {
+                total += promoMoney;
+            }
+            if (winningAmount > 0) {
+                total += winningAmount;
+            }
+        }
+
+        return total;
+    }
 
 }
