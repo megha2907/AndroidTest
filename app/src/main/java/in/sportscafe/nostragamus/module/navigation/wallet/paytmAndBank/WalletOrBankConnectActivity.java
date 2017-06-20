@@ -106,7 +106,7 @@ public class WalletOrBankConnectActivity extends NostragamusActivity {
     }
 
     private void navigateToAddBankDetails() {
-        Intent intent = new Intent(this, AddPaymentBankActivity.class);
+        Intent intent = new Intent(this, AddBankDetailsActivity.class);
         intent.putExtras(getExtras());
         startActivityForResult(intent, BANK_REQUEST_CODE);
     }

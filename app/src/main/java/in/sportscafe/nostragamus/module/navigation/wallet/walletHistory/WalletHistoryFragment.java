@@ -28,24 +28,24 @@ import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WalletHistoryHistoryFragment extends NostragamusFragment implements WalletHistoryModel, View.OnClickListener {
+public class WalletHistoryFragment extends NostragamusFragment implements WalletHistoryModel, View.OnClickListener {
 
-    private static final String TAG = WalletHistoryHistoryFragment.class.getSimpleName();
+    private static final String TAG = WalletHistoryFragment.class.getSimpleName();
 
     private WalletHistoryFragmentListener mFragmentListener;
     private RecyclerView mWalletHistoryRecyclerView;
     private TextView mAmountWonTextView;
     private UserPaymentInfo mUserPaymentInfo;
 
-    public WalletHistoryHistoryFragment() {
+    public WalletHistoryFragment() {
     }
 
     public void setUserPaymentInfo(UserPaymentInfo userPaymentInfo) {
         mUserPaymentInfo = userPaymentInfo;
     }
 
-    public static WalletHistoryHistoryFragment newInstance() {
-        WalletHistoryHistoryFragment fragment = new WalletHistoryHistoryFragment();
+    public static WalletHistoryFragment newInstance() {
+        WalletHistoryFragment fragment = new WalletHistoryFragment();
         return fragment;
     }
 
@@ -73,8 +73,9 @@ public class WalletHistoryHistoryFragment extends NostragamusFragment implements
         super.onActivityCreated(savedInstanceState);
 
         showWalletBalance();
+        loadTransactionDetails();
 
-        if (NostragamusDataHandler.getInstance().getUserInfo() != null) {
+        /*if (NostragamusDataHandler.getInstance().getUserInfo() != null) {
             mUserPaymentInfo = NostragamusDataHandler.getInstance().getUserInfo().getUserPaymentInfo();
         }
 
@@ -84,8 +85,8 @@ public class WalletHistoryHistoryFragment extends NostragamusFragment implements
             Log.d(TAG, "It seems that paymentInfo not available");
             showAddPaymentInfoButton();
         } else {
-            loadTransactionDetails();
-        }
+
+        }*/
     }
 
     private void showWalletBalance() {
@@ -106,21 +107,17 @@ public class WalletHistoryHistoryFragment extends NostragamusFragment implements
     }
 
     private void showAddPaymentInfoButton() {
-        if (getActivity() != null && getView() != null) {
+        /*if (getActivity() != null && getView() != null) {
             LinearLayout addPaymentDetailsLayout = (LinearLayout) getView().findViewById(R.id.wallet_add_payment_details_layout);
             addPaymentDetailsLayout.setVisibility(View.VISIBLE);
 
             LinearLayout historyLayout = (LinearLayout) getView().findViewById(R.id.wallet_history_layout);
             historyLayout.setVisibility(View.GONE);
-        }
+        }*/
     }
 
     private void initViews(View view) {
         view.findViewById(R.id.back_button).setOnClickListener(this);
-        view.findViewById(R.id.wallet_update_payment_btn).setOnClickListener(this);
-        view.findViewById(R.id.wallet_update_payment_btn1).setOnClickListener(this);
-
-        mAmountWonTextView = (TextView) view.findViewById(R.id.wallet_amount_won_textview);
 
         mWalletHistoryRecyclerView = (RecyclerView) view.findViewById(R.id.walletRecyclerView);
         mWalletHistoryRecyclerView.setHasFixedSize(true);
@@ -157,24 +154,17 @@ public class WalletHistoryHistoryFragment extends NostragamusFragment implements
     }
 
     private void onTransactionListFetchedSuccessful(List<WalletHistoryTransaction> transactionList) {
-        if (getActivity() != null && getView() != null) {
-
+        if (getActivity() != null && getView() != null && mWalletHistoryRecyclerView != null) {
             if (transactionList == null || transactionList.isEmpty()) {
-
                 mWalletHistoryRecyclerView.setVisibility(View.GONE);
-                LinearLayout addPaymentDetailsLayout = (LinearLayout) getView().findViewById(R.id.wallet_add_payment_details_layout);
-                addPaymentDetailsLayout.setVisibility(View.GONE);
-
                 LinearLayout noHistoryLayout = (LinearLayout) getView().findViewById(R.id.wallet_no_transaction_history_layout);
                 noHistoryLayout.setVisibility(View.VISIBLE);
 
                 return;
             } else {
                 mWalletHistoryRecyclerView.setVisibility(View.VISIBLE);
+                mWalletHistoryRecyclerView.setAdapter(new WalletHistoryAdapter(getContext(), transactionList));
             }
-
-            setAmountWon(transactionList);
-            mWalletHistoryRecyclerView.setAdapter(new WalletHistoryAdapter(getContext(), transactionList));
         }
     }
 
@@ -201,12 +191,6 @@ public class WalletHistoryHistoryFragment extends NostragamusFragment implements
                     mFragmentListener.onBackClicked();
                 }
                 break;
-
-            case R.id.wallet_update_payment_btn:
-            case R.id.wallet_update_payment_btn1:
-                launchPaymentDetails();
-                break;
-
         }
     }
 

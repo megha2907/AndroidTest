@@ -17,9 +17,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.utils.AnimationHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -49,55 +49,83 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
         if (mTransactionList != null && mTransactionList.size() > position) {
             WalletHistoryTransaction transaction = mTransactionList.get(position);
 
-            // Background color
-            if (position % 2 == 0) {
-                holder.itemRootLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.grey1));
-            } else {
-                holder.itemRootLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black));
+            changeItemBackground(holder, position);
+
+            setTransactionText(holder, transaction);
+
+            showDate(holder, transaction);
+        }
+    }
+
+    private void setTransactionText(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
+        String txnDetails = transaction.getChallengeName();
+
+        if (transaction.getMoneyFlow().equals(Constants.MoneyFlow.IN)) {
+            holder.txnImageView.setImageResource(R.drawable.wallet_debit);
+            holder.titleTextView.setText(getSpannedText(true, String.valueOf(transaction.getAmount())));
+            txnDetails = "Joined " + transaction.getChallengeName();
+        } else {
+
+            String statusCode = transaction.getStatusCode();
+            if (statusCode.equals(Constants.MoneyFlow.STATUS_CODE_INITIATED)) {
+
+
+
+            } else if (statusCode.equals(Constants.MoneyFlow.STATUS_CODE_SUCCESS)) {
+
+
+
+            } else if (statusCode.equals(Constants.MoneyFlow.STATUS_CODE_FAILURE)) {
+
             }
 
-            String txnDetails = transaction.getChallengeName();
-
-            // Debit-credit , set values
-            if (transaction.getMoneyFlow().equals(Constants.MoneyFlow.IN)) {
-                holder.txnImageView.setImageResource(R.drawable.wallet_debit);
-                holder.titleTextView.setText(getSpannedText(true, String.valueOf(transaction.getAmount())));
-                txnDetails = "Joined " + transaction.getChallengeName();
-            } else {
-                holder.txnImageView.setImageResource(R.drawable.wallet_credit);
-                holder.titleTextView.setText(getSpannedText(false, String.valueOf(transaction.getAmount())));
-                if (!TextUtils.isEmpty(transaction.getRank())) {
-                    txnDetails = "Rank " + transaction.getRank() + " in " + transaction.getChallengeName();
-                }
+            holder.txnImageView.setImageResource(R.drawable.wallet_credit);
+            holder.titleTextView.setText(getSpannedText(false, String.valueOf(transaction.getAmount())));
+            if (!TextUtils.isEmpty(transaction.getRank())) {
+                txnDetails = "Rank " + transaction.getRank() + " in " + transaction.getChallengeName();
             }
 
-            holder.detailsTextView.setText(txnDetails);
 
-            // Date format
-            try {
-                if (!TextUtils.isEmpty(transaction.getCreatedAt())) {
-                    String dateStr = "-";
+        }
+        holder.detailsTextView.setText(txnDetails);
+    }
 
-                    String dateTime = transaction.getCreatedAt();
-                    long dateTimeMs = TimeUtils.getMillisecondsFromDateString(
-                            dateTime,
-                            Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                            Constants.DateFormats.GMT
-                    );
+    private void showDate(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
+        try {
+            if (!TextUtils.isEmpty(transaction.getCreatedAt())) {
+                String dateStr = "-";
 
-                    int dayStr = Integer.parseInt(TimeUtils.getDateStringFromMs(dateTimeMs, "d"));
-                    dateStr = dayStr + AppSnippet.ordinalOnly(dayStr) + " " +
-                            TimeUtils.getDateStringFromMs(dateTimeMs, "MMM") + " \'" +
-                            TimeUtils.getDateStringFromMs(dateTimeMs, "yy");
+                String dateTime = transaction.getCreatedAt();
+                long dateTimeMs = TimeUtils.getMillisecondsFromDateString(
+                        dateTime,
+                        Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                        Constants.DateFormats.GMT
+                );
 
-                    holder.dateTextView.setText(dateStr);
-                }
+                /*int dayStr = Integer.parseInt(TimeUtils.getDateStringFromMs(dateTimeMs, "d"));
+                dateStr = dayStr + AppSnippet.ordinalOnly(dayStr) + " " +
+                        TimeUtils.getDateStringFromMs(dateTimeMs, "MMM") + " \'" +
+                        TimeUtils.getDateStringFromMs(dateTimeMs, "yy");*/
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
+                dateStr = TimeUtils.getDateStringFromMs(dateTimeMs, "dd") + "/" +
+                        TimeUtils.getDateStringFromMs(dateTimeMs, "MM") + "/" +
+                        TimeUtils.getDateStringFromMs(dateTimeMs, "yy");
+
+                holder.dateTextView.setText(dateStr);
             }
 
-            holder.txnIdTextView.setText("Transaction ID - " + String.valueOf(transaction.getOrderId()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        holder.txnIdTextView.setText("Transaction ID - " + String.valueOf(transaction.getOrderId()));
+    }
+
+    private void changeItemBackground(WalletHistoryViewHolder holder, int position) {
+        if (position % 2 == 0) {
+            holder.itemRootLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+        } else {
+            holder.itemRootLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black));
         }
     }
 
@@ -165,10 +193,12 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
             switch (v.getId()) {
                 case R.id.wallet_more_details_imgBtn:
                     if (moreDetailsLayout.getVisibility() == View.GONE) {
-                        moreDetailsLayout.setVisibility(View.VISIBLE);
+//                        moreDetailsLayout.setVisibility(View.VISIBLE);
+                        AnimationHelper.expand(moreDetailsLayout);
                         moreDetailBtnImageView.setImageResource(R.drawable.thin_arrow_up_min);
                     } else {
-                        moreDetailsLayout.setVisibility(View.GONE);
+//                        moreDetailsLayout.setVisibility(View.GONE);
+                        AnimationHelper.collapse(moreDetailsLayout);
                         moreDetailBtnImageView.setImageResource(R.drawable.thin_arrow_min);
                     }
                     break;

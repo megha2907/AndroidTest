@@ -7,7 +7,7 @@
     tools:context="in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutWalletChoiceFragment">
 
     <!-- Withdraw button -->
-    <FrameLayout
+    <!--<FrameLayout
         android:id="@+id/withdraw_bottom_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
 
         </LinearLayout>
 
-    </FrameLayout>
+    </FrameLayout>-->
 
     <!--<android.support.v7.widget.RecyclerView
         android:id="@+id/payout_choice_recyclerView"
@@ -42,89 +42,114 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/withdraw_bottom_button">
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dp_5"
-            android:paddingRight="@dimen/dp_5">
+            android:orientation="vertical">
 
             <!-- Paytm button -->
             <RelativeLayout
-                android:id="@+id/payout_choice_paytm_button"
+                android:id="@+id/payout_paytm_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_80"
-                android:visibility="gone">
+                android:minHeight="@dimen/dp_64"
+                android:background="@drawable/bg_card_btn_strip"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginRight="@dimen/dp_12">
 
-                <RadioButton
-                    android:id="@+id/payout_choice_paytm_radio_button"
+                <ImageView
+                    android:id="@+id/imgView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:checked="true"
-                    android:layout_alignParentLeft="true"/>
+                    android:src="@drawable/navigation_wallet_icn"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/dp_18"
+                    android:layout_marginRight="@dimen/dp_18"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@id/imgView"
+                    android:layout_centerVertical="true">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/payout_choice_paytm_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Paytm Wallet"
-                    android:layout_toRightOf="@id/payout_choice_paytm_radio_button"
+                    android:text="PayTm Details"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_16"
-                    app:typeface="lato_regular"
-                    android:layout_marginLeft="@dimen/dp_10"/>
+                    android:textSize="@dimen/sp_13"
+                    app:typeface="lato_regular"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/payout_choice_paytm_number_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:text="XXXXX XXX123"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_16"
+                    android:text="XXXXX XXXXX"
+                    android:textColor="@color/white_dim"
+                    android:textSize="@dimen/sp_11"
                     app:typeface="lato_regular"
-                    android:layout_marginLeft="@dimen/dp_10"/>
+                    android:layout_marginTop="@dimen/dp_5"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/dp_12"
+                    android:layout_height="@dimen/dp_12"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/back_icon_grey"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_16"/>
 
             </RelativeLayout>
 
-            <View
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
-                android:background="@color/grey"/>
+                android:background="@color/grey"/>-->
 
             <!-- Bank button -->
             <RelativeLayout
-                android:id="@+id/payout_choice_bank_button"
+                android:id="@+id/payout_bank_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_80"
-                android:visibility="gone">
+                android:minHeight="@dimen/dp_64"
+                android:background="@drawable/bg_card_btn_strip"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginRight="@dimen/dp_12">
 
-                <RadioButton
-                    android:id="@+id/payout_choice_bank_radio_button"
+                <ImageView
+                    android:id="@+id/imgView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/bank_popup_white_icon"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/dp_18"
+                    android:layout_marginRight="@dimen/dp_18"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/imgView1">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/payout_choice_bank_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Your Bank"
-                    android:layout_toRightOf="@id/payout_choice_bank_radio_button"
+                    android:text="Bank Account"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_16"
-                    app:typeface="lato_regular"
-                    android:layout_marginLeft="@dimen/dp_10"/>
+                    android:textSize="@dimen/sp_13"
+                    app:typeface="lato_regular"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/payout_choice_bank_number_textView"
@@ -132,11 +157,22 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:text="XXXXX XXX123"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_16"
+                    android:text="XXX-XXX-XXX-XXX"
+                    android:textColor="@color/white_dim"
+                    android:textSize="@dimen/sp_11"
                     app:typeface="lato_regular"
-                    android:layout_marginLeft="@dimen/dp_10"/>
+                    android:layout_marginTop="@dimen/dp_5"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/dp_12"
+                    android:layout_height="@dimen/dp_12"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/back_icon_grey"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_16"/>
 
             </RelativeLayout>
 

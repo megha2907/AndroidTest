@@ -17,7 +17,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoBankDto;
 
-public class AddPaymentBankActivity extends NostragamusActivity implements View.OnFocusChangeListener {
+public class AddBankDetailsActivity extends NostragamusActivity implements View.OnFocusChangeListener {
 
     private EditText mAccHolderNameEditText;
     private EditText mAccNumberEditText;
@@ -96,10 +96,6 @@ public class AddPaymentBankActivity extends NostragamusActivity implements View.
         }
     }
 
-    public void onAddBankSkipClicked(View view) {
-        finishThisAndGotoPaymentHome();
-    }
-
     private AddPaytmOrBankDetailModelModelImpl.PaytmOrBankDetailModelListener getCallBackListener() {
 
         return new AddPaytmOrBankDetailModelModelImpl.PaytmOrBankDetailModelListener() {
@@ -113,7 +109,6 @@ public class AddPaymentBankActivity extends NostragamusActivity implements View.
             public void onNoInternet() {
                 dismissProgressbar();
                 showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
-
             }
 
             @Override

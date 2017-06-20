@@ -24,7 +24,7 @@ public class WalletHistoryActivity extends NostragamusActivity implements Wallet
     }
 
     private void loadHistoryFragment() {
-        WalletHistoryHistoryFragment fragment = WalletHistoryHistoryFragment.newInstance();
+        WalletHistoryFragment fragment = WalletHistoryFragment.newInstance();
         FragmentHelper.replaceFragment(this, R.id.fragment_container, fragment);
     }
 

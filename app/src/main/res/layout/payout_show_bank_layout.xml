@@ -4,57 +4,92 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black">
+    android:background="@drawable/bg_card_btn_strip"
+    android:layout_marginTop="@dimen/dp_12"
+    android:layout_marginLeft="@dimen/dp_12"
+    android:layout_marginRight="@dimen/dp_12">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:minHeight="@dimen/dp_80"
-        android:layout_marginLeft="@dimen/dp_12">
+        android:minHeight="@dimen/dp_64"
+        >
+
+        <ImageView
+            android:id="@+id/payout_list_item_icon_imageView"
+            android:layout_width="@dimen/dp_12"
+            android:layout_height="@dimen/dp_12"
+            android:src="@drawable/bank_popup_grey_icon"
+            android:layout_marginRight="@dimen/dp_18"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"/>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:id="@+id/payout_list_item_icon_imageView"
-                android:layout_width="@dimen/dp_16"
-                android:layout_height="@dimen/dp_16"
-                android:src="@drawable/info"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/payout_list_item_icon_imageView">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Edit bank details"
+                android:text="Bank Account"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_12"
+                android:textSize="@dimen/sp_13"
+                app:typeface="lato_regular"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/payout_list_item_details_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/grey_dim_text"
+                android:textSize="@dimen/sp_11"
                 app:typeface="lato_regular"
-                android:layout_marginLeft="@dimen/dp_5"/>
+                android:layout_marginTop="@dimen/dp_5"/>
 
         </LinearLayout>
 
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/payout_list_item_details_textView"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
-            app:typeface="lato_regular"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_16">
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="@dimen/dp_12"
+                android:layout_height="@dimen/dp_12"
+                android:src="@drawable/edit_icon"
+                android:layout_marginRight="@dimen/dp_6"
+                android:layout_marginLeft="@dimen/dp_6"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0.5"
-        android:background="@color/grey"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"/>
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EDIT"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_11"
+                app:typeface="lato_regular"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <!--
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0.5"
+            android:background="@color/grey"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"/>-->
 
 </LinearLayout>

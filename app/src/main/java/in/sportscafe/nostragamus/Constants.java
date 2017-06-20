@@ -606,6 +606,10 @@ public interface Constants {
     public interface MoneyFlow {
         String IN = "in";   // Debit
         String OUT = "out"; // credit
+
+        String STATUS_CODE_INITIATED = "0";
+        String STATUS_CODE_SUCCESS = "1";
+        String STATUS_CODE_FAILURE = "2";
     }
 
     interface ChallengeTabs {

@@ -52,8 +52,9 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
     }
 
     private void initRootView(View rootView) {
-        rootView.findViewById(R.id.wallet_add_money_layout_button).setOnClickListener(this);
-        rootView.findViewById(R.id.wallet_withdraw_money_layout_button).setOnClickListener(this);
+        rootView.findViewById(R.id.wallet_home_earn_more_button).setOnClickListener(this);
+        rootView.findViewById(R.id.wallet_home_add_money_button).setOnClickListener(this);
+        rootView.findViewById(R.id.wallet_home_withdraw_button).setOnClickListener(this);
         rootView.findViewById(R.id.wallet_transaction_history_card).setOnClickListener(this);
         rootView.findViewById(R.id.wallet_payout_detail_card).setOnClickListener(this);
         rootView.findViewById(R.id.wallet_home_card_money_layout).setOnClickListener(this);
@@ -150,11 +151,15 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.wallet_add_money_layout_button:
+            case R.id.wallet_home_earn_more_button:
+                onEarnMoreClicked();
+                break;
+
+            case R.id.wallet_home_add_money_button:
                 onAddMoneyClicked();
                 break;
 
-            case R.id.wallet_withdraw_money_layout_button:
+            case R.id.wallet_home_withdraw_button:
                 onWithdrawMoneyClicked();
                 break;
 
@@ -214,6 +219,10 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
         if (mFragmentListener != null) {
             mFragmentListener.onTransactionHistoryClicked();
         }
+    }
+
+    private void onEarnMoreClicked() {
+
     }
 
     private void onWithdrawMoneyClicked() {

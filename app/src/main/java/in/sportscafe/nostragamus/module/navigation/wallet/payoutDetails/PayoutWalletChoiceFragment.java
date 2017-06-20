@@ -10,8 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 
 import com.jeeva.android.BaseFragment;
 
@@ -28,14 +27,14 @@ import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.With
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String TAG = PayoutWalletChoiceFragment.class.getSimpleName();
 
     private PayoutWalletChoiceFragmentListener mFragmentListener;
 
-    private RadioButton mPaytmRadioButton;
-    private RadioButton mBankRadioButton;
+    private RelativeLayout mPaytmButton;
+    private RelativeLayout mBankButton;
 
     public PayoutWalletChoiceFragment() {}
 
@@ -59,15 +58,11 @@ public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnC
     }
 
     private void initRootView(View rootView) {
-        rootView.findViewById(R.id.withdraw_bottom_button).setOnClickListener(this);
-        rootView.findViewById(R.id.payout_choice_paytm_button).setOnClickListener(this);
-        rootView.findViewById(R.id.payout_choice_bank_button).setOnClickListener(this);
         rootView.findViewById(R.id.payout_choice_no_account_button).setOnClickListener(this);
-
-        mPaytmRadioButton = (RadioButton) rootView.findViewById(R.id.payout_choice_paytm_radio_button);
-        mBankRadioButton = (RadioButton) rootView.findViewById(R.id.payout_choice_bank_radio_button);
-        mPaytmRadioButton.setOnCheckedChangeListener(this);
-        mBankRadioButton.setOnCheckedChangeListener(this);
+        mPaytmButton = (RelativeLayout) rootView.findViewById(R.id.payout_paytm_button);
+        mBankButton = (RelativeLayout) rootView.findViewById(R.id.payout_bank_button);
+        mPaytmButton.setOnClickListener(this);
+        mBankButton.setOnClickListener(this);
     }
 
     @Override
@@ -79,7 +74,6 @@ public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnC
 
     private void init() {
         showPayoutAccounts();
-        initWithdrawalAmount();
     }
 
     private void showPayoutAccounts() {
@@ -89,23 +83,21 @@ public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnC
 
         if (view != null) {
             if (isPaytmProvided) {
-                view.findViewById(R.id.payout_choice_paytm_button).setVisibility(View.VISIBLE);
-                mPaytmRadioButton.setChecked(true);
+                if (mPaytmButton != null) {
+                    mPaytmButton.setVisibility(View.VISIBLE);
+                }
             }
             if (isBankProvided) {
-                view.findViewById(R.id.payout_choice_bank_button).setVisibility(View.VISIBLE);
-                if (mPaytmRadioButton.getVisibility() != View.VISIBLE) {
-                    mBankRadioButton.setChecked(true);
+                if (mBankButton != null) {
+                    mBankButton.setVisibility(View.VISIBLE);
                 }
             }
 
             // If no account details available
             if (!isPaytmProvided && !isBankProvided) {
                 view.findViewById(R.id.payout_choice_no_account_button).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.withdraw_bottom_button).setEnabled(false);
             } else {
                 view.findViewById(R.id.payout_choice_no_account_button).setVisibility(View.GONE);
-                view.findViewById(R.id.withdraw_bottom_button).setEnabled(true);
             }
         }
     }
@@ -141,10 +133,6 @@ public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnC
         }).performApiCall();
     }
 
-    private void initWithdrawalAmount() {
-        double amount = getWithdrawalAmount();
-    }
-
     private double getWithdrawalAmount() {
         double amount = 0;
         Bundle args = getArguments();
@@ -158,22 +146,26 @@ public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnC
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.withdraw_bottom_button:
-                onWithdrawClicked();
-                break;
-
-            case R.id.payout_choice_paytm_button:
-                mPaytmRadioButton.setChecked(true);
-                break;
-
-            case R.id.payout_choice_bank_button:
-                mBankRadioButton.setChecked(true);
-                break;
-
             case R.id.payout_choice_no_account_button:
                 onAddPayoutButtonClicked();
                 break;
+
+            case R.id.payout_paytm_button:
+                onPaytmChosen();
+                break;
+
+            case R.id.payout_bank_button:
+                onBankChosen();
+                break;
         }
+    }
+
+    private void onBankChosen() {
+        performWithdrawOperation(PayoutChoiceType.BANK);
+    }
+
+    private void onPaytmChosen() {
+        performWithdrawOperation(PayoutChoiceType.PAYTM);
     }
 
     private void onAddPayoutButtonClicked() {
@@ -182,25 +174,13 @@ public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnC
         }
     }
 
-    private void onWithdrawClicked() {
+    private void performWithdrawOperation(String payout) {
         double amount = getWithdrawalAmount();
-        String payout = getPayoutChoice();
-
         if (amount > 0 && !TextUtils.isEmpty(payout)) {
             performTransaction(amount, payout);
         } else {
             showMessage("Invalid amount or choose payout account");
         }
-    }
-
-    private String getPayoutChoice() {
-        String payout = PayoutChoiceType.PAYTM;
-
-        if (mBankRadioButton.isChecked()) {
-            payout = PayoutChoiceType.BANK;
-        }
-
-        return payout;
     }
 
     private void performTransaction(double amount, String type) {
@@ -273,20 +253,4 @@ public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnC
         }
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()) {
-            case R.id.payout_choice_paytm_radio_button:
-                if (isChecked) {
-                    mBankRadioButton.setChecked(false);
-                }
-                break;
-
-            case R.id.payout_choice_bank_radio_button:
-                if (isChecked) {
-                    mPaytmRadioButton.setChecked(false);
-                }
-                break;
-        }
-    }
 }

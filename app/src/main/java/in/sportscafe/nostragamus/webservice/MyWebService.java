@@ -23,7 +23,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
 import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentBankRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddBankDetailsRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentDetailsResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentPaytmRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderRequest;
@@ -282,7 +282,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.generateOrder(request);
     }
 
-    public Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(AddUserPaymentBankRequest request) {
+    public Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(AddBankDetailsRequest request) {
         return mNostragamusService.addUserPaymentBankDetails(request);
     }
 
