@@ -223,9 +223,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             if (match.isResultPublished()) {
 
                 holder.mTvMatchResult.setVisibility(View.VISIBLE);
-                if (match.getParties()==null) {
+                if (match.getParties() == null) {
                     holder.mTvOnePartyMatchResult.setText(match.getResult());
-                }else {
+                } else {
                     holder.mTvMatchResult.setText(match.getStage() + " - " + match.getResult());
                 }
                 holder.mTvAvgMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
@@ -282,7 +282,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     holder.mTvOnePartyMatchResultWait.setVisibility(View.VISIBLE);
                     holder.mTvOnePartyMatchResultWait.setText("Awaiting Results");
                     holder.mTvOnePartyMatchResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                }else {
+                } else {
                     holder.mTvResultWait.setVisibility(View.VISIBLE);
                     holder.mTvResultWait.setText(match.getStage() + " - " + "Awaiting Results");
                     holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
@@ -477,10 +477,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 .setText(question.getQuestionText().replace("\n", ""));
 
         mRlEditAnswers = (RelativeLayout) convertView.findViewById(R.id.my_results_rl_edit_answers);
-        final TextView tvAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer);
-        final TextView tvNeitherAnswer = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_neither_answer);
         final TextView tvAnswerPoints = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_answer_points);
-        final TextView tvotheroption = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_correct_answer);
+        final TextView tvOption1 = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_option1_answer);
+        final TextView tvOption2 = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_option2_answer);
+        final TextView tvOption3 = (TextView) convertView.findViewById(R.id.my_predictions_row_tv_option3_answer);
 
         showOrHidePowerUps(question, convertView);
 
@@ -511,213 +511,229 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         }
 
-        /* BEFORE THE RESULT IS PUBLISHED SHOW ANSWERS */
+
+           /* BEFORE THE RESULT IS PUBLISHED SHOW ANSWERS */
         if (null == question.getQuestionAnswer()) {
 
-            tvotheroption.setVisibility(View.VISIBLE);
-            setTextColor(tvAnswer, R.color.white);
-            setTextColor(tvotheroption, R.color.white_60);
-            setTextColor(tvNeitherAnswer, R.color.white_60);
+            tvOption1.setText(question.getQuestionOption1());
+            tvOption2.setText(question.getQuestionOption2());
+
+            tvOption2.setVisibility(View.VISIBLE);
+
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                tvOption3.setVisibility(View.VISIBLE);
+                tvOption3.setText(question.getQuestionOption3());
+            }
 
             if (answerId == 0) {
-                setTextColor(tvAnswer, R.color.tabcolor);
-                tvAnswer.setText(question.getQuestionOption1());
-                tvotheroption.setText(question.getQuestionOption2());
-                setTextColor(tvAnswer, R.color.white_60);
-                setTextColor(tvotheroption, R.color.white_60);
+
+                /* if question not answered then answerId=0 , set All Options Color as grey */
+                setTextColor(tvOption1, R.color.white_60);
+                setTextColor(tvOption2, R.color.white_60);
                 if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                    tvNeitherAnswer.setVisibility(View.VISIBLE);
-                    tvNeitherAnswer.setText(question.getQuestionOption3());
-                    setTextColor(tvNeitherAnswer, R.color.white_60);
+                    setTextColor(tvOption3, R.color.white_60);
                 }
 
             } else {
-                /* if answer is 1st option */
-                if (answerId == 1) {
-                    tvAnswer.setText(question.getQuestionOption1());
-                    tvotheroption.setText(question.getQuestionOption2());
 
-                }  /* if answer is 2nd option */ else {
-                    tvAnswer.setText(question.getQuestionOption2());
-                    tvotheroption.setText(question.getQuestionOption1());
+                /* if answer is 1st option , set Option1 Color as white and other grey */
+                if (answerId == 1) {
+                    setTextColor(tvOption1, R.color.white);
+                    setTextColor(tvOption2, R.color.white_60);
+                    setTextColor(tvOption3, R.color.white_60);
+
+                }  /* if answer is 2nd option , set Option2 Color as white and other grey */ else {
+                    setTextColor(tvOption2, R.color.white);
+                    setTextColor(tvOption1, R.color.white_60);
+                    setTextColor(tvOption3, R.color.white_60);
                 }
 
-                 /* if answer is 3rd option */
+                 /* if answer is 3rd option , set Option3 Color as white and others grey */
                 if (!TextUtils.isEmpty(question.getQuestionOption3()) && answerId == 3) {
-                    tvNeitherAnswer.setVisibility(View.VISIBLE);
-                    tvAnswer.setText(question.getQuestionOption3());
-                    tvotheroption.setText(question.getQuestionOption1());
-                    tvNeitherAnswer.setText(question.getQuestionOption2());
-                } else if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                    tvNeitherAnswer.setVisibility(View.VISIBLE);
-                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    setTextColor(tvOption1, R.color.white_60);
+                    setTextColor(tvOption2, R.color.white_60);
+                    setTextColor(tvOption3, R.color.white);
                 }
             }
 
         }
         /* if played match but not attempted Question */
         else if (answerId == 0) {
+
+            /* We can't edit answer if not attempted a Question */
             mRlEditAnswers.setVisibility(View.GONE);
-            setTextColor(tvAnswer, R.color.tabcolor);
-            tvotheroption.setVisibility(View.VISIBLE);
-            tvAnswer.setText(question.getQuestionOption1());
-            tvotheroption.setText(question.getQuestionOption2());
-            setTextColor(tvAnswer, R.color.white_60);
-            setTextColor(tvotheroption, R.color.white_60);
+
+            /* Set All options color as grey */
+            tvOption1.setText(question.getQuestionOption1());
+            tvOption2.setText(question.getQuestionOption2());
+
+            tvOption2.setVisibility(View.VISIBLE);
+
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                tvNeitherAnswer.setVisibility(View.VISIBLE);
-                tvNeitherAnswer.setText(question.getQuestionOption3());
-                setTextColor(tvNeitherAnswer, R.color.white_60);
+                tvOption3.setVisibility(View.VISIBLE);
+                tvOption3.setText(question.getQuestionOption3());
+                setTextColor(tvOption3, R.color.white_60);
             }
+
+            setTextColor(tvOption1, R.color.white_60);
+            setTextColor(tvOption2, R.color.white_60);
 
             if (question.getQuestionAnswer() == 1 || question.getQuestionAnswer() == 2) {
                 if (question.getQuestionAnswer() == 1) {
-                    tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+                    tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
 
                 } else {
-                    tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+                    tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                 }
             }
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                 if (question.getQuestionAnswer() == 3) {
-                    tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+                    tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                 }
             }
 
 
         }
-        /* if your answer = correct answer */
+        /* if YOUR ANSWER = CORRECT ANSWER */
         else if (answerId == question.getQuestionAnswer()) {
 
-            setTextColor(tvAnswer, R.color.greencolor);
-            setTextColor(tvNeitherAnswer, R.color.white_60);
-            setTextColor(tvotheroption, R.color.white_60);
-            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
-            tvotheroption.setVisibility(View.VISIBLE);
-            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
-            tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+            tvOption1.setText(question.getQuestionOption1());
+            tvOption2.setText(question.getQuestionOption2());
 
+            tvOption2.setVisibility(View.VISIBLE);
+
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                tvOption3.setVisibility(View.VISIBLE);
+                tvOption3.setText(question.getQuestionOption3());
+            }
 
            /* IF USER ANSWER = OPTION 1 OR OPTION 2 */
 
             if (question.getQuestionAnswer() == 1 || question.getQuestionAnswer() == 2) {
-                if (question.getQuestionAnswer() == 1) {
-                    tvAnswer.setText(question.getQuestionOption1());
-                    tvotheroption.setText(question.getQuestionOption2());
 
-                } else {
-                    tvAnswer.setText(question.getQuestionOption2());
-                    tvotheroption.setText(question.getQuestionOption1());
+                /* If your Answer = Option 1 , Set Option 1 color as green and tick icon next to option 1 */
+                if (question.getQuestionAnswer() == 1) {
+                    setTextColor(tvOption1, R.color.greencolor);
+                    setTextColor(tvOption2, R.color.white_60);
+                    tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
+                    tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+
+                }   /* If your Answer = Option 2 , Set Option 2 color as green and tick icon next to option 2 */ else {
+                    setTextColor(tvOption2, R.color.greencolor);
+                    setTextColor(tvOption1, R.color.white_60);
+                    tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
+                    tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
 
                 if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                    tvNeitherAnswer.setVisibility(View.VISIBLE);
-                    tvNeitherAnswer.setText(question.getQuestionOption3());
+                    tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
+
             }
 
-            /* IF USER ANSWER = THIRD OPTION (NEITHER OR DRAW) */
+             /* If your Answer = Option 3 , Set Option 3 color as green and tick icon next to option 3 */
             if (answerId == 3) {
-                tvAnswer.setVisibility(View.VISIBLE);
-                tvAnswer.setText(question.getQuestionOption3());
-                tvotheroption.setText(question.getQuestionOption1());
-                tvNeitherAnswer.setVisibility(View.VISIBLE);
-                tvNeitherAnswer.setText(question.getQuestionOption2());
+                setTextColor(tvOption3, R.color.greencolor);
+                setTextColor(tvOption1, R.color.white_60);
+                setTextColor(tvOption2, R.color.white_60);
+                tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
+                tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+                tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
             }
 
-        }  /* if your answer & other option both are correct */ else if (question.getQuestionAnswer() == 0) {
+        }
 
-            Log.i("answer", "both correct");
+        /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/
+        else if (question.getQuestionAnswer() == -1) {
 
-            tvotheroption.setVisibility(View.VISIBLE);
-            if (question.getQuestionAnswer() == 1) {
-                tvotheroption.setText(question.getQuestionOption1());
-                setTextColor(tvotheroption, R.color.white_60);
-            } else {
-                tvotheroption.setText(question.getQuestionOption2());
-                setTextColor(tvotheroption, R.color.white_60);
-            }
-            tvotheroption.setVisibility(View.VISIBLE);
-            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
-            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
-            setTextColor(tvAnswer, R.color.greencolor);
+            tvOption1.setText(question.getQuestionOption1());
+            tvOption2.setText(question.getQuestionOption2());
 
-        }     /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/ else if (question.getQuestionAnswer() == -1) {
-            tvAnswer.setText(question.getQuestionOption1());
-            tvotheroption.setText(question.getQuestionOption2());
-            tvotheroption.setVisibility(View.VISIBLE);
+            tvOption2.setVisibility(View.VISIBLE);
 
-            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            /* Set All Options Color as grey */
+            setTextColor(tvOption1, R.color.white_60);
+            setTextColor(tvOption2, R.color.white_60);
+
+             /* Set All Options Compound Drawables as null */
+            tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                tvNeitherAnswer.setText(question.getQuestionOption3());
-                tvNeitherAnswer.setVisibility(View.VISIBLE);
-                setTextColor(tvNeitherAnswer, R.color.white_60);
-                tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                tvOption3.setText(question.getQuestionOption3());
+                tvOption3.setVisibility(View.VISIBLE);
+                setTextColor(tvOption3, R.color.white_60);
+                tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             }
 
-            setTextColor(tvNeitherAnswer, R.color.white_60);
-            setTextColor(tvAnswer, R.color.white_60);
             convertView.findViewById(R.id.my_predictions_row_splitView).setVisibility(View.VISIBLE);
-        }  /* if your answer is incorrect and other option is correct */ else {
-            setTextColor(tvAnswer, R.color.tabcolor);
-            tvAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
-            tvotheroption.setVisibility(View.VISIBLE);
-            setTextColor(tvotheroption, R.color.white_60);
-            tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+        }
+
+        /* if your answer is incorrect and other option is correct */
+        else {
+
+            tvOption1.setText(question.getQuestionOption1());
+            tvOption2.setText(question.getQuestionOption2());
+
+            tvOption2.setVisibility(View.VISIBLE);
+
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                tvOption3.setVisibility(View.VISIBLE);
+                tvOption3.setText(question.getQuestionOption3());
+            }
 
             // IF USER ANSWER = OPTION 1 OR OPTION 2
 
             if (question.getQuestionAnswer() == 1 || question.getQuestionAnswer() == 2) {
 
-                if (question.getQuestionAnswer() == 1) {
-                    tvAnswer.setText(question.getQuestionOption2());
-                    tvotheroption.setText(question.getQuestionOption1());
+                if (answerId == 1) {
+                    setTextColor(tvOption1, R.color.tabcolor);
+                    setTextColor(tvOption2, R.color.white_60);
+                    tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+                    tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                 } else {
-                    tvAnswer.setText(question.getQuestionOption1());
-                    tvotheroption.setText(question.getQuestionOption2());
+                    setTextColor(tvOption2, R.color.tabcolor);
+                    setTextColor(tvOption1, R.color.white_60);
+                    tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
+                    tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
 
                 if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                    tvNeitherAnswer.setVisibility(View.VISIBLE);
-                    tvNeitherAnswer.setText(question.getQuestionOption3());
-                    setTextColor(tvNeitherAnswer, R.color.white_60);
-                    tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+                    setTextColor(tvOption3, R.color.white_60);
+                    tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
             } else if (question.getQuestionAnswer() == 3) {
 
                 if (answerId == 1) {
-                    tvAnswer.setText(question.getQuestionOption1());
-                    tvotheroption.setText(question.getQuestionOption2());
+                    setTextColor(tvOption1, R.color.tabcolor);
+                    setTextColor(tvOption2, R.color.white_60);
                 } else {
-                    tvAnswer.setText(question.getQuestionOption2());
-                    tvotheroption.setText(question.getQuestionOption1());
+                    setTextColor(tvOption2, R.color.tabcolor);
+                    setTextColor(tvOption1, R.color.white_60);
                 }
 
-                tvNeitherAnswer.setVisibility(View.VISIBLE);
-                tvNeitherAnswer.setText(question.getQuestionOption3());
-                setTextColor(tvNeitherAnswer, R.color.white_60);
-                tvotheroption.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
-                tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_tick_icon, 0);
+                setTextColor(tvOption3, R.color.white_60);
+                tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+                tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+                tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
 
             }
 
             // IF USER ANSWER = NEITHER
             if (answerId == 3) {
+
                 if (question.getQuestionAnswer() == 1) {
-                    tvotheroption.setText(question.getQuestionOption1());
-                    tvNeitherAnswer.setText(question.getQuestionOption2());
+                    tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
+                    tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 } else {
-                    tvotheroption.setText(question.getQuestionOption2());
-                    tvNeitherAnswer.setText(question.getQuestionOption1());
+                    tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+                    tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                 }
-                tvAnswer.setVisibility(View.VISIBLE);
-                tvNeitherAnswer.setVisibility(View.VISIBLE);
-                tvAnswer.setText(question.getQuestionOption3());
-//                setTextColor(tvNeitherAnswer, R.color.tabcolor);
-                tvNeitherAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
+                setTextColor(tvOption1, R.color.white_60);
+                setTextColor(tvOption2, R.color.white_60);
+                setTextColor(tvOption3, R.color.tabcolor);
+                tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
             }
 
         }
@@ -729,8 +745,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         showGraphPercentage(question, convertView);
 
         /* edit Answer on click of Button and change edit Answer to save answer, If saving Answer ,callapi*/
-        handleEditAnswerButtonClick(parent, question, convertView, tvAnswer,
-                tvNeitherAnswer, tvotheroption);
+        handleEditAnswerButtonClick(parent, question, convertView, tvOption1,
+                tvOption2, tvOption3);
 
         return convertView;
     }
@@ -767,15 +783,15 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
                 String powerUp = powerUpArrayList.get(temp);
                 if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
-                    powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup);
+                    powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
                     powerUp2xImageView.setVisibility(View.VISIBLE);
                     powerUpLayout.setVisibility(View.VISIBLE);
                 } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
-                    powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup);
+                    powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
                     powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
                     powerUpLayout.setVisibility(View.VISIBLE);
                 } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
-                    powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup);
+                    powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
                     powerUpAudienceImageView.setVisibility(View.VISIBLE);
                     powerUpLayout.setVisibility(View.VISIBLE);
                 }
@@ -791,13 +807,13 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
      * @param parent
      * @param question
      * @param convertView
-     * @param tvAnswer
-     * @param tvNeitherAnswer
-     * @param tvotheroption
+     * @param tvOption1
+     * @param tvOption2
+     * @param tvOption3
      */
     private void handleEditAnswerButtonClick(final ViewGroup parent, final Question question,
-                                             final View convertView, final TextView tvAnswer,
-                                             final TextView tvNeitherAnswer, final TextView tvotheroption) {
+                                             final View convertView, final TextView tvOption1,
+                                             final TextView tvOption2, final TextView tvOption3) {
 
         final Button editAnswersBtn = (Button) convertView.findViewById(R.id.my_results_btn_edit_answers);
         final ImageView mIvEditAnswers = (ImageView) convertView.findViewById(R.id.my_results_iv_edit_answers_icon);
@@ -829,7 +845,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                             }
 
 
-                            onClickSaveAnswer(question, selectedAnswerId, tvAnswer, tvotheroption, tvNeitherAnswer);
+                            onClickSaveAnswer(question, selectedAnswerId, tvOption1, tvOption2, tvOption3);
 
 
                         /* call save Answer Api */
@@ -845,9 +861,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
                         }
                     } else { /* Show radio buttons , hide Answers View and change edit Answer btn to Save Answer */
-                        tvAnswer.setVisibility(View.GONE);
-                        tvotheroption.setVisibility(View.GONE);
-                        tvNeitherAnswer.setVisibility(View.GONE);
+                        tvOption1.setVisibility(View.GONE);
+                        tvOption2.setVisibility(View.GONE);
+                        tvOption3.setVisibility(View.GONE);
                         mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_tick));
                         editAnswersBtn.setText(SAVE_ANSWER_STR);
                         question.setEditAnswerQuestionId(question.getQuestionId());
@@ -888,42 +904,47 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     }
 
     /* Update Answer and set Selected AnswerId */
-    private void onClickSaveAnswer(Question question, int selectedAnswerId, TextView tvAnswer, TextView tvOtherOption, TextView tvNeitherAnswer) {
+    private void onClickSaveAnswer(Question question, int selectedAnswerId, TextView tvOption1, TextView tvOption2, TextView tvOption3) {
 
         mSaveAnswer = false;
         mRadioGroup.setVisibility(View.GONE);
-        tvAnswer.setVisibility(View.VISIBLE);
-        tvOtherOption.setVisibility(View.VISIBLE);
+        tvOption1.setVisibility(View.VISIBLE);
+        tvOption2.setVisibility(View.VISIBLE);
 
         question.setAnswerId(selectedAnswerId);
 
+        tvOption1.setText(question.getQuestionOption1());
+        tvOption2.setText(question.getQuestionOption2());
+
+        if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+            tvOption3.setText(question.getQuestionOption3());
+            tvOption3.setVisibility(View.VISIBLE);
+        }
+
         if (selectedAnswerId == 1) {
-            tvAnswer.setText(question.getQuestionOption1());
-            tvOtherOption.setText(question.getQuestionOption2());
+            setTextColor(tvOption1, R.color.white);
+            setTextColor(tvOption2, R.color.white_60);
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                tvNeitherAnswer.setText(question.getQuestionOption3());
-                tvNeitherAnswer.setVisibility(View.VISIBLE);
+                setTextColor(tvOption3, R.color.white_60);
             }
 
         } else if (selectedAnswerId == 2) {
 
-            tvAnswer.setText(question.getQuestionOption2());
-            tvOtherOption.setText(question.getQuestionOption1());
+            setTextColor(tvOption1, R.color.white_60);
+            setTextColor(tvOption2, R.color.white);
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                tvNeitherAnswer.setText(question.getQuestionOption3());
-                tvNeitherAnswer.setVisibility(View.VISIBLE);
+                setTextColor(tvOption3, R.color.white_60);
             }
 
         } else if (selectedAnswerId == 3) {
 
-            tvAnswer.setText(question.getQuestionOption3());
-            tvOtherOption.setText(question.getQuestionOption1());
+            setTextColor(tvOption1, R.color.white_60);
+            setTextColor(tvOption2, R.color.white_60);
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                tvNeitherAnswer.setText(question.getQuestionOption2());
-                tvNeitherAnswer.setVisibility(View.VISIBLE);
+                setTextColor(tvOption3, R.color.white);
             }
         }
 

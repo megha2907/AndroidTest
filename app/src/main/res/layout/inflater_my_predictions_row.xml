@@ -139,7 +139,7 @@
                 android:animateLayoutChanges="true">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/my_predictions_row_tv_answer"
+                    android:id="@+id/my_predictions_row_tv_option1_answer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -150,10 +150,10 @@
                     android:drawablePadding="@dimen/dp_3"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/my_predictions_row_tv_correct_answer"
+                    android:id="@+id/my_predictions_row_tv_option2_answer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/my_predictions_row_tv_answer"
+                    android:layout_below="@+id/my_predictions_row_tv_option1_answer"
                     android:layout_marginTop="@dimen/dp_5"
                     android:gravity="center_vertical"
                     android:maxLines="1"
@@ -164,10 +164,10 @@
                     android:drawablePadding="@dimen/dp_3"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/my_predictions_row_tv_neither_answer"
+                    android:id="@+id/my_predictions_row_tv_option3_answer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/my_predictions_row_tv_correct_answer"
+                    android:layout_below="@+id/my_predictions_row_tv_option2_answer"
                     android:layout_marginTop="@dimen/dp_5"
                     android:gravity="center_vertical"
                     android:maxLines="1"

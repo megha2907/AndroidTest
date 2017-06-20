@@ -20,7 +20,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyT
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
-import in.sportscafe.nostragamus.module.othersanswers.PlayerResultPercentageResponse;
+import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStatsResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentBankRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentDetailsResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentPaytmRequest;
@@ -179,8 +179,8 @@ public interface NostragamusService {
     @GET("v1/game/getPlayerResult")
     Call<MyResultsResponse> getPlayerResult(@Query("player_id") Integer playerId, @Query("match_id") Integer matchId);
 
-    @GET("v1/game/getPlayerResultPercentage")
-    Call<PlayerResultPercentageResponse> playerResultPercentage(@Query("match_id") Integer matchId);
+    @GET("v1/game/getMatchAnswersStats")
+    Call<MatchAnswerStatsResponse> playerResultPercentage(@Query("match_id") Integer matchId);
 
     @GET("v2/game/users/leaderboard/summary")
     Call<LBLandingResponse> getLBLandingSummary(@QueryMap Map<String, String> queries);
