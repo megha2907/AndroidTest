@@ -2,11 +2,13 @@ package in.sportscafe.nostragamus.module.othersanswers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.HashMap;
+
 /**
  * Created by Jeeva on 11/01/17.
  */
 
-public class AnswerPercentage {
+public class MatchAnswerStats {
 
     @JsonProperty("question_id")
     private Integer questionId;
@@ -19,6 +21,9 @@ public class AnswerPercentage {
 
     @JsonProperty("answer2")
     private Integer answer2;
+
+    @JsonProperty("powerups")
+    private HashMap<String, Integer> powerUps = new HashMap<>();
 
     @JsonProperty("question_id")
     public Integer getQuestionId() {
@@ -59,4 +64,15 @@ public class AnswerPercentage {
     public void setAnswer2(Integer answer2) {
         this.answer2 = answer2;
     }
+
+    @JsonProperty("powerups")
+    public HashMap<String, Integer> getPowerUps() {
+        return powerUps;
+    }
+
+    @JsonProperty("powerups")
+    public void setPowerUps(HashMap<String, Integer> powerUps) {
+        this.powerUps = powerUps;
+    }
+
 }

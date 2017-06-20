@@ -6,11 +6,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
-import in.sportscafe.nostragamus.module.othersanswers.AnswerPercentage;
+import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStats;
 
 /**
  * Created by Jeeva on 27/5/16.
@@ -116,6 +117,15 @@ public class Question {
 
     @JsonIgnore
     private Integer editAnswerQuestionId;
+
+    @JsonIgnore
+    private Integer total2xPowerupsUsed;
+
+    @JsonIgnore
+    private Integer totalNoNegsPowerupsUsed;
+
+    @JsonIgnore
+    private Integer totalPlayerPollPowerupsUsed;
 
     /**
      * @return The questionId
@@ -437,11 +447,21 @@ public class Question {
     }
 
     @JsonIgnore
-    public void updatePollPercentage(AnswerPercentage answerPercentage) {
-        if (null != answerPercentage) {
-            option1AudPollPer = answerPercentage.getAnswer1();
-            option2AudPollPer = answerPercentage.getAnswer2();
-            option3AudPollPer = answerPercentage.getAnswer3();
+    public void updatePollPercentage(MatchAnswerStats matchAnswerStats) {
+        if (null != matchAnswerStats) {
+            option1AudPollPer = matchAnswerStats.getAnswer1();
+            option2AudPollPer = matchAnswerStats.getAnswer2();
+            option3AudPollPer = matchAnswerStats.getAnswer3();
+        }
+    }
+
+    @JsonIgnore
+    public void updateTotalPowerUps(MatchAnswerStats matchAnswerStats) {
+        if (null != matchAnswerStats) {
+            HashMap<String, Integer> powerUpMap = matchAnswerStats.getPowerUps();
+            total2xPowerupsUsed = powerUpMap.get(Constants.Powerups.XX);
+            totalNoNegsPowerupsUsed = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+            totalPlayerPollPowerupsUsed = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
         }
     }
 
@@ -714,6 +734,36 @@ public class Question {
     @JsonIgnore
     public void setEditAnswerQuestionId(Integer editAnswerQuestionId) {
         this.editAnswerQuestionId = editAnswerQuestionId;
+    }
+
+    @JsonIgnore
+    public Integer getTotal2xPowerupsUsed() {
+        return total2xPowerupsUsed;
+    }
+
+    @JsonIgnore
+    public void setTotal2xPowerupsUsed(Integer total2xPowerupsUsed) {
+        this.total2xPowerupsUsed = total2xPowerupsUsed;
+    }
+
+    @JsonIgnore
+    public Integer getTotalNoNegsPowerupsUsed() {
+        return totalNoNegsPowerupsUsed;
+    }
+
+    @JsonIgnore
+    public void setTotalNoNegsPowerupsUsed(Integer totalNoNegsPowerupsUsed) {
+        this.totalNoNegsPowerupsUsed = totalNoNegsPowerupsUsed;
+    }
+
+    @JsonIgnore
+    public Integer getTotalPlayerPollPowerupsUsed() {
+        return totalPlayerPollPowerupsUsed;
+    }
+
+    @JsonIgnore
+    public void setTotalPlayerPollPowerupsUsed(Integer totalPlayerPollPowerupsUsed) {
+        this.totalPlayerPollPowerupsUsed = totalPlayerPollPowerupsUsed;
     }
 
 }

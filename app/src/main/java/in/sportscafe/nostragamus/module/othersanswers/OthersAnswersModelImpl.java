@@ -128,7 +128,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
             callPlayerProfileApi();
         }
 
-//        loadAdapterData(getCategorizedList(mMatchDetails, new HashMap<Integer, AnswerPercentage>()));
+//        loadAdapterData(getCategorizedList(mMatchDetails, new HashMap<Integer, MatchAnswerStats>()));
 //        mOthersAnswersModelListener.onSuccessOthersAnswers();
     }
 
@@ -145,7 +145,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
         }
     }*/
 
-    /*private List<Feed> getCategorizedList(Match match, Map<Integer, AnswerPercentage> questionAnswersMap) {
+    /*private List<Feed> getCategorizedList(Match match, Map<Integer, MatchAnswerStats> questionAnswersMap) {
         Map<String, Tournament> tourMap = new HashMap<>();
         Map<String, Feed> feedMap = new HashMap<>();
         List<Feed> feedList = new ArrayList<>();
@@ -199,9 +199,9 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
 
     private void callPlayerResultPercentageApi() {
         MyWebService.getInstance().getPlayerResultPercentageRequest(mMatchId)
-                .enqueue(new NostragamusCallBack<PlayerResultPercentageResponse>() {
+                .enqueue(new NostragamusCallBack<MatchAnswerStatsResponse>() {
                     @Override
-                    public void onResponse(Call<PlayerResultPercentageResponse> call, Response<PlayerResultPercentageResponse> response) {
+                    public void onResponse(Call<MatchAnswerStatsResponse> call, Response<MatchAnswerStatsResponse> response) {
                         super.onResponse(call, response);
 
                         if(response.isSuccessful()) {
@@ -213,14 +213,14 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
                 });
     }
 
-    private void handlePlayerPercentageResponse(List<AnswerPercentage> questionAnswers) {
+    private void handlePlayerPercentageResponse(List<MatchAnswerStats> questionAnswers) {
         if(questionAnswers.isEmpty()) {
             mOthersAnswersModelListener.onEmpty();
             return;
         }
 
-        Map<Integer, AnswerPercentage> questionAnswersMap = new HashMap<>();
-        for (AnswerPercentage questionAnswer : questionAnswers) {
+        Map<Integer, MatchAnswerStats> questionAnswersMap = new HashMap<>();
+        for (MatchAnswerStats questionAnswer : questionAnswers) {
             questionAnswersMap.put(questionAnswer.getQuestionId(), questionAnswer);
         }
 
