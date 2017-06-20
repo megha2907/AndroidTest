@@ -9,18 +9,18 @@ import java.util.List;
  * Created by Jeeva on 11/01/17.
  */
 
-public class PlayerResultPercentageResponse {
+public class MatchAnswerStatsResponse {
 
     @JsonProperty("data")
-    private List<AnswerPercentage> questionAnswers = new ArrayList<>();
+    private List<MatchAnswerStats> questionAnswers = new ArrayList<>();
 
     @JsonProperty("data")
-    public List<AnswerPercentage> getQuestionAnswers() {
+    public List<MatchAnswerStats> getQuestionAnswers() {
         return questionAnswers;
     }
 
     @JsonProperty("data")
-    public void setQuestionAnswers(List<AnswerPercentage> questionAnswers) {
+    public void setQuestionAnswers(List<MatchAnswerStats> questionAnswers) {
         this.questionAnswers = questionAnswers;
     }
 }

@@ -2,7 +2,6 @@ package in.sportscafe.nostragamus.module.feed.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jeeva.android.Log;
 
 import org.parceler.Parcel;
 
@@ -10,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
-import in.sportscafe.nostragamus.module.othersanswers.AnswerPercentage;
+import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStats;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 
 /**
@@ -392,9 +390,10 @@ public class Match {
     }
 
     @JsonIgnore
-    public void updateAnswerPercentage(Map<Integer, AnswerPercentage> questionAnswersMap) {
+    public void updateAnswerPercentage(Map<Integer, MatchAnswerStats> questionAnswersMap) {
         for (Question question : questions) {
             question.updatePollPercentage(questionAnswersMap.get(question.getQuestionId()));
+            question.updateTotalPowerUps(questionAnswersMap.get(question.getQuestionId()));
         }
     }
 

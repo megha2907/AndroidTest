@@ -291,6 +291,7 @@ public interface Constants {
         String PLAYED_FIRST_MATCH = "PlayedFirstMatch";
         String SERVER_TIME = "serverTime";
         String TRANSACTION_AMOUNT = "transactionAmount";
+        String BALANCE_AMOUNT = "balanceAmount";
         String CHALLENGE_CONFIG = "challengeConfig";
 
         /* Wallet */
