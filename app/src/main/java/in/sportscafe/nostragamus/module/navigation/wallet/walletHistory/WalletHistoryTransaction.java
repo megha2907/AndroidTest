@@ -8,6 +8,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WalletHistoryTransaction {
 
+    @JsonProperty("transaction_type")
+    private String transactionType;
+
+    @JsonProperty("trasaction_status")
+    private String trasactionStatus;
+
+    @JsonProperty("account")
+    private String account;
+
+    @JsonProperty("message")
+    private String message;
+
     @JsonProperty("order_id")
     private String orderId;
 
@@ -15,19 +27,42 @@ public class WalletHistoryTransaction {
     private String createdAt;
 
     @JsonProperty("amount")
-    private Integer amount;
-
-    @JsonProperty("challenge_name")
-    private String challengeName;
+    private double amount;
 
     @JsonProperty("money_flow")
     private String moneyFlow;
 
-    @JsonProperty("status_code")
-    private String statusCode;
+    public String getTransactionType() {
+        return transactionType;
+    }
 
-    @JsonProperty("rank")
-    private String rank;
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public String getTrasactionStatus() {
+        return trasactionStatus;
+    }
+
+    public void setTrasactionStatus(String trasactionStatus) {
+        this.trasactionStatus = trasactionStatus;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getOrderId() {
         return orderId;
@@ -45,20 +80,12 @@ public class WalletHistoryTransaction {
         this.createdAt = createdAt;
     }
 
-    public Integer getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
-    }
-
-    public String getChallengeName() {
-        return challengeName;
-    }
-
-    public void setChallengeName(String challengeName) {
-        this.challengeName = challengeName;
     }
 
     public String getMoneyFlow() {
@@ -67,21 +94,5 @@ public class WalletHistoryTransaction {
 
     public void setMoneyFlow(String moneyFlow) {
         this.moneyFlow = moneyFlow;
-    }
-
-    public String getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public String getRank() {
-        return rank;
-    }
-
-    public void setRank(String rank) {
-        this.rank = rank;
     }
 }

@@ -84,13 +84,13 @@ public class CompletePaymentAndJoinDialogFragment extends NostragamusDialogFragm
     }
 
     private void initValues() {
+        if (getView() != null) {
+            TextView tvBalanceAmount = (TextView) findViewById(R.id.complete_payment_tv_wallet_balance);
+            tvBalanceAmount.setText(WalletHelper.getFormattedStringOfAmount(mBalanceAmount));
 
-        TextView tvBalanceAmount = (TextView) findViewById(R.id.complete_payment_tv_wallet_balance);
-        tvBalanceAmount.setText("₹ "+WalletHelper.getFormattedStringOfAmount(mBalanceAmount));
-
-        TextView tvEntryFee = (TextView) findViewById(R.id.complete_payment_tv_entry_fee);
-        tvEntryFee.setText("₹ "+WalletHelper.getFormattedStringOfAmount(mEntryFee));
-
+            TextView tvEntryFee = (TextView) findViewById(R.id.complete_payment_tv_entry_fee);
+            tvEntryFee.setText(WalletHelper.getFormattedStringOfAmount(mEntryFee));
+        }
     }
 
     @Override

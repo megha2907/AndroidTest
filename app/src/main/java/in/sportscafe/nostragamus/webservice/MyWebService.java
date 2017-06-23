@@ -22,8 +22,8 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyT
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddBankDetailsRequest;
 import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStatsResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentBankRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentDetailsResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentPaytmRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderRequest;
@@ -282,7 +282,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.generateOrder(request);
     }
 
-    public Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(AddUserPaymentBankRequest request) {
+    public Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(AddBankDetailsRequest request) {
         return mNostragamusService.addUserPaymentBankDetails(request);
     }
 
@@ -290,8 +290,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.addUserPaymentPaytmDetails(request);
     }
 
-    public Call<List<WalletHistoryTransaction>> getWalletTransactionHistory() {
-        return mNostragamusService.getWalletTransactionHistory();
+    public Call<List<WalletHistoryTransaction>> getWalletTransactionHistory(int pageNumber) {
+        return mNostragamusService.getWalletTransactionHistory(pageNumber);
     }
 
     public Call<TimeResponse> getServerTime() {

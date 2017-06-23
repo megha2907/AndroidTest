@@ -163,7 +163,7 @@ public class WalletHelper {
      * @param balRequired bal required to join challenge
      * @return true if sufficient bal available in wallet
      */
-    public synchronized static boolean isSufficientBalAvailableInWallet(int balRequired) {
+    public synchronized static boolean isSufficientBalAvailableInWallet(double balRequired) {
         boolean balAvailable = false;
 
         double total = getTotalBalance();

@@ -20,8 +20,8 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyT
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddBankDetailsRequest;
 import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStatsResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentBankRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentDetailsResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentPaytmRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderRequest;
@@ -231,13 +231,13 @@ public interface NostragamusService {
     Call<GenerateOrderResponse> generateOrder(@Body GenerateOrderRequest request);
 
     @PUT("v2/game/users/paymentInfo")
-    Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(@Body AddUserPaymentBankRequest request);
+    Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(@Body AddBankDetailsRequest request);
 
     @PUT("v2/game/users/paymentInfo")
     Call<AddUserPaymentDetailsResponse> addUserPaymentPaytmDetails(@Body AddUserPaymentPaytmRequest request);
 
-    @GET("v2/game/getUserTransaction")
-    Call<List<WalletHistoryTransaction>> getWalletTransactionHistory();
+    @GET("/v1/wallet/getUserTransactions")
+    Call<List<WalletHistoryTransaction>> getWalletTransactionHistory(@Query("page") int pageNumber);
 
     @GET("v1/utility/getServerTime")
     Call<TimeResponse> getServerTime();

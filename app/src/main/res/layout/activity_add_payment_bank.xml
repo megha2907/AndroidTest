@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
+    <!-- Toolbar -->
     <android.support.v7.widget.Toolbar
         android:id="@+id/bank_toolbar"
         android:layout_width="match_parent"
@@ -14,11 +15,40 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
+    <!-- Borro save button -->
+    <FrameLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/add_bank_detail_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:background="@drawable/blue_button_selector"
+            android:gravity="center"
+            android:minWidth="@dimen/dp_200"
+            android:onClick="onAddBankSaveClicked"
+            android:paddingBottom="@dimen/dp_2"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_0"
+            android:text="Save Details"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_14"
+            app:typeface="lato_bold" />
+
+    </FrameLayout>
+
+    <!-- Screen -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/bank_toolbar"
-        android:background="@color/black">
+        android:background="@color/black"
+        android:layout_above="@id/bottom_layout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,44 +154,6 @@
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/dp_12"
                 app:typeface="lato_regular" />
-
-            <com.jeeva.android.widgets.customfont.CustomButton
-                android:id="@+id/add_bank_detail_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_40"
-                android:layout_marginTop="@dimen/dp_20"
-                android:background="@drawable/tournament_ready_btn_bg"
-                android:gravity="center"
-                android:minWidth="@dimen/dp_200"
-                android:onClick="onAddBankSaveClicked"
-                android:paddingBottom="@dimen/dp_2"
-                android:paddingLeft="@dimen/dp_15"
-                android:paddingRight="@dimen/dp_15"
-                android:paddingTop="@dimen/dp_0"
-                android:text="Save Details"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dp_14"
-                app:typeface="lato_bold" />
-
-            <com.jeeva.android.widgets.customfont.CustomButton
-                android:id="@+id/add_bank_detail_skip_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_40"
-                android:layout_marginTop="@dimen/dp_20"
-                android:background="@drawable/dg_skip_btn_bg"
-                android:gravity="center"
-                android:minWidth="@dimen/dp_200"
-                android:onClick="onAddBankSkipClicked"
-                android:paddingBottom="@dimen/dp_2"
-                android:paddingLeft="@dimen/dp_15"
-                android:paddingRight="@dimen/dp_15"
-                android:paddingTop="@dimen/dp_0"
-                android:text="I don't want cash rewards"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dp_14"
-                app:typeface="lato_bold" />
 
         </LinearLayout>
 

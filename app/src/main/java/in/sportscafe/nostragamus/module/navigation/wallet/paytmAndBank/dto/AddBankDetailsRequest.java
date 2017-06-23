@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by sandip on 10/04/17.
  */
 
-public class AddUserPaymentBankRequest {
+public class AddBankDetailsRequest {
 
     @JsonProperty("payment_mode")
     private String paymentMode;

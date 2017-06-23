@@ -14,8 +14,11 @@ import com.jeeva.android.BaseFragment;
 
 import java.util.ArrayList;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.dto.PayoutAddEditItemDto;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoBankDto;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoPaytmDto;
@@ -133,6 +136,43 @@ public class PayoutWalletHomeFragment extends BaseFragment {
         }
 
         return list;
+    }
+
+    /**
+     * Perform screen refresh
+     */
+    public void updateScreenDetails() {
+        fetchUserWalletFromServer();
+    }
+
+    private void fetchUserWalletFromServer() {
+        showProgressbar();
+        WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
+            @Override
+            public void noInternet() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onApiFailed() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onSuccessResponse(UserWalletResponse response) {
+                dismissProgressbar();
+                handleSuccessfulWalletResponse();
+            }
+        }).performApiCall();
+    }
+
+    private void handleSuccessfulWalletResponse() {
+        View rootView = getView();
+        if (getActivity() != null && rootView != null) {
+            initView(rootView);
+        }
     }
 
 }
