@@ -13,39 +13,39 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
-
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WalletHistoryHistoryFragment extends NostragamusFragment implements WalletHistoryModel, View.OnClickListener {
+public class WalletHistoryFragment extends NostragamusFragment implements WalletHistoryModel, View.OnClickListener {
 
-    private static final String TAG = WalletHistoryHistoryFragment.class.getSimpleName();
+    private static final String TAG = WalletHistoryFragment.class.getSimpleName();
 
     private WalletHistoryFragmentListener mFragmentListener;
     private RecyclerView mWalletHistoryRecyclerView;
-    private TextView mAmountWonTextView;
-    private UserPaymentInfo mUserPaymentInfo;
+    private WalletHistoryAdapter mWalletHistoryAdapter;
 
-    public WalletHistoryHistoryFragment() {
+    /**
+     * Used for paginating list items */
+    private int mPageNumber = 0;
+
+    /**
+     * Used to identify last api call / stop calling more...
+     * Default always should allow to fetch more
+     */
+    private boolean mShouldFetchMore = true;
+
+    public WalletHistoryFragment() {
     }
 
-    public void setUserPaymentInfo(UserPaymentInfo userPaymentInfo) {
-        mUserPaymentInfo = userPaymentInfo;
-    }
-
-    public static WalletHistoryHistoryFragment newInstance() {
-        WalletHistoryHistoryFragment fragment = new WalletHistoryHistoryFragment();
+    public static WalletHistoryFragment newInstance() {
+        WalletHistoryFragment fragment = new WalletHistoryFragment();
         return fragment;
     }
 
@@ -73,24 +73,31 @@ public class WalletHistoryHistoryFragment extends NostragamusFragment implements
         super.onActivityCreated(savedInstanceState);
 
         showWalletBalance();
+        initMember();
+    }
 
-        if (NostragamusDataHandler.getInstance().getUserInfo() != null) {
-            mUserPaymentInfo = NostragamusDataHandler.getInstance().getUserInfo().getUserPaymentInfo();
+    private void initMember() {
+        mWalletHistoryAdapter = new WalletHistoryAdapter(getContext()) {
+
+            @Override
+            public void loadMoreHistory() {
+                if (mShouldFetchMore) {
+                    loadTransactionDetails(++mPageNumber);
+                }
+            }
+        };
+
+        if (mWalletHistoryRecyclerView != null) {
+            mWalletHistoryRecyclerView.setAdapter(mWalletHistoryAdapter);
         }
 
-        if (mUserPaymentInfo == null ||
-                (mUserPaymentInfo.getBank() == null && mUserPaymentInfo.getPaytm() == null)) {
-
-            Log.d(TAG, "It seems that paymentInfo not available");
-            showAddPaymentInfoButton();
-        } else {
-            loadTransactionDetails();
-        }
+        /* Load first time */
+        loadTransactionDetails(++mPageNumber);
     }
 
     private void showWalletBalance() {
         if (getView() != null) {
-            double amount = WalletHelper.getDepositAmount();
+            double amount = WalletHelper.getTotalBalance();
             if (amount > 0) {
                 TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_history_bal_amount_textView);
                 balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
@@ -105,32 +112,18 @@ public class WalletHistoryHistoryFragment extends NostragamusFragment implements
         }
     }
 
-    private void showAddPaymentInfoButton() {
-        if (getActivity() != null && getView() != null) {
-            LinearLayout addPaymentDetailsLayout = (LinearLayout) getView().findViewById(R.id.wallet_add_payment_details_layout);
-            addPaymentDetailsLayout.setVisibility(View.VISIBLE);
-
-            LinearLayout historyLayout = (LinearLayout) getView().findViewById(R.id.wallet_history_layout);
-            historyLayout.setVisibility(View.GONE);
-        }
-    }
-
     private void initViews(View view) {
         view.findViewById(R.id.back_button).setOnClickListener(this);
-        view.findViewById(R.id.wallet_update_payment_btn).setOnClickListener(this);
-        view.findViewById(R.id.wallet_update_payment_btn1).setOnClickListener(this);
-
-        mAmountWonTextView = (TextView) view.findViewById(R.id.wallet_amount_won_textview);
 
         mWalletHistoryRecyclerView = (RecyclerView) view.findViewById(R.id.walletRecyclerView);
         mWalletHistoryRecyclerView.setHasFixedSize(true);
         mWalletHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
-    private void loadTransactionDetails() {
+    private void loadTransactionDetails(int pageNumber) {
         showProgressbar();
         WalletHistoryApiModelImpl apiModel = WalletHistoryApiModelImpl.getInstance(getWalletTransactionApiListener());
-        apiModel.fetchWalletTransactionsFromServer();
+        apiModel.fetchWalletTransactionsFromServer(pageNumber);
     }
 
     @NonNull
@@ -157,38 +150,22 @@ public class WalletHistoryHistoryFragment extends NostragamusFragment implements
     }
 
     private void onTransactionListFetchedSuccessful(List<WalletHistoryTransaction> transactionList) {
-        if (getActivity() != null && getView() != null) {
+        if (transactionList == null || transactionList.isEmpty()) {
+            mShouldFetchMore = false;
+        } else {
+            if (mWalletHistoryAdapter != null) {
+                mWalletHistoryAdapter.addWalletHistoryIntoList(transactionList);
+            }
+        }
 
-            if (transactionList == null || transactionList.isEmpty()) {
-
+        /* Empty list view */
+        if (getActivity() != null && getView() != null && mWalletHistoryAdapter != null) {
+            if (mWalletHistoryAdapter.getWalletHistoryList() == null || mWalletHistoryAdapter.getWalletHistoryList().isEmpty()) {
                 mWalletHistoryRecyclerView.setVisibility(View.GONE);
-                LinearLayout addPaymentDetailsLayout = (LinearLayout) getView().findViewById(R.id.wallet_add_payment_details_layout);
-                addPaymentDetailsLayout.setVisibility(View.GONE);
-
                 LinearLayout noHistoryLayout = (LinearLayout) getView().findViewById(R.id.wallet_no_transaction_history_layout);
                 noHistoryLayout.setVisibility(View.VISIBLE);
-
-                return;
             } else {
                 mWalletHistoryRecyclerView.setVisibility(View.VISIBLE);
-            }
-
-            setAmountWon(transactionList);
-            mWalletHistoryRecyclerView.setAdapter(new WalletHistoryAdapter(getContext(), transactionList));
-        }
-    }
-
-    private void setAmountWon(List<WalletHistoryTransaction> transactionList) {
-        double amountWon = 0;
-        if (transactionList != null) {
-            for (WalletHistoryTransaction transaction : transactionList) {
-                if (transaction.getMoneyFlow().equals(Constants.MoneyFlow.OUT)) {   // MoneyFlow == OUT means, user got amount (Credit for user)
-                    amountWon += transaction.getAmount();
-                }
-            }
-
-            if (amountWon > 0) {
-                mAmountWonTextView.setText("₹ " + String.valueOf(amountWon));
             }
         }
     }
@@ -201,18 +178,6 @@ public class WalletHistoryHistoryFragment extends NostragamusFragment implements
                     mFragmentListener.onBackClicked();
                 }
                 break;
-
-            case R.id.wallet_update_payment_btn:
-            case R.id.wallet_update_payment_btn1:
-                launchPaymentDetails();
-                break;
-
-        }
-    }
-
-    private void launchPaymentDetails() {
-        if (getActivity() != null && getActivity() instanceof HomeActivity) {
-            ((HomeActivity) getActivity()).launchPaymentDetailsActivity();
         }
     }
 }

@@ -114,25 +114,7 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
     }
 
     private void onApiSuccess() {
-        /*AlertDialog alertDialog = AppSnippet.getAlertDialog(this,
-                "Details Saved",
-                "Your Paytm details have been saved",
-                getString(R.string.ok),
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finishAndGotoPaymentHome();
-                    }
-                });
-
-        alertDialog.show();*/
-
         showMessage("Your Paytm details have been saved");
-        finishAndGotoPaymentHome();
-    }
-
-    public void onClickSkip(View view) {
-        NostragamusAnalytics.getInstance().trackNoCashRewards(Constants.AnalyticsActions.NO_CASH_REWARDS);
         finishAndGotoPaymentHome();
     }
 

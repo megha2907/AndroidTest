@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentBankRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddBankDetailsRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentDetailsResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentPaytmRequest;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -15,7 +15,7 @@ import retrofit2.Response;
 /**
  * Created by Jeeva on 23/03/17.
  */
-public class AddPaytmOrBankDetailModelModelImpl implements AddPaytmDetailModel, AddPaymentBankDetailModel {
+public class AddPaytmOrBankDetailModelModelImpl implements AddPaytmDetailModel, AddBankDetailModel {
 
     private PaytmOrBankDetailModelListener paytmOrBankDetailModelListener;
 
@@ -43,7 +43,7 @@ public class AddPaytmOrBankDetailModelModelImpl implements AddPaytmDetailModel, 
     @Override
     public void savePaymentBankDetails(String accountHolderName, String accNumber, String ifsCode) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            AddUserPaymentBankRequest bankRequest = new AddUserPaymentBankRequest();
+            AddBankDetailsRequest bankRequest = new AddBankDetailsRequest();
             bankRequest.setPaymentMode(Constants.AddUserPaymentDetailsPaymentModes.BANK);
             bankRequest.setAccountNo(accNumber);
             bankRequest.setName(accountHolderName);

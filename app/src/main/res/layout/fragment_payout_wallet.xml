@@ -11,27 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:minHeight="@dimen/dp_80"
+        android:minHeight="@dimen/dp_64"
         android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add your PayTm details to ensure smooth transactions.\nAdd a bank account if you don't have a PayTm wallet"
+            android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
-            app:typeface="lato_regular"/>
+            android:textSize="@dimen/sp_13"
+            app:typeface="lato_regular"
+            android:layout_marginTop="@dimen/dp_18"
+            android:layout_marginBottom="@dimen/dp_18"/>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0.5"
-        android:background="@color/grey"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/payout_recyclerView"

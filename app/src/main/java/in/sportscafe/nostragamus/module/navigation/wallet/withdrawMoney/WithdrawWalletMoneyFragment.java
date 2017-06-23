@@ -69,10 +69,10 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
 
     private void showWalletBalance() {
         if (getView() != null) {
-            double amount = WalletHelper.getDepositAmount();
-            if (amount > 0) {
+            double winningAmount = WalletHelper.getWinningAmount();
+            if (winningAmount > 0) {
                 TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_withdraw_money_amount_textView);
-                balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
+                balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(winningAmount));
             }
         }
     }
@@ -109,20 +109,20 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
     }
 
     private void onWithdrawNextButtonClicked() {
-        double amount = validateAmount();
-        if (amount > 99) {
+        double withdrawalAmount = validateAmount();
+        if (withdrawalAmount > 0) {
+            if (withdrawalAmount <= WalletHelper.getWinningAmount()) {
 
-            Bundle args = new Bundle();
-            args.putDouble(Constants.BundleKeys.WALLET_WITHDRAWAL_AMT, amount);
-
-            if (mFragmentListener != null) {
-                mFragmentListener.onWithdrawButtonClicked(args);
+                Bundle args = new Bundle();
+                args.putDouble(Constants.BundleKeys.WALLET_WITHDRAWAL_AMT, withdrawalAmount);
+                if (mFragmentListener != null) {
+                    mFragmentListener.onWithdrawButtonClicked(args);
+                }
+            } else {
+                showMessage("Sorry, You can not withdraw more than your winnings");
             }
         } else {
-            /*if (getView() != null) {
-                Snackbar.make(getView(), "Please enter amount more or 100", Snackbar.LENGTH_SHORT).show();
-            }*/
-            mAmountEditText.setError("Please enter amount more or 100");
+            mAmountEditText.setError("Please enter valid amount");
         }
     }
 

@@ -47,10 +47,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.navigation.wallet.paytmAndBank.AddPaytmDetailsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
+            android:name=".module.navigation.wallet.paytmAndBank.AddBankDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <!--<activity
             android:name=".module.navigation.submitquestion.matchlist.MatchListFragment"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" />-->
         <activity
             android:name=".module.navigation.submitquestion.add.AddQuestionActivity"
             android:screenOrientation="portrait"
@@ -94,6 +99,7 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".module.feed.FeedWebView"
             android:screenOrientation="portrait" />
@@ -152,9 +158,9 @@
             android:name=".module.user.myprofile.edit.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
+        <!--<activity
             android:name=".module.user.sportselection.SportSelectionActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" />-->
         <activity
             android:name=".module.play.prediction.PredictionActivity"
             android:screenOrientation="portrait" />
@@ -174,10 +180,10 @@
         <activity
             android:name=".module.resultspeek.ResultsPeekActivity"
             android:screenOrientation="portrait" />
-        <activity
+        <!--<activity
             android:name=".module.play.myresults.flipPowerup.FlipActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />-->
         <activity
             android:name=".module.user.points.PointsActivity"
             android:screenOrientation="portrait" />
@@ -463,10 +469,7 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".module.navigation.wallet.paytmAndBank.AddPaymentBankActivity"
-            android:label="@string/title_activity_add_payment_bank"
-            android:theme="@style/AppTheme" />
+
 
         <!-- Google AdWords Conversion Tracking Code -->
         <receiver
@@ -477,18 +480,20 @@
             </intent-filter>
         </receiver>
 
-        <!-- File Download complete / result receiver -->
+        <!-- File (APK) Download complete / result receiver -->
         <service android:name=".service.NostraFileDownloadService" />
 
         <receiver
             android:name=".receiver.NostraFileDownloadReceiver"
             android:enabled="true">
             <intent-filter>
-
                 <!-- Take action from NostraFileDownloadService.FILE_DOWNLOAD_BROADCAST_ACTION -->
                 <action android:name="in.sportscafe.nostragamus.broadcast.action.fileDownloadBroadcast" />
             </intent-filter>
         </receiver>
+
+
+
     </application>
 
 </manifest>

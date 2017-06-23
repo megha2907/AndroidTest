@@ -43,7 +43,7 @@
                 android:textAllCaps="false"
                 android:textColor="#808080"
                 android:textSize="@dimen/sp_12"
-                android:layout_marginTop="@dimen/dp_6"
+                android:layout_marginTop="@dimen/dp_10"
                 app:typeface="lato_regular" />
 
         </LinearLayout>
@@ -76,7 +76,7 @@
             android:orientation="vertical">
 
             <!--Wallet section -->
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/navigation_wallet_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,6 +88,7 @@
                 android:background="?android:attr/selectableItemBackground">
 
                 <ImageView
+                    android:id="@+id/wallet_img"
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
                     android:src="@drawable/navigation_wallet_icn"/>
@@ -96,12 +97,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Wallet"
+                    android:layout_toRightOf="@id/wallet_img"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_13"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
-            </LinearLayout>
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/navigation_wallet_amount_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textColor="#00a99d"
+                    android:textSize="@dimen/sp_12"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    app:typeface="lato_regular" />
+
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -360,7 +372,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Update the App"
-                    android:textColor="@color/white_60"
+                    android:textColor="#666666"
                     android:textSize="@dimen/sp_13"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />

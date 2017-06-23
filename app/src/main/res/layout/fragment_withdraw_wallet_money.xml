@@ -28,7 +28,7 @@
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next"
+                android:text="Withdraw Amount"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16"
@@ -105,7 +105,7 @@
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Balance"
+                        android:text="Winning Balance"
                         android:layout_gravity="center_horizontal"
                         android:textColor="#e6e6e6"
                         android:textSize="@dimen/sp_16"
@@ -140,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:text="Enter Amount"
+                    android:text="Amount to withdraw"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />
@@ -149,7 +149,7 @@
                     android:id="@+id/paytm_add_detail_sl_confirm_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:paddingBottom="@dimen/dp_4"
                     app:sl_cornerRadius="@dimen/dp_5"
                     app:sl_fillColor="@color/edittext_selection_bg"
@@ -162,6 +162,28 @@
                         android:imeOptions="actionDone"/>
 
                 </com.jeeva.android.widgets.ShadowLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="Your first withdrawal needs to be ₹ 100 or more, \nOr else ₹ 10 transaction fee will be applied"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular"
+                    android:layout_marginTop="@dimen/dp_10"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:gravity="center_horizontal"
+                    android:text="Withdrawals are generally completed within 48 hours of initiation"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular"
+                    android:layout_marginTop="@dimen/dp_40"/>
 
             </LinearLayout>
 

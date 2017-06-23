@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -24,12 +26,16 @@ import in.sportscafe.nostragamus.module.navigation.help.HelpActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.settings.SettingsActivity;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity;
 
 public class NavigationFragment extends BaseFragment implements View.OnClickListener{
 
+    private static final String TAG = NavigationFragment.class.getSimpleName();
 
     public NavigationFragment() {}
 
@@ -64,18 +70,23 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void initialize() {
+        initWalletDetails();
         showOrHideContentBasedOnAppType();
         showVersionOrAppUpdateMsg();
         initProfileDetails();
     }
 
+    private void initWalletDetails() {
+        fetchUserWalletFromServer();
+    }
+
     private void showOrHideContentBasedOnAppType() {
         /* Hide wallet section for free (ps - play store) app */
-        /*if (!BuildConfig.IS_PAID_VERSION) {
+        if (!BuildConfig.IS_PAID_VERSION) {
             if (getView() != null) {
                 getView().findViewById(R.id.navigation_wallet_layout).setVisibility(View.GONE);
             }
-        }*/
+        }
     }
 
     private void showVersionOrAppUpdateMsg() {
@@ -101,7 +112,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 versionNameTextView.setText(Nostragamus.getInstance().getAppVersionName());
 
                 TextView updateTextView = (TextView) view.findViewById(R.id.navigation_update_str_textView);
-                updateTextView.setTextColor(ContextCompat.getColor(updateTextView.getContext(), R.color.white_60));
+                updateTextView.setTextColor(ContextCompat.getColor(updateTextView.getContext(), R.color.scrollbar_indicator));
             }
         }
     }
@@ -249,5 +260,39 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
             isNewVersion = true;
         }
         return isNewVersion;
+    }
+
+    private void fetchUserWalletFromServer() {
+//        Making silent call
+        WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
+            @Override
+            public void noInternet() {
+                Log.d(TAG, Constants.Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onApiFailed() {
+                Log.d(TAG, Constants.Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onSuccessResponse(UserWalletResponse response) {
+                showOrUpdateWalletAmount();
+            }
+        }).performApiCall();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showOrUpdateWalletAmount();
+    }
+
+    private void showOrUpdateWalletAmount() {
+        double amount = WalletHelper.getTotalBalance();
+        if (getView() != null && amount > 0) {
+            TextView amountTextView = (TextView) getView().findViewById(R.id.navigation_wallet_amount_textView);
+            amountTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
+        }
     }
 }

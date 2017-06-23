@@ -9,6 +9,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.With
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -32,7 +33,7 @@ public class WithdrawFromWalletApiModelImpl {
 
     public void callWithdrawMoneyApi(double amount, String payoutType) {
 
-        WithdrawFromWalletRequest request = new WithdrawFromWalletRequest();
+        final WithdrawFromWalletRequest request = new WithdrawFromWalletRequest();
         request.setAmount(amount);
         request.setPayoutChoice(payoutType);
 
@@ -42,14 +43,13 @@ public class WithdrawFromWalletApiModelImpl {
                 public void onResponse(Call<WithdrawFromWalletResponse> call, Response<WithdrawFromWalletResponse> response) {
                     super.onResponse(call, response);
 
-                    if (response != null && response.isSuccessful() && response.body() != null) {
+                    if (response != null && response.body() != null && response.isSuccessful()) {
                         WithdrawFromWalletResponse walletResponse = response.body();
-
                         if (mListener != null) {
                             mListener.onSuccessResponse(walletResponse);
                         }
                     } else {
-                        Log.d(TAG, "Api response empty!");
+                        Log.d(TAG, "Api Failed!");
                         if (mListener != null) {
                             mListener.onNoApiResponse();
                         }

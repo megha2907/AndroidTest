@@ -91,8 +91,8 @@
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/dp_45"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    android:layout_marginRight="@dimen/dp_20">
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginRight="@dimen/dp_24">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/bal_textView"
@@ -139,8 +139,8 @@
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/dp_45"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    android:layout_marginRight="@dimen/dp_20">
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginRight="@dimen/dp_24">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:layout_width="wrap_content"
@@ -202,8 +202,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginRight="@dimen/dp_12"
                 android:layout_marginTop="@dimen/dp_16">
 
                 <com.jeeva.android.widgets.customfont.CustomButton
@@ -259,14 +259,14 @@
                     android:layout_gravity="left"
                     android:text="Enter Amount"
                     android:textColor="@color/white_60"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.ShadowLayout
                     android:id="@+id/paytm_add_detail_sl_confirm_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_12"
                     android:paddingBottom="@dimen/dp_4"
                     app:sl_cornerRadius="@dimen/dp_5"
                     app:sl_fillColor="@color/edittext_selection_bg"
@@ -281,8 +281,6 @@
                 </com.jeeva.android.widgets.ShadowLayout>
 
             </LinearLayout>
-
-
 
         </LinearLayout>
 
