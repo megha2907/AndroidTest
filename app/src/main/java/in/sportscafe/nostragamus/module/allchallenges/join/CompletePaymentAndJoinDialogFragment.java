@@ -27,18 +27,16 @@ public class CompletePaymentAndJoinDialogFragment extends NostragamusDialogFragm
 
     private CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener mCompletePaymentActionListener;
     private int mDialogRequestCode;
-    private double mBalanceAmount;
     private double mEntryFee;
 
     public void setSuccessListener(CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener listener) {
         mCompletePaymentActionListener = listener;
     }
 
-    public static CompletePaymentAndJoinDialogFragment newInstance(int requestCode, double amount, double entryFee,
+    public static CompletePaymentAndJoinDialogFragment newInstance(int requestCode, double entryFee,
                                                                    CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener listener) {
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.BundleKeys.DIALOG_REQUEST_CODE, requestCode);
-        bundle.putDouble(Constants.BundleKeys.BALANCE_AMOUNT, amount);
         bundle.putDouble(Constants.BundleKeys.ENTRY_FEE, entryFee);
 
         CompletePaymentAndJoinDialogFragment fragment = new CompletePaymentAndJoinDialogFragment();
@@ -71,7 +69,6 @@ public class CompletePaymentAndJoinDialogFragment extends NostragamusDialogFragm
 
     private void openBundle(Bundle bundle) {
         mDialogRequestCode = bundle.getInt(Constants.BundleKeys.DIALOG_REQUEST_CODE);
-        mBalanceAmount = bundle.getDouble(Constants.BundleKeys.BALANCE_AMOUNT);
         mEntryFee = bundle.getDouble(Constants.BundleKeys.ENTRY_FEE);
     }
 
@@ -86,7 +83,8 @@ public class CompletePaymentAndJoinDialogFragment extends NostragamusDialogFragm
     private void initValues() {
         if (getView() != null) {
             TextView tvBalanceAmount = (TextView) findViewById(R.id.complete_payment_tv_wallet_balance);
-            tvBalanceAmount.setText(WalletHelper.getFormattedStringOfAmount(mBalanceAmount));
+            double walletBalAmount = WalletHelper.getTotalBalance();
+            tvBalanceAmount.setText(WalletHelper.getFormattedStringOfAmount(walletBalAmount));
 
             TextView tvEntryFee = (TextView) findViewById(R.id.complete_payment_tv_entry_fee);
             tvEntryFee.setText(WalletHelper.getFormattedStringOfAmount(mEntryFee));

@@ -82,7 +82,7 @@ public class WalletHelper {
         UserWalletResponse userWalletResponse = Nostragamus.getInstance().getServerDataManager().getUserWalletResponse();
         if (userWalletResponse != null && userWalletResponse.getUserPaymentInfo() != null) {
             UserPaymentInfoPaytmDto paytm = userWalletResponse.getUserPaymentInfo().getPaytm();
-            if (paytm != null || !TextUtils.isEmpty(paytm.getMobile())) {
+            if (paytm != null && !TextUtils.isEmpty(paytm.getMobile())) {
                 isProvided = true;
             }
         }

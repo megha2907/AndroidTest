@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/grey1"
-    android:layout_marginTop="@dimen/dp_12"
+    android:layout_marginBottom="@dimen/dp_12"
     android:layout_marginLeft="@dimen/dp_12"
     android:layout_marginRight="@dimen/dp_12">
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:minHeight="@dimen/dp_80">
+        android:minHeight="@dimen/dp_64">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -26,7 +26,7 @@
                 android:id="@+id/payout_list_item_icon_imageView"
                 android:layout_width="@dimen/dp_12"
                 android:layout_height="@dimen/dp_12"
-                android:src="@drawable/info"
+                android:src="@drawable/plus_icn"
                 android:layout_marginLeft="@dimen/dp_18"
                 android:layout_marginRight="@dimen/dp_18"/>
 
@@ -34,7 +34,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Add Paytm details"
+                android:text="Add"
+                android:textColor="@color/white_dim"
+                android:textSize="@dimen/sp_13"
+                app:typeface="lato_regular"/>
+
+            <ImageView
+                android:layout_width="@dimen/dp_56"
+                android:layout_height="@dimen/dp_18"
+                android:src="@drawable/paytm_logo"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_5"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="details"
                 android:textColor="@color/white_dim"
                 android:textSize="@dimen/sp_13"
                 app:typeface="lato_regular"/>

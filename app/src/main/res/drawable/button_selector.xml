@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true" android:drawable="@color/white" />
-    <item android:state_pressed="true" android:drawable="@color/white" />
-    <item android:drawable="@drawable/grey_button_shape" />
+    <!-- Press impact -->
+    <item android:state_pressed="true">
+        <layer-list>
+            <!-- below shadow -->
+            <item>
+                <shape>
+                    <solid android:color="@color/grey" />
+                    <corners android:radius="@dimen/dp_4" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- Normal style -->
+    <item>
+        <layer-list>
+            <!-- below shadow -->
+            <item>
+                <shape>
+                    <solid android:color="@color/black_10" />
+                    <corners android:radius="@dimen/dp_4" />
+                </shape>
+            </item>
+            <!-- BUTTON -->
+            <item android:bottom="@dimen/dp_3" android:left="@dimen/dp_2" android:right="@dimen/dp_2">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/black_1" />
+                    <corners android:radius="@dimen/dp_4" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
 </selector>

@@ -35,7 +35,7 @@ public class PayoutWalletChoiceActivity extends NostragamusActivity implements P
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.payout_choice_toolbar);
-        toolbar.setTitle("Choose Account");
+        toolbar.setTitle("Choose Withdrawal Account");
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationIcon(R.drawable.back_icon_grey);
