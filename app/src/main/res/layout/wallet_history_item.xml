@@ -67,6 +67,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/wallet_history_more_details_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -84,7 +85,7 @@
                 app:typeface="lato_light"/>
 
             <ImageView
-                android:id="@+id/wallet_more_details_imgBtn"
+                android:id="@+id/wallet_more_details_imgView"
                 android:layout_width="@dimen/dp_20"
                 android:layout_height="@dimen/dp_20"
                 android:padding="@dimen/dp_5"

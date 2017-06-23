@@ -32,9 +32,9 @@ public class WalletHistoryApiModelImpl {
         return new WalletHistoryApiModelImpl(listener);
     }
 
-    public void fetchWalletTransactionsFromServer() {
+    public void fetchWalletTransactionsFromServer(int pageNumber) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getWalletTransactionHistory().enqueue(getUserPaymentCallBack());
+            MyWebService.getInstance().getWalletTransactionHistory(pageNumber).enqueue(getUserPaymentCallBack());
         } else {
             modelListener.noInternet();
         }
@@ -47,7 +47,7 @@ public class WalletHistoryApiModelImpl {
             public void onResponse(Call<List<WalletHistoryTransaction>> call, Response<List<WalletHistoryTransaction>> response) {
                 super.onResponse(call, response);
                 if (response != null && response.isSuccessful()) {
-                    List<WalletHistoryTransaction> transactionList = (List<WalletHistoryTransaction>) response.body();
+                    List<WalletHistoryTransaction> transactionList = response.body();
                     modelListener.onSuccess(transactionList);
                 } else {
                     modelListener.onFailure();

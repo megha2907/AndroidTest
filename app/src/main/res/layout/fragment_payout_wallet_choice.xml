@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/dp_64"
-                android:background="@drawable/bg_card_btn_strip"
+                android:background="@drawable/payout_choice_btn_selector"
                 android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginRight="@dimen/dp_12">
@@ -102,7 +102,7 @@
                     android:layout_width="@dimen/dp_12"
                     android:layout_height="@dimen/dp_12"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/back_icon_grey"
+                    android:src="@drawable/right_arrow_feedicon"
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="@dimen/dp_16"
                     android:layout_marginRight="@dimen/dp_16"/>
@@ -120,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/dp_64"
-                android:background="@drawable/bg_card_btn_strip"
+                android:background="@drawable/payout_choice_btn_selector"
                 android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginRight="@dimen/dp_12">
@@ -169,7 +169,7 @@
                     android:layout_width="@dimen/dp_12"
                     android:layout_height="@dimen/dp_12"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/back_icon_grey"
+                    android:src="@drawable/right_arrow_feedicon"
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="@dimen/dp_16"
                     android:layout_marginRight="@dimen/dp_16"/>

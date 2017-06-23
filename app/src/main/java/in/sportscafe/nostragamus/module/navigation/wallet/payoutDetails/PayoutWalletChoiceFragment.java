@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
@@ -23,6 +24,8 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawFromWalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoBankDto;
+import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoPaytmDto;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,12 +85,25 @@ public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnC
         View view = getView();
 
         if (view != null) {
+            /* Paytm details */
             if (isPaytmProvided) {
+                UserPaymentInfoPaytmDto paytmDto = WalletHelper.getPaytm();
+                if (paytmDto != null && !TextUtils.isEmpty(paytmDto.getMobile())) {
+                    TextView mobileNoTextView = (TextView) view.findViewById(R.id.payout_choice_paytm_number_textView);
+                    mobileNoTextView.setText(paytmDto.getMobile());
+                }
                 if (mPaytmButton != null) {
                     mPaytmButton.setVisibility(View.VISIBLE);
                 }
             }
+
+            /* Bank details  */
             if (isBankProvided) {
+                UserPaymentInfoBankDto bankDto = WalletHelper.getBank();
+                if (bankDto != null && !TextUtils.isEmpty(bankDto.getAccountNo())) {
+                    TextView mobileNoTextView = (TextView) view.findViewById(R.id.payout_choice_bank_number_textView);
+                    mobileNoTextView.setText(bankDto.getAccountNo());
+                }
                 if (mBankButton != null) {
                     mBankButton.setVisibility(View.VISIBLE);
                 }

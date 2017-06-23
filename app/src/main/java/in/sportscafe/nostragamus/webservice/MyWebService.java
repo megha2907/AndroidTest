@@ -290,8 +290,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.addUserPaymentPaytmDetails(request);
     }
 
-    public Call<List<WalletHistoryTransaction>> getWalletTransactionHistory() {
-        return mNostragamusService.getWalletTransactionHistory();
+    public Call<List<WalletHistoryTransaction>> getWalletTransactionHistory(int pageNumber) {
+        return mNostragamusService.getWalletTransactionHistory(pageNumber);
     }
 
     public Call<TimeResponse> getServerTime() {

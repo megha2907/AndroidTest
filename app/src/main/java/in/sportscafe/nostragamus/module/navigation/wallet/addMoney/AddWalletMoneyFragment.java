@@ -70,6 +70,7 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
     private void showWalletBalance() {
         if (getView() != null) {
+            /* Showing ONLY deposit money while adding into wallet */
             double amount = WalletHelper.getDepositAmount();
             if (amount > 0) {
                 TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_add_money_amount_textView);

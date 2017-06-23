@@ -236,8 +236,8 @@ public interface NostragamusService {
     @PUT("v2/game/users/paymentInfo")
     Call<AddUserPaymentDetailsResponse> addUserPaymentPaytmDetails(@Body AddUserPaymentPaytmRequest request);
 
-    @GET("v2/game/getUserTransaction")
-    Call<List<WalletHistoryTransaction>> getWalletTransactionHistory();
+    @GET("/v1/wallet/getUserTransactions")
+    Call<List<WalletHistoryTransaction>> getWalletTransactionHistory(@Query("page") int pageNumber);
 
     @GET("v1/utility/getServerTime")
     Call<TimeResponse> getServerTime();

@@ -15,10 +15,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -26,14 +28,34 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
  * Created by sandip on 12/04/17.
  */
 
-public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdapter.WalletHistoryViewHolder> {
+public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdapter.WalletHistoryViewHolder> {
+
+    /* Used for pagination of items loading */
+    public abstract void loadMoreHistory();
 
     private List<WalletHistoryTransaction> mTransactionList;
     private Context mContext;
 
-    public WalletHistoryAdapter(Context context, List<WalletHistoryTransaction> transactions) {
+    public WalletHistoryAdapter(Context context) {
         mContext = context;
-        mTransactionList = transactions;
+    }
+
+    public List<WalletHistoryTransaction> getWalletHistoryList() {
+        return mTransactionList;
+    }
+
+    /**
+     * Add more history items
+     * @param transactions
+     */
+    public void addWalletHistoryIntoList(List<WalletHistoryTransaction> transactions) {
+        if (mTransactionList == null) {
+            mTransactionList = new ArrayList<>();
+        }
+        if (transactions != null && !transactions.isEmpty()) {
+            mTransactionList.addAll(transactions);
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -46,7 +68,10 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
 
     @Override
     public void onBindViewHolder(WalletHistoryViewHolder holder, int position) {
-        if (mTransactionList != null && mTransactionList.size() > position) {
+        if (position >= (getItemCount() - 1)) {
+            loadMoreHistory();
+
+        } else if (mTransactionList != null && position < mTransactionList.size()) {    /* position < getItemCount() */
             WalletHistoryTransaction transaction = mTransactionList.get(position);
 
             changeItemBackground(holder, position);
@@ -58,37 +83,152 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
     }
 
     private void setTransactionText(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
-        String txnDetails = transaction.getChallengeName();
+        if (transaction != null) {
+            String transactionType = transaction.getTransactionType();
 
-        if (transaction.getMoneyFlow().equals(Constants.MoneyFlow.IN)) {
-            holder.txnImageView.setImageResource(R.drawable.wallet_debit);
-            holder.titleTextView.setText(getSpannedText(true, String.valueOf(transaction.getAmount())));
-            txnDetails = "Joined " + transaction.getChallengeName();
-        } else {
+            if (!TextUtils.isEmpty(transactionType)) {
+                if (transactionType.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_TYPE_DEPOSIT)) {
+                    populateDepositDetails(holder, transaction);
 
-            String statusCode = transaction.getStatusCode();
-            if (statusCode.equals(Constants.MoneyFlow.STATUS_CODE_INITIATED)) {
+                } else if (transactionType.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_TYPE_WITHDRAW)) {
+                    populateWithdrawDetails(holder, transaction);
 
+                } else if (transactionType.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_TYPE_JOINING)) {
+                    populateJoiningDetails(holder, transaction);
 
+                } else if (transactionType.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_TYPE_WINNING)) {
+                    populateWinningDetails(holder, transaction);
 
-            } else if (statusCode.equals(Constants.MoneyFlow.STATUS_CODE_SUCCESS)) {
+                } else if (transactionType.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_TYPE_PROMO)) {
+                    populatePromoDetails(holder, transaction);
 
-
-
-            } else if (statusCode.equals(Constants.MoneyFlow.STATUS_CODE_FAILURE)) {
-
+                }
             }
-
-            holder.txnImageView.setImageResource(R.drawable.wallet_credit);
-            holder.titleTextView.setText(getSpannedText(false, String.valueOf(transaction.getAmount())));
-            if (!TextUtils.isEmpty(transaction.getRank())) {
-                txnDetails = "Rank " + transaction.getRank() + " in " + transaction.getChallengeName();
-            }
-
-
         }
-        holder.detailsTextView.setText(txnDetails);
     }
+
+    private void populatePromoDetails(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
+        if (transaction != null) {
+            holder.txnImageView.setImageResource(R.drawable.wallet_credit);
+            double amount = transaction.getAmount();
+            if (amount > 0) {
+                String title = "Added " + WalletHelper.getFormattedStringOfAmount(amount) + " to Promo money";
+                holder.titleTextView.setText(title);
+
+                String detailMsg = "";
+                if (!TextUtils.isEmpty(transaction.getMessage())) {
+                    detailMsg = transaction.getMessage();
+                }
+                holder.detailsTextView.setText(detailMsg);
+            }
+        }
+    }
+
+    private void populateWinningDetails(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
+        if (transaction != null) {
+            holder.txnImageView.setImageResource(R.drawable.wallet_credit);
+            double amount = transaction.getAmount();
+            if (amount > 0) {
+                String title = "Added " + WalletHelper.getFormattedStringOfAmount(amount) + " to your winnings";
+                holder.titleTextView.setText(title);
+
+                String detailMsg = "You won by playing";
+                if (!TextUtils.isEmpty(transaction.getMessage())) {
+                    detailMsg = transaction.getMessage();
+                }
+                holder.detailsTextView.setText(detailMsg);
+            }
+        }
+    }
+
+    private void populateJoiningDetails(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
+        if (transaction != null) {
+            holder.txnImageView.setImageResource(R.drawable.wallet_debit);
+            double amount = transaction.getAmount();
+            if (amount > 0) {
+                String title = "Paid " + WalletHelper.getFormattedStringOfAmount(amount) + " from your wallet";
+                holder.titleTextView.setText(title);
+
+                String detailMsg = "Joined challenge ";
+                if (!TextUtils.isEmpty(transaction.getMessage())) {
+                    detailMsg = transaction.getMessage();
+                }
+                holder.detailsTextView.setText(detailMsg);
+            }
+        }
+    }
+
+    private void populateWithdrawDetails(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
+        if (transaction != null) {
+            String status = transaction.getTrasactionStatus();
+            if (!TextUtils.isEmpty(status)) {
+                double amount = transaction.getAmount();
+
+                if (status.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_STATUS_SUCCESS)) {  /* If transaction status Success */
+                    holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_success);
+                    String account = transaction.getAccount();
+
+                    if (amount > 0) {
+                        String msg = "Added " + WalletHelper.getFormattedStringOfAmount(amount);
+
+                        if (!TextUtils.isEmpty(account)) {
+                            if (account.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_ACCOUNT_PAYTM)) {
+                                msg = msg + " to your paytm wallet";
+                            } else if (account.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_ACCOUNT_BANK)) {
+                                msg = msg + " to your bank account";
+                            }
+                        }
+
+                        holder.titleTextView.setText(msg);
+                        holder.detailsTextView.setText("Withdrawn from your winnings");
+                    }
+
+                } else if (status.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_STATUS_FAILED)) {    /* If transaction status FAILED */
+                    holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_failed);
+                    if (amount > 0) {
+                        String msg = WalletHelper.getFormattedStringOfAmount(amount) + " withdrawal failed";
+                        holder.titleTextView.setText(msg);
+                        holder.detailsTextView.setText("Failed to withdraw from your winnings");
+                    }
+
+                } else if (status.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_STATUS_INITIATED)) {     /* If transaction status Initiated */
+                    holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_initiated);
+                    if (amount > 0) {
+                        String msg = WalletHelper.getFormattedStringOfAmount(amount) + " withdrawal in progress";
+                        holder.titleTextView.setText(msg);
+                        holder.detailsTextView.setText("Withdrawn from your winnings");
+                    }
+                }
+            }
+        }
+    }
+
+    private void populateDepositDetails(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
+        String status = transaction.getTrasactionStatus();
+        if (!TextUtils.isEmpty(status)) {
+            if (status.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_STATUS_SUCCESS)) {
+                holder.txnImageView.setImageResource(R.drawable.wallet_debit);
+
+                double amount = transaction.getAmount();
+                if (amount > 0) {
+                    String msg = "Added " + WalletHelper.getFormattedStringOfAmount(amount) + " to deposit money";
+                    holder.titleTextView.setText(msg);
+                }
+
+                String account = transaction.getAccount();
+                if (!TextUtils.isEmpty(account)) {
+                    String detailMsg = "";
+                    if (account.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_ACCOUNT_PAYTM)) {
+                        detailMsg = "Added from paytm wallet";
+                    } else if (account.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_ACCOUNT_BANK)) {
+                        detailMsg = "Added from bank account";
+                    }
+                    holder.detailsTextView.setText(detailMsg);
+                }
+            }
+        }
+    }
+
 
     private void showDate(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
         try {
@@ -173,6 +313,7 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
         ImageView moreDetailBtnImageView;
         LinearLayout moreDetailsLayout;
         LinearLayout itemRootLayout;
+        LinearLayout moreDetailsButton;
 
         public WalletHistoryViewHolder(View itemView) {
             super(itemView);
@@ -184,20 +325,19 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
             detailsTextView = (TextView) itemView.findViewById(R.id.wallet_history_detail_textview);
             dateTextView = (TextView) itemView.findViewById(R.id.wallet_item_date_textview);
             txnIdTextView = (TextView) itemView.findViewById(R.id.wallet_item_txn_id_textview);
-            moreDetailBtnImageView = (ImageView) itemView.findViewById(R.id.wallet_more_details_imgBtn);
-            moreDetailBtnImageView.setOnClickListener(this);
+            moreDetailBtnImageView = (ImageView) itemView.findViewById(R.id.wallet_more_details_imgView);
+            moreDetailsButton = (LinearLayout) itemView.findViewById(R.id.wallet_history_more_details_btn);
+            moreDetailsButton.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.wallet_more_details_imgBtn:
+                case R.id.wallet_history_more_details_btn:
                     if (moreDetailsLayout.getVisibility() == View.GONE) {
-//                        moreDetailsLayout.setVisibility(View.VISIBLE);
                         AnimationHelper.expand(moreDetailsLayout);
                         moreDetailBtnImageView.setImageResource(R.drawable.thin_arrow_up_min);
                     } else {
-//                        moreDetailsLayout.setVisibility(View.GONE);
                         AnimationHelper.collapse(moreDetailsLayout);
                         moreDetailBtnImageView.setImageResource(R.drawable.thin_arrow_min);
                     }

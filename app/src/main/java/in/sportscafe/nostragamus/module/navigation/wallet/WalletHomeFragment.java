@@ -112,6 +112,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
             TextView totalWalletBalanceTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_total_amount_textView);
             TextView depositTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_deposit_textView);
             TextView promoBalanceTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_promo_amount_textView);
+            TextView winningsTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_winning_textView);
 
             double depositAmount = WalletHelper.getDepositAmount();
             double promoAmount = WalletHelper.getPromoAmount();
@@ -124,7 +125,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
                 promoBalanceTextView.setText(WalletHelper.getFormattedStringOfAmount(promoAmount));
             }
             if (winningAmount > 0) {
-                depositTextView.setText(WalletHelper.getFormattedStringOfAmount(winningAmount));
+                winningsTextView.setText(WalletHelper.getFormattedStringOfAmount(winningAmount));
             }
 
             double total = WalletHelper.getTotalBalance();

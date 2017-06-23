@@ -613,6 +613,21 @@ public interface Constants {
         String STATUS_CODE_FAILURE = "2";
     }
 
+    interface WalletHistory {
+        String TRANSACTION_TYPE_WITHDRAW = "withdraw";
+        String TRANSACTION_TYPE_DEPOSIT = "deposit";
+        String TRANSACTION_TYPE_PROMO = "promo";
+        String TRANSACTION_TYPE_JOINING = "joining";
+        String TRANSACTION_TYPE_WINNING = "winning";
+
+        String TRANSACTION_STATUS_INITIATED = "initiated";
+        String TRANSACTION_STATUS_SUCCESS = "success";
+        String TRANSACTION_STATUS_FAILED = "failed";
+
+        String TRANSACTION_ACCOUNT_PAYTM = "paytm";
+        String TRANSACTION_ACCOUNT_BANK = "bank";
+    }
+
     interface ChallengeTabs {
         String NEW = "New";
         String IN_PLAY = "In Play";

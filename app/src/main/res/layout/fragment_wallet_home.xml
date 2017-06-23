@@ -69,15 +69,17 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_0.5"
-                        android:background="@color/grey4"/>
+                        android:layout_height="@dimen/dp_1"
+                        android:background="#314f89"/>
 
                     <!-- Promo money layout -->
                     <LinearLayout
                         android:id="@+id/promo_layout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/dp_6"
+                        android:layout_marginRight="@dimen/dp_6">
 
                         <LinearLayout
                             android:id="@+id/wallet_home_card_promo_layout"
@@ -128,12 +130,12 @@
                                     android:text="0.00"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/sp_16"
-                                    app:typeface="lato_black" />
+                                    app:typeface="lato_bold" />
 
                                 <ImageView
                                     android:layout_width="@dimen/dp_12"
                                     android:layout_height="@dimen/dp_12"
-                                    android:src="@drawable/powerup_info_icon"
+                                    android:src="@drawable/wallet_info_icn"
                                     android:layout_marginLeft="@dimen/dp_5"/>
 
                             </LinearLayout>
@@ -155,7 +157,8 @@
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_regular"
-                                    android:background="@drawable/wallet_home_button_bg"/>
+                                    android:background="@drawable/wallet_home_button_bg"
+                                    android:elevation="@dimen/dp_6"/>
 
                             </LinearLayout>
 
@@ -184,21 +187,24 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_0.5"
-                        android:background="@color/grey4"/>
+                        android:layout_height="@dimen/dp_1"
+                        android:background="#314f89"/>
 
                     <!-- Deposit layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/dp_6"
+                        android:layout_marginRight="@dimen/dp_6">
 
                         <LinearLayout
                             android:id="@+id/wallet_home_card_money_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:minHeight="@dimen/dp_52"
-                            android:gravity="center_vertical">
+                            android:gravity="center_vertical"
+                            >
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -239,12 +245,12 @@
                                     android:text="0.00"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/sp_16"
-                                    app:typeface="lato_black" />
+                                    app:typeface="lato_bold" />
 
                                 <ImageView
                                     android:layout_width="@dimen/dp_12"
                                     android:layout_height="@dimen/dp_12"
-                                    android:src="@drawable/powerup_info_icon"
+                                    android:src="@drawable/wallet_info_icn"
                                     android:layout_marginLeft="@dimen/dp_5"/>
 
                             </LinearLayout>
@@ -266,7 +272,8 @@
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_regular"
-                                    android:background="@drawable/wallet_home_button_bg"/>
+                                    android:background="@drawable/wallet_home_button_bg"
+                                    android:elevation="@dimen/dp_6"/>
 
                             </LinearLayout>
 
@@ -295,14 +302,16 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_0.5"
-                        android:background="@color/grey4"/>
+                        android:layout_height="@dimen/dp_1"
+                        android:background="#314f89"/>
 
                     <!-- Winning layout -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/dp_6"
+                        android:layout_marginRight="@dimen/dp_6">
 
                         <LinearLayout
                             android:id="@+id/wallet_home_card_winning_layout"
@@ -354,12 +363,12 @@
                                 android:text="0.00"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/sp_16"
-                                app:typeface="lato_black" />
+                                app:typeface="lato_bold" />
 
                                 <ImageView
                                     android:layout_width="@dimen/dp_12"
                                     android:layout_height="@dimen/dp_12"
-                                    android:src="@drawable/powerup_info_icon"
+                                    android:src="@drawable/wallet_info_icn"
                                     android:layout_marginLeft="@dimen/dp_5"/>
 
                             </LinearLayout>
@@ -381,7 +390,8 @@
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_regular"
-                                    android:background="@drawable/wallet_home_button_bg"/>
+                                    android:background="@drawable/wallet_home_button_bg"
+                                    android:elevation="@dimen/dp_6"/>
 
                             </LinearLayout>
 
@@ -428,7 +438,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_gravity="center_vertical">
+                    android:layout_gravity="center_vertical"
+                    android:background="?android:attr/selectableItemBackground">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -454,17 +465,17 @@
                             android:textColor="@color/white_999999"
                             android:textSize="@dimen/sp_11"
                             app:typeface="lato_regular"
-                            android:layout_marginTop="@dimen/dp_8"/>
+                            android:layout_marginTop="@dimen/dp_4"/>
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:id="@+id/wallet_home_withdraw_progress_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0 withdrawals in progress"
-                            android:textColor="@color/white_606060"
-                            android:textSize="@dimen/sp_11"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_12"
                             app:typeface="lato_regular"
-                            android:layout_marginTop="@dimen/dp_8"/>
+                            android:layout_marginTop="@dimen/dp_4"/>
 
                     </LinearLayout>
 
@@ -488,13 +499,15 @@
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginRight="@dimen/dp_12"
                 android:layout_marginTop="@dimen/dp_12"
-                app:cardBackgroundColor="@color/black_1">
+                app:cardBackgroundColor="@color/black_1"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_gravity="center_vertical">
+                    android:layout_gravity="center_vertical"
+                    android:background="?android:attr/selectableItemBackground">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -520,17 +533,17 @@
                             android:textColor="@color/white_999999"
                             android:textSize="@dimen/sp_11"
                             app:typeface="lato_regular"
-                            android:layout_marginTop="@dimen/dp_8"/>
+                            android:layout_marginTop="@dimen/dp_4"/>
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:id="@+id/wallet_home_account_added_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0 account added"
-                            android:textColor="@color/white_606060"
-                            android:textSize="@dimen/sp_11"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_12"
                             app:typeface="lato_regular"
-                            android:layout_marginTop="@dimen/dp_8"/>
+                            android:layout_marginTop="@dimen/dp_4"/>
 
                     </LinearLayout>
 
