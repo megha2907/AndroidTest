@@ -330,13 +330,8 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
             if (challengeConfig != null && challengeId != -1) {
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        showJoinDialog(challengeId, challengeConfig);
-                    }
-                }, 300);
-
+                /* Fetch wallet details and continue in loop */
+                fetchUserWalletFromServer(challengeConfig, challengeId);
             } else {
                 showMessage(Alerts.SOMETHING_WRONG);
             }
@@ -476,7 +471,6 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     private void showJoinDialog(int challengeId, ChallengeConfig challengeConfig) {
         CompletePaymentAndJoinDialogFragment dialogFragment =
                 CompletePaymentAndJoinDialogFragment.newInstance(JOIN_CHALLENGE_CONFIRMATION_REQUEST_CODE,
-                        WalletHelper.getTotalBalance(),
                         challengeConfig.getEntryFee(),
                         getCompletePaymentDialoActionListener(challengeId, challengeConfig));
         dialogFragment.show(getChildFragmentManager(), "COMPLETE_JOIN");

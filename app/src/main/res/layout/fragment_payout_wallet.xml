@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:minHeight="@dimen/dp_64"
+        android:minHeight="@dimen/dp_72"
         android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20">
@@ -20,12 +20,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add your PayTm details to ensure smooth transactions.\nAdd a bank account if you don't have a PayTm wallet"
-            android:gravity="center"
+            android:gravity="left"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_13"
             app:typeface="lato_regular"
-            android:layout_marginTop="@dimen/dp_18"
-            android:layout_marginBottom="@dimen/dp_18"/>
+            android:lineSpacingExtra="@dimen/dp_10"/>
 
     </LinearLayout>
 

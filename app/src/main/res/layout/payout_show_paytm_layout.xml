@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/payout_choice_btn_selector"
-    android:layout_marginTop="@dimen/dp_12"
+    android:layout_marginBottom="@dimen/dp_12"
     android:layout_marginLeft="@dimen/dp_12"
     android:layout_marginRight="@dimen/dp_12">
 
@@ -20,7 +20,7 @@
             android:id="@+id/payout_list_item_icon_imageView"
             android:layout_width="@dimen/dp_12"
             android:layout_height="@dimen/dp_12"
-            android:src="@drawable/navigation_wallet_icn"
+            android:src="@drawable/edit_paytm_icn"
             android:layout_marginRight="@dimen/dp_18"
             android:layout_marginLeft="@dimen/dp_18"
             android:layout_alignParentLeft="true"
@@ -68,7 +68,7 @@
             <ImageView
                 android:layout_width="@dimen/dp_12"
                 android:layout_height="@dimen/dp_12"
-                android:src="@drawable/edit_icon"
+                android:src="@drawable/edit_icn"
                 android:layout_marginRight="@dimen/dp_6"
                 android:layout_marginLeft="@dimen/dp_6"/>
 

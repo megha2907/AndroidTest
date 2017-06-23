@@ -98,15 +98,15 @@ public class PayoutHomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     private void bindAddPaytmData(AddPaytmViewHolder holder, int position) {
-        holder.iconImageView.setImageResource(R.drawable.info);
+//        holder.iconImageView.setImageResource(R.drawable.plus_icn);
     }
 
     private void bindAddBankData(AddBankViewHolder holder, int position) {
-        holder.iconImageView.setImageResource(R.drawable.info);
+//        holder.iconImageView.setImageResource(R.drawable.plus_icn);
     }
 
     private void bindEditPaytmData(ShowPaytmViewHolder holder, int position) {
-        holder.iconImageView.setImageResource(R.drawable.edit_icon);
+//        holder.iconImageView.setImageResource(R.drawable.edit_icn);
 
         if (mPayoutInfoList != null && position < mPayoutInfoList.size()) {
             PayoutAddEditItemDto payoutAddEditItemDto = mPayoutInfoList.get(position);
@@ -119,7 +119,7 @@ public class PayoutHomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     private void bindEditBankData(ShowBankViewHolder holder, int position) {
-        holder.iconImageView.setImageResource(R.drawable.edit_icon);
+//        holder.iconImageView.setImageResource(R.drawable.edit_icon);
 
         if (mPayoutInfoList != null && position < mPayoutInfoList.size()) {
             PayoutAddEditItemDto payoutAddEditItemDto = mPayoutInfoList.get(position);

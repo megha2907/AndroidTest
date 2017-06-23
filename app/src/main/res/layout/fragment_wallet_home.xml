@@ -59,7 +59,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:gravity="right"
-                            android:text="0.00"
+                            android:text="₹ 0.00"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_19"
                             android:layout_marginLeft="@dimen/dp_20"
@@ -81,6 +81,7 @@
                         android:layout_marginLeft="@dimen/dp_6"
                         android:layout_marginRight="@dimen/dp_6">
 
+                        <!-- Visible layout -->
                         <LinearLayout
                             android:id="@+id/wallet_home_card_promo_layout"
                             android:layout_width="match_parent"
@@ -127,7 +128,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"
                                     android:gravity="right"
-                                    android:text="0.00"
+                                    android:text="₹ 0.00"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/sp_16"
                                     app:typeface="lato_bold" />
@@ -164,11 +165,11 @@
 
                         </LinearLayout>
 
+                        <!-- Hidden info layout -->
                         <LinearLayout
                             android:id="@+id/wallet_promo_info_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="@dimen/dp_45"
                             android:orientation="vertical"
                             android:gravity="center_vertical"
                             android:visibility="gone">
@@ -176,6 +177,7 @@
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:minHeight="@dimen/dp_45"
                                 android:text="This money can be used for joining challenge or withdrawing!"
                                 android:textColor="@color/white_f2f2f2"
                                 android:textSize="@dimen/sp_13"
@@ -198,6 +200,7 @@
                         android:layout_marginLeft="@dimen/dp_6"
                         android:layout_marginRight="@dimen/dp_6">
 
+                        <!-- visible layout -->
                         <LinearLayout
                             android:id="@+id/wallet_home_card_money_layout"
                             android:layout_width="match_parent"
@@ -242,7 +245,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="right"
-                                    android:text="0.00"
+                                    android:text="₹ 0.00"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/sp_16"
                                     app:typeface="lato_bold" />
@@ -279,11 +282,11 @@
 
                         </LinearLayout>
 
+                        <!-- Hidden layout -->
                         <LinearLayout
                             android:id="@+id/wallet_deposit_info_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="@dimen/dp_45"
                             android:orientation="vertical"
                             android:gravity="center_vertical"
                             android:visibility="gone">
@@ -291,6 +294,7 @@
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:minHeight="@dimen/dp_45"
                                 android:text="This money can be used for joining challenge or withdrawing!"
                                 android:textColor="@color/white_f2f2f2"
                                 android:textSize="@dimen/sp_13"
@@ -313,6 +317,7 @@
                         android:layout_marginLeft="@dimen/dp_6"
                         android:layout_marginRight="@dimen/dp_6">
 
+                        <!-- Visible layout -->
                         <LinearLayout
                             android:id="@+id/wallet_home_card_winning_layout"
                             android:layout_width="match_parent"
@@ -360,7 +365,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="right"
-                                android:text="0.00"
+                                android:text="₹ 0.00"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/sp_16"
                                 app:typeface="lato_bold" />
@@ -397,11 +402,11 @@
 
                         </LinearLayout>
 
+                        <!-- Hidden layout -->
                         <LinearLayout
                             android:id="@+id/wallet_winning_info_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="@dimen/dp_45"
                             android:orientation="vertical"
                             android:gravity="center_vertical"
                             android:visibility="gone">
@@ -409,6 +414,7 @@
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:minHeight="@dimen/dp_45"
                                 android:text="This money can be used for joining challenge or withdrawing!"
                                 android:textColor="@color/white_f2f2f2"
                                 android:textSize="@dimen/sp_13"
