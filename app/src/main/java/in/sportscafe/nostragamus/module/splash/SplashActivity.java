@@ -9,6 +9,7 @@ import com.jeeva.android.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -57,6 +58,11 @@ public class SplashActivity extends Activity {
                         if (lastParams.has(BundleKeys.USER_REFERRAL_ID)) {
                             nostragamusDataHandler.setReferralUserId(lastParams.getString(BundleKeys.USER_REFERRAL_ID));
                         }
+
+                        if (lastParams.has(BundleKeys.WALLET_INITIAL_AMOUNT)) {
+                            nostragamusDataHandler.setWalletInitialAmount(Integer.parseInt(lastParams.getString(BundleKeys.WALLET_INITIAL_AMOUNT)));
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

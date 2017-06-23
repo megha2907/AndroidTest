@@ -11,25 +11,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_profile_toolbar"
-        android:layout_marginTop="@dimen/dp_14">
+        android:background="@drawable/profile_screen_bg"
+        android:paddingTop="@dimen/dp_12"
+        android:paddingBottom="@dimen/dp_12">
 
-        <in.sportscafe.nostragamus.module.common.RoundImage
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/edit_tv_screen_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="Complete your Profile"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_18"
+            android:visibility="visible"
+            app:typeface="lato_bold" />
+
+        <com.jeeva.android.widgets.HmImageView
             android:id="@+id/edit_iv_user_image"
-            android:layout_width="@dimen/dp_128"
-            android:layout_height="@dimen/dp_128"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
             android:layout_centerHorizontal="true"
             android:alpha="0.9"
-            android:background="@android:color/transparent"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_below="@+id/edit_tv_screen_title"
+            android:background="@color/black_30"
             android:onClick="showImagePopup"
-            android:scaleType="centerCrop"
-            app:defaultImage="@drawable/left_placeholder_icon" />
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/edit_iv_camera_image"
             android:layout_width="@dimen/dp_36"
             android:layout_height="@dimen/dp_36"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_46"
+            android:layout_below="@+id/edit_tv_screen_title"
+            android:layout_marginTop="@dimen/dp_38"
             android:alpha="0.8"
             android:onClick="showImagePopup"
             android:src="@drawable/camera_icon" />
@@ -42,12 +60,12 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_8"
-            android:text="Tap to upload your profile pic"
-            android:textColor="@color/white_60"
-            android:textSize="@dimen/dp_12"
-            android:visibility="gone"
-            app:typeface="lato_regular" />
+            android:layout_marginTop="@dimen/dp_12"
+            android:text="+ Upload a Photo"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_14"
+            android:visibility="visible"
+            app:typeface="lato_bold" />
 
     </RelativeLayout>
 
@@ -89,11 +107,62 @@
 
     </com.jeeva.android.widgets.ShadowLayout>
 
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/edit_profile_tv_referral_code_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="Referral Code"
+        android:textColor="@color/white_60"
+        android:textSize="@dimen/dp_14"
+        android:layout_below="@+id/rl1"
+        app:typeface="lato_regular" />
+
+    <LinearLayout
+        android:id="@+id/edit_profile_et_referral_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:layout_marginRight="@dimen/dp_14"
+        android:layout_below="@+id/edit_profile_tv_referral_code_txt">
+
+        <com.jeeva.android.widgets.customfont.CustomEditText
+            android:id="@+id/edit_profile_et_referral_code_char_one"
+            style="@style/InviteCodeStyle" />
+
+        <com.jeeva.android.widgets.customfont.CustomEditText
+            android:id="@+id/edit_profile_et_referral_code_char_two"
+            style="@style/InviteCodeStyle" />
+
+        <com.jeeva.android.widgets.customfont.CustomEditText
+            android:id="@+id/edit_profile_et_referral_code_char_three"
+            style="@style/InviteCodeStyle" />
+
+        <com.jeeva.android.widgets.customfont.CustomEditText
+            android:id="@+id/edit_profile_et_referral_code_char_four"
+            style="@style/InviteCodeStyle" />
+
+        <com.jeeva.android.widgets.customfont.CustomEditText
+            android:id="@+id/edit_profile_et_referral_code_char_five"
+            style="@style/InviteCodeStyle" />
+
+        <com.jeeva.android.widgets.customfont.CustomEditText
+            android:id="@+id/edit_profile_et_referral_code_char_six"
+            style="@style/InviteCodeStyle"
+            android:imeOptions="actionDone" />
+
+    </LinearLayout>
+
+
     <in.sportscafe.nostragamus.module.common.NostraEditText
         android:id="@+id/edit_et_nickname_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl1"
+        android:layout_below="@+id/edit_profile_et_referral_code"
         android:layout_marginTop="@dimen/dp_16"
         android:layout_marginLeft="@dimen/dp_16"
         android:layout_marginRight="@dimen/dp_16"
@@ -124,6 +193,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorMedium"
         android:elevation="4dp"
+        android:visibility="gone"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -157,15 +227,12 @@
 
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/edit_btn_done"
-        android:layout_width="@dimen/dp_100"
-        android:layout_height="@dimen/blue_button_height"
-        android:layout_below="@+id/edit_disclaimer_checkbox"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_25"
-        android:background="@drawable/tournament_ready_btn_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_alignParentBottom="true"
+        android:background="@color/venice_blue"
         android:onClick="onClick"
-        android:text="UPDATE"
+        android:text="Update Details"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/blue_button_text"

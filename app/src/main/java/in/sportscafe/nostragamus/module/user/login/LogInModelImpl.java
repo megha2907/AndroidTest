@@ -35,6 +35,7 @@ import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static in.sportscafe.nostragamus.Constants.AnalyticsActions.PRO_APP;
 import static in.sportscafe.nostragamus.Constants.AnalyticsActions.STARTED;
 
 public class LogInModelImpl implements LogInModel {
@@ -180,6 +181,17 @@ public class LogInModelImpl implements LogInModel {
         userProfile.setEmails(email);
         userProfile.setPhotos(photo);
         userProfile.setUserReferralId(NostragamusDataHandler.getInstance().getReferralUserId());
+        userProfile.setCampaignName(NostragamusDataHandler.getInstance().getInstallReferralCampaign());
+
+        if (BuildConfig.IS_PAID_VERSION){
+            userProfile.setAppType(Constants.AppType.PRO);
+        }else {
+            userProfile.setAppType(Constants.AppType.PLAYSTORE);
+        }
+
+        if (NostragamusDataHandler.getInstance().getWalletInitialAmount()!= -1) {
+            userProfile.setWalletInitialAmount(NostragamusDataHandler.getInstance().getWalletInitialAmount());
+        }
 
         MyWebService.getInstance().getLogInRequest(logInRequest).enqueue(
                 new NostragamusCallBack<LogInResponse>() {

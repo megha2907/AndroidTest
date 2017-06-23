@@ -13,6 +13,9 @@ public class UpdateUserRequest {
     @JsonProperty("user_nick")
     private String userNickName;
 
+    @JsonProperty("user_accepted")
+    private boolean disclaimerAccepted;
+
     @JsonProperty("user_photo")
     public String getUserPhoto() {
         return userPhoto;
@@ -32,6 +35,16 @@ public class UpdateUserRequest {
     @JsonProperty("user_nick")
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
+    }
+
+    @JsonProperty("user_accepted")
+    public boolean isDisclaimerAccepted() {
+        return disclaimerAccepted;
+    }
+
+    @JsonProperty("user_accepted")
+    public void setDisclaimerAccepted(boolean disclaimerAccepted) {
+        this.disclaimerAccepted = disclaimerAccepted;
     }
 
 }

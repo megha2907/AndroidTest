@@ -79,6 +79,7 @@
     <color name="grey4">#cecece</color>
     <color name="line_separator">#303030</color>
     <color name="grey5">#999999</color>
+    <color name="grey6">#CCCCCC</color>
 
     <color name="white_70">#B3FFFFFF</color>
     <color name="white_80">#CCFFFFFF</color>
@@ -132,7 +133,9 @@
     <color name="code_gray_13">#353535</color>
     <color name="scrollbar_indicator">#666666</color>
     <color name="hyperlink_color">#29abe2</color>
-
+    <color name="venice_blue">#005182</color>
+    <color name="jade">#00B978</color>
+    <color name="salem">#008654</color>
     <color name="elephant">#13374D</color>
 
 </resources>

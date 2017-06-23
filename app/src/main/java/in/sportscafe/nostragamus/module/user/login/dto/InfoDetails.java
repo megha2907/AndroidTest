@@ -28,6 +28,9 @@ public class InfoDetails {
     @JsonProperty("level")
     private String level;
 
+    @JsonProperty("user_accepted")
+    private Boolean disclaimerAccepted;
+
     @JsonProperty("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps;
@@ -66,6 +69,16 @@ public class InfoDetails {
     @JsonProperty("transient_badges")
     public void setTransientBadges(List<Badge> transientBadges) {
         this.transientBadges = transientBadges;
+    }
+
+    @JsonProperty("user_accepted")
+    public Boolean getDisclaimerAccepted() {
+        return disclaimerAccepted;
+    }
+
+    @JsonProperty("user_accepted")
+    public void setDisclaimerAccepted(Boolean disclaimerAccepted) {
+        this.disclaimerAccepted = disclaimerAccepted;
     }
 
 }
