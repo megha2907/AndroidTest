@@ -97,11 +97,11 @@
                                 android:layout_weight="1"
                                 android:gravity="center_vertical">
 
-                                <ImageView
+                                <!--<ImageView
                                     android:id="@+id/img1"
                                     android:layout_width="@dimen/dp_12"
                                     android:layout_height="@dimen/dp_12"
-                                    android:src="@drawable/star"/>
+                                    android:src="@drawable/star"/>-->
 
                                 <com.jeeva.android.widgets.customfont.CustomTextView
                                     android:id="@+id/label1"
@@ -110,8 +110,7 @@
                                     android:text="Promo :"
                                     android:textColor="@color/white_f2f2f2"
                                     android:textSize="@dimen/sp_13"
-                                    app:typeface="lato_regular"
-                                    android:layout_marginLeft="@dimen/dp_5"/>
+                                    app:typeface="lato_regular"/>
 
                             </LinearLayout>
 
@@ -216,11 +215,11 @@
                                 android:layout_weight="1"
                                 android:gravity="center_vertical">
 
-                                <ImageView
+                                <!--<ImageView
                                     android:id="@+id/img2"
                                     android:layout_width="@dimen/dp_12"
                                     android:layout_height="@dimen/dp_12"
-                                    android:src="@drawable/wallet_icn"/>
+                                    android:src="@drawable/wallet_icn"/>-->
 
                                 <com.jeeva.android.widgets.customfont.CustomTextView
                                     android:id="@+id/label2"
@@ -229,8 +228,7 @@
                                     android:text="Deposit :"
                                     android:textColor="@color/white_f2f2f2"
                                     android:textSize="@dimen/sp_13"
-                                    app:typeface="lato_regular"
-                                    android:layout_marginLeft="@dimen/dp_5"/>
+                                    app:typeface="lato_regular"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -333,23 +331,21 @@
                                 android:layout_weight="1"
                                 android:gravity="center_vertical">
 
-                            <ImageView
+                            <!--<ImageView
                                 android:id="@+id/img3"
                                 android:layout_width="@dimen/dp_12"
                                 android:layout_height="@dimen/dp_12"
                                 android:src="@drawable/star"
-                                android:layout_alignParentLeft="true"/>
+                                android:layout_alignParentLeft="true"/>-->
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:id="@+id/label3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/img3"
                                 android:text="Winnings :"
                                 android:textColor="@color/white_f2f2f2"
                                 android:textSize="@dimen/sp_13"
-                                app:typeface="lato_regular"
-                                android:layout_marginLeft="@dimen/dp_5"/>
+                                app:typeface="lato_regular"/>
 
                             </LinearLayout>
 
