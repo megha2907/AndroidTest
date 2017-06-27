@@ -52,11 +52,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     }
 
     @Override
-    public void onClickDone(String nickname) {
+    public void onClickDone(String nickname,Boolean disclaimerAccepted) {
         if (nickname.equals("")) {
             mEditProfileView.setNicknameEmpty();
         } else {
-            mEditProfileModel.updateProfile(nickname);
+            mEditProfileModel.updateProfile(nickname,disclaimerAccepted);
         }
 
         NostragamusAnalytics.getInstance().trackEditProfile(AnalyticsActions.OTHERS, AnalyticsLabels.UPDATE);

@@ -14,7 +14,7 @@ import okhttp3.RequestBody;
  */
 public interface EditProfileModel {
 
-    void updateProfile(String about);
+    void updateProfile(String about, Boolean disclaimerAccepted);
 
     void onGetImage(Intent imageData);
 

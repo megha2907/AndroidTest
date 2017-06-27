@@ -28,6 +28,16 @@ public class UserProfile {
 
     @JsonProperty("profileUrl")
     private String profileUrl;
+
+    @JsonProperty("campaignName")
+    private String campaignName;
+
+    @JsonProperty("appType")
+    private String appType;
+
+    @JsonProperty("wallet_init")
+    private Integer walletInitialAmount;
+
 //
 //    @JsonProperty("emails")
 //    private Emails emails;
@@ -154,6 +164,34 @@ public class UserProfile {
             userReferralId = "";
         }
         this.userReferralId = userReferralId;
+    }
+
+    public String getCampaignName() {
+        return campaignName;
+    }
+
+    public void setCampaignName(String campaignName) {
+        this.campaignName = campaignName;
+    }
+
+    @JsonProperty("wallet_init")
+    public Integer getWalletInitialAmount() {
+        return walletInitialAmount;
+    }
+
+    @JsonProperty("wallet_init")
+    public void setWalletInitialAmount(Integer walletInitialAmount) {
+        this.walletInitialAmount = walletInitialAmount;
+    }
+
+    @JsonProperty("appType")
+    public String getAppType() {
+        return appType;
+    }
+
+    @JsonProperty("appType")
+    public void setAppType(String appType) {
+        this.appType = appType;
     }
 
 }
