@@ -4,6 +4,7 @@ package in.sportscafe.nostragamus.module.navigation.referfriends;
  * Created by deepanshi on 6/21/17.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,6 +17,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
@@ -70,7 +72,10 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
 
     @Override
     public void onReferralCreditsClicked() {
-
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), ReferralCreditActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override

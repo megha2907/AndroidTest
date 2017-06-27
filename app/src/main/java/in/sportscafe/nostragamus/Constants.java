@@ -516,6 +516,7 @@ public interface Constants {
         String WALLET_PAYOUT_CHOICE = "walletPayoutChoice";
         String DOWNLOADING_APP = "DownloadingApp";
         String REFER_FRIEND = "ReferFriend";
+        String REFERRAL_CREDIT = "ReferralCredit";
     }
 
     interface InAppPopups {
@@ -635,6 +636,11 @@ public interface Constants {
 
         String TRANSACTION_ACCOUNT_PAYTM = "paytm";
         String TRANSACTION_ACCOUNT_BANK = "bank";
+    }
+
+    interface ReferralHistory {
+        String REFERRAL_HISTORY_TYPE_POWERUPS = "powerup";
+        String REFERRAL_HISTORY_TYPE_MONEY = "promoMoney";
     }
 
     interface ChallengeTabs {

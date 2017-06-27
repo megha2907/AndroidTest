@@ -5,4 +5,7 @@ package in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits
  */
 
 public interface ReferralCreditFragmentListener {
+    void onPowerUpRewardsClicked();
+
+    void onCashRewardsClicked();
 }
