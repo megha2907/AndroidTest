@@ -197,4 +197,29 @@ public class WalletHelper {
         return total;
     }
 
+    /**
+     * Adds given extra amount into given base-amount string, else return extra-amount if exception found.
+     * @param baseAmountStr
+     * @param extraAmtToAdd
+     * @return
+     */
+    public static synchronized double addMoreAmount(String baseAmountStr, double extraAmtToAdd) {
+        double addedAmt = extraAmtToAdd;
+
+        if (!TextUtils.isEmpty(baseAmountStr)) {
+            try {
+                double baseAmt = Double.parseDouble(baseAmountStr);
+                if (extraAmtToAdd > 0) {
+                    baseAmt = baseAmt + extraAmtToAdd;
+                }
+                if (baseAmt > 0) {
+                    addedAmt = baseAmt;
+                }
+            } catch (NumberFormatException nex) {
+                nex.printStackTrace();
+            }
+        }
+
+        return addedAmt;
+    }
 }

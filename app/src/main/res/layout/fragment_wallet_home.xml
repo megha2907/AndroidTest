@@ -33,7 +33,7 @@
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dp_16"
                     android:paddingRight="@dimen/dp_16"
-                    android:background="@drawable/card_bg_img_small">
+                    android:background="@drawable/wallet_card_bg">
 
                     <!-- Balance layout -->
                     <RelativeLayout

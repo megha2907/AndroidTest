@@ -299,6 +299,7 @@ public interface Constants {
         String WITHDRAW_STATUS_CODE = "withdrawFailureCode";
         String WITHDRAW_AMOUNT = "withdrawAmount";
         String WITHDRAW_PAYOUT_TYPE = "withdrawPayoutType";
+        String DIALOG_LAUNCH_MODE = "dialogLaunchMode";
     }
 
     interface ParcelableKeys {

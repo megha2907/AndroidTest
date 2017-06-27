@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:minHeight="@dimen/dp_200"
-                android:background="@drawable/card_bg_img_small">
+                android:background="@drawable/wallet_bg">
 
                 <!-- Header layout -->
                 <RelativeLayout
@@ -110,7 +110,9 @@
                         android:textColor="#e6e6e6"
                         android:textSize="@dimen/sp_16"
                         app:typeface="lato_regular"
-                        />
+                        android:shadowColor="@color/black"
+                        android:shadowRadius="1"
+                        android:shadowDy="5"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/wallet_add_money_amount_textView"
@@ -122,8 +124,8 @@
                         android:textSize="@dimen/sp_25"
                         app:typeface="lato_bold"
                         android:layout_marginTop="@dimen/dp_18"
-                        android:shadowColor="@color/grey_dim_text"
-                        android:shadowRadius="3"
+                        android:shadowColor="@color/black"
+                        android:shadowRadius="1"
                         android:shadowDy="5"/>
 
                 </LinearLayout>
@@ -148,7 +150,7 @@
                     android:layout_weight="1"
                     android:text="+ ₹50"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"
                     android:background="@drawable/button_selector"
                     />
@@ -161,7 +163,7 @@
                     android:gravity="center"
                     android:text="+ ₹100"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"
                     android:background="@drawable/button_selector"
                     android:layout_marginLeft="@dimen/dp_12"/>
@@ -174,7 +176,7 @@
                     android:gravity="center"
                     android:text="+ ₹250"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"
                     android:background="@drawable/button_selector"
                     android:layout_marginLeft="@dimen/dp_12"/>
@@ -196,8 +198,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:text="Enter Amount"
-                    android:textColor="@color/white_60"
-                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.ShadowLayout
