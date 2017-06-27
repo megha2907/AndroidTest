@@ -71,7 +71,7 @@
                 android:id="@+id/wallet_history_bal_amount_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-"
+                android:text="₹ 0.00"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_25"

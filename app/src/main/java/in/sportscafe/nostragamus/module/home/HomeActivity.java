@@ -111,9 +111,11 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
      * @param userInfo
      */
     private void checkPaymentInfoProvidedOrRequired(UserInfo userInfo) {
-        if (userInfo != null) {
+        // NOTE : On-boarding for collecting payout details NOT requires as wallet has been introduced.
 
-            /* If user info is null AND paymentDetails never shown to user on HomeScreen, then only (once only) */
+        /*if (userInfo != null) {
+
+            *//* If user info is null AND paymentDetails never shown to user on HomeScreen, then only (once only) *//*
             if (userInfo.getUserPaymentInfo() == null &&
                     !NostragamusDataHandler.getInstance().isPaymentDetailsShownAtHome() && BuildConfig.IS_PAID_VERSION) {
 
@@ -125,7 +127,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             } else {
                 Log.d(TAG, "[onBoard] User payment details screen not required to show at home");
             }
-        }
+        }*/
     }
 
     /**

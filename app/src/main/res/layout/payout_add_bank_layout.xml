@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/grey1"
-    android:layout_marginTop="@dimen/dp_12"
+    android:layout_marginBottom="@dimen/dp_12"
     android:layout_marginLeft="@dimen/dp_12"
     android:layout_marginRight="@dimen/dp_12">
 
@@ -26,7 +26,7 @@
                 android:id="@+id/payout_list_item_icon_imageView"
                 android:layout_width="@dimen/dp_12"
                 android:layout_height="@dimen/dp_12"
-                android:src="@drawable/info"
+                android:src="@drawable/plus_icn"
                 android:layout_marginLeft="@dimen/dp_18"
                 android:layout_marginRight="@dimen/dp_18"/>
 
