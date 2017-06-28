@@ -68,10 +68,11 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
 
     @Override
     public void onBindViewHolder(WalletHistoryViewHolder holder, int position) {
-        if (position >= (getItemCount() - 1)) {
+        if (position >= (getItemCount() - 1)) {     /* Load more data once last position reached */
             loadMoreHistory();
+        }
 
-        } else if (mTransactionList != null && position < mTransactionList.size()) {    /* position < getItemCount() */
+        if (mTransactionList != null && position < mTransactionList.size()) {    /* position < getItemCount() */
             WalletHistoryTransaction transaction = mTransactionList.get(position);
 
             changeItemBackground(holder, position);
