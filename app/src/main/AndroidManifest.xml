@@ -263,7 +263,7 @@
             android:name=".module.navigation.wallet.payoutDetails.PayoutWalletHomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.navigation.wallet.payoutDetails.PayoutWalletChoiceActivity"
+            android:name=".module.navigation.wallet.payoutDetails.WithdrawPayoutChoiceActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity"

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutChoiceType;
@@ -20,20 +19,20 @@ import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutCh
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WithdrawFromWalletApiResponseDialogFragment extends NostragamusDialogFragment implements View.OnClickListener {
+public class WithdrawInitiatedDialogFragment extends NostragamusDialogFragment implements View.OnClickListener {
 
-    private static final String TAG = WithdrawFromWalletApiResponseDialogFragment.class.getSimpleName();
+    private static final String TAG = WithdrawInitiatedDialogFragment.class.getSimpleName();
 
     private WithdrawApiDialogListener mDialogListener;
 
-    public WithdrawFromWalletApiResponseDialogFragment() {}
+    public WithdrawInitiatedDialogFragment() {}
 
     public void setDialogListener (WithdrawApiDialogListener listener) {
         mDialogListener = listener;
     }
 
-    public static WithdrawFromWalletApiResponseDialogFragment newInstance(WithdrawApiDialogListener dialogListener) {
-        WithdrawFromWalletApiResponseDialogFragment fragment = new WithdrawFromWalletApiResponseDialogFragment();
+    public static WithdrawInitiatedDialogFragment newInstance(WithdrawApiDialogListener dialogListener) {
+        WithdrawInitiatedDialogFragment fragment = new WithdrawInitiatedDialogFragment();
         fragment.setDialogListener(dialogListener);
         return fragment;
 
@@ -42,7 +41,7 @@ public class WithdrawFromWalletApiResponseDialogFragment extends NostragamusDial
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_withdraw_from_wallet_api_response_dialog, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_withdraw_initiated_dialog, container, false);
         initView(rootView);
         return rootView;
     }

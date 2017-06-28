@@ -302,6 +302,7 @@ public interface Constants {
         String WITHDRAW_PAYOUT_TYPE = "withdrawPayoutType";
         String WALLET_INITIAL_AMOUNT = "wallet_init";
         String USER_REFERRAL_CODE = "user_referral_code";
+        String DIALOG_LAUNCH_MODE = "dialogLaunchMode";
     }
 
     interface ParcelableKeys {
@@ -512,7 +513,7 @@ public interface Constants {
         String WALLET_ADD_MONEY = "addWalletMoney";
         String WALLET_WITHDRAW_MONEY = "withdrawWalletMoney";
         String WALLET_HISTORY = "walletHistory";
-        String WALLET_PAYOUT = "walletPayout";
+        String WALLET_PAYOUT_HOME = "walletPayoutHome";
         String WALLET_PAYOUT_CHOICE = "walletPayoutChoice";
         String DOWNLOADING_APP = "DownloadingApp";
         String REFER_FRIEND = "ReferFriend";

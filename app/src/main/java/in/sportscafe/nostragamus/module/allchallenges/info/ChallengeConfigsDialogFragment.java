@@ -222,7 +222,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         }
     }
 
-    private void fetchUserWalletFromServer(final ChallengeConfig challengeConfig, final int challengeId) {
+    private void fetchUserWalletFromServer(final ChallengeConfig challengeConfig, final int challengeId, final int joinDialogLaunchMode) {
         showProgressbar();
         WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
             @Override
@@ -240,7 +240,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             @Override
             public void onSuccessResponse(UserWalletResponse response) {
                 dismissProgressbar();
-                payAndJoinChallenge(challengeConfig, challengeId);
+                payAndJoinChallenge(challengeConfig, challengeId, joinDialogLaunchMode);
             }
         }).performApiCall();
     }
@@ -253,18 +253,19 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                 performJoinChallengeAction(challengeId, challengeConfig);
             } else {
                 // Paid entry, check wallet balance, fetch wallet and then continue
-                fetchUserWalletFromServer(challengeConfig, challengeId);
+                fetchUserWalletFromServer(challengeConfig, challengeId,
+                        CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.NORMAL_LAUNCH);
             }
         } else {
             showMessage(Alerts.SOMETHING_WRONG);
         }
     }
 
-    private void payAndJoinChallenge(ChallengeConfig challengeConfig, int challengeId) {
+    private void payAndJoinChallenge(ChallengeConfig challengeConfig, int challengeId, int joinDialogLaunchMode) {
         double entryFee = challengeConfig.getEntryFee();
 
         if (WalletHelper.isSufficientBalAvailableInWallet(entryFee)) {
-            showJoinDialog(challengeId, challengeConfig);
+            showJoinDialog(challengeId, challengeConfig, joinDialogLaunchMode);
 
         } else {
             // Add money into wallet to join
@@ -331,7 +332,8 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             if (challengeConfig != null && challengeId != -1) {
 
                 /* Fetch wallet details and continue in loop */
-                fetchUserWalletFromServer(challengeConfig, challengeId);
+                fetchUserWalletFromServer(challengeConfig, challengeId,
+                        CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.MONEY_ADDED_ON_LOW_BAL_LAUNCH);
             } else {
                 showMessage(Alerts.SOMETHING_WRONG);
             }
@@ -468,10 +470,12 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         }
     }
 
-    private void showJoinDialog(int challengeId, ChallengeConfig challengeConfig) {
+    private void showJoinDialog(int challengeId, ChallengeConfig challengeConfig, int dialogLaunchMode) {
         CompletePaymentAndJoinDialogFragment dialogFragment =
                 CompletePaymentAndJoinDialogFragment.newInstance(JOIN_CHALLENGE_CONFIRMATION_REQUEST_CODE,
+                        challengeConfig.getConfigName(),
                         challengeConfig.getEntryFee(),
+                        dialogLaunchMode,
                         getCompletePaymentDialoActionListener(challengeId, challengeConfig));
         dialogFragment.show(getChildFragmentManager(), "COMPLETE_JOIN");
     }

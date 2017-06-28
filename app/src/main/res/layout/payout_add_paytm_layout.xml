@@ -4,10 +4,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/grey1"
     android:layout_marginBottom="@dimen/dp_12"
     android:layout_marginLeft="@dimen/dp_12"
-    android:layout_marginRight="@dimen/dp_12">
+    android:layout_marginRight="@dimen/dp_12"
+    android:background="@drawable/payout_choice_add_btn_selector">
 
     <LinearLayout
         android:layout_width="match_parent"

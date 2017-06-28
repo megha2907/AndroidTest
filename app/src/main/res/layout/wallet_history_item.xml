@@ -104,15 +104,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginLeft="@dimen/dp_30"
-        android:layout_marginRight="@dimen/dp_30"
         android:visibility="gone">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/white_60"
-            />
+            android:layout_height="1dp"
+            android:background="#303030"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginRight="@dimen/dp_12"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,7 +119,9 @@
             android:orientation="horizontal"
             android:gravity="left"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_10">
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_30">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/wallet_item_txn_id_textview"
@@ -128,10 +129,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/white_999999"
                 android:textSize="@dimen/sp_10"
                 android:maxLines="1"
-                app:typeface="lato_light"
+                app:typeface="lato_regular"
                 android:ellipsize="end"/>
 
         </LinearLayout>

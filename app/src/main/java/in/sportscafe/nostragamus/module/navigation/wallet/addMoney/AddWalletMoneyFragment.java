@@ -4,6 +4,7 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,17 +120,20 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
 
     private void onAddMoney250Clicked() {
-        mAmountEditText.setText("250");
+        double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 250);
+        mAmountEditText.setText(String.valueOf(amt));
         setEditTextSelection();
     }
 
     private void onAddMoney100Clicked() {
-        mAmountEditText.setText("100");
+        double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 100);
+        mAmountEditText.setText(String.valueOf(amt));
         setEditTextSelection();
     }
 
     private void onAddMoney50Clicked() {
-        mAmountEditText.setText("50");
+        double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 50);
+        mAmountEditText.setText(String.valueOf(amt));
         setEditTextSelection();
     }
 
@@ -137,4 +141,6 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
         int length = mAmountEditText.getText().length();
         mAmountEditText.setSelection(length, length);
     }
+
+
 }

@@ -2,10 +2,17 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.SpannedString;
 import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,14 +124,7 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
                 entryFeeTextView.setText(WalletHelper.getFormattedStringOfAmount(entryFee));
             }
 
-
-            String msg = "Low balance! You need to add ";
-            if (mLowBalanceDifferenceAmount > 0) {
-                msg = msg + WalletHelper.getFormattedStringOfAmount(mLowBalanceDifferenceAmount);
-            }
-            msg = msg + " more to wallet to join " + ((!TextUtils.isEmpty(configName)) ? configName : "");
-            lowBalMsgTextView.setText(msg, TextView.BufferType.SPANNABLE);
-
+            setMessageText(configName, lowBalMsgTextView);
 
             if (mAmountEditText != null) {
                 mAmountEditText.setText(String.valueOf(mLowBalanceDifferenceAmount));
@@ -133,18 +133,42 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
         }
     }
 
+    private void setMessageText(String configName, TextView lowBalMsgTextView) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        String msg1 = "Low balance! You need to add ";
+        SpannableString spannable1 = new SpannableString(msg1);
+
+        SpannableString spannable2 = null;
+        if (mLowBalanceDifferenceAmount > 0) {
+            String msg2 = WalletHelper.getFormattedStringOfAmount(mLowBalanceDifferenceAmount);
+            spannable2 = new SpannableString(msg2);
+            spannable2.setSpan(new AbsoluteSizeSpan(16), 0, msg2.length(), 0);
+        } else {
+            spannable2 = new SpannableString("");
+        }
+
+        String msg3 = " more to wallet to join " + ((!TextUtils.isEmpty(configName)) ? configName : "");
+        SpannableString spannable3 = new SpannableString(msg3);
+
+        builder.append(spannable1).append(spannable2).append(spannable3);
+        lowBalMsgTextView.setText(builder, TextView.BufferType.SPANNABLE);
+    }
+
     private void onAddMoney250Clicked() {
-        mAmountEditText.setText("250");
+        double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 250);
+        mAmountEditText.setText(String.valueOf(amt));
         setEditTextSelection();
     }
 
     private void onAddMoney100Clicked() {
-        mAmountEditText.setText("100");
+        double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 100);
+        mAmountEditText.setText(String.valueOf(amt));
         setEditTextSelection();
     }
 
     private void onAddMoney50Clicked() {
-        mAmountEditText.setText("50");
+        double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 50);
+        mAmountEditText.setText(String.valueOf(amt));
         setEditTextSelection();
     }
 

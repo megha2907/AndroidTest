@@ -33,7 +33,7 @@
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dp_16"
                     android:paddingRight="@dimen/dp_16"
-                    android:background="@drawable/card_bg_img_small">
+                    android:background="@drawable/wallet_card_bg">
 
                     <!-- Balance layout -->
                     <RelativeLayout
@@ -158,7 +158,9 @@
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_regular"
                                     android:background="@drawable/wallet_home_button_bg"
-                                    android:elevation="@dimen/dp_6"/>
+                                    android:elevation="@dimen/dp_6"
+                                    android:translationZ="@dimen/dp_6"
+                                    android:stateListAnimator="@null"/>
 
                             </LinearLayout>
 
@@ -274,7 +276,9 @@
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_regular"
                                     android:background="@drawable/wallet_home_button_bg"
-                                    android:elevation="@dimen/dp_6"/>
+                                    android:elevation="@dimen/dp_6"
+                                    android:translationZ="@dimen/dp_6"
+                                    android:stateListAnimator="@null"/>
 
                             </LinearLayout>
 
@@ -392,7 +396,9 @@
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_regular"
                                     android:background="@drawable/wallet_home_button_bg"
-                                    android:elevation="@dimen/dp_6"/>
+                                    android:elevation="@dimen/dp_6"
+                                    android:translationZ="@dimen/dp_6"
+                                    android:stateListAnimator="@null"/>
 
                             </LinearLayout>
 
