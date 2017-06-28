@@ -102,6 +102,7 @@ public interface Constants {
 
         String LAST_SHOWN_APP_VERSION_CODE = "lastShownAppVersionCode";
         String UPDATE_TYPE = "updateType";
+        String WALLET_INITIAL_AMOUNT = "walletInitialAmount";
     }
 
     interface Alerts {
@@ -299,6 +300,8 @@ public interface Constants {
         String WITHDRAW_STATUS_CODE = "withdrawFailureCode";
         String WITHDRAW_AMOUNT = "withdrawAmount";
         String WITHDRAW_PAYOUT_TYPE = "withdrawPayoutType";
+        String WALLET_INITIAL_AMOUNT = "wallet_init";
+        String USER_REFERRAL_CODE = "user_referral_code";
         String DIALOG_LAUNCH_MODE = "dialogLaunchMode";
     }
 
@@ -463,6 +466,11 @@ public interface Constants {
         String REFERRAL_CAMPAIGN = "Campaign";
     }
 
+    interface AppType {
+        String PRO = "PRO";
+        String PLAYSTORE = "PS";
+    }
+
     interface ScreenNames {
         String PROFILE = "profile"; //in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment
         String PROFILE_EDIT = "edit_profile"; //in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity
@@ -505,9 +513,11 @@ public interface Constants {
         String WALLET_ADD_MONEY = "addWalletMoney";
         String WALLET_WITHDRAW_MONEY = "withdrawWalletMoney";
         String WALLET_HISTORY = "walletHistory";
-        String WALLET_PAYOUT = "walletPayout";
+        String WALLET_PAYOUT_HOME = "walletPayoutHome";
         String WALLET_PAYOUT_CHOICE = "walletPayoutChoice";
         String DOWNLOADING_APP = "DownloadingApp";
+        String REFER_FRIEND = "ReferFriend";
+        String REFERRAL_CREDIT = "ReferralCredit";
     }
 
     interface InAppPopups {
@@ -627,6 +637,11 @@ public interface Constants {
 
         String TRANSACTION_ACCOUNT_PAYTM = "paytm";
         String TRANSACTION_ACCOUNT_BANK = "bank";
+    }
+
+    interface ReferralHistory {
+        String REFERRAL_HISTORY_TYPE_POWERUPS = "powerup";
+        String REFERRAL_HISTORY_TYPE_MONEY = "promoMoney";
     }
 
     interface ChallengeTabs {

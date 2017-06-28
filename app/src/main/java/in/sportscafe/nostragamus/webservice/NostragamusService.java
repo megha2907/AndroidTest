@@ -267,4 +267,7 @@ public interface NostragamusService {
 
     @GET("/v1/setting/getLatestApk")
     Call<String> getLatestApk();
+
+    @GET("v2/game/getReferralScreen")
+    Call<UserReferralResponse> getUserReferralInfo(@Query("app_type") String flavor);
 }

@@ -109,7 +109,7 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
 
     private void populatePromoDetails(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
         if (transaction != null) {
-            holder.txnImageView.setImageResource(R.drawable.wallet_credit);
+            holder.txnImageView.setImageResource(R.drawable.wallet_promo_icn);
             double amount = transaction.getAmount();
             if (amount > 0) {
                 String title = "Added " + WalletHelper.getFormattedStringOfAmount(amount) + " to Promo money";
@@ -126,7 +126,7 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
 
     private void populateWinningDetails(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
         if (transaction != null) {
-            holder.txnImageView.setImageResource(R.drawable.wallet_credit);
+            holder.txnImageView.setImageResource(R.drawable.wallet_won_icn);
             double amount = transaction.getAmount();
             if (amount > 0) {
                 String title = "Added " + WalletHelper.getFormattedStringOfAmount(amount) + " to your winnings";
@@ -143,7 +143,7 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
 
     private void populateJoiningDetails(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
         if (transaction != null) {
-            holder.txnImageView.setImageResource(R.drawable.wallet_debit);
+            holder.txnImageView.setImageResource(R.drawable.wallet_join_challenge_icn);
             double amount = transaction.getAmount();
             if (amount > 0) {
                 String title = "Paid " + WalletHelper.getFormattedStringOfAmount(amount) + " from your wallet";
@@ -165,7 +165,7 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                 double amount = transaction.getAmount();
 
                 if (status.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_STATUS_SUCCESS)) {  /* If transaction status Success */
-                    holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_success);
+                    holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_success_icn);
                     String account = transaction.getAccount();
 
                     if (amount > 0) {
@@ -184,7 +184,7 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                     }
 
                 } else if (status.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_STATUS_FAILED)) {    /* If transaction status FAILED */
-                    holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_failed);
+                    holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_failed_icn);
                     if (amount > 0) {
                         String msg = WalletHelper.getFormattedStringOfAmount(amount) + " withdrawal failed";
                         holder.titleTextView.setText(msg);
@@ -192,7 +192,7 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                     }
 
                 } else if (status.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_STATUS_INITIATED)) {     /* If transaction status Initiated */
-                    holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_initiated);
+                    holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_initiated_icn);
                     if (amount > 0) {
                         String msg = WalletHelper.getFormattedStringOfAmount(amount) + " withdrawal in progress";
                         holder.titleTextView.setText(msg);
@@ -207,7 +207,7 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
         String status = transaction.getTrasactionStatus();
         if (!TextUtils.isEmpty(status)) {
             if (status.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_STATUS_SUCCESS)) {
-                holder.txnImageView.setImageResource(R.drawable.wallet_debit);
+                holder.txnImageView.setImageResource(R.drawable.wallet_deposit_icn);
 
                 double amount = transaction.getAmount();
                 if (amount > 0) {

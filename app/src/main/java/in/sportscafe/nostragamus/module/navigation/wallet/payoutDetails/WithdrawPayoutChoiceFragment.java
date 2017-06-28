@@ -30,32 +30,32 @@ import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoPaytmDto;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PayoutWalletChoiceFragment extends BaseFragment implements View.OnClickListener {
+public class WithdrawPayoutChoiceFragment extends BaseFragment implements View.OnClickListener {
 
-    private static final String TAG = PayoutWalletChoiceFragment.class.getSimpleName();
+    private static final String TAG = WithdrawPayoutChoiceFragment.class.getSimpleName();
 
-    private PayoutWalletChoiceFragmentListener mFragmentListener;
+    private WithdrawPayoutChoiceFragmentListener mFragmentListener;
 
     private RelativeLayout mPaytmButton;
     private RelativeLayout mBankButton;
 
-    public PayoutWalletChoiceFragment() {}
+    public WithdrawPayoutChoiceFragment() {}
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof PayoutWalletChoiceFragmentListener) {
-            mFragmentListener = (PayoutWalletChoiceFragmentListener) context;
+        if (context instanceof WithdrawPayoutChoiceFragmentListener) {
+            mFragmentListener = (WithdrawPayoutChoiceFragmentListener) context;
         } else {
             throw  new RuntimeException("Activity must implement " +
-                    PayoutWalletChoiceFragmentListener.class.getSimpleName());
+                    WithdrawPayoutChoiceFragmentListener.class.getSimpleName());
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_payout_wallet_choice, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_withdraw_payout_choice, container, false);
         initRootView(rootView);
         return rootView;
     }

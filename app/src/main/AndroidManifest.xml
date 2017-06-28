@@ -167,6 +167,7 @@
         <activity
             android:name=".module.play.prediction.AllDoneActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".module.play.myresults.MyResultsActivity"
             android:parentActivityName=".module.home.HomeActivity"
@@ -262,12 +263,20 @@
             android:name=".module.navigation.wallet.payoutDetails.PayoutWalletHomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.navigation.wallet.payoutDetails.PayoutWalletChoiceActivity"
+            android:name=".module.navigation.wallet.payoutDetails.WithdrawPayoutChoiceActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
+
+        <activity
+            android:name=".module.navigation.referfriends.ReferFriendActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.navigation.referfriends.referralcredits.ReferralCreditActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

@@ -152,6 +152,57 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/navigation_refer_separator"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0.5"
+                android:background="@color/line_separator"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"/>
+
+            <!--Refer a Friend section -->
+            <LinearLayout
+                android:id="@+id/navigation_refer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_60"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_24"
+                android:visibility="visible"
+                android:background="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16"
+                    android:src="@drawable/navigation_refer_icon"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Refer a friend and earn "
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_13"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    app:typeface="lato_regular" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_1"
+                    android:src="@drawable/navigation_earn_more_icon"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" money!"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_13"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+            <View
                 android:id="@+id/navigation_whats_new_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"

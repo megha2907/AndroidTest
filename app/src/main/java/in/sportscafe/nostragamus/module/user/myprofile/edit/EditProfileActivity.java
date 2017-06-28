@@ -56,7 +56,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private NostraEditText mEtNickName;
 
-    private RoundImage mIvProfileImage;
+    private HmImageView mIvProfileImage;
 
     private CheckBox mCbProfileDisclaimer;
 
@@ -87,7 +87,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
         mTvUpdateProfile = (TextView) findViewById(R.id.edit_tv);
         mEtNickName = (NostraEditText) findViewById(R.id.edit_et_nickname_new);
-        mIvProfileImage = (RoundImage) findViewById(R.id.edit_iv_user_image);
+        mIvProfileImage = (HmImageView) findViewById(R.id.edit_iv_user_image);
         mBtnUpdateDone = (CustomButton) findViewById(R.id.edit_btn_done);
         mCbProfileDisclaimer = (CheckBox) findViewById(R.id.edit_disclaimer_checkbox);
         initListener();
@@ -167,10 +167,10 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
             if (!mCbProfileDisclaimer.isChecked()) {
                 showMessage(Constants.Alerts.EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED);
             } else {
-                mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()));
+                mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()),true);
             }
         } else {
-            mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()));
+            mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()),false);
         }
     }
 
@@ -224,7 +224,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     @Override
     public void changeViewforProfile() {
         mToolbarTitle.setText("Update Your Profile");
-        mBtnUpdateDone.setText("UPDATE");
+        mBtnUpdateDone.setText("Update Details");
 
         /*mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
         mtoolbar.setNavigationOnClickListener(

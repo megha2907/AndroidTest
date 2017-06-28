@@ -318,6 +318,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getUserWallet();
     }
 
+    public Call<UserReferralResponse> getUserReferralInfo(String flavor) {
+        return mNostragamusService.getUserReferralInfo(flavor);
+    }
+
     public Call<WithdrawFromWalletResponse> withdrawFromWallet(WithdrawFromWalletRequest request) {
         return mNostragamusService.withdrawFromWallet(request);
     }

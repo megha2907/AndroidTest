@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.navigation.help.HelpActivity;
+import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.settings.SettingsActivity;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
@@ -59,6 +60,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
         view.findViewById(R.id.navigation_help_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_settings_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_app_update_layout).setOnClickListener(this);
+        view.findViewById(R.id.navigation_refer_layout).setOnClickListener(this);
     }
 
     @Override
@@ -155,6 +157,10 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 NostragamusAnalytics.getInstance().trackWhatsNew(Constants.AnalyticsActions.OPENED);
                 break;
 
+            case R.id.navigation_refer_layout:
+                onReferFriendClicked();
+                break;
+
             case R.id.navigation_submit_question_layout:
                 onSubmitQuestionClicked();
                 break;
@@ -172,6 +178,13 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 NostragamusAnalytics.getInstance().trackUpdateApp(Constants.AnalyticsActions.OPENED);
                 break;
 
+        }
+    }
+
+    private void onReferFriendClicked() {
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), ReferFriendActivity.class);
+            startActivity(intent);
         }
     }
 

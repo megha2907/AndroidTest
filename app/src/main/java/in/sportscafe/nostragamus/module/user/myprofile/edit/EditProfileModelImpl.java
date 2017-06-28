@@ -26,6 +26,8 @@ public class EditProfileModelImpl implements EditProfileModel {
 
     private OnEditProfileListener mEditProfileListener;
 
+    private boolean mDisclaimerAccepted;
+
     private EditProfileModelImpl(OnEditProfileListener listener) {
         this.mEditProfileListener = listener;
         this.mUserInfo = NostragamusDataHandler.getInstance().getUserInfo();
@@ -36,7 +38,10 @@ public class EditProfileModelImpl implements EditProfileModel {
     }
 
     @Override
-    public void updateProfile(String nickname) {
+    public void updateProfile(String nickname, Boolean disclaimerAccepted) {
+
+        mDisclaimerAccepted = disclaimerAccepted;
+
         if (nickname.isEmpty()) {
             mEditProfileListener.onNickNameEmpty();
             return;
@@ -102,6 +107,7 @@ public class EditProfileModelImpl implements EditProfileModel {
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
         updateUserRequest.setUserPhoto(mUserInfo.getPhoto());
         updateUserRequest.setUserNickName(nickname);
+        updateUserRequest.setDisclaimerAccepted(mDisclaimerAccepted);
 
         MyWebService.getInstance().getUpdateUserRequest(updateUserRequest).enqueue(
                 new NostragamusCallBack<ApiResponse>() {

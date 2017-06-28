@@ -11,23 +11,23 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawApiDialogListener;
-import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawFromWalletApiResponseDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawInitiatedDialogFragment;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
-public class PayoutWalletChoiceActivity extends NostragamusActivity implements PayoutWalletChoiceFragmentListener {
+public class WithdrawPayoutChoiceActivity extends NostragamusActivity implements WithdrawPayoutChoiceFragmentListener {
 
     private static final int ADD_PAYOUT_REQUEST_CODE = 21;
 
     @Override
     public String getScreenName() {
-        return null; //Constants.ScreenNames.WALLET_PAYOUT_CHOICE;
+        return Constants.ScreenNames.WALLET_PAYOUT_CHOICE;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payout_wallet_choice);
+        setContentView(R.layout.activity_withdraw_payout_choice);
 
         initToolbar();
         loadChoiceFragment();
@@ -50,7 +50,7 @@ public class PayoutWalletChoiceActivity extends NostragamusActivity implements P
     }
 
     private void loadChoiceFragment() {
-        PayoutWalletChoiceFragment fragment = new PayoutWalletChoiceFragment();
+        WithdrawPayoutChoiceFragment fragment = new WithdrawPayoutChoiceFragment();
         if (getIntent() != null) {
             fragment.setArguments(getIntent().getExtras());
         }
@@ -81,9 +81,8 @@ public class PayoutWalletChoiceActivity extends NostragamusActivity implements P
         }
         args.putInt(Constants.BundleKeys.DIALOG_REQUEST_CODE, requestCode);
 
-
-        WithdrawFromWalletApiResponseDialogFragment dialogFragment =
-                WithdrawFromWalletApiResponseDialogFragment.newInstance(getDialogListener());
+        WithdrawInitiatedDialogFragment dialogFragment =
+                WithdrawInitiatedDialogFragment.newInstance(getDialogListener());
         dialogFragment.setArguments(args);
         dialogFragment.show(getSupportFragmentManager(), "WITHDRAW_DIALOG");
     }
@@ -109,8 +108,8 @@ public class PayoutWalletChoiceActivity extends NostragamusActivity implements P
 
         if (requestCode == ADD_PAYOUT_REQUEST_CODE) {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            if (fragment != null && fragment instanceof PayoutWalletChoiceFragment) {
-                ((PayoutWalletChoiceFragment) fragment).onPayoutDetailsAdded();
+            if (fragment != null && fragment instanceof WithdrawPayoutChoiceFragment) {
+                ((WithdrawPayoutChoiceFragment) fragment).onPayoutDetailsAdded();
             }
         }
     }

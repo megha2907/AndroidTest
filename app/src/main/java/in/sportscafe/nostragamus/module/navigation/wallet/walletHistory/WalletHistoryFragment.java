@@ -165,7 +165,9 @@ public class WalletHistoryFragment extends NostragamusFragment implements Wallet
                 LinearLayout noHistoryLayout = (LinearLayout) getView().findViewById(R.id.wallet_no_transaction_history_layout);
                 noHistoryLayout.setVisibility(View.VISIBLE);
             } else {
-                mWalletHistoryRecyclerView.setVisibility(View.VISIBLE);
+                if (mWalletHistoryRecyclerView.getVisibility() != View.VISIBLE) {
+                    mWalletHistoryRecyclerView.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
