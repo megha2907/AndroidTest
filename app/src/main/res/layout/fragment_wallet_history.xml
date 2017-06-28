@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:minHeight="@dimen/dp_62">
+            android:minHeight="@dimen/dp_56">
 
             <ImageView
                 android:id="@+id/back_button"
@@ -79,7 +79,6 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_25"
                 app:typeface="lato_bold"
-                android:layout_marginTop="@dimen/dp_16"
                 android:shadowColor="@color/black"
                 android:shadowRadius="1"
                 android:shadowDy="5"/>
@@ -93,7 +92,7 @@
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular"
-                android:layout_marginTop="@dimen/dp_16"/>
+                android:layout_marginTop="@dimen/dp_4"/>
 
         </LinearLayout>
 

@@ -26,7 +26,7 @@ public class WalletHelper {
     public synchronized static String getFormattedStringOfAmount(double amount) {
         String str = "";
 
-        if (amount > 0) {
+        if (amount >= 0) {
             DecimalFormat df = new DecimalFormat(Constants.AMOUNT_DECIMAL_PATTERN);
             str = Constants.RUPEE_SYMBOL + df.format(amount);
         }

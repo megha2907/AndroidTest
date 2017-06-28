@@ -142,7 +142,7 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
         if (mLowBalanceDifferenceAmount > 0) {
             String msg2 = WalletHelper.getFormattedStringOfAmount(mLowBalanceDifferenceAmount);
             spannable2 = new SpannableString(msg2);
-            spannable2.setSpan(new AbsoluteSizeSpan(16), 0, msg2.length(), 0);
+            spannable2.setSpan(new RelativeSizeSpan(1.20f), 0, msg2.length(), 0);
         } else {
             spannable2 = new SpannableString("");
         }
