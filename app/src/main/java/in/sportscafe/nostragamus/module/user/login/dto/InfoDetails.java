@@ -38,7 +38,7 @@ public class InfoDetails {
     private Boolean firstWithdrawDone;
 
     @JsonProperty("wallet_created")
-    private Boolean isWalletCreated;
+    private boolean isWalletCreated;
 
     @JsonProperty("powerups")
     public HashMap<String, Integer> getPowerUps() {
@@ -111,12 +111,12 @@ public class InfoDetails {
     }
 
     @JsonProperty("wallet_created")
-    public Boolean getWalletCreated() {
+    public boolean isWalletCreated() {
         return isWalletCreated;
     }
 
     @JsonProperty("wallet_created")
-    public void setWalletCreated(Boolean walletCreated) {
+    public void setWalletCreated(boolean walletCreated) {
         isWalletCreated = walletCreated;
     }
 }

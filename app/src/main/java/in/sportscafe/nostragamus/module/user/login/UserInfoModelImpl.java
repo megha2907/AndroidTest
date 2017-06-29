@@ -1,11 +1,15 @@
 package in.sportscafe.nostragamus.module.user.login;
 
+import com.jeeva.android.Log;
+
 import java.util.HashMap;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
+import in.sportscafe.nostragamus.module.user.login.dto.UserLoginInResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
@@ -18,6 +22,7 @@ import retrofit2.Response;
 
 public class UserInfoModelImpl {
 
+    private static final String TAG = UserInfoModelImpl.class.getSimpleName();
     private UserInfoModelImpl.OnGetUserInfoModelListener mUserInfoModelListener;
 
     private UserInfoModelImpl(OnGetUserInfoModelListener listener) {
@@ -57,6 +62,8 @@ public class UserInfoModelImpl {
 
     public void handleUserInfoResponse(UserInfo userInfo) {
         if (null != userInfo) {
+            performLogoutIfRequired(userInfo);
+
             NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
             nostragamusDataHandler.setUserInfo(userInfo);
 
@@ -72,6 +79,21 @@ public class UserInfoModelImpl {
             nostragamusDataHandler.setMatchPlayedCount(userInfo.getTotalMatchesPlayed());
             nostragamusDataHandler.setTotalGroupsCount(userInfo.getTotalGroups());
 
+        }
+    }
+
+    /**
+     * If Pro version && wallet NOT created, make logout
+     */
+    private void performLogoutIfRequired(UserInfo userInfo) {
+        if (BuildConfig.IS_PAID_VERSION) {
+            if (userInfo != null && userInfo.getInfoDetails() != null) {
+
+                if (!userInfo.getInfoDetails().isWalletCreated()) {
+                    Log.d(TAG, "Logging out as wallet not created");
+                    Nostragamus.getInstance().logout();
+                }
+            }
         }
     }
 

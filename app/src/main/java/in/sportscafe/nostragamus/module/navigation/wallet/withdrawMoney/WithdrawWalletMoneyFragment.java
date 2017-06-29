@@ -80,14 +80,24 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
             Integer walletInit = userInfo.getInfoDetails().getWalletInit();
             Boolean isFirstWithdrawalDone =  userInfo.getInfoDetails().getFirstWithdrawDone();
 
-            // If first time withdrawal done, should not show this msg
-            if (walletInit != null && isFirstWithdrawalDone != null &&
-                    walletInit > 0 && !isFirstWithdrawalDone) {
-                String msg = "Your first withdrawal needs to be ₹ 100 or more, \\nOr else " +
-                        WalletHelper.getFormattedStringOfAmount(walletInit) + " transaction fee will be applied";
+            /* If first withdrawal made, do not show this msg;
+             * be careful as any of the value can be null (null considered as withdrawal NOT done) */
 
+            String msg = "Your first withdrawal needs to be ₹ 100 or more, \nOr else ";
+            if (walletInit == null || walletInit <= 0) {
+                msg = msg + " transaction fee will be applied";
                 msgTextView.setText(msg);
                 msgLayout.setVisibility(View.VISIBLE);
+
+            } else {
+                if (isFirstWithdrawalDone == null || !isFirstWithdrawalDone) {
+                    msg = msg + WalletHelper.getFormattedStringOfAmount(walletInit) + " transaction fee will be applied";
+                    msgTextView.setText(msg);
+                    msgLayout.setVisibility(View.VISIBLE);
+
+                } else {
+                    msgLayout.setVisibility(View.GONE);
+                }
             }
         }
     }
