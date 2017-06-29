@@ -7,14 +7,13 @@
     android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.navigation.settings.SettingsFragment">
 
-    <!-- Add Money bottom layout -->
+    <!-- Logout layout -->
     <FrameLayout
         android:id="@+id/logout_button_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <!-- Add Amount layout -->
         <LinearLayout
             android:id="@+id/settings_logout_layout"
             android:layout_width="match_parent"
