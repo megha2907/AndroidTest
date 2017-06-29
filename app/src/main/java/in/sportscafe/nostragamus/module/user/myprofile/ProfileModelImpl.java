@@ -9,6 +9,7 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.bank.BankFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
@@ -71,11 +72,10 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
                 paymentInfo = userInfo.getUserPaymentInfo();
             }
             pagerAdapter.addFragment(WalletHistoryFragment.newInstance(paymentInfo), "Wallet");
-        }
+        }*/
 
         HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());
-
-        pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Powerup Bank");*/
+        pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Powerup Bank");
 
         List<Badge> badgeList = userInfo.getBadges();
         pagerAdapter.addFragment(BadgeFragment.newInstance(badgeList), "Achievements");

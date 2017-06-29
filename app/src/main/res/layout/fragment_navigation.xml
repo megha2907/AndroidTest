@@ -124,7 +124,7 @@
                 android:layout_marginRight="@dimen/dp_10"/>
 
             <!--Powerup Bank section -->
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/navigation_powerup_bank_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                 android:layout_height="@dimen/dp_0.5"
                 android:background="@color/line_separator"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:layout_marginRight="@dimen/dp_10"/>-->
 
             <!--Refer a Friend section -->
             <LinearLayout
@@ -372,8 +372,8 @@
                     android:id="@+id/navigation_update_str_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Update the App"
-                    android:textColor="#666666"
+                    android:text="App is up to date"
+                    android:textColor="@color/scrollbar_indicator"
                     android:textSize="@dimen/sp_13"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
@@ -392,7 +392,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:textColor="@color/white_60"
+                    android:textColor="@color/scrollbar_indicator"
                     android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular" />
 

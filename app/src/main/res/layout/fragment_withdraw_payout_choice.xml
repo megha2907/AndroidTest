@@ -178,9 +178,15 @@
                 android:id="@+id/payout_choice_no_account_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_80"
+                android:minHeight="@dimen/dp_64"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginRight="@dimen/dp_12"
+                android:paddingLeft="@dimen/dp_18"
+                android:paddingRight="@dimen/dp_18"
+                android:background="@drawable/payout_choice_add_btn_selector"
                 android:visibility="gone">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -188,15 +194,15 @@
                     android:layout_height="wrap_content"
                     android:text="Add Payout Account"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="You have not added any payout details"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/white_dim"
+                    android:textSize="@dimen/sp_11"
                     app:typeface="lato_regular"
                     android:layout_marginTop="@dimen/dp_5"/>
 
