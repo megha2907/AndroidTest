@@ -1,10 +1,15 @@
 package in.sportscafe.nostragamus.module.onboard;
 
 import android.animation.Animator;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +18,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.jeeva.android.widgets.HmImageView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
@@ -34,9 +46,9 @@ public class OnBoardingFragment extends NostragamusFragment {
 
     private Button mBtnNext;
 
-    private ImageView mIvOnBoardIn;
+    private HmImageView mIvOnBoardIn;
 
-    private ImageView mIvOnBoardOut;
+    private HmImageView mIvOnBoardOut;
 
     private ViewPager mViewPager;
 
@@ -60,8 +72,8 @@ public class OnBoardingFragment extends NostragamusFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mIvOnBoardIn = (ImageView) findViewById(R.id.onboard_iv_image_in);
-        mIvOnBoardOut = (ImageView) findViewById(R.id.onboard_iv_image_out);
+        mIvOnBoardIn = (HmImageView) findViewById(R.id.onboard_iv_image_in);
+        mIvOnBoardOut = (HmImageView) findViewById(R.id.onboard_iv_image_out);
         mViewPager = (ViewPager) findViewById(R.id.onboard_vp);
 
         mOnBoardingList = getOnBoardingList();
@@ -96,7 +108,7 @@ public class OnBoardingFragment extends NostragamusFragment {
         onPositionChanged(0);
     }
 
-    public void onPositionChanged(int position) {
+    public void onPositionChanged(final int position) {
         mIvOnBoardOut.setAlpha(1);
         mIvOnBoardOut.animate().alpha(0).setDuration(1000).setListener(new Animator.AnimatorListener() {
             @Override
@@ -105,7 +117,7 @@ public class OnBoardingFragment extends NostragamusFragment {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                mIvOnBoardOut.setImageResource(getImageRes(mViewPager.getCurrentItem()));
+                mIvOnBoardOut.setImageUrl(getImage(mViewPager.getCurrentItem()));
             }
 
             @Override
@@ -117,14 +129,16 @@ public class OnBoardingFragment extends NostragamusFragment {
             }
         });
 
-        mIvOnBoardIn.setImageResource(getImageRes(position));
+        mIvOnBoardIn.setImageUrl(getImage(position));
         mIvOnBoardIn.setAlpha(0.1f);
         mIvOnBoardIn.animate().alpha(1).setDuration(1000);
 
-        startTimer();
+        //startTimer();
     }
 
     private List<OnBoardingDto> getOnBoardingList() {
+
+        List<OnBoardingDto> onBoardingList = new ArrayList();
         String json = null;
         try {
             InputStream is = null;
@@ -141,21 +155,56 @@ public class OnBoardingFragment extends NostragamusFragment {
             ex.printStackTrace();
         }
 
+        OnBoardingDto onBoardingDto = new OnBoardingDto();
+
+        if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralCode())) {
+
+            if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralName())) {
+                onBoardingDto.setTitle("Sign Up with " + NostragamusDataHandler.getInstance().getUserReferralName() + "'s " + "Referral Code");
+            }
+
+            if (NostragamusDataHandler.getInstance().getWalletInitialAmount() != null) {
+                onBoardingDto.setDesc("Join " + NostragamusDataHandler.getInstance().getUserReferralName()
+                        + " in predicting live sports matches! \\n Your first " +
+                        "₹" + NostragamusDataHandler.getInstance().getWalletInitialAmount()
+                        + " is on us!");
+            }
+            onBoardingDto.setImageUrl(NostragamusDataHandler.getInstance().getUserReferralPhoto());
+            onBoardingDto.setReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());
+            onBoardingDto.setReferral(true);
+            onBoardingList.add(onBoardingDto);
+        }
+
         if (null != json) {
-            return MyWebService.getInstance().getObjectFromJson(
+            List<OnBoardingDto> onBoardingListTwo = new ArrayList();
+            onBoardingListTwo = MyWebService.getInstance().getObjectFromJson(
                     json,
                     new TypeReference<List<OnBoardingDto>>() {
                     }
             );
+            for (int i = 0; i < onBoardingListTwo.size(); i++) {
+                onBoardingList.add(onBoardingListTwo.get(i));
+            }
+        }
+
+        if (null != json) {
+            return onBoardingList;
         }
         return null;
     }
 
     private int getImageRes(int position) {
+        if (mOnBoardingList.get(position).getImageResName() == null) {
+            return 0;
+        }
         return ViewUtils.getDrawableIdFromResName(
                 getContext(),
                 mOnBoardingList.get(position).getImageResName()
         );
+    }
+
+    private String getImage(int position) {
+        return mOnBoardingList.get(position).getImageUrl();
     }
 
     private Handler mTimerHandler = new Handler();
@@ -181,4 +230,5 @@ public class OnBoardingFragment extends NostragamusFragment {
             mViewPager.setCurrentItem(currentPosition + 1);
         }
     }
+
 }

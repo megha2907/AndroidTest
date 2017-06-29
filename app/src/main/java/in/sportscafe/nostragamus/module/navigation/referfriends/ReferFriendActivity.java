@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.jeeva.android.ExceptionTracker;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -19,12 +21,11 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
+import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
 import io.branch.referral.util.LinkProperties;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ReferFriendActivity extends NostragamusActivity implements ReferFriendFragmentListener {
 
@@ -71,9 +72,10 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
     }
 
     @Override
-    public void onReferralCreditsClicked() {
+    public void onReferralCreditsClicked(Bundle bundle) {
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), ReferralCreditActivity.class);
+            intent.putExtras(bundle);
             startActivity(intent);
         }
     }
@@ -93,7 +95,9 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId())
                 .addContentMetadata(Constants.BundleKeys.WALLET_INITIAL_AMOUNT, walletInit)
-                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_CODE, referralCode);
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_CODE, referralCode)
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, NostragamusDataHandler.getInstance().getUserInfo().getPhoto())
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, NostragamusDataHandler.getInstance().getUserInfo().getUserName());
 
         LinkProperties linkProperties = new LinkProperties()
                 .addTag("inviteApp")

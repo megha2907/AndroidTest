@@ -2,20 +2,23 @@ package in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
 /**
  * Created by deepanshi on 6/27/17.
  */
 
+@Parcel
 public class ReferralDetails {
 
     @JsonProperty("user_id")
     private Integer userId;
 
     @JsonProperty("user_name")
-    private Integer userName;
+    private String userName;
 
     @JsonProperty("user_photo")
-    private Integer userPhoto;
+    private String userPhoto;
 
     @JsonProperty("user_id")
     public Integer getUserId() {
@@ -28,22 +31,22 @@ public class ReferralDetails {
     }
 
     @JsonProperty("user_name")
-    public Integer getUserName() {
+    public String getUserName() {
         return userName;
     }
 
     @JsonProperty("user_name")
-    public void setUserName(Integer userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
     @JsonProperty("user_photo")
-    public Integer getUserPhoto() {
+    public String getUserPhoto() {
         return userPhoto;
     }
 
     @JsonProperty("user_photo")
-    public void setUserPhoto(Integer userPhoto) {
+    public void setUserPhoto(String userPhoto) {
         this.userPhoto = userPhoto;
     }
 }

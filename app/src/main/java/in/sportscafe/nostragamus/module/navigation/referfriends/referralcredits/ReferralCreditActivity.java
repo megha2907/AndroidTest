@@ -4,11 +4,25 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+
+import com.jeeva.android.ExceptionTracker;
+
+import org.parceler.Parcels;
+
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
+import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
+import in.sportscafe.nostragamus.webservice.UserReferralInfo;
+import io.branch.indexing.BranchUniversalObject;
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
+import io.branch.referral.util.LinkProperties;
 
 /**
  * Created by deepanshi on 6/23/17.
@@ -28,7 +42,7 @@ public class ReferralCreditActivity extends NostragamusActivity implements Refer
         setContentView(R.layout.activity_referral_credits);
 
         initialize();
-        loadReferralCreditFragment();
+        loadReferralCreditFragment(getIntent().getExtras());
     }
 
     private void initialize() {
@@ -53,9 +67,9 @@ public class ReferralCreditActivity extends NostragamusActivity implements Refer
         );
     }
 
-    private void loadReferralCreditFragment() {
-        ReferralCreditFragment fragment = new ReferralCreditFragment();
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, fragment);
+    private void loadReferralCreditFragment(Bundle bundle) {
+        UserReferralInfo userReferralInfo = Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.USER_REFERRAL_INFO));
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, ReferralCreditFragment.newInstance(userReferralInfo));
     }
 
     @Override
@@ -67,4 +81,38 @@ public class ReferralCreditActivity extends NostragamusActivity implements Refer
     public void onCashRewardsClicked() {
 
     }
+
+    @Override
+    public void onReferAFriendClicked(String referralCode, String walletInit) {
+        navigateToReferFriend(referralCode,walletInit);
+    }
+
+    private void navigateToReferFriend(String referralCode, String walletInit) {
+        BranchUniversalObject buo = new BranchUniversalObject()
+                .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId())
+                .addContentMetadata(Constants.BundleKeys.WALLET_INITIAL_AMOUNT, walletInit)
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_CODE, referralCode);
+
+        LinkProperties linkProperties = new LinkProperties()
+                .addTag("inviteApp")
+                .setFeature("inviteApp")
+                .setChannel("App")
+                .setCampaign("App Normal Invite")
+                .addControlParameter("$android_deeplink_path", "app/invite/");
+
+        buo.generateShortUrl(getContext(), linkProperties,
+                new Branch.BranchLinkCreateListener() {
+                    @Override
+                    public void onLinkCreate(String url, BranchError error) {
+                        if (null == error) {
+                            String shareText = "I’m playing Nostragamus, the sports prediction app. Join and lets see who does better! Click this link to download the app " + url;
+                            AppSnippet.doGeneralShare(getApplicationContext(), shareText);
+                        } else {
+                            ExceptionTracker.track(error.getMessage());
+                        }
+                    }
+                });
+    }
+
 }
