@@ -1,13 +1,14 @@
 package in.sportscafe.nostragamus.webservice;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.parceler.Parcel;
 
 import java.util.HashMap;
 
 /**
  * Created by deepanshi on 6/23/17.
  */
-
+@Parcel
 public class UserReferralInfo {
 
     @JsonProperty("refer_heading")
@@ -36,7 +37,6 @@ public class UserReferralInfo {
 
     @JsonProperty("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
-
 
     @JsonProperty("refer_heading")
     public String getReferHeading() {

@@ -74,6 +74,30 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(BundleKeys.USER_REFERRAL_ID, userReferralId);
     }
 
+    public String getUserReferralCode() {
+        return getSharedStringData(BundleKeys.USER_REFERRAL_CODE);
+    }
+
+    public void setUserReferralCode(String userReferralCode) {
+        setSharedStringData(BundleKeys.USER_REFERRAL_CODE, userReferralCode);
+    }
+
+    public String getUserReferralName() {
+        return getSharedStringData(BundleKeys.USER_REFERRAL_NAME);
+    }
+
+    public void setUserReferralName(String userReferralName) {
+        setSharedStringData(BundleKeys.USER_REFERRAL_NAME, userReferralName);
+    }
+
+    public String getUserReferralPhoto() {
+        return getSharedStringData(BundleKeys.USER_REFERRAL_PHOTO);
+    }
+
+    public void setUserReferralPhoto(String userReferralPhoto) {
+        setSharedStringData(BundleKeys.USER_REFERRAL_PHOTO, userReferralPhoto);
+    }
+
     public UserInfo getUserInfo() {
         String userInfo = getSharedStringData(SharedKeys.USER_INFO);
         if (null == userInfo || userInfo.isEmpty()) {

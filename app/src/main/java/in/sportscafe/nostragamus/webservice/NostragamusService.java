@@ -270,4 +270,7 @@ public interface NostragamusService {
 
     @GET("v2/game/getReferralScreen")
     Call<UserReferralResponse> getUserReferralInfo(@Query("app_type") String flavor);
+
+    @GET("v2/game/getReferralTransactions")
+    Call<UserReferralHistoryResponse> getUserReferralHistory(@Query("app_type") String flavor);
 }

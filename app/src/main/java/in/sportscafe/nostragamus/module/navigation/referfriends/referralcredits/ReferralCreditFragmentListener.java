@@ -8,4 +8,6 @@ public interface ReferralCreditFragmentListener {
     void onPowerUpRewardsClicked();
 
     void onCashRewardsClicked();
+
+    void onReferAFriendClicked(String referralCode, String walletInit);
 }

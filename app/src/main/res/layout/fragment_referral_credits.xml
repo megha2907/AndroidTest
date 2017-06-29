@@ -22,8 +22,6 @@
                 android:id="@+id/refer_code_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_24"
-                android:layout_marginRight="@dimen/dp_24"
                 android:layout_marginTop="@dimen/dp_26"
                 android:background="?android:attr/selectableItemBackground"
                 android:gravity="center_vertical"
@@ -37,6 +35,8 @@
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:text="20 Friends Added"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginRight="@dimen/dp_24"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_32"
                     app:typeface="lato_bold" />
@@ -45,8 +45,10 @@
                     android:id="@+id/referral_credit_summary_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:text="SUMMARY"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginRight="@dimen/dp_24"
                     android:textColor="@color/grey7"
                     android:textSize="@dimen/dp_12"
                     app:typeface="lato_regular" />
@@ -54,24 +56,28 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_16">
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10">
 
 
                         <RelativeLayout
-                            android:id="@+id/referral_code_rl"
-                            android:layout_width="@dimen/dp_140"
-                            android:layout_height="@dimen/dp_80"
+                            android:id="@+id/referral_credits_powerup_rl"
+                            android:layout_width="@dimen/dp_160"
+                            android:layout_height="@dimen/dp_90"
                             android:clipToPadding="false"
+                            android:paddingBottom="@dimen/dp_12"
                             android:background="@drawable/referral_powerups_bg"
                             android:elevation="@dimen/dp_5">
 
                             <LinearLayout
+                                android:id="@+id/referral_credits_powerup_ll"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginLeft="@dimen/dp_20"
                                 android:layout_marginRight="@dimen/dp_20"
-                                android:layout_marginTop="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_12"
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="horizontal">
@@ -85,16 +91,16 @@
                                         android:id="@+id/referral_credits_2x_powerup_count"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="88"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/dp_14"
+                                        android:layout_gravity="center"
                                         app:typeface="lato_bold" />
 
                                     <ImageView
                                         android:id="@+id/referral_credits_powerup_2x"
                                         android:layout_width="@dimen/dp_16"
                                         android:layout_height="@dimen/dp_16"
-                                        android:layout_marginTop="@dimen/dp_1"
+                                        android:layout_marginTop="@dimen/dp_4"
                                         android:background="@android:color/transparent"
                                         android:src="@drawable/double_powerup_small"
                                         android:visibility="visible" />
@@ -111,16 +117,16 @@
                                         android:id="@+id/referral_credits_noneg_powerup_count"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="67"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/dp_14"
+                                        android:layout_gravity="center"
                                         app:typeface="lato_bold" />
 
                                     <ImageView
                                         android:id="@+id/referral_credits_noneg_powerup"
                                         android:layout_width="@dimen/dp_16"
                                         android:layout_height="@dimen/dp_16"
-                                        android:layout_marginTop="@dimen/dp_1"
+                                        android:layout_marginTop="@dimen/dp_4"
                                         android:background="@android:color/transparent"
                                         android:src="@drawable/no_negative_powerup_small"
                                         android:visibility="visible" />
@@ -137,16 +143,16 @@
                                         android:id="@+id/referral_credits_player_poll_powerup_count"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="72"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/dp_14"
+                                        android:layout_gravity="center"
                                         app:typeface="lato_bold" />
 
                                     <ImageView
                                         android:id="@+id/referral_credits_player_poll_powerup"
                                         android:layout_width="@dimen/dp_16"
                                         android:layout_height="@dimen/dp_16"
-                                        android:layout_marginTop="@dimen/dp_1"
+                                        android:layout_marginTop="@dimen/dp_4"
                                         android:background="@android:color/transparent"
                                         android:src="@drawable/audience_poll_powerup_small"
                                         android:visibility="visible" />
@@ -159,9 +165,9 @@
                                 android:id="@+id/referral_credits_powerup_earned_txt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentBottom="true"
+                                android:layout_below="@+id/referral_credits_powerup_ll"
                                 android:layout_centerHorizontal="true"
-                                android:layout_marginBottom="@dimen/dp_12"
+                                android:layout_marginTop="@dimen/dp_12"
                                 android:includeFontPadding="false"
                                 android:text="Powerup Earned"
                                 android:textColor="@color/grey6"
@@ -176,6 +182,7 @@
                                 android:layout_marginBottom="@dimen/dp_15"
                                 android:layout_marginRight="@dimen/dp_12"
                                 android:rotation="180"
+                                android:visibility="gone"
                                 android:src="@drawable/back_icon_grey" />
 
                         </RelativeLayout>
@@ -183,8 +190,8 @@
 
                         <RelativeLayout
                             android:id="@+id/referral_credits_money_earned_rl"
-                            android:layout_width="@dimen/dp_140"
-                            android:layout_height="@dimen/dp_80"
+                            android:layout_width="@dimen/dp_160"
+                            android:layout_height="@dimen/dp_90"
                             android:background="@drawable/referral_powerups_bg"
                             android:layout_alignParentRight="true">
 
@@ -196,7 +203,6 @@
                                 android:layout_marginTop="@dimen/dp_14"
                                 android:layout_marginBottom="@dimen/dp_12"
                                 android:includeFontPadding="false"
-                                android:text="332"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/dp_25"
                                 app:typeface="lato_bold" />
@@ -222,6 +228,7 @@
                                 android:layout_marginBottom="@dimen/dp_15"
                                 android:layout_marginRight="@dimen/dp_18"
                                 android:rotation="180"
+                                android:visibility="gone"
                                 android:src="@drawable/back_icon_grey" />
 
                         </RelativeLayout>
@@ -233,24 +240,76 @@
                     android:id="@+id/referral_credits_friends_act_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_24"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:text="FRIEND'S ACTIVITY"
                     android:textColor="@color/grey7"
                     android:textSize="@dimen/dp_12"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginRight="@dimen/dp_24"
                     app:typeface="lato_regular" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_0.5"
-                    android:layout_marginTop="@dimen/dp_16"
-                    android:background="@color/line_separator" />
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginRight="@dimen/dp_24"
+                    android:background="@color/line_separator_two" />
 
                 <!-- Recycler List view  -->
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/referralHistoryRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    />
+                    android:layout_marginLeft="@dimen/dp_24"
+                    android:layout_marginRight="@dimen/dp_24"/>
+
+                <!-- No transaction history empty view -->
+                <LinearLayout
+                    android:id="@+id/referral_credits_no_history_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:gravity="center_horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_150"
+                        android:layout_height="@dimen/dp_150"
+                        android:src="@drawable/no_referral_history"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="No Friends added yet. Add friends to start earning cash and powerups regularly"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_13"
+                        app:typeface="lato_regular"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_marginRight="@dimen/dp_15"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_10"/>
+
+                    <!-- Refer Now Button -->
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/refer_friend_btn"
+                        android:layout_width="@dimen/dp_150"
+                        android:layout_height="@dimen/dp_48"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center"
+                        android:background="@drawable/btn_refer_bg"
+                        android:clickable="false"
+                        android:layout_marginTop="@dimen/dp_16"
+                        android:paddingBottom="@dimen/dp_3"
+                        android:text="Refer Now!"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_14"
+                        app:typeface="lato_bold" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

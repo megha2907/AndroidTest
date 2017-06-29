@@ -294,6 +294,7 @@ public interface Constants {
         String TRANSACTION_AMOUNT = "transactionAmount";
         String BALANCE_AMOUNT = "balanceAmount";
         String CHALLENGE_CONFIG = "challengeConfig";
+        String USER_REFERRAL_INFO = "userReferralInfo";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -302,6 +303,8 @@ public interface Constants {
         String WITHDRAW_PAYOUT_TYPE = "withdrawPayoutType";
         String WALLET_INITIAL_AMOUNT = "wallet_init";
         String USER_REFERRAL_CODE = "user_referral_code";
+        String USER_REFERRAL_NAME = "user_referral_name";
+        String USER_REFERRAL_PHOTO = "user_referral_photo";
     }
 
     interface ParcelableKeys {

@@ -2,11 +2,14 @@ package in.sportscafe.nostragamus.webservice;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
 import in.sportscafe.nostragamus.module.settings.app.dto.SettingsDetails;
 
 /**
  * Created by deepanshi on 6/23/17.
  */
+
 
 public class UserReferralResponse {
 

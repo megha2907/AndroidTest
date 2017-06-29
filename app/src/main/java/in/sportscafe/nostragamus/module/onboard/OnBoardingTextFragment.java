@@ -1,16 +1,22 @@
 package in.sportscafe.nostragamus.module.onboard;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.jeeva.android.ExceptionTracker;
 
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.module.notifications.InboxFragment;
 
 /**
  * Created by Jeeva on 21/10/16.
@@ -18,6 +24,14 @@ import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 public class OnBoardingTextFragment extends NostragamusFragment {
 
     private static final String ONBOARD_DATA = "onboardData";
+
+    private  TextView mTvReferralCode1;
+    private  TextView mTvReferralCode2;
+    private  TextView mTvReferralCode3;
+    private  TextView mTvReferralCode4;
+    private  TextView mTvReferralCode5;
+    private  TextView mTvReferralCode6;
+    private  TextView mTvReferralCode7;
 
     public static OnBoardingTextFragment newInstance(OnBoardingDto onBoardingDto) {
         Bundle args = new Bundle();
@@ -40,7 +54,50 @@ public class OnBoardingTextFragment extends NostragamusFragment {
 
         OnBoardingDto onBoardingDto = Parcels.unwrap(getArguments().getParcelable(ONBOARD_DATA));
 
-        ((TextView) findViewById(R.id.onboard_tv_title)).setText(onBoardingDto.getTitle());
-        ((TextView) findViewById(R.id.onboard_tv_desc)).setText(onBoardingDto.getDesc());
+        TextView onBoardingTitle = (TextView) findViewById(R.id.onboard_tv_title);
+        onBoardingTitle.setText(onBoardingDto.getTitle());
+        TextView onBoardingDesc = (TextView) findViewById(R.id.onboard_tv_desc);
+        onBoardingDesc.setText(onBoardingDto.getDesc());
+
+        mTvReferralCode1 = (TextView) findViewById(R.id.onboard_text_et_referral_code_char_one);
+        mTvReferralCode2 = (TextView) findViewById(R.id.onboard_text_et_referral_code_char_two);
+        mTvReferralCode3 = (TextView) findViewById(R.id.onboard_text_et_referral_code_char_three);
+        mTvReferralCode4 = (TextView) findViewById(R.id.onboard_text_et_referral_code_char_four);
+        mTvReferralCode5 = (TextView) findViewById(R.id.onboard_text_et_referral_code_char_five);
+        mTvReferralCode6 = (TextView) findViewById(R.id.onboard_text_et_referral_code_char_six);
+        mTvReferralCode7 = (TextView) findViewById(R.id.onboard_text_et_referral_code_char_seven);
+
+        LinearLayout referralCode = (LinearLayout) findViewById(R.id.onboard_text_et_referral_code);
+        if (onBoardingDto.getReferral()) {
+            if (onBoardingDto.getReferralCode()!=null){
+                populateUserReferralCode(onBoardingDto.getReferralCode());
+            }
+            referralCode.setVisibility(View.VISIBLE);
+            onBoardingTitle.setTextSize(16);
+            onBoardingTitle.setTypeface(null, Typeface.BOLD);
+        } else {
+            referralCode.setVisibility(View.GONE);
+            RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) onBoardingDesc.getLayoutParams();
+            paramsFour.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            paramsFour.bottomMargin = 200;
+            onBoardingDesc.setLayoutParams(paramsFour);
+        }
+
     }
+
+    public void populateUserReferralCode(String referralCode) {
+        try {
+            String[] codeSplitter = referralCode.split("");
+            mTvReferralCode1.setText(codeSplitter[1]);
+            mTvReferralCode2.setText(codeSplitter[2]);
+            mTvReferralCode3.setText(codeSplitter[3]);
+            mTvReferralCode4.setText(codeSplitter[4]);
+            mTvReferralCode5.setText(codeSplitter[5]);
+            mTvReferralCode6.setText(codeSplitter[6]);
+            mTvReferralCode7.setText(codeSplitter[7]);
+        } catch (Exception e) {
+            ExceptionTracker.track(e);
+        }
+    }
+
 }
