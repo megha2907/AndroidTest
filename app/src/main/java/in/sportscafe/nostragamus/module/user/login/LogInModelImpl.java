@@ -180,7 +180,7 @@ public class LogInModelImpl implements LogInModel {
         userProfile.setProvider(provider);
         userProfile.setEmails(email);
         userProfile.setPhotos(photo);
-        userProfile.setUserReferralId(NostragamusDataHandler.getInstance().getReferralUserId());
+        userProfile.setUserReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());
         userProfile.setCampaignName(NostragamusDataHandler.getInstance().getInstallReferralCampaign());
 
         if (BuildConfig.IS_PAID_VERSION){
@@ -234,7 +234,7 @@ public class LogInModelImpl implements LogInModel {
             }
 
             NostragamusAnalytics.getInstance().trackNewUsers(
-                    TextUtils.isEmpty(nostragamusDataHandler.getReferralUserId()) ? AnalyticsActions.ORGANIC : AnalyticsActions.REFERRAL,
+                    TextUtils.isEmpty(nostragamusDataHandler.getUserReferralCode()) ? AnalyticsActions.ORGANIC : AnalyticsActions.REFERRAL,
                      label
             );
         }

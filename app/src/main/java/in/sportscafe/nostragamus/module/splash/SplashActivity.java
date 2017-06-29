@@ -55,9 +55,6 @@ public class SplashActivity extends Activity {
                     NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
 
                     try {
-                        if (lastParams.has(BundleKeys.USER_REFERRAL_ID)) {
-                            nostragamusDataHandler.setReferralUserId(lastParams.getString(BundleKeys.USER_REFERRAL_ID));
-                        }
 
                         if (lastParams.has(BundleKeys.USER_REFERRAL_CODE)) {
                             nostragamusDataHandler.setUserReferralCode(lastParams.getString(BundleKeys.USER_REFERRAL_CODE));
