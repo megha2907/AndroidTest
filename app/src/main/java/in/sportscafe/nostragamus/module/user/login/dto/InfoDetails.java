@@ -31,6 +31,15 @@ public class InfoDetails {
     @JsonProperty("user_accepted")
     private Boolean disclaimerAccepted;
 
+    @JsonProperty("wallet_init")
+    private Integer walletInit;
+
+    @JsonProperty("first_withdrawal_done")
+    private Boolean firstWithdrawDone;
+
+    @JsonProperty("wallet_created")
+    private boolean isWalletCreated;
+
     @JsonProperty("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps;
@@ -81,4 +90,33 @@ public class InfoDetails {
         this.disclaimerAccepted = disclaimerAccepted;
     }
 
+    @JsonProperty("wallet_init")
+    public Integer getWalletInit() {
+        return walletInit;
+    }
+
+    @JsonProperty("wallet_init")
+    public void setWalletInit(Integer walletInit) {
+        this.walletInit = walletInit;
+    }
+
+    @JsonProperty("first_withdrawal_done")
+    public Boolean getFirstWithdrawDone() {
+        return firstWithdrawDone;
+    }
+
+    @JsonProperty("first_withdrawal_done")
+    public void setFirstWithdrawDone(Boolean firstWithdrawDone) {
+        this.firstWithdrawDone = firstWithdrawDone;
+    }
+
+    @JsonProperty("wallet_created")
+    public boolean isWalletCreated() {
+        return isWalletCreated;
+    }
+
+    @JsonProperty("wallet_created")
+    public void setWalletCreated(boolean walletCreated) {
+        isWalletCreated = walletCreated;
+    }
 }

@@ -46,7 +46,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_18"
+                android:layout_marginTop="@dimen/dp_12"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -97,7 +97,6 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_0.5"
-                    android:layout_marginTop="@dimen/dp_12"
                     android:background="@color/linecolor" />
 
                 <!-- Contest fee layout -->
@@ -139,9 +138,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:minHeight="@dimen/dp_60"
-                    android:gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_16">
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginBottom="@dimen/dp_3"
+                    android:gravity="center_horizontal">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/join_challenge_dialog_money_added_textView"
@@ -171,7 +170,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginBottom="@dimen/dp_16">
 
                 <RelativeLayout

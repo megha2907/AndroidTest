@@ -56,7 +56,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_60"
-                    android:src="@drawable/paytm_failed_img" />
+                    android:src="@drawable/paytm_trans_failed_img" />
 
             </LinearLayout>
 

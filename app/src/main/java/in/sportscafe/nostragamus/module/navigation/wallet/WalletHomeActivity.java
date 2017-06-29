@@ -9,6 +9,7 @@ import android.view.View;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutWalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryActivity;
@@ -72,6 +73,12 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
         WalletHomeFragment walletHomeFragment = new WalletHomeFragment();
         walletHomeFragment.setArguments(args);
         FragmentHelper.replaceFragment(this, R.id.fragment_container, walletHomeFragment);
+    }
+
+    @Override
+    public void onEarnMoreClicked() {
+        Intent intent = new Intent(this, ReferFriendActivity.class);
+        startActivity(intent);
     }
 
     @Override

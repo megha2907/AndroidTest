@@ -10,13 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +68,38 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
 
     private void initialize() {
         showWalletBalance();
+        initMessages();
+    }
+
+    private void initMessages() {
+        UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
+        if (userInfo != null && userInfo.getInfoDetails() != null && getView() != null) {
+            LinearLayout msgLayout = (LinearLayout) getView().findViewById(R.id.withdraw_first_time_msg_layout);
+            TextView msgTextView = (TextView) getView().findViewById(R.id.withdraw_first_time_msg_textView);
+
+            Integer walletInit = userInfo.getInfoDetails().getWalletInit();
+            Boolean isFirstWithdrawalDone =  userInfo.getInfoDetails().getFirstWithdrawDone();
+
+            /* If first withdrawal made, do not show this msg;
+             * be careful as any of the value can be null (null considered as withdrawal NOT done) */
+
+            String msg = "Your first withdrawal needs to be ₹ 100 or more, \nOr else ";
+            if (walletInit == null || walletInit <= 0) {
+                msg = msg + " transaction fee will be applied";
+                msgTextView.setText(msg);
+                msgLayout.setVisibility(View.VISIBLE);
+
+            } else {
+                if (isFirstWithdrawalDone == null || !isFirstWithdrawalDone) {
+                    msg = msg + WalletHelper.getFormattedStringOfAmount(walletInit) + " transaction fee will be applied";
+                    msgTextView.setText(msg);
+                    msgLayout.setVisibility(View.VISIBLE);
+
+                } else {
+                    msgLayout.setVisibility(View.GONE);
+                }
+            }
+        }
     }
 
     private void showWalletBalance() {

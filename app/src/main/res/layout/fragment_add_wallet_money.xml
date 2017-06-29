@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:minHeight="@dimen/dp_68">
+                    android:minHeight="@dimen/dp_60">
 
                     <ImageView
                         android:id="@+id/back_button"
@@ -98,8 +98,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="@dimen/dp_18"
-                    android:layout_marginBottom="@dimen/dp_18"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginBottom="@dimen/dp_12"
                     android:layout_gravity="bottom">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -123,7 +123,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_25"
                         app:typeface="lato_bold"
-                        android:layout_marginTop="@dimen/dp_18"
+                        android:layout_marginTop="@dimen/dp_4"
                         android:shadowColor="@color/black"
                         android:shadowRadius="1"
                         android:shadowDy="5"/>
@@ -150,7 +150,7 @@
                     android:layout_weight="1"
                     android:text="+ ₹50"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular"
                     android:background="@drawable/button_selector"
                     />
@@ -163,7 +163,7 @@
                     android:gravity="center"
                     android:text="+ ₹100"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular"
                     android:background="@drawable/button_selector"
                     android:layout_marginLeft="@dimen/dp_12"/>
@@ -176,7 +176,7 @@
                     android:gravity="center"
                     android:text="+ ₹250"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular"
                     android:background="@drawable/button_selector"
                     android:layout_marginLeft="@dimen/dp_12"/>
