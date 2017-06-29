@@ -8,9 +8,7 @@ import com.jeeva.android.Log;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutWalletChoiceActivity;
-import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutWalletHomeActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.WithdrawPayoutChoiceActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class WithdrawWalletMoneyActivity extends NostragamusActivity implements WithdrawWalletMoneyFragmentListener {
@@ -46,7 +44,7 @@ public class WithdrawWalletMoneyActivity extends NostragamusActivity implements 
 //        if (WalletHelper.isPaytmPayoutDetailsProvided() || WalletHelper.isBankPayoutDetailsProvided()) {
 
             Log.d(TAG, "Payout details available");
-            Intent intent = new Intent(this, PayoutWalletChoiceActivity.class);
+            Intent intent = new Intent(this, WithdrawPayoutChoiceActivity.class);
             if (args != null) {
                 intent.putExtras(args);
             }

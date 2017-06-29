@@ -223,7 +223,9 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
     }
 
     private void onEarnMoreClicked() {
-
+        if (mFragmentListener != null) {
+            mFragmentListener.onEarnMoreClicked();
+        }
     }
 
     private void onWithdrawMoneyClicked() {

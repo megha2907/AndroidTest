@@ -22,6 +22,7 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
+            <!-- Header -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_42"
@@ -30,7 +31,7 @@
                 android:orientation="horizontal">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/paytm_transaction_success_tv_title"
+                    android:id="@+id/join_challenge_dialog_header_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_8"
@@ -41,10 +42,11 @@
 
             </LinearLayout>
 
+            <!-- Image -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_12"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -55,17 +57,20 @@
 
             </LinearLayout>
 
+            <!-- Content -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:layout_marginRight="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_10"
                 android:orientation="vertical">
 
+                <!-- Balance Layout-->
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dp_60"
+                    android:gravity="center_vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/complete_payment_tv_wallet_balance_txt"
@@ -74,7 +79,7 @@
                         android:layout_alignParentLeft="true"
                         android:text="Balance"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_14"
+                        android:textSize="@dimen/dp_13"
                         app:typeface="lato_bold" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -92,13 +97,14 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_0.5"
-                    android:layout_marginTop="@dimen/dp_12"
                     android:background="@color/linecolor" />
 
+                <!-- Contest fee layout -->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_12">
+                    android:minHeight="@dimen/dp_60"
+                    android:gravity="center_vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/complete_payment_tv_entry_fee_txt"
@@ -107,7 +113,7 @@
                         android:layout_alignParentLeft="true"
                         android:text="Contest Entry Fee"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_14"
+                        android:textSize="@dimen/dp_13"
                         app:typeface="lato_bold" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -125,51 +131,74 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_0.5"
-                    android:layout_marginTop="@dimen/dp_12"
                     android:background="@color/linecolor" />
+
+                <!-- Messages layout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginBottom="@dimen/dp_3"
+                    android:gravity="center_horizontal">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/join_challenge_dialog_money_added_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_dim"
+                        android:textSize="@dimen/dp_13"
+                        app:typeface="lato_regular"
+                        android:visibility="gone"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/join_challenge_dialog_msg_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_dim"
+                        android:textSize="@dimen/dp_13"
+                        app:typeface="lato_regular"
+                        android:layout_marginTop="@dimen/dp_16"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+            <!-- Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/dp_16">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginRight="@dimen/dp_10">
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20">
 
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/complete_payment_btn_pay_join"
                         android:layout_width="@dimen/dp_110"
-                        android:layout_height="@dimen/dp_34"
+                        android:layout_height="@dimen/dp_40"
                         android:layout_alignParentRight="true"
-                        android:layout_marginBottom="@dimen/dp_10"
                         android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_marginRight="@dimen/dp_10"
-                        android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/tournament_ready_btn_bg"
                         android:gravity="center"
                         android:paddingBottom="@dimen/dp_3"
                         android:paddingTop="@dimen/dp_0"
-                        android:text="Pay and Join"
+                        android:text="Join Contest"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_14"
-                        app:typeface="lato_bold" />
+                        app:typeface="lato_regular" />
 
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/complete_payment_btn_back"
                         android:layout_width="@dimen/dp_110"
-                        android:layout_height="@dimen/dp_34"
+                        android:layout_height="@dimen/dp_40"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginBottom="@dimen/dp_10"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/btn_not_played_shadow_bg"
                         android:gravity="center"
                         android:paddingBottom="@dimen/dp_3"
@@ -178,8 +207,7 @@
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_14"
-                        app:typeface="lato_bold" />
-
+                        app:typeface="lato_regular" />
 
                 </RelativeLayout>
 

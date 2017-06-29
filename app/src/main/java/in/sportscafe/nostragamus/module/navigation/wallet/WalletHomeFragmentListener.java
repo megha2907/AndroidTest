@@ -5,6 +5,7 @@ package in.sportscafe.nostragamus.module.navigation.wallet;
  */
 
 public interface WalletHomeFragmentListener {
+    void onEarnMoreClicked();
     void onAddMoneyClicked();
     void onWithdrawMoneyClicked();
     void onTransactionHistoryClicked();

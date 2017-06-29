@@ -305,6 +305,7 @@ public interface Constants {
         String USER_REFERRAL_CODE = "user_referral_code";
         String USER_REFERRAL_NAME = "user_referral_name";
         String USER_REFERRAL_PHOTO = "user_referral_photo";
+        String DIALOG_LAUNCH_MODE = "dialogLaunchMode";
     }
 
     interface ParcelableKeys {
@@ -515,7 +516,7 @@ public interface Constants {
         String WALLET_ADD_MONEY = "addWalletMoney";
         String WALLET_WITHDRAW_MONEY = "withdrawWalletMoney";
         String WALLET_HISTORY = "walletHistory";
-        String WALLET_PAYOUT = "walletPayout";
+        String WALLET_PAYOUT_HOME = "walletPayoutHome";
         String WALLET_PAYOUT_CHOICE = "walletPayoutChoice";
         String DOWNLOADING_APP = "DownloadingApp";
         String REFER_FRIEND = "ReferFriend";

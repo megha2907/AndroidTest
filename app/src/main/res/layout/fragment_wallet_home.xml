@@ -33,7 +33,7 @@
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dp_16"
                     android:paddingRight="@dimen/dp_16"
-                    android:background="@drawable/card_bg_img_small">
+                    android:background="@drawable/wallet_card_bg">
 
                     <!-- Balance layout -->
                     <RelativeLayout
@@ -158,7 +158,9 @@
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_regular"
                                     android:background="@drawable/wallet_home_button_bg"
-                                    android:elevation="@dimen/dp_6"/>
+                                    android:elevation="@dimen/dp_6"
+                                    android:translationZ="@dimen/dp_6"
+                                    android:stateListAnimator="@null"/>
 
                             </LinearLayout>
 
@@ -177,7 +179,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:minHeight="@dimen/dp_45"
-                                android:text="This money can be used for joining challenge or withdrawing!"
+                                android:text="Money you’ve earned from our offers(referrals etc). Use it to join challenges and win cash!"
                                 android:textColor="@color/white_f2f2f2"
                                 android:textSize="@dimen/sp_13"
                                 app:typeface="lato_regular" />
@@ -274,7 +276,9 @@
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_regular"
                                     android:background="@drawable/wallet_home_button_bg"
-                                    android:elevation="@dimen/dp_6"/>
+                                    android:elevation="@dimen/dp_6"
+                                    android:translationZ="@dimen/dp_6"
+                                    android:stateListAnimator="@null"/>
 
                             </LinearLayout>
 
@@ -293,7 +297,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:minHeight="@dimen/dp_45"
-                                android:text="This money can be used for joining challenge or withdrawing!"
+                                android:text="Money you’ve deposited into wallet to join challenges and win cash! but cannot be withdrawn."
                                 android:textColor="@color/white_f2f2f2"
                                 android:textSize="@dimen/sp_13"
                                 app:typeface="lato_regular" />
@@ -392,7 +396,9 @@
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_regular"
                                     android:background="@drawable/wallet_home_button_bg"
-                                    android:elevation="@dimen/dp_6"/>
+                                    android:elevation="@dimen/dp_6"
+                                    android:translationZ="@dimen/dp_6"
+                                    android:stateListAnimator="@null"/>
 
                             </LinearLayout>
 
@@ -411,10 +417,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:minHeight="@dimen/dp_45"
-                                android:text="This money can be used for joining challenge or withdrawing!"
+                                android:text="Money that can be withdrawn or can be used to join challenges and win cash."
                                 android:textColor="@color/white_f2f2f2"
                                 android:textSize="@dimen/sp_13"
-                                app:typeface="lato_regular" />
+                                app:typeface="lato_regular"/>
 
                         </LinearLayout>
 

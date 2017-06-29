@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/payout_list_item_icon_imageView"
-            android:layout_width="@dimen/dp_12"
-            android:layout_height="@dimen/dp_12"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
             android:src="@drawable/edit_bank_icn"
             android:layout_marginRight="@dimen/dp_18"
             android:layout_marginLeft="@dimen/dp_18"
@@ -52,7 +52,7 @@
                 android:textColor="@color/grey_dim_text"
                 android:textSize="@dimen/sp_11"
                 app:typeface="lato_regular"
-                android:layout_marginTop="@dimen/dp_5"/>
+                android:layout_marginTop="@dimen/dp_3"/>
 
         </LinearLayout>
 
@@ -63,11 +63,11 @@
             android:gravity="center_vertical"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_16">
+            android:layout_marginRight="@dimen/dp_20">
 
             <ImageView
-                android:layout_width="@dimen/dp_12"
-                android:layout_height="@dimen/dp_12"
+                android:layout_width="@dimen/dp_7"
+                android:layout_height="@dimen/dp_7"
                 android:src="@drawable/edit_icn"
                 android:layout_marginRight="@dimen/dp_6"
                 android:layout_marginLeft="@dimen/dp_6"/>

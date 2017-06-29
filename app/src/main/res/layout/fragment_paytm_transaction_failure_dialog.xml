@@ -49,14 +49,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_24"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_52"
-                    android:src="@drawable/paytm_failed_img" />
+                    android:layout_height="@dimen/dp_60"
+                    android:src="@drawable/paytm_trans_failed_img" />
 
             </LinearLayout>
 
@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_16"
                     android:text="Transaction Unsuccessful"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_14"
@@ -82,7 +82,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="@dimen/dp_30"
                     android:layout_marginRight="@dimen/dp_30"
-                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_6"
                     android:gravity="center"
                     android:text="The provider declined the payment.Please retry or check your credentials."
                     android:textColor="#cecece"
@@ -93,12 +93,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_16"
                     android:gravity="center"
                     android:text="If money has been debited from your \naccount, it will be refunded shortly."
                     android:textColor="#cecece"
                     android:textSize="@dimen/dp_12"
-                    app:typeface="lato_light" />
+                    app:typeface="lato_regular" />
 
             </LinearLayout>
 
@@ -106,7 +106,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_16">
 
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/paytm_failure_backToAddMoney_button"
