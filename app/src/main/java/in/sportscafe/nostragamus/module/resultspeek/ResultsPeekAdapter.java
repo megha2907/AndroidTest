@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,9 +14,11 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -28,6 +31,9 @@ import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
  */
 
 public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.ViewHolder> {
+
+    private static final int PLAYER_ONE = 1;
+    private static final int PLAYER_TWO = 2;
 
     private PlayerInfo mPlayerInfo;
 
@@ -163,14 +169,16 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
                 }
             }
 
-            int powerUpMyIcons = PowerUp.getResultPowerupIcons(myQuestion.getAnswerPowerUpId());
+            /*int powerUpMyIcons = PowerUp.getResultPowerupIcons(myQuestion.getAnswerPowerUpId());
             if (powerUpMyIcons == -1) {
                 powerUpUsedPlayerOne.setVisibility(View.GONE);
                 powerUpPlayerOne.setVisibility(View.GONE);
             } else {
                 powerUpUsedPlayerOne.setVisibility(View.VISIBLE);
                 powerUpUsedPlayerOne.setBackgroundResource(powerUpMyIcons);
-            }
+            }*/
+
+
 
         }
 
@@ -252,15 +260,17 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
                 }
             }
 
-            int powerUpOtherPlayerIcons = PowerUp.getResultPowerupIcons(playerQuestion.getAnswerPowerUpId());
+            /*int powerUpOtherPlayerIcons = PowerUp.getResultPowerupIcons(playerQuestion.getAnswerPowerUpId());
             if (powerUpOtherPlayerIcons == -1) {
                 powerUpUsedPlayerTwo.setVisibility(View.GONE);
                 powerUpPlayerTwo.setVisibility(View.GONE);
             } else {
                 powerUpUsedPlayerTwo.setVisibility(View.VISIBLE);
                 powerUpUsedPlayerTwo.setBackgroundResource(powerUpOtherPlayerIcons);
-            }
+            }*/
         }
+
+        showOrHidePowerUps(myQuestion, playerQuestion, convertView);
 
         return convertView;
     }
@@ -281,6 +291,61 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
 
     private void setTextColor(TextView textView, int color) {
         textView.setTextColor(textView.getResources().getColor(color));
+    }
+
+    private void showOrHidePowerUps(Question myQuestion, Question playerQuestion, View convertView) {
+        if (myQuestion != null && playerQuestion != null) {
+            ArrayList<String> myPowerUpArray = myQuestion.getPowerUpArrayList();
+            ArrayList<String> playerPowerUpArray = playerQuestion.getPowerUpArrayList();
+
+            if ((myPowerUpArray == null || myPowerUpArray.isEmpty()) && (playerPowerUpArray == null || playerPowerUpArray.isEmpty())) {
+                LinearLayout powerupLayout = (LinearLayout) convertView.findViewById(R.id.powerup_bottom_layout);
+                powerupLayout.setVisibility(View.GONE);
+            } else {
+                populatePowerup(myQuestion, convertView, PLAYER_ONE);
+                populatePowerup(playerQuestion, convertView, PLAYER_TWO);
+            }
+        }
+    }
+
+    private void populatePowerup(Question question, View convertView, int player) {
+        ImageView powerUp2xImageView = null;
+        ImageView powerUpNoNegativeImageView = null;
+        ImageView powerUpAudienceImageView = null;
+
+        if (player == PLAYER_ONE) {
+            powerUp2xImageView = (ImageView) convertView.findViewById(R.id.result_peek_powerup_2x_left);
+            powerUpNoNegativeImageView = (ImageView) convertView.findViewById(R.id.result_peek_powerup_noNeg_left);
+            powerUpAudienceImageView = (ImageView) convertView.findViewById(R.id.result_peek_powerup_audience_left);
+        }
+        if (player == PLAYER_TWO) {
+            powerUp2xImageView = (ImageView) convertView.findViewById(R.id.result_peek_powerup_2x_right);
+            powerUpNoNegativeImageView = (ImageView) convertView.findViewById(R.id.result_peek_powerup_noNeg_right);
+            powerUpAudienceImageView = (ImageView) convertView.findViewById(R.id.result_peek_powerup_audience_right);
+        }
+
+        if (powerUp2xImageView != null && powerUpNoNegativeImageView != null && powerUpAudienceImageView != null) {
+
+            ArrayList<String> powerUpArrayList = question.getPowerUpArrayList();
+            if (powerUpArrayList != null && !powerUpArrayList.isEmpty()) {
+                for (int temp = 0; temp < powerUpArrayList.size(); temp++) {
+
+                    String powerUp = powerUpArrayList.get(temp);
+                    if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
+                        powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
+                        powerUp2xImageView.setVisibility(View.VISIBLE);
+
+                    } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
+                        powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
+                        powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+
+                    } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
+                        powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
+                        powerUpAudienceImageView.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        }
     }
 
 }
