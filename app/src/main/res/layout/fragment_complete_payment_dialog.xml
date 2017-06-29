@@ -53,7 +53,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/paytm_tr_blue_wallet" />
+                    android:src="@drawable/wallet_join_challenge_icn" />
 
             </LinearLayout>
 
