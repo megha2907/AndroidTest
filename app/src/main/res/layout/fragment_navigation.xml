@@ -124,7 +124,7 @@
                 android:layout_marginRight="@dimen/dp_10"/>
 
             <!--Powerup Bank section -->
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/navigation_powerup_bank_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                 android:layout_height="@dimen/dp_0.5"
                 android:background="@color/line_separator"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:layout_marginRight="@dimen/dp_10"/>-->
 
             <!--Refer a Friend section -->
             <LinearLayout

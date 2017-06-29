@@ -7,6 +7,7 @@ import android.view.View;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
  * Created by deepanshi on 12/22/16.
@@ -24,9 +25,16 @@ public class UserProfileActivity extends NostragamusActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        getSupportFragmentManager().beginTransaction().replace(
-                R.id.user_profile_fl_holder,
-                ProfileFragment.newInstance(0, true, getIntent().getExtras())
-        ).commit();
+        loadProfileFragment();
+    }
+
+    private void loadProfileFragment() {
+        Bundle args = null;
+        if (getIntent() != null) {
+            args = getIntent().getExtras();
+        }
+
+        ProfileFragment profileFragment = ProfileFragment.newInstance(0, true, args);
+        FragmentHelper.replaceFragment(this, R.id.user_profile_fl_holder, profileFragment);
     }
 }

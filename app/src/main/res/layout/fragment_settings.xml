@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,10 +7,42 @@
     android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.navigation.settings.SettingsFragment">
 
+    <!-- Add Money bottom layout -->
+    <FrameLayout
+        android:id="@+id/logout_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <!-- Add Amount layout -->
+        <LinearLayout
+            android:id="@+id/settings_logout_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/button_height_48"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/flat_blue_btn_selector">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                app:typeface="lato_bold" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
     <!-- Content Part -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@id/logout_button_layout"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,41 +70,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="About Nostragamus"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    app:typeface="lato_regular" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0.5"
-                android:background="@color/line_separator"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
-
-            <!--Logout section -->
-            <LinearLayout
-                android:id="@+id/settings_logout_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:minHeight="@dimen/dp_60"
-                android:orientation="horizontal"
-                android:layout_marginLeft="@dimen/dp_24"
-                android:layout_marginRight="@dimen/dp_24"
-                android:background="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="@dimen/dp_16"
-                    android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/navigation_logout_icon"/>
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Logout"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_13"
                     android:layout_marginLeft="@dimen/dp_20"
@@ -117,4 +114,4 @@
 
     </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>
