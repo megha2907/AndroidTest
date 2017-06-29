@@ -41,7 +41,9 @@ public class ReferFriendApiModelImpl {
                         UserReferralResponse userReferralResponse = response.body();
 
                         if (mListener != null) {
-                            mListener.onSuccessResponse(userReferralResponse);
+                            if (userReferralResponse!=null) {
+                                mListener.onSuccessResponse(userReferralResponse);
+                            }
                         }
 
                     } else {

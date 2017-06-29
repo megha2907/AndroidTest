@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
 import java.util.HashMap;
 
 import in.sportscafe.nostragamus.webservice.UserReferralInfo;
@@ -10,6 +12,7 @@ import in.sportscafe.nostragamus.webservice.UserReferralInfo;
  * Created by deepanshi on 6/27/17.
  */
 
+@Parcel
 public class ReferralHistory {
 
     @JsonProperty("type")
@@ -17,6 +20,9 @@ public class ReferralHistory {
 
     @JsonProperty("transaction_amount")
     private Integer transactionAmount;
+
+    @JsonProperty("order_id")
+    private String referralOrderId;
 
     @JsonProperty("info")
     private ReferralDetails referralDetails;
@@ -62,6 +68,16 @@ public class ReferralHistory {
     @JsonProperty("type")
     public void setReferralHistoryType(String referralHistoryType) {
         this.referralHistoryType = referralHistoryType;
+    }
+
+    @JsonProperty("order_id")
+    public String getReferralOrderId() {
+        return referralOrderId;
+    }
+
+    @JsonProperty("order_id")
+    public void setReferralOrderId(String referralOrderId) {
+        this.referralOrderId = referralOrderId;
     }
 
 

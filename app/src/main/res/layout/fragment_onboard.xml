@@ -9,33 +9,37 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dp_56"
         app:ci_drawable="@drawable/ob_indicator_selected"
         app:ci_drawable_unselected="@drawable/ob_indicator_unselected"
         app:ci_gravity="center"
-        app:ci_orientation="horizontal"
-        app:ci_width="@dimen/dp_8"
         app:ci_height="@dimen/dp_8"
-        app:ci_margin="@dimen/dp_8"/>
+        app:ci_margin="@dimen/dp_8"
+        app:ci_orientation="horizontal"
+        app:ci_width="@dimen/dp_8" />
 
-    <ImageView
-        android:id="@+id/onboard_iv_image_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/onboard_cpi_indicator"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_75" />
 
-    <ImageView
-        android:id="@+id/onboard_iv_image_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/onboard_iv_image_out"
+    <RelativeLayout
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_150"
         android:layout_alignParentTop="true"
-        android:layout_alignTop="@id/onboard_iv_image_out"
-        android:layout_centerHorizontal="true"
-        android:alpha="0" />
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_centerHorizontal="true">
+
+        <com.jeeva.android.widgets.HmImageView
+            android:id="@+id/onboard_iv_image_out"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultImage="@drawable/placeholder_icon" />
+
+        <com.jeeva.android.widgets.HmImageView
+            android:id="@+id/onboard_iv_image_in"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/onboard_iv_image_out"
+            android:layout_alignTop="@id/onboard_iv_image_out"
+            android:alpha="0"
+            app:defaultImage="@drawable/placeholder_icon" />
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/onboard_vp"

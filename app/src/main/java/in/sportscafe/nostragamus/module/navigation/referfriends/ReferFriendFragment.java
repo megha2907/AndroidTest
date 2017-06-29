@@ -11,13 +11,12 @@ import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
+import org.parceler.Parcels;
+
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
-import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 import in.sportscafe.nostragamus.webservice.UserReferralResponse;
 
@@ -38,6 +37,8 @@ public class ReferFriendFragment extends BaseFragment implements View.OnClickLis
     private TextView tvReferralCreditAmount;
     private TextView tvNumberOfFriendsReferred;
     private TextView tvUserReferralCode;
+
+    private Bundle mBundle;
 
     String mReferralCode;
     String mWalletInit;
@@ -112,6 +113,9 @@ public class ReferFriendFragment extends BaseFragment implements View.OnClickLis
 
     private void setUserReferralInfo(UserReferralInfo userReferralInfo){
 
+        mBundle = new Bundle();
+        mBundle.putParcelable(Constants.BundleKeys.USER_REFERRAL_INFO, Parcels.wrap(userReferralInfo));
+
         if (!TextUtils.isEmpty(userReferralInfo.getReferHeading())){
             tvReferFriendHeading.setText(userReferralInfo.getReferHeading());
         }else {
@@ -149,7 +153,7 @@ public class ReferFriendFragment extends BaseFragment implements View.OnClickLis
         switch (view.getId()) {
             case R.id.refer_referral_credit_layout:
                 if (mReferFriendFragmentListener != null) {
-                    mReferFriendFragmentListener.onReferralCreditsClicked();
+                    mReferFriendFragmentListener.onReferralCreditsClicked(mBundle);
                 }
                 break;
 

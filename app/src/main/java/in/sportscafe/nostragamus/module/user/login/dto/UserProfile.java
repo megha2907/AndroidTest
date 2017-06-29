@@ -14,8 +14,8 @@ public class UserProfile {
     @JsonProperty("id")
     private String id;
 
-    @JsonProperty("user_referral_id")
-    private String userReferralId;
+    @JsonProperty("user_referral_code")
+    private String userReferralCode;
 
     @JsonProperty("username")
     private String userName;
@@ -153,17 +153,17 @@ public class UserProfile {
         this.photos = photos;
     }
 
-    @JsonProperty("user_referral_id")
-    public String getUserReferralId() {
-        return userReferralId;
+    @JsonProperty("user_referral_code")
+    public String getUserReferralCode() {
+        return userReferralCode;
     }
 
-    @JsonProperty("user_referral_id")
-    public void setUserReferralId(String userReferralId) {
-        if(null == userReferralId) {
-            userReferralId = "";
+    @JsonProperty("user_referral_code")
+    public void setUserReferralCode(String userReferralCode) {
+        if(null == userReferralCode) {
+            userReferralCode = "";
         }
-        this.userReferralId = userReferralId;
+        this.userReferralCode = userReferralCode;
     }
 
     public String getCampaignName() {

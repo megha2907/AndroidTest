@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.onboard;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.parceler.Parcel;
@@ -19,6 +20,15 @@ public class OnBoardingDto {
 
     @JsonProperty("imageResName")
     private String imageResName;
+
+    @JsonProperty("imageUrl")
+    private String imageUrl;
+
+    @JsonProperty("referralCode")
+    private String referralCode;
+
+    @JsonIgnore
+    private Boolean isReferral=false;
 
     public OnBoardingDto() {
     }
@@ -58,4 +68,36 @@ public class OnBoardingDto {
     public void setImageResName(String imageResName) {
         this.imageResName = imageResName;
     }
+
+    @JsonProperty("imageUrl")
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    @JsonProperty("imageUrl")
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    @JsonIgnore
+    public Boolean getReferral() {
+        return isReferral;
+    }
+
+    @JsonIgnore
+    public void setReferral(Boolean referral) {
+        isReferral = referral;
+    }
+
+    @JsonProperty("referralCode")
+    public String getReferralCode() {
+        return referralCode;
+    }
+
+    @JsonProperty("referralCode")
+    public void setReferralCode(String referralCode) {
+        this.referralCode = referralCode;
+    }
+
+
 }

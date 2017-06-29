@@ -55,8 +55,17 @@ public class SplashActivity extends Activity {
                     NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
 
                     try {
-                        if (lastParams.has(BundleKeys.USER_REFERRAL_ID)) {
-                            nostragamusDataHandler.setReferralUserId(lastParams.getString(BundleKeys.USER_REFERRAL_ID));
+
+                        if (lastParams.has(BundleKeys.USER_REFERRAL_CODE)) {
+                            nostragamusDataHandler.setUserReferralCode(lastParams.getString(BundleKeys.USER_REFERRAL_CODE));
+                        }
+
+                        if (lastParams.has(BundleKeys.USER_REFERRAL_PHOTO)) {
+                            nostragamusDataHandler.setUserReferralPhoto(lastParams.getString(BundleKeys.USER_REFERRAL_PHOTO));
+                        }
+
+                        if (lastParams.has(BundleKeys.USER_REFERRAL_NAME)) {
+                            nostragamusDataHandler.setUserReferralName(lastParams.getString(BundleKeys.USER_REFERRAL_NAME));
                         }
 
                         if (lastParams.has(BundleKeys.WALLET_INITIAL_AMOUNT)) {

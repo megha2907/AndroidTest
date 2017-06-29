@@ -55,6 +55,10 @@
 -keep class com.google.android.gms.iid.** { *; }
 -keep class com.google.android.gms.location.** { *; }
 
+-keep interface org.parceler.Parcel
+-keep @org.parceler.Parcel class * { *; }
+-keep class **$$Parcelable { *; }
+
 -keep class com.moe.pushlibrary.activities.** { *; }
 -keep class com.moengage.locationlibrary.GeofenceIntentService
 -keep class com.moe.pushlibrary.InstallReceiver
