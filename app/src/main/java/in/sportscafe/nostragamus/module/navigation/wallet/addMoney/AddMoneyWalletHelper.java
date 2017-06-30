@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 
 import com.jeeva.android.BaseFragment;
@@ -180,7 +181,13 @@ public class AddMoneyWalletHelper {
             public void run() {
                 PaytmTransactionSuccessDialogFragment successDialogFragment =
                         PaytmTransactionSuccessDialogFragment.newInstance(1200, amount, getPaytmSuccessActionListener(fragment));
-                successDialogFragment.show(fragment.getChildFragmentManager(), "SUCCESS_DIALOG");
+
+                if (fragment != null) {
+                    FragmentManager fragmentManager = fragment.getChildFragmentManager();
+                    if (fragmentManager != null) {
+                        successDialogFragment.show(fragmentManager, "SUCCESS_DIALOG");
+                    }
+                }
             }
         }, 200);
     }
@@ -191,7 +198,13 @@ public class AddMoneyWalletHelper {
             public void run() {
                 PaytmTransactionFailureDialogFragment failureDialogFragment =
                         PaytmTransactionFailureDialogFragment.newInstance(1199, getPaytmFailureActionListener(fragment, amount));
-                failureDialogFragment.show(fragment.getChildFragmentManager(), "FAILURE_DIALOG");
+
+                if (fragment != null) {
+                    FragmentManager fragmentManager = fragment.getChildFragmentManager();
+                    if (fragmentManager != null) {
+                        failureDialogFragment.show(fragmentManager, "FAILURE_DIALOG");
+                    }
+                }
             }
         }, 200);
     }

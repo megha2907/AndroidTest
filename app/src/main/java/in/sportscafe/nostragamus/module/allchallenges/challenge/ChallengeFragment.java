@@ -540,11 +540,19 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     }
 
     private void moveSeekToSwipe() {
-        mVSwitchSeek.animate().translationXBy(-getResources().getDimensionPixelSize(R.dimen.dp_26)).setDuration(500);
+        try {
+            mVSwitchSeek.animate().translationXBy(-getResources().getDimensionPixelSize(R.dimen.dp_26)).setDuration(500);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void moveSeekToList() {
-        mVSwitchSeek.animate().translationXBy(getResources().getDimensionPixelSize(R.dimen.dp_26)).setDuration(500);
+        try {
+            mVSwitchSeek.animate().translationXBy(getResources().getDimensionPixelSize(R.dimen.dp_26)).setDuration(500);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override

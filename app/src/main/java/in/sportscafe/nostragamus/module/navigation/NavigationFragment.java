@@ -55,7 +55,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     private void setListener(View view) {
         view.findViewById(R.id.navigation_profile_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_wallet_layout).setOnClickListener(this);
-        view.findViewById(R.id.navigation_powerup_bank_layout).setOnClickListener(this);
+//        view.findViewById(R.id.navigation_powerup_bank_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_whats_new_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_submit_question_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_help_layout).setOnClickListener(this);
@@ -155,9 +155,9 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 onWalletClicked();
                 break;
 
-            case R.id.navigation_powerup_bank_layout:
+            /*case R.id.navigation_powerup_bank_layout:
                 onPowerUpsClicked();
-                break;
+                break;*/
 
             case R.id.navigation_whats_new_layout:
                 onWhatsNewClicked();
@@ -247,8 +247,12 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
 
     private void onProfileClicked() {
         if (getActivity() != null) {
+            Bundle args = getArguments();
+
             Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-            intent.putExtras(getArguments());
+            if (args != null) {
+                intent.putExtras(getArguments());
+            }
             startActivity(intent);
         }
     }

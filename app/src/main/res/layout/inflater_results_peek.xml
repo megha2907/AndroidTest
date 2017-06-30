@@ -14,7 +14,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/shape_timeline_tour_bg"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dp_10">
+        >
 
         <RelativeLayout
             android:id="@+id/results_peek_row_question_rl"
@@ -49,11 +49,13 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/result_peek_item_content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_18"
             android:layout_marginRight="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_10"
             android:layout_below="@+id/results_peek_row_question_rl"
             android:layout_gravity="left">
 
@@ -168,6 +170,108 @@
 
 
         </RelativeLayout>
+
+        <!-- Powerups layout at bottom -->
+        <LinearLayout
+            android:id="@+id/powerup_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/result_peek_item_content_layout">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0.5"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginRight="@dimen/dp_12"
+                android:background="@color/linecolor"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/dp_8"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_44"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20">
+
+                <!-- Left -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="left">
+
+                    <com.jeeva.android.widgets.HmImageView
+                        android:id="@+id/result_peek_powerup_2x_left"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/double_powerup"
+                        android:visibility="gone"/>
+
+                    <com.jeeva.android.widgets.HmImageView
+                        android:id="@+id/result_peek_powerup_noNeg_left"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/no_negative_powerup"
+                        android:visibility="gone"
+                        android:layout_marginLeft="@dimen/dp_20"/>
+
+                    <com.jeeva.android.widgets.HmImageView
+                        android:id="@+id/result_peek_powerup_audience_left"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/audience_poll_powerup"
+                        android:visibility="gone"
+                        android:layout_marginLeft="@dimen/dp_20"/>
+
+                </LinearLayout>
+
+                <!-- Right -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="right">
+
+                    <com.jeeva.android.widgets.HmImageView
+                        android:id="@+id/result_peek_powerup_2x_right"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/double_powerup"
+                        android:visibility="gone"/>
+
+                    <com.jeeva.android.widgets.HmImageView
+                        android:id="@+id/result_peek_powerup_noNeg_right"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/no_negative_powerup"
+                        android:visibility="gone"
+                        android:layout_marginLeft="@dimen/dp_20"/>
+
+                    <com.jeeva.android.widgets.HmImageView
+                        android:id="@+id/result_peek_powerup_audience_right"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/audience_poll_powerup"
+                        android:visibility="gone"
+                        android:layout_marginLeft="@dimen/dp_20"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         </RelativeLayout>
 

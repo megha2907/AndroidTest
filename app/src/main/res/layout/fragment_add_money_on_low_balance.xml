@@ -212,7 +212,7 @@
                     android:layout_weight="1"
                     android:text="+ ₹50"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular"
                     android:background="@drawable/button_selector"/>
 
@@ -223,7 +223,7 @@
                     android:layout_weight="1"
                     android:text="+ ₹100"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular"
                     android:background="@drawable/button_selector"
                     android:layout_marginLeft="@dimen/dp_12"/>
@@ -235,7 +235,7 @@
                     android:layout_weight="1"
                     android:text="+ ₹250"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular"
                     android:background="@drawable/button_selector"
                     android:layout_marginLeft="@dimen/dp_12"/>
