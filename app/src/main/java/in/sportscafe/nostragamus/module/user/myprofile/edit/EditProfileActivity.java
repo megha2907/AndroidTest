@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.ExceptionTracker;
@@ -34,6 +35,7 @@ import in.sportscafe.nostragamus.module.common.NostraEditText;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.navigation.referfriends.SuccessfulReferralActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 
@@ -88,6 +90,9 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private String mReferralCode = "";
 
+    private LinearLayout referralCodeLayout;
+    private TextView mReferralCodeText;
+
     private InputFilter filter = new InputFilter() {
 
         @Override
@@ -135,6 +140,10 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     }
 
     private void initReferralCode() {
+
+        mReferralCodeText = (TextView)findViewById(R.id.edit_profile_tv_referral_code_txt);
+        referralCodeLayout =(LinearLayout)findViewById(R.id.edit_profile_et_referral_code);
+
         mEtReferralCode1 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_one);
         mEtReferralCode2 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_two);
         mEtReferralCode3 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_three);
@@ -143,12 +152,21 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         mEtReferralCode6 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_six);
         mEtReferralCode7 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_seven);
 
-        if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralCode())) {
-            populateUserReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());
-            mReferralCode = NostragamusDataHandler.getInstance().getUserReferralCode();
-            NoEditingReferralCode();
-        } else {
-            enterReferralCodeManually();
+        if (!NostragamusDataHandler.getInstance().isMarketingCampaign()) {
+
+            mReferralCodeText.setVisibility(View.VISIBLE);
+            referralCodeLayout.setVisibility(View.VISIBLE);
+
+            if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralCode())) {
+                populateUserReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());
+                mReferralCode = NostragamusDataHandler.getInstance().getUserReferralCode();
+                NoEditingReferralCode();
+            } else {
+                enterReferralCodeManually();
+            }
+        }else {
+            mReferralCodeText.setVisibility(View.GONE);
+            referralCodeLayout.setVisibility(View.GONE);
         }
 
     }
@@ -324,6 +342,14 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         TextView correctReferralCode = (TextView) findViewById(R.id.edit_profile_referral_code_error_text);
         correctReferralCode.setVisibility(View.VISIBLE);
         correctReferralCode.setText("Referral Code applied successfully.");
+    }
+
+    @Override
+    public void navigateToSuccessfulReferral() {
+        Intent intent = new Intent(this, SuccessfulReferralActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     public void showImagePopup(View view) {

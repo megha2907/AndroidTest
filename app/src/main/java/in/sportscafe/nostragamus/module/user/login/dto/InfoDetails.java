@@ -28,6 +28,9 @@ public class InfoDetails {
     @JsonProperty("level")
     private String level;
 
+    @JsonProperty("user_referral_code")
+    private String ReferUserCode;
+
     @JsonProperty("user_accepted")
     private Boolean disclaimerAccepted;
 
@@ -119,4 +122,16 @@ public class InfoDetails {
     public void setWalletCreated(boolean walletCreated) {
         isWalletCreated = walletCreated;
     }
+
+    @JsonProperty("user_referral_code")
+    public String getReferUserCode() {
+        return ReferUserCode;
+    }
+
+    @JsonProperty("user_referral_code")
+    public void setReferUserCode(String referUserCode) {
+        ReferUserCode = referUserCode;
+    }
+
+
 }

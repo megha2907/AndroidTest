@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/successful_referral_text_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:typeface="lato_regular"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_80"
+        android:textSize="@dimen/dp_14"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/successful_referral_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/gift_successful_referral"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_below="@+id/successful_referral_text_one"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/successful_referral_text_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:typeface="lato_bold"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_below="@+id/successful_referral_image"
+        android:textSize="@dimen/dp_16"
+        android:gravity="center"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/successful_referral_text_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:typeface="lato_regular"
+        android:textColor="@color/white"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/successful_referral_text_two"
+        android:text="Join challenges in your favorite sports and \n get predicting!"
+        android:textSize="@dimen/dp_14"
+        android:gravity="center"/>
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/start_playing_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_alignParentBottom="true"
+        android:background="@color/venice_blue"
+        android:onClick="onClick"
+        android:text="Start Playing"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/blue_button_text"
+        app:typeface="lato_regular" />
+
+</RelativeLayout>

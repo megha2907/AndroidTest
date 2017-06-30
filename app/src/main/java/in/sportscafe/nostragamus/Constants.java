@@ -103,6 +103,7 @@ public interface Constants {
         String LAST_SHOWN_APP_VERSION_CODE = "lastShownAppVersionCode";
         String UPDATE_TYPE = "updateType";
         String WALLET_INITIAL_AMOUNT = "walletInitialAmount";
+        String MARKETING_CAMPAIGN = "marketingCampaign";
     }
 
     interface Alerts {

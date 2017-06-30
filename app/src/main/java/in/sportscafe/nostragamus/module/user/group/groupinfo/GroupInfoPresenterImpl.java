@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.jeeva.android.ExceptionTracker;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
@@ -59,7 +60,10 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode())
                 .addContentMetadata(BundleKeys.GROUP_NAME, groupInfo.getName())
-                .addContentMetadata(BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId());
+                .addContentMetadata(BundleKeys.USER_REFERRAL_CODE, NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getReferUserCode())
+                .addContentMetadata(BundleKeys.WALLET_INITIAL_AMOUNT, String.valueOf(groupInfo.getWalletInitialAmount()))
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, NostragamusDataHandler.getInstance().getUserInfo().getPhoto())
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, NostragamusDataHandler.getInstance().getUserInfo().getUserName());
 
 
         LinkProperties linkProperties = new LinkProperties()

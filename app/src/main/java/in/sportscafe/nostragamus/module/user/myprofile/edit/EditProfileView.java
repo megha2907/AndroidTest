@@ -36,4 +36,6 @@ public interface EditProfileView extends View {
     void onIncorrectReferralCode();
 
     void onCorrectReferralCode();
+
+    void navigateToSuccessfulReferral();
 }

@@ -248,6 +248,6 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/blue_button_text"
-        app:typeface="roboto_condensed" />
+        app:typeface="lato_regular" />
 
 </RelativeLayout>
