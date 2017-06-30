@@ -32,4 +32,10 @@ public interface EditProfileView extends View {
     void setNicknameNotValid();
 
     void navigateToAddPhoto(int requestCode);
+
+    void onIncorrectReferralCode();
+
+    void onCorrectReferralCode();
+
+    void navigateToSuccessfulReferral();
 }

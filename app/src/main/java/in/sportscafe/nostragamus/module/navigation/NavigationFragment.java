@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
@@ -104,12 +105,18 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 TextView updateTextView = (TextView) view.findViewById(R.id.navigation_update_str_textView);
                 updateTextView.setTextColor(ContextCompat.getColor(updateTextView.getContext(), R.color.white));
 
+                ImageView updateApp = (ImageView)findViewById(R.id.navigation_app_update_app_iv) ;
+                updateApp.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.navigation_update_app_icn));
+
             } else {
                 view.findViewById(R.id.navigation_app_update_layout).setOnClickListener(null);
                 view.findViewById(R.id.navigation_app_update_available_imageView).setVisibility(View.GONE);
 
+                ImageView updateApp = (ImageView)findViewById(R.id.navigation_app_update_app_iv) ;
                 TextView versionNameTextView = (TextView) view.findViewById(R.id.navigation_version_textView);
-                versionNameTextView.setText(Nostragamus.getInstance().getAppVersionName());
+                versionNameTextView.setText("Ver - "+Nostragamus.getInstance().getAppVersionName());
+                versionNameTextView.setTextColor(ContextCompat.getColor(getContext(),R.color.scrollbar_indicator));
+                updateApp.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.navigation_update_app_dark_icon));
 
                 TextView updateTextView = (TextView) view.findViewById(R.id.navigation_update_str_textView);
                 updateTextView.setTextColor(ContextCompat.getColor(updateTextView.getContext(), R.color.scrollbar_indicator));

@@ -3,7 +3,8 @@ package in.sportscafe.nostragamus.module.user.myprofile.edit;
 import android.content.Intent;
 import android.os.Bundle;
 
-import in.sportscafe.nostragamus.BuildConfig;
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
@@ -52,11 +53,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     }
 
     @Override
-    public void onClickDone(String nickname,Boolean disclaimerAccepted) {
+    public void onClickDone(String nickname, String referralCode, Boolean disclaimerAccepted) {
         if (nickname.equals("")) {
             mEditProfileView.setNicknameEmpty();
         } else {
-            mEditProfileModel.updateProfile(nickname,disclaimerAccepted);
+            mEditProfileModel.updateProfile(nickname, referralCode, disclaimerAccepted);
         }
 
         NostragamusAnalytics.getInstance().trackEditProfile(AnalyticsActions.OTHERS, AnalyticsLabels.UPDATE);
@@ -75,18 +76,27 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     }
 
     @Override
+    public void verifyReferralCode(String referralCode) {
+        mEditProfileView.showProgressbar();
+        mEditProfileModel.callVerifyReferralCodeApi(referralCode);
+    }
+
+    @Override
     public void onUpdating() {
         mEditProfileView.showProgressbar();
     }
 
     @Override
-    public void onEditSuccess() {
+    public void onEditSuccess(boolean referralCodeExists) {
         mEditProfileView.dismissProgressbar();
-
-        if (screen.equals(BundleKeys.HOME_SCREEN)) {
-            mEditProfileView.navigateToHome(true);
+        if (referralCodeExists || NostragamusDataHandler.getInstance().isMarketingCampaign()) {
+            mEditProfileView.navigateToSuccessfulReferral();
         } else {
-            mEditProfileView.navigateToHome(false);
+            if (screen.equals(BundleKeys.HOME_SCREEN)) {
+                mEditProfileView.navigateToHome(true);
+            } else {
+                mEditProfileView.navigateToHome(false);
+            }
         }
     }
 
@@ -94,7 +104,6 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     public void onPhotoUpdate() {
         UserInfo userInfo = mEditProfileModel.getUserInfo();
         mEditProfileView.setProfileImage(userInfo.getPhoto());
-
         mEditProfileView.dismissProgressbar();
     }
 
@@ -134,5 +143,17 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     @Override
     public void onNickNameValidation() {
         mEditProfileView.setNicknameNotValid();
+    }
+
+    @Override
+    public void onReferralCodeVerified() {
+        mEditProfileView.dismissProgressbar();
+        mEditProfileView.onCorrectReferralCode();
+    }
+
+    @Override
+    public void onReferralCodeFailed(String message) {
+        mEditProfileView.dismissProgressbar();
+        mEditProfileView.onIncorrectReferralCode();
     }
 }

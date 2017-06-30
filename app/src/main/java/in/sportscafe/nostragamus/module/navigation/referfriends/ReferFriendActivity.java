@@ -102,7 +102,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
                 .addTag("inviteApp")
                 .setFeature("inviteApp")
                 .setChannel("App")
-                .setCampaign("App Normal Invite")
+                .setCampaign("App Invite")
                 .addControlParameter("$android_deeplink_path", "app/invite/");
 
         buo.generateShortUrl(getContext(), linkProperties,

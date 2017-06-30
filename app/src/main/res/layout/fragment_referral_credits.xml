@@ -45,7 +45,7 @@
                     android:id="@+id/referral_credit_summary_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:text="SUMMARY"
                     android:layout_marginLeft="@dimen/dp_24"
                     android:layout_marginRight="@dimen/dp_24"
@@ -201,6 +201,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="@dimen/dp_14"
+                                android:text="₹ 0.00"
                                 android:layout_marginBottom="@dimen/dp_12"
                                 android:includeFontPadding="false"
                                 android:textColor="@color/white"
@@ -252,8 +253,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_0.5"
                     android:layout_marginTop="@dimen/dp_14"
-                    android:layout_marginLeft="@dimen/dp_24"
-                    android:layout_marginRight="@dimen/dp_24"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
                     android:background="@color/line_separator_two" />
 
                 <!-- Recycler List view  -->
@@ -261,8 +262,8 @@
                     android:id="@+id/referralHistoryRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/dp_24"
-                    android:layout_marginRight="@dimen/dp_24"/>
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"/>
 
                 <!-- No transaction history empty view -->
                 <LinearLayout

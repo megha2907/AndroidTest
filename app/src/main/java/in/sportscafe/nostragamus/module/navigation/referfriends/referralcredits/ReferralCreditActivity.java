@@ -90,9 +90,10 @@ public class ReferralCreditActivity extends NostragamusActivity implements Refer
     private void navigateToReferFriend(String referralCode, String walletInit) {
         BranchUniversalObject buo = new BranchUniversalObject()
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
-                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_ID, NostragamusDataHandler.getInstance().getUserId())
                 .addContentMetadata(Constants.BundleKeys.WALLET_INITIAL_AMOUNT, walletInit)
-                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_CODE, referralCode);
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_CODE, referralCode)
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, NostragamusDataHandler.getInstance().getUserInfo().getPhoto())
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, NostragamusDataHandler.getInstance().getUserInfo().getUserName());
 
         LinkProperties linkProperties = new LinkProperties()
                 .addTag("inviteApp")

@@ -136,7 +136,7 @@ public class ReferFriendFragment extends BaseFragment implements View.OnClickLis
             tvReferFriendTwo.setText(Html.fromHtml(styledTextTwo), TextView.BufferType.SPANNABLE);
         }
 
-        if (userReferralInfo.getReferralCredits()!=null) {
+        if (userReferralInfo.getReferralCredits()!=null  && userReferralInfo.getReferralCredits() > 0) {
             tvReferralCreditAmount.setText(WalletHelper.getFormattedStringOfAmount(userReferralInfo.getReferralCredits()));
         }
         tvUserReferralCode.setText(userReferralInfo.getReferralCode());

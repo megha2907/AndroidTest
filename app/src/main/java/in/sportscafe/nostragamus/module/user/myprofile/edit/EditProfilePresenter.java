@@ -15,9 +15,11 @@ public interface EditProfilePresenter {
 
     void onCreateEditProfile(Bundle bundle);
 
-    void onClickDone(String about,Boolean disclaimerAccepted);
+    void onClickDone(String about,String referralCode,Boolean disclaimerAccepted);
 
     void onClickImage();
 
     void onGetResult(int requestCode, int resultCode, Intent data);
+
+    void verifyReferralCode(String referralCode);
 }

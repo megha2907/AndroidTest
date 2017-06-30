@@ -103,6 +103,7 @@ public interface Constants {
         String LAST_SHOWN_APP_VERSION_CODE = "lastShownAppVersionCode";
         String UPDATE_TYPE = "updateType";
         String WALLET_INITIAL_AMOUNT = "walletInitialAmount";
+        String MARKETING_CAMPAIGN = "marketingCampaign";
     }
 
     interface Alerts {
@@ -521,6 +522,7 @@ public interface Constants {
         String DOWNLOADING_APP = "DownloadingApp";
         String REFER_FRIEND = "ReferFriend";
         String REFERRAL_CREDIT = "ReferralCredit";
+        String SUCCESSFUL_REFERRAL = "successfulReferral";
     }
 
     interface InAppPopups {

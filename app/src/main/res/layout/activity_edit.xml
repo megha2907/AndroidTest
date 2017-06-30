@@ -47,7 +47,7 @@
             android:layout_height="@dimen/dp_36"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/edit_tv_screen_title"
-            android:layout_marginTop="@dimen/dp_38"
+            android:layout_marginTop="@dimen/dp_40"
             android:alpha="0.8"
             android:onClick="showImagePopup"
             android:src="@drawable/camera_icon" />
@@ -152,18 +152,30 @@
 
         <com.jeeva.android.widgets.customfont.CustomEditText
             android:id="@+id/edit_profile_et_referral_code_char_six"
+            style="@style/InviteCodeStyle" />
+
+        <com.jeeva.android.widgets.customfont.CustomEditText
+            android:id="@+id/edit_profile_et_referral_code_char_seven"
             style="@style/InviteCodeStyle"
             android:imeOptions="actionDone" />
 
     </LinearLayout>
 
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/edit_profile_referral_code_error_text"
+        style="@style/EditTextErrorStyle"
+        android:layout_below="@+id/edit_profile_et_referral_code"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:layout_marginRight="@dimen/dp_16"
+        android:text="The code has been entered incorrectly"/>
 
     <in.sportscafe.nostragamus.module.common.NostraEditText
         android:id="@+id/edit_et_nickname_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_profile_et_referral_code"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginLeft="@dimen/dp_16"
         android:layout_marginRight="@dimen/dp_16"
         app:boxStyle="@style/CustomEditTextStyle"
@@ -236,6 +248,6 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/blue_button_text"
-        app:typeface="roboto_condensed" />
+        app:typeface="lato_regular" />
 
 </RelativeLayout>

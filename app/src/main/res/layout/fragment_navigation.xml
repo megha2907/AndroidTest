@@ -364,9 +364,9 @@
                 android:background="?android:attr/selectableItemBackground">
 
                 <ImageView
+                    android:id="@+id/navigation_app_update_app_iv"
                     android:layout_width="@dimen/dp_16"
-                    android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/navigation_update_app_icn"/>
+                    android:layout_height="@dimen/dp_16" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/navigation_update_str_textView"

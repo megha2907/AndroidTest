@@ -14,11 +14,13 @@ import okhttp3.RequestBody;
  */
 public interface EditProfileModel {
 
-    void updateProfile(String about, Boolean disclaimerAccepted);
+    void updateProfile(String about,String referralCode, Boolean disclaimerAccepted);
 
     void onGetImage(Intent imageData);
 
     void updateProfilePhoto(File file, String filepath, String filename);
 
     UserInfo getUserInfo();
+
+    void callVerifyReferralCodeApi(String referralCode);
 }

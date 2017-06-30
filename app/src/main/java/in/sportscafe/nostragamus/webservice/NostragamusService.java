@@ -55,6 +55,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentFeedRespons
 import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
+import in.sportscafe.nostragamus.module.user.myprofile.edit.VerifyReferralCodeResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryTransaction;
 import okhttp3.MultipartBody;
@@ -273,4 +274,7 @@ public interface NostragamusService {
 
     @GET("v2/game/getReferralTransactions")
     Call<UserReferralHistoryResponse> getUserReferralHistory(@Query("app_type") String flavor);
+
+    @GET("v2/game/verifyReferralCode")
+    Call<VerifyReferralCodeResponse> verifyReferralCode(@Query("referral_code") String referralCode);
 }

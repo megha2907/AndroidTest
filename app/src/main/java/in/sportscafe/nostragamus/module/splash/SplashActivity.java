@@ -83,6 +83,10 @@ public class SplashActivity extends Activity {
 
                         if (lastParams.has("~campaign")) {
                             nostragamusDataHandler.setInstallReferralCampaign(lastParams.getString("~campaign"));
+                            if (!lastParams.getString("~campaign").equalsIgnoreCase("App Invite") ||
+                                    !lastParams.getString("~campaign").equalsIgnoreCase("Group Invite")){
+                                NostragamusDataHandler.getInstance().setMarketingCampaign(true);
+                            }
                         }
 
                     } catch (JSONException e) {

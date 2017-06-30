@@ -50,6 +50,9 @@ public class GroupInfo {
     @JsonProperty("group_code")
     private String groupCode;
 
+    @JsonProperty("wallet_init")
+    private Integer walletInitialAmount;
+
     public GroupInfo() {
     }
 
@@ -268,5 +271,14 @@ public class GroupInfo {
         return name;
     }
 
+    @JsonProperty("wallet_init")
+    public Integer getWalletInitialAmount() {
+        return walletInitialAmount;
+    }
+
+    @JsonProperty("wallet_init")
+    public void setWalletInitialAmount(Integer walletInitialAmount) {
+        this.walletInitialAmount = walletInitialAmount;
+    }
 
 }

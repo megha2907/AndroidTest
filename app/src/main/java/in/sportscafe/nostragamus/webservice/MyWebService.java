@@ -57,6 +57,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentFeedRespons
 import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
+import in.sportscafe.nostragamus.module.user.myprofile.edit.VerifyReferralCodeResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryTransaction;
 import okhttp3.MediaType;
@@ -336,5 +337,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<UserReferralHistoryResponse> getUserReferralHistory(String flavor) {
         return mNostragamusService.getUserReferralHistory(flavor);
+    }
+
+    public Call<VerifyReferralCodeResponse> verifyReferralCodeRequest(String referralCode) {
+        return mNostragamusService.verifyReferralCode(referralCode);
     }
 }

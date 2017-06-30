@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
@@ -28,6 +29,10 @@ public class EditProfileModelImpl implements EditProfileModel {
 
     private boolean mDisclaimerAccepted;
 
+    private String mReferralCode;
+
+    private boolean referralCodeExists=false;
+
     private EditProfileModelImpl(OnEditProfileListener listener) {
         this.mEditProfileListener = listener;
         this.mUserInfo = NostragamusDataHandler.getInstance().getUserInfo();
@@ -38,9 +43,10 @@ public class EditProfileModelImpl implements EditProfileModel {
     }
 
     @Override
-    public void updateProfile(String nickname, Boolean disclaimerAccepted) {
+    public void updateProfile(String nickname,String referralCode, Boolean disclaimerAccepted) {
 
         mDisclaimerAccepted = disclaimerAccepted;
+        mReferralCode = referralCode;
 
         if (nickname.isEmpty()) {
             mEditProfileListener.onNickNameEmpty();
@@ -109,6 +115,13 @@ public class EditProfileModelImpl implements EditProfileModel {
         updateUserRequest.setUserNickName(nickname);
         updateUserRequest.setDisclaimerAccepted(mDisclaimerAccepted);
 
+        if (!TextUtils.isEmpty(mReferralCode)){
+            referralCodeExists = true;
+            updateUserRequest.setReferralCode(mReferralCode);
+        }else {
+            updateUserRequest.setReferralCode(null);
+        }
+
         MyWebService.getInstance().getUpdateUserRequest(updateUserRequest).enqueue(
                 new NostragamusCallBack<ApiResponse>() {
                     @Override
@@ -125,7 +138,7 @@ public class EditProfileModelImpl implements EditProfileModel {
                                 NostragamusDataHandler.getInstance().setFirstTimeUser(false);
                                 NostragamusDataHandler.getInstance().setIsProfileDisclaimerAccepted(true);
 
-                                mEditProfileListener.onEditSuccess();
+                                mEditProfileListener.onEditSuccess(referralCodeExists);
                             }
                         } else {
                             mEditProfileListener.onEditFailed(response.message());
@@ -140,11 +153,46 @@ public class EditProfileModelImpl implements EditProfileModel {
         return mUserInfo;
     }
 
+    @Override
+    public void callVerifyReferralCodeApi(String referralCode) {
+
+        MyWebService.getInstance().verifyReferralCodeRequest(referralCode).enqueue(
+                new NostragamusCallBack<VerifyReferralCodeResponse>() {
+                    @Override
+                    public void onResponse(Call<VerifyReferralCodeResponse> call, Response<VerifyReferralCodeResponse> response) {
+                        super.onResponse(call, response);
+                        if (response.isSuccessful()) {
+                            if (response != null && response.isSuccessful() && response.body() != null) {
+                                VerifyUserInfo verifyUserInfo = response.body().getVerifyUserInfo();
+
+                                if (TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralName())){
+                                    NostragamusDataHandler.getInstance().setUserReferralName(verifyUserInfo.getUserName());
+                                }
+
+                                if (NostragamusDataHandler.getInstance().getWalletInitialAmount()== -1 ||
+                                        NostragamusDataHandler.getInstance().getWalletInitialAmount()== 0 ){
+                                    NostragamusDataHandler.getInstance().setWalletInitialAmount(verifyUserInfo.getWalletInitialAmount());
+                                }
+
+                                mEditProfileListener.onReferralCodeVerified();
+
+                            }else {
+                                mEditProfileListener.onReferralCodeFailed(response.message());
+                            }
+                        } else {
+                            mEditProfileListener.onReferralCodeFailed(response.message());
+                        }
+                    }
+                }
+        );
+
+    }
+
     public interface OnEditProfileListener {
 
         void onUpdating();
 
-        void onEditSuccess();
+        void onEditSuccess(boolean referralCodeExists);
 
         void onPhotoUpdate();
 
@@ -161,5 +209,9 @@ public class EditProfileModelImpl implements EditProfileModel {
         void onUserNameConflict();
 
         void onNickNameValidation();
+
+        void onReferralCodeVerified();
+
+        void onReferralCodeFailed(String message);
     }
 }

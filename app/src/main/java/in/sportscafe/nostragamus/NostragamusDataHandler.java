@@ -560,5 +560,12 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(SharedKeys.UPDATE_TYPE, appUpdateType);
     }
 
+    public boolean isMarketingCampaign() {
+        return getSharedBooleanData(SharedKeys.MARKETING_CAMPAIGN, false);
+    }
+
+    public void setMarketingCampaign(boolean marketingCampaign) {
+        setSharedBooleanData(SharedKeys.MARKETING_CAMPAIGN, marketingCampaign);
+    }
 
 }
