@@ -1,18 +1,23 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
@@ -21,6 +26,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
@@ -70,6 +76,30 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private ImageButton mBackBtn;
 
+    private String blockCharacterSet = "~#^|$%&*!@_-+/:;!?";
+
+    private EditText mEtReferralCode1;
+    private EditText mEtReferralCode2;
+    private EditText mEtReferralCode3;
+    private EditText mEtReferralCode4;
+    private EditText mEtReferralCode5;
+    private EditText mEtReferralCode6;
+    private EditText mEtReferralCode7;
+
+    private String mReferralCode = "";
+
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };
+
+
     /**
      * If only On-board (HomeActivity) && paid version, then only true
      */
@@ -94,29 +124,57 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         this.mEditProfilePresenter = EditProfilePresenterImpl.newInstance(this);
         this.mEditProfilePresenter.onCreateEditProfile(getIntent().getExtras());
 
+        initOnBoardFlow();
+        initReferralCode();
+
         if (!TextUtils.isEmpty(mEtNickName.getEditText().getText())) {
             String editName = mEtNickName.getEditText().getText().toString();
             mEtNickName.getEditText().setSelection(editName.length());
         }
 
-        initOnBoardFlow();
+    }
+
+    private void initReferralCode() {
+        mEtReferralCode1 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_one);
+        mEtReferralCode2 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_two);
+        mEtReferralCode3 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_three);
+        mEtReferralCode4 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_four);
+        mEtReferralCode5 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_five);
+        mEtReferralCode6 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_six);
+        mEtReferralCode7 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_seven);
+
+        if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralCode())) {
+            populateUserReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());
+            mReferralCode = NostragamusDataHandler.getInstance().getUserReferralCode();
+            NoEditingReferralCode();
+        } else {
+            enterReferralCodeManually();
+        }
 
     }
+
+    private void NoEditingReferralCode() {
+        mEtReferralCode1.setEnabled(false);
+        mEtReferralCode2.setEnabled(false);
+        mEtReferralCode3.setEnabled(false);
+        mEtReferralCode4.setEnabled(false);
+        mEtReferralCode5.setEnabled(false);
+        mEtReferralCode6.setEnabled(false);
+        mEtReferralCode7.setEnabled(false);
+    }
+
 
     /**
      * If only on-board flow, and only paid version, then show age-disclaimer; else not
      */
     private void initOnBoardFlow() {
-        Intent thisIntent = getIntent();
-        if (thisIntent != null && thisIntent.hasExtra(Constants.BundleKeys.EDIT_PROFILE_LAUNCHED_FROM)) {
-            int thisLaunchedFrom = thisIntent.getIntExtra(Constants.BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, -1);
-            if (thisLaunchedFrom == ILaunchedFrom.HOME_ACTIVITY) {
-
-                if (BuildConfig.IS_PAID_VERSION) {
-                    mIsOnBoardFlow = true;
-                    mCbProfileDisclaimer.setVisibility(View.VISIBLE);
-                    mCbProfileDisclaimer.setText(String.valueOf(NostragamusDataHandler.getInstance().getDisclaimerText()));
-                }
+        if (BuildConfig.IS_PAID_VERSION) {
+            mIsOnBoardFlow = true;
+            mCbProfileDisclaimer.setVisibility(View.VISIBLE);
+            if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getDisclaimerText())) {
+                mCbProfileDisclaimer.setText(NostragamusDataHandler.getInstance().getDisclaimerText());
+            } else {
+                mCbProfileDisclaimer.setText(getResources().getString(R.string.profile_disclaimer));
             }
         }
     }
@@ -127,9 +185,9 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //size as per your requirement
-                if (mEtNickName.getEditText().length() < 3 || mEtNickName.getEditText().length() > 15){
+                if (mEtNickName.getEditText().length() < 3 || mEtNickName.getEditText().length() > 15) {
                     setNicknameNotValid();
-                }else {
+                } else {
                     mEtNickName.setErrorText("");
                 }
 
@@ -167,10 +225,10 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
             if (!mCbProfileDisclaimer.isChecked()) {
                 showMessage(Constants.Alerts.EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED);
             } else {
-                mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()),true);
+                mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()), mReferralCode, true);
             }
         } else {
-            mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()),false);
+            mEditProfilePresenter.onClickDone(getTrimmedText(mEtNickName.getEditText()), mReferralCode, false);
         }
     }
 
@@ -253,6 +311,21 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         startActivityForResult(new Intent(this, AddPhotoActivity.class), requestCode);
     }
 
+    @Override
+    public void onIncorrectReferralCode() {
+        TextView incorrectReferralCode = (TextView) findViewById(R.id.edit_profile_referral_code_error_text);
+        incorrectReferralCode.setVisibility(View.VISIBLE);
+        incorrectReferralCode.setText("The referral code is invalid.");
+        mReferralCode = "";
+    }
+
+    @Override
+    public void onCorrectReferralCode() {
+        TextView correctReferralCode = (TextView) findViewById(R.id.edit_profile_referral_code_error_text);
+        correctReferralCode.setVisibility(View.VISIBLE);
+        correctReferralCode.setText("Referral Code applied successfully.");
+    }
+
     public void showImagePopup(View view) {
         if (new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
             PermissionsActivity.startActivityForResult(this, RequestCodes.STORAGE_PERMISSION, AppPermissions.STORAGE);
@@ -264,18 +337,18 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(RESULT_OK == resultCode) {
+        if (RESULT_OK == resultCode) {
             mEditProfilePresenter.onGetResult(requestCode, resultCode, data);
         }
 
-        if(RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
+        if (RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
             mEditProfilePresenter.onClickImage();
         }
     }
 
     public void initToolBar() {
         mtoolbar = (Toolbar) findViewById(R.id.edit_profile_toolbar);
-        mToolbarTitle = (TextView)findViewById(R.id.edit_tv);
+        mToolbarTitle = (TextView) findViewById(R.id.edit_tv);
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
@@ -293,4 +366,172 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
             super.onBackPressed();
         }
     }
+
+    public void populateUserReferralCode(String referralCode) {
+        try {
+            String[] codeSplitter = referralCode.split("");
+            mEtReferralCode1.setText(codeSplitter[1]);
+            mEtReferralCode2.setText(codeSplitter[2]);
+            mEtReferralCode3.setText(codeSplitter[3]);
+            mEtReferralCode4.setText(codeSplitter[4]);
+            mEtReferralCode5.setText(codeSplitter[5]);
+            mEtReferralCode6.setText(codeSplitter[6]);
+            mEtReferralCode7.setText(codeSplitter[7]);
+        } catch (Exception e) {
+            ExceptionTracker.track(e);
+        }
+    }
+
+    private void enterReferralCodeManually() {
+
+        mEtReferralCode1.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
+        mEtReferralCode2.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
+        mEtReferralCode3.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
+        mEtReferralCode4.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
+        mEtReferralCode5.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
+        mEtReferralCode6.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
+        mEtReferralCode7.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
+
+        mEtReferralCode1.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                if (s.length() == 1) {
+                    mEtReferralCode2.requestFocus();
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+            }
+        });
+
+        mEtReferralCode2.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 1) {
+                    mEtReferralCode3.requestFocus();
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+            }
+        });
+        mEtReferralCode3.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 1) {
+                    mEtReferralCode4.requestFocus();
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+            }
+        });
+
+        mEtReferralCode4.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 1) {
+                    mEtReferralCode5.requestFocus();
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+            }
+        });
+
+        mEtReferralCode5.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 1) {
+                    mEtReferralCode6.requestFocus();
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+            }
+        });
+
+        mEtReferralCode6.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 1) {
+                    mEtReferralCode7.requestFocus();
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+            }
+        });
+
+        mEtReferralCode7.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 1) {
+
+                    hideSoftKeyboard();
+
+                    mReferralCode = getTrimmedText(mEtReferralCode1) + getTrimmedText(mEtReferralCode2)
+                            + getTrimmedText(mEtReferralCode3) + getTrimmedText(mEtReferralCode4)
+                            + getTrimmedText(mEtReferralCode5) + getTrimmedText(mEtReferralCode6)
+                            + getTrimmedText(mEtReferralCode7);
+
+                    mEditProfilePresenter.verifyReferralCode(mReferralCode);
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+            }
+        });
+
+    }
+
+
 }

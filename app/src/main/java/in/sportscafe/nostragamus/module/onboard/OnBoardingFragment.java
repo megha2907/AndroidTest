@@ -156,7 +156,6 @@ public class OnBoardingFragment extends NostragamusFragment {
         }
 
         OnBoardingDto onBoardingDto = new OnBoardingDto();
-
         if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralCode())) {
 
             if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralName())) {
@@ -165,7 +164,7 @@ public class OnBoardingFragment extends NostragamusFragment {
 
             if (NostragamusDataHandler.getInstance().getWalletInitialAmount() != null) {
                 onBoardingDto.setDesc("Join " + NostragamusDataHandler.getInstance().getUserReferralName()
-                        + " in predicting live sports matches! \\n Your first " +
+                        + " in predicting live sports matches! \n Your first " +
                         "₹" + NostragamusDataHandler.getInstance().getWalletInitialAmount()
                         + " is on us!");
             }

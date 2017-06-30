@@ -52,11 +52,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     }
 
     @Override
-    public void onClickDone(String nickname,Boolean disclaimerAccepted) {
+    public void onClickDone(String nickname,String referralCode,Boolean disclaimerAccepted) {
         if (nickname.equals("")) {
             mEditProfileView.setNicknameEmpty();
         } else {
-            mEditProfileModel.updateProfile(nickname,disclaimerAccepted);
+            mEditProfileModel.updateProfile(nickname,referralCode,disclaimerAccepted);
         }
 
         NostragamusAnalytics.getInstance().trackEditProfile(AnalyticsActions.OTHERS, AnalyticsLabels.UPDATE);
@@ -72,6 +72,12 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
         if (ADD_PHOTO_REQUEST_CODE == requestCode) {
             mEditProfileModel.onGetImage(data);
         }
+    }
+
+    @Override
+    public void verifyReferralCode(String referralCode) {
+        mEditProfileView.showProgressbar();
+        mEditProfileModel.callVerifyReferralCodeApi(referralCode);
     }
 
     @Override
@@ -134,5 +140,17 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     @Override
     public void onNickNameValidation() {
         mEditProfileView.setNicknameNotValid();
+    }
+
+    @Override
+    public void onReferralCodeVerified() {
+        mEditProfileView.dismissProgressbar();
+        mEditProfileView.onCorrectReferralCode();
+    }
+
+    @Override
+    public void onReferralCodeFailed(String message) {
+        mEditProfileView.dismissProgressbar();
+        mEditProfileView.onIncorrectReferralCode();
     }
 }

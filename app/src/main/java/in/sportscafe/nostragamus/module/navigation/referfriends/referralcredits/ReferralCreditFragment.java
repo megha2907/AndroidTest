@@ -44,6 +44,9 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
     private RecyclerView mReferralHistoryRecyclerView;
     private ReferralHistoryAdapter mReferralHistoryAdapter;
 
+    String mReferralCode;
+    String mWalletInit;
+
     public ReferralCreditFragment() {
     }
 
@@ -135,36 +138,50 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
         tvRCPowerupNonegCount = (TextView) rootView.findViewById(R.id.referral_credits_noneg_powerup_count);
         tvRCPowerupPlayerPollCount = (TextView) rootView.findViewById(R.id.referral_credits_player_poll_powerup_count);
         tvRCMoneyEarned = (TextView) rootView.findViewById(R.id.referral_credits_money_earned);
+        rootView.findViewById(R.id.refer_friend_btn).setOnClickListener(this);
 
         setReferralInfo(userReferralInfo);
     }
 
     private void setReferralInfo(UserReferralInfo userReferralInfo) {
 
-        tvRCFriendsReferred.setText(userReferralInfo.getFriendsReferred()+ " Friends Added");
-        tvRCMoneyEarned.setText(WalletHelper.getFormattedStringOfAmount(userReferralInfo.getReferralCredits()));
+        if (userReferralInfo != null) {
+            tvRCFriendsReferred.setText(userReferralInfo.getFriendsReferred() + " Friends Added");
 
-        HashMap<String, Integer> powerUpMap = userReferralInfo.getPowerUps();
+            if (userReferralInfo.getReferralCredits() != null && userReferralInfo.getReferralCredits() > 0) {
+                tvRCMoneyEarned.setText(WalletHelper.getFormattedStringOfAmount(userReferralInfo.getReferralCredits()));
+            }
 
-        Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
-        Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
-        Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+            HashMap<String, Integer> powerUpMap = userReferralInfo.getPowerUps();
 
-        if (null == powerUp2xCount) {
-            powerUp2xCount = 0;
+            Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
+            Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+            Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+
+            if (null == powerUp2xCount) {
+                powerUp2xCount = 0;
+            }
+
+            if (null == powerUpNonNegsCount) {
+                powerUpNonNegsCount = 0;
+            }
+
+            if (null == powerUpPlayerPollCount) {
+                powerUpPlayerPollCount = 0;
+            }
+
+            tvRCPowerup2xCount.setText(String.valueOf(powerUp2xCount));
+            tvRCPowerupNonegCount.setText(String.valueOf(powerUpNonNegsCount));
+            tvRCPowerupPlayerPollCount.setText(String.valueOf(powerUpPlayerPollCount));
+            mReferralCode = userReferralInfo.getReferralCode();
+            mWalletInit = String.valueOf(userReferralInfo.getWalletInitialAmount());
+
+        } else {
+            tvRCFriendsReferred.setText("0 Friends Added");
+            tvRCPowerup2xCount.setText("0");
+            tvRCPowerupNonegCount.setText("0");
+            tvRCPowerupPlayerPollCount.setText("0");
         }
-
-        if (null == powerUpNonNegsCount) {
-            powerUpNonNegsCount = 0;
-        }
-
-        if (null == powerUpPlayerPollCount) {
-            powerUpPlayerPollCount = 0;
-        }
-
-        tvRCPowerup2xCount.setText(String.valueOf(powerUp2xCount));
-        tvRCPowerupNonegCount.setText(String.valueOf(powerUpNonNegsCount));
-        tvRCPowerupPlayerPollCount.setText(String.valueOf(powerUpPlayerPollCount));
 
     }
 
@@ -190,15 +207,10 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.refer_referral_credit_layout:
-                if (mReferralCreditFragmentListener != null) {
-                    mReferralCreditFragmentListener.onPowerUpRewardsClicked();
-                }
-                break;
 
-            case R.id.refer_terms_layout:
+            case R.id.refer_friend_btn:
                 if (mReferralCreditFragmentListener != null) {
-                    mReferralCreditFragmentListener.onCashRewardsClicked();
+                    mReferralCreditFragmentListener.onReferAFriendClicked(mReferralCode, mWalletInit);
                 }
                 break;
 

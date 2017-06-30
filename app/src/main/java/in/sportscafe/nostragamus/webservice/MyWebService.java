@@ -337,4 +337,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<UserReferralHistoryResponse> getUserReferralHistory(String flavor) {
         return mNostragamusService.getUserReferralHistory(flavor);
     }
+
+    public Call<ApiResponse> verifyReferralCodeRequest(String referralCode) {
+        return mNostragamusService.verifyReferralCode(referralCode);
+    }
 }

@@ -131,12 +131,12 @@
                 android:layout_marginLeft="@dimen/dp_24"
                 android:layout_marginRight="@dimen/dp_24"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="@dimen/dp_60">
+                android:minHeight="@dimen/dp_72">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true">
+                    android:layout_centerInParent="true">
 
                     <LinearLayout
                         android:id="@+id/refer_referral_credit_textview_ll"
@@ -156,6 +156,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_6"
+                            android:text="₹ 0.00"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dp_14"
                             app:typeface="lato_bold" />
@@ -175,7 +176,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_centerInParent="true"
                         android:layout_marginRight="@dimen/dp_2"
                         android:rotation="180"
                         android:src="@drawable/back_icon_grey" />
@@ -199,7 +200,7 @@
                 android:layout_marginLeft="@dimen/dp_24"
                 android:layout_marginRight="@dimen/dp_24"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="@dimen/dp_60">
+                android:minHeight="@dimen/dp_72">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"

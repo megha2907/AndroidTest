@@ -16,6 +16,9 @@ public class UpdateUserRequest {
     @JsonProperty("user_accepted")
     private boolean disclaimerAccepted;
 
+    @JsonProperty("user_referral_code")
+    private String referralCode;
+
     @JsonProperty("user_photo")
     public String getUserPhoto() {
         return userPhoto;
@@ -45,6 +48,16 @@ public class UpdateUserRequest {
     @JsonProperty("user_accepted")
     public void setDisclaimerAccepted(boolean disclaimerAccepted) {
         this.disclaimerAccepted = disclaimerAccepted;
+    }
+
+    @JsonProperty("user_referral_code")
+    public String getReferralCode() {
+        return referralCode;
+    }
+
+    @JsonProperty("user_referral_code")
+    public void setReferralCode(String referralCode) {
+        this.referralCode = referralCode;
     }
 
 }

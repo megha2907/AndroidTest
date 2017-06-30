@@ -134,7 +134,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_add_payment_bank">AddPaymentBankActivity</string>
-    <string name="profile_disclaimer"> We\'ve built NostraGamus to be a "Game of Skill" which is 100% legal in India. But, our users need to be above 18 years of age and not from Assam or Odisha (States that do not allow such games). Click here to confirm the same and get a seamless, hassle-free experience.</string>
+    <string name="profile_disclaimer"> Nostragamus is built as a Game of Skill, which are legally protected as games involving money in the majority of states of India. To proceed further, please check the box to confirm you are above 18 years old and are not playing Nostragamus from Assam or Odisha.</string>
     <string name="download_app_text">Gain access to contests with prizes upto ₹ 10,000 on the full version of Nostragamus!</string>
     <string name="prize_money_disclaimer">In case two or more people tie for a particular rank, the prize money will be re-calculated and may (or) may not be the same. Please refer to Section 7 in <![CDATA[<a href="http://nostragamus.in/rules.html">Nostragamus Rules</a>]]></string>
 
