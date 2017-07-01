@@ -181,7 +181,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:minHeight="@dimen/dp_45"
-                                    android:text="Money you’ve earned from our offers(referrals etc). Use it to join challenges and win cash!"
+                                    android:text="Money you’ve earned from our offers(referrals etc). Use it to join challenges and win more money!"
                                     android:textColor="@color/white_f2f2f2"
                                     android:textSize="@dimen/sp_13"
                                     app:typeface="lato_regular" />
@@ -293,7 +293,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:minHeight="@dimen/dp_45"
-                                    android:text="Money you’ve deposited into wallet to join challenges and win cash! but cannot be withdrawn."
+                                    android:text="Money you’ve deposited into wallet to join challenges and win more money but cannot be withdrawn."
                                     android:textColor="@color/white_f2f2f2"
                                     android:textSize="@dimen/sp_13"
                                     app:typeface="lato_regular" />
@@ -406,7 +406,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:minHeight="@dimen/dp_45"
-                                    android:text="Money that can be withdrawn or can be used to join challenges and win cash."
+                                    android:text="Money that can be withdrawn or can be used to join challenges and win more money."
                                     android:textColor="@color/white_f2f2f2"
                                     android:textSize="@dimen/sp_13"
                                     app:typeface="lato_regular"/>
@@ -526,7 +526,7 @@
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="View or edit your details to withdraw cash"
+                                android:text="Add or edit your details to withdraw cash"
                                 android:textColor="@color/white_999999"
                                 android:textSize="@dimen/sp_11"
                                 app:typeface="lato_regular"
