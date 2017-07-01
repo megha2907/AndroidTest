@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,15 +22,20 @@ import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
@@ -59,9 +65,13 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
 
     private Button mUpdateAppLater;
 
+    private TextView mBtnSkip;
+
     private ViewPager mViewPager;
 
     private TextView mTvUpdateAppNext;
+
+    private boolean mChangeToSkip = false;
 
     private AppUpdateResponse mAppUpdateResponse;
 
@@ -87,7 +97,7 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
         mAppUpdateActionListener = listener;
     }
 
-    public static AppUpdateFragment newInstance(String screenType,AppUpdateActionListener listener) {
+    public static AppUpdateFragment newInstance(String screenType, AppUpdateActionListener listener) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.BundleKeys.SCREEN, screenType);
 
@@ -128,6 +138,7 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
         mViewPager = (ViewPager) findViewById(R.id.update_app_vp);
         mUpdateAppBtn = (Button) findViewById(R.id.update_app_btn);
         mUpdateAppLater = (Button) findViewById(R.id.update_app_later);
+        mBtnSkip = (TextView) findViewById(R.id.update_app_btn_skip);
         mTvUpdateAppNext = (TextView) findViewById(R.id.update_app_btn_next);
         TextView screenHeading = (TextView) findViewById(R.id.update_app_tv_heading);
         RelativeLayout rlViewPager = (RelativeLayout) findViewById(R.id.update_app_rl_viewpager);
@@ -136,7 +147,8 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
         mUpdateAppLater.setOnClickListener(this);
         backBtn.setOnClickListener(this);
         mTvUpdateAppNext.setOnClickListener(this);
-
+        mBtnSkip.setOnClickListener(this);
+        mBtnSkip.setVisibility(View.GONE);
 
         if (bundle.getString(Constants.BundleKeys.SCREEN) != null) {
 
@@ -148,6 +160,12 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
                 RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) rlViewPager.getLayoutParams();
                 paramsFour.setMargins(0, 50, 0, 100);
                 rlViewPager.setLayoutParams(paramsFour);
+
+                if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
+                    backBtn.setVisibility(View.GONE);
+                    mBtnSkip.setVisibility(View.VISIBLE);
+                }
+
             } else if (bundle.getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_FORCE_UPDATE)) {
                 screenHeading.setText("Update the App !");
                 mUpdateAppLater.setVisibility(View.VISIBLE);
@@ -173,6 +191,25 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
 
     }
 
+    private void callWhatsNewShownApi() {
+
+        MyWebService.getInstance().getWhatsNewShown().enqueue(
+                new NostragamusCallBack<ApiResponse>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        super.onResponse(call, response);
+
+                        if (response.isSuccessful() && response.body() != null) {
+                            NostragamusDataHandler.getInstance().setWhatsNewShown(true);
+                        } else {
+                            NostragamusDataHandler.getInstance().setWhatsNewShown(true);
+                        }
+                    }
+                }
+        );
+
+    }
+
     /* Set Details of App Update */
     private void initAppUpdateSlides() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
@@ -186,8 +223,16 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
 
                 if (position < mAppUpdateList.size() - 1) {
                     mTvUpdateAppNext.setText("Next");
+                    if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
+                        mChangeToSkip = false;
+                        mBtnSkip.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     mTvUpdateAppNext.setText("Done");
+                    if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
+                        mChangeToSkip = true;
+                        mBtnSkip.setVisibility(View.GONE);
+                    }
                 }
 
             }
@@ -322,8 +367,18 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
                 }
                 break;
 
+            case R.id.update_app_btn_skip:
+                callWhatsNewShownApi();
+                navigateToHome();
+                break;
+
             case R.id.update_app_btn_next:
-                mViewPager.setCurrentItem(getItem(+1), true);
+                if (mChangeToSkip) {
+                    callWhatsNewShownApi();
+                    navigateToHome();
+                } else {
+                    mViewPager.setCurrentItem(getItem(+1), true);
+                }
                 break;
 
             case R.id.update_app_btn:

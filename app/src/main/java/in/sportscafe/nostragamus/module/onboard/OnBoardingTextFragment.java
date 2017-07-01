@@ -73,8 +73,7 @@ public class OnBoardingTextFragment extends NostragamusFragment {
                 populateUserReferralCode(onBoardingDto.getReferralCode());
             }
             referralCode.setVisibility(View.VISIBLE);
-            onBoardingTitle.setTextSize(16);
-            onBoardingTitle.setTypeface(null, Typeface.BOLD);
+            onBoardingTitle.setTextSize(18);
         } else {
             referralCode.setVisibility(View.GONE);
             RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) onBoardingDesc.getLayoutParams();

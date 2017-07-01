@@ -26,6 +26,7 @@ import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeJoinDialogFr
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
+import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.WalletOrBankConnectActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
@@ -324,17 +325,25 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
     }
 
     private void performOnBoardFlow(UserInfo userInfo) {
-        if (userInfo.getInfoDetails().getDisclaimerAccepted()==null) {
-//            if (!userInfo.getInfoDetails().getDisclaimerAccepted()) {
-                launchEditProfile();
-                com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
-//            }else {
-//                checkPaymentInfoProvidedOrRequired(userInfo);
-//                com.jeeva.android.Log.d(TAG, "[onBoard] Launch PaymentDetails(if required) for once");
-//            }
-        } else {
-            checkPaymentInfoProvidedOrRequired(userInfo);
-            com.jeeva.android.Log.d(TAG, "[onBoard] Launch PaymentDetails(if required) for once");
+
+        if (userInfo.getInfoDetails().getDisclaimerAccepted()!=null){
+            if (userInfo.getInfoDetails().getWhatsNewShown()==null){
+                launchWhatsNew();
+                com.jeeva.android.Log.d(TAG, "[onBoard] Launch What's New(if required) for once");
+            }
+        }else {
+            launchEditProfile();
+            com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
+        }
+
+    }
+
+    private void launchWhatsNew() {
+
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), AppUpdateActivity.class);
+            intent.putExtra(Constants.BundleKeys.SCREEN,Constants.ScreenNames.WHATS_NEW);
+            startActivity(intent);
         }
     }
 

@@ -316,7 +316,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     @Override
     public void changeViewforLogin(String username) {
         mToolbarTitle.setText("Complete your profile");
-        mBtnUpdateDone.setText("NEXT");
+        mBtnUpdateDone.setText("Update Details");
     }
 
     @Override
@@ -410,13 +410,13 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private void enterReferralCodeManually() {
 
-        mEtReferralCode1.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
-        mEtReferralCode2.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
-        mEtReferralCode3.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
-        mEtReferralCode4.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
-        mEtReferralCode5.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
-        mEtReferralCode6.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
-        mEtReferralCode7.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
+        mEtReferralCode1.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
+        mEtReferralCode2.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
+        mEtReferralCode3.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
+        mEtReferralCode4.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
+        mEtReferralCode5.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
+        mEtReferralCode6.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
+        mEtReferralCode7.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
 
         mEtReferralCode1.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {

@@ -66,34 +66,39 @@
 
     <style name="InviteCodeStyle">
         <item name="android:layout_width">@dimen/dp_0</item>
-        <item name="android:layout_height">@dimen/dp_38</item>
+        <item name="android:layout_height">@dimen/dp_32</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/invite_edittext_bg</item>
+        <item name="android:background">@drawable/invite_edittext_selector_bg</item>
         <item name="android:gravity">center</item>
         <item name="android:imeOptions">actionNext</item>
         <item name="android:inputType">text|textNoSuggestions|textCapCharacters</item>
         <item name="android:maxLength">1</item>
         <item name="android:maxLines">1</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:layout_margin">@dimen/dp_4</item>
-        <item name="android:paddingBottom">@dimen/dp_1</item>
+        <item name="android:layout_margin">@dimen/dp_8</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/dp_20</item>
+        <item name="android:textSize">@dimen/dp_18</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">4</item>
     </style>
 
     <style name="InviteCodeLoginStyle">
         <item name="android:layout_width">@dimen/dp_0</item>
-        <item name="android:layout_height">@dimen/dp_38</item>
+        <item name="android:layout_height">@dimen/dp_32</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/invite_edittext_bg</item>
+        <item name="android:background">@drawable/invite_edittext_login_bg</item>
         <item name="android:gravity">center</item>
         <item name="android:maxLength">1</item>
         <item name="android:maxLines">1</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:layout_margin">@dimen/dp_4</item>
-        <item name="android:paddingBottom">@dimen/dp_1</item>
+        <item name="android:layout_margin">@dimen/dp_8</item>
         <item name="android:textColor">@color/white_80</item>
-        <item name="android:textSize">@dimen/dp_20</item>
+        <item name="android:textSize">@dimen/dp_18</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">4</item>
     </style>
 
     <style name="Theme.Transparent" parent="android:style/Theme.Translucent.NoTitleBar">

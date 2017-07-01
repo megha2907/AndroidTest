@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.jeeva.android.widgets.HmImageView;
@@ -52,6 +53,8 @@ public class OnBoardingFragment extends NostragamusFragment {
 
     private ViewPager mViewPager;
 
+    private RelativeLayout mOnBoardImageLayout;
+
     private List<OnBoardingDto> mOnBoardingList = new ArrayList<>();
 
     private AlphaAnimation mAnimIn;
@@ -75,6 +78,7 @@ public class OnBoardingFragment extends NostragamusFragment {
         mIvOnBoardIn = (HmImageView) findViewById(R.id.onboard_iv_image_in);
         mIvOnBoardOut = (HmImageView) findViewById(R.id.onboard_iv_image_out);
         mViewPager = (ViewPager) findViewById(R.id.onboard_vp);
+        mOnBoardImageLayout =(RelativeLayout)findViewById(R.id.onboarding_image_rl);
 
         mOnBoardingList = getOnBoardingList();
         initOnBoard();
@@ -132,6 +136,18 @@ public class OnBoardingFragment extends NostragamusFragment {
         mIvOnBoardIn.setImageUrl(getImage(position));
         mIvOnBoardIn.setAlpha(0.1f);
         mIvOnBoardIn.animate().alpha(1).setDuration(1000);
+
+        if (mOnBoardingList.get(position).getReferralCode()!=null) {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mOnBoardImageLayout.getLayoutParams();
+            params.height = 190;
+            params.width = 190;
+            mOnBoardImageLayout.setLayoutParams(params);
+        }else {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mOnBoardImageLayout.getLayoutParams();
+            params.height = 320;
+            params.width = 320;
+            mOnBoardImageLayout.setLayoutParams(params);
+        }
 
         //startTimer();
     }

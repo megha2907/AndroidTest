@@ -34,6 +34,9 @@ public class InfoDetails {
     @JsonProperty("user_accepted")
     private Boolean disclaimerAccepted;
 
+    @JsonProperty("seen_whats_new")
+    private Boolean whatsNewShown;
+
     @JsonProperty("wallet_init")
     private Integer walletInit;
 
@@ -133,5 +136,14 @@ public class InfoDetails {
         ReferUserCode = referUserCode;
     }
 
+    @JsonProperty("seen_whats_new")
+    public Boolean getWhatsNewShown() {
+        return whatsNewShown;
+    }
+
+    @JsonProperty("seen_whats_new")
+    public void setWhatsNewShown(Boolean whatsNewShown) {
+        this.whatsNewShown = whatsNewShown;
+    }
 
 }

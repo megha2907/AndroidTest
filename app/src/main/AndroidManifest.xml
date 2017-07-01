@@ -162,7 +162,7 @@
         <activity
             android:name=".module.user.myprofile.edit.EditProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden" />
         <!--<activity
             android:name=".module.user.sportselection.SportSelectionActivity"
             android:screenOrientation="portrait" />-->
