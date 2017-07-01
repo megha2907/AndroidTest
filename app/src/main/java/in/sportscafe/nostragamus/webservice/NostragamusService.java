@@ -277,4 +277,7 @@ public interface NostragamusService {
 
     @GET("v2/game/verifyReferralCode")
     Call<VerifyReferralCodeResponse> verifyReferralCode(@Query("referral_code") String referralCode);
+
+    @GET("v1/game/seenWhatsNew")
+    Call<ApiResponse> getWhatsNewShown();
 }

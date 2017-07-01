@@ -568,4 +568,12 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedBooleanData(SharedKeys.MARKETING_CAMPAIGN, marketingCampaign);
     }
 
+    public boolean isWhatsNewShown() {
+        return getSharedBooleanData(SharedKeys.WHATS_NEW_SHOWN, false);
+    }
+
+    public void setWhatsNewShown(boolean whatsNewShown) {
+        setSharedBooleanData(SharedKeys.WHATS_NEW_SHOWN, whatsNewShown);
+    }
+
 }

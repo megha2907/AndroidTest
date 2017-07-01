@@ -14,15 +14,17 @@
         app:ci_gravity="center"
         app:ci_height="@dimen/dp_8"
         app:ci_margin="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_20"
         app:ci_orientation="horizontal"
         app:ci_width="@dimen/dp_8" />
 
 
     <RelativeLayout
-        android:layout_width="@dimen/dp_150"
-        android:layout_height="@dimen/dp_150"
+        android:id="@+id/onboarding_image_rl"
+        android:layout_width="@dimen/dp_190"
+        android:layout_height="@dimen/dp_190"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_40"
         android:layout_centerHorizontal="true">
 
         <com.jeeva.android.widgets.HmImageView

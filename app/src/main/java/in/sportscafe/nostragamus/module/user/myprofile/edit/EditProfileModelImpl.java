@@ -97,7 +97,7 @@ public class EditProfileModelImpl implements EditProfileModel {
                         if (response.isSuccessful()) {
                             mUserInfo.setPhoto(response.body().getResult());
                             NostragamusDataHandler.getInstance().setUserInfo(mUserInfo);
-                            callUpdateUserApi(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName());
+                            //callUpdateUserApi(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName());
 
                             mEditProfileListener.onPhotoUpdate();
 

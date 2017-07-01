@@ -464,6 +464,11 @@ public class NostragamusAnalytics {
                     userProperties.put(UserProperties.REFERRAL_CAMPAIGN, campaign);
                 }
 
+                String walletInit = String.valueOf(NostragamusDataHandler.getInstance().getWalletInitialAmount());
+                if (!TextUtils.isEmpty(walletInit)) {
+                    userProperties.put(UserProperties.WALLET_INIT, walletInit);
+                }
+
                 mAmplitude.setUserProperties(userProperties);
                 Log.d("userProperties--", userProperties.toString());
             } catch (JSONException e) {

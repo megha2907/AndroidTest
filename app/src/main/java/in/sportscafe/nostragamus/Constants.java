@@ -104,6 +104,7 @@ public interface Constants {
         String UPDATE_TYPE = "updateType";
         String WALLET_INITIAL_AMOUNT = "walletInitialAmount";
         String MARKETING_CAMPAIGN = "marketingCampaign";
+        String WHATS_NEW_SHOWN = "whatsNewShown";
     }
 
     interface Alerts {
@@ -468,6 +469,7 @@ public interface Constants {
         String PRO_APP = "Pro App";
         String REFERRAL_CHANNEL = "Channel";
         String REFERRAL_CAMPAIGN = "Campaign";
+        String WALLET_INIT = "Wallet Initial Amount";
     }
 
     interface AppType {
