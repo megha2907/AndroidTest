@@ -526,7 +526,7 @@
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="View or edit your details to withdraw money"
+                                android:text="Add or edit your details to withdraw money"
                                 android:textColor="@color/white_999999"
                                 android:textSize="@dimen/sp_11"
                                 app:typeface="lato_regular"

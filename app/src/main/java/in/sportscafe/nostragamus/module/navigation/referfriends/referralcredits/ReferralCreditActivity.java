@@ -87,7 +87,7 @@ public class ReferralCreditActivity extends NostragamusActivity implements Refer
         navigateToReferFriend(referralCode,walletInit);
     }
 
-    private void navigateToReferFriend(String referralCode, String walletInit) {
+    private void navigateToReferFriend(final String referralCode, final String walletInit) {
         BranchUniversalObject buo = new BranchUniversalObject()
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(Constants.BundleKeys.WALLET_INITIAL_AMOUNT, walletInit)
@@ -107,8 +107,9 @@ public class ReferralCreditActivity extends NostragamusActivity implements Refer
                     @Override
                     public void onLinkCreate(String url, BranchError error) {
                         if (null == error) {
-                            String shareText = "I’m playing Nostragamus, the sports prediction app. Join and lets see who does better! Click this link to download the app " + url;
-                            AppSnippet.doGeneralShare(getApplicationContext(), shareText);
+                            String shareText = "If you love sports, try out India's first live sports predictions game and win REAL money." +
+                                    "Here's ₹ " + walletInit +" for you to enter a contest - just download the app using this link " + url +
+                                    "  or use my referral code "+ referralCode + " at login."; AppSnippet.doGeneralShare(getApplicationContext(), shareText);
                         } else {
                             ExceptionTracker.track(error.getMessage());
                         }

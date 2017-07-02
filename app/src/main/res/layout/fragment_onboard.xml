@@ -14,7 +14,6 @@
         app:ci_gravity="center"
         app:ci_height="@dimen/dp_8"
         app:ci_margin="@dimen/dp_8"
-        android:layout_marginBottom="@dimen/dp_20"
         app:ci_orientation="horizontal"
         app:ci_width="@dimen/dp_8" />
 
