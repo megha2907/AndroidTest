@@ -104,6 +104,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
 
                 TextView updateTextView = (TextView) view.findViewById(R.id.navigation_update_str_textView);
                 updateTextView.setTextColor(ContextCompat.getColor(updateTextView.getContext(), R.color.white));
+                updateTextView.setText("Update the App");
 
                 ImageView updateApp = (ImageView)findViewById(R.id.navigation_app_update_app_iv) ;
                 updateApp.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.navigation_update_app_icn));
@@ -120,6 +121,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
 
                 TextView updateTextView = (TextView) view.findViewById(R.id.navigation_update_str_textView);
                 updateTextView.setTextColor(ContextCompat.getColor(updateTextView.getContext(), R.color.scrollbar_indicator));
+                updateTextView.setText("App is up to date");
             }
         }
     }

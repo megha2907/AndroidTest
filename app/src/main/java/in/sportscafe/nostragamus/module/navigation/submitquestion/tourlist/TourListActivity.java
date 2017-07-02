@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
@@ -41,8 +42,11 @@ public class TourListActivity extends NostragamusActivity implements TourListVie
 
     public void initToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tournament_toolbar);
-        toolbar.setTitle("Select a Match");
+        TextView tvToolbar = (TextView) findViewById(R.id.tournament_toolbar_tv);
+        tvToolbar.setText("Select a Match");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         toolbar.setNavigationIcon(R.drawable.back_icon_grey);
         toolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {

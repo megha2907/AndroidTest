@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -34,8 +35,10 @@ public class HelpActivity extends NostragamusActivity implements HelpFragmentLis
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.help_toolbar);
-        toolbar.setTitle("Help");
+        TextView tvToolbar = (TextView) findViewById(R.id.help_toolbar_tv);
+        tvToolbar.setText("Help");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         toolbar.setNavigationIcon(R.drawable.back_icon_grey);
         toolbar.setNavigationOnClickListener(

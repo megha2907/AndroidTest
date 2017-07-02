@@ -77,8 +77,11 @@ public class AddQuestionActivity extends NostragamusActivity implements AddQuest
 
     public void initToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.add_question_toolbar);
-        toolbar.setTitle("Submit Question");
+        TextView tvToolbar = (TextView) findViewById(R.id.add_question_toolbar_tv);
+        tvToolbar.setText("Submit Question");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         toolbar.setNavigationIcon(R.drawable.back_icon_grey);
         toolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {

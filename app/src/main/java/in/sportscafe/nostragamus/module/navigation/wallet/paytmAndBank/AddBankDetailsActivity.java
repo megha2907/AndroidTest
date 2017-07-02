@@ -147,8 +147,11 @@ public class AddBankDetailsActivity extends NostragamusActivity implements View.
 
     private void initToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.bank_toolbar);
-        toolbar.setTitle("Bank Details");
+        TextView tvToolbar = (TextView) findViewById(R.id.bank_toolbar_tv);
+        tvToolbar.setText("Bank Details");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         toolbar.setNavigationIcon(R.drawable.back_icon_grey);
         toolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {

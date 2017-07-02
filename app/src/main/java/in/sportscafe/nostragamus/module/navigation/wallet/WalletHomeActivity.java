@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -50,8 +51,10 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.wallet_toolbar);
-        toolbar.setTitle("Wallet");
+        TextView tvToolbar = (TextView) findViewById(R.id.wallet_toolbar_tv);
+        tvToolbar.setText("Wallet");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         toolbar.setNavigationIcon(R.drawable.back_icon_grey);
         toolbar.setNavigationOnClickListener(
