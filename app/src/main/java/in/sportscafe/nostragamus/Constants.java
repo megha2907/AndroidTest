@@ -664,6 +664,7 @@ public interface Constants {
         String ABOUT_NOSTRAGAMUS = "http://nostragamus.in/about.html";
         String TERMS_SERVICE = "http://nostragamus.in/terms.html";
         String PRIVACY = "http://nostragamus.in/privacy.html";
+        String REFERRAL_TERMS = "http://nostragamus.in/referralapp.html";
 
     }
 

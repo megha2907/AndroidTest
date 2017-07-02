@@ -51,7 +51,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.refer_friend_toolbar);
         TextView tvToolbar = (TextView) findViewById(R.id.refer_friend_toolbar_tv);
-        tvToolbar.setText("Refer a Friend and earn cash");
+        tvToolbar.setText("Refer a Friend and earn money");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -82,7 +82,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
 
     @Override
     public void onTermsClicked() {
-
+        navigateToWebView(Constants.WebPageUrls.REFERRAL_TERMS, "Terms and Conditions");
     }
 
     @Override

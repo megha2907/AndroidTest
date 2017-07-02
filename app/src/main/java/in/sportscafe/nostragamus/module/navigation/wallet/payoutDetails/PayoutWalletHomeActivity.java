@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import org.parceler.Parcels;
 
@@ -45,8 +46,10 @@ public class PayoutWalletHomeActivity extends NostragamusActivity implements Pay
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.payout_toolbar);
-        toolbar.setTitle("Payout Details");
+        TextView tvToolbar = (TextView) findViewById(R.id.payout_toolbar_tv);
+        tvToolbar.setText("Withdrawal details");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         toolbar.setNavigationIcon(R.drawable.back_icon_grey);
         toolbar.setNavigationOnClickListener(

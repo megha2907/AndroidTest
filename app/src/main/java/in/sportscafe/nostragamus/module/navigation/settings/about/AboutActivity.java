@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.navigation.settings.about;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -32,8 +33,10 @@ public class AboutActivity extends NostragamusActivity implements AboutFragmentL
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.about_toolbar);
-        toolbar.setTitle("About");
+        TextView tvToolbar = (TextView) findViewById(R.id.about_toolbar_tv);
+        tvToolbar.setText("About");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         toolbar.setNavigationIcon(R.drawable.back_icon_grey);
         toolbar.setNavigationOnClickListener(

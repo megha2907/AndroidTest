@@ -120,8 +120,11 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
 
     public void initToolBar() {
         mtoolbar = (Toolbar) findViewById(R.id.paytm_toolbar);
-        mtoolbar.setTitle("PayTm Details");
+        TextView tvToolbar = (TextView) findViewById(R.id.paytm_toolbar_tv);
+        tvToolbar.setText("PayTm Details");
         setSupportActionBar(mtoolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
         mtoolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {

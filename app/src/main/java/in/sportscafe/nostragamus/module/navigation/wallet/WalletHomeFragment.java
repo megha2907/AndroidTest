@@ -137,14 +137,22 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
             int withdrawInProgress = WalletHelper.getWithdrawalsInProgress();
             if (withdrawInProgress > 0) {
                 TextView withdrawProgressTextView = (TextView) rootView.findViewById(R.id.wallet_home_withdraw_progress_textView);
-                withdrawProgressTextView.setText(withdrawInProgress + " withdrawals in progress");
+                if (withdrawInProgress > 1) {
+                    withdrawProgressTextView.setText(withdrawInProgress + " withdrawals in progress");
+                }else {
+                    withdrawProgressTextView.setText(withdrawInProgress + " withdrawal in progress");
+                }
             }
 
             // Payout accounts
             int payoutAccount = WalletHelper.getPayoutAccountsAdded();
             if (payoutAccount > 0) {
                 TextView payoutAccountsTextView = (TextView) rootView.findViewById(R.id.wallet_home_account_added_textView);
-                payoutAccountsTextView.setText(payoutAccount + " account added");
+                if (payoutAccount > 1) {
+                    payoutAccountsTextView.setText(payoutAccount + " accounts added");
+                }else {
+                    payoutAccountsTextView.setText(payoutAccount + " account added");
+                }
             }
         }
     }

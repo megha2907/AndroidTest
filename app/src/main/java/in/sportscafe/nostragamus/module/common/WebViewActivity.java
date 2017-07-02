@@ -7,9 +7,11 @@ package in.sportscafe.nostragamus.module.common;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import in.sportscafe.nostragamus.R;
 
@@ -17,9 +19,9 @@ public class WebViewActivity extends NostragamusActivity {
 
     private WebView webView;
     private Toolbar mtoolbar;
-    private  Bundle mbundle;
-    private  String mUrl;
-    private  String mtoolbarHeading;
+    private Bundle mbundle;
+    private String mUrl;
+    private String mtoolbarHeading;
 
 
     @Override
@@ -36,7 +38,7 @@ public class WebViewActivity extends NostragamusActivity {
 
         mbundle = getIntent().getExtras();
         mUrl = mbundle.getString("url");
-        mtoolbarHeading= mbundle.getString("heading");
+        mtoolbarHeading = mbundle.getString("heading");
 
         startWebView(mUrl);
         initToolBar();
@@ -57,13 +59,14 @@ public class WebViewActivity extends NostragamusActivity {
             }
 
             //Show loader on url load
-            public void onLoadResource (WebView view, String url) {
+            public void onLoadResource(WebView view, String url) {
 
             }
-            public void onPageFinished(WebView view, String url) {
-                try{
 
-                }catch(Exception exception){
+            public void onPageFinished(WebView view, String url) {
+                try {
+
+                } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             }
@@ -98,7 +101,7 @@ public class WebViewActivity extends NostragamusActivity {
     @Override
     // Detect when the back button is pressed
     public void onBackPressed() {
-        if(webView.canGoBack()) {
+        if (webView.canGoBack()) {
             webView.goBack();
         } else {
             // Let the system handle the back button
@@ -108,8 +111,17 @@ public class WebViewActivity extends NostragamusActivity {
 
     public void initToolBar() {
         mtoolbar = (Toolbar) findViewById(R.id.webview_toolbar);
-        mtoolbar.setTitle(mtoolbarHeading);
+
+        TextView tvToolbar = (TextView) findViewById(R.id.webview_toolbar_tv);
+        if (!TextUtils.isEmpty(mtoolbarHeading)) {
+            tvToolbar.setText(mtoolbarHeading);
+        }else {
+            tvToolbar.setText("Nostragamus");
+        }
+
         setSupportActionBar(mtoolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         mtoolbar.setNavigationIcon(R.drawable.back_icon_grey);
         mtoolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {
