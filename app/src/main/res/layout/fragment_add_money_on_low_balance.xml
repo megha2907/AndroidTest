@@ -99,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="Total Balance"
+                        android:text="Wallet Balance"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_13"
                         app:typeface="lato_regular" />
