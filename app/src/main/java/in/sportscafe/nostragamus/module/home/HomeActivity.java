@@ -326,14 +326,18 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private void performOnBoardFlow(UserInfo userInfo) {
 
-        if (userInfo.getInfoDetails().getDisclaimerAccepted()!=null){
-            if (userInfo.getInfoDetails().getWhatsNewShown()==null){
-                launchWhatsNew();
-                com.jeeva.android.Log.d(TAG, "[onBoard] Launch What's New(if required) for once");
+//        if (userInfo.getInfoDetails().getDisclaimerAccepted()!=null){
+//            if (userInfo.getInfoDetails().getWhatsNewShown()==null){
+//                launchWhatsNew();
+//                com.jeeva.android.Log.d(TAG, "[onBoard] Launch What's New(if required) for once");
+//            }
+//        }
+
+        if (userInfo !=null) {
+            if (userInfo.getInfoDetails().getDisclaimerAccepted() == null) {
+                launchEditProfile();
+                com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
             }
-        }else {
-            launchEditProfile();
-            com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
         }
 
     }

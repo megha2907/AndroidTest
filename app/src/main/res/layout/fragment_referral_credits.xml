@@ -54,6 +54,7 @@
                     app:typeface="lato_regular" />
 
                 <RelativeLayout
+                    android:id="@+id/referral_credits_pro_powerup_rl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_14"
@@ -174,8 +175,8 @@
                                 android:includeFontPadding="false"
                                 android:text="Powerups Earned"
                                 android:textColor="@color/grey6"
-                                android:textSize="@dimen/dp_12"
-                                app:typeface="lato_bold" />
+                                android:textSize="@dimen/sp_13"
+                                app:typeface="lato_regular" />
 
                             <ImageView
                                 android:layout_width="@dimen/dp_8"
@@ -221,8 +222,8 @@
                                 android:includeFontPadding="false"
                                 android:text="Money Earned"
                                 android:textColor="@color/grey6"
-                                android:textSize="@dimen/dp_12"
-                                app:typeface="lato_bold" />
+                                android:textSize="@dimen/sp_13"
+                                app:typeface="lato_regular" />
 
                             <ImageView
                                 android:layout_width="@dimen/dp_8"
@@ -237,8 +238,150 @@
 
                         </RelativeLayout>
 
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/referral_credits_ps_powerup_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_90"
+                    android:clipToPadding="false"
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/dp_18"
+                    android:layout_marginRight="@dimen/dp_18"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:paddingBottom="@dimen/dp_12"
+                    android:background="@drawable/referral_powerups_bg"
+                    android:elevation="@dimen/dp_5">
+
+                    <LinearLayout
+                        android:id="@+id/referral_credits_ps_powerup_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="@dimen/dp_36"
+                        android:layout_marginRight="@dimen/dp_36"
+                        android:layout_marginTop="@dimen/dp_14"
+                        android:layout_weight="3"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_gravity="left"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/referral_credits_ps_powerup_2x"
+                                android:layout_width="@dimen/dp_24"
+                                android:layout_height="@dimen/dp_24"
+                                android:layout_marginTop="@dimen/dp_4"
+                                android:gravity="center"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/double_powerup_small"
+                                android:visibility="visible" />
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/referral_credits_ps_2x_powerup_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_22"
+                                android:layout_marginLeft="@dimen/dp_8"
+                                android:text="0"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                app:typeface="lato_bold" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_22"
+                            android:orientation="horizontal"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/referral_credits_ps_noneg_powerup"
+                                android:layout_width="@dimen/dp_24"
+                                android:layout_height="@dimen/dp_24"
+                                android:layout_marginTop="@dimen/dp_4"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/no_negative_powerup_small"
+                                android:visibility="visible" />
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/referral_credits_ps_noneg_powerup_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_22"
+                                android:layout_marginLeft="@dimen/dp_8"
+                                android:text="0"
+                                android:layout_gravity="center"
+                                app:typeface="lato_bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_22"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/referral_credits_ps_player_poll_powerup"
+                                android:layout_width="@dimen/dp_24"
+                                android:layout_height="@dimen/dp_24"
+                                android:layout_marginTop="@dimen/dp_4"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/audience_poll_powerup_small"
+                                android:visibility="visible"/>
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/referral_credits_ps_player_poll_powerup_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_22"
+                                android:layout_marginLeft="@dimen/dp_8"
+                                android:text="0"
+                                android:layout_gravity="center"
+                                app:typeface="lato_bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/referral_credits_ps_powerup_earned_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/referral_credits_ps_powerup_ll"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:includeFontPadding="false"
+                        android:text="Powerups Earned"
+                        android:textColor="@color/grey6"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_8"
+                        android:layout_height="@dimen/dp_8"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/dp_15"
+                        android:layout_marginRight="@dimen/dp_12"
+                        android:rotation="180"
+                        android:visibility="gone"
+                        android:src="@drawable/back_icon_grey" />
 
                 </RelativeLayout>
+
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/referral_credits_friends_act_text"
@@ -276,6 +419,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_marginTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_20"
                     android:gravity="center_horizontal"
                     android:visibility="gone">
 

@@ -132,6 +132,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         initOnBoardFlow();
         initReferralCode();
 
+
         if (!TextUtils.isEmpty(mEtNickName.getEditText().getText())) {
             String editName = mEtNickName.getEditText().getText().toString();
             mEtNickName.getEditText().setSelection(editName.length());
@@ -141,8 +142,8 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private void initReferralCode() {
 
-        mReferralCodeText = (TextView)findViewById(R.id.edit_profile_tv_referral_code_txt);
-        referralCodeLayout =(LinearLayout)findViewById(R.id.edit_profile_et_referral_code);
+        mReferralCodeText = (TextView) findViewById(R.id.edit_profile_tv_referral_code_txt);
+        referralCodeLayout = (LinearLayout) findViewById(R.id.edit_profile_et_referral_code);
 
         mEtReferralCode1 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_one);
         mEtReferralCode2 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_two);
@@ -152,19 +153,24 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         mEtReferralCode6 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_six);
         mEtReferralCode7 = (EditText) findViewById(R.id.edit_profile_et_referral_code_char_seven);
 
-        if (!NostragamusDataHandler.getInstance().isMarketingCampaign()) {
+        if (BuildConfig.IS_PAID_VERSION) {
+            if (!NostragamusDataHandler.getInstance().isMarketingCampaign()) {
 
-            mReferralCodeText.setVisibility(View.VISIBLE);
-            referralCodeLayout.setVisibility(View.VISIBLE);
+                mReferralCodeText.setVisibility(View.VISIBLE);
+                referralCodeLayout.setVisibility(View.VISIBLE);
 
-            if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralCode())) {
-                populateUserReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());
-                mReferralCode = NostragamusDataHandler.getInstance().getUserReferralCode();
-                NoEditingReferralCode();
+                if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralCode())) {
+                    populateUserReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());
+                    mReferralCode = NostragamusDataHandler.getInstance().getUserReferralCode();
+                    NoEditingReferralCode();
+                } else {
+                    enterReferralCodeManually();
+                }
             } else {
-                enterReferralCodeManually();
+                mReferralCodeText.setVisibility(View.GONE);
+                referralCodeLayout.setVisibility(View.GONE);
             }
-        }else {
+        } else {
             mReferralCodeText.setVisibility(View.GONE);
             referralCodeLayout.setVisibility(View.GONE);
         }
@@ -410,13 +416,13 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     private void enterReferralCodeManually() {
 
-        mEtReferralCode1.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
-        mEtReferralCode2.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
-        mEtReferralCode3.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
-        mEtReferralCode4.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
-        mEtReferralCode5.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
-        mEtReferralCode6.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
-        mEtReferralCode7.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(),new InputFilter.LengthFilter(1)});
+        mEtReferralCode1.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(), new InputFilter.LengthFilter(1)});
+        mEtReferralCode2.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(), new InputFilter.LengthFilter(1)});
+        mEtReferralCode3.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(), new InputFilter.LengthFilter(1)});
+        mEtReferralCode4.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(), new InputFilter.LengthFilter(1)});
+        mEtReferralCode5.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(), new InputFilter.LengthFilter(1)});
+        mEtReferralCode6.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(), new InputFilter.LengthFilter(1)});
+        mEtReferralCode7.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps(), new InputFilter.LengthFilter(1)});
 
         mEtReferralCode1.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {

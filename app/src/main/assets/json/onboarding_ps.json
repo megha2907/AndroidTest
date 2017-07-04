@@ -2,16 +2,19 @@
   {
     "title": "Predict Sports Events",
     "desc": "Get in-match stats, swipe to predict",
-    "imageResName": "onboard_predict_match"
+    "imageResName": "onboard_predict_match",
+    "imageUrl":"https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_predict_match.png"
   },
   {
     "title": "Play Weekly Challenges",
     "desc": "Play for fun",
-    "imageResName": "onboard_join_public"
+    "imageResName": "onboard_join_public",
+    "imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_join_public.png"
   },
   {
     "title": "War With Friends",
     "desc": "Create your own groups",
-    "imageResName": "onboard_war_friends"
+    "imageResName": "onboard_war_friends",
+    "imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_war_friends.png"
   }
 ]

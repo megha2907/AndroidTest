@@ -10,6 +10,7 @@ import com.jeeva.android.ExceptionTracker;
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -52,7 +53,11 @@ public class ReferralCreditActivity extends NostragamusActivity implements Refer
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.referral_credits_toolbar);
         TextView tvToolbar = (TextView) findViewById(R.id.referral_credits_toolbar_tv);
-        tvToolbar.setText("Referral Credits");
+        if (BuildConfig.IS_PAID_VERSION) {
+            tvToolbar.setText("Referral Credits");
+        }else {
+            tvToolbar.setText("My Friends");
+        }
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 

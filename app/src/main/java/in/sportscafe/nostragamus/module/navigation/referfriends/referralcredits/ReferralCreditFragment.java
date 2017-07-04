@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
@@ -40,6 +41,13 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
     private TextView tvRCPowerupNonegCount;
     private TextView tvRCPowerupPlayerPollCount;
     private TextView tvRCMoneyEarned;
+
+    private RelativeLayout proPowerUpsLayout;
+
+    private TextView tvPSPowerup2xCount;
+    private TextView tvPSPowerupNonegCount;
+    private TextView tvPSPowerupPlayerPollCount;
+    private RelativeLayout psPowerUpsLayout;
 
     private RecyclerView mReferralHistoryRecyclerView;
     private ReferralHistoryAdapter mReferralHistoryAdapter;
@@ -101,7 +109,7 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
         if (BuildConfig.IS_PAID_VERSION) {
             appFlavor = "PRO";
         } else {
-            appFlavor = null;
+            appFlavor = "PS";
         }
         showProgressbar();
         ReferralCreditApiModelImpl.newInstance(new ReferralCreditApiModelImpl.ReferralCreditApiListener() {
@@ -138,6 +146,13 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
         tvRCPowerupNonegCount = (TextView) rootView.findViewById(R.id.referral_credits_noneg_powerup_count);
         tvRCPowerupPlayerPollCount = (TextView) rootView.findViewById(R.id.referral_credits_player_poll_powerup_count);
         tvRCMoneyEarned = (TextView) rootView.findViewById(R.id.referral_credits_money_earned);
+        proPowerUpsLayout = (RelativeLayout) rootView.findViewById(R.id.referral_credits_pro_powerup_rl);
+        psPowerUpsLayout = (RelativeLayout) rootView.findViewById(R.id.referral_credits_ps_powerup_rl);
+
+        tvPSPowerup2xCount = (TextView) rootView.findViewById(R.id.referral_credits_ps_2x_powerup_count);
+        tvPSPowerupNonegCount = (TextView) rootView.findViewById(R.id.referral_credits_ps_noneg_powerup_count);
+        tvPSPowerupPlayerPollCount = (TextView) rootView.findViewById(R.id.referral_credits_ps_player_poll_powerup_count);
+
         rootView.findViewById(R.id.refer_friend_btn).setOnClickListener(this);
 
         setReferralInfo(userReferralInfo);
@@ -176,13 +191,31 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
             mReferralCode = userReferralInfo.getReferralCode();
             mWalletInit = String.valueOf(userReferralInfo.getWalletInitialAmount());
 
+            tvPSPowerup2xCount.setText(String.valueOf(powerUp2xCount));
+            tvPSPowerupNonegCount.setText(String.valueOf(powerUpNonNegsCount));
+            tvPSPowerupPlayerPollCount.setText(String.valueOf(powerUpPlayerPollCount));
+
         } else {
             tvRCFriendsReferred.setText("0 Friends Added");
             tvRCPowerup2xCount.setText("0");
             tvRCPowerupNonegCount.setText("0");
             tvRCPowerupPlayerPollCount.setText("0");
+
+            tvPSPowerup2xCount.setText("0");
+            tvPSPowerupNonegCount.setText("0");
+            tvPSPowerupPlayerPollCount.setText("0");
+
         }
 
+        showOrHideContentBasedOnAppType();
+
+    }
+
+    private void showOrHideContentBasedOnAppType() {
+        if (!BuildConfig.IS_PAID_VERSION) {
+            proPowerUpsLayout.setVisibility(View.GONE);
+            psPowerUpsLayout.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -202,7 +235,9 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
                 mReferralHistoryRecyclerView.setVisibility(View.VISIBLE);
             }
         }
+
     }
+
 
     @Override
     public void onClick(View view) {

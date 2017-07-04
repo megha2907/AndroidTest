@@ -161,10 +161,10 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
                 paramsFour.setMargins(0, 50, 0, 100);
                 rlViewPager.setLayoutParams(paramsFour);
 
-                if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
-                    backBtn.setVisibility(View.GONE);
-                    mBtnSkip.setVisibility(View.VISIBLE);
-                }
+//                if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
+//                    backBtn.setVisibility(View.GONE);
+//                    mBtnSkip.setVisibility(View.VISIBLE);
+//                }
 
             } else if (bundle.getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_FORCE_UPDATE)) {
                 screenHeading.setText("Update the App !");
@@ -223,16 +223,16 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
 
                 if (position < mAppUpdateList.size() - 1) {
                     mTvUpdateAppNext.setText("Next");
-                    if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
-                        mChangeToSkip = false;
-                        mBtnSkip.setVisibility(View.VISIBLE);
-                    }
+//                    if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
+//                        mChangeToSkip = false;
+//                        mBtnSkip.setVisibility(View.VISIBLE);
+//                    }
                 } else {
                     mTvUpdateAppNext.setText("Done");
-                    if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
-                        mChangeToSkip = true;
-                        mBtnSkip.setVisibility(View.GONE);
-                    }
+//                    if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
+//                        mChangeToSkip = true;
+//                        mBtnSkip.setVisibility(View.GONE);
+//                    }
                 }
 
             }
@@ -373,12 +373,12 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
                 break;
 
             case R.id.update_app_btn_next:
-                if (mChangeToSkip) {
-                    callWhatsNewShownApi();
-                    navigateToHome();
-                } else {
+//                if (mChangeToSkip) {
+//                    callWhatsNewShownApi();
+//                    navigateToHome();
+//                } else {
                     mViewPager.setCurrentItem(getItem(+1), true);
-                }
+                //}
                 break;
 
             case R.id.update_app_btn:
@@ -388,7 +388,11 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
                     if (BuildConfig.IS_PAID_VERSION) {
                         downloadAndInstallApp(mAppLink);
                     } else {
-                        navigateAppHostedUrl(mAppLink);
+                        if(mAppLink.contains("apk")){
+                            downloadAndInstallApp(mAppLink);
+                        }else {
+                            navigateAppHostedUrl(mAppLink);
+                        }
                     }
                 }
                 NostragamusAnalytics.getInstance().trackUpdateApp(Constants.AnalyticsActions.CLICKED);
