@@ -99,7 +99,7 @@
                     android:text="Wallet"
                     android:layout_toRightOf="@id/wallet_img"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:text="Power Ups Bank"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
@@ -178,26 +178,28 @@
                     android:src="@drawable/navigation_refer_icon"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/navigation_earn_more_tv_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Refer a friend and earn "
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
                 <ImageView
+                    android:id="@+id/navigation_earn_more_iv"
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
-                    android:layout_marginTop="@dimen/dp_1"
-                    android:src="@drawable/navigation_earn_more_icon"/>
+                    android:layout_marginTop="@dimen/dp_1" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/navigation_earn_more_tv_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" money!"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />
 
             </LinearLayout>
@@ -233,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:text="What's New?"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
@@ -268,7 +270,7 @@
                     android:layout_height="wrap_content"
                     android:text="Submit a question"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
@@ -303,7 +305,7 @@
                     android:layout_height="wrap_content"
                     android:text="Help"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
@@ -338,7 +340,7 @@
                     android:layout_height="wrap_content"
                     android:text="Settings"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
@@ -374,7 +376,7 @@
                     android:layout_height="wrap_content"
                     android:text="App is up to date"
                     android:textColor="@color/scrollbar_indicator"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
@@ -393,7 +395,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:textColor="@color/scrollbar_indicator"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />
 
             </LinearLayout>

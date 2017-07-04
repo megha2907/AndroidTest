@@ -15,6 +15,7 @@ import com.jeeva.android.ExceptionTracker;
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -51,7 +52,11 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.refer_friend_toolbar);
         TextView tvToolbar = (TextView) findViewById(R.id.refer_friend_toolbar_tv);
-        tvToolbar.setText("Refer a Friend and earn money");
+        if (BuildConfig.IS_PAID_VERSION) {
+            tvToolbar.setText("Refer a Friend and earn money");
+        }else {
+            tvToolbar.setText("Refer a Friend and earn powerups");
+        }
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 

@@ -34,11 +34,12 @@ import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity;
 
-public class NavigationFragment extends BaseFragment implements View.OnClickListener{
+public class NavigationFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String TAG = NavigationFragment.class.getSimpleName();
 
-    public NavigationFragment() {}
+    public NavigationFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,7 +87,17 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
         if (!BuildConfig.IS_PAID_VERSION) {
             if (getView() != null) {
                 getView().findViewById(R.id.navigation_wallet_layout).setVisibility(View.GONE);
+
+                /*change Earn More Money text to Earn More Powerups in playstore app */
+                TextView navEarnMore = (TextView) findViewById(R.id.navigation_earn_more_tv_two);
+                navEarnMore.setText(" powerups!");
+                ImageView navEarnMoreIcon = (ImageView) findViewById(R.id.navigation_earn_more_iv);
+                navEarnMoreIcon.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.navigation_powerup_icon));
+
             }
+        } else {
+            ImageView navEarnMoreIcon = (ImageView) findViewById(R.id.navigation_earn_more_iv);
+            navEarnMoreIcon.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.navigation_earn_more_icon));
         }
     }
 
@@ -106,18 +117,18 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 updateTextView.setTextColor(ContextCompat.getColor(updateTextView.getContext(), R.color.white));
                 updateTextView.setText("Update the App");
 
-                ImageView updateApp = (ImageView)findViewById(R.id.navigation_app_update_app_iv) ;
-                updateApp.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.navigation_update_app_icn));
+                ImageView updateApp = (ImageView) findViewById(R.id.navigation_app_update_app_iv);
+                updateApp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.navigation_update_app_icn));
 
             } else {
                 view.findViewById(R.id.navigation_app_update_layout).setOnClickListener(null);
                 view.findViewById(R.id.navigation_app_update_available_imageView).setVisibility(View.GONE);
 
-                ImageView updateApp = (ImageView)findViewById(R.id.navigation_app_update_app_iv) ;
+                ImageView updateApp = (ImageView) findViewById(R.id.navigation_app_update_app_iv);
                 TextView versionNameTextView = (TextView) view.findViewById(R.id.navigation_version_textView);
-                versionNameTextView.setText("Ver - "+Nostragamus.getInstance().getAppVersionName());
-                versionNameTextView.setTextColor(ContextCompat.getColor(getContext(),R.color.scrollbar_indicator));
-                updateApp.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.navigation_update_app_dark_icon));
+                versionNameTextView.setText("Ver - " + Nostragamus.getInstance().getAppVersionName());
+                versionNameTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.scrollbar_indicator));
+                updateApp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.navigation_update_app_dark_icon));
 
                 TextView updateTextView = (TextView) view.findViewById(R.id.navigation_update_str_textView);
                 updateTextView.setTextColor(ContextCompat.getColor(updateTextView.getContext(), R.color.scrollbar_indicator));
@@ -231,7 +242,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     private void onWhatsNewClicked() {
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), AppUpdateActivity.class);
-            intent.putExtra(Constants.BundleKeys.SCREEN,Constants.ScreenNames.WHATS_NEW);
+            intent.putExtra(Constants.BundleKeys.SCREEN, Constants.ScreenNames.WHATS_NEW);
             startActivity(intent);
         }
     }
@@ -260,7 +271,6 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     }
 
     /**
-     *
      * @return true if newer app version available
      */
     private boolean isNewVersionAvailable() {
