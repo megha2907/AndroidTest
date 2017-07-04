@@ -116,7 +116,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
                     public void onLinkCreate(String url, BranchError error) {
                         if (null == error) {
                             String shareText = "If you love sports, try out India's first live sports predictions game and win REAL money." +
-                                    "Here's ₹ " + walletInit +"for you to enter a contest - just download the app using this link " + url +
+                                    "Here's ₹ " + walletInit +" for you to enter a contest - just download the app using this link " + url +
                                     "  or use my referral code "+ referralCode + " at login.";
                             AppSnippet.doGeneralShare(getApplicationContext(), shareText);
                         } else {
