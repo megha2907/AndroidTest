@@ -35,12 +35,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
+import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -765,8 +767,14 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     }
 
     private void showOrHideEditAnswerButton() {
-        if (mIsMatchStarted && mRlEditAnswers != null) {
-            // If match started, answers can not be edited
+
+        if (BuildConfig.IS_PAID_VERSION) {
+            if (mIsMatchStarted && mRlEditAnswers != null) {
+                // If match started, answers can not be edited
+                mRlEditAnswers.setVisibility(View.GONE);
+            }
+        } else {
+            // If Playstore App , answers can not be edited
             mRlEditAnswers.setVisibility(View.GONE);
         }
     }

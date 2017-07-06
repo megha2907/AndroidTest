@@ -96,6 +96,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
                 holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.paid_join_btn_bg));
                 holder.mBtnJoin.setClickable(true);
             }
+
             mTvMaxEntriesCount = String.valueOf(memberDetails.getMaxCount());
         }
 
@@ -145,7 +146,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
         } else {
             holder.mLlRewardDropDown.setVisibility(View.GONE);
             holder.mTvNumberOfPrizes.setVisibility(View.GONE);
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.mTvMaxEntries.getLayoutParams();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.mTvMaxEntries.getLayoutParams();
             params.setMargins(0, 0, 0, 22);
             holder.mTvMaxEntries.setLayoutParams(params);
         }
