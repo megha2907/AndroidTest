@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.onboard;
 
 import android.animation.Animator;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -110,6 +112,11 @@ public class OnBoardingFragment extends NostragamusFragment {
         CircleIndicator cpi = (CircleIndicator) findViewById(R.id.onboard_cpi_indicator);
         cpi.setViewPager(mViewPager);
 
+        RelativeLayout.LayoutParams cpiLayoutParams = (RelativeLayout.LayoutParams) cpi.getLayoutParams();
+        cpiLayoutParams.bottomMargin = getResources().getDimensionPixelSize(R.dimen.onboarding_cpi_bottom_gap);
+        cpi.setLayoutParams(cpiLayoutParams);
+
+
         //onPositionChanged(0);
     }
 
@@ -150,6 +157,8 @@ public class OnBoardingFragment extends NostragamusFragment {
             mOnBoardImageLayout.setLayoutParams(params);
         }
 
+//        getResources().getDimensionPixelSize(R.dimen.width);
+
         //startTimer();
     }
 
@@ -173,13 +182,6 @@ public class OnBoardingFragment extends NostragamusFragment {
         }
 
         OnBoardingDto onBoardingDto = new OnBoardingDto();
-
-
-        NostragamusDataHandler.getInstance().setUserReferralCode("DEE1147");
-        NostragamusDataHandler.getInstance().setUserReferralName("Deepanshi");
-        NostragamusDataHandler.getInstance().setWalletInitialAmount(20);
-        NostragamusDataHandler.getInstance().setUserReferralPhoto("https://scontent.xx.fbcdn.net/v/t1.0-1/p480x480/17523409_1443962065645034_1348270082615908797_n.jpg?oh=894d6be15bb712660f8cd11f98e47f22&oe=59CF4AA9");
-
         if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralCode())) {
 
             if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralName())) {

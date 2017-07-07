@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.onboard;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,11 @@ public class OnBoardingTextFragment extends NostragamusFragment {
         TextView onBoardingDesc = (TextView) findViewById(R.id.onboard_tv_desc);
         onBoardingDesc.setText(onBoardingDto.getDesc());
 
+
+        mIvOnBoardIn = (HmImageView) findViewById(R.id.onboard_iv_image_in);
+        mIvOnBoardOut = (HmImageView) findViewById(R.id.onboard_iv_image_out);
+        mOnBoardImageLayout =(RelativeLayout)findViewById(R.id.onboarding_image_rl);
+
         mTvReferralCode1 = (TextView) findViewById(R.id.onboard_text_et_referral_code_char_one);
         mTvReferralCode2 = (TextView) findViewById(R.id.onboard_text_et_referral_code_char_two);
         mTvReferralCode3 = (TextView) findViewById(R.id.onboard_text_et_referral_code_char_three);
@@ -80,18 +86,15 @@ public class OnBoardingTextFragment extends NostragamusFragment {
                 populateUserReferralCode(onBoardingDto.getReferralCode());
             }
             referralCode.setVisibility(View.VISIBLE);
-            onBoardingTitle.setTextSize(18);
+            onBoardingTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.onboarding_referral_text_size));
+
+            RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) mOnBoardImageLayout.getLayoutParams();
+            paramsFour.topMargin = getResources().getDimensionPixelSize(R.dimen.onboarding_referral_image_gap);
+            mOnBoardImageLayout.setLayoutParams(paramsFour);
+
         } else {
             referralCode.setVisibility(View.GONE);
-//            RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) onBoardingDesc.getLayoutParams();
-//            paramsFour.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//            paramsFour.bottomMargin = 200;
-//            onBoardingDesc.setLayoutParams(paramsFour);
         }
-
-        mIvOnBoardIn = (HmImageView) findViewById(R.id.onboard_iv_image_in);
-        mIvOnBoardOut = (HmImageView) findViewById(R.id.onboard_iv_image_out);
-        mOnBoardImageLayout =(RelativeLayout)findViewById(R.id.onboarding_image_rl);
 
         mIvOnBoardIn.setImageUrl(onBoardingDto.getImageUrl());
         mIvOnBoardIn.setAlpha(0.1f);
@@ -99,13 +102,13 @@ public class OnBoardingTextFragment extends NostragamusFragment {
 
         if (onBoardingDto.getReferralCode()!=null) {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mOnBoardImageLayout.getLayoutParams();
-            params.height = 320;
-            params.width = 320;
+            params.height = getResources().getDimensionPixelSize(R.dimen.onboarding_referral_height);
+            params.width = getResources().getDimensionPixelSize(R.dimen.onboarding_referral_width);
             mOnBoardImageLayout.setLayoutParams(params);
         }else {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mOnBoardImageLayout.getLayoutParams();
-            params.height = 640;
-            params.width = 640;
+            params.height = getResources().getDimensionPixelSize(R.dimen.onboarding_height);
+            params.width = getResources().getDimensionPixelSize(R.dimen.onboarding_width);
             mOnBoardImageLayout.setLayoutParams(params);
         }
 
