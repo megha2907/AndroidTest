@@ -7,7 +7,7 @@
     <dimen name="sp_11">12sp</dimen>
     <dimen name="sp_12">13sp</dimen>
     <dimen name="sp_13">14sp</dimen>
-    <dimen name="sp_14">16sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
     <dimen name="sp_15">16sp</dimen>
     <dimen name="sp_16">18sp</dimen>
     <dimen name="sp_18">19sp</dimen>
@@ -19,4 +19,21 @@
     <dimen name="sp_26">28sp</dimen>
     <dimen name="sp_28">30sp</dimen>
     <dimen name="sp_30">31sp</dimen>
+
+    <dimen name="onboarding_referral_height">96dp</dimen>
+    <dimen name="onboarding_referral_width">96dp</dimen>
+    <dimen name="onboarding_height">190dp</dimen>
+    <dimen name="onboarding_width">190dp</dimen>
+    <dimen name="onboarding_referral_image_gap">57dp</dimen>
+    <dimen name="onboarding_title_text_size">22dp</dimen>
+    <dimen name="onboarding_desc_text_size">17dp</dimen>
+    <dimen name="onboarding_referral_text_size">20.5dp</dimen>
+    <dimen name="onboarding_login_text_size">25dp</dimen>
+    <dimen name="onboarding_referral_title_size">20.5dp</dimen>
+    <dimen name="onboarding_google_text_size">16dp</dimen>
+    <dimen name="onboarding_facebook_text_size">16dp</dimen>
+    <dimen name="onboarding_terms_text_size">15dp</dimen>
+    <dimen name="onboarding_referral_box_size">36dp</dimen>
+    <dimen name="onboarding_cpi_bottom_gap">48dp</dimen>
+
 </resources>

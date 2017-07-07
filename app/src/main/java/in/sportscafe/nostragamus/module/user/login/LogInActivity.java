@@ -2,11 +2,14 @@ package in.sportscafe.nostragamus.module.user.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthException;
@@ -37,6 +40,7 @@ import in.sportscafe.nostragamus.module.common.TermsConditions;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.onboard.OnBoardingFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
+import me.relex.circleindicator.CircleIndicator;
 
 public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -81,7 +85,6 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
         mLogInPresenter = LogInPresenterImpl.newInstance(LogInActivity.this);
         mLogInPresenter.onCreateLogIn(getIntent().getExtras());
-
 
     }
 
@@ -360,4 +363,11 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     public String getScreenName() {
         return Constants.ScreenNames.LOGIN;
     }
+
+    public boolean hasNavBar (Resources resources)
+    {
+        int id = resources.getIdentifier("config_showNavigationBar", "bool", "android");
+        return id > 0 && resources.getBoolean(id);
+    }
 }
+
