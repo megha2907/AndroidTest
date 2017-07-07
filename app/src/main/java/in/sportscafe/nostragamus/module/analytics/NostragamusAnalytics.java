@@ -532,4 +532,18 @@ public class NostragamusAnalytics {
             }
         }
     }
+
+    /** NOTE: Must be called only on successful Login
+     *
+     * This method used as Login method for moengage to identify user.
+     * https://docs.moengage.com/docs/identifying-user
+     * @param userId
+     */
+    public void setMoengageUniqueId(String userId) {
+        if (mMoEHelper != null) {
+            mMoEHelper.setUniqueId(userId);
+        } else {
+            Log.e("Analytics", "Could not set UniqueId for MoEngage");
+        }
+    }
 }
