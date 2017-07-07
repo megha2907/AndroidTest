@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.onboard;
 
 import android.animation.Animator;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -75,10 +77,10 @@ public class OnBoardingFragment extends NostragamusFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mIvOnBoardIn = (HmImageView) findViewById(R.id.onboard_iv_image_in);
-        mIvOnBoardOut = (HmImageView) findViewById(R.id.onboard_iv_image_out);
+//        mIvOnBoardIn = (HmImageView) findViewById(R.id.onboard_iv_image_in);
+//        mIvOnBoardOut = (HmImageView) findViewById(R.id.onboard_iv_image_out);
         mViewPager = (ViewPager) findViewById(R.id.onboard_vp);
-        mOnBoardImageLayout =(RelativeLayout)findViewById(R.id.onboarding_image_rl);
+//        mOnBoardImageLayout =(RelativeLayout)findViewById(R.id.onboarding_image_rl);
 
         mOnBoardingList = getOnBoardingList();
         initOnBoard();
@@ -90,6 +92,7 @@ public class OnBoardingFragment extends NostragamusFragment {
             viewPagerAdapter.addFragment(OnBoardingTextFragment.newInstance(onBoardingDto), "");
         }
 
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -97,7 +100,7 @@ public class OnBoardingFragment extends NostragamusFragment {
 
             @Override
             public void onPageSelected(int position) {
-                onPositionChanged(position);
+               // onPositionChanged(position);
             }
 
             @Override
@@ -109,7 +112,12 @@ public class OnBoardingFragment extends NostragamusFragment {
         CircleIndicator cpi = (CircleIndicator) findViewById(R.id.onboard_cpi_indicator);
         cpi.setViewPager(mViewPager);
 
-        onPositionChanged(0);
+        RelativeLayout.LayoutParams cpiLayoutParams = (RelativeLayout.LayoutParams) cpi.getLayoutParams();
+        cpiLayoutParams.bottomMargin = getResources().getDimensionPixelSize(R.dimen.onboarding_cpi_bottom_gap);
+        cpi.setLayoutParams(cpiLayoutParams);
+
+
+        //onPositionChanged(0);
     }
 
     public void onPositionChanged(final int position) {
@@ -148,6 +156,8 @@ public class OnBoardingFragment extends NostragamusFragment {
             params.width = 320;
             mOnBoardImageLayout.setLayoutParams(params);
         }
+
+//        getResources().getDimensionPixelSize(R.dimen.width);
 
         //startTimer();
     }

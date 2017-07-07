@@ -86,7 +86,7 @@
 
     <style name="InviteCodeLoginStyle">
         <item name="android:layout_width">@dimen/dp_0</item>
-        <item name="android:layout_height">@dimen/dp_32</item>
+        <item name="android:layout_height">@dimen/onboarding_referral_box_size</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/invite_edittext_login_bg</item>
         <item name="android:gravity">center</item>
@@ -95,7 +95,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_margin">@dimen/dp_8</item>
         <item name="android:textColor">@color/white_80</item>
-        <item name="android:textSize">@dimen/dp_18</item>
+        <item name="android:textSize">@dimen/onboarding_referral_text_size</item>
         <item name="android:shadowRadius">2</item>
         <item name="android:shadowDx">2</item>
         <item name="android:shadowDy">4</item>
