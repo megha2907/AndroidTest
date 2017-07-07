@@ -12,6 +12,7 @@ import com.jeeva.android.facebook.user.FacebookPermission;
 import com.jeeva.android.facebook.user.FacebookProfile;
 import com.jeeva.android.facebook.user.GetProfileModelImpl;
 import com.jeeva.android.facebook.user.UserModelImpl;
+import com.moe.pushlibrary.MoEHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -239,10 +240,8 @@ public class LogInModelImpl implements LogInModel {
             );
         }
 
-        // NOTE : As this data used for UserProperties (NostragamusAnalytics.setUserProperties() - Amplitude), DON'T remove it
-        /*nostragamusDataHandler.removeReferralUserId();
-        nostragamusDataHandler.removeInstallChannel();
-        nostragamusDataHandler.removeInstallCampaign();*/
+        /* Mo-engage login method / uniqueId */
+        NostragamusAnalytics.getInstance().setMoengageUniqueId(NostragamusDataHandler.getInstance().getUserId());
 
         mLogInModelListener.onLoginCompleted();
     }
