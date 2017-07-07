@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:text="Rules"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:text="Game play"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:text="FAQ"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
@@ -143,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:text="Play Sample Game"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 

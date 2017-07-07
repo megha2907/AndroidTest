@@ -154,12 +154,12 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
 
             /* check if it's a What's NEW Screen or a Force Update Screen or a Normal Update Screen */
             if (bundle.getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.WHATS_NEW)) {
-                mUpdateAppLater.setVisibility(View.GONE);
-                mUpdateAppBtn.setVisibility(View.GONE);
+                mUpdateAppLater.setVisibility(View.INVISIBLE);
+                mUpdateAppBtn.setVisibility(View.INVISIBLE);
                 screenHeading.setText("What's New !");
-                RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) rlViewPager.getLayoutParams();
-                paramsFour.setMargins(0, 50, 0, 100);
-                rlViewPager.setLayoutParams(paramsFour);
+//                RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) rlViewPager.getLayoutParams();
+//                paramsFour.setMargins(0, 50, 0, 100);
+//                rlViewPager.setLayoutParams(paramsFour);
 
 //                if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
 //                    backBtn.setVisibility(View.GONE);

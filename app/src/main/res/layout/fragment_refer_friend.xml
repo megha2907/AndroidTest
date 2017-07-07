@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_20"
                     android:textColor="@color/grey6"
-                    android:textSize="@dimen/dp_16"
+                    android:textSize="@dimen/sp_15"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_26"
                     android:textColor="@color/grey6"
-                    android:textSize="@dimen/dp_16"
+                    android:textSize="@dimen/sp_15"
                     app:typeface="lato_regular" />
 
                 <RelativeLayout
@@ -149,7 +149,7 @@
                             android:layout_height="wrap_content"
                             android:text="Your Referral Credit  - "
                             android:textColor="@color/white"
-                            android:textSize="@dimen/dp_14"
+                            android:textSize="@dimen/sp_14"
                             app:typeface="lato_regular" />
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -159,7 +159,7 @@
                             android:layout_marginLeft="@dimen/dp_6"
                             android:text="₹ 0.00"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/dp_14"
+                            android:textSize="@dimen/sp_14"
                             app:typeface="lato_bold" />
 
                     </LinearLayout>
@@ -209,7 +209,7 @@
                     android:layout_centerVertical="true"
                     android:text="Terms and Conditions"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_14"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />
 
                 <ImageView
