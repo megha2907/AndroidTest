@@ -4,16 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/onboarding_image_rl"
+        android:layout_width="@dimen/dp_190"
+        android:layout_height="@dimen/dp_190"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_centerHorizontal="true">
+
+        <com.jeeva.android.widgets.HmImageView
+            android:id="@+id/onboard_iv_image_out"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.jeeva.android.widgets.HmImageView
+            android:id="@+id/onboard_iv_image_in"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/onboard_iv_image_out"
+            android:layout_alignTop="@id/onboard_iv_image_out"
+            android:alpha="0" />
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/onboard_text_et_referral_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_28"
         android:layout_marginLeft="@dimen/dp_14"
         android:layout_marginRight="@dimen/dp_14"
-        android:layout_marginBottom="@dimen/dp_20"
         android:visibility="visible"
-        android:layout_above="@+id/onboard_tv_title">
+        android:layout_below="@+id/onboarding_image_rl">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/onboard_text_et_referral_code_char_one"
@@ -52,34 +73,34 @@
 
     </LinearLayout>
 
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/onboard_tv_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_80"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:gravity="center"
-        android:text="Description"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dp_14"
-        app:typeface="lato_light" />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/onboard_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/onboard_tv_desc"
+        android:layout_below="@id/onboard_text_et_referral_code"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
-        android:gravity="center"
-        android:layout_marginBottom="@dimen/dp_5"
-        android:text="Description"
+        android:text="Title"
         android:textColor="@color/white"
         android:textSize="@dimen/dp_22"
+        app:typeface="lato_light" />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/onboard_tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/onboard_tv_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginRight="@dimen/dp_20"
+        android:gravity="center"
+        android:text="desc"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
         app:typeface="lato_light" />
 
 </RelativeLayout>

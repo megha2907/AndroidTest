@@ -75,10 +75,10 @@ public class OnBoardingFragment extends NostragamusFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mIvOnBoardIn = (HmImageView) findViewById(R.id.onboard_iv_image_in);
-        mIvOnBoardOut = (HmImageView) findViewById(R.id.onboard_iv_image_out);
+//        mIvOnBoardIn = (HmImageView) findViewById(R.id.onboard_iv_image_in);
+//        mIvOnBoardOut = (HmImageView) findViewById(R.id.onboard_iv_image_out);
         mViewPager = (ViewPager) findViewById(R.id.onboard_vp);
-        mOnBoardImageLayout =(RelativeLayout)findViewById(R.id.onboarding_image_rl);
+//        mOnBoardImageLayout =(RelativeLayout)findViewById(R.id.onboarding_image_rl);
 
         mOnBoardingList = getOnBoardingList();
         initOnBoard();
@@ -90,6 +90,7 @@ public class OnBoardingFragment extends NostragamusFragment {
             viewPagerAdapter.addFragment(OnBoardingTextFragment.newInstance(onBoardingDto), "");
         }
 
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -97,7 +98,7 @@ public class OnBoardingFragment extends NostragamusFragment {
 
             @Override
             public void onPageSelected(int position) {
-                onPositionChanged(position);
+               // onPositionChanged(position);
             }
 
             @Override
@@ -109,7 +110,7 @@ public class OnBoardingFragment extends NostragamusFragment {
         CircleIndicator cpi = (CircleIndicator) findViewById(R.id.onboard_cpi_indicator);
         cpi.setViewPager(mViewPager);
 
-        onPositionChanged(0);
+        //onPositionChanged(0);
     }
 
     public void onPositionChanged(final int position) {
@@ -172,6 +173,13 @@ public class OnBoardingFragment extends NostragamusFragment {
         }
 
         OnBoardingDto onBoardingDto = new OnBoardingDto();
+
+
+        NostragamusDataHandler.getInstance().setUserReferralCode("DEE1147");
+        NostragamusDataHandler.getInstance().setUserReferralName("Deepanshi");
+        NostragamusDataHandler.getInstance().setWalletInitialAmount(20);
+        NostragamusDataHandler.getInstance().setUserReferralPhoto("https://scontent.xx.fbcdn.net/v/t1.0-1/p480x480/17523409_1443962065645034_1348270082615908797_n.jpg?oh=894d6be15bb712660f8cd11f98e47f22&oe=59CF4AA9");
+
         if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralCode())) {
 
             if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralName())) {

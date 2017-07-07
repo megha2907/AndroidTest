@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.widgets.HmImageView;
 
 import org.parceler.Parcels;
 
@@ -32,6 +33,12 @@ public class OnBoardingTextFragment extends NostragamusFragment {
     private  TextView mTvReferralCode5;
     private  TextView mTvReferralCode6;
     private  TextView mTvReferralCode7;
+
+    private HmImageView mIvOnBoardIn;
+
+    private HmImageView mIvOnBoardOut;
+
+    private RelativeLayout mOnBoardImageLayout;
 
     public static OnBoardingTextFragment newInstance(OnBoardingDto onBoardingDto) {
         Bundle args = new Bundle();
@@ -76,10 +83,30 @@ public class OnBoardingTextFragment extends NostragamusFragment {
             onBoardingTitle.setTextSize(18);
         } else {
             referralCode.setVisibility(View.GONE);
-            RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) onBoardingDesc.getLayoutParams();
-            paramsFour.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-            paramsFour.bottomMargin = 200;
-            onBoardingDesc.setLayoutParams(paramsFour);
+//            RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) onBoardingDesc.getLayoutParams();
+//            paramsFour.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+//            paramsFour.bottomMargin = 200;
+//            onBoardingDesc.setLayoutParams(paramsFour);
+        }
+
+        mIvOnBoardIn = (HmImageView) findViewById(R.id.onboard_iv_image_in);
+        mIvOnBoardOut = (HmImageView) findViewById(R.id.onboard_iv_image_out);
+        mOnBoardImageLayout =(RelativeLayout)findViewById(R.id.onboarding_image_rl);
+
+        mIvOnBoardIn.setImageUrl(onBoardingDto.getImageUrl());
+        mIvOnBoardIn.setAlpha(0.1f);
+        mIvOnBoardIn.animate().alpha(1).setDuration(1000);
+
+        if (onBoardingDto.getReferralCode()!=null) {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mOnBoardImageLayout.getLayoutParams();
+            params.height = 320;
+            params.width = 320;
+            mOnBoardImageLayout.setLayoutParams(params);
+        }else {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mOnBoardImageLayout.getLayoutParams();
+            params.height = 640;
+            params.width = 640;
+            mOnBoardImageLayout.setLayoutParams(params);
         }
 
     }
@@ -98,6 +125,7 @@ public class OnBoardingTextFragment extends NostragamusFragment {
             ExceptionTracker.track(e);
         }
     }
+
 
 
 }
