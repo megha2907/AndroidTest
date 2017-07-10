@@ -34,7 +34,9 @@
     <dimen name="sp_26">26sp</dimen>
     <dimen name="sp_28">28sp</dimen>
     <dimen name="sp_30">30sp</dimen>
+    <dimen name="sp_32">32sp</dimen>
 
+    <!-- OnBoarding Sizes -->
     <dimen name="onboarding_referral_height">84dp</dimen>
     <dimen name="onboarding_referral_width">84dp</dimen>
     <dimen name="onboarding_height">190dp</dimen>
@@ -50,5 +52,23 @@
     <dimen name="onboarding_terms_text_size">13dp</dimen>
     <dimen name="onboarding_referral_box_size">32dp</dimen>
     <dimen name="onboarding_cpi_bottom_gap">0dp</dimen>
+
+    <!-- Update App and Whats New Sizes -->
+    <dimen name="update_app_image_height">300dp</dimen>
+    <dimen name="update_app_image_width">300dp</dimen>
+    <dimen name="update_app_image_margin">16dp</dimen>
+    <dimen name="update_app_title_margin">8dp</dimen>
+    <dimen name="update_app_desc_margin">8dp</dimen>
+    <dimen name="update_app_title_size">16dp</dimen>
+    <dimen name="update_app_desc_size">13dp</dimen>
+    <dimen name="update_app_btn_height">42dp</dimen>
+    <dimen name="update_app_text_size">16dp</dimen>
+    <dimen name="update_later_text_size">15dp</dimen>
+    <dimen name="update_later_bottom_gap">8dp</dimen>
+
+
+    <dimen name="refer_btn_width">150dp</dimen>
+    <dimen name="refer_btn_height">48dp</dimen>
+    <dimen name="refer_code_btn_height">50dp</dimen>
 
 </resources>
