@@ -81,79 +81,80 @@ public class FlingCardListener implements View.OnTouchListener {
 
     public boolean onTouch(View view, MotionEvent event) {
 
-        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_DOWN:
+        try {
+            switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                case MotionEvent.ACTION_DOWN:
 
 //                MainActivity.removeBackground();
 
 
-                mActivePointerId = event.getPointerId(0);
-                float x = 0;
-                float y = 0;
-                boolean success = false;
-                try {
-                    x = event.getX(mActivePointerId);
-                    y = event.getY(mActivePointerId);
-                    success = true;
-                } catch (IllegalArgumentException e) {
-                    Log.w(TAG, "Exception in onTouch(view, event) : " + mActivePointerId, e);
-                }
-                if (success) {
-
-                    aDownTouchX = x;
-                    aDownTouchY = y;
-
-                    if (aPosX == 0) {
-                        aPosX = frame.getX();
+                    mActivePointerId = event.getPointerId(0);
+                    float x = 0;
+                    float y = 0;
+                    boolean success = false;
+                    try {
+                        x = event.getX(mActivePointerId);
+                        y = event.getY(mActivePointerId);
+                        success = true;
+                    } catch (IllegalArgumentException e) {
+                        Log.w(TAG, "Exception in onTouch(view, event) : " + mActivePointerId, e);
                     }
-                    if (aPosY == 0) {
-                        aPosY = frame.getY();
+                    if (success) {
+
+                        aDownTouchX = x;
+                        aDownTouchY = y;
+
+                        if (aPosX == 0) {
+                            aPosX = frame.getX();
+                        }
+                        if (aPosY == 0) {
+                            aPosY = frame.getY();
+                        }
+
+                        if (y < objectH / 2) {
+                            touchPosition = TOUCH_ABOVE;
+                        } else {
+                            touchPosition = TOUCH_BELOW;
+                        }
                     }
 
-                    if (y < objectH / 2) {
-                        touchPosition = TOUCH_ABOVE;
-                    } else {
-                        touchPosition = TOUCH_BELOW;
+                    view.getParent().requestDisallowInterceptTouchEvent(true);
+
+                    Log.d(TAG, "Initial Touch Pointer --> " + aDownTouchX);
+                    break;
+
+                case MotionEvent.ACTION_UP:
+                    mActivePointerId = INVALID_POINTER_ID;
+                    resetCardViewOnStack();
+                    view.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
+
+                case MotionEvent.ACTION_POINTER_DOWN:
+                    break;
+
+                case MotionEvent.ACTION_POINTER_UP:
+                    // Extract the index of the pointer that left the touch sensor
+                    final int pointerIndex = (event.getAction() &
+                            MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+                    final int pointerId = event.getPointerId(pointerIndex);
+                    if (pointerId == mActivePointerId) {
+                        final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
+                        mActivePointerId = event.getPointerId(newPointerIndex);
                     }
-                }
+                    break;
+                case MotionEvent.ACTION_MOVE:
 
-                view.getParent().requestDisallowInterceptTouchEvent(true);
-
-                Log.d(TAG, "Initial Touch Pointer --> " + aDownTouchX);
-                break;
-
-            case MotionEvent.ACTION_UP:
-                mActivePointerId = INVALID_POINTER_ID;
-                resetCardViewOnStack();
-                view.getParent().requestDisallowInterceptTouchEvent(false);
-                break;
-
-            case MotionEvent.ACTION_POINTER_DOWN:
-                break;
-
-            case MotionEvent.ACTION_POINTER_UP:
-                // Extract the index of the pointer that left the touch sensor
-                final int pointerIndex = (event.getAction() &
-                        MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
-                final int pointerId = event.getPointerId(pointerIndex);
-                if (pointerId == mActivePointerId) {
-                    final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
-                    mActivePointerId = event.getPointerId(newPointerIndex);
-                }
-                break;
-            case MotionEvent.ACTION_MOVE:
-
-                // Find the index of the active pointer and fetch its position
-                final int pointerIndexMove = event.findPointerIndex(mActivePointerId);
-                final float xMove = event.getX(pointerIndexMove);
-                final float yMove = event.getY(pointerIndexMove);
+                    // Find the index of the active pointer and fetch its position
+                    final int pointerIndexMove = event.findPointerIndex(mActivePointerId);
+                    final float xMove = event.getX(pointerIndexMove);
+                    final float yMove = event.getY(pointerIndexMove);
 
 
-                final float dx = xMove - aDownTouchX;
-                final float dy = yMove - aDownTouchY;
+                    final float dx = xMove - aDownTouchX;
+                    final float dy = yMove - aDownTouchY;
 
 
-                aPosX += dx;
+                    aPosX += dx;
                 /*if(mIsXAxis) {
                 } else {
                     float tempX = aPosX + dx;
@@ -162,7 +163,7 @@ public class FlingCardListener implements View.OnTouchListener {
                     }
                 }*/
 
-                aPosY += dy;
+                    aPosY += dy;
                 /*if(mIsYAxis) {
                 } else {
                     float tempY = aPosY + dy;
@@ -171,35 +172,34 @@ public class FlingCardListener implements View.OnTouchListener {
                     }
                 }*/
 
-                float distobjectX = aPosX - objectX;
-                float rotation = BASE_ROTATION_DEGREES * 2.f * distobjectX / parentWidth;
-                if (touchPosition == TOUCH_BELOW) {
-                    rotation = -rotation;
-                }
+                    float distobjectX = aPosX - objectX;
+                    float rotation = BASE_ROTATION_DEGREES * 2.f * distobjectX / parentWidth;
+                    if (touchPosition == TOUCH_BELOW) {
+                        rotation = -rotation;
+                    }
 
 //                checkSwipeDirection();
 
-                frame.setX(aPosX);
+                    frame.setX(aPosX);
 
-                frame.setY(aPosY);
+                    frame.setY(aPosY);
 
-                if(mIsRotation) {
-                    frame.setRotation(rotation);
+                    if(mIsRotation) {
+                        frame.setRotation(rotation);
+                    }
+
+                    mFlingListener.onScroll(getScrollProgressPercent());
+
+                    Log.d(TAG, "Movement --> " + xMove + ", " + dx + ", " + aPosX);
+                    break;
+
+                case MotionEvent.ACTION_CANCEL: {
+                    mActivePointerId = INVALID_POINTER_ID;
+                    view.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
                 }
-
-                mFlingListener.onScroll(getScrollProgressPercent());
-
-                Log.d(TAG, "Movement --> " + xMove + ", " + dx + ", " + aPosX);
-                break;
-
-            case MotionEvent.ACTION_CANCEL: {
-                mActivePointerId = INVALID_POINTER_ID;
-                view.getParent().requestDisallowInterceptTouchEvent(false);
-                break;
             }
-        }
 
-        try {
             return true;
         } catch (IllegalArgumentException ex) {
             ex.printStackTrace();
