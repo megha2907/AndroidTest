@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="@dimen/dp_60"
+    android:minHeight="@dimen/wallet_history_row_height"
     android:background="@color/black">
 
     <LinearLayout

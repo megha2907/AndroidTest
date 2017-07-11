@@ -106,8 +106,8 @@
                                     android:gravity="center_vertical">
 
                                     <ImageView
-                                        android:layout_width="@dimen/dp_12"
-                                        android:layout_height="@dimen/dp_12"
+                                        android:layout_width="@dimen/wallet_home_info_img_dimen"
+                                        android:layout_height="@dimen/wallet_home_info_img_dimen"
                                         android:src="@drawable/wallet_info_icn"/>
 
                                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -152,7 +152,7 @@
                                     <com.jeeva.android.widgets.customfont.CustomButton
                                         android:id="@+id/wallet_home_earn_more_button"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/dp_32"
+                                        android:layout_height="@dimen/wallet_home_button_height"
                                         android:gravity="center"
                                         android:text="Earn More"
                                         android:textAllCaps="false"
@@ -220,8 +220,8 @@
                                     android:gravity="center_vertical">
 
                                     <ImageView
-                                        android:layout_width="@dimen/dp_12"
-                                        android:layout_height="@dimen/dp_12"
+                                        android:layout_width="@dimen/wallet_home_info_img_dimen"
+                                        android:layout_height="@dimen/wallet_home_info_img_dimen"
                                         android:src="@drawable/wallet_info_icn"/>
 
                                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -264,7 +264,7 @@
                                     <com.jeeva.android.widgets.customfont.CustomButton
                                         android:id="@+id/wallet_home_add_money_button"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/dp_32"
+                                        android:layout_height="@dimen/wallet_home_button_height"
                                         android:gravity="center"
                                         android:text="Add Money"
                                         android:textAllCaps="false"
@@ -332,8 +332,8 @@
                                     android:gravity="center_vertical">
 
                                     <ImageView
-                                        android:layout_width="@dimen/dp_12"
-                                        android:layout_height="@dimen/dp_12"
+                                        android:layout_width="@dimen/wallet_home_info_img_dimen"
+                                        android:layout_height="@dimen/wallet_home_info_img_dimen"
                                         android:src="@drawable/wallet_info_icn"/>
 
                                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -377,7 +377,7 @@
                                     <com.jeeva.android.widgets.customfont.CustomButton
                                         android:id="@+id/wallet_home_withdraw_button"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/dp_32"
+                                        android:layout_height="@dimen/wallet_home_button_height"
                                         android:gravity="center"
                                         android:text="Withdraw"
                                         android:textAllCaps="false"
@@ -471,8 +471,7 @@
                             android:text="0 withdrawals in progress"
                             android:textColor="@color/white_999999"
                             android:textSize="@dimen/sp_12"
-                            app:typeface="lato_regular"
-                            android:layout_marginTop="@dimen/dp_4"/>
+                            app:typeface="lato_regular"/>
 
                     </LinearLayout>
 
@@ -537,8 +536,7 @@
                             android:text="0 account added"
                             android:textColor="@color/white_999999"
                             android:textSize="@dimen/sp_12"
-                            app:typeface="lato_regular"
-                            android:layout_marginTop="@dimen/dp_4"/>
+                            app:typeface="lato_regular"/>
 
                     </LinearLayout>
 
