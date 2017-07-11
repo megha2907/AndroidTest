@@ -28,6 +28,10 @@
     <dimen name="sp_31">35sp</dimen>
     <dimen name="sp_32">36.5sp</dimen>
 
-    <dimen name="nav_row_height">60dp</dimen>
+    <!-- Navigation -->
+    <dimen name="nav_header_height">82dp</dimen>
+    <dimen name="nav_row_height">68dp</dimen>
+    <dimen name="nav_profile_pic_dimen">55dp</dimen>
+    <dimen name="nav_row_icon_dimen">17dp</dimen>
 
 </resources>
