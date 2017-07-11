@@ -34,4 +34,15 @@
     <dimen name="nav_profile_pic_dimen">55dp</dimen>
     <dimen name="nav_row_icon_dimen">17dp</dimen>
 
+    <!-- Wallet -->
+    <dimen name="wallet_home_row_height">60dp</dimen>
+    <dimen name="wallet_home_info_img_dimen">14dp</dimen>
+    <dimen name="wallet_home_button_height">37dp</dimen>
+    <dimen name="wallet_home_paytm_icn_width">57dp</dimen>
+    <dimen name="wallet_home_paytm_icn_height">20dp</dimen>
+    <dimen name="wallet_big_icon_dimen">82dp</dimen>
+    <dimen name="wallet_history_row_height">68dp</dimen>
+    <dimen name="wallet_history_item_icon_dimen">30dp</dimen>
+    <dimen name="wallet_payout_choice_item_height">68dp</dimen>
+
 </resources>
