@@ -52,6 +52,9 @@
     <dimen name="refer_btn_width">150dp</dimen>
     <dimen name="refer_btn_height">48dp</dimen>
     <dimen name="refer_code_btn_height">50dp</dimen>
+    <dimen name="referral_image_size">150dp</dimen>
+    <dimen name="referral_history_btn_width">150dp</dimen>
+    <dimen name="referral_history_btn_height">48dp</dimen>
 
 
 </resources>

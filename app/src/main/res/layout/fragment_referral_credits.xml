@@ -38,7 +38,7 @@
                     android:layout_marginLeft="@dimen/dp_24"
                     android:layout_marginRight="@dimen/dp_24"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_32"
+                    android:textSize="@dimen/sp_32"
                     app:typeface="lato_bold" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -50,7 +50,7 @@
                     android:layout_marginLeft="@dimen/dp_24"
                     android:layout_marginRight="@dimen/dp_24"
                     android:textColor="@color/grey7"
-                    android:textSize="@dimen/dp_12"
+                    android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />
 
                 <RelativeLayout
@@ -93,7 +93,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/dp_14"
+                                        android:textSize="@dimen/sp_14"
                                         android:text="0"
                                         android:layout_gravity="center"
                                         app:typeface="lato_bold" />
@@ -120,7 +120,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/dp_14"
+                                        android:textSize="@dimen/sp_14"
                                         android:text="0"
                                         android:layout_gravity="center"
                                         app:typeface="lato_bold" />
@@ -147,7 +147,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/dp_14"
+                                        android:textSize="@dimen/sp_14"
                                         android:text="0"
                                         android:layout_gravity="center"
                                         app:typeface="lato_bold" />
@@ -209,7 +209,7 @@
                                 android:layout_marginBottom="@dimen/dp_12"
                                 android:includeFontPadding="false"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/dp_25"
+                                android:textSize="@dimen/sp_25"
                                 app:typeface="lato_bold" />
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -390,7 +390,7 @@
                     android:layout_marginTop="@dimen/dp_20"
                     android:text="FRIEND'S ACTIVITY"
                     android:textColor="@color/grey7"
-                    android:textSize="@dimen/dp_12"
+                    android:textSize="@dimen/sp_12"
                     android:layout_marginLeft="@dimen/dp_24"
                     android:layout_marginRight="@dimen/dp_24"
                     app:typeface="lato_regular" />
@@ -424,8 +424,8 @@
                     android:visibility="gone">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_150"
-                        android:layout_height="@dimen/dp_150"
+                        android:layout_width="@dimen/referral_image_size"
+                        android:layout_height="@dimen/referral_image_size"
                         android:src="@drawable/no_referral_history"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -445,8 +445,8 @@
                     <!-- Refer Now Button -->
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/refer_friend_btn"
-                        android:layout_width="@dimen/dp_150"
-                        android:layout_height="@dimen/dp_48"
+                        android:layout_width="@dimen/referral_history_btn_width"
+                        android:layout_height="@dimen/referral_history_btn_height"
                         android:layout_alignParentRight="true"
                         android:layout_gravity="center"
                         android:background="@drawable/btn_refer_bg"
@@ -456,7 +456,7 @@
                         android:text="Refer Now!"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_14"
+                        android:textSize="@dimen/sp_14"
                         app:typeface="lato_bold" />
 
                 </LinearLayout>
