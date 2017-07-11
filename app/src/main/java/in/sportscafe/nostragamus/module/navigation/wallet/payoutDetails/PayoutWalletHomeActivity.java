@@ -47,7 +47,7 @@ public class PayoutWalletHomeActivity extends NostragamusActivity implements Pay
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.payout_toolbar);
         TextView tvToolbar = (TextView) findViewById(R.id.payout_toolbar_tv);
-        tvToolbar.setText("Withdrawal details");
+        tvToolbar.setText("Withdrawal Details");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
