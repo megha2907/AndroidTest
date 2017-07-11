@@ -17,6 +17,7 @@
 
     <!-- Font sizes -->
     <dimen name="sp_8">8sp</dimen>
+    <dimen name="sp_9">9sp</dimen>
     <dimen name="sp_10">10sp</dimen>
     <dimen name="sp_11">11sp</dimen>
     <dimen name="sp_12">12sp</dimen>
@@ -24,17 +25,24 @@
     <dimen name="sp_14">14sp</dimen>
     <dimen name="sp_15">15sp</dimen>
     <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_17">17sp</dimen>
     <dimen name="sp_18">18sp</dimen>
     <dimen name="sp_19">19sp</dimen>
     <dimen name="sp_20">20sp</dimen>
     <dimen name="sp_21">21sp</dimen>
     <dimen name="sp_22">22sp</dimen>
+    <dimen name="sp_23">23sp</dimen>
     <dimen name="sp_24">24sp</dimen>
     <dimen name="sp_25">25sp</dimen>
     <dimen name="sp_26">26sp</dimen>
+    <dimen name="sp_27">27sp</dimen>
     <dimen name="sp_28">28sp</dimen>
+    <dimen name="sp_29">29sp</dimen>
     <dimen name="sp_30">30sp</dimen>
+    <dimen name="sp_31">31sp</dimen>
+    <dimen name="sp_32">32sp</dimen>
 
+    <!-- on-boarding -->
     <dimen name="onboarding_referral_height">84dp</dimen>
     <dimen name="onboarding_referral_width">84dp</dimen>
     <dimen name="onboarding_height">190dp</dimen>
@@ -50,5 +58,11 @@
     <dimen name="onboarding_terms_text_size">13dp</dimen>
     <dimen name="onboarding_referral_box_size">32dp</dimen>
     <dimen name="onboarding_cpi_bottom_gap">0dp</dimen>
+
+    <!-- Navigation -->
+    <dimen name="nav_header_height">72dp</dimen>
+    <dimen name="nav_row_height">60dp</dimen>
+    <dimen name="nav_profile_pic_dimen">48dp</dimen>
+    <dimen name="nav_row_icon_dimen">15dp</dimen>
 
 </resources>
