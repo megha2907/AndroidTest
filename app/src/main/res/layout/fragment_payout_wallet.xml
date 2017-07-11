@@ -18,7 +18,7 @@
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add your PayTm details to ensure smooth transactions.\nAdd a bank account if you don't have a PayTm wallet"
+            android:text="We strongly recommend using Paytm for faster, hassle-free transactions"
             android:gravity="left"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_13"

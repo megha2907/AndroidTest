@@ -84,7 +84,7 @@ public class PaytmTransactionSuccessDialogFragment extends NostragamusDialogFrag
         TextView tvPaytmTransactionSuccess = (TextView) findViewById(R.id.paytm_transaction_success_tv_desc);
         if (mTransactionAmount != 0) {
             tvPaytmTransactionSuccess.setText(WalletHelper.getFormattedStringOfAmount(mTransactionAmount) +
-                    " has been successfully added to your game wallet!");
+                    " has been successfully added to your wallet!");
         }
     }
 

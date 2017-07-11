@@ -135,7 +135,7 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
 
     private void setMessageText(String configName, TextView lowBalMsgTextView) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        String msg1 = "Low balance! You need to add ";
+        String msg1 = "Low balance! Add at least ";
         SpannableString spannable1 = new SpannableString(msg1);
 
         SpannableString spannable2 = null;
@@ -147,7 +147,7 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
             spannable2 = new SpannableString("");
         }
 
-        String msg3 = " more to wallet to join " + ((!TextUtils.isEmpty(configName)) ? configName : "");
+        String msg3 = " to join " + ((!TextUtils.isEmpty(configName)) ? configName : "");
         SpannableString spannable3 = new SpannableString(msg3);
 
         builder.append(spannable1).append(spannable2).append(spannable3);
