@@ -72,6 +72,8 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             holder.mTvMembersCount.setTextColor(ContextCompat.getColor(holder.mTvMembersCount.getContext(), R.color.free_entry_tv_color));
             holder.mTvReward.setTextColor(ContextCompat.getColor(holder.mTvReward.getContext(), R.color.free_entry_tv_color));
             holder.mBtnJoin.setBackground(ContextCompat.getDrawable(holder.mBtnJoin.getContext(), R.drawable.free_join_btn_bg));
+            holder.mBtnJoin.setText("Join");
+            holder.mBtnJoin.setClickable(true);
             mTvMaxEntriesCount = "unlimited";
             holder.mIvDropDownReward.setBackground(ContextCompat.getDrawable(holder.mIvDropDownReward.getContext(), R.drawable.config_down_arrow_blue));
             holder.mIvDropDownMember.setBackground(ContextCompat.getDrawable(holder.mIvDropDownReward.getContext(), R.drawable.config_down_arrow_blue));

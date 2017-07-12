@@ -23,7 +23,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_10"
             android:textColor="@color/white"
-            android:textSize="@dimen/dp_16"
+            android:textSize="@dimen/sp_16"
             app:typeface="lato_regular" />
 
 
