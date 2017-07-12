@@ -147,7 +147,7 @@
                             android:id="@+id/refer_referral_credit_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Your Referral Credit  - "
+                            android:text="Your Referral Credits  - "
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_14"
                             app:typeface="lato_regular" />
