@@ -282,7 +282,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
         if ((currentAppVersion < dataHandler.getReqUpdateVersion())) {
             isNewVersion = true;
         }
-        return true;
+        return isNewVersion;
     }
 
     private void fetchUserWalletFromServer() {

@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.text.DecimalFormat;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -218,7 +219,7 @@ public class NostraFileDownloadService extends IntentService {
                     int minutes = (int) ((remainingTime / 1000) / 60);
                     int seconds = (int) (remainingTime / 1000) % 60;
 
-                    msg = msg + ", " + minutes + ":" + seconds + " min left";
+                    msg = msg + ", " + minutes + ":" + new DecimalFormat("00").format(seconds) + " min left";
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
