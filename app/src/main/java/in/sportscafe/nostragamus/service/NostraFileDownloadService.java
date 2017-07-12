@@ -74,6 +74,8 @@ public class NostraFileDownloadService extends IntentService {
     private NotificationCompat.Builder mNotificationBuilder;
     private NotificationManager mNotificationManager;
 
+    private long mDownloadStartTime;
+
     public NostraFileDownloadService() {
         super(TAG);
     }
@@ -135,8 +137,10 @@ public class NostraFileDownloadService extends IntentService {
 
             URL url = new URL(serverUrl);
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-            urlConnection.setChunkedStreamingMode(1048576);  // 1MB chunk size
+            urlConnection.setChunkedStreamingMode(10485760);  // 10MB chunk size
             urlConnection.connect();
+
+            mDownloadStartTime = System.currentTimeMillis();
 
             InputStream input = new BufferedInputStream(url.openStream());
             OutputStream output = new FileOutputStream(file);
@@ -146,16 +150,12 @@ public class NostraFileDownloadService extends IntentService {
             byte buffer[] = new byte[1024];
             int bufferLength;
             long downloadLengthCompleted = 0;
+            int lastPercent = 0;
 
             while ((bufferLength = input.read(buffer)) != -1) {
                 downloadLengthCompleted += bufferLength;
 
-                int lastPercent = 0;
-                int downloadPercent = (int)(downloadLengthCompleted * 100 / fileContentTotalLength);
-                if (lastPercent != downloadPercent) {
-                    lastPercent = downloadPercent;
-                    updateDownloadStatusOnNotification(downloadPercent);
-                }
+                lastPercent = updateDownloadStatus(fileContentTotalLength, downloadLengthCompleted, lastPercent);
 
                 output.write(buffer, 0, bufferLength);
             }
@@ -179,9 +179,53 @@ public class NostraFileDownloadService extends IntentService {
         return result;
     }
 
-    private void updateDownloadStatusOnNotification(int downloadProgressPercent) {
+    private int updateDownloadStatus(long fileContentTotalLength, long downloadLengthCompleted, int lastPercent) {
+        try {
+            int downloadPercent = (int)(downloadLengthCompleted * 100 / fileContentTotalLength);
+            if (lastPercent != downloadPercent) {
+                lastPercent = downloadPercent;
+                long remainingTime = calculateRemainingTime(downloadPercent);
+                updateDownloadStatusOnNotification(downloadPercent, remainingTime);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lastPercent;
+    }
+
+    private long calculateRemainingTime(int downloadPer) {
+        long remainingTime = -1;
+
+        try {
+            long elapsedTime = System.currentTimeMillis() - mDownloadStartTime;
+            remainingTime = (100 - downloadPer) * elapsedTime / downloadPer;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return remainingTime;
+    }
+
+    private void updateDownloadStatusOnNotification(int downloadProgressPercent, long remainingTime) {
         if (mNotificationBuilder != null && mNotificationManager != null) {
+
+            String msg = "Download in progress...";
+            if (downloadProgressPercent > 0) {
+                msg = downloadProgressPercent + "% downloaded";
+            }
+            if (remainingTime > 0) {
+                try {
+                    int minutes = (int) ((remainingTime / 1000) / 60);
+                    int seconds = (int) (remainingTime / 1000) % 60;
+
+                    msg = msg + ", Time remaining " + minutes + ":" + seconds;
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
             mNotificationBuilder.setProgress(100, downloadProgressPercent, false);
+            mNotificationBuilder.setContentText(msg);
             mNotificationManager.notify(NOTIFICATION_ID, mNotificationBuilder.build());
         }
     }
