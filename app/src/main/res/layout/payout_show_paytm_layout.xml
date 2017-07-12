@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Paytm details"
+                android:text="Paytm Account"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_13"
                 app:typeface="lato_regular"/>
