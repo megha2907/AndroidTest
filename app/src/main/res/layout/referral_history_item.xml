@@ -108,8 +108,8 @@
 
                         <com.jeeva.android.widgets.HmImageView
                             android:id="@+id/referral_history_powerup_won_2x"
-                            android:layout_width="@dimen/dp_13"
-                            android:layout_height="@dimen/dp_13"
+                            android:layout_width="@dimen/referral_history_powerup_size"
+                            android:layout_height="@dimen/referral_history_powerup_size"
                             android:background="@android:color/transparent"
                             android:src="@drawable/double_powerup_small"
                             android:layout_marginLeft="@dimen/dp_3"
@@ -128,8 +128,8 @@
 
                         <com.jeeva.android.widgets.HmImageView
                             android:id="@+id/referral_history_powerup_won_noNeg"
-                            android:layout_width="@dimen/dp_13"
-                            android:layout_height="@dimen/dp_13"
+                            android:layout_width="@dimen/referral_history_powerup_size"
+                            android:layout_height="@dimen/referral_history_powerup_size"
                             android:background="@android:color/transparent"
                             android:src="@drawable/no_negative_powerup_small"
                             android:visibility="visible"
@@ -148,8 +148,8 @@
 
                         <com.jeeva.android.widgets.HmImageView
                             android:id="@+id/referral_history_powerup_won_audience"
-                            android:layout_width="@dimen/dp_13"
-                            android:layout_height="@dimen/dp_13"
+                            android:layout_width="@dimen/referral_history_powerup_size"
+                            android:layout_height="@dimen/referral_history_powerup_size"
                             android:background="@android:color/transparent"
                             android:src="@drawable/audience_poll_powerup_small"
                             android:visibility="visible"
