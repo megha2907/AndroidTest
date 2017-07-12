@@ -88,8 +88,8 @@
 
                 <!-- add money Image -->
                 <ImageView
-                    android:layout_width="@dimen/dp_80"
-                    android:layout_height="@dimen/dp_80"
+                    android:layout_width="@dimen/wallet_big_icon_dimen"
+                    android:layout_height="@dimen/wallet_big_icon_dimen"
                     android:layout_gravity="center"
                     android:src="@drawable/add_cash_wallet_icn"/>
 
@@ -110,7 +110,7 @@
                         android:textColor="#e6e6e6"
                         android:textSize="@dimen/sp_16"
                         app:typeface="lato_regular"
-                        android:shadowColor="@color/black"
+                        android:shadowColor="@color/text_shadow_color_blue"
                         android:shadowRadius="1"
                         android:shadowDy="5"/>
 
@@ -124,7 +124,7 @@
                         android:textSize="@dimen/sp_25"
                         app:typeface="lato_bold"
                         android:layout_marginTop="@dimen/dp_4"
-                        android:shadowColor="@color/black"
+                        android:shadowColor="@color/text_shadow_color_blue"
                         android:shadowRadius="1"
                         android:shadowDy="5"/>
 

@@ -148,4 +148,6 @@
     <color name="salem">#008654</color>
     <color name="elephant">#13374D</color>
 
+    <color name="text_shadow_color_blue">#0f1c44</color>
+
 </resources>
