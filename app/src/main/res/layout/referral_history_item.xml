@@ -59,7 +59,7 @@
                 android:layout_marginTop="@dimen/dp_2"
                 android:ellipsize="end"
                 android:textColor="@color/grey6"
-                android:textSize="@dimen/dp_12"
+                android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular" />
 
 
@@ -87,7 +87,7 @@
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textColor="@color/grey6"
-                        android:textSize="@dimen/dp_12"
+                        android:textSize="@dimen/sp_12"
                         app:typeface="lato_regular" />
 
                     <LinearLayout
@@ -103,13 +103,13 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:text=" 3"
-                            android:textSize="@dimen/dp_12"
+                            android:textSize="@dimen/sp_12"
                             app:typeface="lato_regular" />
 
                         <com.jeeva.android.widgets.HmImageView
                             android:id="@+id/referral_history_powerup_won_2x"
-                            android:layout_width="@dimen/dp_13"
-                            android:layout_height="@dimen/dp_13"
+                            android:layout_width="@dimen/referral_history_powerup_size"
+                            android:layout_height="@dimen/referral_history_powerup_size"
                             android:background="@android:color/transparent"
                             android:src="@drawable/double_powerup_small"
                             android:layout_marginLeft="@dimen/dp_3"
@@ -122,14 +122,14 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:text="1"
-                            android:textSize="@dimen/dp_12"
+                            android:textSize="@dimen/sp_12"
                             android:layout_marginLeft="@dimen/dp_8"
                             app:typeface="lato_regular" />
 
                         <com.jeeva.android.widgets.HmImageView
                             android:id="@+id/referral_history_powerup_won_noNeg"
-                            android:layout_width="@dimen/dp_13"
-                            android:layout_height="@dimen/dp_13"
+                            android:layout_width="@dimen/referral_history_powerup_size"
+                            android:layout_height="@dimen/referral_history_powerup_size"
                             android:background="@android:color/transparent"
                             android:src="@drawable/no_negative_powerup_small"
                             android:visibility="visible"
@@ -142,14 +142,14 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:text="2"
-                            android:textSize="@dimen/dp_12"
+                            android:textSize="@dimen/sp_12"
                             android:layout_marginLeft="@dimen/dp_8"
                             app:typeface="lato_regular" />
 
                         <com.jeeva.android.widgets.HmImageView
                             android:id="@+id/referral_history_powerup_won_audience"
-                            android:layout_width="@dimen/dp_13"
-                            android:layout_height="@dimen/dp_13"
+                            android:layout_width="@dimen/referral_history_powerup_size"
+                            android:layout_height="@dimen/referral_history_powerup_size"
                             android:background="@android:color/transparent"
                             android:src="@drawable/audience_poll_powerup_small"
                             android:visibility="visible"
@@ -167,7 +167,7 @@
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textColor="@color/grey6"
-                        android:textSize="@dimen/dp_12"
+                        android:textSize="@dimen/sp_12"
                         app:typeface="lato_regular" />
 
 

@@ -150,6 +150,10 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
         mBtnSkip.setOnClickListener(this);
         mBtnSkip.setVisibility(View.GONE);
 
+        RelativeLayout.LayoutParams updateLaterLayoutParams = (RelativeLayout.LayoutParams) mUpdateAppLater.getLayoutParams();
+        updateLaterLayoutParams.bottomMargin = getResources().getDimensionPixelSize(R.dimen.update_later_bottom_gap);
+        mUpdateAppLater.setLayoutParams(updateLaterLayoutParams);
+
         if (bundle.getString(Constants.BundleKeys.SCREEN) != null) {
 
             /* check if it's a What's NEW Screen or a Force Update Screen or a Normal Update Screen */
@@ -239,7 +243,7 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
 
             @Override
             public void onPageSelected(int position) {
-                onPositionChanged(position);
+               // onPositionChanged(position);
             }
 
             @Override
@@ -251,7 +255,7 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
         CircleIndicator cpi = (CircleIndicator) findViewById(R.id.update_app_cpi_indicator);
         cpi.setViewPager(mViewPager);
 
-        onPositionChanged(0);
+        //onPositionChanged(0);
     }
 
     /* Alpha animation on slide changed */

@@ -123,6 +123,8 @@
     <dimen name="dp_198">198dp</dimen>
     <dimen name="dp_200">200dp</dimen>
     <dimen name="dp_220">220dp</dimen>
+    <dimen name="dp_250">250dp</dimen>
+    <dimen name="dp_260">260dp</dimen>
     <dimen name="dp_248">248dp</dimen>
     <dimen name="dp_272">272dp</dimen>
     <dimen name="dp_278">278dp</dimen>

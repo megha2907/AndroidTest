@@ -28,6 +28,52 @@
     <dimen name="sp_31">35sp</dimen>
     <dimen name="sp_32">36.5sp</dimen>
 
+    <dimen name="home_nav_bar_height">57dp</dimen>
+    <dimen name="home_nav_bar_icon">22dp</dimen>
+
+    <dimen name="dp_90">102dp</dimen>
+    <dimen name="dp_160">182dp</dimen>
+
+    <!-- OnBoarding Sizes -->
+    <dimen name="onboarding_referral_height">96dp</dimen>
+    <dimen name="onboarding_referral_width">96dp</dimen>
+    <dimen name="onboarding_height">190dp</dimen>
+    <dimen name="onboarding_width">190dp</dimen>
+    <dimen name="onboarding_referral_image_gap">57dp</dimen>
+    <dimen name="onboarding_title_text_size">22dp</dimen>
+    <dimen name="onboarding_desc_text_size">17dp</dimen>
+    <dimen name="onboarding_referral_text_size">20.5dp</dimen>
+    <dimen name="onboarding_login_text_size">25dp</dimen>
+    <dimen name="onboarding_referral_title_size">20.5dp</dimen>
+    <dimen name="onboarding_google_text_size">16dp</dimen>
+    <dimen name="onboarding_facebook_text_size">16dp</dimen>
+    <dimen name="onboarding_terms_text_size">15dp</dimen>
+    <dimen name="onboarding_referral_box_size">36dp</dimen>
+    <dimen name="onboarding_cpi_bottom_gap">48dp</dimen>
+
+    <!-- Update App and Whats New Sizes -->
+    <dimen name="update_app_image_height">342dp</dimen>
+    <dimen name="update_app_image_width">342dp</dimen>
+    <dimen name="update_app_image_margin">16dp</dimen>
+    <dimen name="update_app_title_margin">8dp</dimen>
+    <dimen name="update_app_desc_margin">8dp</dimen>
+    <dimen name="update_app_title_size">18dp</dimen>
+    <dimen name="update_app_desc_size">16dp</dimen>
+    <dimen name="update_app_btn_height">38dp</dimen>
+    <dimen name="update_app_text_size">18dp</dimen>
+    <dimen name="update_later_text_size">17dp</dimen>
+    <dimen name="update_later_bottom_gap">28dp</dimen>
+
+    <!-- referral history -->
+    <dimen name="refer_btn_width">165dp</dimen>
+    <dimen name="refer_btn_height">52dp</dimen>
+    <dimen name="refer_code_btn_height">54dp</dimen>
+    <dimen name="referral_image_size">170dp</dimen>
+    <dimen name="referral_history_btn_width">170dp</dimen>
+    <dimen name="referral_history_btn_height">55dp</dimen>
+    <dimen name="referral_powerup_size">18dp</dimen>
+    <dimen name="referral_history_powerup_size">14dp</dimen>
+    <dimen name="refer_screen_gap">23dp</dimen>
     <!-- Navigation -->
     <dimen name="nav_header_height">82dp</dimen>
     <dimen name="nav_row_height">68dp</dimen>

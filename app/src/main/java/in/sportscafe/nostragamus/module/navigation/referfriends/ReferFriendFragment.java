@@ -165,8 +165,10 @@ public class ReferFriendFragment extends BaseFragment implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.refer_referral_credit_layout:
-                if (mReferFriendFragmentListener != null) {
+                if (mReferFriendFragmentListener != null && mBundle !=null) {
                     mReferFriendFragmentListener.onReferralCreditsClicked(mBundle);
+                }else {
+                    showMessage(Constants.Alerts.SOMETHING_WRONG);
                 }
                 break;
 

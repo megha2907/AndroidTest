@@ -218,7 +218,7 @@ public class NostraFileDownloadService extends IntentService {
                     int minutes = (int) ((remainingTime / 1000) / 60);
                     int seconds = (int) (remainingTime / 1000) % 60;
 
-                    msg = msg + ", Time remaining " + minutes + ":" + seconds;
+                    msg = msg + ", " + minutes + ":" + seconds + " min left";
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
