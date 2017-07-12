@@ -80,6 +80,10 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        /* Values already fetch once before even launching this screen (at Navigation screen) */
+        updateWalletDetailsOnUi();
+
+        /* Fetch again the values and update later */
         fetchUserWalletFromServer();
     }
 
@@ -101,12 +105,13 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onSuccessResponse(UserWalletResponse response) {
                 dismissProgressbar();
-                handleSuccessfulWalletResponse();
+                updateWalletDetailsOnUi();
             }
         }).performApiCall();
     }
 
-    private void handleSuccessfulWalletResponse() {
+
+    private void updateWalletDetailsOnUi() {
         View rootView = getView();
         if (rootView != null && getActivity() != null) {
             TextView totalWalletBalanceTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_total_amount_textView);
