@@ -232,37 +232,55 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             case R.id.prediction_ibtn_back:
                 mPredictionPresenter.onClickBack();
                 break;
+
             case R.id.prediction_iv_shuffle:
-                mSwipeFlingAdapterView.getTopCardListener().selectBottom();
+                try {
+                    mSwipeFlingAdapterView.getTopCardListener().selectBottom();
+                } catch (Exception ex) {}
                 break;
+
             case R.id.prediction_ll_neither:
-                mSwipeFlingAdapterView.getTopCardListener().selectTop();
+                try {
+                    mSwipeFlingAdapterView.getTopCardListener().selectTop();
+                } catch (Exception ex) {}
                 break;
+
             case R.id.prediction_iv_left_arrow:
-                mSwipeFlingAdapterView.getTopCardListener().selectLeft();
+                try {
+                    mSwipeFlingAdapterView.getTopCardListener().selectLeft();
+                } catch (Exception ex) {}
                 break;
+
             case R.id.prediction_iv_right_arrow:
-                mSwipeFlingAdapterView.getTopCardListener().selectRight();
+                try {
+                    mSwipeFlingAdapterView.getTopCardListener().selectRight();
+                } catch (Exception ex) {}
                 break;
+
             case R.id.powerups_iv_2x:
                 makeClickAnimation(findViewById(R.id.powerup_2x_view));
                 mPredictionPresenter.onClick2xPowerup();
                 break;
+
             case R.id.powerups_iv_nonegs:
                 makeClickAnimation(findViewById(R.id.powerup_no_negative_view));
                 mPredictionPresenter.onClickNonegsPowerup();
                 break;
+
             case R.id.powerups_iv_poll:
                 makeClickAnimation(findViewById(R.id.powerup_audience_poll_view));
                 mPredictionPresenter.onClickPollPowerup();
                 break;
+
             case R.id.powerups_iv_info:
                 new PowerupDialogFragment().show(getSupportFragmentManager(), "Powerup");
                 break;
+
             case R.id.powerups_iv_bank:
                 mPredictionPresenter.onClickBankTransfer();
 //                new BankInfoDialogFragment().show(getSupportFragmentManager(), "BankInfo");
                 break;
+
             case R.id.prediction_share_layout:
                 onAskFriendClicked();
                 break;
