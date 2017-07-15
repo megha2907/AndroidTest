@@ -422,6 +422,10 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
             Bundle bundle = new Bundle();
             bundle.putParcelable(BundleKeys.JOINED_CHALLENGE_INFO, Parcels.wrap(joinChallengeResponse.getJoinedChallengeInfo()));
+            if (mChallenge != null) {
+                bundle.putInt(BundleKeys.CHALLENGE_ID, mChallenge.getChallengeId());
+            }
+
             onJoinActionSuccess(bundle);
         }
     }

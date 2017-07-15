@@ -431,7 +431,9 @@ public class PredictionAdapter extends ArrayAdapter<Question> {
                     vBgFrame2.setVisibility(View.VISIBLE);
                 }
             }
-            mTopViewHolder.cvMainCard.setCardElevation(elevation);
+            if (mTopViewHolder.cvMainCard != null) {
+                mTopViewHolder.cvMainCard.setCardElevation(elevation);
+            }
         }
     }
 
