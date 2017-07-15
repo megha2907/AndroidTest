@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits;
+package in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction;
 
 import android.support.annotation.NonNull;
 
@@ -7,7 +7,7 @@ import com.jeeva.android.Log;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
+import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralHistory;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import in.sportscafe.nostragamus.webservice.UserReferralHistoryResponse;
@@ -15,27 +15,27 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 /**
- * Created by deepanshi on 6/23/17.
+ * Created by deepanshi on 7/13/17.
  */
 
-public class ReferralCreditApiModelImpl {
+public class PBTransactionApiModelImpl {
 
-    private static final String TAG = ReferralCreditApiModelImpl.class.getSimpleName();
-    private ReferralCreditApiModelImpl.ReferralCreditApiListener mListener;
+    private static final String TAG = PBTransactionApiModelImpl.class.getSimpleName();
+    private PBTransactionApiModelImpl.PBTransactionHistoryApiListener mListener;
 
-    private ReferralCreditApiModelImpl(ReferralCreditApiModelImpl.ReferralCreditApiListener listener) {
+    private PBTransactionApiModelImpl(PBTransactionApiModelImpl.PBTransactionHistoryApiListener listener) {
         this.mListener = listener;
     }
 
-    public static ReferralCreditApiModelImpl newInstance(@NonNull ReferralCreditApiModelImpl.ReferralCreditApiListener listener) {
-        return new ReferralCreditApiModelImpl(listener);
+    public static PBTransactionApiModelImpl newInstance(@NonNull PBTransactionApiModelImpl.PBTransactionHistoryApiListener listener) {
+        return new PBTransactionApiModelImpl(listener);
     }
 
     public void performApiCall(String flavor) {
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 
-            MyWebService.getInstance().getUserReferralHistory(flavor,null).enqueue(new NostragamusCallBack<UserReferralHistoryResponse>() {
+            MyWebService.getInstance().getUserReferralHistory(flavor,"powerups").enqueue(new NostragamusCallBack<UserReferralHistoryResponse>() {
                 @Override
                 public void onResponse(Call<UserReferralHistoryResponse> call, Response<UserReferralHistoryResponse> response) {
                     super.onResponse(call, response);
@@ -63,10 +63,9 @@ public class ReferralCreditApiModelImpl {
         }
     }
 
-    public interface ReferralCreditApiListener {
+    public interface PBTransactionHistoryApiListener {
         void noInternet();
         void onApiFailed();
         void onSuccessResponse(List<ReferralHistory> referralHistoryList);
     }
-
 }

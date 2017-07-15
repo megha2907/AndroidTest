@@ -26,8 +26,11 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryAdapter;
+import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryTransaction;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by deepanshi on 6/27/17.
@@ -77,6 +80,7 @@ public class ReferralHistoryAdapter extends RecyclerView.Adapter<ReferralHistory
 
             setWinningsAndReferralsText(holder, referralHistory);
             setUserImage(holder, referralHistory);
+            showDate(holder, referralHistory);
 
         }
     }
@@ -119,6 +123,31 @@ public class ReferralHistoryAdapter extends RecyclerView.Adapter<ReferralHistory
             holder.mTvReferralWinnings.setCompoundDrawablesWithIntrinsicBounds(R.drawable.wallet_credit_small, 0, 0, 0);
         }
 
+
+    }
+
+    private void showDate(ReferralHistoryViewHolder holder, ReferralHistory referralHistory) {
+        try {
+            if (!TextUtils.isEmpty(referralHistory.getCreatedAt())) {
+                String dateStr = "-";
+
+                String dateTime = referralHistory.getCreatedAt();
+                long dateTimeMs = TimeUtils.getMillisecondsFromDateString(
+                        dateTime,
+                        Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                        Constants.DateFormats.GMT
+                );
+
+                dateStr = TimeUtils.getDateStringFromMs(dateTimeMs, "dd") + "/" +
+                        TimeUtils.getDateStringFromMs(dateTimeMs, "MM") + "/" +
+                        TimeUtils.getDateStringFromMs(dateTimeMs, "yy");
+
+                holder.dateTextView.setText(dateStr);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
@@ -202,6 +231,7 @@ public class ReferralHistoryAdapter extends RecyclerView.Adapter<ReferralHistory
         LinearLayout moreDetailsLayout;
         LinearLayout itemRootLayout;
         LinearLayout moreDetailsButton;
+        TextView dateTextView;
 
         /*PowerUp Layout */
         LinearLayout powerUpLayout;
@@ -219,6 +249,7 @@ public class ReferralHistoryAdapter extends RecyclerView.Adapter<ReferralHistory
             itemRootLayout = (LinearLayout) itemView.findViewById(R.id.referral_history_item_root_layout);
             mIvUserImage = (HmImageView) itemView.findViewById(R.id.referral_history_user_imageView);
             mTvReferralTitle = (TextView) itemView.findViewById(R.id.referral_history_title_textview);
+            dateTextView = (TextView) itemView.findViewById(R.id.referral_history_date_textview);
             mTvReferralWinnings = (TextView) itemView.findViewById(R.id.referral_history_winnings_textview);
             mTvReferralMoreDetails = (TextView) itemView.findViewById(R.id.referral_history_order_id_textview);
             moreDetailBtnImageView = (ImageView) itemView.findViewById(R.id.referral_history_more_details_imgView);

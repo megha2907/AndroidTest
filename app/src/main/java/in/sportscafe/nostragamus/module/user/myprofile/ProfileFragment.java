@@ -213,10 +213,10 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                 navigateToSettings();
                 break;*/
             case R.id.profile_iv_image:
-                navigateToEditProfile();
+               // navigateToEditProfile();
                 break;
             case R.id.profile_btn_edit:
-                navigateToEditProfile();
+               // navigateToEditProfile();
                 break;
             case R.id.profile_btn_back:
                 getActivity().onBackPressed();

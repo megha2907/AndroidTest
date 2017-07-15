@@ -525,6 +525,7 @@ public interface Constants {
         String REFER_FRIEND = "ReferFriend";
         String REFERRAL_CREDIT = "ReferralCredit";
         String SUCCESSFUL_REFERRAL = "successfulReferral";
+        String POWERUP_BANK = "PowerupBank";
     }
 
     interface InAppPopups {

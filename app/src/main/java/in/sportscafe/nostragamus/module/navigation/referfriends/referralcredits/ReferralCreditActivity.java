@@ -16,6 +16,7 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
@@ -43,7 +44,7 @@ public class ReferralCreditActivity extends NostragamusActivity implements Refer
         setContentView(R.layout.activity_referral_credits);
 
         initialize();
-        loadReferralCreditFragment(getIntent().getExtras());
+        loadReferralCreditFragment();
     }
 
     private void initialize() {
@@ -72,9 +73,14 @@ public class ReferralCreditActivity extends NostragamusActivity implements Refer
         );
     }
 
-    private void loadReferralCreditFragment(Bundle bundle) {
-        UserReferralInfo userReferralInfo = Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.USER_REFERRAL_INFO));
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, ReferralCreditFragment.newInstance(userReferralInfo));
+    private void loadReferralCreditFragment() {
+        Bundle args = null;
+        if (getIntent() != null) {
+            args = getIntent().getExtras();
+        }
+        ReferralCreditFragment referralCreditFragment = new ReferralCreditFragment();
+        referralCreditFragment.setArguments(args);
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, referralCreditFragment);
     }
 
     @Override

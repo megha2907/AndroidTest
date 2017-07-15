@@ -273,7 +273,7 @@ public interface NostragamusService {
     Call<UserReferralResponse> getUserReferralInfo(@Query("app_type") String flavor);
 
     @GET("v2/game/getReferralTransactions")
-    Call<UserReferralHistoryResponse> getUserReferralHistory(@Query("app_type") String flavor);
+    Call<UserReferralHistoryResponse> getUserReferralHistory(@Query("app_type") String flavor,@Query("transaction_type")  String transactionType);
 
     @GET("v2/game/verifyReferralCode")
     Call<VerifyReferralCodeResponse> verifyReferralCode(@Query("referral_code") String referralCode);
