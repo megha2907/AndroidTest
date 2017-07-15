@@ -7,16 +7,19 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.utils.AnimationHelper;
 import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 import in.sportscafe.nostragamus.webservice.UserReferralResponse;
 
@@ -38,6 +41,8 @@ public class ReferFriendFragment extends BaseFragment implements View.OnClickLis
     private TextView tvNumberOfFriendsReferred;
     private TextView tvUserReferralCode;
     private TextView tvReferralCreditText;
+
+    private LinearLayout referCodeLayout;
 
     private Bundle mBundle;
 
@@ -111,64 +116,69 @@ public class ReferFriendFragment extends BaseFragment implements View.OnClickLis
         tvNumberOfFriendsReferred = (TextView) rootView.findViewById(R.id.refer_number_of_friends_referred);
         tvUserReferralCode = (TextView) rootView.findViewById(R.id.refer_referral_code);
         tvReferralCreditText = (TextView) rootView.findViewById(R.id.refer_referral_credit_tv);
+        referCodeLayout = (LinearLayout) rootView.findViewById(R.id.refer_code_layout);
     }
 
     private void setUserReferralInfo(UserReferralInfo userReferralInfo) {
 
         mBundle = new Bundle();
-        mBundle.putParcelable(Constants.BundleKeys.USER_REFERRAL_INFO, Parcels.wrap(userReferralInfo));
 
-        showOrHideContentBasedOnAppType();
+        if (userReferralInfo != null) {
+            mBundle.putParcelable(Constants.BundleKeys.USER_REFERRAL_INFO, Parcels.wrap(userReferralInfo));
 
-        if (!TextUtils.isEmpty(userReferralInfo.getReferHeading())) {
-            tvReferFriendHeading.setText(userReferralInfo.getReferHeading());
-        } else {
-            tvReferFriendHeading.setText("Give ₹20, get ₹10");
+            showOrHideContentBasedOnAppType();
+
+            if (!TextUtils.isEmpty(userReferralInfo.getReferHeading())) {
+                tvReferFriendHeading.setText(userReferralInfo.getReferHeading());
+            } else {
+                tvReferFriendHeading.setText("Give ₹20, get ₹10");
+            }
+
+            if (!TextUtils.isEmpty(userReferralInfo.getReferSubHeadingOne())) {
+                tvReferFriendOne.setText(Html.fromHtml(userReferralInfo.getReferSubHeadingOne()), TextView.BufferType.SPANNABLE);
+            } else {
+                String styledText = "- When a Friend signs up with your code , they will get <b><font color='#ffffff'>₹ 20</font></b> in their wallet and you receive <b><font color='#ffffff'>2 powerups!</font></b>";
+                tvReferFriendOne.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);
+            }
+
+            if (!TextUtils.isEmpty(userReferralInfo.getReferSubHeadingTwo())) {
+                tvReferFriendTwo.setText(Html.fromHtml(userReferralInfo.getReferSubHeadingTwo()), TextView.BufferType.SPANNABLE);
+            } else {
+                String styledTextTwo = "- When a Friend deposits <b><font color='#ffffff'>₹ 20</font></b> in their wallet, you get <b><font color='#ffffff'>₹ 10</font></b> added to your wallet!";
+                tvReferFriendTwo.setText(Html.fromHtml(styledTextTwo), TextView.BufferType.SPANNABLE);
+            }
+
+
+            if (userReferralInfo.getReferralCredits() != null && userReferralInfo.getReferralCredits() > 0) {
+                tvReferralCreditAmount.setText(WalletHelper.getFormattedStringOfAmount(userReferralInfo.getReferralCredits()));
+            }
+
+            tvUserReferralCode.setText(userReferralInfo.getReferralCode());
+            tvNumberOfFriendsReferred.setText(String.valueOf(userReferralInfo.getFriendsReferred()) + " friends added, "
+                    + String.valueOf(userReferralInfo.getTotalPowerUps()) + " powerups received");
+
+            mReferralCode = userReferralInfo.getReferralCode();
+            mWalletInit = String.valueOf(userReferralInfo.getWalletInitialAmount());
+        }else {
+            referCodeLayout.setVisibility(View.GONE);
         }
 
-        if (!TextUtils.isEmpty(userReferralInfo.getReferSubHeadingOne())) {
-            tvReferFriendOne.setText(Html.fromHtml(userReferralInfo.getReferSubHeadingOne()), TextView.BufferType.SPANNABLE);
-        } else {
-            String styledText = "- When a Friend signs up with your code , they will get <b><font color='#ffffff'>₹ 20</font></b> in their wallet and you receive <b><font color='#ffffff'>2 powerups!</font></b>";
-            tvReferFriendOne.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);
-        }
-
-        if (!TextUtils.isEmpty(userReferralInfo.getReferSubHeadingTwo())) {
-            tvReferFriendTwo.setText(Html.fromHtml(userReferralInfo.getReferSubHeadingTwo()), TextView.BufferType.SPANNABLE);
-        } else {
-            String styledTextTwo = "- When a Friend deposits <b><font color='#ffffff'>₹ 20</font></b> in their wallet, you get <b><font color='#ffffff'>₹ 10</font></b> added to your wallet!";
-            tvReferFriendTwo.setText(Html.fromHtml(styledTextTwo), TextView.BufferType.SPANNABLE);
-        }
-
-
-        if (userReferralInfo.getReferralCredits() != null && userReferralInfo.getReferralCredits() > 0) {
-            tvReferralCreditAmount.setText(WalletHelper.getFormattedStringOfAmount(userReferralInfo.getReferralCredits()));
-        }
-
-        tvUserReferralCode.setText(userReferralInfo.getReferralCode());
-        tvNumberOfFriendsReferred.setText(String.valueOf(userReferralInfo.getFriendsReferred()) + " friends added, "
-                + String.valueOf(userReferralInfo.getTotalPowerUps()) + " powerups received");
-
-        mReferralCode = userReferralInfo.getReferralCode();
-        mWalletInit = String.valueOf(userReferralInfo.getWalletInitialAmount());
 
     }
 
     private void showOrHideContentBasedOnAppType() {
-         if (!BuildConfig.IS_PAID_VERSION) {
-             tvReferralCreditAmount.setVisibility(View.GONE);
-             tvReferralCreditText.setText("My Friends");
-         }
+        if (!BuildConfig.IS_PAID_VERSION) {
+            tvReferralCreditAmount.setVisibility(View.GONE);
+            tvReferralCreditText.setText("My Friends");
+        }
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.refer_referral_credit_layout:
-                if (mReferFriendFragmentListener != null && mBundle !=null) {
+                if (mReferFriendFragmentListener != null) {
                     mReferFriendFragmentListener.onReferralCreditsClicked(mBundle);
-                }else {
-                    showMessage(Constants.Alerts.SOMETHING_WRONG);
                 }
                 break;
 

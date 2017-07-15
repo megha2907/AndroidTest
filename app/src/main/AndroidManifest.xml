@@ -283,6 +283,14 @@
             android:name=".module.navigation.referfriends.referralcredits.ReferralCreditActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".module.navigation.powerupbank.PowerUpBankActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.navigation.powerupbank.powerupbanktransaction.PBTransactionActivity"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

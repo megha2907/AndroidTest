@@ -34,7 +34,7 @@
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:layout_marginLeft="@dimen/dp_12"
-            android:paddingTop="@dimen/dp_12"
+            android:paddingTop="@dimen/dp_13"
             android:paddingBottom="@dimen/dp_14">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -185,15 +185,26 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/referral_history_date_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-"
+                android:layout_marginTop="@dimen/dim_2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_10"
+                app:typeface="lato_light"/>
+
             <ImageView
                 android:id="@+id/referral_history_more_details_imgView"
-                android:layout_width="@dimen/dp_25"
-                android:layout_height="@dimen/dp_25"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
                 android:padding="@dimen/dp_5"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:src="@drawable/thin_arrow_min"
                 android:alpha="0.5"
-                android:layout_marginTop="@dimen/dp_5"/>
+                android:layout_marginTop="@dimen/dp_3"/>
 
         </LinearLayout>
 

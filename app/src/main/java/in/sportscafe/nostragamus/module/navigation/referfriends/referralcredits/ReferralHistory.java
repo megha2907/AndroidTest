@@ -27,6 +27,9 @@ public class ReferralHistory {
     @JsonProperty("info")
     private ReferralDetails referralDetails;
 
+    @JsonProperty("createdAt")
+    private String createdAt;
+
     @JsonProperty("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
@@ -78,6 +81,16 @@ public class ReferralHistory {
     @JsonProperty("order_id")
     public void setReferralOrderId(String referralOrderId) {
         this.referralOrderId = referralOrderId;
+    }
+
+    @JsonProperty("createdAt")
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("createdAt")
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
 
