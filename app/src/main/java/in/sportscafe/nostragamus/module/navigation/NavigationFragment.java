@@ -143,12 +143,12 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
         UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
 
         if (userInfo != null && rootView != null) {
-            String userName = userInfo.getUserName();
+            String userNickName = userInfo.getUserNickName();
             String userPhoto = userInfo.getPhoto();
 
-            if (!TextUtils.isEmpty(userName)) {
+            if (!TextUtils.isEmpty(userNickName)) {
                 TextView profileTextView = (TextView) rootView.findViewById(R.id.profile_name_textView);
-                profileTextView.setText(userName);
+                profileTextView.setText(userNickName);
             }
 
             if (!TextUtils.isEmpty(userPhoto)) {

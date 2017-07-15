@@ -13,9 +13,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +25,10 @@ import android.widget.TextView;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
-import com.jeeva.android.widgets.customfont.CustomTextView;
 import com.jeeva.android.widgets.customfont.Typefaces;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
-import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
@@ -50,22 +44,16 @@ import in.sportscafe.nostragamus.Constants.DateFormats;
 import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeAdapter;
 import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeTimelineAdapterListener;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
-import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialogFragment;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.common.CountDownTimer;
 import in.sportscafe.nostragamus.module.common.CustomTypefaceSpan;
-import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.feed.dto.Parties;
-import in.sportscafe.nostragamus.module.feed.dto.Topics;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
-import in.sportscafe.nostragamus.module.user.group.newgroup.TourSelectionAdapter;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -646,15 +634,16 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         }
 
         private void updateTimer(TextView tvTimerValue, long updatedTime) {
-            tvTimerValue.setTag(updatedTime - 1000);
+            try {
+                tvTimerValue.setTag(updatedTime - 1000);
 
-            int secs = (int) (updatedTime / 1000);
-            int mins = secs / 60;
-            int hours = mins / 60;
-            int days = hours / 24;
-            hours = hours % 24;
-            mins = mins % 60;
-            secs = secs % 60;
+                int secs = (int) (updatedTime / 1000);
+                int mins = secs / 60;
+                int hours = mins / 60;
+                int days = hours / 24;
+                hours = hours % 24;
+                mins = mins % 60;
+                secs = secs % 60;
 //
 //            tvTimerValue.setText(" "+
 //                    String.format("%02d", hours) + "h "
@@ -662,46 +651,50 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 //                    + String.format("%02d", secs) +"s"
 //            );
 
-            SpannableStringBuilder builder = new SpannableStringBuilder();
+                SpannableStringBuilder builder = new SpannableStringBuilder();
 
-            Typeface latoBold = Typeface.createFromAsset(tvTimerValue.getContext().getAssets(), "fonts/lato/Lato-Bold.ttf");
-            TypefaceSpan latoBoldSpan = new CustomTypefaceSpan("", latoBold);
 
-            String hoursTxt = " " + String.format("%02d", hours);
-            SpannableString hoursTxtSpannable = new SpannableString(hoursTxt);
-            hoursTxtSpannable.setSpan(latoBoldSpan, 0, hoursTxt.length(), 0);
-            builder.append(hoursTxtSpannable);
+                Typeface latoBold = Typeface.createFromAsset(tvTimerValue.getContext().getAssets(), "fonts/lato/Lato-Bold.ttf");
+                TypefaceSpan latoBoldSpan = new CustomTypefaceSpan("", latoBold);
 
-            String hoursTxt2 = "h ";
-            SpannableString hoursTxt2Spannable = new SpannableString(hoursTxt2);
-            hoursTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, hoursTxt2.length(), 0);
-            builder.append(hoursTxt2Spannable);
+                String hoursTxt = " " + String.format("%02d", hours);
+                SpannableString hoursTxtSpannable = new SpannableString(hoursTxt);
+                hoursTxtSpannable.setSpan(latoBoldSpan, 0, hoursTxt.length(), 0);
+                builder.append(hoursTxtSpannable);
 
-            TypefaceSpan latoBoldSpan2 = new CustomTypefaceSpan("", latoBold);
-            String minsTxt = " " + String.format("%02d", mins);
-            SpannableString minsTxtSpannable = new SpannableString(minsTxt);
-            minsTxtSpannable.setSpan(latoBoldSpan2, 0, minsTxt.length(), 0);
-            builder.append(minsTxtSpannable);
+                String hoursTxt2 = "h ";
+                SpannableString hoursTxt2Spannable = new SpannableString(hoursTxt2);
+                hoursTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, hoursTxt2.length(), 0);
+                builder.append(hoursTxt2Spannable);
 
-            String minsTxt2 = "m ";
-            SpannableString minsTxt2Spannable = new SpannableString(minsTxt2);
-            minsTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, minsTxt2.length(), 0);
-            builder.append(minsTxt2Spannable);
+                TypefaceSpan latoBoldSpan2 = new CustomTypefaceSpan("", latoBold);
+                String minsTxt = " " + String.format("%02d", mins);
+                SpannableString minsTxtSpannable = new SpannableString(minsTxt);
+                minsTxtSpannable.setSpan(latoBoldSpan2, 0, minsTxt.length(), 0);
+                builder.append(minsTxtSpannable);
 
-            TypefaceSpan latoBoldSpan3 = new CustomTypefaceSpan("", latoBold);
-            String secTxt = " " + String.format("%02d", secs);
-            SpannableString secTxtSpannable = new SpannableString(secTxt);
-            secTxtSpannable.setSpan(latoBoldSpan3, 0, secTxt.length(), 0);
-            builder.append(secTxtSpannable);
+                String minsTxt2 = "m ";
+                SpannableString minsTxt2Spannable = new SpannableString(minsTxt2);
+                minsTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, minsTxt2.length(), 0);
+                builder.append(minsTxt2Spannable);
 
-            String secTxt2 = "s";
-            SpannableString secTxt2Spannable = new SpannableString(secTxt2);
-            secTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, secTxt2.length(), 0);
-            builder.append(secTxt2Spannable);
+                TypefaceSpan latoBoldSpan3 = new CustomTypefaceSpan("", latoBold);
+                String secTxt = " " + String.format("%02d", secs);
+                SpannableString secTxtSpannable = new SpannableString(secTxt);
+                secTxtSpannable.setSpan(latoBoldSpan3, 0, secTxt.length(), 0);
+                builder.append(secTxtSpannable);
 
-            tvTimerValue.setText(builder, TextView.BufferType.SPANNABLE);
+                String secTxt2 = "s";
+                SpannableString secTxt2Spannable = new SpannableString(secTxt2);
+                secTxt2Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, secTxt2.length(), 0);
+                builder.append(secTxt2Spannable);
 
-            tvTimerValue.setCompoundDrawablesWithIntrinsicBounds(R.drawable.timer_icon, 0, 0, 0);
+                tvTimerValue.setText(builder, TextView.BufferType.SPANNABLE);
+
+                tvTimerValue.setCompoundDrawablesWithIntrinsicBounds(R.drawable.timer_icon, 0, 0, 0);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
 
         private void destroy() {

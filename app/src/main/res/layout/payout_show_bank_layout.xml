@@ -13,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:minHeight="@dimen/dp_64"
-        >
+        android:minHeight="@dimen/wallet_payout_choice_item_height">
 
         <ImageView
             android:id="@+id/payout_list_item_icon_imageView"

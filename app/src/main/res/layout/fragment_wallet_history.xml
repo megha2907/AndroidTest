@@ -45,8 +45,8 @@
 
         <!-- History Image -->
         <ImageView
-            android:layout_width="@dimen/dp_80"
-            android:layout_height="@dimen/dp_80"
+            android:layout_width="@dimen/wallet_big_icon_dimen"
+            android:layout_height="@dimen/wallet_big_icon_dimen"
             android:src="@drawable/wallet_history_icn"
             android:layout_gravity="center"/>
 
@@ -66,7 +66,7 @@
                 android:textColor="#e6e6e6"
                 android:textSize="@dimen/sp_16"
                 app:typeface="lato_regular"
-                android:shadowColor="@color/black"
+                android:shadowColor="@color/text_shadow_color_blue"
                 android:shadowRadius="1"
                 android:shadowDy="5"/>
 
@@ -79,7 +79,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_25"
                 app:typeface="lato_bold"
-                android:shadowColor="@color/black"
+                android:shadowColor="@color/text_shadow_color_blue"
                 android:shadowRadius="1"
                 android:shadowDy="5"/>
 

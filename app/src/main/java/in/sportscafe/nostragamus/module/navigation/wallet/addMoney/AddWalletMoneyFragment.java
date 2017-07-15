@@ -121,19 +121,19 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
     private void onAddMoney250Clicked() {
         double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 250);
-        mAmountEditText.setText(String.valueOf(amt));
+        mAmountEditText.setText(String.valueOf((int)amt));
         setEditTextSelection();
     }
 
     private void onAddMoney100Clicked() {
         double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 100);
-        mAmountEditText.setText(String.valueOf(amt));
+        mAmountEditText.setText(String.valueOf((int)amt));
         setEditTextSelection();
     }
 
     private void onAddMoney50Clicked() {
         double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 50);
-        mAmountEditText.setText(String.valueOf(amt));
+        mAmountEditText.setText(String.valueOf((int)amt));
         setEditTextSelection();
     }
 
