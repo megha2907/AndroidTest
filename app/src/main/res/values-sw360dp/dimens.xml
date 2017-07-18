@@ -75,6 +75,7 @@
     <dimen name="dim_29">29dp</dimen>
     <dimen name="dim_30">30dp</dimen>
     <dimen name="dim_32">32dp</dimen>
+    <dimen name="dim_40">40dp</dimen>
     <dimen name="dim_60">60dp</dimen>
     <dimen name="dim_90">90dp</dimen>
     <dimen name="dim_100">100dp</dimen>

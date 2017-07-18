@@ -155,8 +155,7 @@
                     android:id="@+id/paytm_add_detail_sl_confirm_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_12"
-                    android:paddingBottom="@dimen/dp_4"
+                    android:layout_marginTop="@dimen/dp_6"
                     app:sl_cornerRadius="@dimen/dp_5"
                     app:sl_fillColor="@color/edittext_selection_bg"
                     app:sl_shadowRadius="@dimen/dp_4">
@@ -168,6 +167,18 @@
                         android:imeOptions="actionDone"/>
 
                 </com.jeeva.android.widgets.ShadowLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/withdraw_amt_error_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:text="Please enter valid amount"
+                    android:textColor="@color/radical_red"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="lato_regular"
+                    android:visibility="gone"/>
 
                 <!-- First time withdrawal msg layout -->
                 <LinearLayout
