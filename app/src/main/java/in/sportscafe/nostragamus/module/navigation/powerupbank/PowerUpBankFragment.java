@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -13,6 +15,7 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
@@ -49,6 +52,11 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
     private TextView tvPBPowerup2xCount;
     private TextView tvPBPowerupNonegCount;
     private TextView tvPBPowerupPlayerPollCount;
+
+    private ImageView ivPBPowerup2x;
+    private ImageView ivPBPowerupNoneg;
+    private ImageView ivPBPowerupPlayerPoll;
+
 
     private Bundle mBundle;
 
@@ -120,6 +128,14 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
         tvPBPowerupNonegCount = (TextView) rootView.findViewById(R.id.powerup_bank_noneg_powerup_count);
         tvPBPowerupPlayerPollCount = (TextView) rootView.findViewById(R.id.powerup_bank_audience_poll_powerup_count);
 
+        ivPBPowerup2x = (ImageView) rootView.findViewById(R.id.powerup_bank_2x);
+        ivPBPowerupNoneg = (ImageView) rootView.findViewById(R.id.powerup_bank_noneg);
+        ivPBPowerupPlayerPoll = (ImageView) rootView.findViewById(R.id.powerup_bank_audience_poll);
+
+        ivPBPowerup2x.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.double_powerup));
+        ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.no_negative_powerup));
+        ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_powerup));
+
         mBundle = new Bundle();
     }
 
@@ -148,7 +164,7 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
             } else {
                 count = powerUp.getCount();
             }
-            onGet2xPowerUp(count, count < 3);
+            onGet2xPowerUp(count, count < 1);
 
             powerUp = mPowerUpMaps.get(Constants.Powerups.NO_NEGATIVE);
             if (null == powerUp) {
@@ -156,7 +172,7 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
             } else {
                 count = powerUp.getCount();
             }
-            onGetNonegsPowerUp(count, count < 3);
+            onGetNonegsPowerUp(count, count < 1);
 
             powerUp = mPowerUpMaps.get(Constants.Powerups.AUDIENCE_POLL);
             if (null == powerUp) {
@@ -164,26 +180,26 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
             } else {
                 count = powerUp.getCount();
             }
-            onGetPollPowerUp(count, count < 3);
+            onGetPollPowerUp(count, count < 1);
         } else {
             int count = 0;
-            onGet2xPowerUp(count, count < 3);
-            onGetNonegsPowerUp(count, count < 3);
-            onGetPollPowerUp(count, count < 3);
+            onGet2xPowerUp(count, count < 1);
+            onGetNonegsPowerUp(count, count < 1);
+            onGetPollPowerUp(count, count < 1);
         }
 
     }
 
     private void onGetPollPowerUp(int count, boolean runningLow) {
-        setPowerUpCount(tvPBPowerupPlayerPollCount, count, runningLow);
+        setPowerUpCount(tvPBPowerupPlayerPollCount, count, runningLow, Constants.Powerups.AUDIENCE_POLL);
     }
 
     private void onGetNonegsPowerUp(int count, boolean runningLow) {
-        setPowerUpCount(tvPBPowerupNonegCount, count, runningLow);
+        setPowerUpCount(tvPBPowerupNonegCount, count, runningLow, Constants.Powerups.NO_NEGATIVE);
     }
 
     private void onGet2xPowerUp(int count, boolean runningLow) {
-        setPowerUpCount(tvPBPowerup2xCount, count, runningLow);
+        setPowerUpCount(tvPBPowerup2xCount, count, runningLow, Constants.Powerups.XX);
     }
 
     private HashMap<String, PowerUp> getPowerUpMap(HashMap<String, Integer> powerUps) {
@@ -194,10 +210,18 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
         return powerUpMaps;
     }
 
-    private void setPowerUpCount(TextView textView, int count, boolean runningLow) {
+    private void setPowerUpCount(TextView textView, int count, boolean runningLow, String powerUp) {
         textView.setText(String.valueOf(count));
         if (runningLow) {
-            //textView.setBackground(getResources().getDrawable(R.drawable.bank_powerup_count_bg));
+            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
+
+            if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
+                ivPBPowerup2x.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.double_grey_powerup));
+            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
+                ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.no_negative_grey_powerup));
+            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
+                ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_grey_powerup));
+            }
 
             if (mTvRunningLow.getVisibility() == View.GONE) {
                 mTvRunningLow.setVisibility(View.VISIBLE);
@@ -212,7 +236,7 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
         String src = String.valueOf(Html.fromHtml(getResources().getString(R.string.pb_text_two)));
         SpannableString str = new SpannableString(src);
         Drawable d = getResources().getDrawable(R.drawable.powerbank_profile_icon);
-        d.setBounds(0, 0, 30, 30);
+        d.setBounds(0, 0, getResources().getDimensionPixelSize(R.dimen.dim_16), getResources().getDimensionPixelSize(R.dimen.dim_16));
         ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BOTTOM);
         str.setSpan(span, str.toString().indexOf("@"), str.toString().indexOf("@") + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
 

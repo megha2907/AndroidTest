@@ -22,6 +22,7 @@ import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeInfo;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
@@ -100,33 +101,40 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment imple
         TextView challengeDesc = (TextView) findViewById(R.id.challenge_info_tv_challenge_desc);
         TextView challengePayoutDate = (TextView) findViewById(R.id.challenge_info_tv_challenge_payout_date);
         TextView challengePayoutDateTxt = (TextView) findViewById(R.id.challenge_info_tv_challenge_payout_txt);
-        Button challengeBtnClose = (Button)findViewById(R.id.challenge_info_btn_close);
-        ImageView mBtnPopupClose = (ImageView)findViewById(R.id.popup_cross_btn);
+        Button challengeBtnClose = (Button) findViewById(R.id.challenge_info_btn_close);
+        ImageView mBtnPopupClose = (ImageView) findViewById(R.id.popup_cross_btn);
         mBtnPopupClose.setVisibility(View.VISIBLE);
         mBtnPopupClose.setOnClickListener(this);
 
         if (mChallenge != null) {
 
-            ((TextView) findViewById(R.id.challenge_info_tv_title)).setText(mChallenge.getName()+mTitle);
+            ((TextView) findViewById(R.id.challenge_info_tv_title)).setText(mChallenge.getName() + mTitle);
             challengeName.setVisibility(View.GONE);
             challengeDesc.setText(mChallenge.getDescription());
-            challengeDesc.setPadding(0,15,0,0);
-            ChallengeUserInfo challengeUserInfo = mChallenge.getChallengeUserInfo();
+            challengeDesc.setPadding(0, 15, 0, 0);
 
             int powerUpCount = 0;
-            HashMap<String, Integer> powerUps = challengeUserInfo.getPowerUps();
+            HashMap<String, Integer> powerUps;
+
+            if (mChallenge.getChallengeUserInfo().isUserJoined()) {
+                powerUps = mChallenge.getChallengeUserInfo().getPowerUps();
+            }else{
+                powerUps = mChallenge.getChallengeInfo().getPowerUps();
+            }
+
             ((TextView) findViewById(R.id.challenge_info_tv_2x)).setText(powerUps.get(Constants.Powerups.XX) + "");
             ((TextView) findViewById(R.id.challenge_info_tv_nonegs)).setText(powerUps.get(Constants.Powerups.NO_NEGATIVE) + "");
             ((TextView) findViewById(R.id.challenge_info_tv_poll)).setText(powerUps.get(Constants.Powerups.AUDIENCE_POLL) + "");
 
+            String powerUpTotalCount = String.valueOf(powerUps.get(Constants.Powerups.XX)
+                    + powerUps.get(Constants.Powerups.NO_NEGATIVE)
+                    + powerUps.get(Constants.Powerups.AUDIENCE_POLL));
+
             ((TextView) findViewById(R.id.challenge_info_tv_powerup_desc)).setText(
-                    String.format(
-                            getString(R.string.info_powerup_desc),
-                            powerUps.get(Constants.Powerups.XX)
-                                    + powerUps.get(Constants.Powerups.NO_NEGATIVE)
-                                    + powerUps.get(Constants.Powerups.AUDIENCE_POLL)
-                    )
-            );
+                    String.format("You have "+ powerUpTotalCount
+                            +" powerups to use across "
+                            + String.valueOf(mChallenge.getMatchesCategorized().getAllMatches().size() +
+                            " matches in this challenge, Use them to score higher!")));
 
 
             long endTimeMs = TimeUtils.getMillisecondsFromDateString(
@@ -137,7 +145,7 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment imple
 
             int dayOfMonthinEndTime = Integer.parseInt(TimeUtils.getDateStringFromMs(endTimeMs, "d"));
 
-            if (BuildConfig.IS_PAID_VERSION){
+            if (BuildConfig.IS_PAID_VERSION) {
                 challengePayoutDateTxt.setText("Prizes");
                 // Setting end date of the challenge
                 challengePayoutDate.setText("The Challenge ends on the " +
@@ -145,7 +153,7 @@ public class ChallengeInfoDialogFragment extends NostragamusDialogFragment imple
                         TimeUtils.getDateStringFromMs(endTimeMs, "MMM") + " , Prizes will be handed out within 3 days."
                 );
 
-            }else {
+            } else {
                 challengePayoutDateTxt.setText("Results");
 
                 // Setting end date of the challenge
