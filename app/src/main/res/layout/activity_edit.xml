@@ -300,7 +300,7 @@
                     <com.jeeva.android.widgets.customfont.CustomEditText
                         android:id="@+id/edit_et_nickname_new"
                         style="@style/NewEditTextStyle"
-                        android:inputType="text" />
+                        android:inputType="textCapSentences" />
 
                 </LinearLayout>
 
@@ -361,7 +361,7 @@
                 android:layout_marginTop="@dimen/dim_16"
                 android:layout_marginLeft="@dimen/dp_16"
                 android:layout_marginRight="@dimen/dp_16"
-                android:buttonTint="@color/white_90"
+                android:buttonTint="@color/line_separator_two"
                 android:checked="false"
                 android:gravity="left"
                 android:paddingLeft="@dimen/dp_2"

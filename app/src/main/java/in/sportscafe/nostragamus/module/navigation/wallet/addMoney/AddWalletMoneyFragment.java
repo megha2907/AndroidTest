@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
+import org.w3c.dom.Text;
+
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
@@ -109,11 +111,18 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
     private void onAddAmountClicked() {
         double amount = AddMoneyWalletHelper.validateAddMoneyAmountValid(mAmountEditText.getText().toString().trim());
-        if (amount > 0) {
-            AddMoneyWalletHelper.initTransaction(this, amount);
-        } else {
-            if (mAmountEditText != null) {
-                mAmountEditText.setError("Please enter amount");
+        if (getView() != null) {
+            TextView errorTextView = (TextView) getView().findViewById(R.id.add_wallet_money_amt_error_textView);
+
+            if (amount > 0) {
+                errorTextView.setVisibility(View.GONE);
+
+                AddMoneyWalletHelper.initTransaction(this, amount);
+            } else {
+                /*if (mAmountEditText != null) {
+                    mAmountEditText.setError("Please enter amount");
+                }*/
+                errorTextView.setVisibility(View.VISIBLE);
             }
         }
     }

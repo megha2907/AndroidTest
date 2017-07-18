@@ -147,8 +147,9 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
             String userPhoto = userInfo.getPhoto();
 
             if (!TextUtils.isEmpty(userNickName)) {
+                String userNameStr = userNickName.substring(0,1).toUpperCase() + userNickName.substring(1);
                 TextView profileTextView = (TextView) rootView.findViewById(R.id.profile_name_textView);
-                profileTextView.setText(userNickName);
+                profileTextView.setText(userNameStr);
             }
 
             if (!TextUtils.isEmpty(userPhoto)) {
