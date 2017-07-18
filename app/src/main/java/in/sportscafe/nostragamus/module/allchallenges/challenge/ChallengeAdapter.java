@@ -37,6 +37,7 @@ import com.jeeva.android.widgets.ShadowLayout;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -141,12 +142,12 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
             if (BuildConfig.IS_PAID_VERSION) {
                 holder.mRlMatchesLeft.setVisibility(View.INVISIBLE);
-            }else {
+            } else {
                 holder.mRlMatchesLeft.setVisibility(View.VISIBLE);
                 holder.mTvMatchesLeft.setText(String.valueOf(challenge.getCountMatchesLeft()) + "/" + String.valueOf(challenge.getMatchesCategorized().getAllMatches().size()) + " Games Left to score!");
                 int percentage = (Integer.parseInt(challenge.getCountMatchesLeft()) * 100) / challenge.getMatchesCategorized().getAllMatches().size();
                 setPercentPoll(holder.mTvMatchesLeft, percentage, holder.mTvMatchesLeft.getContext());
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.mRlMainPowerup.getLayoutParams();
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.mRlMainPowerup.getLayoutParams();
                 params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 holder.mRlMainPowerup.setLayoutParams(params);
             }
@@ -163,9 +164,9 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
             if (BuildConfig.IS_PAID_VERSION) {
                 holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
-            }else {
+            } else {
                 holder.mRlMainPowerup.setVisibility(View.VISIBLE);
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.mRlMainPowerup.getLayoutParams();
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.mRlMainPowerup.getLayoutParams();
                 params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 holder.mRlMainPowerup.setLayoutParams(params);
             }
@@ -266,7 +267,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
                 if (BuildConfig.IS_PAID_VERSION) {
                     holder.mRlMatchesLeft.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     holder.mRlMatchesLeft.setVisibility(View.VISIBLE);
                     holder.mTvMatchesLeft.setText("0" + "/" + String.valueOf(challenge.getMatchesCategorized().getAllMatches().size()) + " Games Left to score!");
                 }
@@ -278,7 +279,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
                 if (BuildConfig.IS_PAID_VERSION) {
                     holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     holder.mRlMainPowerup.setVisibility(View.VISIBLE);
                 }
                 holder.mJoinChallengeLayout.setVisibility(View.GONE);
@@ -286,11 +287,17 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         }
 
-        if (BuildConfig.IS_PAID_VERSION){
-            holder.mRlCashRewards.setVisibility(View.VISIBLE);
-            holder.mRlRewards.setVisibility(View.VISIBLE);
-            holder.mRewardsLine.setVisibility(View.VISIBLE);
-        }else {
+        if (BuildConfig.IS_PAID_VERSION) {
+            if (!TextUtils.isEmpty(challenge.getPrizeMoneyTopline())) {
+                holder.mRlCashRewards.setVisibility(View.VISIBLE);
+                holder.mRlRewards.setVisibility(View.VISIBLE);
+                holder.mRewardsLine.setVisibility(View.VISIBLE);
+            } else {
+                holder.mRlCashRewards.setVisibility(View.GONE);
+                holder.mRlRewards.setVisibility(View.GONE);
+                holder.mRewardsLine.setVisibility(View.GONE);
+            }
+        } else {
             holder.mRlCashRewards.setVisibility(View.GONE);
             holder.mRlRewards.setVisibility(View.GONE);
             holder.mRewardsLine.setVisibility(View.GONE);
