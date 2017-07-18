@@ -153,7 +153,6 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
             powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
 
-
         } else {
             holder.mRlAfterJoinedChallenge.setVisibility(View.GONE);
             holder.mRlMatchesLeft.setVisibility(View.VISIBLE);
