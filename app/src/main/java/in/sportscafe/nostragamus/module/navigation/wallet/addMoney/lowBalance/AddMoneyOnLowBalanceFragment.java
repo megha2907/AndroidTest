@@ -206,11 +206,15 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
 
     private void onAddAmountClicked() {
         double amount = AddMoneyWalletHelper.validateAddMoneyAmountValid(mAmountEditText.getText().toString().trim());
-        if (amount > 0 && amount >= mLowBalanceDifferenceAmount) {
-            AddMoneyWalletHelper.initTransaction(this, amount);
-        } else {
-            if (mAmountEditText != null) {
-                mAmountEditText.setError("Please enter min amount required to continue");
+        if (getView() != null) {
+            TextView errorTextView = (TextView) getView().findViewById(R.id.add_wallet_money_on_low_amt_error_textView);
+
+            if (amount > 0 && amount >= mLowBalanceDifferenceAmount) {
+                errorTextView.setVisibility(View.GONE);
+
+                AddMoneyWalletHelper.initTransaction(this, amount);
+            } else {
+                errorTextView.setVisibility(View.VISIBLE);
             }
         }
     }

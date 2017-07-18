@@ -7,16 +7,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import org.parceler.Parcels;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoPaytmDto;
+import org.parceler.Parcels;
 
 /**
  * Created by Jeeva on 23/03/17.
@@ -73,14 +70,20 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
         String mobNo = getTrimmedText(mMobileNoEditText);
         String confirmMobNumber = getTrimmedText(mConfirmMobileNoEditText);
 
+        TextView mobErrorTextView = (TextView) findViewById(R.id.add_paytm_mobile_no_error_textview);
+        TextView confirmErrorTextView = (TextView) findViewById(R.id.add_paytm_confirm_mobile_no_error_textview);
         if (mobNo.length() != 10) {
-            mMobileNoEditText.setError("Enter 10 digit number");
+            mobErrorTextView.setVisibility(View.VISIBLE);
             return;
+        } else {
+            mobErrorTextView.setVisibility(View.GONE);
         }
 
         if (!mobNo.equalsIgnoreCase(confirmMobNumber)) {
-            mConfirmMobileNoEditText.setError("Numbers don't match");
+            confirmErrorTextView.setVisibility(View.VISIBLE);
             return;
+        } else {
+            confirmErrorTextView.setVisibility(View.GONE);
         }
 
         showProgressbar();
