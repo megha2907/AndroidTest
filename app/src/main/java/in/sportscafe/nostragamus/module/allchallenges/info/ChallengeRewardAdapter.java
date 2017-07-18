@@ -126,7 +126,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
 
 
         try {
-            if (mChallengeInfo.getCountMatchesLeft().equals("0")) {
+            if (mChallengeInfo.getChallengeInfo().isClosed()) {
                 if (!config.getRewardDetails().getWinnersRewardsList().isEmpty()) {
                     createWinnersDropDownList(config.getRewardDetails().getWinnersRewardsList(), holder.mLlDropDownHolder);
                     holder.mTvChallengeEndTime.setVisibility(View.GONE);
