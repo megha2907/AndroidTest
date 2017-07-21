@@ -4,7 +4,7 @@
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/default_play_bg">
+    android:background="@color/play_screen_bg_color">
 
     <View
         android:layout_width="match_parent"

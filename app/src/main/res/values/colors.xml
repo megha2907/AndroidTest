@@ -151,5 +151,7 @@
 
     <color name="text_shadow_color_blue">#0f1c44</color>
     <color name="edit_text_icon_bg_color">#186AA2</color>
+    <color name="play_screen_bg_color">#222222</color>
+    <color name="err_color">#c43763</color>
 
 </resources>

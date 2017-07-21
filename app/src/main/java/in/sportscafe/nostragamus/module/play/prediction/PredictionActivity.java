@@ -13,12 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.CustomProgressbar;
@@ -41,6 +39,7 @@ import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
+import in.sportscafe.nostragamus.module.play.powerup.PowerupBankTransferToPlayActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
@@ -52,6 +51,8 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
 public class PredictionActivity extends NostragamusActivity implements PredictionView,
         View.OnClickListener, OnDismissListener {
 
+    private final static int POWERUP_BANK_ACTIVITY_REQUEST_CODE = 99;
+
     private final static int DUMMY_GAME_REQUEST_CODE = 45;
 
     private final static int SHARE_QUESTION_REQUEST_CODE = 46;
@@ -59,10 +60,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     private final static int BANK_DIALOG_REQUEST_CODE = 47;
 
     private final static int POPUP_DIALOG_REQUEST_CODE = 48;
-
-    private RelativeLayout mRlPlayBg;
-
-    private ViewGroup mVgPlayPage;
 
     private SwipeFlingAdapterView mSwipeFlingAdapterView;
 
@@ -111,8 +108,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
 //        initToolbar();
 
-        mRlPlayBg = (RelativeLayout) findViewById(R.id.content);
-        mVgPlayPage = (ViewGroup) findViewById(R.id.prediction_rl_play_page);
         mSwipeFlingAdapterView = (SwipeFlingAdapterView) findViewById(R.id.activity_prediction_swipe);
 
         mCardNumberTextView = (TextView) findViewById(R.id.card_number_textview);
@@ -124,7 +119,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mTvPollPowerupCount = (TextView) findViewById(R.id.powerup_tv_poll_count);
         mTvNeitherOption = (TextView) findViewById(R.id.prediction_tv_neither_text);
 
-//        mIv2xGlobalPowerup.setBackground(getPowerupDrawable(R.color.goldenyellowcolor));
         mIv2xPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
         mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
         mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
@@ -359,29 +353,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void changeBackgroundImage(Integer sportId) {
-        int bgRes;
-        switch (sportId) {
-            case 1:
-                bgRes = R.drawable.play_cricket_bg;
-                break;
-            case 3:
-                bgRes = R.drawable.play_tennis_bg;
-                break;
-            case 6:
-                bgRes = R.drawable.play_badminton_bg;
-                break;
-            case 4:
-                bgRes = R.drawable.play_football_bg;
-                break;
-            default:
-                return;
-        }
-
-        mRlPlayBg.setBackgroundResource(bgRes);
-    }
-
-    @Override
     public void goBack() {
         super.onBackPressed();
     }
@@ -433,6 +404,56 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         if (RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
             mPredictionPresenter.onShake();
         }
+
+        if (requestCode == POWERUP_BANK_ACTIVITY_REQUEST_CODE) {
+            showPowerupBankAndHelpButtons(findViewById(R.id.powerups_iv_bank), findViewById(R.id.powerups_iv_info));
+        }
+    }
+
+    private void showPowerupBankAndHelpButtons(final View powerupView, final View helpView) {
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                powerupView.setVisibility(View.VISIBLE);
+                helpView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        powerupView.startAnimation(scaleAnimation);
+        helpView.startAnimation(scaleAnimation);
+    }
+
+    private void hidePowerupBankAndHelpButtons(final View powerupView, final View helpView) {
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                powerupView.setVisibility(View.GONE);
+                helpView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        powerupView.startAnimation(scaleAnimation);
+        helpView.startAnimation(scaleAnimation);
     }
 
     private TourGuide mCoachMarker;
@@ -490,6 +511,16 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         intent.putExtras(bundle);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void showPowerUpBankActivity(Bundle args) {
+        Intent intent = new Intent(PredictionActivity.this, PowerupBankTransferToPlayActivity.class);
+        if (args != null) {
+            intent.putExtras(args);
+        }
+        startActivityForResult(intent, POWERUP_BANK_ACTIVITY_REQUEST_CODE);
+        hidePowerupBankAndHelpButtons(findViewById(R.id.powerups_iv_bank), findViewById(R.id.powerups_iv_info));
     }
 
     private void openPopup(String popUpType) {

@@ -139,10 +139,13 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onClickBankTransfer() {
-        if (NostragamusDataHandler.getInstance().isBankInfoShown()) {
+        /*if (NostragamusDataHandler.getInstance().isBankInfoShown()) {
             mPredictionView.navigateToBankTransfer(mPredictionModel.getChallengeInfoBundle());
         } else {
             mPredictionView.showBankInfo();
+        }*/
+        if (mPredictionView != null && mPredictionModel != null) {
+            mPredictionView.showPowerUpBankActivity(mPredictionModel.getChallengeInfoBundle());
         }
     }
 
@@ -206,7 +209,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onGetSport(Integer sportId) {
-        mPredictionView.changeBackgroundImage(sportId);
     }
 
     @Override

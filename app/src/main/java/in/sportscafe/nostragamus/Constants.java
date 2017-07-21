@@ -297,6 +297,7 @@ public interface Constants {
         String BALANCE_AMOUNT = "balanceAmount";
         String CHALLENGE_CONFIG = "challengeConfig";
         String USER_REFERRAL_INFO = "userReferralInfo";
+        String POWERUP_BANK_INFO_SCREEN = "powerupBankInfoScreen";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";

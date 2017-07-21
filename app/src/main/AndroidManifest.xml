@@ -48,23 +48,23 @@
         <activity
             android:name=".module.navigation.wallet.paytmAndBank.AddPaytmDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".module.navigation.wallet.paytmAndBank.AddBankDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <!--<activity
+        <!--
+            <activity
             android:name=".module.navigation.submitquestion.matchlist.MatchListFragment"
-            android:screenOrientation="portrait" />-->
+            android:screenOrientation="portrait" />
+        -->
         <activity
             android:name=".module.navigation.submitquestion.add.AddQuestionActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".module.navigation.referfriends.SuccessfulReferralActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".module.othersanswers.OthersAnswersActivity"
             android:screenOrientation="portrait"
@@ -104,20 +104,22 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".module.feed.FeedWebView"
             android:screenOrientation="portrait" />
         <activity android:name=".module.common.NostragamusWebView">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
 
-                <!--<data android:scheme="myscheme" />-->
-                <!--<data android:scheme="https" />-->
-                <!--<data android:scheme="http" />-->
-            <!--</intent-filter>-->
+
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+
+
+            <!-- <data android:scheme="myscheme" /> -->
+            <!-- <data android:scheme="https" /> -->
+            <!-- <data android:scheme="http" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".module.getstart.GetStartActivity"
@@ -163,16 +165,17 @@
             android:name=".module.user.myprofile.edit.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <!--<activity
+        <!--
+            <activity
             android:name=".module.user.sportselection.SportSelectionActivity"
-            android:screenOrientation="portrait" />-->
+            android:screenOrientation="portrait" />
+        -->
         <activity
             android:name=".module.play.prediction.PredictionActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.play.prediction.AllDoneActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".module.play.myresults.MyResultsActivity"
             android:parentActivityName=".module.home.HomeActivity"
@@ -185,10 +188,12 @@
         <activity
             android:name=".module.resultspeek.ResultsPeekActivity"
             android:screenOrientation="portrait" />
-        <!--<activity
+        <!--
+            <activity
             android:name=".module.play.myresults.flipPowerup.FlipActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />-->
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        -->
         <activity
             android:name=".module.user.points.PointsActivity"
             android:screenOrientation="portrait" />
@@ -273,23 +278,24 @@
         <activity
             android:name=".module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".module.navigation.referfriends.ReferFriendActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".module.navigation.referfriends.referralcredits.ReferralCreditActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".module.navigation.powerupbank.PowerUpBankActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".module.navigation.powerupbank.powerupbanktransaction.PBTransactionActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.play.powerup.PowerupBankTransferToPlayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TransferPowerupTheme"
+            android:launchMode="singleTop"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -486,8 +492,6 @@
             </intent-filter>
         </receiver>
 
-
-
         <!-- Google AdWords Conversion Tracking Code -->
         <receiver
             android:name="com.google.ads.conversiontracking.InstallReceiver"
@@ -504,13 +508,11 @@
             android:name=".receiver.NostraFileDownloadReceiver"
             android:enabled="true">
             <intent-filter>
+
                 <!-- Take action from NostraFileDownloadService.FILE_DOWNLOAD_BROADCAST_ACTION -->
                 <action android:name="in.sportscafe.nostragamus.broadcast.action.fileDownloadBroadcast" />
             </intent-filter>
         </receiver>
-
-
-
     </application>
 
 </manifest>
