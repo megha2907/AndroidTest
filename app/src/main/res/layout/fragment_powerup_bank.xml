@@ -53,7 +53,6 @@
                         android:layout_marginTop="@dimen/dim_8"
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/double_powerup"
                         android:visibility="visible" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -96,7 +95,6 @@
                         android:layout_marginTop="@dimen/dim_8"
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/no_negative_powerup"
                         android:visibility="visible" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -141,7 +139,6 @@
                         android:layout_marginTop="@dimen/dim_8"
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/audience_poll_powerup"
                         android:visibility="visible" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView

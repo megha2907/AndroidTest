@@ -2,11 +2,13 @@ package in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktrans
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,6 +46,10 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
     private TextView tvPBPowerupPlayerPollCount;
 
     private TextView mTvRunningLow;
+
+    private ImageView ivPBPowerup2x;
+    private ImageView ivPBPowerupNoneg;
+    private ImageView ivPBPowerupPlayerPoll;
 
     private RecyclerView mPBTransactionHistoryRecyclerView;
     private ReferralHistoryAdapter mPBTransactionHistoryAdapter;
@@ -124,6 +130,16 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
         tvPBPowerup2xCount = (TextView) rootView.findViewById(R.id.powerup_bank_2x_powerup_count);
         tvPBPowerupNonegCount = (TextView) rootView.findViewById(R.id.powerup_bank_noneg_powerup_count);
         tvPBPowerupPlayerPollCount = (TextView) rootView.findViewById(R.id.powerup_bank_audience_poll_powerup_count);
+
+        ivPBPowerup2x = (ImageView) rootView.findViewById(R.id.powerup_bank_2x);
+        ivPBPowerupNoneg = (ImageView) rootView.findViewById(R.id.powerup_bank_noneg);
+        ivPBPowerupPlayerPoll = (ImageView) rootView.findViewById(R.id.powerup_bank_audience_poll);
+
+        ivPBPowerup2x.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.double_powerup));
+        ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.no_negative_powerup));
+        ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_powerup));
+
+
         mTvRunningLow = (TextView) rootView.findViewById(R.id.powerup_bank_low_powerups);
         
         setPowerups(getPowerUpMap());
@@ -140,7 +156,7 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
             } else {
                 count = powerUp.getCount();
             }
-            onGet2xPowerUp(count, count < 3);
+            onGet2xPowerUp(count, count < 1);
 
             powerUp = powerUpMaps.get(Constants.Powerups.NO_NEGATIVE);
             if (null == powerUp) {
@@ -148,7 +164,7 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
             } else {
                 count = powerUp.getCount();
             }
-            onGetNonegsPowerUp(count, count < 3);
+            onGetNonegsPowerUp(count, count < 1);
 
             powerUp = powerUpMaps.get(Constants.Powerups.AUDIENCE_POLL);
             if (null == powerUp) {
@@ -156,33 +172,43 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
             } else {
                 count = powerUp.getCount();
             }
-            onGetPollPowerUp(count, count < 3);
+            onGetPollPowerUp(count, count < 1);
         } else {
             int count = 0;
-            onGet2xPowerUp(count, count < 3);
-            onGetNonegsPowerUp(count, count < 3);
-            onGetPollPowerUp(count, count < 3);
+            onGet2xPowerUp(count, count < 1);
+            onGetNonegsPowerUp(count, count < 1);
+            onGetPollPowerUp(count, count < 1);
         }
 
     }
 
     private void onGetPollPowerUp(int count, boolean runningLow) {
-        setPowerUpCount(tvPBPowerupPlayerPollCount, count, runningLow);
+        setPowerUpCount(tvPBPowerupPlayerPollCount, count, runningLow, Constants.Powerups.AUDIENCE_POLL);
     }
 
     private void onGetNonegsPowerUp(int count, boolean runningLow) {
-        setPowerUpCount(tvPBPowerupNonegCount, count, runningLow);
+        setPowerUpCount(tvPBPowerupNonegCount, count, runningLow, Constants.Powerups.NO_NEGATIVE);
     }
 
     private void onGet2xPowerUp(int count, boolean runningLow) {
-        setPowerUpCount(tvPBPowerup2xCount, count, runningLow);
+        setPowerUpCount(tvPBPowerup2xCount, count, runningLow, Constants.Powerups.XX);
     }
 
 
-    private void setPowerUpCount(TextView textView, int count, boolean runningLow) {
+
+
+    private void setPowerUpCount(TextView textView, int count, boolean runningLow, String powerUp) {
         textView.setText(String.valueOf(count));
         if (runningLow) {
-            //textView.setBackground(getResources().getDrawable(R.drawable.bank_powerup_count_bg));
+            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
+
+            if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
+                ivPBPowerup2x.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.double_grey_powerup));
+            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
+                ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.no_negative_grey_powerup));
+            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
+                ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_grey_powerup));
+            }
 
             if (mTvRunningLow.getVisibility() == View.GONE) {
                 mTvRunningLow.setVisibility(View.VISIBLE);
