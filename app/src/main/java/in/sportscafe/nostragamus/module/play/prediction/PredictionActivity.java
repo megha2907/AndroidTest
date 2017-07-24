@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
@@ -38,6 +39,7 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
+import in.sportscafe.nostragamus.module.play.gamePlayHelp.GamePlayHelpActivity;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.powerup.PowerupBankTransferToPlayActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -52,6 +54,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         View.OnClickListener, OnDismissListener {
 
     private final static int POWERUP_BANK_ACTIVITY_REQUEST_CODE = 99;
+    private final static int GAME_PLAY_HELP_ACTIVITY = 98;
 
     private final static int DUMMY_GAME_REQUEST_CODE = 45;
 
@@ -267,7 +270,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 break;
 
             case R.id.powerups_iv_info:
-                new PowerupDialogFragment().show(getSupportFragmentManager(), "Powerup");
+//                new PowerupDialogFragment().show(getSupportFragmentManager(), "Powerup");
+                onGamePlayInfoButtonClicked();
                 break;
 
             case R.id.powerups_iv_bank:
@@ -279,6 +283,12 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 onAskFriendClicked();
                 break;
         }
+    }
+
+    private void onGamePlayInfoButtonClicked() {
+        Intent intent = new Intent(PredictionActivity.this, GamePlayHelpActivity.class);
+        startActivityForResult(intent, GAME_PLAY_HELP_ACTIVITY);
+        hidePowerupBankAndHelpButtons(findViewById(R.id.powerups_iv_bank), findViewById(R.id.powerups_iv_info));
     }
 
     private void makeClickAnimation(final View view) {
@@ -405,15 +415,15 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             mPredictionPresenter.onShake();
         }
 
-        if (requestCode == POWERUP_BANK_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == POWERUP_BANK_ACTIVITY_REQUEST_CODE || requestCode == GAME_PLAY_HELP_ACTIVITY) {
             showPowerupBankAndHelpButtons(findViewById(R.id.powerups_iv_bank), findViewById(R.id.powerups_iv_info));
         }
     }
 
     private void showPowerupBankAndHelpButtons(final View powerupView, final View helpView) {
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(500);
-        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+        AlphaAnimation animation = new AlphaAnimation(0f, 1f);
+        animation.setDuration(500);
+        animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
             }
@@ -429,14 +439,14 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
             }
         });
-        powerupView.startAnimation(scaleAnimation);
-        helpView.startAnimation(scaleAnimation);
+        powerupView.startAnimation(animation);
+        helpView.startAnimation(animation);
     }
 
     private void hidePowerupBankAndHelpButtons(final View powerupView, final View helpView) {
-        ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(500);
-        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+        AlphaAnimation animation = new AlphaAnimation(1f, 0f);
+        animation.setDuration(500);
+        animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
             }
@@ -452,8 +462,8 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
             }
         });
-        powerupView.startAnimation(scaleAnimation);
-        helpView.startAnimation(scaleAnimation);
+        powerupView.startAnimation(animation);
+        helpView.startAnimation(animation);
     }
 
     private TourGuide mCoachMarker;

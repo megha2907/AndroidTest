@@ -293,9 +293,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.play.powerup.PowerupBankTransferToPlayActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/TransferPowerupTheme"
-            android:launchMode="singleTop"/>
+            android:theme="@style/TransferPowerupTheme" />
+        <activity
+            android:name=".module.play.gamePlayHelp.GamePlayHelpActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/TransferPowerupTheme" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

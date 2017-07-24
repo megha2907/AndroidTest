@@ -151,4 +151,6 @@
     <string name="pb_text_one"><![CDATA[- You can use powerups from the <b><font color=\'#ffffff\'>powerup bank</font></b> in any match in <b><font color=\'#ffffff\'>any challenge</font></b>]]></string>
     <string name="pb_text_two"><![CDATA[- You can add powerups to challenges by clicking the @ powerup bank icon on the game screen]]></string>
 
+    <string name="max_added">Max Added</string>
+
 </resources>

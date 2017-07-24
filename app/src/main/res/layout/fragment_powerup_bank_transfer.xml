@@ -22,15 +22,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/dim_20"
-                >
+                android:gravity="center_horizontal">
 
                 <!-- Doubler button -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="@dimen/dim_90"
                     android:orientation="vertical"
-                    android:layout_marginRight="@dimen/dim_15"
+                    android:minWidth="@dimen/dim_100"
                     android:layout_marginLeft="@dimen/dim_15"
                     android:elevation="@dimen/dim_5">
 
@@ -82,7 +81,8 @@
                         android:background="@drawable/grey_button_selector"
                         android:text="+ Add"
                         android:textColor="@drawable/white_text_selector"
-                        android:textAllCaps="false"/>
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/powerup_bank_doubler_add_err_textView"
@@ -122,9 +122,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="@dimen/dim_90"
+                    android:minWidth="@dimen/dim_100"
                     android:orientation="vertical"
-                    android:layout_marginRight="@dimen/dim_15"
                     android:layout_marginLeft="@dimen/dim_15"
                     android:elevation="@dimen/dim_5">
 
@@ -175,7 +174,8 @@
                         android:background="@drawable/grey_button_selector"
                         android:text="+ Add"
                         android:textColor="@drawable/white_text_selector"
-                        android:textAllCaps="false"/>
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/powerup_bank_no_neg_add_err_textView"
@@ -215,7 +215,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="@dimen/dim_90"
+                    android:minWidth="@dimen/dim_100"
                     android:orientation="vertical"
                     android:layout_marginRight="@dimen/dim_15"
                     android:layout_marginLeft="@dimen/dim_15"
@@ -270,7 +270,8 @@
                         android:background="@drawable/grey_button_selector"
                         android:text="+ Add"
                         android:textColor="@drawable/white_text_selector"
-                        android:textAllCaps="false"/>
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/powerup_bank_audience_add_err_textView"
@@ -311,26 +312,33 @@
             <!-- Transfer to challenge button -->
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/powerup_bank_transfer_to_challenge_button"
-                android:layout_width="@dimen/dp_150"
+                android:layout_width="@dimen/dp_160"
                 android:layout_height="@dimen/dim_40"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/blue_button_selector"
                 android:text="Transfer to Challenge"
                 android:textColor="@drawable/white_text_selector"
                 android:textAllCaps="false"
-                android:layout_marginTop="@dimen/dim_20"/>
+                android:layout_marginTop="@dimen/dim_20"
+                android:enabled="false"
+                app:typeface="lato_regular"
+                android:paddingBottom="@dimen/dim_3"/>
 
             <!-- Reset -->
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/powerup_bank_reset_button"
                 android:layout_width="@dimen/dim_90"
                 android:layout_height="@dimen/dim_40"
+                android:enabled="false"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/grey_button_selector"
                 android:text="Reset"
                 android:textColor="@drawable/white_text_selector"
                 android:textAllCaps="false"
-                android:layout_marginTop="@dimen/dim_20"/>
+                android:layout_marginTop="@dimen/dim_20"
+                app:typeface="lato_regular"
+                android:paddingBottom="@dimen/dim_3"
+                />
 
         </LinearLayout>
 

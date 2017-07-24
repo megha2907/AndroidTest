@@ -8,6 +8,14 @@
         </shape>
     </item>
 
+    <!-- Disable state -->
+    <item android:state_enabled="false" android:bottom="@dimen/dp_3">
+        <shape>
+            <solid android:color="#404040" />
+            <corners android:radius="@dimen/dp_3" />
+        </shape>
+    </item>
+
     <!-- Default -->
     <item>
         <layer-list>

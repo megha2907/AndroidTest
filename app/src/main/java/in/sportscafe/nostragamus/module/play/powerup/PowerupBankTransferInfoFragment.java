@@ -85,7 +85,9 @@ public class PowerupBankTransferInfoFragment extends BaseFragment {
 
     private void showAppropriateLayout() {
         if (NostragamusDataHandler.getInstance().isBankInfoShown()) {
-            mViewPager.setCurrentItem(1);
+            mViewPager.setCurrentItem(1);   // Second layout to be shown always (but not for first time when user comes here)
+        } else {
+            NostragamusDataHandler.getInstance().setBankInfoShown(true);
         }
     }
 

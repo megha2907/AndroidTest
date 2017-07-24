@@ -81,6 +81,7 @@
     <dimen name="dim_100">100dp</dimen>
     <dimen name="dim_120">120dp</dimen>
     <dimen name="dim_132">132dp</dimen>
+    <dimen name="dim_150">150dp</dimen>
     <dimen name="dim_160">160dp</dimen>
 
 

@@ -81,6 +81,7 @@
     <dimen name="dim_100">114dp</dimen>
     <dimen name="dim_120">137dp</dimen>
     <dimen name="dim_132">147dp</dimen>
+    <dimen name="dim_150">171dp</dimen>
     <dimen name="dim_160">182.4dp</dimen>
 
     <dimen name="home_nav_bar_height">57dp</dimen>
