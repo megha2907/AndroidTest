@@ -678,6 +678,6 @@ public interface Constants {
         int ERROR_UNKNOWN = 4;      // Unknown server side error
     }
 
-    public static final String AMOUNT_DECIMAL_PATTERN = "#.00";
+    public static final String AMOUNT_DECIMAL_PATTERN = "#0.00";
     public static final String RUPEE_SYMBOL = "₹ ";
 }

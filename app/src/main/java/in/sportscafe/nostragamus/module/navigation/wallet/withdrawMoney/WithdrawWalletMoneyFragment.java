@@ -84,10 +84,15 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
              * be careful as any of the value can be null (null considered as withdrawal NOT done) */
 
             String msg = "Your first withdrawal needs to be ₹ 100 or more, \nOr else ";
-            if (walletInit == null || walletInit <= 0) {
+            if (walletInit == null || walletInit < 0) {
                 msg = msg + " transaction fee will be applied";
                 msgTextView.setText(msg);
                 msgLayout.setVisibility(View.GONE);     // IF no wallet_init available, then should not be shown
+
+            } else if (walletInit == 0) {
+                msg = "You can withdraw without any transaction fee";
+                msgTextView.setText(msg);
+                msgLayout.setVisibility(View.VISIBLE);
 
             } else {
                 if (isFirstWithdrawalDone == null || !isFirstWithdrawalDone) {
