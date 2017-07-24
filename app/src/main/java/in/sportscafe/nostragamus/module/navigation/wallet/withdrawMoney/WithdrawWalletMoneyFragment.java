@@ -87,7 +87,7 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
             if (walletInit == null || walletInit <= 0) {
                 msg = msg + " transaction fee will be applied";
                 msgTextView.setText(msg);
-                msgLayout.setVisibility(View.VISIBLE);
+                msgLayout.setVisibility(View.GONE);     // IF no wallet_init available, then should not be shown
 
             } else {
                 if (isFirstWithdrawalDone == null || !isFirstWithdrawalDone) {
