@@ -64,4 +64,8 @@ public interface PredictionView extends InAppView {
     void navigateToResults(Bundle bundle);
 
     void showPowerUpBankActivity(Bundle args);
+
+    void animatePowerUpAddedFromBank(int oldDoubler, int newDoubler,
+                                     int oldNoNegative, int newNoNegative,
+                                     int oldAudiencePoll, int newAudiencePoll);
 }

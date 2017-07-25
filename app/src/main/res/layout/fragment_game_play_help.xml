@@ -37,7 +37,7 @@
         <!-- Transfer to challenge button -->
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/powerup_bank_transfer_to_challenge_button"
-            android:layout_width="@dimen/dp_150"
+            android:layout_width="@dimen/dp_120"
             android:layout_height="@dimen/dim_40"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/blue_button_selector"
@@ -45,7 +45,6 @@
             android:textColor="@drawable/white_text_selector"
             android:textAllCaps="false"
             android:layout_marginTop="@dimen/dim_10"/>
-
 
     </LinearLayout>
 
@@ -83,18 +82,6 @@
                     android:src="@drawable/powerup_2x_white"
                     android:background="@drawable/powerup_doubler_round_bg"/>
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/powerup_tv_2x_count"
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_15"
-                    android:layout_gravity="top|right"
-                    android:background="@drawable/powerup_count_bg"
-                    android:gravity="center"
-                    android:text="2"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_8"
-                    app:typeface="lato_regular" />
-
             </FrameLayout>
 
             <LinearLayout
@@ -118,8 +105,7 @@
                     android:textColor="@color/white_999999"
                     android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"
-                    android:text="Doubles the points scored for a prediction"
-                    android:layout_marginTop="@dimen/dim_4"/>
+                    android:text="Doubles the points scored for a prediction"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
@@ -127,8 +113,7 @@
                     android:textColor="@color/white_dim"
                     android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"
-                    android:text="Correct ( +20 points), incorrect ( -8 points)"
-                    android:layout_marginTop="@dimen/dim_4"/>
+                    android:text="Correct ( +20 points), incorrect ( -8 points)"/>
 
             </LinearLayout>
 
@@ -157,17 +142,6 @@
                     android:src="@drawable/powerup_2x_white"
                     android:background="@drawable/powerup_no_neg_round_bg"/>
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_15"
-                    android:layout_gravity="top|right"
-                    android:background="@drawable/powerup_count_bg"
-                    android:gravity="center"
-                    android:text="2"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_8"
-                    app:typeface="lato_regular" />
-
             </FrameLayout>
 
             <LinearLayout
@@ -191,8 +165,7 @@
                     android:textColor="@color/white_999999"
                     android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"
-                    android:text="Removes  negative making for any prediction"
-                    android:layout_marginTop="@dimen/dim_4"/>
+                    android:text="Removes  negative making for any prediction"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
@@ -200,11 +173,9 @@
                     android:textColor="@color/white_dim"
                     android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"
-                    android:text="Correct ( +10 points), incorrect ( -0 points)"
-                    android:layout_marginTop="@dimen/dim_4"/>
+                    android:text="Correct ( +10 points), incorrect ( -0 points)"/>
 
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -230,17 +201,6 @@
                     android:src="@drawable/powerup_2x_white"
                     android:background="@drawable/powerup_audiance_poll_round_bg"/>
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_15"
-                    android:layout_gravity="top|right"
-                    android:background="@drawable/powerup_count_bg"
-                    android:gravity="center"
-                    android:text="2"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_8"
-                    app:typeface="lato_regular" />
-
             </FrameLayout>
 
             <LinearLayout
@@ -264,8 +224,7 @@
                     android:textColor="@color/white_999999"
                     android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"
-                    android:text="Shows how the other players have predicted"
-                    android:layout_marginTop="@dimen/dim_4"/>
+                    android:text="Shows how the other players have predicted"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
@@ -273,11 +232,9 @@
                     android:textColor="@color/white_dim"
                     android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"
-                    android:text="No changes to points"
-                    android:layout_marginTop="@dimen/dim_4"/>
+                    android:text="No changes to points"/>
 
             </LinearLayout>
-
 
         </LinearLayout>
 

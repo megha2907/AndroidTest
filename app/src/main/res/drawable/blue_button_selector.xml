@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Pressed state -->
-    <item android:state_pressed="true" android:bottom="@dimen/dp_3">
-        <shape>
-            <solid android:color="@color/color_5b5b5b" />
-            <corners android:radius="@dimen/dp_3" />
-        </shape>
+    <item android:state_pressed="true">
+        <layer-list>
+            <item>
+                <shape>
+                    <solid android:color="#135582" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+            <item android:bottom="@dimen/dp_3">
+                <shape>
+                    <solid android:color="@color/color_5b5b5b" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+        </layer-list>
     </item>
 
     <!-- Disable state -->
-    <item android:state_enabled="false" android:bottom="@dimen/dp_3">
-        <shape>
-            <solid android:color="#404040" />
-            <corners android:radius="@dimen/dp_3" />
-        </shape>
+    <item android:state_enabled="false">
+        <layer-list>
+            <item>
+                <shape>
+                    <solid android:color="@color/grey1" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+            <item  android:bottom="@dimen/dp_3">
+                <shape>
+                    <solid android:color="#404040" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+        </layer-list>
     </item>
 
     <!-- Default -->
@@ -23,14 +43,14 @@
             <item>
                 <shape>
                     <solid android:color="#104468" />
-                    <corners android:radius="@dimen/dp_4" />
+                    <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
             <!-- BUTTON -->
             <item android:bottom="@dimen/dp_3">
                 <shape android:shape="rectangle">
                     <solid android:color="@color/ready_btn_color" />
-                    <corners android:radius="@dimen/dp_4" />
+                    <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
         </layer-list>

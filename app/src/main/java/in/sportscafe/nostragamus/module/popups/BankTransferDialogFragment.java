@@ -254,9 +254,9 @@ public class BankTransferDialogFragment extends NostragamusDialogFragment implem
     }
 
     private void broadcastUpdatedChallengeInfo(ChallengeUserInfo challengeUserInfo) {
-        Intent intent = new Intent(IntentActions.ACTION_POWERUPS_UPDATED);
+        /*Intent intent = new Intent(IntentActions.ACTION_POWERUPS_UPDATED);
         intent.putExtra(BundleKeys.UPDATED_CHALLENGE_USER_INFO, Parcels.wrap(challengeUserInfo));
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);*/
     }
 
     @Override

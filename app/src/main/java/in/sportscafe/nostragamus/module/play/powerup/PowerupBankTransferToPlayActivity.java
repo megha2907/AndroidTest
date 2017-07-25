@@ -1,12 +1,18 @@
 package in.sportscafe.nostragamus.module.play.powerup;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
@@ -93,4 +99,26 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
     public void finishActivity() {
         onBackPressed();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mFinishActivityReceiver,
+                new IntentFilter(Constants.IntentActions.ACTION_FINISH_POWER_UP_BANK_ACTIVITY));
+    }
+
+    @Override
+    public void onStop() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mFinishActivityReceiver);
+        super.onStop();
+    }
+
+    BroadcastReceiver mFinishActivityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (!isFinishing()) {
+                finishActivity();
+            }
+        }
+    };
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.google.ads.conversiontracking.AdWordsConversionReporter;
-import com.jeeva.android.Log;
 
 import java.util.List;
 
@@ -70,10 +69,21 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     }
 
-    private void updatePowerups() {
+    @Override
+    public void updatePowerups() {
         mPredictionView.set2xPowerupCount(mPredictionModel.get2xPowerupCount(), true);
         mPredictionView.setNonegsPowerupCount(mPredictionModel.getNonegsPowerupCount(), true);
         mPredictionView.setPollPowerupCount(mPredictionModel.getPollPowerupCount(), true);
+    }
+
+    private void updatePowerUpAsAddedFromBank(int oldDoubler, int oldNoNegative, int oldAudiencePoll) {
+        if (mPredictionModel != null && mPredictionView != null) {
+            int newDoubler = mPredictionModel.get2xPowerupCount();
+            int newNoNegative = mPredictionModel.getNonegsPowerupCount();
+            int newAudiencePoll = mPredictionModel.getPollPowerupCount();
+
+            mPredictionView.animatePowerUpAddedFromBank(oldDoubler, newDoubler, oldNoNegative, newNoNegative, oldAudiencePoll, newAudiencePoll);
+        }
     }
 
     @Override
@@ -173,6 +183,19 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             mPredictionView.takeScreenshotAndShare();
             mPredictionModel.getShareText(mPredictionView.getContext());
         }
+    }
+
+    @Override
+    public void powerUpAddedFromBank(Bundle bundle) {
+        int doubler = mPredictionModel.get2xPowerupCount();
+        int noNegative = mPredictionModel.getNonegsPowerupCount();
+        int audiencePoll = mPredictionModel.getPollPowerupCount();
+
+        if (mPredictionModel != null) {
+            mPredictionModel.updatePowerUpAsAddedFromBank(bundle);
+        }
+
+        updatePowerUpAsAddedFromBank(doubler, noNegative, audiencePoll);
     }
 
     @Override

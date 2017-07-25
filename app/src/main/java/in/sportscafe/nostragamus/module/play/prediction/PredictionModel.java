@@ -64,4 +64,7 @@ public interface PredictionModel {
     boolean isQuestionAvailable();
 
     void getShareText(Context context);
+
+    void updatePowerUpAsAddedFromBank(Bundle bundle);
+
 }

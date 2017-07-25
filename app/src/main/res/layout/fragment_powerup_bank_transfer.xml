@@ -52,7 +52,7 @@
                             app:typeface="lato_regular" />
 
                         <ImageView
-                            android:id="@+id/powerup_bank_2x"
+                            android:id="@+id/powerup_bank_doubler_img"
                             android:layout_width="@dimen/dim_24"
                             android:layout_height="@dimen/dim_24"
                             android:layout_marginTop="@dimen/dim_8"
@@ -80,6 +80,18 @@
                         android:layout_height="@dimen/dim_32"
                         android:background="@drawable/grey_button_selector"
                         android:text="+ Add"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@drawable/white_text_selector"
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/powerup_bank_buy_double_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_32"
+                        android:background="@drawable/blue_button_selector"
+                        android:text="Buy"
+                        android:textSize="@dimen/sp_12"
                         android:textColor="@drawable/white_text_selector"
                         android:textAllCaps="false"
                         android:paddingBottom="@dimen/dim_3"/>
@@ -145,7 +157,7 @@
                             app:typeface="lato_regular" />
 
                         <ImageView
-                            android:id="@+id/powerup_bank_noneg"
+                            android:id="@+id/powerup_bank_noneg_img"
                             android:layout_width="@dimen/dim_24"
                             android:layout_height="@dimen/dim_24"
                             android:layout_marginTop="@dimen/dim_8"
@@ -173,6 +185,18 @@
                         android:layout_height="@dimen/dim_32"
                         android:background="@drawable/grey_button_selector"
                         android:text="+ Add"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@drawable/white_text_selector"
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/powerup_bank_buy_no_negative_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_32"
+                        android:background="@drawable/blue_button_selector"
+                        android:text="Buy"
+                        android:textSize="@dimen/sp_12"
                         android:textColor="@drawable/white_text_selector"
                         android:textAllCaps="false"
                         android:paddingBottom="@dimen/dim_3"/>
@@ -240,7 +264,7 @@
                             app:typeface="lato_regular" />
 
                         <ImageView
-                            android:id="@+id/powerup_bank_audience_poll"
+                            android:id="@+id/powerup_bank_audience_poll_img"
                             android:layout_width="@dimen/dim_24"
                             android:layout_height="@dimen/dim_24"
                             android:layout_marginTop="@dimen/dim_8"
@@ -260,7 +284,6 @@
                             android:layout_gravity="center"
                             app:typeface="lato_bold" />
 
-
                     </LinearLayout>
 
                     <com.jeeva.android.widgets.customfont.CustomButton
@@ -269,6 +292,18 @@
                         android:layout_height="@dimen/dim_32"
                         android:background="@drawable/grey_button_selector"
                         android:text="+ Add"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@drawable/white_text_selector"
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/powerup_bank_buy_audience_poll_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_32"
+                        android:background="@drawable/blue_button_selector"
+                        android:text="Buy"
+                        android:textSize="@dimen/sp_12"
                         android:textColor="@drawable/white_text_selector"
                         android:textAllCaps="false"
                         android:paddingBottom="@dimen/dim_3"/>
@@ -321,7 +356,7 @@
                 android:textAllCaps="false"
                 android:layout_marginTop="@dimen/dim_20"
                 android:enabled="false"
-                app:typeface="lato_regular"
+                app:typeface="lato_bold"
                 android:paddingBottom="@dimen/dim_3"/>
 
             <!-- Reset -->
