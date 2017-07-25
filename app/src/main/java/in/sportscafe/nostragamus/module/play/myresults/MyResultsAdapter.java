@@ -510,7 +510,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         } else {
             tvAnswerPoints.setVisibility(View.GONE);
             mRlEditAnswers.setVisibility(View.VISIBLE);
-
         }
 
 

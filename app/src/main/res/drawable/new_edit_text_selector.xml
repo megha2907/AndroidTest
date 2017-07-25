@@ -3,7 +3,7 @@
 
     <item android:state_pressed="true" >
         <shape android:shape="rectangle">
-            <solid android:color="#5b5b5b" />
+            <solid android:color="#404040" />
             <corners android:topRightRadius="@dimen/dim_2"
                 android:bottomRightRadius="@dimen/dim_2" />
         </shape>
@@ -11,7 +11,7 @@
 
     <item android:state_focused="true" >
         <shape android:shape="rectangle">
-            <solid android:color="#5b5b5b" />
+            <solid android:color="#404040" />
             <corners android:topRightRadius="@dimen/dim_2"
                 android:bottomRightRadius="@dimen/dim_2" />
         </shape>
@@ -19,7 +19,7 @@
 
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/sort_selected_color" />
+            <solid android:color="#303030" />
             <corners android:topRightRadius="@dimen/dim_2"
                 android:bottomRightRadius="@dimen/dim_2" />
         </shape>

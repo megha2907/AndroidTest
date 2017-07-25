@@ -301,6 +301,18 @@ public class NostragamusAnalytics {
         track(AnalyticsCategory.PLAY, actions, label, timeSpentInMs);
     }
 
+
+    /**
+     * track onBoarding Time
+     *
+     * @param actions       - OnBoardingTime
+     * @param label         - Actual time spent in OnBoarding from Edit Profile to Home
+     */
+    public void trackOnBoarding(String actions, String label) {
+        track(AnalyticsCategory.ONBOARDING_TIME, actions, label, null);
+    }
+
+
     /**
      * track edit profile
      *

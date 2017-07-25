@@ -37,6 +37,7 @@ import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
+import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyProfileActivity;
 
 /**
  * Created by Jeeva on 16/6/16.
@@ -107,8 +108,9 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     /**
      * If user has not yet provided payment info (either paytm or bank) then he'll be asked to provide
-     *
+     * <p>
      * But only once
+     *
      * @param userInfo
      */
     private void checkPaymentInfoProvidedOrRequired(UserInfo userInfo) {
@@ -326,27 +328,44 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private void performOnBoardFlow(UserInfo userInfo) {
 
-//        if (userInfo.getInfoDetails().getDisclaimerAccepted()!=null){
-//            if (userInfo.getInfoDetails().getWhatsNewShown()==null){
-//                launchWhatsNew();
-//                com.jeeva.android.Log.d(TAG, "[onBoard] Launch What's New(if required) for once");
-//            }
-//        }
+        if (userInfo != null) {
 
-        if (userInfo !=null) {
+            /* check for EDIT PROFILE screen */
             if (userInfo.getInfoDetails().getDisclaimerAccepted() == null) {
                 launchEditProfile();
                 com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
+            } else if (userInfo.getInfoDetails().getDisclaimerAccepted() != null) {
+                if (userInfo.getInfoDetails().getDisclaimerAccepted() == false) {
+                    launchEditProfile();
+                } else {
+
+                    /* check for OTP screen */
+                    if (userInfo.getInfoDetails().getOtpVerified() == null) {
+                        launchVerifyOTP();
+                    } else if (userInfo.getInfoDetails().getOtpVerified() == false) {
+                        launchVerifyOTP();
+                    }
+                }
             }
         }
 
+    }
+
+    private void launchVerifyOTP() {
+        if (getActivity() != null) {
+            Intent intent = new Intent(this, VerifyProfileActivity.class);
+            intent.putExtra(Constants.BundleKeys.SUCCESSFUL_REFERRAL, false);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void launchWhatsNew() {
 
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), AppUpdateActivity.class);
-            intent.putExtra(Constants.BundleKeys.SCREEN,Constants.ScreenNames.WHATS_NEW);
+            intent.putExtra(Constants.BundleKeys.SCREEN, Constants.ScreenNames.WHATS_NEW);
             startActivity(intent);
         }
     }

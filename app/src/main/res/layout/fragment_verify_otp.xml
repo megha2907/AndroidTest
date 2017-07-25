@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/black">
+
+    <!-- OTP  -->
+    <LinearLayout
+        android:id="@+id/verify_otp_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/verify_otp_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="@dimen/dim_20"
+            android:text="Enter OTP"
+            android:textColor="@color/white_999999"
+            android:textSize="@dimen/sp_14"
+            app:typeface="lato_regular" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_40"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/dp_6">
+
+            <ImageView
+                style="@style/EditTextIconStyle"
+                android:src="@drawable/edit_key_icon"
+                android:padding="@dimen/dim_12"/>
+
+            <com.jeeva.android.widgets.customfont.CustomEditText
+                android:id="@+id/verify_et_otp"
+                style="@style/NewEditTextStyle"
+                android:inputType="number"
+                android:imeOptions="actionDone"/>
+
+        </LinearLayout>
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/verify_profile_otp_error_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dim_6"
+            android:text="Invalid OTP"
+            android:textColor="@color/radical_red"
+            android:textSize="@dimen/dp_14"
+            app:typeface="lato_regular"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/verify_profile_otp_phone_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginTop="@dimen/dim_12"
+        android:layout_marginLeft="@dimen/dim_16"
+        android:layout_marginRight="@dimen/dim_16"
+        android:lineSpacingExtra="@dimen/dp_1.5"
+        android:layout_below="@+id/verify_otp_layout"
+        android:textColor="@color/white_dim"
+        android:textSize="@dimen/sp_14"
+        app:typeface="lato_regular" />
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/resend_otp_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_45"
+        android:layout_below="@+id/verify_profile_otp_phone_textView"
+        android:background="@android:color/transparent"
+        android:onClick="onClick"
+        android:text="Resend OTP"
+        android:includeFontPadding="false"
+        android:layout_marginTop="@dimen/dim_6"
+        android:layout_marginLeft="@dimen/dim_14"
+        android:layout_marginRight="@dimen/dim_16"
+        android:textAllCaps="false"
+        android:textColor="@color/venice_blue"
+        android:textSize="@dimen/sp_15"
+        app:typeface="lato_regular" />
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/verify_otp_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_alignParentBottom="true"
+        android:background="@color/venice_blue"
+        android:onClick="onClick"
+        android:text="Verify"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/blue_button_text"
+        app:typeface="lato_regular" />
+
+</RelativeLayout>
