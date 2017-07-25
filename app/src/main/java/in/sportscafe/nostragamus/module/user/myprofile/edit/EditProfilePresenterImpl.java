@@ -3,8 +3,7 @@ package in.sportscafe.nostragamus.module.user.myprofile.edit;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.jeeva.android.Log;
-
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
@@ -23,6 +22,8 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     private EditProfileView mEditProfileView;
 
     private EditProfileModel mEditProfileModel;
+
+    private boolean successfulReferral = false;
 
     private String screen;
 
@@ -88,16 +89,28 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     @Override
     public void onEditSuccess(boolean referralCodeExists) {
+
         mEditProfileView.dismissProgressbar();
-        if (referralCodeExists || NostragamusDataHandler.getInstance().isMarketingCampaign()) {
-            mEditProfileView.navigateToSuccessfulReferral();
+
+        if (BuildConfig.IS_PAID_VERSION) {
+
+            if (referralCodeExists || NostragamusDataHandler.getInstance().isMarketingCampaign()) {
+                successfulReferral = true;
+                mEditProfileView.navigateToOTPVerification(successfulReferral);
+            } else {
+                successfulReferral = false;
+                mEditProfileView.navigateToOTPVerification(successfulReferral);
+            }
+
         } else {
+
             if (screen.equals(BundleKeys.HOME_SCREEN)) {
                 mEditProfileView.navigateToHome(true);
             } else {
                 mEditProfileView.navigateToHome(false);
             }
         }
+
     }
 
     @Override

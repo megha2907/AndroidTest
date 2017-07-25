@@ -18,11 +18,14 @@ import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
+import java.util.Calendar;
+
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
@@ -31,6 +34,7 @@ import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.SuccessfulReferralActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
+import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyProfileActivity;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -100,10 +104,19 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
         initOnBoardFlow();
         initReferralCode();
+        getAndStoreCurrentTime();
 
         if (!TextUtils.isEmpty(mUserNickNameEditText.getText())) {
             String editName = mUserNickNameEditText.getText().toString();
             mUserNickNameEditText.setSelection(editName.length());
+        }
+    }
+
+    private void getAndStoreCurrentTime() {
+
+        long currentTimeMs = Calendar.getInstance().getTimeInMillis();
+        if (currentTimeMs!=0){
+            NostragamusDataHandler.getInstance().setEditProfileShownTime(currentTimeMs);
         }
     }
 
@@ -324,6 +337,15 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         finish();
     }
 
+    @Override
+    public void navigateToOTPVerification(boolean successfulReferral) {
+        Intent intent = new Intent(this, VerifyProfileActivity.class);
+        intent.putExtra(Constants.BundleKeys.SUCCESSFUL_REFERRAL,successfulReferral);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
     public void showImagePopup(View view) {
         if (new PermissionsChecker(this).lacksPermissions(AppPermissions.STORAGE)) {
             PermissionsActivity.startActivityForResult(this, RequestCodes.STORAGE_PERMISSION, AppPermissions.STORAGE);
@@ -374,6 +396,9 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     }
 
     private void enterReferralCodeManually() {
+
+        mReferralEditText.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
+
         mReferralEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

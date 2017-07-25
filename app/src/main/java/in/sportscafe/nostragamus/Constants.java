@@ -76,6 +76,7 @@ public interface Constants {
         String PAID_NORMAL_UPDATE_APK_LINK = "paidNormalUpdateApkLink";
         String FORCE_UPDATE_ENABLED = "forceUpdateEnabled";
         String REQUIRED_UPDATE_VERSION = "requiredUpdateVersion";
+        String EDIT_PROFILE_SHOWN_TIME = "editProfileShownTime";
 
         String INITIAL_FORM_SHOWN = "initialFormShown";
         String ACCESS_TOKEN = "accessToken";
@@ -203,6 +204,8 @@ public interface Constants {
         String PAYTM_FAILURE = "Could not initiate transaction, please try again";
         String SOMETHING_WRONG ="Something went wrong! Please try again!";
         String NO_UPDATES = "No New Updates Available";
+        String INVALID_PHONE_NUMBER = "Enter 10 digit number";
+        String INVALID_OTP = "Invalid OTP";
     }
 
     interface BundleKeys {
@@ -297,6 +300,9 @@ public interface Constants {
         String BALANCE_AMOUNT = "balanceAmount";
         String CHALLENGE_CONFIG = "challengeConfig";
         String USER_REFERRAL_INFO = "userReferralInfo";
+        String PHONE_NUMBER = "phoneNumber";
+        String USER_PHOTO = "user_photo";
+        String USER_NAME = "user_name";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -308,6 +314,8 @@ public interface Constants {
         String USER_REFERRAL_NAME = "user_referral_name";
         String USER_REFERRAL_PHOTO = "user_referral_photo";
         String DIALOG_LAUNCH_MODE = "dialogLaunchMode";
+
+        String SUCCESSFUL_REFERRAL = "successfulReferral";
     }
 
     interface ParcelableKeys {
@@ -408,6 +416,7 @@ public interface Constants {
         String UPDATE_LATER = "Update Later";
         String WALLET_ADD_MONEY = "Add Money into Wallet";
         String WALLET_WITHDRAW_MONEY = "Withdraw from Wallet";
+        String ONBOARDING_TIME = "OnBoarding Time";
     }
 
     interface AnalyticsActions {
@@ -444,6 +453,7 @@ public interface Constants {
         String NO_CASH_REWARDS = "Don't Want Cash Rewards";
         String OPENED = "Opened";
         String CLICKED = "Clicked";
+        String ONBOARDING_TIME = "OnBoarding Time";
     }
 
     interface AnalyticsLabels {
@@ -526,6 +536,8 @@ public interface Constants {
         String REFERRAL_CREDIT = "ReferralCredit";
         String SUCCESSFUL_REFERRAL = "successfulReferral";
         String POWERUP_BANK = "PowerupBank";
+        String VERIFY_PROFILE = "VerifyProfile";
+        String STORE = "Store";
     }
 
     interface InAppPopups {

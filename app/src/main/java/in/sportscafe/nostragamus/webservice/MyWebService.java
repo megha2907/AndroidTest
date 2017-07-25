@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
@@ -84,7 +85,11 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<LogInResponse> getLogInRequest(LogInRequest logInRequest) {
-        return mNostragamusService.loginUser(logInRequest);
+        if (BuildConfig.IS_PAID_VERSION) {
+            return mNostragamusService.loginUserV3(logInRequest);
+        }else {
+            return mNostragamusService.loginUserV2(logInRequest);
+        }
     }
 
     public Call<ApiResponse> getUpdateUserRequest(UpdateUserRequest request) {
@@ -345,5 +350,13 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<ApiResponse> getWhatsNewShown() {
         return mNostragamusService.getWhatsNewShown();
+    }
+
+    public Call<ApiResponse> getOTPRequest(String phoneNumber) {
+        return mNostragamusService.getOTPRequest(phoneNumber);
+    }
+
+    public Call<VerifyOTPResponse> verifyOTPRequest(String otp) {
+        return mNostragamusService.verifyOTPRequest(otp);
     }
 }

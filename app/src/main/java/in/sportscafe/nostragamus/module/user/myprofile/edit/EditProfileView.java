@@ -38,4 +38,6 @@ public interface EditProfileView extends View {
     void onCorrectReferralCode();
 
     void navigateToSuccessfulReferral();
+
+    void navigateToOTPVerification(boolean successfulReferral);
 }
