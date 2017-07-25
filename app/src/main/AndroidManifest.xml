@@ -302,6 +302,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/TransferPowerupTheme" />
 
+        <activity
+            android:name=".module.user.myprofile.verify.VerifyProfileActivity"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

@@ -86,7 +86,7 @@ public class OnBoardingTextFragment extends NostragamusFragment {
                 populateUserReferralCode(onBoardingDto.getReferralCode());
             }
             referralCode.setVisibility(View.VISIBLE);
-            onBoardingTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.onboarding_referral_text_size));
+            onBoardingTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.dim_16));
 
             RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) mOnBoardImageLayout.getLayoutParams();
             paramsFour.topMargin = getResources().getDimensionPixelSize(R.dimen.onboarding_referral_image_gap);

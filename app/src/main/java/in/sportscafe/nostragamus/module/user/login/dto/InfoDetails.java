@@ -34,6 +34,9 @@ public class InfoDetails {
     @JsonProperty("user_accepted")
     private Boolean disclaimerAccepted;
 
+    @JsonProperty("otp_verified")
+    private Boolean otpVerified;
+
     @JsonProperty("seen_whats_new")
     private Boolean whatsNewShown;
 
@@ -145,5 +148,16 @@ public class InfoDetails {
     public void setWhatsNewShown(Boolean whatsNewShown) {
         this.whatsNewShown = whatsNewShown;
     }
+
+    @JsonProperty("otp_verified")
+    public Boolean getOtpVerified() {
+        return otpVerified;
+    }
+
+    @JsonProperty("otp_verified")
+    public void setOtpVerified(Boolean otpVerified) {
+        this.otpVerified = otpVerified;
+    }
+
 
 }

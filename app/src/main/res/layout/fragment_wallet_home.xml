@@ -453,7 +453,7 @@
                             android:text="View your Transaction History"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_14"
-                            app:typeface="lato_bold" />
+                            app:typeface="lato_regular" />
 
                         <!--<com.jeeva.android.widgets.customfont.CustomTextView
                             android:layout_width="wrap_content"
@@ -469,7 +469,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0 withdrawals in progress"
-                            android:textColor="@color/white_999999"
+                            android:textColor="@color/white_dim"
                             android:textSize="@dimen/sp_12"
                             app:typeface="lato_regular"/>
 
@@ -518,7 +518,7 @@
                             android:text="Add/Edit your Withdrawal Details"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_14"
-                            app:typeface="lato_bold" />
+                            app:typeface="lato_regular" />
 
                         <!--<com.jeeva.android.widgets.customfont.CustomTextView
                             android:layout_width="wrap_content"
@@ -534,7 +534,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0 account added"
-                            android:textColor="@color/white_999999"
+                            android:textColor="@color/white_dim"
                             android:textSize="@dimen/sp_12"
                             app:typeface="lato_regular"/>
 

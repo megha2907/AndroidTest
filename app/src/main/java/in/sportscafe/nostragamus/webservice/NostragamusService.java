@@ -98,7 +98,7 @@ public interface NostragamusService {
     @GET("v1/game/users/tournaments")
     Call<TournamentFeedResponse> getCurrentTournaments(@Query("is_current") boolean isCurrent);
 
-    @POST("/v2/game/login")
+    @POST("/v3/game/login")
     Call<LogInResponse> loginUser(@Body LogInRequest logInRequest);
 
     @PUT("v1/game/users")
@@ -282,6 +282,18 @@ public interface NostragamusService {
 
     @GET("v1/game/seenWhatsNew")
     Call<ApiResponse> getWhatsNewShown();
+
+    @GET("/v2/game/resendOTP")
+    Call<ApiResponse> getOTPRequest(@Query("mobile") String phoneNumber);
+
+    @GET("/v2/game/verifyOTP")
+    Call<VerifyOTPResponse> verifyOTPRequest(@Query("otp_code") String otp);
+
+    @POST("/v3/game/login")
+    Call<LogInResponse> loginUserV3(@Body LogInRequest logInRequest);
+
+    @POST("/v2/game/login")
+    Call<LogInResponse> loginUserV2(@Body LogInRequest logInRequest);
 
     @POST("/v2/game/users/powerupTransferStats")
     Call<PowerUpBankStatusResponse> powerupTransferStatus(@Body PowerupBankStatusRequest request);
