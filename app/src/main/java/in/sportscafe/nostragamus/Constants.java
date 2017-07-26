@@ -303,6 +303,7 @@ public interface Constants {
         String PHONE_NUMBER = "phoneNumber";
         String USER_PHOTO = "user_photo";
         String USER_NAME = "user_name";
+        String POWERUP_BANK_INFO_SCREEN = "powerupBankInfoScreen";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -354,6 +355,7 @@ public interface Constants {
         String ACTION_SCROLL_CHALLENGE = "in.sportscafe.nostragamus.intent.action.SCROLL_CHALLENGE";
         String ACTION_RELOAD_CHALLENGES = "in.sportscafe.nostragamus.intent.action.RELOAD_CHALLENGES";
         String ACTION_OPEN_WEBVIEW= "in.sportscafe.nostragamus.intent.action.OPEN_WEBVIEW";
+        String ACTION_FINISH_POWER_UP_BANK_ACTIVITY = "in.sportscafe.nostragamus.intent.action.FINISH_POWER_UP_BANK";
     }
 
     interface LeaderBoardPeriods {
@@ -689,6 +691,8 @@ public interface Constants {
         int ERROR_UNKNOWN = 4;      // Unknown server side error
     }
 
-    public static final String AMOUNT_DECIMAL_PATTERN = "#.00";
+    interface PowerupLocalId { int DOUBLER = 1; int NO_NEGATIVE = 2; int AUDIENCE_POLL = 3;}
+
+    public static final String AMOUNT_DECIMAL_PATTERN = "#0.00";
     public static final String RUPEE_SYMBOL = "₹ ";
 }

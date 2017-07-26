@@ -1,0 +1,382 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.play.powerup.PowerupBankTransferFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Powerup Layout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dim_20"
+                android:gravity="center_horizontal">
+
+                <!-- Doubler button -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:minWidth="@dimen/dim_100"
+                    android:layout_marginLeft="@dimen/dim_15"
+                    android:elevation="@dimen/dim_5">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_100"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:background="@color/colorBackground"
+                        >
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/grey6"
+                            android:textSize="@dimen/sp_12"
+                            android:text="Doubler"
+                            android:layout_gravity="center"
+                            app:typeface="lato_regular" />
+
+                        <ImageView
+                            android:id="@+id/powerup_bank_doubler_img"
+                            android:layout_width="@dimen/dim_24"
+                            android:layout_height="@dimen/dim_24"
+                            android:layout_marginTop="@dimen/dim_8"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/double_powerup"
+                            android:visibility="visible" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_bank_user_bal_doubler_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_16"
+                            android:layout_marginTop="@dimen/dim_8"
+                            android:text="0"
+                            android:layout_gravity="center"
+                            app:typeface="lato_bold" />
+
+                    </LinearLayout>
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/powerup_bank_add_double_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_32"
+                        android:background="@drawable/grey_button_selector"
+                        android:text="+ Add"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@drawable/white_text_selector"
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/powerup_bank_buy_double_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_32"
+                        android:background="@drawable/blue_button_selector"
+                        android:text="Buy"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@drawable/white_text_selector"
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/powerup_bank_doubler_add_err_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/err_color"
+                        android:textSize="@dimen/sp_12"
+                        android:text="Transferred"
+                        android:layout_gravity="center"
+                        app:typeface="lato_regular"
+                        android:layout_marginTop="@dimen/dim_10"
+                        android:layout_marginBottom="@dimen/dim_10"
+                        android:visibility="invisible"/>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dim_32"
+                        android:layout_height="@dimen/dim_32"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@color/colorBackground"
+                        android:layout_gravity="center_horizontal">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_bank_doubler_demand_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            android:text="0"
+                            app:typeface="lato_regular"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- No negative -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="@dimen/dim_100"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/dim_15"
+                    android:elevation="@dimen/dim_5">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_100"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:background="@color/colorBackground"
+                        android:gravity="center">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/grey6"
+                            android:textSize="@dimen/sp_12"
+                            android:text="No Negative"
+                            android:layout_gravity="center"
+                            app:typeface="lato_regular" />
+
+                        <ImageView
+                            android:id="@+id/powerup_bank_noneg_img"
+                            android:layout_width="@dimen/dim_24"
+                            android:layout_height="@dimen/dim_24"
+                            android:layout_marginTop="@dimen/dim_8"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/no_negative_powerup"
+                            android:visibility="visible" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_bank_user_bal_no_neg_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_16"
+                            android:layout_marginTop="@dimen/dim_8"
+                            android:text="0"
+                            android:layout_gravity="center"
+                            app:typeface="lato_bold" />
+
+                    </LinearLayout>
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/powerup_bank_add_no_negative_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_32"
+                        android:background="@drawable/grey_button_selector"
+                        android:text="+ Add"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@drawable/white_text_selector"
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/powerup_bank_buy_no_negative_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_32"
+                        android:background="@drawable/blue_button_selector"
+                        android:text="Buy"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@drawable/white_text_selector"
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/powerup_bank_no_neg_add_err_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/err_color"
+                        android:textSize="@dimen/sp_12"
+                        android:text="Transferred"
+                        android:layout_gravity="center"
+                        app:typeface="lato_regular"
+                        android:layout_marginTop="@dimen/dim_10"
+                        android:layout_marginBottom="@dimen/dim_10"
+                        android:visibility="invisible"/>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dim_32"
+                        android:layout_height="@dimen/dim_32"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@color/colorBackground"
+                        android:layout_gravity="center_horizontal">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_bank_no_neg_demand_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            android:text="0"
+                            app:typeface="lato_regular"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Audience poll -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="@dimen/dim_100"
+                    android:orientation="vertical"
+                    android:layout_marginRight="@dimen/dim_15"
+                    android:layout_marginLeft="@dimen/dim_15"
+                    android:elevation="@dimen/dim_5">
+
+                    <LinearLayout
+                        android:id="@+id/powerup_bank_audience_poll_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_100"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:background="@color/colorBackground"
+                        android:gravity="center">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/grey6"
+                            android:textSize="@dimen/sp_12"
+                            android:text="Audience Poll"
+                            android:layout_gravity="center"
+                            app:typeface="lato_regular" />
+
+                        <ImageView
+                            android:id="@+id/powerup_bank_audience_poll_img"
+                            android:layout_width="@dimen/dim_24"
+                            android:layout_height="@dimen/dim_24"
+                            android:layout_marginTop="@dimen/dim_8"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/audience_poll_powerup"
+                            android:visibility="visible" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_bank_user_bal_audience_poll_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_16"
+                            android:layout_marginTop="@dimen/dim_8"
+                            android:text="0"
+                            android:layout_gravity="center"
+                            app:typeface="lato_bold" />
+
+                    </LinearLayout>
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/powerup_bank_add_audience_poll_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_32"
+                        android:background="@drawable/grey_button_selector"
+                        android:text="+ Add"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@drawable/white_text_selector"
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/powerup_bank_buy_audience_poll_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_32"
+                        android:background="@drawable/blue_button_selector"
+                        android:text="Buy"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@drawable/white_text_selector"
+                        android:textAllCaps="false"
+                        android:paddingBottom="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/powerup_bank_audience_add_err_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/err_color"
+                        android:textSize="@dimen/sp_12"
+                        android:text="Transferred"
+                        android:layout_gravity="center"
+                        app:typeface="lato_regular"
+                        android:layout_marginTop="@dimen/dim_10"
+                        android:layout_marginBottom="@dimen/dim_10"
+                        android:visibility="invisible"/>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dim_32"
+                        android:layout_height="@dimen/dim_32"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@color/colorBackground"
+                        android:layout_gravity="center_horizontal">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_bank_audience_demand_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            android:text="0"
+                            app:typeface="lato_regular"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Transfer to challenge button -->
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/powerup_bank_transfer_to_challenge_button"
+                android:layout_width="@dimen/dp_160"
+                android:layout_height="@dimen/dim_40"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/blue_button_selector"
+                android:text="Transfer to Challenge"
+                android:textColor="@drawable/white_text_selector"
+                android:textAllCaps="false"
+                android:layout_marginTop="@dimen/dim_20"
+                android:enabled="false"
+                app:typeface="lato_bold"
+                android:paddingBottom="@dimen/dim_3"/>
+
+            <!-- Reset -->
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/powerup_bank_reset_button"
+                android:layout_width="@dimen/dim_90"
+                android:layout_height="@dimen/dim_40"
+                android:enabled="false"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/grey_button_selector"
+                android:text="Reset"
+                android:textColor="@drawable/white_text_selector"
+                android:textAllCaps="false"
+                android:layout_marginTop="@dimen/dim_20"
+                app:typeface="lato_regular"
+                android:paddingBottom="@dimen/dim_3"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

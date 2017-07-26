@@ -28,6 +28,8 @@ import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.Gener
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
+import in.sportscafe.nostragamus.module.play.powerup.dto.PowerupBankStatusRequest;
+import in.sportscafe.nostragamus.module.play.powerup.dto.PowerUpBankStatusResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
@@ -292,4 +294,7 @@ public interface NostragamusService {
 
     @POST("/v2/game/login")
     Call<LogInResponse> loginUserV2(@Body LogInRequest logInRequest);
+
+    @POST("/v2/game/users/powerupTransferStats")
+    Call<PowerUpBankStatusResponse> powerupTransferStatus(@Body PowerupBankStatusRequest request);
 }

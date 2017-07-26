@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
@@ -26,7 +27,9 @@ public class NostragamusUncaughtExceptionHandler implements Thread.UncaughtExcep
             startNewIntent(LogInActivity.class);
         }
 
-        AppSnippet.closeApp();
+        if (!BuildConfig.DEBUG) {
+            AppSnippet.closeApp();
+        }
     }
 
     private void startNewIntent(Class<?> cls) {
