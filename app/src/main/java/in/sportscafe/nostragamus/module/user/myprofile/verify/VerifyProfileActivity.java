@@ -75,7 +75,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
         backBtn.setVisibility(View.VISIBLE);
         verifyOTPFragment = new VerifyOTPFragment();
         verifyOTPFragment.setArguments(args);
-        FragmentHelper.replaceAndAddContentFragmentWithAnimation(this, R.id.fragment_container, verifyOTPFragment);
+        FragmentHelper.addContentFragmentWithAnimation(this, R.id.fragment_container, verifyOTPFragment);
     }
 
     @Override
