@@ -12,7 +12,7 @@
             </item>
             <item android:bottom="@dimen/dim_3" >
                 <shape>
-                    <solid android:color="#424242" />
+                    <solid android:color="#404040" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
@@ -25,13 +25,13 @@
             <!-- SHADOW -->
             <item>
                 <shape>
-                    <solid android:color="#353535" />
+                    <solid android:color="#242424" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
             <item android:bottom="@dimen/dim_3" >
                 <shape>
-                    <solid android:color="#404040" />
+                    <solid android:color="#323232" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
@@ -57,4 +57,5 @@
             </item>
         </layer-list>
     </item>
+
 </selector>

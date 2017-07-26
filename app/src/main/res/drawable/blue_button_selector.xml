@@ -3,15 +3,15 @@
     <!-- Pressed state -->
     <item android:state_pressed="true">
         <layer-list>
-            <item>
+            <item> <!-- Shadow -->
                 <shape>
-                    <solid android:color="#135582" />
+                    <solid android:color="#104468" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
             <item android:bottom="@dimen/dp_3">
                 <shape>
-                    <solid android:color="@color/color_5b5b5b" />
+                    <solid android:color="#135481" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
@@ -21,15 +21,15 @@
     <!-- Disable state -->
     <item android:state_enabled="false">
         <layer-list>
-            <item>
+            <item>  <!-- shadow -->
                 <shape>
-                    <solid android:color="@color/grey1" />
+                    <solid android:color="#122c3e" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
             <item  android:bottom="@dimen/dp_3">
                 <shape>
-                    <solid android:color="#404040" />
+                    <solid android:color="#163f5b" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
@@ -49,7 +49,7 @@
             <!-- BUTTON -->
             <item android:bottom="@dimen/dp_3">
                 <shape android:shape="rectangle">
-                    <solid android:color="@color/ready_btn_color" />
+                    <solid android:color="#186aa2" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
