@@ -13,13 +13,12 @@ import android.widget.TextView;
 import com.jeeva.android.BaseFragment;
 
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.utils.AnimationHelper;
 import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 import in.sportscafe.nostragamus.webservice.UserReferralResponse;
 
@@ -189,6 +188,7 @@ public class ReferFriendFragment extends BaseFragment implements View.OnClickLis
                 break;
 
             case R.id.refer_friend_btn:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.REFERRAL_ACTION, Constants.AnalyticsClickLabels.REFER_NOW);
                 if (mReferFriendFragmentListener != null) {
                     mReferFriendFragmentListener.onReferAFriendClicked(mReferralCode, mWalletInit);
                 }
