@@ -79,7 +79,7 @@ public class FragmentHelper {
                                                                  final Fragment fragment) {
         FragmentManager manager = activity.getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.setCustomAnimations(R.anim.activity_anim_stay,R.anim.slide_left_from_left);
+        ft.setCustomAnimations(R.anim.activity_anim_stay, R.anim.slide_left_from_right, R.anim.activity_anim_stay, R.anim.slide_right_from_right);
         ft.replace(containerId, fragment, fragment.getClass().getSimpleName()).addToBackStack(null).commit();
 
         if (manager.getBackStackEntryCount() > 0) {
@@ -89,20 +89,23 @@ public class FragmentHelper {
         }
     }
 
-	/*public static synchronized void addContentFragmentWithAnimation(@NonNull final AppCompatActivity activity, final int containerId,
-                                                       final Fragment fragment) throws Exception {
+	public static synchronized void addContentFragmentWithAnimation(@NonNull final AppCompatActivity activity, final int containerId,
+                                                       final Fragment fragment) {
 		FragmentManager manager = activity.getSupportFragmentManager();
 		FragmentTransaction ft = manager.beginTransaction();
-		ft.setCustomAnimations(R.anim.slide_in_up, android.R.anim.slide_out_right, R.anim.slide_out_up, R.anim.slide_out_up);
-		ft.add(containerId, fragment).addToBackStack(null)
-				.commit();
-		manager.executePendingTransactions();
-	} */
+        ft.setCustomAnimations(R.anim.slide_left_from_right, R.anim.activity_anim_stay, R.anim.activity_anim_stay, R.anim.slide_right_from_right);
+		ft.add(containerId, fragment).addToBackStack(null).commit();
+
+        if (manager.getBackStackEntryCount() > 0) {
+            manager.popBackStackImmediate();
+        } else {
+            manager.executePendingTransactions();
+        }
+	}
 
     public static synchronized void removeContentFragmentWithAnimation(@NonNull final AppCompatActivity activity, Fragment fragment) throws Exception {
         FragmentManager manager = activity.getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.setCustomAnimations(R.anim.activity_anim_stay, R.anim.slide_right_from_right);
         ft.remove(fragment);
         ft.commit();
         manager.popBackStackImmediate();

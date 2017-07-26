@@ -76,10 +76,13 @@
     <dimen name="dim_31">35dp</dimen>
     <dimen name="dim_32">36.5dp</dimen>
     <dimen name="dim_36">41dp</dimen>
-    <dimen name="dim_40">50dp</dimen>
+    <dimen name="dim_40">45.6dp</dimen>
     <dimen name="dim_60">68.4dp</dimen>
     <dimen name="dim_90">103dp</dimen>
     <dimen name="dim_100">114dp</dimen>
+    <dimen name="dim_120">137dp</dimen>
+    <dimen name="dim_132">147dp</dimen>
+    <dimen name="dim_150">171dp</dimen>
     <dimen name="dim_160">182.4dp</dimen>
 
 

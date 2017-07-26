@@ -39,8 +39,6 @@ public interface PredictionView extends InAppView {
 
     void notifyTopView();
 
-    void changeBackgroundImage(Integer sportId);
-
     void navigateToFeed();
 
     void goBack();
@@ -64,4 +62,10 @@ public interface PredictionView extends InAppView {
     void takeScreenshotAndShare();
 
     void navigateToResults(Bundle bundle);
+
+    void showPowerUpBankActivity(Bundle args);
+
+    void animatePowerUpAddedFromBank(int oldDoubler, int newDoubler,
+                                     int oldNoNegative, int newNoNegative,
+                                     int oldAudiencePoll, int newAudiencePoll);
 }
