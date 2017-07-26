@@ -330,19 +330,16 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
         if (userInfo != null) {
 
-            /* check for EDIT PROFILE screen */
-            if (userInfo.getInfoDetails().getDisclaimerAccepted() == null) {
-                launchEditProfile();
-                com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
-            } else if (userInfo.getInfoDetails().getDisclaimerAccepted() != null) {
-                if (userInfo.getInfoDetails().getDisclaimerAccepted() == false) {
+            if (userInfo.getInfoDetails() != null) {
+
+                 /* check for EDIT PROFILE screen */
+                Boolean disclaimerAccepted = userInfo.getInfoDetails().getDisclaimerAccepted();
+                if (disclaimerAccepted == null || !disclaimerAccepted) {
                     launchEditProfile();
                 } else {
-
-                    /* check for OTP screen */
-                    if (userInfo.getInfoDetails().getOtpVerified() == null) {
-                        launchVerifyOTP();
-                    } else if (userInfo.getInfoDetails().getOtpVerified() == false) {
+//                    /* check for OTP screen */
+                    Boolean otpVerified = userInfo.getInfoDetails().getOtpVerified();
+                    if (otpVerified == null || !otpVerified) {
                         launchVerifyOTP();
                     }
                 }

@@ -122,6 +122,11 @@ public class VerifyPhoneNumberFragment extends BaseFragment implements View.OnCl
         errorTextView.setVisibility(View.VISIBLE);
     }
 
+    public void setPhoneNumberAlreadyExist() {
+        errorTextView.setText(Constants.Alerts.PHONE_NUMBER_EXIST);
+        errorTextView.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -131,4 +136,5 @@ public class VerifyPhoneNumberFragment extends BaseFragment implements View.OnCl
         }
 
     }
+
 }

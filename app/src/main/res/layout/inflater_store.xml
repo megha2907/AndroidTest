@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dim_12"
+    android:background="@color/black3"
+    android:paddingBottom="@dimen/dim_10">
+
+    <RelativeLayout
+        android:id="@+id/store_category_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black2"
+        android:minHeight="@dimen/dim_60">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/store_category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doubler"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/store_category_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/store_category_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dim_4"
+            android:text="Doubles the points or concede per prediction"
+            android:textColor="@color/white_999999"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_regular" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/store_items_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/store_category_layout"
+        android:orientation="vertical" />
+
+</RelativeLayout>

@@ -2,12 +2,10 @@ package in.sportscafe.nostragamus.module.user.myprofile.verify;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 
@@ -21,7 +19,6 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.SuccessfulReferralActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by deepanshi on 7/18/17.
@@ -39,6 +36,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
     private ImageView backBtn;
 
     private VerifyOTPFragment verifyOTPFragment;
+    private VerifyPhoneNumberFragment verifyPhoneNumberFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +63,8 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
     private void loadVerifyPhoneNumberFragment() {
         backBtn.setVisibility(View.INVISIBLE);
-        VerifyPhoneNumberFragment fragment = new VerifyPhoneNumberFragment();
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, fragment);
+        verifyPhoneNumberFragment = new VerifyPhoneNumberFragment();
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, verifyPhoneNumberFragment);
     }
 
     private void loadVerifyOTPFragment(String phoneNumber) {
@@ -81,7 +79,6 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
     @Override
     public void onVerifyPhoneNumber(String phoneNumber) {
         getOTPRequest(phoneNumber);
-        loadVerifyOTPFragment(phoneNumber);
     }
 
     @Override
@@ -111,10 +108,26 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
             }
 
             @Override
-            public void onSuccessResponse() {
+            public void onSuccessResponse(VerifyOTPInfo verifyOTPInfo, String phoneNumber) {
                 dismissProgressbar();
+                verifyPhoneNumberValid(verifyOTPInfo, phoneNumber);
             }
         }).performApiCall(phoneNumber);
+    }
+
+    private void verifyPhoneNumberValid(VerifyOTPInfo verifyOTPInfo, String phoneNumber) {
+
+        Integer verifyPhoneNumber = verifyOTPInfo.getValidOTPCode();
+
+        if (verifyPhoneNumber == null || verifyPhoneNumber == 0) {
+            if (getActivity() != null) {
+                if (verifyPhoneNumberFragment != null) {
+                    verifyPhoneNumberFragment.setPhoneNumberAlreadyExist();
+                }
+            }
+        } else {
+            loadVerifyOTPFragment(phoneNumber);
+        }
     }
 
     private void verifyOTPRequest(String OTP) {
@@ -143,13 +156,9 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
     private void verifyOTPValid(VerifyOTPInfo verifyOTPInfo) {
 
-        if (verifyOTPInfo.getValidOTPCode() == null) {
-            if (getActivity() != null) {
-                if (verifyOTPFragment != null) {
-                    verifyOTPFragment.setOTPNotValid();
-                }
-            }
-        } else if (verifyOTPInfo.getValidOTPCode() == 0) {
+        Integer verifyOTPCode = verifyOTPInfo.getValidOTPCode();
+
+        if (verifyOTPCode == null || verifyOTPCode == 0) {
             if (getActivity() != null) {
                 if (verifyOTPFragment != null) {
                     verifyOTPFragment.setOTPNotValid();
@@ -203,7 +212,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
             NostragamusAnalytics.getInstance().trackOnBoarding
                     (Constants.AnalyticsActions.ONBOARDING_TIME,
                             String.format("%02d", days) + "d " + String.format("%02d", hours)
-                            + "h " + String.format("%02d", mins) + "m " + String.format("%02d", secs) + "s");
+                                    + "h " + String.format("%02d", mins) + "m " + String.format("%02d", secs) + "s");
         } else {
 
             NostragamusAnalytics.getInstance().trackOnBoarding
@@ -233,42 +242,34 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.verify_profile_iv_back:
-                if (getActivity() != null) {
-
-                    if (verifyOTPFragment != null) {
-                        if (verifyOTPFragment instanceof VerifyOTPFragment) {
-                            try {
-                                backBtn.setVisibility(View.INVISIBLE);
-                                FragmentHelper.removeContentFragmentWithAnimation(this, verifyOTPFragment);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
+                onBackClicked();
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-
         super.onBackPressed();
+        onBackClicked();
+    }
 
-        if (verifyOTPFragment != null) {
-            if (verifyOTPFragment instanceof VerifyOTPFragment) {
-                try {
-                    backBtn.setVisibility(View.INVISIBLE);
-                    FragmentHelper.removeContentFragmentWithAnimation(this, verifyOTPFragment);
-                } catch (Exception e) {
-                    e.printStackTrace();
+    private void onBackClicked() {
+        if (getActivity() != null) {
+            if (verifyOTPFragment != null) {
+                if (verifyOTPFragment instanceof VerifyOTPFragment) {
+                    try {
+                        backBtn.setVisibility(View.INVISIBLE);
+                        FragmentHelper.removeContentFragmentWithAnimation(this, verifyOTPFragment);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        this.finish();
+                    }
+                } else {
                     this.finish();
                 }
             } else {
                 this.finish();
             }
-        } else {
-            this.finish();
         }
     }
 

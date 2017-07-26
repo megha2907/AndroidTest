@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/referral_history_item_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black3"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dim_12"
+    android:paddingRight="@dimen/dim_12">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:minHeight="@dimen/dim_60">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dim_8"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.jeeva.android.widgets.HmImageView
+                android:id="@+id/store_item_iv"
+                android:layout_width="@dimen/dim_36"
+                android:layout_height="@dimen/dim_36"
+                android:layout_marginTop="@dimen/dim_2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp_14"
+            android:paddingTop="@dimen/dp_13">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/store_item_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="left"
+                android:maxLines="1"
+                android:text="One Doubler"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/store_item_value_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="left"
+                android:maxLines="1"
+                android:text="One Doubler"
+                android:layout_marginTop="@dimen/dim_3"
+                android:textColor="@color/greencolor3"
+                android:textSize="@dimen/sp_10"
+                app:typeface="lato_bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/store_item_buy_btn_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dim_8"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/store_item_buy_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dim_28"
+                android:background="@drawable/paid_join_btn_bg"
+                android:minWidth="@dimen/dim_66"
+                android:onClick="onClick"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:text="Rs.1.00"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_12"
+                app:typeface="lato_regular" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_separator_two" />
+
+</LinearLayout>

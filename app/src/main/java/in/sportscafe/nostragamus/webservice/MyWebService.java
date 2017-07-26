@@ -40,6 +40,7 @@ import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse
 import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
+import in.sportscafe.nostragamus.module.store.dto.StoreApiResponse;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
@@ -352,11 +353,15 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getWhatsNewShown();
     }
 
-    public Call<ApiResponse> getOTPRequest(String phoneNumber) {
+    public Call<VerifyOTPResponse> getOTPRequest(String phoneNumber) {
         return mNostragamusService.getOTPRequest(phoneNumber);
     }
 
     public Call<VerifyOTPResponse> verifyOTPRequest(String otp) {
         return mNostragamusService.verifyOTPRequest(otp);
+    }
+
+    public Call<StoreApiResponse> getStoreDetails (String category) {
+        return mNostragamusService.getStoreDetails(category);
     }
 }

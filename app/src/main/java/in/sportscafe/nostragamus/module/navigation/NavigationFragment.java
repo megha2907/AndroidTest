@@ -32,6 +32,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
+import in.sportscafe.nostragamus.module.store.StoreActivity;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity;
 
@@ -58,6 +59,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
         view.findViewById(R.id.navigation_profile_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_wallet_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_powerup_bank_layout).setOnClickListener(this);
+        view.findViewById(R.id.navigation_store_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_whats_new_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_submit_question_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_help_layout).setOnClickListener(this);
@@ -174,6 +176,10 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 onPowerUpsClicked();
                 break;
 
+            case R.id.navigation_store_layout:
+                onStoreClicked();
+                break;
+
             case R.id.navigation_whats_new_layout:
                 onWhatsNewClicked();
                 NostragamusAnalytics.getInstance().trackWhatsNew(Constants.AnalyticsActions.OPENED);
@@ -200,6 +206,13 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 NostragamusAnalytics.getInstance().trackUpdateApp(Constants.AnalyticsActions.OPENED);
                 break;
 
+        }
+    }
+
+    private void onStoreClicked() {
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), StoreActivity.class);
+            startActivity(intent);
         }
     }
 

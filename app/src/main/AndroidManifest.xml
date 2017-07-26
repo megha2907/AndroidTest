@@ -293,6 +293,11 @@
 
         <activity
             android:name=".module.user.myprofile.verify.VerifyProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+
+        <activity
+            android:name=".module.store.StoreActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

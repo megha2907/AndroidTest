@@ -37,6 +37,7 @@ import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse
 import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
+import in.sportscafe.nostragamus.module.store.dto.StoreApiResponse;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
@@ -282,7 +283,7 @@ public interface NostragamusService {
     Call<ApiResponse> getWhatsNewShown();
 
     @GET("/v2/game/resendOTP")
-    Call<ApiResponse> getOTPRequest(@Query("mobile") String phoneNumber);
+    Call<VerifyOTPResponse> getOTPRequest(@Query("mobile") String phoneNumber);
 
     @GET("/v2/game/verifyOTP")
     Call<VerifyOTPResponse> verifyOTPRequest(@Query("otp_code") String otp);
@@ -292,4 +293,7 @@ public interface NostragamusService {
 
     @POST("/v2/game/login")
     Call<LogInResponse> loginUserV2(@Body LogInRequest logInRequest);
+
+    @GET("/v2/game/store/getProductsByCategory")
+    Call<StoreApiResponse> getStoreDetails(@Query("category") String category);
 }

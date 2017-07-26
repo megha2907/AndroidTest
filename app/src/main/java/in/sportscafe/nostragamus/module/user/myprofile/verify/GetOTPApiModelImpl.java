@@ -8,6 +8,7 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
+import in.sportscafe.nostragamus.webservice.VerifyOTPResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -28,19 +29,24 @@ public class GetOTPApiModelImpl {
         return new GetOTPApiModelImpl(listener);
     }
 
-    public void performApiCall(String phoneNumber) {
+    public void performApiCall(final String phoneNumber) {
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            MyWebService.getInstance().getOTPRequest(phoneNumber).enqueue(new NostragamusCallBack<ApiResponse>() {
+            MyWebService.getInstance().getOTPRequest(phoneNumber).enqueue(new NostragamusCallBack<VerifyOTPResponse>() {
                 @Override
-                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                public void onResponse(Call<VerifyOTPResponse> call, Response<VerifyOTPResponse> response) {
                     super.onResponse(call, response);
 
                     if (response != null && response.isSuccessful() && response.body() != null) {
                         Log.d(TAG, "Response : " + response.body());
                         if (mListener != null) {
                             if (response.body()!=null) {
-                                mListener.onSuccessResponse();
+                                VerifyOTPInfo verifyOTPInfo = null;
+                                if (response.body().getVerifyOTPInfo()!=null) {
+                                    verifyOTPInfo = response.body().getVerifyOTPInfo();
+                                }
+
+                                mListener.onSuccessResponse(verifyOTPInfo,phoneNumber);
                             }
                         }
 
@@ -62,7 +68,7 @@ public class GetOTPApiModelImpl {
     public interface GetOTPApiListener {
         void noInternet();
         void onApiFailed();
-        void onSuccessResponse();
+        void onSuccessResponse(VerifyOTPInfo verifyOTPInfo, String phoneNumber);
     }
 
 }
