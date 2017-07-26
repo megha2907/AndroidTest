@@ -83,7 +83,8 @@
                         android:textSize="@dimen/sp_12"
                         android:textColor="@drawable/white_text_selector"
                         android:textAllCaps="false"
-                        android:paddingBottom="@dimen/dim_3"/>
+                        android:paddingBottom="@dimen/dim_3"
+                        />
 
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/powerup_bank_buy_double_button"
@@ -102,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/err_color"
                         android:textSize="@dimen/sp_12"
-                        android:text="Transferred"
+                        android:text="@string/max_added"
                         android:layout_gravity="center"
                         app:typeface="lato_regular"
                         android:layout_marginTop="@dimen/dim_10"
@@ -207,7 +208,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/err_color"
                         android:textSize="@dimen/sp_12"
-                        android:text="Transferred"
+                        android:text="@string/max_added"
                         android:layout_gravity="center"
                         app:typeface="lato_regular"
                         android:layout_marginTop="@dimen/dim_10"
@@ -314,7 +315,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/err_color"
                         android:textSize="@dimen/sp_12"
-                        android:text="Transferred"
+                        android:text="@string/max_added"
                         android:layout_gravity="center"
                         app:typeface="lato_regular"
                         android:layout_marginTop="@dimen/dim_10"

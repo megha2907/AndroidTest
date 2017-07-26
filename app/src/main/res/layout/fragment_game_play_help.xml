@@ -44,7 +44,8 @@
             android:text="Play Game"
             android:textColor="@drawable/white_text_selector"
             android:textAllCaps="false"
-            android:layout_marginTop="@dimen/dim_10"/>
+            android:layout_marginTop="@dimen/dim_10"
+            android:paddingBottom="@dimen/dim_3"/>
 
     </LinearLayout>
 

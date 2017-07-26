@@ -79,8 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0.5"
             android:background="@color/dividercolor"
-            android:layout_marginLeft="@dimen/dim_20"
-            android:layout_marginRight="@dimen/dim_20"/>
+            android:layout_marginLeft="@dimen/dim_15"
+            android:layout_marginRight="@dimen/dim_15"/>
 
         <!-- Add Powerup layout -->
         <FrameLayout
