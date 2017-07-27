@@ -57,7 +57,7 @@ public class StoreActivity extends NostragamusActivity implements StoreFragmentL
     }
 
     private void loadStoreFragment() {
-        PowerUpBankFragment fragment = new PowerUpBankFragment();
+        StoreFragment fragment = new StoreFragment();
         FragmentHelper.replaceFragment(this, R.id.fragment_container, fragment);
     }
 

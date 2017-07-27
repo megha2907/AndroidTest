@@ -13,17 +13,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/verify_otp_btn"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_45"
-            android:background="@color/venice_blue"
-            android:onClick="onClick"
-            android:text="Verify"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/blue_button_text"
-            app:typeface="lato_regular" />
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/verify_otp_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/flat_blue_btn_selector"
+        android:onClick="onClick"
+        android:text="Verify"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/blue_button_text"
+        app:typeface="lato_regular" />
 
     </FrameLayout>
 
@@ -126,5 +127,6 @@
         </RelativeLayout>
 
     </ScrollView>
+
 
 </RelativeLayout>

@@ -149,5 +149,7 @@
     <dimen name="wallet_history_row_height">60dp</dimen>
     <dimen name="wallet_history_item_icon_dimen">28dp</dimen>
     <dimen name="wallet_payout_choice_item_height">64dp</dimen>
+    <dimen name="dim_36">36dp</dimen>
+    <dimen name="dim_66">66dp</dimen>
 
 </resources>

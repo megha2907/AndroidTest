@@ -3,14 +3,18 @@ package in.sportscafe.nostragamus.module.store;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.Log;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,11 +24,7 @@ import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.navigation.powerupbank.PowerUpBankActivity;
-import in.sportscafe.nostragamus.module.navigation.powerupbank.PowerUpBankFragmentListener;
-import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.PBTransactionApiModelImpl;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralHistory;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralHistoryAdapter;
+import in.sportscafe.nostragamus.module.store.dto.StoreSections;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 
@@ -36,7 +36,7 @@ public class StoreFragment extends BaseFragment {
 
     private static final String TAG = StoreFragment.class.getSimpleName();
 
-    private PowerUpBankFragmentListener mPowerUpBankFragmentListener;
+    private StoreFragmentListener storeFragmentListener;
 
     private HashMap<String, PowerUp> mPowerUpMaps;
 
@@ -60,8 +60,8 @@ public class StoreFragment extends BaseFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof PowerUpBankActivity) {
-            mPowerUpBankFragmentListener = (PowerUpBankFragmentListener) context;
+        if (context instanceof StoreActivity) {
+            storeFragmentListener = (StoreFragmentListener) context;
         } else {
             throw new RuntimeException("Activity must implement " + TAG);
         }
@@ -72,58 +72,57 @@ public class StoreFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_store, container, false);
-//
-//        fetchStoreDataFromServer();
-//        initRootView(rootView);
+
+        fetchStoreDataFromServer();
+        initRootView(rootView);
 //        initAdapter();
         setInfo();
 
         return rootView;
     }
 
-//    private void initAdapter() {
-//        storeAdapter = new StoreAdapter(getContext());
-//
-//        if (mStoreRecyclerView != null) {
-//            mStoreRecyclerView.setAdapter(storeAdapter);
-//        }
-//
-//    }
+    private void initAdapter() {
+        storeAdapter = new StoreAdapter(getContext());
+
+        /*if (mStoreRecyclerView != null) {
+            mStoreRecyclerView.setAdapter(storeAdapter);
+        }*/
+
+    }
 
 
-//    private void fetchStoreDataFromServer() {
-//
-//        String appFlavor;
-//        if (BuildConfig.IS_PAID_VERSION) {
-//            appFlavor = "PRO";
-//        } else {
-//            appFlavor = "PS";
-//        }
-//        showProgressbar();
-//        StoreApiModelImpl.newInstance(new StoreApiModelImpl().PBTransactionHistoryApiListener() {
-//            @Override
-//            public void noInternet() {
-//                dismissProgressbar();
-//                showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
-//            }
-//
-//            @Override
-//            public void onApiFailed() {
-//                dismissProgressbar();
-//                showMessage(Constants.Alerts.API_FAIL);
-//            }
-//
-//            @Override
-//            public void onSuccessResponse(List<ReferralHistory> referralHistoryList) {
-//                dismissProgressbar();
-//                onReferralHistoryListFetchedSuccessful(referralHistoryList);
-//            }
-//        }).performApiCall(appFlavor);
-//    }
+    private void fetchStoreDataFromServer() {
+
+        showProgressbar();
+        StoreApiModelImpl.newInstance(new StoreApiModelImpl.StoreApiListener() {
+            @Override
+            public void noInternet() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onApiFailed() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onSuccessResponse(List<StoreSections> storeSectionsList) {
+                dismissProgressbar();
+                onStoreListFetchedSuccessful(storeSectionsList);
+            }
+        }).performApiCall("powerups");
+    }
+
 
     private void initRootView(View rootView) {
 
         mTvRunningLow = (TextView) rootView.findViewById(R.id.powerup_bank_low_powerups);
+        mStoreRecyclerView = (RecyclerView) rootView.findViewById(R.id.storeItemsRecyclerView);
+        mStoreRecyclerView.setHasFixedSize(true);
+        mStoreRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
 
         tvPBPowerup2xCount = (TextView) rootView.findViewById(R.id.powerup_bank_2x_powerup_count);
         tvPBPowerupNonegCount = (TextView) rootView.findViewById(R.id.powerup_bank_noneg_powerup_count);
@@ -232,6 +231,36 @@ public class StoreFragment extends BaseFragment {
         if (!BuildConfig.IS_PAID_VERSION) {
 
         }
+    }
+
+    private void onStoreListFetchedSuccessful(List<StoreSections> storeSectionsList) {
+
+
+        initAdapter();
+        if (storeAdapter != null) {
+            storeAdapter.addStoreSectionsIntoList(storeSectionsList);
+        }
+
+        if (mStoreRecyclerView != null) {
+            mStoreRecyclerView.setAdapter(storeAdapter);
+        }
+
+        RelativeLayout recyclerViewLayout = (RelativeLayout) getView().findViewById(R.id.store_items_rl);
+        /* Empty list view */
+        if (getActivity() != null && getView() != null && storeAdapter != null) {
+            if (storeAdapter.getStoreSectionsList() == null || storeAdapter.getStoreSectionsList().isEmpty()) {
+                Log.i("inside","storeAdapter.getStoreSectionsList() == null");
+                mStoreRecyclerView.setVisibility(View.GONE);
+                recyclerViewLayout.setVisibility(View.GONE);
+                LinearLayout noHistoryLayout = (LinearLayout) getView().findViewById(R.id.store_empty_history_layout);
+                noHistoryLayout.setVisibility(View.VISIBLE);
+            } else {
+                Log.i("inside","storeAdapter.getStoreSectionsList() != null");
+                recyclerViewLayout.setVisibility(View.VISIBLE);
+                mStoreRecyclerView.setVisibility(View.VISIBLE);
+            }
+        }
+
     }
 
 }

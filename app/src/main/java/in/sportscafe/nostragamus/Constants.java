@@ -205,6 +205,7 @@ public interface Constants {
         String SOMETHING_WRONG ="Something went wrong! Please try again!";
         String NO_UPDATES = "No New Updates Available";
         String INVALID_PHONE_NUMBER = "Enter 10 digit number";
+        String PHONE_NUMBER_EXIST = "Mobile Number is already registered";
         String INVALID_OTP = "Invalid OTP";
     }
 

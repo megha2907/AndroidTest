@@ -149,6 +149,12 @@
     <color name="elephant">#13374D</color>
     <color name="deepcarmine">#b22b42</color>
 
+    <color name="greencolor2">#04af76</color>
+    <color name="greencolor3">#057f53</color>
+
+    <color name="black2">#212121</color>
+    <color name="black3">#252525</color>
+
     <color name="text_shadow_color_blue">#0f1c44</color>
     <color name="edit_text_icon_bg_color">#186AA2</color>
     <color name="play_screen_bg_color">#222222</color>

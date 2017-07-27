@@ -199,12 +199,12 @@
             app:layout_collapseMode="pin"
             android:elevation="@dimen/dim_0"
             android:paddingBottom="@dimen/dim_20"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="@dimen/referral_image_size"
                 android:layout_height="@dimen/referral_image_size"
-                android:src="@drawable/no_referral_history" />
+                android:src="@drawable/empty_powerup_bank" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
@@ -215,27 +215,10 @@
                 android:layout_marginTop="@dimen/dim_10"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="No Friends added yet. Add friends to start earning money and powerups regularly"
+                android:text="No Transaction have occurred yet"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_13"
                 app:typeface="lato_regular" />
-
-            <!-- Refer Now Button -->
-            <com.jeeva.android.widgets.customfont.CustomButton
-                android:id="@+id/refer_friend_btn"
-                android:layout_width="@dimen/referral_history_btn_width"
-                android:layout_height="@dimen/referral_history_btn_height"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dim_16"
-                android:background="@drawable/btn_refer_bg"
-                android:clickable="false"
-                android:paddingBottom="@dimen/dim_3"
-                android:text="Refer Now!"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_14"
-                app:typeface="lato_bold" />
 
         </LinearLayout>
 

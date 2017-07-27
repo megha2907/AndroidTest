@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import java.util.ArrayList;
@@ -77,7 +78,6 @@ public class ReferralHistoryAdapter extends RecyclerView.Adapter<ReferralHistory
 
         if (mReferralHistoryList != null && position < mReferralHistoryList.size()) {    /* position < getItemCount() */
             ReferralHistory referralHistory = mReferralHistoryList.get(position);
-
             setWinningsAndReferralsText(holder, referralHistory);
             setUserImage(holder, referralHistory);
             showDate(holder, referralHistory);
