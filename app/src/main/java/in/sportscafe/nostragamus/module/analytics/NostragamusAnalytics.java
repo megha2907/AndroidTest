@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.analytics;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.amplitude.api.Amplitude;
@@ -557,5 +558,17 @@ public class NostragamusAnalytics {
         } else {
             Log.e("Analytics", "Could not set UniqueId for MoEngage");
         }
+    }
+
+    /**
+     * Tracks clicks on different event actions
+     * @param category
+     */
+    public void trackClickEvent(@NonNull String category, String label) {
+        track(category, AnalyticsActions.CLICKED, label, null);
+    }
+
+    public void trackReferralBenefitScreenShown() {
+        track(AnalyticsCategory.REFERRAL_BENEFIT, AnalyticsActions.OPENED, AnalyticsLabels.SCREENS_SEEN, null);
     }
 }

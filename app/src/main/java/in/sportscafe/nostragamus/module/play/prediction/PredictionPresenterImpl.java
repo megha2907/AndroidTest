@@ -11,6 +11,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
@@ -300,6 +301,8 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onNoPowerUps() {
+        /* As no Powerup in Bank, log analytics */
+        NostragamusAnalytics.getInstance().trackPowerups(Constants.AnalyticsActions.OPEN_POWERUP_BANK, Constants.AnalyticsLabels.NO_POWERUP);
         onClickBankTransfer();
     }
 

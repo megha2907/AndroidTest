@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeDownloadAppFragment;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeJoinDialogFragment;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
@@ -208,6 +209,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                     navigationFragment.setArguments(getIntent().getExtras());
                 }
                 loadFragment(navigationFragment);
+
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PROFILE, Constants.AnalyticsActions.OPENED);
                 break;
         }
     }

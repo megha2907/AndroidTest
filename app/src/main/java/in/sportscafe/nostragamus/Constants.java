@@ -419,6 +419,36 @@ public interface Constants {
         String WALLET_ADD_MONEY = "Add Money into Wallet";
         String WALLET_WITHDRAW_MONEY = "Withdraw from Wallet";
         String ONBOARDING_TIME = "OnBoarding Time";
+        String NAVIGATION_SCREEN = "Navigation Screen";
+        String WALLET = "Wallet";
+        String REFERRAL_BENEFIT = "Referral Benefit";
+    }
+
+    interface AnalyticsClickLabels {
+        /* Navigation */
+        String PROFILE = "Profile";
+        String WALLET = "Wallet";
+        String POWER_UP_BANK = "Powerup Bank";
+        String REFER_FRIEND = "Refer Friend";
+        String WHATS_NEW = "Whats New";
+        String SUBMIT_QUESTION = "Submit Question";
+        String HELP = "Help";
+        String SETTINGS = "Settings";
+        String APP_UPDATE = "App Update";
+
+        /* Wallet */
+        String EARN_MORE = "Earn More";
+        String ADD_MONEY = "Add Money";
+        String WITHDRAW = "Withdraw";
+        String TRANSACTION_HISTORY = "Transaction History";
+        String ADD_EDIT_WITHDRAWAL_DETAILS = "Add/Edit Withdraw Details";
+
+        /* Refer */
+        String REFER_NOW = "Refer Now";
+
+        /* Play screen */
+        String PLAY_BANK = "PowerUp Bank";
+        String PLAY_GAME_HELP = "Game-Help";
     }
 
     interface AnalyticsActions {
@@ -456,6 +486,7 @@ public interface Constants {
         String OPENED = "Opened";
         String CLICKED = "Clicked";
         String ONBOARDING_TIME = "OnBoarding Time";
+        String OPEN_POWERUP_BANK = "Open Powerup Bank";
     }
 
     interface AnalyticsLabels {
@@ -474,6 +505,7 @@ public interface Constants {
         String NOTIFICATION = "Notification";
         String GROUP = "Group";
         String PROFILE = "Profile";
+        String NO_POWERUP = "No Powerup";
     }
 
     interface UserProperties {

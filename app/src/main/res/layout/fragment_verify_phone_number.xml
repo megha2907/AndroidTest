@@ -6,87 +6,110 @@
     android:layout_height="fill_parent"
     android:background="@color/black">
 
-    <!-- Phone Number  -->
-    <LinearLayout
-        android:id="@+id/verify_phone_no_layout"
+    <!-- Request OTP -->
+    <FrameLayout
+        android:id="@+id/request_otp_bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="@dimen/dp_16"
-        android:layout_marginRight="@dimen/dp_16">
+        android:layout_alignParentBottom="true">
 
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/verify_phone_no_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginTop="@dimen/dim_20"
-            android:text="Enter your Phone Number"
-            android:textColor="@color/white_999999"
-            android:textSize="@dimen/sp_14"
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/verify_request_otp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:background="@color/venice_blue"
+            android:onClick="onClick"
+            android:text="Request OTP"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/blue_button_text"
             app:typeface="lato_regular" />
+
+    </FrameLayout>
+
+    <!-- Scrollable top layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/request_otp_bottom_layout"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_40"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/dp_6">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                style="@style/EditTextIconStyle"
-                android:src="@drawable/edit_call_icon"
-                android:padding="@dimen/dim_12"/>
+            <!-- Phone Number  -->
+            <LinearLayout
+                android:id="@+id/verify_phone_no_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginRight="@dimen/dp_16">
 
-            <com.jeeva.android.widgets.customfont.CustomEditText
-                android:id="@+id/verify_et_phone_number"
-                style="@style/NewEditTextStyle"
-                android:inputType="number"
-                android:imeOptions="actionDone"/>
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/verify_phone_no_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/dim_20"
+                    android:text="Enter your Phone Number"
+                    android:textColor="@color/white_999999"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_40"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/dp_6">
+
+                    <ImageView
+                        style="@style/EditTextIconStyle"
+                        android:src="@drawable/edit_call_icon"
+                        android:padding="@dimen/dim_12"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomEditText
+                        android:id="@+id/verify_et_phone_number"
+                        style="@style/NewEditTextStyle"
+                        android:inputType="number"
+                        android:imeOptions="actionDone"/>
+
+                </LinearLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/verify_profile_phone_number_error_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/dim_6"
+                    android:text="Please enter atleast 10 digits Phone Number"
+                    android:textColor="@color/radical_red"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="lato_regular"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/verify_profile_otp_phone_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="@dimen/dim_12"
+                android:layout_marginLeft="@dimen/dim_16"
+                android:lineSpacingExtra="@dimen/dp_1.5"
+                android:layout_marginRight="@dimen/dim_16"
+                android:layout_below="@+id/verify_phone_no_layout"
+                android:textColor="@color/white_dim"
+                android:text="We need your phone number to verify your account and ensure secure transactions."
+                android:textSize="@dimen/sp_14"
+                app:typeface="lato_regular" />
 
         </LinearLayout>
 
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/verify_profile_phone_number_error_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="@dimen/dim_6"
-            android:text="Please enter atleast 10 digits Phone Number"
-            android:textColor="@color/radical_red"
-            android:textSize="@dimen/dp_14"
-            app:typeface="lato_regular"
-            android:visibility="invisible"/>
-
-    </LinearLayout>
-
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/verify_profile_otp_phone_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_marginTop="@dimen/dim_12"
-        android:layout_marginLeft="@dimen/dim_16"
-        android:lineSpacingExtra="@dimen/dp_1.5"
-        android:layout_marginRight="@dimen/dim_16"
-        android:layout_below="@+id/verify_phone_no_layout"
-        android:textColor="@color/white_dim"
-        android:text="We need your phone number to verify your account and ensure secure transactions."
-        android:textSize="@dimen/sp_14"
-        app:typeface="lato_regular" />
-
-
-    <com.jeeva.android.widgets.customfont.CustomButton
-        android:id="@+id/verify_request_otp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
-        android:layout_alignParentBottom="true"
-        android:background="@color/venice_blue"
-        android:onClick="onClick"
-        android:text="Request OTP"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="@dimen/blue_button_text"
-        app:typeface="lato_regular" />
+    </ScrollView>
 
 </RelativeLayout>

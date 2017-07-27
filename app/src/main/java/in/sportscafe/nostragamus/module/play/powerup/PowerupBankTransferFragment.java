@@ -234,6 +234,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         }
 
         enableTransferToChallengeButton(false);
+        enableResetButton(false);
     }
 
     private void resetUi() {
