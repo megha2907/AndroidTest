@@ -421,6 +421,7 @@ public interface Constants {
         String ONBOARDING_TIME = "OnBoarding Time";
         String NAVIGATION_SCREEN = "Navigation Screen";
         String WALLET = "Wallet";
+        String REFERRAL_BENEFIT = "Referral Benefit";
     }
 
     interface AnalyticsClickLabels {

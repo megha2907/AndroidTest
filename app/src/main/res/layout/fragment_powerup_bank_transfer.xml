@@ -372,7 +372,7 @@
                 android:textColor="@drawable/white_text_selector"
                 android:textAllCaps="false"
                 android:layout_marginTop="@dimen/dim_20"
-                app:typeface="lato_regular"
+                app:typeface="lato_bold"
                 android:paddingBottom="@dimen/dim_3"
                 />
 

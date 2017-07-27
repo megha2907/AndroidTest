@@ -568,4 +568,7 @@ public class NostragamusAnalytics {
         track(category, AnalyticsActions.CLICKED, label, null);
     }
 
+    public void trackReferralBenefitScreenShown() {
+        track(AnalyticsCategory.REFERRAL_BENEFIT, AnalyticsActions.OPENED, AnalyticsLabels.SCREENS_SEEN, null);
+    }
 }

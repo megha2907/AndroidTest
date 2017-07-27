@@ -11,6 +11,7 @@ import com.jeeva.android.Log;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
@@ -38,6 +39,7 @@ public class SuccessfulReferralActivity extends NostragamusActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_successful_referral);
         initialize();
+        NostragamusAnalytics.getInstance().trackReferralBenefitScreenShown();
     }
 
     private void initialize() {
