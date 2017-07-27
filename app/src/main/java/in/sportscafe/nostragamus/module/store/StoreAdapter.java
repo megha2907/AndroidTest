@@ -9,14 +9,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
+import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigAdapter;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.store.dto.ProductSaleInfo;
 import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 import in.sportscafe.nostragamus.module.store.dto.StoreSections;
 
@@ -82,36 +88,59 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> {
 
     private void createStoreItemsList(List<StoreItems> storeItemsList, ViewGroup parent) {
         for (StoreItems storeItems : storeItemsList) {
-            parent.addView(getStoreItemView(storeItems, parent));
+            parent.addView(getStoreItemView(storeItems, storeItemsList.size(), parent));
         }
     }
 
-    private View getStoreItemView(StoreItems storeItem, ViewGroup parent) {
+    private View getStoreItemView(StoreItems storeItem, int storeItemsListSize, ViewGroup parent) {
 
         View storeItemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.inflater_store_item, parent, false);
 
         TextView tvStoreItemName = (TextView) storeItemView.findViewById(R.id.store_item_title_tv);
+        CustomButton btnStoreItemPrice = (CustomButton) storeItemView.findViewById(R.id.store_item_buy);
+        CustomButton btnSalePercentage = (CustomButton) storeItemView.findViewById(R.id.store_item_sale);
+        HmImageView ivStoreItemImage = (HmImageView) storeItemView.findViewById(R.id.store_item_iv);
+        TextView tvStoreItemValue = (TextView) storeItemView.findViewById(R.id.store_item_value_tv);
+        View storeLine = (View) storeItemView.findViewById(R.id.store_item_line);
+
+
         tvStoreItemName.setText(storeItem.getProductName());
 
-        HmImageView ivStoreItemImage = (HmImageView) storeItemView.findViewById(R.id.store_item_iv);
         if (!TextUtils.isEmpty(storeItem.getProductImage())) {
             ivStoreItemImage.setImageUrl(storeItem.getProductImage());
         } else {
             ivStoreItemImage.setVisibility(View.GONE);
         }
 
-        TextView tvStoreItemValue = (TextView) storeItemView.findViewById(R.id.store_item_value_tv);
 
         if (TextUtils.isEmpty(storeItem.getProductDesc())) {
             tvStoreItemValue.setVisibility(View.GONE);
         } else {
             tvStoreItemValue.setVisibility(View.VISIBLE);
             tvStoreItemValue.setText(storeItem.getProductDesc());
-            tvStoreItemValue.setPadding(15, 0, 0, 0);
         }
 
-//        Button btnStoreItemValue = (Button) storeItemView.findViewById(R.id.store_item_buy_btn);
-//        btnStoreItemValue.setText(storeItem.getProductPrice());
+        if (parent.getChildCount() == storeItemsListSize - 1) {
+            storeLine.setVisibility(View.GONE);
+        }
+
+        if (storeItem.getProductPrice()!=null) {
+            btnStoreItemPrice.setText(WalletHelper.getFormattedStringOfAmount(storeItem.getProductPrice()));
+        }else {
+            btnStoreItemPrice.setText(Constants.RUPEE_SYMBOL + "0");
+        }
+
+        ProductSaleInfo productSaleInfo = storeItem.getProductSaleInfo();
+
+        if (productSaleInfo!=null){
+
+            if (productSaleInfo.getSaleOn()){
+                btnSalePercentage.setVisibility(View.VISIBLE);
+                btnSalePercentage.setText(productSaleInfo.getSalePercentage().toString()+" %off");
+            }else {
+                btnSalePercentage.setVisibility(View.GONE);
+            }
+        }
 
         return storeItemView;
     }

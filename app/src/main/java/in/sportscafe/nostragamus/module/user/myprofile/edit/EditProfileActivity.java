@@ -332,7 +332,6 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     @Override
     public void navigateToSuccessfulReferral() {
         Intent intent = new Intent(this, SuccessfulReferralActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
@@ -341,7 +340,6 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     public void navigateToOTPVerification(boolean successfulReferral) {
         Intent intent = new Intent(this, VerifyProfileActivity.class);
         intent.putExtra(Constants.BundleKeys.SUCCESSFUL_REFERRAL,successfulReferral);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
