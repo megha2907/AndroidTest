@@ -24,8 +24,6 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.CustomProgressbar;
 import com.jeeva.android.widgets.HmImageView;
 
-import java.util.Objects;
-
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
@@ -33,8 +31,8 @@ import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
-import in.sportscafe.nostragamus.module.common.CallbackListener;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusWebView;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
@@ -51,7 +49,6 @@ import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
 import in.sportscafe.nostragamus.module.popups.BankTransferDialogFragment;
 import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupFragment;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 public class PredictionActivity extends NostragamusActivity implements PredictionView,
@@ -274,13 +271,13 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 break;
 
             case R.id.powerups_iv_info:
-//                new PowerupDialogFragment().show(getSupportFragmentManager(), "Powerup");
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PLAY, Constants.AnalyticsClickLabels.PLAY_GAME_HELP);
                 onGamePlayInfoButtonClicked();
                 break;
 
             case R.id.powerups_iv_bank:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PLAY, Constants.AnalyticsClickLabels.PLAY_BANK);
                 mPredictionPresenter.onClickBankTransfer();
-//                new BankInfoDialogFragment().show(getSupportFragmentManager(), "BankInfo");
                 break;
 
             case R.id.prediction_share_layout:

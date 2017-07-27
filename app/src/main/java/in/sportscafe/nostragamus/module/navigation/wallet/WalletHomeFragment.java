@@ -15,6 +15,7 @@ import com.jeeva.android.BaseFragment;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 
@@ -166,22 +167,27 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.wallet_home_earn_more_button:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.WALLET, Constants.AnalyticsClickLabels.EARN_MORE);
                 onEarnMoreClicked();
                 break;
 
             case R.id.wallet_home_add_money_button:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.WALLET, Constants.AnalyticsClickLabels.ADD_MONEY);
                 onAddMoneyClicked();
                 break;
 
             case R.id.wallet_home_withdraw_button:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.WALLET, Constants.AnalyticsClickLabels.WITHDRAW);
                 onWithdrawMoneyClicked();
                 break;
 
             case R.id.wallet_transaction_history_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.WALLET, Constants.AnalyticsClickLabels.TRANSACTION_HISTORY);
                 onTransactionHistoryClicked();
                 break;
 
             case R.id.wallet_payout_detail_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.WALLET, Constants.AnalyticsClickLabels.ADD_EDIT_WITHDRAWAL_DETAILS);
                 onPayoutDetailsClicked();
                 break;
 

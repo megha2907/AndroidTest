@@ -165,14 +165,17 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.navigation_profile_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.PROFILE);
                 onProfileClicked();
                 break;
 
             case R.id.navigation_wallet_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.WALLET);
                 onWalletClicked();
                 break;
 
             case R.id.navigation_powerup_bank_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.POWER_UP_BANK);
                 onPowerUpsClicked();
                 break;
 
@@ -181,29 +184,33 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 break;
 
             case R.id.navigation_whats_new_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.WHATS_NEW);
                 onWhatsNewClicked();
-                NostragamusAnalytics.getInstance().trackWhatsNew(Constants.AnalyticsActions.OPENED);
                 break;
 
             case R.id.navigation_refer_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.REFER_FRIEND);
                 onReferFriendClicked();
                 break;
 
             case R.id.navigation_submit_question_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.SUBMIT_QUESTION);
                 onSubmitQuestionClicked();
                 break;
 
             case R.id.navigation_help_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.HELP);
                 onHelpClicked();
                 break;
 
             case R.id.navigation_settings_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.SETTINGS);
                 onSettingsClicked();
                 break;
 
             case R.id.navigation_app_update_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.APP_UPDATE);
                 onUpdateAppClicked();
-                NostragamusAnalytics.getInstance().trackUpdateApp(Constants.AnalyticsActions.OPENED);
                 break;
 
         }
