@@ -180,6 +180,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 break;
 
             case R.id.navigation_store_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.STORE);
                 onStoreClicked();
                 break;
 

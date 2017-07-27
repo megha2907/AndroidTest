@@ -436,6 +436,7 @@ public interface Constants {
         String HELP = "Help";
         String SETTINGS = "Settings";
         String APP_UPDATE = "App Update";
+        String STORE = "Store";
 
         /* Wallet */
         String EARN_MORE = "Earn More";

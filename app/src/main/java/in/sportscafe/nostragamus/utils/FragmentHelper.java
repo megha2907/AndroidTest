@@ -103,9 +103,10 @@ public class FragmentHelper {
         }
 	}
 
-    public static synchronized void removeContentFragmentWithAnimation(@NonNull final AppCompatActivity activity, Fragment fragment) throws Exception {
+    public static synchronized void removeContentFragmentWithAnimation(@NonNull final AppCompatActivity activity, Fragment fragment) {
         FragmentManager manager = activity.getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
+        ft.setCustomAnimations(R.anim.activity_anim_stay, R.anim.slide_right_from_right);
         ft.remove(fragment);
         ft.commit();
         manager.popBackStackImmediate();
