@@ -7,14 +7,17 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 
 /**
  * Created by deepanshi on 6/20/17.
@@ -23,33 +26,40 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 public class CompletePaymentAndJoinDialogFragment extends NostragamusDialogFragment implements View.OnClickListener {
 
     public interface DialogLaunchFlow {
-        int NORMAL_LAUNCH = 1;
-        int MONEY_ADDED_ON_LOW_BAL_LAUNCH = 2;
+        int JOINING_CHALLENGE_LAUNCH = 1;
+        int JOINING_CHALLENGE_AFTER_LOW_BAL_LAUNCH = 2;
+        int STORE_BUY_POWERUP_LAUNCH = 3;
+        int STORE_BUY_POWERUP_AFTER_LOW_BAL_LAUNCH = 4;
     }
 
     public interface CompletePaymentActionListener {
         void onBackClicked();
-        void onPayAndJoin();
+        void onPayConfirmed();
     }
 
     private CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener mCompletePaymentActionListener;
     private int mDialogRequestCode;
+    private int mDialogLaunchMode;
 
     public void setSuccessListener(CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener listener) {
         mCompletePaymentActionListener = listener;
     }
 
-    public static CompletePaymentAndJoinDialogFragment newInstance(int requestCode, String configName, double entryFee, int dialogLaunchMode,
-                                                                   CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener listener) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(Constants.BundleKeys.DIALOG_REQUEST_CODE, requestCode);
-        bundle.putDouble(Constants.BundleKeys.ENTRY_FEE, entryFee);
-        bundle.putString(Constants.BundleKeys.CONFIG_NAME, configName);
-        bundle.putInt(Constants.BundleKeys.DIALOG_LAUNCH_MODE, dialogLaunchMode);
+    public void setDialogRequestCode(int requestCode) {
+        this.mDialogRequestCode = requestCode;
+    }
 
+    public void setDialogLaunchMode(int launchMode) {
+        this.mDialogLaunchMode = launchMode;
+    }
+
+    public static CompletePaymentAndJoinDialogFragment newInstance(int requestCode, int dialogLaunchMode, Bundle args,
+                                                                   CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener listener) {
         CompletePaymentAndJoinDialogFragment fragment = new CompletePaymentAndJoinDialogFragment();
+        fragment.setDialogRequestCode(requestCode);
+        fragment.setDialogLaunchMode(dialogLaunchMode);
         fragment.setSuccessListener(listener);
-        fragment.setArguments(bundle);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -70,26 +80,70 @@ public class CompletePaymentAndJoinDialogFragment extends NostragamusDialogFragm
         super.onActivityCreated(savedInstanceState);
         setCancelable(false);
         initViews();
-        initValues();
+        populateValues();
     }
 
     private void initViews() {
         findViewById(R.id.complete_payment_btn_back).setOnClickListener(this);
-        findViewById(R.id.complete_payment_btn_pay_join).setOnClickListener(this);
+        findViewById(R.id.complete_payment_btn).setOnClickListener(this);
         ImageView mBtnPopupClose = (ImageView) findViewById(R.id.popup_cross_btn);
         mBtnPopupClose.setVisibility(View.VISIBLE);
         mBtnPopupClose.setOnClickListener(this);
     }
 
-    private void initValues() {
+    private void populateValues() {
+        switch (mDialogLaunchMode) {
+            case DialogLaunchFlow.JOINING_CHALLENGE_LAUNCH:
+            case DialogLaunchFlow.JOINING_CHALLENGE_AFTER_LOW_BAL_LAUNCH:
+                populateChallengeJoiningValues();
+                break;
+
+            case DialogLaunchFlow.STORE_BUY_POWERUP_LAUNCH:
+            case DialogLaunchFlow.STORE_BUY_POWERUP_AFTER_LOW_BAL_LAUNCH:
+                populateStorePowerupBuyValues();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void populateStorePowerupBuyValues() {
+        if (getView() != null) {
+
+            /* Change button to buy */
+            Button confirmButton = (Button) getView().findViewById(R.id.complete_payment_btn);
+            confirmButton.setText("Buy");
+
+            Bundle bundle = getArguments();
+            if (bundle != null) {
+                StoreItems storeItems = Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.STORE_ITEM));
+                if (storeItems != null) {
+
+                    /* entry fee Label */
+                    TextView entryFeeLabelTextView = (TextView) getView().findViewById(R.id.complete_payment_tv_entry_fee_txt);
+                    if (!TextUtils.isEmpty(storeItems.getProductName())) {
+                        entryFeeLabelTextView.setText(storeItems.getProductName());
+                    } else {
+                        entryFeeLabelTextView.setText("Powerup Price");
+                    }
+
+                    /* Fee / price */
+                    if (storeItems.getProductPrice() > 0) {
+                        populateEntryFee(storeItems.getProductPrice());
+                    }
+                }
+            }
+        }
+    }
+
+    private void populateChallengeJoiningValues() {
         if (getView() != null) {
             Bundle bundle = getArguments();
 
             if (bundle != null) {
-                mDialogRequestCode = bundle.getInt(Constants.BundleKeys.DIALOG_REQUEST_CODE);
                 double entryFee = bundle.getDouble(Constants.BundleKeys.ENTRY_FEE);
                 String configName = bundle.getString(Constants.BundleKeys.CONFIG_NAME);
-                int dialogLaunchMode = bundle.getInt(Constants.BundleKeys.DIALOG_LAUNCH_MODE);
 
                 // Header
                 if (!TextUtils.isEmpty(configName)) {
@@ -98,22 +152,12 @@ public class CompletePaymentAndJoinDialogFragment extends NostragamusDialogFragm
                     headerTextView.setText(str);
                 }
 
-                // balance
-                TextView tvBalanceAmount = (TextView) findViewById(R.id.complete_payment_tv_wallet_balance);
-                double walletBalAmount = WalletHelper.getTotalBalance();
-                tvBalanceAmount.setText(WalletHelper.getFormattedStringOfAmount(walletBalAmount));
-
-                // entry fee
-                TextView tvEntryFee = (TextView) findViewById(R.id.complete_payment_tv_entry_fee);
-                tvEntryFee.setText(WalletHelper.getFormattedStringOfAmount(entryFee));
-
-                // contest entry msg
-                TextView msgTextView = (TextView) findViewById(R.id.join_challenge_dialog_msg_textView);
-                String msg = WalletHelper.getFormattedStringOfAmount(entryFee) + " will be deducted from your wallet to join this contest";
-                msgTextView.setText(msg);
+                populateWalletBalance();
+                populateEntryFee(entryFee);
+                populateWalletMoneyDeductionMsg(entryFee);
 
                 // Dialog launch mode
-                if (dialogLaunchMode == DialogLaunchFlow.MONEY_ADDED_ON_LOW_BAL_LAUNCH) {
+                if (mDialogLaunchMode == DialogLaunchFlow.JOINING_CHALLENGE_AFTER_LOW_BAL_LAUNCH) {
                     TextView balAddedTextView = (TextView) findViewById(R.id.join_challenge_dialog_money_added_textView);
                     String str = "Updated wallet balance is " + WalletHelper.getFormattedStringOfAmount(entryFee);
                     balAddedTextView.setText(str);
@@ -123,25 +167,37 @@ public class CompletePaymentAndJoinDialogFragment extends NostragamusDialogFragm
         }
     }
 
+    private void populateWalletMoneyDeductionMsg(double entryFee) {
+        TextView msgTextView = (TextView) findViewById(R.id.join_challenge_dialog_msg_textView);
+        String msg = WalletHelper.getFormattedStringOfAmount(entryFee) + " will be deducted from your wallet to join this contest";
+        msgTextView.setText(msg);
+    }
+
+    private void populateEntryFee(double entryFee) {
+        TextView tvEntryFee = (TextView) findViewById(R.id.complete_payment_tv_entry_fee);
+        tvEntryFee.setText(WalletHelper.getFormattedStringOfAmount(entryFee));
+    }
+
+    private void populateWalletBalance() {
+        TextView tvBalanceAmount = (TextView) findViewById(R.id.complete_payment_tv_wallet_balance);
+        double walletBalAmount = WalletHelper.getTotalBalance();
+        tvBalanceAmount.setText(WalletHelper.getFormattedStringOfAmount(walletBalAmount));
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.complete_payment_btn_back:
-                if (mCompletePaymentActionListener != null) {
-                    mCompletePaymentActionListener.onBackClicked();
-                }
-                dismiss();
-                break;
-
             case R.id.popup_cross_btn:
                 if (mCompletePaymentActionListener != null) {
                     mCompletePaymentActionListener.onBackClicked();
                 }
                 dismiss();
                 break;
-            case R.id.complete_payment_btn_pay_join:
+
+            case R.id.complete_payment_btn:
                 if (mCompletePaymentActionListener != null) {
-                    mCompletePaymentActionListener.onPayAndJoin();
+                    mCompletePaymentActionListener.onPayConfirmed();
                 }
                 dismiss();
                 break;
