@@ -35,6 +35,7 @@ import in.sportscafe.nostragamus.module.play.powerup.dto.UserDemandPowerUpDto;
 import in.sportscafe.nostragamus.module.play.powerup.io.PowerupBankStatusApiModelImpl;
 import in.sportscafe.nostragamus.module.popups.banktransfer.BankTranferApiModelImpl;
 import in.sportscafe.nostragamus.module.store.StoreActivity;
+import in.sportscafe.nostragamus.module.store.StoreLaunchMode;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
 /**
@@ -386,6 +387,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     private void performBuy(int buyCategory) {
         Bundle args = new Bundle();
         args.putInt(Constants.BundleKeys.STORE_BUY_PRODUCT_CATEGORY, buyCategory);
+        args.putInt(Constants.BundleKeys.LAUNCH_MODE, StoreLaunchMode.POWER_UP_BANK_LAUCNH);
 
         if (mFragmentListener != null) {
             mFragmentListener.launchStore(args);

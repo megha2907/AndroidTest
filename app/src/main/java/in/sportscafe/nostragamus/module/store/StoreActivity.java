@@ -8,11 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentDialogFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
@@ -36,6 +41,7 @@ public class StoreActivity extends NostragamusActivity implements StoreFragmentL
 
         initialize();
         loadStoreFragment();
+        fetchUserWalletFromServer();
     }
 
     private void initialize() {
@@ -79,6 +85,12 @@ public class StoreActivity extends NostragamusActivity implements StoreFragmentL
     }
 
     @Override
+    public void finishStoreActivity() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -91,6 +103,29 @@ public class StoreActivity extends NostragamusActivity implements StoreFragmentL
                 ((StoreFragment) fragment).fetchUserWalletFromServer(CompletePaymentDialogFragment.DialogLaunchMode.STORE_BUY_POWERUP_AFTER_LOW_BAL_LAUNCH,
                         data.getExtras());
             }
+        }
+    }
+
+    /**
+     * As wallet values tobe updated for store..
+     * Since multiple entry-point for Store
+     */
+    private void fetchUserWalletFromServer() {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
+                @Override
+                public void noInternet() {
+                    showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+                }
+
+                @Override
+                public void onApiFailed() {
+                    showMessage(Constants.Alerts.API_FAIL);
+                }
+
+                @Override
+                public void onSuccessResponse(UserWalletResponse response) {}
+            }).performApiCall();
         }
     }
 }

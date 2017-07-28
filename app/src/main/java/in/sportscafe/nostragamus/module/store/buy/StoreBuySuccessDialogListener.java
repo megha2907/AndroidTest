@@ -6,5 +6,5 @@ package in.sportscafe.nostragamus.module.store.buy;
 
 public interface StoreBuySuccessDialogListener {
     void onCloseButtonClicked();
-    void onBuyButtonClicked();
+    void onOkayButtonClicked();
 }
