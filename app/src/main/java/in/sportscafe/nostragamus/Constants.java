@@ -305,6 +305,8 @@ public interface Constants {
         String USER_PHOTO = "user_photo";
         String USER_NAME = "user_name";
         String POWERUP_BANK_INFO_SCREEN = "powerupBankInfoScreen";
+        String STORE_ITEM = "storeItem";
+        String STORE_BUY_PRODUCT_CATEGORY = "storeBuyProductCategory";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -436,6 +438,7 @@ public interface Constants {
         String HELP = "Help";
         String SETTINGS = "Settings";
         String APP_UPDATE = "App Update";
+        String STORE = "Store";
 
         /* Wallet */
         String EARN_MORE = "Earn More";
@@ -725,6 +728,12 @@ public interface Constants {
     }
 
     interface PowerupLocalId { int DOUBLER = 1; int NO_NEGATIVE = 2; int AUDIENCE_POLL = 3;}
+
+    interface StoreBuyProductCategory {
+        int POWER_UP_DOUBLER = 1;
+        int POWER_UP_NO_NEGATIVE = 2;
+        int POWER_UP_AUDIENCE_POLL = 3;
+    }
 
     public static final String AMOUNT_DECIMAL_PATTERN = "#0.00";
     public static final String RUPEE_SYMBOL = "₹ ";

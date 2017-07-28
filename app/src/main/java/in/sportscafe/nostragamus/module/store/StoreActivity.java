@@ -58,6 +58,9 @@ public class StoreActivity extends NostragamusActivity implements StoreFragmentL
 
     private void loadStoreFragment() {
         StoreFragment fragment = new StoreFragment();
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            fragment.setArguments(getIntent().getExtras());
+        }
         FragmentHelper.replaceFragment(this, R.id.fragment_container, fragment);
     }
 

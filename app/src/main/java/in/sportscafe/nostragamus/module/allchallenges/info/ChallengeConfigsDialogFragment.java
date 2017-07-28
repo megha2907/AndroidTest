@@ -254,7 +254,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             } else {
                 // Paid entry, check wallet balance, fetch wallet and then continue
                 fetchUserWalletFromServer(challengeConfig, challengeId,
-                        CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.NORMAL_LAUNCH);
+                        CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.JOINING_CHALLENGE_LAUNCH);
             }
         } else {
             showMessage(Alerts.SOMETHING_WRONG);
@@ -333,7 +333,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
                 /* Fetch wallet details and continue in loop */
                 fetchUserWalletFromServer(challengeConfig, challengeId,
-                        CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.MONEY_ADDED_ON_LOW_BAL_LAUNCH);
+                        CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.JOINING_CHALLENGE_AFTER_LOW_BAL_LAUNCH);
             } else {
                 showMessage(Alerts.SOMETHING_WRONG);
             }
@@ -475,12 +475,16 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     }
 
     private void showJoinDialog(int challengeId, ChallengeConfig challengeConfig, int dialogLaunchMode) {
+        Bundle bundle = new Bundle();
+        bundle.putDouble(Constants.BundleKeys.ENTRY_FEE, challengeConfig.getEntryFee());
+        bundle.putString(Constants.BundleKeys.CONFIG_NAME, challengeConfig.getConfigName());
+
         CompletePaymentAndJoinDialogFragment dialogFragment =
                 CompletePaymentAndJoinDialogFragment.newInstance(JOIN_CHALLENGE_CONFIRMATION_REQUEST_CODE,
-                        challengeConfig.getConfigName(),
-                        challengeConfig.getEntryFee(),
                         dialogLaunchMode,
+                        bundle,
                         getCompletePaymentDialoActionListener(challengeId, challengeConfig));
+
         dialogFragment.show(getChildFragmentManager(), "COMPLETE_JOIN");
     }
 
@@ -494,7 +498,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             }
 
             @Override
-            public void onPayAndJoin() {
+            public void onPayConfirmed() {
                 performJoinChallengeAction(challengeId, challengeConfig);
             }
         };

@@ -2,12 +2,12 @@ package in.sportscafe.nostragamus.module.user.myprofile.verify;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
-
 
 import java.util.Calendar;
 
@@ -256,34 +256,19 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.verify_profile_iv_back:
-                onBackClicked();
+                onBackPressed();
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        onBackClicked();
-    }
-
-    private void onBackClicked() {
-        if (getActivity() != null) {
-            if (verifyOTPFragment != null) {
-                if (verifyOTPFragment instanceof VerifyOTPFragment) {
-                    try {
-                        backBtn.setVisibility(View.INVISIBLE);
-                        FragmentHelper.removeContentFragmentWithAnimation(this, verifyOTPFragment);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        this.finish();
-                    }
-                } else {
-                    this.finish();
-                }
-            } else {
-                this.finish();
-            }
+        Fragment fragment = getSupportFragmentManager().findFragmentById( R.id.fragment_container);
+        if (fragment != null && fragment instanceof VerifyOTPFragment) {
+            ((VerifyOTPFragment) fragment).onBackPressed(this);
+            backBtn.setVisibility(View.INVISIBLE);
+        } else {
+            super.onBackPressed();
         }
     }
 

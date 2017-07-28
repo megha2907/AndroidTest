@@ -1,10 +1,13 @@
 package in.sportscafe.nostragamus.module.user.myprofile.verify;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -26,6 +29,7 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
+import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
  * Created by deepanshi on 7/18/17.
@@ -267,6 +271,14 @@ public class VerifyOTPFragment extends BaseFragment implements View.OnClickListe
                 resendOTP();
                 break;
         }
+    }
+
+    /**
+     * To remove fragment from backstack
+     * @param activity
+     */
+    public void onBackPressed(@NonNull AppCompatActivity activity) {
+        FragmentHelper.removeContentFragmentWithAnimation(activity, this);
     }
 
 }

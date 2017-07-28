@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.store;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.nfc.Tag;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import com.jeeva.android.widgets.customfont.CustomButton;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -31,15 +34,16 @@ import in.sportscafe.nostragamus.module.store.dto.StoreSections;
  * Created by deepanshi on 7/25/17.
  */
 
-public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> {
+public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> implements View.OnClickListener {
 
-
+    private BuyButtonListener mBuyListener;
     private List<StoreSections> mStoreSectionsList;
     private Context mContext;
     private boolean showBundleView = false;
 
-    public StoreAdapter(Context context) {
+    public StoreAdapter(Context context, @NonNull BuyButtonListener buyButtonListener) {
         mContext = context;
+        mBuyListener = buyButtonListener;
     }
 
     public List<StoreSections> getStoreSectionsList() {
@@ -152,6 +156,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> {
             storeItemLayout.setLayoutParams(params);
         }
 
+        btnStoreItemPrice.setOnClickListener(this);
+        btnStoreItemPrice.setTag(storeItem);
 
         tvStoreItemName.setText(WordUtils.capitalize(storeItem.getProductName()));
 
@@ -214,6 +220,22 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> {
         }
 
         return storeItemView;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.store_item_buy:
+                onBuyButtonClicked(view);
+                break;
+        }
+    }
+
+    private void onBuyButtonClicked(View view) {
+        Object obj = view.getTag();
+        if (obj != null && mBuyListener != null) {
+            mBuyListener.onBuyClicked((StoreItems) obj);
+        }
     }
 
 
