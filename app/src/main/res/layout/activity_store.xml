@@ -26,6 +26,13 @@
             android:textSize="@dimen/sp_16"
             app:typeface="lato_regular" />
 
+        <ImageView
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_18"
+            android:visibility="gone"
+            android:src="@drawable/powerup_nonegs_white"
+            android:layout_marginLeft="@dimen/dim_10"/>
+
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout

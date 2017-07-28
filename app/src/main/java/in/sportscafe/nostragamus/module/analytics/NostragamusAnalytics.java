@@ -309,8 +309,8 @@ public class NostragamusAnalytics {
      * @param actions       - OnBoardingTime
      * @param label         - Actual time spent in OnBoarding from Edit Profile to Home
      */
-    public void trackOnBoarding(String actions, String label) {
-        track(AnalyticsCategory.ONBOARDING_TIME, actions, label, null);
+    public void trackOnBoarding(String actions, String label, long timeSpentInS) {
+        track(AnalyticsCategory.ONBOARDING_TIME, actions, label, timeSpentInS);
     }
 
 
