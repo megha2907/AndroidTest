@@ -40,11 +40,9 @@ public class BuyApiModelImpl {
                     super.onResponse(call, response);
 
                     if (response != null && response.isSuccessful() && response.body() != null) {
-                        Log.d("Buy", response.body().toString());
-                        /*if (mListener != null) {
+                        if (mListener != null) {
                             mListener.onSuccessResponse(response.body());
-                        }*/
-
+                        }
                     } else {
                         Log.d(TAG, "Api response not proper/null");
                         if (mListener != null) {
