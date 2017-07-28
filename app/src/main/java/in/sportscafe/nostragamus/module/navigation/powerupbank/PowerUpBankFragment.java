@@ -27,6 +27,7 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -141,8 +142,8 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
 
     private void setInfo() {
 
-        if (NostragamusDataHandler.getInstance().getUserInfo() != null) {
-            UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        if (userInfo != null) {
             getPowerUps(userInfo);
         }
         setPowerUpText();

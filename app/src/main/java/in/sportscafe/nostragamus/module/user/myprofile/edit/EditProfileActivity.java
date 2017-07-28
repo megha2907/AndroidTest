@@ -269,7 +269,6 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         Bundle bundle = new Bundle();
         bundle.putString(BundleKeys.LOGIN_SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 //        if(fromHome) {
 //            intent.putExtra(BundleKeys.OPEN_PROFILE, "0");
 //        }

@@ -56,8 +56,8 @@
 
             <com.jeeva.android.widgets.HmImageView
                 android:id="@+id/verify_profile_iv_user_image"
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="@dimen/dp_100"
+                android:layout_width="@dimen/dim_100"
+                android:layout_height="@dimen/dim_100"
                 android:layout_below="@+id/verify_profile_screen_title"
                 android:layout_centerHorizontal="true"
                 android:alpha="0.9"

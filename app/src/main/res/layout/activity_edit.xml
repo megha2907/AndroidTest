@@ -57,8 +57,8 @@
 
                     <com.jeeva.android.widgets.HmImageView
                         android:id="@+id/edit_iv_user_image"
-                        android:layout_width="@dimen/dp_100"
-                        android:layout_height="@dimen/dp_100"
+                        android:layout_width="@dimen/dim_100"
+                        android:layout_height="@dimen/dim_100"
                         android:layout_centerHorizontal="true"
                         android:alpha="0.9"
                         android:background="@color/black_30"
@@ -67,10 +67,10 @@
 
                     <ImageView
                         android:id="@+id/edit_iv_camera_image"
-                        android:layout_width="@dimen/dp_36"
-                        android:layout_height="@dimen/dp_36"
+                        android:layout_width="@dimen/dim_36"
+                        android:layout_height="@dimen/dim_36"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dp_32"
+                        android:layout_marginTop="@dimen/dim_32"
                         android:alpha="0.8"
                         android:onClick="showImagePopup"
                         android:src="@drawable/camera_icon" />
@@ -88,8 +88,8 @@
                         android:id="@+id/edit_tv_upload_pic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dim_20"
+                        android:layout_marginRight="@dimen/dim_20"
                         android:text="+ Upload a Photo"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"
@@ -241,7 +241,7 @@
                 android:paddingTop="@dimen/dp_2"
                 android:text="@string/profile_disclaimer"
                 android:textColor="@color/white_60"
-                android:textSize="@dimen/dp_12"
+                android:textSize="@dimen/sp_12"
                 android:visibility="gone"
                 app:typeface="lato_regular" />
 
