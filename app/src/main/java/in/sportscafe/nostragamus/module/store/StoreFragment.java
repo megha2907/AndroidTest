@@ -1,9 +1,8 @@
 package in.sportscafe.nostragamus.module.store;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
-import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
@@ -26,14 +24,15 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
-import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentAndJoinDialogFragment;
+import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
+import in.sportscafe.nostragamus.module.store.buy.BuyApiModelImpl;
+import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
 import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 import in.sportscafe.nostragamus.module.store.dto.StoreSections;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -47,9 +46,8 @@ public class StoreFragment extends BaseFragment {
 
     private static final String TAG = StoreFragment.class.getSimpleName();
     private static final int BUY_POWER_UP_COMPLETE_PAYMENT_REQUEST_CODE = 501;
-    private static final int ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE = 502;
 
-    private StoreFragmentListener storeFragmentListener;
+    private StoreFragmentListener mStoreFragmentListener;
 
     private HashMap<String, PowerUp> mPowerUpMaps;
 
@@ -73,8 +71,8 @@ public class StoreFragment extends BaseFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof StoreActivity) {
-            storeFragmentListener = (StoreFragmentListener) context;
+        if (context instanceof StoreFragmentListener) {
+            mStoreFragmentListener = (StoreFragmentListener) context;
         } else {
             throw new RuntimeException("Activity must implement " + TAG);
         }
@@ -112,13 +110,16 @@ public class StoreFragment extends BaseFragment {
     }
 
     private void confirmWalletBalance(StoreItems storeItem) {
-        double price = storeItem.getProductPrice();
+        int price = storeItem.getProductPrice();
+        if (storeItem.getProductSaleInfo() != null && storeItem.getProductSaleInfo().getSaleOn()) {
+            price = storeItem.getProductSaleInfo().getSalePrice();
+        }
 
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.BundleKeys.STORE_ITEM, Parcels.wrap(storeItem));
 
         if (WalletHelper.isSufficientBalAvailableInWallet(price)) {
-            showCompletePaymentDialog(bundle, CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.STORE_BUY_POWERUP_LAUNCH);
+            showCompletePaymentDialog(bundle, CompletePaymentDialogFragment.DialogLaunchMode.STORE_BUY_POWERUP_LAUNCH);
 
         } else {
             // Add money into wallet as less available
@@ -129,18 +130,18 @@ public class StoreFragment extends BaseFragment {
     private void showCompletePaymentDialog(Bundle args, int launchMode) {
         StoreItems storeItems = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.STORE_ITEM));
 
-        CompletePaymentAndJoinDialogFragment dialogFragment =
-                CompletePaymentAndJoinDialogFragment.newInstance(BUY_POWER_UP_COMPLETE_PAYMENT_REQUEST_CODE,
+        CompletePaymentDialogFragment dialogFragment =
+                CompletePaymentDialogFragment.newInstance(BUY_POWER_UP_COMPLETE_PAYMENT_REQUEST_CODE,
                         launchMode,
                         args,
                         getCompletePaymentDialoActionListener(storeItems));
 
-        dialogFragment.show(getChildFragmentManager(), CompletePaymentAndJoinDialogFragment.class.getSimpleName());
+        dialogFragment.show(getChildFragmentManager(), CompletePaymentDialogFragment.class.getSimpleName());
     }
 
-    private CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener
+    private CompletePaymentDialogFragment.CompletePaymentActionListener
     getCompletePaymentDialoActionListener(final StoreItems storeItems) {
-        return new CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener() {
+        return new CompletePaymentDialogFragment.CompletePaymentActionListener() {
             @Override
             public void onBackClicked() {
                 // No action required
@@ -154,14 +155,50 @@ public class StoreFragment extends BaseFragment {
     }
 
     private void buyPowerUpFromStore(StoreItems storeItems) {
-        // TODO: Make BUY api call
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            showProgressbar();
+            BuyApiModelImpl buyApiModel = BuyApiModelImpl.newInstance(getBuyApiListener());
+            buyApiModel.performApiCall(storeItems.getProductId());
+        } else {
+            showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+        }
     }
 
+    @NonNull
+    private BuyApiModelImpl.BuyApiListener getBuyApiListener() {
+        return new BuyApiModelImpl.BuyApiListener() {
+            @Override
+            public void noInternet() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onApiFailed() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onSuccessResponse(BuyResponse buyResponse) {
+                dismissProgressbar();
+                onBuySuccessResponse(buyResponse);
+            }
+        };
+    }
+
+    private void onBuySuccessResponse(BuyResponse buyResponse) {
+        if (buyResponse != null) {
+            if (buyResponse.getStatus() == Constants.ApiSuccessStatusCode.SUCCESS) {
+
+            }
+        }
+    }
+
+
     private void addMoneyInWalletAsLowBalance(Bundle args) {
-        Intent intent = new Intent(getActivity(), AddMoneyOnLowBalanceActivity.class);
-        intent.putExtras(args);
-        if (getActivity() != null) {
-            getActivity().startActivityForResult(intent, ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE);
+        if (mStoreFragmentListener != null) {
+            mStoreFragmentListener.onLowBalanceWhileBuy(args);
         }
     }
 
@@ -335,24 +372,12 @@ public class StoreFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE &&
-                resultCode == Activity.RESULT_OK &&
-                data != null && data.getExtras() != null) {
-
-                /* Fetch wallet details and continue in loop */
-                fetchUserWalletFromServer(CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.STORE_BUY_POWERUP_AFTER_LOW_BAL_LAUNCH,
-                        data.getExtras());
-
-        }  else {
-            showMessage(Constants.Alerts.SOMETHING_WRONG);
-        }
-    }
-
-    private void fetchUserWalletFromServer(final int launchMode, final Bundle args) {
+    /**
+     * Check wallet balance and continue buy
+     * @param launchMode
+     * @param args
+     */
+    public void fetchUserWalletFromServer(final int launchMode, final Bundle args) {
         showProgressbar();
         WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
             @Override

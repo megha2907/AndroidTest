@@ -15,9 +15,12 @@ import android.widget.RelativeLayout;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.store.StoreActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class PowerupBankTransferToPlayActivity extends NostragamusActivity implements View.OnClickListener, PowerUpBankTransferFragmentListener {
+
+    private static final int STORE_REQUEST_CODE = 551;
 
     private PowerupBankTransferInfoFragment mInfoFragment;
 
@@ -98,6 +101,27 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
     @Override
     public void finishActivity() {
         onBackPressed();
+    }
+
+    @Override
+    public void launchStore(Bundle args) {
+        Intent intent = new Intent(getActivity(), StoreActivity.class);
+        if (args != null) {
+            intent.putExtras(args);
+        }
+        startActivityForResult(intent, STORE_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == STORE_REQUEST_CODE) {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.powerup_bank_fragment_container);
+            if (fragment != null && fragment instanceof PowerupBankTransferFragment) {
+                ((PowerupBankTransferFragment) fragment).onStoreResponse();
+            }
+        }
     }
 
     @Override

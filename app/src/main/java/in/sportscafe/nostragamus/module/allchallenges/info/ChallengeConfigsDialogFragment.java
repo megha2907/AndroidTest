@@ -32,7 +32,7 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
-import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentAndJoinDialogFragment;
+import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentDialogFragment;
 import in.sportscafe.nostragamus.module.allchallenges.join.JoinChallengeUseWalletApiModelImpl;
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
@@ -254,7 +254,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             } else {
                 // Paid entry, check wallet balance, fetch wallet and then continue
                 fetchUserWalletFromServer(challengeConfig, challengeId,
-                        CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.JOINING_CHALLENGE_LAUNCH);
+                        CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
             }
         } else {
             showMessage(Alerts.SOMETHING_WRONG);
@@ -333,7 +333,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
                 /* Fetch wallet details and continue in loop */
                 fetchUserWalletFromServer(challengeConfig, challengeId,
-                        CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.JOINING_CHALLENGE_AFTER_LOW_BAL_LAUNCH);
+                        CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_AFTER_LOW_BAL_LAUNCH);
             } else {
                 showMessage(Alerts.SOMETHING_WRONG);
             }
@@ -479,8 +479,8 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         bundle.putDouble(Constants.BundleKeys.ENTRY_FEE, challengeConfig.getEntryFee());
         bundle.putString(Constants.BundleKeys.CONFIG_NAME, challengeConfig.getConfigName());
 
-        CompletePaymentAndJoinDialogFragment dialogFragment =
-                CompletePaymentAndJoinDialogFragment.newInstance(JOIN_CHALLENGE_CONFIRMATION_REQUEST_CODE,
+        CompletePaymentDialogFragment dialogFragment =
+                CompletePaymentDialogFragment.newInstance(JOIN_CHALLENGE_CONFIRMATION_REQUEST_CODE,
                         dialogLaunchMode,
                         bundle,
                         getCompletePaymentDialoActionListener(challengeId, challengeConfig));
@@ -488,10 +488,10 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         dialogFragment.show(getChildFragmentManager(), "COMPLETE_JOIN");
     }
 
-    private CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener
+    private CompletePaymentDialogFragment.CompletePaymentActionListener
     getCompletePaymentDialoActionListener(final int challengeId, final ChallengeConfig challengeConfig) {
 
-        return new CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener() {
+        return new CompletePaymentDialogFragment.CompletePaymentActionListener() {
             @Override
             public void onBackClicked() {
                 // No action required
