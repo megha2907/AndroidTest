@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -33,6 +34,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.store.StoreActivity;
+import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity;
 
@@ -75,13 +77,16 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void initialize() {
-        initWalletDetails();
+        fetchServerDetails();
         showOrHideContentBasedOnAppType();
         showVersionOrAppUpdateMsg();
         initProfileDetails();
     }
 
-    private void initWalletDetails() {
+    private void fetchServerDetails() {
+        /* Make silent API calls
+         * 1. Wallet details api
+         * 2. User Info api */
         fetchUserWalletFromServer();
     }
 
@@ -277,7 +282,6 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
         }
     }
 
-
     private void onWalletClicked() {
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), WalletHomeActivity.class);
@@ -313,7 +317,6 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void fetchUserWalletFromServer() {
-//        Making silent call
         WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
             @Override
             public void noInternet() {
@@ -323,13 +326,32 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onApiFailed() {
                 Log.d(TAG, Constants.Alerts.API_FAIL);
+                fetchUserInfo();
             }
 
             @Override
             public void onSuccessResponse(UserWalletResponse response) {
                 showOrUpdateWalletAmount();
+                fetchUserInfo();
             }
         }).performApiCall();
+    }
+
+    private void fetchUserInfo() {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            UserInfoModelImpl.newInstance(new UserInfoModelImpl.OnGetUserInfoModelListener() {
+                @Override
+                public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {}
+
+                @Override
+                public void onFailedGetUpdateUserInfo(String message) {}
+
+                @Override
+                public void onNoInternet() {}
+            }).getUserInfo();
+        } else {
+            Log.i(TAG, "No internet");
+        }
     }
 
     @Override

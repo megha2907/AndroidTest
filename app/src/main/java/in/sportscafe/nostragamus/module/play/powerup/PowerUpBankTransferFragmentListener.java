@@ -9,4 +9,5 @@ import android.os.Bundle;
 public interface PowerUpBankTransferFragmentListener {
     void updatePowerUpInfoDetails(Bundle args);
     void finishActivity();
+    void launchStore(Bundle args);
 }

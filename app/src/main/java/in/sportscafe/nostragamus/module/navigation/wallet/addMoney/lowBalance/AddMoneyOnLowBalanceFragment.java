@@ -2,16 +2,12 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.SpannedString;
 import android.text.TextUtils;
-import android.text.style.AbsoluteSizeSpan;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +25,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddMoneyWalletHelper;
+import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,22 +83,12 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
 
     private void initBalanceDetails() {
         Bundle args = getArguments();
-        if (args != null && args.containsKey(Constants.BundleKeys.CHALLENGE_CONFIG)) {
-            ChallengeConfig challengeConfig = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.CHALLENGE_CONFIG));
-
-            if (challengeConfig != null) {
-                double totalBal = WalletHelper.getTotalBalance();
-                int entryFee = challengeConfig.getEntryFee();
-                double diff = totalBal - entryFee;
-                if (diff < 0) {
-                    mLowBalanceDifferenceAmount = -diff;
-                    showDetailsOnUi(totalBal, entryFee, challengeConfig.getConfigName());
-                } else {
-                    Log.d(TAG, "Low balance difference not proper : " + diff);
-                    showMessage(Constants.Alerts.SOMETHING_WRONG);
-                }
+        if (args != null) {
+            if (args.containsKey(Constants.BundleKeys.CHALLENGE_CONFIG)) {
+                setUiAsLowBalFromChallenge(args);
+            } else if (args.containsKey(Constants.BundleKeys.STORE_ITEM)) {
+                setUiAsLowBalFromBuyFromStore(args);
             }
-
         } else {
             if (mFragmentListener != null) {
                 mFragmentListener.onBackClicked();
@@ -109,13 +96,58 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
         }
     }
 
-    private void showDetailsOnUi(double totalBal, int entryFee, String configName) {
+    private void setUiAsLowBalFromBuyFromStore(Bundle args) {
+        StoreItems storeItems = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.STORE_ITEM));
+        if (storeItems != null && getView() != null) {
+
+            double totalBal = WalletHelper.getTotalBalance();
+            int productPrice = storeItems.getProductPrice();
+            if (storeItems.getProductSaleInfo() != null && storeItems.getProductSaleInfo().getSaleOn()) {
+                productPrice = storeItems.getProductSaleInfo().getSalePrice();
+            }
+
+            TextView productLabelTextView = (TextView) getView().findViewById(R.id.low_money_product_name_textView);
+            if (!TextUtils.isEmpty(storeItems.getProductName())) {
+                productLabelTextView.setText(storeItems.getProductName() + " price");
+            } else {
+                productLabelTextView.setText("Powerup Price");
+            }
+
+            double diff = totalBal - productPrice;
+            if (diff < 0) {
+                mLowBalanceDifferenceAmount = -diff;
+                showDetailsOnUi(totalBal, productPrice);
+                setMessageText(storeItems.getProductName(), "buy");
+            } else {
+                Log.d(TAG, "Low balance difference not proper : " + diff);
+                showMessage(Constants.Alerts.SOMETHING_WRONG);
+            }
+        }
+    }
+
+    private void setUiAsLowBalFromChallenge(Bundle args) {
+        ChallengeConfig challengeConfig = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.CHALLENGE_CONFIG));
+        if (challengeConfig != null) {
+            double totalBal = WalletHelper.getTotalBalance();
+            int entryFee = challengeConfig.getEntryFee();
+            double diff = totalBal - entryFee;
+            if (diff < 0) {
+                mLowBalanceDifferenceAmount = -diff;
+                showDetailsOnUi(totalBal, entryFee);
+                setMessageText(challengeConfig.getConfigName(), "join");
+            } else {
+                Log.d(TAG, "Low balance difference not proper : " + diff);
+                showMessage(Constants.Alerts.SOMETHING_WRONG);
+            }
+        }
+    }
+
+    private void showDetailsOnUi(double totalBal, int entryFee) {
         // Show on UI
         View view = getView();
         if (view != null && getActivity() != null) {
             TextView totalBalTextView = (TextView) view.findViewById(R.id.low_bal_amount_textView);
             TextView entryFeeTextView = (TextView) view.findViewById(R.id.low_bal_contest_entry_fee_textView);
-            TextView lowBalMsgTextView = (TextView) view.findViewById(R.id.low_bal_details_msg_textView);
 
             if (totalBal > 0) {
                 totalBalTextView.setText(WalletHelper.getFormattedStringOfAmount(totalBal));
@@ -124,8 +156,6 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
                 entryFeeTextView.setText(WalletHelper.getFormattedStringOfAmount(entryFee));
             }
 
-            setMessageText(configName, lowBalMsgTextView);
-
             if (mAmountEditText != null) {
                 mAmountEditText.setText(String.valueOf(mLowBalanceDifferenceAmount));
                 setEditTextSelection();
@@ -133,25 +163,29 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
         }
     }
 
-    private void setMessageText(String configName, TextView lowBalMsgTextView) {
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        String msg1 = "Low balance! Add at least ";
-        SpannableString spannable1 = new SpannableString(msg1);
+    private void setMessageText(String buyProductName, String operationStr) {
+        if (getView() != null) {
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            String msg1 = "Low balance! Add at least ";
+            SpannableString spannable1 = new SpannableString(msg1);
 
-        SpannableString spannable2 = null;
-        if (mLowBalanceDifferenceAmount > 0) {
-            String msg2 = WalletHelper.getFormattedStringOfAmount(mLowBalanceDifferenceAmount);
-            spannable2 = new SpannableString(msg2);
-            spannable2.setSpan(new RelativeSizeSpan(1.20f), 0, msg2.length(), 0);
-        } else {
-            spannable2 = new SpannableString("");
+            SpannableString spannable2 = null;
+            if (mLowBalanceDifferenceAmount > 0) {
+                String msg2 = WalletHelper.getFormattedStringOfAmount(mLowBalanceDifferenceAmount);
+                spannable2 = new SpannableString(msg2);
+                spannable2.setSpan(new RelativeSizeSpan(1.20f), 0, msg2.length(), 0);
+            } else {
+                spannable2 = new SpannableString("");
+            }
+
+            String msg3 = " to " + operationStr + " " + ((!TextUtils.isEmpty(buyProductName)) ? buyProductName : "");
+            SpannableString spannable3 = new SpannableString(msg3);
+
+            builder.append(spannable1).append(spannable2).append(spannable3);
+
+            TextView lowBalMsgTextView = (TextView) getView().findViewById(R.id.low_bal_details_msg_textView);
+            lowBalMsgTextView.setText(builder, TextView.BufferType.SPANNABLE);
         }
-
-        String msg3 = " to join " + ((!TextUtils.isEmpty(configName)) ? configName : "");
-        SpannableString spannable3 = new SpannableString(msg3);
-
-        builder.append(spannable1).append(spannable2).append(spannable3);
-        lowBalMsgTextView.setText(builder, TextView.BufferType.SPANNABLE);
     }
 
     private void onAddMoney250Clicked() {

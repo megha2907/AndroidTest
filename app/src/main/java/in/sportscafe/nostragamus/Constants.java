@@ -727,6 +727,11 @@ public interface Constants {
         int ERROR_UNKNOWN = 4;      // Unknown server side error
     }
 
+    interface ApiSuccessStatusCode {
+        int FAILURE = 0;
+        int SUCCESS = 1;
+    }
+
     interface PowerupLocalId { int DOUBLER = 1; int NO_NEGATIVE = 2; int AUDIENCE_POLL = 3;}
 
     interface StoreBuyProductCategory {

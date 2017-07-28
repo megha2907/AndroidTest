@@ -387,9 +387,9 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         Bundle args = new Bundle();
         args.putInt(Constants.BundleKeys.STORE_BUY_PRODUCT_CATEGORY, buyCategory);
 
-        Intent intent = new Intent(getActivity(), StoreActivity.class);
-        intent.putExtras(args);
-        startActivity(intent);
+        if (mFragmentListener != null) {
+            mFragmentListener.launchStore(args);
+        }
     }
 
     private void onTransferClicked() {
@@ -619,5 +619,12 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
             isValid = true;
         }
         return isValid;
+    }
+
+    /**
+     * After completing store action
+     */
+    public void onStoreResponse() {
+        fetchPowerupBankStatusFromServer();
     }
 }
