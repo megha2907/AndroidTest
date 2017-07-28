@@ -2,12 +2,14 @@ package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -62,6 +64,8 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     private EditText mReferralEditText;
     private EditText mUserNickNameEditText;
     private LinearLayout mReferralLayout;
+    private TextView userNickNameLabel;
+    private TextView mReferralLabel;
 
     private final String blockCharacterSet = "~#^|$%&*!@_-+/:;!?";
 
@@ -95,6 +99,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         initToolBar();
 
         mUserNickNameEditText = (EditText) findViewById(R.id.edit_et_nickname_new);
+        userNickNameLabel = (TextView) findViewById(R.id.edit_tv_nickname_label);
         mIvProfileImage = (HmImageView) findViewById(R.id.edit_iv_user_image);
         mBtnUpdateDone = (CustomButton) findViewById(R.id.edit_btn_done);
         mCbProfileDisclaimer = (CheckBox) findViewById(R.id.edit_disclaimer_checkbox);
@@ -124,6 +129,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
 //        mReferralCodeText = (TextView) findViewById(R.id.edit_profile_tv_referral_code_txt);
         mReferralLayout = (LinearLayout) findViewById(R.id.edit_profile_referral_layout);
+        mReferralLabel = (TextView) findViewById(R.id.edit_profile_tv_referral_label);
         mReferralEditText = (EditText) findViewById(R.id.edit_profile_tv_referral_code_editText);
 
         if (BuildConfig.IS_PAID_VERSION) {
@@ -174,6 +180,15 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     }
 
     private void initListener() {
+
+        mUserNickNameEditText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                userNickNameLabel.setTextColor(ResourcesCompat.getColor(getActivity().getResources(), R.color.white, null));
+                return false;
+            }
+
+        });
 
         mUserNickNameEditText.addTextChangedListener(new TextWatcher() {
 
@@ -394,6 +409,15 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     }
 
     private void enterReferralCodeManually() {
+
+        mReferralEditText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mReferralLabel.setTextColor(ResourcesCompat.getColor(getActivity().getResources(), R.color.white, null));
+                return false;
+            }
+
+        });
 
         mReferralEditText.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
 

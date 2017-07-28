@@ -48,7 +48,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dim_2"
                         android:text="Doubles the points or concede per prediction"
-                        android:textColor="@color/white_999999"
+                        android:textColor="@color/white_dim"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_regular" />
 
