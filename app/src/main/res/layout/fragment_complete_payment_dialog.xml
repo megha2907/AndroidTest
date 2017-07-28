@@ -179,7 +179,7 @@
                     android:layout_marginRight="@dimen/dp_20">
 
                     <com.jeeva.android.widgets.customfont.CustomButton
-                        android:id="@+id/complete_payment_btn_pay_join"
+                        android:id="@+id/complete_payment_btn"
                         android:layout_width="@dimen/dp_110"
                         android:layout_height="@dimen/dp_40"
                         android:layout_alignParentRight="true"

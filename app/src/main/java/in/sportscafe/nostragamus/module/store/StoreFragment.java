@@ -1,6 +1,8 @@
 package in.sportscafe.nostragamus.module.store;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
 
+import org.parceler.Parcels;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +28,13 @@ import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
+import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentAndJoinDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
+import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 import in.sportscafe.nostragamus.module.store.dto.StoreSections;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
@@ -35,6 +46,8 @@ import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 public class StoreFragment extends BaseFragment {
 
     private static final String TAG = StoreFragment.class.getSimpleName();
+    private static final int BUY_POWER_UP_COMPLETE_PAYMENT_REQUEST_CODE = 501;
+    private static final int ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE = 502;
 
     private StoreFragmentListener storeFragmentListener;
 
@@ -82,7 +95,14 @@ public class StoreFragment extends BaseFragment {
     }
 
     private void initAdapter() {
-        storeAdapter = new StoreAdapter(getContext());
+        storeAdapter = new StoreAdapter(getContext(), new BuyButtonListener() {
+            @Override
+            public void onBuyClicked(StoreItems storeItem) {
+                if (storeItem != null) {
+                    confirmWalletBalance(storeItem);
+                }
+            }
+        });
 
         /*if (mStoreRecyclerView != null) {
             mStoreRecyclerView.setAdapter(storeAdapter);
@@ -90,6 +110,59 @@ public class StoreFragment extends BaseFragment {
 
     }
 
+    private void confirmWalletBalance(StoreItems storeItem) {
+        double price = storeItem.getProductPrice();
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.BundleKeys.STORE_ITEM, Parcels.wrap(storeItem));
+
+        if (WalletHelper.isSufficientBalAvailableInWallet(price)) {
+            showCompletePaymentDialog(bundle, CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.STORE_BUY_POWERUP_LAUNCH);
+
+        } else {
+            // Add money into wallet as less available
+            addMoneyInWalletAsLowBalance(bundle);
+        }
+    }
+
+    private void showCompletePaymentDialog(Bundle args, int launchMode) {
+        StoreItems storeItems = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.STORE_ITEM));
+
+        CompletePaymentAndJoinDialogFragment dialogFragment =
+                CompletePaymentAndJoinDialogFragment.newInstance(BUY_POWER_UP_COMPLETE_PAYMENT_REQUEST_CODE,
+                        launchMode,
+                        args,
+                        getCompletePaymentDialoActionListener(storeItems));
+
+        dialogFragment.show(getChildFragmentManager(), CompletePaymentAndJoinDialogFragment.class.getSimpleName());
+    }
+
+    private CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener
+    getCompletePaymentDialoActionListener(final StoreItems storeItems) {
+        return new CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener() {
+            @Override
+            public void onBackClicked() {
+                // No action required
+            }
+
+            @Override
+            public void onPayConfirmed() {
+                buyPowerUpFromStore(storeItems);
+            }
+        };
+    }
+
+    private void buyPowerUpFromStore(StoreItems storeItems) {
+        // TODO: Make BUY api call
+    }
+
+    private void addMoneyInWalletAsLowBalance(Bundle args) {
+        Intent intent = new Intent(getActivity(), AddMoneyOnLowBalanceActivity.class);
+        intent.putExtras(args);
+        if (getActivity() != null) {
+            getActivity().startActivityForResult(intent, ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE);
+        }
+    }
 
     private void fetchStoreDataFromServer() {
 
@@ -263,4 +336,43 @@ public class StoreFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE &&
+                resultCode == Activity.RESULT_OK &&
+                data != null && data.getExtras() != null) {
+
+                /* Fetch wallet details and continue in loop */
+                fetchUserWalletFromServer(CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.STORE_BUY_POWERUP_AFTER_LOW_BAL_LAUNCH,
+                        data.getExtras());
+
+        }  else {
+            showMessage(Constants.Alerts.SOMETHING_WRONG);
+        }
+    }
+
+    private void fetchUserWalletFromServer(final int launchMode, final Bundle args) {
+        showProgressbar();
+        WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
+            @Override
+            public void noInternet() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onApiFailed() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onSuccessResponse(UserWalletResponse response) {
+                dismissProgressbar();
+                showCompletePaymentDialog(args, launchMode);
+            }
+        }).performApiCall();
+    }
 }

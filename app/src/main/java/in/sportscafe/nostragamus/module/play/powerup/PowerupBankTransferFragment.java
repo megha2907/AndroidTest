@@ -34,6 +34,7 @@ import in.sportscafe.nostragamus.module.play.powerup.dto.UserBalancePowerupDto;
 import in.sportscafe.nostragamus.module.play.powerup.dto.UserDemandPowerUpDto;
 import in.sportscafe.nostragamus.module.play.powerup.io.PowerupBankStatusApiModelImpl;
 import in.sportscafe.nostragamus.module.popups.banktransfer.BankTranferApiModelImpl;
+import in.sportscafe.nostragamus.module.store.StoreActivity;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
 /**
@@ -371,16 +372,24 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     }
 
     private void onBuyAudiencePollClicked() {
-
+        performBuy(Constants.StoreBuyProductCategory.POWER_UP_AUDIENCE_POLL);
     }
 
     private void onBuyNoNegativeClicked() {
-
-
+        performBuy(Constants.StoreBuyProductCategory.POWER_UP_NO_NEGATIVE);
     }
 
     private void onBuyDoublerClicked() {
+        performBuy(Constants.StoreBuyProductCategory.POWER_UP_DOUBLER);
+    }
 
+    private void performBuy(int buyCategory) {
+        Bundle args = new Bundle();
+        args.putInt(Constants.BundleKeys.STORE_BUY_PRODUCT_CATEGORY, buyCategory);
+
+        Intent intent = new Intent(getActivity(), StoreActivity.class);
+        intent.putExtras(args);
+        startActivity(intent);
     }
 
     private void onTransferClicked() {

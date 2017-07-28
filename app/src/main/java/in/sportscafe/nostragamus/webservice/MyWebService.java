@@ -42,6 +42,8 @@ import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse
 import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
+import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
+import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
 import in.sportscafe.nostragamus.module.store.dto.StoreApiResponse;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
@@ -337,6 +339,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<JoinChallengeResponse> joinChallenge(JoinChallengeRequest request) {
         return mNostragamusService.useWalletToJoinChallenge(request);
+    }
+
+    public Call<BuyResponse> buyFromStore(BuyRequest request) {
+        return mNostragamusService.useWalletToBuyFromStore(request);
     }
 
     public Call<String> getLatestApk() {
