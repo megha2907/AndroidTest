@@ -2,25 +2,23 @@ package in.sportscafe.nostragamus.module.store;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -40,6 +38,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
     private List<StoreSections> mStoreSectionsList;
     private Context mContext;
     private boolean showBundleView = false;
+
 
     public StoreAdapter(Context context, @NonNull BuyButtonListener buyButtonListener) {
         mContext = context;
@@ -90,6 +89,10 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                             holder.mRlStoreHolder.getResources().getDimensionPixelSize(R.dimen.dim_72));
                     holder.mRlStoreHolder.setLayoutParams(params);
+                }else {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                            holder.mRlStoreHolder.getResources().getDimensionPixelSize(R.dimen.dim_60));
+                    holder.mRlStoreHolder.setLayoutParams(params);
                 }
 
                 createStoreItemsList(storeSections.getStoreItemsList(), holder.mLlStoreItemsHolder, showBundleView);
@@ -103,15 +106,30 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
 
     private boolean bundleWithDifferentPowerUps(StoreSections storeSections) {
 
-        HashMap<String, Integer> powerUpMap = storeSections.getStoreItemsList().get(0).getPowerUps();
+        if (storeSections != null) {
 
-        Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
-        Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
-        Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+            List<StoreItems> storeItemsList = storeSections.getStoreItemsList();
 
-        if (powerUp2xCount != null && powerUpNonNegsCount != null && powerUpPlayerPollCount != null) {
-            if (!allEqual(powerUp2xCount, powerUpNonNegsCount, powerUpPlayerPollCount)) {
-                return true;
+            if (storeItemsList != null || !storeItemsList.isEmpty()) {
+
+                if (storeItemsList.get(0) != null) {
+
+                    if (storeItemsList.get(0).getPowerUps() != null) {
+
+                        HashMap<String, Integer> powerUpMap = storeItemsList.get(0).getPowerUps();
+
+                        Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
+                        Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+                        Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+
+                        if (powerUp2xCount != null && powerUpNonNegsCount != null && powerUpPlayerPollCount != null) {
+                            if (!allEqual(powerUp2xCount, powerUpNonNegsCount, powerUpPlayerPollCount)) {
+                                return true;
+                            }
+                        }
+
+                    }
+                }
             }
         }
 
@@ -140,20 +158,28 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
 
         TextView tvStoreItemName = (TextView) storeItemView.findViewById(R.id.store_item_title_tv);
         CustomButton btnStoreItemPrice = (CustomButton) storeItemView.findViewById(R.id.store_item_buy);
-        CustomButton btnSalePercentage = (CustomButton) storeItemView.findViewById(R.id.store_item_sale);
         HmImageView ivStoreItemImage = (HmImageView) storeItemView.findViewById(R.id.store_item_iv);
         TextView tvStoreItemValue = (TextView) storeItemView.findViewById(R.id.store_item_value_tv);
-        TextView tvStoreItemSaleValue = (TextView) storeItemView.findViewById(R.id.store_item_sale_value_tv);
+        RelativeLayout storeItemValueLayout = (RelativeLayout) storeItemView.findViewById(R.id.store_item_value_rl);
         View storeLine = (View) storeItemView.findViewById(R.id.store_item_line);
         LinearLayout storeItemLayout = (LinearLayout) storeItemView.findViewById(R.id.store_item_layout);
-
-        tvStoreItemSaleValue.setVisibility(View.GONE);
-        btnSalePercentage.setVisibility(View.GONE);
+        TextView tvStoreItemSecondValue = (TextView) storeItemView.findViewById(R.id.store_item_second_value_tv);
+        RelativeLayout storeItemSecondValueLayout = (RelativeLayout) storeItemView.findViewById(R.id.store_item_second_value_rl);
 
         if (showBundleView) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     storeItemLayout.getResources().getDimensionPixelSize(R.dimen.dim_72));
             storeItemLayout.setLayoutParams(params);
+            storeItemValueLayout.setVisibility(View.GONE);
+            storeItemSecondValueLayout.setVisibility(View.VISIBLE);
+            tvStoreItemSecondValue.setText(WordUtils.capitalize(storeItem.getProductDesc()));
+            showOrHidePowerUps(storeItemView, storeItem);
+        }else {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    storeItemLayout.getResources().getDimensionPixelSize(R.dimen.dim_60));
+            storeItemLayout.setLayoutParams(params);
+            storeItemValueLayout.setVisibility(View.VISIBLE);
+            storeItemSecondValueLayout.setVisibility(View.GONE);
         }
 
         btnStoreItemPrice.setOnClickListener(this);
@@ -185,6 +211,20 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
             btnStoreItemPrice.setText(Constants.RUPEE_SYMBOL + "0");
         }
 
+        checkIfSaleIsON(storeItemView, storeItem);
+
+        return storeItemView;
+    }
+
+    private void checkIfSaleIsON(View storeItemView, StoreItems storeItem) {
+
+        CustomButton btnSalePercentage = (CustomButton) storeItemView.findViewById(R.id.store_item_sale);
+        TextView tvStoreItemSaleValue = (TextView) storeItemView.findViewById(R.id.store_item_sale_value_tv);
+        TextView tvStoreItemValue = (TextView) storeItemView.findViewById(R.id.store_item_value_tv);
+        CustomButton btnStoreItemPrice = (CustomButton) storeItemView.findViewById(R.id.store_item_buy);
+        TextView tvStoreItemSecondValue = (TextView) storeItemView.findViewById(R.id.store_item_second_value_tv);
+        TextView tvStoreItemSecondSaleValue = (TextView) storeItemView.findViewById(R.id.store_item_second_sale_value_tv);
+
         ProductSaleInfo productSaleInfo = storeItem.getProductSaleInfo();
 
         if (productSaleInfo != null) {
@@ -210,6 +250,10 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
 
                     tvStoreItemSaleValue.setText(" Save " + Constants.RUPEE_SYMBOL + String.valueOf(savePrice));
 
+                    tvStoreItemSecondValue.setText((Constants.RUPEE_SYMBOL + originalPrice.toString()));
+                    tvStoreItemSecondValue.setPaintFlags(tvStoreItemValue.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    tvStoreItemSecondSaleValue.setText(" Save " + Constants.RUPEE_SYMBOL + String.valueOf(savePrice));
+
                     btnStoreItemPrice.setText(WalletHelper.getFormattedStringOfAmount(salePrice));
 
                 }
@@ -219,7 +263,70 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
             }
         }
 
-        return storeItemView;
+    }
+
+    private void showOrHidePowerUps(View storeItemView, StoreItems storeItem) {
+
+        LinearLayout powerUpLayout = (LinearLayout) storeItemView.findViewById(R.id.powerup_bottom_layout);
+        ImageView powerUp2xImageView = (ImageView) storeItemView.findViewById(R.id.powerup_2x);
+        ImageView powerUpNoNegativeImageView = (ImageView) storeItemView.findViewById(R.id.powerup_noNeg);
+        ImageView powerUpAudienceImageView = (ImageView) storeItemView.findViewById(R.id.powerup_audience);
+        TextView powerUp2xTextView = (TextView) storeItemView.findViewById(R.id.powerup_2x_count);
+        TextView powerUpNoNegativeTextView = (TextView) storeItemView.findViewById(R.id.powerup_noNeg_count);
+        TextView powerUpAudienceTextView = (TextView) storeItemView.findViewById(R.id.powerup_audience_count);
+
+        HashMap<String, Integer> powerUpMap = storeItem.getPowerUps();
+
+        if (powerUpMap != null) {
+            Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
+            Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+            Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+
+            if (null == powerUp2xCount) {
+                powerUp2xCount = 0;
+            }
+
+            if (null == powerUpNonNegsCount) {
+                powerUpNonNegsCount = 0;
+            }
+
+            if (null == powerUpPlayerPollCount) {
+                powerUpPlayerPollCount = 0;
+            }
+
+            if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {
+                powerUpLayout.setVisibility(View.GONE);
+            } else {
+                powerUpLayout.setVisibility(View.VISIBLE);
+
+                if (powerUp2xCount != 0) {
+                    powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
+                    powerUp2xImageView.setVisibility(View.VISIBLE);
+                    powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
+                } else {
+                    powerUp2xImageView.setVisibility(View.GONE);
+                    powerUp2xTextView.setVisibility(View.GONE);
+                }
+
+                if (powerUpNonNegsCount != 0) {
+                    powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
+                    powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+                    powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
+                } else {
+                    powerUpNoNegativeImageView.setVisibility(View.GONE);
+                    powerUpNoNegativeTextView.setVisibility(View.GONE);
+                }
+
+                if (powerUpPlayerPollCount != 0) {
+                    powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
+                    powerUpAudienceImageView.setVisibility(View.VISIBLE);
+                    powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+                } else {
+                    powerUpAudienceImageView.setVisibility(View.GONE);
+                    powerUpAudienceTextView.setVisibility(View.GONE);
+                }
+            }
+        }
     }
 
     @Override

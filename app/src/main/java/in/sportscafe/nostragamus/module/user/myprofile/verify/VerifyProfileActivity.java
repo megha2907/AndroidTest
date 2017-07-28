@@ -217,20 +217,18 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
             editProfileOpenTime = NostragamusDataHandler.getInstance().getEditProfileShownTime();
 
             long getTimeDiff = currentTimeMs - editProfileOpenTime;
-
             int secs = (int) (getTimeDiff / 1000);
-            int mins = secs / 60;
-            int hours = mins / 60;
-            int days = hours / 24;
+
+//            int mins = secs / 60;
+//            int hours = mins / 60;
+//            int days = hours / 24;
 
             NostragamusAnalytics.getInstance().trackOnBoarding
-                    (Constants.AnalyticsActions.ONBOARDING_TIME,
-                            String.format("%02d", days) + "d " + String.format("%02d", hours)
-                                    + "h " + String.format("%02d", mins) + "m " + String.format("%02d", secs) + "s");
+                    (Constants.AnalyticsActions.ONBOARDING_TIME,Constants.AnalyticsActions.ONBOARDING_TIME,secs);
         } else {
 
             NostragamusAnalytics.getInstance().trackOnBoarding
-                    (Constants.AnalyticsActions.ONBOARDING_TIME, "No Data for OnBoarding Time");
+                    (Constants.AnalyticsActions.ONBOARDING_TIME, "No Data for OnBoarding Time", Long.parseLong(null));
         }
 
     }
