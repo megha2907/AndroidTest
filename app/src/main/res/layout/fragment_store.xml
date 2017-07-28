@@ -15,11 +15,21 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                android:text="Powerups In Bank"
+                android:layout_marginTop="@dimen/dim_15"
+                android:layout_gravity="center"
+                app:typeface="lato_regular" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dim_20"
+                android:layout_marginTop="@dimen/dim_15"
                 android:paddingBottom="@dimen/dim_5">
 
                 <LinearLayout

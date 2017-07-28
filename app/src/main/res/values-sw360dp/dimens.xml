@@ -75,15 +75,17 @@
     <dimen name="dim_29">29dp</dimen>
     <dimen name="dim_30">30dp</dimen>
     <dimen name="dim_32">32dp</dimen>
+    <dimen name="dim_36">36dp</dimen>
     <dimen name="dim_40">40dp</dimen>
     <dimen name="dim_60">60dp</dimen>
+    <dimen name="dim_66">66dp</dimen>
+    <dimen name="dim_72">72dp</dimen>
     <dimen name="dim_90">90dp</dimen>
     <dimen name="dim_100">100dp</dimen>
     <dimen name="dim_120">120dp</dimen>
     <dimen name="dim_132">132dp</dimen>
     <dimen name="dim_150">150dp</dimen>
     <dimen name="dim_160">160dp</dimen>
-
 
     <dimen name="dp_90">90dp</dimen>
     <dimen name="dp_160">160dp</dimen>
@@ -149,8 +151,6 @@
     <dimen name="wallet_history_row_height">60dp</dimen>
     <dimen name="wallet_history_item_icon_dimen">28dp</dimen>
     <dimen name="wallet_payout_choice_item_height">64dp</dimen>
-    <dimen name="dim_36">36dp</dimen>
-    <dimen name="dim_66">66dp</dimen>
-    <dimen name="dim_72">72dp</dimen>
+
 
 </resources>

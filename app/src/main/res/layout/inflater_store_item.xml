@@ -78,8 +78,10 @@
                 app:typeface="lato_regular" />
 
             <RelativeLayout
+                android:id="@+id/store_item_value_rl"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/store_item_value_tv"
@@ -98,18 +100,103 @@
                     android:id="@+id/store_item_sale_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_2"
                     android:layout_marginTop="@dimen/dim_2"
+                    android:layout_toRightOf="@+id/store_item_value_tv"
                     android:ellipsize="end"
                     android:gravity="left"
                     android:maxLines="1"
-                    android:visibility="gone"
-                    android:layout_marginLeft="@dimen/dim_2"
-                    android:layout_toRightOf="@+id/store_item_value_tv"
                     android:textColor="@color/greencolor2"
                     android:textSize="@dimen/sp_10"
+                    android:visibility="gone"
                     app:typeface="lato_bold" />
 
+
             </RelativeLayout>
+
+            <!-- Powerups layout at bottom -->
+            <LinearLayout
+                android:id="@+id/powerup_bottom_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_2"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_2x_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="33"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_10"
+                            app:typeface="lato_regular" />
+
+                        <com.jeeva.android.widgets.HmImageView
+                            android:id="@+id/powerup_2x"
+                            android:layout_width="@dimen/dim_10"
+                            android:layout_height="@dimen/dim_10"
+                            android:layout_marginLeft="@dimen/dp_3"
+                            android:layout_marginTop="@dimen/dp_2"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/double_powerup_small"
+                            android:visibility="visible" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_noNeg_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:text="1"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_10"
+                            app:typeface="lato_regular" />
+
+                        <com.jeeva.android.widgets.HmImageView
+                            android:id="@+id/powerup_noNeg"
+                            android:layout_width="@dimen/dim_10"
+                            android:layout_height="@dimen/dim_10"
+                            android:layout_marginLeft="@dimen/dp_3"
+                            android:layout_marginTop="@dimen/dp_2"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/no_negative_powerup_small"
+                            android:visibility="visible" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_audience_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:text="2"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_10"
+                            app:typeface="lato_regular" />
+
+                        <com.jeeva.android.widgets.HmImageView
+                            android:id="@+id/powerup_audience"
+                            android:layout_width="@dimen/dim_10"
+                            android:layout_height="@dimen/dim_10"
+                            android:layout_marginLeft="@dimen/dp_3"
+                            android:layout_marginTop="@dimen/dp_2"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/audience_poll_powerup_small"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -121,6 +208,40 @@
             android:layout_marginRight="@dimen/dim_8"
             android:gravity="center"
             android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/store_item_second_value_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/dim_2">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/store_item_second_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/greencolor2"
+                    android:textSize="@dimen/sp_10"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/store_item_second_sale_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_2"
+                    android:layout_toRightOf="@+id/store_item_second_value_tv"
+                    android:ellipsize="end"
+                    android:gravity="left"
+                    android:maxLines="1"
+                    android:textColor="@color/greencolor2"
+                    android:textSize="@dimen/sp_10"
+                    app:typeface="lato_bold" />
+
+
+            </RelativeLayout>
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/store_item_buy"
