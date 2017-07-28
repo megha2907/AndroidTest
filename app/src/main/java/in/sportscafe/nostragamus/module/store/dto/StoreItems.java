@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.parceler.Parcel;
 
+import java.util.HashMap;
+
 import in.sportscafe.nostragamus.module.allchallenges.dto.ConfigRewardDetails;
 
 /**
@@ -30,6 +32,9 @@ public class StoreItems {
 
     @JsonProperty("product_price")
     private Integer productPrice;
+
+    @JsonProperty("product")
+    private HashMap<String, Integer> powerUps = new HashMap<>();
 
 //    @JsonProperty("inventory")
 //    private Integer productInventory;
@@ -100,6 +105,14 @@ public class StoreItems {
 
     public void setProductSaleInfo(ProductSaleInfo productSaleInfo) {
         this.productSaleInfo = productSaleInfo;
+    }
+
+    public HashMap<String, Integer> getPowerUps() {
+        return powerUps;
+    }
+
+    public void setPowerUps(HashMap<String, Integer> powerUps) {
+        this.powerUps = powerUps;
     }
 
 }

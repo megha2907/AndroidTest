@@ -199,6 +199,11 @@ public class VerifyOTPFragment extends BaseFragment implements View.OnClickListe
         errorTextView.setVisibility(View.VISIBLE);
     }
 
+    public void setErrorMessage() {
+        errorTextView.setText(Constants.Alerts.API_FAIL);
+        errorTextView.setVisibility(View.VISIBLE);
+    }
+
     private void startOTPCountDownTimer() {
 
         countDownTimer = new CountDownTimer((15 + 1) * 1000, 1000) {

@@ -83,11 +83,6 @@ public class StoreFragment extends BaseFragment {
 
     private void initAdapter() {
         storeAdapter = new StoreAdapter(getContext());
-
-        /*if (mStoreRecyclerView != null) {
-            mStoreRecyclerView.setAdapter(storeAdapter);
-        }*/
-
     }
 
 

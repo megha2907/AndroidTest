@@ -117,16 +117,23 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
     private void verifyPhoneNumberValid(VerifyOTPInfo verifyOTPInfo, String phoneNumber) {
 
-        Integer verifyPhoneNumber = verifyOTPInfo.getValidOTPCode();
-
-        if (verifyPhoneNumber == null || verifyPhoneNumber == 0) {
+        if (verifyOTPInfo!=null) {
+            Integer verifyPhoneNumber = verifyOTPInfo.getValidOTPCode();
+            if (verifyPhoneNumber == null || verifyPhoneNumber == 0) {
+                if (getActivity() != null) {
+                    if (verifyPhoneNumberFragment != null) {
+                        verifyPhoneNumberFragment.setPhoneNumberAlreadyExist();
+                    }
+                }
+            } else {
+                loadVerifyOTPFragment(phoneNumber);
+            }
+        }else {
             if (getActivity() != null) {
                 if (verifyPhoneNumberFragment != null) {
-                    verifyPhoneNumberFragment.setPhoneNumberAlreadyExist();
+                    verifyPhoneNumberFragment.setErrorMessage();
                 }
             }
-        } else {
-            loadVerifyOTPFragment(phoneNumber);
         }
     }
 
@@ -156,16 +163,23 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
     private void verifyOTPValid(VerifyOTPInfo verifyOTPInfo) {
 
-        Integer verifyOTPCode = verifyOTPInfo.getValidOTPCode();
-
-        if (verifyOTPCode == null || verifyOTPCode == 0) {
+        if (verifyOTPInfo!=null) {
+            Integer verifyOTPCode = verifyOTPInfo.getValidOTPCode();
+            if (verifyOTPCode == null || verifyOTPCode == 0) {
+                if (getActivity() != null) {
+                    if (verifyOTPFragment != null) {
+                        verifyOTPFragment.setOTPNotValid();
+                    }
+                }
+            } else {
+                checkForSuccessfulReferral();
+            }
+        }else {
             if (getActivity() != null) {
                 if (verifyOTPFragment != null) {
-                    verifyOTPFragment.setOTPNotValid();
+                    verifyOTPFragment.setErrorMessage();
                 }
             }
-        } else {
-            checkForSuccessfulReferral();
         }
 
     }

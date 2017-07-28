@@ -25,6 +25,9 @@ public class ProductSaleInfo {
     private String saleDesc;
 
     public Boolean getSaleOn() {
+        if (saleOn==null){
+            return saleOn = false;
+        }
         return saleOn;
     }
 
@@ -41,6 +44,9 @@ public class ProductSaleInfo {
     }
 
     public Integer getSalePercentage() {
+        if (salePercentage==null){
+            return salePercentage = 0;
+        }
         return salePercentage;
     }
 

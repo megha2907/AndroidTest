@@ -127,6 +127,11 @@ public class VerifyPhoneNumberFragment extends BaseFragment implements View.OnCl
         errorTextView.setVisibility(View.VISIBLE);
     }
 
+    public void setErrorMessage() {
+        errorTextView.setText(Constants.Alerts.API_FAIL);
+        errorTextView.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
