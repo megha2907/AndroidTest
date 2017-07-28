@@ -21,7 +21,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
                 android:text="Powerups In Bank"
-                android:layout_marginTop="@dimen/dim_15"
+                android:layout_marginTop="@dimen/dim_12"
                 android:layout_gravity="center"
                 app:typeface="lato_regular" />
 
@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dim_15"
+                android:layout_marginTop="@dimen/dim_10"
                 android:paddingBottom="@dimen/dim_5">
 
                 <LinearLayout

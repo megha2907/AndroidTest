@@ -27,6 +27,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.ServerDataManager;
 import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
@@ -37,6 +38,7 @@ import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 import in.sportscafe.nostragamus.module.store.dto.StoreSections;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
+import in.sportscafe.nostragamus.webservice.NostragamusService;
 
 /**
  * Created by deepanshi on 7/25/17.
@@ -251,11 +253,10 @@ public class StoreFragment extends BaseFragment {
 
     private void setInfo() {
 
-        if (NostragamusDataHandler.getInstance().getUserInfo() != null) {
-            UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        if (userInfo != null) {
             getPowerUps(userInfo);
         }
-
     }
 
     private void getPowerUps(UserInfo userInfo) {

@@ -3,6 +3,8 @@ package in.sportscafe.nostragamus.module.store;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -246,12 +248,12 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
                     savePrice = originalPrice - salePrice;
 
                     tvStoreItemValue.setText((Constants.RUPEE_SYMBOL + originalPrice.toString()));
-                    tvStoreItemValue.setPaintFlags(tvStoreItemValue.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    tvStoreItemValue.setBackground(ResourcesCompat.getDrawable(tvStoreItemValue.getResources(), R.drawable.strike_line, null));
 
                     tvStoreItemSaleValue.setText(" Save " + Constants.RUPEE_SYMBOL + String.valueOf(savePrice));
 
                     tvStoreItemSecondValue.setText((Constants.RUPEE_SYMBOL + originalPrice.toString()));
-                    tvStoreItemSecondValue.setPaintFlags(tvStoreItemValue.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    tvStoreItemSecondValue.setBackground(ResourcesCompat.getDrawable(tvStoreItemValue.getResources(), R.drawable.strike_line, null));
                     tvStoreItemSecondSaleValue.setText(" Save " + Constants.RUPEE_SYMBOL + String.valueOf(savePrice));
 
                     btnStoreItemPrice.setText(WalletHelper.getFormattedStringOfAmount(salePrice));

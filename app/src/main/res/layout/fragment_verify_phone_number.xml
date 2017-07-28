@@ -17,7 +17,7 @@
             android:id="@+id/verify_request_otp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_45"
-            android:background="@color/venice_blue"
+            android:background="@drawable/blue_button_selector"
             android:onClick="onClick"
             android:text="Request OTP"
             android:textAllCaps="false"
@@ -87,7 +87,7 @@
                     android:layout_marginTop="@dimen/dim_6"
                     android:text="Please enter atleast 10 digits Phone Number"
                     android:textColor="@color/radical_red"
-                    android:textSize="@dimen/dp_14"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular"
                     android:visibility="invisible"/>
 

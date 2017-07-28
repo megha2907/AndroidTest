@@ -6,7 +6,7 @@
             <!-- BUTTON -->
             <item>
                 <shape android:shape="rectangle">
-                    <solid android:color="@color/monza" />
+                    <solid android:color="#c1272d" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>

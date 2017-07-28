@@ -138,7 +138,7 @@
                 android:layout_marginLeft="@dimen/dim_24"
                 android:layout_marginRight="@dimen/dim_24"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="@dimen/dp_72">
+                android:minHeight="@dimen/dim_72">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -208,7 +208,7 @@
                 android:layout_marginLeft="@dimen/dim_24"
                 android:layout_marginRight="@dimen/dim_24"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="@dimen/dp_72">
+                android:minHeight="@dimen/dim_72">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
