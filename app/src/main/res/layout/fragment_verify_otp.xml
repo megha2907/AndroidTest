@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/flat_blue_btn_selector"
+        android:background="@drawable/blue_button_selector"
         android:onClick="onClick"
         android:text="Verify"
         android:textAllCaps="false"
@@ -87,7 +87,7 @@
                     android:layout_marginTop="@dimen/dim_6"
                     android:text="Invalid OTP"
                     android:textColor="@color/radical_red"
-                    android:textSize="@dimen/dp_14"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular"
                     android:visibility="invisible"/>
 

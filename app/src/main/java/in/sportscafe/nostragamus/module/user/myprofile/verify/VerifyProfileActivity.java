@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import java.util.Calendar;
@@ -219,10 +220,6 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
             long getTimeDiff = currentTimeMs - editProfileOpenTime;
             int secs = (int) (getTimeDiff / 1000);
 
-//            int mins = secs / 60;
-//            int hours = mins / 60;
-//            int days = hours / 24;
-
             NostragamusAnalytics.getInstance().trackOnBoarding
                     (Constants.AnalyticsActions.ONBOARDING_TIME,Constants.AnalyticsActions.ONBOARDING_TIME,secs);
         } else {
@@ -238,14 +235,12 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
         Bundle bundle = new Bundle();
         bundle.putString(Constants.BundleKeys.LOGIN_SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
 
     private void navigateToSuccessfulReferral() {
         Intent intent = new Intent(this, SuccessfulReferralActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
