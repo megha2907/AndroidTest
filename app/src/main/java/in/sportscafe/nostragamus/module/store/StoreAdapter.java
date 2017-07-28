@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.store;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +9,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -17,13 +18,13 @@ import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
-import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigAdapter;
+import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.store.dto.ProductSaleInfo;
 import in.sportscafe.nostragamus.module.store.dto.StoreItems;
@@ -38,6 +39,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
     private BuyButtonListener mBuyListener;
     private List<StoreSections> mStoreSectionsList;
     private Context mContext;
+    private boolean showBundleView = false;
 
     public StoreAdapter(Context context, @NonNull BuyButtonListener buyButtonListener) {
         mContext = context;
@@ -78,11 +80,47 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
         if (mStoreSectionsList != null && position < mStoreSectionsList.size()) {    /* position < getItemCount() */
 
             StoreSections storeSections = mStoreSectionsList.get(position);
-            holder.mTvCategory.setText(storeSections.getSectionName());
+            holder.mTvCategory.setText(WordUtils.capitalize(storeSections.getSectionName()));
             holder.mTvCategoryDesc.setText(storeSections.getSectionDesc());
-            createStoreItemsList(storeSections.getStoreItemsList(), holder.mLlStoreItemsHolder);
+
+            try {
+                showBundleView = bundleWithDifferentPowerUps(storeSections);
+
+                if (showBundleView) {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                            holder.mRlStoreHolder.getResources().getDimensionPixelSize(R.dimen.dim_72));
+                    holder.mRlStoreHolder.setLayoutParams(params);
+                }
+
+                createStoreItemsList(storeSections.getStoreItemsList(), holder.mLlStoreItemsHolder, showBundleView);
+
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
 
         }
+    }
+
+    private boolean bundleWithDifferentPowerUps(StoreSections storeSections) {
+
+        HashMap<String, Integer> powerUpMap = storeSections.getStoreItemsList().get(0).getPowerUps();
+
+        Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
+        Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+        Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+
+        if (powerUp2xCount != null && powerUpNonNegsCount != null && powerUpPlayerPollCount != null) {
+            if (!allEqual(powerUp2xCount, powerUpNonNegsCount, powerUpPlayerPollCount)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean allEqual(Object key, Object... objs) {
+        for (Object o : objs) if (!o.equals(key)) return false;
+        return true;
     }
 
     @Override
@@ -90,13 +128,13 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
         return (mStoreSectionsList != null) ? mStoreSectionsList.size() : 0;
     }
 
-    private void createStoreItemsList(List<StoreItems> storeItemsList, ViewGroup parent) {
+    private void createStoreItemsList(List<StoreItems> storeItemsList, ViewGroup parent, boolean showBundleView) {
         for (StoreItems storeItems : storeItemsList) {
-            parent.addView(getStoreItemView(storeItems, storeItemsList.size(), parent));
+            parent.addView(getStoreItemView(storeItems, storeItemsList.size(), showBundleView, parent));
         }
     }
 
-    private View getStoreItemView(StoreItems storeItem, int storeItemsListSize, ViewGroup parent) {
+    private View getStoreItemView(StoreItems storeItem, int storeItemsListSize, boolean showBundleView, ViewGroup parent) {
 
         View storeItemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.inflater_store_item, parent, false);
 
@@ -105,12 +143,23 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
         CustomButton btnSalePercentage = (CustomButton) storeItemView.findViewById(R.id.store_item_sale);
         HmImageView ivStoreItemImage = (HmImageView) storeItemView.findViewById(R.id.store_item_iv);
         TextView tvStoreItemValue = (TextView) storeItemView.findViewById(R.id.store_item_value_tv);
+        TextView tvStoreItemSaleValue = (TextView) storeItemView.findViewById(R.id.store_item_sale_value_tv);
         View storeLine = (View) storeItemView.findViewById(R.id.store_item_line);
+        LinearLayout storeItemLayout = (LinearLayout) storeItemView.findViewById(R.id.store_item_layout);
+
+        tvStoreItemSaleValue.setVisibility(View.GONE);
+        btnSalePercentage.setVisibility(View.GONE);
+
+        if (showBundleView) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    storeItemLayout.getResources().getDimensionPixelSize(R.dimen.dim_72));
+            storeItemLayout.setLayoutParams(params);
+        }
 
         btnStoreItemPrice.setOnClickListener(this);
         btnStoreItemPrice.setTag(storeItem);
 
-        tvStoreItemName.setText(storeItem.getProductName());
+        tvStoreItemName.setText(WordUtils.capitalize(storeItem.getProductName()));
 
         if (!TextUtils.isEmpty(storeItem.getProductImage())) {
             ivStoreItemImage.setImageUrl(storeItem.getProductImage());
@@ -123,27 +172,49 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
             tvStoreItemValue.setVisibility(View.GONE);
         } else {
             tvStoreItemValue.setVisibility(View.VISIBLE);
-            tvStoreItemValue.setText(storeItem.getProductDesc());
+            tvStoreItemValue.setText(WordUtils.capitalize(storeItem.getProductDesc()));
         }
 
         if (parent.getChildCount() == storeItemsListSize - 1) {
             storeLine.setVisibility(View.GONE);
         }
 
-        if (storeItem.getProductPrice()!=null) {
+        if (storeItem.getProductPrice() != null) {
             btnStoreItemPrice.setText(WalletHelper.getFormattedStringOfAmount(storeItem.getProductPrice()));
-        }else {
+        } else {
             btnStoreItemPrice.setText(Constants.RUPEE_SYMBOL + "0");
         }
 
         ProductSaleInfo productSaleInfo = storeItem.getProductSaleInfo();
 
-        if (productSaleInfo!=null){
+        if (productSaleInfo != null) {
 
-            if (productSaleInfo.getSaleOn()){
-                btnSalePercentage.setVisibility(View.VISIBLE);
-                btnSalePercentage.setText(productSaleInfo.getSalePercentage().toString()+" %off");
-            }else {
+            if (productSaleInfo.getSaleOn()) {
+
+                if (productSaleInfo.getSalePercentage() != 0) {
+                    btnSalePercentage.setVisibility(View.VISIBLE);
+                    btnSalePercentage.setText(productSaleInfo.getSalePercentage().toString() + " %off");
+                }
+
+                int savePrice = 0;
+                Integer originalPrice = storeItem.getProductPrice();
+                Integer salePrice = productSaleInfo.getSalePrice();
+
+                if (salePrice != null && originalPrice != null) {
+
+                    tvStoreItemSaleValue.setVisibility(View.VISIBLE);
+                    savePrice = originalPrice - salePrice;
+
+                    tvStoreItemValue.setText((Constants.RUPEE_SYMBOL + originalPrice.toString()));
+                    tvStoreItemValue.setPaintFlags(tvStoreItemValue.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                    tvStoreItemSaleValue.setText(" Save " + Constants.RUPEE_SYMBOL + String.valueOf(savePrice));
+
+                    btnStoreItemPrice.setText(WalletHelper.getFormattedStringOfAmount(salePrice));
+
+                }
+
+            } else {
                 btnSalePercentage.setVisibility(View.GONE);
             }
         }
@@ -174,6 +245,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
         TextView mTvCategory;
         TextView mTvCategoryDesc;
         LinearLayout mLlStoreItemsHolder;
+        RelativeLayout mRlStoreHolder;
 
 
         public StoreVH(View view) {
@@ -183,6 +255,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
             mTvCategory = (TextView) view.findViewById(R.id.store_category_name);
             mTvCategoryDesc = (TextView) view.findViewById(R.id.store_category_desc);
             mLlStoreItemsHolder = (LinearLayout) view.findViewById(R.id.store_items_ll);
+            mRlStoreHolder = (RelativeLayout) view.findViewById(R.id.store_category_layout);
         }
 
     }

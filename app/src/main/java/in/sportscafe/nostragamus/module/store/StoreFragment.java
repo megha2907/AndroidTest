@@ -95,6 +95,7 @@ public class StoreFragment extends BaseFragment {
     }
 
     private void initAdapter() {
+
         storeAdapter = new StoreAdapter(getContext(), new BuyButtonListener() {
             @Override
             public void onBuyClicked(StoreItems storeItem) {
@@ -322,13 +323,11 @@ public class StoreFragment extends BaseFragment {
         /* Empty list view */
         if (getActivity() != null && getView() != null && storeAdapter != null) {
             if (storeAdapter.getStoreSectionsList() == null || storeAdapter.getStoreSectionsList().isEmpty()) {
-                Log.i("inside","storeAdapter.getStoreSectionsList() == null");
                 mStoreRecyclerView.setVisibility(View.GONE);
                 recyclerViewLayout.setVisibility(View.GONE);
                 LinearLayout noHistoryLayout = (LinearLayout) getView().findViewById(R.id.store_empty_history_layout);
                 noHistoryLayout.setVisibility(View.VISIBLE);
             } else {
-                Log.i("inside","storeAdapter.getStoreSectionsList() != null");
                 recyclerViewLayout.setVisibility(View.VISIBLE);
                 mStoreRecyclerView.setVisibility(View.VISIBLE);
             }

@@ -10,6 +10,7 @@
     android:paddingRight="@dimen/dim_12">
 
     <LinearLayout
+        android:id="@+id/store_item_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minHeight="@dimen/dim_60"
@@ -29,18 +30,18 @@
                     android:id="@+id/store_item_sale"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dim_14"
+                    android:layout_marginLeft="@dimen/dim_6"
+                    android:layout_marginTop="@dimen/dim_30"
                     android:background="@drawable/red_btn_bg"
                     android:minWidth="@dimen/dim_40"
                     android:onClick="onClick"
-                    android:layout_marginTop="@dimen/dim_30"
                     android:paddingLeft="@dimen/dp_3"
                     android:paddingRight="@dimen/dp_3"
-                    android:layout_marginLeft="@dimen/dim_6"
                     android:text="60 % off"
                     android:textAllCaps="false"
-                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dp_9"
+                    android:visibility="gone"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.HmImageView
@@ -76,18 +77,39 @@
                 android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular" />
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/store_item_value_tv"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_2"
-                android:ellipsize="end"
-                android:gravity="left"
-                android:maxLines="1"
-                android:text="One Doubler"
-                android:textColor="@color/greencolor3"
-                android:textSize="@dimen/sp_10"
-                app:typeface="lato_bold" />
+                android:layout_height="wrap_content">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/store_item_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_2"
+                    android:ellipsize="end"
+                    android:gravity="left"
+                    android:maxLines="1"
+                    android:text="One Doubler"
+                    android:textColor="@color/greencolor2"
+                    android:textSize="@dimen/sp_10"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/store_item_sale_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_2"
+                    android:ellipsize="end"
+                    android:gravity="left"
+                    android:maxLines="1"
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/dim_2"
+                    android:layout_toRightOf="@+id/store_item_value_tv"
+                    android:textColor="@color/greencolor2"
+                    android:textSize="@dimen/sp_10"
+                    app:typeface="lato_bold" />
+
+            </RelativeLayout>
 
 
         </LinearLayout>
@@ -104,7 +126,7 @@
                 android:id="@+id/store_item_buy"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dim_28"
-                android:background="@drawable/btn_refer_bg"
+                android:background="@drawable/green_store_btn_bg"
                 android:minWidth="@dimen/dim_66"
                 android:onClick="onClick"
                 android:paddingBottom="@dimen/dim_2"
