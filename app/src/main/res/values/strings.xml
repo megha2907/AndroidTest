@@ -1,6 +1,7 @@
 <resources>
     <string name="play_store_url">https://play.google.com/store/apps/details?id=in.sportscafe.nostragamus</string>
     <string name="facebook_app_id">841946925908609</string>
+    <string name="fb_login_protocol_scheme">fb841946925908609</string>
     <string name="oauth_server_id">576361348926-ef040f3his3jfe3pchhqigjvrfjoejtp.apps.googleusercontent.com</string>
     <string name="oauth_server_id_pro">576361348926-ef040f3his3jfe3pchhqigjvrfjoejtp.apps.googleusercontent.com</string>
     <string name="fabric_api_key">66dc8b5ddc3cab78b5935c8254c264658064977d</string>
