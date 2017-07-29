@@ -49,7 +49,7 @@ public class StoreActivity extends NostragamusActivity implements StoreFragmentL
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.store_toolbar);
         TextView tvToolbar = (TextView) findViewById(R.id.store_toolbar_tv);
-        tvToolbar.setText("Shop - Buy Powerups");
+        tvToolbar.setText("Store - Buy Powerups");
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
