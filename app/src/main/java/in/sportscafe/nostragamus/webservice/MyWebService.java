@@ -376,4 +376,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<PowerUpBankStatusResponse> getPowerupBankStatus(PowerupBankStatusRequest request) {
         return mNostragamusService.powerupTransferStatus(request);
     }
+
+    public Call<UserReferralHistoryResponse> getPBTransactionHistory(String flavor, String transactionType) {
+        return mNostragamusService.getPBTransactionHistory(flavor,transactionType);
+    }
 }

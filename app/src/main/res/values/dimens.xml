@@ -166,5 +166,6 @@
     <dimen name="dim_36">36dp</dimen>
     <dimen name="dim_66">66dp</dimen>
     <dimen name="dim_72">72dp</dimen>
+    <dimen name="dim_45">45dp</dimen>
 
 </resources>

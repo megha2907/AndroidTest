@@ -53,7 +53,7 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
     private ImageView ivPBPowerupPlayerPoll;
 
     private RecyclerView mPBTransactionHistoryRecyclerView;
-    private ReferralHistoryAdapter mPBTransactionHistoryAdapter;
+    private PBTransactionHistoryAdapter mPBTransactionHistoryAdapter;
 
     public PBTransactionFragment() {
     }
@@ -83,7 +83,7 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
     }
 
     private void initAdapter() {
-        mPBTransactionHistoryAdapter = new ReferralHistoryAdapter(getContext());
+        mPBTransactionHistoryAdapter = new PBTransactionHistoryAdapter(getContext());
 
         if (mPBTransactionHistoryRecyclerView != null) {
             mPBTransactionHistoryRecyclerView.setAdapter(mPBTransactionHistoryAdapter);
@@ -115,9 +115,9 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
             }
 
             @Override
-            public void onSuccessResponse(List<ReferralHistory> referralHistoryList) {
+            public void onSuccessResponse(List<ReferralHistory> pbTransactionHistory) {
                 dismissProgressbar();
-                onReferralHistoryListFetchedSuccessful(referralHistoryList);
+                onPBTransactionHistoryListFetchedSuccessful(pbTransactionHistory);
             }
         }).performApiCall(appFlavor);
     }
@@ -224,17 +224,17 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
     }
 
 
-    private void onReferralHistoryListFetchedSuccessful(List<ReferralHistory> referralHistoryList) {
+    private void onPBTransactionHistoryListFetchedSuccessful(List<ReferralHistory> pbTransactionHistory) {
 
         if (mPBTransactionHistoryAdapter != null) {
-            mPBTransactionHistoryAdapter.addReferralHistoryIntoList(referralHistoryList);
+            mPBTransactionHistoryAdapter.addPBTransactionHistoryIntoList(pbTransactionHistory);
         }
 
         RelativeLayout recyclerViewLayout = (RelativeLayout) getView().findViewById(R.id.pb_transaction_friends_act_rl);
 
         /* Empty list view */
         if (getActivity() != null && getView() != null && mPBTransactionHistoryAdapter != null) {
-            if (mPBTransactionHistoryAdapter.getReferralHistoryList() == null || mPBTransactionHistoryAdapter.getReferralHistoryList().isEmpty()) {
+            if (mPBTransactionHistoryAdapter.getPBTransactionHistoryList() == null || mPBTransactionHistoryAdapter.getPBTransactionHistoryList().isEmpty()) {
                 mPBTransactionHistoryRecyclerView.setVisibility(View.GONE);
                 recyclerViewLayout.setVisibility(View.GONE);
                 LinearLayout noHistoryLayout = (LinearLayout) getView().findViewById(R.id.pb_transaction_no_history_layout);

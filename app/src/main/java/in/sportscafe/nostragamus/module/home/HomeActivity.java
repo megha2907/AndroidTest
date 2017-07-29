@@ -341,10 +341,10 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                     launchEditProfile();
                 } else {
 //                    /* check for OTP screen */
-                    Boolean otpVerified = userInfo.getInfoDetails().getOtpVerified();
-                    if (otpVerified == null || !otpVerified) {
-                        launchVerifyOTP();
-                    }
+//                    Boolean otpVerified = userInfo.getInfoDetails().getOtpVerified();
+//                    if (otpVerified == null || !otpVerified) {
+//                        launchVerifyOTP();
+//                    }
                 }
             }
         }

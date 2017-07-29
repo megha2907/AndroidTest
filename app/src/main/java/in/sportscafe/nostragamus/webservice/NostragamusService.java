@@ -307,4 +307,7 @@ public interface NostragamusService {
 
     @POST("/v2/game/users/powerupTransferStats")
     Call<PowerUpBankStatusResponse> powerupTransferStatus(@Body PowerupBankStatusRequest request);
+
+    @GET("v2/game/getReferralTransactions")
+    Call<UserReferralHistoryResponse> getPBTransactionHistory(@Query("app_type") String flavor,@Query("transaction_type")  String transactionType);
 }

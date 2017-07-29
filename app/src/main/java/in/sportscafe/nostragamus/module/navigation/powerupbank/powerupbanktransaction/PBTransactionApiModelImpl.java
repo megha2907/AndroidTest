@@ -35,7 +35,7 @@ public class PBTransactionApiModelImpl {
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 
-            MyWebService.getInstance().getUserReferralHistory(flavor,"powerups").enqueue(new NostragamusCallBack<UserReferralHistoryResponse>() {
+            MyWebService.getInstance().getPBTransactionHistory(flavor,"powerups").enqueue(new NostragamusCallBack<UserReferralHistoryResponse>() {
                 @Override
                 public void onResponse(Call<UserReferralHistoryResponse> call, Response<UserReferralHistoryResponse> response) {
                     super.onResponse(call, response);

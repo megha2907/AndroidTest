@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/dp_20">
+            android:paddingBottom="@dimen/dim_20">
 
             <!-- Top section -->
             <LinearLayout
@@ -105,15 +105,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_16">
+                android:layout_marginLeft="@dimen/dim_16"
+                android:layout_marginRight="@dimen/dim_16">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/edit_tv_nickname_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dim_16"
                     android:text="Enter a Username"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/sp_14"
@@ -124,7 +124,7 @@
                     android:layout_height="@dimen/dim_40"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="@dimen/dp_6">
+                    android:layout_marginTop="@dimen/dim_6">
 
                     <ImageView
                         style="@style/EditTextIconStyle"
@@ -143,10 +143,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:text="Please provide IFSC code"
+                    android:layout_marginTop="@dimen/dim_6"
                     android:textColor="@color/radical_red"
-                    android:textSize="@dimen/dp_14"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular"
                     android:visibility="gone"/>
 
@@ -159,8 +158,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="@dimen/dim_16"
-                android:layout_marginLeft="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_16">
+                android:layout_marginLeft="@dimen/dim_16"
+                android:layout_marginRight="@dimen/dim_16">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/edit_profile_tv_referral_label"
@@ -177,7 +176,7 @@
                     android:layout_height="@dimen/dim_40"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="@dimen/dp_6">
+                    android:layout_marginTop="@dimen/dim_6">
 
                     <ImageView
                         style="@style/EditTextIconStyle"
@@ -196,10 +195,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginTop="@dimen/dp_6"
+                    android:layout_marginTop="@dimen/dim_6"
                     android:text="edit_profile_referral_code_error_text"
                     android:textColor="@color/radical_red"
-                    android:textSize="@dimen/dp_14"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular"
                     android:visibility="gone"/>
 
@@ -221,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_16"
+                    android:textSize="@dimen/sp_16"
                     app:typeface="lato_regular" />
 
             </android.support.v7.widget.Toolbar>
@@ -232,13 +231,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edit_et_nickname_new"
                 android:layout_marginTop="@dimen/dim_16"
-                android:layout_marginLeft="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_16"
+                android:layout_marginLeft="@dimen/dim_16"
+                android:layout_marginRight="@dimen/dim_16"
                 android:buttonTint="@color/line_separator_two"
                 android:checked="false"
                 android:gravity="left"
-                android:paddingLeft="@dimen/dp_2"
-                android:paddingTop="@dimen/dp_2"
+                android:paddingLeft="@dimen/dim_2"
+                android:paddingTop="@dimen/dim_2"
                 android:text="@string/profile_disclaimer"
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/sp_12"
@@ -252,14 +251,14 @@
     <com.jeeva.android.widgets.customfont.CustomButton
         android:id="@+id/edit_btn_done"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="@dimen/dim_45"
         android:layout_alignParentBottom="true"
         android:background="@drawable/flat_blue_btn_selector"
         android:onClick="onClick"
         android:text="Update Details"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="@dimen/blue_button_text"
+        android:textSize="@dimen/sp_15"
         app:typeface="lato_regular" />
 
 </RelativeLayout>
