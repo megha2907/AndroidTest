@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
@@ -159,7 +160,7 @@ public class VerifyOTPFragment extends BaseFragment implements View.OnClickListe
 
             public void afterTextChanged(Editable ed) {
 
-                errorTextView.setVisibility(View.INVISIBLE);
+//                errorTextView.setVisibility(View.INVISIBLE);
 
                 if (ed.length() == 6) {
                     hideSoftKeyboard();
@@ -173,9 +174,9 @@ public class VerifyOTPFragment extends BaseFragment implements View.OnClickListe
         String otp = getTrimmedText(mOTP);
 
         if (TextUtils.isEmpty(otp) || otp.length() != 6) {
+            errorTextView.setVisibility(View.VISIBLE);
             setOTPNotValid();
         } else {
-            errorTextView.setVisibility(View.INVISIBLE);
             if (mVerifyProfileFragmentListener != null) {
                 mVerifyProfileFragmentListener.onVerifyOTP(otp);
             } else {
@@ -199,13 +200,13 @@ public class VerifyOTPFragment extends BaseFragment implements View.OnClickListe
 
 
     public void setOTPNotValid() {
-        errorTextView.setText(Constants.Alerts.INVALID_OTP);
         errorTextView.setVisibility(View.VISIBLE);
+        errorTextView.setText(Constants.Alerts.INVALID_OTP);
     }
 
     public void setErrorMessage() {
-        errorTextView.setText(Constants.Alerts.API_FAIL);
         errorTextView.setVisibility(View.VISIBLE);
+        errorTextView.setText(Constants.Alerts.API_FAIL);
     }
 
     private void startOTPCountDownTimer() {

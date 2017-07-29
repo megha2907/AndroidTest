@@ -199,7 +199,7 @@
             app:layout_collapseMode="pin"
             android:elevation="@dimen/dim_0"
             android:paddingBottom="@dimen/dim_20"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="@dimen/referral_image_size"

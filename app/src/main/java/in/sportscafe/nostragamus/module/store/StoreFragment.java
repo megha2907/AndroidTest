@@ -333,32 +333,39 @@ public class StoreFragment extends BaseFragment {
 
             mPowerUpMaps = getPowerUpMap(userInfo.getPowerUps());
 
-            int count;
+            if (mPowerUpMaps != null) {
 
-            PowerUp powerUp = mPowerUpMaps.get(Constants.Powerups.XX);
-            if (null == powerUp) {
-                count = 0;
-            } else {
-                count = powerUp.getCount();
-            }
-            onGet2xPowerUp(count, count < 1);
+                int count;
+                PowerUp powerUp = mPowerUpMaps.get(Constants.Powerups.XX);
+                if (null == powerUp) {
+                    count = 0;
+                } else {
+                    count = powerUp.getCount();
+                }
+                onGet2xPowerUp(count, count < 1);
 
-            powerUp = mPowerUpMaps.get(Constants.Powerups.NO_NEGATIVE);
-            if (null == powerUp) {
-                count = 0;
-            } else {
-                count = powerUp.getCount();
-            }
-            onGetNonegsPowerUp(count, count < 1);
+                powerUp = mPowerUpMaps.get(Constants.Powerups.NO_NEGATIVE);
+                if (null == powerUp) {
+                    count = 0;
+                } else {
+                    count = powerUp.getCount();
+                }
+                onGetNonegsPowerUp(count, count < 1);
 
-            powerUp = mPowerUpMaps.get(Constants.Powerups.AUDIENCE_POLL);
-            if (null == powerUp) {
-                count = 0;
-            } else {
-                count = powerUp.getCount();
+                powerUp = mPowerUpMaps.get(Constants.Powerups.AUDIENCE_POLL);
+                if (null == powerUp) {
+                    count = 0;
+                } else {
+                    count = powerUp.getCount();
+                }
+                onGetPollPowerUp(count, count < 1);
+            }else {
+                int count = 0;
+                onGet2xPowerUp(count, count < 1);
+                onGetNonegsPowerUp(count, count < 1);
+                onGetPollPowerUp(count, count < 1);
             }
-            onGetPollPowerUp(count, count < 1);
-        } else {
+        }else {
             int count = 0;
             onGet2xPowerUp(count, count < 1);
             onGetNonegsPowerUp(count, count < 1);

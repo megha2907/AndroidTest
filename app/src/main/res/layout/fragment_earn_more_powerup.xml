@@ -25,7 +25,7 @@
                 android:layout_marginTop="@dimen/dim_20">
 
                 <LinearLayout
-                    android:id="@+id/powerup_bank_2x_ll"
+                    android:id="@+id/earn_more_powerup_2x_ll"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dim_100"
                     android:orientation="vertical"
@@ -47,7 +47,7 @@
                         app:typeface="lato_regular" />
 
                     <ImageView
-                        android:id="@+id/powerup_bank_2x"
+                        android:id="@+id/earn_more_powerup_2x"
                         android:layout_width="@dimen/dim_26"
                         android:layout_height="@dimen/dim_26"
                         android:layout_marginTop="@dimen/dim_8"
@@ -56,7 +56,7 @@
                         android:visibility="visible" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/powerup_bank_2x_powerup_count"
+                        android:id="@+id/earn_more_powerup_2x_powerup_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -69,7 +69,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/powerup_bank_noneg_ll"
+                    android:id="@+id/earn_more_powerup_noneg_ll"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dim_100"
                     android:orientation="vertical"
@@ -89,7 +89,7 @@
                         app:typeface="lato_regular" />
 
                     <ImageView
-                        android:id="@+id/powerup_bank_noneg"
+                        android:id="@+id/earn_more_powerup_noneg"
                         android:layout_width="@dimen/dim_26"
                         android:layout_height="@dimen/dim_26"
                         android:layout_marginTop="@dimen/dim_8"
@@ -98,7 +98,7 @@
                         android:visibility="visible" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/powerup_bank_noneg_powerup_count"
+                        android:id="@+id/earn_more_powerup_noneg_powerup_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -111,7 +111,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/powerup_bank_audience_poll_ll"
+                    android:id="@+id/earn_more_powerup_audience_poll_ll"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dim_100"
                     android:orientation="vertical"
@@ -133,7 +133,7 @@
                         app:typeface="lato_regular" />
 
                     <ImageView
-                        android:id="@+id/powerup_bank_audience_poll"
+                        android:id="@+id/earn_more_powerup_audience_poll"
                         android:layout_width="@dimen/dim_26"
                         android:layout_height="@dimen/dim_26"
                         android:layout_marginTop="@dimen/dim_8"
@@ -142,7 +142,7 @@
                         android:visibility="visible" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/powerup_bank_audience_poll_powerup_count"
+                        android:id="@+id/earn_more_powerup_audience_poll_powerup_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -158,7 +158,7 @@
             </LinearLayout>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/powerup_bank_low_powerups"
+                android:id="@+id/earn_more_powerup_low_powerups"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/deepcarmine"
@@ -172,7 +172,7 @@
 
             <!--Refer code section -->
             <LinearLayout
-                android:id="@+id/powerup_bank_layout"
+                android:id="@+id/earn_more_powerup_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_20"
@@ -184,21 +184,13 @@
 
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/powerup_bank_subheading_tv_one"
+                    android:id="@+id/earn_more_powerup_subheading_tv_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey6"
                     android:textSize="@dimen/sp_15"
                     app:typeface="lato_regular" />
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/powerup_bank_subheading_tv_two"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_20"
-                    android:textColor="@color/grey6"
-                    android:textSize="@dimen/sp_15"
-                    app:typeface="lato_regular" />
 
             </LinearLayout>
 
@@ -212,7 +204,7 @@
                 android:background="@color/line_separator" />
 
             <RelativeLayout
-                android:id="@+id/powerup_bank_earn_more_layout"
+                android:id="@+id/earn_more_powerup_refer_friend_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_20"
@@ -229,7 +221,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="Earn More Powerups"
+                        android:text="Refer a Friend"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"
                         app:typeface="lato_regular" />
@@ -254,47 +246,10 @@
                 android:layout_marginRight="@dimen/dim_10"
                 android:background="@color/line_separator" />
 
-            <!--Transaction section -->
-            <RelativeLayout
-                android:id="@+id/powerup_bank_txn_history_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dim_20"
-                android:layout_marginRight="@dimen/dim_20"
-                android:background="?android:attr/selectableItemBackground"
-                android:minHeight="@dimen/nav_row_height">
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Transaction History"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14"
-                    app:typeface="lato_regular" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dim_2"
-                    android:rotation="180"
-                    android:src="@drawable/back_icon_grey" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dim_0.5"
-                android:layout_marginLeft="@dimen/dim_10"
-                android:layout_marginRight="@dimen/dim_10"
-                android:background="@color/line_separator" />
-
 
             <!--Terms and Conditions section -->
             <RelativeLayout
-                android:id="@+id/powerup_bank_terms_layout"
+                android:id="@+id/earn_more_powerup_shop_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_20"
@@ -306,7 +261,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Terms and Conditions"
+                    android:text="Shop for Powerups"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />

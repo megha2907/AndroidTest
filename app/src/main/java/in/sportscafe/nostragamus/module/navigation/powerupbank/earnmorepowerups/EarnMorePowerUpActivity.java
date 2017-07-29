@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.navigation.powerupbank;
+package in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,34 +6,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import org.parceler.Parcels;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.EarnMorePowerUpActivity;
-import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.PBTransactionActivity;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.PowerUpBankFragment;
+import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
+import in.sportscafe.nostragamus.module.store.StoreActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
- * Created by deepanshi on 7/12/17.
+ * Created by deepanshi on 7/29/17.
  */
 
-public class PowerUpBankActivity extends NostragamusActivity implements PowerUpBankFragmentListener {
+public class EarnMorePowerUpActivity extends NostragamusActivity implements EarnMorePowerUpFragmentListener {
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.POWERUP_BANK;
+        return Constants.ScreenNames.EARN_MORE_POWERUPS;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_powerup_bank);
+        setContentView(R.layout.activity_earn_more_powerup);
 
         initialize();
-        loadPowerUpFragment();
+        loadEarnMorePowerUpFragment();
     }
 
     private void initialize() {
@@ -41,9 +40,9 @@ public class PowerUpBankActivity extends NostragamusActivity implements PowerUpB
     }
 
     private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.powerup_bank_toolbar);
-        TextView tvToolbar = (TextView) findViewById(R.id.powerup_bank_toolbar_tv);
-        tvToolbar.setText("Powerups Bank");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.em_powerup_toolbar);
+        TextView tvToolbar = (TextView) findViewById(R.id.em_powerup_toolbar_tv);
+        tvToolbar.setText("Earn More Powerups");
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -59,29 +58,23 @@ public class PowerUpBankActivity extends NostragamusActivity implements PowerUpB
         );
     }
 
-    private void loadPowerUpFragment() {
-        PowerUpBankFragment fragment = new PowerUpBankFragment();
+    private void loadEarnMorePowerUpFragment() {
+        EarnMorePowerUpFragment fragment = new EarnMorePowerUpFragment();
         FragmentHelper.replaceFragment(this, R.id.fragment_container, fragment);
     }
 
     @Override
-    public void onEarnMorePowerUpsClicked() {
+    public void onStoreClicked() {
         if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), EarnMorePowerUpActivity.class);
+            Intent intent = new Intent(getActivity(), StoreActivity.class);
             startActivity(intent);
         }
     }
 
     @Override
-    public void onTermsClicked() {
-        navigateToWebView(Constants.WebPageUrls.REFERRAL_TERMS, "Terms and Conditions");
-    }
-
-    @Override
-    public void onPowerUpTransactionHistoryClicked(Bundle bundle) {
+    public void onReferAFriendClicked() {
         if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), PBTransactionActivity.class);
-            intent.putExtras(bundle);
+            Intent intent = new Intent(getActivity(), ReferFriendActivity.class);
             startActivity(intent);
         }
     }

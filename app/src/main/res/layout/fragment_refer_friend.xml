@@ -135,8 +135,8 @@
                 android:id="@+id/refer_referral_credit_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dim_24"
-                android:layout_marginRight="@dimen/dim_24"
+                android:layout_marginLeft="@dimen/dim_20"
+                android:layout_marginRight="@dimen/dim_20"
                 android:background="?android:attr/selectableItemBackground"
                 android:minHeight="@dimen/dim_72">
 
@@ -205,8 +205,8 @@
                 android:id="@+id/refer_terms_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dim_24"
-                android:layout_marginRight="@dimen/dim_24"
+                android:layout_marginLeft="@dimen/dim_20"
+                android:layout_marginRight="@dimen/dim_20"
                 android:background="?android:attr/selectableItemBackground"
                 android:minHeight="@dimen/dim_72">
 

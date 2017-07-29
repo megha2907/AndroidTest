@@ -70,7 +70,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_16"
                         android:layout_marginTop="@dimen/dim_8"
-                        android:text="4"
+                        android:text="0"
                         android:layout_gravity="center"
                         app:typeface="lato_bold" />
 
@@ -112,7 +112,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_16"
                         android:layout_marginTop="@dimen/dim_8"
-                        android:text="10"
+                        android:text="0"
                         android:layout_gravity="center"
                         app:typeface="lato_bold" />
 
@@ -156,7 +156,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_16"
                         android:layout_marginTop="@dimen/dim_8"
-                        android:text="9"
+                        android:text="0"
                         android:layout_gravity="center"
                         app:typeface="lato_bold" />
 
@@ -171,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/deepcarmine"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dim_12"
+                android:layout_marginTop="@dimen/dim_6"
                 android:text="You are running low on powerups!"
                 android:textSize="@dimen/sp_12"
                 android:visibility="gone"
