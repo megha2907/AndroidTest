@@ -23,7 +23,9 @@
             android:layout_height="wrap_content"
             android:background="@color/colorMedium"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -37,8 +39,8 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="@dimen/dim_12"
-                        android:layout_height="@dimen/dim_12"
+                        android:layout_width="@dimen/dim_14"
+                        android:layout_height="@dimen/dim_14"
                         android:src="@drawable/help_icn"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -56,13 +58,13 @@
 
                 <ImageView
                     android:id="@+id/game_play_help_close_imgView"
-                    android:layout_width="@dimen/dim_30"
-                    android:layout_height="@dimen/dim_30"
+                    android:layout_width="@dimen/dim_36"
+                    android:layout_height="@dimen/dim_36"
                     android:src="@drawable/cross_icon"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dim_10"
-                    android:padding="@dimen/dim_8"/>
+                    android:padding="@dimen/dim_11"/>
 
             </RelativeLayout>
 
