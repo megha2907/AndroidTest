@@ -259,7 +259,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_15"
-        app:typeface="lato_regular" />
+        app:typeface="lato_bold" />
 
 </RelativeLayout>
 

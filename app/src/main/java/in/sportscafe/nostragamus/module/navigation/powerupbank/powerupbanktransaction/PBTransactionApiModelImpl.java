@@ -7,10 +7,10 @@ import com.jeeva.android.Log;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralHistory;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistory;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistoryResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
-import in.sportscafe.nostragamus.webservice.UserReferralHistoryResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -35,17 +35,17 @@ public class PBTransactionApiModelImpl {
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 
-            MyWebService.getInstance().getPBTransactionHistory(flavor,"powerups").enqueue(new NostragamusCallBack<UserReferralHistoryResponse>() {
+            MyWebService.getInstance().getPBTransactionHistory(flavor,"powerups").enqueue(new NostragamusCallBack<PBTransactionHistoryResponse>() {
                 @Override
-                public void onResponse(Call<UserReferralHistoryResponse> call, Response<UserReferralHistoryResponse> response) {
+                public void onResponse(Call<PBTransactionHistoryResponse> call, Response<PBTransactionHistoryResponse> response) {
                     super.onResponse(call, response);
 
                     if (response != null && response.isSuccessful() && response.body() != null) {
                         Log.d(TAG, "Response : " + response.body());
-                        UserReferralHistoryResponse userReferralHistoryResponse = response.body();
+                        PBTransactionHistoryResponse pbTransactionHistoryResponse = response.body();
 
                         if (mListener != null) {
-                            mListener.onSuccessResponse(userReferralHistoryResponse.getReferralHistoryList());
+                            mListener.onSuccessResponse(pbTransactionHistoryResponse.getPbTransactionHistoryList());
                         }
 
                     } else {
@@ -66,6 +66,6 @@ public class PBTransactionApiModelImpl {
     public interface PBTransactionHistoryApiListener {
         void noInternet();
         void onApiFailed();
-        void onSuccessResponse(List<ReferralHistory> referralHistoryList);
+        void onSuccessResponse(List<PBTransactionHistory> pbTransactionHistoryList);
     }
 }

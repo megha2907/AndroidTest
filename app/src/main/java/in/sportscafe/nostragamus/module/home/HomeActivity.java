@@ -340,11 +340,11 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                 if (disclaimerAccepted == null || !disclaimerAccepted) {
                     launchEditProfile();
                 } else {
-//                    /* check for OTP screen */
-//                    Boolean otpVerified = userInfo.getInfoDetails().getOtpVerified();
-//                    if (otpVerified == null || !otpVerified) {
-//                        launchVerifyOTP();
-//                    }
+                    /* check for OTP screen */
+                    Boolean otpVerified = userInfo.getInfoDetails().getOtpVerified();
+                    if (otpVerified == null || !otpVerified) {
+                        launchVerifyOTP();
+                    }
                 }
             }
         }
@@ -380,6 +380,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         intent.putExtra(BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, EditProfileActivity.ILaunchedFrom.HOME_ACTIVITY);
         intent.putExtras(bundle);
         startActivity(intent);
+        finish();
     }
 
     /**

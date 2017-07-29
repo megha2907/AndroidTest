@@ -17,13 +17,13 @@
             android:id="@+id/verify_request_otp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dim_45"
-            android:background="@drawable/blue_button_selector"
+            android:background="@drawable/flat_blue_btn_selector"
             android:onClick="onClick"
             android:text="Request OTP"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_15"
-            app:typeface="lato_regular" />
+            app:typeface="lato_bold" />
 
     </FrameLayout>
 

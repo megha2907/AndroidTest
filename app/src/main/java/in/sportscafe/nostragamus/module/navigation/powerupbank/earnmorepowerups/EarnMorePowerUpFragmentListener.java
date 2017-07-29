@@ -5,4 +5,5 @@ package in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups
  */
 
 public interface EarnMorePowerUpFragmentListener {
+    void onStoreClicked();
 }

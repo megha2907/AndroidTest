@@ -14,23 +14,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
-import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistory;
 import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditFragment;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralHistory;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralHistoryAdapter;
-import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
-import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 
 /**
  * Created by deepanshi on 7/13/17.
@@ -115,7 +110,7 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
             }
 
             @Override
-            public void onSuccessResponse(List<ReferralHistory> pbTransactionHistory) {
+            public void onSuccessResponse(List<PBTransactionHistory> pbTransactionHistory) {
                 dismissProgressbar();
                 onPBTransactionHistoryListFetchedSuccessful(pbTransactionHistory);
             }
@@ -224,7 +219,7 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
     }
 
 
-    private void onPBTransactionHistoryListFetchedSuccessful(List<ReferralHistory> pbTransactionHistory) {
+    private void onPBTransactionHistoryListFetchedSuccessful(List<PBTransactionHistory> pbTransactionHistory) {
 
         if (mPBTransactionHistoryAdapter != null) {
             mPBTransactionHistoryAdapter.addPBTransactionHistoryIntoList(pbTransactionHistory);

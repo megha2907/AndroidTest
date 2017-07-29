@@ -16,6 +16,7 @@ import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistoryResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyToWalletRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
@@ -308,6 +309,6 @@ public interface NostragamusService {
     @POST("/v2/game/users/powerupTransferStats")
     Call<PowerUpBankStatusResponse> powerupTransferStatus(@Body PowerupBankStatusRequest request);
 
-    @GET("v2/game/getReferralTransactions")
-    Call<UserReferralHistoryResponse> getPBTransactionHistory(@Query("app_type") String flavor,@Query("transaction_type")  String transactionType);
+    @GET("v2/game/store/getPowerupTransaction")
+    Call<PBTransactionHistoryResponse> getPBTransactionHistory();
 }

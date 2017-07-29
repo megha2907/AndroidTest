@@ -19,7 +19,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.WordUtils;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralHistory;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistory;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -30,14 +30,14 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransactionHistoryAdapter.PBTransactionViewHolder> {
 
-    private List<ReferralHistory> mPBTransactionHistoryList;
+    private List<PBTransactionHistory> mPBTransactionHistoryList;
     private Context mContext;
 
     public PBTransactionHistoryAdapter(Context context) {
         mContext = context;
     }
 
-    public List<ReferralHistory> getPBTransactionHistoryList() {
+    public List<PBTransactionHistory> getPBTransactionHistoryList() {
         return mPBTransactionHistoryList;
     }
 
@@ -46,7 +46,7 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
      *
      * @param pbTransactionHistory
      */
-    public void addPBTransactionHistoryIntoList(List<ReferralHistory> pbTransactionHistory) {
+    public void addPBTransactionHistoryIntoList(List<PBTransactionHistory> pbTransactionHistory) {
         if (mPBTransactionHistoryList == null) {
             mPBTransactionHistoryList = new ArrayList<>();
         }
@@ -68,47 +68,47 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
     public void onBindViewHolder(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, int position) {
 
         if (mPBTransactionHistoryList != null && position < mPBTransactionHistoryList.size()) {    /* position < getItemCount() */
-            ReferralHistory referralHistory = mPBTransactionHistoryList.get(position);
-            setWinningsAndReferralsText(holder, referralHistory);
-            setUserImage(holder, referralHistory);
-            showDate(holder, referralHistory);
+            PBTransactionHistory pbTransactionHistory = mPBTransactionHistoryList.get(position);
+            setWinningsAndReferralsText(holder, pbTransactionHistory);
+            setUserImage(holder, pbTransactionHistory);
+            showDate(holder, pbTransactionHistory);
 
         }
     }
 
-    private void setUserImage(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, ReferralHistory referralHistory) {
-        if (referralHistory != null) {
-            if (referralHistory.getReferralDetails() != null) {
-                holder.mIvUserImage.setImageUrl(referralHistory.getReferralDetails().getUserPhoto());
+    private void setUserImage(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory ) {
+        if (pbTransactionHistory != null) {
+            if (pbTransactionHistory.getReferralDetails() != null) {
+                holder.mIvUserImage.setImageUrl(pbTransactionHistory.getReferralDetails().getUserPhoto());
             }
         }
     }
 
-    private void setWinningsAndReferralsText(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, ReferralHistory referralHistory) {
-        if (referralHistory != null) {
-            String referralHistoryType = referralHistory.getReferralHistoryType();
+    private void setWinningsAndReferralsText(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory ) {
+        if (pbTransactionHistory != null) {
+            String referralHistoryType = pbTransactionHistory.getReferralHistoryType();
 
             if (!TextUtils.isEmpty(referralHistoryType)) {
                 if (referralHistoryType.equalsIgnoreCase(Constants.ReferralHistory.REFERRAL_HISTORY_TYPE_POWERUPS)) {
-                    populatePowerUpDetails(holder, referralHistory);
+                    populatePowerUpDetails(holder, pbTransactionHistory);
 
                 } else if (referralHistoryType.equalsIgnoreCase(Constants.ReferralHistory.REFERRAL_HISTORY_TYPE_MONEY)) {
-                    populateMoneyDetails(holder, referralHistory);
+                    populateMoneyDetails(holder, pbTransactionHistory);
 
                 }
-                holder.mTvReferralMoreDetails.setText("Transaction ID - " + referralHistory.getReferralOrderId());
+                holder.mTvReferralMoreDetails.setText("Transaction ID - " + pbTransactionHistory.getReferralOrderId());
             }
         }
     }
 
-    private void populateMoneyDetails(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, ReferralHistory referralHistory) {
+    private void populateMoneyDetails(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory ) {
 
-        if (referralHistory != null) {
-            holder.mTvReferralTitle.setText(WordUtils.capitalize(referralHistory.getReferralDetails().getUserName()) + " made some deposit!");
+        if (pbTransactionHistory != null) {
+            holder.mTvReferralTitle.setText(WordUtils.capitalize(pbTransactionHistory.getReferralDetails().getUserName()) + " made some deposit!");
 
             holder.mTvReferralWinnings.setVisibility(View.VISIBLE);
 
-            holder.mTvReferralWinnings.setText(" " + WalletHelper.getFormattedStringOfAmount(referralHistory.getTransactionAmount()) +
+            holder.mTvReferralWinnings.setText(" " + WalletHelper.getFormattedStringOfAmount(pbTransactionHistory.getTransactionAmount()) +
                     " added to your wallet");
 
             holder.mTvReferralWinnings.setCompoundDrawablesWithIntrinsicBounds(R.drawable.wallet_credit_small, 0, 0, 0);
@@ -117,12 +117,12 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
 
     }
 
-    private void showDate(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, ReferralHistory referralHistory) {
+    private void showDate(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory ) {
         try {
-            if (!TextUtils.isEmpty(referralHistory.getCreatedAt())) {
+            if (!TextUtils.isEmpty(pbTransactionHistory.getCreatedAt())) {
                 String dateStr = "-";
 
-                String dateTime = referralHistory.getCreatedAt();
+                String dateTime = pbTransactionHistory.getCreatedAt();
                 long dateTimeMs = TimeUtils.getMillisecondsFromDateString(
                         dateTime,
                         Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
@@ -142,19 +142,19 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
 
     }
 
-    private void populatePowerUpDetails(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, ReferralHistory referralHistory) {
+    private void populatePowerUpDetails(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory) {
 
-        if (referralHistory != null) {
-            holder.mTvReferralTitle.setText(WordUtils.capitalize(referralHistory.getReferralDetails().getUserName()) + " joined with your referral Code!");
+        if (pbTransactionHistory != null) {
+            holder.mTvReferralTitle.setText(WordUtils.capitalize(pbTransactionHistory.getReferralDetails().getUserName()) + " joined with your referral Code!");
             holder.mTvReferralWinnings.setVisibility(View.GONE);
-            showOrHidePowerUps(holder, referralHistory);
+            showOrHidePowerUps(holder, pbTransactionHistory);
         }
 
     }
 
-    private void showOrHidePowerUps(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, ReferralHistory referralHistory) {
+    private void showOrHidePowerUps(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory) {
 
-        HashMap<String, Integer> powerUpMap = referralHistory.getPowerUps();
+        HashMap<String, Integer> powerUpMap = pbTransactionHistory.getPowerUps();
 
         Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
         Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);

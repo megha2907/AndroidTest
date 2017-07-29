@@ -577,6 +577,7 @@ public interface Constants {
         String POWERUP_BANK = "PowerupBank";
         String VERIFY_PROFILE = "VerifyProfile";
         String STORE = "Store";
+        String EARN_MORE_POWERUPS = "EarnMorePowerups";
     }
 
     interface InAppPopups {

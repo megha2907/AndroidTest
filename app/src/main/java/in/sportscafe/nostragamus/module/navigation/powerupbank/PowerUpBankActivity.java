@@ -11,6 +11,7 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.EarnMorePowerUpActivity;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.PBTransactionActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
@@ -32,7 +33,7 @@ public class PowerUpBankActivity extends NostragamusActivity implements PowerUpB
         setContentView(R.layout.activity_powerup_bank);
 
         initialize();
-        loadReferFriendFragment();
+        loadPowerUpFragment();
     }
 
     private void initialize() {
@@ -58,7 +59,7 @@ public class PowerUpBankActivity extends NostragamusActivity implements PowerUpB
         );
     }
 
-    private void loadReferFriendFragment() {
+    private void loadPowerUpFragment() {
         PowerUpBankFragment fragment = new PowerUpBankFragment();
         FragmentHelper.replaceFragment(this, R.id.fragment_container, fragment);
     }
@@ -66,8 +67,8 @@ public class PowerUpBankActivity extends NostragamusActivity implements PowerUpB
     @Override
     public void onEarnMorePowerUpsClicked() {
         if (getActivity() != null) {
-//            Intent intent = new Intent(getActivity(), ReferralCreditActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(getActivity(), EarnMorePowerUpActivity.class);
+            startActivity(intent);
         }
     }
 
