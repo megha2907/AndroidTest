@@ -418,6 +418,8 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                     !joinChallengeResponse.getJoinedChallengeInfo().isFreeEntry() &&
                     amount > 0 && mChallenge != null) {
                 NostragamusAnalytics.getInstance().trackRevenue(amount, mChallenge.getChallengeId(), mChallenge.getName());
+
+                NostragamusAnalytics.getInstance().logFbRevenue(amount, new Bundle());
             }
 
             Bundle bundle = new Bundle();

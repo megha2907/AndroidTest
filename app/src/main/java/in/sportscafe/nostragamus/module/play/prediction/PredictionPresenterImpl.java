@@ -89,6 +89,7 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onSuccessCompletion(Bundle bundle) {
+        NostragamusAnalytics.getInstance().logFbPlayCompleted(null);
 
         bundle.putString(Constants.ScreenNames.PLAY,Constants.ScreenNames.PLAY);
 
