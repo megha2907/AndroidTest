@@ -137,6 +137,12 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 //        mShakeListener.resume(this);
         dismissMessage();
         setImmersiveFullScreenMode();
+        enableButtons();
+    }
+
+    private void enableButtons() {
+        findViewById(R.id.powerups_iv_info).setEnabled(true);
+        findViewById(R.id.powerups_iv_bank).setEnabled(true);
     }
 
     @Override
@@ -273,11 +279,13 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             case R.id.powerups_iv_info:
                 NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PLAY, Constants.AnalyticsClickLabels.PLAY_GAME_HELP);
                 onGamePlayInfoButtonClicked();
+                view.setEnabled(false);
                 break;
 
             case R.id.powerups_iv_bank:
                 NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PLAY, Constants.AnalyticsClickLabels.PLAY_BANK);
                 mPredictionPresenter.onClickBankTransfer();
+                view.setEnabled(false);
                 break;
 
             case R.id.prediction_share_layout:

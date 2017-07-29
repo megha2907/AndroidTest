@@ -42,6 +42,12 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
         initViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setImmersiveFullScreenMode();
+    }
+
     private void initViews() {
         ImageView closeButton = (ImageView) findViewById(R.id.powerup_bank_close_imgView);
         closeButton.setOnClickListener(this);

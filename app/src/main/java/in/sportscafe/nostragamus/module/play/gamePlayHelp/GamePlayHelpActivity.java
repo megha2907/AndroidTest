@@ -32,6 +32,12 @@ public class GamePlayHelpActivity extends NostragamusActivity implements View.On
         initViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setImmersiveFullScreenMode();
+    }
+
     private void initViews() {
         ImageView closeImageView = (ImageView) findViewById(R.id.game_play_help_close_imgView);
         closeImageView.setOnClickListener(this);
