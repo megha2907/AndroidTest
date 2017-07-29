@@ -189,6 +189,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey6"
                     android:textSize="@dimen/sp_15"
+                    android:lineSpacingExtra="@dimen/dp_1.5"
                     app:typeface="lato_regular" />
 
 
@@ -261,7 +262,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Shop for Powerups"
+                    android:text="Buy Powerups"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />

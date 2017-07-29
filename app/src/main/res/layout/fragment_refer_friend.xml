@@ -52,6 +52,7 @@
                     android:layout_marginTop="@dimen/dim_20"
                     android:textColor="@color/grey6"
                     android:textSize="@dimen/sp_15"
+                    android:lineSpacingExtra="@dimen/dp_1.5"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -61,6 +62,7 @@
                     android:layout_marginTop="@dimen/dim_20"
                     android:textColor="@color/grey6"
                     android:textSize="@dimen/sp_15"
+                    android:lineSpacingExtra="@dimen/dp_1.5"
                     app:typeface="lato_regular" />
 
                 </LinearLayout>

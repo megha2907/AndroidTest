@@ -95,7 +95,7 @@ public class ChallengeRewardAdapter extends Adapter<ChallengeConfig, ChallengeRe
                 TimeUtils.getDateStringFromMs(endTimeMs, "MMM");
 
         // Setting end date of the challenge
-        holder.mTvChallengeEndTime.setText("Prizes will be handed out within a day when the challenge ends on " + prizesHandOutDate);
+        holder.mTvChallengeEndTime.setText("Prizes will be handed out within a few hours of challenge completion.");
 
        // holder.mTvDisclaimer.setText("The money you win ultimately will be decided by the number of people who join the challenge");
 
