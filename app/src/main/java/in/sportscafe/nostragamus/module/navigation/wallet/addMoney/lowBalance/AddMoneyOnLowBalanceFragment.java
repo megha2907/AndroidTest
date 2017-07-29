@@ -108,7 +108,7 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
 
             TextView productLabelTextView = (TextView) getView().findViewById(R.id.low_money_product_name_textView);
             if (!TextUtils.isEmpty(storeItems.getProductName())) {
-                productLabelTextView.setText(storeItems.getProductName() + " price");
+                productLabelTextView.setText(storeItems.getProductName() + " Price");
             } else {
                 productLabelTextView.setText("Powerup Price");
             }

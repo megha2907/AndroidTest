@@ -8,8 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
@@ -100,7 +98,7 @@ public class StoreActivity extends NostragamusActivity implements StoreFragmentL
 
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             if (fragment != null && fragment instanceof StoreFragment) {
-                ((StoreFragment) fragment).fetchUserWalletFromServer(CompletePaymentDialogFragment.DialogLaunchMode.STORE_BUY_POWERUP_AFTER_LOW_BAL_LAUNCH,
+                ((StoreFragment) fragment).fetchUserWalletFromServerAndContinuePurchase(CompletePaymentDialogFragment.DialogLaunchMode.STORE_BUY_POWERUP_AFTER_LOW_BAL_LAUNCH,
                         data.getExtras());
             }
         }
