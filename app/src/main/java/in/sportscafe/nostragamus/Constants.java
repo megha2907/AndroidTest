@@ -704,6 +704,12 @@ public interface Constants {
         String REFERRAL_HISTORY_TYPE_MONEY = "promoMoney";
     }
 
+    interface TransactionHistory {
+        String CHALLENGE = "challenge";
+        String REFERRAL = "referral";
+        String STORE = "Store";
+    }
+
     interface ChallengeTabs {
         String NEW = "New";
         String IN_PLAY = "In Play";

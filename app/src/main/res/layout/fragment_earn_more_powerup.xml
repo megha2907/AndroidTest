@@ -191,14 +191,6 @@
                     android:textSize="@dimen/sp_15"
                     app:typeface="lato_regular" />
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/earn_more_powerup_subheading_tv_two"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_20"
-                    android:textColor="@color/grey6"
-                    android:textSize="@dimen/sp_15"
-                    app:typeface="lato_regular" />
 
             </LinearLayout>
 
@@ -212,7 +204,7 @@
                 android:background="@color/line_separator" />
 
             <RelativeLayout
-                android:id="@+id/earn_more_powerup_earn_more_layout"
+                android:id="@+id/earn_more_powerup_refer_friend_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_20"
@@ -229,7 +221,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="Store"
+                        android:text="Refer a Friend"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"
                         app:typeface="lato_regular" />
@@ -257,7 +249,7 @@
 
             <!--Terms and Conditions section -->
             <RelativeLayout
-                android:id="@+id/earn_more_powerup_terms_layout"
+                android:id="@+id/earn_more_powerup_shop_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dim_20"
@@ -269,7 +261,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Terms and Conditions"
+                    android:text="Shop for Powerups"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />

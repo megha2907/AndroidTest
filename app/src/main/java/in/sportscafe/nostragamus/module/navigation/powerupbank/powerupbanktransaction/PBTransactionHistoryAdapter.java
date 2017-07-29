@@ -20,6 +20,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistory;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.TransactionTypeInfo;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -72,48 +73,78 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
             setWinningsAndReferralsText(holder, pbTransactionHistory);
             setUserImage(holder, pbTransactionHistory);
             showDate(holder, pbTransactionHistory);
+            holder.moreDetailBtnImageView.setVisibility(View.GONE);
 
         }
     }
 
     private void setUserImage(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory ) {
         if (pbTransactionHistory != null) {
-            if (pbTransactionHistory.getReferralDetails() != null) {
-                holder.mIvUserImage.setImageUrl(pbTransactionHistory.getReferralDetails().getUserPhoto());
+            if (pbTransactionHistory.getTransactionTypeInfo() != null) {
+                holder.mIvUserImage.setImageUrl(pbTransactionHistory.getTransactionTypeInfo().getImage());
             }
         }
     }
 
     private void setWinningsAndReferralsText(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory ) {
         if (pbTransactionHistory != null) {
-            String referralHistoryType = pbTransactionHistory.getReferralHistoryType();
+            String type = pbTransactionHistory.getType();
 
-            if (!TextUtils.isEmpty(referralHistoryType)) {
-                if (referralHistoryType.equalsIgnoreCase(Constants.ReferralHistory.REFERRAL_HISTORY_TYPE_POWERUPS)) {
-                    populatePowerUpDetails(holder, pbTransactionHistory);
+            if (!TextUtils.isEmpty(type)) {
+                if (type.equalsIgnoreCase(Constants.TransactionHistory.REFERRAL)) {
+                    populateReferralDetails(holder, pbTransactionHistory);
 
-                } else if (referralHistoryType.equalsIgnoreCase(Constants.ReferralHistory.REFERRAL_HISTORY_TYPE_MONEY)) {
-                    populateMoneyDetails(holder, pbTransactionHistory);
+                } else if (type.equalsIgnoreCase(Constants.TransactionHistory.CHALLENGE)) {
+                    populateChallengeDetails(holder, pbTransactionHistory);
+
+                }else if (type.equalsIgnoreCase(Constants.TransactionHistory.STORE)) {
+                    populateStoreDetails(holder, pbTransactionHistory);
 
                 }
-                holder.mTvReferralMoreDetails.setText("Transaction ID - " + pbTransactionHistory.getReferralOrderId());
             }
         }
     }
 
-    private void populateMoneyDetails(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory ) {
+    private void populateStoreDetails(PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory) {
+        if (pbTransactionHistory != null) {
+            TransactionTypeInfo transactionTypeInfo = pbTransactionHistory.getTransactionTypeInfo();
+            if (transactionTypeInfo!=null) {
+                holder.mTvReferralTitle.setText("Purchased " +
+                        WordUtils.capitalize(transactionTypeInfo.getName())
+                        + " from the shop");
+                holder.mTvReferralWinnings.setVisibility(View.GONE);
+                holder.powerUpHistoryTv.setText(" to your Bank");
+                showOrHidePowerUps(holder, pbTransactionHistory);
+            }
+        }
+    }
+
+    private void populateChallengeDetails(PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory) {
+        if (pbTransactionHistory != null) {
+
+            TransactionTypeInfo transactionTypeInfo = pbTransactionHistory.getTransactionTypeInfo();
+            if (transactionTypeInfo!=null) {
+                holder.mTvReferralTitle.setText("Transferred to " +
+                        WordUtils.capitalize(transactionTypeInfo.getName()));
+                holder.mTvReferralWinnings.setVisibility(View.GONE);
+                holder.powerUpHistoryTv.setText(" to the challenge");
+                showOrHidePowerUps(holder, pbTransactionHistory);
+            }
+        }
+    }
+
+    private void populateReferralDetails(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory) {
 
         if (pbTransactionHistory != null) {
-            holder.mTvReferralTitle.setText(WordUtils.capitalize(pbTransactionHistory.getReferralDetails().getUserName()) + " made some deposit!");
-
-            holder.mTvReferralWinnings.setVisibility(View.VISIBLE);
-
-            holder.mTvReferralWinnings.setText(" " + WalletHelper.getFormattedStringOfAmount(pbTransactionHistory.getTransactionAmount()) +
-                    " added to your wallet");
-
-            holder.mTvReferralWinnings.setCompoundDrawablesWithIntrinsicBounds(R.drawable.wallet_credit_small, 0, 0, 0);
+            TransactionTypeInfo transactionTypeInfo = pbTransactionHistory.getTransactionTypeInfo();
+            if (transactionTypeInfo!=null) {
+                holder.mTvReferralTitle.setText(WordUtils.capitalize(transactionTypeInfo.getName()) +
+                        " joined with your referral Code!");
+                holder.mTvReferralWinnings.setVisibility(View.GONE);
+                holder.powerUpHistoryTv.setText(" to your Bank");
+                showOrHidePowerUps(holder, pbTransactionHistory);
+            }
         }
-
 
     }
 
@@ -142,66 +173,59 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
 
     }
 
-    private void populatePowerUpDetails(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory) {
-
-        if (pbTransactionHistory != null) {
-            holder.mTvReferralTitle.setText(WordUtils.capitalize(pbTransactionHistory.getReferralDetails().getUserName()) + " joined with your referral Code!");
-            holder.mTvReferralWinnings.setVisibility(View.GONE);
-            showOrHidePowerUps(holder, pbTransactionHistory);
-        }
-
-    }
 
     private void showOrHidePowerUps(PBTransactionHistoryAdapter.PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory) {
 
         HashMap<String, Integer> powerUpMap = pbTransactionHistory.getPowerUps();
 
-        Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
-        Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
-        Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+        if (powerUpMap!=null) {
+            Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
+            Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+            Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
 
-        if (null == powerUp2xCount) {
-            powerUp2xCount = 0;
-        }
-
-        if (null == powerUpNonNegsCount) {
-            powerUpNonNegsCount = 0;
-        }
-
-        if (null == powerUpPlayerPollCount) {
-            powerUpPlayerPollCount = 0;
-        }
-
-        if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {
-            holder.powerUpLayout.setVisibility(View.GONE);
-        } else {
-            holder.powerUpLayout.setVisibility(View.VISIBLE);
-
-            if (powerUp2xCount != 0) {
-                holder.powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
-                holder.powerUp2xImageView.setVisibility(View.VISIBLE);
-                holder.powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
-            } else {
-                holder.powerUp2xImageView.setVisibility(View.GONE);
-                holder.powerUp2xTextView.setVisibility(View.GONE);
+            if (null == powerUp2xCount) {
+                powerUp2xCount = 0;
             }
 
-            if (powerUpNonNegsCount != 0) {
-                holder.powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
-                holder.powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
-                holder.powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
-            } else {
-                holder.powerUpNoNegativeImageView.setVisibility(View.GONE);
-                holder.powerUpNoNegativeTextView.setVisibility(View.GONE);
+            if (null == powerUpNonNegsCount) {
+                powerUpNonNegsCount = 0;
             }
 
-            if (powerUpPlayerPollCount != 0) {
-                holder.powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
-                holder.powerUpAudienceImageView.setVisibility(View.VISIBLE);
-                holder.powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+            if (null == powerUpPlayerPollCount) {
+                powerUpPlayerPollCount = 0;
+            }
+
+            if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {
+                holder.powerUpLayout.setVisibility(View.GONE);
             } else {
-                holder.powerUpAudienceImageView.setVisibility(View.GONE);
-                holder.powerUpAudienceTextView.setVisibility(View.GONE);
+                holder.powerUpLayout.setVisibility(View.VISIBLE);
+
+                if (powerUp2xCount != 0) {
+                    holder.powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
+                    holder.powerUp2xImageView.setVisibility(View.VISIBLE);
+                    holder.powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
+                } else {
+                    holder.powerUp2xImageView.setVisibility(View.GONE);
+                    holder.powerUp2xTextView.setVisibility(View.GONE);
+                }
+
+                if (powerUpNonNegsCount != 0) {
+                    holder.powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
+                    holder.powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+                    holder.powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
+                } else {
+                    holder.powerUpNoNegativeImageView.setVisibility(View.GONE);
+                    holder.powerUpNoNegativeTextView.setVisibility(View.GONE);
+                }
+
+                if (powerUpPlayerPollCount != 0) {
+                    holder.powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
+                    holder.powerUpAudienceImageView.setVisibility(View.VISIBLE);
+                    holder.powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+                } else {
+                    holder.powerUpAudienceImageView.setVisibility(View.GONE);
+                    holder.powerUpAudienceTextView.setVisibility(View.GONE);
+                }
             }
         }
     }
@@ -223,6 +247,7 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
         LinearLayout itemRootLayout;
         LinearLayout moreDetailsButton;
         TextView dateTextView;
+        TextView powerUpHistoryTv;
 
         /*PowerUp Layout */
         LinearLayout powerUpLayout;
@@ -232,6 +257,7 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
         TextView powerUp2xTextView;
         TextView powerUpNoNegativeTextView;
         TextView powerUpAudienceTextView;
+
 
         public PBTransactionViewHolder(View itemView) {
             super(itemView);
@@ -245,6 +271,7 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
             mTvReferralMoreDetails = (TextView) itemView.findViewById(R.id.referral_history_order_id_textview);
             moreDetailBtnImageView = (ImageView) itemView.findViewById(R.id.referral_history_more_details_imgView);
             moreDetailsButton = (LinearLayout) itemView.findViewById(R.id.referral_history_more_details_btn);
+            powerUpHistoryTv = (TextView) itemView.findViewById(R.id.referral_history_tv_two);
             moreDetailsButton.setOnClickListener(this);
 
             powerUpLayout = (LinearLayout) itemView.findViewById(R.id.powerup_bottom_layout);
@@ -260,7 +287,7 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.referral_history_more_details_btn:
+              /*  case R.id.referral_history_more_details_btn:
                     if (moreDetailsLayout.getVisibility() == View.GONE) {
                         AnimationHelper.expand(moreDetailsLayout);
                         moreDetailBtnImageView.setImageResource(R.drawable.thin_arrow_up_min);
@@ -268,7 +295,7 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
                         AnimationHelper.collapse(moreDetailsLayout);
                         moreDetailBtnImageView.setImageResource(R.drawable.thin_arrow_min);
                     }
-                    break;
+                    break; */
             }
         }
     }

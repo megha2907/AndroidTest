@@ -15,16 +15,10 @@ import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.
 public class PBTransactionHistory {
 
     @JsonProperty("type")
-    private String referralHistoryType;
-
-    @JsonProperty("transaction_amount")
-    private Integer transactionAmount;
-
-    @JsonProperty("order_id")
-    private String referralOrderId;
+    private String type;
 
     @JsonProperty("info")
-    private ReferralDetails referralDetails;
+    private TransactionTypeInfo transactionTypeInfo;
 
     @JsonProperty("createdAt")
     private String createdAt;
@@ -42,44 +36,26 @@ public class PBTransactionHistory {
         this.powerUps = powerUps;
     }
 
-    @JsonProperty("transaction_amount")
-    public Integer getTransactionAmount() {
-        return transactionAmount;
-    }
 
-    @JsonProperty("transaction_amount")
-    public void setTransactionAmount(Integer transactionAmount) {
-        this.transactionAmount = transactionAmount;
+    @JsonProperty("info")
+    public TransactionTypeInfo getTransactionTypeInfo() {
+        return transactionTypeInfo;
     }
 
     @JsonProperty("info")
-    public ReferralDetails getReferralDetails() {
-        return referralDetails;
+    public void setTransactionTypeInfo(TransactionTypeInfo transactionTypeInfo) {
+        this.transactionTypeInfo = transactionTypeInfo;
     }
 
-    @JsonProperty("info")
-    public void setReferralDetails(ReferralDetails referralDetails) {
-        this.referralDetails = referralDetails;
+
+    @JsonProperty("type")
+    public String getType() {
+        return type;
     }
 
     @JsonProperty("type")
-    public String getReferralHistoryType() {
-        return referralHistoryType;
-    }
-
-    @JsonProperty("type")
-    public void setReferralHistoryType(String referralHistoryType) {
-        this.referralHistoryType = referralHistoryType;
-    }
-
-    @JsonProperty("order_id")
-    public String getReferralOrderId() {
-        return referralOrderId;
-    }
-
-    @JsonProperty("order_id")
-    public void setReferralOrderId(String referralOrderId) {
-        this.referralOrderId = referralOrderId;
+    public void setType(String type) {
+        this.type = type;
     }
 
     @JsonProperty("createdAt")

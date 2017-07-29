@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -9,6 +10,8 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.PowerUpBankFragment;
+import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
+import in.sportscafe.nostragamus.module.store.StoreActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
@@ -62,24 +65,18 @@ public class EarnMorePowerUpActivity extends NostragamusActivity implements Earn
 
     @Override
     public void onStoreClicked() {
-
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), StoreActivity.class);
+            startActivity(intent);
+        }
     }
 
-//    @Override
-//    public void onEarnMorePowerUpsClicked() {
-//        if (getActivity() != null) {
-////            Intent intent = new Intent(getActivity(), ReferralCreditActivity.class);
-////            startActivity(intent);
-//        }
-//    }
-//
-//
-//    @Override
-//    public void onPowerUpTransactionHistoryClicked(Bundle bundle) {
-//        if (getActivity() != null) {
-//            Intent intent = new Intent(getActivity(), PBTransactionActivity.class);
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-//        }
-//    }
+    @Override
+    public void onReferAFriendClicked() {
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), ReferFriendActivity.class);
+            startActivity(intent);
+        }
+    }
+
 }

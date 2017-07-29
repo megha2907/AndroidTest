@@ -85,10 +85,9 @@ public class EarnMorePowerUpFragment extends BaseFragment implements View.OnClic
 
 
     private void initRootView(View rootView) {
-        rootView.findViewById(R.id.earn_more_powerup_earn_more_layout).setOnClickListener(this);
-        rootView.findViewById(R.id.earn_more_powerup_terms_layout).setOnClickListener(this);
+        rootView.findViewById(R.id.earn_more_powerup_refer_friend_layout).setOnClickListener(this);
+        rootView.findViewById(R.id.earn_more_powerup_shop_layout).setOnClickListener(this);
         tvPowerupBankOne = (TextView) rootView.findViewById(R.id.earn_more_powerup_subheading_tv_one);
-        tvPowerupBankTwo = (TextView) rootView.findViewById(R.id.earn_more_powerup_subheading_tv_two);
         mTvRunningLow = (TextView) rootView.findViewById(R.id.earn_more_powerup_low_powerups);
 
         tvPBPowerup2xCount = (TextView) rootView.findViewById(R.id.earn_more_powerup_2x_powerup_count);
@@ -197,25 +196,9 @@ public class EarnMorePowerUpFragment extends BaseFragment implements View.OnClic
     }
 
     private void setPowerUpText() {
-        tvPowerupBankOne.setText(Html.fromHtml(getResources().getString(R.string.pb_text_one)), TextView.BufferType.SPANNABLE);
+        tvPowerupBankOne.setText(Html.fromHtml(
+                getResources().getString(R.string.earn_more_powerups_text)), TextView.BufferType.SPANNABLE);
 
-        /* Set the icon for "powerupbank" */
-        String src = String.valueOf(Html.fromHtml(getResources().getString(R.string.pb_text_two)));
-        SpannableString str = new SpannableString(src);
-        Drawable d = getResources().getDrawable(R.drawable.powerbank_profile_icon);
-        d.setBounds(0, 0, getResources().getDimensionPixelSize(R.dimen.dim_16), getResources().getDimensionPixelSize(R.dimen.dim_16));
-        ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BOTTOM);
-        str.setSpan(span, str.toString().indexOf("@"), str.toString().indexOf("@") + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-
-        final ForegroundColorSpan fcs = new ForegroundColorSpan(Color.WHITE);
-        final StyleSpan bss = new StyleSpan(android.graphics.Typeface.BOLD);
-
-        /* Set the text color for "powerupbank" text to white */
-        str.setSpan(fcs, str.toString().indexOf("@"), str.toString().indexOf("@") + 15, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        /* make them also bold */
-        str.setSpan(bss, str.toString().indexOf("@"), str.toString().indexOf("@") + 15, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-
-        tvPowerupBankTwo.setText(str, TextView.BufferType.SPANNABLE);
     }
 
 
@@ -229,9 +212,16 @@ public class EarnMorePowerUpFragment extends BaseFragment implements View.OnClic
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.earn_more_powerup_earn_more_layout:
+            case R.id.earn_more_powerup_shop_layout:
                 if (mEarnMorePowerUpFragmentListener != null) {
                     mEarnMorePowerUpFragmentListener.onStoreClicked();
+                } else {
+                    showMessage(Constants.Alerts.SOMETHING_WRONG);
+                }
+                break;
+            case R.id.earn_more_powerup_refer_friend_layout:
+                if (mEarnMorePowerUpFragmentListener != null) {
+                    mEarnMorePowerUpFragmentListener.onReferAFriendClicked();
                 } else {
                     showMessage(Constants.Alerts.SOMETHING_WRONG);
                 }

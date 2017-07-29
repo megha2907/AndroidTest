@@ -155,34 +155,43 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
         if (userInfo.getPowerUps() != null) {
 
             mPowerUpMaps = getPowerUpMap(userInfo.getPowerUps());
-            mBundle.putParcelable(Constants.BundleKeys.POWERUPS, Parcels.wrap(mPowerUpMaps));
 
-            int count;
+            if (mPowerUpMaps != null) {
 
-            PowerUp powerUp = mPowerUpMaps.get(Constants.Powerups.XX);
-            if (null == powerUp) {
-                count = 0;
-            } else {
-                count = powerUp.getCount();
+                mBundle.putParcelable(Constants.BundleKeys.POWERUPS, Parcels.wrap(mPowerUpMaps));
+
+                int count;
+
+                PowerUp powerUp = mPowerUpMaps.get(Constants.Powerups.XX);
+                if (null == powerUp) {
+                    count = 0;
+                } else {
+                    count = powerUp.getCount();
+                }
+                onGet2xPowerUp(count, count < 1);
+
+                powerUp = mPowerUpMaps.get(Constants.Powerups.NO_NEGATIVE);
+                if (null == powerUp) {
+                    count = 0;
+                } else {
+                    count = powerUp.getCount();
+                }
+                onGetNonegsPowerUp(count, count < 1);
+
+                powerUp = mPowerUpMaps.get(Constants.Powerups.AUDIENCE_POLL);
+                if (null == powerUp) {
+                    count = 0;
+                } else {
+                    count = powerUp.getCount();
+                }
+                onGetPollPowerUp(count, count < 1);
+            }else {
+                int count = 0;
+                onGet2xPowerUp(count, count < 1);
+                onGetNonegsPowerUp(count, count < 1);
+                onGetPollPowerUp(count, count < 1);
             }
-            onGet2xPowerUp(count, count < 1);
-
-            powerUp = mPowerUpMaps.get(Constants.Powerups.NO_NEGATIVE);
-            if (null == powerUp) {
-                count = 0;
-            } else {
-                count = powerUp.getCount();
-            }
-            onGetNonegsPowerUp(count, count < 1);
-
-            powerUp = mPowerUpMaps.get(Constants.Powerups.AUDIENCE_POLL);
-            if (null == powerUp) {
-                count = 0;
-            } else {
-                count = powerUp.getCount();
-            }
-            onGetPollPowerUp(count, count < 1);
-        } else {
+        }else {
             int count = 0;
             onGet2xPowerUp(count, count < 1);
             onGetNonegsPowerUp(count, count < 1);
@@ -205,8 +214,12 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
 
     private HashMap<String, PowerUp> getPowerUpMap(HashMap<String, Integer> powerUps) {
         HashMap<String, PowerUp> powerUpMaps = new HashMap<>();
-        for (Map.Entry<String, Integer> entry : powerUps.entrySet()) {
-            powerUpMaps.put(entry.getKey(), new PowerUp(entry.getKey(), entry.getValue()));
+        if (powerUps != null && !powerUps.isEmpty()) {
+            for (Map.Entry<String, Integer> entry : powerUps.entrySet()) {
+                if (entry.getKey() != null && entry.getValue() != null) {
+                    powerUpMaps.put(entry.getKey(), new PowerUp(entry.getKey(), entry.getValue()));
+                }
+            }
         }
         return powerUpMaps;
     }
