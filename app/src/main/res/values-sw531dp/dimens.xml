@@ -82,6 +82,7 @@
     <dimen name="dim_66">76dp</dimen>
     <dimen name="dim_72">82dp</dimen>
     <dimen name="dim_80">91dp</dimen>
+    <dimen name="dim_75">85.5dp</dimen>
     <dimen name="dim_90">103dp</dimen>
     <dimen name="dim_100">114dp</dimen>
     <dimen name="dim_120">137dp</dimen>

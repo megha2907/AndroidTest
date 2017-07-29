@@ -95,7 +95,8 @@
                         android:textSize="@dimen/sp_12"
                         android:textColor="@drawable/white_text_selector"
                         android:textAllCaps="false"
-                        android:paddingBottom="@dimen/dim_3"/>
+                        android:paddingBottom="@dimen/dim_3"
+                        android:visibility="gone"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/powerup_bank_doubler_add_err_textView"
@@ -200,7 +201,8 @@
                         android:textSize="@dimen/sp_12"
                         android:textColor="@drawable/white_text_selector"
                         android:textAllCaps="false"
-                        android:paddingBottom="@dimen/dim_3"/>
+                        android:paddingBottom="@dimen/dim_3"
+                        android:visibility="gone"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/powerup_bank_no_neg_add_err_textView"
@@ -307,7 +309,8 @@
                         android:textSize="@dimen/sp_12"
                         android:textColor="@drawable/white_text_selector"
                         android:textAllCaps="false"
-                        android:paddingBottom="@dimen/dim_3"/>
+                        android:paddingBottom="@dimen/dim_3"
+                        android:visibility="gone"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/powerup_bank_audience_add_err_textView"

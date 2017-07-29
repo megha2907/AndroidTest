@@ -124,7 +124,7 @@ public class CompletePaymentDialogFragment extends NostragamusDialogFragment imp
 
                     TextView entryFeeLabelTextView = (TextView) getView().findViewById(R.id.complete_payment_tv_entry_fee_txt);
                     if (!TextUtils.isEmpty(storeItems.getProductName())) {
-                        entryFeeLabelTextView.setText(storeItems.getProductName() + " price");
+                        entryFeeLabelTextView.setText(storeItems.getProductName() + " Price");
                     } else {
                         entryFeeLabelTextView.setText("Powerup Price");
                     }
