@@ -13,7 +13,7 @@
         android:layout_marginLeft="@dimen/dim_20"
         android:layout_marginRight="@dimen/dim_20"
         android:layout_marginTop="@dimen/dim_20"
-        android:text="Max of 2 Powerup each can be added"
+        android:text="- Max of 2 Powerup each can be added"
         android:textColor="@color/white_dim"
         android:textSize="@dimen/sp_15"
         app:typeface="lato_regular" />
