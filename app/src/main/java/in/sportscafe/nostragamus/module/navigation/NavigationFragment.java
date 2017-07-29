@@ -77,6 +77,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void initialize() {
+        showOrUpdateWalletAmount();
         fetchServerDetails();
         showOrHideContentBasedOnAppType();
         showVersionOrAppUpdateMsg();
@@ -85,9 +86,9 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
 
     private void fetchServerDetails() {
         /* Make silent API calls
-         * 1. Wallet details api
+         * 1. Wallet details api (onResume as wallet values need to be updated)
          * 2. User Info api */
-        fetchUserWalletFromServer();
+        fetchUserInfo();
     }
 
     private void showOrHideContentBasedOnAppType() {
@@ -317,24 +318,26 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void fetchUserWalletFromServer() {
-        WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
-            @Override
-            public void noInternet() {
-                Log.d(TAG, Constants.Alerts.NO_NETWORK_CONNECTION);
-            }
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
+                @Override
+                public void noInternet() {
+                    Log.d(TAG, Constants.Alerts.NO_NETWORK_CONNECTION);
+                }
 
-            @Override
-            public void onApiFailed() {
-                Log.d(TAG, Constants.Alerts.API_FAIL);
-                fetchUserInfo();
-            }
+                @Override
+                public void onApiFailed() {
+                    Log.d(TAG, Constants.Alerts.API_FAIL);
+                    fetchUserInfo();
+                }
 
-            @Override
-            public void onSuccessResponse(UserWalletResponse response) {
-                showOrUpdateWalletAmount();
-                fetchUserInfo();
-            }
-        }).performApiCall();
+                @Override
+                public void onSuccessResponse(UserWalletResponse response) {
+                    showOrUpdateWalletAmount();
+
+                }
+            }).performApiCall();
+        }
     }
 
     private void fetchUserInfo() {
@@ -357,7 +360,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onResume() {
         super.onResume();
-        showOrUpdateWalletAmount();
+        fetchUserWalletFromServer();
     }
 
     private void showOrUpdateWalletAmount() {

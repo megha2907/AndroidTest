@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
@@ -34,8 +35,11 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.store.buy.BuyApiModelImpl;
 import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
+import in.sportscafe.nostragamus.module.store.buy.StoreBuySuccessDialogFragment;
+import in.sportscafe.nostragamus.module.store.buy.StoreBuySuccessDialogListener;
 import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 import in.sportscafe.nostragamus.module.store.dto.StoreSections;
+import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 import in.sportscafe.nostragamus.webservice.NostragamusService;
@@ -48,17 +52,15 @@ public class StoreFragment extends BaseFragment {
 
     private static final String TAG = StoreFragment.class.getSimpleName();
     private static final int BUY_POWER_UP_COMPLETE_PAYMENT_REQUEST_CODE = 501;
+    private static final int BUY_SUCCESS_DIALOG_REQUEST_CODE = 502;
 
     private StoreFragmentListener mStoreFragmentListener;
-
     private HashMap<String, PowerUp> mPowerUpMaps;
 
     private TextView mTvRunningLow;
-
     private TextView tvPBPowerup2xCount;
     private TextView tvPBPowerupNonegCount;
     private TextView tvPBPowerupPlayerPollCount;
-
     private ImageView ivPBPowerup2x;
     private ImageView ivPBPowerupNoneg;
     private ImageView ivPBPowerupPlayerPoll;
@@ -159,7 +161,7 @@ public class StoreFragment extends BaseFragment {
     private void buyPowerUpFromStore(StoreItems storeItems) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             showProgressbar();
-            BuyApiModelImpl buyApiModel = BuyApiModelImpl.newInstance(getBuyApiListener());
+            BuyApiModelImpl buyApiModel = BuyApiModelImpl.newInstance(getBuyApiListener(storeItems));
             buyApiModel.performApiCall(storeItems.getProductId());
         } else {
             showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
@@ -167,7 +169,7 @@ public class StoreFragment extends BaseFragment {
     }
 
     @NonNull
-    private BuyApiModelImpl.BuyApiListener getBuyApiListener() {
+    private BuyApiModelImpl.BuyApiListener getBuyApiListener(final StoreItems storeItem) {
         return new BuyApiModelImpl.BuyApiListener() {
             @Override
             public void noInternet() {
@@ -184,15 +186,70 @@ public class StoreFragment extends BaseFragment {
             @Override
             public void onSuccessResponse(BuyResponse buyResponse) {
                 dismissProgressbar();
-                onBuySuccessResponse(buyResponse);
+                onBuySuccessResponse(buyResponse, storeItem);
+                fetchPowerupDetailsToUpdateUi();
             }
         };
     }
 
-    private void onBuySuccessResponse(BuyResponse buyResponse) {
+    private void fetchPowerupDetailsToUpdateUi() {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            UserInfoModelImpl.newInstance(new UserInfoModelImpl.OnGetUserInfoModelListener() {
+                @Override
+                public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {
+                    setInfo();
+                }
+
+                @Override
+                public void onFailedGetUpdateUserInfo(String message) {
+                    showMessage(Constants.Alerts.API_FAIL);
+                }
+
+                @Override
+                public void onNoInternet() {
+                    showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+                }
+            }).getUserInfo();
+        } else {
+            Log.d(TAG, "No Internet");
+            showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+        }
+    }
+
+    private void onBuySuccessResponse(BuyResponse buyResponse, StoreItems storeItems) {
         if (buyResponse != null) {
             if (buyResponse.getStatus() == Constants.ApiSuccessStatusCode.SUCCESS) {
+                StoreBuySuccessDialogFragment fragment = StoreBuySuccessDialogFragment.newInstance(BUY_SUCCESS_DIALOG_REQUEST_CODE,
+                        storeItems, new StoreBuySuccessDialogListener() {
+                            @Override
+                            public void onCloseButtonClicked() {
+                                // Nothing to do
+                            }
 
+                            @Override
+                            public void onOkayButtonClicked() {
+                                onPurchaseOkayed();
+                            }
+                        });
+                fragment.show(getChildFragmentManager(), StoreBuySuccessDialogFragment.class.getSimpleName());
+            }
+        }
+    }
+
+    private void onPurchaseOkayed() {
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(Constants.BundleKeys.LAUNCH_MODE)) {
+            int lauchMode = args.getInt(Constants.BundleKeys.LAUNCH_MODE);
+
+            switch (lauchMode) {
+                case StoreLaunchMode.POWER_UP_BANK_LAUCNH:
+                    if (mStoreFragmentListener != null) {
+                        mStoreFragmentListener.finishStoreActivity();
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
     }

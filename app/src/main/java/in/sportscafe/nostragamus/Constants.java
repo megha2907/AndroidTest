@@ -307,6 +307,7 @@ public interface Constants {
         String POWERUP_BANK_INFO_SCREEN = "powerupBankInfoScreen";
         String STORE_ITEM = "storeItem";
         String STORE_BUY_PRODUCT_CATEGORY = "storeBuyProductCategory";
+        String LAUNCH_MODE = "launchMode";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -317,7 +318,7 @@ public interface Constants {
         String USER_REFERRAL_CODE = "user_referral_code";
         String USER_REFERRAL_NAME = "user_referral_name";
         String USER_REFERRAL_PHOTO = "user_referral_photo";
-        String DIALOG_LAUNCH_MODE = "dialogLaunchMode";
+
 
         String SUCCESSFUL_REFERRAL = "successfulReferral";
     }

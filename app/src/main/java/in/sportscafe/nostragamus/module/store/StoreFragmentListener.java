@@ -8,4 +8,5 @@ import android.os.Bundle;
 
 public interface StoreFragmentListener {
     void onLowBalanceWhileBuy(Bundle args);
+    void finishStoreActivity();
 }
