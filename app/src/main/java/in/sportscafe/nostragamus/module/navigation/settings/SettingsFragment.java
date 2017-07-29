@@ -83,6 +83,7 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
             if (TextUtils.isEmpty(feedbackText)) {
                 feedbackTextView.setText(Html.fromHtml(getString(R.string.feedback_string)));
             }else {
+
                 feedbackTextView.setText(feedbackText);
             }
         }
