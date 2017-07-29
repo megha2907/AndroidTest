@@ -577,6 +577,7 @@ public interface Constants {
         String POWERUP_BANK = "PowerupBank";
         String VERIFY_PROFILE = "VerifyProfile";
         String STORE = "Store";
+        String EARN_MORE_POWERUPS = "EarnMorePowerups";
     }
 
     interface InAppPopups {
@@ -701,6 +702,12 @@ public interface Constants {
     interface ReferralHistory {
         String REFERRAL_HISTORY_TYPE_POWERUPS = "powerup";
         String REFERRAL_HISTORY_TYPE_MONEY = "promoMoney";
+    }
+
+    interface TransactionHistory {
+        String CHALLENGE = "challenge";
+        String REFERRAL = "referral";
+        String STORE = "Store";
     }
 
     interface ChallengeTabs {

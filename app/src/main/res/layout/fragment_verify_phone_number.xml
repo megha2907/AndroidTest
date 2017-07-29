@@ -16,14 +16,14 @@
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/verify_request_otp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_45"
-            android:background="@drawable/blue_button_selector"
+            android:layout_height="@dimen/dim_45"
+            android:background="@drawable/flat_blue_btn_selector"
             android:onClick="onClick"
             android:text="Request OTP"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/blue_button_text"
-            app:typeface="lato_regular" />
+            android:textSize="@dimen/sp_15"
+            app:typeface="lato_bold" />
 
     </FrameLayout>
 
@@ -45,8 +45,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_16">
+                android:layout_marginLeft="@dimen/dim_16"
+                android:layout_marginRight="@dimen/dim_16">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/verify_phone_no_label"
@@ -64,7 +64,7 @@
                     android:layout_height="@dimen/dim_40"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="@dimen/dp_6">
+                    android:layout_marginTop="@dimen/dim_6">
 
                     <ImageView
                         style="@style/EditTextIconStyle"

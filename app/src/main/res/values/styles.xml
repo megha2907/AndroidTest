@@ -189,8 +189,8 @@
     </style>
 
     <style name="EditTextIconStyle" >
-        <item name="android:layout_width">@dimen/dp_40</item>
-        <item name="android:layout_height">@dimen/dp_40</item>
+        <item name="android:layout_width">@dimen/dim_40</item>
+        <item name="android:layout_height">@dimen/dim_40</item>
         <item name="android:background">@drawable/edit_text_icon_selector</item>
     </style>
 

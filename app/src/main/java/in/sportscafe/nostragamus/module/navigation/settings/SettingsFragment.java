@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 
 import static io.fabric.sdk.android.services.concurrency.AsyncTask.init;
@@ -70,7 +73,19 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
         View view = getView();
         if (view != null) {
             TextView feedbackTextView = (TextView) view.findViewById(R.id.feedback_textView);
-            feedbackTextView.setText(Html.fromHtml(getString(R.string.feedback_string)));
+
+            String feedbackText;
+            if (BuildConfig.IS_PAID_VERSION) {
+                 feedbackText = NostragamusDataHandler.getInstance().getProFeedBack();
+            }else {
+                feedbackText = NostragamusDataHandler.getInstance().getFeedBack();
+            }
+            if (TextUtils.isEmpty(feedbackText)) {
+                feedbackTextView.setText(Html.fromHtml(getString(R.string.feedback_string)));
+            }else {
+
+                feedbackTextView.setText(feedbackText);
+            }
         }
     }
 

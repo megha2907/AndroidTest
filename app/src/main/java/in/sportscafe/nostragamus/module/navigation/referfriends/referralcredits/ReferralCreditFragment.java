@@ -166,31 +166,33 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
 
             HashMap<String, Integer> powerUpMap = userReferralInfo.getPowerUps();
 
-            Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
-            Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
-            Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+            if (powerUpMap!=null) {
+                Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
+                Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+                Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
 
-            if (null == powerUp2xCount) {
-                powerUp2xCount = 0;
+                if (null == powerUp2xCount) {
+                    powerUp2xCount = 0;
+                }
+
+                if (null == powerUpNonNegsCount) {
+                    powerUpNonNegsCount = 0;
+                }
+
+                if (null == powerUpPlayerPollCount) {
+                    powerUpPlayerPollCount = 0;
+                }
+
+                tvRCPowerup2xCount.setText(String.valueOf(powerUp2xCount));
+                tvRCPowerupNonegCount.setText(String.valueOf(powerUpNonNegsCount));
+                tvRCPowerupPlayerPollCount.setText(String.valueOf(powerUpPlayerPollCount));
+                mReferralCode = userReferralInfo.getReferralCode();
+                mWalletInit = String.valueOf(userReferralInfo.getWalletInitialAmount());
+
+                tvPSPowerup2xCount.setText(String.valueOf(powerUp2xCount));
+                tvPSPowerupNonegCount.setText(String.valueOf(powerUpNonNegsCount));
+                tvPSPowerupPlayerPollCount.setText(String.valueOf(powerUpPlayerPollCount));
             }
-
-            if (null == powerUpNonNegsCount) {
-                powerUpNonNegsCount = 0;
-            }
-
-            if (null == powerUpPlayerPollCount) {
-                powerUpPlayerPollCount = 0;
-            }
-
-            tvRCPowerup2xCount.setText(String.valueOf(powerUp2xCount));
-            tvRCPowerupNonegCount.setText(String.valueOf(powerUpNonNegsCount));
-            tvRCPowerupPlayerPollCount.setText(String.valueOf(powerUpPlayerPollCount));
-            mReferralCode = userReferralInfo.getReferralCode();
-            mWalletInit = String.valueOf(userReferralInfo.getWalletInitialAmount());
-
-            tvPSPowerup2xCount.setText(String.valueOf(powerUp2xCount));
-            tvPSPowerupNonegCount.setText(String.valueOf(powerUpNonNegsCount));
-            tvPSPowerupPlayerPollCount.setText(String.valueOf(powerUpPlayerPollCount));
 
         } else {
             tvRCFriendsReferred.setText("0 Friends Added");

@@ -113,14 +113,18 @@ public class ReferralHistoryAdapter extends RecyclerView.Adapter<ReferralHistory
     private void populateMoneyDetails(ReferralHistoryViewHolder holder, ReferralHistory referralHistory) {
 
         if (referralHistory != null) {
-            holder.mTvReferralTitle.setText(WordUtils.capitalize(referralHistory.getReferralDetails().getUserName()) + " made some deposit!");
 
-            holder.mTvReferralWinnings.setVisibility(View.VISIBLE);
+            ReferralDetails referralDetails = referralHistory.getReferralDetails();
+            if (referralDetails != null) {
+                holder.mTvReferralTitle.setText(WordUtils.capitalize(referralDetails.getUserName()) + " made some deposit!");
 
-            holder.mTvReferralWinnings.setText(" "+WalletHelper.getFormattedStringOfAmount(referralHistory.getTransactionAmount()) +
-                    " added to your wallet");
+                holder.mTvReferralWinnings.setVisibility(View.VISIBLE);
 
-            holder.mTvReferralWinnings.setCompoundDrawablesWithIntrinsicBounds(R.drawable.wallet_credit_small, 0, 0, 0);
+                holder.mTvReferralWinnings.setText(" " + WalletHelper.getFormattedStringOfAmount(referralHistory.getTransactionAmount()) +
+                        " added to your wallet");
+
+                holder.mTvReferralWinnings.setCompoundDrawablesWithIntrinsicBounds(R.drawable.wallet_credit_small, 0, 0, 0);
+            }
         }
 
 
@@ -154,9 +158,13 @@ public class ReferralHistoryAdapter extends RecyclerView.Adapter<ReferralHistory
     private void populatePowerUpDetails(ReferralHistoryViewHolder holder, ReferralHistory referralHistory) {
 
         if (referralHistory != null) {
-            holder.mTvReferralTitle.setText(WordUtils.capitalize(referralHistory.getReferralDetails().getUserName()) + " joined with your referral Code!");
-            holder.mTvReferralWinnings.setVisibility(View.GONE);
-            showOrHidePowerUps(holder, referralHistory);
+            ReferralDetails referralDetails = referralHistory.getReferralDetails();
+            if (referralDetails != null) {
+                holder.mTvReferralTitle.setText(WordUtils.capitalize(referralDetails.getUserName()) +
+                        " joined with your referral Code!");
+                holder.mTvReferralWinnings.setVisibility(View.GONE);
+                showOrHidePowerUps(holder, referralHistory);
+            }
         }
 
     }
@@ -165,52 +173,54 @@ public class ReferralHistoryAdapter extends RecyclerView.Adapter<ReferralHistory
 
         HashMap<String, Integer> powerUpMap = referralHistory.getPowerUps();
 
-        Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
-        Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
-        Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+        if (powerUpMap!=null) {
+            Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
+            Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+            Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
 
-        if (null == powerUp2xCount) {
-            powerUp2xCount = 0;
-        }
-
-        if (null == powerUpNonNegsCount) {
-            powerUpNonNegsCount = 0;
-        }
-
-        if (null == powerUpPlayerPollCount) {
-            powerUpPlayerPollCount = 0;
-        }
-
-        if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {
-            holder.powerUpLayout.setVisibility(View.GONE);
-        } else {
-            holder.powerUpLayout.setVisibility(View.VISIBLE);
-
-            if (powerUp2xCount != 0) {
-                holder.powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
-                holder.powerUp2xImageView.setVisibility(View.VISIBLE);
-                holder.powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
-            } else {
-                holder.powerUp2xImageView.setVisibility(View.GONE);
-                holder.powerUp2xTextView.setVisibility(View.GONE);
+            if (null == powerUp2xCount) {
+                powerUp2xCount = 0;
             }
 
-            if (powerUpNonNegsCount != 0) {
-                holder.powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
-                holder.powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
-                holder.powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
-            } else {
-                holder.powerUpNoNegativeImageView.setVisibility(View.GONE);
-                holder.powerUpNoNegativeTextView.setVisibility(View.GONE);
+            if (null == powerUpNonNegsCount) {
+                powerUpNonNegsCount = 0;
             }
 
-            if (powerUpPlayerPollCount != 0) {
-                holder.powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
-                holder.powerUpAudienceImageView.setVisibility(View.VISIBLE);
-                holder.powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+            if (null == powerUpPlayerPollCount) {
+                powerUpPlayerPollCount = 0;
+            }
+
+            if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {
+                holder.powerUpLayout.setVisibility(View.GONE);
             } else {
-                holder.powerUpAudienceImageView.setVisibility(View.GONE);
-                holder.powerUpAudienceTextView.setVisibility(View.GONE);
+                holder.powerUpLayout.setVisibility(View.VISIBLE);
+
+                if (powerUp2xCount != 0) {
+                    holder.powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
+                    holder.powerUp2xImageView.setVisibility(View.VISIBLE);
+                    holder.powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
+                } else {
+                    holder.powerUp2xImageView.setVisibility(View.GONE);
+                    holder.powerUp2xTextView.setVisibility(View.GONE);
+                }
+
+                if (powerUpNonNegsCount != 0) {
+                    holder.powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
+                    holder.powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+                    holder.powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
+                } else {
+                    holder.powerUpNoNegativeImageView.setVisibility(View.GONE);
+                    holder.powerUpNoNegativeTextView.setVisibility(View.GONE);
+                }
+
+                if (powerUpPlayerPollCount != 0) {
+                    holder.powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
+                    holder.powerUpAudienceImageView.setVisibility(View.VISIBLE);
+                    holder.powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+                } else {
+                    holder.powerUpAudienceImageView.setVisibility(View.GONE);
+                    holder.powerUpAudienceTextView.setVisibility(View.GONE);
+                }
             }
         }
     }

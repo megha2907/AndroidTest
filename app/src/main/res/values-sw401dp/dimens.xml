@@ -77,9 +77,11 @@
     <dimen name="dim_32">36.5dp</dimen>
     <dimen name="dim_36">41dp</dimen>
     <dimen name="dim_40">45.6dp</dimen>
+    <dimen name="dim_45">51dp</dimen>
     <dimen name="dim_60">68.4dp</dimen>
     <dimen name="dim_66">76dp</dimen>
     <dimen name="dim_72">82dp</dimen>
+    <dimen name="dim_80">91dp</dimen>
     <dimen name="dim_75">85.5dp</dimen>
     <dimen name="dim_90">103dp</dimen>
     <dimen name="dim_100">114dp</dimen>

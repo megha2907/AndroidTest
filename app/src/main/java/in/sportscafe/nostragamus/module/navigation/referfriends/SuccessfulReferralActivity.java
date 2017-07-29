@@ -59,7 +59,7 @@ public class SuccessfulReferralActivity extends NostragamusActivity implements V
         }
 
         if (NostragamusDataHandler.getInstance().getWalletInitialAmount() != null) {
-            Log.i("insidewalletinit", String.valueOf(NostragamusDataHandler.getInstance().getWalletInitialAmount()));
+
             tvSuccessfulReferralTwo.setVisibility(View.VISIBLE);
             if (NostragamusDataHandler.getInstance().getWalletInitialAmount() > 0) {
                 tvSuccessfulReferralTwo.setText(WalletHelper.getFormattedStringOfAmount

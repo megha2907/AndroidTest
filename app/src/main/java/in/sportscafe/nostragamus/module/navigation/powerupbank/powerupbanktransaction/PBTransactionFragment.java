@@ -14,23 +14,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
-import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistory;
 import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditFragment;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralHistory;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralHistoryAdapter;
-import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
-import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 
 /**
  * Created by deepanshi on 7/13/17.
@@ -53,7 +48,7 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
     private ImageView ivPBPowerupPlayerPoll;
 
     private RecyclerView mPBTransactionHistoryRecyclerView;
-    private ReferralHistoryAdapter mPBTransactionHistoryAdapter;
+    private PBTransactionHistoryAdapter mPBTransactionHistoryAdapter;
 
     public PBTransactionFragment() {
     }
@@ -83,7 +78,7 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
     }
 
     private void initAdapter() {
-        mPBTransactionHistoryAdapter = new ReferralHistoryAdapter(getContext());
+        mPBTransactionHistoryAdapter = new PBTransactionHistoryAdapter(getContext());
 
         if (mPBTransactionHistoryRecyclerView != null) {
             mPBTransactionHistoryRecyclerView.setAdapter(mPBTransactionHistoryAdapter);
@@ -115,9 +110,9 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
             }
 
             @Override
-            public void onSuccessResponse(List<ReferralHistory> referralHistoryList) {
+            public void onSuccessResponse(List<PBTransactionHistory> pbTransactionHistory) {
                 dismissProgressbar();
-                onReferralHistoryListFetchedSuccessful(referralHistoryList);
+                onPBTransactionHistoryListFetchedSuccessful(pbTransactionHistory);
             }
         }).performApiCall(appFlavor);
     }
@@ -224,17 +219,17 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
     }
 
 
-    private void onReferralHistoryListFetchedSuccessful(List<ReferralHistory> referralHistoryList) {
+    private void onPBTransactionHistoryListFetchedSuccessful(List<PBTransactionHistory> pbTransactionHistory) {
 
         if (mPBTransactionHistoryAdapter != null) {
-            mPBTransactionHistoryAdapter.addReferralHistoryIntoList(referralHistoryList);
+            mPBTransactionHistoryAdapter.addPBTransactionHistoryIntoList(pbTransactionHistory);
         }
 
         RelativeLayout recyclerViewLayout = (RelativeLayout) getView().findViewById(R.id.pb_transaction_friends_act_rl);
 
         /* Empty list view */
         if (getActivity() != null && getView() != null && mPBTransactionHistoryAdapter != null) {
-            if (mPBTransactionHistoryAdapter.getReferralHistoryList() == null || mPBTransactionHistoryAdapter.getReferralHistoryList().isEmpty()) {
+            if (mPBTransactionHistoryAdapter.getPBTransactionHistoryList() == null || mPBTransactionHistoryAdapter.getPBTransactionHistoryList().isEmpty()) {
                 mPBTransactionHistoryRecyclerView.setVisibility(View.GONE);
                 recyclerViewLayout.setVisibility(View.GONE);
                 LinearLayout noHistoryLayout = (LinearLayout) getView().findViewById(R.id.pb_transaction_no_history_layout);

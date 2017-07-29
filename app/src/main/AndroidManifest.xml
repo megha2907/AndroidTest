@@ -321,6 +321,10 @@
             android:name=".module.store.StoreActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".module.navigation.powerupbank.earnmorepowerups.EarnMorePowerUpActivity"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
