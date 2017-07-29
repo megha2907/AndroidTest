@@ -34,7 +34,6 @@ import in.sportscafe.nostragamus.module.play.powerup.dto.UserBalancePowerupDto;
 import in.sportscafe.nostragamus.module.play.powerup.dto.UserDemandPowerUpDto;
 import in.sportscafe.nostragamus.module.play.powerup.io.PowerupBankStatusApiModelImpl;
 import in.sportscafe.nostragamus.module.popups.banktransfer.BankTranferApiModelImpl;
-import in.sportscafe.nostragamus.module.store.StoreActivity;
 import in.sportscafe.nostragamus.module.store.StoreLaunchMode;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
@@ -173,29 +172,33 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     }
 
     private void changeAddButtonsToBuyIfRequired() {
+        changeDoublerToBuy();
+        changeNoNegativeToBuy();
+        changeAudiencePollToBuy();
+    }
+
+    private void changeAudiencePollToBuy() {
         if (getView() != null && mApiResponse != null && mApiResponse.getUserBalance() != null) {
-
-            Button buyDoublerButton = (Button) getView().findViewById(R.id.powerup_bank_buy_double_button);
-            Button buyNoNegativeButton = (Button) getView().findViewById(R.id.powerup_bank_buy_no_negative_button);
             Button buyAudiencePollButton = (Button) getView().findViewById(R.id.powerup_bank_buy_audience_poll_button);
-            buyDoublerButton.setOnClickListener(this);
-            buyNoNegativeButton.setOnClickListener(this);
             buyAudiencePollButton.setOnClickListener(this);
-
-            /* Doubler */
-            ImageView img = (ImageView) getView().findViewById(R.id.powerup_bank_doubler_img);
-            if (mApiResponse.getUserBalance().getDoubler() <= 0) {
-                mAddDoublerButton.setVisibility(View.GONE);
-                buyDoublerButton.setVisibility(View.VISIBLE);
-                img.setImageResource(R.drawable.double_grey_powerup);
+            ImageView img = (ImageView) getView().findViewById(R.id.powerup_bank_audience_poll_img);
+            if (mApiResponse.getUserBalance().getAudiencePoll() <= 0) {
+                mAddAudiencePollButton.setVisibility(View.GONE);
+                buyAudiencePollButton.setVisibility(View.VISIBLE);
+                img.setImageResource(R.drawable.audience_poll_grey_powerup);
             } else {
-                mAddDoublerButton.setVisibility(View.VISIBLE);
-                buyDoublerButton.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.double_powerup);
+                mAddAudiencePollButton.setVisibility(View.VISIBLE);
+                buyAudiencePollButton.setVisibility(View.GONE);
+                img.setImageResource(R.drawable.audience_poll_powerup);
             }
+        }
+    }
 
-            /* No Negative */
-            img = (ImageView) getView().findViewById(R.id.powerup_bank_noneg_img);
+    private void changeNoNegativeToBuy() {
+        if (getView() != null && mApiResponse != null && mApiResponse.getUserBalance() != null) {
+            Button buyNoNegativeButton = (Button) getView().findViewById(R.id.powerup_bank_buy_no_negative_button);
+            buyNoNegativeButton.setOnClickListener(this);
+            ImageView img = (ImageView) getView().findViewById(R.id.powerup_bank_noneg_img);
             if (mApiResponse.getUserBalance().getNoNegative() <= 0) {
                 mAddNoNegativeButton.setVisibility(View.GONE);
                 buyNoNegativeButton.setVisibility(View.VISIBLE);
@@ -205,17 +208,23 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                 buyNoNegativeButton.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.no_negative_powerup);
             }
+        }
+    }
 
-            /* Audience Poll */
-            img = (ImageView) getView().findViewById(R.id.powerup_bank_audience_poll_img);
-            if (mApiResponse.getUserBalance().getAudiencePoll() <= 0) {
-                mAddAudiencePollButton.setVisibility(View.GONE);
-                buyAudiencePollButton.setVisibility(View.VISIBLE);
-                img.setImageResource(R.drawable.audience_poll_grey_powerup);
+    private void changeDoublerToBuy() {
+        if (getView() != null && mApiResponse != null && mApiResponse.getUserBalance() != null) {
+            Button buyDoublerButton = (Button) getView().findViewById(R.id.powerup_bank_buy_double_button);
+            buyDoublerButton.setOnClickListener(this);
+            ImageView img = (ImageView) getView().findViewById(R.id.powerup_bank_doubler_img);
+
+            if (mApiResponse.getUserBalance().getDoubler() <= 0) {
+                mAddDoublerButton.setVisibility(View.GONE);
+                buyDoublerButton.setVisibility(View.VISIBLE);
+                img.setImageResource(R.drawable.double_grey_powerup);
             } else {
-                mAddAudiencePollButton.setVisibility(View.VISIBLE);
-                buyAudiencePollButton.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.audience_poll_powerup);
+                mAddDoublerButton.setVisibility(View.VISIBLE);
+                buyDoublerButton.setVisibility(View.GONE);
+                img.setImageResource(R.drawable.double_powerup);
             }
         }
     }
@@ -489,12 +498,14 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
                     enableResetButton(true);
                     enableTransferToChallengeButton(true);
+
+                    changeAudiencePollToBuy();
                 } else {
                     onMaxAudiencePollPowerUpAdded(true);
                 }
             } else {
-                // No more doubler in bank.... change to buy
                 mAddAudiencePollButton.setEnabled(false);
+                changeAudiencePollToBuy();
             }
         }
     }
@@ -542,12 +553,13 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                     mDemandedNoNegativeTextView.setText(String.valueOf(mUserDemandPowerup.getNoNegative()));
                     enableResetButton(true);
                     enableTransferToChallengeButton(true);
+                    changeNoNegativeToBuy();
                 } else {
                     onMaxNoNegativePowerUpAdded(true);
                 }
             } else {
-                // No more doubler in bank.... change to buy
                 mAddNoNegativeButton.setEnabled(false);
+                changeNoNegativeToBuy();
             }
         }
     }
@@ -584,12 +596,13 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
                     enableResetButton(true);
                     enableTransferToChallengeButton(true);
+                    changeDoublerToBuy();
                 } else {
                     onMaxDoublerPowerUpAdded(true);
                 }
             } else {
-                // No more doubler in bank.... change to buy
                 mAddDoublerButton.setEnabled(false);
+                changeDoublerToBuy();
             }
         }
     }

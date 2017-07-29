@@ -2,7 +2,9 @@ package in.sportscafe.nostragamus.module.store;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,9 +28,7 @@ import java.util.Map;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.ServerDataManager;
 import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
@@ -42,7 +42,6 @@ import in.sportscafe.nostragamus.module.store.dto.StoreSections;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
-import in.sportscafe.nostragamus.webservice.NostragamusService;
 
 /**
  * Created by deepanshi on 7/25/17.
@@ -87,13 +86,16 @@ public class StoreFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_store, container, false);
-
-        fetchStoreDataFromServer();
         initRootView(rootView);
-//        initAdapter();
-        setInfo();
-
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        fetchStoreDataFromServer();
+        setInfo();
+        fetchPowerupDetailsFromServer();
     }
 
     private void initAdapter() {
@@ -187,12 +189,13 @@ public class StoreFragment extends BaseFragment {
             public void onSuccessResponse(BuyResponse buyResponse) {
                 dismissProgressbar();
                 onBuySuccessResponse(buyResponse, storeItem);
-                fetchPowerupDetailsToUpdateUi();
+                fetchPowerupDetailsFromServer();
             }
         };
     }
 
-    private void fetchPowerupDetailsToUpdateUi() {
+    private void fetchPowerupDetailsFromServer() {
+        /* Silent call */
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             UserInfoModelImpl.newInstance(new UserInfoModelImpl.OnGetUserInfoModelListener() {
                 @Override
@@ -202,12 +205,12 @@ public class StoreFragment extends BaseFragment {
 
                 @Override
                 public void onFailedGetUpdateUserInfo(String message) {
-                    showMessage(Constants.Alerts.API_FAIL);
+//                    showMessage(Constants.Alerts.API_FAIL);
                 }
 
                 @Override
                 public void onNoInternet() {
-                    showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+//                    showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
                 }
             }).getUserInfo();
         } else {
@@ -216,24 +219,34 @@ public class StoreFragment extends BaseFragment {
         }
     }
 
-    private void onBuySuccessResponse(BuyResponse buyResponse, StoreItems storeItems) {
+    private void onBuySuccessResponse(BuyResponse buyResponse, final StoreItems storeItems) {
         if (buyResponse != null) {
             if (buyResponse.getStatus() == Constants.ApiSuccessStatusCode.SUCCESS) {
-                StoreBuySuccessDialogFragment fragment = StoreBuySuccessDialogFragment.newInstance(BUY_SUCCESS_DIALOG_REQUEST_CODE,
-                        storeItems, new StoreBuySuccessDialogListener() {
-                            @Override
-                            public void onCloseButtonClicked() {
-                                // Nothing to do
-                            }
-
-                            @Override
-                            public void onOkayButtonClicked() {
-                                onPurchaseOkayed();
-                            }
-                        });
-                fragment.show(getChildFragmentManager(), StoreBuySuccessDialogFragment.class.getSimpleName());
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        showBuySuccessfulDialog(storeItems);
+                    }
+                }, 500);
             }
         }
+    }
+
+    private void showBuySuccessfulDialog(StoreItems storeItems) {
+        StoreBuySuccessDialogFragment fragment = StoreBuySuccessDialogFragment.newInstance(BUY_SUCCESS_DIALOG_REQUEST_CODE,
+                storeItems, new StoreBuySuccessDialogListener() {
+                    @Override
+                    public void onCloseButtonClicked() {
+                        // Nothing to do
+                    }
+
+                    @Override
+                    public void onOkayButtonClicked() {
+                        onPurchaseOkayed();
+                    }
+                });
+        fragment.show(getChildFragmentManager(), StoreBuySuccessDialogFragment.class.getSimpleName());
     }
 
     private void onPurchaseOkayed() {
@@ -262,7 +275,6 @@ public class StoreFragment extends BaseFragment {
     }
 
     private void fetchStoreDataFromServer() {
-
         showProgressbar();
         StoreApiModelImpl.newInstance(new StoreApiModelImpl.StoreApiListener() {
             @Override
@@ -309,7 +321,6 @@ public class StoreFragment extends BaseFragment {
     }
 
     private void setInfo() {
-
         UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
         if (userInfo != null) {
             getPowerUps(userInfo);
@@ -370,8 +381,12 @@ public class StoreFragment extends BaseFragment {
 
     private HashMap<String, PowerUp> getPowerUpMap(HashMap<String, Integer> powerUps) {
         HashMap<String, PowerUp> powerUpMaps = new HashMap<>();
-        for (Map.Entry<String, Integer> entry : powerUps.entrySet()) {
-            powerUpMaps.put(entry.getKey(), new PowerUp(entry.getKey(), entry.getValue()));
+        if (powerUps != null && !powerUps.isEmpty()) {
+            for (Map.Entry<String, Integer> entry : powerUps.entrySet()) {
+                if (entry.getKey() != null && entry.getValue() != null) {
+                    powerUpMaps.put(entry.getKey(), new PowerUp(entry.getKey(), entry.getValue()));
+                }
+            }
         }
         return powerUpMaps;
     }
@@ -392,6 +407,19 @@ public class StoreFragment extends BaseFragment {
             if (mTvRunningLow.getVisibility() == View.GONE) {
                 mTvRunningLow.setVisibility(View.VISIBLE);
             }
+        } else {
+            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+            if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
+                ivPBPowerup2x.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.double_powerup));
+            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
+                ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.no_negative_powerup));
+            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
+                ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_powerup));
+            }
+
+            if (mTvRunningLow.getVisibility() == View.VISIBLE) {
+                mTvRunningLow.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -403,8 +431,6 @@ public class StoreFragment extends BaseFragment {
     }
 
     private void onStoreListFetchedSuccessful(List<StoreSections> storeSectionsList) {
-
-
         initAdapter();
         if (storeAdapter != null) {
             storeAdapter.addStoreSectionsIntoList(storeSectionsList);
@@ -427,7 +453,6 @@ public class StoreFragment extends BaseFragment {
                 mStoreRecyclerView.setVisibility(View.VISIBLE);
             }
         }
-
     }
 
     /**
@@ -435,7 +460,7 @@ public class StoreFragment extends BaseFragment {
      * @param launchMode
      * @param args
      */
-    public void fetchUserWalletFromServer(final int launchMode, final Bundle args) {
+    public void fetchUserWalletFromServerAndContinuePurchase(final int launchMode, final Bundle args) {
         showProgressbar();
         WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
             @Override

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
 
@@ -67,9 +68,17 @@ public class StoreBuySuccessDialogFragment extends NostragamusDialogFragment imp
         if (getView() != null && args != null && args.containsKey(Constants.BundleKeys.STORE_ITEM)) {
             StoreItems storeItems = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.STORE_ITEM));
 
-            if (storeItems != null && !TextUtils.isEmpty(storeItems.getProductImage())) {
-                HmImageView productImageView = (HmImageView) getView().findViewById(R.id.store_success_dialog_imageView);
-                productImageView.setImageUrl(storeItems.getProductImage());
+            if (storeItems != null) {
+                if (!TextUtils.isEmpty(storeItems.getProductImage())) {
+                    HmImageView productImageView = (HmImageView) getView().findViewById(R.id.store_success_dialog_imageView);
+                    productImageView.setImageUrl(storeItems.getProductImage());
+                }
+
+                if (!TextUtils.isEmpty(storeItems.getProductName())) {
+                    TextView descTextView = (TextView) getView().findViewById(R.id.store_buy_success_desc_textView);
+                    String msg = storeItems.getProductName() + " have been added to your bank!";
+                    descTextView.setText(msg);
+                }
             }
         }
     }
