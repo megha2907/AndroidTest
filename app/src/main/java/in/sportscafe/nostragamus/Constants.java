@@ -750,4 +750,9 @@ public interface Constants {
 
     public static final String AMOUNT_DECIMAL_PATTERN = "#0.00";
     public static final String RUPEE_SYMBOL = "₹ ";
+    String INDIAN_CURRENCY_CODE = "INR";
+
+    interface FaceBookAnalyticsEvents {
+        String MATCH_PLAY_COMPLETED = "Played";
+    }
 }
