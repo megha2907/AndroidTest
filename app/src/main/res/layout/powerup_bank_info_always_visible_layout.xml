@@ -15,7 +15,7 @@
         android:layout_marginTop="@dimen/dim_20"
         android:text="Max of 2 Powerup each can be added"
         android:textColor="@color/white_dim"
-        android:textSize="@dimen/sp_14"
+        android:textSize="@dimen/sp_15"
         app:typeface="lato_regular" />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -24,7 +24,7 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dim_10"
-        android:text="Earn more powerup from Powerup Bank section in your profile"
+        android:text="- Earn more powerup from Powerup Bank section in your profile"
         android:textColor="@color/white_dim"
         android:textSize="@dimen/sp_14"
         app:typeface="lato_regular" />
