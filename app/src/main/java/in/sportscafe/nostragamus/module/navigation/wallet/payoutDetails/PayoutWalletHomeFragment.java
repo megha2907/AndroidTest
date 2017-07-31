@@ -69,7 +69,7 @@ public class PayoutWalletHomeFragment extends BaseFragment {
         boolean isBankAdded = WalletHelper.isBankPayoutDetailsProvided();
 
         if (!isBankAdded && !isPaytmAdded) {
-            infoTextView.setText("We strongly recommend adding Paytm for faster, hassle-free transactions");
+            infoTextView.setText("We strongly recommend using Paytm for faster, hassle-free transactions.");
         }
     }
 

@@ -19,7 +19,7 @@
             android:id="@+id/payout_wallet_info_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="We strongly recommend using Paytm for faster, hassle-free transactions"
+            android:text="We strongly recommend using Paytm for faster, hassle-free transactions."
             android:gravity="left"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_13"

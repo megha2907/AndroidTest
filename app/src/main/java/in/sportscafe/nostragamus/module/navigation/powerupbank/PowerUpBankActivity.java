@@ -45,7 +45,7 @@ public class PowerUpBankActivity extends NostragamusActivity implements PowerUpB
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.powerup_bank_toolbar);
         TextView tvToolbar = (TextView) findViewById(R.id.powerup_bank_toolbar_tv);
-        tvToolbar.setText("Powerups Bank");
+        tvToolbar.setText("Powerup Bank");
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

@@ -371,7 +371,7 @@
                 android:enabled="false"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/grey_button_selector"
-                android:text="Reset"
+                android:text="Reset All"
                 android:textColor="@drawable/white_text_selector"
                 android:textAllCaps="false"
                 android:layout_marginTop="@dimen/dim_20"
