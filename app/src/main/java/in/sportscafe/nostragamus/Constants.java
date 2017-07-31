@@ -724,6 +724,7 @@ public interface Constants {
         String TERMS_SERVICE = "http://nostragamus.in/terms.html";
         String PRIVACY = "http://nostragamus.in/privacy.html";
         String REFERRAL_TERMS = "http://nostragamus.in/referralapp.html";
+        String POWERUP_BANK_URL = "http://nostragamus.in/powerup-bankapp.html";
 
     }
 

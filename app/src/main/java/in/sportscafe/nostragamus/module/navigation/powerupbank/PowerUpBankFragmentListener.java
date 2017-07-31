@@ -17,4 +17,6 @@ public interface PowerUpBankFragmentListener {
     void onTermsClicked();
 
     void onPowerUpTransactionHistoryClicked(Bundle bundle);
+
+    void onStoreClicked();
 }
