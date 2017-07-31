@@ -1,20 +1,26 @@
 [
   {
-    "title": "Predict Sports Events",
-    "desc": "Get in-match stats, swipe to predict",
-    "imageResName": "onboard_predict_match",
-    "imageUrl":"https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_predict_match.png"
-  },
-  {
-    "title": "Play Weekly Challenges",
-    "desc": "Win cash prizes, or play for fun",
-    "imageResName": "onboard_join_public",
-    "imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_join_public.png"
-  },
-  {
-    "title": "War With Friends",
-    "desc": "Create your own groups",
-    "imageResName": "onboard_war_friends",
-    "imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_war_friends.png"
-  }
+		"title": "Daily Fantasy Sports Prediction",
+		"desc": "Make Predictions. Win cash prizes!",
+		"imageResName": "onboard_dailysports",
+		"imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_dailysports_2.png"
+	},
+	{
+		"title": "Simpler than ever before.",
+		"desc": "Predict with just a swipe!",
+		"imageResName": "onboard_swipe",
+		"imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_swipe_2.png"
+	},
+	{
+		"title": "Challenges across various sports",
+		"desc": "Play for cash or play for fun!",
+		"imageResName": "onboard_challenges",
+		"imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_challenges_2.png"
+	},
+	{
+		"title": "Compete With Friends",
+		"desc": "Prove you know more about sports!",
+		"imageResName": "onboard_friends",
+		"imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_friends_2.png"
+	}
 ]
