@@ -130,9 +130,9 @@ public class VerifyOTPFragment extends BaseFragment implements View.OnClickListe
 
             phoneNumber = getArguments().getString(Constants.BundleKeys.PHONE_NUMBER);
             phoneNumberText.setText("We have sent an OTP to " + phoneNumber +
-                    ", if you haven't yet received the code , click the link below.");
+                    ". If you do not received the code , click the link below to resend.");
         } else {
-            phoneNumberText.setText("We have sent an OTP to your phone number, if you haven't yet received the code , click the link below.");
+            phoneNumberText.setText("We have sent an OTP to your phone number. If you do not received the code , click the link below to resend.");
         }
     }
 
@@ -247,7 +247,7 @@ public class VerifyOTPFragment extends BaseFragment implements View.OnClickListe
                         }
                     });
                 }else {
-                    resendOTPBtn.setText("Resend OTP in 00:" + String.format("%02d", ((millisUntilFinished) / 1000) - 1));
+                    resendOTPBtn.setText("You can resend OTP in 00:" + String.format("%02d", ((millisUntilFinished) / 1000) - 1));
                     if (getActivity()!=null) {
                         resendOTPBtn.setTextColor(ResourcesCompat.getColor(getActivity().getResources(), R.color.white_999999, null));
                     }

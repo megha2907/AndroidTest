@@ -565,7 +565,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                     st2.setSpan(new ForegroundColorSpan(Color.WHITE), 0, t2.length(), 0);
                     builder.append(st2);
 
-                    String t3 = " We'll update your score, Meanwhile you can play other live games!";
+                    String t3 = ". We will notify you when the results are out. Meanwhile go back and play other live games!";
                     SpannableString st3 = new SpannableString(t3);
                     builder.append(st3);
 
