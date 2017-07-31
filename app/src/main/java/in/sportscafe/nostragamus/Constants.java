@@ -133,7 +133,7 @@ public interface Constants {
         String EDIT_PROFILE_FAILED = "Profile update failed. Try again.";
         String NAME_EMPTY = "Please enter name";
         String NICKNAME_EMPTY = "Please enter username";
-        String NICKNAME_NOT_VALID = "Username should be between 3 and 15 characters long";
+        String NICKNAME_NOT_VALID = "Username should be 3-15 characters long";
         String NICKNAME_NO_UPPERCASE = "Oops ,Please use lowercase";
         String NICKNAME_CONFLICT = "Oops , this username is already taken";
         String USERNAME_EMPTY = "Please enter username";
@@ -725,6 +725,7 @@ public interface Constants {
         String TERMS_SERVICE = "http://nostragamus.in/terms.html";
         String PRIVACY = "http://nostragamus.in/privacy.html";
         String REFERRAL_TERMS = "http://nostragamus.in/referralapp.html";
+        String POWERUP_BANK_URL = "http://nostragamus.in/powerup-bankapp.html";
 
     }
 

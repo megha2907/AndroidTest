@@ -133,8 +133,7 @@
 
                     <com.jeeva.android.widgets.customfont.CustomEditText
                         android:id="@+id/edit_et_nickname_new"
-                        style="@style/NewEditTextStyle"
-                        android:inputType="textCapSentences" />
+                        style="@style/NewEditTextStyle" />
 
                 </LinearLayout>
 

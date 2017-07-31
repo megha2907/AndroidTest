@@ -13,6 +13,8 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.EarnMorePowerUpActivity;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.PBTransactionActivity;
+import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
+import in.sportscafe.nostragamus.module.store.StoreActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
@@ -67,14 +69,14 @@ public class PowerUpBankActivity extends NostragamusActivity implements PowerUpB
     @Override
     public void onEarnMorePowerUpsClicked() {
         if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), EarnMorePowerUpActivity.class);
+            Intent intent = new Intent(getActivity(), ReferFriendActivity.class);
             startActivity(intent);
         }
     }
 
     @Override
     public void onTermsClicked() {
-        navigateToWebView(Constants.WebPageUrls.REFERRAL_TERMS, "Terms and Conditions");
+        navigateToWebView(Constants.WebPageUrls.POWERUP_BANK_URL, "Terms and Conditions");
     }
 
     @Override
@@ -82,6 +84,14 @@ public class PowerUpBankActivity extends NostragamusActivity implements PowerUpB
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), PBTransactionActivity.class);
             intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onStoreClicked() {
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), StoreActivity.class);
             startActivity(intent);
         }
     }

@@ -227,14 +227,42 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true">
 
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/navigation_refer_layout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Earn More Powerups"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14"
-                        app:typeface="lato_regular" />
+                        android:minHeight="@dimen/nav_row_height"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:visibility="visible"
+                        android:background="?android:attr/selectableItemBackground">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/navigation_earn_more_tv_one"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Refer a friend and earn "
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            app:typeface="lato_regular" />
+
+                        <ImageView
+                            android:id="@+id/navigation_earn_more_iv"
+                            android:layout_width="@dimen/nav_row_icon_dimen"
+                            android:layout_height="@dimen/nav_row_icon_dimen"
+                            android:layout_marginTop="@dimen/dp_1"
+                            android:src="@drawable/navigation_powerup_icon"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/navigation_earn_more_tv_two"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" powerups!"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            app:typeface="lato_regular" />
+
+                    </LinearLayout>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -246,6 +274,43 @@
                         android:src="@drawable/back_icon_grey" />
 
                 </RelativeLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_0.5"
+                android:layout_marginLeft="@dimen/dim_10"
+                android:layout_marginRight="@dimen/dim_10"
+                android:background="@color/line_separator" />
+
+            <!--Transaction section -->
+            <RelativeLayout
+                android:id="@+id/powerup_bank_store_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim_20"
+                android:layout_marginRight="@dimen/dim_20"
+                android:background="?android:attr/selectableItemBackground"
+                android:minHeight="@dimen/nav_row_height">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Buy Powerups"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dim_2"
+                    android:rotation="180"
+                    android:src="@drawable/back_icon_grey" />
 
             </RelativeLayout>
 

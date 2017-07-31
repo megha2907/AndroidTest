@@ -235,7 +235,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
 
                 if (productSaleInfo.getSalePercentage() != 0) {
                     btnSalePercentage.setVisibility(View.VISIBLE);
-                    btnSalePercentage.setText(productSaleInfo.getSalePercentage().toString() + " %off");
+                    btnSalePercentage.setText(productSaleInfo.getSalePercentage().toString() + "% off");
                 }
 
                 int savePrice = 0;

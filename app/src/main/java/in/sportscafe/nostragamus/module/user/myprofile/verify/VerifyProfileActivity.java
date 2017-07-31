@@ -89,7 +89,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
     @Override
     public void onResendOTP(String phoneNumber) {
-        getOTPRequest(phoneNumber);
+        getOTPResendRequest(phoneNumber);
     }
 
     private void getOTPRequest(String phoneNumber) {
@@ -112,6 +112,29 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
             public void onSuccessResponse(VerifyOTPInfo verifyOTPInfo, String phoneNumber) {
                 dismissProgressbar();
                 verifyPhoneNumberValid(verifyOTPInfo, phoneNumber);
+            }
+        }).performApiCall(phoneNumber);
+    }
+
+    private void getOTPResendRequest(String phoneNumber) {
+
+        showProgressbar();
+        GetOTPApiModelImpl.newInstance(new GetOTPApiModelImpl.GetOTPApiListener() {
+            @Override
+            public void noInternet() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onApiFailed() {
+                dismissProgressbar();
+                showMessage(Constants.Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onSuccessResponse(VerifyOTPInfo verifyOTPInfo, String phoneNumber) {
+                dismissProgressbar();
             }
         }).performApiCall(phoneNumber);
     }
