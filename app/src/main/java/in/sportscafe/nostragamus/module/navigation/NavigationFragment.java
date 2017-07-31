@@ -63,7 +63,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
         view.findViewById(R.id.navigation_powerup_bank_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_store_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_whats_new_layout).setOnClickListener(this);
-        view.findViewById(R.id.navigation_submit_question_layout).setOnClickListener(this);
+//        view.findViewById(R.id.navigation_submit_question_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_help_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_settings_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_app_update_layout).setOnClickListener(this);
@@ -200,10 +200,10 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 onReferFriendClicked();
                 break;
 
-            case R.id.navigation_submit_question_layout:
+            /*case R.id.navigation_submit_question_layout:
                 NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.SUBMIT_QUESTION);
                 onSubmitQuestionClicked();
-                break;
+                break;*/
 
             case R.id.navigation_help_layout:
                 NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.HELP);

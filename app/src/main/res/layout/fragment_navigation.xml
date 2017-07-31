@@ -284,7 +284,7 @@
                 android:layout_marginRight="@dimen/dp_10"/>
 
             <!--Submit question section -->
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/navigation_submit_question_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -316,7 +316,7 @@
                 android:layout_height="@dimen/dp_0.5"
                 android:background="@color/line_separator"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:layout_marginRight="@dimen/dp_10"/>-->
 
             <!--Help section -->
             <LinearLayout

@@ -130,9 +130,9 @@ public class VerifyOTPFragment extends BaseFragment implements View.OnClickListe
 
             phoneNumber = getArguments().getString(Constants.BundleKeys.PHONE_NUMBER);
             phoneNumberText.setText("We have sent an OTP to " + phoneNumber +
-                    ", if you haven't received the code , use the button to resend it.");
+                    ", if you haven't yet received the code , click the link below.");
         } else {
-            phoneNumberText.setText("We have sent an OTP to your Phone Number, if you haven't received the code , use the button to resend it.");
+            phoneNumberText.setText("We have sent an OTP to your phone number, if you haven't yet received the code , click the link below.");
         }
     }
 

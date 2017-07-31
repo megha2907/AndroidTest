@@ -35,9 +35,10 @@ public class WithdrawPayoutChoiceActivity extends NostragamusActivity implements
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.payout_choice_toolbar);
-        toolbar.setTitle("Choose Withdrawal Account");
         setSupportActionBar(toolbar);
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
         toolbar.setNavigationIcon(R.drawable.back_icon_grey);
         toolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {
@@ -60,7 +61,11 @@ public class WithdrawPayoutChoiceActivity extends NostragamusActivity implements
 
     @Override
     public void onAddPayoutDetailsClicked() {
+        Bundle args = new Bundle();
+        args.putInt(Constants.BundleKeys.LAUNCH_MODE, PayoutLaunchMode.FROM_WITHDRAWAL_AS_NO_PAY_OUT_ACC);
+
         Intent intent = new Intent(this, PayoutWalletHomeActivity.class);
+        intent.putExtras(args);
         startActivityForResult(intent, ADD_PAYOUT_REQUEST_CODE);
     }
 

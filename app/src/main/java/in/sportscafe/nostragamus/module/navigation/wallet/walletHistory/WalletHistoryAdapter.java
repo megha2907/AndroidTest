@@ -103,8 +103,26 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                 } else if (transactionType.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_TYPE_PROMO)) {
                     populatePromoDetails(holder, transaction);
 
+                } else if (transactionType.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_TYPE_BUY)) {
+                    populateBuyDetails(holder, transaction);
+
                 }
             }
+        }
+    }
+
+    private void populateBuyDetails(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
+        if (transaction != null) {
+            holder.txnImageView.setImageResource(R.drawable.wallet_join_challenge_icn);
+            double amount = transaction.getAmount();
+            String title = "Paid " + WalletHelper.getFormattedStringOfAmount(amount) + " from your wallet";
+            holder.titleTextView.setText(title);
+
+            String detailMsg = "Bought Powerup";
+            if (!TextUtils.isEmpty(transaction.getMessage())) {
+                detailMsg = transaction.getMessage();
+            }
+            holder.detailsTextView.setText(detailMsg);
         }
     }
 
@@ -112,16 +130,14 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
         if (transaction != null) {
             holder.txnImageView.setImageResource(R.drawable.wallet_promo_icn);
             double amount = transaction.getAmount();
-            if (amount > 0) {
-                String title = "Added " + WalletHelper.getFormattedStringOfAmount(amount) + " to Promo money";
-                holder.titleTextView.setText(title);
+            String title = "Added " + WalletHelper.getFormattedStringOfAmount(amount) + " to Promo money";
+            holder.titleTextView.setText(title);
 
-                String detailMsg = "";
-                if (!TextUtils.isEmpty(transaction.getMessage())) {
-                    detailMsg = transaction.getMessage();
-                }
-                holder.detailsTextView.setText(detailMsg);
+            String detailMsg = "";
+            if (!TextUtils.isEmpty(transaction.getMessage())) {
+                detailMsg = transaction.getMessage();
             }
+            holder.detailsTextView.setText(detailMsg);
         }
     }
 
@@ -129,16 +145,14 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
         if (transaction != null) {
             holder.txnImageView.setImageResource(R.drawable.wallet_won_icn);
             double amount = transaction.getAmount();
-            if (amount > 0) {
-                String title = "Added " + WalletHelper.getFormattedStringOfAmount(amount) + " to your winnings";
-                holder.titleTextView.setText(title);
+            String title = "Added " + WalletHelper.getFormattedStringOfAmount(amount) + " to your winnings";
+            holder.titleTextView.setText(title);
 
-                String detailMsg = "You won by playing";
-                if (!TextUtils.isEmpty(transaction.getMessage())) {
-                    detailMsg = transaction.getMessage();
-                }
-                holder.detailsTextView.setText(detailMsg);
+            String detailMsg = "You won by playing";
+            if (!TextUtils.isEmpty(transaction.getMessage())) {
+                detailMsg = transaction.getMessage();
             }
+            holder.detailsTextView.setText(detailMsg);
         }
     }
 
@@ -146,16 +160,14 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
         if (transaction != null) {
             holder.txnImageView.setImageResource(R.drawable.wallet_join_challenge_icn);
             double amount = transaction.getAmount();
-            if (amount > 0) {
-                String title = "Paid " + WalletHelper.getFormattedStringOfAmount(amount) + " from your wallet";
-                holder.titleTextView.setText(title);
+            String title = "Paid " + WalletHelper.getFormattedStringOfAmount(amount) + " from your wallet";
+            holder.titleTextView.setText(title);
 
-                String detailMsg = "Joined challenge ";
-                if (!TextUtils.isEmpty(transaction.getMessage())) {
-                    detailMsg = transaction.getMessage();
-                }
-                holder.detailsTextView.setText(detailMsg);
+            String detailMsg = "Joined challenge ";
+            if (!TextUtils.isEmpty(transaction.getMessage())) {
+                detailMsg = transaction.getMessage();
             }
+            holder.detailsTextView.setText(detailMsg);
         }
     }
 
@@ -169,36 +181,30 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                     holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_success_icn);
                     String account = transaction.getAccount();
 
-                    if (amount > 0) {
-                        String msg = "Added " + WalletHelper.getFormattedStringOfAmount(amount);
+                    String msg = "Added " + WalletHelper.getFormattedStringOfAmount(amount);
 
-                        if (!TextUtils.isEmpty(account)) {
-                            if (account.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_ACCOUNT_PAYTM)) {
-                                msg = msg + " to your paytm wallet";
-                            } else if (account.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_ACCOUNT_BANK)) {
-                                msg = msg + " to your bank account";
-                            }
+                    if (!TextUtils.isEmpty(account)) {
+                        if (account.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_ACCOUNT_PAYTM)) {
+                            msg = msg + " to your paytm wallet";
+                        } else if (account.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_ACCOUNT_BANK)) {
+                            msg = msg + " to your bank account";
                         }
-
-                        holder.titleTextView.setText(msg);
-                        holder.detailsTextView.setText("Withdrawn from your winnings");
                     }
+
+                    holder.titleTextView.setText(msg);
+                    holder.detailsTextView.setText("Withdrawn from your winnings");
 
                 } else if (status.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_STATUS_FAILED)) {    /* If transaction status FAILED */
                     holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_failed_icn);
-                    if (amount > 0) {
-                        String msg = WalletHelper.getFormattedStringOfAmount(amount) + " withdrawal failed";
-                        holder.titleTextView.setText(msg);
-                        holder.detailsTextView.setText("Failed to withdraw from your winnings");
-                    }
+                    String msg = WalletHelper.getFormattedStringOfAmount(amount) + " withdrawal failed";
+                    holder.titleTextView.setText(msg);
+                    holder.detailsTextView.setText("Failed to withdraw from your winnings");
 
                 } else if (status.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_STATUS_INITIATED)) {     /* If transaction status Initiated */
                     holder.txnImageView.setImageResource(R.drawable.wallet_withdraw_initiated_icn);
-                    if (amount > 0) {
-                        String msg = WalletHelper.getFormattedStringOfAmount(amount) + " withdrawal in progress";
-                        holder.titleTextView.setText(msg);
-                        holder.detailsTextView.setText("Withdrawn from your winnings");
-                    }
+                    String msg = WalletHelper.getFormattedStringOfAmount(amount) + " withdrawal in progress";
+                    holder.titleTextView.setText(msg);
+                    holder.detailsTextView.setText("Withdrawn from your winnings");
                 }
             }
         }
@@ -211,10 +217,8 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                 holder.txnImageView.setImageResource(R.drawable.wallet_deposit_icn);
 
                 double amount = transaction.getAmount();
-                if (amount > 0) {
-                    String msg = "Added " + WalletHelper.getFormattedStringOfAmount(amount) + " to deposit money";
-                    holder.titleTextView.setText(msg);
-                }
+                String msg = "Added " + WalletHelper.getFormattedStringOfAmount(amount) + " to deposit money";
+                holder.titleTextView.setText(msg);
 
                 String account = transaction.getAccount();
                 if (!TextUtils.isEmpty(account)) {

@@ -76,7 +76,7 @@ public class WithdrawPayoutChoiceFragment extends BaseFragment implements View.O
     }
 
     private void init() {
-        showPayoutAccounts();
+        fetchWalletDetails();
     }
 
     private void showPayoutAccounts() {

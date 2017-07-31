@@ -690,6 +690,7 @@ public interface Constants {
         String TRANSACTION_TYPE_PROMO = "promo";
         String TRANSACTION_TYPE_JOINING = "joining";
         String TRANSACTION_TYPE_WINNING = "winning";
+        String TRANSACTION_TYPE_BUY = "buy";
 
         String TRANSACTION_STATUS_INITIATED = "initiated";
         String TRANSACTION_STATUS_SUCCESS = "success";
