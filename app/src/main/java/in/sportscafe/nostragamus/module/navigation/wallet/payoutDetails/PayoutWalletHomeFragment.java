@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
@@ -57,6 +58,19 @@ public class PayoutWalletHomeFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
 
         recyclerView.setAdapter(new PayoutHomeRecyclerAdapter(getContext(), getAdapterItemList(), getAdapterActionListener()));
+
+        updateTextOnUi(rootView);
+    }
+
+    private void updateTextOnUi(View rootView) {
+        TextView infoTextView = (TextView) rootView.findViewById(R.id.payout_wallet_info_textView);
+
+        boolean isPaytmAdded = WalletHelper.isPaytmPayoutDetailsProvided();
+        boolean isBankAdded = WalletHelper.isBankPayoutDetailsProvided();
+
+        if (!isBankAdded && !isPaytmAdded) {
+            infoTextView.setText("We strongly recommend adding Paytm for faster, hassle-free transactions");
+        }
     }
 
     private PayoutHomeRecyclerAdapter.IPayoutAdapterActionListener getAdapterActionListener() {

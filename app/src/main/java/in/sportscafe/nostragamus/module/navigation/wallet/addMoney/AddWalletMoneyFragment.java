@@ -4,7 +4,6 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
-
-import org.w3c.dom.Text;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
@@ -75,10 +72,8 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
         if (getView() != null) {
             /* Showing ONLY deposit money while adding into wallet */
             double amount = WalletHelper.getDepositAmount();
-            if (amount > 0) {
-                TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_add_money_amount_textView);
-                balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
-            }
+            TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_add_money_amount_textView);
+            balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
         }
     }
 

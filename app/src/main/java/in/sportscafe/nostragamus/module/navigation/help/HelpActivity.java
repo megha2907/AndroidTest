@@ -76,4 +76,10 @@ public class HelpActivity extends NostragamusActivity implements HelpFragmentLis
         Intent intent = new Intent(this, DummyGameActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onSendFeedbackClicked() {
+
+    }
+
 }

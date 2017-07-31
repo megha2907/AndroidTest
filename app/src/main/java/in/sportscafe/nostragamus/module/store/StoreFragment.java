@@ -329,47 +329,48 @@ public class StoreFragment extends BaseFragment {
 
     private void getPowerUps(UserInfo userInfo) {
 
+        int count = 0;
         if (userInfo.getPowerUps() != null) {
 
             mPowerUpMaps = getPowerUpMap(userInfo.getPowerUps());
-
             if (mPowerUpMaps != null) {
-
-                int count;
                 PowerUp powerUp = mPowerUpMaps.get(Constants.Powerups.XX);
-                if (null == powerUp) {
-                    count = 0;
-                } else {
+                if (null != powerUp) {
                     count = powerUp.getCount();
                 }
                 onGet2xPowerUp(count, count < 1);
 
                 powerUp = mPowerUpMaps.get(Constants.Powerups.NO_NEGATIVE);
-                if (null == powerUp) {
-                    count = 0;
-                } else {
+                if (null != powerUp) {
                     count = powerUp.getCount();
                 }
                 onGetNonegsPowerUp(count, count < 1);
 
                 powerUp = mPowerUpMaps.get(Constants.Powerups.AUDIENCE_POLL);
-                if (null == powerUp) {
-                    count = 0;
-                } else {
+                if (null != powerUp) {
                     count = powerUp.getCount();
                 }
                 onGetPollPowerUp(count, count < 1);
             }else {
-                int count = 0;
                 onGet2xPowerUp(count, count < 1);
                 onGetNonegsPowerUp(count, count < 1);
                 onGetPollPowerUp(count, count < 1);
             }
         }else {
-            int count = 0;
             onGet2xPowerUp(count, count < 1);
             onGetNonegsPowerUp(count, count < 1);
             onGetPollPowerUp(count, count < 1);
+        }
+
+        /* Show running low msg */
+        if (count < 1) {
+            if (mTvRunningLow.getVisibility() != View.VISIBLE) {
+                mTvRunningLow.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (mTvRunningLow.getVisibility() == View.VISIBLE) {
+                mTvRunningLow.setVisibility(View.GONE);
+            }
         }
 
     }
@@ -410,10 +411,6 @@ public class StoreFragment extends BaseFragment {
             } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
                 ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_grey_powerup));
             }
-
-            if (mTvRunningLow.getVisibility() == View.GONE) {
-                mTvRunningLow.setVisibility(View.VISIBLE);
-            }
         } else {
             textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
             if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
@@ -422,10 +419,6 @@ public class StoreFragment extends BaseFragment {
                 ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.no_negative_powerup));
             } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
                 ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_powerup));
-            }
-
-            if (mTvRunningLow.getVisibility() == View.VISIBLE) {
-                mTvRunningLow.setVisibility(View.GONE);
             }
         }
     }

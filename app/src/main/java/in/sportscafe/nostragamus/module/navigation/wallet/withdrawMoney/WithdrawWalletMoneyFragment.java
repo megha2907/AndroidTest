@@ -110,10 +110,8 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
     private void showWalletBalance() {
         if (getView() != null) {
             double winningAmount = WalletHelper.getWinningAmount();
-            if (winningAmount > 0) {
-                TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_withdraw_money_amount_textView);
-                balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(winningAmount));
-            }
+            TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_withdraw_money_amount_textView);
+            balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(winningAmount));
         }
     }
 

@@ -14,7 +14,20 @@
         android:layout_height="wrap_content"
         android:background="@color/colorMedium"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark" >
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/payout_choice_heading_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="Choose Withdrawal Account"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            app:typeface="lato_regular" />
+
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/fragment_container"
