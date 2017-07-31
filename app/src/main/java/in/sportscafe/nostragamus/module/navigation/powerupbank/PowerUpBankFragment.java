@@ -121,6 +121,7 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
         rootView.findViewById(R.id.powerup_bank_earn_more_layout).setOnClickListener(this);
         rootView.findViewById(R.id.powerup_bank_terms_layout).setOnClickListener(this);
         rootView.findViewById(R.id.powerup_bank_txn_history_layout).setOnClickListener(this);
+        rootView.findViewById(R.id.powerup_bank_store_layout).setOnClickListener(this);
         tvPowerupBankOne = (TextView) rootView.findViewById(R.id.powerup_bank_subheading_tv_one);
         tvPowerupBankTwo = (TextView) rootView.findViewById(R.id.powerup_bank_subheading_tv_two);
         mTvRunningLow = (TextView) rootView.findViewById(R.id.powerup_bank_low_powerups);
@@ -293,6 +294,12 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
             case R.id.powerup_bank_txn_history_layout:
                 if (mPowerUpBankFragmentListener != null) {
                     mPowerUpBankFragmentListener.onPowerUpTransactionHistoryClicked(mBundle);
+                }
+                break;
+
+            case R.id.powerup_bank_store_layout:
+                if (mPowerUpBankFragmentListener != null) {
+                    mPowerUpBankFragmentListener.onStoreClicked();
                 }
                 break;
         }
