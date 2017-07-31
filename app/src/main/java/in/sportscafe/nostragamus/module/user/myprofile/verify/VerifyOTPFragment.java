@@ -178,6 +178,7 @@ public class VerifyOTPFragment extends BaseFragment implements View.OnClickListe
             setOTPNotValid();
         } else {
             if (mVerifyProfileFragmentListener != null) {
+                Log.i("inside","onVerifyOTP");
                 mVerifyProfileFragmentListener.onVerifyOTP(otp);
             } else {
                 showMessage(Constants.Alerts.SOMETHING_WRONG);

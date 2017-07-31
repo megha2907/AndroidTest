@@ -33,6 +33,7 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.SuccessfulReferralActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
@@ -191,6 +192,8 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
         });
 
+        mUserNickNameEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+
         mUserNickNameEditText.addTextChangedListener(new TextWatcher() {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -209,11 +212,11 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
             public void afterTextChanged(Editable arg0) {
                 String s = arg0.toString();
-                if (!s.equals(s.toLowerCase())) {
-                    s = s.toLowerCase();
-                    mUserNickNameEditText.setText(s);
+//                if (!s.equals(s.toLowerCase())) {
+//                    s = s.toLowerCase();
+//                    mUserNickNameEditText.setText(s);
                     mUserNickNameEditText.setSelection(mUserNickNameEditText.getText().length());
-                }
+                //}
             }
         });
     }
@@ -250,7 +253,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void setNickName(String nickname) {
-        mUserNickNameEditText.setText(nickname);
+        mUserNickNameEditText.setText(WordUtils.capitalize(nickname));
     }
 
     @Override
@@ -356,7 +359,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         Intent intent = new Intent(this, VerifyProfileActivity.class);
         intent.putExtra(Constants.BundleKeys.SUCCESSFUL_REFERRAL,successfulReferral);
         startActivity(intent);
-        finish();
+        this.finish();
     }
 
     public void showImagePopup(View view) {
