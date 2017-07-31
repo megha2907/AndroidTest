@@ -365,7 +365,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
 
     private void showOrUpdateWalletAmount() {
         double amount = WalletHelper.getTotalBalance();
-        if (getView() != null && amount > 0) {
+        if (getView() != null) {
             TextView amountTextView = (TextView) getView().findViewById(R.id.navigation_wallet_amount_textView);
             amountTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
         }
