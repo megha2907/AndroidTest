@@ -6,6 +6,5 @@ package in.sportscafe.nostragamus.module.navigation.settings;
 
 public interface SettingsFragmentListener {
     void onAboutNostragamusClicked();
-    void onSendFeedbackClicked();
     void onLogoutClicked();
 }

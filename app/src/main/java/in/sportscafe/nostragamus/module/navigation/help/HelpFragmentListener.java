@@ -9,5 +9,5 @@ public interface HelpFragmentListener {
     void onGamePlayClicked();
     void onFaqClicked();
     void onPlaySampleGameClicked();
-
+    void onSendFeedbackClicked();
 }

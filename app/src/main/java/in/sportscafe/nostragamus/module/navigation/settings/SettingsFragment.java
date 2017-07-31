@@ -54,39 +54,8 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
 
     private void initRootView(View rootView) {
         rootView.findViewById(R.id.settings_about_layout).setOnClickListener(this);
-        rootView.findViewById(R.id.settings_send_feedback_layout).setOnClickListener(this);
+
         rootView.findViewById(R.id.settings_logout_layout).setOnClickListener(this);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        initialize();
-    }
-
-    private void initialize() {
-        setFeedbackText();
-    }
-
-    private void setFeedbackText() {
-        View view = getView();
-        if (view != null) {
-            TextView feedbackTextView = (TextView) view.findViewById(R.id.feedback_textView);
-
-            String feedbackText;
-            if (BuildConfig.IS_PAID_VERSION) {
-                 feedbackText = NostragamusDataHandler.getInstance().getProFeedBack();
-            }else {
-                feedbackText = NostragamusDataHandler.getInstance().getFeedBack();
-            }
-            if (TextUtils.isEmpty(feedbackText)) {
-                feedbackTextView.setText(Html.fromHtml(getString(R.string.feedback_string)));
-            }else {
-
-                feedbackTextView.setText(feedbackText);
-            }
-        }
     }
 
     @Override
@@ -96,12 +65,6 @@ public class SettingsFragment extends BaseFragment implements View.OnClickListen
             case R.id.settings_about_layout:
                 if (mSettingFragmentListener != null) {
                     mSettingFragmentListener.onAboutNostragamusClicked();
-                }
-                break;
-
-            case R.id.settings_send_feedback_layout:
-                if (mSettingFragmentListener != null) {
-                    mSettingFragmentListener.onSendFeedbackClicked();
                 }
                 break;
 

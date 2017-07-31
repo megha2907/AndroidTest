@@ -353,41 +353,6 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"/>
 
-            <!--Settings section -->
-            <LinearLayout
-                android:id="@+id/navigation_settings_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="@dimen/nav_row_height"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_24"
-                android:layout_marginRight="@dimen/dp_24"
-                android:background="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="@dimen/nav_row_icon_dimen"
-                    android:layout_height="@dimen/nav_row_icon_dimen"
-                    android:src="@drawable/navigation_settings_icn"/>
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Settings"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    app:typeface="lato_regular" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0.5"
-                android:background="@color/line_separator"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
-
             <!--Update section -->
             <LinearLayout
                 android:id="@+id/navigation_app_update_layout"
@@ -431,6 +396,41 @@
                     android:gravity="right"
                     android:textColor="@color/scrollbar_indicator"
                     android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0.5"
+                android:background="@color/line_separator"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"/>
+
+            <!--Settings section -->
+            <LinearLayout
+                android:id="@+id/navigation_settings_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/nav_row_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_24"
+                android:background="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="@dimen/nav_row_icon_dimen"
+                    android:layout_height="@dimen/nav_row_icon_dimen"
+                    android:src="@drawable/navigation_settings_icn"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Settings"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
             </LinearLayout>

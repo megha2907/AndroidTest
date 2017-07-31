@@ -156,6 +156,32 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"/>
 
+            <!--Send Feedback section -->
+            <LinearLayout
+                android:id="@+id/settings_send_feedback_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/dp_60"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <!--<ImageView
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16" />-->
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/feedback_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
