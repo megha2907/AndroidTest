@@ -149,9 +149,7 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
             TextView totalBalTextView = (TextView) view.findViewById(R.id.low_bal_amount_textView);
             TextView entryFeeTextView = (TextView) view.findViewById(R.id.low_bal_contest_entry_fee_textView);
 
-            if (totalBal > 0) {
-                totalBalTextView.setText(WalletHelper.getFormattedStringOfAmount(totalBal));
-            }
+            totalBalTextView.setText(WalletHelper.getFormattedStringOfAmount(totalBal));
             if (entryFee > 0) {
                 entryFeeTextView.setText(WalletHelper.getFormattedStringOfAmount(entryFee));
             }

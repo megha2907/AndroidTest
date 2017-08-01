@@ -64,6 +64,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 

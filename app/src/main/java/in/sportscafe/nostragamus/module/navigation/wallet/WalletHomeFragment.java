@@ -120,24 +120,10 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
             TextView promoBalanceTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_promo_amount_textView);
             TextView winningsTextView = (TextView) rootView.findViewById(R.id.wallet_home_card_winning_textView);
 
-            double depositAmount = WalletHelper.getDepositAmount();
-            double promoAmount = WalletHelper.getPromoAmount();
-            double winningAmount = WalletHelper.getWinningAmount();
-
-            if (depositAmount > 0) {
-                depositTextView.setText(WalletHelper.getFormattedStringOfAmount(depositAmount));
-            }
-            if (promoAmount > 0) {
-                promoBalanceTextView.setText(WalletHelper.getFormattedStringOfAmount(promoAmount));
-            }
-            if (winningAmount > 0) {
-                winningsTextView.setText(WalletHelper.getFormattedStringOfAmount(winningAmount));
-            }
-
-            double total = WalletHelper.getTotalBalance();
-            if (total > 0) {
-                totalWalletBalanceTextView.setText(WalletHelper.getFormattedStringOfAmount(total));
-            }
+            depositTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getDepositAmount()));
+            promoBalanceTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getPromoAmount()));
+            winningsTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getWinningAmount()));
+            totalWalletBalanceTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getTotalBalance()));
 
             // Withdraw in progress
             int withdrawInProgress = WalletHelper.getWithdrawalsInProgress();

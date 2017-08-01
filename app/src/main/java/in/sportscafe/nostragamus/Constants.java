@@ -194,7 +194,7 @@ public interface Constants {
         String DEFAULT_SHARE_MESSAGE = "Use paste, If you want to use the default share message!";
         String POLL_LIST_EMPTY = "No polls";
         String NOT_FREE_CHALLENGE = "Please use full version for the paid challenges";
-        String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Oops! Select the checkbox to proceed as if you do not meet these restrictions, you are not allowed to play the full version of the game";
+        String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Please select the checkbox to proceed - you must meet these conditions to play the Pro version of Nostragamus";
         String FORCE_UPDATE_PROFILE_MSG_FOR_PAID_VERSION = "Please update your profile";
 
         /*--- Paytm Msg ---*/
@@ -690,6 +690,7 @@ public interface Constants {
         String TRANSACTION_TYPE_PROMO = "promo";
         String TRANSACTION_TYPE_JOINING = "joining";
         String TRANSACTION_TYPE_WINNING = "winning";
+        String TRANSACTION_TYPE_BUY = "buy";
 
         String TRANSACTION_STATUS_INITIATED = "initiated";
         String TRANSACTION_STATUS_SUCCESS = "success";

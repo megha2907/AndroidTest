@@ -165,7 +165,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:text="Enter a Referral Code"
+                    android:text="Enter a Referral Code (optional)"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />

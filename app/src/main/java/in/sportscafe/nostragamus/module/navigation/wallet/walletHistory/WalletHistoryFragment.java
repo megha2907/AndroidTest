@@ -98,10 +98,8 @@ public class WalletHistoryFragment extends NostragamusFragment implements Wallet
     private void showWalletBalance() {
         if (getView() != null) {
             double amount = WalletHelper.getTotalBalance();
-            if (amount > 0) {
                 TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_history_bal_amount_textView);
                 balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
-            }
 
             // Withdrawals in progress
             int withdrawProgress = WalletHelper.getWithdrawalsInProgress();

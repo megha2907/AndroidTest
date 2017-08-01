@@ -104,7 +104,7 @@
                 android:layout_marginRight="@dimen/dim_16"
                 android:layout_below="@+id/verify_phone_no_layout"
                 android:textColor="@color/white_dim"
-                android:text="We need your phone number to verify your account and ensure secure transactions."
+                android:text="Your phone number is required to verify your account and ensure secure transactions."
                 android:textSize="@dimen/sp_14"
                 app:typeface="lato_regular" />
 
