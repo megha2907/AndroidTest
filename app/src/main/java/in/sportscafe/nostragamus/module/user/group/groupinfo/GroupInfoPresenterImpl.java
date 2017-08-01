@@ -84,7 +84,7 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
                                     + groupInfo.getName()
                                     +"’ and lets see who does better! Use my group code ‘"
                                     + groupInfo.getGroupCode()
-                                    + "’ or click this link "
+                                    + "’ or click this link to download the app "
                                     + url;
                             AppSnippet.doGeneralShare(mGroupInfoView.getContext(), text);
                         } else {
