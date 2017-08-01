@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
-                android:text="Powerups In Bank"
+                android:text="Your Powerup Bank"
                 android:layout_marginTop="@dimen/dim_12"
                 android:layout_gravity="center"
                 app:typeface="lato_regular" />
