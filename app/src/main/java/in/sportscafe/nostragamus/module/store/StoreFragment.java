@@ -440,9 +440,9 @@ public class StoreFragment extends BaseFragment {
             mStoreRecyclerView.setAdapter(storeAdapter);
         }
 
-        RelativeLayout recyclerViewLayout = (RelativeLayout) getView().findViewById(R.id.store_items_rl);
         /* Empty list view */
         if (getActivity() != null && getView() != null && storeAdapter != null) {
+            RelativeLayout recyclerViewLayout = (RelativeLayout) getView().findViewById(R.id.store_items_rl);
             if (storeAdapter.getStoreSectionsList() == null || storeAdapter.getStoreSectionsList().isEmpty()) {
                 mStoreRecyclerView.setVisibility(View.GONE);
                 recyclerViewLayout.setVisibility(View.GONE);
