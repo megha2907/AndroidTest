@@ -110,8 +110,11 @@ public class Nostragamus extends Application {
         // For notification inbox
         InboxManager.getInstance().setInboxAdapter(new NotificationInboxAdapter());
 
+        //Enable cookie matching
+        Branch.enableCookieBasedMatching("http://nostragamus.in/");
+
         // Initializing the Branch
-       Branch.getAutoInstance(this);
+        Branch.getAutoInstance(this);
 
 
     }
