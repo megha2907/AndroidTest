@@ -308,6 +308,8 @@ public interface Constants {
         String STORE_ITEM = "storeItem";
         String STORE_BUY_PRODUCT_CATEGORY = "storeBuyProductCategory";
         String LAUNCH_MODE = "launchMode";
+        String IMAGE_URL = "imageUrl";
+        String DOWNLOAD_URL = "downloadUrl";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -675,7 +677,7 @@ public interface Constants {
          String FORCE_PAID_UPDATE = "Force_Paid";
      }
 
-    public interface MoneyFlow {
+    interface MoneyFlow {
         String IN = "in";   // Debit
         String OUT = "out"; // credit
 
@@ -750,8 +752,8 @@ public interface Constants {
         int POWER_UP_AUDIENCE_POLL = 3;
     }
 
-    public static final String AMOUNT_DECIMAL_PATTERN = "#0.00";
-    public static final String RUPEE_SYMBOL = "₹ ";
+    String AMOUNT_DECIMAL_PATTERN = "#0.00";
+    String RUPEE_SYMBOL = "₹ ";
     String INDIAN_CURRENCY_CODE = "INR";
 
     interface FaceBookAnalyticsEvents {

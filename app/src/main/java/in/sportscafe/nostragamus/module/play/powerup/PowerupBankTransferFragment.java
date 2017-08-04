@@ -21,6 +21,7 @@ import com.jeeva.android.BaseFragment;
 
 import org.parceler.Parcels;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -183,9 +184,13 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
             buyAudiencePollButton.setOnClickListener(this);
             ImageView img = (ImageView) getView().findViewById(R.id.powerup_bank_audience_poll_img);
             if (mApiResponse.getUserBalance().getAudiencePoll() <= 0) {
-                mAddAudiencePollButton.setVisibility(View.GONE);
-                buyAudiencePollButton.setVisibility(View.VISIBLE);
-                img.setImageResource(R.drawable.audience_poll_grey_powerup);
+                if (BuildConfig.IS_PAID_VERSION) {
+                    mAddAudiencePollButton.setVisibility(View.GONE);
+                    buyAudiencePollButton.setVisibility(View.VISIBLE);
+                    img.setImageResource(R.drawable.audience_poll_grey_powerup);
+                } else {
+                    mAddAudiencePollButton.setEnabled(false);
+                }
             } else {
                 mAddAudiencePollButton.setVisibility(View.VISIBLE);
                 buyAudiencePollButton.setVisibility(View.GONE);
@@ -200,9 +205,13 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
             buyNoNegativeButton.setOnClickListener(this);
             ImageView img = (ImageView) getView().findViewById(R.id.powerup_bank_noneg_img);
             if (mApiResponse.getUserBalance().getNoNegative() <= 0) {
-                mAddNoNegativeButton.setVisibility(View.GONE);
-                buyNoNegativeButton.setVisibility(View.VISIBLE);
-                img.setImageResource(R.drawable.no_negative_grey_powerup);
+                if (BuildConfig.IS_PAID_VERSION) {
+                    mAddNoNegativeButton.setVisibility(View.GONE);
+                    buyNoNegativeButton.setVisibility(View.VISIBLE);
+                    img.setImageResource(R.drawable.no_negative_grey_powerup);
+                } else {
+                    mAddNoNegativeButton.setEnabled(false);
+                }
             } else {
                 mAddNoNegativeButton.setVisibility(View.VISIBLE);
                 buyNoNegativeButton.setVisibility(View.GONE);
@@ -218,9 +227,13 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
             ImageView img = (ImageView) getView().findViewById(R.id.powerup_bank_doubler_img);
 
             if (mApiResponse.getUserBalance().getDoubler() <= 0) {
-                mAddDoublerButton.setVisibility(View.GONE);
-                buyDoublerButton.setVisibility(View.VISIBLE);
-                img.setImageResource(R.drawable.double_grey_powerup);
+                if (BuildConfig.IS_PAID_VERSION) {
+                    mAddDoublerButton.setVisibility(View.GONE);
+                    buyDoublerButton.setVisibility(View.VISIBLE);
+                    img.setImageResource(R.drawable.double_grey_powerup);
+                } else {
+                    mAddDoublerButton.setEnabled(false);
+                }
             } else {
                 mAddDoublerButton.setVisibility(View.VISIBLE);
                 buyDoublerButton.setVisibility(View.GONE);
@@ -394,12 +407,14 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     }
 
     private void performBuy(int buyCategory) {
-        Bundle args = new Bundle();
-        args.putInt(Constants.BundleKeys.STORE_BUY_PRODUCT_CATEGORY, buyCategory);
-        args.putInt(Constants.BundleKeys.LAUNCH_MODE, StoreLaunchMode.POWER_UP_BANK_LAUCNH);
+        if (BuildConfig.IS_PAID_VERSION) {
+            Bundle args = new Bundle();
+            args.putInt(Constants.BundleKeys.STORE_BUY_PRODUCT_CATEGORY, buyCategory);
+            args.putInt(Constants.BundleKeys.LAUNCH_MODE, StoreLaunchMode.POWER_UP_BANK_LAUCNH);
 
-        if (mFragmentListener != null) {
-            mFragmentListener.launchStore(args);
+            if (mFragmentListener != null) {
+                mFragmentListener.launchStore(args);
+            }
         }
     }
 

@@ -285,12 +285,12 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
             mTvMembersCount = (TextView) view.findViewById(R.id.pool_row_tv_member_count);
             mLlDropDownHolder = (LinearLayout) view.findViewById(R.id.pool_row_ll_drop_down);
             mTvDropDownTitle = (TextView) view.findViewById(R.id.pool_row_tv_dropdown_title);
-            mVDropDown = (View) view.findViewById(R.id.pool_row_v_separator_drop_down);
+            mVDropDown = view.findViewById(R.id.pool_row_v_separator_drop_down);
             mIvDropDownReward = (ImageView) view.findViewById(R.id.pool_row_iv_reward_arrow);
             mIvDropDownMember = (ImageView) view.findViewById(R.id.pool_row_iv_member_arrow);
             mTvDisclaimerTxt = (TextView) view.findViewById(R.id.pool_row_tv_disclaimer_txt);
             mTvDisclaimer = (TextView) view.findViewById(R.id.pool_row_tv_disclaimer);
-            mVDisclaimerSeparator = (View) view.findViewById(R.id.pool_row_v_disclaimer);
+            mVDisclaimerSeparator = view.findViewById(R.id.pool_row_v_disclaimer);
             mBtnJoin = (Button) view.findViewById(R.id.pool_row_btn_join);
             mTvMaxEntries = (TextView) view.findViewById(R.id.pool_row_tv_max_entries);
             mTvNumberOfPrizes = (TextView) view.findViewById(R.id.pool_row_tv_number_of_prizes);

@@ -22,8 +22,8 @@ public class PowerUpBankStatusResponse implements Cloneable {
     public PowerUpBankStatusResponse clone() {
         try {
             PowerUpBankStatusResponse obj = (PowerUpBankStatusResponse)super.clone();
-            obj.alreadyTransferred = (AlreadyTransferredPowerupDto) alreadyTransferred.clone();
-            obj.userBalance = (UserBalancePowerupDto) userBalance.clone();
+            obj.alreadyTransferred = alreadyTransferred.clone();
+            obj.userBalance = userBalance.clone();
             return obj;
         } catch (CloneNotSupportedException e) {}
         return null;

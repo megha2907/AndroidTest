@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,11 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.JoinChallengeFailureDialogFragment;
+import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
+import in.sportscafe.nostragamus.module.upgradeToPro.UpgradeToProAppApiModelImpl;
+import in.sportscafe.nostragamus.module.upgradeToPro.UpgradeToProAppDialogFragment;
+import in.sportscafe.nostragamus.module.upgradeToPro.dto.UpgradeToProResponse;
 
 /**
  * Created by Jeeva on 28/02/17.
@@ -180,8 +186,69 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     @Override
     public void onEmpty() {
-        showMessage(Alerts.POLL_LIST_EMPTY);
-        dismissThisDialog();
+        // If config is empty or null (on PS Version), then show dialog
+        if (BuildConfig.IS_PAID_VERSION) {
+            showMessage(Alerts.POLL_LIST_EMPTY);
+            dismissThisDialog();
+        } else {
+            verifyAndShowAppUpgradeToProDialogIfRequired();
+        }
+    }
+
+    private void verifyAndShowAppUpgradeToProDialogIfRequired() {
+        // Only for PS version
+        if (!BuildConfig.IS_PAID_VERSION) {
+            showProgressbar();
+            UpgradeToProAppApiModelImpl apiModel = UpgradeToProAppApiModelImpl.newInstance(getAppUpgradeToProDetailsApiListener());
+            apiModel.performApiCall();
+        }
+    }
+
+    @NonNull
+    private UpgradeToProAppApiModelImpl.UpgradeToProAppApiListener getAppUpgradeToProDetailsApiListener() {
+        return new UpgradeToProAppApiModelImpl.UpgradeToProAppApiListener() {
+            @Override
+            public void noInternet() {
+                Log.d(TAG, "No Internet");
+                dismissProgressbar();
+                showMessage(Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onNoApiResponse() {
+                Log.d(TAG, "Api Failure");
+                dismissProgressbar();
+                showMessage(Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onSuccessResponse(UpgradeToProResponse response) {
+                dismissProgressbar();
+                onAppUpgradeToProDialogApiResponse(response);
+                dismissThisDialog();
+            }
+        };
+    }
+
+    private void onAppUpgradeToProDialogApiResponse(UpgradeToProResponse response) {
+        if (response != null) {
+            if (response.isShouldShowUpgradeDialog() && !TextUtils.isEmpty(response.getContentImageUrl())) {
+                Bundle args = new Bundle();
+                args.putString(BundleKeys.IMAGE_URL, response.getContentImageUrl());
+                args.putString(BundleKeys.DOWNLOAD_URL, response.getProAppDownloadLink());
+
+                if(new PermissionsChecker(getActivity()).lacksPermissions(Constants.AppPermissions.STORAGE)) {
+                    PermissionsActivity.startActivityForResult(getActivity(), Constants.RequestCodes.STORAGE_PERMISSION, Constants.AppPermissions.STORAGE);
+                } else {
+
+                    UpgradeToProAppDialogFragment fragment = new UpgradeToProAppDialogFragment();
+                    fragment.setArguments(args);
+                    if (getActivity() != null) {
+                        fragment.show(getActivity().getSupportFragmentManager(), UpgradeToProAppDialogFragment.class.getSimpleName());
+                    }
+                }
+            }
+        }
     }
 
     @Override

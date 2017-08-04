@@ -50,7 +50,7 @@ public class InAppPopupActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_popups);
 
-        ((RelativeLayout) findViewById(R.id.in_app_popup_rl)).setOnClickListener(this);
+        findViewById(R.id.in_app_popup_rl).setOnClickListener(this);
 
         mbundle = getIntent().getExtras();
         inAppPopUpType = mbundle.getString(Constants.InAppPopups.IN_APP_POPUP_TYPE);

@@ -256,7 +256,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             mIvPartyBPhoto = (HmImageView) V.findViewById(R.id.swipe_card_iv_right);
             mTvResultCorrectCount = (TextView) V.findViewById(R.id.schedule_row_tv_match_correct_questions);
             mBtnMatchPoints = (TextView) V.findViewById(R.id.schedule_row_tv_my_score);
-            mViewResult = (View) V.findViewById(R.id.schedule_row_v_result_line);
+            mViewResult = V.findViewById(R.id.schedule_row_v_result_line);
             mLlPredictionsParent = (LinearLayout) V.findViewById(R.id.my_results_row_ll_predictions);
             mTvResultWait = (TextView) V.findViewById(R.id.schedule_row_tv_match_result_wait);
             mleaderboard = (LinearLayout) V.findViewById(R.id.my_results_row_ll_leaderboardbtn);
@@ -272,8 +272,8 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_my_score);
             mTvMatchPointsTxt = (TextView) V.findViewById(R.id.schedule_row_tv_my_score_txt);
-            mViewAvg = (View) V.findViewById(R.id.schedule_row_avg_line);
-            mViewHighest = (View) V.findViewById(R.id.schedule_row_highest_line);
+            mViewAvg = V.findViewById(R.id.schedule_row_avg_line);
+            mViewHighest = V.findViewById(R.id.schedule_row_highest_line);
         }
     }
 

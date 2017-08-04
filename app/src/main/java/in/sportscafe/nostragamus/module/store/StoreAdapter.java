@@ -163,7 +163,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
         HmImageView ivStoreItemImage = (HmImageView) storeItemView.findViewById(R.id.store_item_iv);
         TextView tvStoreItemValue = (TextView) storeItemView.findViewById(R.id.store_item_value_tv);
         RelativeLayout storeItemValueLayout = (RelativeLayout) storeItemView.findViewById(R.id.store_item_value_rl);
-        View storeLine = (View) storeItemView.findViewById(R.id.store_item_line);
+        View storeLine = storeItemView.findViewById(R.id.store_item_line);
         LinearLayout storeItemLayout = (LinearLayout) storeItemView.findViewById(R.id.store_item_layout);
         TextView tvStoreItemSecondValue = (TextView) storeItemView.findViewById(R.id.store_item_second_value_tv);
         RelativeLayout storeItemSecondValueLayout = (RelativeLayout) storeItemView.findViewById(R.id.store_item_second_value_rl);

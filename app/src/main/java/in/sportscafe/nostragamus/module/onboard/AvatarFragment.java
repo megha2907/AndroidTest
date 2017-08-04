@@ -62,16 +62,14 @@ public class AvatarFragment extends NostragamusFragment {
 
     private float mCardHeight;
 
-    private List<Avatar> mAvatarImageList = Arrays.asList(new Avatar[]{
-            new Avatar(R.drawable.onboard_predict_match),
+    private List<Avatar> mAvatarImageList = Arrays.asList(new Avatar(R.drawable.onboard_predict_match),
             new Avatar(R.drawable.onboard_war_friends),
             new Avatar(R.drawable.onboard_how_to_play),
             new Avatar(R.drawable.onboard_join_public),
             new Avatar(R.drawable.onboard_predict_match),
             new Avatar(R.drawable.onboard_war_friends),
             new Avatar(R.drawable.onboard_how_to_play),
-            new Avatar(R.drawable.onboard_join_public)
-    });
+            new Avatar(R.drawable.onboard_join_public));
 
     private String[] mOnboardTitles;
 
