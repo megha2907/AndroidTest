@@ -320,8 +320,8 @@ public class NostragamusAnalytics {
     /**
      * track onBoarding Time
      *
-     * @param actions       - OnBoardingTime
-     * @param label         - Actual time spent in OnBoarding from Edit Profile to Home
+     * @param actions - OnBoardingTime
+     * @param label   - Actual time spent in OnBoarding from Edit Profile to Home
      */
     public void trackOnBoarding(String actions, String label, long timeSpentInS) {
         track(AnalyticsCategory.ONBOARDING_TIME, actions, label, timeSpentInS);
@@ -504,6 +504,32 @@ public class NostragamusAnalytics {
         }
     }
 
+
+    public void setMoEngageUserProperties() {
+        if (null != mMoEHelper) {
+
+            if (BuildConfig.IS_PAID_VERSION) {
+                mMoEHelper.setUserAttribute(UserProperties.PRO_APP, true);
+            } else {
+                mMoEHelper.setUserAttribute(UserProperties.PRO_APP, false);
+            }
+
+            String channel = NostragamusDataHandler.getInstance().getInstallChannel();
+            if (!TextUtils.isEmpty(channel)) {
+                mMoEHelper.setUserAttribute(UserProperties.REFERRAL_CHANNEL, channel);
+            }
+            String campaign = NostragamusDataHandler.getInstance().getInstallReferralCampaign();
+            if (!TextUtils.isEmpty(campaign)) {
+                mMoEHelper.setUserAttribute(UserProperties.REFERRAL_CAMPAIGN, campaign);
+            }
+
+            String walletInit = String.valueOf(NostragamusDataHandler.getInstance().getWalletInitialAmount());
+            if (!TextUtils.isEmpty(walletInit)) {
+                mMoEHelper.setUserAttribute(UserProperties.WALLET_INIT, walletInit);
+            }
+        }
+    }
+
     /**
      * Tracks revenue
      * Once paytm payment is successful - Only for paid app
@@ -532,9 +558,8 @@ public class NostragamusAnalytics {
     }
 
     /**
-     *
      * @param isAddMoney - if true, tracks as ADD-MONEY else WITHDRAW-MONEY
-     * @param amount - amount of transaction
+     * @param amount     - amount of transaction
      */
     public void trackWalletTransaction(boolean isAddMoney, double amount) {
         if (BuildConfig.IS_PAID_VERSION) {
@@ -560,10 +585,12 @@ public class NostragamusAnalytics {
         }
     }
 
-    /** NOTE: Must be called only on successful Login
-     *
+    /**
+     * NOTE: Must be called only on successful Login
+     * <p>
      * This method used as Login method for moengage to identify user.
      * https://docs.moengage.com/docs/identifying-user
+     *
      * @param userId
      */
     public void setMoengageUniqueId(String userId) {
@@ -576,6 +603,7 @@ public class NostragamusAnalytics {
 
     /**
      * Tracks clicks on different event actions
+     *
      * @param category
      */
     public void trackClickEvent(@NonNull String category, String label) {
@@ -588,6 +616,7 @@ public class NostragamusAnalytics {
 
     /**
      * Logs Facebook revenue event
+     *
      * @param amount
      * @param args
      */
@@ -604,6 +633,7 @@ public class NostragamusAnalytics {
 
     /**
      * Logs Facebook Play completed event
+     *
      * @param args
      */
     public void logFbPlayCompleted(@Nullable Bundle args) {

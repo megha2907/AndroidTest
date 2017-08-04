@@ -75,6 +75,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
         initViews();
         UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
+        NostragamusAnalytics.getInstance().setMoEngageUserProperties();
         showScreenAsRequired();
 
     }
