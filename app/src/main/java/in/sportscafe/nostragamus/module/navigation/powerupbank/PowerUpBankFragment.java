@@ -138,6 +138,8 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
         ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.no_negative_powerup));
         ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_powerup));
 
+        showOrHideContentBasedOnAppType(rootView);
+
         mBundle = new Bundle();
     }
 
@@ -148,7 +150,6 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
             getPowerUps(userInfo);
         }
         setPowerUpText();
-        showOrHideContentBasedOnAppType();
     }
 
     private void getPowerUps(UserInfo userInfo) {
@@ -267,10 +268,11 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
     }
 
 
-    private void showOrHideContentBasedOnAppType() {
+    private void showOrHideContentBasedOnAppType(View rootView) {
         /* if design changes needed for playstore app */
         if (!BuildConfig.IS_PAID_VERSION) {
-
+            rootView.findViewById(R.id.powerup_bank_earn_more_layout).setVisibility(View.GONE);
+            rootView.findViewById(R.id.powerup_bank_store_layout).setVisibility(View.GONE);
         }
     }
 

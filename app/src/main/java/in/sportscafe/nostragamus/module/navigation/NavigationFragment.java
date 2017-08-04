@@ -96,6 +96,8 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
         if (!BuildConfig.IS_PAID_VERSION) {
             if (getView() != null) {
                 getView().findViewById(R.id.navigation_wallet_layout).setVisibility(View.GONE);
+                getView().findViewById(R.id.navigation_refer_layout).setVisibility(View.GONE);
+                getView().findViewById(R.id.navigation_store_layout).setVisibility(View.GONE);
 
                 /*change Earn More Money text to Earn More Powerups in playstore app */
                 TextView navEarnMore = (TextView) findViewById(R.id.navigation_earn_more_tv_two);
