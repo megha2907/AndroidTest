@@ -37,7 +37,7 @@ public class InboxFragment extends Fragment implements LoaderCallbacks<Cursor> {
     private static final String KEY_CLICK_DISABLED = "CLICK_DISABLED";
     ContentObserver mDataObserver = new ContentObserver(new Handler()) {
         public void onChange(boolean selfChange) {
-            this.onChange(selfChange, (Uri)null);
+            this.onChange(selfChange, null);
         }
 
         public void onChange(boolean selfChange, Uri uri) {
@@ -87,13 +87,13 @@ public class InboxFragment extends Fragment implements LoaderCallbacks<Cursor> {
     }
 
     public void onLoaderReset(Loader<Cursor> arg0) {
-        this.mAdapter.swapCursor((Cursor)null);
+        this.mAdapter.swapCursor(null);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(layout.moe_inbox, container, false);
         this.mListView = (ListView)inflatedView.findViewById(id.MOEInboxList);
-        this.mAdapter = new MoEInboxListAdapter(this.getActivity(), (Cursor)null);
+        this.mAdapter = new MoEInboxListAdapter(this.getActivity(), null);
         this.mListView.setAdapter(this.mAdapter);
         this.mAdapter.setClickable(!this.disableClick());
         this.mEmptyMsg = inflatedView.findViewById(id.emptyBox);

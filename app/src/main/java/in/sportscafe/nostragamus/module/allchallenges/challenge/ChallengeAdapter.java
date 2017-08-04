@@ -385,8 +385,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlRewards = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_rewards);
             mTvRewards = (TextView) V.findViewById(id.all_challenges_row_btn_rewards);
             mRlLeaderBoardRank = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_leaderboard_rank);
-            mVLeaderBoardRank = (View) V.findViewById(id.all_challenges_row_v_leaderboard_rank);
-            mRewardsLine = (View) V.findViewById(id.all_challenges_row_v_rewards);
+            mVLeaderBoardRank = V.findViewById(id.all_challenges_row_v_leaderboard_rank);
+            mRewardsLine = V.findViewById(id.all_challenges_row_v_rewards);
             mJoinChallengeLayout = (RelativeLayout) V.findViewById(id.all_challenges_rl_join_challenge);
 
             mRlShowGames.setOnClickListener(this);

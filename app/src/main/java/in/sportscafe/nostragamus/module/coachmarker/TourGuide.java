@@ -30,7 +30,7 @@ public class TourGuide {
      * This describes the allowable motion, for example if you want the users to learn about clicking, but want to stop them from swiping, then use CLICK_ONLY
      */
     public enum MotionType {
-        ALLOW_ALL, CLICK_ONLY, SWIPE_ONLY;
+        ALLOW_ALL, CLICK_ONLY, SWIPE_ONLY
     }
     private List<FrameLayoutWithHole> mFrameList = new ArrayList<>();
 

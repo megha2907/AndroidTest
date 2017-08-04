@@ -174,7 +174,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
 
         if (TextUtils.isEmpty(rightContestName)){
-            ((TextView) findViewById(R.id.prediction_contest_vs_textView)).setVisibility(View.GONE);
+            findViewById(R.id.prediction_contest_vs_textView).setVisibility(View.GONE);
             mRightContestImage.setVisibility(View.GONE);
             mRightContestName.setVisibility(View.GONE);
 

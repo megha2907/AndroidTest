@@ -114,5 +114,5 @@ public class TestAdapter extends Adapter<String, TestAdapter.ViewHolder> {
             }
         }
 
-    };
+    }
 }

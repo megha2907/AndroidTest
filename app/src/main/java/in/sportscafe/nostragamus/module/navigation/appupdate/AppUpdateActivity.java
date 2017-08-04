@@ -87,7 +87,7 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
     private void openDownloadAppScreen(String screenType) {
 
         DownloadingAppFragment downloadingApp = new DownloadingAppFragment();
-        FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, downloadingApp.newInstance(screenType));
+        FragmentHelper.replaceFragment(this, R.id.update_app_fl_holder, DownloadingAppFragment.newInstance(screenType));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow();
