@@ -101,7 +101,6 @@ public class SplashActivity extends Activity {
                     Log.d("BranchError:--", error.getMessage());
                 }
                 navigateToGetStarted();
-                NostragamusAnalytics.getInstance().setUserProperties();
             }
         }, this.getIntent().getData(), this);
 
