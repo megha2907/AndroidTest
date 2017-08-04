@@ -43,6 +43,7 @@ import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
 import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
 import in.sportscafe.nostragamus.module.store.dto.StoreApiResponse;
+import in.sportscafe.nostragamus.module.upgradeToPro.dto.UpgradeToProResponse;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
@@ -311,4 +312,7 @@ public interface NostragamusService {
 
     @GET("v2/game/store/getPowerupTransaction")
     Call<PBTransactionHistoryResponse> getPBTransactionHistory();
+
+    @GET("v2/game/showUpgradePopups")
+    Call<UpgradeToProResponse> shouldShowUpgradeToProDialog();
 }

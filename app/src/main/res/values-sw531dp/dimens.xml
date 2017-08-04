@@ -78,6 +78,7 @@
     <dimen name="dim_36">41dp</dimen>
     <dimen name="dim_40">45.6dp</dimen>
     <dimen name="dim_45">51dp</dimen>
+    <dimen name="dim_50">57dp</dimen>
     <dimen name="dim_60">68.4dp</dimen>
     <dimen name="dim_66">76dp</dimen>
     <dimen name="dim_72">82dp</dimen>
@@ -89,6 +90,8 @@
     <dimen name="dim_132">147dp</dimen>
     <dimen name="dim_150">171dp</dimen>
     <dimen name="dim_160">182.4dp</dimen>
+    <dimen name="dim_300">342dp</dimen>
+    <dimen name="dim_320">364.8dp</dimen>
 
     <dimen name="home_nav_bar_height">57dp</dimen>
     <dimen name="home_nav_bar_icon">22dp</dimen>

@@ -308,6 +308,8 @@ public interface Constants {
         String STORE_ITEM = "storeItem";
         String STORE_BUY_PRODUCT_CATEGORY = "storeBuyProductCategory";
         String LAUNCH_MODE = "launchMode";
+        String IMAGE_URL = "imageUrl";
+        String DOWNLOAD_URL = "downloadUrl";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";

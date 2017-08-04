@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="in.sportscafe.nostragamus.module.upgradeToPro.UpgradeToProAppDialogFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/dialog_bg">
+
+        <com.jeeva.android.widgets.HmImageView
+            android:id="@+id/app_upgrade_imgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/dim_300"
+            android:minHeight="@dimen/dim_300"
+            android:layout_gravity="bottom"/>
+
+        <Button
+            android:id="@+id/app_upgrade_dialog_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dim_50"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:text="Download"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:background="@drawable/flat_blue_btn_selector"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
