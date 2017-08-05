@@ -24,6 +24,7 @@ import com.jeeva.android.Log;
 import org.parceler.Parcels;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
@@ -231,7 +232,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     }
 
     private void onAppUpgradeToProDialogApiResponse(UpgradeToProResponse response) {
-        if (response != null) {
+        if (response != null && getActivity() != null) {
             if (response.isShouldShowUpgradeDialog() && !TextUtils.isEmpty(response.getContentImageUrl())) {
                 Bundle args = new Bundle();
                 args.putString(BundleKeys.IMAGE_URL, response.getContentImageUrl());
@@ -528,8 +529,10 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "Dismissing this...");
-                ChallengeConfigsDialogFragment.this.dismiss();
+                try {
+                    Log.d(TAG, "Dismissing this...");
+                    ChallengeConfigsDialogFragment.this.dismiss();
+                } catch (Exception ex) {}
             }
         }, 300);
     }
