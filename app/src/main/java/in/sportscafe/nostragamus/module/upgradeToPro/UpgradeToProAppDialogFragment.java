@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -69,7 +70,6 @@ public class UpgradeToProAppDialogFragment extends BaseDialogFragment implements
         switch (view.getId()) {
             case R.id.app_upgrade_dialog_button:
                 onDownloadButtonClicked();
-                dismiss();
                 break;
         }
     }
@@ -92,6 +92,18 @@ public class UpgradeToProAppDialogFragment extends BaseDialogFragment implements
             }
         }
 
+        dismissDialog();
+    }
 
+    private void dismissDialog() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    UpgradeToProAppDialogFragment.this.dismissAllowingStateLoss();
+                } catch (Exception ex) {}
+            }
+        }, 300);
     }
 }
