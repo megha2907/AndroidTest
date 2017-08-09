@@ -527,6 +527,14 @@ public class NostragamusAnalytics {
             if (!TextUtils.isEmpty(walletInit)) {
                 mMoEHelper.setUserAttribute(UserProperties.WALLET_INIT, walletInit);
             }
+
+            /* setEmail() mandatory to get notification - DO NOT REMOVE  */
+            if (NostragamusDataHandler.getInstance().getUserInfo() != null) {
+                String email = NostragamusDataHandler.getInstance().getUserInfo().getEmail();
+                if (!TextUtils.isEmpty(email)) {
+                    mMoEHelper.setEmail(email);
+                }
+            }
         }
     }
 
