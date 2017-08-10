@@ -117,6 +117,7 @@
             </RelativeLayout>
 
             <View
+                android:id="@+id/navigation_powerup_bank_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
                 android:background="@color/line_separator"
@@ -152,6 +153,7 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/navigation_store_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
                 android:background="@color/line_separator"

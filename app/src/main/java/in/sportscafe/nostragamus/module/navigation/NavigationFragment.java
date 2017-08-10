@@ -98,6 +98,9 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 getView().findViewById(R.id.navigation_wallet_layout).setVisibility(View.GONE);
                 getView().findViewById(R.id.navigation_refer_layout).setVisibility(View.GONE);
                 getView().findViewById(R.id.navigation_store_layout).setVisibility(View.GONE);
+                getView().findViewById(R.id.navigation_refer_separator).setVisibility(View.GONE);
+                getView().findViewById(R.id.navigation_powerup_bank_separator).setVisibility(View.GONE);
+                getView().findViewById(R.id.navigation_store_separator).setVisibility(View.GONE);
 
                 /*change Earn More Money text to Earn More Powerups in playstore app */
                 TextView navEarnMore = (TextView) findViewById(R.id.navigation_earn_more_tv_two);
