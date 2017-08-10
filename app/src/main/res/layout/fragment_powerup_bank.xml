@@ -278,6 +278,7 @@
             </RelativeLayout>
 
             <View
+                android:id="@+id/powerup_bank_store_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_0.5"
                 android:layout_marginLeft="@dimen/dim_10"
@@ -315,6 +316,7 @@
             </RelativeLayout>
 
             <View
+                android:id="@+id/powerup_bank_txn_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_0.5"
                 android:layout_marginLeft="@dimen/dim_10"

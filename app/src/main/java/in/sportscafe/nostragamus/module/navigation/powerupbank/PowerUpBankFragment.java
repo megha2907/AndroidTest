@@ -187,13 +187,13 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
                     count = powerUp.getCount();
                 }
                 onGetPollPowerUp(count, count < 1);
-            }else {
+            } else {
                 int count = 0;
                 onGet2xPowerUp(count, count < 1);
                 onGetNonegsPowerUp(count, count < 1);
                 onGetPollPowerUp(count, count < 1);
             }
-        }else {
+        } else {
             int count = 0;
             onGet2xPowerUp(count, count < 1);
             onGetNonegsPowerUp(count, count < 1);
@@ -271,8 +271,12 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
     private void showOrHideContentBasedOnAppType(View rootView) {
         /* if design changes needed for playstore app */
         if (!BuildConfig.IS_PAID_VERSION) {
-            rootView.findViewById(R.id.powerup_bank_earn_more_layout).setVisibility(View.GONE);
-            rootView.findViewById(R.id.powerup_bank_store_layout).setVisibility(View.GONE);
+            if (rootView != null) {
+                rootView.findViewById(R.id.powerup_bank_earn_more_layout).setVisibility(View.GONE);
+                rootView.findViewById(R.id.powerup_bank_store_layout).setVisibility(View.GONE);
+                rootView.findViewById(R.id.powerup_bank_store_separator).setVisibility(View.GONE);
+                rootView.findViewById(R.id.powerup_bank_txn_separator).setVisibility(View.GONE);
+            }
         }
     }
 
