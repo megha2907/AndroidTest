@@ -53,9 +53,9 @@ public class SuccessfulReferralActivity extends NostragamusActivity implements V
 
         if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralName())) {
             tvSuccessfulReferralOne.setText("Welcome to Nostragamus! Here's a gift from us and "
-                    + WordUtils.capitalize(NostragamusDataHandler.getInstance().getUserReferralName()) + " to get you predicting!");
+                    + WordUtils.capitalize(NostragamusDataHandler.getInstance().getUserReferralName()) + " to start you off!");
         } else {
-            tvSuccessfulReferralOne.setText("Welcome to Nostragamus! Here's a gift from us to get you predicting!");
+            tvSuccessfulReferralOne.setText("Welcome to Nostragamus! Here's a gift from us to start you off!");
         }
 
         if (NostragamusDataHandler.getInstance().getWalletInitialAmount() != null) {

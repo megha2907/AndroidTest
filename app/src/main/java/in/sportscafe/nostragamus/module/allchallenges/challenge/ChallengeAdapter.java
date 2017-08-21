@@ -434,12 +434,16 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     Challenge challengeInfo = getItem(getAdapterPosition());
                     dialogType = CHALLENGE_INFO_DIALOG_TYPE;
                     showChallengeInfo(context, challengeInfo);
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CHALLENGES,
+                            Constants.AnalyticsClickLabels.CHALLENGE_INFO);
                     break;
 
                 case R.id.all_challenges_row_rl_join_btn:
                     Challenge challengeJoin = getItem(getAdapterPosition());
                     dialogType = CHALLENGE_CONFIG_DIALOG_TYPE;
                     showChallengeInfo(context, challengeJoin);
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CHALLENGES,
+                            Constants.AnalyticsClickLabels.CHALLENGE_JOIN);
                     break;
 
                 case R.id.all_challenges_row_rl_rewards:
@@ -462,6 +466,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                         showChallengeInfo(context, challengeRewardsNew);
 //                        }
                     }
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CHALLENGES,
+                            Constants.AnalyticsClickLabels.CHALLENGE_REWARDS);
                     break;
 
                 case R.id.all_challenges_row_rl_show_games_btn:

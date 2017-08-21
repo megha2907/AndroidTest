@@ -24,6 +24,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.store.dto.ProductSaleInfo;
@@ -336,6 +337,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
         switch (view.getId()) {
             case R.id.store_item_buy:
                 onBuyButtonClicked(view);
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.STORE_SCREEN, Constants.AnalyticsClickLabels.BUY_PRODUCT);
                 break;
         }
     }

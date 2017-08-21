@@ -192,16 +192,19 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             case Constants.Screens.CHALLENGES:
                 setSelected(findViewById(R.id.home_ibtn_challenge), findViewById(R.id.home_tv_challenge));
                 loadFragment(AllChallengesFragment.newInstance(getIntent().getExtras()));
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CHALLENGES, Constants.AnalyticsActions.OPENED);
                 break;
 
             case Constants.Screens.GROUP:
                 setSelected(findViewById(R.id.home_ibtn_group), findViewById(R.id.home_tv_group));
                 loadFragment(AllGroupsFragment.newInstance());
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.GROUP, Constants.AnalyticsActions.OPENED);
                 break;
 
             case Constants.Screens.LEADER_BOARD:
                 setSelected(findViewById(R.id.home_ibtn_leaderboard), findViewById(R.id.home_tv_leaderboard));
                 loadFragment(new LBLandingFragment());
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.LEADERBOARD, Constants.AnalyticsActions.OPENED);
                 break;
 
             case Constants.Screens.PROFILE:

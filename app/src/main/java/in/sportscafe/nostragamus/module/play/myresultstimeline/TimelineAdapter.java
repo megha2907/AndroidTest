@@ -488,7 +488,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                     navigateToPrediction(context, bundle);
                     break;
                 case R.id.rl_points:
-                    NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.VIEW_ANSWERS);
+                    NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.VIEW_OTHERS_ANSWERS);
 
                     if (mPlayerId != null) {
                         navigateToResultsPeek(context, bundle);
@@ -498,8 +498,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
                     break;
                 case R.id.schedule_row_ll_waiting_for_result:
-                    NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.RESULT_WAITING);
-
+                    NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.OTHERS_RESULTS_WAITING);
                     navigateToMyResults(context, bundle);
                     break;
             }

@@ -618,6 +618,15 @@ public class NostragamusAnalytics {
         track(category, AnalyticsActions.CLICKED, label, null);
     }
 
+    /**
+     * Tracks screen Views
+     *
+     * @param category
+     */
+    public void trackScreenShown(@NonNull String category, String label) {
+        track(category, AnalyticsActions.OPENED, label, null);
+    }
+
     public void trackReferralBenefitScreenShown() {
         track(AnalyticsCategory.REFERRAL_BENEFIT, AnalyticsActions.OPENED, AnalyticsLabels.SCREENS_SEEN, null);
     }
@@ -649,4 +658,7 @@ public class NostragamusAnalytics {
             sFaceBookAppEventLogger.logEvent(Constants.FaceBookAnalyticsEvents.MATCH_PLAY_COMPLETED, args);
         }
     }
+
+
+
 }

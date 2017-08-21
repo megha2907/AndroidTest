@@ -21,6 +21,7 @@ import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeFragment;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 
@@ -216,6 +217,10 @@ public class AllChallengesFragment extends NostragamusFragment
                             msgTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                             msgTextView.setBackgroundResource(R.drawable.challenge_tab_counter_unselected);
                         }
+
+                        /* Tracks click event on InPlay,New & Completed Tabs */
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CHALLENGES, tv.getText().toString());
+
                     }
                 }
             }

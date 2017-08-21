@@ -56,7 +56,7 @@
         android:layout_centerHorizontal="true"
         android:lineSpacingExtra="@dimen/dp_7"
         android:layout_below="@+id/successful_referral_text_two"
-        android:text="Join challenges in your favorite sports and \n get predicting!"
+        android:text="Join any challenges from your favorite sports.\n Win big and double your money"
         android:textSize="@dimen/sp_15"
         android:gravity="center"/>
 

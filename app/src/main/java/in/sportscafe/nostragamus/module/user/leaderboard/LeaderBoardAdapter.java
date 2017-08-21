@@ -11,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
@@ -205,6 +207,9 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
                     intent.putExtra(BundleKeys.CHALLENGE_ID, mChallengeId);
                 }
                 context.startActivity(intent);
+
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.LEADERBOARD,
+                        Constants.AnalyticsClickLabels.OTHER_PROFILE);
             }
         }
     }
