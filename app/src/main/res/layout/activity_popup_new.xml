@@ -30,6 +30,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/popup_ll_heading_bg"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_42"
                     android:background="@color/transparent"
@@ -37,12 +38,11 @@
                     android:orientation="horizontal">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/challenge_dw_app_tv_title"
+                        android:id="@+id/popup_tv_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_8"
-                        android:text="Achievement Unlocked!"
-                        android:textAllCaps="true"
+                        android:text="ACHIEVEMENT UNLOCKED!"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_14"
                         app:typeface="lato_bold" />
@@ -60,6 +60,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
+                            android:id="@+id/popup_image_bg"
                             android:layout_width="@dimen/dp_170"
                             android:layout_height="@dimen/dp_170"
                             android:src="@drawable/achievement_bg" />
@@ -113,7 +114,7 @@
 
                         <com.jeeva.android.widgets.customfont.CustomButton
                             android:id="@+id/popup_exit_btn"
-                            android:layout_width="@dimen/dp_70"
+                            android:layout_width="@dimen/dp_100"
                             android:layout_height="@dimen/dp_36"
                             android:background="@drawable/green_store_btn_bg"
                             android:gravity="center"

@@ -32,8 +32,6 @@ public class BankPresenterImpl implements BankPrensenter, BankModelImpl.OnBankMo
     @Override
     public void onClickReferFriend() {
         mBankView.navigateToReferFriend();
-
-        NostragamusAnalytics.getInstance().trackReferralAction(AnalyticsLabels.GROUP);
     }
 
     @Override

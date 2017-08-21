@@ -93,7 +93,6 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
                     }
                 });
 
-        NostragamusAnalytics.getInstance().trackReferralAction(AnalyticsLabels.PROFILE);
     }
 
     @Override

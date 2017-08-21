@@ -289,6 +289,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
                 break;
 
             case R.id.prediction_share_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PLAY, Constants.AnalyticsClickLabels.PLAY_ASK_FRIEND);
                 onAskFriendClicked();
                 break;
         }

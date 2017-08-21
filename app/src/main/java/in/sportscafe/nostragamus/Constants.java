@@ -19,7 +19,6 @@ public interface Constants {
     interface NotificationKeys {
         String RESULTS_LEADERBOARD = "results_leaderboard";
         String FROM_NOTIFICATION = "fromNotification";
-
         String NEW_CHALLENGE_ID = "challenge_id";
     }
 
@@ -321,7 +320,6 @@ public interface Constants {
         String USER_REFERRAL_NAME = "user_referral_name";
         String USER_REFERRAL_PHOTO = "user_referral_photo";
 
-
         String SUCCESSFUL_REFERRAL = "successfulReferral";
     }
 
@@ -426,8 +424,12 @@ public interface Constants {
         String WALLET_WITHDRAW_MONEY = "Withdraw from Wallet";
         String ONBOARDING_TIME = "OnBoarding Time";
         String NAVIGATION_SCREEN = "Navigation Screen";
+        String STORE_SCREEN = "Store Screen";
         String WALLET = "Wallet";
         String REFERRAL_BENEFIT = "Referral Benefit";
+        String NAVIGATION = "Navigation";
+        String CHALLENGES = "Challenges";
+        String COMPARE_PROFILE = "Compare Results";
     }
 
     interface AnalyticsClickLabels {
@@ -442,6 +444,8 @@ public interface Constants {
         String SETTINGS = "Settings";
         String APP_UPDATE = "App Update";
         String STORE = "Store";
+        String BUY_PRODUCT = "Buy Product";
+        String PRODUCT_PURCHASED = "Product Purchased";
 
         /* Wallet */
         String EARN_MORE = "Earn More";
@@ -455,7 +459,14 @@ public interface Constants {
 
         /* Play screen */
         String PLAY_BANK = "PowerUp Bank";
+        String PLAY_ASK_FRIEND = "Ask a Friend";
         String PLAY_GAME_HELP = "Game-Help";
+        String SWIPE_VIEW = "Swipe View";
+        String LIST_VIEW = "List View";
+        String CHALLENGE_INFO = "Challenge Info";
+        String CHALLENGE_JOIN = "Challenge Join";
+        String CHALLENGE_REWARDS = "Challenge Rewards";
+        String OTHER_PROFILE = "Other Profile";
     }
 
     interface AnalyticsActions {
@@ -494,6 +505,8 @@ public interface Constants {
         String CLICKED = "Clicked";
         String ONBOARDING_TIME = "OnBoarding Time";
         String OPEN_POWERUP_BANK = "Open Powerup Bank";
+        String VIEW_OTHERS_ANSWERS = "View Other's Answers";
+        String OTHERS_RESULTS_WAITING = "Other's Results Waiting";
     }
 
     interface AnalyticsLabels {
@@ -511,6 +524,7 @@ public interface Constants {
         String LAUNCHER = "Launcher";
         String NOTIFICATION = "Notification";
         String GROUP = "Group";
+        String REFER_FRIEND = "Refer Friend";
         String PROFILE = "Profile";
         String NO_POWERUP = "No Powerup";
     }
@@ -717,6 +731,11 @@ public interface Constants {
         String NEW = "New";
         String IN_PLAY = "In Play";
         String COMPLETED = "Completed";
+    }
+
+    interface PopUpType {
+        String Losers = "lost_first_challenge";
+        String Winners = "won_first_challenge";
     }
 
     interface WebPageUrls {

@@ -23,11 +23,17 @@ public class PopUp {
     @JsonProperty("popup_name")
     private String name;
 
+    @JsonProperty("heading")
+    private String heading;
+
     @JsonProperty("description")
     private String description;
 
     @JsonProperty("screen_name")
     private String screenName;
+
+    @JsonProperty("alternate_design")
+    private Boolean alternateDesign;
 
     @JsonProperty("id")
     public String getPopupId() {
@@ -87,4 +93,25 @@ public class PopUp {
     public void setScreenName(String screenName) {
         this.screenName = screenName;
     }
+
+    @JsonProperty("heading")
+    public String getHeading() {
+        return heading;
+    }
+
+    @JsonProperty("heading")
+    public void setHeading(String heading) {
+        this.heading = heading;
+    }
+
+    @JsonProperty("alternate_design")
+    public Boolean getAlternateDesign() {
+        return alternateDesign;
+    }
+
+    @JsonProperty("alternate_design")
+    public void setAlternateDesign(Boolean alternateDesign) {
+        this.alternateDesign = alternateDesign;
+    }
+
 }

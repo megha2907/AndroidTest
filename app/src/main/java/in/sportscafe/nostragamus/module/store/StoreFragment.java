@@ -30,6 +30,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentDialogFragment;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
@@ -227,6 +228,7 @@ public class StoreFragment extends BaseFragment {
                     @Override
                     public void run() {
                         showBuySuccessfulDialog(storeItems);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.STORE_SCREEN, Constants.AnalyticsClickLabels.PRODUCT_PURCHASED);
                     }
                 }, 500);
             }

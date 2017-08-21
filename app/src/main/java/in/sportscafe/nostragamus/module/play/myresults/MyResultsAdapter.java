@@ -41,6 +41,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
@@ -463,6 +464,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     bundle.putString(BundleKeys.PLAYER_NAME, match.getHighestScorerName());
                     bundle.putString(BundleKeys.PLAYER_PHOTO, match.getHighestScorerPhoto());
                     navigateToResultsPeek(v.getContext(), bundle);
+
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.COMPARE_PROFILE, Constants.AnalyticsActions.OPENED);
+
                     break;
             }
 
