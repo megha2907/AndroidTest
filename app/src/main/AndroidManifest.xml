@@ -165,6 +165,11 @@
             android:name=".module.user.myprofile.edit.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".module.navigation.edituserprofile.EditUserProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <!--
             <activity
             android:name=".module.user.sportselection.SportSelectionActivity"

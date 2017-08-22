@@ -19,6 +19,7 @@ import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
+import in.sportscafe.nostragamus.module.navigation.edituserprofile.UpdateUserProfileRequest;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistoryResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyToWalletRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
@@ -385,5 +386,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<UpgradeToProResponse> shouldShowUpgradeDialog() {
         return mNostragamusService.shouldShowUpgradeToProDialog();
+    }
+
+    public Call<ApiResponse> getUpdateUserProfileRequest(UpdateUserProfileRequest updateUserProfileRequest) {
+        return mNostragamusService.updateUserProfile(updateUserProfileRequest);
     }
 }

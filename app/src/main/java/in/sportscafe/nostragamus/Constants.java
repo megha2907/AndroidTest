@@ -573,6 +573,7 @@ public interface Constants {
         String QUESTION_ADD_TOUR_LIST = "question_add_tour_list"; //TourListActivity
         String USER_PROFILE = "user_profile"; //in.sportscafe.nostragamus.module.user.myprofile.ProfileActivity
         String ADD_PAYMENT_BANK_DETAILS = "add_payment_bank_details";
+        String EDIT_USER_PROFILE = "edit_user_profile"; ///Users/deepanshi/code/nostragamus/app/src/main/java/in/sportscafe/nostragamus/module/navigation/edituserprofile/EditUserProfileActivity.java
 
         String SETTINGS = "settings";
         String ABOUT = "about";

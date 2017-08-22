@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/edit_btn_done">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dim_20">
+
+            <!-- Top section -->
+            <LinearLayout
+                android:id="@+id/rl1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/edit_profile_toolbar"
+                android:background="@drawable/profile_screen_bg">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_60">
+
+                    <ImageButton
+                        android:id="@+id/edit_btn_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:padding="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_6"
+                        android:src="@drawable/back_icon_grey"
+                        android:visibility="visible"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/edit_tv_screen_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_18"
+                        android:text="Update your Profile"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_18"
+                        android:visibility="visible"
+                        app:typeface="lato_bold" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <com.jeeva.android.widgets.HmImageView
+                        android:id="@+id/edit_iv_user_image"
+                        android:layout_width="@dimen/dim_100"
+                        android:layout_height="@dimen/dim_100"
+                        android:layout_centerHorizontal="true"
+                        android:alpha="0.9"
+                        android:background="@color/black_30"
+                        android:onClick="showImagePopup"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:id="@+id/edit_iv_camera_image"
+                        android:layout_width="@dimen/dim_36"
+                        android:layout_height="@dimen/dim_36"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dim_32"
+                        android:alpha="0.8"
+                        android:onClick="showImagePopup"
+                        android:src="@drawable/camera_icon" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:minHeight="@dimen/dim_60">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/edit_tv_upload_pic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dim_20"
+                        android:layout_marginRight="@dimen/dim_20"
+                        android:text="+ Upload a Photo"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        android:visibility="visible"
+                        app:typeface="lato_bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- UserName  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/dim_16"
+                android:layout_marginRight="@dimen/dim_16">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/edit_tv_nickname_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/dim_16"
+                    android:text="Enter a Username"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_40"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/dim_6">
+
+                    <ImageView
+                        style="@style/EditTextIconStyle"
+                        android:src="@drawable/profile_edittext_icon"
+                        android:padding="@dimen/dim_12"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomEditText
+                        android:id="@+id/edit_et_nickname_new"
+                        style="@style/NewEditTextStyle" />
+
+                </LinearLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/edit_profile_username_error_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/dim_6"
+                    android:textColor="@color/radical_red"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/edit_btn_done"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_45"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/flat_blue_btn_selector"
+        android:onClick="onClick"
+        android:text="Update Details"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_15"
+        app:typeface="lato_bold" />
+
+</RelativeLayout>
+
