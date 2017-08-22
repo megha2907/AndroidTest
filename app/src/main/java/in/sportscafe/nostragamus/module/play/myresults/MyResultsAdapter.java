@@ -44,6 +44,8 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
+import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
+import in.sportscafe.nostragamus.module.feed.FeedWebView;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -1036,9 +1038,15 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         leaderboardView.findViewById(R.id.my_results_ll_share_score).setOnClickListener(this);
 
         if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()) {
-            TextView tvcommentary = (TextView) leaderboardView.findViewById(R.id.schedule_row_tv_match_result_commentary);
+            final TextView tvcommentary = (TextView) leaderboardView.findViewById(R.id.schedule_row_tv_match_result_commentary);
             tvcommentary.setVisibility(View.VISIBLE);
             tvcommentary.setText(Html.fromHtml(match.getResultdesc()));
+            tvcommentary.setMovementMethod(new NostraTextViewLinkClickMovementMethod() {
+                @Override
+                public void onLinkClick(String url) {
+                    OpenWebView(tvcommentary,url);
+                }
+            });
         }
 
         return leaderboardView;
@@ -1115,4 +1123,14 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     public void changeToEditAnswers(int selectedQuestionId, Question question) {
 
     }
+
+    /**
+     * On on click of link open NostragamusWebView Activity for handling links
+     */
+    private void OpenWebView(View view,String url) {
+        if (url != null) {
+            view.getContext().startActivity(new Intent(view.getContext(), FeedWebView.class).putExtra("url", url));
+        }
+    }
+
 }

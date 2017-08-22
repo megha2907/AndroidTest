@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.navigation.edituserprofile.EditUserProfileActivity;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.settings.SettingActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
@@ -201,9 +202,8 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
         backBtn.setVisibility(View.VISIBLE);
         backBtn.setOnClickListener(this);
 
-        findViewById(R.id.profile_iv_image).setEnabled(false);
 //        findViewById(R.id.profile_btn_settings).setVisibility(View.INVISIBLE);
-        findViewById(R.id.profile_btn_edit).setVisibility(View.INVISIBLE);
+        findViewById(R.id.profile_btn_edit).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -213,10 +213,10 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                 navigateToSettings();
                 break;*/
             case R.id.profile_iv_image:
-               // navigateToEditProfile();
+                navigateToEditProfile();
                 break;
             case R.id.profile_btn_edit:
-               // navigateToEditProfile();
+                navigateToEditProfile();
                 break;
             case R.id.profile_btn_back:
                 getActivity().onBackPressed();
@@ -229,10 +229,8 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
     }
 
     private void navigateToEditProfile() {
-        Intent intent = new Intent(getContext(), EditProfileActivity.class);
-        intent.putExtra(BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, EditProfileActivity.ILaunchedFrom.PROFILE_FRAGMENT);
-        intent.putExtra("screen", BundleKeys.HOME_SCREEN);
-        startActivityForResult(intent, EDIT_PROFILE_CODE);
+        Intent intent = new Intent(getContext(), EditUserProfileActivity.class);
+        startActivity(intent);
     }
 
     @Override
