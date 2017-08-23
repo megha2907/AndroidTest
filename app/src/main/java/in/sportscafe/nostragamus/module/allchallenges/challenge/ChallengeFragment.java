@@ -523,11 +523,12 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
 
         if (mIsViewLayoutSwipe) {
             switchToSwipeView(-1);
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CHALLENGES,Constants.AnalyticsClickLabels.SWIPE_VIEW);
         } else {
             switchToListView();
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CHALLENGES,Constants.AnalyticsClickLabels.LIST_VIEW);
         }
 
-        NostragamusAnalytics.getInstance().trackTimeline(Constants.AnalyticsActions.SWITCH);
     }
 
     @Override

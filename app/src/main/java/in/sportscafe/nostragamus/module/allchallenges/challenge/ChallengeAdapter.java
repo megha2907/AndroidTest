@@ -37,6 +37,7 @@ import com.jeeva.android.widgets.ShadowLayout;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -141,18 +142,17 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
             if (BuildConfig.IS_PAID_VERSION) {
                 holder.mRlMatchesLeft.setVisibility(View.INVISIBLE);
-            }else {
+            } else {
                 holder.mRlMatchesLeft.setVisibility(View.VISIBLE);
                 holder.mTvMatchesLeft.setText(String.valueOf(challenge.getCountMatchesLeft()) + "/" + String.valueOf(challenge.getMatchesCategorized().getAllMatches().size()) + " Games Left to score!");
                 int percentage = (Integer.parseInt(challenge.getCountMatchesLeft()) * 100) / challenge.getMatchesCategorized().getAllMatches().size();
                 setPercentPoll(holder.mTvMatchesLeft, percentage, holder.mTvMatchesLeft.getContext());
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.mRlMainPowerup.getLayoutParams();
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.mRlMainPowerup.getLayoutParams();
                 params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 holder.mRlMainPowerup.setLayoutParams(params);
             }
 
             powerUpMap = challenge.getChallengeUserInfo().getPowerUps();
-
 
         } else {
             holder.mRlAfterJoinedChallenge.setVisibility(View.GONE);
@@ -164,9 +164,9 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
             if (BuildConfig.IS_PAID_VERSION) {
                 holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
-            }else {
+            } else {
                 holder.mRlMainPowerup.setVisibility(View.VISIBLE);
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)holder.mRlMainPowerup.getLayoutParams();
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.mRlMainPowerup.getLayoutParams();
                 params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 holder.mRlMainPowerup.setLayoutParams(params);
             }
@@ -257,7 +257,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
         );
 
         //for completed challenges
-        if (challenge.getCountMatchesLeft().equals("0")) {
+        if (challenge.getChallengeInfo().isClosed()) {
             holder.mTvRewards.setText("Winners");
 
             if (challenge.getChallengeUserInfo().isUserJoined()) {
@@ -267,7 +267,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
                 if (BuildConfig.IS_PAID_VERSION) {
                     holder.mRlMatchesLeft.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     holder.mRlMatchesLeft.setVisibility(View.VISIBLE);
                     holder.mTvMatchesLeft.setText("0" + "/" + String.valueOf(challenge.getMatchesCategorized().getAllMatches().size()) + " Games Left to score!");
                 }
@@ -279,7 +279,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
                 if (BuildConfig.IS_PAID_VERSION) {
                     holder.mRlMainPowerup.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     holder.mRlMainPowerup.setVisibility(View.VISIBLE);
                 }
                 holder.mJoinChallengeLayout.setVisibility(View.GONE);
@@ -287,11 +287,17 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         }
 
-        if (BuildConfig.IS_PAID_VERSION){
-            holder.mRlCashRewards.setVisibility(View.VISIBLE);
-            holder.mRlRewards.setVisibility(View.VISIBLE);
-            holder.mRewardsLine.setVisibility(View.VISIBLE);
-        }else {
+        if (BuildConfig.IS_PAID_VERSION) {
+            if (!TextUtils.isEmpty(challenge.getPrizeMoneyTopline())) {
+                holder.mRlCashRewards.setVisibility(View.VISIBLE);
+                holder.mRlRewards.setVisibility(View.VISIBLE);
+                holder.mRewardsLine.setVisibility(View.VISIBLE);
+            } else {
+                holder.mRlCashRewards.setVisibility(View.GONE);
+                holder.mRlRewards.setVisibility(View.GONE);
+                holder.mRewardsLine.setVisibility(View.GONE);
+            }
+        } else {
             holder.mRlCashRewards.setVisibility(View.GONE);
             holder.mRlRewards.setVisibility(View.GONE);
             holder.mRewardsLine.setVisibility(View.GONE);
@@ -379,8 +385,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
             mRlRewards = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_rewards);
             mTvRewards = (TextView) V.findViewById(id.all_challenges_row_btn_rewards);
             mRlLeaderBoardRank = (RelativeLayout) V.findViewById(id.all_challenges_row_rl_leaderboard_rank);
-            mVLeaderBoardRank = (View) V.findViewById(id.all_challenges_row_v_leaderboard_rank);
-            mRewardsLine = (View) V.findViewById(id.all_challenges_row_v_rewards);
+            mVLeaderBoardRank = V.findViewById(id.all_challenges_row_v_leaderboard_rank);
+            mRewardsLine = V.findViewById(id.all_challenges_row_v_rewards);
             mJoinChallengeLayout = (RelativeLayout) V.findViewById(id.all_challenges_rl_join_challenge);
 
             mRlShowGames.setOnClickListener(this);
@@ -428,12 +434,16 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                     Challenge challengeInfo = getItem(getAdapterPosition());
                     dialogType = CHALLENGE_INFO_DIALOG_TYPE;
                     showChallengeInfo(context, challengeInfo);
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CHALLENGES,
+                            Constants.AnalyticsClickLabels.CHALLENGE_INFO);
                     break;
 
                 case R.id.all_challenges_row_rl_join_btn:
                     Challenge challengeJoin = getItem(getAdapterPosition());
                     dialogType = CHALLENGE_CONFIG_DIALOG_TYPE;
                     showChallengeInfo(context, challengeJoin);
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CHALLENGES,
+                            Constants.AnalyticsClickLabels.CHALLENGE_JOIN);
                     break;
 
                 case R.id.all_challenges_row_rl_rewards:
@@ -456,6 +466,8 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
                         showChallengeInfo(context, challengeRewardsNew);
 //                        }
                     }
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CHALLENGES,
+                            Constants.AnalyticsClickLabels.CHALLENGE_REWARDS);
                     break;
 
                 case R.id.all_challenges_row_rl_show_games_btn:

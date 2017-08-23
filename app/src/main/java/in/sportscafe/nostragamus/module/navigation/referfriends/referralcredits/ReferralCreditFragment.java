@@ -59,16 +59,6 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
     }
 
 
-    public static ReferralCreditFragment newInstance(UserReferralInfo userReferralInfo) {
-
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.BundleKeys.USER_REFERRAL_INFO, Parcels.wrap(userReferralInfo));
-
-        ReferralCreditFragment fragment = new ReferralCreditFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -84,7 +74,7 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_referral_credits, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_new_referral_credits, container, false);
 
         fetchReferralCreditsInfoFromServer();
         initRootView(rootView);
@@ -135,8 +125,6 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
 
     private void initRootView(View rootView) {
 
-        UserReferralInfo userReferralInfo = Parcels.unwrap(getArguments().getParcelable(Constants.BundleKeys.USER_REFERRAL_INFO));
-
         mReferralHistoryRecyclerView = (RecyclerView) rootView.findViewById(R.id.referralHistoryRecyclerView);
         mReferralHistoryRecyclerView.setHasFixedSize(true);
         mReferralHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -155,7 +143,16 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
 
         rootView.findViewById(R.id.refer_friend_btn).setOnClickListener(this);
 
-        setReferralInfo(userReferralInfo);
+        setReferralInfo(getUserReferralInfo());
+    }
+
+    private UserReferralInfo getUserReferralInfo() {
+        UserReferralInfo userReferralInfo = null;
+        Bundle args = getArguments();
+        if (args != null) {
+            userReferralInfo = Parcels.unwrap(getArguments().getParcelable(Constants.BundleKeys.USER_REFERRAL_INFO));
+        }
+        return userReferralInfo;
     }
 
     private void setReferralInfo(UserReferralInfo userReferralInfo) {
@@ -169,31 +166,33 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
 
             HashMap<String, Integer> powerUpMap = userReferralInfo.getPowerUps();
 
-            Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
-            Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
-            Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
+            if (powerUpMap!=null) {
+                Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
+                Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
+                Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
 
-            if (null == powerUp2xCount) {
-                powerUp2xCount = 0;
+                if (null == powerUp2xCount) {
+                    powerUp2xCount = 0;
+                }
+
+                if (null == powerUpNonNegsCount) {
+                    powerUpNonNegsCount = 0;
+                }
+
+                if (null == powerUpPlayerPollCount) {
+                    powerUpPlayerPollCount = 0;
+                }
+
+                tvRCPowerup2xCount.setText(String.valueOf(powerUp2xCount));
+                tvRCPowerupNonegCount.setText(String.valueOf(powerUpNonNegsCount));
+                tvRCPowerupPlayerPollCount.setText(String.valueOf(powerUpPlayerPollCount));
+                mReferralCode = userReferralInfo.getReferralCode();
+                mWalletInit = String.valueOf(userReferralInfo.getWalletInitialAmount());
+
+                tvPSPowerup2xCount.setText(String.valueOf(powerUp2xCount));
+                tvPSPowerupNonegCount.setText(String.valueOf(powerUpNonNegsCount));
+                tvPSPowerupPlayerPollCount.setText(String.valueOf(powerUpPlayerPollCount));
             }
-
-            if (null == powerUpNonNegsCount) {
-                powerUpNonNegsCount = 0;
-            }
-
-            if (null == powerUpPlayerPollCount) {
-                powerUpPlayerPollCount = 0;
-            }
-
-            tvRCPowerup2xCount.setText(String.valueOf(powerUp2xCount));
-            tvRCPowerupNonegCount.setText(String.valueOf(powerUpNonNegsCount));
-            tvRCPowerupPlayerPollCount.setText(String.valueOf(powerUpPlayerPollCount));
-            mReferralCode = userReferralInfo.getReferralCode();
-            mWalletInit = String.valueOf(userReferralInfo.getWalletInitialAmount());
-
-            tvPSPowerup2xCount.setText(String.valueOf(powerUp2xCount));
-            tvPSPowerupNonegCount.setText(String.valueOf(powerUpNonNegsCount));
-            tvPSPowerupPlayerPollCount.setText(String.valueOf(powerUpPlayerPollCount));
 
         } else {
             tvRCFriendsReferred.setText("0 Friends Added");
@@ -225,13 +224,17 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
             mReferralHistoryAdapter.addReferralHistoryIntoList(referralHistoryList);
         }
 
+        RelativeLayout recyclerViewLayout = (RelativeLayout) getView().findViewById(R.id.referral_credits_friends_act_rl);
+
         /* Empty list view */
         if (getActivity() != null && getView() != null && mReferralHistoryAdapter != null) {
             if (mReferralHistoryAdapter.getReferralHistoryList() == null || mReferralHistoryAdapter.getReferralHistoryList().isEmpty()) {
                 mReferralHistoryRecyclerView.setVisibility(View.GONE);
+                recyclerViewLayout.setVisibility(View.GONE);
                 LinearLayout noHistoryLayout = (LinearLayout) getView().findViewById(R.id.referral_credits_no_history_layout);
                 noHistoryLayout.setVisibility(View.VISIBLE);
             } else {
+                recyclerViewLayout.setVisibility(View.VISIBLE);
                 mReferralHistoryRecyclerView.setVisibility(View.VISIBLE);
             }
         }

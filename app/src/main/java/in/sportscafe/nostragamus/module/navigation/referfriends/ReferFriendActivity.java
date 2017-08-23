@@ -19,6 +19,7 @@ import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
@@ -93,6 +94,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
     @Override
     public void onReferAFriendClicked(String referralCode,String walletInit) {
         navigateToReferFriend(referralCode,walletInit);
+        NostragamusAnalytics.getInstance().trackReferralAction(Constants.AnalyticsLabels.REFER_FRIEND);
     }
 
     private void navigateToReferFriend(final String referralCode, final String walletInit) {
@@ -109,6 +111,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
                 .setChannel("App")
                 .setCampaign("App Invite")
                 .addControlParameter("$android_deeplink_path", "app/invite/");
+//              .addControlParameter("$android_url", "http://nostragamus.in/download.html");
 
         buo.generateShortUrl(getContext(), linkProperties,
                 new Branch.BranchLinkCreateListener() {

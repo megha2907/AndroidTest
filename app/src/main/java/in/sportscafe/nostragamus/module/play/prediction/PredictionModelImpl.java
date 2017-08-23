@@ -424,6 +424,20 @@ public class PredictionModelImpl implements PredictionModel, SwipeFlingAdapterVi
     }
 
     @Override
+    public void updatePowerUpAsAddedFromBank(Bundle bundle) {
+        if (bundle != null && bundle.containsKey(BundleKeys.UPDATED_CHALLENGE_USER_INFO) && mChallegeInfo != null) {
+            mChallegeInfo.setChallengeUserInfo((ChallengeUserInfo) Parcels.unwrap(bundle.getParcelable(BundleKeys.UPDATED_CHALLENGE_USER_INFO)));
+
+            HashMap<String, Integer> powerUpMap = mChallegeInfo.getChallengeUserInfo().getPowerUps();
+            if (powerUpMap != null) {
+                m2xPowerups = powerUpMap.get(Powerups.XX);
+                mNonegsPowerups = powerUpMap.get(Powerups.NO_NEGATIVE);
+                mPollPowerups = powerUpMap.get(Powerups.AUDIENCE_POLL);
+            }
+        }
+    }
+
+    @Override
     public void removeFirstObjectInAdapter(Question question) {
         mPredictionAdapter.remove(question);
         mPredictionAdapter.notifyDataSetChanged();

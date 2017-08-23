@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -47,7 +48,7 @@ public class PayoutWalletHomeActivity extends NostragamusActivity implements Pay
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.payout_toolbar);
         TextView tvToolbar = (TextView) findViewById(R.id.payout_toolbar_tv);
-        tvToolbar.setText("Withdrawal details");
+        tvToolbar.setText("Withdrawal Details");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -115,6 +116,25 @@ public class PayoutWalletHomeActivity extends NostragamusActivity implements Pay
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             if (fragment != null && fragment instanceof PayoutWalletHomeFragment) {
                 ((PayoutWalletHomeFragment) fragment).updateScreenDetails();
+            }
+
+            /* Finish this is launched from Withdrawal (As there is no acc was added) */
+            if (getIntent() != null && getIntent().getExtras() != null) {
+                Bundle args = getIntent().getExtras();
+                int launchMode = args.getInt(Constants.BundleKeys.LAUNCH_MODE, -1);
+                switch (launchMode) {
+                    case PayoutLaunchMode.FROM_WITHDRAWAL_AS_NO_PAY_OUT_ACC:
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                setResult(RESULT_OK);
+                                finish();
+                            }
+                        }, 500);
+                        break;
+                }
             }
         }
     }

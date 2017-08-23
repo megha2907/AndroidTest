@@ -4,7 +4,6 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,10 +72,8 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
         if (getView() != null) {
             /* Showing ONLY deposit money while adding into wallet */
             double amount = WalletHelper.getDepositAmount();
-            if (amount > 0) {
-                TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_add_money_amount_textView);
-                balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
-            }
+            TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_add_money_amount_textView);
+            balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(amount));
         }
     }
 
@@ -109,11 +106,18 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
     private void onAddAmountClicked() {
         double amount = AddMoneyWalletHelper.validateAddMoneyAmountValid(mAmountEditText.getText().toString().trim());
-        if (amount > 0) {
-            AddMoneyWalletHelper.initTransaction(this, amount);
-        } else {
-            if (mAmountEditText != null) {
-                mAmountEditText.setError("Please enter amount");
+        if (getView() != null) {
+            TextView errorTextView = (TextView) getView().findViewById(R.id.add_wallet_money_amt_error_textView);
+
+            if (amount > 0) {
+                errorTextView.setVisibility(View.GONE);
+
+                AddMoneyWalletHelper.initTransaction(this, amount);
+            } else {
+                /*if (mAmountEditText != null) {
+                    mAmountEditText.setError("Please enter amount");
+                }*/
+                errorTextView.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -121,19 +125,19 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
     private void onAddMoney250Clicked() {
         double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 250);
-        mAmountEditText.setText(String.valueOf(amt));
+        mAmountEditText.setText(String.valueOf((int)amt));
         setEditTextSelection();
     }
 
     private void onAddMoney100Clicked() {
         double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 100);
-        mAmountEditText.setText(String.valueOf(amt));
+        mAmountEditText.setText(String.valueOf((int)amt));
         setEditTextSelection();
     }
 
     private void onAddMoney50Clicked() {
         double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 50);
-        mAmountEditText.setText(String.valueOf(amt));
+        mAmountEditText.setText(String.valueOf((int)amt));
         setEditTextSelection();
     }
 

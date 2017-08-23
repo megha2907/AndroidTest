@@ -1,6 +1,7 @@
 <resources>
     <string name="play_store_url">https://play.google.com/store/apps/details?id=in.sportscafe.nostragamus</string>
     <string name="facebook_app_id">841946925908609</string>
+    <string name="fb_login_protocol_scheme">fb841946925908609</string>
     <string name="oauth_server_id">576361348926-ef040f3his3jfe3pchhqigjvrfjoejtp.apps.googleusercontent.com</string>
     <string name="oauth_server_id_pro">576361348926-ef040f3his3jfe3pchhqigjvrfjoejtp.apps.googleusercontent.com</string>
     <string name="fabric_api_key">66dc8b5ddc3cab78b5935c8254c264658064977d</string>
@@ -134,7 +135,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_add_payment_bank">AddPaymentBankActivity</string>
-    <string name="profile_disclaimer"> Nostragamus is built as a Game of Skill, which are legally protected as games involving money in the majority of states of India. To proceed further, please check the box to confirm you are above 18 years old and are not playing Nostragamus from Assam or Odisha.</string>
+    <string name="profile_disclaimer"> Nostragamus is built as a Game of Skill, which are legally protected as games involving money in the majority of states of India. To proceed, please check the box to confirm you are above 18 years old and are not playing Nostragamus from Assam or Odisha.</string>
     <string name="download_app_text">Gain access to contests with prizes upto ₹ 10,000 on the full version of Nostragamus!</string>
     <string name="prize_money_disclaimer">In case two or more people tie for a particular rank, the prize money will be re-calculated and may (or) may not be the same. Please refer to Section 7 in <![CDATA[<a href="http://nostragamus.in/rules.html">Nostragamus Rules</a>]]></string>
 
@@ -148,5 +149,10 @@
     ]]>
     </string>
     <string name="app_downloading">Your app is being downloaded in the background, click on Install after the download is over!</string>
+    <string name="pb_text_one"><![CDATA[- These powerups can be transferred to and used in <b><font color=\'#ffffff\'>any challenge</font></b>]]></string>
+    <string name="pb_text_two"><![CDATA[- To transfer powerups from your bank, click the @ powerup bank icon on the bottom left while playing any match in that challenge]]></string>
+
+    <string name="max_added">Max Added</string>
+    <string name="earn_more_powerups_text">- You can add more powerups to your bank by referring friends or buying powerups</string>
 
 </resources>

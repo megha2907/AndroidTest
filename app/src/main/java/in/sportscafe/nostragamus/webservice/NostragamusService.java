@@ -16,6 +16,8 @@ import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
+import in.sportscafe.nostragamus.module.navigation.edituserprofile.UpdateUserProfileRequest;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistoryResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyToWalletRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
@@ -28,6 +30,8 @@ import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.Gener
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
+import in.sportscafe.nostragamus.module.play.powerup.dto.PowerupBankStatusRequest;
+import in.sportscafe.nostragamus.module.play.powerup.dto.PowerUpBankStatusResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
@@ -37,6 +41,10 @@ import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse
 import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
+import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
+import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
+import in.sportscafe.nostragamus.module.store.dto.StoreApiResponse;
+import in.sportscafe.nostragamus.module.upgradeToPro.dto.UpgradeToProResponse;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
@@ -96,7 +104,7 @@ public interface NostragamusService {
     @GET("v1/game/users/tournaments")
     Call<TournamentFeedResponse> getCurrentTournaments(@Query("is_current") boolean isCurrent);
 
-    @POST("/v2/game/login")
+    @POST("/v3/game/login")
     Call<LogInResponse> loginUser(@Body LogInRequest logInRequest);
 
     @PUT("v1/game/users")
@@ -266,6 +274,9 @@ public interface NostragamusService {
     @POST("/v1/wallet/useWallet")
     Call<JoinChallengeResponse> useWalletToJoinChallenge(@Body JoinChallengeRequest request);
 
+    @POST("/v1/wallet/useWallet")
+    Call<BuyResponse> useWalletToBuyFromStore(@Body BuyRequest request);
+
     @GET("/v1/setting/getLatestApk")
     Call<String> getLatestApk();
 
@@ -273,11 +284,39 @@ public interface NostragamusService {
     Call<UserReferralResponse> getUserReferralInfo(@Query("app_type") String flavor);
 
     @GET("v2/game/getReferralTransactions")
-    Call<UserReferralHistoryResponse> getUserReferralHistory(@Query("app_type") String flavor);
+    Call<UserReferralHistoryResponse> getUserReferralHistory(@Query("app_type") String flavor,@Query("transaction_type")  String transactionType);
 
     @GET("v2/game/verifyReferralCode")
     Call<VerifyReferralCodeResponse> verifyReferralCode(@Query("referral_code") String referralCode);
 
     @GET("v1/game/seenWhatsNew")
     Call<ApiResponse> getWhatsNewShown();
+
+    @GET("/v2/game/resendOTP")
+    Call<VerifyOTPResponse> getOTPRequest(@Query("mobile") String phoneNumber);
+
+    @GET("/v2/game/verifyOTP")
+    Call<VerifyOTPResponse> verifyOTPRequest(@Query("otp_code") String otp);
+
+    @POST("/v3/game/login")
+    Call<LogInResponse> loginUserV3(@Body LogInRequest logInRequest);
+
+    @POST("/v2/game/login")
+    Call<LogInResponse> loginUserV2(@Body LogInRequest logInRequest);
+
+
+    @GET("/v2/game/store/getProductsByCategory")
+    Call<StoreApiResponse> getStoreDetails(@Query("category") String category);
+
+    @POST("/v2/game/users/powerupTransferStats")
+    Call<PowerUpBankStatusResponse> powerupTransferStatus(@Body PowerupBankStatusRequest request);
+
+    @GET("v2/game/store/getPowerupTransaction")
+    Call<PBTransactionHistoryResponse> getPBTransactionHistory();
+
+    @GET("v2/game/showUpgradePopups")
+    Call<UpgradeToProResponse> shouldShowUpgradeToProDialog();
+
+    @POST("v1/game/users/updateProfile")
+    Call<ApiResponse> updateUserProfile(@Body UpdateUserProfileRequest updateUserProfileRequest);
 }

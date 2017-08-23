@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.jeeva.android.Log;
 import org.parceler.Parcels;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
@@ -32,7 +34,7 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
-import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentAndJoinDialogFragment;
+import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentDialogFragment;
 import in.sportscafe.nostragamus.module.allchallenges.join.JoinChallengeUseWalletApiModelImpl;
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
@@ -44,6 +46,11 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.JoinChallengeFailureDialogFragment;
+import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
+import in.sportscafe.nostragamus.module.upgradeToPro.UpgradeToProAppApiModelImpl;
+import in.sportscafe.nostragamus.module.upgradeToPro.UpgradeToProAppDialogFragment;
+import in.sportscafe.nostragamus.module.upgradeToPro.dto.UpgradeToProResponse;
 
 /**
  * Created by Jeeva on 28/02/17.
@@ -180,8 +187,69 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
     @Override
     public void onEmpty() {
-        showMessage(Alerts.POLL_LIST_EMPTY);
-        dismissThisDialog();
+        // If config is empty or null (on PS Version), then show dialog
+        if (BuildConfig.IS_PAID_VERSION) {
+            showMessage(Alerts.POLL_LIST_EMPTY);
+            dismissThisDialog();
+        } else {
+            verifyAndShowAppUpgradeToProDialogIfRequired();
+        }
+    }
+
+    private void verifyAndShowAppUpgradeToProDialogIfRequired() {
+        // Only for PS version
+        if (!BuildConfig.IS_PAID_VERSION) {
+            showProgressbar();
+            UpgradeToProAppApiModelImpl apiModel = UpgradeToProAppApiModelImpl.newInstance(getAppUpgradeToProDetailsApiListener());
+            apiModel.performApiCall();
+        }
+    }
+
+    @NonNull
+    private UpgradeToProAppApiModelImpl.UpgradeToProAppApiListener getAppUpgradeToProDetailsApiListener() {
+        return new UpgradeToProAppApiModelImpl.UpgradeToProAppApiListener() {
+            @Override
+            public void noInternet() {
+                Log.d(TAG, "No Internet");
+                dismissProgressbar();
+                showMessage(Alerts.NO_NETWORK_CONNECTION);
+            }
+
+            @Override
+            public void onNoApiResponse() {
+                Log.d(TAG, "Api Failure");
+                dismissProgressbar();
+                showMessage(Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onSuccessResponse(UpgradeToProResponse response) {
+                dismissProgressbar();
+                onAppUpgradeToProDialogApiResponse(response);
+                dismissThisDialog();
+            }
+        };
+    }
+
+    private void onAppUpgradeToProDialogApiResponse(UpgradeToProResponse response) {
+        if (response != null && getActivity() != null) {
+            if (response.isShouldShowUpgradeDialog() && !TextUtils.isEmpty(response.getContentImageUrl())) {
+                Bundle args = new Bundle();
+                args.putString(BundleKeys.IMAGE_URL, response.getContentImageUrl());
+                args.putString(BundleKeys.DOWNLOAD_URL, response.getProAppDownloadLink());
+
+                if(new PermissionsChecker(getActivity()).lacksPermissions(Constants.AppPermissions.STORAGE)) {
+                    PermissionsActivity.startActivityForResult(getActivity(), Constants.RequestCodes.STORAGE_PERMISSION, Constants.AppPermissions.STORAGE);
+                } else {
+
+                    UpgradeToProAppDialogFragment fragment = new UpgradeToProAppDialogFragment();
+                    fragment.setArguments(args);
+                    if (getActivity() != null) {
+                        fragment.show(getActivity().getSupportFragmentManager(), UpgradeToProAppDialogFragment.class.getSimpleName());
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -254,7 +322,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
             } else {
                 // Paid entry, check wallet balance, fetch wallet and then continue
                 fetchUserWalletFromServer(challengeConfig, challengeId,
-                        CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.NORMAL_LAUNCH);
+                        CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
             }
         } else {
             showMessage(Alerts.SOMETHING_WRONG);
@@ -333,7 +401,7 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
 
                 /* Fetch wallet details and continue in loop */
                 fetchUserWalletFromServer(challengeConfig, challengeId,
-                        CompletePaymentAndJoinDialogFragment.DialogLaunchFlow.MONEY_ADDED_ON_LOW_BAL_LAUNCH);
+                        CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_AFTER_LOW_BAL_LAUNCH);
             } else {
                 showMessage(Alerts.SOMETHING_WRONG);
             }
@@ -418,10 +486,16 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
                     !joinChallengeResponse.getJoinedChallengeInfo().isFreeEntry() &&
                     amount > 0 && mChallenge != null) {
                 NostragamusAnalytics.getInstance().trackRevenue(amount, mChallenge.getChallengeId(), mChallenge.getName());
+
+                NostragamusAnalytics.getInstance().logFbRevenue(amount, new Bundle());
             }
 
             Bundle bundle = new Bundle();
             bundle.putParcelable(BundleKeys.JOINED_CHALLENGE_INFO, Parcels.wrap(joinChallengeResponse.getJoinedChallengeInfo()));
+            if (mChallenge != null) {
+                bundle.putInt(BundleKeys.CHALLENGE_ID, mChallenge.getChallengeId());
+            }
+
             onJoinActionSuccess(bundle);
         }
     }
@@ -455,8 +529,10 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "Dismissing this...");
-                ChallengeConfigsDialogFragment.this.dismiss();
+                try {
+                    Log.d(TAG, "Dismissing this...");
+                    ChallengeConfigsDialogFragment.this.dismiss();
+                } catch (Exception ex) {}
             }
         }, 300);
     }
@@ -471,26 +547,30 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
     }
 
     private void showJoinDialog(int challengeId, ChallengeConfig challengeConfig, int dialogLaunchMode) {
-        CompletePaymentAndJoinDialogFragment dialogFragment =
-                CompletePaymentAndJoinDialogFragment.newInstance(JOIN_CHALLENGE_CONFIRMATION_REQUEST_CODE,
-                        challengeConfig.getConfigName(),
-                        challengeConfig.getEntryFee(),
+        Bundle bundle = new Bundle();
+        bundle.putDouble(Constants.BundleKeys.ENTRY_FEE, challengeConfig.getEntryFee());
+        bundle.putString(Constants.BundleKeys.CONFIG_NAME, challengeConfig.getConfigName());
+
+        CompletePaymentDialogFragment dialogFragment =
+                CompletePaymentDialogFragment.newInstance(JOIN_CHALLENGE_CONFIRMATION_REQUEST_CODE,
                         dialogLaunchMode,
+                        bundle,
                         getCompletePaymentDialoActionListener(challengeId, challengeConfig));
+
         dialogFragment.show(getChildFragmentManager(), "COMPLETE_JOIN");
     }
 
-    private CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener
+    private CompletePaymentDialogFragment.CompletePaymentActionListener
     getCompletePaymentDialoActionListener(final int challengeId, final ChallengeConfig challengeConfig) {
 
-        return new CompletePaymentAndJoinDialogFragment.CompletePaymentActionListener() {
+        return new CompletePaymentDialogFragment.CompletePaymentActionListener() {
             @Override
             public void onBackClicked() {
                 // No action required
             }
 
             @Override
-            public void onPayAndJoin() {
+            public void onPayConfirmed() {
                 performJoinChallengeAction(challengeId, challengeConfig);
             }
         };

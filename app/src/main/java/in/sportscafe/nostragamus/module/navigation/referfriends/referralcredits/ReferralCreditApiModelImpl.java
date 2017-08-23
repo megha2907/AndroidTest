@@ -35,7 +35,7 @@ public class ReferralCreditApiModelImpl {
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 
-            MyWebService.getInstance().getUserReferralHistory(flavor).enqueue(new NostragamusCallBack<UserReferralHistoryResponse>() {
+            MyWebService.getInstance().getUserReferralHistory(flavor,null).enqueue(new NostragamusCallBack<UserReferralHistoryResponse>() {
                 @Override
                 public void onResponse(Call<UserReferralHistoryResponse> call, Response<UserReferralHistoryResponse> response) {
                     super.onResponse(call, response);

@@ -144,7 +144,7 @@ public class ChallengeJoinDialogFragment extends NostragamusDialogFragment imple
                 // Setting end date of the challenge
                 challengePayoutDate.setText("The Challenge ends on the " +
                         dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
-                        TimeUtils.getDateStringFromMs(endTimeMs, "MMM") + " , Prizes will be handed out within 3 days."
+                        TimeUtils.getDateStringFromMs(endTimeMs, "MMM") + " , Prizes will be handed out within a few hours of challenge completion."
                 );
 
             }else {

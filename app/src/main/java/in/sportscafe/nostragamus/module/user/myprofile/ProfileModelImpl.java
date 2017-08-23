@@ -74,8 +74,8 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
             pagerAdapter.addFragment(WalletHistoryFragment.newInstance(paymentInfo), "Wallet");
         }*/
 
-        HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());
-        pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Powerup Bank");
+        /*HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());
+        pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Powerup Bank");*/
 
         List<Badge> badgeList = userInfo.getBadges();
         pagerAdapter.addFragment(BadgeFragment.newInstance(badgeList), "Achievements");

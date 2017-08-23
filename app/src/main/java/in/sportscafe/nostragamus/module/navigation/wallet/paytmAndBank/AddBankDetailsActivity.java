@@ -81,14 +81,22 @@ public class AddBankDetailsActivity extends NostragamusActivity implements View.
         String accNumber = getTrimmedText(mAccNumberEditText);
         String ifsCode = getTrimmedText(mIfscodeEditText);
 
+        TextView holderNameErrorTextView = (TextView) findViewById(R.id.add_bank_acc_holder_name_error_textview);
+        TextView accNoErrorTextView = (TextView) findViewById(R.id.add_bank_acc_no_error_textview);
+        TextView ifscErrorTextView = (TextView) findViewById(R.id.add_bank_ifsc_error_textview);
+
         if (name.length() == 0) {
-            mAccHolderNameEditText.setError("Please provide account holder's name");
+            holderNameErrorTextView.setVisibility(View.VISIBLE);
         } else if (accNumber.length() == 0) {
-            mAccNumberEditText.setError("Please provide account number");
+            accNoErrorTextView.setVisibility(View.VISIBLE);
+            holderNameErrorTextView.setVisibility(View.GONE);
+
         } else if (ifsCode.length() == 0) {
-            mIfscodeEditText.setError("Please provide IFSC code");
+            ifscErrorTextView.setVisibility(View.VISIBLE);
+            accNoErrorTextView.setVisibility(View.GONE);
+
         } else {
-            // Make api call to save details
+            ifscErrorTextView.setVisibility(View.GONE);
 
             showProgressbar();
             AddPaytmOrBankDetailModelModelImpl detailsModel = AddPaytmOrBankDetailModelModelImpl.newInstance(getCallBackListener());

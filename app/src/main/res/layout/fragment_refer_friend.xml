@@ -22,14 +22,19 @@
                 android:id="@+id/refer_code_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_24"
-                android:layout_marginRight="@dimen/dp_24"
-                android:layout_marginTop="@dimen/dp_26"
+                android:layout_marginLeft="@dimen/dim_24"
+                android:layout_marginRight="@dimen/dim_24"
+                android:layout_marginTop="@dimen/dim_20"
                 android:background="?android:attr/selectableItemBackground"
                 android:gravity="center_vertical"
-                android:minHeight="@dimen/dp_60"
                 android:orientation="vertical">
 
+
+                <LinearLayout
+                    android:id="@+id/refer_code_text_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/refer_friend_heading"
@@ -37,36 +42,40 @@
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_32"
+                    android:textSize="@dimen/sp_32"
                     app:typeface="lato_bold" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/refer_friend_subheading_tv_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dim_20"
                     android:textColor="@color/grey6"
                     android:textSize="@dimen/sp_15"
+                    android:lineSpacingExtra="@dimen/dp_1.5"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/refer_friend_subheading_tv_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_26"
+                    android:layout_marginTop="@dimen/dim_20"
                     android:textColor="@color/grey6"
                     android:textSize="@dimen/sp_15"
+                    android:lineSpacingExtra="@dimen/dp_1.5"
                     app:typeface="lato_regular" />
+
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_32">
+                    android:layout_marginTop="@dimen/dim_20">
 
                     <RelativeLayout
                         android:id="@+id/referral_code_rl"
-                        android:layout_width="@dimen/dp_150"
-                        android:layout_height="@dimen/dp_50"
+                        android:layout_width="@dimen/refer_btn_width"
+                        android:layout_height="@dimen/refer_code_btn_height"
                         android:background="@drawable/btn_refer_code_bg">
 
                         <!-- Referral Code TextView -->
@@ -75,10 +84,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="@dimen/dp_3"
+                            android:layout_marginTop="@dimen/dim_3"
                             android:text="Your code"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/dp_12"
+                            android:textSize="@dimen/sp_12"
                             app:typeface="lato_regular" />
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -89,7 +98,7 @@
                             android:layout_centerHorizontal="true"
                             android:includeFontPadding="false"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/dp_18"
+                            android:textSize="@dimen/sp_18"
                             app:typeface="lato_bold" />
 
                     </RelativeLayout>
@@ -97,17 +106,17 @@
                     <!-- Refer Now Button -->
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/refer_friend_btn"
-                        android:layout_width="@dimen/dp_150"
-                        android:layout_height="@dimen/dp_48"
+                        android:layout_width="@dimen/refer_btn_width"
+                        android:layout_height="@dimen/refer_btn_height"
                         android:layout_alignParentRight="true"
                         android:layout_gravity="right"
                         android:background="@drawable/btn_refer_bg"
                         android:clickable="false"
-                        android:paddingBottom="@dimen/dp_3"
+                        android:paddingBottom="@dimen/dim_3"
                         android:text="Refer Now!"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_14"
+                        android:textSize="@dimen/sp_14"
                         app:typeface="lato_bold" />
 
                 </RelativeLayout>
@@ -116,10 +125,10 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0.5"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_32"
+                android:layout_height="@dimen/dim_0.5"
+                android:layout_marginLeft="@dimen/dim_10"
+                android:layout_marginRight="@dimen/dim_10"
+                android:layout_marginTop="@dimen/dim_20"
                 android:background="@color/line_separator" />
 
 
@@ -128,10 +137,10 @@
                 android:id="@+id/refer_referral_credit_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_24"
-                android:layout_marginRight="@dimen/dp_24"
+                android:layout_marginLeft="@dimen/dim_20"
+                android:layout_marginRight="@dimen/dim_20"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="@dimen/dp_72">
+                android:minHeight="@dimen/dim_72">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -147,7 +156,7 @@
                             android:id="@+id/refer_referral_credit_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Your Referral Credit  - "
+                            android:text="Your Referral Credits  - "
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_14"
                             app:typeface="lato_regular" />
@@ -156,7 +165,7 @@
                             android:id="@+id/refer_referral_credit_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_6"
+                            android:layout_marginLeft="@dimen/dim_6"
                             android:text="₹ 0.00"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_14"
@@ -170,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/refer_referral_credit_textview_ll"
                         android:textColor="@color/grey6"
-                        android:textSize="@dimen/dp_12"
+                        android:textSize="@dimen/sp_12"
                         app:typeface="lato_regular" />
 
                     <ImageView
@@ -178,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginRight="@dimen/dp_2"
+                        android:layout_marginRight="@dimen/dim_2"
                         android:rotation="180"
                         android:src="@drawable/back_icon_grey" />
 
@@ -188,9 +197,9 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0.5"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
+                android:layout_height="@dimen/dim_0.5"
+                android:layout_marginLeft="@dimen/dim_10"
+                android:layout_marginRight="@dimen/dim_10"
                 android:background="@color/line_separator" />
 
             <!--Terms section -->
@@ -198,10 +207,10 @@
                 android:id="@+id/refer_terms_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_24"
-                android:layout_marginRight="@dimen/dp_24"
+                android:layout_marginLeft="@dimen/dim_20"
+                android:layout_marginRight="@dimen/dim_20"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="@dimen/dp_72">
+                android:minHeight="@dimen/dim_72">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
@@ -217,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp_2"
+                    android:layout_marginRight="@dimen/dim_2"
                     android:rotation="180"
                     android:src="@drawable/back_icon_grey" />
 
@@ -225,9 +234,9 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0.5"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
+                android:layout_height="@dimen/dim_0.5"
+                android:layout_marginLeft="@dimen/dim_10"
+                android:layout_marginRight="@dimen/dim_10"
                 android:background="@color/line_separator" />
 
 

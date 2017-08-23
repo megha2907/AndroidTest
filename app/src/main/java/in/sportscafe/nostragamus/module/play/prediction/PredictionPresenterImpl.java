@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.google.ads.conversiontracking.AdWordsConversionReporter;
-import com.jeeva.android.Log;
 
 import java.util.List;
 
@@ -12,6 +11,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
@@ -70,14 +70,26 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     }
 
-    private void updatePowerups() {
+    @Override
+    public void updatePowerups() {
         mPredictionView.set2xPowerupCount(mPredictionModel.get2xPowerupCount(), true);
         mPredictionView.setNonegsPowerupCount(mPredictionModel.getNonegsPowerupCount(), true);
         mPredictionView.setPollPowerupCount(mPredictionModel.getPollPowerupCount(), true);
     }
 
+    private void updatePowerUpAsAddedFromBank(int oldDoubler, int oldNoNegative, int oldAudiencePoll) {
+        if (mPredictionModel != null && mPredictionView != null) {
+            int newDoubler = mPredictionModel.get2xPowerupCount();
+            int newNoNegative = mPredictionModel.getNonegsPowerupCount();
+            int newAudiencePoll = mPredictionModel.getPollPowerupCount();
+
+            mPredictionView.animatePowerUpAddedFromBank(oldDoubler, newDoubler, oldNoNegative, newNoNegative, oldAudiencePoll, newAudiencePoll);
+        }
+    }
+
     @Override
     public void onSuccessCompletion(Bundle bundle) {
+        NostragamusAnalytics.getInstance().logFbPlayCompleted(null);
 
         bundle.putString(Constants.ScreenNames.PLAY,Constants.ScreenNames.PLAY);
 
@@ -139,10 +151,13 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onClickBankTransfer() {
-        if (NostragamusDataHandler.getInstance().isBankInfoShown()) {
+        /*if (NostragamusDataHandler.getInstance().isBankInfoShown()) {
             mPredictionView.navigateToBankTransfer(mPredictionModel.getChallengeInfoBundle());
         } else {
             mPredictionView.showBankInfo();
+        }*/
+        if (mPredictionView != null && mPredictionModel != null) {
+            mPredictionView.showPowerUpBankActivity(mPredictionModel.getChallengeInfoBundle());
         }
     }
 
@@ -170,6 +185,19 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
             mPredictionView.takeScreenshotAndShare();
             mPredictionModel.getShareText(mPredictionView.getContext());
         }
+    }
+
+    @Override
+    public void powerUpAddedFromBank(Bundle bundle) {
+        int doubler = mPredictionModel.get2xPowerupCount();
+        int noNegative = mPredictionModel.getNonegsPowerupCount();
+        int audiencePoll = mPredictionModel.getPollPowerupCount();
+
+        if (mPredictionModel != null) {
+            mPredictionModel.updatePowerUpAsAddedFromBank(bundle);
+        }
+
+        updatePowerUpAsAddedFromBank(doubler, noNegative, audiencePoll);
     }
 
     @Override
@@ -206,7 +234,6 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onGetSport(Integer sportId) {
-        mPredictionView.changeBackgroundImage(sportId);
     }
 
     @Override
@@ -275,6 +302,8 @@ public class PredictionPresenterImpl implements PredictionPresenter, PredictionM
 
     @Override
     public void onNoPowerUps() {
+        /* As no Powerup in Bank, log analytics */
+        NostragamusAnalytics.getInstance().trackPowerups(Constants.AnalyticsActions.OPEN_POWERUP_BANK, Constants.AnalyticsLabels.NO_POWERUP);
         onClickBankTransfer();
     }
 

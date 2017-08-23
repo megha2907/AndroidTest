@@ -50,6 +50,8 @@ public class UserInfoModelImpl {
 
                         if (response.isSuccessful()) {
                             UserInfo userInfo = response.body().getUserInfo();
+                            Nostragamus.getInstance().getServerDataManager().setUserInfo(userInfo);
+
                             handleUserInfoResponse(userInfo);
                             mUserInfoModelListener.onSuccessGetUpdatedUserInfo(userInfo);
                         } else {

@@ -19,7 +19,6 @@ public interface Constants {
     interface NotificationKeys {
         String RESULTS_LEADERBOARD = "results_leaderboard";
         String FROM_NOTIFICATION = "fromNotification";
-
         String NEW_CHALLENGE_ID = "challenge_id";
     }
 
@@ -76,6 +75,7 @@ public interface Constants {
         String PAID_NORMAL_UPDATE_APK_LINK = "paidNormalUpdateApkLink";
         String FORCE_UPDATE_ENABLED = "forceUpdateEnabled";
         String REQUIRED_UPDATE_VERSION = "requiredUpdateVersion";
+        String EDIT_PROFILE_SHOWN_TIME = "editProfileShownTime";
 
         String INITIAL_FORM_SHOWN = "initialFormShown";
         String ACCESS_TOKEN = "accessToken";
@@ -132,7 +132,7 @@ public interface Constants {
         String EDIT_PROFILE_FAILED = "Profile update failed. Try again.";
         String NAME_EMPTY = "Please enter name";
         String NICKNAME_EMPTY = "Please enter username";
-        String NICKNAME_NOT_VALID = "Username should be between 3 and 15 characters long";
+        String NICKNAME_NOT_VALID = "Username should be 3-15 characters long";
         String NICKNAME_NO_UPPERCASE = "Oops ,Please use lowercase";
         String NICKNAME_CONFLICT = "Oops , this username is already taken";
         String USERNAME_EMPTY = "Please enter username";
@@ -193,7 +193,7 @@ public interface Constants {
         String DEFAULT_SHARE_MESSAGE = "Use paste, If you want to use the default share message!";
         String POLL_LIST_EMPTY = "No polls";
         String NOT_FREE_CHALLENGE = "Please use full version for the paid challenges";
-        String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Oops! Select the checkbox to proceed as if you do not meet these restrictions, you are not allowed to play the full version of the game";
+        String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Please select the checkbox to proceed - you must meet these conditions to play the Pro version of Nostragamus";
         String FORCE_UPDATE_PROFILE_MSG_FOR_PAID_VERSION = "Please update your profile";
 
         /*--- Paytm Msg ---*/
@@ -203,6 +203,9 @@ public interface Constants {
         String PAYTM_FAILURE = "Could not initiate transaction, please try again";
         String SOMETHING_WRONG ="Something went wrong! Please try again!";
         String NO_UPDATES = "No New Updates Available";
+        String INVALID_PHONE_NUMBER = "Enter 10 digit number";
+        String PHONE_NUMBER_EXIST = "Mobile Number is already registered";
+        String INVALID_OTP = "Invalid OTP";
     }
 
     interface BundleKeys {
@@ -297,6 +300,15 @@ public interface Constants {
         String BALANCE_AMOUNT = "balanceAmount";
         String CHALLENGE_CONFIG = "challengeConfig";
         String USER_REFERRAL_INFO = "userReferralInfo";
+        String PHONE_NUMBER = "phoneNumber";
+        String USER_PHOTO = "user_photo";
+        String USER_NAME = "user_name";
+        String POWERUP_BANK_INFO_SCREEN = "powerupBankInfoScreen";
+        String STORE_ITEM = "storeItem";
+        String STORE_BUY_PRODUCT_CATEGORY = "storeBuyProductCategory";
+        String LAUNCH_MODE = "launchMode";
+        String IMAGE_URL = "imageUrl";
+        String DOWNLOAD_URL = "downloadUrl";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -307,7 +319,8 @@ public interface Constants {
         String USER_REFERRAL_CODE = "user_referral_code";
         String USER_REFERRAL_NAME = "user_referral_name";
         String USER_REFERRAL_PHOTO = "user_referral_photo";
-        String DIALOG_LAUNCH_MODE = "dialogLaunchMode";
+
+        String SUCCESSFUL_REFERRAL = "successfulReferral";
     }
 
     interface ParcelableKeys {
@@ -346,6 +359,7 @@ public interface Constants {
         String ACTION_SCROLL_CHALLENGE = "in.sportscafe.nostragamus.intent.action.SCROLL_CHALLENGE";
         String ACTION_RELOAD_CHALLENGES = "in.sportscafe.nostragamus.intent.action.RELOAD_CHALLENGES";
         String ACTION_OPEN_WEBVIEW= "in.sportscafe.nostragamus.intent.action.OPEN_WEBVIEW";
+        String ACTION_FINISH_POWER_UP_BANK_ACTIVITY = "in.sportscafe.nostragamus.intent.action.FINISH_POWER_UP_BANK";
     }
 
     interface LeaderBoardPeriods {
@@ -408,6 +422,51 @@ public interface Constants {
         String UPDATE_LATER = "Update Later";
         String WALLET_ADD_MONEY = "Add Money into Wallet";
         String WALLET_WITHDRAW_MONEY = "Withdraw from Wallet";
+        String ONBOARDING_TIME = "OnBoarding Time";
+        String NAVIGATION_SCREEN = "Navigation Screen";
+        String STORE_SCREEN = "Store Screen";
+        String WALLET = "Wallet";
+        String REFERRAL_BENEFIT = "Referral Benefit";
+        String NAVIGATION = "Navigation";
+        String CHALLENGES = "Challenges";
+        String COMPARE_PROFILE = "Compare Results";
+    }
+
+    interface AnalyticsClickLabels {
+        /* Navigation */
+        String PROFILE = "Profile";
+        String WALLET = "Wallet";
+        String POWER_UP_BANK = "Powerup Bank";
+        String REFER_FRIEND = "Refer Friend";
+        String WHATS_NEW = "Whats New";
+        String SUBMIT_QUESTION = "Submit Question";
+        String HELP = "Help";
+        String SETTINGS = "Settings";
+        String APP_UPDATE = "App Update";
+        String STORE = "Store";
+        String BUY_PRODUCT = "Buy Product";
+        String PRODUCT_PURCHASED = "Product Purchased";
+
+        /* Wallet */
+        String EARN_MORE = "Earn More";
+        String ADD_MONEY = "Add Money";
+        String WITHDRAW = "Withdraw";
+        String TRANSACTION_HISTORY = "Transaction History";
+        String ADD_EDIT_WITHDRAWAL_DETAILS = "Add/Edit Withdraw Details";
+
+        /* Refer */
+        String REFER_NOW = "Refer Now";
+
+        /* Play screen */
+        String PLAY_BANK = "PowerUp Bank";
+        String PLAY_ASK_FRIEND = "Ask a Friend";
+        String PLAY_GAME_HELP = "Game-Help";
+        String SWIPE_VIEW = "Swipe View";
+        String LIST_VIEW = "List View";
+        String CHALLENGE_INFO = "Challenge Info";
+        String CHALLENGE_JOIN = "Challenge Join";
+        String CHALLENGE_REWARDS = "Challenge Rewards";
+        String OTHER_PROFILE = "Other Profile";
     }
 
     interface AnalyticsActions {
@@ -444,6 +503,10 @@ public interface Constants {
         String NO_CASH_REWARDS = "Don't Want Cash Rewards";
         String OPENED = "Opened";
         String CLICKED = "Clicked";
+        String ONBOARDING_TIME = "OnBoarding Time";
+        String OPEN_POWERUP_BANK = "Open Powerup Bank";
+        String VIEW_OTHERS_ANSWERS = "View Other's Answers";
+        String OTHERS_RESULTS_WAITING = "Other's Results Waiting";
     }
 
     interface AnalyticsLabels {
@@ -461,7 +524,9 @@ public interface Constants {
         String LAUNCHER = "Launcher";
         String NOTIFICATION = "Notification";
         String GROUP = "Group";
+        String REFER_FRIEND = "Refer Friend";
         String PROFILE = "Profile";
+        String NO_POWERUP = "No Powerup";
     }
 
     interface UserProperties {
@@ -508,6 +573,7 @@ public interface Constants {
         String QUESTION_ADD_TOUR_LIST = "question_add_tour_list"; //TourListActivity
         String USER_PROFILE = "user_profile"; //in.sportscafe.nostragamus.module.user.myprofile.ProfileActivity
         String ADD_PAYMENT_BANK_DETAILS = "add_payment_bank_details";
+        String EDIT_USER_PROFILE = "edit_user_profile"; ///Users/deepanshi/code/nostragamus/app/src/main/java/in/sportscafe/nostragamus/module/navigation/edituserprofile/EditUserProfileActivity.java
 
         String SETTINGS = "settings";
         String ABOUT = "about";
@@ -525,6 +591,10 @@ public interface Constants {
         String REFER_FRIEND = "ReferFriend";
         String REFERRAL_CREDIT = "ReferralCredit";
         String SUCCESSFUL_REFERRAL = "successfulReferral";
+        String POWERUP_BANK = "PowerupBank";
+        String VERIFY_PROFILE = "VerifyProfile";
+        String STORE = "Store";
+        String EARN_MORE_POWERUPS = "EarnMorePowerups";
     }
 
     interface InAppPopups {
@@ -622,7 +692,7 @@ public interface Constants {
          String FORCE_PAID_UPDATE = "Force_Paid";
      }
 
-    public interface MoneyFlow {
+    interface MoneyFlow {
         String IN = "in";   // Debit
         String OUT = "out"; // credit
 
@@ -637,6 +707,7 @@ public interface Constants {
         String TRANSACTION_TYPE_PROMO = "promo";
         String TRANSACTION_TYPE_JOINING = "joining";
         String TRANSACTION_TYPE_WINNING = "winning";
+        String TRANSACTION_TYPE_BUY = "buy";
 
         String TRANSACTION_STATUS_INITIATED = "initiated";
         String TRANSACTION_STATUS_SUCCESS = "success";
@@ -651,10 +722,21 @@ public interface Constants {
         String REFERRAL_HISTORY_TYPE_MONEY = "promoMoney";
     }
 
+    interface TransactionHistory {
+        String CHALLENGE = "challenge";
+        String REFERRAL = "referral";
+        String STORE = "Store";
+    }
+
     interface ChallengeTabs {
         String NEW = "New";
         String IN_PLAY = "In Play";
         String COMPLETED = "Completed";
+    }
+
+    interface PopUpType {
+        String Losers = "lost_first_challenge";
+        String Winners = "won_first_challenge";
     }
 
     interface WebPageUrls {
@@ -665,6 +747,7 @@ public interface Constants {
         String TERMS_SERVICE = "http://nostragamus.in/terms.html";
         String PRIVACY = "http://nostragamus.in/privacy.html";
         String REFERRAL_TERMS = "http://nostragamus.in/referralapp.html";
+        String POWERUP_BANK_URL = "http://nostragamus.in/powerup-bankapp.html";
 
     }
 
@@ -676,6 +759,24 @@ public interface Constants {
         int ERROR_UNKNOWN = 4;      // Unknown server side error
     }
 
-    public static final String AMOUNT_DECIMAL_PATTERN = "#.00";
-    public static final String RUPEE_SYMBOL = "₹ ";
+    interface ApiSuccessStatusCode {
+        int FAILURE = 0;
+        int SUCCESS = 1;
+    }
+
+    interface PowerupLocalId { int DOUBLER = 1; int NO_NEGATIVE = 2; int AUDIENCE_POLL = 3;}
+
+    interface StoreBuyProductCategory {
+        int POWER_UP_DOUBLER = 1;
+        int POWER_UP_NO_NEGATIVE = 2;
+        int POWER_UP_AUDIENCE_POLL = 3;
+    }
+
+    String AMOUNT_DECIMAL_PATTERN = "#0.00";
+    String RUPEE_SYMBOL = "₹ ";
+    String INDIAN_CURRENCY_CODE = "INR";
+
+    interface FaceBookAnalyticsEvents {
+        String MATCH_PLAY_COMPLETED = "Played";
+    }
 }

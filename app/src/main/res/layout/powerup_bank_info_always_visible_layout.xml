@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/powerup_bank_info_max_msg_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_20"
+        android:layout_marginTop="@dimen/dim_20"
+        android:text="No more than 2 powerups each can be transfered to this challenge"
+        android:textColor="@color/white_dim"
+        android:textSize="@dimen/sp_15"
+        app:typeface="lato_regular" />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dim_10"
+        android:text="To refill your bank, go to the Powerup Bank section of your Profile "
+        android:textColor="@color/white_dim"
+        android:textSize="@dimen/sp_14"
+        app:typeface="lato_regular" />
+
+</LinearLayout>

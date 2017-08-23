@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Font sizes -->
+    <dimen name="sp_8">9sp</dimen>
+    <dimen name="sp_9">10sp</dimen>
+    <dimen name="sp_10">11sp</dimen>
+    <dimen name="sp_11">12.5sp</dimen>
+    <dimen name="sp_12">14sp</dimen>
+    <dimen name="sp_13">15sp</dimen>
+    <dimen name="sp_14">16sp</dimen>
+    <dimen name="sp_15">17sp</dimen>
+    <dimen name="sp_16">18sp</dimen>
+    <dimen name="sp_17">19sp</dimen>
+    <dimen name="sp_18">20.5sp</dimen>
+    <dimen name="sp_19">21.6sp</dimen>
+    <dimen name="sp_20">23sp</dimen>
+    <dimen name="sp_21">24sp</dimen>
+    <dimen name="sp_22">25sp</dimen>
+    <dimen name="sp_23">26sp</dimen>
+    <dimen name="sp_24">27sp</dimen>
+    <dimen name="sp_25">28.5sp</dimen>
+    <dimen name="sp_26">29.6sp</dimen>
+    <dimen name="sp_27">31sp</dimen>
+    <dimen name="sp_28">32sp</dimen>
+    <dimen name="sp_29">33sp</dimen>
+    <dimen name="sp_30">34sp</dimen>
+    <dimen name="sp_31">35sp</dimen>
+    <dimen name="sp_32">36.5sp</dimen>
+
+    <!-- Dimens -->
+    <dimen name="_dim_10">-11dp</dimen>
+    <dimen name="_dim_7">-8dp</dimen>
+    <dimen name="_dim_5">-6dp</dimen>
+    <dimen name="_dim_2">-3dp</dimen>
+    <dimen name="_dim_1">-2dp</dimen>
+    <dimen name="dim_0">0dp</dimen>
+    <dimen name="dim_0.5">0.6dp</dimen>
+    <dimen name="dim_0.7">0.8dp</dimen>
+    <dimen name="dim_0.8">0.9dp</dimen>
+    <dimen name="dim_0.9">1dp</dimen>
+    <dimen name="dim_1">2dp</dimen>
+    <dimen name="dim_1.2">1.3dp</dimen>
+    <dimen name="dim_2">3dp</dimen>
+    <dimen name="dim_3">4dp</dimen>
+    <dimen name="dim_4">5dp</dimen>
+    <dimen name="dim_5">6dp</dimen>
+    <dimen name="dim_6">7dp</dimen>
+    <dimen name="dim_6.5">7.5dp</dimen>
+    <dimen name="dim_7">8dp</dimen>
+    <dimen name="dim_8">9dp</dimen>
+    <dimen name="dim_9">10dp</dimen>
+    <dimen name="dim_10">11dp</dimen>
+    <dimen name="dim_11">12dp</dimen>
+    <dimen name="dim_11.5">12.5dp</dimen>
+    <dimen name="dim_12">14dp</dimen>
+    <dimen name="dim_13">15dp</dimen>
+    <dimen name="dim_14">16dp</dimen>
+    <dimen name="dim_15">17dp</dimen>
+    <dimen name="dim_16">18dp</dimen>
+    <dimen name="dim_17">19dp</dimen>
+    <dimen name="dim_17.5">19.5dp</dimen>
+    <dimen name="dim_18">20.5dp</dimen>
+    <dimen name="dim_19">21.6dp</dimen>
+    <dimen name="dim_20">23dp</dimen>
+    <dimen name="dim_21">24dp</dimen>
+    <dimen name="dim_22">25dp</dimen>
+    <dimen name="dim_23">26dp</dimen>
+    <dimen name="dim_24">27dp</dimen>
+    <dimen name="dim_25">28.5dp</dimen>
+    <dimen name="dim_26">29.6dp</dimen>
+    <dimen name="dim_27">31dp</dimen>
+    <dimen name="dim_28">32dp</dimen>
+    <dimen name="dim_29">33dp</dimen>
+    <dimen name="dim_30">34dp</dimen>
+    <dimen name="dim_31">35dp</dimen>
+    <dimen name="dim_32">36.5dp</dimen>
+    <dimen name="dim_36">41dp</dimen>
+    <dimen name="dim_40">45.6dp</dimen>
+    <dimen name="dim_45">51dp</dimen>
+    <dimen name="dim_50">57dp</dimen>
+    <dimen name="dim_60">68.4dp</dimen>
+    <dimen name="dim_66">76dp</dimen>
+    <dimen name="dim_72">82dp</dimen>
+    <dimen name="dim_80">91dp</dimen>
+    <dimen name="dim_75">85.5dp</dimen>
+    <dimen name="dim_90">103dp</dimen>
+    <dimen name="dim_100">114dp</dimen>
+    <dimen name="dim_120">137dp</dimen>
+    <dimen name="dim_132">147dp</dimen>
+    <dimen name="dim_150">171dp</dimen>
+    <dimen name="dim_160">182.4dp</dimen>
+    <dimen name="dim_300">342dp</dimen>
+    <dimen name="dim_320">364.8dp</dimen>
+
+    <dimen name="home_nav_bar_height">57dp</dimen>
+    <dimen name="home_nav_bar_icon">22dp</dimen>
+
+    <dimen name="dp_90">102dp</dimen>
+    <dimen name="dp_160">182dp</dimen>
+
+    <!-- OnBoarding Sizes -->
+    <dimen name="onboarding_referral_height">96dp</dimen>
+    <dimen name="onboarding_referral_width">96dp</dimen>
+    <dimen name="onboarding_height">190dp</dimen>
+    <dimen name="onboarding_width">190dp</dimen>
+    <dimen name="onboarding_referral_image_gap">57dp</dimen>
+    <dimen name="onboarding_title_text_size">22dp</dimen>
+    <dimen name="onboarding_desc_text_size">17dp</dimen>
+    <dimen name="onboarding_referral_text_size">20.5dp</dimen>
+    <dimen name="onboarding_login_text_size">25dp</dimen>
+    <dimen name="onboarding_referral_title_size">20.5dp</dimen>
+    <dimen name="onboarding_google_text_size">16dp</dimen>
+    <dimen name="onboarding_facebook_text_size">16dp</dimen>
+    <dimen name="onboarding_terms_text_size">15dp</dimen>
+    <dimen name="onboarding_referral_box_size">36dp</dimen>
+    <dimen name="onboarding_cpi_bottom_gap">48dp</dimen>
+
+    <!-- Update App and Whats New Sizes -->
+    <dimen name="update_app_image_height">342dp</dimen>
+    <dimen name="update_app_image_width">342dp</dimen>
+    <dimen name="update_app_image_margin">16dp</dimen>
+    <dimen name="update_app_title_margin">8dp</dimen>
+    <dimen name="update_app_desc_margin">8dp</dimen>
+    <dimen name="update_app_title_size">18dp</dimen>
+    <dimen name="update_app_desc_size">16dp</dimen>
+    <dimen name="update_app_btn_height">38dp</dimen>
+    <dimen name="update_app_text_size">18dp</dimen>
+    <dimen name="update_later_text_size">17dp</dimen>
+    <dimen name="update_later_bottom_gap">28dp</dimen>
+
+    <!-- referral history -->
+    <dimen name="refer_btn_width">165dp</dimen>
+    <dimen name="refer_btn_height">52dp</dimen>
+    <dimen name="refer_code_btn_height">54dp</dimen>
+    <dimen name="referral_image_size">170dp</dimen>
+    <dimen name="referral_history_btn_width">170dp</dimen>
+    <dimen name="referral_history_btn_height">55dp</dimen>
+    <dimen name="referral_powerup_size">18dp</dimen>
+    <dimen name="referral_history_powerup_size">14dp</dimen>
+    <dimen name="dp_20_gap">23dp</dimen>
+
+    <dimen name="refer_screen_gap">23dp</dimen>
+
+    <!-- Navigation -->
+    <dimen name="nav_header_height">82dp</dimen>
+    <dimen name="nav_row_height">68dp</dimen>
+    <dimen name="nav_profile_pic_dimen">55dp</dimen>
+    <dimen name="nav_row_icon_dimen">17dp</dimen>
+
+    <!-- Wallet -->
+    <dimen name="wallet_home_row_height">60dp</dimen>
+    <dimen name="wallet_home_info_img_dimen">14dp</dimen>
+    <dimen name="wallet_home_button_height">37dp</dimen>
+    <dimen name="wallet_home_paytm_icn_width">57dp</dimen>
+    <dimen name="wallet_home_paytm_icn_height">20dp</dimen>
+    <dimen name="wallet_big_icon_dimen">82dp</dimen>
+    <dimen name="wallet_history_row_height">68dp</dimen>
+    <dimen name="wallet_history_item_icon_dimen">30dp</dimen>
+    <dimen name="wallet_payout_choice_item_height">68dp</dimen>
+
+</resources>

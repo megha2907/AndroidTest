@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesFragment;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeDownloadAppFragment;
 import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeJoinDialogFragment;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
@@ -37,6 +38,7 @@ import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.ProfileFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
+import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyProfileActivity;
 
 /**
  * Created by Jeeva on 16/6/16.
@@ -62,6 +64,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -72,8 +75,16 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
         initViews();
         UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
+        NostragamusAnalytics.getInstance().setMoEngageUserProperties();
         showScreenAsRequired();
+        checkForStoragePermission();
 
+    }
+
+    private void checkForStoragePermission() {
+        if(new PermissionsChecker(getActivity()).lacksPermissions(Constants.AppPermissions.STORAGE)) {
+            PermissionsActivity.startActivityForResult(getActivity(), Constants.RequestCodes.STORAGE_PERMISSION, Constants.AppPermissions.STORAGE);
+        }
     }
 
     private void showScreenAsRequired() {
@@ -107,8 +118,9 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     /**
      * If user has not yet provided payment info (either paytm or bank) then he'll be asked to provide
-     *
+     * <p>
      * But only once
+     *
      * @param userInfo
      */
     private void checkPaymentInfoProvidedOrRequired(UserInfo userInfo) {
@@ -180,16 +192,19 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
             case Constants.Screens.CHALLENGES:
                 setSelected(findViewById(R.id.home_ibtn_challenge), findViewById(R.id.home_tv_challenge));
                 loadFragment(AllChallengesFragment.newInstance(getIntent().getExtras()));
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CHALLENGES, Constants.AnalyticsActions.OPENED);
                 break;
 
             case Constants.Screens.GROUP:
                 setSelected(findViewById(R.id.home_ibtn_group), findViewById(R.id.home_tv_group));
                 loadFragment(AllGroupsFragment.newInstance());
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.GROUP, Constants.AnalyticsActions.OPENED);
                 break;
 
             case Constants.Screens.LEADER_BOARD:
                 setSelected(findViewById(R.id.home_ibtn_leaderboard), findViewById(R.id.home_tv_leaderboard));
                 loadFragment(new LBLandingFragment());
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.LEADERBOARD, Constants.AnalyticsActions.OPENED);
                 break;
 
             case Constants.Screens.PROFILE:
@@ -206,6 +221,8 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
                     navigationFragment.setArguments(getIntent().getExtras());
                 }
                 loadFragment(navigationFragment);
+
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PROFILE, Constants.AnalyticsActions.OPENED);
                 break;
         }
     }
@@ -326,27 +343,41 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
 
     private void performOnBoardFlow(UserInfo userInfo) {
 
-//        if (userInfo.getInfoDetails().getDisclaimerAccepted()!=null){
-//            if (userInfo.getInfoDetails().getWhatsNewShown()==null){
-//                launchWhatsNew();
-//                com.jeeva.android.Log.d(TAG, "[onBoard] Launch What's New(if required) for once");
-//            }
-//        }
+        if (userInfo != null) {
 
-        if (userInfo !=null) {
-            if (userInfo.getInfoDetails().getDisclaimerAccepted() == null) {
-                launchEditProfile();
-                com.jeeva.android.Log.d(TAG, "[onBoard] Launch EditProfile to accept disclaimer");
+            if (userInfo.getInfoDetails() != null) {
+
+                 /* check for EDIT PROFILE screen */
+                Boolean disclaimerAccepted = userInfo.getInfoDetails().getDisclaimerAccepted();
+                if (disclaimerAccepted == null || !disclaimerAccepted) {
+                    launchEditProfile();
+                } else {
+                    /* check for OTP screen */
+                    Boolean otpVerified = userInfo.getInfoDetails().getOtpVerified();
+                    if (otpVerified == null || !otpVerified) {
+                        launchVerifyOTP();
+                    }
+                }
             }
         }
 
+    }
+
+    private void launchVerifyOTP() {
+        if (getActivity() != null) {
+            Intent intent = new Intent(this, VerifyProfileActivity.class);
+            intent.putExtra(Constants.BundleKeys.SUCCESSFUL_REFERRAL, false);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void launchWhatsNew() {
 
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), AppUpdateActivity.class);
-            intent.putExtra(Constants.BundleKeys.SCREEN,Constants.ScreenNames.WHATS_NEW);
+            intent.putExtra(Constants.BundleKeys.SCREEN, Constants.ScreenNames.WHATS_NEW);
             startActivity(intent);
         }
     }
@@ -361,6 +392,7 @@ public class HomeActivity extends NostragamusActivity implements OnHomeActionLis
         intent.putExtra(BundleKeys.EDIT_PROFILE_LAUNCHED_FROM, EditProfileActivity.ILaunchedFrom.HOME_ACTIVITY);
         intent.putExtras(bundle);
         startActivity(intent);
+        finish();
     }
 
     /**

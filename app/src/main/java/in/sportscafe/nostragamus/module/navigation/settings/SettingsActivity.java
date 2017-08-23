@@ -64,12 +64,6 @@ public class SettingsActivity extends NostragamusActivity implements SettingsFra
     }
 
     @Override
-    public void onSendFeedbackClicked() {
-
-
-    }
-
-    @Override
     public void onLogoutClicked() {
         Nostragamus.getInstance().logout();
     }

@@ -84,8 +84,13 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
              * be careful as any of the value can be null (null considered as withdrawal NOT done) */
 
             String msg = "Your first withdrawal needs to be ₹ 100 or more, \nOr else ";
-            if (walletInit == null || walletInit <= 0) {
+            if (walletInit == null || walletInit < 0) {
                 msg = msg + " transaction fee will be applied";
+                msgTextView.setText(msg);
+                msgLayout.setVisibility(View.GONE);     // IF no wallet_init available, then should not be shown
+
+            } else if (walletInit == 0) {
+                msg = "You can withdraw without any transaction fee";
                 msgTextView.setText(msg);
                 msgLayout.setVisibility(View.VISIBLE);
 
@@ -105,10 +110,8 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
     private void showWalletBalance() {
         if (getView() != null) {
             double winningAmount = WalletHelper.getWinningAmount();
-            if (winningAmount > 0) {
-                TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_withdraw_money_amount_textView);
-                balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(winningAmount));
-            }
+            TextView balanceTextView = (TextView) getView().findViewById(R.id.wallet_withdraw_money_amount_textView);
+            balanceTextView.setText(WalletHelper.getFormattedStringOfAmount(winningAmount));
         }
     }
 
@@ -145,19 +148,25 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
 
     private void onWithdrawNextButtonClicked() {
         double withdrawalAmount = validateAmount();
-        if (withdrawalAmount > 0) {
-            if (withdrawalAmount <= WalletHelper.getWinningAmount()) {
+        if (getView() != null) {
+            TextView errorTextView = (TextView) getView().findViewById(R.id.withdraw_amt_error_textView);
 
-                Bundle args = new Bundle();
-                args.putDouble(Constants.BundleKeys.WALLET_WITHDRAWAL_AMT, withdrawalAmount);
-                if (mFragmentListener != null) {
-                    mFragmentListener.onWithdrawButtonClicked(args);
+            if (withdrawalAmount > 0) {
+                errorTextView.setVisibility(View.GONE);
+
+                if (withdrawalAmount <= WalletHelper.getWinningAmount()) {
+
+                    Bundle args = new Bundle();
+                    args.putDouble(Constants.BundleKeys.WALLET_WITHDRAWAL_AMT, withdrawalAmount);
+                    if (mFragmentListener != null) {
+                        mFragmentListener.onWithdrawButtonClicked(args);
+                    }
+                } else {
+                    showMessage("Sorry, You can not withdraw more than your winnings");
                 }
             } else {
-                showMessage("Sorry, You can not withdraw more than your winnings");
+                errorTextView.setVisibility(View.VISIBLE);
             }
-        } else {
-            mAmountEditText.setError("Please enter valid amount");
         }
     }
 

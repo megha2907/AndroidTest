@@ -26,10 +26,8 @@ public class WalletHelper {
     public synchronized static String getFormattedStringOfAmount(double amount) {
         String str = "";
 
-        if (amount >= 0) {
-            DecimalFormat df = new DecimalFormat(Constants.AMOUNT_DECIMAL_PATTERN);
-            str = Constants.RUPEE_SYMBOL + df.format(amount);
-        }
+        DecimalFormat df = new DecimalFormat(Constants.AMOUNT_DECIMAL_PATTERN);
+        str = Constants.RUPEE_SYMBOL + df.format(amount);
 
         return str;
     }
@@ -183,7 +181,11 @@ public class WalletHelper {
             double promoMoney = WalletHelper.getPromoAmount();
             double winningAmount = WalletHelper.getWinningAmount();
 
-            if (depositAmount > 0) {
+            total += depositAmount;
+            total += promoMoney;
+            total += winningAmount;
+
+            /*if (depositAmount > 0) {
                 total += depositAmount;
             }
             if (promoMoney > 0) {
@@ -191,7 +193,7 @@ public class WalletHelper {
             }
             if (winningAmount > 0) {
                 total += winningAmount;
-            }
+            }*/
         }
 
         return total;

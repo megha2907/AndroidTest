@@ -7,18 +7,18 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.CustomProgressbar;
@@ -31,26 +31,31 @@ import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.coachmarker.TourGuide;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusWebView;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.common.ShakeListener;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
-import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
+import in.sportscafe.nostragamus.module.play.gamePlayHelp.GamePlayHelpActivity;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
+import in.sportscafe.nostragamus.module.play.powerup.PowerupBankTransferToPlayActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
 import in.sportscafe.nostragamus.module.popups.BankTransferDialogFragment;
-import in.sportscafe.nostragamus.module.popups.PowerupDialogFragment;
 import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupFragment;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 public class PredictionActivity extends NostragamusActivity implements PredictionView,
         View.OnClickListener, OnDismissListener {
+
+    private final static int POWERUP_BANK_ACTIVITY_REQUEST_CODE = 99;
+    private final static int GAME_PLAY_HELP_ACTIVITY = 98;
 
     private final static int DUMMY_GAME_REQUEST_CODE = 45;
 
@@ -59,10 +64,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     private final static int BANK_DIALOG_REQUEST_CODE = 47;
 
     private final static int POPUP_DIALOG_REQUEST_CODE = 48;
-
-    private RelativeLayout mRlPlayBg;
-
-    private ViewGroup mVgPlayPage;
 
     private SwipeFlingAdapterView mSwipeFlingAdapterView;
 
@@ -111,8 +112,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
 //        initToolbar();
 
-        mRlPlayBg = (RelativeLayout) findViewById(R.id.content);
-        mVgPlayPage = (ViewGroup) findViewById(R.id.prediction_rl_play_page);
         mSwipeFlingAdapterView = (SwipeFlingAdapterView) findViewById(R.id.activity_prediction_swipe);
 
         mCardNumberTextView = (TextView) findViewById(R.id.card_number_textview);
@@ -124,7 +123,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         mTvPollPowerupCount = (TextView) findViewById(R.id.powerup_tv_poll_count);
         mTvNeitherOption = (TextView) findViewById(R.id.prediction_tv_neither_text);
 
-//        mIv2xGlobalPowerup.setBackground(getPowerupDrawable(R.color.goldenyellowcolor));
         mIv2xPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
         mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
         mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
@@ -139,6 +137,12 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 //        mShakeListener.resume(this);
         dismissMessage();
         setImmersiveFullScreenMode();
+        enableButtons();
+    }
+
+    private void enableButtons() {
+        findViewById(R.id.powerups_iv_info).setEnabled(true);
+        findViewById(R.id.powerups_iv_bank).setEnabled(true);
     }
 
     @Override
@@ -170,7 +174,7 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
 
         if (TextUtils.isEmpty(rightContestName)){
-            ((TextView) findViewById(R.id.prediction_contest_vs_textView)).setVisibility(View.GONE);
+            findViewById(R.id.prediction_contest_vs_textView).setVisibility(View.GONE);
             mRightContestImage.setVisibility(View.GONE);
             mRightContestName.setVisibility(View.GONE);
 
@@ -232,41 +236,69 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
             case R.id.prediction_ibtn_back:
                 mPredictionPresenter.onClickBack();
                 break;
+
             case R.id.prediction_iv_shuffle:
-                mSwipeFlingAdapterView.getTopCardListener().selectBottom();
+                try {
+                    mSwipeFlingAdapterView.getTopCardListener().selectBottom();
+                } catch (Exception ex) {}
                 break;
+
             case R.id.prediction_ll_neither:
-                mSwipeFlingAdapterView.getTopCardListener().selectTop();
+                try {
+                    mSwipeFlingAdapterView.getTopCardListener().selectTop();
+                } catch (Exception ex) {}
                 break;
+
             case R.id.prediction_iv_left_arrow:
-                mSwipeFlingAdapterView.getTopCardListener().selectLeft();
+                try {
+                    mSwipeFlingAdapterView.getTopCardListener().selectLeft();
+                } catch (Exception ex) {}
                 break;
+
             case R.id.prediction_iv_right_arrow:
-                mSwipeFlingAdapterView.getTopCardListener().selectRight();
+                try {
+                    mSwipeFlingAdapterView.getTopCardListener().selectRight();
+                } catch (Exception ex) {}
                 break;
+
             case R.id.powerups_iv_2x:
                 makeClickAnimation(findViewById(R.id.powerup_2x_view));
                 mPredictionPresenter.onClick2xPowerup();
                 break;
+
             case R.id.powerups_iv_nonegs:
                 makeClickAnimation(findViewById(R.id.powerup_no_negative_view));
                 mPredictionPresenter.onClickNonegsPowerup();
                 break;
+
             case R.id.powerups_iv_poll:
                 makeClickAnimation(findViewById(R.id.powerup_audience_poll_view));
                 mPredictionPresenter.onClickPollPowerup();
                 break;
+
             case R.id.powerups_iv_info:
-                new PowerupDialogFragment().show(getSupportFragmentManager(), "Powerup");
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PLAY, Constants.AnalyticsClickLabels.PLAY_GAME_HELP);
+                onGamePlayInfoButtonClicked();
+                view.setEnabled(false);
                 break;
+
             case R.id.powerups_iv_bank:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PLAY, Constants.AnalyticsClickLabels.PLAY_BANK);
                 mPredictionPresenter.onClickBankTransfer();
-//                new BankInfoDialogFragment().show(getSupportFragmentManager(), "BankInfo");
+                view.setEnabled(false);
                 break;
+
             case R.id.prediction_share_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PLAY, Constants.AnalyticsClickLabels.PLAY_ASK_FRIEND);
                 onAskFriendClicked();
                 break;
         }
+    }
+
+    private void onGamePlayInfoButtonClicked() {
+        Intent intent = new Intent(PredictionActivity.this, GamePlayHelpActivity.class);
+        startActivityForResult(intent, GAME_PLAY_HELP_ACTIVITY);
+        hidePowerupBankAndHelpButtons(findViewById(R.id.powerups_iv_bank), findViewById(R.id.powerups_iv_info));
     }
 
     private void makeClickAnimation(final View view) {
@@ -341,29 +373,6 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
     }
 
     @Override
-    public void changeBackgroundImage(Integer sportId) {
-        int bgRes;
-        switch (sportId) {
-            case 1:
-                bgRes = R.drawable.play_cricket_bg;
-                break;
-            case 3:
-                bgRes = R.drawable.play_tennis_bg;
-                break;
-            case 6:
-                bgRes = R.drawable.play_badminton_bg;
-                break;
-            case 4:
-                bgRes = R.drawable.play_football_bg;
-                break;
-            default:
-                return;
-        }
-
-        mRlPlayBg.setBackgroundResource(bgRes);
-    }
-
-    @Override
     public void goBack() {
         super.onBackPressed();
     }
@@ -415,6 +424,65 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         if (RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
             mPredictionPresenter.onShake();
         }
+
+        if (requestCode == POWERUP_BANK_ACTIVITY_REQUEST_CODE) {
+            showPowerupBankAndHelpButtons(findViewById(R.id.powerups_iv_bank), findViewById(R.id.powerups_iv_info));
+
+            // Just reset powerup details again on UI
+            if (mPredictionPresenter != null) {
+                mPredictionPresenter.updatePowerups();
+            }
+        }
+
+        if (requestCode == GAME_PLAY_HELP_ACTIVITY) {
+            showPowerupBankAndHelpButtons(findViewById(R.id.powerups_iv_bank), findViewById(R.id.powerups_iv_info));
+        }
+    }
+
+    private void showPowerupBankAndHelpButtons(final View powerupView, final View helpView) {
+        AlphaAnimation animation = new AlphaAnimation(0f, 1f);
+        animation.setDuration(500);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                powerupView.setVisibility(View.VISIBLE);
+                helpView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        powerupView.startAnimation(animation);
+        helpView.startAnimation(animation);
+    }
+
+    private void hidePowerupBankAndHelpButtons(final View powerupView, final View helpView) {
+        AlphaAnimation animation = new AlphaAnimation(1f, 0f);
+        animation.setDuration(500);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                powerupView.setVisibility(View.GONE);
+                helpView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        powerupView.startAnimation(animation);
+        helpView.startAnimation(animation);
     }
 
     private TourGuide mCoachMarker;
@@ -474,6 +542,91 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
         finish();
     }
 
+    @Override
+    public void showPowerUpBankActivity(Bundle args) {
+        Intent intent = new Intent(PredictionActivity.this, PowerupBankTransferToPlayActivity.class);
+        if (args != null) {
+            intent.putExtras(args);
+        }
+        startActivityForResult(intent, POWERUP_BANK_ACTIVITY_REQUEST_CODE);
+        hidePowerupBankAndHelpButtons(findViewById(R.id.powerups_iv_bank), findViewById(R.id.powerups_iv_info));
+    }
+
+    @Override
+    public void animatePowerUpAddedFromBank(final int oldDoubler, final int newDoubler,
+                                            final int oldNoNegative, final int newNoNegative,
+                                            final int oldAudiencePoll, final int newAudiencePoll) {
+
+        new AsyncTask<Void, Integer, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    Thread.currentThread(); // This is AsyncTask thread, NOT UI thread.
+
+                    /* Double */
+                    int temp = oldDoubler;
+                    while (temp <= newDoubler) {
+                        Thread.sleep(300);
+                        publishProgress(Constants.PowerupLocalId.DOUBLER, temp);
+                        temp++;
+                    }
+
+                    /* No Negative */
+                    temp = oldNoNegative;
+                    while (temp <= newNoNegative) {
+                        Thread.sleep(300);
+                        publishProgress(Constants.PowerupLocalId.NO_NEGATIVE, temp);
+                        temp++;
+                    }
+
+                    /* Audience poll */
+                    temp = oldAudiencePoll;
+                    while (temp <= newAudiencePoll) {
+                        Thread.sleep(300);
+                        publishProgress(Constants.PowerupLocalId.AUDIENCE_POLL, temp);
+                        temp++;
+                    }
+
+                    cancel(false);
+
+                } catch (InterruptedException ex) {}
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                super.onProgressUpdate(values);
+
+                switch (values[0]) {
+                    case Constants.PowerupLocalId.DOUBLER:
+                        set2xPowerupCount(values[1], true);
+                        break;
+
+                    case Constants.PowerupLocalId.NO_NEGATIVE:
+                        setNonegsPowerupCount(values[1], true);
+                        break;
+
+                    case Constants.PowerupLocalId.AUDIENCE_POLL:
+                        setPollPowerupCount(values[1], true);
+                        break;
+                }
+            }
+
+            @Override
+            protected void onCancelled() {
+                finishPowerupBankActivity();
+                super.onCancelled();
+            }
+
+        }.execute();
+    }
+
+    private void finishPowerupBankActivity() {
+        Intent intent = new Intent(IntentActions.ACTION_FINISH_POWER_UP_BANK_ACTIVITY);
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+    }
+
     private void openPopup(String popUpType) {
 
         InAppPopupFragment fragment = new InAppPopupFragment();
@@ -517,15 +670,17 @@ public class PredictionActivity extends NostragamusActivity implements Predictio
 
     @Override
     public void onStop() {
-        super.onStop();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mPowerUpUpdatedReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mOpenWebView);
+        super.onStop();
     }
 
     BroadcastReceiver mPowerUpUpdatedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mPredictionPresenter.onChallengeInfoUpdated(intent.getExtras());
+            if (mPredictionPresenter != null) {
+                mPredictionPresenter.powerUpAddedFromBank(intent.getExtras());
+            }
         }
     };
 

@@ -1,0 +1,28 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.play.powerup.PowerupBankTransferInfoFragment">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/powerup_bank_info_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/powerup_bank_info_pager_circle_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dim_40"
+        app:ci_drawable="@drawable/ob_indicator_selected"
+        app:ci_drawable_unselected="@drawable/ob_indicator_unselected"
+        app:ci_gravity="center"
+        app:ci_orientation="horizontal"
+        android:layout_gravity="bottom"
+        app:ci_height="@dimen/dim_7"
+        app:ci_width="@dimen/dim_7"
+        app:ci_margin="@dimen/dim_7"/>
+
+</FrameLayout>

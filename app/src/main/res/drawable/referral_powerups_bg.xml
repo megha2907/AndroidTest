@@ -6,7 +6,7 @@
             <item android:bottom="@dimen/dp_3">
                 <shape android:shape="rectangle">
                     <solid android:color="@color/colorBackground" />
-                    <stroke android:color="@color/grey3"
+                    <stroke android:color="@color/colorBackground"
                         android:width="@dimen/dp_0.5"/>
                 </shape>
             </item>

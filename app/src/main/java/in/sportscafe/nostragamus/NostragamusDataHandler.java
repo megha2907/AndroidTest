@@ -63,6 +63,7 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     //USER ID
     public void setUserId(String userId) {
         NostragamusAnalytics.getInstance().setUserId(userId);
+        NostragamusAnalytics.getInstance().setUserProperties();
         setSharedStringData(SharedKeys.USER_ID, userId);
     }
 
@@ -574,6 +575,14 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     public void setWhatsNewShown(boolean whatsNewShown) {
         setSharedBooleanData(SharedKeys.WHATS_NEW_SHOWN, whatsNewShown);
+    }
+
+    public long getEditProfileShownTime() {
+        return getSharedLongData(SharedKeys.EDIT_PROFILE_SHOWN_TIME, -1);
+    }
+
+    public void setEditProfileShownTime(long editProfileShownTime) {
+        setSharedLongData(SharedKeys.EDIT_PROFILE_SHOWN_TIME, editProfileShownTime);
     }
 
 }

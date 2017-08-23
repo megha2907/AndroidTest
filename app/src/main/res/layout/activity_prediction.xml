@@ -4,7 +4,7 @@
     android:id="@id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/default_play_bg">
+    android:background="@color/play_screen_bg_color">
 
     <View
         android:layout_width="match_parent"
@@ -331,15 +331,15 @@
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/powerup_tv_2x_count"
-                        android:layout_width="@dimen/dp_15"
-                        android:layout_height="@dimen/dp_15"
+                        android:layout_width="@dimen/dim_18"
+                        android:layout_height="@dimen/dp_18"
                         android:layout_gravity="top|right"
                         android:alpha="0.8"
                         android:background="@drawable/powerup_count_bg"
                         android:gravity="center"
-                        android:text="3"
+                        android:text="0"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_8"
+                        android:textSize="@dimen/sp_10"
                         app:typeface="lato_regular" />
 
                 </FrameLayout>
@@ -364,15 +364,15 @@
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/powerup_tv_nonegs_count"
-                        android:layout_width="@dimen/dp_15"
-                        android:layout_height="@dimen/dp_15"
+                        android:layout_width="@dimen/dim_18"
+                        android:layout_height="@dimen/dim_18"
                         android:layout_gravity="top|right"
                         android:alpha="0.8"
                         android:background="@drawable/powerup_count_bg"
                         android:gravity="center"
-                        android:text="3"
+                        android:text="0"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_8"
+                        android:textSize="@dimen/sp_10"
                         app:typeface="lato_regular" />
 
                 </FrameLayout>
@@ -398,15 +398,15 @@
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/powerup_tv_poll_count"
-                        android:layout_width="@dimen/dp_15"
-                        android:layout_height="@dimen/dp_15"
+                        android:layout_width="@dimen/dim_18"
+                        android:layout_height="@dimen/dim_18"
                         android:layout_gravity="top|right"
                         android:alpha="0.8"
                         android:background="@drawable/powerup_count_bg"
                         android:gravity="center"
-                        android:text="3"
+                        android:text="0"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_8"
+                        android:textSize="@dimen/sp_10"
                         app:typeface="lato_regular" />
 
                 </FrameLayout>

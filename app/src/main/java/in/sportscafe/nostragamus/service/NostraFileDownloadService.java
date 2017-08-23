@@ -1,7 +1,6 @@
 package in.sportscafe.nostragamus.service;
 
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -18,9 +17,10 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
-import java.net.URLConnection;
+import java.text.DecimalFormat;
 
-import in.sportscafe.nostragamus.BuildConfig;
+import javax.net.ssl.HttpsURLConnection;
+
 import in.sportscafe.nostragamus.R;
 
 /**
@@ -73,6 +73,9 @@ public class NostraFileDownloadService extends IntentService {
     public static final String FILE_DOWNLOAD_RESULT_PARAM = "resultParam";
 
     private NotificationCompat.Builder mNotificationBuilder;
+    private NotificationManager mNotificationManager;
+
+    private long mDownloadStartTime;
 
     public NostraFileDownloadService() {
         super(TAG);
@@ -91,7 +94,9 @@ public class NostraFileDownloadService extends IntentService {
                 .setContentTitle("App Update")
                 .setContentText("Download in progress...")
                 .setSmallIcon(R.drawable.white_notification_icon)
-        .setProgress(100, 0, true);
+        .setProgress(100, 0, false);
+
+        mNotificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
         sendNotification();
     }
@@ -132,25 +137,26 @@ public class NostraFileDownloadService extends IntentService {
             Log.d(TAG, "Downloading : " + serverUrl + "\n Encoded : " + encodedUrl);*/
 
             URL url = new URL(serverUrl);
-            URLConnection urlConnection = url.openConnection();
-            urlConnection.setDoOutput(true);
+            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+            urlConnection.setChunkedStreamingMode(10485760);  // 10MB chunk size
             urlConnection.connect();
+
+            mDownloadStartTime = System.currentTimeMillis();
 
             InputStream input = new BufferedInputStream(url.openStream());
             OutputStream output = new FileOutputStream(file);
 
             long fileContentTotalLength = urlConnection.getContentLength();
-            if (fileContentTotalLength == -1) {
-                fileContentTotalLength = Integer.MAX_VALUE;
-            }
+
             byte buffer[] = new byte[1024];
             int bufferLength;
             long downloadLengthCompleted = 0;
+            int lastPercent = 0;
 
             while ((bufferLength = input.read(buffer)) != -1) {
                 downloadLengthCompleted += bufferLength;
-                int downloadPercent = (int)((downloadLengthCompleted / fileContentTotalLength) * 100);
-                updateDownloadStatusOnNotification(downloadPercent);
+
+                lastPercent = updateDownloadStatus(fileContentTotalLength, downloadLengthCompleted, lastPercent);
 
                 output.write(buffer, 0, bufferLength);
             }
@@ -158,6 +164,7 @@ public class NostraFileDownloadService extends IntentService {
             output.flush();
             output.close();
             input.close();
+            urlConnection.disconnect();
 
             Log.d(TAG, "Download Successful : " + file.getPath());
             result = FILE_DOWNLOAD_SUCCESS;
@@ -173,9 +180,54 @@ public class NostraFileDownloadService extends IntentService {
         return result;
     }
 
-    private void updateDownloadStatusOnNotification(int downloadProgressPercent) {
-        if (mNotificationBuilder != null) {
-            mNotificationBuilder.setProgress(100, downloadProgressPercent, true);
+    private int updateDownloadStatus(long fileContentTotalLength, long downloadLengthCompleted, int lastPercent) {
+        try {
+            int downloadPercent = (int)(downloadLengthCompleted * 100 / fileContentTotalLength);
+            if (lastPercent != downloadPercent) {
+                lastPercent = downloadPercent;
+                long remainingTime = calculateRemainingTime(downloadPercent);
+                updateDownloadStatusOnNotification(downloadPercent, remainingTime);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lastPercent;
+    }
+
+    private long calculateRemainingTime(int downloadPer) {
+        long remainingTime = -1;
+
+        try {
+            long elapsedTime = System.currentTimeMillis() - mDownloadStartTime;
+            remainingTime = (100 - downloadPer) * elapsedTime / downloadPer;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return remainingTime;
+    }
+
+    private void updateDownloadStatusOnNotification(int downloadProgressPercent, long remainingTime) {
+        if (mNotificationBuilder != null && mNotificationManager != null) {
+
+            String msg = "Download in progress...";
+            if (downloadProgressPercent > 0) {
+                msg = downloadProgressPercent + "% downloaded";
+            }
+            if (remainingTime > 0) {
+                try {
+                    int minutes = (int) ((remainingTime / 1000) / 60);
+                    int seconds = (int) (remainingTime / 1000) % 60;
+
+                    msg = msg + ", " + minutes + ":" + new DecimalFormat("00").format(seconds) + " min left";
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            mNotificationBuilder.setProgress(100, downloadProgressPercent, false);
+            mNotificationBuilder.setContentText(msg);
+            mNotificationManager.notify(NOTIFICATION_ID, mNotificationBuilder.build());
         }
     }
 
@@ -205,10 +257,8 @@ public class NostraFileDownloadService extends IntentService {
      * Send notification
      */
     private void sendNotification() {
-        if (mNotificationBuilder != null) {
-            Notification notification = mNotificationBuilder.build();
-            NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(NOTIFICATION_ID, notification);
+        if (mNotificationBuilder != null && mNotificationManager != null) {
+            mNotificationManager.notify(NOTIFICATION_ID, mNotificationBuilder.build());
         }
     }
 }

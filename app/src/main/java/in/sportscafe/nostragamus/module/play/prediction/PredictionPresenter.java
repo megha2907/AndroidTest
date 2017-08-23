@@ -30,4 +30,7 @@ public interface PredictionPresenter {
     void onGetDummyGameResult();
 
     void onShake();
+
+    void powerUpAddedFromBank(Bundle bundle);
+    void updatePowerups();
 }

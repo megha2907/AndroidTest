@@ -3,15 +3,21 @@ package in.sportscafe.nostragamus.module.analytics;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.amplitude.api.Amplitude;
 import com.amplitude.api.AmplitudeClient;
 import com.amplitude.api.Revenue;
+import com.facebook.FacebookSdk;
+import com.facebook.LoggingBehavior;
+import com.facebook.appevents.AppEventsConstants;
+import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.PayloadBuilder;
@@ -19,7 +25,8 @@ import com.moe.pushlibrary.PayloadBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.EventListener;
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
@@ -30,6 +37,7 @@ import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.UserProperties;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialogFragment;
 
 
 /**
@@ -58,6 +66,8 @@ public class NostragamusAnalytics {
 
     private AmplitudeClient mAmplitude;
 
+    private static AppEventsLogger sFaceBookAppEventLogger;
+
     private boolean mAppOpeningTracked = false;
 
     public NostragamusAnalytics init(Context context, boolean optOut) {
@@ -79,10 +89,15 @@ public class NostragamusAnalytics {
 
             // Tracking flavor
             trackFlavor();
+
+            // Facebook Analytics
+            FacebookSdk.sdkInitialize(context);
+            sFaceBookAppEventLogger = AppEventsLogger.newLogger(context);
         }
 
         return this;
     }
+
 
     /**
      * track app opening
@@ -301,6 +316,18 @@ public class NostragamusAnalytics {
         track(AnalyticsCategory.PLAY, actions, label, timeSpentInMs);
     }
 
+
+    /**
+     * track onBoarding Time
+     *
+     * @param actions - OnBoardingTime
+     * @param label   - Actual time spent in OnBoarding from Edit Profile to Home
+     */
+    public void trackOnBoarding(String actions, String label, long timeSpentInS) {
+        track(AnalyticsCategory.ONBOARDING_TIME, actions, label, timeSpentInS);
+    }
+
+
     /**
      * track edit profile
      *
@@ -477,6 +504,40 @@ public class NostragamusAnalytics {
         }
     }
 
+
+    public void setMoEngageUserProperties() {
+        if (null != mMoEHelper) {
+
+            if (BuildConfig.IS_PAID_VERSION) {
+                mMoEHelper.setUserAttribute(UserProperties.PRO_APP, true);
+            } else {
+                mMoEHelper.setUserAttribute(UserProperties.PRO_APP, false);
+            }
+
+            String channel = NostragamusDataHandler.getInstance().getInstallChannel();
+            if (!TextUtils.isEmpty(channel)) {
+                mMoEHelper.setUserAttribute(UserProperties.REFERRAL_CHANNEL, channel);
+            }
+            String campaign = NostragamusDataHandler.getInstance().getInstallReferralCampaign();
+            if (!TextUtils.isEmpty(campaign)) {
+                mMoEHelper.setUserAttribute(UserProperties.REFERRAL_CAMPAIGN, campaign);
+            }
+
+            String walletInit = String.valueOf(NostragamusDataHandler.getInstance().getWalletInitialAmount());
+            if (!TextUtils.isEmpty(walletInit)) {
+                mMoEHelper.setUserAttribute(UserProperties.WALLET_INIT, walletInit);
+            }
+
+            /* setEmail() mandatory to get notification - DO NOT REMOVE  */
+            if (NostragamusDataHandler.getInstance().getUserInfo() != null) {
+                String email = NostragamusDataHandler.getInstance().getUserInfo().getEmail();
+                if (!TextUtils.isEmpty(email)) {
+                    mMoEHelper.setEmail(email);
+                }
+            }
+        }
+    }
+
     /**
      * Tracks revenue
      * Once paytm payment is successful - Only for paid app
@@ -505,9 +566,8 @@ public class NostragamusAnalytics {
     }
 
     /**
-     *
      * @param isAddMoney - if true, tracks as ADD-MONEY else WITHDRAW-MONEY
-     * @param amount - amount of transaction
+     * @param amount     - amount of transaction
      */
     public void trackWalletTransaction(boolean isAddMoney, double amount) {
         if (BuildConfig.IS_PAID_VERSION) {
@@ -532,4 +592,73 @@ public class NostragamusAnalytics {
             }
         }
     }
+
+    /**
+     * NOTE: Must be called only on successful Login
+     * <p>
+     * This method used as Login method for moengage to identify user.
+     * https://docs.moengage.com/docs/identifying-user
+     *
+     * @param userId
+     */
+    public void setMoengageUniqueId(String userId) {
+        if (mMoEHelper != null) {
+            mMoEHelper.setUniqueId(userId);
+        } else {
+            Log.e("Analytics", "Could not set UniqueId for MoEngage");
+        }
+    }
+
+    /**
+     * Tracks clicks on different event actions
+     *
+     * @param category
+     */
+    public void trackClickEvent(@NonNull String category, String label) {
+        track(category, AnalyticsActions.CLICKED, label, null);
+    }
+
+    /**
+     * Tracks screen Views
+     *
+     * @param category
+     */
+    public void trackScreenShown(@NonNull String category, String label) {
+        track(category, AnalyticsActions.OPENED, label, null);
+    }
+
+    public void trackReferralBenefitScreenShown() {
+        track(AnalyticsCategory.REFERRAL_BENEFIT, AnalyticsActions.OPENED, AnalyticsLabels.SCREENS_SEEN, null);
+    }
+
+    /**
+     * Logs Facebook revenue event
+     *
+     * @param amount
+     * @param args
+     */
+    public void logFbRevenue(double amount, @NonNull Bundle args) {
+        if (sFaceBookAppEventLogger != null) {
+            try {
+                BigDecimal values = BigDecimal.valueOf(amount);
+                sFaceBookAppEventLogger.logPurchase(values, Currency.getInstance(Constants.INDIAN_CURRENCY_CODE), args);
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Logs Facebook Play completed event
+     *
+     * @param args
+     */
+    public void logFbPlayCompleted(@Nullable Bundle args) {
+        if (sFaceBookAppEventLogger != null) {
+            sFaceBookAppEventLogger.logEvent(Constants.FaceBookAnalyticsEvents.MATCH_PLAY_COMPLETED, args);
+        }
+    }
+
+
+
 }

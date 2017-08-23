@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Config;
 import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
@@ -18,6 +19,8 @@ import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
 import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
 import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
+import in.sportscafe.nostragamus.module.navigation.edituserprofile.UpdateUserProfileRequest;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistoryResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyToWalletRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
@@ -30,6 +33,8 @@ import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.Gener
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
+import in.sportscafe.nostragamus.module.play.powerup.dto.PowerupBankStatusRequest;
+import in.sportscafe.nostragamus.module.play.powerup.dto.PowerUpBankStatusResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
@@ -39,6 +44,10 @@ import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse
 import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
+import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
+import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
+import in.sportscafe.nostragamus.module.store.dto.StoreApiResponse;
+import in.sportscafe.nostragamus.module.upgradeToPro.dto.UpgradeToProResponse;
 import in.sportscafe.nostragamus.module.user.group.allgroups.dto.AllGroupsResponse;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupNameUpdateRequest;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupTournamentUpdateRequest;
@@ -84,7 +93,11 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<LogInResponse> getLogInRequest(LogInRequest logInRequest) {
-        return mNostragamusService.loginUser(logInRequest);
+        if (BuildConfig.IS_PAID_VERSION) {
+            return mNostragamusService.loginUserV3(logInRequest);
+        }else {
+            return mNostragamusService.loginUserV2(logInRequest);
+        }
     }
 
     public Call<ApiResponse> getUpdateUserRequest(UpdateUserRequest request) {
@@ -331,12 +344,16 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.useWalletToJoinChallenge(request);
     }
 
+    public Call<BuyResponse> buyFromStore(BuyRequest request) {
+        return mNostragamusService.useWalletToBuyFromStore(request);
+    }
+
     public Call<String> getLatestApk() {
         return mNostragamusService.getLatestApk();
     }
 
-    public Call<UserReferralHistoryResponse> getUserReferralHistory(String flavor) {
-        return mNostragamusService.getUserReferralHistory(flavor);
+    public Call<UserReferralHistoryResponse> getUserReferralHistory(String flavor,String transactionType) {
+        return mNostragamusService.getUserReferralHistory(flavor,transactionType);
     }
 
     public Call<VerifyReferralCodeResponse> verifyReferralCodeRequest(String referralCode) {
@@ -345,5 +362,33 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<ApiResponse> getWhatsNewShown() {
         return mNostragamusService.getWhatsNewShown();
+    }
+
+    public Call<VerifyOTPResponse> getOTPRequest(String phoneNumber) {
+        return mNostragamusService.getOTPRequest(phoneNumber);
+    }
+
+    public Call<VerifyOTPResponse> verifyOTPRequest(String otp) {
+        return mNostragamusService.verifyOTPRequest(otp);
+    }
+
+    public Call<StoreApiResponse> getStoreDetails (String category) {
+        return mNostragamusService.getStoreDetails(category);
+    }
+
+    public Call<PowerUpBankStatusResponse> getPowerupBankStatus(PowerupBankStatusRequest request) {
+        return mNostragamusService.powerupTransferStatus(request);
+    }
+
+    public Call<PBTransactionHistoryResponse> getPBTransactionHistory(String flavor, String transactionType) {
+        return mNostragamusService.getPBTransactionHistory();
+    }
+
+    public Call<UpgradeToProResponse> shouldShowUpgradeDialog() {
+        return mNostragamusService.shouldShowUpgradeToProDialog();
+    }
+
+    public Call<ApiResponse> getUpdateUserProfileRequest(UpdateUserProfileRequest updateUserProfileRequest) {
+        return mNostragamusService.updateUserProfile(updateUserProfileRequest);
     }
 }

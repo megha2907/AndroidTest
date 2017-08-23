@@ -16,16 +16,17 @@
         android:layout_marginRight="@dimen/dp_20">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/payout_wallet_info_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add your PayTm details to ensure smooth transactions.\nAdd a bank account if you don't have a PayTm wallet"
+            android:text="We strongly recommend using Paytm for faster, hassle-free transactions."
             android:gravity="left"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_13"
             app:typeface="lato_regular"
             android:lineSpacingExtra="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_8"/>
+            android:layout_marginBottom="@dimen/dp_12"/>
 
     </LinearLayout>
 

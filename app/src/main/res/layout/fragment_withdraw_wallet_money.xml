@@ -88,8 +88,8 @@
 
                 <!-- add money Image -->
                 <ImageView
-                    android:layout_width="@dimen/dp_80"
-                    android:layout_height="@dimen/dp_80"
+                    android:layout_width="@dimen/wallet_big_icon_dimen"
+                    android:layout_height="@dimen/wallet_big_icon_dimen"
                     android:layout_gravity="center"
                     android:src="@drawable/wallet_withdraw_money_icn"/>
 
@@ -110,7 +110,7 @@
                         android:textColor="#e6e6e6"
                         android:textSize="@dimen/sp_16"
                         app:typeface="lato_regular"
-                        android:shadowColor="@color/black"
+                        android:shadowColor="@color/text_shadow_color_blue"
                         android:shadowRadius="1"
                         android:shadowDy="5"/>
 
@@ -124,7 +124,7 @@
                         android:textSize="@dimen/sp_25"
                         app:typeface="lato_bold"
                         android:layout_marginTop="@dimen/dp_4"
-                        android:shadowColor="@color/black"
+                        android:shadowColor="@color/text_shadow_color_blue"
                         android:shadowRadius="1"
                         android:shadowDy="5"/>
 
@@ -155,8 +155,7 @@
                     android:id="@+id/paytm_add_detail_sl_confirm_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_12"
-                    android:paddingBottom="@dimen/dp_4"
+                    android:layout_marginTop="@dimen/dp_6"
                     app:sl_cornerRadius="@dimen/dp_5"
                     app:sl_fillColor="@color/edittext_selection_bg"
                     app:sl_shadowRadius="@dimen/dp_4">
@@ -168,6 +167,18 @@
                         android:imeOptions="actionDone"/>
 
                 </com.jeeva.android.widgets.ShadowLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/withdraw_amt_error_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:text="Please enter valid amount"
+                    android:textColor="@color/radical_red"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="lato_regular"
+                    android:visibility="gone"/>
 
                 <!-- First time withdrawal msg layout -->
                 <LinearLayout

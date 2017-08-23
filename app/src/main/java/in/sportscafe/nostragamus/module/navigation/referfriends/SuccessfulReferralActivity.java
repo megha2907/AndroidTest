@@ -11,6 +11,7 @@ import com.jeeva.android.Log;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.home.HomeActivity;
@@ -38,6 +39,7 @@ public class SuccessfulReferralActivity extends NostragamusActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_successful_referral);
         initialize();
+        NostragamusAnalytics.getInstance().trackReferralBenefitScreenShown();
     }
 
     private void initialize() {
@@ -51,13 +53,13 @@ public class SuccessfulReferralActivity extends NostragamusActivity implements V
 
         if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralName())) {
             tvSuccessfulReferralOne.setText("Welcome to Nostragamus! Here's a gift from us and "
-                    + WordUtils.capitalize(NostragamusDataHandler.getInstance().getUserReferralName()) + " to get you predicting!");
+                    + WordUtils.capitalize(NostragamusDataHandler.getInstance().getUserReferralName()) + " to start you off!");
         } else {
-            tvSuccessfulReferralOne.setText("Welcome to Nostragamus! Here's a gift from us to get you predicting!");
+            tvSuccessfulReferralOne.setText("Welcome to Nostragamus! Here's a gift from us to start you off!");
         }
 
         if (NostragamusDataHandler.getInstance().getWalletInitialAmount() != null) {
-            Log.i("insidewalletinit", String.valueOf(NostragamusDataHandler.getInstance().getWalletInitialAmount()));
+
             tvSuccessfulReferralTwo.setVisibility(View.VISIBLE);
             if (NostragamusDataHandler.getInstance().getWalletInitialAmount() > 0) {
                 tvSuccessfulReferralTwo.setText(WalletHelper.getFormattedStringOfAmount
@@ -88,7 +90,6 @@ public class SuccessfulReferralActivity extends NostragamusActivity implements V
         Bundle bundle = new Bundle();
         bundle.putString(Constants.BundleKeys.LOGIN_SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }

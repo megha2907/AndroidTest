@@ -54,7 +54,7 @@
                 android:id="@+id/payout_paytm_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_64"
+                android:minHeight="@dimen/wallet_payout_choice_item_height"
                 android:background="@drawable/payout_choice_btn_selector"
                 android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginLeft="@dimen/dp_12"
@@ -78,24 +78,24 @@
                     android:layout_toRightOf="@id/imgView"
                     android:layout_centerVertical="true">
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/payout_choice_paytm_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PayTm Details"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
-                    app:typeface="lato_regular"/>
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/payout_choice_paytm_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Paytm Account"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"/>
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/payout_choice_paytm_number_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="XXXXX XXXXX"
-                    android:textColor="@color/white_dim"
-                    android:textSize="@dimen/sp_11"
-                    app:typeface="lato_regular"
-                    android:layout_marginTop="@dimen/dp_5"/>
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/payout_choice_paytm_number_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="XXXXX XXXXX"
+                        android:textColor="@color/white_dim"
+                        android:textSize="@dimen/sp_11"
+                        app:typeface="lato_regular"
+                        android:layout_marginTop="@dimen/dp_5"/>
 
                 </LinearLayout>
 
@@ -115,7 +115,7 @@
                 android:id="@+id/payout_bank_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_64"
+                android:minHeight="@dimen/wallet_payout_choice_item_height"
                 android:background="@drawable/payout_choice_btn_selector"
                 android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginLeft="@dimen/dp_12"
@@ -139,26 +139,26 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/imgView1">
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/payout_choice_bank_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bank Account"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
-                    app:typeface="lato_regular"/>
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/payout_choice_bank_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bank Account"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"/>
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/payout_choice_bank_number_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:text="XXX-XXX-XXX-XXX"
-                    android:textColor="@color/white_dim"
-                    android:textSize="@dimen/sp_11"
-                    app:typeface="lato_regular"
-                    android:layout_marginTop="@dimen/dp_5"/>
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/payout_choice_bank_number_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:text="XXX-XXX-XXX-XXX"
+                        android:textColor="@color/white_dim"
+                        android:textSize="@dimen/sp_11"
+                        app:typeface="lato_regular"
+                        android:layout_marginTop="@dimen/dp_5"/>
 
                 </LinearLayout>
 
@@ -178,33 +178,47 @@
                 android:id="@+id/payout_choice_no_account_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_64"
+                android:minHeight="@dimen/wallet_payout_choice_item_height"
                 android:gravity="center_vertical"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginRight="@dimen/dp_12"
                 android:paddingLeft="@dimen/dp_18"
                 android:paddingRight="@dimen/dp_18"
                 android:background="@drawable/payout_choice_add_btn_selector"
-                android:visibility="gone">
+                >
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Add Payout Account"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
-                    app:typeface="lato_regular"/>
+                <ImageView
+                    android:id="@+id/payout_list_item_icon_imageView"
+                    android:layout_width="@dimen/dp_12"
+                    android:layout_height="@dimen/dp_12"
+                    android:src="@drawable/plus_icn"/>
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="You have not added any payout details"
-                    android:textColor="@color/white_dim"
-                    android:textSize="@dimen/sp_11"
-                    app:typeface="lato_regular"
-                    android:layout_marginTop="@dimen/dp_5"/>
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/dim_18">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Payout Account"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="You have not added any payout details"
+                        android:textColor="@color/white_dim"
+                        android:textSize="@dimen/sp_11"
+                        app:typeface="lato_regular"
+                        android:layout_marginTop="@dimen/dp_5"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
