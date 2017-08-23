@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.HmImageView;
+
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.animator.AppBarStateChangeListener;
@@ -113,7 +115,7 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
 
     @Override
     public void setProfileImage(String imageUrl) {
-        ((RoundImage) findViewById(R.id.profile_iv_image)).setImageUrl(
+        ((HmImageView) findViewById(R.id.profile_iv_image)).setImageUrl(
                 imageUrl
         );
     }
