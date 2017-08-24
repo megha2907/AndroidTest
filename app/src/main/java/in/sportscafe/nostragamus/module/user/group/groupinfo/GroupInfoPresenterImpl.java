@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -65,13 +66,24 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
                 .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, NostragamusDataHandler.getInstance().getUserInfo().getPhoto())
                 .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, NostragamusDataHandler.getInstance().getUserInfo().getUserName());
 
+        LinkProperties linkProperties = new LinkProperties();
 
-        LinkProperties linkProperties = new LinkProperties()
-                .addTag("inviteGroup")
-                .setFeature("inviteGroup")
-                .setChannel("App")
-                .setCampaign("Group Invite")
-                .addControlParameter("$android_deeplink_path", "group/invite/");
+        if (!TextUtils.isEmpty(groupInfo.getAppDownloadLink())) {
+            linkProperties
+                    .addTag("inviteGroup")
+                    .setFeature("inviteGroup")
+                    .setChannel("App")
+                    .setCampaign("Group Invite")
+                    .addControlParameter("$android_deeplink_path", "group/invite/")
+                    .addControlParameter("$android_url", groupInfo.getAppDownloadLink());
+        }else {
+            linkProperties
+                    .addTag("inviteGroup")
+                    .setFeature("inviteGroup")
+                    .setChannel("App")
+                    .setCampaign("Group Invite")
+                    .addControlParameter("$android_deeplink_path", "group/invite/");
+        }
 
         buo.generateShortUrl(mGroupInfoView.getContext(), linkProperties,
                 new Branch.BranchLinkCreateListener() {
