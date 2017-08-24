@@ -63,40 +63,32 @@
 
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/player_profile_btn_compare_profile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_30"
-                        android:layout_marginTop="@dimen/dp_23"
+                        android:layout_width="@dimen/dim_80"
+                        android:layout_height="@dimen/dim_28"
+                        android:layout_marginTop="@dimen/dim_23"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/dp_30"
-                        android:layout_toLeftOf="@+id/player_profil_iv_compare_profile_icon"
+                        android:layout_marginRight="@dimen/dim_20"
                         android:background="@drawable/compare_btn_bg"
                         android:onClick="onClick"
                         android:gravity="center"
                         android:text="COMPARE"
-                        android:paddingRight="@dimen/dp_15"
+                        android:paddingRight="@dimen/dim_7"
+                        android:paddingLeft="@dimen/dim_4"
+                        android:drawableRight="@drawable/compare_btn_icon"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_12"
+                        android:textSize="@dimen/sp_11"
                         app:typeface="roboto_condensed" />
 
-                    <ImageView
-                        android:id="@+id/player_profil_iv_compare_profile_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/compare_btn_icon"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/dp_23"
-                        android:layout_marginRight="@dimen/dp_22"
-                        />
 
-
-                    <in.sportscafe.nostragamus.module.common.RoundImage
+                    <com.jeeva.android.widgets.HmImageView
                         android:id="@+id/player_profile_iv_image"
-                        android:layout_width="@dimen/dp_80"
-                        android:layout_height="@dimen/dp_80"
-                        android:layout_marginBottom="@dimen/dp_10"
-                        android:layout_marginLeft="@dimen/dp_50"
-                        android:layout_marginRight="@dimen/dp_5"
-                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_width="@dimen/dim_60"
+                        android:layout_height="@dimen/dim_60"
+                        android:layout_marginLeft="@dimen/dim_20"
+                        android:layout_marginRight="@dimen/dim_20"
+                        android:layout_marginTop="@dimen/dim_18"
+                        android:onClick="onClick"
+                        android:layout_centerHorizontal="true"
                         android:src="@drawable/left_placeholder_icon" />
 
 
@@ -104,16 +96,13 @@
                         android:id="@+id/player_profile_tv_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_24"
-                        android:layout_toRightOf="@+id/player_profile_iv_image"
-                        android:layout_toLeftOf="@+id/player_profile_btn_compare_profile"
-                        android:layout_marginRight="@dimen/dp_10"
-                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_marginTop="@dimen/dim_2"
+                        android:layout_below="@+id/player_profile_iv_image"
                         android:textAllCaps="false"
+                        android:layout_centerHorizontal="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_18"
-                        android:textStyle="bold"
-                        app:typeface="lato_regular" />
+                        android:textSize="@dimen/sp_14"
+                        app:typeface="lato_bold" />
 
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -121,12 +110,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/player_profile_tv_title"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:layout_marginLeft="@dimen/dp_5"
-                        android:layout_toRightOf="@+id/player_profile_iv_image"
+                        android:layout_centerHorizontal="true"
                         android:textAllCaps="false"
-                        android:textColor="@color/white_60"
-                        android:textSize="@dimen/dp_13"
+                        android:textColor="@color/white_70"
+                        android:textSize="@dimen/sp_12"
                         android:textStyle="bold"
                         app:typeface="lato_regular" />
 
@@ -146,16 +133,18 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/player_profile_iv_image"
-                        android:layout_marginBottom="@dimen/dp_10"
-                        android:layout_marginTop="@dimen/dp_12"
+                        android:layout_below="@+id/player_profile_tv_level"
+                        android:layout_marginBottom="@dimen/dim_12"
+                        android:layout_marginTop="@dimen/dim_14"
                         android:gravity="center_horizontal">
 
 
                         <RelativeLayout
                             android:id="@+id/player_profile_ll_points_parent"
-                            android:layout_width="@dimen/dp_72"
+                            android:layout_width="@dimen/dim_100"
                             android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/player_profile_ll_predictions_parent"
+                            android:layout_marginLeft="@dimen/dim_10"
                             android:layout_centerVertical="true">
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -165,33 +154,33 @@
                                 android:layout_marginBottom="@dimen/dp_4"
                                 android:clickable="false"
                                 android:text="POINTS"
+                                android:layout_centerHorizontal="true"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/dp_11"
+                                android:textSize="@dimen/sp_10"
                                 app:typeface="lato_regular" />
 
                             <com.jeeva.android.widgets.customfont.CustomButton
                                 android:id="@+id/player_profile_tv_points"
-                                android:layout_width="@dimen/dp_72"
-                                android:layout_height="@dimen/dp_30"
+                                android:layout_width="@dimen/dim_100"
+                                android:layout_height="@dimen/dim_28"
                                 android:layout_below="@+id/player_profile_tv_points_txt"
                                 android:background="@drawable/profile_screen_btns_bg"
                                 android:clickable="false"
-                                android:drawableLeft="@drawable/profile_screen_points_icon"
                                 android:gravity="center"
-                                android:paddingLeft="@dimen/dp_10"
-                                android:paddingRight="@dimen/dp_5"
+                                android:paddingLeft="@dimen/dim_10"
+                                android:paddingRight="@dimen/dim_5"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/dp_12"
+                                android:textSize="@dimen/sp_13"
                                 app:typeface="lato_bold" />
 
                         </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/player_profile_ll_accuracy_parent"
-                            android:layout_width="@dimen/dp_72"
+                            android:layout_width="@dimen/dim_100"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_marginLeft="@dimen/dim_10"
                             android:layout_toRightOf="@+id/player_profile_ll_points_parent"
                             android:orientation="vertical">
 
@@ -202,23 +191,23 @@
                                 android:layout_marginBottom="@dimen/dp_4"
                                 android:clickable="false"
                                 android:text="ACCURACY"
+                                android:layout_centerHorizontal="true"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/dp_11"
+                                android:textSize="@dimen/sp_10"
                                 app:typeface="lato_regular" />
 
                             <com.jeeva.android.widgets.customfont.CustomButton
                                 android:id="@+id/player_profile_btn_accuracy"
-                                android:layout_width="@dimen/dp_72"
-                                android:layout_height="@dimen/dp_30"
+                                android:layout_width="@dimen/dim_100"
+                                android:layout_height="@dimen/dim_28"
                                 android:layout_below="@+id/player_profile_tv_accuracy_txt"
                                 android:background="@drawable/profile_screen_btns_bg"
                                 android:clickable="false"
-                                android:drawableLeft="@drawable/profile_screen_accuracy_icon"
-                                android:paddingLeft="@dimen/dp_10"
-                                android:paddingRight="@dimen/dp_5"
+                                android:paddingLeft="@dimen/dim_10"
+                                android:paddingRight="@dimen/dim_5"
                                 android:text="0%"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/dp_12"
+                                android:textSize="@dimen/sp_13"
                                 app:typeface="lato_bold" />
 
                         </RelativeLayout>
@@ -226,10 +215,8 @@
 
                         <RelativeLayout
                             android:id="@+id/player_profile_ll_predictions_parent"
-                            android:layout_width="@dimen/dp_72"
+                            android:layout_width="@dimen/dim_100"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:layout_toRightOf="@+id/player_profile_ll_accuracy_parent"
                             android:orientation="vertical">
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -239,23 +226,23 @@
                                 android:layout_marginBottom="@dimen/dp_4"
                                 android:clickable="false"
                                 android:text="PREDICTIONS"
+                                android:layout_centerHorizontal="true"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/dp_11"
+                                android:textSize="@dimen/sp_10"
                                 app:typeface="lato_regular" />
 
                             <com.jeeva.android.widgets.customfont.CustomButton
                                 android:id="@+id/player_profile_btn_predictions"
-                                android:layout_width="@dimen/dp_72"
-                                android:layout_height="@dimen/dp_30"
+                                android:layout_width="@dimen/dim_100"
+                                android:layout_height="@dimen/dim_28"
                                 android:layout_below="@+id/player_profile_tv_predictions_txt"
                                 android:background="@drawable/profile_screen_btns_bg"
                                 android:clickable="false"
-                                android:drawableLeft="@drawable/profile_screen_predictions_icon"
-                                android:paddingLeft="@dimen/dp_10"
-                                android:paddingRight="@dimen/dp_5"
+                                android:paddingLeft="@dimen/dim_10"
+                                android:paddingRight="@dimen/dim_5"
                                 android:text="0"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/dp_12"
+                                android:textSize="@dimen/sp_13"
                                 app:typeface="lato_bold" />
 
                         </RelativeLayout>
@@ -308,7 +295,7 @@
             <in.sportscafe.nostragamus.module.common.CustomTabLayout
                 android:id="@+id/tab_tl"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_46"
+                android:layout_height="@dimen/dp_40"
                 android:layout_below="@+id/player_player_profile_ll_points_parent"
                 android:layout_gravity="center_horizontal|top"
                 android:background="@color/profile_tab_color"

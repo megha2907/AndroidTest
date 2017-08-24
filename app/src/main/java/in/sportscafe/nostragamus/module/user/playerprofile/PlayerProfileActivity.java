@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.HmImageView;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -85,7 +87,7 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
 
     @Override
     public void setProfileImage(String imageUrl) {
-        ((RoundImage) findViewById(R.id.player_profile_iv_image)).setImageUrl(
+        ((HmImageView) findViewById(R.id.player_profile_iv_image)).setImageUrl(
                 imageUrl
         );
     }

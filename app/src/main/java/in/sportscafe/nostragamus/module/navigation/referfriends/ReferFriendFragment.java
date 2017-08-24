@@ -45,8 +45,9 @@ public class ReferFriendFragment extends BaseFragment implements View.OnClickLis
 
     private Bundle mBundle;
 
-    String mReferralCode;
+    String mReferralCode="";
     String mWalletInit;
+    String mDownloadLink="";
 
     public ReferFriendFragment() {
     }
@@ -158,6 +159,8 @@ public class ReferFriendFragment extends BaseFragment implements View.OnClickLis
 
             mReferralCode = userReferralInfo.getReferralCode();
             mWalletInit = String.valueOf(userReferralInfo.getWalletInitialAmount());
+            mDownloadLink = userReferralInfo.getAppDownloadLink();
+
         }else {
             referCodeLayout.setVisibility(View.GONE);
         }
@@ -190,7 +193,7 @@ public class ReferFriendFragment extends BaseFragment implements View.OnClickLis
             case R.id.refer_friend_btn:
                 NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.REFERRAL_ACTION, Constants.AnalyticsClickLabels.REFER_NOW);
                 if (mReferFriendFragmentListener != null) {
-                    mReferFriendFragmentListener.onReferAFriendClicked(mReferralCode, mWalletInit);
+                    mReferFriendFragmentListener.onReferAFriendClicked(mReferralCode, mWalletInit,mDownloadLink);
                 }
                 break;
         }
