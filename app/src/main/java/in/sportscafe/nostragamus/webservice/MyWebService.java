@@ -81,7 +81,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     private static MyWebService sMyWebService = new MyWebService();
 
-    public static MyWebService getInstance() {
+    public static synchronized MyWebService getInstance() {
         return sMyWebService;
     }
 

@@ -779,4 +779,12 @@ public interface Constants {
     interface FaceBookAnalyticsEvents {
         String MATCH_PLAY_COMPLETED = "Played";
     }
+
+    interface DataStatus {
+        int FROM_SERVER_API_SUCCESS = 1;
+        int FROM_SERVER_API_FAILED = 2;
+        int FROM_DATABASE_AS_SERVER_FAILED = 3;
+        int FROM_DATABASE_AS_NO_INTERNET = 4;
+
+    }
 }
