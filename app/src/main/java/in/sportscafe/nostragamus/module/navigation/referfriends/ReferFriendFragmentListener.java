@@ -16,5 +16,5 @@ public interface ReferFriendFragmentListener {
 
     void onTermsClicked();
 
-    void onReferAFriendClicked(String referralCode,String walletInit);
+    void onReferAFriendClicked(String referralCode,String walletInit,String downloadLink);
 }

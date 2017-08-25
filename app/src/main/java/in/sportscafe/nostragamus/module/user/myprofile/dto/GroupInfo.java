@@ -53,6 +53,9 @@ public class GroupInfo {
     @JsonProperty("wallet_init")
     private Integer walletInitialAmount;
 
+    @JsonProperty("download_link")
+    private String appDownloadLink;
+
     public GroupInfo() {
     }
 
@@ -279,6 +282,16 @@ public class GroupInfo {
     @JsonProperty("wallet_init")
     public void setWalletInitialAmount(Integer walletInitialAmount) {
         this.walletInitialAmount = walletInitialAmount;
+    }
+
+    @JsonProperty("download_link")
+    public String getAppDownloadLink() {
+        return appDownloadLink;
+    }
+
+    @JsonProperty("download_link")
+    public void setAppDownloadLink(String appDownloadLink) {
+        this.appDownloadLink = appDownloadLink;
     }
 
 }

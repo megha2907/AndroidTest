@@ -7,6 +7,7 @@ package in.sportscafe.nostragamus.module.navigation.referfriends;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -55,7 +56,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
         TextView tvToolbar = (TextView) findViewById(R.id.refer_friend_toolbar_tv);
         if (BuildConfig.IS_PAID_VERSION) {
             tvToolbar.setText("Refer a Friend and earn money");
-        }else {
+        } else {
             tvToolbar.setText("Refer a Friend and earn powerups");
         }
         setSupportActionBar(toolbar);
@@ -92,12 +93,12 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
     }
 
     @Override
-    public void onReferAFriendClicked(String referralCode,String walletInit) {
-        navigateToReferFriend(referralCode,walletInit);
+    public void onReferAFriendClicked(String referralCode, String walletInit, String downloadLink) {
+        navigateToReferFriend(referralCode, walletInit, downloadLink);
         NostragamusAnalytics.getInstance().trackReferralAction(Constants.AnalyticsLabels.REFER_FRIEND);
     }
 
-    private void navigateToReferFriend(final String referralCode, final String walletInit) {
+    private void navigateToReferFriend(final String referralCode, final String walletInit, final String downloadLink) {
         BranchUniversalObject buo = new BranchUniversalObject()
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(Constants.BundleKeys.WALLET_INITIAL_AMOUNT, walletInit)
@@ -105,13 +106,24 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
                 .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, NostragamusDataHandler.getInstance().getUserInfo().getPhoto())
                 .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, NostragamusDataHandler.getInstance().getUserInfo().getUserName());
 
-        LinkProperties linkProperties = new LinkProperties()
-                .addTag("inviteApp")
-                .setFeature("inviteApp")
-                .setChannel("App")
-                .setCampaign("App Invite")
-                .addControlParameter("$android_deeplink_path", "app/invite/");
-//              .addControlParameter("$android_url", "http://nostragamus.in/download.html");
+
+        LinkProperties linkProperties = new LinkProperties();
+        if (!TextUtils.isEmpty(downloadLink)) {
+            linkProperties
+                    .addTag("inviteApp")
+                    .setFeature("inviteApp")
+                    .setChannel("App")
+                    .setCampaign("App Invite")
+                    .addControlParameter("$android_deeplink_path", "app/invite/")
+                    .addControlParameter("$android_url", downloadLink);
+        }else {
+            linkProperties
+                    .addTag("inviteApp")
+                    .setFeature("inviteApp")
+                    .setChannel("App")
+                    .setCampaign("App Invite")
+                    .addControlParameter("$android_deeplink_path", "app/invite/");
+        }
 
         buo.generateShortUrl(getContext(), linkProperties,
                 new Branch.BranchLinkCreateListener() {
@@ -119,8 +131,8 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
                     public void onLinkCreate(String url, BranchError error) {
                         if (null == error) {
                             String shareText = "If you love sports, try out India's first live sports predictions game and win REAL money." +
-                                    "Here's ₹ " + walletInit +" for you to enter a contest - just download the app using this link " + url +
-                                    "  or use my referral code "+ referralCode + " at login.";
+                                    "Here's ₹ " + walletInit + " for you to enter a contest - just download the app using this link " + url +
+                                    "  or use my referral code " + referralCode + " at login.";
                             AppSnippet.doGeneralShare(getApplicationContext(), shareText);
                         } else {
                             ExceptionTracker.track(error.getMessage());
