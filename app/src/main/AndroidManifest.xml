@@ -340,6 +340,26 @@
         <activity
             android:name=".module.navigation.powerupbank.earnmorepowerups.EarnMorePowerUpActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.challenges.ChallengesActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeActivityTransitionStyle" />
+        <activity
+            android:name=".module.navigation.ProfileActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeActivityTransitionStyle" />
+        <activity
+            android:name=".module.user.group.GroupActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeActivityTransitionStyle" />
+        <activity
+            android:name=".module.join.JoinActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeActivityTransitionStyle" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

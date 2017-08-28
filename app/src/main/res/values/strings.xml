@@ -155,4 +155,9 @@
     <string name="max_added">Max Added</string>
     <string name="earn_more_powerups_text">- You can add more powerups to your bank by referring friends or buying powerups</string>
 
+    <string name="bottom_nav_challenge">Challenges</string>
+    <string name="bottom_nav_join">Join</string>
+    <string name="bottom_nav_group">Group</string>
+    <string name="bottom_nav_profile">Profile</string>
+
 </resources>

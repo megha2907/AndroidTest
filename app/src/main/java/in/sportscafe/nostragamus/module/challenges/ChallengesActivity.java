@@ -6,18 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 import static io.fabric.sdk.android.services.concurrency.AsyncTask.init;
 
-public class ChallengesActivity extends NostraBaseActivity {
+public class ChallengesActivity extends NostraHomeActivity {
 
     private static final String TAG = ChallengesActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_challenges);
+        setNewChallengesSelected();
+        setContentLayout(R.layout.activity_challenges);
         initialize();
     }
 
