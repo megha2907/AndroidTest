@@ -219,7 +219,7 @@ public class ChallengeFragment extends NostragamusFragment implements ChallengeV
     }
 
     private void updateChallengeCount() {
-        tvChallengeNumber.setText("Challenge " + String.valueOf(mCurrentPosition + 1));
+        tvChallengeNumber.setText("NewChallengesResponse " + String.valueOf(mCurrentPosition + 1));
     }
 
     private int mFirstItemY = 0;

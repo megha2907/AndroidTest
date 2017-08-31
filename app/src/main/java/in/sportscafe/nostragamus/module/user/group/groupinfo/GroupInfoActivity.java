@@ -15,13 +15,11 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.CustomProgressbar;
 import com.jeeva.android.widgets.HmImageView;
 
-import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.group.editgroupinfo.EditGroupInfoActivity;
 
 /**

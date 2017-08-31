@@ -12,10 +12,9 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.allchallenges.AllChallengesApiModelImpl;
-import in.sportscafe.nostragamus.module.challenges.ChallengesActivity;
+import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.feedback.GoogleFormActivity;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
@@ -70,7 +69,7 @@ public class GetStartActivity extends Activity {
     }
 
     private void navigateToHome() {
-        startActivity(new Intent(this, ChallengesActivity.class));
+        startActivity(new Intent(this, NewChallengesActivity.class));
         finish();
     }
 

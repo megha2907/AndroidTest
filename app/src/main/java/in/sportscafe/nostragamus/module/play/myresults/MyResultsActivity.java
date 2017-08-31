@@ -182,10 +182,10 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
        /* Bundle mbundle = new Bundle();
         mbundle = getIntent().getExtras();
-        Match match = Parcels.unwrap(mbundle.getParcelable(Constants.BundleKeys.MATCH_LIST));
+        Match Match = Parcels.unwrap(mbundle.getParcelable(Constants.BundleKeys.MATCH_LIST));
 
         long startTimeMs = TimeUtils.getMillisecondsFromDateString(
-                match.getStartTime(),
+                Match.getStartTime(),
                 Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
                 Constants.DateFormats.GMT
         );
@@ -196,7 +196,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 || timeAgo.timeUnit == TimeUnit.SECOND;
 
 
-        if (match.isResultPublished() || isMatchStarted){
+        if (Match.isResultPublished() || isMatchStarted){
             powerupMainFab.setVisibility(View.GONE);
         }else {
             powerupMainFab.setVisibility(View.VISIBLE);

@@ -49,7 +49,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void onsetMatchDetails(Match match) {
         mResultsView.setMatchDetails(match);
-//        mResultsView.navigatetoPlay(match);
+//        mResultsView.navigatetoPlay(Match);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
 
     @Override
     public void onSuccessChangeAnswerResponse(Match match) {
-        //mResultsView.updateAnswers(match);
+        //mResultsView.updateAnswers(Match);
         mResultsView.dismissProgressbar();
     }
 

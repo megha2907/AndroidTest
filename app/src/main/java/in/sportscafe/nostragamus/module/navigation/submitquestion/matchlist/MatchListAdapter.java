@@ -58,7 +58,7 @@ public class MatchListAdapter extends Adapter<Match, MatchListAdapter.MatchVH> {
         );
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
-        // Setting date of the match
+        // Setting date of the Match
         holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
                 + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA)

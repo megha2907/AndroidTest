@@ -432,7 +432,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                             (mChallenge != null) ? mChallenge.getChallengeId() : 0);
 
         } else {
-            showMessage("Please add any Powerup to transfer to Challenge");
+            showMessage("Please add any Powerup to transfer to NewChallengesResponse");
         }
     }
 
