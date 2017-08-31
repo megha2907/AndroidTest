@@ -7,7 +7,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 
 /**
@@ -22,7 +22,7 @@ public class NostragamusUncaughtExceptionHandler implements Thread.UncaughtExcep
         }
 
         if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
-            startNewIntent(HomeActivity.class);
+            startNewIntent(NewChallengesActivity.class);
         } else {
             startNewIntent(LogInActivity.class);
         }

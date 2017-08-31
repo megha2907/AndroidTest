@@ -145,7 +145,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
         }
     }*/
 
-    /*private List<Feed> getCategorizedList(Match match, Map<Integer, MatchAnswerStats> questionAnswersMap) {
+    /*private List<Feed> getCategorizedList(Match Match, Map<Integer, MatchAnswerStats> questionAnswersMap) {
         Map<String, Tournament> tourMap = new HashMap<>();
         Map<String, Feed> feedMap = new HashMap<>();
         List<Feed> feedList = new ArrayList<>();
@@ -155,7 +155,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
         int tourId;
         Tournament tour;
         date = TimeUtils.getFormattedDateString(
-                match.getStartTime(),
+                Match.getStartTime(),
                 Constants.DateFormats.DD_MM_YYYY,
                 Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
                 Constants.DateFormats.GMT
@@ -173,19 +173,19 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
             feedList.add(feed);
         }
 
-        tourId = match.getTournamentId();
+        tourId = Match.getTournamentId();
 
         if (tourMap.containsKey(date + tourId)) {
             tour = tourMap.get(date + tourId);
         } else {
-            tour = new Tournament(tourId, match.getTournamentName());
+            tour = new Tournament(tourId, Match.getTournamentName());
             tourMap.put(date + tourId, tour);
             feed.addTournament(tour);
         }
 
-        tour.addMatches(match);
+        tour.addMatches(Match);
 
-        match.updateAnswerPercentage(questionAnswersMap);
+        Match.updateAnswerPercentage(questionAnswersMap);
 
         Collections.sort(feedList, new Comparator<Feed>() {
             @Override

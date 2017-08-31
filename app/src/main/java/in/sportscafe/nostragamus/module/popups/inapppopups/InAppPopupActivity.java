@@ -61,7 +61,7 @@ public class InAppPopupActivity extends AppCompatActivity implements View.OnClic
 
         if (inAppPopUpType.equals(Constants.InAppPopups.FIRST_MATCH_PLAYED)) {
             inAppPopUpTitle = "Remember!";
-            inAppPopUpBody = "Great! You will be notified once the result of the match is out";
+            inAppPopUpBody = "Great! You will be notified once the result of the Match is out";
             inAppPopUpBtnTitle = "Check Current Standings!";
             NostragamusDataHandler.getInstance().setPlayedFirstMatch(true);
 

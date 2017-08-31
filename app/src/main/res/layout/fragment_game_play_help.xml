@@ -34,7 +34,7 @@
             android:text="Play sample game to know more about the gameplay"
             android:layout_marginTop="@dimen/dim_4"/>
 
-        <!-- Transfer to challenge button -->
+        <!-- Transfer to newChallengesResponse button -->
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/powerup_bank_transfer_to_challenge_button"
             android:layout_width="@dimen/dp_120"

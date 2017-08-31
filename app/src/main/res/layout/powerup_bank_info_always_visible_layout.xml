@@ -13,7 +13,7 @@
         android:layout_marginLeft="@dimen/dim_20"
         android:layout_marginRight="@dimen/dim_20"
         android:layout_marginTop="@dimen/dim_20"
-        android:text="No more than 2 powerups each can be transfered to this challenge"
+        android:text="No more than 2 powerups each can be transfered to this newChallengesResponse"
         android:textColor="@color/white_dim"
         android:textSize="@dimen/sp_15"
         app:typeface="lato_regular" />

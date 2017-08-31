@@ -101,7 +101,7 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
         } else {
             int myAnswerId = myQuestion.getAnswerId();
 
-            // if played match but not attempted Question
+            // if played Match but not attempted Question
             if (myAnswerId == 0) {
                 tvPlayerOneAnswer.setText("Did not Play");
                 setTextColor(tvPlayerOneAnswer, R.color.white_60);
@@ -192,7 +192,7 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
         } else {
             otherPlayerAnswerId = playerQuestion.getAnswerId();
 
-            // if played match but not attempted Question
+            // if played Match but not attempted Question
             if (otherPlayerAnswerId == 0) {
                 tvPlayerTwoAnswer.setText("Did not Play");
                 setTextColor(tvPlayerTwoAnswer, R.color.white_60);

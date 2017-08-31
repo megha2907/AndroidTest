@@ -66,12 +66,12 @@ public class PowerUpAdapter extends Adapter<PowerUp, PowerUpAdapter.ViewHolder> 
             case Powerups.ANSWER_FLIP:
                 holder.mTvPowerUpName.setText("Flip Answer");
                 holder.mBtnPowerUp.setImageResource(R.drawable.powerup_flip);
-                holder.mTvPowerUpDesc.setText("Change your mind about a prediction you made before a match begins");
+                holder.mTvPowerUpDesc.setText("Change your mind about a prediction you made before a Match begins");
                 break;
             case Powerups.MATCH_REPLAY:
                 holder.mTvPowerUpName.setText("Replay Match");
                 holder.mBtnPowerUp.setImageResource(R.drawable.replay_icon);
-                holder.mTvPowerUpDesc.setText("Forget all predictions made for a match so that you can play it again");
+                holder.mTvPowerUpDesc.setText("Forget all predictions made for a Match so that you can play it again");
                 break;
 
         }

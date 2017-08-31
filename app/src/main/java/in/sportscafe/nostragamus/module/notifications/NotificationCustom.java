@@ -40,7 +40,7 @@ public class NotificationCustom extends PushMessageListener {
     @Override
     public NotificationCompat.Builder onCreateNotification(Context context, Bundle extras, ConfigurationProvider provider) {
 
-        if (extras.containsKey(NotificationKeys.RESULTS_LEADERBOARD)) { // sending match id
+        if (extras.containsKey(NotificationKeys.RESULTS_LEADERBOARD)) { // sending Match id
             extras.putString(MoEHelperConstants.GCM_EXTRA_ACTIVITY_NAME,
                     "in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity");
         }

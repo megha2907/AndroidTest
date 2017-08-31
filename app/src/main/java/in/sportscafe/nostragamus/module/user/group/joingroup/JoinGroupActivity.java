@@ -19,9 +19,9 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity;
 import io.branch.referral.Branch;
@@ -223,7 +223,7 @@ public class JoinGroupActivity extends NostragamusActivity implements JoinGroupV
 
     @Override
     public void goToHome() {
-        Intent homeintent = new Intent(this, HomeActivity.class);
+        Intent homeintent = new Intent(this, NewChallengesActivity.class);
         homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         homeintent.putExtra("group", "openprofile");
         startActivity(homeintent);
