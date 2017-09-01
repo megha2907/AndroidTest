@@ -41,7 +41,7 @@
     <color name="textcolorlight">#86858D</color>
     <color name="textcolorlightopacity">#5586858D</color>
     <color name="dividercolor">#2A2A2A</color>
-    <color name="linecolor">#303030</color>
+    <color name="linecolor">#505050</color>
     <color name="colorBrown">#2A2832</color>
     <color name="colorGrey">#26252d</color>
     <color name="invitepeoplebtncolor">#00CE61</color>
@@ -83,6 +83,8 @@
     <color name="grey5">#999999</color>
     <color name="grey6">#CCCCCC</color>
     <color name="grey7">#e6e6e6</color>
+    <color name="grey8">#282828</color>
+    <color name="grey_303030">#303030</color>
     <color name="grey_dim_text">#99a5b5</color>
 
     <color name="white_70">#B3FFFFFF</color>

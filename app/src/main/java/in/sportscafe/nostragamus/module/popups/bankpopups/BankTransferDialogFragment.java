@@ -1,13 +1,9 @@
-package in.sportscafe.nostragamus.module.popups;
+package in.sportscafe.nostragamus.module.popups.bankpopups;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.style.ImageSpan;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +18,6 @@ import java.util.HashMap;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.Constants.IntentActions;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -30,11 +25,7 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
-import in.sportscafe.nostragamus.module.popups.banktransfer.BankTranferApiModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-
-import static android.R.id.replaceText;
-import static com.google.android.gms.analytics.internal.zzy.d;
 
 /**
  * Created by Jeeva on 28/02/17.

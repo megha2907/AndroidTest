@@ -54,7 +54,7 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
 
     @Override
     public ConfigVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ConfigVH(getLayoutInflater().inflate(R.layout.inflater_pool_row, parent, false));
+        return new ConfigVH(getLayoutInflater().inflate(R.layout.inflater_pool_new_row, parent, false));
     }
 
     @Override
@@ -62,7 +62,6 @@ public class ChallengeConfigAdapter extends Adapter<ChallengeConfig, ChallengeCo
         ChallengeConfig config = getItem(position);
 
         ConfigPlayersDetails memberDetails = config.getPlayersDetails();
-
 
         if (config.isFreeEntry()) {
             holder.mTvEntryFee.setText("Free");

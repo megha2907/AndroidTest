@@ -16,12 +16,13 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
+import in.sportscafe.nostragamus.module.common.PopUpDialogFragment;
 import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StoreBuySuccessDialogFragment extends NostragamusDialogFragment implements View.OnClickListener {
+public class StoreBuySuccessDialogFragment extends PopUpDialogFragment implements View.OnClickListener {
 
     private StoreBuySuccessDialogListener mDialogListener;
 
@@ -54,6 +55,7 @@ public class StoreBuySuccessDialogFragment extends NostragamusDialogFragment imp
 
     private void initView(View rootView) {
         rootView.findViewById(R.id.popup_cross_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.popup_bg).setOnClickListener(this);
         rootView.findViewById(R.id.store_success_dialog_ok_button).setOnClickListener(this);
     }
 
@@ -87,6 +89,13 @@ public class StoreBuySuccessDialogFragment extends NostragamusDialogFragment imp
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.popup_cross_btn:
+                if (mDialogListener != null) {
+                    mDialogListener.onOkayButtonClicked();
+                }
+                dismiss();
+                break;
+
+            case R.id.popup_bg:
                 if (mDialogListener != null) {
                     mDialogListener.onOkayButtonClicked();
                 }

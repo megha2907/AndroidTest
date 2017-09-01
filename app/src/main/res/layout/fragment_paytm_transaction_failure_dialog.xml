@@ -1,47 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popup_bg"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/transparent">
+    android:layout_height="match_parent"
+    android:background="@color/black_40">
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/popup_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_20"
         app:cardBackgroundColor="@color/transparent"
-        app:cardCornerRadius="@dimen/dp_4"
-        android:layout_marginTop="@dimen/dp_15"
+        app:cardCornerRadius="@dimen/dim_4"
+        android:layout_marginTop="@dimen/dim_15"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/code_gray_1a"
+            android:background="@color/grey_303030"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_42"
-                android:background="@color/chathams_blue"
+                android:layout_height="@dimen/dim_56"
+                android:background="@color/colorBackground"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_15"
+                    android:layout_width="@dimen/dim_15"
+                    android:layout_height="@dimen/dim_15"
                     android:src="@drawable/tr_failure_cross_icon" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginLeft="@dimen/dim_8"
                     android:text="Transaction failed!"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_14"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_bold" />
 
             </LinearLayout>
@@ -49,13 +52,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dim_8"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_60"
+                    android:layout_height="@dimen/dim_100"
                     android:src="@drawable/paytm_trans_failed_img" />
 
             </LinearLayout>
@@ -69,10 +72,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dim_16"
                     android:text="Transaction Unsuccessful"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_14"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_bold" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -80,24 +83,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="@dimen/dp_30"
-                    android:layout_marginRight="@dimen/dp_30"
-                    android:layout_marginTop="@dimen/dp_6"
+                    android:layout_marginLeft="@dimen/dim_30"
+                    android:layout_marginRight="@dimen/dim_30"
+                    android:layout_marginTop="@dimen/dim_12"
                     android:gravity="center"
                     android:text="The provider declined the payment.Please retry or check your credentials."
-                    android:textColor="#cecece"
-                    android:textSize="@dimen/dp_12"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dim_12"
                     android:gravity="center"
                     android:text="If money has been debited from your \naccount, it will be refunded shortly."
-                    android:textColor="#cecece"
-                    android:textSize="@dimen/dp_12"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />
 
             </LinearLayout>
@@ -107,38 +110,36 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dp_16"
-                android:layout_marginBottom="@dimen/dp_16">
+                android:layout_marginTop="@dimen/dim_20"
+                android:layout_marginBottom="@dimen/dim_20">
 
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/paytm_failure_backToAddMoney_button"
-                    android:layout_width="@dimen/dp_140"
-                    android:layout_height="@dimen/dp_38"
-                    android:background="@drawable/tournament_ready_btn_bg"
+                    android:layout_width="@dimen/dim_130"
+                    android:layout_height="@dimen/dim_38"
+                    android:background="@drawable/grey_button_selector"
                     android:gravity="center"
                     android:paddingBottom="@dimen/dp_3"
                     android:paddingTop="@dimen/dp_0"
-                    android:text="Back to Add Money"
+                    android:text="Back to Wallet"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_14"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_bold" />
 
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/paytm_failure_retry_payment_button"
-                    android:layout_width="@dimen/dp_130"
-                    android:layout_height="@dimen/dp_38"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:background="@drawable/tournament_ready_btn_bg"
+                    android:layout_width="@dimen/dim_130"
+                    android:layout_height="@dimen/dim_38"
+                    android:layout_marginLeft="@dimen/dim_10"
+                    android:background="@drawable/blue_button_selector"
                     android:gravity="center"
                     android:paddingBottom="@dimen/dp_3"
                     android:paddingTop="@dimen/dp_0"
                     android:text="Retry Payment"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_14"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_bold" />
 
             </LinearLayout>
@@ -149,14 +150,14 @@
 
     <ImageView
         android:id="@+id/popup_cross_btn"
-        android:layout_width="@dimen/dp_32"
-        android:layout_height="@dimen/dp_32"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_7"
-        android:layout_marginTop="@dimen/dp_7"
+        android:layout_width="@dimen/dim_36"
+        android:layout_height="@dimen/dim_36"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/popup_card"
+        android:layout_marginTop="@dimen/dim_38"
         android:elevation="@dimen/dp_4"
         android:padding="@dimen/dp_5"
         android:src="@drawable/popup_cross_icon"
-        android:visibility="invisible" />
+        android:visibility="visible" />
 
 </RelativeLayout>
