@@ -13,13 +13,14 @@ import android.widget.TextView;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
+import in.sportscafe.nostragamus.module.common.PopUpDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutChoiceType;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WithdrawInitiatedDialogFragment extends NostragamusDialogFragment implements View.OnClickListener {
+public class WithdrawInitiatedDialogFragment extends PopUpDialogFragment implements View.OnClickListener {
 
     private static final String TAG = WithdrawInitiatedDialogFragment.class.getSimpleName();
 
@@ -49,6 +50,7 @@ public class WithdrawInitiatedDialogFragment extends NostragamusDialogFragment i
     private void initView(View rootView) {
         rootView.findViewById(R.id.withdraw_dialog_ok_button).setOnClickListener(this);
         ImageView mBtnPopupClose = (ImageView) rootView.findViewById(R.id.popup_cross_btn);
+        rootView.findViewById(R.id.popup_bg).setOnClickListener(this);
         mBtnPopupClose.setVisibility(View.VISIBLE);
         mBtnPopupClose.setOnClickListener(this);
     }
@@ -96,7 +98,7 @@ public class WithdrawInitiatedDialogFragment extends NostragamusDialogFragment i
         headerTextView.setText("Transaction Failed");
         statusTextView.setText("Transaction Initiation Failed");
         statusMsgTextView.setText("The provider declined the payment.");
-        statusImageView.setImageResource(R.drawable.paytm_failed_img);
+        statusImageView.setImageResource(R.drawable.wallet_withdraw_failed_icn);
 
     }
 
@@ -120,10 +122,10 @@ public class WithdrawInitiatedDialogFragment extends NostragamusDialogFragment i
             }
         }
 
-        headerTextView.setText("Transaction Initiated");
+        headerTextView.setText("Transaction Started");
         statusTextView.setText("Transaction Initiated");
         statusMsgTextView.setText(msg);
-        statusImageView.setImageResource(R.drawable.paytm_failed_img);
+        statusImageView.setImageResource(R.drawable.wallet_withdraw_initiated_icn);
     }
 
     @Override
@@ -131,6 +133,9 @@ public class WithdrawInitiatedDialogFragment extends NostragamusDialogFragment i
         switch (view.getId()) {
             case R.id.withdraw_dialog_ok_button:
             case R.id.popup_cross_btn:
+                onOkButtonClicked();
+                break;
+            case R.id.popup_bg:
                 onOkButtonClicked();
                 break;
         }

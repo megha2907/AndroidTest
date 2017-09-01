@@ -34,7 +34,7 @@ import in.sportscafe.nostragamus.module.play.powerup.dto.PowerUpBankStatusRespon
 import in.sportscafe.nostragamus.module.play.powerup.dto.UserBalancePowerupDto;
 import in.sportscafe.nostragamus.module.play.powerup.dto.UserDemandPowerUpDto;
 import in.sportscafe.nostragamus.module.play.powerup.io.PowerupBankStatusApiModelImpl;
-import in.sportscafe.nostragamus.module.popups.banktransfer.BankTranferApiModelImpl;
+import in.sportscafe.nostragamus.module.popups.bankpopups.BankTranferApiModelImpl;
 import in.sportscafe.nostragamus.module.store.StoreLaunchMode;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 

@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.popups.banktransfer;
+package in.sportscafe.nostragamus.module.popups.bankpopups;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

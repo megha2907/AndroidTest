@@ -16,6 +16,7 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
+import in.sportscafe.nostragamus.module.common.PopUpDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 
@@ -23,7 +24,7 @@ import in.sportscafe.nostragamus.module.store.dto.StoreItems;
  * Created by deepanshi on 6/20/17.
  */
 
-public class CompletePaymentDialogFragment extends NostragamusDialogFragment implements View.OnClickListener {
+public class CompletePaymentDialogFragment extends PopUpDialogFragment implements View.OnClickListener {
 
     public interface DialogLaunchMode {
         int JOINING_CHALLENGE_LAUNCH = 1;
@@ -86,6 +87,7 @@ public class CompletePaymentDialogFragment extends NostragamusDialogFragment imp
     private void initViews() {
         findViewById(R.id.complete_payment_btn_back).setOnClickListener(this);
         findViewById(R.id.complete_payment_btn).setOnClickListener(this);
+        findViewById(R.id.popup_bg).setOnClickListener(this);
         ImageView mBtnPopupClose = (ImageView) findViewById(R.id.popup_cross_btn);
         mBtnPopupClose.setVisibility(View.VISIBLE);
         mBtnPopupClose.setOnClickListener(this);
@@ -96,6 +98,7 @@ public class CompletePaymentDialogFragment extends NostragamusDialogFragment imp
             case DialogLaunchMode.JOINING_CHALLENGE_LAUNCH:
             case DialogLaunchMode.JOINING_CHALLENGE_AFTER_LOW_BAL_LAUNCH:
                 populateChallengeJoiningValues();
+
                 break;
 
             case DialogLaunchMode.STORE_BUY_POWERUP_LAUNCH:
@@ -204,6 +207,13 @@ public class CompletePaymentDialogFragment extends NostragamusDialogFragment imp
         switch (v.getId()) {
             case R.id.complete_payment_btn_back:
             case R.id.popup_cross_btn:
+                if (mCompletePaymentActionListener != null) {
+                    mCompletePaymentActionListener.onBackClicked();
+                }
+                dismiss();
+                break;
+
+            case R.id.popup_bg:
                 if (mCompletePaymentActionListener != null) {
                     mCompletePaymentActionListener.onBackClicked();
                 }

@@ -33,6 +33,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
+import in.sportscafe.nostragamus.module.popups.challengepopups.ContestDetailsPopupActivity;
 import in.sportscafe.nostragamus.module.store.StoreActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -254,7 +255,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
 
     private void onSettingsClicked() {
         if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            Intent intent = new Intent(getActivity(), ContestDetailsPopupActivity.class);
             startActivity(intent);
         }
     }

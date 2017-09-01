@@ -361,6 +361,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/homeActivityTransitionStyle" />
 
+        <activity
+            android:name=".module.popups.challengepopups.ContestDetailsPopupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.PopupTheme"/>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
