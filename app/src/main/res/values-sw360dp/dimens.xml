@@ -76,8 +76,11 @@
     <dimen name="dim_30">30dp</dimen>
     <dimen name="dim_32">32dp</dimen>
     <dimen name="dim_36">36dp</dimen>
+    <dimen name="dim_38">38dp</dimen>
     <dimen name="dim_40">40dp</dimen>
+    <dimen name="dim_48">48dp</dimen>
     <dimen name="dim_50">50dp</dimen>
+    <dimen name="dim_56">56dp</dimen>
     <dimen name="dim_60">60dp</dimen>
     <dimen name="dim_66">66dp</dimen>
     <dimen name="dim_72">72dp</dimen>
@@ -87,7 +90,9 @@
     <dimen name="dim_110">110dp</dimen>
     <dimen name="dim_120">120dp</dimen>
     <dimen name="dim_132">132dp</dimen>
+    <dimen name="dim_130">130dp</dimen>
     <dimen name="dim_150">150dp</dimen>
+    <dimen name="dim_156">156dp</dimen>
     <dimen name="dim_160">160dp</dimen>
     <dimen name="dim_300">300dp</dimen>
     <dimen name="dim_320">320dp</dimen>
@@ -158,6 +163,5 @@
     <dimen name="wallet_payout_choice_item_height">64dp</dimen>
     <dimen name="dim_45">45dp</dimen>
     <dimen name="dim_80">80dp</dimen>
-
 
 </resources>

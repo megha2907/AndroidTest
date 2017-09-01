@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popup_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CC000000">
@@ -18,21 +19,21 @@
             android:layout_marginTop="@dimen/dp_15"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
-            app:cardBackgroundColor="#CC000000"
+            app:cardBackgroundColor="@color/grey"
             app:cardCornerRadius="@dimen/dp_4"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/code_gray_13"
+                android:background="@color/grey_303030"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/popup_ll_heading_bg"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_42"
+                    android:layout_height="wrap_content"
                     android:background="@color/transparent"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -42,10 +43,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_8"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        android:visibility="gone"
+                        app:typeface="lato_regular" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/popup_achievement_tv_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_8"
                         android:text="ACHIEVEMENT UNLOCKED!"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_14"
-                        app:typeface="lato_bold" />
+                        android:textSize="@dimen/sp_14"
+                        android:paddingTop="@dimen/dim_20"
+                        app:typeface="lato_regular" />
 
                 </LinearLayout>
 
@@ -56,19 +68,20 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
+                        android:id="@+id/popup_image_rl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
                         <ImageView
                             android:id="@+id/popup_image_bg"
-                            android:layout_width="@dimen/dp_170"
-                            android:layout_height="@dimen/dp_170"
+                            android:layout_width="@dimen/dim_156"
+                            android:layout_height="@dimen/dim_156"
                             android:src="@drawable/achievement_bg" />
 
                         <com.jeeva.android.widgets.HmImageView
                             android:id="@+id/popup_image"
-                            android:layout_width="@dimen/dp_128"
-                            android:layout_height="@dimen/dp_128"
+                            android:layout_width="@dimen/dim_100"
+                            android:layout_height="@dimen/dim_100"
                             android:layout_centerInParent="true"
                             android:scaleType="fitXY" />
 
@@ -81,8 +94,9 @@
                         android:layout_gravity="center_horizontal"
                         android:text="Against the odds"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/dp_14"
-                        app:typeface="lato_bold" />
+                        android:textSize="@dimen/sp_16"
+                        android:layout_marginTop="@dimen/dim_12"
+                        app:typeface="lato_regular" />
 
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -90,13 +104,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginLeft="@dimen/dp_15"
-                        android:layout_marginRight="@dimen/dp_15"
-                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginLeft="@dimen/dim_15"
+                        android:layout_marginRight="@dimen/dim_15"
+                        android:layout_marginTop="@dimen/dim_8"
                         android:gravity="center"
                         android:text="you have successfully gone against the majority using the Audience Poll powerup."
                         android:textColor="#cecece"
-                        android:textSize="@dimen/dp_12"
+                        android:textSize="@dimen/sp_14"
                         app:typeface="lato_regular" />
 
                 </LinearLayout>
@@ -110,22 +124,25 @@
                         android:layout_width="@dimen/dp_0"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:paddingTop="@dimen/dim_20"
+                        android:paddingBottom="@dimen/dim_20">
 
                         <com.jeeva.android.widgets.customfont.CustomButton
                             android:id="@+id/popup_exit_btn"
-                            android:layout_width="@dimen/dp_100"
-                            android:layout_height="@dimen/dp_36"
-                            android:background="@drawable/green_store_btn_bg"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dim_40"
+                            android:layout_marginTop="@dimen/dim_1"
+                            android:layout_marginLeft="@dimen/dim_20"
+                            android:layout_marginRight="@dimen/dim_20"
+                            android:background="@drawable/blue_button_selector"
                             android:gravity="center"
-                            android:minWidth="@dimen/dp_72"
-                            android:text="Okay!"
-                            android:layout_marginTop="@dimen/dp_14"
-                            android:layout_marginBottom="@dimen/dp_15"
-                            android:paddingBottom="@dimen/dp_2"
+                            android:minWidth="@dimen/dim_72"
+                            android:paddingBottom="@dimen/dim_2"
+                            android:text="Got it!"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/dp_14"
+                            android:textSize="@dimen/sp_14"
                             app:typeface="lato_bold" />
                     </LinearLayout>
                 </LinearLayout>
@@ -136,10 +153,11 @@
 
         <ImageView
             android:id="@+id/popup_cross_btn"
-            android:layout_width="@dimen/dp_32"
-            android:layout_height="@dimen/dp_32"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_width="@dimen/dim_32"
+            android:layout_height="@dimen/dim_32"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/popup"
+            android:layout_marginTop="@dimen/dim_48"
             android:elevation="@dimen/dp_4"
             android:padding="@dimen/dp_5"
             android:src="@drawable/popup_cross_icon"

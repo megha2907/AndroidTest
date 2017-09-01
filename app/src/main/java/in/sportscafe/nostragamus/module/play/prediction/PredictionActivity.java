@@ -46,8 +46,8 @@ import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.powerup.PowerupBankTransferToPlayActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
-import in.sportscafe.nostragamus.module.popups.BankInfoDialogFragment;
-import in.sportscafe.nostragamus.module.popups.BankTransferDialogFragment;
+import in.sportscafe.nostragamus.module.popups.bankpopups.BankInfoDialogFragment;
+import in.sportscafe.nostragamus.module.popups.bankpopups.BankTransferDialogFragment;
 import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupFragment;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 

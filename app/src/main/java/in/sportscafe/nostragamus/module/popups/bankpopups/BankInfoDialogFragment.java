@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.popups;
+package in.sportscafe.nostragamus.module.popups.bankpopups;
 
 import android.content.Context;
 import android.content.DialogInterface;
