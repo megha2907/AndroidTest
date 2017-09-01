@@ -142,7 +142,7 @@ public class ChallengeJoinDialogFragment extends NostragamusDialogFragment imple
             if (BuildConfig.IS_PAID_VERSION){
                 challengePayoutDateTxt.setText("Prizes");
                 // Setting end date of the challenge
-                challengePayoutDate.setText("The Challenge ends on the " +
+                challengePayoutDate.setText("The NewChallengesResponse ends on the " +
                         dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
                         TimeUtils.getDateStringFromMs(endTimeMs, "MMM") + " , Prizes will be handed out within a few hours of challenge completion."
                 );
@@ -151,7 +151,7 @@ public class ChallengeJoinDialogFragment extends NostragamusDialogFragment imple
                 challengePayoutDateTxt.setText("Results");
 
                 // Setting end date of the challenge
-                challengePayoutDate.setText("The Challenge ends on the " +
+                challengePayoutDate.setText("The NewChallengesResponse ends on the " +
                         dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
                         TimeUtils.getDateStringFromMs(endTimeMs, "MMM") + " , Results will be out within few hours."
                 );

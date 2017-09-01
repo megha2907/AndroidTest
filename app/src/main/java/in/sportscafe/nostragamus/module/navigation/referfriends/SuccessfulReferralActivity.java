@@ -6,15 +6,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.WordUtils;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
 /**
@@ -86,7 +84,7 @@ public class SuccessfulReferralActivity extends NostragamusActivity implements V
     }
 
     public void navigateToHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, NewChallengesActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.BundleKeys.LOGIN_SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);

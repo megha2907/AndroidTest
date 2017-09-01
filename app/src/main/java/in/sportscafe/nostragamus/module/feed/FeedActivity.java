@@ -17,8 +17,8 @@ import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineAdapter;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
@@ -206,7 +206,7 @@ public class FeedActivity extends NostragamusActivity implements FeedView {
 
     @Override
     public void navigateToHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, NewChallengesActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

@@ -138,7 +138,7 @@ public interface Constants {
         String USERNAME_EMPTY = "Please enter username";
         String NO_QUESTIONS_FOUND = "No questions found";
         String NO_FEEDS_FOUND = "No upcoming matches.";
-        String NO_UPDATED_LEADERBOARDS = "Your leaderboard will update here after a match you have played is over";
+        String NO_UPDATED_LEADERBOARDS = "Your leaderboard will update here after a Match you have played is over";
         String NO_RESULTS = "No results yet";
         String JOIN_GROUP_SUCCESS = "Your request sent to the group admin for the approval";
         String INVALID_GROUP_CODE = "Invalid group code";
@@ -163,7 +163,7 @@ public interface Constants {
         String AUDIENCE_POLL_FAIL = "Not enough responses for a meaningful poll, you can try after some time";
         String POWERUP_FAIL = "Something went wrong! Please try again!";
         String API_FAIL = "Something went wrong! Please try again!";
-        String MATCH_ALREADY_STARTED = "This match has already started!";
+        String MATCH_ALREADY_STARTED = "This Match has already started!";
         String FLIP_POWERUP_OVER = "You have used all your flip powerups!";
         String REPLAY_POWERUP_OVER = "You have used all your replay powerups!";
         String ADD_PHOTO_FAILED = "Adding photo failed! Try again!";
@@ -463,9 +463,9 @@ public interface Constants {
         String PLAY_GAME_HELP = "Game-Help";
         String SWIPE_VIEW = "Swipe View";
         String LIST_VIEW = "List View";
-        String CHALLENGE_INFO = "Challenge Info";
-        String CHALLENGE_JOIN = "Challenge Join";
-        String CHALLENGE_REWARDS = "Challenge Rewards";
+        String CHALLENGE_INFO = "NewChallengesResponse Info";
+        String CHALLENGE_JOIN = "NewChallengesResponse Join";
+        String CHALLENGE_REWARDS = "NewChallengesResponse Rewards";
         String OTHER_PROFILE = "Other Profile";
     }
 
@@ -785,6 +785,7 @@ public interface Constants {
         int FROM_SERVER_API_FAILED = 2;
         int FROM_DATABASE_AS_SERVER_FAILED = 3;
         int FROM_DATABASE_AS_NO_INTERNET = 4;
+        int FROM_DATABASE_ERROR = 5;
 
     }
 }

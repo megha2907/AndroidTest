@@ -182,12 +182,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.play.myresults.MyResultsActivity"
-            android:parentActivityName=".module.home.HomeActivity"
+            android:parentActivityName=".module.newChallenges.ui.NewChallengesActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".module.home.HomeActivity" />
+                android:value=".module.newChallenges.ui.NewChallengesActivity" />
         </activity>
         <activity
             android:name=".module.resultspeek.ResultsPeekActivity"
@@ -340,6 +340,26 @@
         <activity
             android:name=".module.navigation.powerupbank.earnmorepowerups.EarnMorePowerUpActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.newChallenges.ui.NewChallengesActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeActivityTransitionStyle" />
+        <activity
+            android:name=".module.navigation.ProfileActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeActivityTransitionStyle" />
+        <activity
+            android:name=".module.user.group.GroupActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeActivityTransitionStyle" />
+        <activity
+            android:name=".module.join.JoinActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeActivityTransitionStyle" />
 
         <activity
             android:name=".module.popups.challengepopups.ContestDetailsPopupActivity"

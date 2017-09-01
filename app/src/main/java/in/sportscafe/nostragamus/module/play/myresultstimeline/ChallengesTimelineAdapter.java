@@ -154,7 +154,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         );
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
-        // Setting date of the match
+        // Setting date of the Match
         holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
                 + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA).replace("AM", "am").replace("PM", "pm")
@@ -167,7 +167,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
             List<Parties> parties = new ArrayList<>();
 
-            // Setting party details : if one party view then set topics for one party match
+            // Setting party details : if one party view then set topics for one party Match
             if (getItemViewType(pos) == ONE_PARTY_VIEW) {
                 holder.mTvPartyAName.setText(match.getTopics().getTopicName());
                 holder.mIvPartyAPhoto.setImageUrl(match.getTopics().getTopicUrl());
@@ -211,9 +211,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
                 if (match.getMatchQuestionCount() > 0) {
 
-                    if (match.isResultPublished()) { // if match Result Published
+                    if (match.isResultPublished()) { // if Match Result Published
 
-                        //if match Completely Attempted then IsAttempted = 2 else if Partially Attempted then is Attempted =1
+                        //if Match Completely Attempted then IsAttempted = 2 else if Partially Attempted then is Attempted =1
                         //show Match Results
                         if (GameAttemptedStatus.COMPLETELY == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
 
@@ -244,7 +244,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                             }
                         }
 
-                        //if match not Attempted then IsAttempted=0
+                        //if Match not Attempted then IsAttempted=0
                         if (GameAttemptedStatus.NOT == attemptedStatus) {
                             // Show Opportunity missed at scoring!
                             holder.mTvMatchResult.setVisibility(View.VISIBLE);
@@ -274,7 +274,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                     holder.mTvDate.setText("In Progress");
                                 } else {
 
-                                    /* You cannot play the match as the match already started */
+                                    /* You cannot play the Match as the Match already started */
                                     holder.mTvInfo.setVisibility(View.VISIBLE);
                                     holder.mTvInfo.setText("Did Not Play");
                                     holder.mTvInfo.setTag(match);
@@ -288,7 +288,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                 holder.mBtnPlayMatch.setVisibility(View.VISIBLE);
                                 holder.mBtnPlayMatch.setTag(match);
 
-                                /* check if has partially played a match */
+                                /* check if has partially played a Match */
                                 if (GameAttemptedStatus.PARTIALLY == attemptedStatus) {
                                     holder.mBtnPlayMatch.setAllCaps(false);
                                     holder.mBtnPlayMatch.setText(("Continue"));
@@ -297,7 +297,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                     holder.mBtnPlayMatch.setText(("Play"));
                                 }
 
-                                /* check if one day left and match not started , show countdown timer */
+                                /* check if one day left and Match not started , show countdown timer */
                                 if (timeAgo.totalDiff < ONE_DAY_IN_MS) {
                                     holder.mTvExpiresIn.setVisibility(View.VISIBLE);
 
@@ -316,7 +316,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                              /*   Waiting for results */
                             holder.mLlResultWait.setVisibility(View.VISIBLE);
 
-                             /* check if one day left and match not started and show countdown timer */
+                             /* check if one day left and Match not started and show countdown timer */
                             if (timeAgo.totalDiff < ONE_DAY_IN_MS) {
                                 holder.mTvExpiresIn.setVisibility(View.VISIBLE);
 
@@ -330,7 +330,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                                 }
                             }
 //                        holder.mTvMatchResult.setVisibility(View.VISIBLE);
-//                        holder.mTvMatchResult.setText(match.getStage());
+//                        holder.mTvMatchResult.setText(Match.getStage());
                             holder.mLlResultWait.setTag(match);
                         }
 
@@ -342,7 +342,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                         holder.mTvInfo.setClickable(false);
                         holder.mTvInfo.setBackground(holder.mTvInfo.getContext().getResources().getDrawable(R.drawable.btn_not_played_bg));
 //                    holder.mTvMatchResult.setVisibility(View.VISIBLE);
-//                    holder.mTvMatchResult.setText(match.getStage());
+//                    holder.mTvMatchResult.setText(Match.getStage());
                     }
                 }
             } else {
@@ -356,9 +356,9 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
 
                     if (match.getMatchQuestionCount() > 0) {
 
-                        if (match.isResultPublished()) { // if match Result Published
+                        if (match.isResultPublished()) { // if Match Result Published
 
-                            //if match not Attempted then IsAttempted=0
+                            //if Match not Attempted then IsAttempted=0
                             if (GameAttemptedStatus.NOT == attemptedStatus) {
                                 // Show Opportunity missed at scoring!
                                 holder.mBtnMatchLock.setText("Completed");
@@ -367,7 +367,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
                         } else { // if Results not published
                             if (GameAttemptedStatus.NOT == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
                                 if (isMatchStarted) {
-                                    // You cannot play the match as the match already started
+                                    // You cannot play the Match as the Match already started
                                     holder.mBtnMatchLock.setText("Completed");
                                 } else {
                                     // show Play button
@@ -488,7 +488,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
         @Override
         public void onClick(View view) {
 
-//            /* Only for 'NEW' screen/section, no click action should be listened as No match is yet Joined
+//            /* Only for 'NEW' screen/section, no click action should be listened as No Match is yet Joined
 //             * But Joining (on play clicked) should be allowed */
 //            if (mThisScreenCategory.equalsIgnoreCase(Constants.ChallengeTabs.NEW)) {
 //                if (view.getId() == R.id.schedule_row_btn_playmatch &&
@@ -505,7 +505,7 @@ public class ChallengesTimelineAdapter extends Adapter<Match, ChallengesTimeline
             Match match = (Match) view.getTag();
             if (null != match) {
                 bundle = new Bundle();
-                // Nostragamus.getInstance().getServerDataManager().setMatchInfo(match);
+                // Nostragamus.getInstance().getServerDataManager().setMatchInfo(Match);
                 bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
                 bundle.putString(BundleKeys.SCREEN, Constants.ScreenNames.PROFILE);
 

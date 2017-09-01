@@ -11,15 +11,15 @@ import java.util.List;
 public class AllChallengesResponse {
 
     /*@JsonProperty("data")
-    private List<Challenge> challenges = new ArrayList<>();
+    private List<NewChallengesResponse> challenges = new ArrayList<>();
 
     @JsonProperty("data")
-    public List<Challenge> getChallenges() {
+    public List<NewChallengesResponse> getChallenges() {
         return challenges;
     }
 
     @JsonProperty("data")
-    public void setChallenges(List<Challenge> challenges) {
+    public void setChallenges(List<NewChallengesResponse> challenges) {
         this.challenges = challenges;
     }*/
 

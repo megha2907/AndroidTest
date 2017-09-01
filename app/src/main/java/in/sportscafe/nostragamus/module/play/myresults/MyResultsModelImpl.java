@@ -70,7 +70,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         if(null != bundle) {
             if (bundle.containsKey(BundleKeys.MATCH_LIST)) {
                 match = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
-               // match=Nostragamus.getInstance().getServerDataManager().getMatchInfo();
+               // Match=Nostragamus.getInstance().getServerDataManager().getMatchInfo();
                 matchId = match.getId();
                 if (null == match.getResult() || match.getResult().isEmpty()) {
                     mResultsModelListener.setToolbarHeading("Awaiting Results");
@@ -88,9 +88,9 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
                     /*Boolean playedFirstMatch = bundle.getBoolean(BundleKeys.PLAYED_FIRST_MATCH);
                     if (playedFirstMatch){
-                       mResultsModelListener.showResultsToBeDeclared(true, match);
+                       mResultsModelListener.showResultsToBeDeclared(true, Match);
                     }else {
-                        mResultsModelListener.showResultsToBeDeclared(false, match);
+                        mResultsModelListener.showResultsToBeDeclared(false, Match);
                     }*/
 //                }
 

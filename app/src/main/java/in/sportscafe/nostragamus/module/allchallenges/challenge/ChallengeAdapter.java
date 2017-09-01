@@ -248,7 +248,7 @@ public class ChallengeAdapter extends Adapter<Challenge, ChallengeAdapter.ViewHo
 
         int dayOfMonthinEndTime = Integer.parseInt(TimeUtils.getDateStringFromMs(endTimeMs, "d"));
 
-        // Setting date of the match
+        // Setting date of the Match
         holder.mBtnTimeLeft.setText(
                 dayOfMonthinStartTime + AppSnippet.ordinalOnly(dayOfMonthinStartTime) + " " +
                         TimeUtils.getDateStringFromMs(startTimeMs, "MMM")

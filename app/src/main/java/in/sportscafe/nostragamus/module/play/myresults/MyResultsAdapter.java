@@ -121,7 +121,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         mMatchStartTimeMs = startTimeMs;
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
-        // Setting date of the match
+        // Setting date of the Match
         holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
                 + TimeUtils.getDateStringFromMs(startTimeMs, Constants.DateFormats.HH_MM_AA)
@@ -159,32 +159,32 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         }
 
 
-//        if (null == match.getResult() || match.getResult().isEmpty()) {
+//        if (null == Match.getResult() || Match.getResult().isEmpty()) {
 //            holder.mTvMatchResult.setVisibility(View.GONE);
 //            holder.mTvResultWait.setVisibility(View.VISIBLE);
-//            holder.mTvResultWait.setText(match.getStage()+" - "+"Awaiting Results");
+//            holder.mTvResultWait.setText(Match.getStage()+" - "+"Awaiting Results");
 //            holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-//            holder.mTvResultCorrectCount.setText(match.getQuestions().size() +"/" + match.getMatchQuestionCount() + " Questions Answered");
+//            holder.mTvResultCorrectCount.setText(Match.getQuestions().size() +"/" + Match.getMatchQuestionCount() + " Questions Answered");
 //
-//            if (null != match.getUserRank()) {
-//                holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));
+//            if (null != Match.getUserRank()) {
+//                holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(Match.getUserRank()) + "/" + String.valueOf(Match.getCountPlayers()));
 //            }else {
 //                holder.mTvLeaderBoardRank.setText("No Rank");
 //            }
 //
-//            if (null != match.getCountPowerUps()) {
-//                holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()));
+//            if (null != Match.getCountPowerUps()) {
+//                holder.mTvNumberofPowerupsUsed.setText(String.valueOf(Match.getCountPowerUps()));
 //            }else {
 //                holder.mTvNumberofPowerupsUsed.setText("0");
 //            }
 //
 //        } else {
 //            holder.mTvMatchResult.setVisibility(View.VISIBLE);
-//            holder.mTvMatchResult.setText(match.getStage()+" - "+match.getResult());
+//            holder.mTvMatchResult.setText(Match.getStage()+" - "+Match.getResult());
 //        }
 //
 //
-//        if (null == match.getMatchPoints()) {
+//        if (null == Match.getMatchPoints()) {
 //
 //            holder.mBtnMatchPoints.setVisibility(View.GONE);
 //            holder.mLlMatchScores.setVisibility(View.GONE);
@@ -193,21 +193,21 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 //            holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
 //            holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
 //            holder.mTvResultWait.setVisibility(View.GONE);
-//            holder.mBtnMatchPoints.setText(match.getMatchPoints().toString());
-//            holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Answered Correctly");
-//            holder.mTvAvgMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
-//            holder.mTvHighestMatchPoints.setText(String.valueOf(match.getHighestMatchPoints()));
+//            holder.mBtnMatchPoints.setText(Match.getMatchPoints().toString());
+//            holder.mTvResultCorrectCount.setText(Match.getCorrectCount() + "/" + Match.getMatchQuestionCount() + " Answered Correctly");
+//            holder.mTvAvgMatchPoints.setText(String.valueOf(Match.getAvgMatchPoints().intValue()));
+//            holder.mTvHighestMatchPoints.setText(String.valueOf(Match.getHighestMatchPoints()));
 //
-//            if (null != match.getUserRank()) {
-//                holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));
+//            if (null != Match.getUserRank()) {
+//                holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(Match.getUserRank()) + "/" + String.valueOf(Match.getCountPlayers()));
 //            }else {
 //                holder.mTvLeaderBoardRank.setText("No Rank");
 //            }
 //
-//            if (null !=match.getRankChange()) {
+//            if (null !=Match.getRankChange()) {
 //                holder.mIvRankStatus.setVisibility(View.VISIBLE);
 //
-//                if (match.getRankChange() < 0) {
+//                if (Match.getRankChange() < 0) {
 //                    holder.mIvRankStatus.setImageResource(R.drawable.lb_rank_change_icon);
 //                    holder.mIvRankStatus.setRotation(180);
 //                } else {
@@ -215,8 +215,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 //                }
 //            }
 //
-//            holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()));
-//            holder.mRlHighestMatchPoints.setTag(match);
+//            holder.mTvNumberofPowerupsUsed.setText(String.valueOf(Match.getCountPowerUps()));
+//            holder.mRlHighestMatchPoints.setTag(Match);
 //        }
 
 
@@ -340,7 +340,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     }
 
     /**
-     * Check that the match started or not
+     * Check that the Match started or not
      */
     private void initMatchStarted(long matchStartTimeMs) {
         long timeSpent = matchStartTimeMs - Nostragamus.getInstance().getServerTime();
@@ -564,7 +564,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             }
 
         }
-        /* if played match but not attempted Question */
+        /* if played Match but not attempted Question */
         else if (answerId == 0) {
 
             /* We can't edit answer if not attempted a Question */
@@ -745,7 +745,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         }
 
-        /* Hide Edit button if match started  */
+        /* Hide Edit button if Match started  */
         showOrHideEditAnswerButton();
 
         /* Showing graph based on percentage */
@@ -775,7 +775,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         if (BuildConfig.IS_PAID_VERSION) {
             if (mIsMatchStarted && mRlEditAnswers != null) {
-                // If match started, answers can not be edited
+                // If Match started, answers can not be edited
                 mRlEditAnswers.setVisibility(View.GONE);
             }
         } else {
@@ -835,7 +835,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         editAnswersBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                /* If match not started, then only save */
+                /* If Match not started, then only save */
                 initMatchStarted(mMatchStartTimeMs);
                 if (!mIsMatchStarted) {
 
@@ -1089,7 +1089,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         Intent intent = new Intent(context, PointsActivity.class);
         intent.putExtra(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
         intent.putExtra(BundleKeys.MATCH_ID, match.getId());
-//        intent.putExtra(BundleKeys.TOURNAMENT_ID, match.getTournamentId());
+//        intent.putExtra(BundleKeys.TOURNAMENT_ID, Match.getTournamentId());
         context.startActivity(intent);
     }
 

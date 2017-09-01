@@ -95,7 +95,7 @@ public class AddQuestionPresenterImpl implements AddQuestionPresenter, AddQuesti
         );
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
-        // Setting date of the match
+        // Setting date of the Match
         mAddQuestionView.setMatchDate(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
                 + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA)

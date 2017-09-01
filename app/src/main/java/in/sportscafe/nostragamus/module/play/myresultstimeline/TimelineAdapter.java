@@ -159,7 +159,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         );
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
-        // Setting date of the match
+        // Setting date of the Match
         holder.mTvDate.setText(
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + "\n"
                         + dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth)
@@ -178,20 +178,20 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 holder.mTvChallengeName.setText(match.getChallengeName());
             }
 
-            // Setting match stage, if the stage is not empty & not the "commentary"
+            // Setting Match stage, if the stage is not empty & not the "commentary"
             if (!TextUtils.isEmpty(matchStage)) {
                 holder.mTvMatchStage.setVisibility(View.VISIBLE);
                 holder.mTvMatchStage.setText(match.getStage());
             }
 
-            // Setting starting time of the match
+            // Setting starting time of the Match
             holder.mTvStartTime.setVisibility(View.VISIBLE);
             holder.mTvStartTime.setText(TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA));
 
             // Setting party details
             List<Parties> parties = new ArrayList<>();
 
-            // Setting party details : if one party view then set topics for one party match
+            // Setting party details : if one party view then set topics for one party Match
             if (match.getParties() == null) {
                 holder.mTvPartyAName.setText(match.getTopics().getTopicName());
                 holder.mIvPartyAPhoto.setImageUrl(match.getTopics().getTopicUrl());
@@ -228,9 +228,9 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
             if (match.getMatchQuestionCount() > 0) {
 
-                if (match.isResultPublished()) { // if match Result Published
+                if (match.isResultPublished()) { // if Match Result Published
 
-                    //if match Completely Attempted then IsAttempted = 2 else if Partially Attempted then is Attempted =1
+                    //if Match Completely Attempted then IsAttempted = 2 else if Partially Attempted then is Attempted =1
                     //show Match Results
                     if (GameAttemptedStatus.COMPLETELY == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
 
@@ -260,7 +260,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                         }
                     }
 
-                    //if match not Attempted then IsAttempted=0
+                    //if Match not Attempted then IsAttempted=0
                     if (GameAttemptedStatus.NOT == attemptedStatus) {
                         // Show Opportunity missed at scoring!
                         holder.mTvMatchResult.setVisibility(View.VISIBLE);
@@ -288,7 +288,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                                 holder.mLlResultWait.setTag(match);
                             } else {
 
-                                // You cannot play the match as the match already started
+                                // You cannot play the Match as the Match already started
                                 holder.mVResultLine.setVisibility(View.VISIBLE);
                                 holder.mTvInfo.setVisibility(View.VISIBLE);
                                 holder.mTvInfo.setText("Opportunity missed at scoring!");

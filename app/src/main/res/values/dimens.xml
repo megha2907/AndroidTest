@@ -153,6 +153,7 @@
     <dimen name="dim_75">75dp</dimen>
     <dimen name="dim_90">90dp</dimen>
     <dimen name="dim_100">100dp</dimen>
+    <dimen name="dim_110">110dp</dimen>
     <dimen name="dim_132">132dp</dimen>
     <dimen name="dim_130">130dp</dimen>
     <dimen name="dim_120">120dp</dimen>

@@ -65,7 +65,7 @@
                 android:id="@+id/bank_info_tv_transfer_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Transfer powerups from your bank to a challenge by tapping the tranfer_icon button"
+                android:text="Transfer powerups from your bank to a newChallengesResponse by tapping the tranfer_icon button"
                 android:textColor="@color/white_80"
                 android:textSize="@dimen/dp_12"
                 app:typeface="lato_light" />

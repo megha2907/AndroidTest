@@ -4,13 +4,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="in.sportscafe.nostragamus.module.challenges.ChallengesFragment">
+    tools:context="in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesFragment">
 
     <!-- Heading layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/dim_80">
+        android:minHeight="@dimen/dim_40"
+        android:background="@color/new_challenge_tab_bg">
+
 
 
     </LinearLayout>
@@ -21,12 +23,15 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_60"
         app:tabMode="scrollable"
-        app:tabGravity="fill"/>
+        app:tabGravity="fill"
+        app:tabIndicatorHeight="@dimen/dim_2"
+        app:tabIndicatorColor="#008ad6"
+        android:background="@color/new_challenge_tab_bg"/>
 
     <!-- ViewPager -->
     <in.sportscafe.nostragamus.module.common.CustomViewPager
         android:id="@+id/challenge_viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

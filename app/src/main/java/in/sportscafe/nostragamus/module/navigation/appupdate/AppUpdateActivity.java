@@ -10,10 +10,10 @@ import android.view.WindowManager;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
@@ -98,7 +98,7 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
 
 
     private void navigateToHome() {
-        Intent intent = new Intent(getContext(), HomeActivity.class);
+        Intent intent = new Intent(getContext(), NewChallengesActivity.class);
         intent.putExtra(Constants.BundleKeys.SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         startActivity(intent);
         finish();

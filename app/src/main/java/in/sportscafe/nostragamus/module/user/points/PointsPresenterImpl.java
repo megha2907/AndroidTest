@@ -123,7 +123,7 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     @Override
     public void onEmpty() {
         mPointsView.dismissProgressbar();
-        mPointsView.showInAppMessage("Your leaderboard will update here after a match you have played is over");
+        mPointsView.showInAppMessage("Your leaderboard will update here after a Match you have played is over");
 
     }
 

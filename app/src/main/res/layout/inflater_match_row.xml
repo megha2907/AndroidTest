@@ -34,7 +34,7 @@
             android:layout_below="@+id/swipe_card_tv_context">
 
 
-            <!-- Challenge Left Image and Name -->
+            <!-- NewChallengesResponse Left Image and Name -->
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
 
             </RelativeLayout>
 
-            <!-- Challenge Right Image and Name -->
+            <!-- NewChallengesResponse Right Image and Name -->
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
