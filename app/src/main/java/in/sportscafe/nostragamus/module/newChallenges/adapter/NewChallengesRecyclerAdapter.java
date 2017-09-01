@@ -7,12 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.viewHolder.NewChallengesItemViewHolder;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by sandip on 23/08/17.
@@ -74,9 +78,55 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
             if (newChallengesResponse != null) {
                 newChallengesItemViewHolder.challengeNameTextView.setText(newChallengesResponse.getChallengeName());
-                newChallengesItemViewHolder.challengeDateTextView.setText(newChallengesResponse.getChallengeStartTime());
+                newChallengesItemViewHolder.challengeTournamentTextView.setText(getTournamentString(newChallengesResponse.getTournaments()));
+                newChallengesItemViewHolder.challengeDateTextView.setText(getChallengeDuration(newChallengesResponse.getChallengeStartTime(), newChallengesResponse.getChallengeEndTime()));
+                newChallengesItemViewHolder.gameLeftTextView.setText(newChallengesResponse.getMatchesLeft() + "/" + newChallengesResponse.getTotalMatches());
+                newChallengesItemViewHolder.prizeTextView.setText(WalletHelper.getFormattedStringOfAmount(newChallengesResponse.getPrizes()));
+                newChallengesItemViewHolder.startTimeTextView.setText(getStartTime(newChallengesResponse.getChallengeStartTime()));
             }
         }
+    }
+
+    private String getChallengeDuration(String startTime, String endTime) {
+        String timeDurationStr = "";
+
+        long startMillis = TimeUtils.getMillisecondsFromDateString(startTime);
+        long endMillis = TimeUtils.getMillisecondsFromDateString(endTime);
+
+        int startDayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startMillis, "d"));
+        int endDayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(endMillis, "d"));
+
+        timeDurationStr = startDayOfMonth + AppSnippet.ordinalOnly(startDayOfMonth) + " " + TimeUtils.getDateStringFromMs(startMillis, "MMM")
+                + " - " +
+                endDayOfMonth + AppSnippet.ordinalOnly(endDayOfMonth) + " " + TimeUtils.getDateStringFromMs(endMillis, "MMM");
+
+        return timeDurationStr;
+    }
+
+    private String getStartTime(String startTime) {
+        String startTimeStr = "";
+
+        long millis = TimeUtils.getMillisecondsFromDateString(startTime);
+        if (millis > 0) {
+            long days = TimeUtils.getDaysDifference(millis - Calendar.getInstance().getTimeInMillis());
+            if (days > 1) {
+                startTimeStr = String.valueOf(days + " days");
+            } else {
+                startTimeStr = TimeUtils.getDateStringFromMs(millis, Constants.DateFormats.CHALLENGE_START_TIME_FORMAT);
+            }
+        }
+
+        return startTimeStr;
+    }
+
+    private String getTournamentString(List<String> tournamentList) {
+        String str = "";
+        if (tournamentList != null && tournamentList.size() > 0) {
+            for (String s : tournamentList) {
+                str = str.concat(", " + s);
+            }
+        }
+        return str;
     }
 
     @Override
