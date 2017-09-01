@@ -356,15 +356,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/homeActivityTransitionStyle" />
         <activity
-            android:name=".module.join.JoinActivity"
+            android:name=".module.inPlay.ui.InPlayActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/homeActivityTransitionStyle" />
-
         <activity
             android:name=".module.popups.challengepopups.ContestDetailsPopupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.PopupTheme"/>
+            android:theme="@style/AppTheme.PopupTheme" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

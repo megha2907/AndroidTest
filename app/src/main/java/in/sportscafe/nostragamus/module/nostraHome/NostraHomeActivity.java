@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.join.JoinActivity;
+import in.sportscafe.nostragamus.module.inPlay.ui.InPlayActivity;
 import in.sportscafe.nostragamus.module.navigation.ProfileActivity;
 
 public abstract class NostraHomeActivity extends NostraBaseActivity implements View.OnClickListener {
@@ -109,7 +109,7 @@ public abstract class NostraHomeActivity extends NostraBaseActivity implements V
     }
 
     private void onJoinClicked() {
-        Intent intent = new Intent(this.getApplicationContext(), JoinActivity.class);
+        Intent intent = new Intent(this.getApplicationContext(), InPlayActivity.class);
         startActivity(intent);
     }
 
