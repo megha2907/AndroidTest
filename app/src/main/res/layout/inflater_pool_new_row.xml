@@ -34,8 +34,7 @@
                     android:id="@+id/pool_row_rl_detail_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@id/pool_row_v_line_separator">
+                    android:layout_alignParentLeft="true">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/pool_row_tv_name"
