@@ -309,6 +309,7 @@ public interface Constants {
         String LAUNCH_MODE = "launchMode";
         String IMAGE_URL = "imageUrl";
         String DOWNLOAD_URL = "downloadUrl";
+        String NEW_CHALLENGES_RESPONSE = "newChallengeResponse";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -367,6 +368,13 @@ public interface Constants {
         String ALL_TIME = "alltime";
         String MONTH = "monthly";
         String WEEK = "weekly";
+    }
+
+    interface MatchStatus {
+        String UPCOMING = "upcoming";
+        String LIVE = "live";
+        String PLAY = "play";
+        String CANCELLED = "cancelled";
     }
 
     interface LBLandingType {
@@ -596,6 +604,7 @@ public interface Constants {
         String VERIFY_PROFILE = "VerifyProfile";
         String STORE = "Store";
         String EARN_MORE_POWERUPS = "EarnMorePowerups";
+        String MATCHES_TIMELINE = "MatchesTimeline";
     }
 
     interface InAppPopups {
