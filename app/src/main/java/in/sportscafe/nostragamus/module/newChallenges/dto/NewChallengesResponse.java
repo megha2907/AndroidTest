@@ -2,13 +2,17 @@ package in.sportscafe.nostragamus.module.newChallenges.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
+import org.parceler.Parcel;
 
+import java.util.ArrayList;
+import java.util.List;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterItemType;
 
 /**
  * Created by sandip on 29/08/17.
  */
+
+@Parcel
 public class NewChallengesResponse {
 
     @JsonProperty("id")
@@ -42,7 +46,8 @@ public class NewChallengesResponse {
     private String updatedAt;
 
     @JsonProperty("matches")
-    private List<Match> matches = null;
+    private List<Match> matches = new ArrayList<>();
+
 
     private int challengeAdapterItemType = NewChallengeAdapterItemType.CHALLENGE;
 
