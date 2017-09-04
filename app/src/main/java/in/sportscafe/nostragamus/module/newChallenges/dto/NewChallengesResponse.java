@@ -15,6 +15,8 @@ import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapte
 @Parcel
 public class NewChallengesResponse {
 
+    private int challengeAdapterItemType = NewChallengeAdapterItemType.CHALLENGE;
+
     @JsonProperty("id")
     private int id;
 
@@ -24,32 +26,26 @@ public class NewChallengesResponse {
     @JsonProperty("challenge_starttime")
     private String challengeStartTime;
 
-    @JsonProperty("challenge_img_url")
-    private String challengeImgUrl;
-
     @JsonProperty("challenge_endtime")
     private String challengeEndTime;
 
     @JsonProperty("sports_id")
     private int sportsId;
 
-    @JsonProperty("challenge_tournaments")
-    private List<Integer> challengeTournaments = null;
+    @JsonProperty("tournaments")
+    private List<String> tournaments = null;
 
-    @JsonProperty("challenge_desc")
-    private String challengeDesc;
+    @JsonProperty("total_matches")
+    private int totalMatches;
 
-    @JsonProperty("createdAt")
-    private String createdAt;
-
-    @JsonProperty("updatedAt")
-    private String updatedAt;
+    @JsonProperty("matches_left")
+    private int matchesLeft;
 
     @JsonProperty("matches")
     private List<Match> matches = new ArrayList<>();
 
-
-    private int challengeAdapterItemType = NewChallengeAdapterItemType.CHALLENGE;
+    @JsonProperty("prizes")
+    private double prizes;
 
     public int getChallengeAdapterItemType() {
         return challengeAdapterItemType;
@@ -83,14 +79,6 @@ public class NewChallengesResponse {
         this.challengeStartTime = challengeStartTime;
     }
 
-    public String getChallengeImgUrl() {
-        return challengeImgUrl;
-    }
-
-    public void setChallengeImgUrl(String challengeImgUrl) {
-        this.challengeImgUrl = challengeImgUrl;
-    }
-
     public String getChallengeEndTime() {
         return challengeEndTime;
     }
@@ -107,43 +95,43 @@ public class NewChallengesResponse {
         this.sportsId = sportsId;
     }
 
-    public List<Integer> getChallengeTournaments() {
-        return challengeTournaments;
-    }
-
-    public void setChallengeTournaments(List<Integer> challengeTournaments) {
-        this.challengeTournaments = challengeTournaments;
-    }
-
-    public String getChallengeDesc() {
-        return challengeDesc;
-    }
-
-    public void setChallengeDesc(String challengeDesc) {
-        this.challengeDesc = challengeDesc;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public List<Match> getMatches() {
         return matches;
     }
 
     public void setMatches(List<Match> matches) {
         this.matches = matches;
+    }
+
+    public List<String> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(List<String> tournaments) {
+        this.tournaments = tournaments;
+    }
+
+    public int getTotalMatches() {
+        return totalMatches;
+    }
+
+    public void setTotalMatches(int totalMatches) {
+        this.totalMatches = totalMatches;
+    }
+
+    public int getMatchesLeft() {
+        return matchesLeft;
+    }
+
+    public void setMatchesLeft(int matchesLeft) {
+        this.matchesLeft = matchesLeft;
+    }
+
+    public double getPrizes() {
+        return prizes;
+    }
+
+    public void setPrizes(double prizes) {
+        this.prizes = prizes;
     }
 }

@@ -344,6 +344,7 @@ public interface Constants {
         String HH_MM_AA_D_MMM = "hh:mm aa, d'th' MMM";
         String YYYY_MMM_DD = "yyyy/MMM/dd";
         String FORMAT_DATE_T_TIME_ZONE_ZZ_ZZ = "yyyy-MM-dd'T'HH:mm:ssZ";
+        String CHALLENGE_START_TIME_FORMAT = "HH'h' mm'm' ss's'";
     }
 
     interface IntentActions {
@@ -795,6 +796,7 @@ public interface Constants {
         int FROM_DATABASE_AS_SERVER_FAILED = 3;
         int FROM_DATABASE_AS_NO_INTERNET = 4;
         int FROM_DATABASE_ERROR = 5;
+        int NO_INTERNET = 6;
 
     }
 }

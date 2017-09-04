@@ -51,10 +51,10 @@
             android:id="@+id/challenge_tournaments_textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:text=""
             android:textAllCaps="false"
-            android:textColor="@color/grey"
+            android:textColor="@color/grey_999999"
             android:textSize="@dimen/sp_10"
             app:typeface="lato_regular" />
 
@@ -65,8 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text=""
+            android:gravity="right"
             android:textAllCaps="false"
-            android:textColor="@color/grey"
+            android:textColor="@color/grey_999999"
             android:textSize="@dimen/sp_10"
             app:typeface="lato_regular" />
 
@@ -83,24 +84,22 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:orientation="vertical">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:text="STARTS IN"
-                android:textColor="@color/grey"
+                android:textColor="@color/grey_999999"
                 android:textSize="@dimen/sp_10"
                 app:typeface="lato_regular" />
 
             <!-- start time  -->
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/challenge_start_time_textView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:text="0:0:0"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
@@ -113,24 +112,22 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:orientation="vertical">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:text="GAMES LEFT"
-                android:textColor="@color/grey"
+                android:textColor="@color/grey_999999"
                 android:textSize="@dimen/sp_10"
                 app:typeface="lato_regular" />
 
             <!-- start time  -->
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/challenge_game_left_textView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:text="0/0"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
@@ -147,23 +144,21 @@
             android:orientation="vertical">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:text="PRIZES"
-                android:textColor="@color/grey"
+                android:textColor="@color/grey_999999"
                 android:textSize="@dimen/sp_10"
                 app:typeface="lato_regular" />
 
             <!-- start time  -->
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/challenge_prizes_textView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="0/0"
+                android:text=""
                 android:textAllCaps="false"
-                android:textColor="@color/green_pea"
+                android:textColor="@color/paid_entry_tv_color"
                 android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular" />
 

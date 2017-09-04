@@ -47,13 +47,6 @@ public class NewChallengesFragment extends BaseFragment {
 
     }
 
-    private TextView getTab(TabLayout tabLayout, SportsTab sportsTab) {
-        TextView tabTextView = (TextView) LayoutInflater.from(tabLayout.getContext()).inflate(R.layout.challenge_tab, null);
-        tabTextView.setText(sportsTab.getSportsName());
-        tabTextView.setCompoundDrawablesWithIntrinsicBounds(0, sportsTab.getSportIconDrawable(), 0, 0);
-        return tabTextView;
-    }
-
     /**
      * Delivers intent received while newIntent() of activity re-tasking.
      * @param intent

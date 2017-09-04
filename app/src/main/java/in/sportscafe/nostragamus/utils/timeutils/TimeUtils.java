@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import in.sportscafe.nostragamus.Constants;
+
 /**
  * Created by Jeeva on 23/3/16.
  */
@@ -186,5 +188,13 @@ public class TimeUtils {
 
     public static String getCurrentTime(String neededFormat, String timeZone) {
         return getDateStringFromDate(Calendar.getInstance().getTime(), neededFormat, timeZone);
+    }
+
+    public static long getMillisecondsFromDateString(String dateString) {
+        Date date = getDateFromDateString(dateString, Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT);
+        if (date != null) {
+            return date.getTime();
+        }
+        return 0;
     }
 }
