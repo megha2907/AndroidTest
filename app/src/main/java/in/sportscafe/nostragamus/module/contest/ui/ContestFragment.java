@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,13 @@ public class ContestFragment extends NostraBaseFragment {
 
     private static final String TAG = ContestFragment.class.getSimpleName();
 
-    public ContestFragment() {}
+    public ContestFragment() {
+    }
+
+    TextView mTvTBarHeading;
+    TextView mTvTBarSubHeading;
+    String challengeName;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +56,8 @@ public class ContestFragment extends NostraBaseFragment {
     }
 
     private void initView(View rootView) {
-
+        mTvTBarHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
+        mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
     }
 
     public void onNewIntent(Intent intent) {
@@ -66,7 +74,9 @@ public class ContestFragment extends NostraBaseFragment {
         ContestDataProvider dataProvider = new ContestDataProvider();
         final List<ContestType> contestTypeList = dataProvider.getContestTypeList();
 
+        //// TODO: 9/5/17 send challenge id and challenge name from bundle
         int challengeId = 300;
+        challengeName = "Australia vs India T20 Challenge";
         dataProvider.getContestDetails(challengeId, new ContestDataProvider.ContestDataProviderListener() {
             @Override
             public void onSuccessResponse(int status, ContestResponse response) {
@@ -122,6 +132,9 @@ public class ContestFragment extends NostraBaseFragment {
                         fragmentList.add(tabFragment);
                     }
                 }
+
+                mTvTBarHeading.setText(String.valueOf(contestTypeList.size()) + " Contests Available");
+                mTvTBarSubHeading.setText(challengeName);
 
                 ContestViewPagerAdapter viewPagerAdapter = new ContestViewPagerAdapter(
                         getActivity().getSupportFragmentManager(), fragmentList);

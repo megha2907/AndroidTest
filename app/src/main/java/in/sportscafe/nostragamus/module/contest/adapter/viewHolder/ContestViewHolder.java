@@ -3,7 +3,10 @@ package in.sportscafe.nostragamus.module.contest.adapter.viewHolder;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import in.sportscafe.nostragamus.R;
@@ -16,13 +19,17 @@ import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapte
 
 public class ContestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView challengeNameTextView;
-    public TextView challengeTournamentTextView;
-    public TextView challengeDateTextView;
-    public TextView startTimeTextView;
-    public TextView gameLeftTextView;
-    public TextView prizeTextView;
-    public LinearLayout gameIconLinearLayout;
+    public TextView mTvPoolName;
+    public Button mBtnJoin;
+    public TextView mTvEntryFee;
+    public TextView mTvMaxEntries;
+    public TextView mTvPrizes;
+    public TextView mTvNumberOfPrizes;
+    public TextView mTvFilledContests;
+    public TextView mTvContestsAvailable;
+    public RelativeLayout mRlContestLayout;
+    public ImageView mIvContestsType;
+
 
     private ContestAdapterListener clickListener;
 
@@ -30,21 +37,36 @@ public class ContestViewHolder extends RecyclerView.ViewHolder implements View.O
         super(itemView);
         this.clickListener = listener;
 
-        challengeNameTextView = (TextView) itemView.findViewById(R.id.challenge_name_textView);
-        challengeTournamentTextView = (TextView) itemView.findViewById(R.id.challenge_tournaments_textView);
-        challengeDateTextView = (TextView) itemView.findViewById(R.id.challenge_date_textView);
-        startTimeTextView = (TextView) itemView.findViewById(R.id.challenge_start_time_textView);
-        gameLeftTextView = (TextView) itemView.findViewById(R.id.challenge_game_left_textView);
-        prizeTextView = (TextView) itemView.findViewById(R.id.challenge_prizes_textView);
-        gameIconLinearLayout = (LinearLayout) itemView.findViewById(R.id.challenge_sports_icons_container);
+        mTvPoolName = (TextView) itemView.findViewById(R.id.pool_row_tv_name);
+        mBtnJoin = (Button) itemView.findViewById(R.id.pool_row_btn_join);
+        mTvEntryFee = (TextView) itemView.findViewById(R.id.pool_row_tv_entry_fee);
+        mTvMaxEntries = (TextView) itemView.findViewById(R.id.pool_row_tv_member_count);
+        mTvPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_reward);
+        mTvNumberOfPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_number_of_prizes);
+        mTvFilledContests = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_filled);
+        mTvContestsAvailable = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_available);
+        mRlContestLayout = (RelativeLayout) itemView.findViewById(R.id.pool_rl_layout);
+        mIvContestsType = (ImageView) itemView.findViewById(R.id.pool_row_iv_contest_type);
 
         itemView.setOnClickListener(this);
+        mBtnJoin.setOnClickListener(this);
+        mRlContestLayout.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (clickListener != null) {
-            clickListener.onContestClicked();
+
+        switch (v.getId()) {
+            case R.id.pool_rl_layout:
+                if (clickListener != null) {
+                    clickListener.onContestClicked();
+                }
+                break;
+            case R.id.pool_row_btn_join:
+                if (clickListener != null) {
+                    clickListener.onJoinContestClicked();
+                }
+                break;
         }
     }
 }
