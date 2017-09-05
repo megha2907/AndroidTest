@@ -44,6 +44,7 @@ public class ContestFragment extends NostraBaseFragment {
 
     TextView mTvTBarHeading;
     TextView mTvTBarSubHeading;
+    String challengeName;
 
 
     @Override
@@ -73,7 +74,9 @@ public class ContestFragment extends NostraBaseFragment {
         ContestDataProvider dataProvider = new ContestDataProvider();
         final List<ContestType> contestTypeList = dataProvider.getContestTypeList();
 
+        //// TODO: 9/5/17 send challenge id and challenge name from bundle
         int challengeId = 300;
+        challengeName = "Australia vs India T20 Challenge";
         dataProvider.getContestDetails(challengeId, new ContestDataProvider.ContestDataProviderListener() {
             @Override
             public void onSuccessResponse(int status, ContestResponse response) {
@@ -131,6 +134,7 @@ public class ContestFragment extends NostraBaseFragment {
                 }
 
                 mTvTBarHeading.setText(String.valueOf(contestTypeList.size()) + " Contests Available");
+                mTvTBarSubHeading.setText(challengeName);
 
                 ContestViewPagerAdapter viewPagerAdapter = new ContestViewPagerAdapter(
                         getActivity().getSupportFragmentManager(), fragmentList);
