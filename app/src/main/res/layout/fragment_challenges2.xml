@@ -17,21 +17,45 @@
 
     </LinearLayout>
 
-    <!-- Tabs Layout -->
-    <android.support.design.widget.TabLayout
-        android:id="@+id/challenge_tabs"
+    <LinearLayout
+        android:id="@+id/newChallengeContentLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dim_60"
-        app:tabMode="scrollable"
-        app:tabGravity="fill"
-        app:tabIndicatorHeight="@dimen/dim_2"
-        app:tabIndicatorColor="#008ad6"
-        android:background="@color/new_challenge_tab_bg"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <!-- ViewPager -->
-    <in.sportscafe.nostragamus.module.common.CustomViewPager
-        android:id="@+id/challenge_viewPager"
+        <!-- Tabs Layout -->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/challenge_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_60"
+            app:tabMode="scrollable"
+            app:tabGravity="fill"
+            app:tabIndicatorHeight="@dimen/dim_2"
+            app:tabIndicatorColor="#008ad6"
+            android:background="@color/new_challenge_tab_bg"/>
+
+        <!-- ViewPager -->
+        <in.sportscafe.nostragamus.module.common.CustomViewPager
+            android:id="@+id/challenge_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <!-- Loading View -->
+    <LinearLayout
+        android:id="@+id/newChallengeProgressBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <in.sportscafe.nostragamus.module.common.NostraProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
 
 </LinearLayout>

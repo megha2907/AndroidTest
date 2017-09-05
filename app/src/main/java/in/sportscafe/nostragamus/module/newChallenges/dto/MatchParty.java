@@ -2,10 +2,12 @@ package in.sportscafe.nostragamus.module.newChallenges.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
 /**
  * Created by sandip on 30/08/17.
  */
-
+@Parcel
 public class MatchParty {
 
     @JsonProperty("party_id")
