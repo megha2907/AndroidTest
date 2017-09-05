@@ -749,6 +749,11 @@ public interface Constants {
         String Winners = "won_first_challenge";
     }
 
+    interface ContestType {
+        String GUARANTEED = "guaranteed";
+        String POOL = "pool";
+    }
+
     interface WebPageUrls {
         String GAME_PLAY = "http://nostragamus.in/gameplayapp.html";
         String RULES = "http://nostragamus.in/rulesapp.html";

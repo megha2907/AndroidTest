@@ -77,7 +77,7 @@ public class ContestDataProvider {
 
         ContestType h2h = new ContestType();
         h2h.setId(0);
-        h2h.setName("Head To Head");
+        h2h.setName("Head 2 Head");
 
         ContestType doubleUp = new ContestType();
         doubleUp.setId(1);
@@ -85,11 +85,11 @@ public class ContestDataProvider {
 
         ContestType glory = new ContestType();
         glory.setId(2);
-        glory.setName("Glory");
+        glory.setName("Glory Contests");
 
         ContestType free = new ContestType();
         free.setId(3);
-        free.setName("Free");
+        free.setName("Free Contests");
 
         contestTypes.add(h2h);
         contestTypes.add(doubleUp);

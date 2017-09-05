@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.contest.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
@@ -26,13 +27,13 @@ public class Contest {
     private String category;
 
     @JsonProperty("prizes")
-    private int prizes;
+    private Integer prizes;
 
     @JsonProperty("entry_fee")
-    private double entryFee;
+    private Integer entryFee;
 
     @JsonProperty("room_size")
-    private int roomSize;
+    private Integer roomSize;
 
     @JsonProperty("filled_rooms")
     private int filledRooms;
@@ -90,11 +91,11 @@ public class Contest {
         this.prizes = prizes;
     }
 
-    public double getEntryFee() {
+    public Integer getEntryFee() {
         return entryFee;
     }
 
-    public void setEntryFee(double entryFee) {
+    public void setEntryFee(Integer entryFee) {
         this.entryFee = entryFee;
     }
 
@@ -129,4 +130,20 @@ public class Contest {
     public void setContestItemType(int contestItemType) {
         this.contestItemType = contestItemType;
     }
+
+    @JsonIgnore
+    public boolean isFreeEntry() {
+        return entryFee == 0 || entryFee == null;
+    }
+
+    @JsonIgnore
+    public boolean isUnlimitedEntries() {
+        return roomSize == 0 || roomSize == null;
+    }
+
+    @JsonIgnore
+    public boolean noPrizes() {
+        return prizes == 0 || prizes == null;
+    }
+
 }

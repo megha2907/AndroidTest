@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,12 @@ public class ContestFragment extends NostraBaseFragment {
 
     private static final String TAG = ContestFragment.class.getSimpleName();
 
-    public ContestFragment() {}
+    public ContestFragment() {
+    }
+
+    TextView mTvTBarHeading;
+    TextView mTvTBarSubHeading;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +55,8 @@ public class ContestFragment extends NostraBaseFragment {
     }
 
     private void initView(View rootView) {
-
+        mTvTBarHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
+        mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
     }
 
     public void onNewIntent(Intent intent) {
@@ -122,6 +129,8 @@ public class ContestFragment extends NostraBaseFragment {
                         fragmentList.add(tabFragment);
                     }
                 }
+
+                mTvTBarHeading.setText(String.valueOf(contestTypeList.size()) + " Contests Available");
 
                 ContestViewPagerAdapter viewPagerAdapter = new ContestViewPagerAdapter(
                         getActivity().getSupportFragmentManager(), fragmentList);

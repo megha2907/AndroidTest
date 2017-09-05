@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.contest.ui.ContestActivityLaunchMode;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class ContestsActivity extends NostraBaseActivity {

@@ -18,7 +18,6 @@ import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterListener;
 import in.sportscafe.nostragamus.module.contest.adapter.ContestRecyclerAdapter;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
-import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,7 +54,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
     private void populateDataOnUi() {
         if (mRecyclerView != null && mContestList != null) {
-//            mRecyclerView.setAdapter(new ContestRecyclerAdapter(mRecyclerView.getContext(), mContestList, getContestAdapterListener()));
+            mRecyclerView.setAdapter(new ContestRecyclerAdapter(mRecyclerView.getContext(), mContestList, getContestAdapterListener()));
         }
     }
 
