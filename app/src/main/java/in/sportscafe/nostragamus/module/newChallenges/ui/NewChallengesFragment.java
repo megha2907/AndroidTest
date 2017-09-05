@@ -27,6 +27,7 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
 import in.sportscafe.nostragamus.module.newChallenges.viewPager.NewChallengesViewPagerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.viewPager.NewChallengesViewPagerFragment;
+import in.sportscafe.nostragamus.utils.NostraProgressDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,18 +60,22 @@ public class NewChallengesFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loadData();
+
     }
 
     private void loadData() {
+        showLoadingProgressBar();
         NewChallengesDataProvider dataProvider = new NewChallengesDataProvider();
         dataProvider.getChallenges(getContext().getApplicationContext(), new NewChallengesDataProvider.ChallengesDataProviderListener() {
             @Override
             public void onData(int status, @Nullable List<NewChallengesResponse> newChallengesResponseData) {
+                hideLoadingProgressBar();
                 onDataReceived(status, newChallengesResponseData);
             }
 
             @Override
             public void onError(int status) {
+                hideLoadingProgressBar();
                 handleError(status);
             }
         });
@@ -166,5 +171,19 @@ public class NewChallengesFragment extends BaseFragment {
         }
 
         return dailyChallenge;
+    }
+
+    private void showLoadingProgressBar() {
+        if (getView() != null) {
+            getView().findViewById(R.id.newChallengeContentLayout).setVisibility(View.GONE);
+            getView().findViewById(R.id.newChallengeProgressBarLayout).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideLoadingProgressBar() {
+        if (getView() != null) {
+            getView().findViewById(R.id.newChallengeProgressBarLayout).setVisibility(View.GONE);
+            getView().findViewById(R.id.newChallengeContentLayout).setVisibility(View.VISIBLE);
+        }
     }
 }

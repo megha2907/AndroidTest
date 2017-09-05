@@ -79,4 +79,12 @@
         <attr name="errorText" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="NostraProgressBar">
+        <attr name="dot_radius" format="dimension" />
+        <attr name="bounce_dot_radius" format="dimension" />
+        <attr name="progress_circle_radius" format="dimension" />
+        <attr name="total_dots" format="integer" />
+        <attr name="dot_color" format="color"/>
+    </declare-styleable>
+
 </resources>
