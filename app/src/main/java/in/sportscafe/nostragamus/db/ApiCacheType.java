@@ -11,6 +11,7 @@ public interface ApiCacheType {
      */
     int NEW_CHALLENGE_API = 11;
     int COMPLETED_CHALLENGE_API = 12;
+    int IN_PLAY_API = 13;
 
 
 }

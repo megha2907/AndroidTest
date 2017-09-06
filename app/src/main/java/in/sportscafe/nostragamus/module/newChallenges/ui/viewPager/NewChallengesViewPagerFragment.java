@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.newChallenges.ui.viewPager;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,10 +20,12 @@ import com.jeeva.android.Log;
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditActivity;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
+import in.sportscafe.nostragamus.module.newmatches.MatchesTimelineActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,7 +92,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
         return new NewChallengeAdapterListener() {
             @Override
             public void onChallengeClicked(Bundle args) {
-
+                goToNewMatchesTimeline(args);
             }
 
             @Override
@@ -97,6 +100,14 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
 
             }
         };
+    }
+
+    private void goToNewMatchesTimeline(Bundle args) {
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), MatchesTimelineActivity.class);
+            intent.putExtras(args);
+            startActivity(intent);
+        }
     }
 
     @Override

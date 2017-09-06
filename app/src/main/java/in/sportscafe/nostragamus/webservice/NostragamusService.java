@@ -11,6 +11,8 @@ import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeRequ
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayRequest;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesRequest;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
@@ -328,4 +330,7 @@ public interface NostragamusService {
 
     @POST("v3/game/temp/getContests")
     Call<ContestResponse> getContests(@Body ContestRequest request);
+
+    @POST("v3/game/temp/getHomeChallenges")
+    Call<List<InPlayResponse>> getInPlayChallenges(@Body InPlayRequest request);
 }

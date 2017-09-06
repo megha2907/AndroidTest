@@ -1,11 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context="in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment"
     android:background="@color/black">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/in_play_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:paddingTop="@dimen/dp_5"
+        android:clipToPadding="false" />
+
+    <!-- Loading View -->
+    <LinearLayout
+        android:id="@+id/inPlayProgressBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <in.sportscafe.nostragamus.module.common.NostraProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
 
 </LinearLayout>
