@@ -2,37 +2,62 @@ package in.sportscafe.nostragamus.module.nostraHome;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.inPlay.ui.InPlayActivity;
-import in.sportscafe.nostragamus.module.navigation.ProfileActivity;
+import in.sportscafe.nostragamus.module.contest.ui.ContestFragment;
+import in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment;
+import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
+import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesFragment;
+import in.sportscafe.nostragamus.utils.FragmentHelper;
 
-public abstract class NostraHomeActivity extends NostraBaseActivity implements View.OnClickListener {
+public class NostraHomeActivity extends NostraBaseActivity implements View.OnClickListener {
+
+    private static final String TAG = NostraHomeActivity.class.getSimpleName();
+    public static final int DOUBLE_BACK_PRESSED_DELAY_ALLOWED = 3000;
+
+    /**
+     * Keep a single instance of all the fragments ready always
+     * Do not create them again & again, so maintain reference
+     */
+    private NewChallengesFragment mNewChallengeFragment;
+    private InPlayFragment mInPlayFragment;
+    private NavigationFragment mNavigationFragment;
 
     private LinearLayout mNewChallengesBottomButton;
     private LinearLayout mJoinedBottomButton;
     private LinearLayout mGroupBottomButton;
     private LinearLayout mProfileBottomButton;
 
+    private boolean mIsFirstBackPressed = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nostra_home);
+
+        initMembers();
         initViews();
+
+        onNewChallengesClicked();
     }
 
-    /**
-     * Use this method for all activities where bottom navigation bar is visible to set it;s contentView
-     * NOTE : Replace setContentView(layout) method with this method in your activity
-     * @param activityLayout
-     */
-    protected void setContentLayout(int activityLayout) {
-        getLayoutInflater().inflate(activityLayout, (FrameLayout)findViewById(R.id.activity_container));
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+
+    }
+
+    private void initMembers() {
+        mNewChallengeFragment = new NewChallengesFragment();
+        mInPlayFragment = new InPlayFragment();
+        mNavigationFragment = new NavigationFragment();
     }
 
     private void initViews() {
@@ -51,7 +76,7 @@ public abstract class NostraHomeActivity extends NostraBaseActivity implements V
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_challenges_tab_layout:
-                onChallengesClicked();
+                onNewChallengesClicked();
                 break;
 
             case R.id.home_join_tab_layout:
@@ -75,7 +100,7 @@ public abstract class NostraHomeActivity extends NostraBaseActivity implements V
         mProfileBottomButton.setSelected(false);
     }
 
-    protected void setJoinSelected() {
+    protected void setInPlaySelected() {
         mJoinedBottomButton.setSelected(true);
         mNewChallengesBottomButton.setSelected(false);
         mGroupBottomButton.setSelected(false);
@@ -99,22 +124,92 @@ public abstract class NostraHomeActivity extends NostraBaseActivity implements V
 
 
     private void onProfileClicked() {
-        Intent intent = new Intent(this.getApplicationContext(), ProfileActivity.class);
-        startActivity(intent);
+        setProfileSelected();
+        loadNavigationFragment();
     }
 
     private void onGroupClicked() {
+        setGroupSelected();
        /* Intent intent = new Intent(this.getApplicationContext(), GroupActivity.class);
         startActivity(intent);*/
     }
 
     private void onJoinClicked() {
-        Intent intent = new Intent(this.getApplicationContext(), InPlayActivity.class);
-        startActivity(intent);
+        setInPlaySelected();
+        loadInPlayFragment();
     }
 
-    private void onChallengesClicked() {
-        Intent intent = new Intent(this.getApplicationContext(), NewChallengesActivity.class);
-        startActivity(intent);
+    private void onNewChallengesClicked() {
+        setNewChallengesSelected();
+        loadNewChallengeFragment();
+    }
+
+    private void loadNavigationFragment() {
+        if (mNavigationFragment == null) {
+            mNavigationFragment = new NavigationFragment();
+        }
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            mNavigationFragment.setArguments(getIntent().getExtras());
+        }
+
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, mNavigationFragment);
+    }
+
+    private void loadInPlayFragment() {
+        /*if (mInPlayFragment == null) {
+            mInPlayFragment = new InPlayFragment();
+        }
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            mInPlayFragment.setArguments(getIntent().getExtras());
+        }
+
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, mInPlayFragment);*/
+
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, new ContestFragment());
+    }
+
+    private void loadNewChallengeFragment() {
+//        if (mNewChallengeFragment == null) {
+            mNewChallengeFragment = new NewChallengesFragment();
+//        }
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            mNewChallengeFragment.setArguments(getIntent().getExtras());
+        }
+
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, mNewChallengeFragment);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment != null && !(fragment instanceof NewChallengesFragment)) {
+            onNewChallengesClicked();
+        } else {
+            handleDoubleBackPressToExitApp();
+        }
+    }
+
+    /**
+     * Application exit happens only when user clicks back button twice within specified time interval
+     */
+    private void handleDoubleBackPressToExitApp() {
+        if (mIsFirstBackPressed) {
+            super.onBackPressed();
+        } else {
+
+            Toast.makeText(this, getString(R.string.double_back_press_msg), Toast.LENGTH_SHORT).show();
+            mIsFirstBackPressed = true;
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mIsFirstBackPressed = false;
+                }
+            }, DOUBLE_BACK_PRESSED_DELAY_ALLOWED);
+        }
     }
 }
