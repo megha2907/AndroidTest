@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
@@ -25,9 +24,8 @@ import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataPro
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
-import in.sportscafe.nostragamus.module.newChallenges.viewPager.NewChallengesViewPagerAdapter;
-import in.sportscafe.nostragamus.module.newChallenges.viewPager.NewChallengesViewPagerFragment;
-import in.sportscafe.nostragamus.utils.NostraProgressDialog;
+import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerAdapter;
+import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerFragment;
 
 /**
  * A simple {@link Fragment} subclass.

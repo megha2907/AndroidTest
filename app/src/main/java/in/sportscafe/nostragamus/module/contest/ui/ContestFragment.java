@@ -25,12 +25,6 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.contest.viewPager.ContestViewPagerAdapter;
 import in.sportscafe.nostragamus.module.contest.viewPager.ContestViewPagerFragment;
-import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
-import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
-import in.sportscafe.nostragamus.module.newChallenges.viewPager.NewChallengesViewPagerAdapter;
-import in.sportscafe.nostragamus.module.newChallenges.viewPager.NewChallengesViewPagerFragment;
 
 /**
  * A simple {@link Fragment} subclass.
