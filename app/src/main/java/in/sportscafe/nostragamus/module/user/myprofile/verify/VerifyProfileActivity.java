@@ -15,9 +15,9 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.SuccessfulReferralActivity;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
@@ -253,7 +253,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
     }
 
     private void navigateToHome() {
-        Intent intent = new Intent(this, NewChallengesActivity.class);
+        Intent intent = new Intent(this, NostraHomeActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.BundleKeys.LOGIN_SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);

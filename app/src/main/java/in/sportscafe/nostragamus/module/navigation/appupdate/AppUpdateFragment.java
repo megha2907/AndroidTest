@@ -31,10 +31,10 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.service.NostraFileDownloadService;
@@ -438,9 +438,8 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-
     private void navigateToHome() {
-        Intent intent = new Intent(getContext(), NewChallengesActivity.class);
+        Intent intent = new Intent(getContext(), NostraHomeActivity.class);
         intent.putExtra(Constants.BundleKeys.SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         startActivity(intent);
     }
