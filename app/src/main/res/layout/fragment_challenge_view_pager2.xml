@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="in.sportscafe.nostragamus.module.newChallenges.viewPager.NewChallengesViewPagerFragment">
+    tools:context="in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerFragment">
 
     <WebView
         android:id="@+id/challenges_ads_webView"
