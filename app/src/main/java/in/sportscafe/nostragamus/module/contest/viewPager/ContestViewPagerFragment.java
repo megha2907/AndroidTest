@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -29,6 +30,8 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     private RecyclerView mRecyclerView;
     private ContestType contestType;
     private List<Contest> mContestList;
+    private TextView mTvContestName;
+    private TextView mTvContestDesc;
 
     public ContestViewPagerFragment() {}
 
@@ -44,6 +47,8 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.contest_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
+        mTvContestName = (TextView) rootView.findViewById(R.id.contest_name);
+        mTvContestDesc = (TextView) rootView.findViewById(R.id.contest_desc);
     }
 
     @Override
@@ -55,6 +60,8 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     private void populateDataOnUi() {
         if (mRecyclerView != null && mContestList != null) {
             mRecyclerView.setAdapter(new ContestRecyclerAdapter(mRecyclerView.getContext(), mContestList, getContestAdapterListener()));
+            mTvContestName.setText(getContestType().getName());
+            mTvContestDesc.setText(getContestType().getTagLine());
         }
     }
 

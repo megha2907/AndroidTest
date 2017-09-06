@@ -2,9 +2,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="in.sportscafe.nostragamus.module.contest.viewPager.ContestViewPagerFragment"
     android:background="@color/black">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:paddingTop="@dimen/dim_12"
+        android:paddingLeft="@dimen/dim_12"
+        android:paddingRight="@dimen/dim_12">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/contest_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Head 2 Head"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/contest_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finish on the top half"
+            android:layout_marginTop="@dimen/dim_4"
+            android:layout_below="@+id/contest_name"
+            android:textColor="@color/white_999999"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/contest_expiry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20h 40m 23s"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_bold"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/contest_recycler"

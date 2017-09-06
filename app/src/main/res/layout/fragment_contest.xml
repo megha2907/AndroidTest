@@ -90,44 +90,6 @@
         app:unselected_typeface="lato_regular" />
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:padding="@dimen/dim_12">
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/contest_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Head 2 Head"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
-            app:typeface="lato_regular" />
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/contest_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Finish on the top half"
-            android:layout_marginTop="@dimen/dim_4"
-            android:layout_below="@+id/contest_name"
-            android:textColor="@color/white_999999"
-            android:textSize="@dimen/sp_12"
-            app:typeface="lato_regular" />
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/contest_expiry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="20h 40m 23s"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
-            app:typeface="lato_bold"
-            android:layout_alignParentRight="true"/>
-
-    </RelativeLayout>
-
     <!-- ViewPager -->
     <in.sportscafe.nostragamus.module.common.CustomViewPager
         android:id="@+id/contest_viewPager"

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterListener;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 
 /**
  * Created by sandip on 23/08/17.
