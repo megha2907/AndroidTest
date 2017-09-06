@@ -31,10 +31,10 @@ import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
-import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.navigation.referfriends.SuccessfulReferralActivity;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyProfileActivity;
@@ -268,7 +268,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void navigateToHome(boolean fromHome) {
-        Intent intent = new Intent(this, NewChallengesActivity.class);
+        Intent intent = new Intent(this, NostraHomeActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(BundleKeys.LOGIN_SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);

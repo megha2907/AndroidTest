@@ -16,9 +16,9 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.SpacesItemDecoration;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
@@ -98,7 +98,7 @@ public class MembersFragment extends NostragamusFragment implements MembersView 
 
     @Override
     public void navigateToHome() {
-        Intent intent = new Intent(getContext(), NewChallengesActivity.class);
+        Intent intent = new Intent(getContext(), NostraHomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

@@ -131,5 +131,9 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
 
     public void onChallengeData(List<NewChallengesResponse> challengesFiltered) {
         mFilteredChallenges = challengesFiltered;
+
+        if (mRecyclerView != null && mRecyclerView.getAdapter() != null) {
+            mRecyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 }

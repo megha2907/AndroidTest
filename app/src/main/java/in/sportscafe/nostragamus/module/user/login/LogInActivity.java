@@ -29,10 +29,10 @@ import java.io.IOException;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogBox;
 import in.sportscafe.nostragamus.module.common.TermsConditions;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.onboard.OnBoardingFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
@@ -121,7 +121,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
     @Override
     public void navigateToHome() {
-        Intent intent = new Intent(this, NewChallengesActivity.class);
+        Intent intent = new Intent(this, NostraHomeActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.BundleKeys.LOGIN_SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);

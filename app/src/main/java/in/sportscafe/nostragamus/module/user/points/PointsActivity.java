@@ -17,12 +17,12 @@ import com.jeeva.android.widgets.HmImageView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardModelImpl;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
@@ -346,7 +346,7 @@ public class PointsActivity extends NostragamusActivity implements PointsView, V
 
     @Override
     public void navigateToHome() {
-        Intent intent = new Intent(this, NewChallengesActivity.class);
+        Intent intent = new Intent(this, NostraHomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();

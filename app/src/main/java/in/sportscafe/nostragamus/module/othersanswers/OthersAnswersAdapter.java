@@ -27,9 +27,9 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
@@ -110,7 +110,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             Integer playerId = mPlayerInfo.getId();
 
             if (playerId.equals(NostragamusDataHandler.getInstance().getUserId())) {
-                Intent homeintent = new Intent(view.getContext(), NewChallengesActivity.class);
+                Intent homeintent = new Intent(view.getContext(), NostraHomeActivity.class);
                 homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 homeintent.putExtra("group", "openprofile");
                 view.getContext().startActivity(homeintent);

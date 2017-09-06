@@ -7,8 +7,8 @@ import android.view.View;
 import com.jeeva.android.widgets.customfont.CustomButton;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 
 /**
  * Created by Jeeva on 16/6/16.
@@ -29,7 +29,7 @@ public class AllDoneActivity extends NostragamusActivity {
         mbutton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), NewChallengesActivity.class);
+                Intent i = new Intent(getApplicationContext(), NostraHomeActivity.class);
                 startActivity(i);
 
             }
