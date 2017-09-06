@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.newChallenges;
+package in.sportscafe.nostragamus.module.newChallenges.ui;
 
 /**
  * Created by sandip on 23/08/17.
