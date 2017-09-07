@@ -23,8 +23,8 @@ import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
-import in.sportscafe.nostragamus.module.contest.viewPager.ContestViewPagerAdapter;
-import in.sportscafe.nostragamus.module.contest.viewPager.ContestViewPagerFragment;
+import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAdapter;
+import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment;
 
 /**
  * A simple {@link Fragment} subclass.

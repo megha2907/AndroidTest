@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment">
+
+    <ExpandableListView
+        android:id="@+id/challengesEntriesExpandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:groupIndicator="@null"
+        android:animateLayoutChanges="true"/>
+
+</LinearLayout>
