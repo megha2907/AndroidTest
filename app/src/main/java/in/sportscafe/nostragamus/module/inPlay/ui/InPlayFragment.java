@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.jeeva.android.BaseFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -24,15 +21,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
-import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
-import in.sportscafe.nostragamus.module.newChallenges.dataProvider.NewChallengesDataProvider;
-import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
-import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
-import in.sportscafe.nostragamus.module.newChallenges.viewPager.NewChallengesViewPagerAdapter;
-import in.sportscafe.nostragamus.module.newChallenges.viewPager.NewChallengesViewPagerFragment;
-import in.sportscafe.nostragamus.module.newmatches.MatchesTimelineAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

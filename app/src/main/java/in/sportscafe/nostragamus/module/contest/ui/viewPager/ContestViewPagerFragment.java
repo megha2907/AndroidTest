@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.contest.viewPager;
+package in.sportscafe.nostragamus.module.contest.ui.viewPager;
 
 
 import android.os.Bundle;
