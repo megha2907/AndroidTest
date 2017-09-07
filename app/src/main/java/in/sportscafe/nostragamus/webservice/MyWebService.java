@@ -12,6 +12,8 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeRequest;
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsRequest;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
@@ -412,9 +414,12 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getInPlayChallenges(request);
     }
 
+    public Call<RewardsResponse> getRewardsDetails(RewardsRequest rewardsRequest) {
+        return mNostragamusService.getRewardDetails(rewardsRequest);
+    }
+
     public Call<ContestEntriesResponse> getContestEntries(ContestEntriesRequest request) {
         return mNostragamusService.getContestEntries(request);
     }
-
 
 }
