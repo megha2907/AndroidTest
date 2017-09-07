@@ -191,7 +191,7 @@ public interface Constants {
         String SUBMIT_QUESTION_SUCCESS = "Your question is submitted successfully";
         String EMPTY_MATCHES = "Currently no upcoming matches";
         String DEFAULT_SHARE_MESSAGE = "Use paste, If you want to use the default share message!";
-        String POLL_LIST_EMPTY = "No polls";
+        String POLL_LIST_EMPTY = "No Rewards";
         String NOT_FREE_CHALLENGE = "Please use full version for the paid challenges";
         String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Please select the checkbox to proceed - you must meet these conditions to play the Pro version of Nostragamus";
         String FORCE_UPDATE_PROFILE_MSG_FOR_PAID_VERSION = "Please update your profile";
@@ -322,6 +322,7 @@ public interface Constants {
         String USER_REFERRAL_PHOTO = "user_referral_photo";
 
         String SUCCESSFUL_REFERRAL = "successfulReferral";
+        String CONTEST_ID = "contestId";
     }
 
     interface ParcelableKeys {
