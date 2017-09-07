@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.contest.viewPager;
+package in.sportscafe.nostragamus.module.contest.ui.viewPager;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
-import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 
 /**
  * Created by sandip on 01/09/17.

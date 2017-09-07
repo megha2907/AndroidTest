@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="in.sportscafe.nostragamus.module.contest.viewPager.ContestViewPagerFragment"
+    tools:context="in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment"
     android:background="@color/black">
 
     <RelativeLayout
