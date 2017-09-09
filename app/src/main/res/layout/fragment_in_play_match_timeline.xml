@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment">
+
+    <LinearLayout
+        android:id="@+id/inplay_matches_content_View"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <!-- Matches status timeline -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:minHeight="@dimen/dim_50"
+            >
+
+            <LinearLayout
+                android:id="@+id/match_status_timeline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                />
+
+        </LinearLayout>
+
+        <!-- List -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/inPlay_matches_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <!-- Loading View -->
+    <LinearLayout
+        android:id="@+id/inplay_matches_loading_View"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <in.sportscafe.nostragamus.module.common.NostraProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

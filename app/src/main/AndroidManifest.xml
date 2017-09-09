@@ -355,6 +355,10 @@
             android:name=".module.nostraHome.NostraHomeActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleInstance"/>
+        <activity
+            android:name=".module.newChallenges.ui.matches.MatchesTimelineActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

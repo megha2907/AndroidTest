@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.newmatches;
+package in.sportscafe.nostragamus.module.newChallenges.adapter;
 
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 

@@ -20,12 +20,11 @@ import com.jeeva.android.Log;
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditActivity;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.module.newmatches.MatchesTimelineActivity;
+import in.sportscafe.nostragamus.module.newChallenges.ui.matches.MatchesTimelineActivity;
 
 /**
  * A simple {@link Fragment} subclass.

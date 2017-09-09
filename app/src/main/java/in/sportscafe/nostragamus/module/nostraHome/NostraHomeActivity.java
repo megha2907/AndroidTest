@@ -13,6 +13,7 @@ import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
 import in.sportscafe.nostragamus.module.contest.ui.ContestFragment;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment;
+import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
 import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesFragment;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
@@ -168,7 +169,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
         FragmentHelper.replaceFragment(this, R.id.fragment_container, mInPlayFragment);*/
 
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, new ContestEntriesViewPagerFragment());
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, new InPlayMatchTimelineViewPagerFragment());
     }
 
     private void loadNewChallengeFragment() {
