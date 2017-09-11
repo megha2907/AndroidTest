@@ -15,6 +15,7 @@ public class ContestsActivity extends NostraBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contests);
         loadFragment();

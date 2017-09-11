@@ -83,7 +83,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     }
 
     private void goToContestDetails(Bundle args) {
-        Intent intent = new Intent(getContext(), ContestDetailsActivity.class);
+        Intent intent = new Intent(getActivity(), ContestDetailsActivity.class);
         intent.putExtras(args);
         startActivity(intent);
     }
