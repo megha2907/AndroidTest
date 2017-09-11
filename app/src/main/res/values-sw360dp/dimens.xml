@@ -80,6 +80,7 @@
     <dimen name="dim_40">40dp</dimen>
     <dimen name="dim_48">48dp</dimen>
     <dimen name="dim_50">50dp</dimen>
+    <dimen name="dim_52">52dp</dimen>
     <dimen name="dim_56">56dp</dimen>
     <dimen name="dim_60">60dp</dimen>
     <dimen name="dim_66">66dp</dimen>

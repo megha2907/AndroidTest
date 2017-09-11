@@ -77,12 +77,12 @@ public class ContestDataProvider {
 
         ContestType h2h = new ContestType();
         h2h.setId(0);
-        h2h.setName("Head 2 Head");
+        h2h.setName("H 2 H Contests");
         h2h.setTagLine("Finish on the Top Half of the leaderboards to win");
 
         ContestType doubleUp = new ContestType();
         doubleUp.setId(1);
-        doubleUp.setName("Double Up");
+        doubleUp.setName("Double Up Contests");
         doubleUp.setTagLine("Finish on the Top Half of the leaderboards to win");
 
         ContestType glory = new ContestType();

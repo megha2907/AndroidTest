@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAdapter;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +40,7 @@ public class ContestFragment extends NostraBaseFragment {
 
     TextView mTvTBarHeading;
     TextView mTvTBarSubHeading;
+    TextView mTvTBarWalletMoney;
     String challengeName;
 
 
@@ -52,6 +55,7 @@ public class ContestFragment extends NostraBaseFragment {
     private void initView(View rootView) {
         mTvTBarHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
         mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
+        mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
     }
 
     public void onNewIntent(Intent intent) {
@@ -130,6 +134,9 @@ public class ContestFragment extends NostraBaseFragment {
                 mTvTBarHeading.setText(String.valueOf(contestTypeList.size()) + " Contests Available");
                 mTvTBarSubHeading.setText(challengeName);
 
+                int amount = (int) WalletHelper.getTotalBalance();
+                mTvTBarWalletMoney.setText(String.valueOf(amount));
+
                 ContestViewPagerAdapter viewPagerAdapter = new ContestViewPagerAdapter(
                         getActivity().getSupportFragmentManager(), fragmentList);
                 challengesViewPager.setAdapter(viewPagerAdapter);
@@ -148,4 +155,5 @@ public class ContestFragment extends NostraBaseFragment {
             }
         }
     }
+
 }

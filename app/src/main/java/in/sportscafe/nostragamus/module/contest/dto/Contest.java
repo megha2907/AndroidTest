@@ -3,12 +3,19 @@ package in.sportscafe.nostragamus.module.contest.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
+import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
 
 /**
  * Created by sandip on 01/09/17.
  */
 
+@Parcel
 public class Contest {
 
     @JsonProperty("contest_id")
@@ -29,6 +36,9 @@ public class Contest {
     @JsonProperty("prizes")
     private Integer prizes;
 
+    @JsonProperty("contest_type")
+    private ContestTypeInfo contestTypeInfo;
+
     @JsonProperty("entry_fee")
     private Integer entryFee;
 
@@ -40,6 +50,18 @@ public class Contest {
 
     @JsonProperty("filling_rooms")
     private int fillingRooms;
+
+    @JsonProperty("max_transfer")
+    private int maxTransferPowerUps;
+
+    @JsonProperty("total_matches")
+    private int totalMatches;
+
+//    @JsonProperty("total_powerups")
+//    private ArrayList<String> powerUpArrayList = new ArrayList<>();
+
+    @JsonProperty("tournaments")
+    private List<String> tournaments = new ArrayList<>();
 
     private int contestItemType = ContestAdapterItemType.CONTEST;
 
@@ -145,5 +167,54 @@ public class Contest {
     public boolean noPrizes() {
         return prizes == 0 || prizes == null;
     }
+
+    public void setPrizes(Integer prizes) {
+        this.prizes = prizes;
+    }
+
+    public ContestTypeInfo getContestTypeInfo() {
+        return contestTypeInfo;
+    }
+
+    public void setContestTypeInfo(ContestTypeInfo contestTypeInfo) {
+        this.contestTypeInfo = contestTypeInfo;
+    }
+//
+//    public void setRoomSize(Integer roomSize) {
+//        this.roomSize = roomSize;
+//    }
+//
+//    public ArrayList<String> getPowerUpArrayList() {
+//        return powerUpArrayList;
+//    }
+//
+//    public void setPowerUpArrayList(ArrayList<String> powerUpArrayList) {
+//        this.powerUpArrayList = powerUpArrayList;
+//    }
+
+    public int getTotalMatches() {
+        return totalMatches;
+    }
+
+    public void setTotalMatches(int totalMatches) {
+        this.totalMatches = totalMatches;
+    }
+
+    public int getMaxTransferPowerUps() {
+        return maxTransferPowerUps;
+    }
+
+    public void setMaxTransferPowerUps(int maxTransferPowerUps) {
+        this.maxTransferPowerUps = maxTransferPowerUps;
+    }
+
+    public List<String> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(List<String> tournaments) {
+        this.tournaments = tournaments;
+    }
+
 
 }

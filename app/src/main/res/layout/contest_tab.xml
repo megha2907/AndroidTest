@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:minHeight="@dimen/dim_80"
+    android:minHeight="@dimen/dim_66"
     android:layout_gravity="center">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dim_10"
+        android:layout_marginTop="@dimen/dim_4"
         android:textSize="@dimen/sp_16"
         android:text="5"
         app:typeface="lato_bold" />
@@ -22,11 +22,10 @@
         android:id="@+id/contest_type_tab_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white_60"
-        android:layout_marginTop="@dimen/dim_4"
+        android:textColor="@drawable/tab_tv_selector"
         android:layout_gravity="center"
         android:text="head to head"
-        android:textSize="@dimen/sp_12"
+        android:textSize="@dimen/sp_10"
         android:gravity="center"
         app:typeface="lato_regular" />
 

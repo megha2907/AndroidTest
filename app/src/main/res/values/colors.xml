@@ -64,6 +64,7 @@
 
     <color name="black">#151515</color>
     <color name="black_1">#252525</color>
+    <color name="black_2">#181818</color>
     <color name="black_10">#1A000000</color>
     <color name="black_20">#33000000</color>
     <color name="black_30">#4D000000</color>
@@ -159,6 +160,8 @@
 
     <color name="black2">#212121</color>
     <color name="black3">#252525</color>
+    <color name="black4">#181818</color>
+    <color name="black5">#151515</color>
 
     <color name="text_shadow_color_blue">#0f1c44</color>
     <color name="edit_text_icon_bg_color">#186AA2</color>
