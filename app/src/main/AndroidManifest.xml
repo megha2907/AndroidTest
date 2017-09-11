@@ -8,6 +8,8 @@
 
     <!-- To get the status of internet -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!-- Start MoEngage Permissions -->
     <!-- If you have specified applicationId in build.gradle file then replace [YOUR_PACKAGE_NAME] with applicationId -->
@@ -355,6 +357,10 @@
             android:name=".module.nostraHome.NostraHomeActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleInstance"/>
+        <activity
+            android:name=".module.newChallenges.ui.matches.MatchesTimelineActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
 
         <activity
             android:name=".module.contest.contestDetails.ContestDetailsActivity"
@@ -575,6 +581,15 @@
                 <action android:name="in.sportscafe.nostragamus.broadcast.action.fileDownloadBroadcast" />
             </intent-filter>
         </receiver>
+
+        <!-- Internet connection change receiver -->
+        <receiver android:name=".receiver.InternetConnectionStateChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

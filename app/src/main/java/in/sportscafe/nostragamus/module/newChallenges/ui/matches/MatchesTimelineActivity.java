@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.newmatches;
+package in.sportscafe.nostragamus.module.newChallenges.ui.matches;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -34,12 +34,6 @@ public class MatchesTimelineActivity extends NostragamusActivity implements Matc
 
     private void initialize() {
         initToolbar();
-        TextView tvContestHeading = (TextView) findViewById(R.id.matches_timeline_heading);
-        TextView tvContestSubHeadingOne = (TextView) findViewById(R.id.matches_timeline_subheading_one);
-        TextView tvContestSubHeadingTwo = (TextView) findViewById(R.id.matches_timeline_subheading_two);
-        Button tvJoinContestBtn = (Button) findViewById(R.id.matches_timeline_btn_join);
-        TextView tvMatchesLeft = (TextView) findViewById(R.id.matches_timeline_matches_left);
-        TextView tvContestExpiry = (TextView) findViewById(R.id.matches_timeline_match_expires_in);
     }
 
     private void initToolbar() {
