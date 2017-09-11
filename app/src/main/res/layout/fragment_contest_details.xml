@@ -1,0 +1,105 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="in.sportscafe.nostragamus.module.contest.ui.ContestFragment">
+
+    <!-- Heading layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/toolbar_bg"
+        android:minHeight="@dimen/dim_60">
+
+        <ImageView
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dim_6"
+            android:padding="@dimen/dim_10"
+            android:src="@drawable/back_icon_grey" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dim_6">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/toolbar_heading_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contest Available"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/toolbar_heading_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar_heading_one"
+                android:text="India vs Australia T20 Challenge"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/toolbar_wallet_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dim_16"
+                android:text="120"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/sp_14"
+                app:typeface="lato_regular" />
+
+            <ImageView
+                android:id="@+id/toolbar_wallet_icon"
+                android:layout_width="@dimen/dim_14"
+                android:layout_height="@dimen/dim_14"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dim_4"
+                android:layout_toLeftOf="@+id/toolbar_wallet_money"
+                android:src="@drawable/toolbar_wallet_icon" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <in.sportscafe.nostragamus.module.common.CustomTabLayout
+        android:id="@+id/contest_details_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_40"
+        android:layout_below="@+id/challenges_toolbar"
+        android:background="@color/new_challenge_tab_bg"
+        android:elevation="4dp"
+        app:layout_collapseMode="pin"
+        app:selected_textSize="@dimen/sp_12"
+        app:selected_typeface="lato_regular"
+        app:tabBackground="@color/tab_background_selector"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@android:color/transparent"
+        app:tabIndicatorHeight="@dimen/dp_0"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/ChallengeTextAppearance"
+        app:tabTextColor="@color/white_60"
+        app:unselected_textSize="@dimen/sp_12"
+        app:unselected_typeface="lato_regular" />
+
+
+    <!-- ViewPager -->
+    <in.sportscafe.nostragamus.module.common.CustomViewPager
+        android:id="@+id/contest_details_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

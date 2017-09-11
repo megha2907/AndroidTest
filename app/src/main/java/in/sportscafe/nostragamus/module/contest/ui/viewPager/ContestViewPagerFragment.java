@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.contest.ui.viewPager;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterListener;
 import in.sportscafe.nostragamus.module.contest.adapter.ContestRecyclerAdapter;
+import in.sportscafe.nostragamus.module.contest.contestDetails.ContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 
@@ -59,7 +61,8 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
     private void populateDataOnUi() {
         if (mRecyclerView != null && mContestList != null) {
-            mRecyclerView.setAdapter(new ContestRecyclerAdapter(mRecyclerView.getContext(), mContestList, getContestAdapterListener()));
+            mRecyclerView.setAdapter(new ContestRecyclerAdapter(mRecyclerView.getContext(), mContestList,
+                    getContestAdapterListener()));
             mTvContestName.setText(getContestType().getName());
             mTvContestDesc.setText(getContestType().getTagLine());
         }
@@ -68,8 +71,8 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     private ContestAdapterListener getContestAdapterListener() {
         return new ContestAdapterListener() {
             @Override
-            public void onContestClicked() {
-
+            public void onContestClicked(Bundle args) {
+                goToContestDetails(args);
             }
 
             @Override
@@ -77,6 +80,12 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
             }
         };
+    }
+
+    private void goToContestDetails(Bundle args) {
+        Intent intent = new Intent(getContext(), ContestDetailsActivity.class);
+        intent.putExtras(args);
+        startActivity(intent);
     }
 
     public ContestType getContestType() {

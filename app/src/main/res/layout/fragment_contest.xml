@@ -8,25 +8,24 @@
 
     <!-- Heading layout -->
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="2dp"
-        android:background="@drawable/toolbar_bg"
-        android:contentInsetLeft="0dp"
-        android:contentInsetStart="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        android:contentInsetRight="0dp"
-        android:contentInsetEnd="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetEnd="0dp">
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/toolbar_bg"-->
+        <!--android:contentInsetLeft="0dp"-->
+        <!--android:contentInsetStart="0dp"-->
+        <!--app:contentInsetLeft="0dp"-->
+        <!--app:contentInsetStart="0dp"-->
+        <!--android:contentInsetRight="0dp"-->
+        <!--android:contentInsetEnd="0dp"-->
+        <!--app:contentInsetRight="0dp"-->
+        <!--app:contentInsetEnd="0dp">-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/dim_60"
-            app:contentInsetStart="0dp">
+            android:background="@drawable/toolbar_bg">
 
             <ImageView
                 android:layout_width="@dimen/dp_32"
@@ -61,21 +60,43 @@
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />
 
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/toolbar_wallet_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="120"
+                    android:layout_marginRight="@dimen/dim_16"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+                <ImageView
+                    android:id="@+id/toolbar_wallet_icon"
+                    android:layout_width="@dimen/dim_14"
+                    android:layout_height="@dimen/dim_14"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/toolbar_wallet_money"
+                    android:layout_marginRight="@dimen/dim_4"
+                    android:src="@drawable/toolbar_wallet_icon"/>
+
             </RelativeLayout>
 
         </LinearLayout>
 
-    </android.support.v7.widget.Toolbar>
+    <!--</android.support.v7.widget.Toolbar>-->
 
 
     <in.sportscafe.nostragamus.module.common.CustomTabLayout
         android:id="@+id/contest_tabs"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dim_80"
+        android:layout_height="@dimen/dim_60"
         android:layout_below="@+id/challenges_toolbar"
         android:background="@color/new_challenge_tab_bg"
+        android:elevation="4dp"
         app:layout_collapseMode="pin"
-        app:selected_textSize="@dimen/dp_12"
+        app:selected_textSize="@dimen/sp_12"
         app:selected_typeface="lato_regular"
         app:tabBackground="@color/tab_background_selector"
         app:tabGravity="center"
@@ -86,7 +107,7 @@
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/ChallengeTextAppearance"
         app:tabTextColor="@color/white_60"
-        app:unselected_textSize="@dimen/dp_12"
+        app:unselected_textSize="@dimen/sp_12"
         app:unselected_typeface="lato_regular" />
 
 

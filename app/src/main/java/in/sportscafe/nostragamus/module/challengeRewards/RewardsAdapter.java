@@ -61,14 +61,11 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        int viewType = TYPE_ITEM;
 
-        if (isPositionHeader(position)){
-            viewType = TYPE_HEADER;
-        }else if (mRewardsList != null && !mRewardsList.isEmpty()) {
-            viewType = TYPE_ITEM;
+        if (isPositionHeader(position)) {
+            return TYPE_HEADER;
         }
-        return viewType;
+        return TYPE_ITEM;
     }
 
     @Override
@@ -97,10 +94,8 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if (holder != null) {
-            switch (holder.getItemViewType()) {
-                case TYPE_ITEM:
-                    setRewardsItem(holder, position);
-                    break;
+            if (holder instanceof RewardsVH) {
+                setRewardsItem(holder, position-1);
             }
         }
 
@@ -110,16 +105,17 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if (mRewardsList != null && mRewardsList.size() > position) {
 
-            Rewards rewards = mRewardsList.get(position);
+            Rewards rewards = getItem(position);
+
             RewardsVH rewardsVH = (RewardsVH) holder;
 
             if (rewards != null) {
 
                 //alternate row color
                 if (position % 2 == 0) {
-                    holder.itemView.setBackgroundColor(ContextCompat.getColor(rewardsVH.mTvRank.getContext(), R.color.black_1));
+                    holder.itemView.setBackgroundColor(ContextCompat.getColor(rewardsVH.mTvRank.getContext(), R.color.black5));
                 } else {
-                    holder.itemView.setBackgroundColor(ContextCompat.getColor(rewardsVH.mTvRank.getContext(), R.color.black_2));
+                    holder.itemView.setBackgroundColor(ContextCompat.getColor(rewardsVH.mTvRank.getContext(), R.color.black4));
                 }
 
                 if (!TextUtils.isEmpty(rewards.getRank())) {
@@ -143,10 +139,15 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     }
 
+    private Rewards getItem(int position) {
+        return mRewardsList.get(position);
+    }
+
     @Override
     public int getItemCount() {
-        return (mRewardsList != null) ? mRewardsList.size() : 0;
+        return mRewardsList.size()+1;
     }
+
 
     private class RewardsVH extends RecyclerView.ViewHolder {
 
@@ -171,6 +172,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public RewardsHeaderVH(View itemView) {
             super(itemView);
         }
+
     }
 
     private boolean isPositionHeader(int position) {

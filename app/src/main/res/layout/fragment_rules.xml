@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <!-- Contest Rules-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dim_26"
+        android:paddingRight="@dimen/dim_26"
+        android:paddingTop="@dimen/dim_12">
+
+        <!-- Contest Heading-->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/contest_rule_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:typeface="lato_regular"
+            android:text="Contest Details"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <!-- Contest Rule One-->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/contest_rule_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:typeface="lato_regular"
+            android:textSize="@dimen/sp_12"
+            android:layout_marginTop="@dimen/dim_12"
+            android:textColor="@color/grey6"/>
+
+        <!-- Contest Tournaments Linear Layout-->
+        <LinearLayout
+            android:id="@+id/contest_rule_tournaments_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contest_rule_one"
+            android:layout_marginTop="@dimen/dim_12"
+            android:orientation="horizontal" />
+
+        </RelativeLayout>
+
+        <!-- Contest Rule Two-->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/contest_rule_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:typeface="lato_regular"
+            android:textSize="@dimen/sp_12"
+            android:layout_marginTop="@dimen/dim_12"
+            android:textColor="@color/grey6"/>
+
+        <!-- Contest Rule Three-->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/contest_rule_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:typeface="lato_regular"
+            android:textSize="@dimen/sp_12"
+            android:layout_marginTop="@dimen/dim_12"
+            android:textColor="@color/grey6"/>
+
+
+    </LinearLayout>
+
+    <!-- Powerups Rules-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dim_26"
+        android:paddingRight="@dimen/dim_26"
+        android:paddingTop="@dimen/dim_26">
+
+        <!-- powerup Heading-->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/powerup_rule_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:typeface="lato_regular"
+            android:text="Powerups Usage"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"/>
+
+        <!-- powerup Rule One-->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/powerup_rule_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:typeface="lato_regular"
+            android:textSize="@dimen/sp_12"
+            android:layout_marginTop="@dimen/dim_12"
+            android:textColor="@color/grey6"/>
+
+        <!-- powerup Rule Two-->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/powerup_rule_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:typeface="lato_regular"
+            android:textSize="@dimen/sp_12"
+            android:layout_marginTop="@dimen/dim_12"
+            android:textColor="@color/grey6"/>
+
+    </LinearLayout>
+
+    <!-- Cancelled Rules-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dim_26"
+        android:paddingRight="@dimen/dim_26"
+        android:paddingTop="@dimen/dim_26">
+
+        <!-- Cancelled Heading-->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/cancelled_rule_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:typeface="lato_regular"
+            android:text="Cancelled Questions / Split Points"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"/>
+
+        <!-- Cancelled Rule One-->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/cancelled_rule_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:typeface="lato_regular"
+            android:textSize="@dimen/sp_12"
+            android:layout_marginTop="@dimen/dim_12"
+            android:textColor="@color/grey6"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -171,7 +171,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
         FragmentHelper.replaceFragment(this, R.id.fragment_container, mInPlayFragment);*/
 
-        //FragmentHelper.replaceFragment(this, R.id.fragment_container, new ContestFragment());
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, new ContestFragment());
 
 
 //        Bundle bundle = new Bundle();
@@ -180,7 +180,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 //        rewardsFragment.setArguments(bundle);
 //        FragmentHelper.replaceFragment(this, R.id.fragment_container, rewardsFragment);
 
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, new ContestEntriesViewPagerFragment());
+        //FragmentHelper.replaceFragment(this, R.id.fragment_container, new ContestEntriesViewPagerFragment());
     }
 
     private void loadNewChallengeFragment() {

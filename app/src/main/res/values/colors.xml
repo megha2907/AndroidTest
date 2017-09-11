@@ -160,6 +160,8 @@
 
     <color name="black2">#212121</color>
     <color name="black3">#252525</color>
+    <color name="black4">#181818</color>
+    <color name="black5">#151515</color>
 
     <color name="text_shadow_color_blue">#0f1c44</color>
     <color name="edit_text_icon_bg_color">#186AA2</color>
