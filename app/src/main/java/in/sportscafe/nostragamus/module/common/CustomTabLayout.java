@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,10 +95,12 @@ public class CustomTabLayout extends TabLayout {
                     // Todo Have to update when the fonts are choosen
                     textView.setTypeface(mSelTabFont, Typeface.BOLD);
                     textView.setTextSize(mSelTextSize);
+                    textView.setTextColor(ContextCompat.getColor(getContext(), R.color.yellowcolor));
                 } else{
                     textView = (TextView) tabViewChild;
                     textView.setTypeface(mUnSelTabFont, Typeface.NORMAL);
                     textView.setTextSize(mUnSelTextSize);
+                    textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                 }
                 break;
             }

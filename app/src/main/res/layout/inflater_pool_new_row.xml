@@ -26,9 +26,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/dark_grey_gradient_bg"
                 android:paddingBottom="@dimen/dim_8"
-                android:paddingLeft="@dimen/dim_16"
-                android:paddingRight="@dimen/dim_16"
-                android:paddingTop="@dimen/dim_16">
+                android:paddingLeft="@dimen/dim_15"
+                android:paddingRight="@dimen/dim_15"
+                android:paddingTop="@dimen/dim_12">
 
                 <RelativeLayout
                     android:id="@+id/pool_row_rl_detail_layout"
@@ -55,7 +55,7 @@
                         android:maxLines="1"
                         android:text="No Prizes"
                         android:textColor="@color/white_999999"
-                        android:textSize="@dimen/sp_14"
+                        android:textSize="@dimen/sp_12"
                         android:visibility="visible"
                         app:typeface="lato_regular" />
 
@@ -74,6 +74,7 @@
                         android:layout_below="@id/pool_row_tv_name"
                         android:layout_marginRight="@dimen/dim_20"
                         android:layout_marginTop="@dimen/dim_16"
+                        android:minWidth="@dimen/dim_52"
                         android:layout_toRightOf="@+id/pool_row_ll_reward_layout"
                         android:clickable="true"
                         android:orientation="vertical">
@@ -113,6 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/pool_row_ll_member_layout"
                         android:layout_marginRight="@dimen/dim_20"
+                        android:minWidth="@dimen/dim_52"
                         android:clickable="true"
                         android:orientation="vertical">
 
@@ -138,10 +140,11 @@
                                 android:maxLines="1"
                                 android:textColor="#22b573"
                                 android:textSize="@dimen/sp_12"
+                                android:drawablePadding="@dimen/dim_2"
+                                android:drawableRight="@drawable/contest_prizes_arrow"
                                 app:typeface="lato_bold" />
 
                         </RelativeLayout>
-
 
                     </LinearLayout>
 
@@ -149,6 +152,7 @@
                         android:id="@+id/pool_row_ll_entry_fee_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:minWidth="@dimen/dim_52"
                         android:layout_alignTop="@id/pool_row_ll_member_layout"
                         android:layout_toRightOf="@id/pool_row_ll_member_layout"
                         android:clickable="true"
@@ -245,7 +249,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/sp_9"
-                    app:typeface="lato_bold" />
+                    app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/pool_row_tv_rooms_available"
@@ -274,7 +278,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/sp_9"
-                    app:typeface="lato_bold" />
+                    app:typeface="lato_regular" />
 
             </RelativeLayout>
 

@@ -323,6 +323,10 @@ public interface Constants {
 
         String SUCCESSFUL_REFERRAL = "successfulReferral";
         String CONTEST_ID = "contestId";
+        String CONTEST_TYPE = "contestType";
+        String CONTEST_TYPE_DESC = "contestTypeDesc";
+        String BANK_TRANSFER_POWERUPS = "BankPowerUps";
+        String CONTEST = "Contest";
     }
 
     interface ParcelableKeys {
@@ -743,6 +747,12 @@ public interface Constants {
         String NEW = "New";
         String IN_PLAY = "In Play";
         String COMPLETED = "Completed";
+    }
+
+    interface ContestDetailsTabs {
+        String ENTRIES = "Entries";
+        String REWARDS = "Rewards";
+        String RULES = "Rules";
     }
 
     interface PopUpType {

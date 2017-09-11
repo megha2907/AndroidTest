@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.Log;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -17,6 +20,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
+import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -40,6 +44,16 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
 
     }
 
+    public static RewardsFragment newInstance(int contestId) {
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.BundleKeys.CONTEST_ID, contestId);
+
+        RewardsFragment fragment = new RewardsFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,6 +71,7 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
     private void openBundle(Bundle bundle) {
         if (bundle != null) {
             mContestId = bundle.getInt(Constants.BundleKeys.CONTEST_ID);
+            Log.i("mContestId", String.valueOf(mContestId));
             getRewardsData();
         }
     }
@@ -143,4 +158,5 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
 
         }
     }
+
 }

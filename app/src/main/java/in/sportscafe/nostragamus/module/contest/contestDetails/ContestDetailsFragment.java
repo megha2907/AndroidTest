@@ -1,0 +1,134 @@
+package in.sportscafe.nostragamus.module.contest.contestDetails;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+
+import org.parceler.Parcels;
+
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
+import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
+import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.contest.dto.Contest;
+import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+
+/**
+ * Created by deepanshi on 9/10/17.
+ */
+
+public class ContestDetailsFragment extends NostraBaseFragment {
+
+    private static final String TAG = ContestDetailsFragment.class.getSimpleName();
+
+    public ContestDetailsFragment() {
+    }
+
+    TextView mTvTBarHeading;
+    TextView mTvTBarSubHeading;
+    TextView mTvTBarWalletMoney;
+    String challengeName;
+
+    private ContestDetailsViewPagerAdapter mViewPagerAdapter;
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_contest_details, container, false);
+        initView(rootView);
+        return rootView;
+    }
+
+    private void initView(View rootView) {
+        mTvTBarHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
+        mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
+        mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
+
+        setInfo();
+    }
+
+    private void setInfo() {
+
+        mTvTBarHeading.setText("Contest Name");
+        mTvTBarSubHeading.setText(challengeName);
+
+        int amount = (int) WalletHelper.getTotalBalance();
+        mTvTBarWalletMoney.setText(String.valueOf(amount));
+    }
+
+    public void onNewIntent(Intent intent) {
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        openBundle(getArguments());
+    }
+
+    private void openBundle(Bundle arguments) {
+        if (arguments != null) {
+            Contest contest = Parcels.unwrap(arguments.getParcelable(Constants.BundleKeys.CONTEST));
+            createAdapter(contest);
+        }
+    }
+
+    private void createAdapter(Contest contest) {
+
+        ViewPager mViewPager = (ViewPager) getView().findViewById(R.id.contest_details_viewPager);
+        mViewPagerAdapter = new ContestDetailsViewPagerAdapter(getChildFragmentManager(), getContext());
+
+        if (contest != null) {
+
+            ContestEntriesViewPagerFragment contestEntriesViewPagerFragment = new ContestEntriesViewPagerFragment();
+            mViewPagerAdapter.addFragment(contestEntriesViewPagerFragment, Constants.ContestDetailsTabs.ENTRIES);
+
+
+            RewardsFragment rewardsFragment = RewardsFragment.newInstance(contest.getContestId());
+            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.REWARDS);
+
+            RulesFragment rulesFragment = RulesFragment.newInstance(contest);
+            mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
+
+
+            mViewPager.setAdapter(mViewPagerAdapter);
+            mViewPager.setOffscreenPageLimit(3);
+
+            setTabLayout(mViewPager);
+        }
+
+    }
+
+    private void setTabLayout(ViewPager mViewPager) {
+
+        try {
+
+            TabLayout contestTabLayout = (TabLayout) getView().findViewById(R.id.contest_details_tabs);
+            contestTabLayout.setupWithViewPager(mViewPager);
+
+            if (mViewPagerAdapter != null) {
+                TabLayout.Tab tab = contestTabLayout.getTabAt(0);
+                if (tab != null) {
+                    contestTabLayout.getTabAt(0).setCustomView(mViewPagerAdapter.getTabView(0));
+                    contestTabLayout.getTabAt(1).setCustomView(mViewPagerAdapter.getTabView(1));
+                    contestTabLayout.getTabAt(2).setCustomView(mViewPagerAdapter.getTabView(2));
+                }
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+}
