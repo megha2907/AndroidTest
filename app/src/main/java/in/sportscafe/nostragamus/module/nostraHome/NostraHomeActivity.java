@@ -17,6 +17,7 @@ import android.widget.Toast;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.contest.ui.ContestFragment;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
@@ -174,7 +175,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
         FragmentHelper.replaceFragment(this, R.id.fragment_container, mInPlayFragment);*/
 
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, new InPlayMatchTimelineViewPagerFragment());
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, new ContestFragment());
 
 
 //        Bundle bundle = new Bundle();

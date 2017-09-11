@@ -751,6 +751,7 @@ public interface Constants {
     }
 
     interface ContestDetailsTabs {
+        String MATCHES = "Matches";
         String ENTRIES = "Entries";
         String REWARDS = "Rewards";
         String RULES = "Rules";
