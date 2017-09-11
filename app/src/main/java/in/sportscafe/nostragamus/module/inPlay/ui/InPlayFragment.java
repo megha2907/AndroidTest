@@ -17,6 +17,7 @@ import com.jeeva.android.BaseFragment;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
@@ -56,6 +57,12 @@ public class InPlayFragment extends BaseFragment {
      */
     public void onNewIntent(Intent intent) {
 
+    }
+
+    public void onInternetConnected() {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            loadData();
+        }
     }
 
     @Override

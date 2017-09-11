@@ -17,8 +17,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:minHeight="@dimen/dim_100"
-        android:paddingLeft="@dimen/dim_5"
-        android:paddingRight="@dimen/dim_5"
+        android:paddingLeft="@dimen/dim_20"
+        android:paddingRight="@dimen/dim_20"
         android:gravity="center_vertical">
 
         <!-- Date Time details -->
@@ -46,7 +46,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/dim_10">
+            android:layout_marginTop="@dimen/dim_10"
+            android:minHeight="@dimen/dim_32"
+            android:gravity="center_vertical">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -57,8 +59,8 @@
 
                 <com.jeeva.android.widgets.HmImageView
                     android:id="@+id/match_party_1_imgView"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_20"
                     android:scaleType="fitXY"
                     app:defaultImage="@drawable/right_placeholder_icon" />
 
@@ -73,7 +75,7 @@
                     android:textColor="@color/white_80"
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular"
-                    android:layout_marginLeft="@dimen/dim_5"/>
+                    android:layout_marginLeft="@dimen/dim_10"/>
 
             </LinearLayout>
 
@@ -117,12 +119,12 @@
                     android:textColor="@color/white_80"
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular"
-                    android:layout_marginRight="@dimen/dim_5"/>
+                    android:layout_marginRight="@dimen/dim_10"/>
 
                 <com.jeeva.android.widgets.HmImageView
                     android:id="@+id/match_party_2_imgView"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_20"
                     android:scaleType="fitXY"
                     app:defaultImage="@drawable/right_placeholder_icon" />
 

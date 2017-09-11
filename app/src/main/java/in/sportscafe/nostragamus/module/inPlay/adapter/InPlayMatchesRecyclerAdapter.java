@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.inPlay.adapter;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -119,6 +120,36 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         return (mInPlayMatchList != null) ? mInPlayMatchList.size() : 0;
     }
 
+    private void onActionButtonClicked(int adapterPos) {
+        if (mInPlayMatchList != null && mInPlayMatchList.size() > adapterPos && mMatchAdapterListener != null) {
+            InPlayMatch match = mInPlayMatchList.get(adapterPos);
+            Bundle args = new Bundle();
+
+            if (match != null) {
+                String matchStatus = match.getMatchStatus();
+                if (matchStatus.equalsIgnoreCase("Did Not Play")) {
+                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.DID_NOT_PLAY, args);
+
+                } else if (matchStatus.equalsIgnoreCase("Coming up")) {
+                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.COMMING_UP, args);
+
+                } else if (matchStatus.equalsIgnoreCase("Play")) {
+                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.PLAY, args);
+
+                } else if (matchStatus.equalsIgnoreCase("Continue")) {
+                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.CONTINUE, args);
+
+                } else if (matchStatus.equalsIgnoreCase("Answer")) {
+                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.ANSWER, args);
+
+                } else if (matchStatus.equalsIgnoreCase("Points")) {
+                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.POINTS, args);
+
+                }
+            }
+        }
+    }
+
     /* ---------------------
      View Holders
       ---------------------*/
@@ -157,9 +188,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                     break;
 
                 case R.id.inplay_match_action_button:
-                    if (mMatchAdapterListener != null) {
-                        mMatchAdapterListener.onMatchActionClicked(1, null);
-                    }
+                    onActionButtonClicked(getAdapterPosition());
                     break;
             }
         }

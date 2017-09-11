@@ -362,6 +362,7 @@ public interface Constants {
         String ACTION_RELOAD_CHALLENGES = "in.sportscafe.nostragamus.intent.action.RELOAD_CHALLENGES";
         String ACTION_OPEN_WEBVIEW= "in.sportscafe.nostragamus.intent.action.OPEN_WEBVIEW";
         String ACTION_FINISH_POWER_UP_BANK_ACTIVITY = "in.sportscafe.nostragamus.intent.action.FINISH_POWER_UP_BANK";
+        String ACTION_INTERNET_STATE_CHANGED = "in.sportscafe.nostragamus.intent.action.INTERNET_STATE_CHANGED";
     }
 
     interface LeaderBoardPeriods {

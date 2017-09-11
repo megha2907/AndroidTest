@@ -12,12 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.jeeva.android.Log;
+
+import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
@@ -83,9 +87,11 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
     private void onDataResponse(InPlayMatchesResponse responses) {
         if (mMatchRecyclerView != null && responses != null && responses.getInPlayMatchList() != null) {
+            setMatchesTimeLine(responses);
+
             InPlayMatchesRecyclerAdapter adapter = new InPlayMatchesRecyclerAdapter(responses.getInPlayMatchList(), getMatchesAdapterListener());
             mMatchRecyclerView.setAdapter(adapter);
-            setMatchesTimeLine(responses);
+
         }
     }
 
@@ -94,33 +100,52 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             int totalNodes = responses.getInPlayMatchList().size();
             int totalLines = totalNodes - 1;
 
+            String gamesLeftStr = getGamesLeftCount(responses.getInPlayMatchList()) + "/" + responses.getInPlayMatchList().size() + " GAMES LEFT";
+            TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textView);
+            gamesLeftTextView.setText(gamesLeftStr);
+
             LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
             if (totalNodes > 1) {
                 View nodeView = null, lineView = null;
+                int w = (int)getResources().getDimension(R.dimen.dim_20);
+                int width = (int)getResources().getDimension(R.dimen.dim_50);
+                int height = (int)getResources().getDimension(R.dimen.dim_4);
 
                 for (int temp = 0 ; temp < responses.getInPlayMatchList().size(); temp++) {
                     InPlayMatch match = responses.getInPlayMatchList().get(temp);
 
                     nodeView = getNode(match.isMatchCompleted(), match.isPlayed());
                     if (nodeView != null) {
-                        parent.addView(nodeView);
+                        parent.addView(nodeView, parent.getChildCount(), new ViewGroup.LayoutParams(w, w));
                     }
 
                     lineView = getLineView(match.isMatchCompleted());
                     if (temp != totalLines) {
-                        parent.addView(lineView);
+                        parent.addView(lineView, parent.getChildCount(), new ViewGroup.LayoutParams(width, height));
                     }
                 }
             }
         }
     }
 
+    private int getGamesLeftCount(List<InPlayMatch> matches) {
+        int gameLeft = 0;
+        if (matches != null && matches.size() > 0) {
+            for (InPlayMatch match : matches) {
+                if (!match.isMatchCompleted()) {
+                    gameLeft++;
+                }
+            }
+        }
+        return gameLeft;
+    }
+
     private View getLineView(boolean isCompleted) {
         View view = View.inflate(getContext(), R.layout.match_timeline_line_view, null);
         if (isCompleted) {
-            view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.blue_104468));
+            view.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.games_status_timeline_node));
         } else {
-            view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.grey));
+            view.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.games_status_timeline_node));
         }
         return view;
     }
@@ -128,7 +153,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
     private View getNode(boolean isCompleted, boolean played) {
         View view = View.inflate(getContext(), R.layout.match_timeline_node_view, null);
         if (isCompleted) {
-            view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.grey));
+            view.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.games_status_timeline_node));
         } else {
             if (played) {
                 view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.blue_104468));
@@ -149,7 +174,26 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
             @Override
             public void onMatchActionClicked(int action, Bundle args) {
-                Log.d(TAG, "action button clicked");
+                Log.d(TAG, "action button clicked : " + action);
+                switch (action) {
+                    case InPlayMatchAction.COMMING_UP:
+                        break;
+
+                    case InPlayMatchAction.PLAY:
+                        break;
+
+                    case InPlayMatchAction.CONTINUE:
+                        break;
+
+                    case InPlayMatchAction.ANSWER:
+                        break;
+
+                    case InPlayMatchAction.DID_NOT_PLAY:
+                        break;
+
+                    case InPlayMatchAction.POINTS:
+                        break;
+                }
             }
         };
     }

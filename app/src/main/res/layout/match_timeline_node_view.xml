@@ -2,4 +2,4 @@
 <View xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dim_12"
     android:layout_height="@dimen/dim_12"
-    android:background="@color/blue_104468"/>
+    android:background="@drawable/games_status_timeline_node"/>

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.NewChallengesDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
@@ -54,11 +55,16 @@ public class NewChallengesFragment extends BaseFragment {
 
     }
 
+    public void onInternetConnected() {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            loadData();
+        }
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loadData();
-
     }
 
     private void loadData() {
