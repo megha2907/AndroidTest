@@ -11,7 +11,7 @@ import in.sportscafe.nostragamus.utils.FragmentHelper;
  * Created by deepanshi on 9/10/17.
  */
 
-public class ContestDetailsActivity extends NostraBaseActivity {
+public class ContestDetailsActivity extends NostraBaseActivity implements ContestDetailsFragmentListener {
 
     private static final String TAG = ContestDetailsActivity.class.getSimpleName();
 
@@ -51,4 +51,8 @@ public class ContestDetailsActivity extends NostraBaseActivity {
         }
     }
 
+    @Override
+    public void onJoinContestClicked() {
+
+    }
 }

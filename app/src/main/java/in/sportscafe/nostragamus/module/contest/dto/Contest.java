@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
@@ -57,11 +58,11 @@ public class Contest {
     @JsonProperty("total_matches")
     private int totalMatches;
 
-//    @JsonProperty("total_powerups")
-//    private ArrayList<String> powerUpArrayList = new ArrayList<>();
-
     @JsonProperty("tournaments")
     private List<String> tournaments = new ArrayList<>();
+
+    @JsonProperty("total_powerups")
+    HashMap<String, Integer> powerUpsMap = new HashMap<String, Integer>();
 
     private int contestItemType = ContestAdapterItemType.CONTEST;
 
@@ -183,14 +184,7 @@ public class Contest {
 //    public void setRoomSize(Integer roomSize) {
 //        this.roomSize = roomSize;
 //    }
-//
-//    public ArrayList<String> getPowerUpArrayList() {
-//        return powerUpArrayList;
-//    }
-//
-//    public void setPowerUpArrayList(ArrayList<String> powerUpArrayList) {
-//        this.powerUpArrayList = powerUpArrayList;
-//    }
+//}
 
     public int getTotalMatches() {
         return totalMatches;
@@ -214,6 +208,15 @@ public class Contest {
 
     public void setTournaments(List<String> tournaments) {
         this.tournaments = tournaments;
+    }
+
+
+    public HashMap<String, Integer> getPowerUpsMap() {
+        return powerUpsMap;
+    }
+
+    public void setPowerUpsMap(HashMap<String, Integer> powerUpsMap) {
+        this.powerUpsMap = powerUpsMap;
     }
 
 

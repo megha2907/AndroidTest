@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.jeeva.android.Log;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -38,7 +40,10 @@ public class RulesFragment extends BaseFragment {
     private TextView TvPowerUpsRuleOne;
     private TextView TvPowerUpsRuleTwo;
     private TextView TvCancelledRuleOne;
-    private LinearLayout LlContestsTournaments;
+
+    private int powerUp2xCount = 0;
+    private int powerUpNonNegsCount = 0;
+    private int powerUpPlayerPollCount = 0;
 
     private List<String> tournamentsList = new ArrayList<>();
 
@@ -88,26 +93,145 @@ public class RulesFragment extends BaseFragment {
         TvPowerUpsRuleOne = (TextView) findViewById(R.id.powerup_rule_one);
         TvPowerUpsRuleTwo = (TextView) findViewById(R.id.powerup_rule_two);
         TvCancelledRuleOne = (TextView) findViewById(R.id.cancelled_rule_one);
-        LlContestsTournaments = (LinearLayout) findViewById(R.id.contest_rule_tournaments_ll);
     }
 
     private void setInfo(Contest contest) {
 
+        showContestRuleOne(contest);
+        showContestRuleTwo(contest);
+        showContestRuleThree(contest);
+
+        showPowerUpsRuleOne(contest);
+        showPowerUpsRuleTwo(contest);
+
+        showCancelledRuleOne(contest);
+    }
+
+    private void showContestRuleOne(Contest contest) {
+
         tournamentsList = contest.getTournaments();
 
         if (tournamentsList != null && tournamentsList.size() > 0) {
-            TvContestRuleOne.setText("This challenge contains matches from - " + tournamentsList.toString().replaceAll("[\\[\\](){}]", "") + " and " +
-                    String.valueOf(contest.getTotalMatches()) + " predictions in total");
+            TvContestRuleOne.setText("This challenge contains matches from - " + tournamentsList.toString().replaceAll("[\\[\\](){}]", "")
+                    + " and " + String.valueOf(contest.getTotalMatches()) + " matches in total");
+
+//            TvContestRuleOne.setText("This challenge has "+ String.valueOf(contest.getTotalMatches()) + " from "
+//                    +String.valueOf(contest.getTotalMatches())+" exciting games in "+String.valueOf(tournamentsList.size())
+//                    +" tournaments - "+ tournamentsList.toString().replaceAll("[\\[\\](){}]", ""));
+        } else {
+            if (getView() != null) {
+                getView().findViewById(R.id.contest_rule_one_rl).setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void showContestRuleTwo(Contest contest) {
+        TvContestRuleTwo.setText("You can make and edit your predictions half an hr before the matches start");
+    }
+
+    private void showContestRuleThree(Contest contest) {
+        if (contest.getContestTypeInfo() != null) {
+            TvContestRuleThree.setText(contest.getContestTypeInfo().getType()
+                    + " - " + contest.getContestTypeInfo().getDescription());
+        } else {
+            if (getView() != null) {
+                getView().findViewById(R.id.contest_rule_three_rl).setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void showPowerUpsRuleOne(Contest contest) {
+        if (contest.getPowerUpsMap() != null) {
+            setPowerUps(contest.getPowerUpsMap(), contest);
+        } else {
+            if (getView() != null) {
+                getView().findViewById(R.id.powerups_rule_one_rl).setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void setPowerUps(HashMap<String, Integer> powerUpsMap, Contest contest) {
+
+        if (powerUpsMap.get(Constants.Powerups.XX) != null) {
+            powerUp2xCount = powerUpsMap.get(Constants.Powerups.XX);
+        } else {
+            if (getView() != null) {
+                getView().findViewById(R.id.powerups_rule_one_rl).setVisibility(View.GONE);
+            }
+        }
+        if (powerUpsMap.get(Constants.Powerups.NO_NEGATIVE) != null) {
+            powerUpNonNegsCount = powerUpsMap.get(Constants.Powerups.NO_NEGATIVE);
+        } else {
+            if (getView() != null) {
+                getView().findViewById(R.id.powerups_rule_one_rl).setVisibility(View.GONE);
+            }
+        }
+        if (powerUpsMap.get(Constants.Powerups.AUDIENCE_POLL) != null) {
+            powerUpPlayerPollCount = powerUpsMap.get(Constants.Powerups.AUDIENCE_POLL);
+        } else {
+            if (getView() != null) {
+                getView().findViewById(R.id.powerups_rule_one_rl).setVisibility(View.GONE);
+            }
         }
 
-        TvContestRuleTwo.setText("You can make and edit your predictions half an hr before the matches start");
+        LinearLayout powerUpLayout = (LinearLayout) findViewById(R.id.powerup_ll);
+        ImageView powerUp2xImageView = (ImageView) findViewById(R.id.powerup_2x);
+        ImageView powerUpNoNegativeImageView = (ImageView) findViewById(R.id.powerup_noNeg);
+        ImageView powerUpAudienceImageView = (ImageView) findViewById(R.id.powerup_audience);
 
-        TvContestRuleThree.setText(contest.getContestTypeInfo().getType() + " - " + contest.getContestTypeInfo().getDescription());
+        TextView powerUp2xTextView = (TextView) findViewById(R.id.powerup_2x_count);
+        TextView powerUpNoNegativeTextView = (TextView) findViewById(R.id.powerup_noNeg_count);
+        TextView powerUpAudienceTextView = (TextView) findViewById(R.id.powerup_audience_count);
 
-//        TvPowerUpsRuleOne.setText("You have "+ String.valueOf(mTotalPowerUps) +" to use across "+ String.valueOf(contest.getTotalMatches()) +" matches. Use them to score higher!");
 
+        if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {
+            powerUpLayout.setVisibility(View.GONE);
+        } else {
+            powerUpLayout.setVisibility(View.VISIBLE);
+
+            if (powerUp2xCount != 0) {
+                powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
+                powerUp2xImageView.setVisibility(View.VISIBLE);
+                powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
+            } else {
+                powerUp2xImageView.setVisibility(View.GONE);
+                powerUp2xTextView.setVisibility(View.GONE);
+            }
+
+            if (powerUpNonNegsCount != 0) {
+                powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
+                powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+                powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
+            } else {
+                powerUpNoNegativeImageView.setVisibility(View.GONE);
+                powerUpNoNegativeTextView.setVisibility(View.GONE);
+            }
+
+            if (powerUpPlayerPollCount != 0) {
+                powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
+                powerUpAudienceImageView.setVisibility(View.VISIBLE);
+                powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+            } else {
+                powerUpAudienceImageView.setVisibility(View.GONE);
+                powerUpAudienceTextView.setVisibility(View.GONE);
+            }
+
+            int totalPowerUps = powerUp2xCount + powerUpNonNegsCount + powerUpPlayerPollCount;
+
+            TvPowerUpsRuleOne.setText("You have " + String.valueOf(totalPowerUps)
+                    + " powerups to use across " + String.valueOf(contest.getTotalMatches())
+                    + " matches. Use them to score higher!");
+
+        }
+
+    }
+
+    private void showPowerUpsRuleTwo(Contest contest) {
         TvPowerUpsRuleTwo.setText("You can transfer a maximum of " + String.valueOf(contest.getMaxTransferPowerUps()) + " powerups each from the bank");
+    }
 
+
+    private void showCancelledRuleOne(Contest contest) {
         TvCancelledRuleOne.setText("Questions will be cancelled in case a player is injured or does not play.In these cases," +
                 " half the points would be awarded for the questions.");
     }

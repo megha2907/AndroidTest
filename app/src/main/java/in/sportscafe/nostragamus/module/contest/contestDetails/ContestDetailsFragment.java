@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.contest.contestDetails;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -26,9 +28,11 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
  * Created by deepanshi on 9/10/17.
  */
 
-public class ContestDetailsFragment extends NostraBaseFragment {
+public class ContestDetailsFragment extends NostraBaseFragment implements View.OnClickListener {
 
     private static final String TAG = ContestDetailsFragment.class.getSimpleName();
+
+    private ContestDetailsFragmentListener mContestDetailsFragmentListener;
 
     public ContestDetailsFragment() {
     }
@@ -36,9 +40,21 @@ public class ContestDetailsFragment extends NostraBaseFragment {
     TextView mTvTBarHeading;
     TextView mTvTBarSubHeading;
     TextView mTvTBarWalletMoney;
+    Button joinContest;
     String challengeName;
 
     private ContestDetailsViewPagerAdapter mViewPagerAdapter;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof ContestDetailsActivity) {
+            mContestDetailsFragmentListener = (ContestDetailsFragmentListener) context;
+        } else {
+            throw new RuntimeException("Activity must implement " + TAG);
+        }
+    }
 
 
     @Override
@@ -53,14 +69,16 @@ public class ContestDetailsFragment extends NostraBaseFragment {
         mTvTBarHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
         mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
         mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
-
-        setInfo();
+        joinContest = (Button) rootView.findViewById(R.id.join_contest_btn);
     }
 
-    private void setInfo() {
+    private void setInfo(Contest contest) {
 
-        mTvTBarHeading.setText("Contest Name");
-        mTvTBarSubHeading.setText(challengeName);
+        if (contest != null) {
+            mTvTBarHeading.setText(contest.getTitle());
+            mTvTBarSubHeading.setText("India vs Aus T20");
+            joinContest.setText("Pay " + Constants.RUPEE_SYMBOL + contest.getEntryFee().toString() + " and Join Contest");
+        }
 
         int amount = (int) WalletHelper.getTotalBalance();
         mTvTBarWalletMoney.setText(String.valueOf(amount));
@@ -80,6 +98,7 @@ public class ContestDetailsFragment extends NostraBaseFragment {
         if (arguments != null) {
             Contest contest = Parcels.unwrap(arguments.getParcelable(Constants.BundleKeys.CONTEST));
             createAdapter(contest);
+            setInfo(contest);
         }
     }
 
@@ -95,7 +114,7 @@ public class ContestDetailsFragment extends NostraBaseFragment {
 
 
             RewardsFragment rewardsFragment = RewardsFragment.newInstance(contest.getContestId());
-            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.REWARDS);
+            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
 
             RulesFragment rulesFragment = RulesFragment.newInstance(contest);
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
@@ -105,6 +124,7 @@ public class ContestDetailsFragment extends NostraBaseFragment {
             mViewPager.setOffscreenPageLimit(3);
 
             setTabLayout(mViewPager);
+
         }
 
     }
@@ -131,4 +151,15 @@ public class ContestDetailsFragment extends NostraBaseFragment {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.refer_referral_credit_layout:
+                if (mContestDetailsFragmentListener != null) {
+                    mContestDetailsFragmentListener.onJoinContestClicked();
+                }
+                break;
+
+        }
+    }
 }

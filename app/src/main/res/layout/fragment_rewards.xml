@@ -23,6 +23,7 @@
         android:id="@+id/rewards_rcv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dim_90"
         android:layout_below="@+id/rewards_challenge_end_time"
         android:paddingTop="@dimen/dp_5"
         android:clipToPadding="false" />
@@ -34,6 +35,7 @@
         android:gravity="center"
         android:text="The prize money for this contest might vary with the participation of players.To know more"
         app:typeface="lato_regular"
+        android:visibility="gone"
         android:layout_below="@+id/rewards_rcv"
         android:layout_marginRight="@dimen/dim_30"
         android:layout_marginLeft="@dimen/dim_30"
@@ -49,6 +51,7 @@
         android:gravity="center"
         app:typeface="lato_regular"
         android:text="CLICK HERE"
+        android:visibility="gone"
         android:layout_below="@+id/rewards_disclaimer"
         android:layout_marginRight="@dimen/dim_30"
         android:layout_marginLeft="@dimen/dim_30"
