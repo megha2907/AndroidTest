@@ -1,22 +1,26 @@
 package in.sportscafe.nostragamus.module.nostraHome;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
 import in.sportscafe.nostragamus.module.contest.ui.ContestFragment;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment;
+import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditFragment;
 import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesFragment;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
@@ -225,4 +229,50 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             }, DOUBLE_BACK_PRESSED_DELAY_ALLOWED);
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mNetworkStateChangedReceiver,
+                new IntentFilter(Constants.IntentActions.ACTION_INTERNET_STATE_CHANGED));
+    }
+
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mNetworkStateChangedReceiver);
+        super.onStop();
+    }
+
+    /* Local broadcast receiver when Internet connected, if app is in Foreground, will trigger action */
+    BroadcastReceiver mNetworkStateChangedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onInternetConnected();
+        }
+    };
+
+    private void onInternetConnected() {
+        if (!this.isFinishing()) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+            dialogBuilder.setTitle("Internet Connected");
+            dialogBuilder.setMessage("Reload data");
+            dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+                    if (fragment != null) {
+                        if (fragment instanceof NewChallengesFragment) {
+                            ((NewChallengesFragment) fragment).onInternetConnected();
+                        }
+                        if (fragment instanceof InPlayFragment) {
+                            ((InPlayFragment) fragment).onInternetConnected();
+                        }
+                    }
+                }
+            });
+            dialogBuilder.show();
+        }
+    }
+
 }

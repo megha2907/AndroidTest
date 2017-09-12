@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment">
+
+    <LinearLayout
+        android:id="@+id/inplay_matches_content_View"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <!-- Matches status timeline -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:minHeight="@dimen/dim_100"
+            >
+
+            <LinearLayout
+                android:id="@+id/match_status_timeline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                android:layout_marginTop="@dimen/dim_16"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/inplay_match_timeline_games_left_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white_80"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_regular"
+                android:layout_marginTop="@dimen/dim_12"
+                android:layout_marginBottom="@dimen/dim_10"/>
+
+        </LinearLayout>
+
+        <!-- List -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/inPlay_matches_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <!-- Loading View -->
+    <LinearLayout
+        android:id="@+id/inplay_matches_loading_View"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <in.sportscafe.nostragamus.module.common.NostraProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

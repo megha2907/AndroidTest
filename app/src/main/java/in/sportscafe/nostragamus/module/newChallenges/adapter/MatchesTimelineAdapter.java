@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.newmatches;
+package in.sportscafe.nostragamus.module.newChallenges.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -44,7 +43,6 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.CustomTypefaceSpan;
-import in.sportscafe.nostragamus.module.feed.dto.Parties;
 import in.sportscafe.nostragamus.module.newChallenges.dto.Match;
 import in.sportscafe.nostragamus.module.newChallenges.dto.MatchParty;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
