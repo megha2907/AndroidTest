@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.HmImageView;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -95,8 +97,10 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         if (userLeaderBoard.getRank() != null) {
             if (userLeaderBoard.getRank() == 1 || userLeaderBoard.getRank() == 2 || userLeaderBoard.getRank() == 3) {
                 holder.mTvRank.setTextColor(Color.WHITE);
+                holder.mIvTopRankIndicator.setVisibility(View.VISIBLE);
             } else {
                 holder.mTvRank.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.leaderboard_rank_color));
+                holder.mIvTopRankIndicator.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -154,9 +158,11 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
 
         ImageView mIvStatus;
 
+        ImageView mIvTopRankIndicator;
+
         TextView mTvRank;
 
-        RoundImage mIvUser;
+        HmImageView mIvUser;
 
         TextView mTvName;
 
@@ -175,9 +181,10 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         public ViewHolder(View V) {
             super(V);
 
+            mIvTopRankIndicator = (ImageView) V.findViewById(R.id.leaderboard_row_iv_rank_indicator);
             mIvStatus = (ImageView) V.findViewById(R.id.leaderboard_row_iv_status);
             mTvRank = (TextView) V.findViewById(R.id.leaderboard_row_tv_rank);
-            mIvUser = (RoundImage) V.findViewById(R.id.leaderboard_row_iv_user_img);
+            mIvUser = (HmImageView) V.findViewById(R.id.leaderboard_row_iv_user_img);
             mTvName = (TextView) V.findViewById(R.id.leaderboard_row_tv_user_name);
             mTvTotalPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_points);
             mTvMatchPoints = (TextView) V.findViewById(R.id.leaderboard_row_tv_match_points);

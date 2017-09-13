@@ -7,20 +7,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
 
 /**
  * Created by Jeeva on 10/6/16.
  */
-public class LeaderBoardFragment extends NostragamusFragment implements LeaderBoardView {
+public class LeaderBoardFragment extends BaseFragment implements LeaderBoardView {
 
     private RecyclerView mRvLeaderBoard;
 
@@ -89,4 +92,83 @@ public class LeaderBoardFragment extends NostragamusFragment implements LeaderBo
         mLeaderBoardPresenter.update(bundle);
     }
 
+    @Override
+    public void showInApp() {
+
+    }
+
+    @Override
+    public void hideInApp() {
+
+    }
+
+    @Override
+    public void showInAppMessage(String message) {
+
+    }
+
+    @Override
+    public void showMessage(String message, String positiveButton, View.OnClickListener positiveClickListener) {
+
+    }
+
+    @Override
+    public void showMessage(String message, String positiveButton, View.OnClickListener positiveClickListener, String negativeButton, View.OnClickListener negativeClickListener) {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showMessage(String message, int duration) {
+
+    }
+
+    @Override
+    public boolean isMessageShowing() {
+        return false;
+    }
+
+    @Override
+    public void dismissMessage() {
+
+    }
+
+    @Override
+    public void showProgressbar() {
+
+    }
+
+    @Override
+    public void updateProgressbar() {
+
+    }
+
+    @Override
+    public boolean dismissProgressbar() {
+        return false;
+    }
+
+    @Override
+    public void showSoftKeyboard(View view) {
+
+    }
+
+    @Override
+    public void hideSoftKeyboard() {
+
+    }
+
+    @Override
+    public LayoutInflater getLayoutInflater() {
+        return null;
+    }
+
+    @Override
+    public String getTrimmedText(TextView textView) {
+        return null;
+    }
 }

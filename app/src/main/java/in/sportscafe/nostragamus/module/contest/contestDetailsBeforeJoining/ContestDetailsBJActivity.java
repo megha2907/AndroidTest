@@ -1,23 +1,21 @@
-package in.sportscafe.nostragamus.module.contest.contestDetails;
+package in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
  * Created by deepanshi on 9/10/17.
  */
 
-public class ContestDetailsActivity extends NostraBaseActivity implements ContestDetailsFragmentListener {
+public class ContestDetailsBJActivity extends NostraBaseActivity implements ContestDetailsBJFragmentListener {
 
-    private static final String TAG = ContestDetailsActivity.class.getSimpleName();
+    private static final String TAG = ContestDetailsBJActivity.class.getSimpleName();
 
-    private ContestDetailsFragment mContestDetailsFragment;
+    private ContestDetailsBJFragment mContestDetailsBJFragment;
 
 
     @Override
@@ -34,12 +32,12 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
             args = getIntent().getExtras();
         }
 
-        mContestDetailsFragment = new ContestDetailsFragment();
+        mContestDetailsBJFragment = new ContestDetailsBJFragment();
         if (args != null) {
-            mContestDetailsFragment.setArguments(args);
+            mContestDetailsBJFragment.setArguments(args);
         }
 
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, mContestDetailsFragment);
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, mContestDetailsBJFragment);
     }
 
     @Override
@@ -50,13 +48,18 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
     }
 
     private void passIntentToFragment(Intent intent) {
-        if (intent != null && mContestDetailsFragment != null) {
-            mContestDetailsFragment.onNewIntent(intent);
+        if (intent != null && mContestDetailsBJFragment != null) {
+            mContestDetailsBJFragment.onNewIntent(intent);
         }
     }
 
     @Override
     public void onJoinContestClicked() {
 
+    }
+
+    @Override
+    public void onBackBtnClicked() {
+        onBackPressed();
     }
 }

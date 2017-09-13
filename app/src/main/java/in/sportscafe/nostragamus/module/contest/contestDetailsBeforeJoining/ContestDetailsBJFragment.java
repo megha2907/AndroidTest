@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.contest.contestDetails;
+package in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,13 +29,13 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
  * Created by deepanshi on 9/10/17.
  */
 
-public class ContestDetailsFragment extends NostraBaseFragment implements View.OnClickListener {
+public class ContestDetailsBJFragment extends NostraBaseFragment implements View.OnClickListener {
 
-    private static final String TAG = ContestDetailsFragment.class.getSimpleName();
+    private static final String TAG = ContestDetailsBJFragment.class.getSimpleName();
 
-    private ContestDetailsFragmentListener mContestDetailsFragmentListener;
+    private ContestDetailsBJFragmentListener mContestDetailsBJFragmentListener;
 
-    public ContestDetailsFragment() {
+    public ContestDetailsBJFragment() {
     }
 
     TextView mTvTBarHeading;
@@ -44,14 +44,14 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
     Button joinContest;
     String challengeName;
 
-    private ContestDetailsViewPagerAdapter mViewPagerAdapter;
+    private ContestDetailsBJViewPagerAdapter mViewPagerAdapter;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof ContestDetailsActivity) {
-            mContestDetailsFragmentListener = (ContestDetailsFragmentListener) context;
+        if (context instanceof ContestDetailsBJActivity) {
+            mContestDetailsBJFragmentListener = (ContestDetailsBJFragmentListener) context;
         } else {
             throw new RuntimeException("Activity must implement " + TAG);
         }
@@ -71,12 +71,14 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
         mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
         mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
         joinContest = (Button) rootView.findViewById(R.id.join_contest_btn);
+        joinContest.setOnClickListener(this);
+        rootView.findViewById(R.id.contest_details_back_btn).setOnClickListener(this);
     }
 
     private void setInfo(Contest contest) {
 
         if (contest != null) {
-            mTvTBarHeading.setText(contest.getTitle());
+            mTvTBarHeading.setText(contest.getConfigName());
             mTvTBarSubHeading.setText("India vs Aus T20");
             joinContest.setText("Pay " + Constants.RUPEE_SYMBOL + contest.getEntryFee().toString() + " and Join Contest");
         }
@@ -106,12 +108,9 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
     private void createAdapter(Contest contest) {
 
         ViewPager mViewPager = (ViewPager) getView().findViewById(R.id.contest_details_viewPager);
-        mViewPagerAdapter = new ContestDetailsViewPagerAdapter(getChildFragmentManager(), getContext());
+        mViewPagerAdapter = new ContestDetailsBJViewPagerAdapter(getChildFragmentManager(), getContext());
 
         if (contest != null) {
-
-            InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();
-            mViewPagerAdapter.addFragment(matchTimelineViewPagerFragment, Constants.ContestDetailsTabs.MATCHES);
 
             ContestEntriesViewPagerFragment contestEntriesViewPagerFragment = new ContestEntriesViewPagerFragment();
             mViewPagerAdapter.addFragment(contestEntriesViewPagerFragment, Constants.ContestDetailsTabs.ENTRIES);
@@ -123,7 +122,7 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
 
             mViewPager.setAdapter(mViewPagerAdapter);
-            mViewPager.setOffscreenPageLimit(4);
+            mViewPager.setOffscreenPageLimit(3);
 
             setTabLayout(mViewPager);
 
@@ -144,7 +143,6 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
                     contestTabLayout.getTabAt(0).setCustomView(mViewPagerAdapter.getTabView(0));
                     contestTabLayout.getTabAt(1).setCustomView(mViewPagerAdapter.getTabView(1));
                     contestTabLayout.getTabAt(2).setCustomView(mViewPagerAdapter.getTabView(2));
-                    contestTabLayout.getTabAt(3).setCustomView(mViewPagerAdapter.getTabView(3));
                 }
 
             }
@@ -157,9 +155,14 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.refer_referral_credit_layout:
-                if (mContestDetailsFragmentListener != null) {
-                    mContestDetailsFragmentListener.onJoinContestClicked();
+            case R.id.join_contest_btn:
+                if (mContestDetailsBJFragmentListener != null) {
+                    mContestDetailsBJFragmentListener.onJoinContestClicked();
+                }
+                break;
+            case R.id.contest_details_back_btn:
+                if (mContestDetailsBJFragmentListener != null) {
+                    mContestDetailsBJFragmentListener.onBackBtnClicked();
                 }
                 break;
 

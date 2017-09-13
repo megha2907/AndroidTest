@@ -19,26 +19,26 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
 @Parcel
 public class Contest {
 
-    @JsonProperty("contest_id")
+    @JsonProperty("config_id")
     private int contestId;
 
-    @JsonProperty("contest_type_id")
-    private int contestTypeId;
-
     @JsonProperty("config_name")
-    private String title;
+    private String configName;
+
+    @JsonProperty("challenge_name")
+    private String challengeName;
 
     @JsonProperty("subtitle")
     private String subtitle;
-
-    @JsonProperty("category")
-    private String category;
 
     @JsonProperty("prize_money")
     private Integer prizes;
 
     @JsonProperty("contest_type")
     private ContestTypeInfo contestTypeInfo;
+
+    @JsonProperty("mode")
+    private ContestModeInfo contestModeInfo;
 
     @JsonProperty("fee")
     private Integer entryFee;
@@ -52,7 +52,7 @@ public class Contest {
     @JsonProperty("filling_rooms")
     private int fillingRooms;
 
-    @JsonProperty("max_transfer")
+    @JsonProperty("max_transfer_limit")
     private int maxTransferPowerUps;
 
     @JsonProperty("tot_matches")
@@ -61,7 +61,7 @@ public class Contest {
     @JsonProperty("tournaments")
     private List<String> tournaments = new ArrayList<>();
 
-    @JsonProperty("total_powerups")
+    @JsonProperty("powerups")
     HashMap<String, Integer> powerUpsMap = new HashMap<String, Integer>();
 
     private int contestItemType = ContestAdapterItemType.CONTEST;
@@ -74,20 +74,12 @@ public class Contest {
         this.contestId = contestId;
     }
 
-    public int getContestTypeId() {
-        return contestTypeId;
+    public String getConfigName() {
+        return configName;
     }
 
-    public void setContestTypeId(int contestTypeId) {
-        this.contestTypeId = contestTypeId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setConfigName(String configName) {
+        this.configName = configName;
     }
 
     public String getSubtitle() {
@@ -96,14 +88,6 @@ public class Contest {
 
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public int getPrizes() {
@@ -217,6 +201,22 @@ public class Contest {
 
     public void setPowerUpsMap(HashMap<String, Integer> powerUpsMap) {
         this.powerUpsMap = powerUpsMap;
+    }
+
+    public String getChallengeName() {
+        return challengeName;
+    }
+
+    public void setChallengeName(String challengeName) {
+        this.challengeName = challengeName;
+    }
+
+    public ContestModeInfo getContestModeInfo() {
+        return contestModeInfo;
+    }
+
+    public void setContestModeInfo(ContestModeInfo contestModeInfo) {
+        this.contestModeInfo = contestModeInfo;
     }
 
 

@@ -28,10 +28,11 @@
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/leaderboard_row_tv_rank"
-            android:layout_width="@dimen/dp_0"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dim_6"
-            android:layout_weight="1.2"
+            android:minWidth="@dimen/dim_36"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/dim_8"
             android:text="-"
             android:textColor="@color/leaderboard_rank_color"
             android:textSize="@dimen/sp_20"
@@ -40,22 +41,25 @@
 
         <ImageView
             android:id="@+id/leaderboard_row_iv_status"
-            android:layout_width="@dimen/dim_4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:minWidth="@dimen/dim_6"
+            android:layout_marginLeft="@dimen/dim_4"
             android:src="@drawable/status_arrow_down" />
 
 
-        <in.sportscafe.nostragamus.module.common.RoundImage
+        <com.jeeva.android.widgets.HmImageView
             android:id="@+id/leaderboard_row_iv_user_img"
             android:layout_width="@dimen/dim_36"
             android:layout_height="@dimen/dim_36"
+            android:layout_marginLeft="@dimen/dim_10"
+            android:scaleType="fitXY"
             android:src="@drawable/left_placeholder_icon" />
 
         <RelativeLayout
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginLeft="@dimen/dim_12"
             android:layout_weight="2.5">
 
             <com.jeeva.android.widgets.customfont.CustomTextView

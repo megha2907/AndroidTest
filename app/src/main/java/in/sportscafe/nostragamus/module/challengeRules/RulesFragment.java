@@ -132,15 +132,15 @@ public class RulesFragment extends BaseFragment {
     }
 
     private void showContestRuleThree(Contest contest) {
-        if (contest.getContestTypeInfo() != null) {
-            TvContestRuleThree.setText(contest.getContestTypeInfo().getType()
+        if (contest.getContestTypeInfo() != null && contest.getContestModeInfo()!=null) {
+            TvContestRuleThree.setText(contest.getContestTypeInfo().getName()
                     + " - " + contest.getContestTypeInfo().getDescription());
 
-            if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+            if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
                 IvContestRuleThree.setBackgroundResource(R.drawable.guaranteed_icon);
-            } else if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.POOL)) {
+            } else if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.POOL)) {
                 IvContestRuleThree.setBackgroundResource(R.drawable.pool_icon);
-            }else if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+            }else if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                 IvContestRuleThree.setBackgroundResource(R.drawable.no_guarantee_icon);
             }
 

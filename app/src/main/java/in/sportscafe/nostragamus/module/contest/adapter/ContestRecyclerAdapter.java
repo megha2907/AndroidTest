@@ -87,7 +87,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             if (contest != null) {
 
-                viewHolder.mTvPoolName.setText(contest.getTitle());
+                viewHolder.mTvPoolName.setText(contest.getConfigName());
 
                 if (contest.noPrizes()) {
                     viewHolder.mTvPrizes.setText("No Prizes");
@@ -99,11 +99,11 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
                 viewHolder.mTvContestsAvailable.setText(String.valueOf(contest.getFillingRooms()));
 
-                if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
                     viewHolder.mIvContestsType.setBackgroundResource(R.drawable.guaranteed_icon);
-                } else if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.POOL)) {
+                } else if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.POOL)) {
                     viewHolder.mIvContestsType.setBackgroundResource(R.drawable.pool_icon);
-                }else if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                }else if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                     viewHolder.mIvContestsType.setBackgroundResource(R.drawable.no_guarantee_icon);
                 }
 

@@ -756,6 +756,7 @@ public interface Constants {
         String ENTRIES = "Entries";
         String PRIZES = "Prizes";
         String RULES = "Rules";
+        String LEADERBOARDS = "Leaderboard";
     }
 
     interface PopUpType {
@@ -764,7 +765,7 @@ public interface Constants {
     }
 
     interface ContestType {
-        String GUARANTEED = "guaranteed";
+        String GUARANTEED = "g";
         String NON_GUARANTEED = "ng";
         String POOL = "pool";
     }
