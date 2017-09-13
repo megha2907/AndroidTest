@@ -44,9 +44,9 @@ public class NewChallengesDataProvider {
     }
 
     private void loadChallengesFromServer(final Context appContext, final ChallengesDataProviderListener listener) {
-        NewChallengesRequest request = new NewChallengesRequest();
+//        NewChallengesRequest request = new NewChallengesRequest();
 
-        MyWebService.getInstance().getNewHomeChallenges(request).enqueue(new ApiCallBack<List<NewChallengesResponse>>() {
+        MyWebService.getInstance().getNewHomeChallenges().enqueue(new ApiCallBack<List<NewChallengesResponse>>() {
             @Override
             public void onResponse(Call<List<NewChallengesResponse>> call, Response<List<NewChallengesResponse>> response) {
                 super.onResponse(call, response);

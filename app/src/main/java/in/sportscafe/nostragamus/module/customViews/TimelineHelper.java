@@ -16,6 +16,8 @@ import in.sportscafe.nostragamus.module.contest.dto.Contest;
 
 public class TimelineHelper  {
 
+
+
     private static View getLineView(Context context, boolean isCompleted) {
         View view = View.inflate(context, R.layout.match_timeline_line_view, null);
         if (isCompleted) {
@@ -71,6 +73,7 @@ public class TimelineHelper  {
                 titleView.setText(title);
                 parent.addView(titleView, parent.getChildCount(), new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
             }
+
         }
     }
 
