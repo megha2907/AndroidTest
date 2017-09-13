@@ -1,35 +1,33 @@
-package in.sportscafe.nostragamus.module.user.points;
+package in.sportscafe.nostragamus.module.user.points.pointsFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+import in.sportscafe.nostragamus.module.user.points.PointsModel;
+import in.sportscafe.nostragamus.module.user.points.PointsPresenter;
 
 /**
- * Created by Jeeva on 10/6/16.
+ * Created by deepanshi on 9/13/17.
  */
-public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnPointsModelListener {
 
-    private PointsView mPointsView;
+public class PointsFragmentPresenterImpl implements PointsPresenter, PointsFragmentModeImpl.OnPointsModelListener {
+
+    private PointsFragmentView mPointsView;
 
     private PointsModel mPointsModel;
-//
-//    private OnLeaderBoardUpdateListener mLeaderBoardUpdateListener;
 
 
-    private PointsPresenterImpl(PointsView pointsView) {
+    private PointsFragmentPresenterImpl(PointsFragmentView pointsView) {
         this.mPointsView = pointsView;
-        this.mPointsModel = PointsModelImpl.newInstance(this, mPointsView.getActivity().getSupportFragmentManager());
+        this.mPointsModel = PointsFragmentModeImpl.newInstance(this, mPointsView.getActivity().getSupportFragmentManager());
     }
 
-    public static PointsPresenterImpl newInstance(PointsView pointsView) {
-        return new PointsPresenterImpl(pointsView);
+    public static PointsFragmentPresenterImpl newInstance(PointsFragmentView pointsView) {
+        return new PointsFragmentPresenterImpl(pointsView);
     }
 
     @Override
@@ -64,20 +62,6 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
         mPointsView.setMatchPoints(isMatchPoints);
     }
 
-    @Override
-    public void setChallengeTimer(String days, String hours, String mins, String secs) {
-        mPointsView.setChallengeTimer(days, hours, mins, secs);
-    }
-
-    @Override
-    public void setChallengeTimerView(boolean isChallengeTimer) {
-        mPointsView.setChallengeTimerView(isChallengeTimer);
-    }
-
-    @Override
-    public void setGroupHeadings(String groupName, String heading) {
-        mPointsView.setGroupHeadings(groupName, heading);
-    }
 
     @Override
     public void setUserLeaderBoard(UserLeaderBoard userLeaderBoard) {
@@ -105,23 +89,21 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     }
 
     private void refreshLb() {
-        mPointsView.showProgressbar();
+//        mPointsView.showProgressbar();
         mPointsModel.refreshLeaderBoard();
     }
 
     @Override
     public void onSuccessLeaderBoard() {
-        mPointsView.dismissProgressbar();
+       // mPointsView.dismissProgressbar();
         mPointsView.initMyPosition(mPointsModel.getAdapter(), mPointsModel.getSelectedPosition());
     }
 
     @Override
     public void onEmpty() {
-        mPointsView.dismissProgressbar();
-        mPointsView.showInAppMessage("Your leaderboard will update here after a Match you have played is over");
+      //  mPointsView.dismissProgressbar();
+        //mPointsView.showInAppMessage("Your leaderboard will update here after a Match you have played is over");
 
     }
-
-
 
 }

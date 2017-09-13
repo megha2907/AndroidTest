@@ -9,25 +9,19 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 
 import com.jeeva.android.BaseFragment;
-import com.jeeva.android.Log;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.contest.contestDetails.ContestDetailsActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.ContestDetailsBJActivity;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
-import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterListener;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.module.newChallenges.ui.matches.MatchesTimelineActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -111,7 +105,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
     private void goToNewMatchesTimeline(Bundle args) {
         if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), ContestDetailsActivity.class);
+            Intent intent = new Intent(getActivity(), ContestDetailsBJActivity.class);
             intent.putExtras(args);
             startActivity(intent);
         }
