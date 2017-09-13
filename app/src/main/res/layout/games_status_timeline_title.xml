@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jeeva.android.widgets.customfont.CustomTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="@dimen/dim_50"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:textColor="@color/white"
+    android:textSize="@dimen/sp_9"/>

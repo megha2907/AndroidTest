@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.utils.timeutils;
 
+import android.text.TextUtils;
+
 import com.jeeva.android.ExceptionTracker;
 
 import java.text.DateFormat;
@@ -140,14 +142,16 @@ public class TimeUtils {
     }
 
     public static Date getDateFromDateString(String dateString, String format, String timeZone) {
-        DateFormat simpleDateFormat = new SimpleDateFormat(format);
-        if (null != timeZone) {
-            simpleDateFormat.setTimeZone(TimeZone.getTimeZone(timeZone));
-        }
-        try {
-            return simpleDateFormat.parse(dateString);
-        } catch (ParseException e) {
-            ExceptionTracker.track(e);
+        if (!TextUtils.isEmpty(dateString) && !TextUtils.isEmpty(format) && !TextUtils.isEmpty(timeZone)) {
+            DateFormat simpleDateFormat = new SimpleDateFormat(format);
+            if (null != timeZone) {
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(timeZone));
+            }
+            try {
+                return simpleDateFormat.parse(dateString);
+            } catch (ParseException e) {
+                ExceptionTracker.track(e);
+            }
         }
         return null;
     }

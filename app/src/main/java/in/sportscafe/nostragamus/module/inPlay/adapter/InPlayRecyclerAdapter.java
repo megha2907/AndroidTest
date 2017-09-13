@@ -29,7 +29,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-        int viewType = InPlayAdapterItemType.IN_PLAY;
+        int viewType = InPlayAdapterItemType.JOINED_CONTEST;
         if (mInPlayResponseList != null && !mInPlayResponseList.isEmpty()) {
             viewType = mInPlayResponseList.get(position).getInPlayAdapterItemType();
         }
@@ -43,9 +43,9 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         switch (viewType) {
-            case InPlayAdapterItemType.IN_PLAY:
-                View v1 = inflater.inflate(R.layout.in_play_card_layout, parent, false);
-                viewHolder = new InPlayItemViewHolder(v1, mInPlayAdapterListener);
+            case InPlayAdapterItemType.JOINED_CONTEST:
+                View v1 = inflater.inflate(R.layout.in_play_joined_card_layout, parent, false);
+                viewHolder = new InPlayJoinedItemViewHolder(v1, mInPlayAdapterListener);
                 break;
         }
 
@@ -56,7 +56,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder != null) {
             switch (holder.getItemViewType()) {
-                case InPlayAdapterItemType.IN_PLAY:
+                case InPlayAdapterItemType.JOINED_CONTEST:
                     bindInPlayValues(holder, position);
                     break;
             }
@@ -66,7 +66,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private void bindInPlayValues(RecyclerView.ViewHolder holder, int position) {
         if (mInPlayResponseList != null && mInPlayResponseList.size() > position) {
             InPlayResponse inPlayResponse = mInPlayResponseList.get(position);
-            InPlayItemViewHolder inPlayItemViewHolder = (InPlayItemViewHolder) holder;
+            InPlayJoinedItemViewHolder inPlayJoinedItemViewHolder = (InPlayJoinedItemViewHolder) holder;
 
             if (inPlayResponse != null) {
 
@@ -79,22 +79,43 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return (mInPlayResponseList != null) ? mInPlayResponseList.size() : 0;
     }
 
-    public class InPlayItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class InPlayJoinedItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private InPlayAdapterListener clickListener;
 
-        public InPlayItemViewHolder(View itemView, @NonNull InPlayAdapterListener listener) {
+        public InPlayJoinedItemViewHolder(View itemView, @NonNull InPlayAdapterListener listener) {
             super(itemView);
-            this.clickListener = listener;
 
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if (clickListener != null) {
-                clickListener.onInPlayChallengeClicked(null);
-            }
+        }
+    }
+
+    public class InPlayCompletedItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        public InPlayCompletedItemViewHolder(View itemView, @NonNull InPlayAdapterListener listener) {
+            super(itemView);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+        }
+    }
+
+    public class InPlayHeadLessItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        public InPlayHeadLessItemViewHolder(View itemView, @NonNull InPlayAdapterListener listener) {
+            super(itemView);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
         }
     }
 }

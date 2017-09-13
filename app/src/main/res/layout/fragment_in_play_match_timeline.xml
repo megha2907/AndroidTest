@@ -24,12 +24,29 @@
             >
 
             <LinearLayout
-                android:id="@+id/match_status_timeline"
+                android:id="@+id/match_status_timeline_title_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:scrollbars="horizontal"
                 android:layout_marginTop="@dimen/dim_16"/>
+
+            <LinearLayout
+                android:id="@+id/match_status_timeline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"/>
+
+            <LinearLayout
+                android:id="@+id/match_status_timeline_bottom_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/inplay_match_timeline_games_left_textView"

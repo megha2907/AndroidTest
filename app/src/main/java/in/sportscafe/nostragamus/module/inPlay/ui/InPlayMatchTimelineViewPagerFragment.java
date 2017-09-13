@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,15 +17,18 @@ import com.jeeva.android.Log;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,6 +99,8 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
     private void setMatchesTimeLine(InPlayMatchesResponse responses) {
         if (responses != null && responses.getInPlayMatchList() != null && getView() != null) {
+
+
             int totalNodes = responses.getInPlayMatchList().size();
             int totalLines = totalNodes - 1;
 
@@ -104,28 +108,49 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textView);
             gamesLeftTextView.setText(gamesLeftStr);
 
+            /* Timeline */
             LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
             if (totalNodes > 1) {
-                View nodeView = null, lineView = null;
-                int w = (int)getResources().getDimension(R.dimen.dim_20);
-                int width = (int)getResources().getDimension(R.dimen.dim_50);
-                int height = (int)getResources().getDimension(R.dimen.dim_4);
-
                 for (int temp = 0 ; temp < responses.getInPlayMatchList().size(); temp++) {
                     InPlayMatch match = responses.getInPlayMatchList().get(temp);
-
-                    nodeView = getNode(match.isMatchCompleted(), match.isPlayed());
-                    if (nodeView != null) {
-                        parent.addView(nodeView, parent.getChildCount(), new ViewGroup.LayoutParams(w, w));
+                    boolean isNodeLineRequired = true;
+                    if (temp == totalLines) {
+                        isNodeLineRequired = false;
                     }
+                    TimelineHelper.addNode(parent, true, true, isNodeLineRequired);
+                }
+            }
 
-                    lineView = getLineView(match.isMatchCompleted());
-                    if (temp != totalLines) {
-                        parent.addView(lineView, parent.getChildCount(), new ViewGroup.LayoutParams(width, height));
-                    }
+            /* Title */
+            LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
+            if (responses.getInPlayMatchList().size() > 0) {
+                for (int temp = 0 ; temp < responses.getInPlayMatchList().size(); temp++) {
+                    TimelineHelper.addTextNode(titleParent, "Game " + (temp+1));
+                }
+            }
+
+            /* Bottom */
+            LinearLayout bottomParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_bottom_parent);
+            if (responses.getInPlayMatchList().size() > 0) {
+                for (int temp = 0 ; temp < responses.getInPlayMatchList().size(); temp++) {
+                    String dateTime = responses.getInPlayMatchList().get(temp).getMatchStartTime();
+                    TimelineHelper.addTextNode(bottomParent, getDateTimeValue(dateTime));
                 }
             }
         }
+    }
+
+    private String getDateTimeValue(String startTime) {
+        long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                startTime,
+                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                Constants.DateFormats.GMT
+        );
+
+        int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
+        return dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
+                TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
+                + TimeUtils.getDateStringFromMs(startTimeMs, Constants.DateFormats.HH_MM_AA).replace("AM", "am").replace("PM", "pm");
     }
 
     private int getGamesLeftCount(List<InPlayMatch> matches) {
@@ -138,30 +163,6 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             }
         }
         return gameLeft;
-    }
-
-    private View getLineView(boolean isCompleted) {
-        View view = View.inflate(getContext(), R.layout.match_timeline_line_view, null);
-        if (isCompleted) {
-            view.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.games_status_timeline_node));
-        } else {
-            view.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.games_status_timeline_node));
-        }
-        return view;
-    }
-
-    private View getNode(boolean isCompleted, boolean played) {
-        View view = View.inflate(getContext(), R.layout.match_timeline_node_view, null);
-        if (isCompleted) {
-            view.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.games_status_timeline_node));
-        } else {
-            if (played) {
-                view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.blue_104468));
-            } else {
-                view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.yellowcolor));
-            }
-        }
-        return view;
     }
 
     @NonNull

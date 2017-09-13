@@ -45,9 +45,7 @@ public class InPlayDataProvider {
 
     private void loadInPlayDataFromServer(final Context appContext, final InPlayDataProvider.InPlayDataProviderListener listener) {
 
-        InPlayRequest request = new InPlayRequest();
-
-        MyWebService.getInstance().getInPlayChallenges(request).enqueue(new ApiCallBack<List<InPlayResponse>>() {
+        MyWebService.getInstance().getInPlayChallenges().enqueue(new ApiCallBack<List<InPlayResponse>>() {
             @Override
             public void onResponse(Call<List<InPlayResponse>> call, Response<List<InPlayResponse>> response) {
                 super.onResponse(call, response);
