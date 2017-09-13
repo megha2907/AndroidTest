@@ -19,6 +19,9 @@ public class InPlayContestMatchDto {
     @JsonProperty("start_time")
     private String startTime;
 
+    @JsonProperty("isCompleted")
+    private boolean isCompleted;
+
     public boolean isPlayed() {
         return isPlayed;
     }
@@ -41,5 +44,13 @@ public class InPlayContestMatchDto {
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 }

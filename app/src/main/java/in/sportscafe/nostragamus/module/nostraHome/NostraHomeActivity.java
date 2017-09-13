@@ -163,10 +163,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     }
 
     private void loadInPlayFragment() {
-        if (mInPlayFragment == null) {
-            mInPlayFragment = new InPlayFragment();
-        }
-
+        mInPlayFragment = new InPlayFragment();
         if (getIntent() != null && getIntent().getExtras() != null) {
             mInPlayFragment.setArguments(getIntent().getExtras());
         }

@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.newChallenges.helpers;
 
+import android.text.TextUtils;
+
 import java.util.Calendar;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -30,17 +32,34 @@ public class DateTimeHelper {
 
     public static String getStartTime(String startTime) {
         String startTimeStr = "";
-
-        long millis = TimeUtils.getMillisecondsFromDateString(startTime);
-        if (millis > 0) {
-            long days = TimeUtils.getDaysDifference(millis - Calendar.getInstance().getTimeInMillis());
-            if (days > 1) {
-                startTimeStr = String.valueOf(days + " days");
-            } else {
-                startTimeStr = TimeUtils.getDateStringFromMs(millis, Constants.DateFormats.CHALLENGE_START_TIME_FORMAT);
+        if (!TextUtils.isEmpty(startTime)) {
+            long millis = TimeUtils.getMillisecondsFromDateString(startTime);
+            if (millis > 0) {
+                long days = TimeUtils.getDaysDifference(millis - Calendar.getInstance().getTimeInMillis());
+                if (days > 1) {
+                    startTimeStr = String.valueOf(days + " days");
+                } else {
+                    startTimeStr = TimeUtils.getDateStringFromMs(millis, Constants.DateFormats.CHALLENGE_START_TIME_FORMAT);
+                }
             }
         }
+        return startTimeStr;
+    }
 
+    public static String getInPlayMatchTime(String time) {
+        String startTimeStr = "";
+
+        if (!TextUtils.isEmpty(time)) {
+            long millis = TimeUtils.getMillisecondsFromDateString(time);
+            if (millis > 0) {
+                long days = TimeUtils.getDaysDifference(millis - Calendar.getInstance().getTimeInMillis());
+                if (days > 1) {
+                    startTimeStr = String.valueOf(days + " days");
+                } else {
+                    startTimeStr = TimeUtils.getDateStringFromMs(millis, Constants.DateFormats.CHALLENGE_START_TIME_FORMAT);
+                }
+            }
+        }
         return startTimeStr;
     }
 

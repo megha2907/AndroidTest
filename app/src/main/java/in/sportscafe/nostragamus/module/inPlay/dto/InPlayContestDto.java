@@ -21,6 +21,9 @@ public class InPlayContestDto {
     @JsonProperty("contest_mode")
     private String contestMode;
 
+    @JsonProperty("contest_name")
+    private String contestName;
+
     @JsonProperty("rank")
     private int rank;
 
@@ -55,6 +58,14 @@ public class InPlayContestDto {
 
     public void setContestMode(String contestMode) {
         this.contestMode = contestMode;
+    }
+
+    public String getContestName() {
+        return contestName;
+    }
+
+    public void setContestName(String contestName) {
+        this.contestName = contestName;
     }
 
     public int getRank() {

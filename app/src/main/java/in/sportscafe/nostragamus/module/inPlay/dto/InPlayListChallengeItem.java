@@ -1,38 +1,17 @@
 package in.sportscafe.nostragamus.module.inPlay.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import org.parceler.Parcel;
-
-import java.util.List;
-
-import in.sportscafe.nostragamus.module.contest.dto.Contest;
-import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
-
 /**
- * Created by deepanshi on 9/6/17.
+ * Created by sandip on 13/09/17.
  */
 
-@Parcel
-public class InPlayResponse {
+public class InPlayListChallengeItem {
 
-    @JsonProperty("challenge_id")
     private int challengeId;
-
-    @JsonProperty("challenge_name")
     private String challengeName;
-
-    @JsonProperty("challenge_desc")
     private String challengeDesc;
-
-    @JsonProperty("status")
-    private String status = "ongoing";
-
-    @JsonProperty("sports_id")
+    private String status;
     private int sportsId;
-
-    @JsonProperty("contests")
-    private List<InPlayContestDto> contestList;
+    private int contestCount = 0;
 
     public int getChallengeId() {
         return challengeId;
@@ -74,11 +53,11 @@ public class InPlayResponse {
         this.sportsId = sportsId;
     }
 
-    public List<InPlayContestDto> getContestList() {
-        return contestList;
+    public int getContestCount() {
+        return contestCount;
     }
 
-    public void setContestList(List<InPlayContestDto> contestList) {
-        this.contestList = contestList;
+    public void setContestCount(int contestCount) {
+        this.contestCount = contestCount;
     }
 }

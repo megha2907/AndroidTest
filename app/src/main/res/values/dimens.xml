@@ -150,6 +150,7 @@
     <dimen name="dim_50">50dp</dimen>
     <dimen name="dim_56">56dp</dimen>
     <dimen name="dim_60">60dp</dimen>
+    <dimen name="dim_68">68dp</dimen>
     <dimen name="dim_75">75dp</dimen>
     <dimen name="dim_90">90dp</dimen>
     <dimen name="dim_100">100dp</dimen>

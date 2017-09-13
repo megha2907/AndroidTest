@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAdapter;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
 /**
@@ -73,7 +76,7 @@ public class ContestFragment extends NostraBaseFragment {
         final List<ContestType> contestTypeList = dataProvider.getContestTypeList();
 
         //// TODO: 9/5/17 send challenge id and challenge name from bundle
-        int challengeId = 300;
+        int challengeId = getChallengeId();
         challengeName = "Australia vs India T20 Challenge";
         dataProvider.getContestDetails(challengeId, new ContestDataProvider.ContestDataProviderListener() {
             @Override
@@ -100,6 +103,22 @@ public class ContestFragment extends NostraBaseFragment {
         });
 
 
+    }
+
+    private int getChallengeId() {
+        int challengeId = 300;
+
+        Bundle args = getArguments();
+        if (args != null) {
+            if (args.containsKey(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM)) {
+                InPlayListChallengeItem challengeItem = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM));
+                if (challengeItem != null) {
+                    challengeId = challengeItem.getChallengeId();
+                }
+            }
+        }
+
+        return challengeId;
     }
 
     private void handleError(int status) {

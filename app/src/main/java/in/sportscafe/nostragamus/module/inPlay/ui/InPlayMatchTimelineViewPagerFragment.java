@@ -99,8 +99,6 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
     private void setMatchesTimeLine(InPlayMatchesResponse responses) {
         if (responses != null && responses.getInPlayMatchList() != null && getView() != null) {
-
-
             int totalNodes = responses.getInPlayMatchList().size();
             int totalLines = totalNodes - 1;
 
@@ -110,29 +108,24 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
             /* Timeline */
             LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
-            if (totalNodes > 1) {
+            LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
+            LinearLayout bottomParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_bottom_parent);
+
+            if (responses.getInPlayMatchList().size() > 0) {
                 for (int temp = 0 ; temp < responses.getInPlayMatchList().size(); temp++) {
+
                     InPlayMatch match = responses.getInPlayMatchList().get(temp);
                     boolean isNodeLineRequired = true;
                     if (temp == totalLines) {
                         isNodeLineRequired = false;
                     }
-                    TimelineHelper.addNode(parent, true, true, isNodeLineRequired);
-                }
-            }
+                    /* Content */
+                    TimelineHelper.addNode(parent, match.isMatchCompleted(), match.isPlayed(), isNodeLineRequired);
 
-            /* Title */
-            LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
-            if (responses.getInPlayMatchList().size() > 0) {
-                for (int temp = 0 ; temp < responses.getInPlayMatchList().size(); temp++) {
+                    /* Title */
                     TimelineHelper.addTextNode(titleParent, "Game " + (temp+1));
-                }
-            }
 
-            /* Bottom */
-            LinearLayout bottomParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_bottom_parent);
-            if (responses.getInPlayMatchList().size() > 0) {
-                for (int temp = 0 ; temp < responses.getInPlayMatchList().size(); temp++) {
+                    /* Footer */
                     String dateTime = responses.getInPlayMatchList().get(temp).getMatchStartTime();
                     TimelineHelper.addTextNode(bottomParent, getDateTimeValue(dateTime));
                 }
