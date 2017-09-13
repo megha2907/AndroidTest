@@ -129,8 +129,6 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mGroupBottomButton.setSelected(false);
     }
 
-
-
     private void onProfileClicked() {
         setProfileSelected();
         loadNavigationFragment();
@@ -165,7 +163,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     }
 
     private void loadInPlayFragment() {
-        /*if (mInPlayFragment == null) {
+        if (mInPlayFragment == null) {
             mInPlayFragment = new InPlayFragment();
         }
 
@@ -173,10 +171,10 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             mInPlayFragment.setArguments(getIntent().getExtras());
         }
 
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, mInPlayFragment);*/
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, mInPlayFragment);
 
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, new ContestFragment());
-
+        /*FragmentHelper.replaceFragment(this, R.id.fragment_container, new ContestFragment());
+*/
 
 //        Bundle bundle = new Bundle();
 //        bundle.putInt(Constants.BundleKeys.CONTEST_ID, 1);

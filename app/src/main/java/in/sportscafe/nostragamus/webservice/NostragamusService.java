@@ -331,14 +331,14 @@ public interface NostragamusService {
     @POST("v1/game/users/updateProfile")
     Call<ApiResponse> updateUserProfile(@Body UpdateUserProfileRequest updateUserProfileRequest);
 
-    @POST("v3/game/temp/getHomeChallenges")
-    Call<List<NewChallengesResponse>> getNewHomeChallenges(@Body NewChallengesRequest request);
+    @GET("/v3/game/challenges/new")
+    Call<List<NewChallengesResponse>> getNewHomeChallenges();
 
     @POST("v3/game/temp/getContests")
     Call<ContestResponse> getContests(@Body ContestRequest request);
 
-    @POST("v3/game/temp/getHomeChallenges")
-    Call<List<InPlayResponse>> getInPlayChallenges(@Body InPlayRequest request);
+    @GET("v3/game/challenges/inPlay")
+    Call<List<InPlayResponse>> getInPlayChallenges();
 
     @POST("v3/game/temp/getContestRewards")
     Call<RewardsResponse> getRewardDetails(@Body RewardsRequest request);

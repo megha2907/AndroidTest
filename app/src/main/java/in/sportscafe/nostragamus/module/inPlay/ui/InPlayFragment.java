@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.jeeva.android.BaseFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -22,6 +25,12 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
+import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
+import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerAdapter;
+import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerFragment;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
+import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
+import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,11 +52,6 @@ public class InPlayFragment extends BaseFragment {
     }
 
     private void initView(View rootView) {
-
-        mRcvInPlay = (RecyclerView) rootView.findViewById(R.id.in_play_rv);
-        mRcvInPlay.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false));
-        this.mRcvInPlay.setHasFixedSize(true);
 
     }
 
@@ -111,23 +115,69 @@ public class InPlayFragment extends BaseFragment {
         }
     }
 
-    private void showDataOnUi(List<InPlayResponse> inPlayResponseData) {
-        if (getView() != null && getActivity() != null) {
-            if (inPlayResponseData != null && inPlayResponseData.size() > 0) {
+    private void showDataOnUi(List<InPlayResponse> inPlayResponseList) {
+        if (getView() != null && getActivity() != null && inPlayResponseList != null && inPlayResponseList.size() > 0) {
+            TabLayout inPlayTabLayout = (TabLayout) getView().findViewById(R.id.inplay_tabs);
+            ViewPager inPlayViewPager = (ViewPager) getView().findViewById(R.id.inplay_viewPager);
 
-                if (mRcvInPlay != null) {
-                    //// TODO: 9/6/17 add list and set adapter
+            SportsDataProvider sportsDataProvider = new SportsDataProvider();
+            List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
+
+            ArrayList<InPlayViewPagerFragment> fragmentList = new ArrayList<>();
+            InPlayFilterHelper filterHelper = new InPlayFilterHelper();
+            InPlayViewPagerFragment tabFragment = null;
+
+            for (SportsTab sportsTab : sportsTabList) {
+                tabFragment = new InPlayViewPagerFragment();
+
+                int sportId = sportsTab.getSportsId();
+                List<InPlayResponse> inPlayFilteredList = null;
+                switch (sportId) {
+                    case InPlayFilterHelper.FILTER_ALL_SPORTS_ID:
+                        inPlayFilteredList = inPlayResponseList;
+                        break;
+
+                    case InPlayFilterHelper.FILTER_DAILY_SPORTS_ID:
+                        inPlayFilteredList = filterHelper.getDailyInplayChallenges(inPlayResponseList);
+                        break;
+
+                    case InPlayFilterHelper.FILTER_MIX_SPORTS_ID:
+                        inPlayFilteredList = filterHelper.getDailyInplayChallenges(inPlayResponseList);
+                        break;
+
+                    default:
+                        inPlayFilteredList = filterHelper.getInPlayChallengesFilteredOn(sportsTab.getSportsId(), inPlayResponseList);
+                        break;
                 }
 
-            } else {
-                // TODO: error page / no items found
+                if (inPlayFilteredList != null) {
+                    tabFragment.onChallengeData(inPlayFilteredList);
+                    tabFragment.setTabDetails(sportsTab);
+                    fragmentList.add(tabFragment);
+                }
             }
+
+            InPlayViewPagerAdapter viewPagerAdapter = new InPlayViewPagerAdapter
+                    (getActivity().getSupportFragmentManager(), fragmentList);
+            inPlayViewPager.setAdapter(viewPagerAdapter);
+
+            inPlayTabLayout.setupWithViewPager(inPlayViewPager);
+
+            for (int temp = 0; temp < inPlayTabLayout.getTabCount(); temp++) {
+                TabLayout.Tab tab = inPlayTabLayout.getTabAt(temp);
+                if (tab != null) {
+                    tab.setCustomView(viewPagerAdapter.getTabView(inPlayTabLayout.getContext(), temp));
+                }
+            }
+
+        } else {
+            // TODO: error page / no items found
         }
     }
 
     private void showLoadingProgressBar() {
         if (getView() != null) {
-            getView().findViewById(R.id.in_play_rv).setVisibility(View.GONE);
+            getView().findViewById(R.id.inplayContentLayout).setVisibility(View.GONE);
             getView().findViewById(R.id.inPlayProgressBarLayout).setVisibility(View.VISIBLE);
         }
     }
@@ -135,7 +185,7 @@ public class InPlayFragment extends BaseFragment {
     private void hideLoadingProgressBar() {
         if (getView() != null) {
             getView().findViewById(R.id.inPlayProgressBarLayout).setVisibility(View.GONE);
-            getView().findViewById(R.id.in_play_rv).setVisibility(View.VISIBLE);
+            getView().findViewById(R.id.inplayContentLayout).setVisibility(View.VISIBLE);
         }
     }
 

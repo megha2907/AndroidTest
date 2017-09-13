@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
@@ -15,12 +16,12 @@ import in.sportscafe.nostragamus.utils.FragmentHelper;
  * Created by deepanshi on 9/1/17.
  */
 
-public class MatchesTimelineActivity extends NostragamusActivity implements MatchesTimelineFragmentListener {
+public class MatchesTimelineActivity extends NostraBaseActivity implements MatchesTimelineFragmentListener {
 
-    @Override
+    /*@Override
     public String getScreenName() {
         return Constants.ScreenNames.MATCHES_TIMELINE;
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

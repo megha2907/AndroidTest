@@ -7,5 +7,17 @@ import android.os.Bundle;
  */
 
 public interface InPlayAdapterListener {
-    void onInPlayChallengeClicked(Bundle args);
+
+    /* Joined Card Item */
+    void onJoinedContestCardClicked(Bundle args);
+    void onJoinedContestMoreContestButtonClicked(Bundle args);
+    void onJoinedContestWinningsClicked(Bundle args);
+
+    /* Completed Card Item */
+    void onCompletedCardClicked(Bundle args);
+    void onCompletedWinningClicked(Bundle args);
+
+    /* Head Less Contest card Item */
+    void onHeadLessContestCardClicked(Bundle args);
+    void onHeadLessJoinButtonClicked(Bundle args);
 }

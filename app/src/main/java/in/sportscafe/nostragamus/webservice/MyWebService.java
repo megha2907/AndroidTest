@@ -404,16 +404,16 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.updateUserProfile(updateUserProfileRequest);
     }
 
-    public Call<List<NewChallengesResponse>> getNewHomeChallenges(NewChallengesRequest request) {
-        return mNostragamusService.getNewHomeChallenges(request);
+    public Call<List<NewChallengesResponse>> getNewHomeChallenges() {
+        return mNostragamusService.getNewHomeChallenges();
     }
 
     public Call<ContestResponse> getContests(ContestRequest request) {
         return mNostragamusService.getContests(request);
     }
 
-    public Call<List<InPlayResponse>> getInPlayChallenges(InPlayRequest request) {
-        return mNostragamusService.getInPlayChallenges(request);
+    public Call<List<InPlayResponse>> getInPlayChallenges() {
+        return mNostragamusService.getInPlayChallenges();
     }
 
     public Call<RewardsResponse> getRewardsDetails(RewardsRequest rewardsRequest) {

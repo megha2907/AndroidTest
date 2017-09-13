@@ -48,4 +48,5 @@ public class NostraBaseActivity extends AppCompatActivity {
         performActivityExitAnimation();
     }
 
+
 }
