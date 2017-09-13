@@ -25,7 +25,7 @@ public class Contest {
     @JsonProperty("contest_type_id")
     private int contestTypeId;
 
-    @JsonProperty("title")
+    @JsonProperty("config_name")
     private String title;
 
     @JsonProperty("subtitle")
@@ -34,16 +34,16 @@ public class Contest {
     @JsonProperty("category")
     private String category;
 
-    @JsonProperty("prizes")
+    @JsonProperty("prize_money")
     private Integer prizes;
 
     @JsonProperty("contest_type")
     private ContestTypeInfo contestTypeInfo;
 
-    @JsonProperty("entry_fee")
+    @JsonProperty("fee")
     private Integer entryFee;
 
-    @JsonProperty("room_size")
+    @JsonProperty("max_participants")
     private Integer roomSize;
 
     @JsonProperty("filled_rooms")
@@ -55,7 +55,7 @@ public class Contest {
     @JsonProperty("max_transfer")
     private int maxTransferPowerUps;
 
-    @JsonProperty("total_matches")
+    @JsonProperty("tot_matches")
     private int totalMatches;
 
     @JsonProperty("tournaments")

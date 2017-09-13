@@ -3,8 +3,10 @@ package in.sportscafe.nostragamus.module.contest.contestDetails;
 import android.content.Intent;
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
@@ -17,8 +19,10 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
 
     private ContestDetailsFragment mContestDetailsFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contest_details);
         loadFragment();

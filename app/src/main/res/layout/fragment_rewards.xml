@@ -24,9 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/dim_90"
+        android:clipToPadding="false"
         android:layout_below="@+id/rewards_challenge_end_time"
-        android:paddingTop="@dimen/dp_5"
-        android:clipToPadding="false" />
+        android:paddingTop="@dimen/dp_5" />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/rewards_disclaimer"

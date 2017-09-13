@@ -123,7 +123,7 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
 
             mViewPager.setAdapter(mViewPagerAdapter);
-            mViewPager.setOffscreenPageLimit(3);
+            mViewPager.setOffscreenPageLimit(4);
 
             setTabLayout(mViewPager);
 
@@ -144,6 +144,7 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
                     contestTabLayout.getTabAt(0).setCustomView(mViewPagerAdapter.getTabView(0));
                     contestTabLayout.getTabAt(1).setCustomView(mViewPagerAdapter.getTabView(1));
                     contestTabLayout.getTabAt(2).setCustomView(mViewPagerAdapter.getTabView(2));
+                    contestTabLayout.getTabAt(3).setCustomView(mViewPagerAdapter.getTabView(3));
                 }
 
             }

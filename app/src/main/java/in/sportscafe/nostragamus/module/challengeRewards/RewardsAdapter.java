@@ -51,6 +51,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
+    private static final int TYPE_FOOTER = 2;
 
     public RewardsAdapter(Context context, List<Rewards> rewardsList, String ChallengeEndTime) {
 
@@ -64,6 +65,8 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if (isPositionHeader(position)) {
             return TYPE_HEADER;
+        } else if (position == mRewardsList.size() + 1) {
+            return TYPE_FOOTER;
         }
         return TYPE_ITEM;
     }
@@ -84,6 +87,12 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 View v2 = inflater.inflate(R.layout.inflater_rewards_heading_row, parent, false);
                 viewHolder = new RewardsAdapter.RewardsHeaderVH(v2);
                 break;
+
+            case TYPE_FOOTER:
+                View v3 = inflater.inflate(R.layout.inflater_rewards_footer_row, parent, false);
+                viewHolder = new RewardsAdapter.RewardsFooterVH(v3);
+                break;
+
         }
 
         return viewHolder;
@@ -94,12 +103,24 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if (holder != null) {
+
+            //alternate row color
+            if (position % 2 == 0) {
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black4));
+            } else {
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black5));
+            }
+
             if (holder instanceof RewardsVH) {
-                setRewardsItem(holder, position-1);
+                setRewardsItem(holder, position - 1);
+            } else if (holder instanceof RewardsFooterVH) {
+                ((RewardsFooterVH) holder).mTvDisclaimer.setText(Html.fromHtml(((RewardsFooterVH) holder).mTvDisclaimer.getResources().getString(R.string.prize_money_disclaimer)));
+                ((RewardsFooterVH) holder).mTvDisclaimer.setMovementMethod(LinkMovementMethod.getInstance());
             }
         }
 
     }
+
 
     private void setRewardsItem(RecyclerView.ViewHolder holder, int position) {
 
@@ -110,13 +131,6 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             RewardsVH rewardsVH = (RewardsVH) holder;
 
             if (rewards != null) {
-
-                //alternate row color
-                if (position % 2 == 0) {
-                    holder.itemView.setBackgroundColor(ContextCompat.getColor(rewardsVH.mTvRank.getContext(), R.color.black5));
-                } else {
-                    holder.itemView.setBackgroundColor(ContextCompat.getColor(rewardsVH.mTvRank.getContext(), R.color.black4));
-                }
 
                 if (!TextUtils.isEmpty(rewards.getRank())) {
                     rewardsVH.mTvRank.setVisibility(View.VISIBLE);
@@ -145,7 +159,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return mRewardsList.size()+1;
+        return mRewardsList.size() + 2;
     }
 
 
@@ -171,6 +185,17 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public RewardsHeaderVH(View itemView) {
             super(itemView);
+        }
+
+    }
+
+    private class RewardsFooterVH extends RecyclerView.ViewHolder {
+
+        TextView mTvDisclaimer;
+
+        public RewardsFooterVH(View itemView) {
+            super(itemView);
+            mTvDisclaimer = (TextView) itemView.findViewById(R.id.pool_row_tv_disclaimer_txt);
         }
 
     }

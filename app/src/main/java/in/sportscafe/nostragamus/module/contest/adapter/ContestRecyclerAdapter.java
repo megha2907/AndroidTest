@@ -103,6 +103,8 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mIvContestsType.setBackgroundResource(R.drawable.guaranteed_icon);
                 } else if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.POOL)) {
                     viewHolder.mIvContestsType.setBackgroundResource(R.drawable.pool_icon);
+                }else if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                    viewHolder.mIvContestsType.setBackgroundResource(R.drawable.no_guarantee_icon);
                 }
 
                 if (contest.isFreeEntry()) {
@@ -171,18 +173,17 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         @Override
         public void onClick(View v) {
 
-            switch (v.getId()) {
-                case R.id.pool_rl_layout:
-                    if (clickListener != null) {
-                        int adapterPos = getAdapterPosition();
+            if (clickListener != null) {
+                int adapterPos = getAdapterPosition();
 
-                        if (clickListener != null && mContestList != null && mContestList.size() > adapterPos) {
-                            Bundle args = new Bundle();
-                            args.putParcelable(Constants.BundleKeys.CONTEST, Parcels.wrap(mContestList.get(adapterPos)));
-                            clickListener.onContestClicked(args);
-                        }
-                    }
-                    break;
+                if (clickListener != null && mContestList != null && mContestList.size() > adapterPos) {
+                    Bundle args = new Bundle();
+                    args.putParcelable(Constants.BundleKeys.CONTEST, Parcels.wrap(mContestList.get(adapterPos)));
+                    clickListener.onContestClicked(args);
+                }
+            }
+
+            switch (v.getId()) {
                 case R.id.pool_row_btn_join:
                     if (clickListener != null) {
                         clickListener.onJoinContestClicked();

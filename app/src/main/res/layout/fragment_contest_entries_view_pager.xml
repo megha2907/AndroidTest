@@ -3,15 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment">
 
     <ExpandableListView
         android:id="@+id/challengesEntriesExpandableListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/dim_90"
         android:groupIndicator="@null"
+        android:background="@color/black"
+        android:paddingBottom="@dimen/dim_90"
+        android:clipToPadding="false"
         android:animateLayoutChanges="true"/>
 
 </LinearLayout>

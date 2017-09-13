@@ -22,7 +22,7 @@ public class ContestDetailsViewPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
-    private View[] mTabs = new View[3];
+    private View[] mTabs = new View[4];
     private Context mContext;
 
     public ContestDetailsViewPagerAdapter(FragmentManager manager, Context context) {

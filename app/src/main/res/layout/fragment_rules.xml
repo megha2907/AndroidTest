@@ -87,13 +87,22 @@
             android:layout_height="wrap_content">
 
             <!-- Contest Rule Three-->
+            <ImageView
+                android:id="@+id/contest_rule_three_iv"
+                android:layout_width="@dimen/dim_14"
+                android:layout_height="@dimen/dim_14"
+                android:layout_marginLeft="@dimen/dim_12"
+                android:layout_marginTop="@dimen/dim_14"
+                android:layout_toRightOf="@+id/contest_rule_three_bullet" />
+
+            <!-- Contest Rule Three-->
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/contest_rule_three"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dim_12"
+                android:layout_marginLeft="@dimen/dim_6"
                 android:layout_marginTop="@dimen/dim_12"
-                android:layout_toRightOf="@+id/contest_rule_three_bullet"
+                android:layout_toRightOf="@+id/contest_rule_three_iv"
                 android:textColor="@color/grey6"
                 android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular" />

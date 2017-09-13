@@ -364,7 +364,8 @@
 
         <activity
             android:name=".module.contest.contestDetails.ContestDetailsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

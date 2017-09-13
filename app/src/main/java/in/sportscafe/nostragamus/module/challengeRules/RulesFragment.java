@@ -40,6 +40,7 @@ public class RulesFragment extends BaseFragment {
     private TextView TvPowerUpsRuleOne;
     private TextView TvPowerUpsRuleTwo;
     private TextView TvCancelledRuleOne;
+    private ImageView IvContestRuleThree;
 
     private int powerUp2xCount = 0;
     private int powerUpNonNegsCount = 0;
@@ -90,6 +91,7 @@ public class RulesFragment extends BaseFragment {
         TvContestRuleOne = (TextView) findViewById(R.id.contest_rule_one);
         TvContestRuleTwo = (TextView) findViewById(R.id.contest_rule_two);
         TvContestRuleThree = (TextView) findViewById(R.id.contest_rule_three);
+        IvContestRuleThree = (ImageView) findViewById(R.id.contest_rule_three_iv);
         TvPowerUpsRuleOne = (TextView) findViewById(R.id.powerup_rule_one);
         TvPowerUpsRuleTwo = (TextView) findViewById(R.id.powerup_rule_two);
         TvCancelledRuleOne = (TextView) findViewById(R.id.cancelled_rule_one);
@@ -133,6 +135,15 @@ public class RulesFragment extends BaseFragment {
         if (contest.getContestTypeInfo() != null) {
             TvContestRuleThree.setText(contest.getContestTypeInfo().getType()
                     + " - " + contest.getContestTypeInfo().getDescription());
+
+            if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                IvContestRuleThree.setBackgroundResource(R.drawable.guaranteed_icon);
+            } else if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.POOL)) {
+                IvContestRuleThree.setBackgroundResource(R.drawable.pool_icon);
+            }else if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                IvContestRuleThree.setBackgroundResource(R.drawable.no_guarantee_icon);
+            }
+
         } else {
             if (getView() != null) {
                 getView().findViewById(R.id.contest_rule_three_rl).setVisibility(View.GONE);
