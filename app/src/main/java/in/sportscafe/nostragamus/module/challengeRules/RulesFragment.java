@@ -24,6 +24,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeFragment;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
+import in.sportscafe.nostragamus.module.contest.dto.PowerUpInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
 
 /**
@@ -152,8 +153,8 @@ public class RulesFragment extends BaseFragment {
     }
 
     private void showPowerUpsRuleOne(Contest contest) {
-        if (contest.getPowerUpsMap() != null) {
-            setPowerUps(contest.getPowerUpsMap(), contest);
+        if (contest.getPowerUpInfo() != null) {
+            setPowerUps(contest.getPowerUpInfo(), contest);
         } else {
             if (getView() != null) {
                 getView().findViewById(R.id.powerups_rule_one_rl).setVisibility(View.GONE);
@@ -161,29 +162,11 @@ public class RulesFragment extends BaseFragment {
         }
     }
 
-    private void setPowerUps(HashMap<String, Integer> powerUpsMap, Contest contest) {
+    private void setPowerUps(PowerUpInfo powerUpInfo, Contest contest) {
 
-        if (powerUpsMap.get(Constants.Powerups.XX) != null) {
-            powerUp2xCount = powerUpsMap.get(Constants.Powerups.XX);
-        } else {
-            if (getView() != null) {
-                getView().findViewById(R.id.powerups_rule_one_rl).setVisibility(View.GONE);
-            }
-        }
-        if (powerUpsMap.get(Constants.Powerups.NO_NEGATIVE) != null) {
-            powerUpNonNegsCount = powerUpsMap.get(Constants.Powerups.NO_NEGATIVE);
-        } else {
-            if (getView() != null) {
-                getView().findViewById(R.id.powerups_rule_one_rl).setVisibility(View.GONE);
-            }
-        }
-        if (powerUpsMap.get(Constants.Powerups.AUDIENCE_POLL) != null) {
-            powerUpPlayerPollCount = powerUpsMap.get(Constants.Powerups.AUDIENCE_POLL);
-        } else {
-            if (getView() != null) {
-                getView().findViewById(R.id.powerups_rule_one_rl).setVisibility(View.GONE);
-            }
-        }
+        powerUp2xCount = powerUpInfo.getPowerUp2x();
+        powerUpNonNegsCount = powerUpInfo.getPowerUpNoNeg();
+        powerUpPlayerPollCount = powerUpInfo.getPowerUpPlayerPoll();
 
         LinearLayout powerUpLayout = (LinearLayout) findViewById(R.id.powerup_ll);
         ImageView powerUp2xImageView = (ImageView) findViewById(R.id.powerup_2x);

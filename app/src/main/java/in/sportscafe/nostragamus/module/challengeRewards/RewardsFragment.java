@@ -114,7 +114,7 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
         String endTime = challengeEndTime;
         long endTimeMs = TimeUtils.getMillisecondsFromDateString(
                 endTime,
-                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE_ZZ_ZZ,
                 Constants.DateFormats.GMT
         );
 

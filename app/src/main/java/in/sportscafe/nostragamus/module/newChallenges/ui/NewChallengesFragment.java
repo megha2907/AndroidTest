@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
@@ -20,6 +21,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.NewChallengesDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
@@ -33,6 +35,8 @@ import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallenges
  */
 public class NewChallengesFragment extends BaseFragment {
 
+    private TextView mTvTBarWalletMoney;
+
     public NewChallengesFragment() {}
 
     @Override
@@ -44,7 +48,7 @@ public class NewChallengesFragment extends BaseFragment {
     }
 
     private void initRootView(View rootView) {
-
+        mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
     }
 
     /**
@@ -64,7 +68,13 @@ public class NewChallengesFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setWalletBalance();
         loadData();
+    }
+
+    private void setWalletBalance() {
+        int amount = (int) WalletHelper.getTotalBalance();
+        mTvTBarWalletMoney.setText(String.valueOf(amount));
     }
 
     private void loadData() {

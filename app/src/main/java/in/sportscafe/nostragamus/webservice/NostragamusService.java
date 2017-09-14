@@ -340,7 +340,7 @@ public interface NostragamusService {
     @GET("v3/game/challenges/inPlay")
     Call<List<InPlayResponse>> getInPlayChallenges();
 
-    @POST("v3/game/temp/getContestRewards")
+    @POST("v3/game/challenges/contests/rewards")
     Call<RewardsResponse> getRewardDetails(@Body RewardsRequest request);
 
     @POST("v3/game/temp/getContestRooms")
