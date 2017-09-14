@@ -8,6 +8,9 @@ import android.os.Bundle;
 
 public interface InPlayAdapterListener {
 
+    /* Challenge */
+    void onJoinAnotherContestClicked(Bundle args);
+
     /* Joined Card Item */
     void onJoinedContestCardClicked(Bundle args);
     void onJoinedContestMoreContestButtonClicked(Bundle args);

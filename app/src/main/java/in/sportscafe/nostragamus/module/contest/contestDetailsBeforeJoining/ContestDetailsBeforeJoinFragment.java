@@ -22,20 +22,19 @@ import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
-import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
 /**
  * Created by deepanshi on 9/10/17.
  */
 
-public class ContestDetailsBJFragment extends NostraBaseFragment implements View.OnClickListener {
+public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment implements View.OnClickListener {
 
-    private static final String TAG = ContestDetailsBJFragment.class.getSimpleName();
+    private static final String TAG = ContestDetailsBeforeJoinFragment.class.getSimpleName();
 
     private ContestDetailsBJFragmentListener mContestDetailsBJFragmentListener;
 
-    public ContestDetailsBJFragment() {
+    public ContestDetailsBeforeJoinFragment() {
     }
 
     TextView mTvTBarHeading;
@@ -50,7 +49,7 @@ public class ContestDetailsBJFragment extends NostraBaseFragment implements View
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof ContestDetailsBJActivity) {
+        if (context instanceof ContestDetailsBeforeJoinedActivity) {
             mContestDetailsBJFragmentListener = (ContestDetailsBJFragmentListener) context;
         } else {
             throw new RuntimeException("Activity must implement " + TAG);

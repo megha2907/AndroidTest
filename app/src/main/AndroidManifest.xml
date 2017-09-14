@@ -361,14 +361,18 @@
             android:name=".module.newChallenges.ui.matches.MatchesTimelineActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleInstance"/>
-
         <activity
-            android:name=".module.contest.contestDetailsBeforeJoining.ContestDetailsBJActivity"
+            android:name=".module.contest.contestDetailsBeforeJoining.ContestDetailsBeforeJoinedActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleInstance"/>
 
         <activity
-            android:name=".module.contest.contestDetailsAfterJoining.ContestDetailsAJActivity"
+            android:name=".module.contest.ui.ContestsActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
+
+        <activity
+            android:name=".module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleInstance"/>
 

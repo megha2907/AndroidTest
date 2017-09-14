@@ -327,6 +327,8 @@ public interface Constants {
         String CONTEST_TYPE_DESC = "contestTypeDesc";
         String BANK_TRANSFER_POWERUPS = "BankPowerUps";
         String CONTEST = "Contest";
+        String INPLAY_CONTEST = "InPlayContest";
+        String INPLAY_CHALLENGE_LIST_ITEM = "InPlayChallengeListItem";
     }
 
     interface ParcelableKeys {

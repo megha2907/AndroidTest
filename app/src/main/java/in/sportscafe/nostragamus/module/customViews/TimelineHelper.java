@@ -45,7 +45,7 @@ public class TimelineHelper  {
     public static void addNode(LinearLayout parent, boolean isMatchCompleted, boolean isPlayed, boolean isNodeWithLine) {
         if (parent != null) {
             Context context = parent.getContext();
-            int nodeWidthHeight = (int)context.getResources().getDimension(R.dimen.dim_20);
+            int nodeWidthHeight = (int)context.getResources().getDimension(R.dimen.dim_12);
             int lineWidth = (int)context.getResources().getDimension(R.dimen.dim_60);
             int lineHeight = (int)context.getResources().getDimension(R.dimen.dim_4);
 

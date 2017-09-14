@@ -11,11 +11,11 @@ import in.sportscafe.nostragamus.utils.FragmentHelper;
  * Created by deepanshi on 9/10/17.
  */
 
-public class ContestDetailsBJActivity extends NostraBaseActivity implements ContestDetailsBJFragmentListener {
+public class ContestDetailsBeforeJoinedActivity extends NostraBaseActivity implements ContestDetailsBJFragmentListener {
 
-    private static final String TAG = ContestDetailsBJActivity.class.getSimpleName();
+    private static final String TAG = ContestDetailsBeforeJoinedActivity.class.getSimpleName();
 
-    private ContestDetailsBJFragment mContestDetailsBJFragment;
+    private ContestDetailsBeforeJoinFragment mContestDetailsBeforeJoinFragment;
 
 
     @Override
@@ -32,12 +32,12 @@ public class ContestDetailsBJActivity extends NostraBaseActivity implements Cont
             args = getIntent().getExtras();
         }
 
-        mContestDetailsBJFragment = new ContestDetailsBJFragment();
+        mContestDetailsBeforeJoinFragment = new ContestDetailsBeforeJoinFragment();
         if (args != null) {
-            mContestDetailsBJFragment.setArguments(args);
+            mContestDetailsBeforeJoinFragment.setArguments(args);
         }
 
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, mContestDetailsBJFragment);
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, mContestDetailsBeforeJoinFragment);
     }
 
     @Override
@@ -48,8 +48,8 @@ public class ContestDetailsBJActivity extends NostraBaseActivity implements Cont
     }
 
     private void passIntentToFragment(Intent intent) {
-        if (intent != null && mContestDetailsBJFragment != null) {
-            mContestDetailsBJFragment.onNewIntent(intent);
+        if (intent != null && mContestDetailsBeforeJoinFragment != null) {
+            mContestDetailsBeforeJoinFragment.onNewIntent(intent);
         }
     }
 

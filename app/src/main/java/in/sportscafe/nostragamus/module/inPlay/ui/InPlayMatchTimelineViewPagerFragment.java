@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.jeeva.android.Log;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -26,6 +28,7 @@ import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -36,7 +39,6 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
     private static final String TAG = InPlayMatchTimelineViewPagerFragment.class.getSimpleName();
-
     private RecyclerView mMatchRecyclerView;
 
     public InPlayMatchTimelineViewPagerFragment() {}
@@ -62,9 +64,11 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
     }
 
     private void loadData() {
+        int contestId = 200; //getContestIdFromBundle();    TODO: remove hardcoded contestId
+
         showLoadingContent();
         InPlayMatchesDataProvider dataProvider = new InPlayMatchesDataProvider();
-        dataProvider.getInPlayMatches(200, new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
+        dataProvider.getInPlayMatches(contestId, new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
             @Override
             public void onData(int status, @Nullable InPlayMatchesResponse responses) {
                 hideLoadingContent();
@@ -87,6 +91,18 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
         });
     }
 
+    private int getContestIdFromBundle() {
+        int contestId = -1;
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
+            InPlayContestDto inplayContest = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+            if (inplayContest != null) {
+                contestId = inplayContest.getContestId();
+            }
+        }
+        return contestId;
+    }
+
     private void onDataResponse(InPlayMatchesResponse responses) {
         if (mMatchRecyclerView != null && responses != null && responses.getInPlayMatchList() != null) {
             setMatchesTimeLine(responses);
@@ -99,8 +115,6 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
     private void setMatchesTimeLine(InPlayMatchesResponse responses) {
         if (responses != null && responses.getInPlayMatchList() != null && getView() != null) {
-
-
             int totalNodes = responses.getInPlayMatchList().size();
             int totalLines = totalNodes - 1;
 
@@ -110,29 +124,24 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
             /* Timeline */
             LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
-            if (totalNodes > 1) {
+            LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
+            LinearLayout bottomParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_bottom_parent);
+
+            if (responses.getInPlayMatchList().size() > 0) {
                 for (int temp = 0 ; temp < responses.getInPlayMatchList().size(); temp++) {
+
                     InPlayMatch match = responses.getInPlayMatchList().get(temp);
                     boolean isNodeLineRequired = true;
                     if (temp == totalLines) {
                         isNodeLineRequired = false;
                     }
-                    TimelineHelper.addNode(parent, true, true, isNodeLineRequired);
-                }
-            }
+                    /* Content */
+                    TimelineHelper.addNode(parent, match.isMatchCompleted(), match.isPlayed(), isNodeLineRequired);
 
-            /* Title */
-            LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
-            if (responses.getInPlayMatchList().size() > 0) {
-                for (int temp = 0 ; temp < responses.getInPlayMatchList().size(); temp++) {
+                    /* Title */
                     TimelineHelper.addTextNode(titleParent, "Game " + (temp+1));
-                }
-            }
 
-            /* Bottom */
-            LinearLayout bottomParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_bottom_parent);
-            if (responses.getInPlayMatchList().size() > 0) {
-                for (int temp = 0 ; temp < responses.getInPlayMatchList().size(); temp++) {
+                    /* Footer */
                     String dateTime = responses.getInPlayMatchList().get(temp).getMatchStartTime();
                     TimelineHelper.addTextNode(bottomParent, getDateTimeValue(dateTime));
                 }

@@ -16,25 +16,22 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
-import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
-import in.sportscafe.nostragamus.module.contest.dto.Contest;
-import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.user.points.pointsFragment.PointsFragment;
 
 /**
  * Created by deepanshi on 9/13/17.
  */
 
-public class ContestDetailsAJFragment extends NostraBaseFragment implements View.OnClickListener {
+public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implements View.OnClickListener {
 
-    private static final String TAG = ContestDetailsAJFragment.class.getSimpleName();
+    private static final String TAG = ContestDetailsAfterJoinFragment.class.getSimpleName();
 
     private ContestDetailsAJFragmentListener mContestDetailsAJFragmentListener;
 
-    public ContestDetailsAJFragment() {
+    public ContestDetailsAfterJoinFragment() {
     }
 
     TextView mTvTBarHeading;
@@ -42,13 +39,13 @@ public class ContestDetailsAJFragment extends NostraBaseFragment implements View
     TextView mTvTBarWalletMoney;
     String challengeName;
 
-    private ContestDetailsAJViewPagerAdapter mViewPagerAdapter;
+    private ContestDetailsAfterJoinViewPagerAdapter mViewPagerAdapter;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof ContestDetailsAJActivity) {
+        if (context instanceof ContestDetailsAfterJoinActivity) {
             mContestDetailsAJFragmentListener = (ContestDetailsAJFragmentListener) context;
         } else {
             throw new RuntimeException("Activity must implement " + TAG);
@@ -71,11 +68,11 @@ public class ContestDetailsAJFragment extends NostraBaseFragment implements View
         rootView.findViewById(R.id.contest_details_back_btn).setOnClickListener(this);
     }
 
-    private void setInfo(Contest contest) {
+    private void setInfo(InPlayContestDto inPlayContestDto) {
 
-        if (contest != null) {
-            mTvTBarHeading.setText(contest.getConfigName());
-            mTvTBarSubHeading.setText("India vs Aus T20");
+        if (inPlayContestDto != null) {
+            mTvTBarHeading.setText(inPlayContestDto.getContestName());
+            mTvTBarSubHeading.setText(inPlayContestDto.getContestName());   // TODO change as per need
         }
 
         /*int amount = (int) WalletHelper.getTotalBalance();
@@ -94,61 +91,53 @@ public class ContestDetailsAJFragment extends NostraBaseFragment implements View
 
     private void openBundle(Bundle arguments) {
         if (arguments != null) {
-            Contest contest = Parcels.unwrap(arguments.getParcelable(Constants.BundleKeys.CONTEST));
-            createAdapter(contest);
-            setInfo(contest);
+            InPlayContestDto inplayContest = Parcels.unwrap(arguments.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+            createAdapter(inplayContest);
+            setInfo(inplayContest);
         }
     }
 
-    private void createAdapter(Contest contest) {
+    private void createAdapter(InPlayContestDto contestDto) {
+        if (getView() != null && contestDto != null) {
+            ViewPager mViewPager = (ViewPager) getView().findViewById(R.id.contest_details_viewPager);
+            mViewPagerAdapter = new ContestDetailsAfterJoinViewPagerAdapter(getChildFragmentManager(), getContext());
 
-        ViewPager mViewPager = (ViewPager) getView().findViewById(R.id.contest_details_viewPager);
-        mViewPagerAdapter = new ContestDetailsAJViewPagerAdapter(getChildFragmentManager(), getContext());
-
-        if (contest != null) {
-
-            InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();
+           InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();
+            if (getArguments() != null) {
+                matchTimelineViewPagerFragment.setArguments(getArguments());
+            }
             mViewPagerAdapter.addFragment(matchTimelineViewPagerFragment, Constants.ContestDetailsTabs.MATCHES);
 
-            PointsFragment pointsFragment = PointsFragment.newInstance(contest);
-            mViewPagerAdapter.addFragment(pointsFragment, Constants.ContestDetailsTabs.LEADERBOARDS);
-
-            RewardsFragment rewardsFragment = RewardsFragment.newInstance(contest.getContestId());
+            RewardsFragment rewardsFragment = RewardsFragment.newInstance(contestDto.getContestId());
             mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
-
-            RulesFragment rulesFragment = RulesFragment.newInstance(contest);
-            mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
 
             mViewPager.setAdapter(mViewPagerAdapter);
             mViewPager.setOffscreenPageLimit(4);
 
+                /*RulesFragment rulesFragment = RulesFragment.newInstance(contestDto);
+                mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
+
+                PointsFragment pointsFragment = PointsFragment.newInstance(contestDto);
+                mViewPagerAdapter.addFragment(pointsFragment, Constants.ContestDetailsTabs.LEADERBOARDS);*/
+
             setTabLayout(mViewPager);
-
         }
-
     }
 
     private void setTabLayout(ViewPager mViewPager) {
-
-        try {
-
+        if (getView() != null && getActivity() != null) {
             TabLayout contestTabLayout = (TabLayout) getView().findViewById(R.id.contest_details_tabs);
             contestTabLayout.setupWithViewPager(mViewPager);
 
             if (mViewPagerAdapter != null) {
-                TabLayout.Tab tab = contestTabLayout.getTabAt(0);
-                if (tab != null) {
-                    contestTabLayout.getTabAt(0).setCustomView(mViewPagerAdapter.getTabView(0));
-                    contestTabLayout.getTabAt(1).setCustomView(mViewPagerAdapter.getTabView(1));
-                    contestTabLayout.getTabAt(2).setCustomView(mViewPagerAdapter.getTabView(2));
-                    contestTabLayout.getTabAt(3).setCustomView(mViewPagerAdapter.getTabView(3));
+                for (int temp = 0; temp < contestTabLayout.getTabCount(); temp++) {
+                    TabLayout.Tab tab = contestTabLayout.getTabAt(temp);
+                    if (tab != null) {
+                        tab.setCustomView(mViewPagerAdapter.getTabView(temp));
+                    }
                 }
-
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
-
     }
 
     @Override
