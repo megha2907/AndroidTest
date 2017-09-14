@@ -8,13 +8,51 @@
     tools:context="in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesFragment">
 
     <!-- Heading layout -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/dim_40"
-        android:background="@color/new_challenge_tab_bg">
+        android:background="@drawable/toolbar_bg"
+        android:minHeight="@dimen/dim_60">
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dim_16"
+            android:layout_marginLeft="@dimen/dim_16">
 
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/toolbar_heading_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Challenges"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/toolbar_wallet_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="120"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/sp_14"
+                app:typeface="lato_regular" />
+
+            <ImageView
+                android:id="@+id/toolbar_wallet_icon"
+                android:layout_width="@dimen/dim_14"
+                android:layout_height="@dimen/dim_14"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dim_4"
+                android:layout_toLeftOf="@+id/toolbar_wallet_money"
+                android:src="@drawable/toolbar_wallet_icon" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

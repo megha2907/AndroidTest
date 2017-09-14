@@ -11,6 +11,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
+import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 
 /**
  * Created by sandip on 01/09/17.
@@ -62,7 +63,7 @@ public class Contest {
     private List<String> tournaments = new ArrayList<>();
 
     @JsonProperty("powerups")
-    HashMap<String, Integer> powerUpsMap = new HashMap<String, Integer>();
+    private PowerUpInfo powerUpInfo;
 
     private int contestItemType = ContestAdapterItemType.CONTEST;
 
@@ -194,15 +195,6 @@ public class Contest {
         this.tournaments = tournaments;
     }
 
-
-    public HashMap<String, Integer> getPowerUpsMap() {
-        return powerUpsMap;
-    }
-
-    public void setPowerUpsMap(HashMap<String, Integer> powerUpsMap) {
-        this.powerUpsMap = powerUpsMap;
-    }
-
     public String getChallengeName() {
         return challengeName;
     }
@@ -219,5 +211,12 @@ public class Contest {
         this.contestModeInfo = contestModeInfo;
     }
 
+    public PowerUpInfo getPowerUpInfo() {
+        return powerUpInfo;
+    }
+
+    public void setPowerUpInfo(PowerUpInfo powerUpInfo) {
+        this.powerUpInfo = powerUpInfo;
+    }
 
 }

@@ -67,7 +67,7 @@ public class ContestDetailsAJFragment extends NostraBaseFragment implements View
     private void initView(View rootView) {
         mTvTBarHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
         mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
-        mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
+        //mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
         rootView.findViewById(R.id.contest_details_back_btn).setOnClickListener(this);
     }
 
@@ -78,8 +78,8 @@ public class ContestDetailsAJFragment extends NostraBaseFragment implements View
             mTvTBarSubHeading.setText("India vs Aus T20");
         }
 
-        int amount = (int) WalletHelper.getTotalBalance();
-        mTvTBarWalletMoney.setText(String.valueOf(amount));
+        /*int amount = (int) WalletHelper.getTotalBalance();
+        mTvTBarWalletMoney.setText(String.valueOf(amount));*/
     }
 
     public void onNewIntent(Intent intent) {
@@ -110,14 +110,14 @@ public class ContestDetailsAJFragment extends NostraBaseFragment implements View
             InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();
             mViewPagerAdapter.addFragment(matchTimelineViewPagerFragment, Constants.ContestDetailsTabs.MATCHES);
 
+            PointsFragment pointsFragment = PointsFragment.newInstance(contest);
+            mViewPagerAdapter.addFragment(pointsFragment, Constants.ContestDetailsTabs.LEADERBOARDS);
+
             RewardsFragment rewardsFragment = RewardsFragment.newInstance(contest.getContestId());
             mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
 
             RulesFragment rulesFragment = RulesFragment.newInstance(contest);
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
-
-            PointsFragment pointsFragment = PointsFragment.newInstance(contest);
-            mViewPagerAdapter.addFragment(pointsFragment, Constants.ContestDetailsTabs.LEADERBOARDS);
 
             mViewPager.setAdapter(mViewPagerAdapter);
             mViewPager.setOffscreenPageLimit(4);

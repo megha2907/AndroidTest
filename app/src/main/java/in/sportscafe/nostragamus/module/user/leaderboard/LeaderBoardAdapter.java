@@ -91,7 +91,12 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         if (NostragamusDataHandler.getInstance().getUserId().equals(String.valueOf(userLeaderBoard.getUserId()))) {
             holder.mLlLeaderBoards.setBackgroundColor(ViewUtils.getColor(holder.mLlLeaderBoards.getContext(), R.color.leaderboard_bg_color));
         } else {
-            holder.mLlLeaderBoards.setBackgroundColor(ViewUtils.getColor(holder.mLlLeaderBoards.getContext(), R.color.black));
+            //alternate row color
+            if (position % 2 == 0) {
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black5));
+            } else {
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black4));
+            }
         }
 
         if (userLeaderBoard.getRank() != null) {
