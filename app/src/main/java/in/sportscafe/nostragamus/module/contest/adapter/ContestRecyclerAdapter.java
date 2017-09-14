@@ -87,7 +87,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             if (contest != null) {
 
-                viewHolder.mTvPoolName.setText(contest.getTitle());
+                viewHolder.mTvPoolName.setText(contest.getConfigName());
 
                 if (contest.noPrizes()) {
                     viewHolder.mTvPrizes.setText("No Prizes");
@@ -99,10 +99,12 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
                 viewHolder.mTvContestsAvailable.setText(String.valueOf(contest.getFillingRooms()));
 
-                if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
                     viewHolder.mIvContestsType.setBackgroundResource(R.drawable.guaranteed_icon);
-                } else if (contest.getCategory().equalsIgnoreCase(Constants.ContestType.POOL)) {
+                } else if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.POOL)) {
                     viewHolder.mIvContestsType.setBackgroundResource(R.drawable.pool_icon);
+                }else if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                    viewHolder.mIvContestsType.setBackgroundResource(R.drawable.no_guarantee_icon);
                 }
 
                 if (contest.isFreeEntry()) {
@@ -171,18 +173,17 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         @Override
         public void onClick(View v) {
 
-            switch (v.getId()) {
-                case R.id.pool_rl_layout:
-                    if (clickListener != null) {
-                        int adapterPos = getAdapterPosition();
+            if (clickListener != null) {
+                int adapterPos = getAdapterPosition();
 
-                        if (clickListener != null && mContestList != null && mContestList.size() > adapterPos) {
-                            Bundle args = new Bundle();
-                            args.putParcelable(Constants.BundleKeys.CONTEST, Parcels.wrap(mContestList.get(adapterPos)));
-                            clickListener.onContestClicked(args);
-                        }
-                    }
-                    break;
+                if (clickListener != null && mContestList != null && mContestList.size() > adapterPos) {
+                    Bundle args = new Bundle();
+                    args.putParcelable(Constants.BundleKeys.CONTEST, Parcels.wrap(mContestList.get(adapterPos)));
+                    clickListener.onContestClicked(args);
+                }
+            }
+
+            switch (v.getId()) {
                 case R.id.pool_row_btn_join:
                     if (clickListener != null) {
                         clickListener.onJoinContestClicked();

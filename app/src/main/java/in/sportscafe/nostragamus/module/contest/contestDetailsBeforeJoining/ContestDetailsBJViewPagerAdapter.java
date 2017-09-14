@@ -1,10 +1,9 @@
-package in.sportscafe.nostragamus.module.contest.contestDetails;
+package in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -18,14 +17,14 @@ import in.sportscafe.nostragamus.R;
  * Created by deepanshi on 9/10/17.
  */
 
-public class ContestDetailsViewPagerAdapter extends FragmentPagerAdapter {
+public class ContestDetailsBJViewPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
     private View[] mTabs = new View[3];
     private Context mContext;
 
-    public ContestDetailsViewPagerAdapter(FragmentManager manager, Context context) {
+    public ContestDetailsBJViewPagerAdapter(FragmentManager manager, Context context) {
         super(manager);
         mContext = context;
     }

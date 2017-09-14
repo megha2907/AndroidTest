@@ -1,9 +1,11 @@
 package in.sportscafe.nostragamus.module.inPlay.dto;
 
+import org.parceler.Parcel;
+
 /**
  * Created by sandip on 13/09/17.
  */
-
+@Parcel
 public class InPlayListChallengeItem {
 
     private int challengeId;

@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.jeeva.android.Log;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -26,6 +28,7 @@ import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -36,7 +39,6 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
     private static final String TAG = InPlayMatchTimelineViewPagerFragment.class.getSimpleName();
-
     private RecyclerView mMatchRecyclerView;
 
     public InPlayMatchTimelineViewPagerFragment() {}
@@ -62,9 +64,11 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
     }
 
     private void loadData() {
+        int contestId = 200; //getContestIdFromBundle();    TODO: remove hardcoded contestId
+
         showLoadingContent();
         InPlayMatchesDataProvider dataProvider = new InPlayMatchesDataProvider();
-        dataProvider.getInPlayMatches(200, new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
+        dataProvider.getInPlayMatches(contestId, new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
             @Override
             public void onData(int status, @Nullable InPlayMatchesResponse responses) {
                 hideLoadingContent();
@@ -85,6 +89,18 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
                 handleError(status);
             }
         });
+    }
+
+    private int getContestIdFromBundle() {
+        int contestId = -1;
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
+            InPlayContestDto inplayContest = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+            if (inplayContest != null) {
+                contestId = inplayContest.getContestId();
+            }
+        }
+        return contestId;
     }
 
     private void onDataResponse(InPlayMatchesResponse responses) {

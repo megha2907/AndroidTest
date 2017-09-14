@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.contest.ui.ContestFragment">
 
     <!-- Heading layout -->
@@ -81,7 +80,6 @@
         android:layout_height="@dimen/dim_32"
         android:layout_below="@+id/challenges_toolbar"
         android:background="@color/new_challenge_tab_bg"
-        android:elevation="4dp"
         app:layout_collapseMode="pin"
         app:selected_textSize="@dimen/sp_12"
         app:selected_typeface="lato_regular"
@@ -101,23 +99,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent">
-
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/join_contest_btn"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_50"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="@dimen/dim_16"
-            android:layout_marginRight="@dimen/dim_16"
-            android:layout_marginBottom="@dimen/dim_16"
-            android:paddingBottom="@dimen/dim_2"
-            android:background="@drawable/light_blue_button_selector"
-            android:onClick="onClick"
-            android:text="Pay and Join Contest"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_15"
-            app:typeface="lato_bold" />
 
         <!-- ViewPager -->
         <in.sportscafe.nostragamus.module.common.CustomViewPager

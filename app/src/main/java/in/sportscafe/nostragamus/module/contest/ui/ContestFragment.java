@@ -75,9 +75,7 @@ public class ContestFragment extends NostraBaseFragment {
         ContestDataProvider dataProvider = new ContestDataProvider();
         final List<ContestType> contestTypeList = dataProvider.getContestTypeList();
 
-        //// TODO: 9/5/17 send challenge id and challenge name from bundle
         int challengeId = getChallengeId();
-        challengeName = "Australia vs India T20 Challenge";
         dataProvider.getContestDetails(challengeId, new ContestDataProvider.ContestDataProviderListener() {
             @Override
             public void onSuccessResponse(int status, ContestResponse response) {
@@ -101,8 +99,6 @@ public class ContestFragment extends NostraBaseFragment {
                 handleError(status);
             }
         });
-
-
     }
 
     private int getChallengeId() {
@@ -114,6 +110,7 @@ public class ContestFragment extends NostraBaseFragment {
                 InPlayListChallengeItem challengeItem = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM));
                 if (challengeItem != null) {
                     challengeId = challengeItem.getChallengeId();
+                    challengeName = challengeItem.getChallengeName();
                 }
             }
         }

@@ -14,7 +14,7 @@ public class InPlayFilterHelper {
 
     public static final int FILTER_ALL_SPORTS_ID = -11;
     public static final int FILTER_DAILY_SPORTS_ID = -12;
-    public static final int FILTER_MIX_SPORTS_ID = -13;
+    public static final int FILTER_MIX_SPORTS_ID = 9;   // MIX-SPORTS sport id
 
     public InPlayFilterHelper() {}
 
@@ -34,14 +34,31 @@ public class InPlayFilterHelper {
         return filteredChallenges;
     }
 
-    public List<InPlayResponse> getDailyInplayChallenges(List<InPlayResponse> inPlayResponseList) {
+    public List<InPlayResponse> getInPlayMixedSportsChallengesFilteredOn(List<InPlayResponse> inPlayResponseList) {
         List<InPlayResponse> filteredChallenges = null;
 
         if (inPlayResponseList != null && inPlayResponseList.size() > 0) {
             filteredChallenges = new ArrayList<>();
 
             for (InPlayResponse inPlayResponse : inPlayResponseList) {
-                // TODO: daily param
+                if (inPlayResponse.getSportsId() == FILTER_MIX_SPORTS_ID) {
+                    filteredChallenges.add(inPlayResponse);
+                }
+            }
+        }
+
+        return filteredChallenges;
+    }
+
+    public List<InPlayResponse> getDailyInPlayChallenges(List<InPlayResponse> inPlayResponseList) {
+        List<InPlayResponse> filteredChallenges = null;
+
+        if (inPlayResponseList != null && inPlayResponseList.size() > 0) {
+            filteredChallenges = new ArrayList<>();
+            for (InPlayResponse inPlayResponse : inPlayResponseList) {
+                if (inPlayResponse.isDailyChallenge()) {
+                    filteredChallenges.add(inPlayResponse);
+                }
             }
         }
 

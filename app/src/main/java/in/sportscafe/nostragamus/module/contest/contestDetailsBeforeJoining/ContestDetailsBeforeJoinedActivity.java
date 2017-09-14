@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.contest.contestDetails;
+package in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,12 @@ import in.sportscafe.nostragamus.utils.FragmentHelper;
  * Created by deepanshi on 9/10/17.
  */
 
-public class ContestDetailsActivity extends NostraBaseActivity {
+public class ContestDetailsBeforeJoinedActivity extends NostraBaseActivity implements ContestDetailsBJFragmentListener {
 
-    private static final String TAG = ContestDetailsActivity.class.getSimpleName();
+    private static final String TAG = ContestDetailsBeforeJoinedActivity.class.getSimpleName();
 
-    private ContestDetailsFragment mContestDetailsFragment;
+    private ContestDetailsBeforeJoinFragment mContestDetailsBeforeJoinFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +32,12 @@ public class ContestDetailsActivity extends NostraBaseActivity {
             args = getIntent().getExtras();
         }
 
-        mContestDetailsFragment = new ContestDetailsFragment();
+        mContestDetailsBeforeJoinFragment = new ContestDetailsBeforeJoinFragment();
         if (args != null) {
-            mContestDetailsFragment.setArguments(args);
+            mContestDetailsBeforeJoinFragment.setArguments(args);
         }
 
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, mContestDetailsFragment);
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, mContestDetailsBeforeJoinFragment);
     }
 
     @Override
@@ -47,9 +48,18 @@ public class ContestDetailsActivity extends NostraBaseActivity {
     }
 
     private void passIntentToFragment(Intent intent) {
-        if (intent != null && mContestDetailsFragment != null) {
-            mContestDetailsFragment.onNewIntent(intent);
+        if (intent != null && mContestDetailsBeforeJoinFragment != null) {
+            mContestDetailsBeforeJoinFragment.onNewIntent(intent);
         }
     }
 
+    @Override
+    public void onJoinContestClicked() {
+
+    }
+
+    @Override
+    public void onBackBtnClicked() {
+        onBackPressed();
+    }
 }

@@ -613,6 +613,7 @@ public interface Constants {
         String STORE = "Store";
         String EARN_MORE_POWERUPS = "EarnMorePowerups";
         String MATCHES_TIMELINE = "MatchesTimeline";
+        String CONTEST_DETAILS = "ContestDetails";
     }
 
     interface InAppPopups {
@@ -755,8 +756,9 @@ public interface Constants {
     interface ContestDetailsTabs {
         String MATCHES = "Matches";
         String ENTRIES = "Entries";
-        String REWARDS = "Rewards";
+        String PRIZES = "Prizes";
         String RULES = "Rules";
+        String LEADERBOARDS = "Leaderboard";
     }
 
     interface PopUpType {
@@ -765,7 +767,8 @@ public interface Constants {
     }
 
     interface ContestType {
-        String GUARANTEED = "guaranteed";
+        String GUARANTEED = "g";
+        String NON_GUARANTEED = "ng";
         String POOL = "pool";
     }
 

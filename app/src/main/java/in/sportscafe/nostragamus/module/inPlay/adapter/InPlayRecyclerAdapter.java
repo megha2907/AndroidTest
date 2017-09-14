@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -124,7 +126,11 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (contest != null && contest.getMatches() != null) {
             InPlayHeadLessItemViewHolder viewHolder = (InPlayHeadLessItemViewHolder) holder;
 
-            viewHolder.contestTitleTextView.setText("Contest Name");
+            viewHolder.contestTitleTextView.setText(contest.getContestName());
+            viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
+            viewHolder.entryFeeTextView.setText(String.valueOf(34));
+            viewHolder.prizesTextView.setText(WalletHelper.getFormattedStringOfAmount(contest.getWinningAmount()));
+            viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
 
             viewHolder.timelineHeaderParent.removeAllViews();
             viewHolder.timelineContentParent.removeAllViews();
@@ -156,7 +162,11 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (contest != null && contest.getMatches() != null) {
             InPlayCompletedItemViewHolder viewHolder = (InPlayCompletedItemViewHolder) holder;
 
-            viewHolder.contestTitleTextView.setText("Contest Name");
+            viewHolder.contestTitleTextView.setText(contest.getContestName());
+            viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
+            viewHolder.entryFeeTextView.setText(String.valueOf(34));
+            viewHolder.prizesTextView.setText(WalletHelper.getFormattedStringOfAmount(contest.getWinningAmount()));
+            viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
 
             viewHolder.timelineHeaderParent.removeAllViews();
             viewHolder.timelineContentParent.removeAllViews();
@@ -188,7 +198,11 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (contest != null && contest.getMatches() != null) {
             InPlayJoinedItemViewHolder viewHolder = (InPlayJoinedItemViewHolder) holder;
 
-            viewHolder.contestTitleTextView.setText("Contest Name");
+            viewHolder.contestTitleTextView.setText(contest.getContestName());
+            viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
+            viewHolder.entryFeeTextView.setText(String.valueOf(34));
+            viewHolder.prizesTextView.setText(WalletHelper.getFormattedStringOfAmount(contest.getWinningAmount()));
+            viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
 
             viewHolder.timelineHeaderParent.removeAllViews();
             viewHolder.timelineContentParent.removeAllViews();
@@ -230,6 +244,10 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LinearLayout timelineContentParent;
         LinearLayout timelineFooterParent;
         TextView contestTitleTextView;
+        ImageView contestModeImageView;
+        TextView entryFeeTextView;
+        TextView currentRankTextView;
+        TextView prizesTextView;
 
         public InPlayJoinedItemViewHolder(View itemView) {
             super(itemView);
@@ -239,6 +257,10 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             timelineContentParent = (LinearLayout) itemView.findViewById(R.id.inplay_joined_card_timeline_content_parent);
             timelineFooterParent = (LinearLayout) itemView.findViewById(R.id.inplay_joined_card_timeline_footer_parent);
             contestTitleTextView = (TextView) itemView.findViewById(R.id.inplay_joined_card_title_textView);
+            contestModeImageView = (ImageView) itemView.findViewById(R.id.inplay_contest_card_header_mode_imgView);
+            entryFeeTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_entry_fee_textView);
+            currentRankTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_current_rank_textView);
+            prizesTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_prizes_textView);
 
             root.setOnClickListener(this);
         }
@@ -248,7 +270,13 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             switch (view.getId()) {
                 case R.id.in_play_joined_card_parent:
                     if (mInPlayAdapterListener != null) {
-                        mInPlayAdapterListener.onJoinedContestCardClicked(null);
+                        Bundle args = new Bundle();
+                        InPlayListItem listItem = mItemsList.get(getAdapterPosition());
+                        if (listItem != null && listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.JOINED_CONTEST) {
+                            InPlayContestDto contestDto = (InPlayContestDto) listItem.getItemData();
+                            args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(contestDto));
+                        }
+                        mInPlayAdapterListener.onJoinedContestCardClicked(args);
                     }
                     break;
 
@@ -263,6 +291,11 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LinearLayout timelineContentParent;
         LinearLayout timelineFooterParent;
         TextView contestTitleTextView;
+        ImageView contestModeImageView;
+        TextView entryFeeTextView;
+        TextView currentRankTextView;
+        TextView prizesTextView;
+
 
         public InPlayCompletedItemViewHolder(View itemView) {
             super(itemView);
@@ -271,12 +304,20 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             timelineContentParent = (LinearLayout) itemView.findViewById(R.id.inplay_completed_card_timeline_content_parent);
             timelineFooterParent = (LinearLayout) itemView.findViewById(R.id.inplay_completed_card_timeline_footer_parent);
             contestTitleTextView = (TextView) itemView.findViewById(R.id.inplay_completed_card_title_textView);
+            contestModeImageView = (ImageView) itemView.findViewById(R.id.inplay_contest_card_header_mode_imgView);
+            entryFeeTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_entry_fee_textView);
+            currentRankTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_current_rank_textView);
+            prizesTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_prizes_textView);
 
             root.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.in_play_completed_card_parent:
+                    break;
+            }
         }
     }
 
@@ -286,6 +327,11 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LinearLayout timelineContentParent;
         LinearLayout timelineFooterParent;
         TextView contestTitleTextView;
+        ImageView contestModeImageView;
+        TextView entryFeeTextView;
+        TextView currentRankTextView;
+        TextView prizesTextView;
+
 
         public InPlayHeadLessItemViewHolder(View itemView) {
             super(itemView);
@@ -294,12 +340,20 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             timelineContentParent = (LinearLayout) itemView.findViewById(R.id.inplay_headless_card_timeline_content_parent);
             timelineFooterParent = (LinearLayout) itemView.findViewById(R.id.inplay_headless_card_timeline_footer_parent);
             contestTitleTextView = (TextView) itemView.findViewById(R.id.inplay_headless_card_title_textView);
+            contestModeImageView = (ImageView) itemView.findViewById(R.id.inplay_contest_card_header_mode_imgView);
+            entryFeeTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_entry_fee_textView);
+            currentRankTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_current_rank_textView);
+            prizesTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_prizes_textView);
 
             root.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.in_play_headless_card_parent:
+                    break;
+            }
         }
     }
 
@@ -325,12 +379,12 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.inplay_challenge_button:
-
                     if (mInPlayAdapterListener != null) {
                         Bundle args = new Bundle();
                         InPlayListItem listItem = mItemsList.get(getAdapterPosition());
                         if (listItem != null && listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.CHALLENGE_ITEM) {
-                            args.putParcelable(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM, Parcels.wrap(listItem.getItemData()));
+                            InPlayListChallengeItem challengeItem = (InPlayListChallengeItem) listItem.getItemData();
+                            args.putParcelable(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM, Parcels.wrap(challengeItem));
                         }
 
                         mInPlayAdapterListener.onJoinAnotherContestClicked(args);

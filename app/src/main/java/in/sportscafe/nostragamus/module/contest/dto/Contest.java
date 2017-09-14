@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
@@ -18,31 +19,31 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
 @Parcel
 public class Contest {
 
-    @JsonProperty("contest_id")
+    @JsonProperty("config_id")
     private int contestId;
 
-    @JsonProperty("contest_type_id")
-    private int contestTypeId;
+    @JsonProperty("config_name")
+    private String configName;
 
-    @JsonProperty("title")
-    private String title;
+    @JsonProperty("challenge_name")
+    private String challengeName;
 
     @JsonProperty("subtitle")
     private String subtitle;
 
-    @JsonProperty("category")
-    private String category;
-
-    @JsonProperty("prizes")
+    @JsonProperty("prize_money")
     private Integer prizes;
 
     @JsonProperty("contest_type")
     private ContestTypeInfo contestTypeInfo;
 
-    @JsonProperty("entry_fee")
+    @JsonProperty("mode")
+    private ContestModeInfo contestModeInfo;
+
+    @JsonProperty("fee")
     private Integer entryFee;
 
-    @JsonProperty("room_size")
+    @JsonProperty("max_participants")
     private Integer roomSize;
 
     @JsonProperty("filled_rooms")
@@ -51,17 +52,17 @@ public class Contest {
     @JsonProperty("filling_rooms")
     private int fillingRooms;
 
-    @JsonProperty("max_transfer")
+    @JsonProperty("max_transfer_limit")
     private int maxTransferPowerUps;
 
-    @JsonProperty("total_matches")
+    @JsonProperty("tot_matches")
     private int totalMatches;
-
-//    @JsonProperty("total_powerups")
-//    private ArrayList<String> powerUpArrayList = new ArrayList<>();
 
     @JsonProperty("tournaments")
     private List<String> tournaments = new ArrayList<>();
+
+    @JsonProperty("powerups")
+    HashMap<String, Integer> powerUpsMap = new HashMap<String, Integer>();
 
     private int contestItemType = ContestAdapterItemType.CONTEST;
 
@@ -73,20 +74,12 @@ public class Contest {
         this.contestId = contestId;
     }
 
-    public int getContestTypeId() {
-        return contestTypeId;
+    public String getConfigName() {
+        return configName;
     }
 
-    public void setContestTypeId(int contestTypeId) {
-        this.contestTypeId = contestTypeId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setConfigName(String configName) {
+        this.configName = configName;
     }
 
     public String getSubtitle() {
@@ -95,14 +88,6 @@ public class Contest {
 
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public int getPrizes() {
@@ -183,14 +168,7 @@ public class Contest {
 //    public void setRoomSize(Integer roomSize) {
 //        this.roomSize = roomSize;
 //    }
-//
-//    public ArrayList<String> getPowerUpArrayList() {
-//        return powerUpArrayList;
-//    }
-//
-//    public void setPowerUpArrayList(ArrayList<String> powerUpArrayList) {
-//        this.powerUpArrayList = powerUpArrayList;
-//    }
+//}
 
     public int getTotalMatches() {
         return totalMatches;
@@ -214,6 +192,31 @@ public class Contest {
 
     public void setTournaments(List<String> tournaments) {
         this.tournaments = tournaments;
+    }
+
+
+    public HashMap<String, Integer> getPowerUpsMap() {
+        return powerUpsMap;
+    }
+
+    public void setPowerUpsMap(HashMap<String, Integer> powerUpsMap) {
+        this.powerUpsMap = powerUpsMap;
+    }
+
+    public String getChallengeName() {
+        return challengeName;
+    }
+
+    public void setChallengeName(String challengeName) {
+        this.challengeName = challengeName;
+    }
+
+    public ContestModeInfo getContestModeInfo() {
+        return contestModeInfo;
+    }
+
+    public void setContestModeInfo(ContestModeInfo contestModeInfo) {
+        this.contestModeInfo = contestModeInfo;
     }
 
 

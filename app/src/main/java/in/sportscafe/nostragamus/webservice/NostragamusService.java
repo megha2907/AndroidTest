@@ -334,7 +334,7 @@ public interface NostragamusService {
     @GET("/v3/game/challenges/new")
     Call<List<NewChallengesResponse>> getNewHomeChallenges();
 
-    @POST("v3/game/temp/getContests")
+    @POST("v3/game/challenges/getContests")
     Call<ContestResponse> getContests(@Body ContestRequest request);
 
     @GET("v3/game/challenges/inPlay")

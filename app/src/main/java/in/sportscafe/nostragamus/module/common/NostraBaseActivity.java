@@ -12,10 +12,13 @@ public class NostraBaseActivity extends AppCompatActivity {
 
     private boolean mShouldAnimateActivity = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         performActivityEntryAnimation();
+//        setContentView(R.layout.activity_nostra_base);
+
     }
 
     /**
@@ -44,4 +47,6 @@ public class NostraBaseActivity extends AppCompatActivity {
         super.finish();
         performActivityExitAnimation();
     }
+
+
 }

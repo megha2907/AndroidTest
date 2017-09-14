@@ -26,10 +26,13 @@ public class InPlayResponse {
     private String challengeDesc;
 
     @JsonProperty("status")
-    private String status = "ongoing";
+    private String status;
 
     @JsonProperty("sports_id")
     private int sportsId;
+
+    @JsonProperty("is_daily_challenge")
+    private boolean isDailyChallenge;
 
     @JsonProperty("contests")
     private List<InPlayContestDto> contestList;
@@ -72,6 +75,14 @@ public class InPlayResponse {
 
     public void setSportsId(int sportsId) {
         this.sportsId = sportsId;
+    }
+
+    public boolean isDailyChallenge() {
+        return isDailyChallenge;
+    }
+
+    public void setDailyChallenge(boolean dailyChallenge) {
+        isDailyChallenge = dailyChallenge;
     }
 
     public List<InPlayContestDto> getContestList() {

@@ -33,6 +33,9 @@ public class InPlayContestDto {
     @JsonProperty("winning_amount")
     private int winningAmount;
 
+    @JsonProperty("entry_fee")
+    private int entryFee;
+
     @JsonProperty("matches")
     private List<InPlayContestMatchDto> matches = null;
 
@@ -90,6 +93,14 @@ public class InPlayContestDto {
 
     public void setWinningAmount(int winningAmount) {
         this.winningAmount = winningAmount;
+    }
+
+    public int getEntryFee() {
+        return entryFee;
+    }
+
+    public void setEntryFee(int entryFee) {
+        this.entryFee = entryFee;
     }
 
     public List<InPlayContestMatchDto> getMatches() {

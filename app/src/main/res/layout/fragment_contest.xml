@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.contest.ui.ContestFragment">
 
     <!-- Heading layout -->
@@ -94,7 +95,6 @@
         android:layout_height="@dimen/dim_60"
         android:layout_below="@+id/challenges_toolbar"
         android:background="@color/new_challenge_tab_bg"
-        android:elevation="4dp"
         app:layout_collapseMode="pin"
         app:selected_textSize="@dimen/sp_12"
         app:selected_typeface="lato_regular"

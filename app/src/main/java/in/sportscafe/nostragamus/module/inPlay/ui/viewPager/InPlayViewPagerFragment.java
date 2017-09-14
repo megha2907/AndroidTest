@@ -10,19 +10,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 
 import com.jeeva.android.BaseFragment;
-import com.jeeva.android.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.contest.contestDetails.ContestDetailsActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterListener;
@@ -31,10 +28,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
-import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterListener;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.module.newChallenges.ui.matches.MatchesTimelineActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -201,7 +195,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
     private void goToNewMatchesTimeline(Bundle args) {
         if (getActivity() != null && !getActivity().isFinishing()) {
-            Intent intent = new Intent(getActivity(), ContestDetailsActivity.class);
+            Intent intent = new Intent(getActivity(), ContestDetailsAfterJoinActivity.class);
             if (args != null) {
                 intent.putExtras(args);
             }

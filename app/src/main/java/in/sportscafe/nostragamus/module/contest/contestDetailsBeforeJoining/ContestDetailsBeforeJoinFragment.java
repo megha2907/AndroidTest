@@ -1,5 +1,6 @@
-package in.sportscafe.nostragamus.module.contest.contestDetails;
+package in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -20,26 +22,39 @@ import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
-import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
 /**
  * Created by deepanshi on 9/10/17.
  */
 
-public class ContestDetailsFragment extends NostraBaseFragment {
+public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment implements View.OnClickListener {
 
-    private static final String TAG = ContestDetailsFragment.class.getSimpleName();
+    private static final String TAG = ContestDetailsBeforeJoinFragment.class.getSimpleName();
 
-    public ContestDetailsFragment() {
+    private ContestDetailsBJFragmentListener mContestDetailsBJFragmentListener;
+
+    public ContestDetailsBeforeJoinFragment() {
     }
 
     TextView mTvTBarHeading;
     TextView mTvTBarSubHeading;
     TextView mTvTBarWalletMoney;
+    Button joinContest;
     String challengeName;
 
-    private ContestDetailsViewPagerAdapter mViewPagerAdapter;
+    private ContestDetailsBJViewPagerAdapter mViewPagerAdapter;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof ContestDetailsBeforeJoinedActivity) {
+            mContestDetailsBJFragmentListener = (ContestDetailsBJFragmentListener) context;
+        } else {
+            throw new RuntimeException("Activity must implement " + TAG);
+        }
+    }
 
 
     @Override
@@ -54,14 +69,18 @@ public class ContestDetailsFragment extends NostraBaseFragment {
         mTvTBarHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
         mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
         mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
-
-        setInfo();
+        joinContest = (Button) rootView.findViewById(R.id.join_contest_btn);
+        joinContest.setOnClickListener(this);
+        rootView.findViewById(R.id.contest_details_back_btn).setOnClickListener(this);
     }
 
-    private void setInfo() {
+    private void setInfo(Contest contest) {
 
-        mTvTBarHeading.setText("Contest Name");
-        mTvTBarSubHeading.setText(challengeName);
+        if (contest != null) {
+            mTvTBarHeading.setText(contest.getConfigName());
+            mTvTBarSubHeading.setText("India vs Aus T20");
+            joinContest.setText("Pay " + Constants.RUPEE_SYMBOL + contest.getEntryFee().toString() + " and Join Contest");
+        }
 
         int amount = (int) WalletHelper.getTotalBalance();
         mTvTBarWalletMoney.setText(String.valueOf(amount));
@@ -81,24 +100,22 @@ public class ContestDetailsFragment extends NostraBaseFragment {
         if (arguments != null) {
             Contest contest = Parcels.unwrap(arguments.getParcelable(Constants.BundleKeys.CONTEST));
             createAdapter(contest);
+            setInfo(contest);
         }
     }
 
     private void createAdapter(Contest contest) {
 
         ViewPager mViewPager = (ViewPager) getView().findViewById(R.id.contest_details_viewPager);
-        mViewPagerAdapter = new ContestDetailsViewPagerAdapter(getChildFragmentManager(), getContext());
+        mViewPagerAdapter = new ContestDetailsBJViewPagerAdapter(getChildFragmentManager(), getContext());
 
         if (contest != null) {
-
-            InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();
-            mViewPagerAdapter.addFragment(matchTimelineViewPagerFragment, Constants.ContestDetailsTabs.MATCHES);
 
             ContestEntriesViewPagerFragment contestEntriesViewPagerFragment = new ContestEntriesViewPagerFragment();
             mViewPagerAdapter.addFragment(contestEntriesViewPagerFragment, Constants.ContestDetailsTabs.ENTRIES);
 
             RewardsFragment rewardsFragment = RewardsFragment.newInstance(contest.getContestId());
-            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.REWARDS);
+            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
 
             RulesFragment rulesFragment = RulesFragment.newInstance(contest);
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
@@ -107,6 +124,7 @@ public class ContestDetailsFragment extends NostraBaseFragment {
             mViewPager.setOffscreenPageLimit(3);
 
             setTabLayout(mViewPager);
+
         }
 
     }
@@ -133,4 +151,20 @@ public class ContestDetailsFragment extends NostraBaseFragment {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.join_contest_btn:
+                if (mContestDetailsBJFragmentListener != null) {
+                    mContestDetailsBJFragmentListener.onJoinContestClicked();
+                }
+                break;
+            case R.id.contest_details_back_btn:
+                if (mContestDetailsBJFragmentListener != null) {
+                    mContestDetailsBJFragmentListener.onBackBtnClicked();
+                }
+                break;
+
+        }
+    }
 }

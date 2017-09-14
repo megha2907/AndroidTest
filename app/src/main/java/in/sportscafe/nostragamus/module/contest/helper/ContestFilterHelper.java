@@ -17,7 +17,7 @@ public class ContestFilterHelper {
         if (list != null && list.size() > 0) {
             filteredList = new ArrayList<>();
             for (Contest contest : list) {
-                if (filterTypeId == contest.getContestId()) {
+                if (filterTypeId == contest.getContestTypeInfo().getId()) {
                     filteredList.add(contest);
                 }
             }
