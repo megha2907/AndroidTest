@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,6 @@ import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerAdapt
 import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerFragment;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -121,7 +119,7 @@ public class InPlayFragment extends BaseFragment {
             ViewPager inPlayViewPager = (ViewPager) getView().findViewById(R.id.inplay_viewPager);
 
             SportsDataProvider sportsDataProvider = new SportsDataProvider();
-            List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
+            List<SportsTab> sportsTabList = sportsDataProvider.getInPlaySportsList();
 
             ArrayList<InPlayViewPagerFragment> fragmentList = new ArrayList<>();
             InPlayFilterHelper filterHelper = new InPlayFilterHelper();
@@ -138,11 +136,11 @@ public class InPlayFragment extends BaseFragment {
                         break;
 
                     case InPlayFilterHelper.FILTER_DAILY_SPORTS_ID:
-                        inPlayFilteredList = filterHelper.getDailyInplayChallenges(inPlayResponseList);
+                        inPlayFilteredList = filterHelper.getDailyInPlayChallenges(inPlayResponseList);
                         break;
 
                     case InPlayFilterHelper.FILTER_MIX_SPORTS_ID:
-                        inPlayFilteredList = filterHelper.getDailyInplayChallenges(inPlayResponseList);
+                        inPlayFilteredList = filterHelper.getInPlayMixedSportsChallengesFilteredOn(inPlayResponseList);
                         break;
 
                     default:

@@ -17,14 +17,14 @@ import in.sportscafe.nostragamus.R;
  * Created by deepanshi on 9/13/17.
  */
 
-public class ContestDetailsAJViewPagerAdapter  extends FragmentPagerAdapter {
+public class ContestDetailsAfterJoinViewPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
     private View[] mTabs = new View[4];
     private Context mContext;
 
-    public ContestDetailsAJViewPagerAdapter(FragmentManager manager, Context context) {
+    public ContestDetailsAfterJoinViewPagerAdapter(FragmentManager manager, Context context) {
         super(manager);
         mContext = context;
     }

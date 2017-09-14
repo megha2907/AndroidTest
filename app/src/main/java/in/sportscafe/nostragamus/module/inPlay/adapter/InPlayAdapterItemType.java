@@ -5,7 +5,8 @@ package in.sportscafe.nostragamus.module.inPlay.adapter;
  */
 
 public interface InPlayAdapterItemType {
-    int JOINED_CONTEST = 1;
-    int COMPLETED_CONTEST = 2;
-    int HEADLESS_CONTEST = 3;
+    int CHALLENGE_ITEM = 1;
+    int JOINED_CONTEST = 2;
+    int COMPLETED_CONTEST = 3;
+    int HEADLESS_CONTEST = 4;
 }
