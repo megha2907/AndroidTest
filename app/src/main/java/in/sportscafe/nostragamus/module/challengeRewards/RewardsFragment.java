@@ -32,7 +32,7 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
 
     private static final String TAG = RewardsFragment.class.getSimpleName();
 
-    private int mContestId;
+    private int mContestId=0;
 
     private RewardsAdapter mConfigAdapter;
 
@@ -71,7 +71,6 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
     private void openBundle(Bundle bundle) {
         if (bundle != null) {
             mContestId = bundle.getInt(Constants.BundleKeys.CONTEST_ID);
-            Log.i("mContestId", String.valueOf(mContestId));
             getRewardsData();
         }
     }

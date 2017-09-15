@@ -93,9 +93,9 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         } else {
             //alternate row color
             if (position % 2 == 0) {
-                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black5));
+                holder.mLlLeaderBoards.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black5));
             } else {
-                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black4));
+                holder.mLlLeaderBoards.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black4));
             }
         }
 

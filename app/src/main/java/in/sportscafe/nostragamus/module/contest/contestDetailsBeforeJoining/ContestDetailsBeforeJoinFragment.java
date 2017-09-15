@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 
 /**
  * Created by deepanshi on 9/10/17.
@@ -117,7 +118,7 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
             RewardsFragment rewardsFragment = RewardsFragment.newInstance(contest.getContestId());
             mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
 
-            RulesFragment rulesFragment = RulesFragment.newInstance(contest);
+            RulesFragment rulesFragment = RulesFragment.newInstance(contest.getContestId());
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
 
             mViewPager.setAdapter(mViewPagerAdapter);
