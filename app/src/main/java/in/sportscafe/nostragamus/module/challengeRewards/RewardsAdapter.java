@@ -53,7 +53,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int TYPE_ITEM = 1;
     private static final int TYPE_FOOTER = 2;
 
-    public RewardsAdapter(Context context, List<Rewards> rewardsList, String ChallengeEndTime) {
+    public RewardsAdapter(Context csontext, List<Rewards> rewardsList, String ChallengeEndTime) {
 
         mChallengeEndTime = ChallengeEndTime;
         mRewardsList = rewardsList;
@@ -139,6 +139,12 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     rewardsVH.mTvRank.setVisibility(View.GONE);
                 }
 
+                if (!TextUtils.isEmpty(rewards.getUserName())) {
+                    rewardsVH.mTvWinnersName.setVisibility(View.VISIBLE);
+                    rewardsVH.mTvWinnersName.setText(rewards.getRank());
+                } else {
+                    rewardsVH.mTvWinnersName.setVisibility(View.GONE);
+                }
 
                 if (rewards.getAmount() != null) {
                     rewardsVH.mTvAmount.setVisibility(View.VISIBLE);
@@ -169,6 +175,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         TextView mTvRank;
         TextView mTvAmount;
+        TextView mTvWinnersName;
 
         public RewardsVH(View view) {
             super(view);
@@ -176,6 +183,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mMainView = view;
             mTvRank = (TextView) view.findViewById(R.id.reward_row_tv_rank);
             mTvAmount = (TextView) view.findViewById(R.id.reward_row_tv_amount);
+            mTvWinnersName = (TextView) view.findViewById(R.id.reward_row_tv_name);
 
         }
 

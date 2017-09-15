@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.Log;
+import com.jeeva.android.widgets.HmImageView;
 
 import org.parceler.Parcels;
 
@@ -63,7 +65,7 @@ public class PointsFragment extends BaseFragment implements PointsFragmentView, 
 
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.BundleKeys.LB_LANDING_DATA, Parcels.wrap(new LbLanding(
-                300, 0, "", "", Constants.LBLandingType.CHALLENGE
+                376, 0, "", "", Constants.LBLandingType.CHALLENGE
         )));
 
         PointsFragment fragment = new PointsFragment();
@@ -83,7 +85,6 @@ public class PointsFragment extends BaseFragment implements PointsFragmentView, 
 
         LeaderBoardModelImpl.SORT_TYPE = 0;
         setSelected(findViewById(R.id.sort_by_total_points_btn));
-
 
         mBtnSortByAccuracy = (Button) findViewById(R.id.sort_by_accuracy_btn);
         mBtnSortByTotalPoints = (Button) findViewById(R.id.sort_by_total_points_btn);
@@ -144,6 +145,7 @@ public class PointsFragment extends BaseFragment implements PointsFragmentView, 
         View gradientView = findViewById(R.id.gradient_view);
 
         if (null == userLeaderBoard) {
+            Log.i("insideuserleaderboard","null");
             userPoints.setVisibility(View.GONE);
             gradientView.setVisibility(View.GONE);
             return;
@@ -154,7 +156,7 @@ public class PointsFragment extends BaseFragment implements PointsFragmentView, 
 
         ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_iv_status);
         TextView mTvRank = (TextView) findViewById(R.id.leaderboard_tv_rank);
-        RoundImage mIvUser = (RoundImage) findViewById(R.id.leaderboard_iv_user_img);
+        HmImageView mIvUser = (HmImageView) findViewById(R.id.leaderboard_iv_user_img);
         TextView mTvName = (TextView) findViewById(R.id.leaderboard_tv_user_name);
         TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_tv_points);
         TextView mTvPlayed = (TextView) findViewById(R.id.leaderboard_tv_played);

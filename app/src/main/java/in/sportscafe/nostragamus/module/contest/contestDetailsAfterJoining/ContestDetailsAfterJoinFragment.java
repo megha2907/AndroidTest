@@ -64,7 +64,7 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
     private void initView(View rootView) {
         mTvTBarHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
         mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
-        mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
+        //mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
         rootView.findViewById(R.id.contest_details_back_btn).setOnClickListener(this);
     }
 
@@ -75,8 +75,8 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
             mTvTBarSubHeading.setText(inPlayContestDto.getContestName());   // TODO change as per need
         }
 
-        int amount = (int) WalletHelper.getTotalBalance();
-        mTvTBarWalletMoney.setText(String.valueOf(amount));
+        /*int amount = (int) WalletHelper.getTotalBalance();
+        mTvTBarWalletMoney.setText(String.valueOf(amount));*/
     }
 
     public void onNewIntent(Intent intent) {
@@ -102,14 +102,17 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
             ViewPager mViewPager = (ViewPager) getView().findViewById(R.id.contest_details_viewPager);
             mViewPagerAdapter = new ContestDetailsAfterJoinViewPagerAdapter(getChildFragmentManager(), getContext());
 
-                InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();
-                if (getArguments() != null) {
-                    matchTimelineViewPagerFragment.setArguments(getArguments());
-                }
-                mViewPagerAdapter.addFragment(matchTimelineViewPagerFragment, Constants.ContestDetailsTabs.MATCHES);
+           InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();
+            if (getArguments() != null) {
+                matchTimelineViewPagerFragment.setArguments(getArguments());
+            }
+            mViewPagerAdapter.addFragment(matchTimelineViewPagerFragment, Constants.ContestDetailsTabs.MATCHES);
 
-                RewardsFragment rewardsFragment = RewardsFragment.newInstance(contestDto.getContestId());
-                mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
+            RewardsFragment rewardsFragment = RewardsFragment.newInstance(contestDto.getContestId());
+            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
+
+            mViewPager.setAdapter(mViewPagerAdapter);
+            mViewPager.setOffscreenPageLimit(4);
 
                 /*RulesFragment rulesFragment = RulesFragment.newInstance(contestDto);
                 mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
@@ -117,10 +120,7 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
                 PointsFragment pointsFragment = PointsFragment.newInstance(contestDto);
                 mViewPagerAdapter.addFragment(pointsFragment, Constants.ContestDetailsTabs.LEADERBOARDS);*/
 
-                mViewPager.setAdapter(mViewPagerAdapter);
-                mViewPager.setOffscreenPageLimit(4);
-
-                setTabLayout(mViewPager);
+            setTabLayout(mViewPager);
         }
     }
 
