@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.user.points.pointsFragment.dto;
+package in.sportscafe.nostragamus.module.user.leaderboard.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

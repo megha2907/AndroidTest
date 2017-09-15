@@ -12,12 +12,14 @@ import java.util.Comparator;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.challengeRewards.RewardsApiModelImpl;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
-import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardInfo;
-import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardRequest;
-import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardResponse;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardInfo;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardRequest;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -28,11 +30,13 @@ import retrofit2.Response;
  */
 public class LeaderBoardModelImpl implements LeaderBoardModel {
 
+    private static final String TAG = LeaderBoardModelImpl.class.getSimpleName();
+
     private LeaderBoardAdapter mLeaderBoardAdapter;
 
     private OnLeaderBoardModelListener onLeaderBoardModelListener;
 
-    private Integer mRoomId;
+    private Integer mRoomId = 0;
 
     private UserLeaderBoardInfo mUserLeaderBoardInfo;
 
@@ -55,7 +59,12 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
         if (bundle.containsKey(BundleKeys.ROOM_ID)) {
             mRoomId = bundle.getInt(BundleKeys.ROOM_ID);
         }
-        callLbDetailApi();
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            callLbDetailApi();
+        } else {
+            Log.d(TAG, "No Network connection");
+            onLeaderBoardModelListener.onNoInternet();
+        }
     }
 
     private void checkEmpty() {
@@ -87,10 +96,18 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
                         super.onResponse(call, response);
                         if (response.isSuccessful()) {
 
-                            mUserLeaderBoardInfo = response.body().getUserLeaderBoardInfo();
-                            if (null ==  mUserLeaderBoardInfo) {
+                            if (response.body()!=null) {
+                                mUserLeaderBoardInfo = response.body().getUserLeaderBoardInfo();
+                                if (null == mUserLeaderBoardInfo) {
+                                    onLeaderBoardModelListener.onEmpty();
+                                    return;
+                                }else {
+                                    sortAndRefreshLeaderBoard();
+                                    updateUserLeaderBoard();
+                                  //  onLeaderBoardModelListener.setSortSelectedPos(0);
+                                }
+                            }else {
                                 onLeaderBoardModelListener.onEmpty();
-                                return;
                             }
 
                         } else {
@@ -121,19 +138,34 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
         mLeaderBoardAdapter.notifyDataSetChanged();
     }
 
+    public void updateUserLeaderBoard() {
+        String userId = NostragamusDataHandler.getInstance().getUserId();
+        for (UserLeaderBoard userLeaderBoard : mUserLeaderBoardInfo.getUserLeaderBoardList()) {
+            if (userId.equalsIgnoreCase(userLeaderBoard.getUserId() + "")) {
+                onLeaderBoardModelListener.setUserLeaderBoard(userLeaderBoard);
+                return;
+            }
+        }
+
+        onLeaderBoardModelListener.setUserLeaderBoard(null);
+    }
+
+
     @Override
     public void sortAndRefreshLeaderBoard() {
 
-        if (SORT_TYPE == 0) {
-            Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
-        } else if (SORT_TYPE == 1) {
-            Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserAccuracyComparator);
-        } else if (SORT_TYPE == 2) {
-            Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserPowerUpsComparator);
-        } else if (SORT_TYPE == 3) {
-            Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserMatchPointsComparator);
-        } else {
-            Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
+        if (mUserLeaderBoardInfo!=null) {
+            if (SORT_TYPE == 0) {
+                Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
+            } else if (SORT_TYPE == 1) {
+                Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserAccuracyComparator);
+            } else if (SORT_TYPE == 2) {
+                Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserPowerUpsComparator);
+            } else if (SORT_TYPE == 3) {
+                Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserMatchPointsComparator);
+            } else {
+                Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
+            }
         }
 
         mLeaderBoardAdapter.clear();
@@ -149,5 +181,10 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
         void onEmpty();
 
+        void onNoInternet();
+
+        void setSortSelectedPos(int sortType);
+
+        void setUserLeaderBoard(UserLeaderBoard userLeaderBoard);
     }
 }

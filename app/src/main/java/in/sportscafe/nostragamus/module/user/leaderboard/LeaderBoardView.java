@@ -13,4 +13,7 @@ public interface LeaderBoardView extends InAppView {
 
     void moveAdapterPosition(int movePosition);
 
+    void setSortSelectedType(int sortType);
+
+    void setUserLeaderBoardView(UserLeaderBoard userLeaderBoard);
 }

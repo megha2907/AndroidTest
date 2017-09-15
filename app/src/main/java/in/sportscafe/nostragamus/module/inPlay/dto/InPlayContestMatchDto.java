@@ -11,7 +11,7 @@ import org.parceler.Parcel;
 public class InPlayContestMatchDto {
 
     @JsonProperty("is_played")
-    private boolean isPlayed;
+    private int isPlayed;
 
     @JsonProperty("score")
     private int score;
@@ -20,13 +20,13 @@ public class InPlayContestMatchDto {
     private String startTime;
 
     @JsonProperty("status")
-    private boolean status;
+    private String status;
 
-    public boolean isPlayed() {
+    public int isPlayed() {
         return isPlayed;
     }
 
-    public void setPlayed(boolean played) {
+    public void setPlayed(int played) {
         isPlayed = played;
     }
 
@@ -46,11 +46,11 @@ public class InPlayContestMatchDto {
         this.startTime = startTime;
     }
 
-    public boolean isStatus() {
+    public String isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

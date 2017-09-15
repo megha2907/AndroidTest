@@ -1,12 +1,10 @@
-package in.sportscafe.nostragamus.module.user.points.pointsFragment.dto;
+package in.sportscafe.nostragamus.module.user.leaderboard.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.parceler.Parcel;
 
 import java.util.List;
-
-import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 
 /**
  * Created by deepanshi on 9/15/17.

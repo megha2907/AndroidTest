@@ -16,6 +16,7 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
+import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
@@ -109,17 +110,17 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
             }
             mViewPagerAdapter.addFragment(matchTimelineViewPagerFragment, Constants.ContestDetailsTabs.MATCHES);
 
-            RewardsFragment rewardsFragment = RewardsFragment.newInstance(contestDto.getContestId());
-            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
-
             LeaderBoardFragment leaderBoardFragment = LeaderBoardFragment.newInstance(45);
             mViewPagerAdapter.addFragment(leaderBoardFragment, Constants.ContestDetailsTabs.LEADERBOARDS);
 
+            RewardsFragment rewardsFragment = RewardsFragment.newInstance(contestDto.getContestId());
+            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
+
+            RulesFragment rulesFragment = RulesFragment.newInstance(contestDto.getContestId());
+            mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
+
             mViewPager.setAdapter(mViewPagerAdapter);
             mViewPager.setOffscreenPageLimit(4);
-
-                /*RulesFragment rulesFragment = RulesFragment.newInstance(contestDto);
-                mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES); */
 
 
             setTabLayout(mViewPager);
