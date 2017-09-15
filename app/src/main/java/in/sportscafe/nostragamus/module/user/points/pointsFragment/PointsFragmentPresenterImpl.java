@@ -9,6 +9,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.points.PointsModel;
 import in.sportscafe.nostragamus.module.user.points.PointsPresenter;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardInfo;
 
 /**
  * Created by deepanshi on 9/13/17.
@@ -69,11 +70,6 @@ public class PointsFragmentPresenterImpl implements PointsPresenter, PointsFragm
     }
 
     @Override
-    public void changeTabsView() {
-        mPointsView.setTabsView();
-    }
-
-    @Override
     public void onFailureLeaderBoard(String message) {
         showAlertMsg(message);
     }
@@ -94,9 +90,10 @@ public class PointsFragmentPresenterImpl implements PointsPresenter, PointsFragm
     }
 
     @Override
-    public void onSuccessLeaderBoard() {
+    public void onSuccessLeaderBoard(UserLeaderBoardInfo userLeaderBoardInfo) {
        // mPointsView.dismissProgressbar();
-        mPointsView.initMyPosition(mPointsModel.getAdapter(), mPointsModel.getSelectedPosition());
+        mPointsView.onSuccessLeaderBoardInfo(userLeaderBoardInfo);
+        mPointsView.updateUserLeaderBoard(mPointsModel.getSelectedPosition());
     }
 
     @Override

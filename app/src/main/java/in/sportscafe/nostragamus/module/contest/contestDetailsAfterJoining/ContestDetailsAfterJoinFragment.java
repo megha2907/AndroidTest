@@ -20,6 +20,7 @@ import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 
 /**
  * Created by deepanshi on 9/13/17.
@@ -102,7 +103,7 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
             ViewPager mViewPager = (ViewPager) getView().findViewById(R.id.contest_details_viewPager);
             mViewPagerAdapter = new ContestDetailsAfterJoinViewPagerAdapter(getChildFragmentManager(), getContext());
 
-           InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();
+            InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();
             if (getArguments() != null) {
                 matchTimelineViewPagerFragment.setArguments(getArguments());
             }
@@ -111,14 +112,15 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
             RewardsFragment rewardsFragment = RewardsFragment.newInstance(contestDto.getContestId());
             mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
 
+            LeaderBoardFragment leaderBoardFragment = LeaderBoardFragment.newInstance(45);
+            mViewPagerAdapter.addFragment(leaderBoardFragment, Constants.ContestDetailsTabs.LEADERBOARDS);
+
             mViewPager.setAdapter(mViewPagerAdapter);
             mViewPager.setOffscreenPageLimit(4);
 
                 /*RulesFragment rulesFragment = RulesFragment.newInstance(contestDto);
-                mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
+                mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES); */
 
-                PointsFragment pointsFragment = PointsFragment.newInstance(contestDto);
-                mViewPagerAdapter.addFragment(pointsFragment, Constants.ContestDetailsTabs.LEADERBOARDS);*/
 
             setTabLayout(mViewPager);
         }

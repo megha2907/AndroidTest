@@ -6,6 +6,7 @@ import com.jeeva.android.InAppView;
 
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardInfo;
 
 /**
  * Created by deepanshi on 9/13/17.
@@ -13,16 +14,15 @@ import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 
 public interface PointsFragmentView extends InAppView {
 
-    void initMyPosition(ViewPagerAdapter adapter, int selectedPosition);
+    void updateUserLeaderBoard(int selectedPosition);
 
     void setMatchPoints(boolean isMatchPoints);
 
     void setUserLeaderBoardView(UserLeaderBoard userLeaderBoard);
 
-    void setTabsView();
-
     void navigateToUserProfile(Bundle bundle);
 
     void navigateToHome();
 
+    void onSuccessLeaderBoardInfo(UserLeaderBoardInfo userLeaderBoardInfo);
 }

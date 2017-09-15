@@ -225,6 +225,7 @@ public interface Constants {
         String FROM_PROFILE = "fromProfile";
         String TOURNAMENT_ID = "tour_id";
         String CHALLENGE_ID = "challengeId";
+        String ROOM_ID = "roomId";
         String MATCH_ID = "match_id";
         String TOURNAMENT_NAME = "tourName";
         String TOURNAMENT_SUMMARY = "tourSummary";

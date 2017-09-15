@@ -78,6 +78,8 @@ import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.VerifyReferralCodeResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryTransaction;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardRequest;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardResponse;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -348,4 +350,7 @@ public interface NostragamusService {
 
     @POST("v3/game/temp/getMatches")
     Call<InPlayMatchesResponse> getInPlayMatches(@Body InPlayMatchRequest request);
+
+    @POST("v3/game/rooms/leaderboards")
+    Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(@Body UserLeaderBoardRequest userLeaderBoardRequest);
 }

@@ -47,6 +47,15 @@ public class LeaderBoardFragment extends BaseFragment implements LeaderBoardView
         return fragment;
     }
 
+    public static LeaderBoardFragment newInstance(int roomId) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(BundleKeys.ROOM_ID, roomId);
+
+        LeaderBoardFragment fragment = new LeaderBoardFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

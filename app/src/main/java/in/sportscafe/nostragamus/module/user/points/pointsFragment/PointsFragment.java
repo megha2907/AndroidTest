@@ -33,12 +33,13 @@ import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardModelImpl;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity;
 import in.sportscafe.nostragamus.module.user.points.PointsPresenter;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardInfo;
 
 /**
  * Created by deepanshi on 9/13/17.
  */
 
-public class PointsFragment extends BaseFragment implements PointsFragmentView, View.OnClickListener, OnDismissListener {
+public class PointsFragment extends BaseFragment implements PointsFragmentView, OnDismissListener {
 
     private PointsPresenter mPointsPresenter;
 
@@ -53,8 +54,6 @@ public class PointsFragment extends BaseFragment implements PointsFragmentView, 
     private View mSelectedImage;
 
     private boolean ismMatchPoints = false;
-
-    private TabLayout mTabLayout;
 
     private final static int POPUP_DIALOG_REQUEST_CODE = 50;
 
@@ -89,11 +88,10 @@ public class PointsFragment extends BaseFragment implements PointsFragmentView, 
         mBtnSortByAccuracy = (Button) findViewById(R.id.sort_by_accuracy_btn);
         mBtnSortByTotalPoints = (Button) findViewById(R.id.sort_by_total_points_btn);
         mBtnSortByPowerUps = (Button) findViewById(R.id.sort_by_powerups_btn);
-        mTabLayout = (TabLayout) findViewById(R.id.points_tab_tl);
 
-        mBtnSortByAccuracy.setOnClickListener(this);
-        mBtnSortByPowerUps.setOnClickListener(this);
-        mBtnSortByTotalPoints.setOnClickListener(this);
+//        mBtnSortByAccuracy.setOnClickListener(this);
+//        mBtnSortByPowerUps.setOnClickListener(this);
+//        mBtnSortByTotalPoints.setOnClickListener(this);
 
         this.mPointsPresenter = PointsFragmentPresenterImpl.newInstance(this);
         this.mPointsPresenter.onCreatePoints(getArguments());
@@ -101,30 +99,8 @@ public class PointsFragment extends BaseFragment implements PointsFragmentView, 
     }
 
     @Override
-    public void initMyPosition(ViewPagerAdapter adapter, int selectedPosition) {
-        mViewPager = (ViewPager) findViewById(R.id.points_tab_vp);
-        mViewPager.setAdapter(adapter);
-
-        mTabLayout.setupWithViewPager(mViewPager);
-
-        mViewPager.setCurrentItem(selectedPosition);
+    public void updateUserLeaderBoard(int selectedPosition) {
         mPointsPresenter.updateUserLeaderBoard(selectedPosition);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mPointsPresenter.updateUserLeaderBoard(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     @Override
@@ -136,6 +112,11 @@ public class PointsFragment extends BaseFragment implements PointsFragmentView, 
             mBtnSortByPowerUps.setText("Match Score");
             mBtnSortByPowerUps.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_selection_icon, 0, 0, 0);
         }
+    }
+
+    @Override
+    public void onSuccessLeaderBoardInfo(UserLeaderBoardInfo userLeaderBoardInfo) {
+
     }
 
 
@@ -205,54 +186,48 @@ public class PointsFragment extends BaseFragment implements PointsFragmentView, 
 
     }
 
-    @Override
-    public void setTabsView() {
-        mTabLayout.setSelectedTabIndicatorColor(Color.TRANSPARENT);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-    }
-
-    @Override
-    public void onClick(View view) {
-        //view.setEnabled(false);
-
-        switch (view.getId()) {
-
-            case R.id.sort_by_total_points_btn:
-
-                if (mViewPager != null) {
-                    LeaderBoardModelImpl.SORT_TYPE = 0;
-                    ((ViewPagerAdapter) mViewPager.getAdapter()).getItem(mViewPager.getCurrentItem()).setUserVisibleHint(true);
-                }
-                setSelected(findViewById(R.id.sort_by_total_points_btn));
-                break;
-
-            case R.id.sort_by_accuracy_btn:
-
-                if (mViewPager != null) {
-                    LeaderBoardModelImpl.SORT_TYPE = 1;
-                    ((ViewPagerAdapter) mViewPager.getAdapter()).getItem(mViewPager.getCurrentItem()).setUserVisibleHint(true);
-                }
-                setSelected(findViewById(R.id.sort_by_accuracy_btn));
-                break;
-
-            case R.id.sort_by_powerups_btn:
-                if (mViewPager != null) {
-
-                    if (ismMatchPoints) {
-                        LeaderBoardModelImpl.SORT_TYPE = 3;
-                    } else {
-                        LeaderBoardModelImpl.SORT_TYPE = 2;
-                    }
-                    ((ViewPagerAdapter) mViewPager.getAdapter()).getItem(mViewPager.getCurrentItem()).setUserVisibleHint(true);
-
-                }
-                setSelected(findViewById(R.id.sort_by_powerups_btn));
-                break;
-            case R.id.points_user_rl:
-                mPointsPresenter.onClickUserPoints();
-                break;
-        }
-    }
+//    @Override
+//    public void onClick(View view) {
+//        //view.setEnabled(false);
+//
+//        switch (view.getId()) {
+//
+//            case R.id.sort_by_total_points_btn:
+//
+//                if (mViewPager != null) {
+//                    LeaderBoardModelImpl.SORT_TYPE = 0;
+//                    ((ViewPagerAdapter) mViewPager.getAdapter()).getItem(mViewPager.getCurrentItem()).setUserVisibleHint(true);
+//                }
+//                setSelected(findViewById(R.id.sort_by_total_points_btn));
+//                break;
+//
+//            case R.id.sort_by_accuracy_btn:
+//
+//                if (mViewPager != null) {
+//                    LeaderBoardModelImpl.SORT_TYPE = 1;
+//                    ((ViewPagerAdapter) mViewPager.getAdapter()).getItem(mViewPager.getCurrentItem()).setUserVisibleHint(true);
+//                }
+//                setSelected(findViewById(R.id.sort_by_accuracy_btn));
+//                break;
+//
+//            case R.id.sort_by_powerups_btn:
+//                if (mViewPager != null) {
+//
+//                    if (ismMatchPoints) {
+//                        LeaderBoardModelImpl.SORT_TYPE = 3;
+//                    } else {
+//                        LeaderBoardModelImpl.SORT_TYPE = 2;
+//                    }
+//                    ((ViewPagerAdapter) mViewPager.getAdapter()).getItem(mViewPager.getCurrentItem()).setUserVisibleHint(true);
+//
+//                }
+//                setSelected(findViewById(R.id.sort_by_powerups_btn));
+//                break;
+//            case R.id.points_user_rl:
+//                mPointsPresenter.onClickUserPoints();
+//                break;
+//        }
+//    }
 
     private void setSelected(View selImg) {
         if (null != mSelectedImage) {
@@ -278,6 +253,7 @@ public class PointsFragment extends BaseFragment implements PointsFragmentView, 
         startActivity(intent);
         getActivity().finish();
     }
+
 
     @Override
     public void onDismiss(int requestCode, Bundle bundle) {

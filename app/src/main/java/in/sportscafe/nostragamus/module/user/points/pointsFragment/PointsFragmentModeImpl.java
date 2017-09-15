@@ -12,6 +12,9 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.challengeRewards.RewardsApiModelImpl;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsRequest;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
@@ -19,10 +22,15 @@ import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.points.PointsModel;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardInfo;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardRequest;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardResponse;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
+import in.sportscafe.nostragamus.webservice.ApiCallBack;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
+import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -115,12 +123,13 @@ public class PointsFragmentModeImpl implements PointsModel {
 
     @Override
     public ViewPagerAdapter getAdapter() {
-        return mViewPagerAdapter;
+        return null;
     }
+
 
     @Override
     public void refreshLeaderBoard() {
-        callLbDetailApi();
+
     }
 
     @Override
@@ -128,71 +137,17 @@ public class PointsFragmentModeImpl implements PointsModel {
         return mSelectedPosition;
     }
 
-
-    private void callLbDetailApi() {
-        MyWebService.getInstance().getLeaderBoardDetailRequest(mGroupId, mChallengeId, mMatchId)
-                .enqueue(new NostragamusCallBack<LeaderBoardResponse>() {
-                    @Override
-                    public void onResponse(Call<LeaderBoardResponse> call, Response<LeaderBoardResponse> response) {
-                        super.onResponse(call, response);
-                        if (response.isSuccessful()) {
-
-                            List<LeaderBoard> leaderBoardList = response.body().getLeaderBoardList();
-                            if (null == leaderBoardList || leaderBoardList.isEmpty()) {
-                                mPointsModelListener.onEmpty();
-                                return;
-                            }
-
-                            if (leaderBoardList.get(0).getUserLeaderBoardList().get(0).getMatchPoints() != null) {
-                                isMatchPoints = true;
-                                mPointsModelListener.setIsMatchPoints(isMatchPoints);
-                            }
-
-                            mleaderBoardList = leaderBoardList;
-
-                            refreshAdapter(leaderBoardList, "");
-
-                            mPointsModelListener.onSuccessLeaderBoard();
-                        } else {
-                            mPointsModelListener.onFailureLeaderBoard(response.message());
-                        }
-                    }
-                });
-    }
-
     @Override
     public List<LeaderBoard> getLeaderBoardList() {
-        return mleaderBoardList;
+        return null;
     }
 
     @Override
     public void refreshAdapter(List<LeaderBoard> leaderBoardList, String SortType) {
 
-        LeaderBoard leaderBoard;
-
-        //for challenges change tab to overall
-        if (mChallengeId == 0) {
-            mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoardList.get(0)), leaderBoardList.get(0).getTournamentName());
-            Log.i("name",leaderBoardList.get(0).getTournamentName());
-            mPointsModelListener.changeTabsView();
-        } else {
-
-            for (int i = 0; i < leaderBoardList.size(); i++) {
-                leaderBoard = leaderBoardList.get(i);
-
-                Log.i("groupIdleaderboard", String.valueOf(leaderBoard.getGroupId()));
-
-                mViewPagerAdapter.addFragment(LeaderBoardFragment.newInstance(leaderBoard, mChallengeId), leaderBoard.getTournamentName());
-
-                if (i != 0 && mGroupId == leaderBoard.getGroupId()) {
-                    mSelectedPosition = i;
-                }
-            }
-        }
-        Log.i("mSelectedPosition", String.valueOf(mSelectedPosition));
-
-        mViewPagerAdapter.notifyDataSetChanged();
     }
+
+
 
     @Override
     public void sortAdapter(String sortType) {
@@ -228,7 +183,7 @@ public class PointsFragmentModeImpl implements PointsModel {
 
         void onFailureLeaderBoard(String message);
 
-        void onSuccessLeaderBoard();
+        void onSuccessLeaderBoard(UserLeaderBoardInfo userLeaderBoardInfo);
 
         void onEmpty();
 
@@ -237,7 +192,5 @@ public class PointsFragmentModeImpl implements PointsModel {
         void setIsMatchPoints(boolean isMatchPoints);
 
         void setUserLeaderBoard(UserLeaderBoard userLeaderBoard);
-
-        void changeTabsView();
     }
 }

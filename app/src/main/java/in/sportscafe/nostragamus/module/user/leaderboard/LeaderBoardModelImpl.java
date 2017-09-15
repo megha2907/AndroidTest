@@ -15,6 +15,13 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardInfo;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardRequest;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardResponse;
+import in.sportscafe.nostragamus.webservice.MyWebService;
+import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -25,9 +32,9 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     private OnLeaderBoardModelListener onLeaderBoardModelListener;
 
-    private Integer mChallengeId;
+    private Integer mRoomId;
 
-    private LeaderBoard mleaderBoard;
+    private UserLeaderBoardInfo mUserLeaderBoardInfo;
 
     public static int SORT_TYPE = 0;
 
@@ -45,10 +52,10 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     @Override
     public void init(Bundle bundle) {
-        if (bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
-            mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+        if (bundle.containsKey(BundleKeys.ROOM_ID)) {
+            mRoomId = bundle.getInt(BundleKeys.ROOM_ID);
         }
-        mleaderBoard = Parcels.unwrap(bundle.getParcelable(BundleKeys.LEADERBOARD_LIST));
+        callLbDetailApi();
     }
 
     private void checkEmpty() {
@@ -59,7 +66,7 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     @Override
     public LeaderBoardAdapter getAdapter(Context context) {
-        mLeaderBoardAdapter = new LeaderBoardAdapter(context, mChallengeId);
+        mLeaderBoardAdapter = new LeaderBoardAdapter(context, mRoomId);
         return mLeaderBoardAdapter;
     }
 
@@ -68,15 +75,41 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
         return mUserPosition;
     }
 
+    private void callLbDetailApi() {
+
+        UserLeaderBoardRequest userLeaderBoardRequest = new UserLeaderBoardRequest();
+        userLeaderBoardRequest.setRoomId(mRoomId);
+
+        MyWebService.getInstance().getUserLeaderBoardDetails(userLeaderBoardRequest)
+                .enqueue(new NostragamusCallBack<UserLeaderBoardResponse>() {
+                    @Override
+                    public void onResponse(Call<UserLeaderBoardResponse> call, Response<UserLeaderBoardResponse> response) {
+                        super.onResponse(call, response);
+                        if (response.isSuccessful()) {
+
+                            mUserLeaderBoardInfo = response.body().getUserLeaderBoardInfo();
+                            if (null ==  mUserLeaderBoardInfo) {
+                                onLeaderBoardModelListener.onEmpty();
+                                return;
+                            }
+
+                        } else {
+                            onLeaderBoardModelListener.onEmpty();
+                        }
+                    }
+                });
+    }
+
+
     private void refreshUserPosition() {
 
         Integer userId = Integer.valueOf(NostragamusDataHandler.getInstance().getUserId());
 
         UserLeaderBoard userLeaderBoard;
 
-        for (int i = 0; i < mleaderBoard.getUserLeaderBoardList().size(); i++) {
+        for (int i = 0; i < mUserLeaderBoardInfo.getUserLeaderBoardList().size(); i++) {
 
-            userLeaderBoard = mleaderBoard.getUserLeaderBoardList().get(i);
+            userLeaderBoard = mUserLeaderBoardInfo.getUserLeaderBoardList().get(i);
 
             if (userId.equals(userLeaderBoard.getUserId())) {
                 mUserPosition = i;
@@ -92,15 +125,15 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
     public void sortAndRefreshLeaderBoard() {
 
         if (SORT_TYPE == 0) {
-            Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
+            Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
         } else if (SORT_TYPE == 1) {
-            Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserAccuracyComparator);
+            Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserAccuracyComparator);
         } else if (SORT_TYPE == 2) {
-            Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserPowerUpsComparator);
+            Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserPowerUpsComparator);
         } else if (SORT_TYPE == 3) {
-            Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserMatchPointsComparator);
+            Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserMatchPointsComparator);
         } else {
-            Collections.sort(mleaderBoard.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
+            Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
         }
 
         mLeaderBoardAdapter.clear();

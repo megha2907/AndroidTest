@@ -81,6 +81,8 @@ import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.VerifyReferralCodeResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryTransaction;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardRequest;
+import in.sportscafe.nostragamus.module.user.points.pointsFragment.dto.UserLeaderBoardResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -428,4 +430,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getInPlayMatches(request);
     }
 
+    public Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(UserLeaderBoardRequest userLeaderBoardRequest) {
+        return mNostragamusService.getUserLeaderBoardDetails(userLeaderBoardRequest);
+    }
 }
