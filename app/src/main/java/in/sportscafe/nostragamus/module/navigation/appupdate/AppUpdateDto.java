@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.appupdate;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -11,16 +11,16 @@ import org.parceler.Parcel;
 @Parcel
 public class AppUpdateDto {
 
-    @JsonProperty("title")
+    @SerializedName("title")
     private String title;
 
-    @JsonProperty("description")
+    @SerializedName("description")
     private String desc;
 
-    @JsonProperty("image_url")
+    @SerializedName("image_url")
     private String imageUrl;
 
-    @JsonProperty("heading")
+    @SerializedName("heading")
     private String heading;
 
     public AppUpdateDto() {
@@ -32,42 +32,42 @@ public class AppUpdateDto {
         this.imageUrl = imageUrl;
     }
 
-    @JsonProperty("title")
+    @SerializedName("title")
     public String getTitle() {
         return title;
     }
 
-    @JsonProperty("title")
+    @SerializedName("title")
     public void setTitle(String title) {
         this.title = title;
     }
 
-    @JsonProperty("description")
+    @SerializedName("description")
     public String getDesc() {
         return desc;
     }
 
-    @JsonProperty("description")
+    @SerializedName("description")
     public void setDesc(String desc) {
         this.desc = desc;
     }
 
-    @JsonProperty("image_url")
+    @SerializedName("image_url")
     public String getImageUrl() {
         return imageUrl;
     }
 
-    @JsonProperty("image_url")
+    @SerializedName("image_url")
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
-    @JsonProperty("heading")
+    @SerializedName("heading")
     public String getHeading() {
         return heading;
     }
 
-    @JsonProperty("heading")
+    @SerializedName("heading")
     public void setHeading(String heading) {
         this.heading = heading;
     }

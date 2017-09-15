@@ -1,61 +1,61 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Jeeva on 13/7/16.
  */
 public class UpdateUserRequest {
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     private String userPhoto;
 
-    @JsonProperty("user_nick")
+    @SerializedName("user_nick")
     private String userNickName;
 
-    @JsonProperty("user_accepted")
+    @SerializedName("user_accepted")
     private boolean disclaimerAccepted;
 
-    @JsonProperty("user_referral_code")
+    @SerializedName("user_referral_code")
     private String referralCode;
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     public String getUserPhoto() {
         return userPhoto;
     }
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     public void setUserPhoto(String userPhoto) {
         this.userPhoto = userPhoto;
     }
 
 
-    @JsonProperty("user_nick")
+    @SerializedName("user_nick")
     public String getUserNickName() {
         return userNickName;
     }
 
-    @JsonProperty("user_nick")
+    @SerializedName("user_nick")
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
     }
 
-    @JsonProperty("user_accepted")
+    @SerializedName("user_accepted")
     public boolean isDisclaimerAccepted() {
         return disclaimerAccepted;
     }
 
-    @JsonProperty("user_accepted")
+    @SerializedName("user_accepted")
     public void setDisclaimerAccepted(boolean disclaimerAccepted) {
         this.disclaimerAccepted = disclaimerAccepted;
     }
 
-    @JsonProperty("user_referral_code")
+    @SerializedName("user_referral_code")
     public String getReferralCode() {
         return referralCode;
     }
 
-    @JsonProperty("user_referral_code")
+    @SerializedName("user_referral_code")
     public void setReferralCode(String referralCode) {
         this.referralCode = referralCode;
     }

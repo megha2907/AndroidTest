@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.group.joingroup.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by deepanshi on 11/24/16.
@@ -8,15 +8,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class JoinGroupResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private JoinGroup joinGroup;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public JoinGroup getJoinGroup() {
         return joinGroup;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setJoinGroup(JoinGroup joinGroup) {
         this.joinGroup = joinGroup;
     }

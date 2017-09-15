@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.inPlay.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 09/09/17.
@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class InPlayMatchRequest {
 
-    @JsonProperty("contest_id")
+    @SerializedName("contest_id")
     private int contestId;
 
     public int getContestId() {

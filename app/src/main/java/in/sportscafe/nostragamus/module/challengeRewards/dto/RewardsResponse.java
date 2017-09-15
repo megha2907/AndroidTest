@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.challengeRewards.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -15,13 +15,13 @@ import java.util.List;
 @Parcel
 public class RewardsResponse {
 
-    @JsonProperty("contest_id")
+    @SerializedName("contest_id")
     private int contestId;
 
-    @JsonProperty("challengeEndTime")
+    @SerializedName("challengeEndTime")
     private String challengeEndTime;
 
-    @JsonProperty("rewards")
+    @SerializedName("rewards")
     private List<Rewards> rewardsList = new ArrayList<>();
 
 

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -11,154 +11,154 @@ import java.util.List;
 
 public class UserProfile {
 
-    @JsonProperty("id")
+    @SerializedName("id")
     private String id;
 
-    @JsonProperty("user_referral_code")
+    @SerializedName("user_referral_code")
     private String userReferralCode;
 
-    @JsonProperty("username")
+    @SerializedName("username")
     private String userName;
 
-    @JsonProperty("displayName")
+    @SerializedName("displayName")
     private String displayName;
 
-    @JsonProperty("gender")
+    @SerializedName("gender")
     private String gender;
 
-    @JsonProperty("profileUrl")
+    @SerializedName("profileUrl")
     private String profileUrl;
 
-    @JsonProperty("campaignName")
+    @SerializedName("campaignName")
     private String campaignName;
 
-    @JsonProperty("appType")
+    @SerializedName("appType")
     private String appType;
 
-    @JsonProperty("wallet_init")
+    @SerializedName("wallet_init")
     private Integer walletInitialAmount;
 
 //
-//    @JsonProperty("emails")
+//    @SerializedName("emails")
 //    private Emails emails;
 //
-//    @JsonProperty("photos")
+//    @SerializedName("photos")
 //    private Photos photos;
 
 
-    @JsonProperty("emails")
+    @SerializedName("emails")
     private String emails;
 
-    @JsonProperty("photos")
+    @SerializedName("photos")
     private String photos;
 
-    @JsonProperty("provider")
+    @SerializedName("provider")
     private String provider;
 
-    @JsonProperty("id")
+    @SerializedName("id")
     public String getId() {
         return id;
     }
 
-    @JsonProperty("id")
+    @SerializedName("id")
     public void setId(String id) {
         this.id = id;
     }
 
-    @JsonProperty("username")
+    @SerializedName("username")
     public String getUserName() {
         return userName;
     }
 
-    @JsonProperty("username")
+    @SerializedName("username")
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    @JsonProperty("displayName")
+    @SerializedName("displayName")
     public String getDisplayName() {
         return displayName;
     }
 
-    @JsonProperty("displayName")
+    @SerializedName("displayName")
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
-    @JsonProperty("gender")
+    @SerializedName("gender")
     public String getGender() {
         return gender;
     }
 
-    @JsonProperty("gender")
+    @SerializedName("gender")
     public void setGender(String gender) {
         this.gender = gender;
     }
 
-    @JsonProperty("profileUrl")
+    @SerializedName("profileUrl")
     public String getProfileUrl() {
         return profileUrl;
     }
 
-    @JsonProperty("profileUrl")
+    @SerializedName("profileUrl")
     public void setProfileUrl(String profileUrl) {
         this.profileUrl = profileUrl;
     }
 
-//    @JsonProperty("emails")
+//    @SerializedName("emails")
 //    public Emails getEmails() {
 //        return emails;
 //    }
 //
-//    @JsonProperty("emails")
+//    @SerializedName("emails")
 //    public void setEmails(Emails emails) {
 //        this.emails = emails;
 //    }
 
-//    @JsonProperty("photos")
+//    @SerializedName("photos")
 //    public Photos getPhotos() {
 //        return photos;
 //    }
 //
-//    @JsonProperty("photos")
+//    @SerializedName("photos")
 //    public void setPhotos(Photos photos) {
 //        this.photos = photos;
 //    }
 
-    @JsonProperty("provider")
+    @SerializedName("provider")
     public String getProvider() {
         return provider;
     }
-    @JsonProperty("provider")
+    @SerializedName("provider")
     public void setProvider(String provider) {
         this.provider = provider;
     }
 
-    @JsonProperty("emails")
+    @SerializedName("emails")
     public String getEmails() {
         return emails;
     }
 
-    @JsonProperty("emails")
+    @SerializedName("emails")
     public void setEmails(String emails) {
         this.emails = emails;
     }
 
-    @JsonProperty("photos")
+    @SerializedName("photos")
     public String getPhotos() {
         return photos;
     }
-    @JsonProperty("photos")
+    @SerializedName("photos")
     public void setPhotos(String photos) {
         this.photos = photos;
     }
 
-    @JsonProperty("user_referral_code")
+    @SerializedName("user_referral_code")
     public String getUserReferralCode() {
         return userReferralCode;
     }
 
-    @JsonProperty("user_referral_code")
+    @SerializedName("user_referral_code")
     public void setUserReferralCode(String userReferralCode) {
         if(null == userReferralCode) {
             userReferralCode = "";
@@ -174,22 +174,22 @@ public class UserProfile {
         this.campaignName = campaignName;
     }
 
-    @JsonProperty("wallet_init")
+    @SerializedName("wallet_init")
     public Integer getWalletInitialAmount() {
         return walletInitialAmount;
     }
 
-    @JsonProperty("wallet_init")
+    @SerializedName("wallet_init")
     public void setWalletInitialAmount(Integer walletInitialAmount) {
         this.walletInitialAmount = walletInitialAmount;
     }
 
-    @JsonProperty("appType")
+    @SerializedName("appType")
     public String getAppType() {
         return appType;
     }
 
-    @JsonProperty("appType")
+    @SerializedName("appType")
     public void setAppType(String appType) {
         this.appType = appType;
     }

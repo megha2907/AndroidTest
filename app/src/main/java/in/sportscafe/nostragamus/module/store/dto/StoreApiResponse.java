@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.store.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +11,15 @@ import java.util.List;
 
 public class StoreApiResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<StoreSections> storeSections = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<StoreSections> getStoreSections() {
         return storeSections;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setStoreSections(List<StoreSections> storeSections) {
         this.storeSections = storeSections;
     }

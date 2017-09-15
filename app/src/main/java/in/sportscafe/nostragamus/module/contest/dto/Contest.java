@@ -1,7 +1,7 @@
 package in.sportscafe.nostragamus.module.contest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -20,49 +20,49 @@ import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 @Parcel
 public class Contest {
 
-    @JsonProperty("config_id")
+    @SerializedName("config_id")
     private int contestId;
 
-    @JsonProperty("config_name")
+    @SerializedName("config_name")
     private String configName;
 
-    @JsonProperty("challenge_name")
+    @SerializedName("challenge_name")
     private String challengeName;
 
-    @JsonProperty("subtitle")
+    @SerializedName("subtitle")
     private String subtitle;
 
-    @JsonProperty("prize_money")
+    @SerializedName("prize_money")
     private Integer prizes;
 
-    @JsonProperty("contest_type")
+    @SerializedName("contest_type")
     private ContestTypeInfo contestTypeInfo;
 
-    @JsonProperty("mode")
+    @SerializedName("mode")
     private ContestModeInfo contestModeInfo;
 
-    @JsonProperty("fee")
+    @SerializedName("fee")
     private Integer entryFee;
 
-    @JsonProperty("max_participants")
+    @SerializedName("max_participants")
     private Integer roomSize;
 
-    @JsonProperty("filled_rooms")
+    @SerializedName("filled_rooms")
     private int filledRooms;
 
-    @JsonProperty("filling_rooms")
+    @SerializedName("filling_rooms")
     private int fillingRooms;
 
-    @JsonProperty("max_transfer_limit")
+    @SerializedName("max_transfer_limit")
     private int maxTransferPowerUps;
 
-    @JsonProperty("tot_matches")
+    @SerializedName("tot_matches")
     private int totalMatches;
 
-    @JsonProperty("tournaments")
+    @SerializedName("tournaments")
     private List<String> tournaments = new ArrayList<>();
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     private PowerUpInfo powerUpInfo;
 
     private int contestItemType = ContestAdapterItemType.CONTEST;
@@ -139,17 +139,17 @@ public class Contest {
         this.contestItemType = contestItemType;
     }
 
-    @JsonIgnore
+
     public boolean isFreeEntry() {
         return entryFee == 0 || entryFee == null;
     }
 
-    @JsonIgnore
+
     public boolean isUnlimitedEntries() {
         return roomSize == 0 || roomSize == null;
     }
 
-    @JsonIgnore
+
     public boolean noPrizes() {
         return prizes == 0 || prizes == null;
     }

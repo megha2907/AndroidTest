@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.inPlay.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -12,31 +12,31 @@ import java.util.List;
 @Parcel
 public class InPlayContestDto {
 
-    @JsonProperty("contest_id")
+    @SerializedName("contest_id")
     private int contestId;
 
-    @JsonProperty("contest_tab_id")
+    @SerializedName("contest_tab_id")
     private int contestTabId;
 
-    @JsonProperty("contest_mode")
+    @SerializedName("contest_mode")
     private String contestMode;
 
-    @JsonProperty("contest_name")
+    @SerializedName("contest_name")
     private String contestName;
 
-    @JsonProperty("rank")
+    @SerializedName("rank")
     private int rank;
 
-    @JsonProperty("total_participants")
+    @SerializedName("total_participants")
     private int totalParticipants;
 
-    @JsonProperty("winning_amount")
+    @SerializedName("winning_amount")
     private int winningAmount;
 
-    @JsonProperty("entry_fee")
+    @SerializedName("entry_fee")
     private int entryFee;
 
-    @JsonProperty("matches")
+    @SerializedName("matches")
     private List<InPlayContestMatchDto> matches = null;
 
     public int getContestId() {

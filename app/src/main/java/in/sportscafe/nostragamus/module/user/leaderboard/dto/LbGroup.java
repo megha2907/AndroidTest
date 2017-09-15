@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.leaderboard.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,28 +10,28 @@ import java.util.List;
  */
 public class LbGroup {
 
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     private Integer groupId;
 
-    @JsonProperty("sports")
+    @SerializedName("sports")
     private List<LbSport> sports = new ArrayList<>();
 
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     public Integer getGroupId() {
         return groupId;
     }
 
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 
-    @JsonProperty("sports")
+    @SerializedName("sports")
     public List<LbSport> getSports() {
         return sports;
     }
 
-    @JsonProperty("sports")
+    @SerializedName("sports")
     public void setSports(List<LbSport> sports) {
         this.sports = sports;
     }

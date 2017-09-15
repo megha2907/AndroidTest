@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.contest.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -10,19 +10,19 @@ import java.util.List;
 
 public class ContestRoomDto {
 
-    @JsonProperty("room_id")
+    @SerializedName("room_id")
     private int roomId;
 
-    @JsonProperty("room_size")
+    @SerializedName("room_size")
     private int roomSize;
 
-    @JsonProperty("room_status")
+    @SerializedName("room_status")
     private String roomStatus;
 
-    @JsonProperty("room_title")
+    @SerializedName("room_title")
     private String roomTitle;
 
-    @JsonProperty("entries")
+    @SerializedName("entries")
     private List<ContestRoomEntryDto> entries = null;
 
     public int getRoomId() {

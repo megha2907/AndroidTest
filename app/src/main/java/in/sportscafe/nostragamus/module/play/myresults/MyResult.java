@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.play.myresults;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,31 +12,31 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
  */
 public class MyResult {
 
-    @JsonProperty("match_id")
+    @SerializedName("match_id")
     private Integer matchId;
 
-    @JsonProperty("tournament_id")
+    @SerializedName("tournament_id")
     private Integer tournamentId;
 
-    @JsonProperty("tournament_name")
+    @SerializedName("tournament_name")
     private String tournamentName;
 
-    @JsonProperty("match_parties")
+    @SerializedName("match_parties")
     private String matchParties;
 
-    @JsonProperty("match_result")
+    @SerializedName("match_result")
     private String matchResult;
 
-    @JsonProperty("match_starttime")
+    @SerializedName("match_starttime")
     private String matchStartTime;
 
-    @JsonProperty("questions")
+    @SerializedName("questions")
     private List<Question> questions = new ArrayList<>();
 
     /**
      * @return The matchId
      */
-    @JsonProperty("match_id")
+    @SerializedName("match_id")
     public Integer getMatchId() {
         return matchId;
     }
@@ -44,7 +44,7 @@ public class MyResult {
     /**
      * @param matchId The match_id
      */
-    @JsonProperty("match_id")
+    @SerializedName("match_id")
     public void setMatchId(Integer matchId) {
         this.matchId = matchId;
     }
@@ -52,7 +52,7 @@ public class MyResult {
     /**
      * @return The tournamentId
      */
-    @JsonProperty("tournament_id")
+    @SerializedName("tournament_id")
     public Integer getTournamentId() {
         return tournamentId;
     }
@@ -60,7 +60,7 @@ public class MyResult {
     /**
      * @param tournamentId The tournament_id
      */
-    @JsonProperty("tournament_id")
+    @SerializedName("tournament_id")
     public void setTournamentId(Integer tournamentId) {
         this.tournamentId = tournamentId;
     }
@@ -68,7 +68,7 @@ public class MyResult {
     /**
      * @return The tournamentName
      */
-    @JsonProperty("tournament_name")
+    @SerializedName("tournament_name")
     public String getTournamentName() {
         return tournamentName;
     }
@@ -76,7 +76,7 @@ public class MyResult {
     /**
      * @param tournamentName The tournament_name
      */
-    @JsonProperty("tournament_name")
+    @SerializedName("tournament_name")
     public void setTournamentName(String tournamentName) {
         this.tournamentName = tournamentName;
     }
@@ -84,7 +84,7 @@ public class MyResult {
     /**
      * @return The matchParties
      */
-    @JsonProperty("match_parties")
+    @SerializedName("match_parties")
     public String getMatchParties() {
         return matchParties;
     }
@@ -92,7 +92,7 @@ public class MyResult {
     /**
      * @param matchParties The match_parties
      */
-    @JsonProperty("match_parties")
+    @SerializedName("match_parties")
     public void setMatchParties(String matchParties) {
         this.matchParties = matchParties;
     }
@@ -100,7 +100,7 @@ public class MyResult {
     /**
      * @return The matchResult
      */
-    @JsonProperty("match_result")
+    @SerializedName("match_result")
     public String getMatchResult() {
         return matchResult;
     }
@@ -108,7 +108,7 @@ public class MyResult {
     /**
      * @param matchResult The match_result
      */
-    @JsonProperty("match_result")
+    @SerializedName("match_result")
     public void setMatchResult(String matchResult) {
         this.matchResult = matchResult;
     }
@@ -116,7 +116,7 @@ public class MyResult {
     /**
      * @return The matchStartTime
      */
-    @JsonProperty("match_starttime")
+    @SerializedName("match_starttime")
     public String getMatchStartTime() {
         return matchStartTime;
     }
@@ -124,7 +124,7 @@ public class MyResult {
     /**
      * @param matchStartTime The match_starttime
      */
-    @JsonProperty("match_starttime")
+    @SerializedName("match_starttime")
     public void setMatchStartTime(String matchStartTime) {
         this.matchStartTime = matchStartTime;
     }
@@ -132,7 +132,7 @@ public class MyResult {
     /**
      * @return The questions
      */
-    @JsonProperty("questions")
+    @SerializedName("questions")
     public List<Question> getQuestions() {
         return questions;
     }
@@ -140,7 +140,7 @@ public class MyResult {
     /**
      * @param questions The questions
      */
-    @JsonProperty("questions")
+    @SerializedName("questions")
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.newChallenges.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -17,34 +17,34 @@ public class NewChallengesResponse {
 
     private int challengeAdapterItemType = NewChallengeAdapterItemType.CHALLENGE;
 
-    @JsonProperty("id")
+    @SerializedName("id")
     private int id;
 
-    @JsonProperty("challenge_name")
+    @SerializedName("challenge_name")
     private String challengeName;
 
-    @JsonProperty("challenge_starttime")
+    @SerializedName("challenge_starttime")
     private String challengeStartTime;
 
-    @JsonProperty("challenge_endtime")
+    @SerializedName("challenge_endtime")
     private String challengeEndTime;
 
-    @JsonProperty("sports_id")
+    @SerializedName("sports_id")
     private int sportsId;
 
-    @JsonProperty("tournaments")
+    @SerializedName("tournaments")
     private List<String> tournaments = null;
 
-    @JsonProperty("total_matches")
+    @SerializedName("total_matches")
     private int totalMatches;
 
-    @JsonProperty("matches_left")
+    @SerializedName("matches_left")
     private int matchesLeft;
 
-    @JsonProperty("matches")
+    @SerializedName("matches")
     private List<Match> matches = new ArrayList<>();
 
-    @JsonProperty("prizes")
+    @SerializedName("prizes")
     private double prizes;
 
     public int getChallengeAdapterItemType() {

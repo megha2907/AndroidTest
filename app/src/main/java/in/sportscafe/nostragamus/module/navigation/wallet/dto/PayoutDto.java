@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -10,28 +10,28 @@ import java.util.List;
 
 public class PayoutDto {
 
-    @JsonProperty("paytm")
+    @SerializedName("paytm")
     private List<WalletPaytmDto> paytm = null;
 
-    @JsonProperty("bank")
+    @SerializedName("bank")
     private List<WalletBankDto> bank = null;
 
-    @JsonProperty("paytm")
+    @SerializedName("paytm")
     public List<WalletPaytmDto> getPaytm() {
         return paytm;
     }
 
-    @JsonProperty("paytm")
+    @SerializedName("paytm")
     public void setPaytm(List<WalletPaytmDto> paytm) {
         this.paytm = paytm;
     }
 
-    @JsonProperty("bank")
+    @SerializedName("bank")
     public List<WalletBankDto> getBank() {
         return bank;
     }
 
-    @JsonProperty("bank")
+    @SerializedName("bank")
     public void setBank(List<WalletBankDto> bank) {
         this.bank = bank;
     }

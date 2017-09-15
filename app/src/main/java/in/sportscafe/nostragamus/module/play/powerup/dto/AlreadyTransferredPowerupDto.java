@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.play.powerup.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 21/07/17.
@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AlreadyTransferredPowerupDto implements Cloneable {
 
-    @JsonProperty("2x")
+    @SerializedName("2x")
     private int doubler;
 
-    @JsonProperty("no_negs")
+    @SerializedName("no_negs")
     private int noNegative;
 
-    @JsonProperty("player_poll")
+    @SerializedName("player_poll")
     private int audiencePoll;
 
     public AlreadyTransferredPowerupDto clone() {

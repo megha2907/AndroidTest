@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="in.sportscafe.nostragamus.module.prediction.PredictionFragment">
+
+    <!-- Top Layout -->
+    <LinearLayout
+        android:id="@+id/prediction_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_80"
+        android:orientation="horizontal"
+        android:background="@color/greencolor"
+        android:layout_alignParentTop="true"
+        android:visibility="gone">
+
+
+    </LinearLayout>
+
+
+
+    <!-- Bottom/ Power-up Layout -->
+    <LinearLayout
+        android:id="@+id/prediction_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_80"
+        android:orientation="horizontal"
+        android:background="@color/greencolor"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+
+    </LinearLayout>
+
+    <!-- Card swipe area -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.sportscafe.nostracardstack.cardstack.CardStack
+            android:id="@+id/prediction_cardStack"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:padding="3dp"
+            app:card_gravity="bottom"
+            app:card_margin="3dp"
+            app:card_stack_size="4"
+            app:card_enable_rotation="true"
+            android:background="@android:color/transparent"/>
+
+    </FrameLayout>
+
+</RelativeLayout>

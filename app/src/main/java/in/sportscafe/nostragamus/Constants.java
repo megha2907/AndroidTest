@@ -402,6 +402,7 @@ public interface Constants {
         int LEFT = 1;
         int RIGHT = 2;
         int NEITHER = 3;
+        int SHUFFLE = 4;
     }
 
     interface Powerups {

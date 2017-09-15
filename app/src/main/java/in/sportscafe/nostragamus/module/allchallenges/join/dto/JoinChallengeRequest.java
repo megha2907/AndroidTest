@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.allchallenges.join.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 16/06/17.
@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class JoinChallengeRequest {
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     private int challengeId;
 
-    @JsonProperty("config_index")
+    @SerializedName("config_index")
     private int configIndex;
 
     public int getChallengeId() {

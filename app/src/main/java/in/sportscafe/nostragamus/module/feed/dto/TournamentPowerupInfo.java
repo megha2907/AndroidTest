@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.feed.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -12,15 +12,15 @@ import java.util.HashMap;
 @Parcel
 public class TournamentPowerupInfo {
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps;
     }
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public void setPowerUps(HashMap<String, Integer> powerUps) {
         this.powerUps = powerUps;
     }

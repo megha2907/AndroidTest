@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dim_330"
+    android:layout_height="@dimen/dim_370"
+    app:cardCornerRadius="@dimen/dim_2"
+    app:cardElevation="15dp">
+
+    <!-- Points -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_dim_12">
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/prediction_card_positive_button"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dim_24"
+            android:background="@color/greencolor"/>
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/prediction_card_negative_button"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dim_24"
+            android:background="@color/greencolor"
+            android:layout_marginLeft="@dimen/dim_4"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Question layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_165"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dim_12"
+            android:paddingRight="@dimen/dim_12"
+            android:paddingTop="@dimen/dim_16">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/question_title_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="#707070"
+                app:typeface="lato_bold"
+                android:textSize="@dimen/sp_15"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/question_description_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="2"
+                android:textColor="#090909"
+                app:typeface="lato_regular"
+                android:textSize="@dimen/sp_13"
+                android:layout_marginTop="@dimen/dim_10"/>
+
+        </LinearLayout>
+
+        <!-- Question options image layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_165"
+            android:orientation="horizontal">
+
+            <com.jeeva.android.widgets.HmImageView
+                android:id="@+id/prediction_question_option_1_imgView"
+                android:layout_width="@dimen/dim_165"
+                android:layout_height="@dimen/dim_165"
+                android:src="@drawable/empty_leaderboard_image"/>
+
+            <com.jeeva.android.widgets.HmImageView
+                android:id="@+id/prediction_question_option_2_imgView"
+                android:layout_width="@dimen/dim_165"
+                android:layout_height="@dimen/dim_165"
+                android:src="@drawable/empty_leaderboard_image"/>
+
+        </LinearLayout>
+
+        <!-- Options layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_40"
+            android:orientation="horizontal"
+            android:background="@drawable/prediction_card_bottom_bg">
+
+            <!-- option 1 -->
+            <LinearLayout
+                android:id="@+id/option_1_button_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="left">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/option_1_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/white"
+                    app:typeface="lato_regular"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginLeft="@dimen/dim_24"/>
+
+            </LinearLayout>
+
+            <!-- option 2 -->
+            <LinearLayout
+                android:id="@+id/option_2_button_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="right">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/option_2_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/white"
+                    app:typeface="lato_regular"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginRight="@dimen/dim_24"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

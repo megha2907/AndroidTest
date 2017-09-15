@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.inPlay.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import java.util.List;
 
 public class InPlayMatchesResponse {
 
-    @JsonProperty("contest_id")
+    @SerializedName("contest_id")
     private int contestId;
 
-    @JsonProperty("matches")
+    @SerializedName("matches")
     private List<InPlayMatch> inPlayMatchList;
 
     public int getContestId() {

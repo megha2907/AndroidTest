@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
@@ -10,15 +10,15 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
 public class VerifyReferralCodeResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private VerifyUserInfo verifyUserInfo;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public VerifyUserInfo getVerifyUserInfo() {
         return verifyUserInfo;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setVerifyUserInfo(VerifyUserInfo verifyUserInfo) {
         this.verifyUserInfo = verifyUserInfo;
     }

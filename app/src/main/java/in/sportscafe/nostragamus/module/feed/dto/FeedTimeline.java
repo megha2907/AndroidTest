@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.feed.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,41 +13,41 @@ import in.sportscafe.nostragamus.module.user.login.dto.InfoDetails;
 
 public class FeedTimeline {
 
-    @JsonProperty("matches")
+    @SerializedName("matches")
     private List<Match> matches = new ArrayList<>();
 
-    @JsonProperty("info")
+    @SerializedName("info")
     private TournamentPowerupInfo tournamentPowerupInfo;
 
-    @JsonProperty("powerup_text")
+    @SerializedName("powerup_text")
     private String powerupText;
 
-    @JsonProperty("matches")
+    @SerializedName("matches")
     public List<Match> getMatches() {
         return matches;
     }
 
-    @JsonProperty("matches")
+    @SerializedName("matches")
     public void setMatches(List<Match> matches) {
         this.matches = matches;
     }
 
-    @JsonProperty("info")
+    @SerializedName("info")
     public TournamentPowerupInfo getTournamentPowerupInfo() {
         return tournamentPowerupInfo;
     }
 
-    @JsonProperty("info")
+    @SerializedName("info")
     public void setTournamentPowerupInfo(TournamentPowerupInfo tournamentPowerupInfo) {
         this.tournamentPowerupInfo = tournamentPowerupInfo;
     }
 
-    @JsonProperty("powerup_text")
+    @SerializedName("powerup_text")
     public String getPowerupText() {
         return powerupText;
     }
 
-    @JsonProperty("powerup_text")
+    @SerializedName("powerup_text")
     public void setPowerupText(String powerupText) {
         this.powerupText = powerupText;
     }

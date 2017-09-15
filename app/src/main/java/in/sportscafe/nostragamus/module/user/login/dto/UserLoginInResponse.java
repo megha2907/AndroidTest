@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by deepanshi on 11/26/16.
@@ -9,27 +9,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UserLoginInResponse extends JwtToken {
 
 
-    @JsonProperty("new_user")
+    @SerializedName("new_user")
     private boolean newUser;
 
-    @JsonProperty("user")
+    @SerializedName("user")
     private UserInfo userInfo;
 
-    @JsonProperty("new_user")
+    @SerializedName("new_user")
     public boolean isNewUser() {
         return newUser;
     }
-    @JsonProperty("new_user")
+    @SerializedName("new_user")
     public void setNewUser(boolean newUser) {
         this.newUser = newUser;
     }
 
-    @JsonProperty("user")
+    @SerializedName("user")
     public UserInfo getUserInfo() {
         return userInfo;
     }
 
-    @JsonProperty("user")
+    @SerializedName("user")
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
     }

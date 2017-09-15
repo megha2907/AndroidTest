@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.help.dummygame;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -15,54 +15,54 @@ public class DGAnimation {
         String SCALE = "scale";
     }
 
-    @JsonProperty("start")
+    @SerializedName("start")
     private float start;
 
-    @JsonProperty("end")
+    @SerializedName("end")
     private float end;
 
-    @JsonProperty("duration")
+    @SerializedName("duration")
     private long duration;
 
-    @JsonProperty("type")
+    @SerializedName("type")
     private String type;
 
-    @JsonProperty("start")
+    @SerializedName("start")
     public float getStart() {
         return start;
     }
 
-    @JsonProperty("start")
+    @SerializedName("start")
     public void setStart(float start) {
         this.start = start;
     }
 
-    @JsonProperty("end")
+    @SerializedName("end")
     public float getEnd() {
         return end;
     }
 
-    @JsonProperty("end")
+    @SerializedName("end")
     public void setEnd(float end) {
         this.end = end;
     }
 
-    @JsonProperty("duration")
+    @SerializedName("duration")
     public long getDuration() {
         return duration;
     }
 
-    @JsonProperty("duration")
+    @SerializedName("duration")
     public void setDuration(long duration) {
         this.duration = duration;
     }
 
-    @JsonProperty("type")
+    @SerializedName("type")
     public String getType() {
         return type;
     }
 
-    @JsonProperty("type")
+    @SerializedName("type")
     public void setType(String type) {
         this.type = type;
     }

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.inPlay.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -12,49 +12,49 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.MatchParty;
 
 public class InPlayMatch {
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     private int challengeId;
 
-    @JsonProperty("match_id")
+    @SerializedName("match_id")
     private int matchId;
 
-    @JsonProperty("match_stage")
+    @SerializedName("match_stage")
     private String matchStage;
 
-    @JsonProperty("match_venue")
+    @SerializedName("match_venue")
     private String matchVenue;
 
-    @JsonProperty("match_type")
+    @SerializedName("match_type")
     private String matchType;
 
-    @JsonProperty("match_parties")
+    @SerializedName("match_parties")
     private List<MatchParty> matchParties = null;
 
-    @JsonProperty("match_starttime")
+    @SerializedName("match_starttime")
     private String matchStartTime;
 
-    @JsonProperty("match_endtime")
+    @SerializedName("match_endtime")
     private String matchEndTime;
 
-    @JsonProperty("match_result")
+    @SerializedName("match_result")
     private String matchResult;
 
-    @JsonProperty("is_attempted")
+    @SerializedName("is_attempted")
     private int isAttempted;
 
-    @JsonProperty("match_points")
+    @SerializedName("match_points")
     private int matchPoints;
 
-    @JsonProperty("q_count")
+    @SerializedName("q_count")
     private int questionCount;
 
-    @JsonProperty("match_status")
+    @SerializedName("match_status")
     private String matchStatus;
 
-    @JsonProperty("match_completed")
+    @SerializedName("match_completed")
     private boolean matchCompleted;
 
-    @JsonProperty("is_played")
+    @SerializedName("is_played")
     private boolean isPlayed;
 
     public int getChallengeId() {

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.contest.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 06/09/17.
@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ContestEntriesRequest {
 
-    @JsonProperty("contest_id")
+    @SerializedName("contest_id")
     private Integer contestId;
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     private Integer challengeId;
 
     public Integer getContestId() {

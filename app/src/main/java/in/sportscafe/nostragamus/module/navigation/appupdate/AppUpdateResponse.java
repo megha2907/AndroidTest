@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.appupdate;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by deepanshi on 6/2/17.
@@ -8,15 +8,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AppUpdateResponse {
 
-    @JsonProperty("app")
+    @SerializedName("app")
     private AppUpdateDetails appUpdateDetails;
 
-    @JsonProperty("app")
+    @SerializedName("app")
     public AppUpdateDetails getAppUpdateDetails() {
         return appUpdateDetails;
     }
 
-    @JsonProperty("app")
+    @SerializedName("app")
     public void setAppUpdateDetails(AppUpdateDetails appUpdateDetails) {
         this.appUpdateDetails = appUpdateDetails;
     }

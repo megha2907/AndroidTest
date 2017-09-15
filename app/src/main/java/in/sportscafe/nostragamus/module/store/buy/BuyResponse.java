@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.store.buy;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 27/07/17.
@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BuyResponse {
 
-    @JsonProperty("status")
+    @SerializedName("status")
     private int status;
 
-    @JsonProperty("order_id")
+    @SerializedName("order_id")
     private String orderId;
 
     public int getStatus() {

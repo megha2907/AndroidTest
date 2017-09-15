@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 10/04/17.
@@ -8,16 +8,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AddBankDetailsRequest {
 
-    @JsonProperty("payment_mode")
+    @SerializedName("payment_mode")
     private String paymentMode;
 
-    @JsonProperty("name")
+    @SerializedName("name")
     private String name;
 
-    @JsonProperty("ifsc_code")
+    @SerializedName("ifsc_code")
     private String ifscCode;
 
-    @JsonProperty("account_no")
+    @SerializedName("account_no")
     private String accountNo;
 
     public String getPaymentMode() {

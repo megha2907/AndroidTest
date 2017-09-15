@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -16,15 +16,15 @@ import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransa
 @Parcel
 public class PBTransactionHistoryResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<PBTransactionHistory> pbTransactionHistoryList = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<PBTransactionHistory> getPbTransactionHistoryList() {
         return pbTransactionHistoryList;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setPbTransactionHistoryList(List<PBTransactionHistory> pbTransactionHistoryList) {
         this.pbTransactionHistoryList = pbTransactionHistoryList;
     }

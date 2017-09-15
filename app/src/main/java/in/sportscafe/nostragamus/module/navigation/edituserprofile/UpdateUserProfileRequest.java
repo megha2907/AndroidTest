@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.edituserprofile;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by deepanshi on 8/22/17.
@@ -8,29 +8,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UpdateUserProfileRequest {
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     private String userPhoto;
 
-    @JsonProperty("user_nick")
+    @SerializedName("user_nick")
     private String userNickName;
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     public String getUserPhoto() {
         return userPhoto;
     }
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     public void setUserPhoto(String userPhoto) {
         this.userPhoto = userPhoto;
     }
 
 
-    @JsonProperty("user_nick")
+    @SerializedName("user_nick")
     public String getUserNickName() {
         return userNickName;
     }
 
-    @JsonProperty("user_nick")
+    @SerializedName("user_nick")
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
     }

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.play.prediction.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -10,15 +10,15 @@ import java.util.List;
 
 public class AudiencePollResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<AudiencePoll> audiencePoll;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<AudiencePoll> getAudiencePoll() {
         return audiencePoll;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setAudiencePoll(List<AudiencePoll> audiencePoll) {
         this.audiencePoll = audiencePoll;
     }

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.fuzzylbs;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +13,15 @@ import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 
 public class FuzzyLbResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<LbLanding> lbs = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<LbLanding> getLbs() {
         return lbs;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setLbs(List<LbLanding> lbs) {
         this.lbs = lbs;
     }

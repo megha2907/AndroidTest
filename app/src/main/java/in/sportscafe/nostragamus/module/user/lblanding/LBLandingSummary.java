@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.lblanding;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,40 +11,40 @@ import java.util.List;
 
 public class LBLandingSummary {
 
-//    @JsonProperty("total_points")
+//    @SerializedName("total_points")
 //    private Integer totalPoints = 0;
 
-    @JsonProperty("title")
+    @SerializedName("title")
     private String leaderBoardTitle;
 
-    @JsonProperty("items")
+    @SerializedName("items")
     private List<LbLanding> leaderBoardItems = new ArrayList<>();
 
-//    @JsonProperty("total_points")
+//    @SerializedName("total_points")
 //    public Integer getTotalPoints() {
 //        return totalPoints;}
 //
-//    @JsonProperty("total_points")
+//    @SerializedName("total_points")
 //    public void setTotalPoints(Integer totalPoints) {
 //        this.totalPoints = totalPoints;
 //    }
 
-    @JsonProperty("items")
+    @SerializedName("items")
     public List<LbLanding> getLeaderBoardItems() {
         return leaderBoardItems;
     }
 
-    @JsonProperty("items")
+    @SerializedName("items")
     public void setLeaderBoardItems(List<LbLanding> leaderBoardItems) {
         this.leaderBoardItems = leaderBoardItems;
     }
 
-    @JsonProperty("title")
+    @SerializedName("title")
     public String getLeaderBoardTitle() {
         return leaderBoardTitle;
     }
 
-    @JsonProperty("title")
+    @SerializedName("title")
     public void setLeaderBoardTitle(String leaderBoardTitle) {
         this.leaderBoardTitle = leaderBoardTitle;
     }

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.lblanding;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -14,33 +14,33 @@ public class LbLanding {
 
     private Integer id = 1;
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     private Integer challengeId;
 
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     private Integer groupId;
 
-    @JsonProperty("challenge_name")
+    @SerializedName("challenge_name")
     private String name = "Cricket";
 
     private Integer rank;
 
-    @JsonProperty("rank_change")
+    @SerializedName("rank_change")
     private Integer rankChange;
 
-    @JsonProperty("count_participants")
+    @SerializedName("count_participants")
     private Integer countParticipants;
 
-    @JsonProperty("count_played")
+    @SerializedName("count_played")
     private Integer countPlayed;
 
-    @JsonProperty("challenge_img_url")
+    @SerializedName("challenge_img_url")
     private String imgUrl;
 
-    @JsonProperty("challenge_starttime")
+    @SerializedName("challenge_starttime")
     private String startTime;
 
-    @JsonProperty("challenge_endtime")
+    @SerializedName("challenge_endtime")
     private String endTime;
 
     private String type;
@@ -81,12 +81,12 @@ public class LbLanding {
         this.rank = rank;
     }
 
-    @JsonProperty("challenge_name")
+    @SerializedName("challenge_name")
     public String getName() {
         return name;
     }
 
-    @JsonProperty("challenge_name")
+    @SerializedName("challenge_name")
     public void setName(String name) {
         this.name = name;
     }
@@ -99,12 +99,12 @@ public class LbLanding {
         this.id = id;
     }
 
-    @JsonProperty("challenge_img_url")
+    @SerializedName("challenge_img_url")
     public String getImgUrl() {
         return imgUrl;
     }
 
-    @JsonProperty("challenge_img_url")
+    @SerializedName("challenge_img_url")
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
@@ -117,62 +117,62 @@ public class LbLanding {
         this.type = type;
     }
 
-    @JsonProperty("count_played")
+    @SerializedName("count_played")
     public Integer getCountPlayed() {
         return countPlayed;
     }
 
-    @JsonProperty("count_played")
+    @SerializedName("count_played")
     public void setCountPlayed(Integer countPlayed) {
         this.countPlayed = countPlayed;
     }
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     public Integer getChallengeId() {
         return challengeId;
     }
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     public void setChallengeId(Integer challengeId) {
         this.challengeId = challengeId;
     }
 
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     public Integer getGroupId() {
         return groupId;
     }
 
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 
-    @JsonProperty("challenge_starttime")
+    @SerializedName("challenge_starttime")
     public String getStartTime() {
         return startTime;
     }
 
-    @JsonProperty("challenge_starttime")
+    @SerializedName("challenge_starttime")
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    @JsonProperty("challenge_endtime")
+    @SerializedName("challenge_endtime")
     public String getEndTime() {
         return endTime;
     }
 
-    @JsonProperty("challenge_endtime")
+    @SerializedName("challenge_endtime")
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
-    @JsonProperty("count_participants")
+    @SerializedName("count_participants")
     public Integer getCountParticipants() {
         return countParticipants;
     }
 
-    @JsonProperty("count_participants")
+    @SerializedName("count_participants")
     public void setCountParticipants(Integer countParticipants) {
         this.countParticipants = countParticipants;
     }

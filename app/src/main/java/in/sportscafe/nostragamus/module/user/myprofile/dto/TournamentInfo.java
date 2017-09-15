@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.myprofile.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -12,19 +12,19 @@ import java.util.List;
 @Parcel
 public class TournamentInfo {
 
-    @JsonProperty("sports_id")
+    @SerializedName("sports_id")
     private Integer sportsId;
 
-    @JsonProperty("sports_name")
+    @SerializedName("sports_name")
     private String sportsName;
 
-    @JsonProperty("tournaments")
+    @SerializedName("tournaments")
     private List<TournamentFeedInfo> tournamentFeedInfoList;
 
     /**
      * @return The sportsId
      */
-    @JsonProperty("sports_id")
+    @SerializedName("sports_id")
     public Integer getSportsId() {
         return sportsId;
     }
@@ -32,28 +32,28 @@ public class TournamentInfo {
     /**
      * @param sportsId The user_id
      */
-    @JsonProperty("sports_id")
+    @SerializedName("sports_id")
     public void setSportsId(Integer sportsId) {
         this.sportsId = sportsId;
     }
 
-    @JsonProperty("sports_name")
+    @SerializedName("sports_name")
     public String getSportsName() {
         return sportsName;
     }
 
-    @JsonProperty("sports_name")
+    @SerializedName("sports_name")
     public void setSportsName(String sportsName) {
         this.sportsName = sportsName;
     }
 
 
-    @JsonProperty("tournaments")
+    @SerializedName("tournaments")
     public List<TournamentFeedInfo> getTournamentFeedInfoList() {
         return tournamentFeedInfoList;
     }
 
-    @JsonProperty("tournaments")
+    @SerializedName("tournaments")
     public void setTournamentFeedInfoList(List<TournamentFeedInfo> tournamentFeedInfoList) {
         this.tournamentFeedInfoList = tournamentFeedInfoList;
     }

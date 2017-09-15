@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -15,80 +15,80 @@ import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 @Parcel
 public class ReferralHistory {
 
-    @JsonProperty("type")
+    @SerializedName("type")
     private String referralHistoryType;
 
-    @JsonProperty("transaction_amount")
+    @SerializedName("transaction_amount")
     private Integer transactionAmount;
 
-    @JsonProperty("order_id")
+    @SerializedName("order_id")
     private String referralOrderId;
 
-    @JsonProperty("info")
+    @SerializedName("info")
     private ReferralDetails referralDetails;
 
-    @JsonProperty("createdAt")
+    @SerializedName("createdAt")
     private String createdAt;
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps;
     }
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public void setPowerUps(HashMap<String, Integer> powerUps) {
         this.powerUps = powerUps;
     }
 
-    @JsonProperty("transaction_amount")
+    @SerializedName("transaction_amount")
     public Integer getTransactionAmount() {
         return transactionAmount;
     }
 
-    @JsonProperty("transaction_amount")
+    @SerializedName("transaction_amount")
     public void setTransactionAmount(Integer transactionAmount) {
         this.transactionAmount = transactionAmount;
     }
 
-    @JsonProperty("info")
+    @SerializedName("info")
     public ReferralDetails getReferralDetails() {
         return referralDetails;
     }
 
-    @JsonProperty("info")
+    @SerializedName("info")
     public void setReferralDetails(ReferralDetails referralDetails) {
         this.referralDetails = referralDetails;
     }
 
-    @JsonProperty("type")
+    @SerializedName("type")
     public String getReferralHistoryType() {
         return referralHistoryType;
     }
 
-    @JsonProperty("type")
+    @SerializedName("type")
     public void setReferralHistoryType(String referralHistoryType) {
         this.referralHistoryType = referralHistoryType;
     }
 
-    @JsonProperty("order_id")
+    @SerializedName("order_id")
     public String getReferralOrderId() {
         return referralOrderId;
     }
 
-    @JsonProperty("order_id")
+    @SerializedName("order_id")
     public void setReferralOrderId(String referralOrderId) {
         this.referralOrderId = referralOrderId;
     }
 
-    @JsonProperty("createdAt")
+    @SerializedName("createdAt")
     public String getCreatedAt() {
         return createdAt;
     }
 
-    @JsonProperty("createdAt")
+    @SerializedName("createdAt")
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }

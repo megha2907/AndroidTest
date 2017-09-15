@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.group.groupinfo;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import in.sportscafe.nostragamus.module.user.group.members.AdminRequest;
 import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
@@ -10,28 +10,28 @@ import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
  */
 public class GroupNameUpdateRequest extends MembersRequest {
 
-    @JsonProperty("group_name")
+    @SerializedName("group_name")
     private String groupName;
 
-    @JsonProperty("group_img_url")
+    @SerializedName("group_img_url")
     private String groupPhoto;
 
-    @JsonProperty("group_name")
+    @SerializedName("group_name")
     public String getGroupName() {
         return groupName;
     }
 
-    @JsonProperty("group_name")
+    @SerializedName("group_name")
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
 
-    @JsonProperty("group_img_url")
+    @SerializedName("group_img_url")
     public String getGroupPhoto() {
         return groupPhoto;
     }
 
-    @JsonProperty("group_img_url")
+    @SerializedName("group_img_url")
     public void setGroupPhoto(String groupPhoto) {
         this.groupPhoto = groupPhoto;
     }

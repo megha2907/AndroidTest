@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.group.allgroups;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,42 +10,42 @@ import org.parceler.Parcel;
 @Parcel
 public class AllGroups {
 
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     private Integer groupId;
 
-    @JsonProperty("group_name")
+    @SerializedName("group_name")
     private String groupName;
 
-    @JsonProperty("group_img_url")
+    @SerializedName("group_img_url")
     private String groupPhoto;
 
-    @JsonProperty("count_group_members")
+    @SerializedName("count_group_members")
     private Integer countGroupMembers;
 
-    @JsonProperty("no_of_tournaments")
+    @SerializedName("no_of_tournaments")
     private Integer tournamentsCount;
 
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     public Integer getGroupId() {
         return groupId;
     }
 
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 
-    @JsonProperty("group_name")
+    @SerializedName("group_name")
     public String getGroupName() {
         return groupName;
     }
 
-    @JsonProperty("group_name")
+    @SerializedName("group_name")
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
 
-    @JsonProperty("count_group_members")
+    @SerializedName("count_group_members")
     public Integer getCountGroupMembers() {
         if (null==countGroupMembers){
             countGroupMembers = 0;
@@ -53,27 +53,27 @@ public class AllGroups {
         return countGroupMembers;
     }
 
-    @JsonProperty("count_group_members")
+    @SerializedName("count_group_members")
     public void setCountGroupMembers(Integer countGroupMembers) {
         this.countGroupMembers = countGroupMembers;
     }
 
-    @JsonProperty("group_img_url")
+    @SerializedName("group_img_url")
     public String getGroupPhoto() {
         return groupPhoto;
     }
 
-    @JsonProperty("group_img_url")
+    @SerializedName("group_img_url")
     public void setGroupPhoto(String groupPhoto) {
         this.groupPhoto = groupPhoto;
     }
 
-    @JsonProperty("no_of_tournaments")
+    @SerializedName("no_of_tournaments")
     public Integer getTournamentsCount() {
         return tournamentsCount;
     }
 
-    @JsonProperty("no_of_tournaments")
+    @SerializedName("no_of_tournaments")
     public void setTournamentsCount(Integer tournamentsCount) {
         this.tournamentsCount = tournamentsCount;
     }

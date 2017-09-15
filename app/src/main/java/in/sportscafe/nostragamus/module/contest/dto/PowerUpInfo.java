@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.contest.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,13 +10,13 @@ import org.parceler.Parcel;
 @Parcel
 public class PowerUpInfo {
 
-    @JsonProperty("2x")
+    @SerializedName("2x")
     private Integer powerUp2x;
 
-    @JsonProperty("no_negs")
+    @SerializedName("no_negs")
     private Integer powerUpNoNeg;
 
-    @JsonProperty("player_poll")
+    @SerializedName("player_poll")
     private Integer powerUpPlayerPoll;
 
     public Integer getPowerUp2x() {

@@ -1,7 +1,6 @@
 package in.sportscafe.nostragamus.module.allchallenges.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -17,98 +16,98 @@ public class ChallengeConfig {
         int REWARD = 2;
     }
 
-    @JsonProperty("fee")
+    @SerializedName("fee")
     private Integer entryFee;
 
-    @JsonProperty("name")
+    @SerializedName("name")
     private String configName;
 
-    @JsonProperty("mode")
+    @SerializedName("mode")
     private String mode;
 
-    @JsonProperty("config_index")
+    @SerializedName("config_index")
     private int configIndex;
 
-    @JsonProperty("players_details")
+    @SerializedName("players_details")
     private ConfigPlayersDetails playersDetails;
 
-    @JsonProperty("prize_money_details")
+    @SerializedName("prize_money_details")
     private ConfigRewardDetails rewardDetails;
 
-    @JsonProperty("fee")
+    @SerializedName("fee")
     public Integer getEntryFee() {
         return entryFee;
     }
 
-    @JsonProperty("fee")
+    @SerializedName("fee")
     public void setEntryFee(Integer entryFee) {
         this.entryFee = entryFee;
     }
 
-    @JsonProperty("name")
+    @SerializedName("name")
     public String getConfigName() {
         return configName;
     }
 
-    @JsonProperty("name")
+    @SerializedName("name")
     public void setConfigName(String configName) {
         this.configName = configName;
     }
 
-    @JsonProperty("mode")
+    @SerializedName("mode")
     public String getMode() {
         return mode;
     }
 
-    @JsonProperty("mode")
+    @SerializedName("mode")
     public void setMode(String mode) {
         this.mode = mode;
     }
 
-    @JsonProperty("config_index")
+    @SerializedName("config_index")
     public int getConfigIndex() {
         return configIndex;
     }
 
-    @JsonProperty("config_index")
+    @SerializedName("config_index")
     public void setConfigIndex(int configIndex) {
         this.configIndex = configIndex;
     }
 
-    @JsonProperty("players_details")
+    @SerializedName("players_details")
     public ConfigPlayersDetails getPlayersDetails() {
         return playersDetails;
     }
 
-    @JsonProperty("players_details")
+    @SerializedName("players_details")
     public void setPlayersDetails(ConfigPlayersDetails playersDetails) {
         this.playersDetails = playersDetails;
     }
 
-    @JsonProperty("prize_money_details")
+    @SerializedName("prize_money_details")
     public ConfigRewardDetails getRewardDetails() {
         return rewardDetails;
     }
 
-    @JsonProperty("prize_money_details")
+    @SerializedName("prize_money_details")
     public void setRewardDetails(ConfigRewardDetails rewardDetails) {
         this.rewardDetails = rewardDetails;
     }
 
-    @JsonIgnore
+
     public boolean isFreeEntry() {
         return null == entryFee || entryFee == 0;
     }
 
-    @JsonIgnore
+
     private int dropDownId;
 
-    @JsonIgnore
+
     public int getDropDownId() {
         return dropDownId;
     }
 
-    @JsonIgnore
+
     public void setDropDownId(int dropDownId) {
         this.dropDownId = dropDownId;
     }

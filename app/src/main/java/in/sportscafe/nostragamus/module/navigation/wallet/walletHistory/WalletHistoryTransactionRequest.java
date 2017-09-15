@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.walletHistory;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 12/04/17.
@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WalletHistoryTransactionRequest {
 
-    @JsonProperty("user_id")
+    @SerializedName("user_id")
     private Integer userId;
 
     public Integer getUserId() {

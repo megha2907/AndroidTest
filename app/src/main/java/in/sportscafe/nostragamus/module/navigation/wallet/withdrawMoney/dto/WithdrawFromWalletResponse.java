@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 13/06/17.
@@ -8,28 +8,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WithdrawFromWalletResponse {
 
-    @JsonProperty("msg")
+    @SerializedName("msg")
     private String msg;
 
-    @JsonProperty("code")
+    @SerializedName("code")
     private Integer code;
 
-    @JsonProperty("msg")
+    @SerializedName("msg")
     public String getMsg() {
         return msg;
     }
 
-    @JsonProperty("msg")
+    @SerializedName("msg")
     public void setMsg(String msg) {
         this.msg = msg;
     }
 
-    @JsonProperty("code")
+    @SerializedName("code")
     public Integer getCode() {
         return code;
     }
 
-    @JsonProperty("code")
+    @SerializedName("code")
     public void setCode(Integer code) {
         this.code = code;
     }

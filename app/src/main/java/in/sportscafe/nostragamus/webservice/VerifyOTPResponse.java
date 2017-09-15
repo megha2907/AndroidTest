@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.webservice;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyOTPInfo;
 
@@ -10,15 +10,15 @@ import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyOTPInfo;
 
 public class VerifyOTPResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private VerifyOTPInfo verifyOTPInfo;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public VerifyOTPInfo getVerifyOTPInfo() {
         return verifyOTPInfo;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setVerifyOTPInfo(VerifyOTPInfo verifyOTPInfo) {
         this.verifyOTPInfo = verifyOTPInfo;
     }

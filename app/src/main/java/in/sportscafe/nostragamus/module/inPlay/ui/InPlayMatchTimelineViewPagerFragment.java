@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.inPlay.ui;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataPro
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
+import in.sportscafe.nostragamus.module.prediction.PredictionActivity;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -199,7 +201,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
                     case InPlayMatchAction.ANSWER:
                     case InPlayMatchAction.DID_NOT_PLAY:
                     case InPlayMatchAction.POINTS:
-                        launchResultsScreen();
+                        launchPlayScreen();
                         break;
                 }
             }
@@ -211,7 +213,10 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
     }
 
     private void launchPlayScreen() {
-
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
+            startActivity(predictionIntent);
+        }
     }
 
     private void handleError(int status) {

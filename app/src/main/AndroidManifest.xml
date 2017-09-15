@@ -347,34 +347,34 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/homeActivityTransitionStyle" />
-
         <activity
             android:name=".module.popups.challengepopups.ContestDetailsPopupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.PopupTheme" />
-
         <activity
             android:name=".module.nostraHome.NostraHomeActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.newChallenges.ui.matches.MatchesTimelineActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.contest.contestDetailsBeforeJoining.ContestDetailsBeforeJoinedActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
-
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.contest.ui.ContestsActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
-
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.prediction.PredictionActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -599,7 +599,6 @@
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>
