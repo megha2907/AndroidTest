@@ -14,7 +14,7 @@ public class ContestModeInfo {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("desc")
+    @JsonProperty("description")
     private String description;
 
     public String getName() {

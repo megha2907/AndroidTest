@@ -34,28 +34,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-
-                    <in.sportscafe.nostragamus.module.common.CustomTabLayout
-                        android:id="@+id/points_tab_tl"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_40"
-                        android:layout_below="@+id/rl3"
-                        android:layout_gravity="center_horizontal|top"
-                        android:elevation="@dimen/dp_4"
-                        android:fitsSystemWindows="true"
-                        app:layout_collapseMode="pin"
-                        app:selected_textSize="@dimen/dp_12"
-                        app:selected_typeface="lato_regular"
-                        app:tabGravity="fill"
-                        app:tabIndicatorColor="@color/tabcolor_blue"
-                        app:tabIndicatorHeight="@dimen/dp_3"
-                        app:tabMode="scrollable"
-                        app:tabSelectedTextColor="@color/white"
-                        app:tabTextAppearance="@style/LeaderBoardTabLayoutTextAppearance"
-                        app:tabTextColor="@color/white_60"
-                        app:unselected_textSize="@dimen/dp_12"
-                        app:unselected_typeface="lato_regular" />
-
                     <TableRow
                         android:id="@+id/points_tr_column"
                         android:layout_width="match_parent"

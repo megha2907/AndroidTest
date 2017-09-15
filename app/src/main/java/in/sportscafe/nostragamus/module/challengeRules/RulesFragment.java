@@ -23,6 +23,8 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeFragment;
+import in.sportscafe.nostragamus.module.challengeRewards.RewardsApiModelImpl;
+import in.sportscafe.nostragamus.module.challengeRules.dto.Rules;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.PowerUpInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
@@ -31,7 +33,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
  * Created by deepanshi on 9/8/17.
  */
 
-public class RulesFragment extends BaseFragment {
+public class RulesFragment extends BaseFragment implements RulesApiModelImpl.RulesDataListener {
 
     private static final String TAG = RulesFragment.class.getSimpleName();
 
@@ -43,6 +45,8 @@ public class RulesFragment extends BaseFragment {
     private TextView TvCancelledRuleOne;
     private ImageView IvContestRuleThree;
 
+    private int mContestId=0;
+
     private int powerUp2xCount = 0;
     private int powerUpNonNegsCount = 0;
     private int powerUpPlayerPollCount = 0;
@@ -53,10 +57,10 @@ public class RulesFragment extends BaseFragment {
 
     }
 
-    public static RulesFragment newInstance(Contest contest) {
+    public static RulesFragment newInstance(int contestId) {
 
         Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.BundleKeys.CONTEST, Parcels.wrap(contest));
+        bundle.putInt(Constants.BundleKeys.CONTEST_ID, contestId);
         RulesFragment fragment = new RulesFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -79,13 +83,20 @@ public class RulesFragment extends BaseFragment {
     private void openBundle() {
         Bundle args = getArguments();
         if (args != null) {
-            Contest contest = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.CONTEST));
-            if (contest != null) {
-                setInfo(contest);
-            }
+            mContestId = args.getInt(Constants.BundleKeys.CONTEST_ID);
+            getRulesData();
         } else {
             showEmptyScreen();
         }
+    }
+
+    private void getRulesData() {
+        new RulesApiModelImpl().getRulesData(mContestId, this);
+    }
+
+    @Override
+    public void onData(Rules rules) {
+        setInfo(rules);
     }
 
     private void initViews() {
@@ -98,25 +109,25 @@ public class RulesFragment extends BaseFragment {
         TvCancelledRuleOne = (TextView) findViewById(R.id.cancelled_rule_one);
     }
 
-    private void setInfo(Contest contest) {
+    private void setInfo(Rules rules) {
 
-        showContestRuleOne(contest);
-        showContestRuleTwo(contest);
-        showContestRuleThree(contest);
+        showContestRuleOne(rules);
+        showContestRuleTwo(rules);
+        showContestRuleThree(rules);
 
-        showPowerUpsRuleOne(contest);
-        showPowerUpsRuleTwo(contest);
+        showPowerUpsRuleOne(rules);
+        showPowerUpsRuleTwo(rules);
 
-        showCancelledRuleOne(contest);
+        showCancelledRuleOne(rules);
     }
 
-    private void showContestRuleOne(Contest contest) {
+    private void showContestRuleOne(Rules rules) {
 
-        tournamentsList = contest.getTournaments();
+        tournamentsList = rules.getTournaments();
 
         if (tournamentsList != null && tournamentsList.size() > 0) {
             TvContestRuleOne.setText("This challenge contains matches from - " + tournamentsList.toString().replaceAll("[\\[\\](){}]", "")
-                    + " and " + String.valueOf(contest.getTotalMatches()) + " matches in total");
+                    + " and " + String.valueOf(rules.getTotalMatches()) + " matches in total");
 
 //            TvContestRuleOne.setText("This challenge has "+ String.valueOf(contest.getTotalMatches()) + " from "
 //                    +String.valueOf(contest.getTotalMatches())+" exciting games in "+String.valueOf(tournamentsList.size())
@@ -128,20 +139,20 @@ public class RulesFragment extends BaseFragment {
         }
     }
 
-    private void showContestRuleTwo(Contest contest) {
+    private void showContestRuleTwo(Rules rules) {
         TvContestRuleTwo.setText("You can make and edit your predictions half an hr before the matches start");
     }
 
-    private void showContestRuleThree(Contest contest) {
-        if (contest.getContestTypeInfo() != null && contest.getContestModeInfo()!=null) {
-            TvContestRuleThree.setText(contest.getContestTypeInfo().getName()
-                    + " - " + contest.getContestTypeInfo().getDescription());
+    private void showContestRuleThree(Rules rules) {
+        if (rules.getContestModeInfo() != null) {
+            TvContestRuleThree.setText(rules.getContestModeInfo().getName()
+                    + " - " + rules.getContestModeInfo().getDescription());
 
-            if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+            if (rules.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
                 IvContestRuleThree.setBackgroundResource(R.drawable.guaranteed_icon);
-            } else if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.POOL)) {
+            } else if (rules.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.POOL)) {
                 IvContestRuleThree.setBackgroundResource(R.drawable.pool_icon);
-            }else if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+            } else if (rules.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                 IvContestRuleThree.setBackgroundResource(R.drawable.no_guarantee_icon);
             }
 
@@ -152,9 +163,9 @@ public class RulesFragment extends BaseFragment {
         }
     }
 
-    private void showPowerUpsRuleOne(Contest contest) {
-        if (contest.getPowerUpInfo() != null) {
-            setPowerUps(contest.getPowerUpInfo(), contest);
+    private void showPowerUpsRuleOne(Rules rules) {
+        if (rules.getPowerUpInfo() != null) {
+            setPowerUps(rules.getPowerUpInfo(), rules);
         } else {
             if (getView() != null) {
                 getView().findViewById(R.id.powerups_rule_one_rl).setVisibility(View.GONE);
@@ -162,7 +173,7 @@ public class RulesFragment extends BaseFragment {
         }
     }
 
-    private void setPowerUps(PowerUpInfo powerUpInfo, Contest contest) {
+    private void setPowerUps(PowerUpInfo powerUpInfo, Rules rules) {
 
         powerUp2xCount = powerUpInfo.getPowerUp2x();
         powerUpNonNegsCount = powerUpInfo.getPowerUpNoNeg();
@@ -213,19 +224,19 @@ public class RulesFragment extends BaseFragment {
             int totalPowerUps = powerUp2xCount + powerUpNonNegsCount + powerUpPlayerPollCount;
 
             TvPowerUpsRuleOne.setText("You have " + String.valueOf(totalPowerUps)
-                    + " powerups to use across " + String.valueOf(contest.getTotalMatches())
+                    + " powerups to use across " + String.valueOf(rules.getTotalMatches())
                     + " matches. Use them to score higher!");
 
         }
 
     }
 
-    private void showPowerUpsRuleTwo(Contest contest) {
-        TvPowerUpsRuleTwo.setText("You can transfer a maximum of " + String.valueOf(contest.getMaxTransferPowerUps()) + " powerups each from the bank");
+    private void showPowerUpsRuleTwo(Rules rules) {
+        TvPowerUpsRuleTwo.setText("You can transfer a maximum of " + String.valueOf(rules.getMaxTransferPowerUps()) + " powerups each from the bank");
     }
 
 
-    private void showCancelledRuleOne(Contest contest) {
+    private void showCancelledRuleOne(Rules rules) {
         TvCancelledRuleOne.setText("Questions will be cancelled in case a player is injured or does not play.In these cases," +
                 " half the points would be awarded for the questions.");
     }
@@ -235,4 +246,23 @@ public class RulesFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onError(int status) {
+
+    }
+
+    @Override
+    public void onNoInternet() {
+
+    }
+
+    @Override
+    public void onFailedConfigsApi() {
+
+    }
+
+    @Override
+    public void onEmpty() {
+
+    }
 }

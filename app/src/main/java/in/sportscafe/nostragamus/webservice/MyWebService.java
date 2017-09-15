@@ -14,6 +14,8 @@ import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeRequ
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsRequest;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
+import in.sportscafe.nostragamus.module.challengeRules.dto.RulesRequest;
+import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
@@ -70,6 +72,8 @@ import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupResponse;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardRequest;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
@@ -428,4 +432,11 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getInPlayMatches(request);
     }
 
+    public Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(UserLeaderBoardRequest userLeaderBoardRequest) {
+        return mNostragamusService.getUserLeaderBoardDetails(userLeaderBoardRequest);
+    }
+
+    public Call<RulesResponse> getContestRules(RulesRequest rulesRequest) {
+        return mNostragamusService.getContestRules(rulesRequest);
+    }
 }

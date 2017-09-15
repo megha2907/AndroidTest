@@ -26,7 +26,7 @@ public class InPlayResponse {
     private String challengeDesc;
 
     @JsonProperty("status")
-    private String status;
+    private String status="ongoing";
 
     @JsonProperty("sports_id")
     private int sportsId;

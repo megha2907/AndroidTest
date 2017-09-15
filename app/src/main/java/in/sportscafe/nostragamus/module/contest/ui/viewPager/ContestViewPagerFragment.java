@@ -19,6 +19,8 @@ import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterListener;
 import in.sportscafe.nostragamus.module.contest.adapter.ContestRecyclerAdapter;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.ContestDetailsBeforeJoinFragment;
+import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.ContestDetailsBeforeJoinedActivity;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 
@@ -83,7 +85,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     }
 
     private void goToContestDetails(Bundle args) {
-        Intent intent = new Intent(getActivity(), ContestDetailsAfterJoinActivity.class);
+        Intent intent = new Intent(getActivity(), ContestDetailsBeforeJoinedActivity.class);
         intent.putExtras(args);
         startActivity(intent);
     }

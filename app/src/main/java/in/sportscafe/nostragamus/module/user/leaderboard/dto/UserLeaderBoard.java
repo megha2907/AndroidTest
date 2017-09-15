@@ -30,7 +30,7 @@ public class UserLeaderBoard {
     @JsonProperty("rank_change")
     private Integer rankChange;
 
-    @JsonProperty("count_played")
+    @JsonProperty("count_plays")
     private Integer countPlayed;
 
     @JsonProperty("total_points")
@@ -122,12 +122,12 @@ public class UserLeaderBoard {
     }
 
 
-    @JsonProperty("count_played")
+    @JsonProperty("count_plays")
     public Integer getCountPlayed() {
         return countPlayed;
     }
 
-    @JsonProperty("count_played")
+    @JsonProperty("count_plays")
     public void setCountPlayed(Integer countPlayed) {
         this.countPlayed = countPlayed;
     }
