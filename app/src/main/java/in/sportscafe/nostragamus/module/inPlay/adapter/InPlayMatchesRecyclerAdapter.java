@@ -3,11 +3,12 @@ package in.sportscafe.nostragamus.module.inPlay.adapter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
@@ -18,8 +19,6 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
-import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterItemType;
-import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.dto.MatchParty;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -82,6 +81,12 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
         if (mInPlayMatchList != null && mInPlayMatchList.size() > position) {
             InPlayMatch match = mInPlayMatchList.get(position);
+
+            if (shouldDisableMatchClickAction(match)) {
+                viewHolder.matchParentLayout.setEnabled(false);
+                viewHolder.actionButton.setEnabled(false);
+            }
+
             viewHolder.dateTimeTextView.setText(getDateTimeValue(match.getMatchStartTime()));
             viewHolder.venueTextView.setText(match.getMatchVenue());
             viewHolder.actionButton.setText(match.getMatchStatus());
@@ -100,6 +105,20 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 }
             }
         }
+    }
+
+    private boolean shouldDisableMatchClickAction(InPlayMatch match) {
+        boolean shouldDisable = false;
+
+        String status = match.getMatchStatus();
+        if (!TextUtils.isEmpty(status)) {
+            String matchStatus = match.getMatchStatus();
+            if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.COMING_UP)) {
+                shouldDisable = true;
+            }
+        }
+
+        return shouldDisable;
     }
 
     private String getDateTimeValue(String startTime) {
@@ -127,22 +146,22 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
             if (match != null) {
                 String matchStatus = match.getMatchStatus();
-                if (matchStatus.equalsIgnoreCase("Did Not Play")) {
+                if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.DID_NOT_PLAY)) {
                     mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.DID_NOT_PLAY, args);
 
-                } else if (matchStatus.equalsIgnoreCase("Coming up")) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.COMING_UP)) {
                     mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.COMMING_UP, args);
 
-                } else if (matchStatus.equalsIgnoreCase("Play")) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.PLAY)) {
                     mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.PLAY, args);
 
-                } else if (matchStatus.equalsIgnoreCase("Continue")) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.CONTINUE)) {
                     mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.CONTINUE, args);
 
-                } else if (matchStatus.equalsIgnoreCase("Answer")) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.ANSWER)) {
                     mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.ANSWER, args);
 
-                } else if (matchStatus.equalsIgnoreCase("Points")) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.POINTS)) {
                     mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.POINTS, args);
 
                 }
@@ -156,6 +175,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
     public class InPlayTwoPartyMatchItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        LinearLayout matchParentLayout;
         TextView dateTimeTextView;
         HmImageView party1ImageView;
         TextView party1NameTextView;
@@ -166,6 +186,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
         public InPlayTwoPartyMatchItemViewHolder(View itemView) {
             super(itemView);
+            matchParentLayout = (LinearLayout) itemView.findViewById(R.id.inplay_match_item_parent);
             dateTimeTextView = (TextView) itemView.findViewById(R.id.inplay_match_date_time_textView);
             party1ImageView = (HmImageView) itemView.findViewById(R.id.match_party_1_imgView);
             party1NameTextView = (TextView) itemView.findViewById(R.id.match_party_1_textView);
@@ -174,19 +195,16 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
             venueTextView = (TextView) itemView.findViewById(R.id.inplay_match_venue_textView);
             actionButton = (Button) itemView.findViewById(R.id.inplay_match_action_button);
 
-            itemView.setOnClickListener(this);
+            matchParentLayout.setOnClickListener(this);
             actionButton.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.inplay_match_item_parent:
-                    if (mMatchAdapterListener != null) {
-                        mMatchAdapterListener.onMatchClicked(null);
-                    }
-                    break;
 
+                /* Since taking same action on both the clicks */
+                case R.id.inplay_match_item_parent:
                 case R.id.inplay_match_action_button:
                     onActionButtonClicked(getAdapterPosition());
                     break;

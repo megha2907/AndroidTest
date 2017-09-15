@@ -179,33 +179,39 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
         return new InPlayMatchAdapterListener() {
             @Override
             public void onMatchClicked(Bundle args) {
-                Log.d(TAG, "MAtch clickd");
+                // Same Action (onMatchActionClicked) is taken on match click also
             }
 
             @Override
             public void onMatchActionClicked(int action, Bundle args) {
                 Log.d(TAG, "action button clicked : " + action);
+
                 switch (action) {
                     case InPlayMatchAction.COMMING_UP:
+                        /* Disabled - No action */
                         break;
 
                     case InPlayMatchAction.PLAY:
-                        break;
-
                     case InPlayMatchAction.CONTINUE:
+                        launchPlayScreen();
                         break;
 
                     case InPlayMatchAction.ANSWER:
-                        break;
-
                     case InPlayMatchAction.DID_NOT_PLAY:
-                        break;
-
                     case InPlayMatchAction.POINTS:
+                        launchResultsScreen();
                         break;
                 }
             }
         };
+    }
+
+    private void launchResultsScreen() {
+
+    }
+
+    private void launchPlayScreen() {
+
     }
 
     private void handleError(int status) {

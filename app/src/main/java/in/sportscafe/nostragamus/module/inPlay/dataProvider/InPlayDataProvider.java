@@ -71,7 +71,6 @@ public class InPlayDataProvider {
         });
     }
 
-    //TODO CHANGE WITH RESPONSE
     private void insertInPlayResponseIntoDatabase(final Context appContext,
                                               final List<InPlayResponse> inPlayResponses,
                                               final InPlayDataProvider.InPlayDataProviderListener listener) {
@@ -97,7 +96,6 @@ public class InPlayDataProvider {
         }.execute();
     }
 
-    //TODO CHANGE WITH RESPONSE
     private void loadInPlayFromDatabase(final int status, final Context appContext, final InPlayDataProvider.InPlayDataProviderListener listener) {
         int apiType = ApiCacheType.IN_PLAY_API;
 

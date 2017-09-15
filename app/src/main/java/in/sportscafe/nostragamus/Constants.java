@@ -823,4 +823,14 @@ public interface Constants {
         int NO_INTERNET = 6;
 
     }
+
+    interface InPlayMatchStatusStrings {
+        /* Synced with server as they come in api response */
+        String COMING_UP = "Coming up";
+        String DID_NOT_PLAY = "Did Not Play";
+        String PLAY = "Play";
+        String CONTINUE = "Continue";
+        String ANSWER = "Answer";
+        String POINTS = "Points";
+    }
 }
