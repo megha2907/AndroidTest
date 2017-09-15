@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.challengeRewards.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -13,13 +13,13 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlay;
 @Parcel
 public class Rewards {
 
-    @JsonProperty("rank")
+    @SerializedName("rank")
     private String rank;
 
-    @JsonProperty("amount")
+    @SerializedName("amount")
     private Integer amount;
 
-    @JsonProperty("userName")
+    @SerializedName("userName")
     private String userName;
 
     public String getRank() {

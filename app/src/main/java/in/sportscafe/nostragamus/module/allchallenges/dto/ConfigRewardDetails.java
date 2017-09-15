@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.allchallenges.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -15,44 +15,44 @@ import java.util.List;
 @Parcel
 public class ConfigRewardDetails {
 
-    @JsonProperty("total")
+    @SerializedName("total")
     private String totalReward;
 
-    @JsonProperty("user_amount")
+    @SerializedName("user_amount")
     private String amountWonByUser;
 
-    @JsonProperty("breakup")
+    @SerializedName("breakup")
     private List<RewardBreakUp> breakUps = new ArrayList<>();
 
-    @JsonProperty("winners")
+    @SerializedName("winners")
     private List<WinnersRewards> winnersRewardsList = new ArrayList<>();
 
-    @JsonProperty("total")
+    @SerializedName("total")
     public String getTotalReward() {
         return totalReward;
     }
 
-    @JsonProperty("total")
+    @SerializedName("total")
     public void setTotalReward(String totalReward) {
         this.totalReward = totalReward;
     }
 
-    @JsonProperty("breakup")
+    @SerializedName("breakup")
     public List<RewardBreakUp> getBreakUps() {
         return breakUps;
     }
 
-    @JsonProperty("breakup")
+    @SerializedName("breakup")
     public void setBreakUps(List<RewardBreakUp> breakUps) {
         this.breakUps = breakUps;
     }
 
-    @JsonProperty("winners")
+    @SerializedName("winners")
     public List<WinnersRewards> getWinnersRewardsList() {
         return winnersRewardsList;
     }
 
-    @JsonProperty("winners")
+    @SerializedName("winners")
     public void setWinnersRewardsList(List<WinnersRewards> winnersRewardsList) {
         this.winnersRewardsList = winnersRewardsList;
     }

@@ -62,7 +62,7 @@ public class InPlayMatchesDataProvider {
             @Override
             public void onFailure(Call<InPlayMatchesResponse> call, Throwable t) {
                 super.onFailure(call, t);
-                Log.d(TAG, "Server response Failed");
+                Log.d(TAG, "Server response Failed - " + t.getMessage());
                 if (listener != null) {
                     listener.onError(Constants.DataStatus.FROM_SERVER_API_FAILED);
                 }

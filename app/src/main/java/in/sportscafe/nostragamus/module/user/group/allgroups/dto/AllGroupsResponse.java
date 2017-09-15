@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.group.allgroups.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -12,17 +12,17 @@ import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
 
 public class AllGroupsResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<AllGroups> getAllGroups() {
         return allGroups;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setAllGroups(List<AllGroups> allGroups) {
         this.allGroups = allGroups;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<AllGroups> allGroups;
 
 

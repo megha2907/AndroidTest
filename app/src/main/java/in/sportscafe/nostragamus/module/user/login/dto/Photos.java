@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +11,15 @@ import java.util.List;
 
 public class Photos {
 
-    @JsonProperty("value")
+    @SerializedName("value")
     private List<String> photo;
 
-    @JsonProperty("value")
+    @SerializedName("value")
     public List<String> getPhoto() {
         return photo;
     }
 
-    @JsonProperty("value")
+    @SerializedName("value")
     public void setPhoto(List<String> photo) {
         this.photo = photo;
     }

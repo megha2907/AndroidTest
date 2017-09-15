@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.allchallenges.join.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.JoinedChallengeInfo;
 
@@ -10,7 +10,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.Joine
 
 public class JoinChallengeResponse {
 
-    @JsonProperty("joined_challenge_info")
+    @SerializedName("joined_challenge_info")
     private JoinedChallengeInfo joinedChallengeInfo;
 
     public JoinedChallengeInfo getJoinedChallengeInfo() {

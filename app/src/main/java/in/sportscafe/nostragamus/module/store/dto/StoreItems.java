@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.store.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -15,31 +15,31 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.ConfigRewardDetails;
 @Parcel
 public class StoreItems {
 
-    @JsonProperty("product_id")
+    @SerializedName("product_id")
     private Integer productId;
 
-    @JsonProperty("product_name")
+    @SerializedName("product_name")
     private String productName;
 
-    @JsonProperty("product_image")
+    @SerializedName("product_image")
     private String productImage;
 
-    @JsonProperty("product_desc")
+    @SerializedName("product_desc")
     private String productDesc;
 
-    @JsonProperty("product_category")
+    @SerializedName("product_category")
     private String productCategory;
 
-    @JsonProperty("product_price")
+    @SerializedName("product_price")
     private Integer productPrice;
 
-    @JsonProperty("product")
+    @SerializedName("product")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
-//    @JsonProperty("inventory")
+//    @SerializedName("inventory")
 //    private Integer productInventory;
 
-    @JsonProperty("sale_info")
+    @SerializedName("sale_info")
     private ProductSaleInfo productSaleInfo;
 
     public Integer getProductId() {

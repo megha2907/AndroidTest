@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.popups.bankpopups;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 
@@ -9,28 +9,28 @@ import java.util.HashMap;
  */
 public class BankTransferRequest {
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     private int challengeId;
 
-    @JsonProperty("add_powerups")
+    @SerializedName("add_powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     public int getChallengeId() {
         return challengeId;
     }
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     public void setChallengeId(int challengeId) {
         this.challengeId = challengeId;
     }
 
-    @JsonProperty("add_powerups")
+    @SerializedName("add_powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps;
     }
 
-    @JsonProperty("add_powerups")
+    @SerializedName("add_powerups")
     public void setPowerUps(HashMap<String, Integer> powerUps) {
         this.powerUps = powerUps;
     }

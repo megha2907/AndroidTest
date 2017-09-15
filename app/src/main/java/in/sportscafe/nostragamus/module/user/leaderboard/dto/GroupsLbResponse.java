@@ -1,21 +1,21 @@
 package in.sportscafe.nostragamus.module.user.leaderboard.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Jeeva on 30/6/16.
  */
 public class GroupsLbResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private LbGroupsList lbGroupsList;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public LbGroupsList getLbGroupsList() {
         return lbGroupsList;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setLbGroupsList(LbGroupsList lbGroupsList) {
         this.lbGroupsList = lbGroupsList;
     }

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,15 +10,15 @@ import org.parceler.Parcel;
 @Parcel
 public class UserPaymentInfoPaytmDto {
 
-    @JsonProperty("mobile")
+    @SerializedName("mobile")
     private String mobile;
 
-    @JsonProperty("mobile")
+    @SerializedName("mobile")
     public String getMobile() {
         return mobile;
     }
 
-    @JsonProperty("mobile")
+    @SerializedName("mobile")
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }

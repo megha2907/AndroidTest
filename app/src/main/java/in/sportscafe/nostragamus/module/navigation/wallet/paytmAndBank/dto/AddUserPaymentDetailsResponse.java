@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 10/04/17.
@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AddUserPaymentDetailsResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private String data;
 
     public String getData() {

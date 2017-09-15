@@ -1,7 +1,7 @@
 package in.sportscafe.nostragamus.module.allchallenges.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -15,49 +15,49 @@ import in.sportscafe.nostragamus.Constants.Powerups;
 @Parcel
 public class ChallengeUserInfo {
 
-    @JsonProperty("paid_amount")
+    @SerializedName("paid_amount")
     private Integer paidAmount;
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
-    @JsonProperty("powerups_from_bank")
+    @SerializedName("powerups_from_bank")
     private HashMap<String, Integer> withdrawnPowerUps = new HashMap<>();
 
-    @JsonProperty("config_index")
+    @SerializedName("config_index")
     private Integer configIndex;
 
-    @JsonProperty("paid_amount")
+    @SerializedName("paid_amount")
     public Integer getPaidAmount() {
         return paidAmount;
     }
 
-    @JsonProperty("paid_amount")
+    @SerializedName("paid_amount")
     public void setPaidAmount(Integer paidAmount) {
         this.paidAmount = paidAmount;
     }
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps = initPowerUps(powerUps);
     }
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public void setPowerUps(HashMap<String, Integer> powerUps) {
         this.powerUps = powerUps;
     }
 
-    @JsonProperty("powerups_from_bank")
+    @SerializedName("powerups_from_bank")
     public HashMap<String, Integer> getWithdrawnPowerUps() {
         return withdrawnPowerUps = initPowerUps(withdrawnPowerUps);
     }
 
-    @JsonProperty("powerups_from_bank")
+    @SerializedName("powerups_from_bank")
     public void setWithdrawnPowerUps(HashMap<String, Integer> withdrawnPowerUps) {
         this.withdrawnPowerUps = withdrawnPowerUps;
     }
 
-    @JsonIgnore
+
     private HashMap<String, Integer> initPowerUps(HashMap<String, Integer> powerUpMap) {
         if (null == powerUpMap) {
             powerUpMap = new HashMap<>();
@@ -80,17 +80,17 @@ public class ChallengeUserInfo {
         return powerUpMap;
     }
 
-    @JsonProperty("config_index")
+    @SerializedName("config_index")
     public Integer getConfigIndex() {
         return configIndex;
     }
 
-    @JsonProperty("config_index")
+    @SerializedName("config_index")
     public void setConfigIndex(Integer configIndex) {
         this.configIndex = configIndex;
     }
 
-    @JsonIgnore
+
     public boolean isUserJoined() {
         return null != configIndex;
     }

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.inPlay.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -16,25 +16,25 @@ import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
 @Parcel
 public class InPlayResponse {
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     private int challengeId;
 
-    @JsonProperty("challenge_name")
+    @SerializedName("challenge_name")
     private String challengeName;
 
-    @JsonProperty("challenge_desc")
+    @SerializedName("challenge_desc")
     private String challengeDesc;
 
-    @JsonProperty("status")
-    private String status="ongoing";
+    @SerializedName("status")
+    private String status = "ongoing";
 
-    @JsonProperty("sports_id")
+    @SerializedName("sports_id")
     private int sportsId;
 
-    @JsonProperty("is_daily_challenge")
+    @SerializedName("is_daily_challenge")
     private boolean isDailyChallenge;
 
-    @JsonProperty("contests")
+    @SerializedName("contests")
     private List<InPlayContestDto> contestList;
 
     public int getChallengeId() {

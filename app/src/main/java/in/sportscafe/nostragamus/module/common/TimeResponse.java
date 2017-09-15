@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.common;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by deepanshi on 5/6/17.
@@ -8,15 +8,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TimeResponse {
 
-    @JsonProperty("timestamp")
+    @SerializedName("timestamp")
     private String serverTime;
 
-    @JsonProperty("timestamp")
+    @SerializedName("timestamp")
     public String getServerTime() {
         return serverTime;
     }
 
-    @JsonProperty("timestamp")
+    @SerializedName("timestamp")
     public void setServerTime(String serverTime) {
         this.serverTime = serverTime;
     }

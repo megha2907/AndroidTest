@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.walletHistory;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 12/04/17.
@@ -8,28 +8,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WalletHistoryTransaction {
 
-    @JsonProperty("transaction_type")
+    @SerializedName("transaction_type")
     private String transactionType;
 
-    @JsonProperty("trasaction_status")
+    @SerializedName("trasaction_status")
     private String trasactionStatus;
 
-    @JsonProperty("account")
+    @SerializedName("account")
     private String account;
 
-    @JsonProperty("message")
+    @SerializedName("message")
     private String message;
 
-    @JsonProperty("order_id")
+    @SerializedName("order_id")
     private String orderId;
 
-    @JsonProperty("created_at")
+    @SerializedName("created_at")
     private String createdAt;
 
-    @JsonProperty("amount")
+    @SerializedName("amount")
     private double amount;
 
-    @JsonProperty("money_flow")
+    @SerializedName("money_flow")
     private String moneyFlow;
 
     public String getTransactionType() {

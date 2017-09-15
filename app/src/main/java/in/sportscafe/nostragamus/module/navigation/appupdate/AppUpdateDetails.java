@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.appupdate;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,53 +12,53 @@ import java.util.List;
 
 public class AppUpdateDetails {
 
-    @JsonProperty("slides")
+    @SerializedName("slides")
     private List<AppUpdateDto> appUpdateSlides = new ArrayList<>();
 
-    @JsonProperty("update_url")
+    @SerializedName("update_url")
     private String updateUrl;
 
-    @JsonProperty("update_type")
+    @SerializedName("update_type")
     private String updateType;
 
-    @JsonProperty("req_version")
+    @SerializedName("req_version")
     private int reqVersion;
 
-    @JsonProperty("slides")
+    @SerializedName("slides")
     public List<AppUpdateDto> getAppUpdateSlides() {
         return appUpdateSlides;
     }
-    @JsonProperty("slides")
+    @SerializedName("slides")
     public void setAppUpdateSlides(List<AppUpdateDto> appUpdateSlides) {
         this.appUpdateSlides = appUpdateSlides;
     }
 
-    @JsonProperty("update_url")
+    @SerializedName("update_url")
     public String getUpdateUrl() {
         return updateUrl;
     }
 
-    @JsonProperty("update_url")
+    @SerializedName("update_url")
     public void setUpdateUrl(String updateUrl) {
         this.updateUrl = updateUrl;
     }
 
-    @JsonProperty("req_version")
+    @SerializedName("req_version")
     public int getReqVersion() {
         return reqVersion;
     }
 
-    @JsonProperty("req_version")
+    @SerializedName("req_version")
     public void setReqVersion(int reqVersion) {
         this.reqVersion = reqVersion;
     }
 
-    @JsonProperty("update_type")
+    @SerializedName("update_type")
     public String getUpdateType() {
         return updateType;
     }
 
-    @JsonProperty("update_type")
+    @SerializedName("update_type")
     public void setUpdateType(String updateType) {
         this.updateType = updateType;
     }

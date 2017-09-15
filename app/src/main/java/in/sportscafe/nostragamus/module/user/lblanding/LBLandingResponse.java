@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.lblanding;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class LBLandingResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<LBLandingSummary> summary= new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<LBLandingSummary> getSummary() {
         return summary;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setSummary(List<LBLandingSummary> summary) {
         this.summary = summary;
     }

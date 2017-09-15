@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.myprofile.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class TournamentsResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<TournamentInfo> tournamentInfos = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<TournamentInfo> getTournamentInfos() {
         return tournamentInfos;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setTournamentInfos(List<TournamentInfo> tournamentInfos) {
         this.tournamentInfos = tournamentInfos;
     }

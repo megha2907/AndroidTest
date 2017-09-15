@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.allchallenges.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class ChallengeConfigsResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<ChallengeConfig> configs = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<ChallengeConfig> getConfigs() {
         return configs;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setConfigs(List<ChallengeConfig> configs) {
         this.configs = configs;
     }

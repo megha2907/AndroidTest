@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.upgradeToPro.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 04/08/17.
@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UpgradeToProResponse {
 
-    @JsonProperty("enabled")
+    @SerializedName("enabled")
     private boolean shouldShowUpgradeDialog;
 
-    @JsonProperty("contentImageUrl")
+    @SerializedName("contentImageUrl")
     private String contentImageUrl;
 
-    @JsonProperty("appLink")
+    @SerializedName("appLink")
     private String proAppDownloadLink;
 
     public boolean isShouldShowUpgradeDialog() {

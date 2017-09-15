@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.inPlay.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,16 +10,16 @@ import org.parceler.Parcel;
 @Parcel
 public class InPlayContestMatchDto {
 
-    @JsonProperty("is_played")
+    @SerializedName("is_played")
     private int isPlayed;
 
-    @JsonProperty("score")
+    @SerializedName("score")
     private int score;
 
-    @JsonProperty("start_time")
+    @SerializedName("start_time")
     private String startTime;
 
-    @JsonProperty("status")
+    @SerializedName("status")
     private String status;
 
     public int isPlayed() {

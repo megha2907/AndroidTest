@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.store.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -12,16 +12,16 @@ import org.parceler.Parcel;
 @Parcel
 public class ProductSaleInfo {
 
-    @JsonProperty("sale")
+    @SerializedName("sale")
     private Boolean saleOn;
 
-    @JsonProperty("sale_price")
+    @SerializedName("sale_price")
     private Integer salePrice;
 
-    @JsonProperty("sale_percentage")
+    @SerializedName("sale_percentage")
     private Integer salePercentage;
 
-    @JsonProperty("sale_description")
+    @SerializedName("sale_description")
     private String saleDesc;
 
     public Boolean getSaleOn() {

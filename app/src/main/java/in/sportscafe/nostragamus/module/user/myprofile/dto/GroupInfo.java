@@ -1,7 +1,7 @@
 package in.sportscafe.nostragamus.module.user.myprofile.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -14,46 +14,46 @@ import java.util.List;
 @Parcel
 public class GroupInfo {
 
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     private Integer id;
 
-    @JsonProperty("group_name")
+    @SerializedName("group_name")
     private String name;
 
-    @JsonProperty("group_img_url")
+    @SerializedName("group_img_url")
     private String photo;
 
-    @JsonProperty("group_created_by")
+    @SerializedName("group_created_by")
     private Integer createdBy;
 
-    @JsonProperty("group_created_at")
+    @SerializedName("group_created_at")
     private String createdAt;
 
-    @JsonProperty("group_active")
+    @SerializedName("group_active")
     private boolean active;
 
-    @JsonProperty("group_deleted")
+    @SerializedName("group_deleted")
     private boolean deleted;
 
-    @JsonProperty("group_deleted_at")
+    @SerializedName("group_deleted_at")
     private String deletedAt;
 
-    @JsonProperty("group_deactivated_at")
+    @SerializedName("group_deactivated_at")
     private String deactivatedAt;
 
-    @JsonProperty("group_members")
+    @SerializedName("group_members")
     private List<GroupPerson> members = new ArrayList<>();
 
-    @JsonProperty("group_tournaments_exp")
+    @SerializedName("group_tournaments_exp")
     private List<TournamentFeedInfo> followedTournaments = new ArrayList<>();
 
-    @JsonProperty("group_code")
+    @SerializedName("group_code")
     private String groupCode;
 
-    @JsonProperty("wallet_init")
+    @SerializedName("wallet_init")
     private Integer walletInitialAmount;
 
-    @JsonProperty("download_link")
+    @SerializedName("download_link")
     private String appDownloadLink;
 
     public GroupInfo() {
@@ -68,7 +68,7 @@ public class GroupInfo {
      * @return
      * The id
      */
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     public Integer getId() {
         return id;
     }
@@ -78,7 +78,7 @@ public class GroupInfo {
      * @param id
      * The group_id
      */
-    @JsonProperty("group_id")
+    @SerializedName("group_id")
     public void setId(Integer id) {
         this.id = id;
     }
@@ -88,7 +88,7 @@ public class GroupInfo {
      * @return
      * The name
      */
-    @JsonProperty("group_name")
+    @SerializedName("group_name")
     public String getName() {
         return name;
     }
@@ -98,7 +98,7 @@ public class GroupInfo {
      * @param name
      * The group_name
      */
-    @JsonProperty("group_name")
+    @SerializedName("group_name")
     public void setName(String name) {
         this.name = name;
     }
@@ -108,7 +108,7 @@ public class GroupInfo {
      * @return
      * The createdBy
      */
-    @JsonProperty("group_created_by")
+    @SerializedName("group_created_by")
     public Integer getCreatedBy() {
         return createdBy;
     }
@@ -118,7 +118,7 @@ public class GroupInfo {
      * @param createdBy
      * The group_created_by
      */
-    @JsonProperty("group_created_by")
+    @SerializedName("group_created_by")
     public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
     }
@@ -128,7 +128,7 @@ public class GroupInfo {
      * @return
      * The createdAt
      */
-    @JsonProperty("group_created_at")
+    @SerializedName("group_created_at")
     public String getCreatedAt() {
         return createdAt;
     }
@@ -138,7 +138,7 @@ public class GroupInfo {
      * @param createdAt
      * The group_created_at
      */
-    @JsonProperty("group_created_at")
+    @SerializedName("group_created_at")
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
@@ -148,7 +148,7 @@ public class GroupInfo {
      * @return
      * The active
      */
-    @JsonProperty("group_active")
+    @SerializedName("group_active")
     public boolean getActive() {
         return active;
     }
@@ -158,7 +158,7 @@ public class GroupInfo {
      * @param active
      * The group_active
      */
-    @JsonProperty("group_active")
+    @SerializedName("group_active")
     public void setActive(boolean active) {
         this.active = active;
     }
@@ -168,7 +168,7 @@ public class GroupInfo {
      * @return
      * The deleted
      */
-    @JsonProperty("group_deleted")
+    @SerializedName("group_deleted")
     public boolean getDeleted() {
         return deleted;
     }
@@ -178,7 +178,7 @@ public class GroupInfo {
      * @param deleted
      * The group_deleted
      */
-    @JsonProperty("group_deleted")
+    @SerializedName("group_deleted")
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
@@ -188,7 +188,7 @@ public class GroupInfo {
      * @return
      * The deletedAt
      */
-    @JsonProperty("group_deleted_at")
+    @SerializedName("group_deleted_at")
     public String getDeletedAt() {
         return deletedAt;
     }
@@ -198,7 +198,7 @@ public class GroupInfo {
      * @param deletedAt
      * The group_deleted_at
      */
-    @JsonProperty("group_deleted_at")
+    @SerializedName("group_deleted_at")
     public void setDeletedAt(String deletedAt) {
         this.deletedAt = deletedAt;
     }
@@ -208,7 +208,7 @@ public class GroupInfo {
      * @return
      * The deactivatedAt
      */
-    @JsonProperty("group_deactivated_at")
+    @SerializedName("group_deactivated_at")
     public String getDeactivatedAt() {
         return deactivatedAt;
     }
@@ -218,47 +218,47 @@ public class GroupInfo {
      * @param deactivatedAt
      * The group_deactivated_at
      */
-    @JsonProperty("group_deactivated_at")
+    @SerializedName("group_deactivated_at")
     public void setDeactivatedAt(String deactivatedAt) {
         this.deactivatedAt = deactivatedAt;
     }
 
-    @JsonProperty("group_members")
+    @SerializedName("group_members")
     public List<GroupPerson> getMembers() {
         return members;
     }
 
-    @JsonProperty("group_members")
+    @SerializedName("group_members")
     public void setMembers(List<GroupPerson> members) {
         this.members = members;
     }
 
-    @JsonProperty("group_tournaments_exp")
+    @SerializedName("group_tournaments_exp")
     public List<TournamentFeedInfo> getFollowedTournaments() {
         return followedTournaments;
     }
 
-    @JsonProperty("group_tournaments_exp")
+    @SerializedName("group_tournaments_exp")
     public void setFollowedTournaments(List<TournamentFeedInfo> followedTournaments) {
         this.followedTournaments = followedTournaments;
     }
 
-    @JsonProperty("group_code")
+    @SerializedName("group_code")
     public String getGroupCode() {
         return groupCode;
     }
 
-    @JsonProperty("group_code")
+    @SerializedName("group_code")
     public void setGroupCode(String groupCode) {
         this.groupCode = groupCode;
     }
 
-    @JsonProperty("group_img_url")
+    @SerializedName("group_img_url")
     public String getPhoto() {
         return photo;
     }
 
-    @JsonIgnore
+
     public void setPhoto(String photo) {
         this.photo = photo;
     }
@@ -274,22 +274,22 @@ public class GroupInfo {
         return name;
     }
 
-    @JsonProperty("wallet_init")
+    @SerializedName("wallet_init")
     public Integer getWalletInitialAmount() {
         return walletInitialAmount;
     }
 
-    @JsonProperty("wallet_init")
+    @SerializedName("wallet_init")
     public void setWalletInitialAmount(Integer walletInitialAmount) {
         this.walletInitialAmount = walletInitialAmount;
     }
 
-    @JsonProperty("download_link")
+    @SerializedName("download_link")
     public String getAppDownloadLink() {
         return appDownloadLink;
     }
 
-    @JsonProperty("download_link")
+    @SerializedName("download_link")
     public void setAppDownloadLink(String appDownloadLink) {
         this.appDownloadLink = appDownloadLink;
     }

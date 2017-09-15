@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.play.powerup.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 21/07/17.
@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PowerUpBankStatusResponse implements Cloneable {
 
-    @JsonProperty("maxTransferLimit")
+    @SerializedName("maxTransferLimit")
     private int maxTransferLimit;
 
-    @JsonProperty("alreadyTransferred")
+    @SerializedName("alreadyTransferred")
     private AlreadyTransferredPowerupDto alreadyTransferred;
 
-    @JsonProperty("userBalance")
+    @SerializedName("userBalance")
     private UserBalancePowerupDto userBalance;
 
 

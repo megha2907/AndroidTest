@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.contest.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -11,13 +11,13 @@ import org.parceler.Parcel;
 @Parcel
 public class ContestTypeInfo {
 
-    @JsonProperty("id")
+    @SerializedName("id")
     private int id;
 
-    @JsonProperty("name")
+    @SerializedName("name")
     private String name;
 
-    @JsonProperty("desc")
+    @SerializedName("desc")
     private String description;
 
     public int getId() {

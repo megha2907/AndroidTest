@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,7 +10,7 @@ import org.parceler.Parcel;
 @Parcel
 public class AddMoneyToWalletRequest {
 
-    @JsonProperty("txn_amount")
+    @SerializedName("txn_amount")
     private double amount;
 
     public double getAmount() {

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.allchallenges;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengesDataResponse;
 
@@ -10,15 +10,15 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengesDataResponse
 
 class CompletedChallengesResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private ChallengesDataResponse response;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public ChallengesDataResponse getResponse() {
         return response;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setResponse(ChallengesDataResponse response) {
         this.response = response;
     }

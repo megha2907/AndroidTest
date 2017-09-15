@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.allchallenges.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -15,41 +15,41 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupPerson;
 @Parcel
 public class ConfigPlayersDetails {
 
-    @JsonProperty("max_count")
+    @SerializedName("max_count")
     private int maxCount;
 
-    @JsonProperty("joined_count")
+    @SerializedName("joined_count")
     private int joinedCount;
 
-    @JsonProperty("players")
+    @SerializedName("players")
     private List<GroupPerson> players = new ArrayList<>();
 
-    @JsonProperty("max_count")
+    @SerializedName("max_count")
     public int getMaxCount() {
         return maxCount;
     }
 
-    @JsonProperty("max_count")
+    @SerializedName("max_count")
     public void setMaxCount(int maxCount) {
         this.maxCount = maxCount;
     }
 
-    @JsonProperty("joined_count")
+    @SerializedName("joined_count")
     public int getJoinedCount() {
         return joinedCount;
     }
 
-    @JsonProperty("joined_count")
+    @SerializedName("joined_count")
     public void setJoinedCount(int joinedCount) {
         this.joinedCount = joinedCount;
     }
 
-    @JsonProperty("players")
+    @SerializedName("players")
     public List<GroupPerson> getPlayers() {
         return players;
     }
 
-    @JsonProperty("players")
+    @SerializedName("players")
     public void setPlayers(List<GroupPerson> players) {
         this.players = players;
     }

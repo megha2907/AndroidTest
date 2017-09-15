@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.feed.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,41 +10,41 @@ import org.parceler.Parcel;
 @Parcel
 public class Parties {
 
-    @JsonProperty("party_name")
+    @SerializedName("party_name")
     private String partyName;
 
-    @JsonProperty("party_id")
+    @SerializedName("party_id")
     private int partyId;
 
-    @JsonProperty("party_img_url")
+    @SerializedName("party_img_url")
     private String partyImageUrl;
 
-    @JsonProperty("party_id")
+    @SerializedName("party_id")
     public int getPartyId() {
         return partyId;
     }
 
-    @JsonProperty("party_id")
+    @SerializedName("party_id")
     public void setPartyId(int partyId) {
         this.partyId = partyId;
     }
 
-    @JsonProperty("party_name")
+    @SerializedName("party_name")
     public String getPartyName() {
         return partyName;
     }
 
-    @JsonProperty("party_name")
+    @SerializedName("party_name")
     public void setPartyName(String partyName) {
         this.partyName = partyName;
     }
 
-    @JsonProperty("party_img_url")
+    @SerializedName("party_img_url")
     public String getPartyImageUrl() {
         return partyImageUrl;
     }
 
-    @JsonProperty("party_img_url")
+    @SerializedName("party_img_url")
     public void setPartyImageUrl(String partyImageUrl) {
         this.partyImageUrl = partyImageUrl;
     }

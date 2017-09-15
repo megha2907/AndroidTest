@@ -1,7 +1,7 @@
 package in.sportscafe.nostragamus.module.onboard;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -12,22 +12,22 @@ import org.parceler.Parcel;
 @Parcel
 public class OnBoardingDto {
 
-    @JsonProperty("title")
+    @SerializedName("title")
     private String title;
 
-    @JsonProperty("desc")
+    @SerializedName("desc")
     private String desc;
 
-    @JsonProperty("imageResName")
+    @SerializedName("imageResName")
     private String imageResName;
 
-    @JsonProperty("imageUrl")
+    @SerializedName("imageUrl")
     private String imageUrl;
 
-    @JsonProperty("referralCode")
+    @SerializedName("referralCode")
     private String referralCode;
 
-    @JsonIgnore
+
     private Boolean isReferral=false;
 
     public OnBoardingDto() {
@@ -39,62 +39,62 @@ public class OnBoardingDto {
         this.imageResName = imageResName;
     }
 
-    @JsonProperty("title")
+    @SerializedName("title")
     public String getTitle() {
         return title;
     }
 
-    @JsonProperty("title")
+    @SerializedName("title")
     public void setTitle(String title) {
         this.title = title;
     }
 
-    @JsonProperty("desc")
+    @SerializedName("desc")
     public String getDesc() {
         return desc;
     }
 
-    @JsonProperty("desc")
+    @SerializedName("desc")
     public void setDesc(String desc) {
         this.desc = desc;
     }
 
-    @JsonProperty("imageResName")
+    @SerializedName("imageResName")
     public String getImageResName() {
         return imageResName;
     }
 
-    @JsonProperty("imageResName")
+    @SerializedName("imageResName")
     public void setImageResName(String imageResName) {
         this.imageResName = imageResName;
     }
 
-    @JsonProperty("imageUrl")
+    @SerializedName("imageUrl")
     public String getImageUrl() {
         return imageUrl;
     }
 
-    @JsonProperty("imageUrl")
+    @SerializedName("imageUrl")
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
-    @JsonIgnore
+
     public Boolean getReferral() {
         return isReferral;
     }
 
-    @JsonIgnore
+
     public void setReferral(Boolean referral) {
         isReferral = referral;
     }
 
-    @JsonProperty("referralCode")
+    @SerializedName("referralCode")
     public String getReferralCode() {
         return referralCode;
     }
 
-    @JsonProperty("referralCode")
+    @SerializedName("referralCode")
     public void setReferralCode(String referralCode) {
         this.referralCode = referralCode;
     }

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.play.prediction.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -11,28 +11,28 @@ import org.parceler.Parcel;
 @Parcel
 public class AudiencePoll {
 
-    @JsonProperty("answer")
+    @SerializedName("answer")
     private Integer answerId;
 
-    @JsonProperty("percentage")
+    @SerializedName("percentage")
     private String answerPercentage;
 
-    @JsonProperty("answer")
+    @SerializedName("answer")
     public Integer getAnswerId() {
         return answerId;
     }
 
-    @JsonProperty("answer")
+    @SerializedName("answer")
     public void setAnswerId(Integer answerId) {
         this.answerId = answerId;
     }
 
-    @JsonProperty("percentage")
+    @SerializedName("percentage")
     public String getAnswerPercentage() {
         return answerPercentage;
     }
 
-    @JsonProperty("percentage")
+    @SerializedName("percentage")
     public void setAnswerPercentage(String answerPercentage) {
         this.answerPercentage = answerPercentage;
     }

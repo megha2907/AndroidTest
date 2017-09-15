@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -11,41 +11,41 @@ import in.sportscafe.nostragamus.module.feed.dto.Match;
  */
 public class Tour {
 
-    @JsonProperty("id")
+    @SerializedName("id")
     private int id;
 
-    @JsonProperty("tournament_name")
+    @SerializedName("tournament_name")
     private String name;
 
-    @JsonProperty("matches")
+    @SerializedName("matches")
     private List<Match> matchList;
 
-    @JsonProperty("id")
+    @SerializedName("id")
     public int getId() {
         return id;
     }
 
-    @JsonProperty("id")
+    @SerializedName("id")
     public void setId(int id) {
         this.id = id;
     }
 
-    @JsonProperty("tournament_name")
+    @SerializedName("tournament_name")
     public String getName() {
         return name;
     }
 
-    @JsonProperty("tournament_name")
+    @SerializedName("tournament_name")
     public void setName(String name) {
         this.name = name;
     }
 
-    @JsonProperty("matches")
+    @SerializedName("matches")
     public List<Match> getMatchList() {
         return matchList;
     }
 
-    @JsonProperty("matches")
+    @SerializedName("matches")
     public void setMatchList(List<Match> matchList) {
         this.matchList = matchList;
     }

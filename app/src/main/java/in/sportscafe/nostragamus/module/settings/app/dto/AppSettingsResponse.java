@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.settings.app.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Jeeva on 3/10/16.
@@ -8,28 +8,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AppSettingsResponse {
 
-    @JsonProperty("settings")
+    @SerializedName("settings")
     private SettingsDetails settingsDetails;
 
-    @JsonProperty("settings")
+    @SerializedName("settings")
     public SettingsDetails getSettingsDetails() {
         return settingsDetails;
     }
 
-    @JsonProperty("settings")
+    @SerializedName("settings")
     public void setSettingsDetails(SettingsDetails settingsDetails) {
         this.settingsDetails = settingsDetails;
     }
 
-    @JsonProperty("update")
+    @SerializedName("update")
     private AppUpdateInfo appUpdateInfo;
 
-    @JsonProperty("update")
+    @SerializedName("update")
     public AppUpdateInfo getAppUpdateInfo() {
         return appUpdateInfo;
     }
 
-    @JsonProperty("update")
+    @SerializedName("update")
     public void setAppUpdateInfo(AppUpdateInfo appUpdateInfo) {
         this.appUpdateInfo = appUpdateInfo;
     }

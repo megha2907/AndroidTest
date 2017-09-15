@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 7/4/17.
@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class GenerateOrderRequest {
 
-    @JsonProperty("user_id")
+    @SerializedName("user_id")
     private long userId;
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     private long challengeId;
 
-    @JsonProperty("config_index")
+    @SerializedName("config_index")
     private int configIndex;
 
     public long getUserId() {

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.fuzzyplayers;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +13,15 @@ import in.sportscafe.nostragamus.module.user.login.dto.BasicUserInfo;
 
 public class FuzzyPlayerResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<BasicUserInfo> players = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<BasicUserInfo> getPlayers() {
         return players;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setPlayers(List<BasicUserInfo> players) {
         this.players = players;
     }

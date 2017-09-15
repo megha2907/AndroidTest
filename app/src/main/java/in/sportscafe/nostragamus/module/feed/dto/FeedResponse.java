@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.feed.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by deepanshi on 2/2/17.
@@ -8,15 +8,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FeedResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private FeedTimeline feedTimeline;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public FeedTimeline getFeedTimeline() {
         return feedTimeline;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setFeedTimeline(FeedTimeline feedTimeline) {
         this.feedTimeline = feedTimeline;
     }

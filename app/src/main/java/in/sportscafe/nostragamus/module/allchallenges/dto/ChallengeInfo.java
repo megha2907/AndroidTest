@@ -1,7 +1,7 @@
 package in.sportscafe.nostragamus.module.allchallenges.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -17,72 +17,72 @@ import in.sportscafe.nostragamus.Constants.Powerups;
 @Parcel
 public class ChallengeInfo {
 
-    @JsonProperty("payment_info")
+    @SerializedName("payment_info")
     private PaymentInfo paymentInfo;
 
-    @JsonProperty("maxTransferLimit")
+    @SerializedName("maxTransferLimit")
     private int maxWithdrawLimit = 0;
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
-    @JsonProperty("configs")
+    @SerializedName("configs")
     private List<ChallengeConfig> configs = new ArrayList<>();
 
-    @JsonProperty("payment_info")
+    @SerializedName("payment_info")
     public PaymentInfo getPaymentInfo() {
         return paymentInfo;
     }
 
-    @JsonProperty("isClosed")
+    @SerializedName("isClosed")
     private boolean isClosed;
 
-    @JsonProperty("payment_info")
+    @SerializedName("payment_info")
     public void setPaymentInfo(PaymentInfo paymentInfo) {
         this.paymentInfo = paymentInfo;
     }
 
-    @JsonProperty("maxTransferLimit")
+    @SerializedName("maxTransferLimit")
     public int getMaxWithdrawLimit() {
         return maxWithdrawLimit;
     }
 
-    @JsonProperty("maxTransferLimit")
+    @SerializedName("maxTransferLimit")
     public void setMaxWithdrawLimit(int maxWithdrawLimit) {
         this.maxWithdrawLimit = maxWithdrawLimit;
     }
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps = initPowerUps(powerUps);
     }
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public void setPowerUps(HashMap<String, Integer> powerUps) {
         this.powerUps = powerUps;
     }
 
-    @JsonProperty("configs")
+    @SerializedName("configs")
     public List<ChallengeConfig> getConfigs() {
         return configs;
     }
 
-    @JsonProperty("configs")
+    @SerializedName("configs")
     public void setConfigs(List<ChallengeConfig> configs) {
         this.configs = configs;
     }
 
-    @JsonProperty("isClosed")
+    @SerializedName("isClosed")
     public boolean isClosed() {
         return isClosed;
     }
 
-    @JsonProperty("isClosed")
+    @SerializedName("isClosed")
     public void setClosed(boolean closed) {
         isClosed = closed;
     }
 
-    @JsonIgnore
+
     private HashMap<String, Integer> initPowerUps(HashMap<String, Integer> powerUpMap) {
         if (null == powerUpMap) {
             powerUpMap = new HashMap<>();

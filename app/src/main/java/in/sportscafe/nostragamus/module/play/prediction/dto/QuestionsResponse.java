@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.play.prediction.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class QuestionsResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<Question> questions = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<Question> getQuestions() {
         return questions;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }

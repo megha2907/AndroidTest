@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.allchallenges.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,28 +10,28 @@ import org.parceler.Parcel;
 @Parcel
 public class PaymentInfo {
 
-    @JsonProperty("fee")
+    @SerializedName("fee")
     private Integer challengeFee;
 
-    @JsonProperty("prize_money")
+    @SerializedName("prize_money")
     private Integer prizeMoney;
 
-    @JsonProperty("fee")
+    @SerializedName("fee")
     public Integer getChallengeFee() {
         return challengeFee;
     }
 
-    @JsonProperty("fee")
+    @SerializedName("fee")
     public void setChallengeFee(Integer challengeFee) {
         this.challengeFee = challengeFee;
     }
 
-    @JsonProperty("prize_money")
+    @SerializedName("prize_money")
     public Integer getPrizeMoney() {
         return prizeMoney;
     }
 
-    @JsonProperty("prize_money")
+    @SerializedName("prize_money")
     public void setPrizeMoney(Integer prizeMoney) {
         this.prizeMoney = prizeMoney;
     }

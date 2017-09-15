@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.leaderboard;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +12,15 @@ import in.sportscafe.nostragamus.module.user.leaderboard.dto.LeaderBoard;
  */
 public class LeaderBoardResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<LeaderBoard> leaderBoardList = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<LeaderBoard> getLeaderBoardList() {
         return leaderBoardList;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setLeaderBoardList(List<LeaderBoard> leaderBoardList) {
         this.leaderBoardList = leaderBoardList;
     }

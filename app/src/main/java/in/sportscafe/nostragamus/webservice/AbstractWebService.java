@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+import com.google.gson.GsonBuilder;
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 import com.jeeva.android.converter.JacksonConverterFactory;
@@ -19,6 +20,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Jeeva on 15/3/16.
@@ -38,7 +40,7 @@ public abstract class AbstractWebService<T> {
     private T initService(String baseUrl, Class<T> service) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(JacksonConverterFactory.create(mObjectMapper))
+                .addConverterFactory(GsonConverterFactory.create())
                 .client(getCustomHttpClient())
                 .build();
         return retrofit.create(service);

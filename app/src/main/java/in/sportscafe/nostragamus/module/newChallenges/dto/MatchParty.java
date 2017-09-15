@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.newChallenges.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,13 +10,13 @@ import org.parceler.Parcel;
 @Parcel
 public class MatchParty {
 
-    @JsonProperty("party_id")
+    @SerializedName("party_id")
     private int partyId;
 
-    @JsonProperty("party_name")
+    @SerializedName("party_name")
     private String partyName;
 
-    @JsonProperty("party_img_url")
+    @SerializedName("party_img_url")
     private String partyImgUrl;
 
     public int getPartyId() {

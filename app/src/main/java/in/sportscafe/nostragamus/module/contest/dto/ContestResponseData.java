@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.contest.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -10,16 +10,16 @@ import java.util.List;
 
 public class ContestResponseData {
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     private int challengeId;
 
-    @JsonProperty("challenge_name")
+    @SerializedName("challenge_name")
     private String challengeName;
 
-    @JsonProperty("challenge_starttime")
+    @SerializedName("challenge_starttime")
     private String challengeStartTime;
 
-    @JsonProperty("contest_data")
+    @SerializedName("contest_data")
     private List<Contest> contests;
 
     public int getChallengeId() {

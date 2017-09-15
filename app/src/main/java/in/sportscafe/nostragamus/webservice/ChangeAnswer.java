@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.webservice;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by deepanshi on 5/17/17.
@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ChangeAnswer {
 
-    @JsonProperty("question_id")
+    @SerializedName("question_id")
     private Integer questionId;
 
-    @JsonProperty("answer")
+    @SerializedName("answer")
     private Integer answerId;
 
     public ChangeAnswer(Integer questionId, Integer answerId) {
@@ -19,22 +19,22 @@ public class ChangeAnswer {
         this.answerId = answerId;
     }
 
-    @JsonProperty("question_id")
+    @SerializedName("question_id")
     public Integer getQuestionId() {
         return questionId;
     }
 
-    @JsonProperty("question_id")
+    @SerializedName("question_id")
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
     }
 
-    @JsonProperty("answer")
+    @SerializedName("answer")
     public Integer getAnswerId() {
         return answerId;
     }
 
-    @JsonProperty("answer")
+    @SerializedName("answer")
     public void setAnswerId(Integer answerId) {
         this.answerId = answerId;
     }

@@ -1,21 +1,21 @@
 package in.sportscafe.nostragamus.module.popups.bankpopups;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Jeeva on 02/03/17.
  */
 public class BankTransferResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private BankTransfer bankTransfer;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public BankTransfer getBankTransfer() {
         return bankTransfer;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setBankTransfer(BankTransfer bankTransfer) {
         this.bankTransfer = bankTransfer;
     }

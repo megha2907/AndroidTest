@@ -1,7 +1,7 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -15,31 +15,31 @@ import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 @Parcel
 public class UserInfo extends PlayerInfo {
 
-    @JsonProperty("user_email")
+    @SerializedName("user_email")
     private String email;
 
-    @JsonProperty("user_name")
+    @SerializedName("user_name")
     private String userName;
 
-    @JsonProperty("user_fb_id")
+    @SerializedName("user_fb_id")
     private String fbId;
 
-    @JsonProperty("user_google_id")
+    @SerializedName("user_google_id")
     private String googleId = "0";
 
-    @JsonProperty("user_active")
+    @SerializedName("user_active")
     private boolean active = true;
 
-    @JsonProperty("cookie")
+    @SerializedName("cookie")
     private String cookie;
 
-    @JsonProperty("count_groups")
+    @SerializedName("count_groups")
     private Integer totalGroups;
 
     /**
      * @return The email
      */
-    @JsonProperty("user_email")
+    @SerializedName("user_email")
     public String getEmail() {
         return email;
     }
@@ -47,7 +47,7 @@ public class UserInfo extends PlayerInfo {
     /**
      * @param email The user_email
      */
-    @JsonProperty("user_email")
+    @SerializedName("user_email")
     public void setEmail(String email) {
         this.email = email;
     }
@@ -55,7 +55,7 @@ public class UserInfo extends PlayerInfo {
     /**
      * @return The userName
      */
-    @JsonProperty("user_name")
+    @SerializedName("user_name")
     public String getUserName() {
         return userName;
     }
@@ -63,7 +63,7 @@ public class UserInfo extends PlayerInfo {
     /**
      * @param userName The user_firstname
      */
-    @JsonProperty("user_name")
+    @SerializedName("user_name")
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -71,7 +71,7 @@ public class UserInfo extends PlayerInfo {
     /**
      * @return The fbId
      */
-    @JsonProperty("user_fb_id")
+    @SerializedName("user_fb_id")
     public String getFbId() {
         return fbId;
     }
@@ -79,7 +79,7 @@ public class UserInfo extends PlayerInfo {
     /**
      * @param fbId The user_fb_id
      */
-    @JsonProperty("user_fb_id")
+    @SerializedName("user_fb_id")
     public void setFbId(String fbId) {
         this.fbId = fbId;
     }
@@ -87,7 +87,7 @@ public class UserInfo extends PlayerInfo {
     /**
      * @return The googleId
      */
-    @JsonProperty("user_google_id")
+    @SerializedName("user_google_id")
     public String getGoogleId() {
         return googleId;
     }
@@ -95,7 +95,7 @@ public class UserInfo extends PlayerInfo {
     /**
      * @param googleId The user_google_id
      */
-    @JsonProperty("user_google_id")
+    @SerializedName("user_google_id")
     public void setGoogleId(String googleId) {
         this.googleId = googleId;
     }
@@ -103,7 +103,7 @@ public class UserInfo extends PlayerInfo {
     /**
      * @return The active
      */
-    @JsonProperty("user_active")
+    @SerializedName("user_active")
     public boolean getActive() {
         return active;
     }
@@ -111,32 +111,32 @@ public class UserInfo extends PlayerInfo {
     /**
      * @param active The user_active
      */
-    @JsonProperty("user_active")
+    @SerializedName("user_active")
     public void setActive(boolean active) {
         this.active = active;
     }
 
-    @JsonProperty("cookie")
+    @SerializedName("cookie")
     public String getCookie() {
         return cookie;
     }
 
-    @JsonProperty("cookie")
+    @SerializedName("cookie")
     public void setCookie(String cookie) {
         this.cookie = cookie;
     }
 
-    @JsonProperty("count_groups")
+    @SerializedName("count_groups")
     public Integer getTotalGroups() {
         return totalGroups;
     }
 
-    @JsonProperty("count_groups")
+    @SerializedName("count_groups")
     public void setTotalGroups(Integer totalGroups) {
         this.totalGroups = totalGroups;
     }
 
-    @JsonIgnore
+
     public HashMap<String, Integer> getPowerUps() {
         return getInfoDetails().getPowerUps();
     }

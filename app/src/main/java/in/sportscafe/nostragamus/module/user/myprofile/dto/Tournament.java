@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.myprofile.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,41 +10,41 @@ import org.parceler.Parcel;
 @Parcel
 public class Tournament {
 
-    @JsonProperty("tournament_id")
+    @SerializedName("tournament_id")
     private int id;
 
-    @JsonProperty("tournament_name")
+    @SerializedName("tournament_name")
     private String name;
 
-    @JsonProperty("tournament_short_name")
+    @SerializedName("tournament_short_name")
     private String tournamentShortName;
 
-    @JsonProperty("tournament_id")
+    @SerializedName("tournament_id")
     public int getId() {
         return id;
     }
 
-    @JsonProperty("tournament_id")
+    @SerializedName("tournament_id")
     public void setId(int id) {
         this.id = id;
     }
 
-    @JsonProperty("tournament_name")
+    @SerializedName("tournament_name")
     public String getName() {
         return name;
     }
 
-    @JsonProperty("tournament_name")
+    @SerializedName("tournament_name")
     public void setName(String name) {
         this.name = name;
     }
 
-    @JsonProperty("tournament_short_name")
+    @SerializedName("tournament_short_name")
     public String getTournamentShortName() {
         return tournamentShortName;
     }
 
-    @JsonProperty("tournament_short_name")
+    @SerializedName("tournament_short_name")
     public void setTournamentShortName(String tournamentShortName) {
         this.tournamentShortName = tournamentShortName;
     }

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.newChallenges.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -15,37 +15,37 @@ import in.sportscafe.nostragamus.module.feed.dto.Topics;
 @Parcel
 public class Match {
 
-    @JsonProperty("match_id")
+    @SerializedName("match_id")
     private int matchId;
 
-    @JsonProperty("match_stage")
+    @SerializedName("match_stage")
     private String matchStage;
 
-    @JsonProperty("match_venue")
+    @SerializedName("match_venue")
     private String matchVenue;
 
-    @JsonProperty("match_type")
+    @SerializedName("match_type")
     private String matchType;
 
-    @JsonProperty("match_parties")
+    @SerializedName("match_parties")
     private List<MatchParty> matchParties = null;
 
-    @JsonProperty("match_topic")
+    @SerializedName("match_topic")
     private Topics topics;
 
-    @JsonProperty("match_starttime")
+    @SerializedName("match_starttime")
     private String matchStarttime;
 
-    @JsonProperty("match_endtime")
+    @SerializedName("match_endtime")
     private String matchEndtime;
 
-    @JsonProperty("status")
+    @SerializedName("status")
     private String matchStatus;
 
-    @JsonProperty("is_attempted")
+    @SerializedName("is_attempted")
     private Integer isAttempted;
 
-    @JsonProperty("sports_id")
+    @SerializedName("sports_id")
     private Integer sportId;
 
     public int getMatchId() {

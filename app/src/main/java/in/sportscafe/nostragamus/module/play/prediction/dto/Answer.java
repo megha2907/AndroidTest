@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.play.prediction.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
@@ -9,25 +9,25 @@ import java.util.ArrayList;
  */
 public class Answer {
 
-    @JsonProperty("match_id")
+    @SerializedName("match_id")
     private Integer matchId;
 
-    @JsonProperty("question_id")
+    @SerializedName("question_id")
     private Integer questionId;
 
-    @JsonProperty("answer")
+    @SerializedName("answer")
     private Integer answerId;
 
-    @JsonProperty("answer_time")
+    @SerializedName("answer_time")
     private String answerTime;
 
-    /*@JsonProperty("powerup_id")
+    /*@SerializedName("powerup_id")
     private String powerUpId;*/
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     private int challengeId;
 
-    @JsonProperty("powerup_id_arr")
+    @SerializedName("powerup_id_arr")
     private ArrayList<String> powerupsArray;
 
     public Answer() {
@@ -45,73 +45,73 @@ public class Answer {
     }
 
 
-    @JsonProperty("match_id")
+    @SerializedName("match_id")
     public Integer getMatchId() {
         return matchId;
     }
 
-    @JsonProperty("match_id")
+    @SerializedName("match_id")
     public void setMatchId(Integer matchId) {
         this.matchId = matchId;
     }
 
-    @JsonProperty("question_id")
+    @SerializedName("question_id")
 
     public Integer getQuestionId() {
         return questionId;
     }
 
-    @JsonProperty("question_id")
+    @SerializedName("question_id")
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
     }
 
-    @JsonProperty("answer")
+    @SerializedName("answer")
     public Integer getAnswerId() {
         return answerId;
     }
 
-    @JsonProperty("answer")
+    @SerializedName("answer")
     public void setAnswerId(Integer answerId) {
         this.answerId = answerId;
     }
 
-    @JsonProperty("answer_time")
+    @SerializedName("answer_time")
     public String getAnswerTime() {
         return answerTime;
     }
 
-    @JsonProperty("answer_time")
+    @SerializedName("answer_time")
     public void setAnswerTime(String answerTime) {
         this.answerTime = answerTime;
     }
 
-    /*@JsonProperty("powerup_id")
+    /*@SerializedName("powerup_id")
     public String getPowerUpArrayList() {
         return powerUpId;
     }
 
-    @JsonProperty("powerup_id")
+    @SerializedName("powerup_id")
     public void setPowerUpArrayList(String powerUpId) {
         this.powerUpId = powerUpId;
     }*/
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     public int getChallengeId() {
         return challengeId;
     }
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     public void setChallengeId(int challengeId) {
         this.challengeId = challengeId;
     }
 
-    @JsonProperty("powerup_id_arr")
+    @SerializedName("powerup_id_arr")
     public ArrayList<String> getPowerupsArray() {
         return powerupsArray;
     }
 
-    @JsonProperty("powerup_id_arr")
+    @SerializedName("powerup_id_arr")
     public void setPowerupsArray(ArrayList<String> powerupsArray) {
         this.powerupsArray = powerupsArray;
     }

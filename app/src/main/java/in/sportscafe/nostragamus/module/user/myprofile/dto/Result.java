@@ -1,17 +1,17 @@
 package in.sportscafe.nostragamus.module.user.myprofile.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 
 public class Result {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private String result;
 
     /**
      * @return The result
      */
-    @JsonProperty("data")
+    @SerializedName("data")
     public String getResult() {
         return result;
     }
@@ -19,7 +19,7 @@ public class Result {
     /**
      * @param result The result
      */
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setResult(String result) {
         this.result = result;
     }

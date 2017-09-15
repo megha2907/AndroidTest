@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.settings.app.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Jeeva on 25/8/16.
@@ -8,41 +8,41 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Version {
 
-    @JsonProperty("version")
+    @SerializedName("version")
     private int version;
 
-    @JsonProperty("message")
+    @SerializedName("message")
     private String message;
 
-    @JsonProperty("apkLink")
+    @SerializedName("apkLink")
     private String apkLink;
 
-    @JsonProperty("version")
+    @SerializedName("version")
     public int getVersion() {
         return version;
     }
 
-    @JsonProperty("version")
+    @SerializedName("version")
     public void setVersion(int version) {
         this.version = version;
     }
 
-    @JsonProperty("message")
+    @SerializedName("message")
     public String getMessage() {
         return message;
     }
 
-    @JsonProperty("message")
+    @SerializedName("message")
     public void setMessage(String message) {
         this.message = message;
     }
 
-    @JsonProperty("apkLink")
+    @SerializedName("apkLink")
     public String getApkLink() {
         return apkLink;
     }
 
-    @JsonProperty("apkLink")
+    @SerializedName("apkLink")
     public void setApkLink(String apkLink) {
         this.apkLink = apkLink;
     }

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.play.powerup.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 
@@ -12,13 +12,13 @@ import in.sportscafe.nostragamus.Constants;
 
 public class UserBalancePowerupDto implements Cloneable {
 
-    @JsonProperty("2x")
+    @SerializedName("2x")
     private int doubler;
 
-    @JsonProperty("no_negs")
+    @SerializedName("no_negs")
     private int noNegative;
 
-    @JsonProperty("player_poll")
+    @SerializedName("player_poll")
     private int audiencePoll;
 
     public UserBalancePowerupDto() {
