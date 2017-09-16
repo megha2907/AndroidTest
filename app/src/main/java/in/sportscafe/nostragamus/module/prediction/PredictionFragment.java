@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.prediction;
 
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.sportscafe.nostracardstack.cardstack.CardStack;
 
@@ -28,10 +32,11 @@ import in.sportscafe.nostragamus.module.prediction.dto.PredictionQuestion;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PredictionFragment extends NostraBaseFragment {
+public class PredictionFragment extends NostraBaseFragment implements View.OnClickListener {
 
     private static final String TAG = PredictionFragment.class.getSimpleName();
     private MediaPlayer mp;
+    private PredictionFragmentListener mFragmentListener;
 
     public PredictionFragment() {}
 
@@ -43,7 +48,29 @@ public class PredictionFragment extends NostraBaseFragment {
         return rootView;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof PredictionFragmentListener) {
+            mFragmentListener = (PredictionFragmentListener) context;
+        } else {
+            throw new RuntimeException(PredictionActivity.class.getSimpleName() + " must implement "
+                    + PredictionFragmentListener.class.getSimpleName());
+        }
+    }
+
     private void initView(View rootView) {
+        ImageView backButton = (ImageView) rootView.findViewById(R.id.prediction_back_btn);
+        RelativeLayout doublerPowerup = (RelativeLayout) rootView.findViewById(R.id.prediction_doubler_Layout);
+        RelativeLayout noNegPowerup = (RelativeLayout) rootView.findViewById(R.id.prediction_noNeg_Layout);
+        RelativeLayout playerPollPowerup = (RelativeLayout) rootView.findViewById(R.id.prediction_player_poll_Layout);
+
+        doublerPowerup.setOnClickListener(this);
+        noNegPowerup.setOnClickListener(this);
+        playerPollPowerup.setOnClickListener(this);
+        backButton.setOnClickListener(this);
+
+        /* Card stack */
         CardStack cardStack = (CardStack) rootView.findViewById(R.id.prediction_cardStack);
         cardStack.setContentResource(R.layout.prediction_card_layout);
         cardStack.setCanSwipe(true);
@@ -92,7 +119,19 @@ public class PredictionFragment extends NostraBaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        initHeading();
         animateTopBottomLayouts();
+    }
+
+    private void initHeading() {
+        if (getView() != null && getActivity() != null) {
+            TextView headingTextView = (TextView) getView().findViewById(R.id.prediction_heading_textView);
+            TextView subHeadingTextView = (TextView) getView().findViewById(R.id.prediction_sub_heading_textView);
+
+
+            headingTextView.setText("Test heading challenge now");
+            subHeadingTextView.setText("sub heading of contest challenge");
+        }
     }
 
     private void animateTopBottomLayouts() {
@@ -168,5 +207,40 @@ public class PredictionFragment extends NostraBaseFragment {
                 Log.d("Card", "Top card tapped");
             }
         };
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.prediction_back_btn:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onBackClicked();
+                }
+                break;
+
+            case R.id.prediction_doubler_Layout:
+                onDoublerPowerUpClicked();
+                break;
+
+            case R.id.prediction_noNeg_Layout:
+                onNoNegativeClicked();
+                break;
+
+            case R.id.prediction_player_poll_Layout:
+                onPlayerPollClicked();
+                break;
+        }
+    }
+
+    private void onPlayerPollClicked() {
+
+    }
+
+    private void onNoNegativeClicked() {
+
+    }
+
+    private void onDoublerPowerUpClicked() {
+
     }
 }

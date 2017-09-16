@@ -6,7 +6,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
-public class PredictionActivity extends NostraBaseActivity  {
+public class PredictionActivity extends NostraBaseActivity implements PredictionFragmentListener  {
 
     private static final String TAG = PredictionActivity.class.getSimpleName();
 
@@ -29,4 +29,8 @@ public class PredictionActivity extends NostraBaseActivity  {
         FragmentHelper.replaceFragment(this, R.id.fragment_container, predictionFragment);
     }
 
+    @Override
+    public void onBackClicked() {
+        onBackPressed();
+    }
 }
