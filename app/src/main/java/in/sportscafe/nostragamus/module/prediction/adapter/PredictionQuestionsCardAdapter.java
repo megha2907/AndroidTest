@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.prediction.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,11 +50,11 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
             HmImageView option2ImgView;
             LinearLayout option2Layout;
             TextView option2TextView;
-            Button positivePointsTextView;
-            Button negativePointsTextView;
+            /*CardView positivePointsTextView;
+            CardView negativePointsTextView;
 
-            positivePointsTextView = (Button) contentView.findViewById(R.id.prediction_card_positive_button);
-            negativePointsTextView = (Button) contentView.findViewById(R.id.prediction_card_negative_button);
+            positivePointsTextView = (CardView) contentView.findViewById(R.id.prediction_card_positive_button);
+            negativePointsTextView = (CardView) contentView.findViewById(R.id.prediction_card_negative_button);*/
             questionTitleTextView = (TextView) contentView.findViewById(R.id.question_title_textView);
             questionDescriptionTextView = (TextView) contentView.findViewById(R.id.question_description_textView);
             option1ImgView = (HmImageView) contentView.findViewById(R.id.prediction_question_option_1_imgView);
@@ -104,7 +105,6 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
         } else {
             contentView = new View(parent.getContext());    // Just to handle null warning, not much important as contentView can not be null anytime
         }
-
         return contentView;
     }
 

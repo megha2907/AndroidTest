@@ -39,7 +39,7 @@ public class CardStack extends RelativeLayout {
     private CardEventListener mEventListener = new DefaultStackEventListener(300);
     private int mContentResource = 0;
     private int mMargin;
-
+    private int mTopMargin = 0;
 
     public interface CardEventListener {
         //section
@@ -118,6 +118,14 @@ public class CardStack extends RelativeLayout {
         return mIndex;
     }
 
+    public void setTopMargin(int topMargin) {
+        mTopMargin = topMargin;
+    }
+
+    public int getTopMargin() {
+        return mTopMargin;
+    }
+
     //only necessary when I need the attrs from xml, this will be used when inflating layout
     public CardStack(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -131,6 +139,7 @@ public class CardStack extends RelativeLayout {
             mNumVisible = array.getInteger(R.styleable.CardStack_card_stack_size, mNumVisible);
             mEnableLoop = array.getBoolean(R.styleable.CardStack_card_enable_loop, mEnableLoop);
             mMargin = array.getDimensionPixelOffset(R.styleable.CardStack_card_margin, 20);
+            mTopMargin = array.getDimensionPixelOffset(R.styleable.CardStack_card_top_margin, 0);
             array.recycle();
         }
 
@@ -153,7 +162,7 @@ public class CardStack extends RelativeLayout {
 
     public void setStackMargin(int margin) {
         mMargin = margin;
-        mCardAnimator.setStackMargin(mMargin);
+        mCardAnimator.setStackMargin(margin);
         mCardAnimator.initLayout();
     }
 
@@ -203,7 +212,7 @@ public class CardStack extends RelativeLayout {
 
     private void setupAnimation() {
         final View cardView = viewCollection.get(viewCollection.size() - 1);
-        mCardAnimator = new CardAnimator(viewCollection, mColor, mMargin);
+        mCardAnimator = new CardAnimator(viewCollection, mColor, mMargin, mTopMargin);
         mCardAnimator.setGravity(mGravity);
         mCardAnimator.setEnableRotation(mEnableRotation);
         //mCardAnimator.setStackMargin(mMargin);
@@ -361,15 +370,12 @@ public class CardStack extends RelativeLayout {
 
     }
 
-    // 加载下一个
     private void loadLast() {
         ViewGroup parent = (ViewGroup) viewCollection.get(0);
         int lastIndex = ((mNumVisible - 1) + mIndex);
 
-        // 超出索引
         if (lastIndex > mAdapter.getCount() - 1) {
             if (mEnableLoop) {
-                // 循环处理
                 lastIndex = lastIndex % mAdapter.getCount();
             } else {
                 parent.setVisibility(View.GONE);
@@ -382,9 +388,7 @@ public class CardStack extends RelativeLayout {
         parent.addView(child);
     }
 
-    /**
-     * 获取可见卡片个数
-     *
+    /**     *
      * @return
      */
     public int getVisibleCardNum() {
