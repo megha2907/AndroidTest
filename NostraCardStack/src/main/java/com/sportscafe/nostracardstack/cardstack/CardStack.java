@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -30,7 +31,7 @@ public class CardStack extends RelativeLayout {
     private int mIndex = 0;
     private int mNumVisible = 4;
     private boolean canSwipe = true;
-    private ArrayAdapter<?> mAdapter;
+    private BaseAdapter mAdapter;
     private OnTouchListener mOnTouchListener;
     private CardAnimator mCardAnimator;
     private boolean mEnableLoop;
@@ -215,7 +216,7 @@ public class CardStack extends RelativeLayout {
         mCardAnimator = new CardAnimator(viewCollection, mColor, mMargin, mTopMargin);
         mCardAnimator.setGravity(mGravity);
         mCardAnimator.setEnableRotation(mEnableRotation);
-        //mCardAnimator.setStackMargin(mMargin);
+//        mCardAnimator.setStackMargin(mMargin);
         mCardAnimator.initLayout();
 
         final DragGestureDetector dd = new DragGestureDetector(CardStack.this.getContext(), new DragGestureDetector.DragListener() {
@@ -327,7 +328,7 @@ public class CardStack extends RelativeLayout {
         super(context);
     }
 
-    public void setAdapter(final ArrayAdapter<?> adapter) {
+    public void setAdapter(final BaseAdapter adapter) {
         if (mAdapter != null) {
             mAdapter.unregisterDataSetObserver(mOb);
         }
@@ -337,7 +338,7 @@ public class CardStack extends RelativeLayout {
         loadData();
     }
 
-    public ArrayAdapter getAdapter() {
+    public BaseAdapter getAdapter() {
         return mAdapter;
     }
 

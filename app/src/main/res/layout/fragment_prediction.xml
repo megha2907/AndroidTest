@@ -15,7 +15,7 @@
         android:orientation="horizontal"
         android:background="#252525"
         android:layout_alignParentTop="true"
-        >
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/prediction_back_btn"
@@ -53,7 +53,29 @@
 
     </LinearLayout>
 
+    <!-- Card Layouts -->
+    <LinearLayout
+        android:id="@+id/prediction_third_option_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dim_100"
+        android:animateLayoutChanges="true"
+        android:visibility="gone">
 
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/prediction_third_option_button"
+            android:layout_width="@dimen/dim_100"
+            android:layout_height="@dimen/dp_34"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            android:text="NEITHER"
+            app:typeface="lato_bold"
+            android:background="@drawable/prediction_card_bottom_bg"/>
+
+    </LinearLayout>
 
     <!-- Bottom/ Power-up Layout -->
     <LinearLayout
@@ -64,7 +86,7 @@
         android:background="#252525"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        >
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/prediction_powerup_imgView"
@@ -188,9 +210,9 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:padding="3dp"
+            app:card_margin="@dimen/dim_3"
             app:card_gravity="bottom"
-            app:card_margin="3dp"
-            app:card_top_margin="@dimen/dim_50"
+            app:card_top_margin="@dimen/dim_90"
             app:card_stack_size="4"
             app:card_enable_rotation="true"
             android:background="@android:color/transparent"/>

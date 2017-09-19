@@ -57,6 +57,9 @@ import in.sportscafe.nostragamus.module.popups.bankpopups.BankTransferRequest;
 import in.sportscafe.nostragamus.module.popups.bankpopups.BankTransferResponse;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
+import in.sportscafe.nostragamus.module.prediction.dto.PlayerPollResponse;
+import in.sportscafe.nostragamus.module.prediction.dto.PlayersPollRequest;
+import in.sportscafe.nostragamus.module.prediction.dto.PredictionAllQuestionResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
 import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
@@ -136,8 +139,12 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getMatchResults(isAttempted, WithoutCommentary);
     }
 
-    public Call<QuestionsResponse> getAllQuestions(Integer matchId) {
+    public Call<QuestionsResponse> getAllQuestions(int matchId) {
         return mNostragamusService.getQuestions(matchId);
+    }
+
+    public Call<PredictionAllQuestionResponse> getAllPredictionQuestions(int matchId, int roomId) {
+        return mNostragamusService.getAllPredictionQuestions(matchId);
     }
 
     public Call<TournamentsResponse> getTournaments(boolean isCurrent, boolean groupbySport) {
@@ -438,5 +445,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<RulesResponse> getContestRules(RulesRequest rulesRequest) {
         return mNostragamusService.getContestRules(rulesRequest);
+    }
+
+    public Call<PlayerPollResponse> getPlayerPoll(PlayersPollRequest request) {
+        return mNostragamusService.getPlayersPoll(request);
     }
 }

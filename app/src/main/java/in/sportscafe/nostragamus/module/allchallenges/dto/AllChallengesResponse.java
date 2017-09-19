@@ -14,7 +14,7 @@ public class AllChallengesResponse {
     private List<NewChallengesResponse> challenges = new ArrayList<>();
 
     @SerializedName("data")
-    public List<NewChallengesResponse> getChallenges() {
+    public List<NewChallengesResponse> getAllQuestions() {
         return challenges;
     }
 

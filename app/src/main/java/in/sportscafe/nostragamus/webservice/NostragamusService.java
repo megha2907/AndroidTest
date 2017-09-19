@@ -54,6 +54,9 @@ import in.sportscafe.nostragamus.module.popups.bankpopups.BankTransferRequest;
 import in.sportscafe.nostragamus.module.popups.bankpopups.BankTransferResponse;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
+import in.sportscafe.nostragamus.module.prediction.dto.PlayerPollResponse;
+import in.sportscafe.nostragamus.module.prediction.dto.PlayersPollRequest;
+import in.sportscafe.nostragamus.module.prediction.dto.PredictionAllQuestionResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
 import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
@@ -113,6 +116,10 @@ public interface NostragamusService {
 
     @GET("v1/game/users/questions")
     Call<QuestionsResponse> getQuestions(@Query("match_id") int matchId);
+
+    @GET("v1/game/users/questions")
+    Call<PredictionAllQuestionResponse> getAllPredictionQuestions(@Query("match_id") int matchId/*,
+                                                                  @Query("room_id") int roomId*/);
 
     @GET("v1/game/users/tournaments")
     Call<TournamentsResponse> getTournaments(@Query("is_current") boolean isCurrent, @Query("group_by_sport") boolean groupbySport);
@@ -358,4 +365,7 @@ public interface NostragamusService {
 
     @POST("v3/game/contest/rules")
     Call<RulesResponse> getContestRules(@Body RulesRequest rulesRequest);
+
+    @POST("v3/game/users/runPlayerPoll")
+    Call<PlayerPollResponse> getPlayersPoll(@Body PlayersPollRequest request);
 }
