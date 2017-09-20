@@ -25,6 +25,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeFragment;
 import in.sportscafe.nostragamus.module.challengeRewards.RewardsApiModelImpl;
 import in.sportscafe.nostragamus.module.challengeRules.dto.Rules;
+import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.PowerUpInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
@@ -33,7 +34,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
  * Created by deepanshi on 9/8/17.
  */
 
-public class RulesFragment extends BaseFragment implements RulesApiModelImpl.RulesDataListener {
+public class RulesFragment extends NostraBaseFragment implements RulesApiModelImpl.RulesDataListener {
 
     private static final String TAG = RulesFragment.class.getSimpleName();
 
@@ -45,11 +46,13 @@ public class RulesFragment extends BaseFragment implements RulesApiModelImpl.Rul
     private TextView TvCancelledRuleOne;
     private ImageView IvContestRuleThree;
 
-    private int mContestId=0;
+    private int mContestId = 0;
 
     private int powerUp2xCount = 0;
     private int powerUpNonNegsCount = 0;
     private int powerUpPlayerPollCount = 0;
+
+    private View rootView;
 
     private List<String> tournamentsList = new ArrayList<>();
 
@@ -69,14 +72,14 @@ public class RulesFragment extends BaseFragment implements RulesApiModelImpl.Rul
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_rules, container, false);
+        rootView = inflater.inflate(R.layout.fragment_rules, container, false);
+        initViews(rootView);
+        return rootView;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        initViews();
         openBundle();
     }
 
@@ -99,14 +102,14 @@ public class RulesFragment extends BaseFragment implements RulesApiModelImpl.Rul
         setInfo(rules);
     }
 
-    private void initViews() {
-        TvContestRuleOne = (TextView) findViewById(R.id.contest_rule_one);
-        TvContestRuleTwo = (TextView) findViewById(R.id.contest_rule_two);
-        TvContestRuleThree = (TextView) findViewById(R.id.contest_rule_three);
-        IvContestRuleThree = (ImageView) findViewById(R.id.contest_rule_three_iv);
-        TvPowerUpsRuleOne = (TextView) findViewById(R.id.powerup_rule_one);
-        TvPowerUpsRuleTwo = (TextView) findViewById(R.id.powerup_rule_two);
-        TvCancelledRuleOne = (TextView) findViewById(R.id.cancelled_rule_one);
+    private void initViews(View rootView) {
+        TvContestRuleOne = (TextView) rootView.findViewById(R.id.contest_rule_one);
+        TvContestRuleTwo = (TextView) rootView.findViewById(R.id.contest_rule_two);
+        TvContestRuleThree = (TextView) rootView.findViewById(R.id.contest_rule_three);
+        IvContestRuleThree = (ImageView) rootView.findViewById(R.id.contest_rule_three_iv);
+        TvPowerUpsRuleOne = (TextView) rootView.findViewById(R.id.powerup_rule_one);
+        TvPowerUpsRuleTwo = (TextView) rootView.findViewById(R.id.powerup_rule_two);
+        TvCancelledRuleOne = (TextView) rootView.findViewById(R.id.cancelled_rule_one);
     }
 
     private void setInfo(Rules rules) {
@@ -179,14 +182,14 @@ public class RulesFragment extends BaseFragment implements RulesApiModelImpl.Rul
         powerUpNonNegsCount = powerUpInfo.getPowerUpNoNeg();
         powerUpPlayerPollCount = powerUpInfo.getPowerUpPlayerPoll();
 
-        LinearLayout powerUpLayout = (LinearLayout) findViewById(R.id.powerup_ll);
-        ImageView powerUp2xImageView = (ImageView) findViewById(R.id.powerup_2x);
-        ImageView powerUpNoNegativeImageView = (ImageView) findViewById(R.id.powerup_noNeg);
-        ImageView powerUpAudienceImageView = (ImageView) findViewById(R.id.powerup_audience);
+        LinearLayout powerUpLayout = (LinearLayout)rootView.findViewById(R.id.powerup_ll);
+        ImageView powerUp2xImageView = (ImageView)rootView. findViewById(R.id.powerup_2x);
+        ImageView powerUpNoNegativeImageView = (ImageView)rootView. findViewById(R.id.powerup_noNeg);
+        ImageView powerUpAudienceImageView = (ImageView)rootView. findViewById(R.id.powerup_audience);
 
-        TextView powerUp2xTextView = (TextView) findViewById(R.id.powerup_2x_count);
-        TextView powerUpNoNegativeTextView = (TextView) findViewById(R.id.powerup_noNeg_count);
-        TextView powerUpAudienceTextView = (TextView) findViewById(R.id.powerup_audience_count);
+        TextView powerUp2xTextView = (TextView)rootView. findViewById(R.id.powerup_2x_count);
+        TextView powerUpNoNegativeTextView = (TextView)rootView.findViewById(R.id.powerup_noNeg_count);
+        TextView powerUpAudienceTextView = (TextView)rootView. findViewById(R.id.powerup_audience_count);
 
 
         if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {

@@ -39,6 +39,9 @@ public class InPlayContestDto {
     @SerializedName("entry_fee")
     private int entryFee;
 
+    @SerializedName("room_id")
+    private int roomId;
+
     @SerializedName("matches")
     private List<InPlayContestMatchDto> matches = null;
 
@@ -120,5 +123,13 @@ public class InPlayContestDto {
 
     public void setMatches(List<InPlayContestMatchDto> matches) {
         this.matches = matches;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 }
