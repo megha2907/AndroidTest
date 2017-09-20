@@ -51,6 +51,7 @@ public class PredictionQuestion {
     @SerializedName("poll")
     private List<PlayersPoll> playersPollList;
 
+    private int minorityAnswerId = -1;
 
     private PowerUp powerUp = new PowerUp();
 
@@ -164,5 +165,22 @@ public class PredictionQuestion {
 
     public void setPlayersPollList(List<PlayersPoll> playersPollList) {
         this.playersPollList = playersPollList;
+    }
+
+    public int getMinorityAnswerId() {
+        return minorityAnswerId;
+    }
+
+    public void setMinorityAnswerId(int minorityAnswerId) {
+        this.minorityAnswerId = minorityAnswerId;
+    }
+
+    /**
+     * As per older logic (copied)
+     * @param answerId
+     * @return
+     */
+    public boolean isMinorityAnswer(int answerId) {
+        return -1 != minorityAnswerId && answerId == minorityAnswerId;
     }
 }
