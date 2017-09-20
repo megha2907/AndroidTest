@@ -6,6 +6,8 @@ import org.parceler.Parcel;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.module.prediction.dto.PowerUp;
+
 /**
  * Created by sandip on 12/09/17.
  */
@@ -39,11 +41,13 @@ public class InPlayContestDto {
     @SerializedName("entry_fee")
     private int entryFee;
 
-    @SerializedName("room_id")
-    private int roomId;
+    @SerializedName("powerups")
+    private PowerUp powerUp;
 
     @SerializedName("matches")
     private List<InPlayContestMatchDto> matches = null;
+
+    private int challengeId;
 
     public int getContestId() {
         return contestId;
@@ -117,6 +121,14 @@ public class InPlayContestDto {
         this.entryFee = entryFee;
     }
 
+    public PowerUp getPowerUp() {
+        return powerUp;
+    }
+
+    public void setPowerUp(PowerUp powerUp) {
+        this.powerUp = powerUp;
+    }
+
     public List<InPlayContestMatchDto> getMatches() {
         return matches;
     }
@@ -125,11 +137,11 @@ public class InPlayContestDto {
         this.matches = matches;
     }
 
-    public int getRoomId() {
-        return roomId;
+    public int getChallengeId() {
+        return challengeId;
     }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
+    public void setChallengeId(int challengeId) {
+        this.challengeId = challengeId;
     }
 }

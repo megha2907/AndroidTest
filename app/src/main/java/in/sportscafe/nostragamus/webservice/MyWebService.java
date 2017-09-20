@@ -435,8 +435,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getContestEntries(request);
     }
 
-    public Call<InPlayMatchesResponse> getInPlayMatches(InPlayMatchRequest request) {
-        return mNostragamusService.getInPlayMatches(request);
+    public Call<InPlayMatchesResponse> getInPlayMatches(int roomId, int challengeId) {
+        return mNostragamusService.getInPlayMatches(roomId, challengeId);
     }
 
     public Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(Integer userLeaderBoardRequest) {

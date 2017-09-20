@@ -8,14 +8,14 @@
     tools:context="in.sportscafe.nostragamus.module.prediction.PredictionFragment">
 
     <!-- Top Layout -->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/prediction_top_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_55"
         android:orientation="horizontal"
         android:background="#252525"
         android:layout_alignParentTop="true"
-        android:visibility="gone">
+        >
 
         <ImageView
             android:id="@+id/prediction_back_btn"
@@ -23,14 +23,16 @@
             android:layout_height="@dimen/dim_24"
             android:padding="@dimen/dim_3"
             android:src="@drawable/back_icon_grey"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dim_16"/>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dim_16"
+            android:layout_alignParentLeft="true"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingLeft="@dimen/dim_40">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/prediction_heading_textView"
@@ -51,7 +53,44 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Questions/card info -->
+    <RelativeLayout
+        android:id="@+id/prediction_questions_info_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim_15"
+        android:layout_below="@id/prediction_top_layout"
+        android:gravity="bottom"
+        android:paddingLeft="@dimen/dim_16"
+        android:paddingRight="@dimen/dim_16">
+
+        <!-- Question number counter -->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/prediction_question_counter_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_regular"
+            android:text="0/0"
+            android:layout_alignParentLeft="true"/>
+
+        <!-- Next button -->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/prediction_question_next_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_regular"
+            android:text="NEXT"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/dim_5"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
 
     <!-- Card Layouts -->
     <LinearLayout
@@ -113,7 +152,7 @@
                     android:id="@+id/doubler_imgView"
                     android:layout_width="@dimen/dim_42"
                     android:layout_height="@dimen/dim_46"
-                    android:src="@drawable/prediction_doubler_powerup_icn"/>
+                    android:src="@drawable/prediction_doubler_powerup_button"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/prediction_doubler_counter_textView"
@@ -141,7 +180,7 @@
                     android:id="@+id/noNeg_ingView"
                     android:layout_width="@dimen/dim_42"
                     android:layout_height="@dimen/dim_46"
-                android:src="@drawable/prediction_no_neg_powerup_icn"/>
+                    android:src="@drawable/prediction_no_negative_powerup_button"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/prediction_noNeg_counter_textView"
@@ -169,7 +208,7 @@
                     android:id="@+id/player_poll_imgView"
                     android:layout_width="@dimen/dim_42"
                     android:layout_height="@dimen/dim_46"
-                android:src="@drawable/prediction_player_poll_powerup_icn"/>
+                    android:src="@drawable/prediction_player_poll_powerup_button"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/prediction_player_poll_counter_textView"

@@ -2,44 +2,42 @@ package in.sportscafe.nostragamus.module.prediction.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.parceler.Parcel;
-
 /**
- * Created by sandip on 18/09/17.
+ * Created by sandip on 20/09/17.
  */
-@Parcel
-public class PowerUp {
+
+public class AnswerPowerUpDto {
 
     @SerializedName("2x")
-    private int doubler = 0;
+    private boolean doubler = false;
 
     @SerializedName("no_negs")
-    private int noNegative = 0;
+    private boolean noNegative = false;
 
     @SerializedName("player_poll")
-    private int playerPoll = 0;
+    private boolean playerPoll = false;
 
-    public int getDoubler() {
+    public boolean isDoubler() {
         return doubler;
     }
 
-    public void setDoubler(int doubler) {
+    public void setDoubler(boolean doubler) {
         this.doubler = doubler;
     }
 
-    public int getNoNegative() {
+    public boolean isNoNegative() {
         return noNegative;
     }
 
-    public void setNoNegative(int noNegative) {
+    public void setNoNegative(boolean noNegative) {
         this.noNegative = noNegative;
     }
 
-    public int getPlayerPoll() {
+    public boolean isPlayerPoll() {
         return playerPoll;
     }
 
-    public void setPlayerPoll(int playerPoll) {
+    public void setPlayerPoll(boolean playerPoll) {
         this.playerPoll = playerPoll;
     }
 }

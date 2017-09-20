@@ -13,7 +13,7 @@ public class InPlayMatchesResponse {
     @SerializedName("contest_id")
     private int contestId;
 
-    @SerializedName("matches")
+    @SerializedName("data")
     private List<InPlayMatch> inPlayMatchList;
 
     public int getContestId() {

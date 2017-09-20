@@ -357,8 +357,8 @@ public interface NostragamusService {
     @POST("v3/game/temp/getContestRooms")
     Call<ContestEntriesResponse> getContestEntries(@Body ContestEntriesRequest request);
 
-    @POST("v3/game/temp/getMatches")
-    Call<InPlayMatchesResponse> getInPlayMatches(@Body InPlayMatchRequest request);
+    @GET("v3/game/challenges/getUserMatches")
+    Call<InPlayMatchesResponse> getInPlayMatches(@Query("room_id") int roomId, @Query("challenge_id") int challengeId);
 
     @GET("v3/game/rooms/leaderboards")
     Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(@Query("room_id") Integer userLeaderBoardRequest);

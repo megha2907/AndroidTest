@@ -33,6 +33,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -42,6 +43,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
     private static final String TAG = InPlayMatchTimelineViewPagerFragment.class.getSimpleName();
     private RecyclerView mMatchRecyclerView;
+    private InPlayContestDto mInPlayContest;
 
     public InPlayMatchTimelineViewPagerFragment() {}
 
@@ -62,47 +64,46 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getContestFromArgs();
         loadData();
     }
 
-    private void loadData() {
-        int contestId = 200; //getContestIdFromBundle();    TODO: remove hardcoded contestId
-
-        showLoadingContent();
-        InPlayMatchesDataProvider dataProvider = new InPlayMatchesDataProvider();
-        dataProvider.getInPlayMatches(contestId, new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
-            @Override
-            public void onData(int status, @Nullable InPlayMatchesResponse responses) {
-                hideLoadingContent();
-                switch (status) {
-                    case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
-                        onDataResponse(responses);
-                        break;
-
-                    default:
-                        handleError(status);
-                        break;
-                }
-            }
-
-            @Override
-            public void onError(int status) {
-                hideLoadingContent();
-                handleError(status);
-            }
-        });
-    }
-
-    private int getContestIdFromBundle() {
-        int contestId = -1;
+    private void getContestFromArgs() {
         Bundle args = getArguments();
         if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
-            InPlayContestDto inplayContest = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
-            if (inplayContest != null) {
-                contestId = inplayContest.getContestId();
-            }
+            mInPlayContest = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
         }
-        return contestId;
+    }
+
+    private void loadData() {
+        if (mInPlayContest != null) {
+            showLoadingContent();
+            InPlayMatchesDataProvider dataProvider = new InPlayMatchesDataProvider();
+            dataProvider.getInPlayMatches(mInPlayContest.getRoomId(),
+                    mInPlayContest.getChallengeId(),
+                    new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
+                @Override
+                public void onData(int status, @Nullable InPlayMatchesResponse responses) {
+                    hideLoadingContent();
+
+                    switch (status) {
+                        case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
+                            onDataResponse(responses);
+                            break;
+
+                        default:
+                            handleError(status);
+                            break;
+                    }
+                }
+
+                @Override
+                public void onError(int status) {
+                    hideLoadingContent();
+                    handleError(status);
+                }
+            });
+        }
     }
 
     private void onDataResponse(InPlayMatchesResponse responses) {
@@ -195,13 +196,13 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
                     case InPlayMatchAction.PLAY:
                     case InPlayMatchAction.CONTINUE:
-                        launchPlayScreen();
+                        launchPlayScreen(args);
                         break;
 
                     case InPlayMatchAction.ANSWER:
                     case InPlayMatchAction.DID_NOT_PLAY:
                     case InPlayMatchAction.POINTS:
-                        launchPlayScreen();
+                        launchPlayScreen(args);
                         break;
                 }
             }
@@ -212,15 +213,37 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
     }
 
-    private void launchPlayScreen() {
+    private void launchPlayScreen(Bundle matchArgs) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
-            startActivity(predictionIntent);
+
+            Bundle argument = getArguments();
+            Bundle bundle = new Bundle();
+            if (argument != null && argument.containsKey(Constants.BundleKeys.INPLAY_CONTEST) &&
+                    matchArgs != null && matchArgs.containsKey(Constants.BundleKeys.INPLAY_MATCH)) {
+
+                bundle.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, argument.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+                bundle.putParcelable(Constants.BundleKeys.INPLAY_MATCH, matchArgs.getParcelable(Constants.BundleKeys.INPLAY_MATCH));
+
+                predictionIntent.putExtras(bundle);
+                getActivity().startActivity(predictionIntent);
+            } else {
+                Log.e(TAG, "No Contest in Bundle to launch Play screen");
+                handleError(-1);
+            }
         }
     }
 
     private void handleError(int status) {
-        // TODO: show error content
+        switch (status) {
+            case Constants.DataStatus.NO_INTERNET:
+                AlertsHelper.showAlert(getContext(), "No Internet", "Please tern ON internet to continue", null);
+                break;
+
+            default:
+                AlertsHelper.showAlert(getContext(), "Error", Constants.Alerts.SOMETHING_WRONG, null);
+                break;
+        }
     }
 
     private void showLoadingContent() {

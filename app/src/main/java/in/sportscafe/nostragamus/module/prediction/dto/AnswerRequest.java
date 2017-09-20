@@ -23,6 +23,9 @@ public class AnswerRequest {
     @SerializedName("answer_time")
     private String answerTime;
 
+    @SerializedName("powerups")
+    private AnswerPowerUpDto powerUp;
+
     public int getRoomId() {
         return roomId;
     }
@@ -61,5 +64,13 @@ public class AnswerRequest {
 
     public void setAnswerTime(String answerTime) {
         this.answerTime = answerTime;
+    }
+
+    public AnswerPowerUpDto getPowerUp() {
+        return powerUp;
+    }
+
+    public void setPowerUp(AnswerPowerUpDto powerUp) {
+        this.powerUp = powerUp;
     }
 }
