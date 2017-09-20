@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.prediction;
+package in.sportscafe.nostragamus.module.prediction.helper;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

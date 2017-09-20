@@ -15,6 +15,7 @@ import com.jeeva.android.widgets.HmImageView;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.prediction.dto.PlayersPoll;
 import in.sportscafe.nostragamus.module.prediction.dto.PowerUp;
@@ -109,7 +110,8 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                     option2TextView.setText(question.getQuestionOption2());
                 }
 
-                if (question != null && question.getPlayersPollList() != null && question.getPlayersPollList().size() == 2) {
+                /* If Player-poll already applied */
+                if (question.getPlayersPollList() != null && question.getPlayersPollList().size() == 2) {
                     List<PlayersPoll> playersPollList = question.getPlayersPollList();
 
                     int pollPercentForOption1 = Integer.parseInt(playersPollList.get(0).getAnswerPercentage());
@@ -123,8 +125,18 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                         playerPollOption2TextView.setVisibility(View.VISIBLE);
 
                         applyOrRemovePowerUp(PowerupEnum.PLAYER_POLL, position, true);
+
+                        /* Set Minority Answer */
+                        if (pollPercentForOption1 > pollPercentForOption2) {
+                            question.setMinorityAnswerId(Constants.AnswerIds.RIGHT);
+                        } else if (pollPercentForOption1 < pollPercentForOption2) {
+                            question.setMinorityAnswerId(Constants.AnswerIds.LEFT);
+                        } else {
+                            question.setMinorityAnswerId(-1);
+                        }
                     }
                 }
+
             }
         } else {
             contentView = new View(parent.getContext());    // Just to handle null warning, not much important as contentView can not be null anytime

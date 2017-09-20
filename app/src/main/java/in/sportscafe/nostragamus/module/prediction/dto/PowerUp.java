@@ -8,11 +8,11 @@ import org.parceler.Parcel;
 @Parcel
 public class PowerUp {
 
-    private int doubler;
+    private int doubler = 0;
 
-    private int noNegative;
+    private int noNegative = 0;
 
-    private int playerPoll;
+    private int playerPoll = 0;
 
     public int getDoubler() {
         return doubler;

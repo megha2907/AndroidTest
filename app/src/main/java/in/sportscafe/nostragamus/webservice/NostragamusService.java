@@ -19,9 +19,7 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchRequest;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayRequest;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesRequest;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
@@ -54,6 +52,8 @@ import in.sportscafe.nostragamus.module.popups.bankpopups.BankTransferRequest;
 import in.sportscafe.nostragamus.module.popups.bankpopups.BankTransferResponse;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
+import in.sportscafe.nostragamus.module.prediction.dto.AnswerResponse;
+import in.sportscafe.nostragamus.module.prediction.dto.AnswerRequest;
 import in.sportscafe.nostragamus.module.prediction.dto.PlayerPollResponse;
 import in.sportscafe.nostragamus.module.prediction.dto.PlayersPollRequest;
 import in.sportscafe.nostragamus.module.prediction.dto.PredictionAllQuestionResponse;
@@ -366,6 +366,13 @@ public interface NostragamusService {
     @POST("v3/game/contest/rules")
     Call<RulesResponse> getContestRules(@Body RulesRequest rulesRequest);
 
-    @POST("v3/game/users/runPlayerPoll")
+    @POST("v3/game/users/poll")
     Call<PlayerPollResponse> getPlayersPoll(@Body PlayersPollRequest request);
+
+    @POST("v3/game/users/answer")
+    Call<AnswerResponse> savePredictionAnswer(
+            @Body AnswerRequest answer,
+            @Query("is_match_complete") boolean isMatchComplete,
+            @Query("is_minority_option") boolean isMinorityOption
+    );
 }

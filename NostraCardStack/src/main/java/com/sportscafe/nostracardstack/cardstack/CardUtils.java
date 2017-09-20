@@ -24,9 +24,9 @@ public class CardUtils {
         v.setLayoutParams(params);
     }
 
+    /* Allows default move direction at any side */
     public static LayoutParams getMoveParams(View v, int upDown, int leftRight) {
         RelativeLayout.LayoutParams original = (RelativeLayout.LayoutParams) v.getLayoutParams();
-        //RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(original);
         RelativeLayout.LayoutParams params = cloneParams(original);
 
         params.leftMargin += leftRight;
@@ -60,6 +60,15 @@ public class CardUtils {
 
         params.topMargin -= top;
         params.bottomMargin += top;
+        return params;
+    }
+
+    public static LayoutParams getMoveBottomParams(View v, int bottom) {
+        RelativeLayout.LayoutParams original = (RelativeLayout.LayoutParams) v.getLayoutParams();
+        RelativeLayout.LayoutParams params = cloneParams(original);
+
+        params.topMargin += bottom;
+        params.bottomMargin -= bottom;
         return params;
     }
 
@@ -125,19 +134,48 @@ public class CardUtils {
 
     public static int direction(float x1, float y1, float x2, float y2) {
         if (x2 > x1) {//RIGHT
-            if (y2 > y1) {//BOTTOM
+            if (y2 > y1) {//DOWN
                 return DIRECTION_BOTTOM_RIGHT;
-            } else {//TOP
+            } else {//UP
                 return DIRECTION_TOP_RIGHT;
             }
         } else {//LEFT
-            if (y2 > y1) {//BOTTOM
+            if (y2 > y1) {//DOWN
                 return DIRECTION_BOTTOM_LEFT;
-            } else {//TOP
+            } else {//UP
                 return DIRECTION_TOP_LEFT;
             }
         }
     }
+
+    /**
+     * Used to identify swipe direction
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return
+     */
+    public static int getSwipeDirection(float x1, float y1, float x2, float y2) {
+
+        double rad = Math.atan2(y1-y2,x2-x1) + Math.PI;
+        double angle = (rad*180/Math.PI + 180)%360;
+
+        if(inRange(angle, 45, 135)){
+            return CardDirection.UP;
+        } else if(inRange(angle, 0,45) || inRange(angle, 315, 360)){
+            return CardDirection.RIGHT;
+        } else if(inRange(angle, 225, 315)){
+            return CardDirection.DOWN;
+        } else{
+            return CardDirection.LEFT;
+        }
+    }
+
+    private static boolean inRange(double angle, float init, float end){
+        return (angle >= init) && (angle < end);
+    }
+
 
 
 }

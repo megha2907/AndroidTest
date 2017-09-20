@@ -22,9 +22,7 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchRequest;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayRequest;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesRequest;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
@@ -57,6 +55,8 @@ import in.sportscafe.nostragamus.module.popups.bankpopups.BankTransferRequest;
 import in.sportscafe.nostragamus.module.popups.bankpopups.BankTransferResponse;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
+import in.sportscafe.nostragamus.module.prediction.dto.AnswerRequest;
+import in.sportscafe.nostragamus.module.prediction.dto.AnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.dto.PlayerPollResponse;
 import in.sportscafe.nostragamus.module.prediction.dto.PlayersPollRequest;
 import in.sportscafe.nostragamus.module.prediction.dto.PredictionAllQuestionResponse;
@@ -449,5 +449,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<PlayerPollResponse> getPlayerPoll(PlayersPollRequest request) {
         return mNostragamusService.getPlayersPoll(request);
+    }
+
+    public Call<AnswerResponse> savePredictionAnswer(AnswerRequest request,
+                                                     boolean isMatchComplete, boolean isMinorityOption) {
+        return mNostragamusService.savePredictionAnswer(request, isMatchComplete, isMinorityOption);
     }
 }
