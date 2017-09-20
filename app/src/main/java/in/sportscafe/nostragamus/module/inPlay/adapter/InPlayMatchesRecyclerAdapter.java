@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -145,6 +147,8 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
             Bundle args = new Bundle();
 
             if (match != null) {
+                args.putParcelable(Constants.BundleKeys.INPLAY_MATCH, Parcels.wrap(match));
+
                 String matchStatus = match.getMatchStatus();
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.DID_NOT_PLAY)) {
                     mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.DID_NOT_PLAY, args);

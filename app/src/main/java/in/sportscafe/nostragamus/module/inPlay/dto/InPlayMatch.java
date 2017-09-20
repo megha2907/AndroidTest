@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.inPlay.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.newChallenges.dto.MatchParty;
@@ -9,7 +11,7 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.MatchParty;
 /**
  * Created by sandip on 09/09/17.
  */
-
+@Parcel
 public class InPlayMatch {
 
     @SerializedName("challenge_id")
