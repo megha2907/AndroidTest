@@ -99,6 +99,7 @@ public interface Constants {
         String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
         String IS_PROFILE_DISCLAIMER_ACCEPTED = "isProfileDisclaimerAccepted";
         String INSTALL_REFERRAL_CAMPAIGN_KEY = "installReferralCampaignKey";
+        String INSTALL_LINK_NAME = "installLinkName";
 
         String LAST_SHOWN_APP_VERSION_CODE = "lastShownAppVersionCode";
         String UPDATE_TYPE = "updateType";
@@ -321,6 +322,7 @@ public interface Constants {
         String USER_REFERRAL_CODE = "user_referral_code";
         String USER_REFERRAL_NAME = "user_referral_name";
         String USER_REFERRAL_PHOTO = "user_referral_photo";
+        String LINK_NAME = "linkname";
 
         String SUCCESSFUL_REFERRAL = "successfulReferral";
         String CONTEST_ID = "contestId";
@@ -554,6 +556,7 @@ public interface Constants {
         String REFERRAL_CHANNEL = "Channel";
         String REFERRAL_CAMPAIGN = "Campaign";
         String WALLET_INIT = "Wallet Initial Amount";
+        String LINK_NAME = "Link Name";
     }
 
     interface AppType {

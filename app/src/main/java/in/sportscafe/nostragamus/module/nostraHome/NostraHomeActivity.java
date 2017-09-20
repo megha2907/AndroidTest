@@ -168,9 +168,9 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             mInPlayFragment.setArguments(getIntent().getExtras());
         }
 
-     //  FragmentHelper.replaceFragment(this, R.id.fragment_container, mInPlayFragment);
+       FragmentHelper.replaceFragment(this, R.id.fragment_container, mInPlayFragment);
 
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, new ContestFragment());
+     //   FragmentHelper.replaceFragment(this, R.id.fragment_container, new ContestFragment());
 
 
 //        Bundle bundle = new Bundle();

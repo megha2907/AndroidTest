@@ -33,10 +33,10 @@ public class RulesApiModelImpl {
 
     private void loadRulesData(int contestId, final RulesApiModelImpl.RulesDataListener listener) {
 
-        RulesRequest rulesRequest = new RulesRequest();
-        rulesRequest.setContestId(contestId);
+//        RulesRequest rulesRequest = new RulesRequest();
+//        rulesRequest.setContestId(contestId);
 
-        MyWebService.getInstance().getContestRules(rulesRequest).enqueue(new ApiCallBack<RulesResponse>() {
+        MyWebService.getInstance().getContestRules(contestId).enqueue(new ApiCallBack<RulesResponse>() {
             @Override
             public void onResponse(Call<RulesResponse> call, Response<RulesResponse> response) {
                 super.onResponse(call, response);

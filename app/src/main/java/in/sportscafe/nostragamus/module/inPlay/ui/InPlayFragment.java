@@ -21,6 +21,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
@@ -33,7 +34,7 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InPlayFragment extends BaseFragment {
+public class InPlayFragment extends NostraBaseFragment {
 
     public InPlayFragment() {}
 
@@ -149,6 +150,7 @@ public class InPlayFragment extends BaseFragment {
                 }
 
                 if (inPlayFilteredList != null) {
+                    sportsTab.setChallengeCount(inPlayFilteredList.size());
                     tabFragment.onChallengeData(inPlayFilteredList);
                     tabFragment.setTabDetails(sportsTab);
                     fragmentList.add(tabFragment);

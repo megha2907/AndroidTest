@@ -496,6 +496,11 @@ public class NostragamusAnalytics {
                     userProperties.put(UserProperties.WALLET_INIT, walletInit);
                 }
 
+                String linkName = NostragamusDataHandler.getInstance().getInstallLinkName();
+                if (!TextUtils.isEmpty(linkName)) {
+                    userProperties.put(UserProperties.LINK_NAME, linkName);
+                }
+
                 mAmplitude.setUserProperties(userProperties);
                 Log.d("userProperties--", userProperties.toString());
             } catch (JSONException e) {
@@ -526,6 +531,11 @@ public class NostragamusAnalytics {
             String walletInit = String.valueOf(NostragamusDataHandler.getInstance().getWalletInitialAmount());
             if (!TextUtils.isEmpty(walletInit)) {
                 mMoEHelper.setUserAttribute(UserProperties.WALLET_INIT, walletInit);
+            }
+
+            String linkName = NostragamusDataHandler.getInstance().getInstallLinkName();
+            if (!TextUtils.isEmpty(linkName)) {
+                mMoEHelper.setUserAttribute(UserProperties.LINK_NAME, linkName);
             }
 
             /* setEmail() mandatory to get notification - DO NOT REMOVE  */

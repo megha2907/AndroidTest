@@ -86,10 +86,7 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     private void callLbDetailApi() {
 
-        UserLeaderBoardRequest userLeaderBoardRequest = new UserLeaderBoardRequest();
-        userLeaderBoardRequest.setRoomId(mRoomId);
-
-        MyWebService.getInstance().getUserLeaderBoardDetails(userLeaderBoardRequest)
+        MyWebService.getInstance().getUserLeaderBoardDetails(mRoomId)
                 .enqueue(new NostragamusCallBack<UserLeaderBoardResponse>() {
                     @Override
                     public void onResponse(Call<UserLeaderBoardResponse> call, Response<UserLeaderBoardResponse> response) {
