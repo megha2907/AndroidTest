@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.sportscafe.nostracardstack.cardstack.CardUtils.cloneParams;
+import static com.sportscafe.nostracardstack.cardstack.CardUtils.getMoveBottomParams;
 import static com.sportscafe.nostracardstack.cardstack.CardUtils.getMoveLeftParams;
-import static com.sportscafe.nostracardstack.cardstack.CardUtils.getMoveParams;
 import static com.sportscafe.nostracardstack.cardstack.CardUtils.getMoveRightParams;
 import static com.sportscafe.nostracardstack.cardstack.CardUtils.getMoveTopParams;
 import static com.sportscafe.nostracardstack.cardstack.CardUtils.move;
@@ -104,10 +104,10 @@ public class CardAnimator {
 
     private void setupRemotes() {
         View topView = getTopView();
-        mRemoteLayouts[0] = getMoveParams(topView, REMOTE_DISTANCE, -REMOTE_DISTANCE);
-        mRemoteLayouts[1] = getMoveParams(topView, REMOTE_DISTANCE, REMOTE_DISTANCE);
-        mRemoteLayouts[2] = getMoveParams(topView, -REMOTE_DISTANCE, -REMOTE_DISTANCE);
-        mRemoteLayouts[3] = getMoveParams(topView, -REMOTE_DISTANCE, REMOTE_DISTANCE);
+        mRemoteLayouts[CardDirection.LEFT] = getMoveLeftParams(topView, REMOTE_DISTANCE);
+        mRemoteLayouts[CardDirection.RIGHT] = getMoveRightParams(topView, REMOTE_DISTANCE);
+        mRemoteLayouts[CardDirection.UP] = getMoveTopParams(topView, REMOTE_DISTANCE);
+        mRemoteLayouts[CardDirection.DOWN] = getMoveBottomParams(topView, REMOTE_DISTANCE);
 
     }
 
@@ -215,20 +215,20 @@ public class CardAnimator {
         final View topView = getTopView();
         LayoutParams layoutParams = null;
         switch (direction) {
-            case 1:
+            case CardDirection.LEFT:
                 layoutParams = getMoveLeftParams(topView, REMOTE_DISTANCE);
                 break;
 
-            case 2:
+            case CardDirection.RIGHT:
                 layoutParams = getMoveRightParams(topView, REMOTE_DISTANCE);
                 break;
 
-            case 3:
+            case CardDirection.UP:
                 layoutParams = getMoveTopParams(topView, REMOTE_DISTANCE);
                 break;
 
-            default:
-                layoutParams = mRemoteLayouts[direction];
+            case CardDirection.DOWN:
+                layoutParams = getMoveBottomParams(topView, REMOTE_DISTANCE);
                 break;
         }
 

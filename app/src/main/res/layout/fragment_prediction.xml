@@ -86,7 +86,7 @@
         android:background="#252525"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:visibility="gone">
+        >
 
         <ImageView
             android:id="@+id/prediction_powerup_imgView"

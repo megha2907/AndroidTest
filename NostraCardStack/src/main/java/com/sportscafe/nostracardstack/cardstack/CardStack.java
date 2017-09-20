@@ -37,7 +37,7 @@ public class CardStack extends RelativeLayout {
     private boolean mEnableLoop;
 
 
-    private CardEventListener mEventListener = new DefaultStackEventListener(300);
+    private CardEventListener mEventListener = new DefaultStackEventListener(200);
     private int mContentResource = 0;
     private int mMargin;
     private int mTopMargin = 0;
@@ -231,7 +231,7 @@ public class CardStack extends RelativeLayout {
                 float y1 = e1.getRawY();
                 float x2 = e2.getRawX();
                 float y2 = e2.getRawY();
-                final int direction = CardUtils.direction(x1, y1, x2, y2);
+                final int direction = CardUtils.getSwipeDirection(x1, y1, x2, y2);
                 float distance = CardUtils.distance(x1, y1, x2, y2);
                 mEventListener.swipeStart(direction, distance);
                 return true;
@@ -244,7 +244,7 @@ public class CardStack extends RelativeLayout {
                 float y1 = e1.getRawY();
                 float x2 = e2.getRawX();
                 float y2 = e2.getRawY();
-                final int direction = CardUtils.direction(x1, y1, x2, y2);
+                final int direction = CardUtils.getSwipeDirection(x1, y1, x2, y2);
                 if (canSwipe) {
                     mCardAnimator.drag(e1, e2, distanceX, distanceY);
                 }
@@ -260,12 +260,12 @@ public class CardStack extends RelativeLayout {
                 float x2 = e2.getRawX();
                 float y2 = e2.getRawY();
                 float distance = CardUtils.distance(x1, y1, x2, y2);
-                final int direction = CardUtils.direction(x1, y1, x2, y2);
+                final int direction = CardUtils.getSwipeDirection(x1, y1, x2, y2);
 
                 boolean discard = mEventListener.swipeEnd(direction, distance);
                 if (discard) {
                     if (canSwipe) {
-                        mCardAnimator.discard(direction, new AnimatorListenerAdapter() {
+                        mCardAnimator.discardByCall(direction, new AnimatorListenerAdapter() {
 
                             @Override
                             public void onAnimationEnd(Animator arg0) {
