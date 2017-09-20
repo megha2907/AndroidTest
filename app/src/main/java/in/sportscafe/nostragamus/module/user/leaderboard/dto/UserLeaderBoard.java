@@ -30,7 +30,7 @@ public class UserLeaderBoard {
     @SerializedName("rank_change")
     private Integer rankChange;
 
-    @SerializedName("count_played")
+    @SerializedName("count_plays")
     private Integer countPlayed;
 
     @SerializedName("total_points")
@@ -122,12 +122,12 @@ public class UserLeaderBoard {
     }
 
 
-    @SerializedName("count_played")
+    @SerializedName("count_plays")
     public Integer getCountPlayed() {
         return countPlayed;
     }
 
-    @SerializedName("count_played")
+    @SerializedName("count_plays")
     public void setCountPlayed(Integer countPlayed) {
         this.countPlayed = countPlayed;
     }

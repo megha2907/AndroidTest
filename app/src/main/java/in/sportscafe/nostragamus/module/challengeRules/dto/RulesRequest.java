@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.challengeRules.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -11,7 +12,7 @@ import org.parceler.Parcel;
 @Parcel
 public class RulesRequest {
 
-    @JsonProperty("contest_id")
+    @SerializedName("contest_id")
     private int contestId;
 
     public int getContestId() {

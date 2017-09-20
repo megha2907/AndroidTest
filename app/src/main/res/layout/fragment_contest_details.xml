@@ -81,7 +81,6 @@
         android:layout_height="@dimen/dim_32"
         android:layout_below="@+id/challenges_toolbar"
         android:background="@color/new_challenge_tab_bg"
-        android:elevation="4dp"
         app:layout_collapseMode="pin"
         app:selected_textSize="@dimen/sp_12"
         app:selected_typeface="lato_regular"
@@ -102,6 +101,7 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent">
 
+
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/join_contest_btn"
             android:layout_width="match_parent"
@@ -119,11 +119,24 @@
             android:textSize="@dimen/sp_15"
             app:typeface="lato_bold" />
 
+
         <!-- ViewPager -->
         <in.sportscafe.nostragamus.module.common.CustomViewPager
             android:id="@+id/contest_details_viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <View
+            android:id="@+id/gradient_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_8"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dim_16"
+            android:layout_marginRight="@dimen/dim_16"
+            android:layout_marginBottom="@dimen/dim_10"
+            android:rotation="180"
+            android:visibility="gone"
+            android:background="@drawable/gradient_above_hometab" />
 
     </RelativeLayout>
 

@@ -124,6 +124,10 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
 
         // Setting end date of the challenge
         mChallengeEndTime.setText("The challenge will end on "+prizesHandOutDate+".Prizes will be handed out within a few hours of challenge completion.");
+
+        /* set when challenge is over */
+       // mChallengeEndTime.setText("Prizes were handed out on 15th of Sept.");
+
     }
 
     @Override

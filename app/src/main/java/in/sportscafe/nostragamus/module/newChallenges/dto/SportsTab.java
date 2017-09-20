@@ -10,6 +10,8 @@ public class SportsTab {
     private String sportsName;
     private String sportsIconUrl;
     private int sportIconDrawable;
+    private int sportIconUnselectedDrawable;
+    private int challengeCount;
 
     public int getSportsId() {
         return sportsId;
@@ -41,5 +43,21 @@ public class SportsTab {
 
     public void setSportIconDrawable(int sportIconDrawable) {
         this.sportIconDrawable = sportIconDrawable;
+    }
+
+    public int getChallengeCount() {
+        return challengeCount;
+    }
+
+    public void setChallengeCount(int challengeCount) {
+        this.challengeCount = challengeCount;
+    }
+
+    public int getSportIconUnSelectedDrawable() {
+        return sportIconUnselectedDrawable;
+    }
+
+    public void setSportIconUnSelectedDrawable(int sportIconUnselectedDrawable) {
+        this.sportIconUnselectedDrawable= sportIconUnselectedDrawable;
     }
 }

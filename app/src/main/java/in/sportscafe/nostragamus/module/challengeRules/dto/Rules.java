@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.challengeRules.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -17,31 +18,31 @@ import in.sportscafe.nostragamus.module.contest.dto.PowerUpInfo;
 @Parcel
 public class Rules {
 
-    @JsonProperty("contest_id")
+    @SerializedName("contest_id")
     private int contestId;
 
-    @JsonProperty("challenge_id")
+    @SerializedName("challenge_id")
     private int challengeId;
 
-    @JsonProperty("contest_name")
+    @SerializedName("contest_name")
     private String contestName;
 
-    @JsonProperty("challenge_name")
+    @SerializedName("challenge_name")
     private String challengeName;
 
-    @JsonProperty("tot_matches")
+    @SerializedName("tot_matches")
     private int totalMatches;
 
-    @JsonProperty("max_transfer_limit")
+    @SerializedName("max_transfer_limit")
     private int maxTransferPowerUps;
 
-    @JsonProperty("challenge_tournaments_short_names")
+    @SerializedName("challenge_tournaments_short_names")
     private List<String> tournaments = new ArrayList<>();
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     private PowerUpInfo powerUpInfo;
 
-    @JsonProperty("mode")
+    @SerializedName("mode")
     private ContestModeInfo contestModeInfo;
 
     public int getContestId() {

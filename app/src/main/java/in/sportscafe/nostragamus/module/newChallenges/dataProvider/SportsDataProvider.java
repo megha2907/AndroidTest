@@ -23,55 +23,72 @@ public class SportsDataProvider {
         SportsTab all = new SportsTab();
         all.setSportsId(NewChallengesFilterHelper.FILTER_ALL_SPORTS_ID);
         all.setSportsName("All");
-        all.setSportIconDrawable(R.drawable.profile_sport_icon);
+        all.setSportIconDrawable(R.drawable.sport_all);
+        all.setSportIconUnSelectedDrawable(R.drawable.sport_all_grey);
 
         SportsTab daily = new SportsTab();
         daily.setSportsId(NewChallengesFilterHelper.FILTER_ALL_SPORTS_ID);
         daily.setSportsName("Daily");
-        daily.setSportIconDrawable(R.drawable.profile_sport_icon);
+        daily.setSportIconDrawable(R.drawable.sport_daily);
+        daily.setSportIconUnSelectedDrawable(R.drawable.sport_daily_grey);
+
+        SportsTab mixed = new SportsTab();
+        mixed.setSportsId(NewChallengesFilterHelper.FILTER_ALL_SPORTS_ID);
+        mixed.setSportsName("Mixed");
+        mixed.setSportIconDrawable(R.drawable.sport_mix);
+        mixed.setSportIconUnSelectedDrawable(R.drawable.sport_mix_grey);
 
         SportsTab cricket = new SportsTab();
         cricket.setSportsId(1);
         cricket.setSportsName("Cricket");
-        cricket.setSportIconDrawable(R.drawable.profile_sport_icon);
+        cricket.setSportIconDrawable(R.drawable.sport_cricket);
+        cricket.setSportIconUnSelectedDrawable(R.drawable.sport_cricket_grey);
 
         SportsTab hockey = new SportsTab();
         hockey.setSportsId(2);
         hockey.setSportsName("Hockey");
-        hockey.setSportIconDrawable(R.drawable.profile_sport_icon);
+        hockey.setSportIconDrawable(R.drawable.sport_hockey);
+        hockey.setSportIconUnSelectedDrawable(R.drawable.sport_hockey_grey);
 
         SportsTab tennis = new SportsTab();
         tennis.setSportsId(3);
         tennis.setSportsName("Tennis");
-        tennis.setSportIconDrawable(R.drawable.profile_sport_icon);
+        tennis.setSportIconDrawable(R.drawable.sport_tennis);
+        tennis.setSportIconUnSelectedDrawable(R.drawable.sport_tennis_grey);
 
         SportsTab football = new SportsTab();
         football.setSportsId(4);
         football.setSportsName("Football");
-        football.setSportIconDrawable(R.drawable.profile_sport_icon);
+        football.setSportIconDrawable(R.drawable.sport_football);
+        football.setSportIconUnSelectedDrawable(R.drawable.sport_football_grey);
 
         SportsTab badminton = new SportsTab();
         badminton.setSportsId(6);
         badminton.setSportsName("Badminton");
-        badminton.setSportIconDrawable(R.drawable.profile_sport_icon);
+        badminton.setSportIconDrawable(R.drawable.sport_badminton);
+        badminton.setSportIconUnSelectedDrawable(R.drawable.sport_badminton_grey);
 
         SportsTab basketBall = new SportsTab();
         basketBall.setSportsId(8);
         basketBall.setSportsName("Basketball");
-        basketBall.setSportIconDrawable(R.drawable.profile_sport_icon);
+        basketBall.setSportIconDrawable(R.drawable.sport_basketball);
+        basketBall.setSportIconUnSelectedDrawable(R.drawable.sport_basketball_grey);
 
         SportsTab kabbadi = new SportsTab();
         kabbadi.setSportsId(5);
         kabbadi.setSportsName("Kabbadi");
-        kabbadi.setSportIconDrawable(R.drawable.profile_sport_icon);
+        kabbadi.setSportIconDrawable(R.drawable.sport_kabaddi);
+        kabbadi.setSportIconUnSelectedDrawable(R.drawable.sport_kabaddi_grey);
 
         SportsTab formulaOne = new SportsTab();
         formulaOne.setSportsId(7);
         formulaOne.setSportsName("Formula One");
-        formulaOne.setSportIconDrawable(R.drawable.profile_sport_icon);
+        formulaOne.setSportIconDrawable(R.drawable.sport_racing);
+        formulaOne.setSportIconUnSelectedDrawable(R.drawable.sport_racing_grey);
 
         sportsList.add(all);
         sportsList.add(daily);
+        sportsList.add(mixed);
         sportsList.add(cricket);
         sportsList.add(hockey);
         sportsList.add(tennis);
@@ -90,12 +107,12 @@ public class SportsDataProvider {
         SportsTab all = new SportsTab();
         all.setSportsId(InPlayFilterHelper.FILTER_ALL_SPORTS_ID);
         all.setSportsName("All");
-        all.setSportIconDrawable(R.drawable.profile_sport_icon);
+        all.setSportIconDrawable(R.drawable.sport_all);
 
         SportsTab daily = new SportsTab();
         daily.setSportsId(InPlayFilterHelper.FILTER_ALL_SPORTS_ID);
         daily.setSportsName("Daily");
-        daily.setSportIconDrawable(R.drawable.profile_sport_icon);
+        daily.setSportIconDrawable(R.drawable.sport_calendar);
 
         SportsTab mixed = new SportsTab();
         daily.setSportsId(InPlayFilterHelper.FILTER_MIX_SPORTS_ID);
@@ -105,42 +122,42 @@ public class SportsDataProvider {
         SportsTab cricket = new SportsTab();
         cricket.setSportsId(1);
         cricket.setSportsName("Cricket");
-        cricket.setSportIconDrawable(R.drawable.profile_sport_icon);
+        cricket.setSportIconDrawable(R.drawable.sport_cricket);
 
         SportsTab hockey = new SportsTab();
         hockey.setSportsId(2);
         hockey.setSportsName("Hockey");
-        hockey.setSportIconDrawable(R.drawable.profile_sport_icon);
+        hockey.setSportIconDrawable(R.drawable.sport_hockey);
 
         SportsTab tennis = new SportsTab();
         tennis.setSportsId(3);
         tennis.setSportsName("Tennis");
-        tennis.setSportIconDrawable(R.drawable.profile_sport_icon);
+        tennis.setSportIconDrawable(R.drawable.sport_tennis);
 
         SportsTab football = new SportsTab();
         football.setSportsId(4);
         football.setSportsName("Football");
-        football.setSportIconDrawable(R.drawable.profile_sport_icon);
+        football.setSportIconDrawable(R.drawable.sport_football);
 
         SportsTab badminton = new SportsTab();
         badminton.setSportsId(6);
         badminton.setSportsName("Badminton");
-        badminton.setSportIconDrawable(R.drawable.profile_sport_icon);
+        badminton.setSportIconDrawable(R.drawable.sport_badminton);
 
         SportsTab basketBall = new SportsTab();
         basketBall.setSportsId(8);
         basketBall.setSportsName("Basketball");
-        basketBall.setSportIconDrawable(R.drawable.profile_sport_icon);
+        basketBall.setSportIconDrawable(R.drawable.sport_basketball);
 
         SportsTab kabbadi = new SportsTab();
         kabbadi.setSportsId(5);
         kabbadi.setSportsName("Kabbadi");
-        kabbadi.setSportIconDrawable(R.drawable.profile_sport_icon);
+        kabbadi.setSportIconDrawable(R.drawable.sport_kabaddi);
 
         SportsTab formulaOne = new SportsTab();
         formulaOne.setSportsId(7);
         formulaOne.setSportsName("Formula One");
-        formulaOne.setSportIconDrawable(R.drawable.profile_sport_icon);
+        formulaOne.setSportIconDrawable(R.drawable.sport_racing);
 
         sportsList.add(all);
         sportsList.add(daily);

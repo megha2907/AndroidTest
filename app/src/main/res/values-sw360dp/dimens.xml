@@ -174,5 +174,6 @@
     <dimen name="wallet_payout_choice_item_height">64dp</dimen>
     <dimen name="dim_45">45dp</dimen>
     <dimen name="dim_80">80dp</dimen>
+    <dimen name="dim_64">64dp</dimen>
 
 </resources>

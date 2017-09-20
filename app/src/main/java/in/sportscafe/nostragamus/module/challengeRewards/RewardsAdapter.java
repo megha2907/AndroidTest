@@ -139,12 +139,15 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     rewardsVH.mTvRank.setVisibility(View.GONE);
                 }
 
-                if (!TextUtils.isEmpty(rewards.getUserName())) {
-                    rewardsVH.mTvWinnersName.setVisibility(View.VISIBLE);
-                    rewardsVH.mTvWinnersName.setText(rewards.getRank());
-                } else {
-                    rewardsVH.mTvWinnersName.setVisibility(View.GONE);
-                }
+                rewardsVH.mTvWinnersName.setVisibility(View.VISIBLE);
+                rewardsVH.mTvWinnersName.setText("Deepanshi");
+
+//                if (!TextUtils.isEmpty(rewards.getUserName())) {
+//                    rewardsVH.mTvWinnersName.setVisibility(View.VISIBLE);
+//                    rewardsVH.mTvWinnersName.setText(rewards.getUserName());
+//                } else {
+//                    rewardsVH.mTvWinnersName.setVisibility(View.GONE);
+//                }
 
                 if (rewards.getAmount() != null) {
                     rewardsVH.mTvAmount.setVisibility(View.VISIBLE);
