@@ -16,6 +16,9 @@ import com.jeeva.android.widgets.HmImageView;
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.prediction.dto.PlayersPoll;
+import in.sportscafe.nostragamus.module.prediction.dto.PowerUp;
+import in.sportscafe.nostragamus.module.prediction.dto.PowerupEnum;
 import in.sportscafe.nostragamus.module.prediction.dto.PredictionQuestion;
 
 /**
@@ -50,11 +53,13 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
             HmImageView option2ImgView;
             LinearLayout option2Layout;
             TextView option2TextView;
-            /*CardView positivePointsTextView;
-            CardView negativePointsTextView;
+            TextView positivePointsTextView;
+            TextView negativePointsTextView;
+            TextView playerPollOption1TextView;
+            TextView playerPollOption2TextView;
 
-            positivePointsTextView = (CardView) contentView.findViewById(R.id.prediction_card_positive_button);
-            negativePointsTextView = (CardView) contentView.findViewById(R.id.prediction_card_negative_button);*/
+            positivePointsTextView = (TextView) contentView.findViewById(R.id.prediction_card_positive_textView);
+            negativePointsTextView = (TextView) contentView.findViewById(R.id.prediction_card_negative_textView);
             questionTitleTextView = (TextView) contentView.findViewById(R.id.question_title_textView);
             questionDescriptionTextView = (TextView) contentView.findViewById(R.id.question_description_textView);
             option1ImgView = (HmImageView) contentView.findViewById(R.id.prediction_question_option_1_imgView);
@@ -63,6 +68,8 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
             option2Layout = (LinearLayout) contentView.findViewById(R.id.option_2_button_layout);
             option1TextView = (TextView) contentView.findViewById(R.id.option_1_textView);
             option2TextView = (TextView) contentView.findViewById(R.id.option_2_textView);
+            playerPollOption1TextView = (TextView) contentView.findViewById(R.id.prediction_card_player_poll_1_textView);
+            playerPollOption2TextView = (TextView) contentView.findViewById(R.id.prediction_card_player_poll_2_textView);
 
             option1Layout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,20 +93,37 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                 if (!TextUtils.isEmpty(question.getQuestionText())) {
                     questionTitleTextView.setText(question.getQuestionText());
                 }
-                if (!TextUtils.isEmpty(question.getQuestionDescription())) {
-                    questionDescriptionTextView.setText(question.getQuestionDescription());
+                if (!TextUtils.isEmpty(question.getQuestionContext())) {
+                    questionDescriptionTextView.setText(question.getQuestionContext());
                 }
-                if (!TextUtils.isEmpty(question.getOption1ImgUrl())) {
-                    option1ImgView.setImageUrl(question.getOption1ImgUrl());
+                if (!TextUtils.isEmpty(question.getQuestionImage1())) {
+                    option1ImgView.setImageUrl(question.getQuestionImage1());
                 }
-                if (!TextUtils.isEmpty(question.getOption2ImgUrl())) {
-                    option2ImgView.setImageUrl(question.getOption2ImgUrl());
+                if (!TextUtils.isEmpty(question.getQuestionImage2())) {
+                    option2ImgView.setImageUrl(question.getQuestionImage2());
                 }
-                if (!TextUtils.isEmpty(question.getOption1())) {
-                    option1TextView.setText(question.getOption1());
+                if (!TextUtils.isEmpty(question.getQuestionOption1())) {
+                    option1TextView.setText(question.getQuestionOption1());
                 }
-                if (!TextUtils.isEmpty(question.getOption2())) {
-                    option2TextView.setText(question.getOption2());
+                if (!TextUtils.isEmpty(question.getQuestionOption2())) {
+                    option2TextView.setText(question.getQuestionOption2());
+                }
+
+                if (question != null && question.getPlayersPollList() != null && question.getPlayersPollList().size() == 2) {
+                    List<PlayersPoll> playersPollList = question.getPlayersPollList();
+
+                    int pollPercentForOption1 = Integer.parseInt(playersPollList.get(0).getAnswerPercentage());
+                    int pollPercentForOption2 = Integer.parseInt(playersPollList.get(1).getAnswerPercentage());
+
+                    if (pollPercentForOption1 > 0 && pollPercentForOption2 > 0) {
+                        playerPollOption1TextView.setText(pollPercentForOption1);
+                        playerPollOption2TextView.setText(pollPercentForOption2);
+
+                        playerPollOption1TextView.setVisibility(View.VISIBLE);
+                        playerPollOption2TextView.setVisibility(View.VISIBLE);
+
+                        applyOrRemovePowerUp(PowerupEnum.PLAYER_POLL, position, true);
+                    }
                 }
             }
         } else {
@@ -108,5 +132,32 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
         return contentView;
     }
 
+    public void applyOrRemovePowerUp(PowerupEnum powerupEnum, int pos, boolean shouldAdd) {
+        PredictionQuestion question = getItem(pos);
+        if (question != null) {
+            if (question.getPowerUp() == null) {
+                question.setPowerUp(new PowerUp());
+            }
+            PowerUp powerUp = question.getPowerUp();
+
+            switch (powerupEnum) {
+                case DOUBLER:
+                    powerUp.setDoubler((shouldAdd) ? 1 : 0);
+                    break;
+
+                case NO_NEGATIVE:
+                    powerUp.setNoNegative((shouldAdd) ? 1 : 0);
+                    break;
+
+                case PLAYER_POLL:
+                    if (shouldAdd) {
+                        powerUp.setPlayerPoll(1);
+                    } else {
+                        // NOTE: Player-poll can not be removed
+                    }
+                    break;
+            }
+        }
+    }
 
 }

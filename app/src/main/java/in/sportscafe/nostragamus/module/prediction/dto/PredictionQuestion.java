@@ -1,33 +1,61 @@
 package in.sportscafe.nostragamus.module.prediction.dto;
 
+import com.google.gson.annotations.SerializedName;
+
+import org.parceler.Parcel;
+
+import java.util.List;
+
 /**
  * Created by sandip on 15/09/17.
  */
-
+@Parcel
 public class PredictionQuestion {
 
+    @SerializedName("question_id")
     private int questionId;
 
+    @SerializedName("match_id")
+    private int matchId;
+
+    @SerializedName("question_points")
+    private int questionPoints;
+
+    @SerializedName("question_neg_points")
+    private int questionNegPoints;
+
+    @SerializedName("question_text")
     private String questionText;
 
-    private String questionDescription;
+    @SerializedName("question_context")
+    private String questionContext;
 
-    private String option1;
+    @SerializedName("question_option_1")
+    private String questionOption1;
 
-    private String option1ImgUrl;
+    @SerializedName("question_image_1")
+    private String questionImage1;
 
-    private String option2;
+    @SerializedName("question_option_2")
+    private String questionOption2;
 
-    private String option2ImgUrl;
+    @SerializedName("question_image_2")
+    private String questionImage2;
 
-    private String option3;
+    @SerializedName("question_option_3")
+    private String questionOption3;
+
+    @SerializedName("question_answer")
+    private String questionAnswer;
+
+    @SerializedName("poll")
+    private List<PlayersPoll> playersPollList;
+
+
+    private PowerUp powerUp = new PowerUp();
 
     public int getQuestionId() {
         return questionId;
-    }
-
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
     }
 
     public String getQuestionText() {
@@ -38,51 +66,103 @@ public class PredictionQuestion {
         this.questionText = questionText;
     }
 
-    public String getQuestionDescription() {
-        return questionDescription;
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
-    public void setQuestionDescription(String questionDescription) {
-        this.questionDescription = questionDescription;
+    public int getMatchId() {
+        return matchId;
     }
 
-    public String getOption1() {
-        return option1;
+    public void setMatchId(int matchId) {
+        this.matchId = matchId;
     }
 
-    public void setOption1(String option1) {
-        this.option1 = option1;
+    public int getQuestionPoints() {
+        return questionPoints;
     }
 
-    public String getOption1ImgUrl() {
-        return option1ImgUrl;
+    public void setQuestionPoints(int questionPoints) {
+        this.questionPoints = questionPoints;
     }
 
-    public void setOption1ImgUrl(String option1ImgUrl) {
-        this.option1ImgUrl = option1ImgUrl;
+    public int getQuestionNegPoints() {
+        return questionNegPoints;
     }
 
-    public String getOption2() {
-        return option2;
+    public void setQuestionNegPoints(int questionNegPoints) {
+        this.questionNegPoints = questionNegPoints;
     }
 
-    public void setOption2(String option2) {
-        this.option2 = option2;
+    public String getQuestionContext() {
+        return questionContext;
     }
 
-    public String getOption2ImgUrl() {
-        return option2ImgUrl;
+    public void setQuestionContext(String questionContext) {
+        this.questionContext = questionContext;
     }
 
-    public void setOption2ImgUrl(String option2ImgUrl) {
-        this.option2ImgUrl = option2ImgUrl;
+    public String getQuestionOption1() {
+        return questionOption1;
     }
 
-    public String getOption3() {
-        return option3;
+    public void setQuestionOption1(String questionOption1) {
+        this.questionOption1 = questionOption1;
     }
 
-    public void setOption3(String option3) {
-        this.option3 = option3;
+    public String getQuestionImage1() {
+        return questionImage1;
+    }
+
+    public void setQuestionImage1(String questionImage1) {
+        this.questionImage1 = questionImage1;
+    }
+
+    public String getQuestionOption2() {
+        return questionOption2;
+    }
+
+    public void setQuestionOption2(String questionOption2) {
+        this.questionOption2 = questionOption2;
+    }
+
+    public String getQuestionImage2() {
+        return questionImage2;
+    }
+
+    public void setQuestionImage2(String questionImage2) {
+        this.questionImage2 = questionImage2;
+    }
+
+    public String getQuestionOption3() {
+        return questionOption3;
+    }
+
+    public void setQuestionOption3(String questionOption3) {
+        this.questionOption3 = questionOption3;
+    }
+
+    public String getQuestionAnswer() {
+        return questionAnswer;
+    }
+
+    public void setQuestionAnswer(String questionAnswer) {
+        this.questionAnswer = questionAnswer;
+    }
+
+    public PowerUp getPowerUp() {
+        return powerUp;
+    }
+
+    public void setPowerUp(PowerUp powerUp) {
+        this.powerUp = powerUp;
+    }
+
+    public List<PlayersPoll> getPlayersPollList() {
+        return playersPollList;
+    }
+
+    public void setPlayersPollList(List<PlayersPoll> playersPollList) {
+        this.playersPollList = playersPollList;
     }
 }

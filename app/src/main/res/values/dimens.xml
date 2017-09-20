@@ -155,6 +155,7 @@
     <dimen name="dim_56">56dp</dimen>
     <dimen name="dim_60">60dp</dimen>
     <dimen name="dim_68">68dp</dimen>
+    <dimen name="dim_70">70dp</dimen>
     <dimen name="dim_75">75dp</dimen>
     <dimen name="dim_90">90dp</dimen>
     <dimen name="dim_100">100dp</dimen>
@@ -165,12 +166,16 @@
     <dimen name="dim_120">120dp</dimen>
     <dimen name="dim_150">150dp</dimen>
     <dimen name="dim_160">160dp</dimen>
-    <dimen name="dim_165">166dp</dimen>
+    <dimen name="dim_165">165dp</dimen>
+    <dimen name="dim_170">170dp</dimen>
     <dimen name="dim_185">185dp</dimen>
     <dimen name="dim_300">300dp</dimen>
     <dimen name="dim_320">320dp</dimen>
     <dimen name="dim_330">330dp</dimen>
+    <dimen name="dim_340">340dp</dimen>
     <dimen name="dim_370">370dp</dimen>
+    <dimen name="dim_380">380dp</dimen>
+    <dimen name="dim_382">382dp</dimen>
 
     <!-- Wallet -->
     <dimen name="wallet_home_row_height">52dp</dimen>

@@ -231,7 +231,7 @@ public class AllChallengesApiModelImpl implements AllChallengesApiModel {
                         }
 
                         if (response.isSuccessful() && response.body() != null) {
-                            mAllChallenges = response.body().getChallenges();
+                            mAllChallenges = response.body().getAllQuestions();
 
                             saveChallengesToServerDataManager(mAllChallenges);
 

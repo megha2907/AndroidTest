@@ -822,7 +822,6 @@ public interface Constants {
         int FROM_DATABASE_AS_NO_INTERNET = 4;
         int FROM_DATABASE_ERROR = 5;
         int NO_INTERNET = 6;
-
     }
 
     interface InPlayMatchStatusStrings {
