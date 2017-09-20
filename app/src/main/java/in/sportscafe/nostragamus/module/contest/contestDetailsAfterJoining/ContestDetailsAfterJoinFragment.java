@@ -110,10 +110,10 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
             }
             mViewPagerAdapter.addFragment(matchTimelineViewPagerFragment, Constants.ContestDetailsTabs.MATCHES);
 
-            LeaderBoardFragment leaderBoardFragment = LeaderBoardFragment.newInstance(45);
+            LeaderBoardFragment leaderBoardFragment = LeaderBoardFragment.newInstance(contestDto.getRoomId());
             mViewPagerAdapter.addFragment(leaderBoardFragment, Constants.ContestDetailsTabs.LEADERBOARDS);
 
-            RewardsFragment rewardsFragment = RewardsFragment.newInstance(contestDto.getContestId());
+            RewardsFragment rewardsFragment = RewardsFragment.newInstance(contestDto.getRoomId());
             mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
 
             RulesFragment rulesFragment = RulesFragment.newInstance(contestDto.getContestId());

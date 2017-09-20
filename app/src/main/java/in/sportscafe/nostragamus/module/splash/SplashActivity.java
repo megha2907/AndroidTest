@@ -71,6 +71,10 @@ public class SplashActivity extends Activity {
                             nostragamusDataHandler.setWalletInitialAmount(Integer.parseInt(referringParams.getString(BundleKeys.WALLET_INITIAL_AMOUNT)));
                         }
 
+                        if (referringParams.has(BundleKeys.LINK_NAME)) {
+                            nostragamusDataHandler.setInstallLinkName(referringParams.getString(BundleKeys.LINK_NAME));
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Log.d("BranchValue:--", "No referral Code / No Photo / wallet init / referral name");

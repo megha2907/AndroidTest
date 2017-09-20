@@ -39,9 +39,15 @@
                             android:id="@+id/prediction_card_positive_layout"
                             android:layout_width="@dimen/dp_70"
                             android:layout_height="@dimen/dim_24"
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:background="#cccccc"
                             android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="@dimen/dim_8"
+                                android:layout_height="@dimen/dim_8"
+                                android:layout_margin="@dimen/dim_8"
+                                android:src="@drawable/prediction_positive_icn"/>
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:id="@+id/prediction_card_positive_textView"
@@ -51,7 +57,8 @@
                                 android:textColor="@color/black"
                                 app:typeface="lato_bold"
                                 android:text="+ PTS"
-                                android:textSize="@dimen/sp_10"/>
+                                android:textSize="@dimen/sp_10"
+                                />
 
                         </LinearLayout>
 
@@ -65,9 +72,16 @@
                             android:id="@+id/prediction_card_negative_layout"
                             android:layout_width="@dimen/dp_70"
                             android:layout_height="@dimen/dim_24"
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:background="#cccccc"
                             android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="@dimen/dim_8"
+                                android:layout_height="@dimen/dim_8"
+                                android:layout_margin="@dimen/dim_8"
+                                android:src="@drawable/prediction_negative_icn"/>
+
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:id="@+id/prediction_card_negative_textView"

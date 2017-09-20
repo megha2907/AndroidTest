@@ -6,6 +6,8 @@ import org.parceler.Parcel;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.module.prediction.PredictionConstants;
+
 /**
  * Created by sandip on 15/09/17.
  */
@@ -52,8 +54,11 @@ public class PredictionQuestion {
     private List<PlayersPoll> playersPollList;
 
     private int minorityAnswerId = -1;
-
+    private int positivePoints = PredictionConstants.DefaultPoints.POSITIVE_POINTS;
+    private int negativePoints = PredictionConstants.DefaultPoints.NEGATIVE_POINTS;
     private PowerUp powerUp = new PowerUp();
+
+    /* ------------------------------------------------------------------- */
 
     public int getQuestionId() {
         return questionId;
@@ -182,5 +187,21 @@ public class PredictionQuestion {
      */
     public boolean isMinorityAnswer(int answerId) {
         return -1 != minorityAnswerId && answerId == minorityAnswerId;
+    }
+
+    public int getPositivePoints() {
+        return positivePoints;
+    }
+
+    public void setPositivePoints(int positivePoints) {
+        this.positivePoints = positivePoints;
+    }
+
+    public int getNegativePoints() {
+        return negativePoints;
+    }
+
+    public void setNegativePoints(int negativePoints) {
+        this.negativePoints = negativePoints;
     }
 }

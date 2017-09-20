@@ -351,20 +351,20 @@ public interface NostragamusService {
     @GET("v3/game/challenges/inPlay")
     Call<List<InPlayResponse>> getInPlayChallenges();
 
-    @POST("v3/game/challenges/contests/rewards")
-    Call<RewardsResponse> getRewardDetails(@Body RewardsRequest request);
+    @GET("v3/game/challenges/rewards")
+    Call<RewardsResponse> getRewardDetails(@Query("room_id") int roomId);
 
     @POST("v3/game/temp/getContestRooms")
     Call<ContestEntriesResponse> getContestEntries(@Body ContestEntriesRequest request);
 
-    @POST("v3/game/temp/getMatches")
-    Call<InPlayMatchesResponse> getInPlayMatches(@Body InPlayMatchRequest request);
+    @GET("v3/game/challenges/getUserMatches")
+    Call<InPlayMatchesResponse> getInPlayMatches(@Query("room_id") int roomId, @Query("challenge_id") int challengeId);
 
-    @POST("v3/game/rooms/leaderboards")
-    Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(@Body UserLeaderBoardRequest userLeaderBoardRequest);
+    @GET("v3/game/rooms/leaderboards")
+    Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(@Query("room_id") Integer userLeaderBoardRequest);
 
-    @POST("v3/game/contest/rules")
-    Call<RulesResponse> getContestRules(@Body RulesRequest rulesRequest);
+    @GET("v3/game/contest/rules")
+    Call<RulesResponse> getContestRules(@Query("contest_id") int rulesRequest);
 
     @POST("v3/game/users/poll")
     Call<PlayerPollResponse> getPlayersPoll(@Body PlayersPollRequest request);

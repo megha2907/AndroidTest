@@ -77,11 +77,11 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
     private void loadData() {
         if (mInPlayContest != null) {
-            int contestId = mInPlayContest.getContestId();
-
             showLoadingContent();
             InPlayMatchesDataProvider dataProvider = new InPlayMatchesDataProvider();
-            dataProvider.getInPlayMatches(contestId, new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
+            dataProvider.getInPlayMatches(mInPlayContest.getRoomId(),
+                    mInPlayContest.getChallengeId(),
+                    new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
                 @Override
                 public void onData(int status, @Nullable InPlayMatchesResponse responses) {
                     hideLoadingContent();
@@ -196,13 +196,13 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
                     case InPlayMatchAction.PLAY:
                     case InPlayMatchAction.CONTINUE:
-                        launchPlayScreen();
+                        launchPlayScreen(args);
                         break;
 
                     case InPlayMatchAction.ANSWER:
                     case InPlayMatchAction.DID_NOT_PLAY:
                     case InPlayMatchAction.POINTS:
-                        launchPlayScreen();
+                        launchPlayScreen(args);
                         break;
                 }
             }
@@ -213,14 +213,20 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
     }
 
-    private void launchPlayScreen() {
+    private void launchPlayScreen(Bundle matchArgs) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
-            Bundle args = getArguments();
 
-            if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
-                predictionIntent.putExtras(args);     // Arguments already contains chosen contest
-                startActivity(predictionIntent);
+            Bundle argument = getArguments();
+            Bundle bundle = new Bundle();
+            if (argument != null && argument.containsKey(Constants.BundleKeys.INPLAY_CONTEST) &&
+                    matchArgs != null && matchArgs.containsKey(Constants.BundleKeys.INPLAY_MATCH)) {
+
+                bundle.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, argument.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+                bundle.putParcelable(Constants.BundleKeys.INPLAY_MATCH, matchArgs.getParcelable(Constants.BundleKeys.INPLAY_MATCH));
+
+                predictionIntent.putExtras(bundle);
+                getActivity().startActivity(predictionIntent);
             } else {
                 Log.e(TAG, "No Contest in Bundle to launch Play screen");
                 handleError(-1);

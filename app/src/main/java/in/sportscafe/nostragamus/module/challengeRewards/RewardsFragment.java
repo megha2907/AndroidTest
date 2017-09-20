@@ -9,30 +9,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jeeva.android.BaseFragment;
-import com.jeeva.android.Log;
-
-import org.parceler.Parcels;
-
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
-import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
+import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by deepanshi on 9/6/17.
  */
 
-public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl.RewardsDataListener
+public class RewardsFragment extends NostraBaseFragment implements RewardsApiModelImpl.RewardsDataListener
         , View.OnClickListener {
 
     private static final String TAG = RewardsFragment.class.getSimpleName();
 
-    private int mContestId=0;
+    private int mRoomId=0;
 
     private RewardsAdapter mConfigAdapter;
 
@@ -44,10 +40,10 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
 
     }
 
-    public static RewardsFragment newInstance(int contestId) {
+    public static RewardsFragment newInstance(int roomId) {
 
         Bundle bundle = new Bundle();
-        bundle.putInt(Constants.BundleKeys.CONTEST_ID, contestId);
+        bundle.putInt(Constants.BundleKeys.ROOM_ID, roomId);
 
         RewardsFragment fragment = new RewardsFragment();
         fragment.setArguments(bundle);
@@ -57,7 +53,9 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_rewards, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_rewards, container, false);
+        initViews(rootView);
+        return rootView;
     }
 
     @Override
@@ -65,27 +63,26 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
         super.onActivityCreated(savedInstanceState);
 
         openBundle(getArguments());
-        initViews();
     }
 
     private void openBundle(Bundle bundle) {
         if (bundle != null) {
-            mContestId = bundle.getInt(Constants.BundleKeys.CONTEST_ID);
+            mRoomId = bundle.getInt(Constants.BundleKeys.ROOM_ID);
             getRewardsData();
         }
     }
 
-    private void initViews() {
-        this.mRcvRewards = (RecyclerView) findViewById(R.id.rewards_rcv);
+    private void initViews(View rootView) {
+        this.mRcvRewards = (RecyclerView)rootView. findViewById(R.id.rewards_rcv);
         this.mRcvRewards.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         this.mRcvRewards.setHasFixedSize(true);
 
-        mChallengeEndTime = (TextView) findViewById(R.id.rewards_challenge_end_time);
+        mChallengeEndTime = (TextView)rootView.findViewById(R.id.rewards_challenge_end_time);
     }
 
     private void getRewardsData() {
-        new RewardsApiModelImpl().getRewardsData(mContestId,this);
+        new RewardsApiModelImpl().getRewardsData(mRoomId,this);
     }
 
     private RewardsAdapter createAdapter(List<Rewards> rewardsList,String challengeEndTime) {
@@ -113,7 +110,7 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
         String endTime = challengeEndTime;
         long endTimeMs = TimeUtils.getMillisecondsFromDateString(
                 endTime,
-                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE_ZZ_ZZ,
+                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
                 Constants.DateFormats.GMT
         );
 
@@ -137,7 +134,7 @@ public class RewardsFragment extends BaseFragment implements RewardsApiModelImpl
 
     @Override
     public void onNoInternet() {
-        showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+        AlertsHelper.showAlert(getContext(),"Internet Problem", Constants.Alerts.NO_NETWORK_CONNECTION, null);
     }
 
     private void showLoadingProgressBar() {

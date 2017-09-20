@@ -196,6 +196,14 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return getSharedStringData(SharedKeys.INSTALL_REFERRAL_CAMPAIGN_KEY);
     }
 
+    public void setInstallLinkName(String installLinkName) {
+        setSharedStringData(SharedKeys.INSTALL_LINK_NAME, installLinkName);
+    }
+
+    public String getInstallLinkName() {
+        return getSharedStringData(SharedKeys.INSTALL_LINK_NAME);
+    }
+
     public Integer getWalletInitialAmount() {
         return getSharedIntData(SharedKeys.WALLET_INITIAL_AMOUNT, -1);
     }

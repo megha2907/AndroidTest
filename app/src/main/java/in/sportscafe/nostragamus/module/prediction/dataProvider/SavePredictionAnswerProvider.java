@@ -6,8 +6,10 @@ import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.prediction.dto.AnswerPowerUpDto;
 import in.sportscafe.nostragamus.module.prediction.dto.AnswerRequest;
 import in.sportscafe.nostragamus.module.prediction.dto.AnswerResponse;
+import in.sportscafe.nostragamus.module.prediction.dto.PowerUp;
 import in.sportscafe.nostragamus.webservice.ApiCallBack;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import retrofit2.Call;
@@ -24,12 +26,12 @@ public class SavePredictionAnswerProvider {
     public SavePredictionAnswerProvider() {
     }
 
-    public void savePredictionAnswer(int roomId, int matchId, int questionId, int answerId, String answerTime,
-                               boolean isMatchCompleted, boolean isMinorityOption,
-                               SavePredictionAnswerListener listener) {
+    public void savePredictionAnswer(PowerUp powerUp, int roomId, int matchId, int questionId, int answerId, String answerTime,
+                                     boolean isMatchCompleted, boolean isMinorityOption,
+                                     SavePredictionAnswerListener listener) {
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            loadQuestionsFromServer(roomId, matchId, questionId, answerId, answerTime,
+            loadQuestionsFromServer(powerUp, roomId, matchId, questionId, answerId, answerTime,
                     isMatchCompleted, isMinorityOption ,listener);
 
         } else {
@@ -40,9 +42,23 @@ public class SavePredictionAnswerProvider {
         }
     }
 
-    private void loadQuestionsFromServer(int roomId, int matchId, int questionId, int answerId, String answerTime,
+    private void loadQuestionsFromServer(PowerUp powerUp,
+            int roomId, int matchId, int questionId, int answerId, String answerTime,
                                          boolean isMatchCompleted, boolean isMinorityOption,
                                          final SavePredictionAnswerListener listener) {
+
+        AnswerPowerUpDto powerUpDto = new AnswerPowerUpDto();
+        if (powerUp != null) {
+            if (powerUp.getDoubler() > 0) {
+                powerUpDto.setDoubler(true);
+            }
+            if (powerUp.getNoNegative() > 0) {
+                powerUpDto.setNoNegative(true);
+            }
+            if (powerUp.getPlayerPoll() > 0) {
+                powerUpDto.setPlayerPoll(true);
+            }
+        }
 
         AnswerRequest request = new AnswerRequest();
         request.setRoomId(roomId);
@@ -50,6 +66,7 @@ public class SavePredictionAnswerProvider {
         request.setQuestionId(questionId);
         request.setAnswerId(answerId);
         request.setAnswerTime(answerTime);
+        request.setPowerUp(powerUpDto);
 
         MyWebService.getInstance().savePredictionAnswer(request, isMatchCompleted, isMinorityOption)
                 .enqueue(new ApiCallBack<AnswerResponse>() {

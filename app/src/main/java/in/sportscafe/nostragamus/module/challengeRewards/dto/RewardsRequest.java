@@ -8,16 +8,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class RewardsRequest {
 
-    @SerializedName("contest_id")
-    private int contestId;
+    @SerializedName("room_id")
+    private int roomId;
 
-
-    public int getContestId() {
-        return contestId;
+    public int getRoomId() {
+        return roomId;
     }
 
-    public void setContestId(int contestId) {
-        this.contestId = contestId;
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
 }

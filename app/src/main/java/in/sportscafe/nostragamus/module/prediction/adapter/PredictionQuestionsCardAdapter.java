@@ -37,11 +37,6 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
         mAdapterListener = listener;
     }
 
-    @Override
-    public int getCount() {
-        return super.getCount();
-    }
-
     @NonNull
     @Override
     public View getView(final int position, View contentView, ViewGroup parent) {
@@ -109,6 +104,8 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                 if (!TextUtils.isEmpty(question.getQuestionOption2())) {
                     option2TextView.setText(question.getQuestionOption2());
                 }
+                positivePointsTextView.setText("+ " + String.valueOf(question.getPositivePoints()) + " PTS");
+                negativePointsTextView.setText("- " + String.valueOf(question.getNegativePoints()) + " PTS");
 
                 /* If Player-poll already applied */
                 if (question.getPlayersPollList() != null && question.getPlayersPollList().size() == 2) {
@@ -155,10 +152,20 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
             switch (powerupEnum) {
                 case DOUBLER:
                     powerUp.setDoubler((shouldAdd) ? 1 : 0);
+
+                    // Update points
+                    if (question.getPositivePoints() > 0) {
+                        question.setPositivePoints(question.getPositivePoints() * 2);
+                    }
+                    if (question.getNegativePoints() > 0) {
+                        question.setNegativePoints(question.getNegativePoints() * 2);
+                    }
                     break;
 
                 case NO_NEGATIVE:
                     powerUp.setNoNegative((shouldAdd) ? 1 : 0);
+
+                    question.setNegativePoints(0);  // No negative points, positive as they are
                     break;
 
                 case PLAYER_POLL:
@@ -170,6 +177,24 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                     break;
             }
         }
+    }
+
+    /**
+     * Removes question from adapter list & adds at last pos
+     * Shuffle
+     * @param question
+     */
+    public void onShuffleQuestion(PredictionQuestion question) {
+        /*this.remove(question);
+        this.add(question);*/
+    }
+
+    /**
+     * On every success response of prediction question, remove it from adapter list
+     * @param question
+     */
+    public void onSuccessfulAnswer(PredictionQuestion question) {
+        this.remove(question);
     }
 
 }

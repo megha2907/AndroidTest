@@ -427,7 +427,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getInPlayChallenges();
     }
 
-    public Call<RewardsResponse> getRewardsDetails(RewardsRequest rewardsRequest) {
+    public Call<RewardsResponse> getRewardsDetails(int rewardsRequest) {
         return mNostragamusService.getRewardDetails(rewardsRequest);
     }
 
@@ -435,15 +435,15 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getContestEntries(request);
     }
 
-    public Call<InPlayMatchesResponse> getInPlayMatches(InPlayMatchRequest request) {
-        return mNostragamusService.getInPlayMatches(request);
+    public Call<InPlayMatchesResponse> getInPlayMatches(int roomId, int challengeId) {
+        return mNostragamusService.getInPlayMatches(roomId, challengeId);
     }
 
-    public Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(UserLeaderBoardRequest userLeaderBoardRequest) {
+    public Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(Integer userLeaderBoardRequest) {
         return mNostragamusService.getUserLeaderBoardDetails(userLeaderBoardRequest);
     }
 
-    public Call<RulesResponse> getContestRules(RulesRequest rulesRequest) {
+    public Call<RulesResponse> getContestRules(int rulesRequest) {
         return mNostragamusService.getContestRules(rulesRequest);
     }
 
