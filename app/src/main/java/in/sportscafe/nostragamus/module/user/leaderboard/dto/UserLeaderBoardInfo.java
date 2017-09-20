@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.user.leaderboard.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -13,22 +14,22 @@ import java.util.List;
 @Parcel
 public class UserLeaderBoardInfo {
 
-    @JsonProperty("room_id")
+   @SerializedName("room_id")
     private int roomId;
 
-    @JsonProperty("contest_id")
+   @SerializedName("contest_id")
     private int contestId;
 
-    @JsonProperty("contest_name")
+   @SerializedName("contest_name")
     private String contestName;
 
-    @JsonProperty("challenge_id")
+   @SerializedName("challenge_id")
     private int challengeId;
 
-    @JsonProperty("challenge_name")
+   @SerializedName("challenge_name")
     private String challengeName;
 
-    @JsonProperty("users")
+   @SerializedName("users")
     private List<UserLeaderBoard> userLeaderBoardList;
 
     public int getRoomId() {

@@ -2,19 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/black"
+    android:orientation="vertical"
     tools:context="in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerFragment">
 
     <WebView
         android:id="@+id/challenges_ads_webView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_60"
-        android:scrollbars="none"/>
+        android:scrollbars="none"
+        android:visibility="visible" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/challenge_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/dim_6" />
 
 </LinearLayout>

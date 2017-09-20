@@ -4,23 +4,27 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="@dimen/dim_60"
+    android:minHeight="@dimen/dim_32"
     android:gravity="center_vertical"
-    android:padding="@dimen/dim_10"
-    android:background="@color/black"
+    android:paddingLeft="@dimen/dim_20"
+    android:paddingRight="@dimen/dim_20"
+    android:background="@color/black4"
     android:id="@+id/contest_entry_list_child_root_layout">
 
     <com.jeeva.android.widgets.HmImageView
         android:id="@+id/contest_entry_list_child_imageView"
-        android:layout_width="@dimen/dim_24"
-        android:layout_height="@dimen/dim_24" />
+        android:layout_width="@dimen/dim_20"
+        android:layout_height="@dimen/dim_20"
+        android:scaleType="fitXY"
+        app:defaultImage="@drawable/placeholder_icon"/>
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/contest_entry_list_child_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_12"
+        android:layout_marginLeft="@dimen/dim_12"
+        android:textSize="@dimen/sp_10"
         app:typeface="lato_regular"/>
 
 </LinearLayout>

@@ -36,6 +36,7 @@ import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallenges
 public class NewChallengesFragment extends BaseFragment {
 
     private TextView mTvTBarWalletMoney;
+    private TextView mTvTBarNumberOfChallenges;
 
     public NewChallengesFragment() {}
 
@@ -49,6 +50,7 @@ public class NewChallengesFragment extends BaseFragment {
 
     private void initRootView(View rootView) {
         mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
+        mTvTBarNumberOfChallenges = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
     }
 
     /**
@@ -122,6 +124,7 @@ public class NewChallengesFragment extends BaseFragment {
 
                 TabLayout challengesTabLayout = (TabLayout) getView().findViewById(R.id.challenge_tabs);
                 ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.challenge_viewPager);
+                mTvTBarNumberOfChallenges.setText("("+String.valueOf(newChallengesResponseData.size())+")");
 
                 SportsDataProvider sportsDataProvider = new SportsDataProvider();
                 List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
@@ -144,12 +147,17 @@ public class NewChallengesFragment extends BaseFragment {
                             challengesFiltered = getDailySports(newChallengesResponseData);
                             break;
 
+                        case NewChallengesFilterHelper.FILTER_MIXED_SPORTS_ID:
+                            challengesFiltered = getMixSports(newChallengesResponseData);
+                            break;
+
                         default:
                             challengesFiltered = filterHelper.getNewChallengesFilteredOn(sportsTab.getSportsId(), newChallengesResponseData);
                             break;
                     }
 
                     if (challengesFiltered != null) {
+                        sportsTab.setChallengeCount(challengesFiltered.size());
                         tabFragment.onChallengeData(challengesFiltered);
                         tabFragment.setTabDetails(sportsTab);
                         fragmentList.add(tabFragment);
@@ -185,6 +193,18 @@ public class NewChallengesFragment extends BaseFragment {
         }
 
         return dailyChallenge;
+    }
+
+    private List<NewChallengesResponse> getMixSports(List<NewChallengesResponse> newChallengesResponseData) {
+        List<NewChallengesResponse> mixChallenge = new ArrayList<>();
+
+        if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
+            for (NewChallengesResponse newChallenge : newChallengesResponseData) {
+
+            }
+        }
+
+        return mixChallenge;
     }
 
     private void showLoadingProgressBar() {

@@ -36,7 +36,7 @@
         android:visibility="visible"
         android:layout_below="@+id/reward_row_tv_rank"
         android:textColor="@color/white_90"
-        android:textSize="@dimen/sp_14"
+        android:textSize="@dimen/sp_11"
         app:typeface="lato_regular" />
 
         </RelativeLayout>

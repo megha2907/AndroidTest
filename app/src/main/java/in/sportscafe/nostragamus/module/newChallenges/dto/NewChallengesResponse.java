@@ -23,19 +23,19 @@ public class NewChallengesResponse {
     @SerializedName("challenge_name")
     private String challengeName;
 
-    @SerializedName("challenge_starttime")
+    @SerializedName("start_time")
     private String challengeStartTime;
 
-    @SerializedName("challenge_endtime")
+    @SerializedName("end_time")
     private String challengeEndTime;
 
     @SerializedName("sports_id")
     private int sportsId;
 
-    @SerializedName("tournaments")
+    @SerializedName("challenge_tournaments")
     private List<String> tournaments = null;
 
-    @SerializedName("total_matches")
+    @SerializedName("tot_matches")
     private int totalMatches;
 
     @SerializedName("matches_left")
@@ -44,8 +44,8 @@ public class NewChallengesResponse {
     @SerializedName("matches")
     private List<Match> matches = new ArrayList<>();
 
-    @SerializedName("prizes")
-    private double prizes;
+    @SerializedName("prize_money")
+    private int prizes;
 
     public int getChallengeAdapterItemType() {
         return challengeAdapterItemType;
@@ -127,11 +127,11 @@ public class NewChallengesResponse {
         this.matchesLeft = matchesLeft;
     }
 
-    public double getPrizes() {
+    public int getPrizes() {
         return prizes;
     }
 
-    public void setPrizes(double prizes) {
+    public void setPrizes(int prizes) {
         this.prizes = prizes;
     }
 }

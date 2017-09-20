@@ -83,7 +83,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 newChallengesItemViewHolder.challengeTournamentTextView.setText(getTournamentString(newChallengesResponse.getTournaments()));
                 newChallengesItemViewHolder.challengeDateTextView.setText(DateTimeHelper.getChallengeDuration(newChallengesResponse.getChallengeStartTime(), newChallengesResponse.getChallengeEndTime()));
                 newChallengesItemViewHolder.gameLeftTextView.setText(newChallengesResponse.getMatchesLeft() + "/" + newChallengesResponse.getTotalMatches());
-                newChallengesItemViewHolder.prizeTextView.setText(WalletHelper.getFormattedStringOfAmount(newChallengesResponse.getPrizes()));
+                newChallengesItemViewHolder.prizeTextView.setText(Constants.RUPEE_SYMBOL+String.valueOf(newChallengesResponse.getPrizes()));
                 newChallengesItemViewHolder.startTimeTextView.setText(DateTimeHelper.getStartTime(newChallengesResponse.getChallengeStartTime()));
             }
         }
@@ -92,8 +92,14 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     private String getTournamentString(List<String> tournamentList) {
         String str = "";
         if (tournamentList != null && tournamentList.size() > 0) {
-            for (String s : tournamentList) {
-                str = str.concat(", " + s);
+            if (tournamentList.size() > 1) {
+                for (String s : tournamentList) {
+                    str = str.concat(" . " + s);
+                }
+            }else {
+                for (String s : tournamentList) {
+                    str = s;
+                }
             }
         }
         return str;

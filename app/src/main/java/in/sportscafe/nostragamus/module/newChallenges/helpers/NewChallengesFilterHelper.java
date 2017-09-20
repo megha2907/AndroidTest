@@ -13,6 +13,7 @@ public class NewChallengesFilterHelper {
 
     public static final int FILTER_ALL_SPORTS_ID = -11;
     public static final int FILTER_DAILY_SPORTS_ID = -12;
+    public static final int FILTER_MIXED_SPORTS_ID = -13;
 
     public NewChallengesFilterHelper() {}
 
