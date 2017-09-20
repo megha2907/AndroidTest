@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/tab"
-    android:layout_width="wrap_content"
+    android:layout_width="@dimen/dim_130"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:textColor="@color/white"
-    android:textSize="@dimen/sp_9"
-    app:typeface="lato_bold" />
+    android:orientation="vertical">
+
+    <com.jeeva.android.widgets.HmImageView
+        android:id="@+id/tab_iv"
+        android:layout_width="@dimen/dim_20"
+        android:layout_height="@dimen/dim_20"
+        android:layout_gravity="center"
+        android:src="@drawable/sport_all"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/tab_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim_6"
+        android:layout_gravity="center"
+        android:textAllCaps="true"
+        android:textColor="@drawable/tab_tv_selector"
+        android:textSize="@dimen/sp_9"
+        app:typeface="lato_regular" />
+
+</LinearLayout>

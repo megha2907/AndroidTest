@@ -33,7 +33,7 @@ public class Contest {
     private String subtitle;
 
     @SerializedName("prize_money")
-    private Integer prizes;
+    private int prizes;
 
     @SerializedName("contest_type")
     private ContestTypeInfo contestTypeInfo;
@@ -42,10 +42,10 @@ public class Contest {
     private ContestModeInfo contestModeInfo;
 
     @SerializedName("fee")
-    private Integer entryFee;
+    private int entryFee;
 
     @SerializedName("max_participants")
-    private Integer roomSize;
+    private int roomSize;
 
     @SerializedName("filled_rooms")
     private int filledRooms;
@@ -141,17 +141,17 @@ public class Contest {
 
 
     public boolean isFreeEntry() {
-        return entryFee == 0 || entryFee == null;
+        return entryFee == 0 ;
     }
 
 
     public boolean isUnlimitedEntries() {
-        return roomSize == 0 || roomSize == null;
+        return roomSize == 0;
     }
 
 
     public boolean noPrizes() {
-        return prizes == 0 || prizes == null;
+        return prizes == 0 ;
     }
 
     public void setPrizes(Integer prizes) {

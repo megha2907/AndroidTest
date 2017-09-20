@@ -1,10 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/black"
+    android:orientation="vertical"
     tools:context="in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesFragment">
 
     <!-- Heading layout -->
@@ -13,24 +13,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/toolbar_bg"
-        android:minHeight="@dimen/dim_60">
+        android:minHeight="@dimen/dim_40">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="@dimen/dim_16"
-            android:layout_marginLeft="@dimen/dim_16">
+            android:layout_marginLeft="@dimen/dim_16"
+            android:layout_marginRight="@dimen/dim_16">
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/toolbar_heading_one"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Challenges"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_14"
-                app:typeface="lato_regular" />
+                android:layout_centerHorizontal="true">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/toolbar_heading_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Challenges"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/toolbar_heading_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(3)"
+                    android:layout_marginLeft="@dimen/dim_3"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_13"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/toolbar_wallet_money"
@@ -39,14 +56,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="120"
-                android:textColor="@color/white_60"
+                android:textColor="@color/white_70"
                 android:textSize="@dimen/sp_14"
                 app:typeface="lato_regular" />
 
             <ImageView
                 android:id="@+id/toolbar_wallet_icon"
-                android:layout_width="@dimen/dim_14"
-                android:layout_height="@dimen/dim_14"
+                android:layout_width="@dimen/dim_16"
+                android:layout_height="@dimen/dim_16"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dim_4"
                 android:layout_toLeftOf="@+id/toolbar_wallet_money"
@@ -67,12 +84,13 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/challenge_tabs"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_60"
-            app:tabMode="scrollable"
+            android:layout_height="@dimen/dim_64"
+            android:background="@color/new_challenge_tab_bg"
             app:tabGravity="fill"
-            app:tabIndicatorHeight="@dimen/dim_2"
             app:tabIndicatorColor="#008ad6"
-            android:background="@color/new_challenge_tab_bg"/>
+            app:tabIndicatorHeight="@dimen/dim_2"
+            app:tabMaxWidth="@dimen/dim_130"
+            app:tabMode="scrollable" />
 
         <!-- ViewPager -->
         <in.sportscafe.nostragamus.module.common.CustomViewPager
@@ -87,13 +105,13 @@
         android:id="@+id/newChallengeProgressBarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <in.sportscafe.nostragamus.module.common.NostraProgressBar
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
 
     </LinearLayout>
 

@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:minHeight="@dimen/dim_60"
+        android:minHeight="@dimen/dim_48"
         android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/dim_20"
         android:layout_marginRight="@dimen/dim_20">
@@ -44,33 +44,39 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
+            android:layout_marginRight="@dimen/dim_5"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
+            android:textSize="@dimen/sp_13"
+            app:typeface="lato_regular"/>
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/contest_entry_list_group_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="40"
+            android:textColor="@color/grey6"
+            android:textSize="@dimen/sp_10"
+            app:typeface="lato_bold"
+            />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/contest_entry_list_group_size_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=" ENTRIES"
+            android:textColor="@color/grey_999999"
+            android:textSize="@dimen/sp_10"
             app:typeface="lato_regular"/>
 
         <ImageView
             android:id="@+id/contest_entry_list_group_indicator_imgView"
-            android:layout_width="@dimen/dim_12"
-            android:layout_height="@dimen/dim_12" />
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/contest_entry_list_group_size_textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/sp_12"
-            app:typeface="lato_regular"
-            />
+            android:layout_width="@dimen/dim_6"
+            android:layout_height="@dimen/dim_6"
+            android:layout_marginLeft="@dimen/dim_12"/>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dim_0.5"
-        android:layout_marginLeft="@dimen/dim_20"
-        android:layout_marginRight="@dimen/dim_20"
-        android:background="@color/grey"/>
 
 </LinearLayout>

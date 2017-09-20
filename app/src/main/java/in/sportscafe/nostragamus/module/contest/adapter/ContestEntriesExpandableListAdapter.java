@@ -113,17 +113,23 @@ public class ContestEntriesExpandableListAdapter extends BaseExpandableListAdapt
             holder = new GroupHolder();
             holder.rootLayout = (LinearLayout) convertView.findViewById(R.id.contest_entry_list_group_root_layout);
             holder.groupTitleTextView = (TextView) convertView.findViewById(R.id.contest_entry_list_group_title_textView);
-            holder.groupSizeTextView = (TextView) convertView.findViewById(R.id.contest_entry_list_group_size_textView);
+            holder.groupSizeTextView = (TextView) convertView.findViewById(R.id.contest_entry_list_group_size);
             holder.groupIndicatorImageView = (ImageView) convertView.findViewById(R.id.contest_entry_list_group_indicator_imgView);
             convertView.setTag(holder);
         } else {
             holder = (GroupHolder) convertView.getTag();
         }
 
-        if (isExpanded) {
-            holder.groupIndicatorImageView.setImageResource(android.R.drawable.arrow_up_float);
+        if (groupPosition % 2 == 0) {
+            holder.rootLayout.setBackgroundColor(ContextCompat.getColor(holder.rootLayout.getContext(), R.color.black4));
         } else {
-            holder.groupIndicatorImageView.setImageResource(android.R.drawable.arrow_down_float);
+            holder.rootLayout.setBackgroundColor(ContextCompat.getColor(holder.rootLayout.getContext(), R.color.black5));
+        }
+
+        if (isExpanded) {
+            holder.groupIndicatorImageView.setImageResource(R.drawable.challenge_up_arrow);
+        } else {
+            holder.groupIndicatorImageView.setImageResource(R.drawable.challenge_down_arrow);
         }
 
         if (mRoomsList != null && mRoomsList.size() > groupPosition) {
@@ -138,8 +144,8 @@ public class ContestEntriesExpandableListAdapter extends BaseExpandableListAdapt
                 }
             }*/
 
-            holder.groupTitleTextView.setText(roomDto.getRoomTitle());
-            holder.groupSizeTextView.setText(String.valueOf(roomDto.getEntries().size() + " Entries"));
+            holder.groupTitleTextView.setText("Daily 50/50 Contest 1");
+            holder.groupSizeTextView.setText(String.valueOf(roomDto.getEntries().size()));
         }
 
         return convertView;
@@ -159,10 +165,10 @@ public class ContestEntriesExpandableListAdapter extends BaseExpandableListAdapt
             holder = (ChildHolder) convertView.getTag();
         }
 
-        if (childPosition % 2 == 0) {
-            holder.rootLayout.setBackgroundColor(ContextCompat.getColor(parent.getContext(), R.color.black_1));
+        if (groupPosition % 2 == 0) {
+            holder.rootLayout.setBackgroundColor(ContextCompat.getColor(holder.rootLayout.getContext(), R.color.black4));
         } else {
-            holder.rootLayout.setBackgroundColor(ContextCompat.getColor(parent.getContext(), R.color.black2));
+            holder.rootLayout.setBackgroundColor(ContextCompat.getColor(holder.rootLayout.getContext(), R.color.black5));
         }
 
         if (mRoomsList != null && mRoomsList.size() > groupPosition) {
@@ -173,7 +179,7 @@ public class ContestEntriesExpandableListAdapter extends BaseExpandableListAdapt
                 if (entry != null) {
                     holder.nameTextView.setText(!TextUtils.isEmpty(entry.getUserName()) ? entry.getUserName() : "");
                     if (!TextUtils.isEmpty(entry.getUserPicUrl())) {
-                        holder.photoImageView.setImageUrl(entry.getUserPicUrl());
+                      //  holder.photoImageView.setImageUrl(entry.getUserPicUrl());
                     }
                 }
             }
