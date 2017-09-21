@@ -32,9 +32,9 @@ public class TimelineHelper  {
         View view = View.inflate(context, R.layout.match_timeline_node_view, null);
         if (isCompleted) {
             if (played) {
-                view.setBackgroundResource(R.drawable.correct_tick_white);
+                view.setBackgroundResource(R.drawable.timeline_tick_yellow_dot);
             } else {
-                view.setBackgroundResource(R.drawable.share_cross_icon);
+                view.setBackgroundResource(R.drawable.timeline_yellow_cross_ring);
             }
         } else {
             view.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.games_status_timeline_node));

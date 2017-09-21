@@ -29,16 +29,19 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
 import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerFragment;
+import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
+import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewChallengesFragment extends BaseFragment {
+public class NewChallengesFragment extends BaseFragment implements View.OnClickListener {
 
     private TextView mTvTBarWalletMoney;
     private TextView mTvTBarNumberOfChallenges;
 
-    public NewChallengesFragment() {}
+    public NewChallengesFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,10 +54,12 @@ public class NewChallengesFragment extends BaseFragment {
     private void initRootView(View rootView) {
         mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
         mTvTBarNumberOfChallenges = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
+        rootView.findViewById(R.id.toolbar_wallet_rl).setOnClickListener(this);
     }
 
     /**
      * Delivers intent received while newIntent() of activity re-tasking.
+     *
      * @param intent
      */
     public void onNewIntent(Intent intent) {
@@ -124,7 +129,7 @@ public class NewChallengesFragment extends BaseFragment {
 
                 TabLayout challengesTabLayout = (TabLayout) getView().findViewById(R.id.challenge_tabs);
                 ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.challenge_viewPager);
-                mTvTBarNumberOfChallenges.setText("("+String.valueOf(newChallengesResponseData.size())+")");
+                mTvTBarNumberOfChallenges.setText("(" + String.valueOf(newChallengesResponseData.size()) + ")");
 
                 SportsDataProvider sportsDataProvider = new SportsDataProvider();
                 List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
@@ -219,5 +224,19 @@ public class NewChallengesFragment extends BaseFragment {
             getView().findViewById(R.id.newChallengeProgressBarLayout).setVisibility(View.GONE);
             getView().findViewById(R.id.newChallengeContentLayout).setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.toolbar_wallet_rl:
+                onWalletClicked();
+                break;
+        }
+    }
+
+    private void onWalletClicked() {
+        Intent intent = new Intent(getContext(), WalletBalancePopupActivity.class);
+        startActivity(intent);
     }
 }

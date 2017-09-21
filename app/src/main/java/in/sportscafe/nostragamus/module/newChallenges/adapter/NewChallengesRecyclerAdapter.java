@@ -94,7 +94,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         if (tournamentList != null && tournamentList.size() > 0) {
             if (tournamentList.size() > 1) {
                 for (String s : tournamentList) {
-                    str = str.concat(" . " + s);
+                    str = str.concat(" , " + s);
                 }
             }else {
                 for (String s : tournamentList) {
@@ -102,7 +102,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 }
             }
         }
-        return str;
+        return str.replaceAll(","," ·");
     }
 
     @Override

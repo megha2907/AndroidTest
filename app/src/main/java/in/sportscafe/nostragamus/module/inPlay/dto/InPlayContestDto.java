@@ -15,9 +15,6 @@ public class InPlayContestDto {
     @SerializedName("contest_id")
     private int contestId;
 
-    @SerializedName("room_id")
-    private int roomId;
-
     @SerializedName("contest_tab_id")
     private int contestTabId;
 
@@ -51,14 +48,6 @@ public class InPlayContestDto {
 
     public void setContestId(int contestId) {
         this.contestId = contestId;
-    }
-
-    public int getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
     }
 
     public int getContestTabId() {

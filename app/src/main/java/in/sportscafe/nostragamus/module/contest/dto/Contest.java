@@ -53,18 +53,6 @@ public class Contest {
     @SerializedName("filling_rooms")
     private int fillingRooms;
 
-    @SerializedName("max_transfer_limit")
-    private int maxTransferPowerUps;
-
-    @SerializedName("tot_matches")
-    private int totalMatches;
-
-    @SerializedName("tournaments")
-    private List<String> tournaments = new ArrayList<>();
-
-    @SerializedName("powerups")
-    private PowerUpInfo powerUpInfo;
-
     private int contestItemType = ContestAdapterItemType.CONTEST;
 
     public int getContestId() {
@@ -141,7 +129,7 @@ public class Contest {
 
 
     public boolean isFreeEntry() {
-        return entryFee == 0 ;
+        return entryFee == 0;
     }
 
 
@@ -151,7 +139,7 @@ public class Contest {
 
 
     public boolean noPrizes() {
-        return prizes == 0 ;
+        return prizes == 0;
     }
 
     public void setPrizes(Integer prizes) {
@@ -171,30 +159,6 @@ public class Contest {
 //    }
 //}
 
-    public int getTotalMatches() {
-        return totalMatches;
-    }
-
-    public void setTotalMatches(int totalMatches) {
-        this.totalMatches = totalMatches;
-    }
-
-    public int getMaxTransferPowerUps() {
-        return maxTransferPowerUps;
-    }
-
-    public void setMaxTransferPowerUps(int maxTransferPowerUps) {
-        this.maxTransferPowerUps = maxTransferPowerUps;
-    }
-
-    public List<String> getTournaments() {
-        return tournaments;
-    }
-
-    public void setTournaments(List<String> tournaments) {
-        this.tournaments = tournaments;
-    }
-
     public String getChallengeName() {
         return challengeName;
     }
@@ -209,14 +173,6 @@ public class Contest {
 
     public void setContestModeInfo(ContestModeInfo contestModeInfo) {
         this.contestModeInfo = contestModeInfo;
-    }
-
-    public PowerUpInfo getPowerUpInfo() {
-        return powerUpInfo;
-    }
-
-    public void setPowerUpInfo(PowerUpInfo powerUpInfo) {
-        this.powerUpInfo = powerUpInfo;
     }
 
 }

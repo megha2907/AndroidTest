@@ -55,6 +55,11 @@
             android:name=".module.navigation.wallet.paytmAndBank.AddBankDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".module.popups.walletpopups.WalletBalancePopupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.PopupTheme"/>
         <!--
             <activity
             android:name=".module.navigation.submitquestion.matchlist.MatchListFragment"
