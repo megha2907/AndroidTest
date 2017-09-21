@@ -123,7 +123,7 @@ public class CardAnimator {
         }
     }
 
-    private void reorder() {
+    public void reorder() {
 
         View temp = getTopView();
         //RelativeLayout.LayoutParams tempLp = mLayoutsMap.get(mCardCollection.get(0));

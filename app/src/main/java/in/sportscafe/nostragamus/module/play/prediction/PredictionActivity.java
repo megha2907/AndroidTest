@@ -41,9 +41,9 @@ import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActiv
 import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
-import in.sportscafe.nostragamus.module.play.gamePlayHelp.GamePlayHelpActivity;
+import in.sportscafe.nostragamus.module.prediction.gamePlayHelp.GamePlayHelpActivity;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
-import in.sportscafe.nostragamus.module.play.powerup.PowerupBankTransferToPlayActivity;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.PowerupBankTransferToPlayActivity;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
 import in.sportscafe.nostragamus.module.popups.bankpopups.BankInfoDialogFragment;
