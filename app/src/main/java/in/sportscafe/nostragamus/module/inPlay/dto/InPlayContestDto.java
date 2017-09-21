@@ -6,7 +6,7 @@ import org.parceler.Parcel;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.module.prediction.dto.PowerUp;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 
 /**
  * Created by sandip on 12/09/17.

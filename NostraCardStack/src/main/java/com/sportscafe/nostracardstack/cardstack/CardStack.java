@@ -401,4 +401,8 @@ public class CardStack extends RelativeLayout {
         mIndex --;
         reset(false, true);
     }
+
+    public void reorder() {
+        mCardAnimator.reorder();
+    }
 }

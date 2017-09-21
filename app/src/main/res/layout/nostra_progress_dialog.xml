@@ -10,7 +10,6 @@
     <in.sportscafe.nostragamus.module.common.NostraProgressBar
         android:id="@+id/nostraProgressBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:dot_color="@color/radical_red"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

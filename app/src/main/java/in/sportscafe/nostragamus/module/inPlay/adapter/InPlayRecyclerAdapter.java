@@ -147,7 +147,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
                     /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, true, true, isNodeLineRequired);
+                TimelineHelper.addNode(viewHolder.timelineContentParent, true, true,
+                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS);
 
                     /* Title */
                 TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1));
@@ -183,7 +184,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
                     /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, true, true, isNodeLineRequired);
+                TimelineHelper.addNode(viewHolder.timelineContentParent, true, true,
+                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED);
 
                     /* Title */
                 TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1));
@@ -219,7 +221,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
                     /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, true, true, isNodeLineRequired);
+                TimelineHelper.addNode(viewHolder.timelineContentParent, true, true,
+                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED);
 
                     /* Title */
                 TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1));

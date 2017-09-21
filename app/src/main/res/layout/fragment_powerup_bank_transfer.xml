@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="in.sportscafe.nostragamus.module.play.powerup.PowerupBankTransferFragment">
+    tools:context="in.sportscafe.nostragamus.module.prediction.powerupBank.PowerupBankTransferFragment">
 
     <ScrollView
         android:layout_width="match_parent"

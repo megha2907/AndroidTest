@@ -32,7 +32,7 @@ import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataPro
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
-import in.sportscafe.nostragamus.module.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -80,7 +80,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             showLoadingContent();
             InPlayMatchesDataProvider dataProvider = new InPlayMatchesDataProvider();
             dataProvider.getInPlayMatches(mInPlayContest.getRoomId(),
-                    mInPlayContest.getChallengeId(),
+                    /*mInPlayContest.getChallengeId()*/ 482 /* TODO: remove hardcoded value */,
                     new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
                 @Override
                 public void onData(int status, @Nullable InPlayMatchesResponse responses) {
@@ -139,7 +139,8 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
                         isNodeLineRequired = false;
                     }
                     /* Content */
-                    TimelineHelper.addNode(parent, match.isMatchCompleted(), match.isPlayed(), isNodeLineRequired);
+                    TimelineHelper.addNode(parent, match.isMatchCompleted(), match.isPlayed(),
+                            isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN);
 
                     /* Title */
                     TimelineHelper.addTextNode(titleParent, "Game " + (temp+1));
