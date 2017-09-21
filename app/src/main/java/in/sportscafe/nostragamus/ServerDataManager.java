@@ -8,7 +8,6 @@ import java.util.List;
 import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
-import in.sportscafe.nostragamus.module.play.powerup.dto.PowerUpBankStatusResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
 /**

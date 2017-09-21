@@ -9,15 +9,12 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeRequest;
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
-import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsRequest;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
-import in.sportscafe.nostragamus.module.challengeRules.dto.RulesRequest;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchRequest;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
@@ -42,8 +39,8 @@ import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.Gener
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
-import in.sportscafe.nostragamus.module.play.powerup.dto.PowerupBankStatusRequest;
-import in.sportscafe.nostragamus.module.play.powerup.dto.PowerUpBankStatusResponse;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerupBankStatusRequest;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerUpBankStatusResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
 import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
@@ -52,11 +49,13 @@ import in.sportscafe.nostragamus.module.popups.bankpopups.BankTransferRequest;
 import in.sportscafe.nostragamus.module.popups.bankpopups.BankTransferResponse;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
 import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
-import in.sportscafe.nostragamus.module.prediction.dto.AnswerResponse;
-import in.sportscafe.nostragamus.module.prediction.dto.AnswerRequest;
-import in.sportscafe.nostragamus.module.prediction.dto.PlayerPollResponse;
-import in.sportscafe.nostragamus.module.prediction.dto.PlayersPollRequest;
-import in.sportscafe.nostragamus.module.prediction.dto.PredictionAllQuestionResponse;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerResponse;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerRequest;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayerPollResponse;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayersPollRequest;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionAllQuestionResponse;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankRequest;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
 import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
@@ -72,7 +71,6 @@ import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupResponse;
 import in.sportscafe.nostragamus.module.user.lblanding.LBLandingResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
-import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardRequest;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
@@ -357,8 +355,8 @@ public interface NostragamusService {
     @POST("v3/game/temp/getContestRooms")
     Call<ContestEntriesResponse> getContestEntries(@Body ContestEntriesRequest request);
 
-    @POST("v3/game/temp/getMatches")
-    Call<InPlayMatchesResponse> getInPlayMatches(@Body InPlayMatchRequest request);
+    @GET("v3/game/challenges/getUserMatches")
+    Call<InPlayMatchesResponse> getInPlayMatches(@Query("room_id") int roomId, @Query("challenge_id") int challengeId);
 
     @GET("v3/game/rooms/leaderboards")
     Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(@Query("room_id") Integer userLeaderBoardRequest);
@@ -375,4 +373,7 @@ public interface NostragamusService {
             @Query("is_match_complete") boolean isMatchComplete,
             @Query("is_minority_option") boolean isMinorityOption
     );
+
+    @POST("v3/game/users/transferFromBank")
+    Call<TransferPowerUpFromBankResponse> transferPowerUpsFromBank(@Body TransferPowerUpFromBankRequest request);
 }

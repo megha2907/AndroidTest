@@ -25,9 +25,9 @@ public class InPlayMatchesDataProvider {
     public InPlayMatchesDataProvider() {
     }
 
-    public void getInPlayMatches(int contestId, @NonNull InPlayMatchesDataProviderListener listener) {
+    public void getInPlayMatches(int roomId, int challlengeId, @NonNull InPlayMatchesDataProviderListener listener) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            loadInPlayMatchesDataFromServer(contestId, listener);
+            loadInPlayMatchesDataFromServer(roomId, challlengeId, listener);
         } else {
             Log.d(TAG, "No Network connection");
             if (listener != null) {
@@ -36,12 +36,8 @@ public class InPlayMatchesDataProvider {
         }
     }
 
-    private void loadInPlayMatchesDataFromServer(int contestId, final InPlayMatchesDataProviderListener listener) {
-
-        InPlayMatchRequest request = new InPlayMatchRequest();
-        request.setContestId(contestId);
-
-        MyWebService.getInstance().getInPlayMatches(request).enqueue(new ApiCallBack<InPlayMatchesResponse>() {
+    private void loadInPlayMatchesDataFromServer(int roomId, int challengeId, final InPlayMatchesDataProviderListener listener) {
+        MyWebService.getInstance().getInPlayMatches(roomId, challengeId).enqueue(new ApiCallBack<InPlayMatchesResponse>() {
             @Override
             public void onResponse(Call<InPlayMatchesResponse> call, Response<InPlayMatchesResponse> response) {
                 super.onResponse(call, response);

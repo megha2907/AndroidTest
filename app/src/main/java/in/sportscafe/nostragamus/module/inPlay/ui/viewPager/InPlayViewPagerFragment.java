@@ -99,6 +99,8 @@ public class InPlayViewPagerFragment extends BaseFragment {
                     if (inplay.getContestList() != null && inplay.getContestList().size() > 0 && !TextUtils.isEmpty(status)) {
                         for (InPlayContestDto contestDto : inplay.getContestList()) {
 
+                            contestDto.setChallengeId(inplay.getChallengeId());     // To identify every contest that which challenge it belongs
+
                             listItem = new InPlayListItem();
                             listItem.setItemData(contestDto);
 
