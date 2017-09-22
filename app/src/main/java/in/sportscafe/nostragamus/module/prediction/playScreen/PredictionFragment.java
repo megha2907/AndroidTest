@@ -2,14 +2,17 @@ package in.sportscafe.nostragamus.module.prediction.playScreen;
 
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -359,6 +362,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     public void onPowerUpBankClicked() {
         Intent intent = new Intent(getActivity(), PowerupBankTransferToPlayActivity.class);
+        if (getArguments() != null) {
+            intent.putExtras(getArguments());
+        }
         getActivity().startActivityForResult(intent, POWER_UP_BANK_ACTIVITY_REQUEST_CODE);
     }
 
@@ -884,4 +890,33 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             }
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mPowerUpUpdatedReceiver,
+                new IntentFilter(Constants.IntentActions.ACTION_POWERUPS_UPDATED));
+    }
+
+    @Override
+    public void onStop() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mPowerUpUpdatedReceiver);
+        super.onStop();
+    }
+
+    /**
+     * As per UI design, powerups need to be updated when Bank-Activity there
+     */
+    BroadcastReceiver mPowerUpUpdatedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && intent.getExtras() != null) {
+                PowerUp powerUp = Parcels.unwrap(intent.getExtras().getParcelable(Constants.BundleKeys.POWERUPS));
+                if (powerUp != null) {
+                    mPowerUp = powerUp;
+                    updatePowerUpDetails(mPowerUp);
+                }
+            }
+        }
+    };
 }

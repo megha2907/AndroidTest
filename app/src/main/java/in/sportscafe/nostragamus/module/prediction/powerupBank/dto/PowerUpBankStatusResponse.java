@@ -2,33 +2,22 @@ package in.sportscafe.nostragamus.module.prediction.powerupBank.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
+
 /**
  * Created by sandip on 21/07/17.
  */
 
-public class PowerUpBankStatusResponse implements Cloneable {
+public class PowerUpBankStatusResponse {
 
     @SerializedName("maxTransferLimit")
     private int maxTransferLimit;
 
     @SerializedName("alreadyTransferred")
-    private AlreadyTransferredPowerupDto alreadyTransferred;
+    private PowerUp alreadyTransferred;
 
     @SerializedName("userBalance")
-    private UserBalancePowerupDto userBalance;
-
-
-    /* Clones the object */
-    public PowerUpBankStatusResponse clone() {
-        try {
-            PowerUpBankStatusResponse obj = (PowerUpBankStatusResponse)super.clone();
-            obj.alreadyTransferred = alreadyTransferred.clone();
-            obj.userBalance = userBalance.clone();
-            return obj;
-        } catch (CloneNotSupportedException e) {}
-        return null;
-    }
-
+    private PowerUp userBalance;
 
     public int getMaxTransferLimit() {
         return maxTransferLimit;
@@ -38,19 +27,19 @@ public class PowerUpBankStatusResponse implements Cloneable {
         this.maxTransferLimit = maxTransferLimit;
     }
 
-    public AlreadyTransferredPowerupDto getAlreadyTransferred() {
+    public PowerUp getAlreadyTransferred() {
         return alreadyTransferred;
     }
 
-    public void setAlreadyTransferred(AlreadyTransferredPowerupDto alreadyTransferred) {
+    public void setAlreadyTransferred(PowerUp alreadyTransferred) {
         this.alreadyTransferred = alreadyTransferred;
     }
 
-    public UserBalancePowerupDto getUserBalance() {
+    public PowerUp getUserBalance() {
         return userBalance;
     }
 
-    public void setUserBalance(UserBalancePowerupDto userBalance) {
+    public void setUserBalance(PowerUp userBalance) {
         this.userBalance = userBalance;
     }
 

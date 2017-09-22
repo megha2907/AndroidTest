@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.prediction.powerupBank.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 
 
 /**
@@ -10,16 +11,47 @@ import com.google.gson.annotations.SerializedName;
 
 public class TransferPowerUpFromBankResponse {
 
-    @SerializedName("data")
-    private BankTransfer bankTransfer;
+    @SerializedName("user_id")
+    private int userId;
 
-    @SerializedName("data")
-    public BankTransfer getBankTransfer() {
-        return bankTransfer;
+    @SerializedName("room_id")
+    private int roomId;
+
+    @SerializedName("powerups")
+    private PowerUp powerUp;
+
+    @SerializedName("powerups_from_bank")
+    private PowerUp powerUpFromBank;
+
+    public int getUserId() {
+        return userId;
     }
 
-    @SerializedName("data")
-    public void setBankTransfer(BankTransfer bankTransfer) {
-        this.bankTransfer = bankTransfer;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    public PowerUp getPowerUp() {
+        return powerUp;
+    }
+
+    public void setPowerUp(PowerUp powerUp) {
+        this.powerUp = powerUp;
+    }
+
+    public PowerUp getPowerUpFromBank() {
+        return powerUpFromBank;
+    }
+
+    public void setPowerUpFromBank(PowerUp powerUpFromBank) {
+        this.powerUpFromBank = powerUpFromBank;
     }
 }

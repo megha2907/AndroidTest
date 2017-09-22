@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
+
 /**
  * Created by sandip on 21/09/17.
  */
@@ -17,7 +19,7 @@ public class TransferPowerUpFromBankRequest {
     private int roomId;
 
     @SerializedName("add_powerups")
-    private HashMap<String, Integer> powerUps = new HashMap<>();
+    private PowerUp powerUps;
 
     public int getChallengeId() {
         return challengeId;
@@ -35,11 +37,11 @@ public class TransferPowerUpFromBankRequest {
         this.roomId = roomId;
     }
 
-    public HashMap<String, Integer> getPowerUps() {
+    public PowerUp getPowerUps() {
         return powerUps;
     }
 
-    public void setPowerUps(HashMap<String, Integer> powerUps) {
+    public void setPowerUps(PowerUp powerUps) {
         this.powerUps = powerUps;
     }
 }
