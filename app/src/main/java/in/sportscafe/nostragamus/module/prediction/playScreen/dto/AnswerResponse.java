@@ -8,14 +8,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class AnswerResponse {
 
-    @SerializedName("powerups_remaining")
-    private PowerUp powerUp;
+    @SerializedName("data")
+    private AnswerResponseData answerResponseData;
 
-    public PowerUp getPowerUp() {
-        return powerUp;
+    public AnswerResponseData getAnswerResponseData() {
+        return answerResponseData;
     }
 
-    public void setPowerUp(PowerUp powerUp) {
-        this.powerUp = powerUp;
+    public void setAnswerResponseData(AnswerResponseData answerResponseData) {
+        this.answerResponseData = answerResponseData;
     }
 }

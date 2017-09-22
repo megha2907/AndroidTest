@@ -183,8 +183,8 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
      * @param question
      */
     public void onShuffleQuestion(PredictionQuestion question) {
-        /*this.remove(question);
-        this.add(question);*/
+        this.remove(question);
+        this.add(question);
     }
 
     /**

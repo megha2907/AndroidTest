@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.prediction.playScreen;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +37,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.newChallenges.dto.MatchParty;
 import in.sportscafe.nostragamus.module.prediction.gamePlayHelp.GamePlayHelpActivity;
+import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionsCardBaseAdapter;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.PowerupBankTransferToPlayActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionAdapterListener;
 import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionsCardAdapter;
@@ -73,6 +75,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     private PowerUp mPowerUp;
     private InPlayContestDto mChosenContest;
     private InPlayMatch mMatch;
+    private ProgressDialog mProgressDialog;
+    private TextView mCounterTextView;
+    private TextView mNextTextView;
 
     public PredictionFragment() {}
 
@@ -104,7 +109,10 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         RelativeLayout playerPollPowerup = (RelativeLayout) rootView.findViewById(R.id.prediction_player_poll_Layout);
         Button thirdOptionButton = (Button) rootView.findViewById(R.id.prediction_third_option_button);
         mThirdOptionLayout = (LinearLayout) rootView.findViewById(R.id.prediction_third_option_layout);
+        mCounterTextView = (TextView) rootView.findViewById(R.id.prediction_question_counter_textView);
+        mNextTextView = (TextView) rootView.findViewById(R.id.prediction_question_next_textView);
 
+        mNextTextView.setOnClickListener(this);
         powerUpBankImgView.setOnClickListener(this);
         helpPlayImgView.setOnClickListener(this);
         doublerPowerup.setOnClickListener(this);
@@ -151,6 +159,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     }
 
     private void initMembers() {
+        mProgressDialog = new ProgressDialog(this.getContext());
+
         Bundle args = getArguments();
         if (args != null) {
             if (args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
@@ -185,8 +195,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     }
 
     private void loadQuestions() {
-        if (mMatch != null && mChosenContest != null) {
-            NostraProgressDialog.getInstance(getContext()).showProgress();
+        if (mMatch != null && mChosenContest != null && getActivity() != null) {
             PredictionQuestionsDataProvider dataProvider = new PredictionQuestionsDataProvider();
             dataProvider.getAllQuestions(mMatch.getMatchId(), mChosenContest.getRoomId(), getAllQuestionsApiListener());
         } else {
@@ -199,13 +208,11 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         return new PredictionQuestionsDataProvider.QuestionDataProviderListener() {
             @Override
             public void onData(int status, @Nullable PredictionAllQuestionResponse questionsResponse) {
-                NostraProgressDialog.getInstance(getContext()).dismissProgress();
                 onAllQuestionApiSuccessResponse(questionsResponse);
             }
 
             @Override
             public void onError(int status) {
-                NostraProgressDialog.getInstance(getContext()).dismissProgress();
                 handleError(status);
             }
         };
@@ -233,32 +240,30 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     private void showQuestionsCounter() {
         if (getView() != null && mQuestionsCardAdapter != null) {
-            TextView counterTextView = (TextView) getView().findViewById(R.id.prediction_question_counter_textView);
-            TextView nextTextView = (TextView) getView().findViewById(R.id.prediction_question_next_textView);
-
             String questionNumCounter = getTopVisibleCardPosition() + "/" + mQuestionsCardAdapter.getCount();
-            counterTextView.setText(String.valueOf(questionNumCounter));
+            mCounterTextView.setText(questionNumCounter);
 
-            nextTextView.setOnClickListener(this);
+            RelativeLayout relativeLayout = (RelativeLayout) getView().findViewById(R.id.prediction_questions_info_parent);
+            relativeLayout.setVisibility(View.VISIBLE);
         }
     }
 
     private void initHeading() {
         if (getView() != null && getActivity() != null) {
-            TextView headingTextView = (TextView) getView().findViewById(R.id.prediction_heading_textView);
+            TextView headingParty1TextView = (TextView) getView().findViewById(R.id.prediction_heading_party1_textView);
+            TextView headingParty2TextView = (TextView) getView().findViewById(R.id.prediction_heading_party2_textView);
             TextView subHeadingTextView = (TextView) getView().findViewById(R.id.prediction_sub_heading_textView);
 
-            String title = "";
             if (mMatch != null && mMatch.getMatchParties() != null && mMatch.getMatchParties().size() == 2) {
                 MatchParty party1 = mMatch.getMatchParties().get(0);
                 MatchParty party2 = mMatch.getMatchParties().get(1);
 
                 if (party1 != null && party2 != null &&
                         !TextUtils.isEmpty(party1.getPartyName()) && !TextUtils.isEmpty(party2.getPartyName())) {
-                    title = party1.getPartyName() + " vs " + party2.getPartyName();
+                    headingParty1TextView.setText(party1.getPartyName());
+                    headingParty2TextView.setText(party2.getPartyName());
                 }
             }
-            headingTextView.setText(title);
 
             if (mChosenContest != null && !TextUtils.isEmpty(mChosenContest.getContestName())) {
                 subHeadingTextView.setText(mChosenContest.getContestName());
@@ -380,18 +385,18 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             int questionId = getTopVisibleCardQuestionId();
             if (mChosenContest != null && questionId >= 0) {
 
-                NostraProgressDialog.getInstance(getContext()).showProgress();
+                showProgress();
                 PredictionPlayersPollDataProvider playersPollDataProvider = new PredictionPlayersPollDataProvider();
                 playersPollDataProvider.getPlayersPoll(questionId, mChosenContest.getRoomId(), new PredictionPlayersPollDataProvider.PlayersPollDataProviderListener() {
                     @Override
                     public void onData(int status, @Nullable PlayerPollResponse playersPolls) {
-                        NostraProgressDialog.getInstance(getContext()).dismissProgress();
+                        hideProgress();
                         onPlayerPollSuccess(playersPolls);
                     }
 
                     @Override
                     public void onError(int status) {
-                        NostraProgressDialog.getInstance(getContext()).dismissProgress();
+                        hideProgress();
                         handleError(status);
                     }
                 });
@@ -658,14 +663,15 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                         break;
 
                     case CardDirection.DOWN:
-                        /*if (mQuestionsCardAdapter != null) {
-                            mQuestionsCardAdapter.onShuffleQuestion(mQuestionsCardAdapter.getItem(index));
-                        }*/
-                        if (mCardStack != null) {
-                            mCardStack.reset(true);
+                        if (mQuestionsCardAdapter != null && mCardStack != null) {
+                            PredictionQuestion question = mQuestionsCardAdapter.getItem(index);
+                            mCardStack.shuffle(question);
                         }
                         break;
+                }
 
+                if (position+1 == mQuestionsCardAdapter.getCount()-1) {
+                    hideNextButton();
                 }
             }
 
@@ -674,6 +680,22 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 Log.d("Card", "Top card tapped");
             }
         };
+    }
+
+    private void hideNextButton() {
+        mNextTextView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showProgress() {
+        if (mProgressDialog != null) {
+            mProgressDialog.show();
+        }
+    }
+
+    private void hideProgress() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
     }
 
     /**
@@ -691,7 +713,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         if (mQuestionsCardAdapter != null && cardIndexPos < mQuestionsCardAdapter.getCount() && mChosenContest != null) {
             PredictionQuestion question = mQuestionsCardAdapter.getItem(cardIndexPos);
             if (question != null) {
-                NostraProgressDialog.getInstance(getContext()).showProgress();
+                showProgress();
 
                 mSavePredictionAnswerProvider.savePredictionAnswer(question.getPowerUp(),
                         /*mChosenContest.getRoomId()*/ 8712 /* TODO: remove  */,
@@ -704,17 +726,24 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                         new SavePredictionAnswerProvider.SavePredictionAnswerListener() {
                             @Override
                             public void onData(int status, @Nullable AnswerResponse answerResponse) {
-                                NostraProgressDialog.getInstance(getContext()).dismissProgress();
+                                hideProgress();
                                 onAnswerSavedSuccessfully(isMatchCompleted, answerResponse);
                             }
 
                             @Override
                             public void onError(int status) {
-                                NostraProgressDialog.getInstance(getContext()).dismissProgress();
-                                if (mCardStack != null) {
-                                    mCardStack.undo();
-                                }
-                                handleError(status);
+                                hideProgress();
+
+                                AlertsHelper.showAlert(getContext(), "Error", "Could not save your prediction, try again!",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                /* Undo drag as answer is failed to save */
+                                                if (mCardStack != null) {
+                                                    mCardStack.undo();
+                                                }
+                                            }
+                                        });
                             }
                         });
             }
@@ -725,9 +754,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     }
 
     private void onAnswerSavedSuccessfully(boolean isMatchCompleted, AnswerResponse answerResponse) {
-        if (answerResponse != null && mQuestionsCardAdapter != null) {
+        if (answerResponse != null && answerResponse.getAnswerResponseData() != null && mQuestionsCardAdapter != null) {
             /* Remove Question from Adapter-list */
-            mQuestionsCardAdapter.onSuccessfulAnswer(mQuestionsCardAdapter.getItem(getTopVisibleCardPosition()));
+//            mQuestionsCardAdapter.onSuccessfulAnswer(mQuestionsCardAdapter.getItem(getTopVisibleCardPosition()));
 
             if (isMatchCompleted) {
                 /* On success response for the last question only allows to consider match as completed */
@@ -737,8 +766,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 showQuestionsCounter();
                 showNeitherIfRequired();
 
-                if (answerResponse.getPowerUp() != null) {
-                    mPowerUp = answerResponse.getPowerUp();
+                if (answerResponse.getAnswerResponseData().getPowerUp() != null) {
+                    mPowerUp = answerResponse.getAnswerResponseData().getPowerUp();
                     updatePowerUpDetails(mPowerUp);
                 }
             }
