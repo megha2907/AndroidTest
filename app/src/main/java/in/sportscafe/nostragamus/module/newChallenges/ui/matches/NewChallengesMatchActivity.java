@@ -3,20 +3,17 @@ package in.sportscafe.nostragamus.module.newChallenges.ui.matches;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
  * Created by deepanshi on 9/1/17.
  */
 
-public class MatchesTimelineActivity extends NostraBaseActivity implements MatchesTimelineFragmentListener {
+public class NewChallengesMatchActivity extends NostraBaseActivity implements NewChallengeMatchFragmentListener {
 
     /*@Override
     public String getScreenName() {
@@ -60,8 +57,8 @@ public class MatchesTimelineActivity extends NostraBaseActivity implements Match
         if (getIntent() != null) {
             args = getIntent().getExtras();
         }
-        MatchesTimelineFragment matchesTimelineFragment = new MatchesTimelineFragment();
-        matchesTimelineFragment.setArguments(args);
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, matchesTimelineFragment);
+        NewChallengesMatchesFragment newChallengesMatchesFragment = new NewChallengesMatchesFragment();
+        newChallengesMatchesFragment.setArguments(args);
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, newChallengesMatchesFragment);
     }
 }

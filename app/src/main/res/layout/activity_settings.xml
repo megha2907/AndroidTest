@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:gravity="center_vertical"
-                android:text="Daily and Hourly notifications serve to inform you of \nupcoming matches in the sports you follow"
+                android:text="Daily and Hourly notifications serve to inform you of \nupcoming matchList in the sports you follow"
                 android:textSize="@dimen/dp_12"
                 android:textColor="@color/textcolorlight"
                 android:layout_marginLeft="@dimen/dp_10"/>

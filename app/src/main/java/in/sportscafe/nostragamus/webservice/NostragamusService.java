@@ -17,6 +17,9 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestRequest;
+import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
@@ -358,6 +361,9 @@ public interface NostragamusService {
     @GET("v3/game/challenges/getUserMatches")
     Call<InPlayMatchesResponse> getInPlayMatches(@Query("room_id") int roomId, @Query("challenge_id") int challengeId);
 
+    @GET("v3/game/challenges/getUserMatches")
+    Call<NewChallengeMatchesResponse> getNewChallengeMatches(@Query("challenge_id") int challengeId);
+
     @GET("v3/game/rooms/leaderboards")
     Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(@Query("room_id") Integer userLeaderBoardRequest);
 
@@ -376,4 +382,8 @@ public interface NostragamusService {
 
     @POST("v3/game/users/transferFromBank")
     Call<TransferPowerUpFromBankResponse> transferPowerUpsFromBank(@Body TransferPowerUpFromBankRequest request);
+
+    @POST("/v3/game/challenges/joinPseudoContest")
+    Call<JoinPseudoContestResponse> joinPsuedoContest(@Body JoinPseudoContestRequest request);
+
 }

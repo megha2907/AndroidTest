@@ -26,7 +26,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dataProvider.PowerupBankStatusApiModelImpl;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dataProvider.TransferPowerUpFromBankApiImpl;
@@ -41,8 +41,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
     private PowerUpBankTransferFragmentListener mFragmentListener;
 
-//    private Challenge mChallenge;
-    private InPlayContestDto mInPlayContest;
+    private PlayScreenDataDto mPlayScreenData;
     private PowerUpBankStatusResponse mApiResponse;
     private PowerUpBankStatusResponse mApiResponseForReset;
     private PowerUp mUserDemandPowerup;
@@ -86,11 +85,11 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     }
 
     private void fetchPowerupBankStatusFromServer() {
-        if (mInPlayContest != null) {
+        if (mPlayScreenData != null) {
             if (Nostragamus.getInstance().hasNetworkConnection()) {
                 showProgressbar();
                 PowerupBankStatusApiModelImpl apiModel = PowerupBankStatusApiModelImpl.newInstance(getApiListener());
-                apiModel.performApiCall(mInPlayContest.getChallengeId());
+                apiModel.performApiCall(mPlayScreenData.getChallengeId());
             } else {
                 showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
             }
@@ -116,9 +115,9 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                 dismissProgressbar();
                 onApiSuccess(response);
 
-                if (mFragmentListener != null && mInPlayContest != null && response != null) {
+                if (mFragmentListener != null && mPlayScreenData != null && response != null) {
                     Bundle args = new Bundle();
-                    args.putString(Constants.BundleKeys.CHALLENGE_NAME, mInPlayContest.getContestName());
+                    args.putString(Constants.BundleKeys.CHALLENGE_NAME, mPlayScreenData.getSubTitle());
                     args.putInt(Constants.BundleKeys.MAX_TRANSFER_COUNT, response.getMaxTransferLimit());
                     mFragmentListener.updatePowerUpInfoDetails(args);
                 }
@@ -356,7 +355,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
             mChallenge = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.CHALLENGE_INFO));
         }*/
         if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
-            mInPlayContest = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+            mPlayScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
         }
     }
 
@@ -448,13 +447,13 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     }
 
     private void performTransferPowerupApiCall() {
-        if (isPowerupDemanded() && mUserDemandPowerup != null && mInPlayContest != null) {
+        if (isPowerupDemanded() && mUserDemandPowerup != null && mPlayScreenData != null) {
 
             showProgressbar();
             TransferPowerUpFromBankApiImpl.newInstance(getTransferToChallengeListener()).
                     transferToChallenge(mUserDemandPowerup,
-                            mInPlayContest.getChallengeId(),
-                            mInPlayContest.getRoomId());
+                            mPlayScreenData.getChallengeId(),
+                            mPlayScreenData.getRoomId());
 
         } else {
             showMessage("Please add any Powerup to transfer to NewChallengesResponse");

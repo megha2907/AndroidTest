@@ -10,25 +10,14 @@ import java.util.List;
 
 public class InPlayMatchesResponse {
 
-    @SerializedName("contest_id")
-    private int contestId;
-
     @SerializedName("data")
-    private List<InPlayMatch> inPlayMatchList;
+    private InPlayMatchesResponseData data;
 
-    public int getContestId() {
-        return contestId;
+    public InPlayMatchesResponseData getData() {
+        return data;
     }
 
-    public void setContestId(int contestId) {
-        this.contestId = contestId;
-    }
-
-    public List<InPlayMatch> getInPlayMatchList() {
-        return inPlayMatchList;
-    }
-
-    public void setInPlayMatchList(List<InPlayMatch> inPlayMatchList) {
-        this.inPlayMatchList = inPlayMatchList;
+    public void setData(InPlayMatchesResponseData data) {
+        this.data = data;
     }
 }

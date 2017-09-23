@@ -10,6 +10,11 @@ public class PredictionActivity extends NostraBaseActivity implements Prediction
 
     private static final String TAG = PredictionActivity.class.getSimpleName();
 
+    public interface LaunchedFrom {
+        int NEW_CHALLENGES_SCREEN_PSEUDO_PLAY = 111;
+        int IN_PLAY_SCREEN_PLAY_MATCH = 121;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setShouldAnimateActivity(true);
