@@ -80,7 +80,7 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
         if (contest != null) {
             mTvTBarHeading.setText(contest.getConfigName());
             mTvTBarSubHeading.setText("India vs Aus T20");
-            joinContest.setText("Pay " + Constants.RUPEE_SYMBOL + contest.getEntryFee().toString() + " and Join Contest");
+            joinContest.setText("Pay " + Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()) + " and Join Contest");
         }
 
         int amount = (int) WalletHelper.getTotalBalance();

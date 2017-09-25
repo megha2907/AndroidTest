@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <!-- Top layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_30"
+        android:background="@color/blue_104468">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/matches_timeline_matches_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:text="5/10"
+            android:layout_marginLeft="@dimen/dim_20"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_bold" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/matches_timeline_matches_left_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white_60"
+            android:text="Matches Left"
+            android:textAllCaps="true"
+            android:layout_toRightOf="@+id/matches_timeline_matches_left"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dim_6"
+            android:textSize="@dimen/sp_10"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/matches_timeline_match_expires_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textAllCaps="false"
+            android:text="70h 12m 15s"
+            android:layout_marginRight="@dimen/dim_20"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_bold" />
+
+    </RelativeLayout>
+
+    <!-- Information Layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBackground"
+        android:paddingBottom="@dimen/dim_15">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/matches_timeline_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/bluecolor1"
+            android:text="How to join"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dim_10"
+            android:textSize="@dimen/sp_14"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/matches_timeline_subheading_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey6"
+            android:gravity="center"
+            android:text="Now you can join multiple contests in a challenge!"
+            android:layout_below="@+id/matches_timeline_heading"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dim_10"
+            android:textSize="@dimen/sp_11"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/newchallenge_matches_subheading_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey6"
+            android:gravity="center"
+            android:text="You can now play a match before you join a contest, or \n you can join the contest straight away!"
+            android:layout_below="@+id/matches_timeline_subheading_one"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dim_10"
+            android:textSize="@dimen/sp_11"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/new_challenge_matches_join_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_40"
+            android:layout_marginTop="@dimen/dim_10"
+            android:layout_marginLeft="@dimen/dim_40"
+            android:background="@drawable/light_blue_button_selector"
+            android:onClick="onClick"
+            android:paddingBottom="@dimen/dp_4"
+            android:text="Join Contest"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/newchallenge_matches_subheading_two"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            app:typeface="lato_regular" />
+
+    </RelativeLayout>
+
+    <!-- Matches Layout -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/match_timeline_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/challenge_timeline_tv_match_left"/>
+
+</LinearLayout>

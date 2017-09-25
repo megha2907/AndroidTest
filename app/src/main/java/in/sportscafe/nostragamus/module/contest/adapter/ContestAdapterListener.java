@@ -8,5 +8,5 @@ import android.os.Bundle;
 
 public interface ContestAdapterListener {
     void onContestClicked(Bundle args);
-    void onJoinContestClicked();
+    void onJoinContestClicked(Bundle args);
 }

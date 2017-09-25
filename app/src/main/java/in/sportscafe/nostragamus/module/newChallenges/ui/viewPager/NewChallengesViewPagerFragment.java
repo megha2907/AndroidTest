@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,7 +26,7 @@ import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapte
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.module.newChallenges.ui.matches.MatchesTimelineActivity;
+import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,7 +99,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
         return new NewChallengeAdapterListener() {
             @Override
             public void onChallengeClicked(Bundle args) {
-                goToNewMatchesTimeline(args);
+                launchNewChallengesMatchesActivity(args);
             }
 
             @Override
@@ -110,11 +109,11 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
         };
     }
 
-    private void goToNewMatchesTimeline(Bundle args) {
-        if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), MatchesTimelineActivity.class);
+    private void launchNewChallengesMatchesActivity(Bundle args) {
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            Intent intent = new Intent(getActivity(), NewChallengesMatchActivity.class);
             intent.putExtras(args);
-            startActivity(intent);
+            getActivity().startActivity(intent);
         }
     }
 

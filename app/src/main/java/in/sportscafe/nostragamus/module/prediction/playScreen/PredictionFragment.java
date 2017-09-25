@@ -2,14 +2,17 @@ package in.sportscafe.nostragamus.module.prediction.playScreen;
 
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,18 +36,14 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
-import in.sportscafe.nostragamus.module.newChallenges.dto.MatchParty;
 import in.sportscafe.nostragamus.module.prediction.gamePlayHelp.GamePlayHelpActivity;
-import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionsCardBaseAdapter;
-import in.sportscafe.nostragamus.module.prediction.powerupBank.PowerupBankTransferToPlayActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionAdapterListener;
 import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionsCardAdapter;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dataProvider.PredictionPlayersPollDataProvider;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dataProvider.PredictionQuestionsDataProvider;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dataProvider.SavePredictionAnswerProvider;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerResponse;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayerPollResponse;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayersPoll;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
@@ -52,8 +51,8 @@ import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUpEnum;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionAllQuestionResponse;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionQuestion;
 import in.sportscafe.nostragamus.module.prediction.playScreen.helper.PredictionUiHelper;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.PowerupBankTransferToPlayActivity;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
-import in.sportscafe.nostragamus.utils.NostraProgressDialog;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -73,8 +72,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     private LinearLayout mThirdOptionLayout;
     private PredictionUiHelper mUiHelper;
     private PowerUp mPowerUp;
-    private InPlayContestDto mChosenContest;
-    private InPlayMatch mMatch;
+    private PlayScreenDataDto mPlayScreenData;
     private ProgressDialog mProgressDialog;
     private TextView mCounterTextView;
     private TextView mNextTextView;
@@ -163,17 +161,14 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
         Bundle args = getArguments();
         if (args != null) {
-            if (args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
-                mChosenContest = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
-            }
-            if (args.containsKey(Constants.BundleKeys.INPLAY_MATCH)) {
-                mMatch = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_MATCH));
+            if (args.containsKey(Constants.BundleKeys.PLAY_SCREEN_DATA)) {
+                mPlayScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA));
             }
 
-            if (mChosenContest != null  && mMatch != null) {
+            if (mPlayScreenData != null) {
                 mUiHelper = new PredictionUiHelper();
                 mSavePredictionAnswerProvider = new SavePredictionAnswerProvider();
-                mPowerUp = mChosenContest.getPowerUp();
+                mPowerUp = mPlayScreenData.getPowerUp();
             } else {
                 handleErrorAndFinishActivity();
             }
@@ -195,9 +190,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     }
 
     private void loadQuestions() {
-        if (mMatch != null && mChosenContest != null && getActivity() != null) {
+        if (mPlayScreenData != null && getActivity() != null) {
             PredictionQuestionsDataProvider dataProvider = new PredictionQuestionsDataProvider();
-            dataProvider.getAllQuestions(mMatch.getMatchId(), mChosenContest.getRoomId(), getAllQuestionsApiListener());
+            dataProvider.getAllQuestions(mPlayScreenData.getMatchId(), mPlayScreenData.getRoomId(), getAllQuestionsApiListener());
         } else {
             handleErrorAndFinishActivity();
         }
@@ -254,19 +249,18 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             TextView headingParty2TextView = (TextView) getView().findViewById(R.id.prediction_heading_party2_textView);
             TextView subHeadingTextView = (TextView) getView().findViewById(R.id.prediction_sub_heading_textView);
 
-            if (mMatch != null && mMatch.getMatchParties() != null && mMatch.getMatchParties().size() == 2) {
-                MatchParty party1 = mMatch.getMatchParties().get(0);
-                MatchParty party2 = mMatch.getMatchParties().get(1);
+            if (mPlayScreenData != null) {
+                String party1 = mPlayScreenData.getMatchPartyTitle1();
+                String party2 = mPlayScreenData.getMatchPartyTitle2();
 
-                if (party1 != null && party2 != null &&
-                        !TextUtils.isEmpty(party1.getPartyName()) && !TextUtils.isEmpty(party2.getPartyName())) {
-                    headingParty1TextView.setText(party1.getPartyName());
-                    headingParty2TextView.setText(party2.getPartyName());
+                if (!TextUtils.isEmpty(party1) && !TextUtils.isEmpty(party2)) {
+                    headingParty1TextView.setText(party1);
+                    headingParty2TextView.setText(party2);
                 }
-            }
 
-            if (mChosenContest != null && !TextUtils.isEmpty(mChosenContest.getContestName())) {
-                subHeadingTextView.setText(mChosenContest.getContestName());
+                if (!TextUtils.isEmpty(mPlayScreenData.getSubTitle())) {
+                    subHeadingTextView.setText(mPlayScreenData.getSubTitle());
+                }
             }
         }
     }
@@ -359,6 +353,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     public void onPowerUpBankClicked() {
         Intent intent = new Intent(getActivity(), PowerupBankTransferToPlayActivity.class);
+        if (getArguments() != null) {
+            intent.putExtras(getArguments());
+        }
         getActivity().startActivityForResult(intent, POWER_UP_BANK_ACTIVITY_REQUEST_CODE);
     }
 
@@ -383,11 +380,11 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         if (canApplyPowerUp(PowerUpEnum.PLAYER_POLL)) {
 
             int questionId = getTopVisibleCardQuestionId();
-            if (mChosenContest != null && questionId >= 0) {
+            if (mPlayScreenData != null && questionId >= 0) {
 
                 showProgress();
                 PredictionPlayersPollDataProvider playersPollDataProvider = new PredictionPlayersPollDataProvider();
-                playersPollDataProvider.getPlayersPoll(questionId, mChosenContest.getRoomId(), new PredictionPlayersPollDataProvider.PlayersPollDataProviderListener() {
+                playersPollDataProvider.getPlayersPoll(questionId, mPlayScreenData.getRoomId(), new PredictionPlayersPollDataProvider.PlayersPollDataProviderListener() {
                     @Override
                     public void onData(int status, @Nullable PlayerPollResponse playersPolls) {
                         hideProgress();
@@ -472,8 +469,10 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
             List<PlayersPoll> playersPollList = playersPolls.getPlayersPollList();
 
-            int pollPercentForOption1 = Integer.parseInt(playersPollList.get(0).getAnswerPercentage());
-            int pollPercentForOption2 = Integer.parseInt(playersPollList.get(1).getAnswerPercentage());
+            String poll1Str = playersPollList.get(0).getAnswerPercentage();
+            String poll2Str = playersPollList.get(1).getAnswerPercentage();
+            int pollPercentForOption1 = Integer.parseInt(poll1Str.replaceAll("%",""));
+            int pollPercentForOption2 = Integer.parseInt(poll2Str.replaceAll("%", ""));
 
             if (mCardStack != null && mCardStack.getTopView() != null && mQuestionsCardAdapter != null) {
                 View view = mCardStack.getTopView();
@@ -481,8 +480,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 TextView playerPollOption2TextView = (TextView) view.findViewById(R.id.prediction_card_player_poll_2_textView);
 
                 if (pollPercentForOption1 > 0 && pollPercentForOption2 > 0) {
-                    playerPollOption1TextView.setText(pollPercentForOption1);
-                    playerPollOption2TextView.setText(pollPercentForOption2);
+                    playerPollOption1TextView.setText(playersPollList.get(0).getAnswerPercentage());
+                    playerPollOption2TextView.setText(playersPollList.get(1).getAnswerPercentage());
 
                     playerPollOption1TextView.setVisibility(View.VISIBLE);
                     playerPollOption2TextView.setVisibility(View.VISIBLE);
@@ -710,13 +709,13 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             mSavePredictionAnswerProvider = new SavePredictionAnswerProvider();
         }
 
-        if (mQuestionsCardAdapter != null && cardIndexPos < mQuestionsCardAdapter.getCount() && mChosenContest != null) {
+        if (mQuestionsCardAdapter != null && cardIndexPos < mQuestionsCardAdapter.getCount() && mPlayScreenData != null) {
             PredictionQuestion question = mQuestionsCardAdapter.getItem(cardIndexPos);
             if (question != null) {
                 showProgress();
 
                 mSavePredictionAnswerProvider.savePredictionAnswer(question.getPowerUp(),
-                        /*mChosenContest.getRoomId()*/ 8712 /* TODO: remove  */,
+                        /*mPlayScreenData.getRoomId()*/ 8712 /* TODO: remove  */,
                         question.getMatchId(),
                         question.getQuestionId(),
                         answerId,
@@ -884,4 +883,33 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             }
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mPowerUpUpdatedReceiver,
+                new IntentFilter(Constants.IntentActions.ACTION_POWERUPS_UPDATED));
+    }
+
+    @Override
+    public void onStop() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mPowerUpUpdatedReceiver);
+        super.onStop();
+    }
+
+    /**
+     * As per UI design, powerups need to be updated when Bank-Activity there
+     */
+    BroadcastReceiver mPowerUpUpdatedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && intent.getExtras() != null) {
+                PowerUp powerUp = Parcels.unwrap(intent.getExtras().getParcelable(Constants.BundleKeys.POWERUPS));
+                if (powerUp != null) {
+                    mPowerUp = powerUp;
+                    updatePowerUpDetails(mPowerUp);
+                }
+            }
+        }
+    };
 }

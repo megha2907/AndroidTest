@@ -6,10 +6,10 @@ package in.sportscafe.nostragamus.module.contest.dto;
 
 public class ContestType {
 
-    int id;
-    String name;
-    String tagLine;
-    int contestCount;
+    private int id;
+    private String name;
+    private String tagLine;
+    private int contestCount;
 
     public int getId() {
         return id;

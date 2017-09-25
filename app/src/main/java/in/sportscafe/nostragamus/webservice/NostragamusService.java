@@ -13,10 +13,16 @@ import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
-import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueRequest;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueResponse;
+import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestRequest;
+import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestResponse;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestRequest;
+import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
@@ -343,8 +349,8 @@ public interface NostragamusService {
     @GET("/v3/game/challenges/new")
     Call<List<NewChallengesResponse>> getNewHomeChallenges();
 
-    @POST("v3/game/challenges/getContests")
-    Call<ContestResponse> getContests(@Body ContestRequest request);
+    @GET("v3/game/challenges/getContests")
+    Call<ContestResponse> getContests(@Query("challenge_id") int challengeId);
 
     @GET("v3/game/challenges/inPlay")
     Call<List<InPlayResponse>> getInPlayChallenges();
@@ -357,6 +363,9 @@ public interface NostragamusService {
 
     @GET("v3/game/challenges/getUserMatches")
     Call<InPlayMatchesResponse> getInPlayMatches(@Query("room_id") int roomId, @Query("challenge_id") int challengeId);
+
+    @GET("v3/game/challenges/getUserMatches")
+    Call<NewChallengeMatchesResponse> getNewChallengeMatches(@Query("challenge_id") int challengeId);
 
     @GET("v3/game/rooms/leaderboards")
     Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(@Query("room_id") Integer userLeaderBoardRequest);
@@ -376,4 +385,14 @@ public interface NostragamusService {
 
     @POST("v3/game/users/transferFromBank")
     Call<TransferPowerUpFromBankResponse> transferPowerUpsFromBank(@Body TransferPowerUpFromBankRequest request);
+
+    @POST("/v3/game/challenges/joinPseudoContest")
+    Call<JoinPseudoContestResponse> joinPsuedoContest(@Body JoinPseudoContestRequest request);
+
+    @POST("/v3/game/challenges/joinContestQueue")
+    Call<JoinContestQueueResponse> joinContestQueue(@Body JoinContestQueueRequest request);
+
+    @POST("/v3/game/challenges/verifyJoinContest")
+    Call<VerifyJoinContestResponse> verifyJoinContest(@Body VerifyJoinContestRequest request);
+
 }
