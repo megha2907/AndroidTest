@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +29,8 @@ import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAda
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
+import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,11 +42,11 @@ public class ContestFragment extends NostraBaseFragment {
     public ContestFragment() {
     }
 
-    TextView mTvTBarHeading;
-    TextView mTvTBarSubHeading;
-    TextView mTvTBarWalletMoney;
-    String challengeName;
-
+    private TextView mTvTBarHeading;
+    private TextView mTvTBarSubHeading;
+    private TextView mTvTBarWalletMoney;
+    private String mChallengeName;
+    private int mChallengeId = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,64 +69,82 @@ public class ContestFragment extends NostraBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getRequiredDataFromBundle();
         loadData();
     }
 
     private void loadData() {
-        ContestDataProvider dataProvider = new ContestDataProvider();
-        final List<ContestType> contestTypeList = dataProvider.getContestTypeList();
+        mChallengeId = 300;// TODO: remove hard coded
+        if (mChallengeId > 0) {
+            ContestDataProvider dataProvider = new ContestDataProvider();
+            final List<ContestType> contestTypeList = dataProvider.getContestTypeList();
 
-        int challengeId = getChallengeId();
-        dataProvider.getContestDetails(challengeId, new ContestDataProvider.ContestDataProviderListener() {
-            @Override
-            public void onSuccessResponse(int status, ContestResponse response) {
-                switch (status) {
-                    case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
-                        if (response != null && response.getData() != null && response.getData().getContests() != null) {
-                            showOnUi(contestTypeList, response.getData().getContests());
-                        } else {
-                            // TODO: improper response
-                        }
-                        break;
+            dataProvider.getContestDetails(mChallengeId, new ContestDataProvider.ContestDataProviderListener() {
+                @Override
+                public void onSuccessResponse(int status, ContestResponse response) {
+                    switch (status) {
+                        case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
+                            if (response != null && response.getData() != null && response.getData().getContests() != null) {
+                                showOnUi(contestTypeList, response.getData().getContests());
 
-                    default:
-                        handleError(status);
-                        break;
+                            } else {
+                                handleError(-1);
+                            }
+                            break;
+
+                        default:
+                            handleError(status);
+                            break;
+                    }
                 }
-            }
 
-            @Override
-            public void onError(int status) {
-                handleError(status);
-            }
-        });
+                @Override
+                public void onError(int status) {
+                    handleError(status);
+                }
+            });
+        }
     }
 
-    private int getChallengeId() {
-        int challengeId = 300;
-
+    private void getRequiredDataFromBundle() {
         Bundle args = getArguments();
         if (args != null) {
             if (args.containsKey(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM)) {
                 InPlayListChallengeItem challengeItem = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM));
                 if (challengeItem != null) {
-                    challengeId = challengeItem.getChallengeId();
-                    challengeName = challengeItem.getChallengeName();
+                    mChallengeId = challengeItem.getChallengeId();
+                    mChallengeName = challengeItem.getChallengeName();
+                }
+            }
+
+            if (args.containsKey(Constants.BundleKeys.NEW_CHALLENGES_RESPONSE)) {
+                NewChallengesResponse challengesResponse = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.NEW_CHALLENGES_RESPONSE));
+                if (challengesResponse != null) {
+                    mChallengeId = challengesResponse.getId();
+                    mChallengeName = challengesResponse.getChallengeName();
                 }
             }
         }
-
-        return challengeId;
     }
 
     private void handleError(int status) {
+        switch (status) {
+            case Constants.DataStatus.NO_INTERNET:
+                AlertsHelper.showAlert(getContext(), "No Internet", "Please Tern ON internet to continue", null);
+                break;
 
+            default:
+                AlertsHelper.showAlert(getContext(), "Error!", Constants.Alerts.SOMETHING_WRONG, null);
+                break;
+        }
     }
 
     private void showOnUi(List<ContestType> contestTypeList, List<Contest> contestList) {
         if (getView() != null && getActivity() != null) {
             if (contestTypeList != null && contestTypeList.size() > 0
                     && contestList != null && contestList.size() > 0) {
+
+                addChallengeDetailsIntoContest(contestList);
 
                 TabLayout contestTabLayout = (TabLayout) getView().findViewById(R.id.contest_tabs);
                 ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.contest_viewPager);
@@ -148,7 +167,7 @@ public class ContestFragment extends NostraBaseFragment {
                 }
 
                 mTvTBarHeading.setText(String.valueOf(contestTypeList.size()) + " Contests Available");
-                mTvTBarSubHeading.setText(challengeName);
+                mTvTBarSubHeading.setText(mChallengeName);
 
                 int amount = (int) WalletHelper.getTotalBalance();
                 mTvTBarWalletMoney.setText(String.valueOf(amount));
@@ -169,6 +188,13 @@ public class ContestFragment extends NostraBaseFragment {
             } else {
                 // TODO: error page / no items found
             }
+        }
+    }
+
+    private void addChallengeDetailsIntoContest(List<Contest> contestList) {
+        for (Contest contest : contestList) {
+            contest.setChallengeName(mChallengeName);
+            contest.setChallengeId(mChallengeId);
         }
     }
 

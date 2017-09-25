@@ -351,11 +351,8 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
     private void initChallengeDetails() {
         Bundle args = getArguments();
-        /*if (args != null && args.containsKey(Constants.BundleKeys.CHALLENGE_INFO)) {
-            mChallenge = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.CHALLENGE_INFO));
-        }*/
-        if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
-            mPlayScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+        if (args != null && args.containsKey(Constants.BundleKeys.PLAY_SCREEN_DATA)) {
+            mPlayScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA));
         }
     }
 
@@ -479,7 +476,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                 dismissProgressbar();
 
                 if (response != null) {
-//                    setUserBalancePowerup(response);
+                    setUserBalancePowerUp(response);
                     NostragamusAnalytics.getInstance().trackPowerBank(Constants.AnalyticsActions.COMPLETED);
                     onPowerupTransferred(response);
                 }
@@ -499,13 +496,19 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         };
     }
 
-    /*private void setUserBalancePowerup(TransferPowerUpFromBankResponse response) {
-        UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
+
+    private void setUserBalancePowerUp(TransferPowerUpFromBankResponse response) {
+        /*UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
         if (userInfo != null && response != null && response.getPowerUps() != null) {
             userInfo.getInfoDetails().setPowerUps(challengeUserInfo.getPowerUps());
         }
-        NostragamusDataHandler.getInstance().setUserInfo(userInfo);
-    }*/
+        NostragamusDataHandler.getInstance().setUserInfo(userInfo);*/
+
+        if (response != null && response.getBalancePowerUp() != null) {
+            mApiResponse.setUserBalance(response.getBalancePowerUp());
+            mApiResponseForReset.setUserBalance(response.getBalancePowerUp());
+        }
+    }
 
     private void onPowerupTransferred(TransferPowerUpFromBankResponse response) {
         broadcastPowerUpUpdated(response);
@@ -514,8 +517,10 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
     private void broadcastPowerUpUpdated(TransferPowerUpFromBankResponse response) {
         Intent intent = new Intent(Constants.IntentActions.ACTION_POWERUPS_UPDATED);
-        if (response != null && response.getPowerUp() != null) {
-            intent.putExtra(Constants.BundleKeys.POWERUPS, Parcels.wrap(response.getPowerUp()));
+        if (response != null && response.getBalancePowerUp() != null) {
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.BundleKeys.POWERUPS, Parcels.wrap(response.getBalancePowerUp()));
+            intent.putExtras(args);
         }
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }

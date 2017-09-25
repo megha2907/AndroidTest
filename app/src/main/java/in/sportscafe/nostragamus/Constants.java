@@ -313,6 +313,7 @@ public interface Constants {
         String DOWNLOAD_URL = "downloadUrl";
         String NEW_CHALLENGES_RESPONSE = "newChallengeResponse";
         String SCREEN_LAUNCHED_FROM_PARENT = "screenLaunchedFromParent";
+        String JOIN_CONTEST_DATA = "joinContestData";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";

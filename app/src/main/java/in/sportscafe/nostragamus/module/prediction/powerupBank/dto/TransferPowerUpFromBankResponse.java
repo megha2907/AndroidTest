@@ -18,10 +18,10 @@ public class TransferPowerUpFromBankResponse {
     private int roomId;
 
     @SerializedName("powerups")
-    private PowerUp powerUp;
+    private PowerUp balancePowerUp;
 
     @SerializedName("powerups_from_bank")
-    private PowerUp powerUpFromBank;
+    private PowerUp transferredFromBankPowerUp;
 
     public int getUserId() {
         return userId;
@@ -39,19 +39,19 @@ public class TransferPowerUpFromBankResponse {
         this.roomId = roomId;
     }
 
-    public PowerUp getPowerUp() {
-        return powerUp;
+    public PowerUp getBalancePowerUp() {
+        return balancePowerUp;
     }
 
-    public void setPowerUp(PowerUp powerUp) {
-        this.powerUp = powerUp;
+    public void setBalancePowerUp(PowerUp balancePowerUp) {
+        this.balancePowerUp = balancePowerUp;
     }
 
-    public PowerUp getPowerUpFromBank() {
-        return powerUpFromBank;
+    public PowerUp getTransferredFromBankPowerUp() {
+        return transferredFromBankPowerUp;
     }
 
-    public void setPowerUpFromBank(PowerUp powerUpFromBank) {
-        this.powerUpFromBank = powerUpFromBank;
+    public void setTransferredFromBankPowerUp(PowerUp transferredFromBankPowerUp) {
+        this.transferredFromBankPowerUp = transferredFromBankPowerUp;
     }
 }

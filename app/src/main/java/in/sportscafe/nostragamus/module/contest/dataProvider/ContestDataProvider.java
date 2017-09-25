@@ -39,10 +39,7 @@ public class ContestDataProvider {
     }
 
     private void loadContests(int challengeId, final ContestDataProviderListener listener) {
-        ContestRequest request = new ContestRequest();
-        request.setChallengeId(challengeId);
-
-        MyWebService.getInstance().getContests(request).enqueue(new ApiCallBack<ContestResponse>() {
+        MyWebService.getInstance().getContests(challengeId).enqueue(new ApiCallBack<ContestResponse>() {
             @Override
             public void onResponse(Call<ContestResponse> call, Response<ContestResponse> response) {
                 super.onResponse(call, response);

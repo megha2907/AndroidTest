@@ -551,13 +551,13 @@ public class ChallengeConfigsDialogFragment extends NostragamusDialogFragment im
         bundle.putDouble(Constants.BundleKeys.ENTRY_FEE, challengeConfig.getEntryFee());
         bundle.putString(Constants.BundleKeys.CONFIG_NAME, challengeConfig.getConfigName());
 
-        CompletePaymentDialogFragment dialogFragment =
+        /*CompletePaymentDialogFragment dialogFragment =
                 CompletePaymentDialogFragment.newInstance(JOIN_CHALLENGE_CONFIRMATION_REQUEST_CODE,
                         dialogLaunchMode,
                         bundle,
                         getCompletePaymentDialoActionListener(challengeId, challengeConfig));
 
-        dialogFragment.show(getChildFragmentManager(), "COMPLETE_JOIN");
+        dialogFragment.show(getChildFragmentManager(), "COMPLETE_JOIN");*/
     }
 
     private CompletePaymentDialogFragment.CompletePaymentActionListener

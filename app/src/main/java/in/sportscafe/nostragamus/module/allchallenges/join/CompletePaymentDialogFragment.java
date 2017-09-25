@@ -17,6 +17,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.PopUpDialogFragment;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 
@@ -156,31 +157,35 @@ public class CompletePaymentDialogFragment extends PopUpDialogFragment implement
     }
 
     private void populateChallengeJoiningValues() {
-        if (getView() != null) {
+        if (getView() != null && getArguments() != null) {
             Bundle bundle = getArguments();
-
-            if (bundle != null) {
-                double entryFee = bundle.getDouble(Constants.BundleKeys.ENTRY_FEE);
-                String configName = bundle.getString(Constants.BundleKeys.CONFIG_NAME);
+            JoinContestData joinContestData = Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA));
+            if (joinContestData != null) {
 
                 // Header
-                if (!TextUtils.isEmpty(configName)) {
+                if (!TextUtils.isEmpty(joinContestData.getChallengeName())) {
                     TextView headerTextView = (TextView) findViewById(R.id.join_challenge_dialog_header_textView);
-                    String str = "Join " + configName + " Contest";
+                    String str = "Join " + joinContestData.getChallengeName() + " Contest";
                     headerTextView.setText(str);
 
-                    populateWalletMoneyDeductionMsg(entryFee, str);
+                    populateWalletMoneyDeductionMsg(joinContestData.getEntryFee(), str);
                 }
                 populateWalletBalance();
-                populateEntryFee(entryFee);
+                populateEntryFee(joinContestData.getEntryFee());
 
                 // Dialog launch mode
-                if (mDialogLaunchMode == DialogLaunchMode.JOINING_CHALLENGE_AFTER_LOW_BAL_LAUNCH) {
-                    TextView balAddedTextView = (TextView) findViewById(R.id.join_challenge_dialog_money_added_textView);
-                    String str = "Updated wallet balance is " + WalletHelper.getFormattedStringOfAmount(WalletHelper.getTotalBalance());
-                    balAddedTextView.setText(str);
-                    balAddedTextView.setVisibility(View.VISIBLE);
+                switch (joinContestData.getJoiContestDialogLaunchMode()) {
+                    case DialogLaunchMode.JOINING_CHALLENGE_AFTER_LOW_BAL_LAUNCH:
+                        TextView balAddedTextView = (TextView) findViewById(R.id.join_challenge_dialog_money_added_textView);
+                        String str = "Updated wallet balance is " + WalletHelper.getFormattedStringOfAmount(WalletHelper.getTotalBalance());
+                        balAddedTextView.setText(str);
+                        balAddedTextView.setVisibility(View.VISIBLE);
+                        break;
+
+                    case DialogLaunchMode.JOINING_CHALLENGE_LAUNCH:
+                        break;
                 }
+
             }
         }
     }

@@ -20,8 +20,8 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlay;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeMatchAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeMatchesAdapter;
@@ -42,7 +42,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
 
     private static final String TAG = NewChallengesMatchesFragment.class.getSimpleName();
 
-    private NewChallengeMatchFragmentListener newChallengeMatchFragmentListener;
+    private NewChallengeMatchFragmentListener mNewChallengeMatchFragmentListener;
     private RecyclerView mMatchesRecyclerView;
     private NewChallengeMatchesAdapter mMatchesAdapter;
     private NewChallengesResponse mNewChallengeResponse;
@@ -53,8 +53,8 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof NewChallengesMatchActivity) {
-            newChallengeMatchFragmentListener = (NewChallengeMatchFragmentListener) context;
+        if (context instanceof NewChallengeMatchFragmentListener) {
+            mNewChallengeMatchFragmentListener = (NewChallengeMatchFragmentListener) context;
         } else {
             throw new RuntimeException(TAG + " Activity must implement " +
                     NewChallengeMatchFragmentListener.class.getSimpleName());
@@ -203,7 +203,17 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.new_challenge_matches_join_button:
+                onJoinContestClicked();
                 break;
+        }
+    }
+
+    private void onJoinContestClicked() {
+        if (mNewChallengeResponse != null && mNewChallengeMatchFragmentListener != null) {
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.BundleKeys.NEW_CHALLENGES_RESPONSE, Parcels.wrap(mNewChallengeResponse));
+            args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, ContestsActivity.LaunchedFrom.NEW_CHALLENGE_MATCHES);
+            mNewChallengeMatchFragmentListener.launchContestActivity(ContestsActivity.LaunchedFrom.NEW_CHALLENGE_MATCHES, args);
         }
     }
 
