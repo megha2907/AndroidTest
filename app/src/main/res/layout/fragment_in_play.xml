@@ -48,12 +48,16 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/inplay_tabs"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_60"
+            android:layout_height="@dimen/dim_56"
             android:background="@color/new_challenge_tab_bg"
             app:tabGravity="fill"
             app:tabIndicatorColor="#008ad6"
             app:tabIndicatorHeight="@dimen/dim_2"
-            app:tabMode="scrollable" />
+            app:tabMinWidth="@dimen/dim_66"
+            app:tabMode="scrollable"
+            app:tabPaddingStart="0dp"
+            app:tabPaddingEnd="0dp"/>
+
 
         <!-- ViewPager -->
         <in.sportscafe.nostragamus.module.common.CustomViewPager

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_110"
         android:layout_centerInParent="true"
@@ -12,17 +12,13 @@
         android:layout_marginLeft="@dimen/dim_12"
         android:layout_marginRight="@dimen/dim_12"
         android:layout_marginTop="@dimen/dim_6"
-        app:cardBackgroundColor="@color/black"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="5dp"
-        android:clipChildren="false"
-        app:cardUseCompatPadding="false">
+        android:elevation="6dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/dark_grey_gradient_bg"
             android:orientation="vertical"
+            android:background="@drawable/dark_grey_gradient_bg"
             android:paddingBottom="@dimen/dim_16"
             android:paddingLeft="@dimen/dim_16"
             android:paddingRight="@dimen/dim_16"
@@ -69,8 +65,10 @@
                     android:id="@+id/challenge_tournaments_textView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     android:text=""
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textAllCaps="false"
                     android:textColor="@color/grey_999999"
                     android:textSize="@dimen/sp_10"
@@ -122,7 +120,7 @@
                         android:textAllCaps="false"
                         android:textColor="@color/paid_entry_tv_color"
                         android:textSize="@dimen/sp_12"
-                        app:typeface="lato_regular" />
+                        app:typeface="lato_bold" />
 
                 </LinearLayout>
 
@@ -136,7 +134,7 @@
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="GAMES LEFT"
+                        android:text="GAMES"
                         android:textColor="@color/grey_999999"
                         android:textSize="@dimen/sp_10"
                         app:typeface="lato_regular" />
@@ -150,7 +148,7 @@
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12"
-                        app:typeface="lato_regular" />
+                        app:typeface="lato_bold" />
 
                 </LinearLayout>
 
@@ -179,7 +177,7 @@
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12"
-                        app:typeface="lato_regular" />
+                        app:typeface="lato_bold" />
 
                 </LinearLayout>
 
@@ -187,6 +185,6 @@
             </LinearLayout>
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
 
 </LinearLayout>

@@ -16,7 +16,7 @@ public class InPlayContestMatchDto {
     @SerializedName("score")
     private int score;
 
-    @SerializedName("start_time")
+    @SerializedName("match_starttime")
     private String startTime;
 
     @SerializedName("status")
@@ -46,7 +46,7 @@ public class InPlayContestMatchDto {
         this.startTime = startTime;
     }
 
-    public String isStatus() {
+    public String getStatus() {
         return status;
     }
 

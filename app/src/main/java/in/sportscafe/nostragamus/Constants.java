@@ -781,6 +781,8 @@ public interface Constants {
         String POOL = "pool";
     }
 
+
+
     interface WebPageUrls {
         String GAME_PLAY = "http://nostragamus.in/gameplayapp.html";
         String RULES = "http://nostragamus.in/rulesapp.html";
@@ -839,5 +841,12 @@ public interface Constants {
         String CONTINUE = "Continue";
         String ANSWER = "Answer";
         String POINTS = "Points";
+    }
+
+    interface InPlayMatchStatus {
+        /* Synced with server as they come in api response */
+        String UPCOMING = "upcoming";
+        String ONGOING = "ongoing";
+        String COMPLETED = "completed";
     }
 }

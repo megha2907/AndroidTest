@@ -7,26 +7,20 @@
     android:background="@color/transparent"
     >
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dim_1"
-        android:background="@color/grey"
-        android:layout_marginTop="@dimen/dim_6"
-        android:layout_marginBottom="@dimen/dim_6"/>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dim_52"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dim_8"
         android:layout_marginLeft="@dimen/dim_12"
-        android:layout_marginRight="@dimen/dim_12"
-        >
+        android:layout_marginRight="@dimen/dim_12">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <LinearLayout
@@ -48,10 +42,10 @@
                     android:id="@+id/inplay_challenge_count_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/white_999999"
                     android:textSize="@dimen/sp_11"
                     app:typeface="lato_regular"
-                    android:layout_marginLeft="@dimen/dim_3"/>
+                    android:layout_marginLeft="@dimen/dim_4"/>
 
             </LinearLayout>
 
@@ -59,8 +53,8 @@
                 android:id="@+id/inplay_challenge_tournaments_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_11"
+                android:textColor="@color/white_999999"
+                android:textSize="@dimen/sp_8"
                 android:ellipsize="end"
                 android:maxLines="1"
                 app:typeface="lato_regular"
@@ -70,27 +64,34 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="@dimen/dim_40"
-            android:layout_weight="2"
+            android:layout_height="@dimen/dim_30"
+            android:layout_weight="1.5"
             android:orientation="vertical"
-            android:gravity="right">
+            android:gravity="right|center_vertical">
 
             <LinearLayout
                 android:id="@+id/inplay_challenge_button"
-                android:layout_width="@dimen/dim_100"
-                android:layout_height="@dimen/dim_30"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dim_20"
                 android:background="@drawable/inplay_challenge_btn_bg"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingRight="@dimen/dim_8"
+                android:paddingLeft="@dimen/dim_8">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/inplay_challenge_button_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#0098a6"
-                    android:textSize="@dimen/sp_12"
-                    android:text="click"
-                    app:typeface="lato_regular"
-                    />
+                    android:textSize="@dimen/sp_8"
+                    android:text="JOIN ANOTHER CONTEST"
+                    app:typeface="lato_bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/dim_6"
+                    android:layout_height="@dimen/dim_6"
+                    android:layout_marginLeft="@dimen/dim_6"
+                    android:src="@drawable/green_right_arrow"/>
 
             </LinearLayout>
 
