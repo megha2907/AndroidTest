@@ -1,81 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical">
 
-    <!-- Heading layout -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/toolbar_bg"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:minHeight="@dimen/dim_40">
-
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/toolbar_heading_one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="In Play"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_14"
-            app:typeface="lato_regular" />
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/toolbar_heading_two"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dim_3"
-            android:textColor="@color/white_60"
-            android:textSize="@dimen/sp_13"
-            app:typeface="lato_regular" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/inplayContentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <!-- Tabs Layout -->
-        <android.support.design.widget.TabLayout
-            android:id="@+id/inplay_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_60"
-            android:background="@color/new_challenge_tab_bg"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="#008ad6"
-            app:tabIndicatorHeight="@dimen/dim_2"
-            app:tabMode="scrollable" />
-
-        <!-- ViewPager -->
-        <in.sportscafe.nostragamus.module.common.CustomViewPager
-            android:id="@+id/inplay_viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-
-    <!-- Loading View -->
-    <LinearLayout
-        android:id="@+id/inPlayProgressBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical">
 
-        <in.sportscafe.nostragamus.module.common.NostraProgressBar
+        <!-- Heading layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/toolbar_bg"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:minHeight="@dimen/dim_40">
+
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/toolbar_heading_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="In Play"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/toolbar_heading_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim_3"
+                android:textColor="@color/white_60"
+                android:textSize="@dimen/sp_13"
+                app:typeface="lato_regular" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/inplayContentLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center" />
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Tabs Layout -->
+            <android.support.design.widget.TabLayout
+                android:id="@+id/inplay_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_60"
+                android:background="@color/new_challenge_tab_bg"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="#008ad6"
+                app:tabIndicatorHeight="@dimen/dim_2"
+                app:tabMode="scrollable" />
+
+            <!-- ViewPager -->
+            <in.sportscafe.nostragamus.module.common.CustomViewPager
+                android:id="@+id/inplay_viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- Loading View -->
+        <LinearLayout
+            android:id="@+id/inPlayProgressBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <in.sportscafe.nostragamus.module.common.NostraProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

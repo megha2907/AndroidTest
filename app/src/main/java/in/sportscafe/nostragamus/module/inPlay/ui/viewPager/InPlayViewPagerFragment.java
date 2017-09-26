@@ -18,6 +18,7 @@ import com.jeeva.android.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
@@ -29,6 +30,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
+import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -185,24 +187,32 @@ public class InPlayViewPagerFragment extends BaseFragment {
     }
 
     private void gotoContestScreen(Bundle args) {
-        if (getActivity() != null && !getActivity().isFinishing()) {
-            Intent intent = new Intent(getActivity(), ContestsActivity.class);
-            if (args != null) {
-                intent.putExtras(args);
-            }
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            if (getActivity() != null && !getActivity().isFinishing()) {
+                Intent intent = new Intent(getActivity(), ContestsActivity.class);
+                if (args != null) {
+                    intent.putExtras(args);
+                }
 
-            getActivity().startActivity(intent);
+                getActivity().startActivity(intent);
+            }
+        } else {
+            AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
         }
     }
 
     private void goToNewMatchesTimeline(Bundle args) {
-        if (getActivity() != null && !getActivity().isFinishing()) {
-            Intent intent = new Intent(getActivity(), ContestDetailsAfterJoinActivity.class);
-            if (args != null) {
-                intent.putExtras(args);
-            }
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            if (getActivity() != null && !getActivity().isFinishing()) {
+                Intent intent = new Intent(getActivity(), ContestDetailsAfterJoinActivity.class);
+                if (args != null) {
+                    intent.putExtras(args);
+                }
 
-            getActivity().startActivity(intent);
+                getActivity().startActivity(intent);
+            }
+        } else {
+            AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
         }
     }
 
