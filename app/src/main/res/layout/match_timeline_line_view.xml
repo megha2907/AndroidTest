@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <View xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/dim_30"
-    android:layout_height="@dimen/dim_2"
-    android:background="@drawable/games_timeline_grey_line"/>
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dim_1"
+    android:maxHeight="@dimen/dp_1"
+    android:padding="0dp"
+    android:background="@color/black"/>

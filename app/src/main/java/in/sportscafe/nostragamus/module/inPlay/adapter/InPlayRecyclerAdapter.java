@@ -3,7 +3,6 @@ package in.sportscafe.nostragamus.module.inPlay.adapter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
@@ -23,9 +21,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
-import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by deepanshi on 9/6/17.
@@ -117,9 +113,25 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             viewHolder.challengeNameTextView.setText(challengeItem.getChallengeName());
             viewHolder.challengeCountTextView.setText("(" + challengeItem.getContestCount() + ")");
-            viewHolder.challengeTournamentTextView.setText(challengeItem.getChallengeDesc());
-            viewHolder.challengeButtonTextView.setText("JOIN CONTEST");
+            viewHolder.challengeTournamentTextView.setText(getTournamentString(challengeItem.getChallengeTournaments()));
+            viewHolder.challengeButtonTextView.setText("JOIN ANOTHER CONTEST");
         }
+    }
+
+    private String getTournamentString(List<String> tournamentList) {
+        String str = "";
+        if (tournamentList != null && tournamentList.size() > 0) {
+            if (tournamentList.size() > 1) {
+                for (String s : tournamentList) {
+                    str = str.concat(" , " + s);
+                }
+            }else {
+                for (String s : tournamentList) {
+                    str = s;
+                }
+            }
+        }
+        return str.replaceAll(","," ·");
     }
 
     private void bindHeadLessValues(RecyclerView.ViewHolder holder, InPlayContestDto contest) {
@@ -128,8 +140,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
             viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
-            viewHolder.entryFeeTextView.setText(String.valueOf(34));
-            viewHolder.prizesTextView.setText(WalletHelper.getFormattedStringOfAmount(contest.getWinningAmount()));
+            viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL+String.valueOf(34));
+            viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL+String.valueOf(contest.getWinningAmount()));
             viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
 
             viewHolder.timelineHeaderParent.removeAllViews();
@@ -146,15 +158,25 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     isNodeLineRequired = false;
                 }
 
+                int matchAttemptedStatus = match.isPlayed();
+                boolean isMatchCompleted;
+                boolean isPlayed;
+                if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus ||
+                        Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                    isPlayed = true;
+                }else {
+                    isPlayed = false;
+                }
+
                     /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, true, true,
-                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS);
+                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), isPlayed,
+                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS, contest.getMatches().size());
 
                     /* Title */
-                TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1));
+                TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1),contest.getMatches().size(),match.getStatus());
 
                     /* Footer */
-                TimelineHelper.addTextNode(viewHolder.timelineFooterParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()));
+                TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()), contest.getMatches().size(),match.getStatus());
             }
         }
     }
@@ -165,8 +187,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
             viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
-            viewHolder.entryFeeTextView.setText(String.valueOf(34));
-            viewHolder.prizesTextView.setText(WalletHelper.getFormattedStringOfAmount(contest.getWinningAmount()));
+            viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL+String.valueOf(34));
+            viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL+String.valueOf(contest.getWinningAmount()));
             viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
 
             viewHolder.timelineHeaderParent.removeAllViews();
@@ -183,15 +205,25 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     isNodeLineRequired = false;
                 }
 
+                int matchAttemptedStatus = match.isPlayed();
+                boolean isMatchCompleted;
+                boolean isPlayed;
+                if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus ||
+                        Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                    isPlayed = true;
+                }else {
+                    isPlayed = false;
+                }
+
                     /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, true, true,
-                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED);
+                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), isPlayed,
+                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED,contest.getMatches().size());
 
                     /* Title */
-                TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1));
+                TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(), match.getStatus());
 
                     /* Footer */
-                TimelineHelper.addTextNode(viewHolder.timelineFooterParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()));
+                TimelineHelper.addTextNode(viewHolder.timelineFooterParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()), contest.getMatches().size(), match.getStatus());
             }
         }
     }
@@ -202,8 +234,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
             viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
-            viewHolder.entryFeeTextView.setText(String.valueOf(34));
-            viewHolder.prizesTextView.setText(WalletHelper.getFormattedStringOfAmount(contest.getWinningAmount()));
+            viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL+String.valueOf(34));
+            viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL+String.valueOf(contest.getWinningAmount()));
             viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
 
             viewHolder.timelineHeaderParent.removeAllViews();
@@ -220,15 +252,25 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     isNodeLineRequired = false;
                 }
 
+                int matchAttemptedStatus = match.isPlayed();
+                boolean isPlayed;
+                if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus ||
+                        Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                    isPlayed = true;
+                }else {
+                    isPlayed = false;
+                }
+
                     /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, true, true,
-                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED);
+                TimelineHelper.addNode(viewHolder.timelineContentParent, "upcoming", isPlayed,
+                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, contest.getMatches().size());
 
                     /* Title */
-                TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1));
+                TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(), "upcoming");
 
                     /* Footer */
-                TimelineHelper.addTextNode(viewHolder.timelineFooterParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()));
+                TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent,DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
+                        contest.getMatches().size(), "upcoming");
             }
         }
     }

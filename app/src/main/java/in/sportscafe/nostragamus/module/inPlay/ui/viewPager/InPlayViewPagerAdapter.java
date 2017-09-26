@@ -44,7 +44,7 @@ public class InPlayViewPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public View getTabView(Context context, int position) {
-       /* if (tabFragments != null && tabFragments.size() > position) {
+        if (tabFragments != null && tabFragments.size() > position) {
             SportsTab sportsTab = tabFragments.get(position).getTabDetails();
             if (sportsTab != null) {
 
@@ -66,7 +66,7 @@ public class InPlayViewPagerAdapter extends FragmentStatePagerAdapter {
 
                 return parentLayout;
             }
-        }*/
+        }
         return null;
     }
 }

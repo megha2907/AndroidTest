@@ -2,6 +2,9 @@ package in.sportscafe.nostragamus.module.inPlay.dto;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by sandip on 13/09/17.
  */
@@ -14,6 +17,8 @@ public class InPlayListChallengeItem {
     private String status;
     private int sportsId;
     private int contestCount = 0;
+
+    private List<String> challengeTournaments = new ArrayList<>();
 
     public int getChallengeId() {
         return challengeId;
@@ -61,5 +66,13 @@ public class InPlayListChallengeItem {
 
     public void setContestCount(int contestCount) {
         this.contestCount = contestCount;
+    }
+
+    public List<String> getChallengeTournaments() {
+        return challengeTournaments;
+    }
+
+    public void setChallengeTournaments(List<String> challengeTournaments) {
+        this.challengeTournaments = challengeTournaments;
     }
 }

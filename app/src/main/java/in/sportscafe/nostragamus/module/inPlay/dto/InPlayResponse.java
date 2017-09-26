@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
@@ -36,6 +37,10 @@ public class InPlayResponse {
 
     @SerializedName("contests")
     private List<InPlayContestDto> contestList;
+
+    @SerializedName("challenge_tournaments_short_names")
+    private List<String> tournaments = null;
+
 
     public int getChallengeId() {
         return challengeId;
@@ -91,5 +96,13 @@ public class InPlayResponse {
 
     public void setContestList(List<InPlayContestDto> contestList) {
         this.contestList = contestList;
+    }
+
+    public List<String> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(List<String> tournaments) {
+        this.tournaments = tournaments;
     }
 }

@@ -62,8 +62,8 @@
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/sp_10"
+                    android:textColor="@color/white_999999"
+                    android:textSize="@dimen/sp_9"
                     app:typeface="lato_regular"
                     android:text="ENTRY FEE"/>
 
@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_10"
-                    app:typeface="lato_regular"
+                    app:typeface="lato_bold"
                     android:layout_marginLeft="@dimen/dim_5"/>
 
             </LinearLayout>
@@ -146,9 +146,6 @@
         android:paddingBottom="@dimen/dim_10"
         android:background="@drawable/inplay_card_content_bg">
 
-            <HorizontalScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -185,7 +182,6 @@
 
                 </LinearLayout>
 
-            </HorizontalScrollView>
 
     </LinearLayout>
 

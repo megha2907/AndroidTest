@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
@@ -23,7 +24,7 @@ public class InPlayContestDto {
     @SerializedName("contest_mode")
     private String contestMode;
 
-    @SerializedName("contest_name")
+    @SerializedName("config_name")
     private String contestName;
 
     @SerializedName("rank")
@@ -40,6 +41,9 @@ public class InPlayContestDto {
 
     @SerializedName("powerups")
     private PowerUp powerUp;
+
+    @SerializedName("room_id")
+    private int roomId;
 
     @SerializedName("matches")
     private List<InPlayContestMatchDto> matches = null;
@@ -133,4 +137,13 @@ public class InPlayContestDto {
     public void setChallengeId(int challengeId) {
         this.challengeId = challengeId;
     }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
 }
