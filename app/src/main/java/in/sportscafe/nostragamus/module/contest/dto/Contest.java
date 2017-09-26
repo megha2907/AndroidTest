@@ -63,6 +63,7 @@ public class Contest {
     private PowerUp powerUpInfo;
 
     private int contestItemType = ContestAdapterItemType.CONTEST;
+
     private int challengeId;
 
     public int getContestId() {
@@ -139,7 +140,7 @@ public class Contest {
 
 
     public boolean isFreeEntry() {
-        return entryFee == 0 ;
+        return entryFee == 0;
     }
 
 
@@ -149,7 +150,7 @@ public class Contest {
 
 
     public boolean noPrizes() {
-        return prizes == 0 ;
+        return prizes == 0;
     }
 
     public void setPrizes(Integer prizes) {
@@ -168,30 +169,6 @@ public class Contest {
 //        this.roomSize = roomSize;
 //    }
 //}
-
-    public int getTotalMatches() {
-        return totalMatches;
-    }
-
-    public void setTotalMatches(int totalMatches) {
-        this.totalMatches = totalMatches;
-    }
-
-    public int getMaxTransferPowerUps() {
-        return maxTransferPowerUps;
-    }
-
-    public void setMaxTransferPowerUps(int maxTransferPowerUps) {
-        this.maxTransferPowerUps = maxTransferPowerUps;
-    }
-
-    public List<String> getTournaments() {
-        return tournaments;
-    }
-
-    public void setTournaments(List<String> tournaments) {
-        this.tournaments = tournaments;
-    }
 
     public String getChallengeName() {
         return challengeName;

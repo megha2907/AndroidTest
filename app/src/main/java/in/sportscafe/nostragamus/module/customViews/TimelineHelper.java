@@ -1,43 +1,53 @@
 package in.sportscafe.nostragamus.module.customViews;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.contest.dto.Contest;
+
 
 /**
  * Created by sandip on 11/09/17.
  */
 
-public class TimelineHelper  {
+public class TimelineHelper {
 
-    public enum  MatchTimelineTypeEnum {
+    public enum MatchTimelineTypeEnum {
         IN_PLAY_HEADLESS, IN_PLAY_JOINED, IN_PLAY_MATCHES_SCREEN
     }
 
-    private static View getLineView(Context context, boolean isCompleted, MatchTimelineTypeEnum typeEnum) {
+
+    private static View getLineView(Context context, String matchStatus, MatchTimelineTypeEnum typeEnum) {
         View view = View.inflate(context, R.layout.match_timeline_line_view, null);
 
         switch (typeEnum) {
             case IN_PLAY_HEADLESS:
-                if (isCompleted) {
-                    view.setBackgroundResource(R.drawable.games_timeline_yellow_line);
+                if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
                 } else {
-                    view.setBackgroundResource(R.drawable.games_timeline_grey_line);
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
                 }
                 break;
 
             case IN_PLAY_JOINED:
-            case IN_PLAY_MATCHES_SCREEN:
-                if (isCompleted) {
-                    view.setBackgroundResource(R.drawable.games_timeline_yellow_line);
+                if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
                 } else {
-                    view.setBackgroundResource(R.drawable.games_timeline_grey_line);
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
+
+                }
+                break;
+            case IN_PLAY_MATCHES_SCREEN:
+                if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
+                } else {
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
                 }
                 break;
         }
@@ -45,48 +55,95 @@ public class TimelineHelper  {
         return view;
     }
 
-    private static View getNodeView(Context context, boolean isCompleted, boolean played, MatchTimelineTypeEnum typeEnum) {
+    private static View getNodeView(Context context, String matchStatus, boolean played, MatchTimelineTypeEnum typeEnum) {
         View view = View.inflate(context, R.layout.match_timeline_node_view, null);
-
         switch (typeEnum) {
             case IN_PLAY_HEADLESS:
                 // TODO: make changes as per need
+                if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
+                    if (played) {
+                        view.setBackgroundResource(R.drawable.timeline_grey_tick_dot);
+                    } else {
+                        //todo check what icon to add here
+                        view.setBackgroundResource(R.drawable.timeline_lock_grey);
+                    }
+                } else {
+                    view.setBackgroundResource(R.drawable.timeline_lock_grey);
+                }
+
                 break;
 
             case IN_PLAY_JOINED:
-            case IN_PLAY_MATCHES_SCREEN:
-                if (isCompleted) {
+
+                if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
                     if (played) {
-                        view.setBackgroundResource(R.drawable.correct_tick_white);
+                        view.setBackgroundResource(R.drawable.timeline_tick_yellow_dot);
                     } else {
-                        view.setBackgroundResource(R.drawable.share_cross_icon);
+                        view.setBackgroundResource(R.drawable.timeline_yellow_cross_ring);
                     }
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+                    view.setBackgroundResource(R.drawable.timeline_blue_dot);
                 } else {
-                    view.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.games_status_timeline_node));
+                    view.setBackgroundResource(R.drawable.timeline_grey_dot);
                 }
+
+            case IN_PLAY_MATCHES_SCREEN:
+
+                if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
+                    if (played) {
+                        view.setBackgroundResource(R.drawable.timeline_tick_yellow_dot);
+                    } else {
+                        view.setBackgroundResource(R.drawable.timeline_yellow_cross_ring);
+                    }
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+                    view.setBackgroundResource(R.drawable.timeline_blue_dot);
+                } else {
+                    view.setBackgroundResource(R.drawable.timeline_grey_dot);
+                }
+
                 break;
         }
-
 
         return view;
     }
 
-    public static void addNode(LinearLayout parent, boolean isMatchCompleted,
+    public static void addNode(LinearLayout parent, String matchStatus,
                                boolean isPlayed, boolean isNodeWithLine,
-                               MatchTimelineTypeEnum typeEnum) {
+                               MatchTimelineTypeEnum typeEnum, int matchSize) {
         if (parent != null) {
             Context context = parent.getContext();
-            int nodeWidthHeight = (int)context.getResources().getDimension(R.dimen.dim_12);
-            int lineWidth = (int)context.getResources().getDimension(R.dimen.dim_60);
-            int lineHeight = (int)context.getResources().getDimension(R.dimen.dim_4);
+            int nodeWidthHeight = (int) context.getResources().getDimension(R.dimen.dim_12);
 
-            View view = getNodeView(parent.getContext(), isMatchCompleted, isPlayed, typeEnum);
+            int maxLineWidth;
+            int matchSizeNew;
+
+            if (matchSize == 2) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_260);
+            } else if (matchSize == 3) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_246);
+            } else if (matchSize == 4) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_235);
+            } else if (matchSize == 5) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_220);
+            } else {
+                matchSizeNew = matchSize;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_230);
+            }
+
+            int lineWidth = maxLineWidth / matchSizeNew;
+            int lineHeight = (int) context.getResources().getDimension(R.dimen.dim_4);
+
+            View view = getNodeView(parent.getContext(), matchStatus, isPlayed, typeEnum);
             if (view != null) {
                 parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(nodeWidthHeight, nodeWidthHeight));
             }
 
             if (isNodeWithLine) {
-                view = getLineView(context, isMatchCompleted, typeEnum);
+                view = getLineView(context, matchStatus, typeEnum);
                 if (view != null) {
                     parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(lineWidth, lineHeight));
                 }
@@ -94,14 +151,102 @@ public class TimelineHelper  {
         }
     }
 
-    public static void addTextNode(LinearLayout parent, String title) {
+    public static void addTextNode(LinearLayout parent, String title, int matchSize, String status) {
         if (parent != null) {
             Context context = parent.getContext();
-            int width = (int)context.getResources().getDimension(R.dimen.dim_80);
+
+            int matchSizeNew;
+            int maxLineWidth;
+            /*= (int) context.getResources().getDimension(R.dimen.dim_310); */
+
+            if (matchSize == 2) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_270);
+            } else if (matchSize == 3) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_270);
+            } else if (matchSize == 4) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_270);
+            } else if (matchSize == 5) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_265);
+            } else {
+                matchSizeNew = matchSize;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_270);
+            }
+
+            int width = maxLineWidth / matchSizeNew;
+            //int width = (int)context.getResources().getDimension(R.dimen.dim_80);
 
             TextView titleView = (TextView) View.inflate(context, R.layout.games_status_timeline_title, null);
             if (title != null) {
                 titleView.setText(title);
+                Typeface faceBold = Typeface.createFromAsset(context.getAssets(), "fonts/lato/Lato-Bold.ttf");
+                Typeface faceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/lato/Lato-Regular.ttf");
+
+                if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)){
+                    titleView.setTextColor(ContextCompat.getColor(context,R.color.grey6));
+                    titleView.setTypeface(faceBold);
+                }else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+                    titleView.setTextColor(ContextCompat.getColor(context,R.color.white_999999));
+                    titleView.setTypeface(faceRegular);
+                }else {
+                    titleView.setTextColor(ContextCompat.getColor(context,R.color.white_999999));
+                    titleView.setTypeface(faceRegular);
+                }
+                parent.addView(titleView, parent.getChildCount(), new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
+
+        }
+    }
+
+    public static void addFooterTextNode(LinearLayout parent, String title, int matchSize, String status) {
+        if (parent != null) {
+            Context context = parent.getContext();
+
+            int matchSizeNew;
+            int maxLineWidth;
+            /*= (int) context.getResources().getDimension(R.dimen.dim_310); */
+
+            if (matchSize == 2) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_265);
+            } else if (matchSize == 3) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_265);
+            } else if (matchSize == 4) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_267);
+            } else if (matchSize == 5) {
+                matchSizeNew = matchSize - 1;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_265);
+            } else {
+                matchSizeNew = matchSize;
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_270);
+            }
+
+            int width = maxLineWidth / matchSizeNew;
+            //int width = (int)context.getResources().getDimension(R.dimen.dim_80);
+
+            TextView titleView = (TextView) View.inflate(context, R.layout.games_status_timeline_title, null);
+            if (title != null) {
+
+                titleView.setText(title);
+
+                Typeface faceBold = Typeface.createFromAsset(context.getAssets(), "fonts/lato/Lato-Bold.ttf");
+                Typeface faceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/lato/Lato-Regular.ttf");
+
+                if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)){
+                    titleView.setTextColor(ContextCompat.getColor(context,R.color.grey6));
+                    titleView.setTypeface(faceBold);
+                }else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+                    titleView.setTextColor(ContextCompat.getColor(context,R.color.white_999999));
+                    titleView.setTypeface(faceRegular);
+                }else {
+                    titleView.setTextColor(ContextCompat.getColor(context,R.color.white_999999));
+                    titleView.setTypeface(faceRegular);
+                }
                 parent.addView(titleView, parent.getChildCount(), new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
             }
 

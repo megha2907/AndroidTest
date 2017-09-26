@@ -146,9 +146,6 @@
         android:paddingBottom="@dimen/dim_10"
         android:background="@drawable/inplay_headless_card_content_bg">
 
-        <HorizontalScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -185,7 +182,6 @@
 
             </LinearLayout>
 
-        </HorizontalScrollView>
 
     </LinearLayout>
 

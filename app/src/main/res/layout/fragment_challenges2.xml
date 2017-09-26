@@ -10,29 +10,28 @@
 
     <!-- Heading layout -->
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/toolbar_bg"
-        android:minHeight="@dimen/dim_40">
+        android:layout_height="@dimen/dim_40"
+        android:background="@drawable/toolbar_bg">
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dim_16"
-            android:layout_marginRight="@dimen/dim_16">
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dim_16">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/toolbar_heading_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
                     android:text="Challenges"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
@@ -42,7 +41,6 @@
                     android:id="@+id/toolbar_heading_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="(3)"
                     android:layout_marginLeft="@dimen/dim_3"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/sp_13"
@@ -50,13 +48,22 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/toolbar_wallet_rl"
+                android:layout_width="@dimen/dim_70"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingTop="@dimen/dim_6"
+                android:paddingBottom="@dimen/dim_6"
+                android:paddingRight="@dimen/dim_16">
+
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/toolbar_wallet_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="120"
                 android:textColor="@color/white_70"
                 android:textSize="@dimen/sp_14"
                 app:typeface="lato_regular" />
@@ -66,13 +73,15 @@
                 android:layout_width="@dimen/dim_16"
                 android:layout_height="@dimen/dim_16"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dim_4"
+                android:layout_marginRight="@dimen/dim_6"
                 android:layout_toLeftOf="@+id/toolbar_wallet_money"
                 android:src="@drawable/toolbar_wallet_icon" />
 
+            </RelativeLayout>
+
         </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/newChallengeContentLayout"
@@ -90,8 +99,10 @@
             app:tabGravity="fill"
             app:tabIndicatorColor="#008ad6"
             app:tabIndicatorHeight="@dimen/dim_2"
-            app:tabMaxWidth="@dimen/dim_130"
-            app:tabMode="scrollable" />
+            app:tabMinWidth="@dimen/dim_66"
+            app:tabMode="scrollable"
+            app:tabPaddingStart="0dp"
+            app:tabPaddingEnd="0dp"/>
 
         <!-- ViewPager -->
         <in.sportscafe.nostragamus.module.common.CustomViewPager

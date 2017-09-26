@@ -133,7 +133,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
             challengeItem.setChallengeId(response.getChallengeId());
             challengeItem.setChallengeName(response.getChallengeName());
-            challengeItem.setChallengeDesc(response.getChallengeDesc());
+            challengeItem.setChallengeTournaments(response.getTournaments());
             challengeItem.setStatus(response.getStatus());
             challengeItem.setSportsId(response.getSportsId());
             challengeItem.setContestCount((response.getContestList() != null) ? response.getContestList().size() : 0);
