@@ -17,9 +17,7 @@ import android.widget.Toast;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.contest.ui.ContestFragment;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment;
-import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
 import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesFragment;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
@@ -28,6 +26,14 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
     private static final String TAG = NostraHomeActivity.class.getSimpleName();
     public static final int DOUBLE_BACK_PRESSED_DELAY_ALLOWED = 3000;
+
+    public interface LaunchedFrom {
+        int SHOW_NEW_CHALLENGES = -111;
+        int SHOW_IN_PLAY = -112;
+        int SHOW_COMPLETED = -113;
+        int SHOW_GROUPS = -114;
+        int SHOW_NAVIGATION = -115;
+    }
 
     /**
      * Keep a single instance of all the fragments ready always
@@ -60,6 +66,30 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         super.onNewIntent(intent);
         setIntent(intent);
 
+        if (intent != null) {
+            int launchFrom = intent.getIntExtra(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, -1);
+            switch (launchFrom) {
+                case LaunchedFrom.SHOW_NEW_CHALLENGES:
+                    onNewChallengesClicked();
+                    break;
+
+                case LaunchedFrom.SHOW_IN_PLAY:
+                    onInPlayClicked();
+                    break;
+
+                case LaunchedFrom.SHOW_COMPLETED:
+
+                    break;
+
+                case LaunchedFrom.SHOW_GROUPS:
+                    onGroupClicked();
+                    break;
+
+                case LaunchedFrom.SHOW_NAVIGATION:
+                    onNavigationClicked();
+                    break;
+            }
+        }
     }
 
     private void initMembers() {
@@ -88,7 +118,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 break;
 
             case R.id.home_join_tab_layout:
-                onJoinClicked();
+                onInPlayClicked();
                 break;
 
             case R.id.home_group_tab_layout:
@@ -96,7 +126,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 break;
 
             case R.id.home_profile_tab_layout:
-                onProfileClicked();
+                onNavigationClicked();
                 break;
         }
     }
@@ -129,7 +159,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mGroupBottomButton.setSelected(false);
     }
 
-    private void onProfileClicked() {
+    private void onNavigationClicked() {
         setProfileSelected();
         loadNavigationFragment();
     }
@@ -140,7 +170,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         startActivity(intent);*/
     }
 
-    private void onJoinClicked() {
+    private void onInPlayClicked() {
         setInPlaySelected();
         loadInPlayFragment();
     }

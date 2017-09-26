@@ -38,9 +38,7 @@ public class InPlayFragment extends NostraBaseFragment {
 
     public InPlayFragment() {}
 
-    private RecyclerView mRcvInPlay;
-
-    private InPlayRecyclerAdapter inPlayRecyclerAdapter;
+    private Snackbar mSnackBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +63,9 @@ public class InPlayFragment extends NostraBaseFragment {
     public void onInternetConnected() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             loadData();
+            if (mSnackBar != null && mSnackBar.isShown()) {
+                mSnackBar.dismiss();
+            }
         }
     }
 
@@ -95,16 +96,35 @@ public class InPlayFragment extends NostraBaseFragment {
 
     private void handleError(int status) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
-            Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_SHORT);
+            switch (status) {
+                case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
+                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_NETWORK_CONNECTION, Snackbar.LENGTH_INDEFINITE);
+                    mSnackBar.show();
+                    break;
+
+                case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
+                    mSnackBar = Snackbar.make(getView(), "Server Error!", Snackbar.LENGTH_LONG);
+                    mSnackBar.show();
+                    break;
+
+                default:
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    mSnackBar.show();
+                    break;
+            }
         }
     }
 
     private void onDataReceived(int status, List<InPlayResponse> inPlayResponseData) {
         switch (status) {
             case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
+                showDataOnUi(inPlayResponseData);
+                break;
+
             case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
             case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
                 showDataOnUi(inPlayResponseData);
+                handleError(status);
                 break;
 
             default:
@@ -128,6 +148,7 @@ public class InPlayFragment extends NostraBaseFragment {
 
             for (SportsTab sportsTab : sportsTabList) {
                 tabFragment = new InPlayViewPagerFragment();
+                tabFragment.setArguments(getArguments());
 
                 int sportId = sportsTab.getSportsId();
                 List<InPlayResponse> inPlayFilteredList = null;

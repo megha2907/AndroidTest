@@ -39,6 +39,7 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
 
     private TextView mTvTBarWalletMoney;
     private TextView mTvTBarNumberOfChallenges;
+    private Snackbar mSnackBar;
 
     public NewChallengesFragment() {
     }
@@ -66,17 +67,29 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
 
     }
 
+    /**
+     * When internet gets Turn ON
+     */
     public void onInternetConnected() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             loadData();
+            if (mSnackBar != null && mSnackBar.isShown()) {
+                mSnackBar.dismiss();
+            }
         }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        initMembers();
         setWalletBalance();
         loadData();
+    }
+
+    private void initMembers() {
+
     }
 
     private void setWalletBalance() {
@@ -104,16 +117,35 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
 
     private void handleError(int status) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
-            Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_SHORT);
+            switch (status) {
+                case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
+                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_NETWORK_CONNECTION, Snackbar.LENGTH_INDEFINITE);
+                    mSnackBar.show();
+                    break;
+
+                case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
+                    mSnackBar = Snackbar.make(getView(), "Could not fetch from Server, try again!", Snackbar.LENGTH_INDEFINITE);
+                    mSnackBar.show();
+                    break;
+
+                default:
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    mSnackBar.show();
+                    break;
+            }
         }
     }
 
     private void onDataReceived(int status, List<NewChallengesResponse> newChallengesResponseData) {
         switch (status) {
             case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
+                showDataOnUi(newChallengesResponseData);
+                break;
+
             case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
             case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
                 showDataOnUi(newChallengesResponseData);
+                handleError(status);
                 break;
 
             default:
@@ -140,6 +172,7 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
 
                 for (SportsTab sportsTab : sportsTabList) {
                     tabFragment = new NewChallengesViewPagerFragment();
+                    tabFragment.setArguments(getArguments());
 
                     int sportId = sportsTab.getSportsId();
                     List<NewChallengesResponse> challengesFiltered = null;
@@ -181,6 +214,8 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
                         tab.setCustomView(viewPagerAdapter.getTabView(challengesTabLayout.getContext(), temp));
                     }
                 }
+
+
 
             } else {
                 // TODO: error page / no items found
