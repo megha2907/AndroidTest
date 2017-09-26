@@ -3,10 +3,12 @@ package in.sportscafe.nostragamus.module.contest.ui.viewPager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
+import com.jeeva.android.widgets.CustomProgressbar;
 
 import org.parceler.Parcels;
 
@@ -35,6 +38,7 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
@@ -50,8 +54,6 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     private List<Contest> mContestList;
     private TextView mTvContestName;
     private TextView mTvContestDesc;
-
-    private ProgressDialog mProgressDialog;
 
     public ContestViewPagerFragment() {}
 
@@ -79,7 +81,6 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     }
 
     private void initMembers() {
-        mProgressDialog = new ProgressDialog(getContext());
     }
 
     private void populateDataOnUi() {
@@ -129,48 +130,52 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
             if (joinContestData != null) {
                 if (Nostragamus.getInstance().hasNetworkConnection()) {
-                    mProgressDialog.show();
+                    CustomProgressbar.getProgressbar(getContext()).show();
 
                     JoinContestHelper joinContestHelper = new JoinContestHelper();
                     joinContestHelper.JoinContest(joinContestData, (AppCompatActivity) this.getActivity(),
                             new JoinContestHelper.JoinContestProcessListener() {
                                 @Override
                                 public void noInternet() {
-                                    mProgressDialog.dismiss();
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     handleError(Constants.DataStatus.NO_INTERNET);
                                 }
 
                                 @Override
                                 public void lowWalletBalance(JoinContestData joinContestData) {
-                                    mProgressDialog.dismiss();
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     launchLowBalanceActivity(joinContestData);
                                 }
 
                                 @Override
-                                public void joinContestSuccess() {
-                                    mProgressDialog.dismiss();
-                                    onContestJoinedSuccessfully();
-                                }
-
-                                @Override
-                                public void onUnExpectedError() {
-                                    mProgressDialog.dismiss();
-                                    handleError(-1);
+                                public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                    onContestJoinedSuccessfully(contestJoinedSuccessfully);
                                 }
 
                                 @Override
                                 public void onApiFailure() {
-                                    mProgressDialog.dismiss();
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     handleError(Constants.DataStatus.FROM_SERVER_API_FAILED);
                                 }
 
                                 @Override
                                 public void onServerReturnedError(String msg) {
-                                    mProgressDialog.dismiss();
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     if (TextUtils.isEmpty(msg)) {
                                         msg = Constants.Alerts.SOMETHING_WRONG;
                                     }
                                     AlertsHelper.showAlert(getContext(), "Error!", msg, null);
+                                }
+
+                                @Override
+                                public void hideProgressBar() {
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                }
+
+                                @Override
+                                public void showProgressBar() {
+                                    CustomProgressbar.getProgressbar(getContext()).show();
                                 }
                             });
 
@@ -183,17 +188,28 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         }
     }
 
-    private void onContestJoinedSuccessfully() {
+    private void onContestJoinedSuccessfully(JoinContestData joinContestData) {
         Log.d(TAG, "Contest join successful");
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinContestData));
+
+            Intent clearTaskIntent = new Intent(getContext().getApplicationContext(), NostraHomeActivity.class);
+            clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY);
+            clearTaskIntent.putExtras(args);
+            clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(clearTaskIntent);
+        }
     }
 
     private void launchLowBalanceActivity(JoinContestData joinContestData) {
+        if (getActivity() != null && !getActivity().isFinishing()) {
         Bundle args = new Bundle();
         args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinContestData));
 
         Intent intent = new Intent(getActivity(), AddMoneyOnLowBalanceActivity.class);
         intent.putExtras(args);
-        if (getActivity() != null) {
             getActivity().startActivityForResult(intent, ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE);
         }
     }
@@ -201,8 +217,10 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
+
                 case ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE:
                     if (data != null && data.getExtras() != null) {
                         performJoinContest(data.getExtras());

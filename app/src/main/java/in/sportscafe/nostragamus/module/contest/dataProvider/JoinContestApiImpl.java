@@ -7,6 +7,7 @@ import android.util.Log;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueRequest;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueResponse;
 import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestRequest;
@@ -25,7 +26,7 @@ public class JoinContestApiImpl {
     private static final String TAG = JoinContestApiImpl.class.getSimpleName();
 
     private JoinContestApiListener mListener;
-    private int mVerifyRetryCounter = 0;
+    private int mVerifyRetryCounter = 1;
 
     public JoinContestApiImpl(JoinContestApiListener listener) {
         this.mListener = listener;
@@ -100,9 +101,10 @@ public class JoinContestApiImpl {
                                 }
                             } else if (verifyJoinContestResponse.isTryAgain()) {
                                 tryAgain(orderId);
+
                             } else {
                                 if (mListener != null) {
-                                    mListener.onSuccessResponse(null);
+                                    mListener.onSuccessResponse(response.body());
                                 }
                             }
 
@@ -148,12 +150,16 @@ public class JoinContestApiImpl {
                     verifyJoinContest(orderId);
                 }
             }, 4000);   /* 4 seconds to wait before re-trying */
+        } else {
+            if (mListener != null) {
+                mListener.onFailure(Constants.DataStatus.NO_INTERNET);
+            }
         }
     }
 
     public interface JoinContestApiListener {
         void onFailure(int dataStatus);
         void onServerReturnedError(String msg);
-        void onSuccessResponse(JoinChallengeResponse joinChallengeResponse);
+        void onSuccessResponse(VerifyJoinContestResponse verifyJoinContestResponse);
     }
 }

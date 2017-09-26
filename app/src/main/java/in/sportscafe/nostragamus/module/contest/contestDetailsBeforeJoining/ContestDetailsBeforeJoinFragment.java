@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
@@ -23,7 +22,6 @@ import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 
 /**
  * Created by deepanshi on 9/10/17.
@@ -79,7 +77,7 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
 
         if (contest != null) {
             mTvTBarHeading.setText(contest.getConfigName());
-            mTvTBarSubHeading.setText("India vs Aus T20");
+            mTvTBarSubHeading.setText("");
             joinContest.setText("Pay " + Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()) + " and Join Contest");
         }
 
@@ -131,25 +129,17 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
     }
 
     private void setTabLayout(ViewPager mViewPager) {
-
-        try {
-
+        if (getView() != null && mViewPagerAdapter != null) {
             TabLayout contestTabLayout = (TabLayout) getView().findViewById(R.id.contest_details_tabs);
             contestTabLayout.setupWithViewPager(mViewPager);
 
-            if (mViewPagerAdapter != null) {
-                TabLayout.Tab tab = contestTabLayout.getTabAt(0);
+            for (int temp = 0; temp < contestTabLayout.getTabCount(); temp++) {
+                TabLayout.Tab tab = contestTabLayout.getTabAt(temp);
                 if (tab != null) {
-                    contestTabLayout.getTabAt(0).setCustomView(mViewPagerAdapter.getTabView(0));
-                    contestTabLayout.getTabAt(1).setCustomView(mViewPagerAdapter.getTabView(1));
-                    contestTabLayout.getTabAt(2).setCustomView(mViewPagerAdapter.getTabView(2));
+                    tab.setCustomView(mViewPagerAdapter.getTabView(temp));
                 }
-
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
-
     }
 
     @Override

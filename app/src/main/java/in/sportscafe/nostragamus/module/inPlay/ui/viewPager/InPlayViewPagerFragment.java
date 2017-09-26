@@ -3,24 +3,31 @@ package in.sportscafe.nostragamus.module.inPlay.ui.viewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jeeva.android.BaseFragment;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterListener;
@@ -29,7 +36,9 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
+import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
@@ -71,8 +80,49 @@ public class InPlayViewPagerFragment extends BaseFragment {
             List<InPlayListItem> inPlayListItemList = getInPlayItemList(mFilteredContests);
             if (inPlayListItemList != null) {
                 mRecyclerView.setAdapter(new InPlayRecyclerAdapter(inPlayListItemList, getAdapterListener()));
+
+                if (mSportsTab != null) {
+                    switch (mSportsTab.getSportsId()) {
+                        case InPlayFilterHelper.FILTER_ALL_SPORTS_ID:
+                            scrollToContest();
+                            break;
+                    }
+                }
             } else {
                 // No list UI
+            }
+        }
+    }
+
+    private void scrollToContest() {
+        Bundle args = getArguments();
+        if (args != null && mRecyclerView != null) {
+            if (args.containsKey(Constants.BundleKeys.JOIN_CONTEST_DATA)) {
+                JoinContestData joinContestData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA));
+
+                if (joinContestData != null) {
+                    InPlayRecyclerAdapter inPlayRecyclerAdapter = (InPlayRecyclerAdapter) mRecyclerView.getAdapter();
+                    if (inPlayRecyclerAdapter != null) {
+                        final int adapterPos = inPlayRecyclerAdapter.getAdapterPositionFromContestId(joinContestData.getContestId());
+
+                        Log.d(TAG, "Scrolling to : " + adapterPos);
+                        if (adapterPos > 0) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(mRecyclerView.getContext()) {
+                                        @Override protected int getVerticalSnapPreference() {
+                                            return LinearSmoothScroller.SNAP_TO_START;
+                                        }
+                                    };
+                                    smoothScroller.setTargetPosition(adapterPos);
+                                    mRecyclerView.getLayoutManager().startSmoothScroll(smoothScroller);
+                                }
+                            }, 100);
+                        }
+                    }
+                }
             }
         }
     }

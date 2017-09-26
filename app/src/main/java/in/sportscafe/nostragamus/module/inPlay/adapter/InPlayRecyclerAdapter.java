@@ -280,6 +280,30 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return (mItemsList != null) ? mItemsList.size() : 0;
     }
 
+
+    public int getAdapterPositionFromContestId(int contestId) {
+        int counter = -1;
+        boolean isFound = false;
+        if (mItemsList != null) {
+            for (InPlayListItem inPlayListItem : mItemsList) {
+                if (inPlayListItem.getItemData() instanceof InPlayContestDto) {
+                    InPlayContestDto inPlayContestDto = (InPlayContestDto) inPlayListItem.getItemData();
+
+                    if (inPlayContestDto != null && inPlayContestDto.getContestId() == contestId) {
+                        isFound = true;
+                    }
+                }
+                counter++;
+            }
+        }
+
+        if (!isFound) {
+            counter = -1;
+        }
+
+        return counter;
+    }
+
     /* View Holders */
 
     private class InPlayJoinedItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

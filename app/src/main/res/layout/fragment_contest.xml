@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,6 +6,11 @@
     android:orientation="vertical"
     android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.contest.ui.ContestFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <!-- Heading layout -->
 
@@ -88,7 +93,6 @@
 
     <!--</android.support.v7.widget.Toolbar>-->
 
-
     <in.sportscafe.nostragamus.module.common.CustomTabLayout
         android:id="@+id/contest_tabs"
         android:layout_width="match_parent"
@@ -110,12 +114,12 @@
         app:unselected_textSize="@dimen/sp_12"
         app:unselected_typeface="lato_regular" />
 
-
     <!-- ViewPager -->
     <in.sportscafe.nostragamus.module.common.CustomViewPager
         android:id="@+id/contest_viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    </LinearLayout>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

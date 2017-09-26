@@ -4,6 +4,7 @@ package in.sportscafe.nostragamus.module.contest.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -128,14 +129,16 @@ public class ContestFragment extends NostraBaseFragment {
     }
 
     private void handleError(int status) {
-        switch (status) {
-            case Constants.DataStatus.NO_INTERNET:
-                AlertsHelper.showAlert(getContext(), "No Internet", "Please Tern ON internet to continue", null);
-                break;
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            switch (status) {
+                case Constants.DataStatus.NO_INTERNET:
+                    Snackbar.make(getView(), Constants.Alerts.NO_NETWORK_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    break;
 
-            default:
-                AlertsHelper.showAlert(getContext(), "Error!", Constants.Alerts.SOMETHING_WRONG, null);
-                break;
+                default:
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                    break;
+            }
         }
     }
 

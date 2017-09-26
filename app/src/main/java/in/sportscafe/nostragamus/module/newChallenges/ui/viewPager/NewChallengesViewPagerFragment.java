@@ -22,14 +22,19 @@ import android.widget.RelativeLayout;
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 
@@ -89,15 +94,24 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
     }
 
     private void loadData() {
-        /*if (getView() != null) {
-            WebView webView = (WebView) getView().findViewById(R.id.challenges_ads_webView);
-            webView.loadUrl("http://sportscafe.in/");
-        }*/
-
         if (mRecyclerView != null && mFilteredChallenges != null) {
             mRecyclerView.setAdapter(new NewChallengesRecyclerAdapter(mRecyclerView.getContext(), mFilteredChallenges, getChallengeAdapterListener()));
         }
+
+        if (mSportsTab != null) {
+            switch (mSportsTab.getSportsId()) {
+                case NewChallengesFilterHelper.FILTER_ALL_SPORTS_ID:
+                    scrollToChallenge();
+                    break;
+            }
+        }
     }
+
+    private void scrollToChallenge() {
+
+    }
+
+
 
     @NonNull
     private NewChallengeAdapterListener getChallengeAdapterListener() {

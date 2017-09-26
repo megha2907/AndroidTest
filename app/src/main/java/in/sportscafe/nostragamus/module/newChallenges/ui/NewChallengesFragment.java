@@ -124,7 +124,7 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
                     break;
 
                 case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
-                    mSnackBar = Snackbar.make(getView(), "Server Error!", Snackbar.LENGTH_LONG);
+                    mSnackBar = Snackbar.make(getView(), "Could not fetch from Server, try again!", Snackbar.LENGTH_INDEFINITE);
                     mSnackBar.show();
                     break;
 
@@ -172,6 +172,7 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
 
                 for (SportsTab sportsTab : sportsTabList) {
                     tabFragment = new NewChallengesViewPagerFragment();
+                    tabFragment.setArguments(getArguments());
 
                     int sportId = sportsTab.getSportsId();
                     List<NewChallengesResponse> challengesFiltered = null;
@@ -213,6 +214,8 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
                         tab.setCustomView(viewPagerAdapter.getTabView(challengesTabLayout.getContext(), temp));
                     }
                 }
+
+
 
             } else {
                 // TODO: error page / no items found

@@ -148,6 +148,7 @@ public class InPlayFragment extends NostraBaseFragment {
 
             for (SportsTab sportsTab : sportsTabList) {
                 tabFragment = new InPlayViewPagerFragment();
+                tabFragment.setArguments(getArguments());
 
                 int sportId = sportsTab.getSportsId();
                 List<InPlayResponse> inPlayFilteredList = null;

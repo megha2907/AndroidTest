@@ -349,7 +349,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.user.group.GroupActivity"
-            android:launchMode="singleInstance"
+            
             android:screenOrientation="portrait"
             android:theme="@style/homeActivityTransitionStyle" />
         <activity
@@ -358,27 +358,26 @@
             android:theme="@style/AppTheme.PopupTheme" />
         <activity
             android:name=".module.nostraHome.NostraHomeActivity"
-            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.newChallenges.ui.matches.NewChallengesMatchActivity"
-            android:launchMode="singleInstance"
+            
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.contest.contestDetailsBeforeJoining.ContestDetailsBeforeJoinedActivity"
-            android:launchMode="singleInstance"
+            
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.contest.ui.ContestsActivity"
-            android:launchMode="singleInstance"
+            
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity"
-            android:launchMode="singleInstance"
+            
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.prediction.playScreen.PredictionActivity"
-            android:launchMode="singleInstance"
+            
             android:screenOrientation="portrait" />
 
         <meta-data
