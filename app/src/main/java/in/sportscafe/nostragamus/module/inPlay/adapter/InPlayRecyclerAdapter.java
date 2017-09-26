@@ -262,15 +262,15 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
                     /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, "upcoming", isPlayed,
+                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), isPlayed,
                         isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, contest.getMatches().size());
 
                     /* Title */
-                TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(), "upcoming");
+                TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(), match.getStatus());
 
                     /* Footer */
                 TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent,DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
-                        contest.getMatches().size(), "upcoming");
+                        contest.getMatches().size(), match.getStatus());
             }
         }
     }
