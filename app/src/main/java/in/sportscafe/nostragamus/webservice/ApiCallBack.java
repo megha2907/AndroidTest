@@ -11,10 +11,21 @@ import retrofit2.Response;
 
 public abstract class ApiCallBack<T> implements Callback<T> {
 
+    public interface ResponseCodes {
+        int CODE_400 = 400;     // Server returned Error
+        int CODE_401 = 401;     // UnAuthorized
+        int CODE_200 = 200;     // Response Success
+    }
+
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
-        if(response.code() == 401) {
-            Nostragamus.getInstance().logout();
+        switch (response.code()) {
+            case ResponseCodes.CODE_401:
+                Nostragamus.getInstance().logout();
+                break;
+
+            default:
+                break;
         }
     }
 

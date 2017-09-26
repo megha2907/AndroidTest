@@ -215,7 +215,7 @@ public class PredictionQuestionsCardBaseAdapter extends BaseAdapter {
      * @param topPos - visible top position
      */
     public void onShuffleQuestion(int topPos) {
-        if (mQuestionList != null && topPos < mQuestionList.size()) {
+        if (mQuestionList != null && topPos > 0 && topPos < mQuestionList.size()) {
             PredictionQuestion question = mQuestionList.get(topPos);
             mQuestionList.remove(topPos);
             mQuestionList.add(question);

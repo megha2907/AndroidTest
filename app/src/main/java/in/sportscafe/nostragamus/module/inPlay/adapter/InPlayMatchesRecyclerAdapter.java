@@ -40,12 +40,12 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public int getItemViewType(int position) {
-        int viewType = InPlayMatchAdapterItemType.DOUBLE_PARTY_MATCH;
+        int viewType = MatchesAdapterItemType.TWO_PARTY_MATCH;
 
         // TODO : change if other type introduced
         /*if (mInPlayMatchList != null && mInPlayMatchList.size() > position && mInPlayMatchList.get(position) != null) {
             if (mInPlayMatchList.get(position).getMatchType().equalsIgnoreCase("parties")) {
-                viewType = InPlayMatchAdapterItemType.SINGLE_PARTY_MATCH;
+                viewType = MatchesAdapterItemType.SINGLE_PARTY_MATCH;
             }
         }*/
 
@@ -58,7 +58,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         switch (viewType) {
-            case InPlayMatchAdapterItemType.DOUBLE_PARTY_MATCH:
+            case MatchesAdapterItemType.TWO_PARTY_MATCH:
                 View v1 = inflater.inflate(R.layout.inplay_match_list_double_party_item, parent, false);
                 viewHolder = new InPlayTwoPartyMatchItemViewHolder(v1);
                 break;
@@ -71,7 +71,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder != null) {
             switch (holder.getItemViewType()) {
-                case InPlayMatchAdapterItemType.DOUBLE_PARTY_MATCH:
+                case MatchesAdapterItemType.TWO_PARTY_MATCH:
                     bindDoublePartyMatchData(holder, position);
                     break;
             }
@@ -115,7 +115,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         String status = match.getMatchStatus();
         if (!TextUtils.isEmpty(status)) {
             String matchStatus = match.getMatchStatus();
-            if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.COMING_UP)) {
+            if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
                 shouldDisable = true;
             }
         }
@@ -150,23 +150,23 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 args.putParcelable(Constants.BundleKeys.INPLAY_MATCH, Parcels.wrap(match));
 
                 String matchStatus = match.getMatchStatus();
-                if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.DID_NOT_PLAY)) {
-                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.DID_NOT_PLAY, args);
+                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.DID_NOT_PLAY)) {
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.DID_NOT_PLAY, args);
 
-                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.COMING_UP)) {
-                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.COMMING_UP, args);
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.COMING_UP, args);
 
-                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.PLAY)) {
-                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.PLAY, args);
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY)) {
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.PLAY, args);
 
-                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.CONTINUE)) {
-                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.CONTINUE, args);
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.CONTINUE, args);
 
-                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.ANSWER)) {
-                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.ANSWER, args);
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.ANSWER, args);
 
-                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatusStrings.POINTS)) {
-                    mMatchAdapterListener.onMatchActionClicked(InPlayMatchAction.POINTS, args);
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.POINTS)) {
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.POINTS, args);
 
                 }
             }

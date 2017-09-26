@@ -216,7 +216,7 @@ public class CardStack extends RelativeLayout {
         mCardAnimator = new CardAnimator(viewCollection, mColor, mMargin, mTopMargin);
         mCardAnimator.setGravity(mGravity);
         mCardAnimator.setEnableRotation(mEnableRotation);
-//        mCardAnimator.setStackMargin(mMargin);
+        mCardAnimator.setStackMargin(mMargin);
         mCardAnimator.initLayout();
 
         final DragGestureDetector dd = new DragGestureDetector(CardStack.this.getContext(), new DragGestureDetector.DragListener() {
@@ -402,7 +402,23 @@ public class CardStack extends RelativeLayout {
         reset(false, true);
     }
 
-    public void reorder() {
-        mCardAnimator.reorder();
+    public void shuffle(Object object) {
+        if (mAdapter != null) {
+            /* add object into adapter at last */
+            ArrayAdapter<Object> arrayAdapter = (ArrayAdapter<Object>) mAdapter;
+            arrayAdapter.add(object);
+
+            /* Add view into background */
+            /*removeAllViews();
+            viewCollection.clear();
+            for (int i = 0; i < mNumVisible; i++) {
+                addContainerViews(false);
+            }
+            setupAnimation();
+            loadData();*/
+
+            reset(false, false);
+        }
     }
+
 }

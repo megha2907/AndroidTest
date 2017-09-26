@@ -16,10 +16,16 @@ import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
-import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueRequest;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueResponse;
+import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestRequest;
+import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestResponse;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestRequest;
+import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
@@ -437,6 +443,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getInPlayMatches(roomId, challengeId);
     }
 
+    public Call<NewChallengeMatchesResponse> getNewChallengeMatches(int challengeId) {
+        return mNostragamusService.getNewChallengeMatches(challengeId);
+    }
+
     public Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(Integer userLeaderBoardRequest) {
         return mNostragamusService.getUserLeaderBoardDetails(userLeaderBoardRequest);
     }
@@ -456,5 +466,17 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<TransferPowerUpFromBankResponse> transferPowerUpFromBank(TransferPowerUpFromBankRequest request) {
         return mNostragamusService.transferPowerUpsFromBank(request);
+    }
+
+    public Call<JoinPseudoContestResponse> joinPseudoContest(JoinPseudoContestRequest request) {
+        return mNostragamusService.joinPsuedoContest(request);
+    }
+
+    public Call<JoinContestQueueResponse> joinContestQueue(JoinContestQueueRequest request) {
+        return mNostragamusService.joinContestQueue(request);
+    }
+
+    public Call<VerifyJoinContestResponse> verifyJoinContest(VerifyJoinContestRequest request) {
+        return mNostragamusService.verifyJoinContest(request);
     }
 }

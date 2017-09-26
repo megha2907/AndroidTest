@@ -144,7 +144,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
             if (mChallengeListener != null && mNewChallengesResponseList != null && mNewChallengesResponseList.size() > adapterPos) {
                 Bundle args = new Bundle();
-                args.putParcelable(Constants.BundleKeys.CHALLENGE, Parcels.wrap(mNewChallengesResponseList.get(adapterPos)));
+                args.putParcelable(Constants.BundleKeys.NEW_CHALLENGES_RESPONSE, Parcels.wrap(mNewChallengesResponseList.get(adapterPos)));
                 mChallengeListener.onChallengeClicked(args);
             }
         }

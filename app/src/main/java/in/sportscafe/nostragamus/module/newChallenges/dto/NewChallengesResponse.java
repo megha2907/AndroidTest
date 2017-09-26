@@ -41,9 +41,6 @@ public class NewChallengesResponse {
     @SerializedName("matches_left")
     private int matchesLeft;
 
-    @SerializedName("matches")
-    private List<Match> matches = new ArrayList<>();
-
     @SerializedName("prize_money")
     private int prizes;
 
@@ -93,14 +90,6 @@ public class NewChallengesResponse {
 
     public void setSportsId(int sportsId) {
         this.sportsId = sportsId;
-    }
-
-    public List<Match> getMatches() {
-        return matches;
-    }
-
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
     }
 
     public List<String> getTournaments() {

@@ -5,11 +5,17 @@ import android.os.Bundle;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengeMatchFragmentListener;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class ContestsActivity extends NostraBaseActivity {
 
     private static final String TAG = ContestsActivity.class.getSimpleName();
+
+    public interface LaunchedFrom {
+        int NEW_CHALLENGE_MATCHES = 211;
+        int IN_PLAY_MATCHES = 212;
+    }
 
     private ContestFragment mContestFragment;
 
@@ -47,4 +53,5 @@ public class ContestsActivity extends NostraBaseActivity {
             mContestFragment.onNewIntent(intent);
         }
     }
+
 }

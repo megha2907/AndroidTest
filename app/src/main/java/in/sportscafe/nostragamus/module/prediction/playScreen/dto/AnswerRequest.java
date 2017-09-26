@@ -17,7 +17,7 @@ public class AnswerRequest {
     @SerializedName("question_id")
     private int questionId;
 
-    @SerializedName("answer_id")
+    @SerializedName("answer")
     private int answerId;
 
     @SerializedName("answer_time")

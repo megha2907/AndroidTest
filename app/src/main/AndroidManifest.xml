@@ -361,7 +361,7 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.newChallenges.ui.matches.MatchesTimelineActivity"
+            android:name=".module.newChallenges.ui.matches.NewChallengesMatchActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity

@@ -1,17 +1,14 @@
 package in.sportscafe.nostragamus.module.contest.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 
 /**
  * Created by sandip on 01/09/17.
@@ -53,7 +50,21 @@ public class Contest {
     @SerializedName("filling_rooms")
     private int fillingRooms;
 
+    @SerializedName("max_transfer_limit")
+    private int maxTransferPowerUps;
+
+    @SerializedName("tot_matches")
+    private int totalMatches;
+
+    @SerializedName("tournaments")
+    private List<String> tournaments = new ArrayList<>();
+
+    @SerializedName("powerups")
+    private PowerUp powerUpInfo;
+
     private int contestItemType = ContestAdapterItemType.CONTEST;
+
+    private int challengeId;
 
     public int getContestId() {
         return contestId;
@@ -87,11 +98,11 @@ public class Contest {
         this.prizes = prizes;
     }
 
-    public Integer getEntryFee() {
+    public int getEntryFee() {
         return entryFee;
     }
 
-    public void setEntryFee(Integer entryFee) {
+    public void setEntryFee(int entryFee) {
         this.entryFee = entryFee;
     }
 
@@ -175,4 +186,19 @@ public class Contest {
         this.contestModeInfo = contestModeInfo;
     }
 
+    public PowerUp getPowerUp() {
+        return powerUpInfo;
+    }
+
+    public void setPowerUp(PowerUp powerUpInfo) {
+        this.powerUpInfo = powerUpInfo;
+    }
+
+    public int getChallengeId() {
+        return challengeId;
+    }
+
+    public void setChallengeId(int challengeId) {
+        this.challengeId = challengeId;
+    }
 }

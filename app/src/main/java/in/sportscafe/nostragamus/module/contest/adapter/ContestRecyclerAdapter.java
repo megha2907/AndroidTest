@@ -172,25 +172,30 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         @Override
         public void onClick(View v) {
-
-            if (clickListener != null) {
-                int adapterPos = getAdapterPosition();
-
-                if (clickListener != null && mContestList != null && mContestList.size() > adapterPos) {
-                    Bundle args = new Bundle();
-                    args.putParcelable(Constants.BundleKeys.CONTEST, Parcels.wrap(mContestList.get(adapterPos)));
-                    clickListener.onContestClicked(args);
-                }
-            }
-
             switch (v.getId()) {
                 case R.id.pool_row_btn_join:
                     if (clickListener != null) {
-                        clickListener.onJoinContestClicked();
+                        clickListener.onJoinContestClicked(getContestBundle(getAdapterPosition()));
+                    }
+                    break;
+
+                case R.id.pool_rl_layout:
+                    if (clickListener != null) {
+                        int adapterPos = getAdapterPosition();
+                        if (clickListener != null && mContestList != null && mContestList.size() > adapterPos) {
+                            clickListener.onContestClicked(getContestBundle(adapterPos));
+                        }
                     }
                     break;
             }
         }
+    }
+
+    @NonNull
+    private Bundle getContestBundle(int adapterPos) {
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.BundleKeys.CONTEST, Parcels.wrap(mContestList.get(adapterPos)));
+        return args;
     }
 
 }

@@ -312,6 +312,8 @@ public interface Constants {
         String IMAGE_URL = "imageUrl";
         String DOWNLOAD_URL = "downloadUrl";
         String NEW_CHALLENGES_RESPONSE = "newChallengeResponse";
+        String SCREEN_LAUNCHED_FROM_PARENT = "screenLaunchedFromParent";
+        String JOIN_CONTEST_DATA = "joinContestData";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -333,6 +335,7 @@ public interface Constants {
         String INPLAY_CONTEST = "InPlayContest";
         String INPLAY_CHALLENGE_LIST_ITEM = "InPlayChallengeListItem";
         String INPLAY_MATCH = "InPlayMatch";
+        String PLAY_SCREEN_DATA = "playScreenData";
     }
 
     interface ParcelableKeys {
@@ -830,7 +833,7 @@ public interface Constants {
         int NO_INTERNET = 6;
     }
 
-    interface InPlayMatchStatusStrings {
+    interface MatchStatusStrings {
         /* Synced with server as they come in api response */
         String COMING_UP = "Coming up";
         String DID_NOT_PLAY = "Did Not Play";

@@ -24,19 +24,15 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
-import in.sportscafe.nostragamus.module.prediction.powerupBank.dataProvider.BankTransferApiModelImpl;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dataProvider.PowerupBankStatusApiModelImpl;
-import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.AlreadyTransferredPowerupDto;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dataProvider.TransferPowerUpFromBankApiImpl;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerUpBankStatusResponse;
-import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.UserBalancePowerupDto;
-import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.UserDemandPowerUpDto;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankResponse;
 import in.sportscafe.nostragamus.module.store.StoreLaunchMode;
-import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,11 +41,10 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
     private PowerUpBankTransferFragmentListener mFragmentListener;
 
-//    private Challenge mChallenge;
-    private InPlayContestDto mInPlayContest;
+    private PlayScreenDataDto mPlayScreenData;
     private PowerUpBankStatusResponse mApiResponse;
     private PowerUpBankStatusResponse mApiResponseForReset;
-    private UserDemandPowerUpDto mUserDemandPowerup;
+    private PowerUp mUserDemandPowerup;
     private TextView mUserBalDoublerTextView;
     private TextView mDemandedDoublerTextView;
     private TextView mUserBalNoNegativeTextView;
@@ -63,7 +58,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     private Button mTransferPowerUpButton;
 
     public PowerupBankTransferFragment() {
-        mUserDemandPowerup = new UserDemandPowerUpDto();
+        mUserDemandPowerup = new PowerUp();
     }
 
     @Override
@@ -90,11 +85,11 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     }
 
     private void fetchPowerupBankStatusFromServer() {
-        if (mInPlayContest != null) {
+        if (mPlayScreenData != null) {
             if (Nostragamus.getInstance().hasNetworkConnection()) {
                 showProgressbar();
                 PowerupBankStatusApiModelImpl apiModel = PowerupBankStatusApiModelImpl.newInstance(getApiListener());
-                apiModel.performApiCall(mInPlayContest.getChallengeId());
+                apiModel.performApiCall(mPlayScreenData.getChallengeId());
             } else {
                 showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
             }
@@ -120,9 +115,9 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                 dismissProgressbar();
                 onApiSuccess(response);
 
-                if (mFragmentListener != null && mInPlayContest != null && response != null) {
+                if (mFragmentListener != null && mPlayScreenData != null && response != null) {
                     Bundle args = new Bundle();
-                    args.putString(Constants.BundleKeys.CHALLENGE_NAME, mInPlayContest.getContestName());
+                    args.putString(Constants.BundleKeys.CHALLENGE_NAME, mPlayScreenData.getSubTitle());
                     args.putInt(Constants.BundleKeys.MAX_TRANSFER_COUNT, response.getMaxTransferLimit());
                     mFragmentListener.updatePowerUpInfoDetails(args);
                 }
@@ -133,10 +128,34 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     private void onApiSuccess(PowerUpBankStatusResponse response) {
         if (response != null) {
             mApiResponse = response;
-            mApiResponseForReset = mApiResponse.clone();
+            mApiResponseForReset = cloneResponse(response);
         }
 
         performResetOperation();
+    }
+
+    private PowerUpBankStatusResponse cloneResponse(PowerUpBankStatusResponse response) {
+        PowerUpBankStatusResponse cloneResponse = new PowerUpBankStatusResponse();
+        if (response != null) {
+            PowerUp userBalance = new PowerUp();
+            PowerUp alreadyTransferred = new PowerUp();
+
+            if (response.getUserBalance() != null) {
+                userBalance.setDoubler(response.getUserBalance().getDoubler());
+                userBalance.setNoNegative(response.getUserBalance().getNoNegative());
+                userBalance.setPlayerPoll(response.getUserBalance().getPlayerPoll());
+            }
+            if (response.getAlreadyTransferred() != null) {
+                alreadyTransferred.setDoubler(response.getAlreadyTransferred().getDoubler());
+                alreadyTransferred.setNoNegative(response.getAlreadyTransferred().getNoNegative());
+                alreadyTransferred.setPlayerPoll(response.getAlreadyTransferred().getPlayerPoll());
+            }
+
+            cloneResponse.setMaxTransferLimit(response.getMaxTransferLimit());
+            cloneResponse.setUserBalance(userBalance);
+            cloneResponse.setAlreadyTransferred(alreadyTransferred);
+        }
+        return cloneResponse;
     }
 
     private void performResetOperation() {
@@ -165,7 +184,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                 onMaxNoNegativePowerUpAdded(false);
             }
 
-            if (mApiResponse.getAlreadyTransferred().getAudiencePoll() >= maxLimit) {
+            if (mApiResponse.getAlreadyTransferred().getPlayerPoll() >= maxLimit) {
                 onMaxAudiencePollPowerUpAdded(true);
             } else {
                 onMaxAudiencePollPowerUpAdded(false);
@@ -184,7 +203,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
             Button buyAudiencePollButton = (Button) getView().findViewById(R.id.powerup_bank_buy_audience_poll_button);
             buyAudiencePollButton.setOnClickListener(this);
             ImageView img = (ImageView) getView().findViewById(R.id.powerup_bank_audience_poll_img);
-            if (mApiResponse.getUserBalance().getAudiencePoll() <= 0) {
+            if (mApiResponse.getUserBalance().getPlayerPoll() <= 0) {
                 if (BuildConfig.IS_PAID_VERSION) {
                     mAddAudiencePollButton.setVisibility(View.GONE);
                     buyAudiencePollButton.setVisibility(View.VISIBLE);
@@ -245,17 +264,17 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
     private void updatePowerUpDetailsOnUi() {
         if (mApiResponse != null && mApiResponse.getUserBalance() != null && getView() != null) {
-            UserBalancePowerupDto userBalance = mApiResponse.getUserBalance();
+            PowerUp userBalance = mApiResponse.getUserBalance();
             mUserBalDoublerTextView.setText(String.valueOf(userBalance.getDoubler()));
             mUserBalNoNegativeTextView.setText(String.valueOf(userBalance.getNoNegative()));
-            mUserBalAudiencePollTextView.setText(String.valueOf(userBalance.getAudiencePoll()));
+            mUserBalAudiencePollTextView.setText(String.valueOf(userBalance.getPlayerPoll()));
         }
 
         if (mUserDemandPowerup != null) {
-            mUserDemandPowerup.clearData();
+            mUserDemandPowerup = new PowerUp();
             mDemandedDoublerTextView.setText(String.valueOf(mUserDemandPowerup.getDoubler()));
             mDemandedNoNegativeTextView.setText(String.valueOf(mUserDemandPowerup.getNoNegative()));
-            mDemandedAudiencePollTextView.setText(String.valueOf(mUserDemandPowerup.getAudiencePoll()));
+            mDemandedAudiencePollTextView.setText(String.valueOf(mUserDemandPowerup.getPlayerPoll()));
         }
 
         enableTransferToChallengeButton(false);
@@ -273,7 +292,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                         Thread.currentThread(); // This is AsyncTask thread, NOT UI thread.
                         while (mUserDemandPowerup.getDoubler() > 0 ||
                                 mUserDemandPowerup.getNoNegative() > 0 ||
-                                mUserDemandPowerup.getAudiencePoll() > 0) {
+                                mUserDemandPowerup.getPlayerPoll() > 0) {
 
                             if (mUserDemandPowerup.getDoubler() > 0) {
                                 mUserDemandPowerup.setDoubler(mUserDemandPowerup.getDoubler() - 1);
@@ -285,9 +304,9 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                                 mApiResponse.getUserBalance().setNoNegative(mApiResponse.getUserBalance().getNoNegative() + 1);
                             }
 
-                            if (mUserDemandPowerup.getAudiencePoll() > 0) {
-                                mUserDemandPowerup.setAudiencePoll(mUserDemandPowerup.getAudiencePoll() - 1);
-                                mApiResponse.getUserBalance().setAudiencePoll(mApiResponse.getUserBalance().getAudiencePoll() + 1);
+                            if (mUserDemandPowerup.getPlayerPoll() > 0) {
+                                mUserDemandPowerup.setPlayerPoll(mUserDemandPowerup.getPlayerPoll() - 1);
+                                mApiResponse.getUserBalance().setPlayerPoll(mApiResponse.getUserBalance().getPlayerPoll() + 1);
                             }
 
                             publishProgress(null);
@@ -303,16 +322,16 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                 protected void onProgressUpdate(Void... values) {
                     super.onProgressUpdate(values);
 
-                    UserBalancePowerupDto userBalance = mApiResponse.getUserBalance();
+                    PowerUp userBalance = mApiResponse.getUserBalance();
                     if (userBalance != null) {
                         mUserBalDoublerTextView.setText(String.valueOf(userBalance.getDoubler()));
                         mUserBalNoNegativeTextView.setText(String.valueOf(userBalance.getNoNegative()));
-                        mUserBalAudiencePollTextView.setText(String.valueOf(userBalance.getAudiencePoll()));
+                        mUserBalAudiencePollTextView.setText(String.valueOf(userBalance.getPlayerPoll()));
                     }
                     if (mUserDemandPowerup != null) {
                         mDemandedDoublerTextView.setText(String.valueOf(mUserDemandPowerup.getDoubler()));
                         mDemandedNoNegativeTextView.setText(String.valueOf(mUserDemandPowerup.getNoNegative()));
-                        mDemandedAudiencePollTextView.setText(String.valueOf(mUserDemandPowerup.getAudiencePoll()));
+                        mDemandedAudiencePollTextView.setText(String.valueOf(mUserDemandPowerup.getPlayerPoll()));
                     }
                 }
 
@@ -322,7 +341,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
                     // Transfer reset values so that any issue while reset-ui operation does not affect other things
                     if (mApiResponseForReset != null) {
-                        mApiResponse = mApiResponseForReset.clone();
+                        mApiResponse = cloneResponse(mApiResponseForReset);
                     }
                     performResetOperation();
                 }
@@ -332,11 +351,8 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
     private void initChallengeDetails() {
         Bundle args = getArguments();
-        /*if (args != null && args.containsKey(Constants.BundleKeys.CHALLENGE_INFO)) {
-            mChallenge = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.CHALLENGE_INFO));
-        }*/
-        if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
-            mInPlayContest = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+        if (args != null && args.containsKey(Constants.BundleKeys.PLAY_SCREEN_DATA)) {
+            mPlayScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA));
         }
     }
 
@@ -428,13 +444,13 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     }
 
     private void performTransferPowerupApiCall() {
-        if (isPowerupDemanded() && mUserDemandPowerup != null && mInPlayContest != null) {
+        if (isPowerupDemanded() && mUserDemandPowerup != null && mPlayScreenData != null) {
 
             showProgressbar();
-            BankTransferApiModelImpl.newInstance(getTransferToChallengeListener()).
-                    transferToChallenge(mUserDemandPowerup.getValueMap(),
-                            mInPlayContest.getChallengeId(),
-                            mInPlayContest.getRoomId());
+            TransferPowerUpFromBankApiImpl.newInstance(getTransferToChallengeListener()).
+                    transferToChallenge(mUserDemandPowerup,
+                            mPlayScreenData.getChallengeId(),
+                            mPlayScreenData.getRoomId());
 
         } else {
             showMessage("Please add any Powerup to transfer to NewChallengesResponse");
@@ -445,7 +461,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         boolean isDemanded = false;
 
         if (mUserDemandPowerup != null &&
-                (mUserDemandPowerup.getDoubler() > 0 || mUserDemandPowerup.getNoNegative() > 0 || mUserDemandPowerup.getAudiencePoll() > 0)) {
+                (mUserDemandPowerup.getDoubler() > 0 || mUserDemandPowerup.getNoNegative() > 0 || mUserDemandPowerup.getPlayerPoll() > 0)) {
             isDemanded = true;
         }
 
@@ -453,15 +469,17 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     }
 
     @NonNull
-    private BankTransferApiModelImpl.BankTransferApiModelListener getTransferToChallengeListener() {
-        return new BankTransferApiModelImpl.BankTransferApiModelListener() {
+    private TransferPowerUpFromBankApiImpl.BankTransferApiModelListener getTransferToChallengeListener() {
+        return new TransferPowerUpFromBankApiImpl.BankTransferApiModelListener() {
             @Override
-            public void onSuccess(ChallengeUserInfo challengeUserInfo) {
+            public void onSuccess(TransferPowerUpFromBankResponse response) {
                 dismissProgressbar();
 
-                setUserBalancePowerup(challengeUserInfo);
-                NostragamusAnalytics.getInstance().trackPowerBank(Constants.AnalyticsActions.COMPLETED);
-                onPowerupTransferred(challengeUserInfo);
+                if (response != null) {
+                    setUserBalancePowerUp(response);
+                    NostragamusAnalytics.getInstance().trackPowerBank(Constants.AnalyticsActions.COMPLETED);
+                    onPowerupTransferred(response);
+                }
             }
 
             @Override
@@ -478,23 +496,31 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         };
     }
 
-    private void setUserBalancePowerup(ChallengeUserInfo challengeUserInfo) {
-        UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
-        if (userInfo != null && challengeUserInfo != null && challengeUserInfo.getPowerUps() != null) {
+
+    private void setUserBalancePowerUp(TransferPowerUpFromBankResponse response) {
+        /*UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
+        if (userInfo != null && response != null && response.getPowerUps() != null) {
             userInfo.getInfoDetails().setPowerUps(challengeUserInfo.getPowerUps());
         }
-        NostragamusDataHandler.getInstance().setUserInfo(userInfo);
+        NostragamusDataHandler.getInstance().setUserInfo(userInfo);*/
+
+        if (response != null && response.getBalancePowerUp() != null) {
+            mApiResponse.setUserBalance(response.getBalancePowerUp());
+            mApiResponseForReset.setUserBalance(response.getBalancePowerUp());
+        }
     }
 
-    private void onPowerupTransferred(ChallengeUserInfo challengeUserInfo) {
-        broadcastPowerUpUpdated(challengeUserInfo);
+    private void onPowerupTransferred(TransferPowerUpFromBankResponse response) {
+        broadcastPowerUpUpdated(response);
         updatePowerUpDetailsOnUi();
     }
 
-    private void broadcastPowerUpUpdated(ChallengeUserInfo challengeUserInfo) {
+    private void broadcastPowerUpUpdated(TransferPowerUpFromBankResponse response) {
         Intent intent = new Intent(Constants.IntentActions.ACTION_POWERUPS_UPDATED);
-        if (challengeUserInfo != null) {
-            intent.putExtra(Constants.BundleKeys.UPDATED_CHALLENGE_USER_INFO, Parcels.wrap(challengeUserInfo));
+        if (response != null && response.getBalancePowerUp() != null) {
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.BundleKeys.POWERUPS, Parcels.wrap(response.getBalancePowerUp()));
+            intent.putExtras(args);
         }
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
@@ -502,19 +528,19 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     private void addAudiencePoll() {
         if (getView() != null && mApiResponse != null &&  mApiResponse.getAlreadyTransferred() != null && mApiResponse.getUserBalance() != null) {
 
-            AlreadyTransferredPowerupDto alreadyTransferredPowerup = mApiResponse.getAlreadyTransferred();
-            UserBalancePowerupDto userBalancePowerup = mApiResponse.getUserBalance();
+            PowerUp alreadyTransferredPowerup = mApiResponse.getAlreadyTransferred();
+            PowerUp userBalancePowerup = mApiResponse.getUserBalance();
 
-            if (isPowerupBankBalanceAvailable(userBalancePowerup.getAudiencePoll())) {
-                int totalWithdrawDemand = mUserDemandPowerup.getAudiencePoll() + 1;
-                if (isWithdrawLimitValid(totalWithdrawDemand, alreadyTransferredPowerup.getAudiencePoll(), mApiResponse.getMaxTransferLimit())) {
+            if (isPowerupBankBalanceAvailable(userBalancePowerup.getPlayerPoll())) {
+                int totalWithdrawDemand = mUserDemandPowerup.getPlayerPoll() + 1;
+                if (isWithdrawLimitValid(totalWithdrawDemand, alreadyTransferredPowerup.getPlayerPoll(), mApiResponse.getMaxTransferLimit())) {
 
-                    userBalancePowerup.setAudiencePoll(userBalancePowerup.getAudiencePoll() - 1);
-                    mUserDemandPowerup.setAudiencePoll(mUserDemandPowerup.getAudiencePoll() + 1);
+                    userBalancePowerup.setPlayerPoll(userBalancePowerup.getPlayerPoll() - 1);
+                    mUserDemandPowerup.setPlayerPoll(mUserDemandPowerup.getPlayerPoll() + 1);
 
                     // Update ui
-                    mUserBalAudiencePollTextView.setText(String.valueOf(userBalancePowerup.getAudiencePoll()));
-                    mDemandedAudiencePollTextView.setText(String.valueOf(mUserDemandPowerup.getAudiencePoll()));
+                    mUserBalAudiencePollTextView.setText(String.valueOf(userBalancePowerup.getPlayerPoll()));
+                    mDemandedAudiencePollTextView.setText(String.valueOf(mUserDemandPowerup.getPlayerPoll()));
 
                     enableResetButton(true);
                     enableTransferToChallengeButton(true);
@@ -558,8 +584,8 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     private void addNoNegative() {
         if (getView() != null && mApiResponse != null &&  mApiResponse.getAlreadyTransferred() != null && mApiResponse.getUserBalance() != null) {
 
-            AlreadyTransferredPowerupDto alreadyTransferredPowerup = mApiResponse.getAlreadyTransferred();
-            UserBalancePowerupDto userBalancePowerup = mApiResponse.getUserBalance();
+            PowerUp alreadyTransferredPowerup = mApiResponse.getAlreadyTransferred();
+            PowerUp userBalancePowerup = mApiResponse.getUserBalance();
 
             if (isPowerupBankBalanceAvailable(userBalancePowerup.getNoNegative())) {
                 int totalWithdrawDemand = mUserDemandPowerup.getNoNegative() + 1;
@@ -600,8 +626,8 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     private void addDoubler() {
         if (getView() != null && mApiResponse != null &&  mApiResponse.getAlreadyTransferred() != null && mApiResponse.getUserBalance() != null) {
 
-            AlreadyTransferredPowerupDto alreadyTransferredPowerup = mApiResponse.getAlreadyTransferred();
-            UserBalancePowerupDto userBalancePowerup = mApiResponse.getUserBalance();
+            PowerUp alreadyTransferredPowerup = mApiResponse.getAlreadyTransferred();
+            PowerUp userBalancePowerup = mApiResponse.getUserBalance();
 
             if (isPowerupBankBalanceAvailable(userBalancePowerup.getDoubler())) {
                 int totalWithdrawDemand = mUserDemandPowerup.getDoubler() + 1;
