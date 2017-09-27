@@ -36,6 +36,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.play.myresults.dto.MyResultScreenData;
 import in.sportscafe.nostragamus.module.prediction.gamePlayHelp.GamePlayHelpActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionAdapterListener;
 import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionsCardAdapter;
@@ -702,6 +703,22 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
      */
     private void onMatchCompleted() {
         Log.d(TAG, "Match Completed");
+        MyResultScreenData data = new MyResultScreenData();
+        if (mPlayScreenData != null) {
+            data.setRoomId(mPlayScreenData.getRoomId());
+            data.setChallengeId(mPlayScreenData.getChallengeId());
+            data.setMatchId(mPlayScreenData.getMatchId());
+        }
+
+        Bundle args = getArguments();
+        if (args == null) {
+            args = new Bundle();
+        }
+        args.putParcelable(Constants.BundleKeys.MY_RESULT_SCREEN_DATA, Parcels.wrap(data));
+
+        if (mFragmentListener != null) {
+            mFragmentListener.onMatchCompleted(args);
+        }
     }
 
     private void saveAnswer(int cardIndexPos, final int answerId, final boolean isMatchCompleted) {

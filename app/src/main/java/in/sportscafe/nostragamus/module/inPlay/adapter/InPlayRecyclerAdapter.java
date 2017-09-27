@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
-
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -20,6 +18,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
@@ -349,7 +348,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return counter;
     }
 
-    /* View Holders */
+    /* ================== View Holders ===================== */
 
     private class InPlayJoinedItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -357,6 +356,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LinearLayout timelineHeaderParent;
         LinearLayout timelineContentParent;
         LinearLayout timelineFooterParent;
+        LinearLayout currentRankLayout;
+        LinearLayout prizesLayout;
         TextView contestTitleTextView;
         ImageView contestModeImageView;
         TextView entryFeeTextView;
@@ -365,18 +366,20 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public InPlayJoinedItemViewHolder(View itemView) {
             super(itemView);
-
             root = (LinearLayout) itemView.findViewById(R.id.in_play_joined_card_parent);
             timelineHeaderParent = (LinearLayout) itemView.findViewById(R.id.inplay_joined_card_timeline_heading_parent);
             timelineContentParent = (LinearLayout) itemView.findViewById(R.id.inplay_joined_card_timeline_content_parent);
             timelineFooterParent = (LinearLayout) itemView.findViewById(R.id.inplay_joined_card_timeline_footer_parent);
+            currentRankLayout = (LinearLayout) itemView.findViewById(R.id.inplay_contest_list_current_rank_layout);
+            prizesLayout = (LinearLayout) itemView.findViewById(R.id.inplay_contest_list_prizes_layout);
             contestTitleTextView = (TextView) itemView.findViewById(R.id.inplay_joined_card_title_textView);
             contestModeImageView = (ImageView) itemView.findViewById(R.id.inplay_contest_card_header_mode_imgView);
             entryFeeTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_entry_fee_textView);
             currentRankTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_current_rank_textView);
             prizesTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_prizes_textView);
-
             root.setOnClickListener(this);
+            currentRankLayout.setOnClickListener(this);
+            prizesLayout.setOnClickListener(this);
         }
 
         @Override
@@ -384,17 +387,38 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             switch (view.getId()) {
                 case R.id.in_play_joined_card_parent:
                     if (mInPlayAdapterListener != null) {
-                        Bundle args = new Bundle();
-                        InPlayListItem listItem = mItemsList.get(getAdapterPosition());
-                        if (listItem != null && listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.JOINED_CONTEST) {
-                            InPlayContestDto contestDto = (InPlayContestDto) listItem.getItemData();
-                            args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(contestDto));
-                        }
+                        Bundle args = getContestDataBundle();
                         mInPlayAdapterListener.onJoinedContestCardClicked(args);
                     }
                     break;
 
+                case R.id.inplay_contest_list_current_rank_layout:
+                    if (mInPlayAdapterListener != null) {
+                        Bundle args = getContestDataBundle();
+                        args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+                        mInPlayAdapterListener.onJoinedContestCurrentRankClicked(args);
+                    }
+                    break;
+
+                case R.id.inplay_contest_list_prizes_layout:
+                    if (mInPlayAdapterListener != null) {
+                        Bundle args = getContestDataBundle();
+                        args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_REWARDS_SCREEN);
+                        mInPlayAdapterListener.onJoinedContestPrizesClicked(args);
+                    }
+                    break;
             }
+        }
+
+        @NonNull
+        private Bundle getContestDataBundle() {
+            Bundle args = new Bundle();
+            InPlayListItem listItem = mItemsList.get(getAdapterPosition());
+            if (listItem != null && listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.JOINED_CONTEST) {
+                InPlayContestDto contestDto = (InPlayContestDto) listItem.getItemData();
+                args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(contestDto));
+            }
+            return args;
         }
     }
 

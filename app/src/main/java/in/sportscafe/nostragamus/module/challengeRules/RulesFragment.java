@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,17 +149,21 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
 
     private void showContestRuleThree(Rules rules) {
         if (rules.getContestModeInfo() != null) {
-            TvContestRuleThree.setText(rules.getContestModeInfo().getName()
-                    + " - " + rules.getContestModeInfo().getDescription());
+            String modeName = rules.getContestModeInfo().getName();
+            if (!TextUtils.isEmpty(modeName)) {
+                if (modeName.equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                    IvContestRuleThree.setBackgroundResource(R.drawable.guaranteed_icon);
+                } else if (modeName.equalsIgnoreCase(Constants.ContestType.POOL)) {
+                    IvContestRuleThree.setBackgroundResource(R.drawable.pool_icon);
+                } else if (modeName.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                    IvContestRuleThree.setBackgroundResource(R.drawable.no_guarantee_icon);
+                }
 
-            if (rules.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
-                IvContestRuleThree.setBackgroundResource(R.drawable.guaranteed_icon);
-            } else if (rules.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.POOL)) {
-                IvContestRuleThree.setBackgroundResource(R.drawable.pool_icon);
-            } else if (rules.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
-                IvContestRuleThree.setBackgroundResource(R.drawable.no_guarantee_icon);
+                if (rules.getContestModeInfo().getDescription() != null) {
+                    TvContestRuleThree.setText(rules.getContestModeInfo().getName()
+                            + " - " + rules.getContestModeInfo().getDescription());
+                }
             }
-
         } else {
             if (getView() != null) {
                 getView().findViewById(R.id.contest_rule_three_rl).setVisibility(View.GONE);

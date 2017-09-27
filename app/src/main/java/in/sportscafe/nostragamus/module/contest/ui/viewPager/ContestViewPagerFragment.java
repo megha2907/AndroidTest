@@ -34,7 +34,7 @@ import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
-import in.sportscafe.nostragamus.module.contest.ui.ContestDetailsLaunchRequest;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
@@ -94,7 +94,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         return new ContestAdapterListener() {
             @Override
             public void onContestClicked(Bundle args) {
-                goToContestDetails(args, ContestDetailsLaunchRequest.SHOW_DEFAULT_SCREEN);
+                goToContestDetails(args, DetailScreensLaunchRequest.CONTESTS_DEFAULT_SCREEN);
             }
 
             @Override
@@ -104,7 +104,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
             @Override
             public void onPrizesClicked(Bundle args) {
-                goToContestDetails(args, ContestDetailsLaunchRequest.SHOW_REWARDS_SCREEN);
+                goToContestDetails(args, DetailScreensLaunchRequest.CONTESTS_REWARDS_SCREEN);
             }
         };
     }

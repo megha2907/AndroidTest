@@ -8,4 +8,5 @@ import android.os.Bundle;
 
 public interface PredictionFragmentListener {
     void onBackClicked();
+    void onMatchCompleted(Bundle args);
 }

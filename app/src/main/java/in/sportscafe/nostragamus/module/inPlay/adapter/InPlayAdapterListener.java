@@ -13,12 +13,8 @@ public interface InPlayAdapterListener {
 
     /* Joined Card Item */
     void onJoinedContestCardClicked(Bundle args);
-    void onJoinedContestMoreContestButtonClicked(Bundle args);
-    void onJoinedContestWinningsClicked(Bundle args);
-
-    /* Completed Card Item */
-    void onCompletedCardClicked(Bundle args);
-    void onCompletedWinningClicked(Bundle args);
+    void onJoinedContestPrizesClicked(Bundle args);
+    void onJoinedContestCurrentRankClicked(Bundle args);
 
     /* Head Less Contest card Item */
     void onHeadLessContestCardClicked(Bundle args);

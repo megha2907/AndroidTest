@@ -20,7 +20,7 @@ import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
-import in.sportscafe.nostragamus.module.contest.ui.ContestDetailsLaunchRequest;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
@@ -113,7 +113,7 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
                 int launchScreen = args.getInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST);
                 switch (launchScreen) {
 
-                    case ContestDetailsLaunchRequest.SHOW_REWARDS_SCREEN:
+                    case DetailScreensLaunchRequest.CONTESTS_REWARDS_SCREEN:
                         mViewPager.setCurrentItem(1);   // Second TAB is rewards
                         break;
                 }

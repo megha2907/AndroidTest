@@ -84,6 +84,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         if (mInPlayMatchList != null && mInPlayMatchList.size() > position) {
             InPlayMatch match = mInPlayMatchList.get(position);
 
+            /* Enable / disable buttons */
             if (shouldDisableMatchClickAction(match)) {
                 viewHolder.matchParentLayout.setEnabled(false);
                 viewHolder.actionButton.setEnabled(false);
@@ -91,8 +92,17 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
             viewHolder.dateTimeTextView.setText(getDateTimeValue(match.getMatchStartTime()));
             viewHolder.venueTextView.setText(match.getMatchVenue());
-            viewHolder.actionButton.setText(match.getMatchStatus());
 
+            /* Match status */
+            String matchStatus =  match.getMatchStatus();
+            if (!TextUtils.isEmpty(matchStatus)) {
+                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.POINTS)) {
+                    matchStatus = match.getMatchPoints() + " " + matchStatus;
+                }
+                viewHolder.actionButton.setText(matchStatus);
+            }
+
+            /* Match parties */
             if (match.getMatchParties() != null)  {
                 MatchParty party1 = match.getMatchParties().get(0);
                 if (party1 != null) {

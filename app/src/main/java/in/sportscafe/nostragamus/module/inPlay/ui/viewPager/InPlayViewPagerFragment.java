@@ -213,23 +213,13 @@ public class InPlayViewPagerFragment extends BaseFragment {
             }
 
             @Override
-            public void onJoinedContestMoreContestButtonClicked(Bundle args) {
-
+            public void onJoinedContestPrizesClicked(Bundle args) {
+                goToNewMatchesTimeline(args);
             }
 
             @Override
-            public void onJoinedContestWinningsClicked(Bundle args) {
-
-            }
-
-            @Override
-            public void onCompletedCardClicked(Bundle args) {
-
-            }
-
-            @Override
-            public void onCompletedWinningClicked(Bundle args) {
-
+            public void onJoinedContestCurrentRankClicked(Bundle args) {
+                goToNewMatchesTimeline(args);
             }
 
             @Override
