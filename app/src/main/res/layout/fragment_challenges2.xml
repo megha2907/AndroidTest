@@ -94,7 +94,7 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/challenge_tabs"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_64"
+            android:layout_height="@dimen/dim_56"
             android:background="@color/new_challenge_tab_bg"
             app:tabGravity="fill"
             app:tabIndicatorColor="#008ad6"

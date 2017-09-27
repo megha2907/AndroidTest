@@ -17,6 +17,8 @@ public class InPlayListChallengeItem {
     private String status;
     private int sportsId;
     private int contestCount = 0;
+    private String challengeStartTime;
+    private String challengeEndTime;
 
     private List<String> challengeTournaments = new ArrayList<>();
 
@@ -75,4 +77,21 @@ public class InPlayListChallengeItem {
     public void setChallengeTournaments(List<String> challengeTournaments) {
         this.challengeTournaments = challengeTournaments;
     }
+
+    public String getChallengeStartTime() {
+        return challengeStartTime;
+    }
+
+    public void setChallengeStartTime(String challengeStartTime) {
+        this.challengeStartTime = challengeStartTime;
+    }
+
+    public String getChallengeEndTime() {
+        return challengeEndTime;
+    }
+
+    public void setChallengeEndTime(String challengeEndTime) {
+        this.challengeEndTime = challengeEndTime;
+    }
+
 }

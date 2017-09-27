@@ -146,11 +146,14 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
                             isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, responses.getData().getInPlayMatchList().size());
 
                     /* Title */
-                    TimelineHelper.addTextNode(titleParent, "Game " + (temp+1), responses.getData().getInPlayMatchList().size(), match.getMatchStatus());
+                    TimelineHelper.addTextNode(titleParent, "Game " + (temp+1), responses.getData().getInPlayMatchList().size(),
+                            match.getMatchStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN,match.isPlayed());
 
                     /* Footer */
                     String dateTime = responses.getData().getInPlayMatchList().get(temp).getMatchStartTime();
-                    TimelineHelper.addTextNode(bottomParent, getDateTimeValue(dateTime),responses.getData().getInPlayMatchList().size(), match.getMatchStatus());
+                    TimelineHelper.addTextNode(bottomParent, getDateTimeValue(dateTime),
+                            responses.getData().getInPlayMatchList().size(), match.getMatchStatus(),
+                            TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN,match.isPlayed());
                 }
             }
         }
