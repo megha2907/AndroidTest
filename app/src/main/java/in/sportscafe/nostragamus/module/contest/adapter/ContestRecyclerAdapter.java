@@ -3,13 +3,13 @@ package in.sportscafe.nostragamus.module.contest.adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -99,11 +99,11 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
                 viewHolder.mTvContestsAvailable.setText(String.valueOf(contest.getFillingRooms()));
 
-                if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
                     viewHolder.mIvContestsType.setBackgroundResource(R.drawable.guaranteed_icon);
-                } else if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.POOL)) {
+                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
                     viewHolder.mIvContestsType.setBackgroundResource(R.drawable.pool_icon);
-                }else if (contest.getContestModeInfo().getName().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                     viewHolder.mIvContestsType.setBackgroundResource(R.drawable.no_guarantee_icon);
                 }
 
@@ -146,6 +146,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView mTvContestsAvailable;
         public RelativeLayout mRlContestLayout;
         public ImageView mIvContestsType;
+        LinearLayout mRewardsPrizesLayout;
 
 
         private ContestAdapterListener clickListener;
@@ -164,10 +165,12 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mTvContestsAvailable = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_available);
             mRlContestLayout = (RelativeLayout) itemView.findViewById(R.id.pool_rl_layout);
             mIvContestsType = (ImageView) itemView.findViewById(R.id.pool_row_iv_contest_type);
+            mRewardsPrizesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_reward_layout);
 
             itemView.setOnClickListener(this);
             mBtnJoin.setOnClickListener(this);
             mRlContestLayout.setOnClickListener(this);
+            mRewardsPrizesLayout.setOnClickListener(this);
         }
 
         @Override
@@ -185,6 +188,12 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         if (clickListener != null && mContestList != null && mContestList.size() > adapterPos) {
                             clickListener.onContestClicked(getContestBundle(adapterPos));
                         }
+                    }
+                    break;
+
+                case R.id.pool_row_ll_reward_layout:
+                    if (clickListener != null) {
+                        clickListener.onPrizesClicked(getContestBundle(getAdapterPosition()));
                     }
                     break;
             }

@@ -47,8 +47,11 @@ public class InPlayMatch {
     @SerializedName("match_points")
     private int matchPoints;
 
-    @SerializedName("q_count")
+    @SerializedName("count_questions")
     private int questionCount;
+
+    @SerializedName("count_answers")
+    private int answerCount;
 
     @SerializedName("match_status")
     private String matchStatus;
@@ -179,4 +182,11 @@ public class InPlayMatch {
         isPlayed = played;
     }
 
+    public int getAnswerCount() {
+        return answerCount;
+    }
+
+    public void setAnswerCount(int answerCount) {
+        this.answerCount = answerCount;
+    }
 }

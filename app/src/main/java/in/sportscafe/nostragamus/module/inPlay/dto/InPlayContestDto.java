@@ -52,6 +52,7 @@ public class InPlayContestDto {
     private List<InPlayContestMatchDto> matches = null;
 
     private int challengeId;
+    private String challengeName;
 
     public int getContestId() {
         return contestId;
@@ -157,4 +158,11 @@ public class InPlayContestDto {
         this.headlessState = headlessState;
     }
 
+    public String getChallengeName() {
+        return challengeName;
+    }
+
+    public void setChallengeName(String challengeName) {
+        this.challengeName = challengeName;
+    }
 }

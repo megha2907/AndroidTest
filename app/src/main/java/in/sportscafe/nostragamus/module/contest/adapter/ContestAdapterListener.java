@@ -9,4 +9,5 @@ import android.os.Bundle;
 public interface ContestAdapterListener {
     void onContestClicked(Bundle args);
     void onJoinContestClicked(Bundle args);
+    void onPrizesClicked(Bundle args);
 }

@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.NewChallengesDataProvider;
@@ -30,7 +29,6 @@ import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilte
 import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerFragment;
 import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
-import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,11 +69,9 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
      * When internet gets Turn ON
      */
     public void onInternetConnected() {
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
-            loadData();
-            if (mSnackBar != null && mSnackBar.isShown()) {
-                mSnackBar.dismiss();
-            }
+        loadData();
+        if (mSnackBar != null && mSnackBar.isShown()) {
+            mSnackBar.dismiss();
         }
     }
 
@@ -119,20 +115,26 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_NETWORK_CONNECTION, Snackbar.LENGTH_INDEFINITE);
-                    mSnackBar.show();
+                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_INDEFINITE);
+
                     break;
 
                 case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
-                    mSnackBar = Snackbar.make(getView(), "Could not fetch from Server, try again!", Snackbar.LENGTH_INDEFINITE);
-                    mSnackBar.show();
+                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.COULD_NOT_FETCH_DATA_FROM_SERVER, Snackbar.LENGTH_INDEFINITE);
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
-                    mSnackBar.show();
+                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
                     break;
             }
+
+            mSnackBar.setAction("Retry", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onInternetConnected();
+                }
+            });
+            mSnackBar.show();
         }
     }
 
@@ -229,6 +231,7 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
         if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
             for (NewChallengesResponse newChallenge : newChallengesResponseData) {
 
+                // TODO
             }
         }
 
@@ -241,6 +244,7 @@ public class NewChallengesFragment extends BaseFragment implements View.OnClickL
         if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
             for (NewChallengesResponse newChallenge : newChallengesResponseData) {
 
+                // TODO
             }
         }
 

@@ -36,7 +36,7 @@ public class Contest {
     private ContestTypeInfo contestTypeInfo;
 
     @SerializedName("mode")
-    private ContestModeInfo contestModeInfo;
+    private String contestMode;
 
     @SerializedName("fee")
     private int entryFee;
@@ -178,12 +178,12 @@ public class Contest {
         this.challengeName = challengeName;
     }
 
-    public ContestModeInfo getContestModeInfo() {
-        return contestModeInfo;
+    public String getContestMode() {
+        return contestMode;
     }
 
-    public void setContestModeInfo(ContestModeInfo contestModeInfo) {
-        this.contestModeInfo = contestModeInfo;
+    public void setContestMode(String contestMode) {
+        this.contestMode = contestMode;
     }
 
     public PowerUp getPowerUp() {

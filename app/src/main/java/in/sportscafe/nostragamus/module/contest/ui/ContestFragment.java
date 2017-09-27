@@ -24,6 +24,7 @@ import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dataProvider.ContestDataProvider;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
+import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAdapter;
@@ -46,8 +47,7 @@ public class ContestFragment extends NostraBaseFragment {
     private TextView mTvTBarHeading;
     private TextView mTvTBarSubHeading;
     private TextView mTvTBarWalletMoney;
-    private String mChallengeName;
-    private int mChallengeId = -1;
+    private ContestScreenData mContestScreenData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,12 +75,12 @@ public class ContestFragment extends NostraBaseFragment {
     }
 
     private void loadData() {
-        mChallengeId = 300;// TODO: remove hard coded
-        if (mChallengeId > 0) {
+        if (mContestScreenData != null) {
             ContestDataProvider dataProvider = new ContestDataProvider();
             final List<ContestType> contestTypeList = dataProvider.getContestTypeList();
 
-            dataProvider.getContestDetails(mChallengeId, new ContestDataProvider.ContestDataProviderListener() {
+            dataProvider.getContestDetails(/*mContestScreenData.getChallengeId()*/482 /* TODO */,
+                    new ContestDataProvider.ContestDataProviderListener() {
                 @Override
                 public void onSuccessResponse(int status, ContestResponse response) {
                     switch (status) {
@@ -110,20 +110,8 @@ public class ContestFragment extends NostraBaseFragment {
     private void getRequiredDataFromBundle() {
         Bundle args = getArguments();
         if (args != null) {
-            if (args.containsKey(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM)) {
-                InPlayListChallengeItem challengeItem = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM));
-                if (challengeItem != null) {
-                    mChallengeId = challengeItem.getChallengeId();
-                    mChallengeName = challengeItem.getChallengeName();
-                }
-            }
-
-            if (args.containsKey(Constants.BundleKeys.NEW_CHALLENGES_RESPONSE)) {
-                NewChallengesResponse challengesResponse = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.NEW_CHALLENGES_RESPONSE));
-                if (challengesResponse != null) {
-                    mChallengeId = challengesResponse.getId();
-                    mChallengeName = challengesResponse.getChallengeName();
-                }
+            if (args.containsKey(Constants.BundleKeys.CONTEST_SCREEN_DATA)) {
+                mContestScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA));
             }
         }
     }
@@ -143,7 +131,7 @@ public class ContestFragment extends NostraBaseFragment {
     }
 
     private void showOnUi(List<ContestType> contestTypeList, List<Contest> contestList) {
-        if (getView() != null && getActivity() != null) {
+        if (getView() != null && getActivity() != null && mContestScreenData != null) {
             if (contestTypeList != null && contestTypeList.size() > 0
                     && contestList != null && contestList.size() > 0) {
 
@@ -170,7 +158,7 @@ public class ContestFragment extends NostraBaseFragment {
                 }
 
                 mTvTBarHeading.setText(String.valueOf(contestTypeList.size()) + " Contests Available");
-                mTvTBarSubHeading.setText(mChallengeName);
+                mTvTBarSubHeading.setText(mContestScreenData.getChallengeName());
 
                 int amount = (int) WalletHelper.getTotalBalance();
                 mTvTBarWalletMoney.setText(String.valueOf(amount));
@@ -195,9 +183,11 @@ public class ContestFragment extends NostraBaseFragment {
     }
 
     private void addChallengeDetailsIntoContest(List<Contest> contestList) {
-        for (Contest contest : contestList) {
-            contest.setChallengeName(mChallengeName);
-            contest.setChallengeId(mChallengeId);
+        if (mContestScreenData != null && contestList != null) {
+            for (Contest contest : contestList) {
+                contest.setChallengeName(mContestScreenData.getChallengeName());
+                contest.setChallengeId(mContestScreenData.getChallengeId());
+            }
         }
     }
 

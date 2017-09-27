@@ -14,10 +14,10 @@ public class ContestTypeInfo {
     @SerializedName("id")
     private int id;
 
-    @SerializedName("name")
+    @SerializedName("category_name")
     private String name;
 
-    @SerializedName("desc")
+    @SerializedName("category_desc")
     private String description;
 
     public int getId() {

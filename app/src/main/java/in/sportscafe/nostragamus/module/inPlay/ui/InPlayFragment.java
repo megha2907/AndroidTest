@@ -8,21 +8,16 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.jeeva.android.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
-import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
@@ -61,11 +56,9 @@ public class InPlayFragment extends NostraBaseFragment {
     }
 
     public void onInternetConnected() {
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
-            loadData();
-            if (mSnackBar != null && mSnackBar.isShown()) {
-                mSnackBar.dismiss();
-            }
+        loadData();
+        if (mSnackBar != null && mSnackBar.isShown()) {
+            mSnackBar.dismiss();
         }
     }
 
@@ -98,20 +91,25 @@ public class InPlayFragment extends NostraBaseFragment {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_NETWORK_CONNECTION, Snackbar.LENGTH_INDEFINITE);
-                    mSnackBar.show();
+                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_INDEFINITE);
                     break;
 
                 case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
-                    mSnackBar = Snackbar.make(getView(), "Server Error!", Snackbar.LENGTH_LONG);
-                    mSnackBar.show();
+                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.COULD_NOT_FETCH_DATA_FROM_SERVER, Snackbar.LENGTH_LONG);
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
-                    mSnackBar.show();
+                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
                     break;
             }
+
+            mSnackBar.setAction("Retry", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onInternetConnected();
+                }
+            });
+            mSnackBar.show();
         }
     }
 

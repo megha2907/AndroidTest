@@ -29,9 +29,12 @@ import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlay;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
+import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
+import in.sportscafe.nostragamus.module.play.myresults.dto.MyResultScreenData;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
@@ -81,7 +84,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             showLoadingContent();
             InPlayMatchesDataProvider dataProvider = new InPlayMatchesDataProvider();
             dataProvider.getInPlayMatches(mInPlayContest.getRoomId(),
-                    /*mInPlayContest.getChallengeId()*/ 482 /* TODO: remove hardcoded value */,
+                    mInPlayContest.getChallengeId(),
                     new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
                 @Override
                 public void onData(int status, @Nullable InPlayMatchesResponse responses) {
@@ -209,15 +212,36 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
                     case MatchesAdapterAction.ANSWER:
                     case MatchesAdapterAction.DID_NOT_PLAY:
                     case MatchesAdapterAction.POINTS:
-                        launchPlayScreen(args);
+                        launchResultsScreen(args);
                         break;
                 }
             }
         };
     }
 
-    private void launchResultsScreen() {
+    private void launchResultsScreen(Bundle args) {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            MyResultScreenData data = null;
 
+            if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_MATCH)) {
+                InPlayMatch match = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_MATCH));
+
+                if (match != null && mInPlayContest != null) {
+                    data = new MyResultScreenData();
+                    data.setMatchId(match.getMatchId());
+                    data.setChallengeId(match.getChallengeId());
+                    data.setRoomId(mInPlayContest.getRoomId());
+                }
+            }
+
+            if (data != null) {
+                args.putParcelable(Constants.BundleKeys.MY_RESULT_SCREEN_DATA, Parcels.wrap(data));
+
+                Intent intent = new Intent(getActivity(), MyResultsActivity.class);
+                intent.putExtras(args);
+                getActivity().startActivity(intent);
+            }
+        }
     }
 
     private void launchPlayScreen(Bundle matchArgs) {
