@@ -75,7 +75,6 @@ public class ContestFragment extends NostraBaseFragment {
     }
 
     private void loadData() {
-        mChallengeId = 300;// TODO: remove hard coded
         if (mChallengeId > 0) {
             ContestDataProvider dataProvider = new ContestDataProvider();
             final List<ContestType> contestTypeList = dataProvider.getContestTypeList();

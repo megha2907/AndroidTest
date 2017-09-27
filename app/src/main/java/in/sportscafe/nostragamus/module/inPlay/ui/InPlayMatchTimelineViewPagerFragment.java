@@ -81,7 +81,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             showLoadingContent();
             InPlayMatchesDataProvider dataProvider = new InPlayMatchesDataProvider();
             dataProvider.getInPlayMatches(mInPlayContest.getRoomId(),
-                    /*mInPlayContest.getChallengeId()*/ 482 /* TODO: remove hardcoded value */,
+                    mInPlayContest.getChallengeId(),
                     new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
                 @Override
                 public void onData(int status, @Nullable InPlayMatchesResponse responses) {

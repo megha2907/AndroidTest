@@ -715,7 +715,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 showProgress();
 
                 mSavePredictionAnswerProvider.savePredictionAnswer(question.getPowerUp(),
-                        /*mPlayScreenData.getRoomId()*/ 8712 /* TODO: remove  */,
+                        mPlayScreenData.getRoomId(),
                         question.getMatchId(),
                         question.getQuestionId(),
                         answerId,

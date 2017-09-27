@@ -196,6 +196,8 @@ public interface Constants {
         String NOT_FREE_CHALLENGE = "Please use full version for the paid challenges";
         String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Please select the checkbox to proceed - you must meet these conditions to play the Pro version of Nostragamus";
         String FORCE_UPDATE_PROFILE_MSG_FOR_PAID_VERSION = "Please update your profile";
+        String NO_INTERNET_CONNECTION = "No internet connection";
+        String COULD_NOT_FETCH_DATA_FROM_SERVER = "Could not fetch data from Server!";
 
         /*--- Paytm Msg ---*/
         String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";

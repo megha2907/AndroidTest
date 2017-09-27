@@ -20,6 +20,7 @@ import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
+import in.sportscafe.nostragamus.module.contest.ui.ContestDetailsLaunchRequest;
 import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
@@ -32,17 +33,15 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
     private static final String TAG = ContestDetailsBeforeJoinFragment.class.getSimpleName();
 
     private ContestDetailsBJFragmentListener mContestDetailsBJFragmentListener;
+    private TextView mTvTBarHeading;
+    private TextView mTvTBarSubHeading;
+    private TextView mTvTBarWalletMoney;
+    private Button joinContest;
+    private ContestDetailsBJViewPagerAdapter mViewPagerAdapter;
+    private ViewPager mViewPager;
 
     public ContestDetailsBeforeJoinFragment() {
     }
-
-    TextView mTvTBarHeading;
-    TextView mTvTBarSubHeading;
-    TextView mTvTBarWalletMoney;
-    Button joinContest;
-    String challengeName;
-
-    private ContestDetailsBJViewPagerAdapter mViewPagerAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -69,12 +68,13 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
         mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
         mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
         joinContest = (Button) rootView.findViewById(R.id.join_contest_btn);
+        mViewPager = (ViewPager) rootView.findViewById(R.id.contest_details_viewPager);
+
         joinContest.setOnClickListener(this);
         rootView.findViewById(R.id.contest_details_back_btn).setOnClickListener(this);
     }
 
     private void setInfo(Contest contest) {
-
         if (contest != null) {
             mTvTBarHeading.setText(contest.getConfigName());
             mTvTBarSubHeading.setText("");
@@ -100,15 +100,30 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
             Contest contest = Parcels.unwrap(arguments.getParcelable(Constants.BundleKeys.CONTEST));
             createAdapter(contest);
             setInfo(contest);
+
+            showRequestedTabScreen();
+        }
+    }
+
+    private void showRequestedTabScreen() {
+        Bundle args = getArguments();
+        if (args != null && mViewPager != null) {
+            if (args.containsKey(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST)) {
+
+                int launchScreen = args.getInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST);
+                switch (launchScreen) {
+
+                    case ContestDetailsLaunchRequest.SHOW_REWARDS_SCREEN:
+                        mViewPager.setCurrentItem(1);   // Second TAB is rewards
+                        break;
+                }
+            }
         }
     }
 
     private void createAdapter(Contest contest) {
-
-        ViewPager mViewPager = (ViewPager) getView().findViewById(R.id.contest_details_viewPager);
-        mViewPagerAdapter = new ContestDetailsBJViewPagerAdapter(getChildFragmentManager(), getContext());
-
-        if (contest != null) {
+        if (contest != null && getView() != null && mViewPager != null) {
+            mViewPagerAdapter = new ContestDetailsBJViewPagerAdapter(getChildFragmentManager(), getContext());
 
             ContestEntriesViewPagerFragment contestEntriesViewPagerFragment = new ContestEntriesViewPagerFragment();
             mViewPagerAdapter.addFragment(contestEntriesViewPagerFragment, Constants.ContestDetailsTabs.ENTRIES);
@@ -123,9 +138,7 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
             mViewPager.setOffscreenPageLimit(3);
 
             setTabLayout(mViewPager);
-
         }
-
     }
 
     private void setTabLayout(ViewPager mViewPager) {
@@ -147,7 +160,7 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
         switch (v.getId()) {
             case R.id.join_contest_btn:
                 if (mContestDetailsBJFragmentListener != null) {
-                    mContestDetailsBJFragmentListener.onJoinContestClicked();
+                    mContestDetailsBJFragmentListener.onJoinContestClicked(getArguments());
                 }
                 break;
             case R.id.contest_details_back_btn:

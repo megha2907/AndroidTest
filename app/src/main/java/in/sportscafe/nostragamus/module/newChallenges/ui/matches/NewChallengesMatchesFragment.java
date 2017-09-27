@@ -105,7 +105,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void joinPseudoContest(final InPlayMatch match) {
         if (mNewChallengeResponse != null) {
             JoinPseudoContestApiModelImpl joinPseudoContestApiModel = new JoinPseudoContestApiModelImpl();
-            joinPseudoContestApiModel.joinPseudoContest(/*mNewChallengeResponse.getId()*/582 /* TODO: remove */, new JoinPseudoContestApiModelImpl.JoinPseudoContestApiListener() {
+            joinPseudoContestApiModel.joinPseudoContest(mNewChallengeResponse.getId(), new JoinPseudoContestApiModelImpl.JoinPseudoContestApiListener() {
                 @Override
                 public void onData(int status, @Nullable JoinPseudoContestResponse responses) {
                     launchPlayScreen(match, responses);
@@ -167,9 +167,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void loadDataFromServer() {
         if (mNewChallengeResponse != null) {
             NewChallengesMatchesDataProvider dataProvider = new NewChallengesMatchesDataProvider();
-            int challengeId = 482; //challengesResponse.getId() // TODO: remove
-
-            dataProvider.getNewChallengesMatches(challengeId, new NewChallengesMatchesDataProvider.NewChallengesApiListener() {
+            dataProvider.getNewChallengesMatches(mNewChallengeResponse.getId(), new NewChallengesMatchesDataProvider.NewChallengesApiListener() {
                 @Override
                 public void onData(int status, @Nullable NewChallengeMatchesResponse responses) {
                     onSuccessMatchResponse(responses);
