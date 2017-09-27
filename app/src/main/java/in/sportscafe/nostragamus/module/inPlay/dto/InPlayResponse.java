@@ -26,6 +26,12 @@ public class InPlayResponse {
     @SerializedName("challenge_desc")
     private String challengeDesc;
 
+    @SerializedName("challenge_starttime")
+    private String challengeStartTime;
+
+    @SerializedName("challenge_endtime")
+    private String challengeEndTime;
+
     @SerializedName("status")
     private String status = "ongoing";
 
@@ -104,5 +110,21 @@ public class InPlayResponse {
 
     public void setTournaments(List<String> tournaments) {
         this.tournaments = tournaments;
+    }
+
+    public String getChallengeStartTime() {
+        return challengeStartTime;
+    }
+
+    public void setChallengeStartTime(String challengeStartTime) {
+        this.challengeStartTime = challengeStartTime;
+    }
+
+    public String getChallengeEndTime() {
+        return challengeEndTime;
+    }
+
+    public void setChallengeEndTime(String challengeEndTime) {
+        this.challengeEndTime = challengeEndTime;
     }
 }
