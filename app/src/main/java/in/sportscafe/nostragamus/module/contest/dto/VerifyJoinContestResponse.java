@@ -11,7 +11,7 @@ public class VerifyJoinContestResponse {
     @SerializedName("error")
     private String error;
 
-    @SerializedName("try_again")
+    @SerializedName("try-again")
     private boolean tryAgain = false;
 
     public String getError() {

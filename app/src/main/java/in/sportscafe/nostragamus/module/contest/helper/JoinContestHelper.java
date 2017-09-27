@@ -13,6 +13,7 @@ import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentDialog
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
 import in.sportscafe.nostragamus.module.contest.dataProvider.JoinContestApiImpl;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
+import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
@@ -32,10 +33,11 @@ public class JoinContestHelper {
     public interface JoinContestProcessListener {
         void noInternet();
         void lowWalletBalance(JoinContestData joinContestData);
-        void joinContestSuccess();
-        void onUnExpectedError();
+        void joinContestSuccess(JoinContestData joinContestData);
         void onApiFailure();
         void onServerReturnedError(String msg);
+        void hideProgressBar();
+        void showProgressBar();
     }
 
     public synchronized int JoinContest(@NonNull JoinContestData joinContestData,
@@ -100,6 +102,11 @@ public class JoinContestHelper {
                             args,
                             getCompletePaymentDialogActionListener(joinContestData));
 
+            /* Hide progress dialog from UI */
+            if (mListener != null) {
+                mListener.hideProgressBar();
+            }
+
             dialogFragment.show(appCompatActivity.getSupportFragmentManager(), CompletePaymentDialogFragment.class.getSimpleName());
         }
     }
@@ -115,12 +122,15 @@ public class JoinContestHelper {
 
             @Override
             public void onPayConfirmed() {
+                if (mListener != null) {
+                    mListener.showProgressBar();
+                }
                 performJoinChallengeAction(joinContestData);
             }
         };
     }
 
-    private void performJoinChallengeAction(JoinContestData joinContestData) {
+    private void performJoinChallengeAction(final JoinContestData joinContestData) {
         JoinContestApiImpl joinContestApi = new JoinContestApiImpl(new JoinContestApiImpl.JoinContestApiListener() {
 
             @Override
@@ -138,9 +148,9 @@ public class JoinContestHelper {
             }
 
             @Override
-            public void onSuccessResponse(JoinChallengeResponse joinChallengeResponse) {
+            public void onSuccessResponse(VerifyJoinContestResponse verifyJoinContestResponse) {
                 if (mListener != null) {
-                    mListener.joinContestSuccess();
+                    mListener.joinContestSuccess(joinContestData);
                 }
             }
         });

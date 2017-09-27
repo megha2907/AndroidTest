@@ -314,6 +314,7 @@ public interface Constants {
         String NEW_CHALLENGES_RESPONSE = "newChallengeResponse";
         String SCREEN_LAUNCHED_FROM_PARENT = "screenLaunchedFromParent";
         String JOIN_CONTEST_DATA = "joinContestData";
+        String SCREEN_LAUNCH_REQUEST = "screenLaunchRequest";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
