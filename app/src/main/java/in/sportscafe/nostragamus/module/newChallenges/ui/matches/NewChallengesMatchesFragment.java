@@ -20,6 +20,7 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
@@ -209,8 +210,12 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
 
     private void onJoinContestClicked() {
         if (mNewChallengeResponse != null && mNewChallengeMatchFragmentListener != null) {
+            ContestScreenData screenData = new ContestScreenData();
+            screenData.setChallengeId(mNewChallengeResponse.getId());
+            screenData.setChallengeName(mNewChallengeResponse.getChallengeName());
+
             Bundle args = new Bundle();
-            args.putParcelable(Constants.BundleKeys.NEW_CHALLENGES_RESPONSE, Parcels.wrap(mNewChallengeResponse));
+            args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(screenData));
             args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, ContestsActivity.LaunchedFrom.NEW_CHALLENGE_MATCHES);
             mNewChallengeMatchFragmentListener.launchContestActivity(ContestsActivity.LaunchedFrom.NEW_CHALLENGE_MATCHES, args);
         }

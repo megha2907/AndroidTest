@@ -379,6 +379,9 @@
             android:name=".module.prediction.playScreen.PredictionActivity"
             
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

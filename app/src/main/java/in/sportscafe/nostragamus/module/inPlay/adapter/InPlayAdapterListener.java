@@ -18,5 +18,4 @@ public interface InPlayAdapterListener {
 
     /* Head Less Contest card Item */
     void onHeadLessContestCardClicked(Bundle args);
-    void onHeadLessJoinButtonClicked(Bundle args);
 }

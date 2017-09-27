@@ -470,7 +470,6 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView currentRankTextView;
         TextView prizesTextView;
 
-
         public InPlayHeadLessItemViewHolder(View itemView) {
             super(itemView);
             root = (LinearLayout) itemView.findViewById(R.id.in_play_headless_card_parent);
@@ -490,8 +489,24 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.in_play_headless_card_parent:
+                    if (mInPlayAdapterListener != null) {
+                        Bundle args = getHeadLessContestDataBundle();
+
+                        mInPlayAdapterListener.onHeadLessContestCardClicked(args);
+                    }
                     break;
             }
+        }
+
+        @NonNull
+        private Bundle getHeadLessContestDataBundle() {
+            Bundle args = new Bundle();
+            InPlayListItem listItem = mItemsList.get(getAdapterPosition());
+            if (listItem != null && listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.HEADLESS_CONTEST) {
+                InPlayContestDto contestDto = (InPlayContestDto) listItem.getItemData();
+                args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(contestDto));
+            }
+            return args;
         }
     }
 
