@@ -19,8 +19,7 @@
         android:background="@drawable/inplay_headless_card_top_bg"
         android:paddingLeft="@dimen/dim_16"
         android:paddingRight="@dimen/dim_16"
-        android:paddingTop="@dimen/dim_10"
-        android:paddingBottom="@dimen/dim_10">
+        android:paddingTop="@dimen/dim_10">
 
         <!--  -->
         <LinearLayout
@@ -40,16 +39,18 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:ellipsize="end"
+                    android:includeFontPadding="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_10"
+                    android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular"
                     />
 
                 <ImageView
-                    android:id="@+id/inplay_contest_card_header_mode_imgView"
+                    android:id="@+id/inplay_headless_card_header_mode_imgView"
                     android:layout_width="@dimen/dim_16"
                     android:layout_height="@dimen/dim_16"
-                    android:layout_marginLeft="@dimen/dim_5"/>
+                    android:layout_marginLeft="@dimen/dim_5"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -57,24 +58,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dim_3">
+                android:layout_marginTop="@dimen/dim_1">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/inplay_contest_card_header_join_contest_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/sp_10"
-                    app:typeface="lato_regular"
-                    android:text="ENTRY FEE"/>
+                    android:textColor="@color/brown_ccbbbb"
+                    android:textSize="@dimen/sp_11"
+                    app:typeface="lato_regular" />
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/inplay_contest_card_header_entry_fee_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_10"
-                    app:typeface="lato_regular"
-                    android:layout_marginLeft="@dimen/dim_5"/>
+                <ImageView
+                    android:layout_width="@dimen/dim_6"
+                    android:layout_height="@dimen/dim_6"
+                    android:layout_marginLeft="@dimen/dim_8"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/dim_2"
+                    android:src="@drawable/right_arrow_feedicon"/>
 
             </LinearLayout>
 
@@ -85,13 +85,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="2">
+            android:layout_weight="2"
+            android:visibility="gone">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/sp_10"
+                android:textColor="@color/white_999999"
+                android:textSize="@dimen/sp_9"
                 app:typeface="lato_regular"
                 android:text="CURRENT RANK"/>
 
@@ -101,8 +102,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_10"
-                app:typeface="lato_regular"
-                android:layout_marginTop="@dimen/dim_3"/>
+                app:typeface="lato_bold"
+                android:layout_marginTop="@dimen/dim_4"/>
 
         </LinearLayout>
 
@@ -111,13 +112,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="0.75"
+            android:visibility="gone">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/sp_10"
+                android:textColor="@color/white_999999"
+                android:textSize="@dimen/sp_9"
                 app:typeface="lato_regular"
                 android:text="PRIZES"/>
 
@@ -125,10 +127,10 @@
                 android:id="@+id/inplay_contest_card_header_prizes_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/green_pea"
+                android:textColor="#22b573"
                 android:textSize="@dimen/sp_10"
-                app:typeface="lato_regular"
-                android:layout_marginTop="@dimen/dim_3"/>
+                app:typeface="lato_bold"
+                android:layout_marginTop="@dimen/dim_4"/>
 
         </LinearLayout>
 
@@ -140,49 +142,51 @@
         android:layout_height="@dimen/dim_68"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dim_16"
-        android:paddingRight="@dimen/dim_16"
+        android:paddingLeft="@dimen/dim_10"
+        android:paddingRight="@dimen/dim_5"
         android:paddingTop="@dimen/dim_10"
         android:paddingBottom="@dimen/dim_10"
         android:background="@drawable/inplay_headless_card_content_bg">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
             <LinearLayout
+                android:id="@+id/inplay_headless_card_timeline_heading_parent"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_gravity="left"
+                android:scrollbars="horizontal"
+                android:layout_marginLeft="@dimen/dim_5"
+                />
 
-                <LinearLayout
-                    android:id="@+id/inplay_headless_card_timeline_heading_parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:scrollbars="horizontal"
-                    />
+            <LinearLayout
+                android:id="@+id/inplay_headless_card_timeline_content_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                android:layout_gravity="left"
+                android:layout_marginLeft="@dimen/dim_15"
+                android:layout_marginTop="@dimen/dim_4"
+                android:layout_marginBottom="@dimen/dim_4"/>
 
-                <LinearLayout
-                    android:id="@+id/inplay_headless_card_timeline_content_parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:scrollbars="horizontal"
-                    android:layout_marginTop="@dimen/dim_4"
-                    android:layout_marginBottom="@dimen/dim_4"/>
+            <LinearLayout
+                android:id="@+id/inplay_headless_card_timeline_footer_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_gravity="left"
+                android:scrollbars="horizontal"/>
 
-                <LinearLayout
-                    android:id="@+id/inplay_headless_card_timeline_footer_parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:scrollbars="horizontal"/>
-
-            </LinearLayout>
-
-
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

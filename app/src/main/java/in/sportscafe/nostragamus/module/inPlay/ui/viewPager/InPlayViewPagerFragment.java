@@ -104,7 +104,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                             listItem = new InPlayListItem();
                             listItem.setItemData(contestDto);
 
-                            if (status.equalsIgnoreCase("Completed")) {
+                            /*if (status.equalsIgnoreCase("Completed")) {
                                 listItem.setInPlayAdapterItemType(InPlayAdapterItemType.COMPLETED_CONTEST);
 
                             } else if (status.equalsIgnoreCase("ongoing")) {
@@ -112,6 +112,12 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
                             } else if (status.equalsIgnoreCase("Headless")) {
                                 listItem.setInPlayAdapterItemType(InPlayAdapterItemType.HEADLESS_CONTEST);
+                            } */
+
+                            if (contestDto.isHeadlessState()){
+                                listItem.setInPlayAdapterItemType(InPlayAdapterItemType.HEADLESS_CONTEST);
+                            }else {
+                                listItem.setInPlayAdapterItemType(InPlayAdapterItemType.JOINED_CONTEST);
                             }
 
                             itemList.add(listItem);
@@ -132,6 +138,8 @@ public class InPlayViewPagerFragment extends BaseFragment {
             challengeItem.setChallengeId(response.getChallengeId());
             challengeItem.setChallengeName(response.getChallengeName());
             challengeItem.setChallengeTournaments(response.getTournaments());
+            challengeItem.setChallengeStartTime(response.getChallengeStartTime());
+            challengeItem.setChallengeEndTime(response.getChallengeEndTime());
             challengeItem.setStatus(response.getStatus());
             challengeItem.setSportsId(response.getSportsId());
             challengeItem.setContestCount((response.getContestList() != null) ? response.getContestList().size() : 0);

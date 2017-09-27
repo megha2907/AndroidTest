@@ -42,6 +42,9 @@ public class InPlayContestDto {
     @SerializedName("powerups")
     private PowerUp powerUp;
 
+    @SerializedName("headless_state")
+    private boolean headlessState;
+
     @SerializedName("room_id")
     private int roomId;
 
@@ -144,6 +147,14 @@ public class InPlayContestDto {
 
     public void setRoomId(int roomId) {
         this.roomId = roomId;
+    }
+
+    public boolean isHeadlessState() {
+        return headlessState;
+    }
+
+    public void setHeadlessState(boolean headlessState) {
+        this.headlessState = headlessState;
     }
 
 }

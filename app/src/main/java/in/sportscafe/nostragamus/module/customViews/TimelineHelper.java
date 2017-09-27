@@ -29,9 +29,9 @@ public class TimelineHelper {
         switch (typeEnum) {
             case IN_PLAY_HEADLESS:
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
-                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_brown_line));
                 } else {
-                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_brown_line));
                 }
                 break;
 
@@ -67,6 +67,18 @@ public class TimelineHelper {
                         //todo check what icon to add here
                         view.setBackgroundResource(R.drawable.timeline_lock_grey);
                     }
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+
+                    //todo for partially played add icon
+                    if (played) {
+                        view.setBackgroundResource(R.drawable.timeline_grey_tick_dot);
+                    } else {
+                        view.setBackgroundResource(R.drawable.timeline_lock_grey);
+                    }
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+
+                    view.setBackgroundResource(R.drawable.timeline_lock_grey);
+
                 } else {
                     view.setBackgroundResource(R.drawable.timeline_lock_grey);
                 }
@@ -76,29 +88,57 @@ public class TimelineHelper {
             case IN_PLAY_JOINED:
 
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
+
                     if (played) {
                         view.setBackgroundResource(R.drawable.timeline_tick_yellow_dot);
                     } else {
                         view.setBackgroundResource(R.drawable.timeline_yellow_cross_ring);
                     }
+
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
-                    view.setBackgroundResource(R.drawable.timeline_blue_dot);
-                } else {
+
+                    if (played) {
+                        view.setBackgroundResource(R.drawable.timeline_blue_tick);
+                    } else {
+                        view.setBackgroundResource(R.drawable.timeline_blue_dot);
+                    }
+
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+
                     view.setBackgroundResource(R.drawable.timeline_grey_dot);
+
+                } else {
+
+                    view.setBackgroundResource(R.drawable.timeline_grey_dot);
+
                 }
 
             case IN_PLAY_MATCHES_SCREEN:
 
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
+
                     if (played) {
                         view.setBackgroundResource(R.drawable.timeline_tick_yellow_dot);
                     } else {
                         view.setBackgroundResource(R.drawable.timeline_yellow_cross_ring);
                     }
+
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
-                    view.setBackgroundResource(R.drawable.timeline_blue_dot);
-                } else {
+
+                    if (played) {
+                        view.setBackgroundResource(R.drawable.timeline_blue_tick);
+                    } else {
+                        view.setBackgroundResource(R.drawable.timeline_blue_dot);
+                    }
+
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+
                     view.setBackgroundResource(R.drawable.timeline_grey_dot);
+
+                } else {
+
+                    view.setBackgroundResource(R.drawable.timeline_grey_dot);
+
                 }
 
                 break;
@@ -151,7 +191,8 @@ public class TimelineHelper {
         }
     }
 
-    public static void addTextNode(LinearLayout parent, String title, int matchSize, String status) {
+    public static void addTextNode(LinearLayout parent, String title, int matchSize, String status,
+                                   MatchTimelineTypeEnum typeEnum, boolean isPlayed) {
         if (parent != null) {
             Context context = parent.getContext();
 
@@ -185,23 +226,41 @@ public class TimelineHelper {
                 Typeface faceBold = Typeface.createFromAsset(context.getAssets(), "fonts/lato/Lato-Bold.ttf");
                 Typeface faceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/lato/Lato-Regular.ttf");
 
-                if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)){
-                    titleView.setTextColor(ContextCompat.getColor(context,R.color.grey6));
-                    titleView.setTypeface(faceBold);
-                }else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
-                    titleView.setTextColor(ContextCompat.getColor(context,R.color.white_999999));
-                    titleView.setTypeface(faceRegular);
-                }else {
-                    titleView.setTextColor(ContextCompat.getColor(context,R.color.white_999999));
-                    titleView.setTypeface(faceRegular);
+                switch (typeEnum) {
+                    case IN_PLAY_HEADLESS:
+                        if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.brown_ccbbbb));
+                            titleView.setTypeface(faceBold);
+                        } else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_998989));
+                            titleView.setTypeface(faceRegular);
+                        } else {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_998989));
+                            titleView.setTypeface(faceRegular);
+                        }
+                        break;
+                    case IN_PLAY_JOINED:
+                        if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.grey6));
+                            titleView.setTypeface(faceBold);
+                        } else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_999999));
+                            titleView.setTypeface(faceRegular);
+                        } else {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_999999));
+                            titleView.setTypeface(faceRegular);
+                        }
+                        break;
                 }
+
                 parent.addView(titleView, parent.getChildCount(), new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
             }
 
         }
     }
 
-    public static void addFooterTextNode(LinearLayout parent, String title, int matchSize, String status) {
+    public static void addFooterTextNode(LinearLayout parent, String title, int matchSize, String status,
+                                         MatchTimelineTypeEnum typeEnum, boolean isPlayed) {
         if (parent != null) {
             Context context = parent.getContext();
 
@@ -237,16 +296,33 @@ public class TimelineHelper {
                 Typeface faceBold = Typeface.createFromAsset(context.getAssets(), "fonts/lato/Lato-Bold.ttf");
                 Typeface faceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/lato/Lato-Regular.ttf");
 
-                if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)){
-                    titleView.setTextColor(ContextCompat.getColor(context,R.color.grey6));
-                    titleView.setTypeface(faceBold);
-                }else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
-                    titleView.setTextColor(ContextCompat.getColor(context,R.color.white_999999));
-                    titleView.setTypeface(faceRegular);
-                }else {
-                    titleView.setTextColor(ContextCompat.getColor(context,R.color.white_999999));
-                    titleView.setTypeface(faceRegular);
+                switch (typeEnum) {
+                    case IN_PLAY_HEADLESS:
+                        if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.brown_ccbbbb));
+                            titleView.setTypeface(faceBold);
+                        } else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_998989));
+                            titleView.setTypeface(faceRegular);
+                        } else {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_998989));
+                            titleView.setTypeface(faceRegular);
+                        }
+                        break;
+                    case IN_PLAY_JOINED:
+                        if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.grey6));
+                            titleView.setTypeface(faceBold);
+                        } else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_999999));
+                            titleView.setTypeface(faceRegular);
+                        } else {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_999999));
+                            titleView.setTypeface(faceRegular);
+                        }
+                        break;
                 }
+
                 parent.addView(titleView, parent.getChildCount(), new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
             }
 
