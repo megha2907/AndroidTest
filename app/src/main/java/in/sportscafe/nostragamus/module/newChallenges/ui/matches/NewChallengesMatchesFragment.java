@@ -134,7 +134,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
 
             if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
                 playData.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
-                playData.setMatchPartyTitle1(match.getMatchParties().get(1).getPartyName());
+                playData.setMatchPartyTitle2(match.getMatchParties().get(1).getPartyName());
             }
 
             Bundle bundle = new Bundle();

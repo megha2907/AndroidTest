@@ -196,7 +196,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorBackground"
-                android:paddingBottom="@dimen/dim_15">
+                android:paddingBottom="@dimen/dim_15"
+                android:visibility="gone">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/results_heading"

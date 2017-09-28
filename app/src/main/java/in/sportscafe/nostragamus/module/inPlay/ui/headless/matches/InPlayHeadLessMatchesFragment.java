@@ -28,9 +28,9 @@ import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
+import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
-import in.sportscafe.nostragamus.module.play.myresults.dto.MyResultScreenData;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 
@@ -117,6 +117,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
                 if (playData != null) {
                     bundle.putParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA, Parcels.wrap(playData));
+                    bundle.putBoolean(Constants.BundleKeys.IS_HEADLESS_FLOW, true);
 
                     Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
                     predictionIntent.putExtras(bundle);
@@ -148,7 +149,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
-                dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(1).getPartyName());
+                dataDto.setMatchPartyTitle2(inPlayMatch.getMatchParties().get(1).getPartyName());
             }
         }
 
@@ -157,21 +158,27 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
     private void launchResultsScreen(Bundle args) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
-            MyResultScreenData data = null;
+            ResultsScreenDataDto data = null;
 
             if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_MATCH)) {
                 InPlayMatch match = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_MATCH));
 
                 if (match != null && mHeadLessMatchScreenData != null) {
-                    data = new MyResultScreenData();
+                    data = new ResultsScreenDataDto();
                     data.setMatchId(match.getMatchId());
                     data.setChallengeId(match.getChallengeId());
                     data.setRoomId(mHeadLessMatchScreenData.getRoomId());
+                    data.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
+
+                    if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
+                        data.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
+                        data.setMatchPartyTitle2(match.getMatchParties().get(1).getPartyName());
+                    }
                 }
             }
 
             if (data != null) {
-                args.putParcelable(Constants.BundleKeys.MY_RESULT_SCREEN_DATA, Parcels.wrap(data));
+                args.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(data));
 
                 Intent intent = new Intent(getActivity(), MyResultsActivity.class);
                 intent.putExtras(args);

@@ -23,6 +23,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -47,10 +48,14 @@ import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
+import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
+import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -58,8 +63,9 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
  */
 public class MyResultsActivity extends NostragamusActivity implements MyResultsView, View.OnClickListener {
 
-    private RecyclerView mRvMyResults;
+    private static final String TAG = MyResultsActivity.class.getSimpleName();
 
+    private RecyclerView mRvMyResults;
     private MyResultsPresenter mResultsPresenter;
 
     private boolean mReplaypowerUpApplied = false;
@@ -67,9 +73,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     private Button btnReplayPowerUpCount;
     private Button btnFlipPowerUpCount;
-
     private Toolbar mtoolbar;
-    private Bundle mbundle;
+    private Bundle mbundle = new Bundle();
     private TextView mTitle;
     private TextView mMatchStage;
     private boolean goback = false;
@@ -92,6 +97,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     LinearLayoutManager mlayoutManager;
     private boolean mIsResultAwaitingScreen = false;
+    private ResultsScreenDataDto mResultScreenData;
 
     public interface LaunchedFrom {
         int IN_PLAY_SCREEN_MATCH_DID_NOT_PLAY = 115;
@@ -107,36 +113,21 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         setContentView(R.layout.activity_my_results);
 
         initToolBar();
+        initMembers();
 
         mlayoutManager = new LinearLayoutManager(this);
-        this.mRvMyResults = (RecyclerView) findViewById(R.id.my_results_rv);
-        this.mRvMyResults.setLayoutManager(mlayoutManager);
+        mRvMyResults = (RecyclerView) findViewById(R.id.my_results_rv);
+        mRvMyResults.setLayoutManager(mlayoutManager);
         mRvMyResults.setNestedScrollingEnabled(false);
-
-
         shareResultsBtn = (Button) findViewById(R.id.my_results_ll_share_score);
         mRlshareResults = (RelativeLayout) findViewById(R.id.my_results_rl_share_score);
         shareResultsBtn.setOnClickListener(this);
-
-        /*shareFab = (FloatingActionButton)findViewById(R.id.fab_share);
-        btnfbShare =findViewById(R.id.fab_fb);
-        shareContainer = findViewById(R.id.fab_container_share);
-
-
-        shareFab.setOnClickListener(this);
-        btnfbShare.setOnClickListener(this);*/
-
-        //POWERUPFAB ICONS
         btnReplayPowerUpCount = (Button) findViewById(R.id.powerup_replay_count);
         btnFlipPowerUpCount = (Button) findViewById(R.id.powerup_flip_count);
         powerupMainFab = (ImageButton) findViewById(R.id.results_fab_main);
-
         powerupReplayFab = findViewById(R.id.fab_fl_replay);
         powerupFlipFab = findViewById(R.id.fab_fl_flip);
         fabContainer = findViewById(R.id.fab_container);
-
-        Button btnJoinContest = (Button) findViewById(R.id.results_join_contest_button);
-        btnJoinContest.setOnClickListener(this);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_close);
@@ -163,33 +154,22 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             }
         });
 
-        /*shareContainer.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                shareContainer.getViewTreeObserver().removeOnPreDrawListener(this);
-                float mainY = shareFab.getY();
 
-                offset3 = mainY - btnfbShare.getY();
-                btnfbShare.setTranslationY(offset3);
-                return true;
-            }
-        });*/
-
-
-        this.mRvMyResults.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false));
+        this.mRvMyResults.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         this.mRvMyResults.setHasFixedSize(true);
 
         this.mResultsPresenter = MyResultPresenterImpl.newInstance(this);
         this.mResultsPresenter.onCreateMyResults(getIntent().getExtras());
-
-
-        //COMMENT REPLAY AND FLIP POWERUPS FOR NOW
-
         powerupMainFab.setVisibility(View.GONE);
 
-        mbundle = new Bundle();
-        mbundle = getIntent().getExtras();
+        /* If headless flow, show join contest layout */
+        if (isHeadlessFlow()) {
+            RelativeLayout cardLayout = (RelativeLayout) findViewById(R.id.join_contest_rl);
+            cardLayout.setVisibility(View.VISIBLE);
+
+            Button btnJoinContest = (Button) findViewById(R.id.results_join_contest_button);
+            btnJoinContest.setOnClickListener(this);
+        }
 
        /* Bundle mbundle = new Bundle();
         mbundle = getIntent().getExtras();
@@ -212,9 +192,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         }else {
             powerupMainFab.setVisibility(View.VISIBLE);
         } */
-
-
-
 
         /*this.mRvMyResults.addOnScrollListener(new RecyclerView.OnScrollListener()
         {
@@ -245,7 +222,23 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
         });*/
 
+    }
 
+    private void initMembers() {
+        if (getIntent() != null) {
+            mbundle = getIntent().getExtras();
+            if (mbundle != null && mbundle.containsKey(BundleKeys.RESULTS_SCREEN_DATA)) {
+                mResultScreenData = Parcels.unwrap(mbundle.getParcelable(BundleKeys.RESULTS_SCREEN_DATA));
+            }
+        }
+    }
+
+    private boolean isHeadlessFlow() {
+        boolean isHeadLess = false;
+        if (mbundle != null && mbundle.getBoolean(BundleKeys.IS_HEADLESS_FLOW, false)) {
+            isHeadLess = true;
+        }
+        return isHeadLess;
     }
 
     @Override
@@ -361,7 +354,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 break;
 
             case R.id.results_join_contest_button:
-                //todo got to contestScreen
                 navigateToContestScreen();
                 break;
 
@@ -373,7 +365,23 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     private void navigateToContestScreen() {
+        if (mResultScreenData != null) {
+            ContestScreenData screenData = new ContestScreenData();
+            screenData.setChallengeId(mResultScreenData.getChallengeId());
+            screenData.setChallengeName(mResultScreenData.getSubTitle());   // Either ChallengeName or ContestName, Here it should be challenge name as per values passed
 
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(screenData));
+            args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, ContestsActivity.LaunchedFrom.IN_PLAY_HEAD_LESS_MATCHES);
+
+            Intent contestScreen = new Intent(this, ContestsActivity.class);
+            contestScreen.putExtras(args);
+            startActivity(contestScreen);
+
+        } else {
+            Log.d(TAG, "No screen data !");
+            AlertsHelper.showAlert(this, "Error!", Constants.Alerts.SOMETHING_WRONG, null);
+        }
     }
 
     @Override

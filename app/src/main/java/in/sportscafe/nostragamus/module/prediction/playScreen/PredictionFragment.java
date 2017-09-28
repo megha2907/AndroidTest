@@ -36,7 +36,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
-import in.sportscafe.nostragamus.module.play.myresults.dto.MyResultScreenData;
+import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.prediction.gamePlayHelp.GamePlayHelpActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionAdapterListener;
 import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionsCardAdapter;
@@ -642,6 +642,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             @Override
             public void discarded(int index, int direction) {
 
+                onMatchCompleted();
+
                 int position = index - 1;   // Index position is not 0 based
 
                 boolean isMatchCompleted = false;
@@ -703,7 +705,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
      */
     private void onMatchCompleted() {
         Log.d(TAG, "Match Completed");
-        MyResultScreenData data = new MyResultScreenData();
+        ResultsScreenDataDto data = new ResultsScreenDataDto();
         if (mPlayScreenData != null) {
             data.setRoomId(mPlayScreenData.getRoomId());
             data.setChallengeId(mPlayScreenData.getChallengeId());
@@ -714,7 +716,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         if (args == null) {
             args = new Bundle();
         }
-        args.putParcelable(Constants.BundleKeys.MY_RESULT_SCREEN_DATA, Parcels.wrap(data));
+        args.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(data));
 
         if (mFragmentListener != null) {
             mFragmentListener.onMatchCompleted(args);
