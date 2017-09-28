@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,19 +26,13 @@ import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayHeadLessMatchAdapte
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayHeadLessMatchesAdapter;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
-import in.sportscafe.nostragamus.module.newChallenges.dataProvider.JoinPseudoContestApiModelImpl;
-import in.sportscafe.nostragamus.module.newChallenges.dataProvider.NewChallengesMatchesDataProvider;
-import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestResponse;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
+import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.play.myresults.dto.MyResultScreenData;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.OnClickListener {
 
@@ -48,7 +41,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
     private InPlayHeadLessMatchFragmentListener mInPlayHeadLessMatchFragmentListener;
     private RecyclerView mMatchesRecyclerView;
     private InPlayHeadLessMatchesAdapter mMatchesAdapter;
-    private InPlayContestDto mInPlayContest;
+    private HeadLessMatchScreenData mHeadLessMatchScreenData;
 
     public InPlayHeadLessMatchesFragment() {
     }
@@ -115,7 +108,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
     private void launchPlayScreen(Bundle matchArgs) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing() &&
-                mInPlayContest != null) {
+                mHeadLessMatchScreenData != null) {
 
             Bundle bundle = new Bundle();
             if (matchArgs != null && matchArgs.containsKey(Constants.BundleKeys.INPLAY_MATCH)) {
@@ -144,14 +137,14 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
     private PlayScreenDataDto getPlayScreenData(InPlayMatch inPlayMatch) {
         PlayScreenDataDto dataDto = null;
 
-        if (inPlayMatch != null && mInPlayContest != null) {
+        if (inPlayMatch != null && mHeadLessMatchScreenData != null) {
             dataDto = new PlayScreenDataDto();
 
-            dataDto.setChallengeId(mInPlayContest.getChallengeId());
+            dataDto.setChallengeId(mHeadLessMatchScreenData.getChallengeId());
             dataDto.setMatchId(inPlayMatch.getMatchId());
-            dataDto.setRoomId(mInPlayContest.getRoomId());
-            dataDto.setPowerUp(mInPlayContest.getPowerUp());
-            dataDto.setSubTitle(mInPlayContest.getContestName());
+            dataDto.setRoomId(mHeadLessMatchScreenData.getRoomId());
+            dataDto.setPowerUp(mHeadLessMatchScreenData.getPowerUp());
+            dataDto.setSubTitle(mHeadLessMatchScreenData.getContestName());
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
@@ -169,11 +162,11 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_MATCH)) {
                 InPlayMatch match = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_MATCH));
 
-                if (match != null && mInPlayContest != null) {
+                if (match != null && mHeadLessMatchScreenData != null) {
                     data = new MyResultScreenData();
                     data.setMatchId(match.getMatchId());
                     data.setChallengeId(match.getChallengeId());
-                    data.setRoomId(mInPlayContest.getRoomId());
+                    data.setRoomId(mHeadLessMatchScreenData.getRoomId());
                 }
             }
 
@@ -198,16 +191,16 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
     private void initMembers() {
         Bundle args = getArguments();
-        if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
-            mInPlayContest = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+        if (args != null && args.containsKey(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA)) {
+            mHeadLessMatchScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA));
         }
     }
 
     private void loadDataFromServer() {
-        if (mInPlayContest != null) {
+        if (mHeadLessMatchScreenData != null) {
             InPlayMatchesDataProvider inPlayMatchesDataProvider = new InPlayMatchesDataProvider();
-            inPlayMatchesDataProvider.getInPlayMatches(mInPlayContest.getRoomId(),
-                    mInPlayContest.getChallengeId(),
+            inPlayMatchesDataProvider.getInPlayMatches(mHeadLessMatchScreenData.getRoomId(),
+                    mHeadLessMatchScreenData.getChallengeId(),
                     new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
                         @Override
                         public void onData(int status, @Nullable InPlayMatchesResponse responses) {
@@ -252,10 +245,10 @@ handleError(status);
     }
 
     private void onJoinContestClicked() {
-        if (mInPlayContest != null && mInPlayHeadLessMatchFragmentListener != null) {
+        if (mHeadLessMatchScreenData != null && mInPlayHeadLessMatchFragmentListener != null) {
             ContestScreenData screenData = new ContestScreenData();
-            screenData.setChallengeId(mInPlayContest.getChallengeId());
-            screenData.setChallengeName(mInPlayContest.getChallengeName());
+            screenData.setChallengeId(mHeadLessMatchScreenData.getChallengeId());
+            screenData.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
 
             Bundle args = new Bundle();
             args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(screenData));

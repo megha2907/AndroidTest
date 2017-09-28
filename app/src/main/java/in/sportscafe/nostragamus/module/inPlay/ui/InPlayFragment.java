@@ -12,19 +12,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
+import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
+import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity;
 import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerFragment;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
+import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -116,12 +125,12 @@ public class InPlayFragment extends NostraBaseFragment {
     private void onDataReceived(int status, List<InPlayResponse> inPlayResponseData) {
         switch (status) {
             case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
-                showDataOnUi(inPlayResponseData);
+                showDataOnUi(inPlayResponseData, true);
                 break;
 
             case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
             case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
-                showDataOnUi(inPlayResponseData);
+                showDataOnUi(inPlayResponseData, false);
                 handleError(status);
                 break;
 
@@ -132,7 +141,7 @@ public class InPlayFragment extends NostraBaseFragment {
         }
     }
 
-    private void showDataOnUi(List<InPlayResponse> inPlayResponseList) {
+    private void showDataOnUi(List<InPlayResponse> inPlayResponseList, boolean isServerResponse) {
         if (getView() != null && getActivity() != null && inPlayResponseList != null && inPlayResponseList.size() > 0) {
             TabLayout inPlayTabLayout = (TabLayout) getView().findViewById(R.id.inplay_tabs);
             ViewPager inPlayViewPager = (ViewPager) getView().findViewById(R.id.inplay_viewPager);
@@ -189,8 +198,50 @@ public class InPlayFragment extends NostraBaseFragment {
                 }
             }
 
+            handleFurtherFlow(isServerResponse, inPlayResponseList);
+
         } else {
             // TODO: error page / no items found
+        }
+    }
+
+    private void handleFurtherFlow(boolean isServerResponse, List<InPlayResponse> inPlayResponseList) {
+        Bundle args = getArguments();
+        if (isServerResponse && args != null) {
+
+            /* Handle Pseudo game play
+            * If so, launch headless matches screen */
+
+            boolean isPlayingPsedoGame = args.getBoolean(Constants.BundleKeys.IS_PLAYING_PSEUDO_GAME, false);
+            if (isPlayingPsedoGame) {
+                PlayScreenDataDto playScreenDataDto = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA));
+                if (playScreenDataDto != null && inPlayResponseList != null) {
+
+                    /*int roomId = -1;
+                    for (InPlayResponse inPlayResponse : inPlayResponseList) {
+                        for (InPlayContestDto contestDto : inPlayResponse.getContestList()) {
+                            if (contestDto.isHeadlessState() && contestDto.getChallengeId() == playScreenDataDto.getChallengeId()) {
+                                roomId = contestDto.getRoomId();
+                                break;
+                            }
+                        }
+                    }*/
+
+
+                        HeadLessMatchScreenData data = new HeadLessMatchScreenData();
+                        data.setChallengeName(playScreenDataDto.getSubTitle());
+                        data.setChallengeId(playScreenDataDto.getChallengeId());
+                        data.setPowerUp(playScreenDataDto.getPowerUp());
+                        data.setContestName(playScreenDataDto.getSubTitle());
+                        data.setRoomId(playScreenDataDto.getRoomId());
+
+                        args.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
+
+                        Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
+                        intent.putExtras(args);
+                        getActivity().startActivity(intent);
+                }
+            }
         }
     }
 

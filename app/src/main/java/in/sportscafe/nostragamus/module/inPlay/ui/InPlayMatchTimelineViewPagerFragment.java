@@ -289,7 +289,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
-                dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(1).getPartyName());
+                dataDto.setMatchPartyTitle2(inPlayMatch.getMatchParties().get(1).getPartyName());
             }
         }
 

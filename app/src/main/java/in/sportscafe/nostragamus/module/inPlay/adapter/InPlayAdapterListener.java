@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.inPlay.adapter;
 
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+
 /**
  * Created by deepanshi on 9/6/17.
  */
@@ -17,5 +19,5 @@ public interface InPlayAdapterListener {
     void onJoinedContestCurrentRankClicked(Bundle args);
 
     /* Head Less Contest card Item */
-    void onHeadLessContestCardClicked(Bundle args);
+    void onHeadLessContestCardClicked(Bundle args, InPlayContestDto inPlayContestDto);
 }

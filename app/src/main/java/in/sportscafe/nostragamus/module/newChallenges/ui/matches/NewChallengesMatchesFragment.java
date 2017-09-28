@@ -123,14 +123,14 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void launchPlayScreen(InPlayMatch match, JoinPseudoContestResponse response) {
-        if (match != null && mNewChallengeResponse != null && response != null) {
+        if (match != null && mNewChallengeResponse != null && response != null && response.getUserRoom() != null) {
             PlayScreenDataDto playData = new PlayScreenDataDto();
 
             playData.setChallengeId(match.getChallengeId());
-            playData.setRoomId(response.getRoomId());
+            playData.setRoomId(response.getUserRoom().getRoomId());
             playData.setMatchId(match.getMatchId());
             playData.setSubTitle(mNewChallengeResponse.getChallengeName());
-            playData.setPowerUp(response.getPowerUp());
+            playData.setPowerUp(response.getUserRoom().getPowerUp());
 
             if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
                 playData.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
@@ -139,6 +139,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
 
             Bundle bundle = new Bundle();
             bundle.putParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA, Parcels.wrap(playData));
+            bundle.putBoolean(Constants.BundleKeys.IS_PLAYING_PSEUDO_GAME, true);
 
             Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
             predictionIntent.putExtras(bundle);
