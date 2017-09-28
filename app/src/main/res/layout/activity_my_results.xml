@@ -14,8 +14,8 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_results_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorMedium"
+            android:layout_height="@dimen/dim_60"
+            android:background="@drawable/toolbar_bg"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
@@ -30,16 +30,17 @@
                     android:layout_height="wrap_content"
                     android:text="Match Results"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/dp_14"
-                    app:typeface="roboto_condensed" />
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/toolbar_match_stage"
-                    android:layout_width="@dimen/dp_240"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/toolbar_title"
-                    android:textColor="@color/white_60"
-                    android:textSize="@dimen/dp_12"
+                    android:layout_marginTop="@dimen/dim_2"
+                    android:textColor="#a1afbe"
+                    android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />
 
             </RelativeLayout>
@@ -50,7 +51,8 @@
                 android:layout_width="@dimen/dp_110"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="@dimen/dp_20">
+                android:layout_marginRight="@dimen/dp_20"
+                android:visibility="gone">
 
 
                 <com.jeeva.android.widgets.customfont.CustomButton
@@ -93,108 +95,172 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-    <!-- Result declaration layout -->
-    <LinearLayout
-        android:id="@+id/my_results_declaration_rl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <!-- Heading text -->
-        <LinearLayout
-            android:id="@+id/head_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dp_16">
-
-            <ImageView
-                android:id="@+id/correct_icon"
-                android:layout_width="@dimen/dp_10"
-                android:layout_height="@dimen/dp_10"
-                android:src="@drawable/correct_done"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/dp_2"/>
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/my_results_declaration_tv_heading"
-                android:layout_width="wrap_content"
+            <!-- Result declaration layout -->
+            <LinearLayout
+                android:id="@+id/my_results_declaration_rl"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/greenresults"
-                app:typeface="lato_bold"
-                android:layout_marginLeft="@dimen/dp_6"
-                android:layout_marginRight="@dimen/dp_16"
-                android:textSize="@dimen/dp_14"/>
+                android:layout_below="@+id/join_contest_rl"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-        </LinearLayout>
+                <!-- Heading text -->
+                <LinearLayout
+                    android:id="@+id/head_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-        <!-- Content text -->
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/my_results_declaration_tv_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginRight="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_12"
-            android:gravity="center"
-            android:text=""
-            android:textColor="#e1e1e1"
-            app:typeface="lato_regular"
-            android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/dp_13"/>
+                    <ImageView
+                        android:id="@+id/correct_icon"
+                        android:layout_width="@dimen/dp_10"
+                        android:layout_height="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:src="@drawable/correct_done"
+                        android:visibility="gone" />
 
-        <!-- Back button layout -->
-        <LinearLayout
-            android:id="@+id/my_results_challenge_back_btn_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dp_12"
-            android:visibility="gone"
-            >
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/my_results_declaration_tv_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_6"
+                        android:layout_marginRight="@dimen/dp_16"
+                        android:text=""
+                        android:textColor="@color/greenresults"
+                        android:textSize="@dimen/dp_14"
+                        app:typeface="lato_bold" />
 
-            <ImageView
-                android:layout_width="@dimen/dp_8"
-                android:layout_height="@dimen/dp_8"
-                android:src="@drawable/left_arrow"/>
+                </LinearLayout>
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/my_results_challenge_btn"
-                android:layout_width="wrap_content"
+                <!-- Content text -->
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/my_results_declaration_tv_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#e1e1e1"
+                    android:textSize="@dimen/dp_13"
+                    app:typeface="lato_regular" />
+
+                <!-- Back button layout -->
+                <LinearLayout
+                    android:id="@+id/my_results_challenge_back_btn_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_8"
+                        android:layout_height="@dimen/dp_8"
+                        android:src="@drawable/left_arrow" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/my_results_challenge_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_3"
+                        android:text="Back to Challenges"
+                        android:textColor="#3e8bd3"
+                        android:textSize="@dimen/dp_13"
+                        app:typeface="lato_bold" />
+
+                </LinearLayout>
+
+                <!-- Line at last/bottom -->
+                <View
+                    android:id="@+id/pool_row_v_disclaimer"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:background="#333333" />
+
+            </LinearLayout>
+
+            <!-- Information Layout -->
+            <RelativeLayout
+                android:id="@+id/join_contest_rl"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Back to Challenges"
-                android:textColor="#3e8bd3"
-                app:typeface="lato_bold"
-                android:textSize="@dimen/dp_13"
-                android:layout_marginLeft="@dimen/dp_3"/>
+                android:background="@color/colorBackground"
+                android:paddingBottom="@dimen/dim_15">
 
-        </LinearLayout>
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/results_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dim_10"
+                    android:text="How to join"
+                    android:textColor="@color/bluecolor1"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
 
-        <!-- Line at last/bottom -->
-        <View
-            android:id="@+id/pool_row_v_disclaimer"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#333333"
-            android:layout_marginLeft="@dimen/dp_16"
-            android:layout_marginRight="@dimen/dp_16"
-            android:layout_marginTop="@dimen/dp_16" />
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/results_subheading_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/results_heading"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dim_10"
+                    android:gravity="center"
+                    android:text="Now you can join multiple contests in a challenge!"
+                    android:textColor="@color/grey6"
+                    android:textSize="@dimen/sp_11"
+                    app:typeface="lato_regular" />
 
-    </LinearLayout>
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/results_subheading_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/results_subheading_one"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dim_10"
+                    android:gravity="center"
+                    android:text="You can now play a match before you join a contest, or \n you can join the contest straight away!"
+                    android:textColor="@color/grey6"
+                    android:textSize="@dimen/sp_11"
+                    app:typeface="lato_regular" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_results_rv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/my_results_declaration_rl"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:background="@color/black" />
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/results_join_contest_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_40"
+                    android:layout_below="@+id/results_subheading_two"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/dim_40"
+                    android:layout_marginTop="@dimen/dim_10"
+                    android:background="@drawable/light_blue_button_selector"
+                    android:onClick="onClick"
+                    android:paddingBottom="@dimen/dp_4"
+                    android:text="Join Contest"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/my_results_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/my_results_declaration_rl"
+                android:background="@color/black"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </RelativeLayout>
 

@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlay;
 
 /**
  * Created by deepanshi on 9/6/17.

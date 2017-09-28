@@ -93,6 +93,14 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     LinearLayoutManager mlayoutManager;
     private boolean mIsResultAwaitingScreen = false;
 
+    public interface LaunchedFrom {
+        int IN_PLAY_SCREEN_MATCH_DID_NOT_PLAY = 115;
+        int IN_PLAY_SCREEN_MATCH_CHECK_POINTS = 116;
+        int IN_PLAY_SCREEN_MATCH_AWAITING_RESULTS = 117;
+        int CHECK_RESULTS_NOTIFICATION = 118;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +134,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         powerupReplayFab = findViewById(R.id.fab_fl_replay);
         powerupFlipFab = findViewById(R.id.fab_fl_flip);
         fabContainer = findViewById(R.id.fab_container);
+
+        Button btnJoinContest = (Button) findViewById(R.id.results_join_contest_button);
+        btnJoinContest.setOnClickListener(this);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_close);
@@ -349,23 +360,20 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 }
                 break;
 
-//            case R.id.my_results_btn_edit_answers:
-//                if (mSaveAnswer) {
-//                   mResultsPresenter.saveUpdatedAnswers();
-//                } else {
-//                    mResultsPresenter.onClickEditAnswers();
-//                }
-//                break;
+            case R.id.results_join_contest_button:
+                //todo got to contestScreen
+                navigateToContestScreen();
+                break;
 
             case R.id.my_results_challenge_back_btn_layout:
                 onBackPressed();
                 break;
 
-            /*case R.id.fab_fb:
-
-                break;*/
-
         }
+    }
+
+    private void navigateToContestScreen() {
+
     }
 
     @Override
