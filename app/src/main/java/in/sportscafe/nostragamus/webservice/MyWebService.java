@@ -12,6 +12,8 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeRequest;
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatchesResponse;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
@@ -478,5 +480,13 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<VerifyJoinContestResponse> verifyJoinContest(VerifyJoinContestRequest request) {
         return mNostragamusService.verifyJoinContest(request);
+    }
+
+    public Call<List<CompletedResponse>> getCompletedChallenges() {
+        return mNostragamusService.getCompletedChallenges();
+    }
+
+    public Call<CompletedMatchesResponse> getCompletedChallengeMatches(int roomId, int challengeId) {
+        return mNostragamusService.getCompletedChallengeMatches(roomId, challengeId);
     }
 }

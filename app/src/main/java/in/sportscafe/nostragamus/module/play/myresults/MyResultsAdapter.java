@@ -204,16 +204,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 //                holder.mTvLeaderBoardRank.setText("No Rank");
 //            }
 //
-//            if (null !=Match.getRankChange()) {
-//                holder.mIvRankStatus.setVisibility(View.VISIBLE);
-//
-//                if (Match.getRankChange() < 0) {
-//                    holder.mIvRankStatus.setImageResource(R.drawable.lb_rank_change_icon);
-//                    holder.mIvRankStatus.setRotation(180);
-//                } else {
-//                    holder.mIvRankStatus.setImageResource(R.drawable.lb_rank_change_icon);
-//                }
-//            }
 //
 //            holder.mTvNumberofPowerupsUsed.setText(String.valueOf(Match.getCountPowerUps()));
 //            holder.mRlHighestMatchPoints.setTag(Match);
@@ -241,17 +231,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));
                 } else {
                     holder.mTvLeaderBoardRank.setText("No Rank");
-                }
-
-                if (null != match.getRankChange()) {
-                    holder.mIvRankStatus.setVisibility(View.VISIBLE);
-
-                    if (match.getRankChange() < 0) {
-                        holder.mIvRankStatus.setImageResource(R.drawable.lb_rank_change_icon);
-                        holder.mIvRankStatus.setRotation(180);
-                    } else {
-                        holder.mIvRankStatus.setImageResource(R.drawable.lb_rank_change_icon);
-                    }
                 }
 
 
@@ -384,7 +363,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         TextView mTvNumberofPowerupsUsed;
         RelativeLayout mRlLeaderBoard;
         LinearLayout mLlMatchScores;
-        ImageView mIvRankStatus;
         TextView mTvMatchPointsTxt;
 
         LinearLayout mLlMultiParty;
@@ -397,7 +375,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         TextView mTvOnePartyMatchResult;
 
 
-        ShadowLayout mLeaderBoardLayout;
+        LinearLayout mLeaderBoardLayout;
 
 
         public MyResultViewHolder(View V) {
@@ -425,7 +403,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mRlAvgMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
             mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mLlMatchScores = (LinearLayout) V.findViewById(R.id.schedule_row_scores_ll);
-            mIvRankStatus = (ImageView) V.findViewById(R.id.schedule_row_rank_status_iv);
 
             mLlMultiParty = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
 
@@ -436,7 +413,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mTvOnePartyMatchResultWait = (TextView) V.findViewById(R.id.schedule_row_one_party_tv_match_result_wait);
             mTvOnePartyMatchResult = (TextView) V.findViewById(R.id.schedule_row_one_party_tv_match_result);
 
-            mLeaderBoardLayout = (ShadowLayout) V.findViewById(R.id.schedule_row_rl_points_summary);
+            mLeaderBoardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_rl_points_summary);
 
 
             mRlLeaderBoard.setOnClickListener(this);

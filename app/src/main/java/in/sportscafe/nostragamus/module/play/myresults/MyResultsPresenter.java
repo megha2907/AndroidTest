@@ -18,4 +18,5 @@ public interface MyResultsPresenter {
     void onClickShare();
 
     void onDoneScreenShot();
+
 }

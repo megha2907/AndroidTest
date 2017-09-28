@@ -21,6 +21,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
@@ -67,7 +68,15 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public void init(Bundle bundle) {
-        if(null != bundle) {
+
+        if (bundle!=null) {
+
+            if (bundle.containsKey(BundleKeys.RESULTS_SCREEN_DATA)) {
+                ResultsScreenDataDto resultsScreenData = Parcels.unwrap(bundle.getParcelable(BundleKeys.RESULTS_SCREEN_DATA));
+                matchId = resultsScreenData.getMatchId();
+            }
+
+            /*
             if (bundle.containsKey(BundleKeys.MATCH_LIST)) {
                 match = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
                // Match=Nostragamus.getInstance().getServerDataManager().getMatchInfo();
@@ -83,16 +92,16 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                         mResultsModelListener.showResultsToBeDeclared(false, match);
                     }
                 }
-//                if (bundle.containsKey(Constants.ScreenNames.PLAY)){
+               if (bundle.containsKey(Constants.ScreenNames.PLAY)){
 
 
-                    /*Boolean playedFirstMatch = bundle.getBoolean(BundleKeys.PLAYED_FIRST_MATCH);
+                    Boolean playedFirstMatch = bundle.getBoolean(BundleKeys.PLAYED_FIRST_MATCH);
                     if (playedFirstMatch){
                        mResultsModelListener.showResultsToBeDeclared(true, Match);
                     }else {
                         mResultsModelListener.showResultsToBeDeclared(false, Match);
-                    }*/
-//                }
+                    }
+                }
 
             } else if (bundle.containsKey(BundleKeys.MATCH_ID)) {
                 String match_id = bundle.getString(BundleKeys.MATCH_ID);
@@ -104,6 +113,10 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
             if (bundle.containsKey(BundleKeys.PLAYER_ID)) {
                 mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_ID);
             }
+
+           */
+
+
         } else {
             mResultsModelListener.onFailedMyResults(Constants.Alerts.RESULTS_INFO_ERROR);
         }
@@ -164,7 +177,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     private MyResultsAdapter createAdapter(Context context) {
         mResultAdapter = new MyResultsAdapter(context, null == mPlayerUserId);
         mResultAdapter.setResultsActionListener(this);
-        return  mResultAdapter;
+        return mResultAdapter;
     }
 
     private void destroyAdapter() {
@@ -268,7 +281,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private void callChangeAnswerApi(Integer questionId, Integer answerId) {
 
-        ChangeAnswer changeAnswer = new ChangeAnswer(questionId,answerId);
+        ChangeAnswer changeAnswer = new ChangeAnswer(questionId, answerId);
         mResultsModelListener.StartProgressbar();
         MyWebService.getInstance().getChangeAnswerRequest(changeAnswer).enqueue(new NostragamusCallBack<ApiResponse>() {
             @Override
@@ -295,13 +308,13 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     @Override
-    public void onClickEditAnswer(int selectedQuestionId,Question question) {
-        mResultAdapter.changeToEditAnswers(selectedQuestionId,question);
+    public void onClickEditAnswer(int selectedQuestionId, Question question) {
+        mResultAdapter.changeToEditAnswers(selectedQuestionId, question);
     }
 
     @Override
     public void saveUpdatedAnswer(int QuestionId, int AnswerId) {
-       callChangeAnswerApi(QuestionId,AnswerId);
+        callChangeAnswerApi(QuestionId, AnswerId);
     }
 
 
