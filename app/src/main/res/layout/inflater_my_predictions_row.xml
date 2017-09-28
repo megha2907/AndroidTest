@@ -25,10 +25,10 @@
                 android:id="@+id/question_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_44"
+                android:minHeight="@dimen/dim_36"
                 android:orientation="horizontal"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dim_12"
+                android:layout_marginRight="@dimen/dim_12"
                 android:animateLayoutChanges="true">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -124,8 +124,7 @@
             android:id="@+id/answer_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/my_predictions_row_rl_question"
-            android:paddingBottom="@dimen/dp_10">
+            android:layout_below="@+id/my_predictions_row_rl_question">
 
             <!-- Answers Row -->
             <RelativeLayout
@@ -235,7 +234,7 @@
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/my_predictions_row_tv_perc_1"
             android:layout_width="@dimen/dp_150"
-            android:layout_height="@dimen/dp_22"
+            android:layout_height="@dimen/dim_24"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/answer_layout"
             android:layout_below="@+id/my_predictions_row_rl_question"

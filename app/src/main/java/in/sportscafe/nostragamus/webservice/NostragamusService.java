@@ -9,6 +9,8 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
 import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeRequest;
 import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatchesResponse;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
@@ -395,4 +397,9 @@ public interface NostragamusService {
     @POST("/v3/game/challenges/verifyJoinContest")
     Call<VerifyJoinContestResponse> verifyJoinContest(@Body VerifyJoinContestRequest request);
 
+    @GET("v3/game/challenges/inPlay")
+    Call<List<CompletedResponse>> getCompletedChallenges();
+
+    @GET("v3/game/challenges/getUserMatches")
+    Call<CompletedMatchesResponse> getCompletedChallengeMatches(@Query("room_id") int roomId, @Query("challenge_id") int challengeId);
 }

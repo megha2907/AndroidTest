@@ -226,7 +226,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
             viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
-            viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(34));
+            viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
             viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
             viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
 
@@ -277,7 +277,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
             viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
-            viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(34));
+            viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
             viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
             viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
 
@@ -313,9 +313,15 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(),
                         match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
 
+                if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
                     /* Footer */
-                TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
-                        contest.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
+                    TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, String.valueOf(match.getScore()),
+                            contest.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
+                }else {
+                      /* Footer */
+                    TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
+                            contest.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
+                }
             }
         }
     }

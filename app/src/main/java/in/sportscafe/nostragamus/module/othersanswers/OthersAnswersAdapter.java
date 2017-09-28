@@ -177,8 +177,6 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         holder.mRlAvgMatchPoints.setVisibility(View.GONE);
         holder.mRlHighestMatchPoints.setVisibility(View.GONE);
         holder.mRlLeaderBoard.setVisibility(View.GONE);
-        holder.mViewAvg.setVisibility(View.INVISIBLE);
-        holder.mViewHighest.setVisibility(View.INVISIBLE);
         holder.mTvMatchPointsTxt.setText("Average Score");
         holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountMatchPowerupsUsed()));
         holder.mTvResultCorrectCount.setText(match.getCountMatchPlayers().toString() + " People Answered");
@@ -234,10 +232,6 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         RelativeLayout mRlLeaderBoard;
         ShadowLayout mSlScrores;
 
-        View mViewAvg;
-        View mViewHighest;
-
-
         public MyResultViewHolder(View V) {
             super(V);
 
@@ -267,8 +261,6 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_my_score);
             mTvMatchPointsTxt = (TextView) V.findViewById(R.id.schedule_row_tv_my_score_txt);
-            mViewAvg = V.findViewById(R.id.schedule_row_avg_line);
-            mViewHighest = V.findViewById(R.id.schedule_row_highest_line);
         }
     }
 

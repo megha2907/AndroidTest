@@ -336,7 +336,10 @@ public interface Constants {
         String INPLAY_CONTEST = "InPlayContest";
         String INPLAY_CHALLENGE_LIST_ITEM = "InPlayChallengeListItem";
         String INPLAY_MATCH = "InPlayMatch";
+        String COMPLETED_MATCH = "CompletedMatch";
+        String COMPLETED_CONTEST = "CompletedContest";
         String PLAY_SCREEN_DATA = "playScreenData";
+        String RESULTS_SCREEN_DATA = "resultsScreenData";
     }
 
     interface ParcelableKeys {

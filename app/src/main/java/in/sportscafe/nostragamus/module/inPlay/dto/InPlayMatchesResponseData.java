@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatch;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 
 /**
