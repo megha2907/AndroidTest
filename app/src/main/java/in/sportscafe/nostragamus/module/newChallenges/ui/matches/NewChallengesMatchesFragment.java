@@ -20,6 +20,7 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
@@ -105,7 +106,8 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void joinPseudoContest(final InPlayMatch match) {
         if (mNewChallengeResponse != null) {
             JoinPseudoContestApiModelImpl joinPseudoContestApiModel = new JoinPseudoContestApiModelImpl();
-            joinPseudoContestApiModel.joinPseudoContest(/*mNewChallengeResponse.getId()*/582 /* TODO: remove */, new JoinPseudoContestApiModelImpl.JoinPseudoContestApiListener() {
+            joinPseudoContestApiModel.joinPseudoContest(/*mNewChallengeResponse.getId()*/482 /*TODO*/,
+                    new JoinPseudoContestApiModelImpl.JoinPseudoContestApiListener() {
                 @Override
                 public void onData(int status, @Nullable JoinPseudoContestResponse responses) {
                     launchPlayScreen(match, responses);
@@ -167,9 +169,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void loadDataFromServer() {
         if (mNewChallengeResponse != null) {
             NewChallengesMatchesDataProvider dataProvider = new NewChallengesMatchesDataProvider();
-            int challengeId = 482; //challengesResponse.getId() // TODO: remove
-
-            dataProvider.getNewChallengesMatches(challengeId, new NewChallengesMatchesDataProvider.NewChallengesApiListener() {
+            dataProvider.getNewChallengesMatches(/*mNewChallengeResponse.getId()*/482, new NewChallengesMatchesDataProvider.NewChallengesApiListener() {
                 @Override
                 public void onData(int status, @Nullable NewChallengeMatchesResponse responses) {
                     onSuccessMatchResponse(responses);
@@ -210,8 +210,12 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
 
     private void onJoinContestClicked() {
         if (mNewChallengeResponse != null && mNewChallengeMatchFragmentListener != null) {
+            ContestScreenData screenData = new ContestScreenData();
+            screenData.setChallengeId(mNewChallengeResponse.getId());
+            screenData.setChallengeName(mNewChallengeResponse.getChallengeName());
+
             Bundle args = new Bundle();
-            args.putParcelable(Constants.BundleKeys.NEW_CHALLENGES_RESPONSE, Parcels.wrap(mNewChallengeResponse));
+            args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(screenData));
             args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, ContestsActivity.LaunchedFrom.NEW_CHALLENGE_MATCHES);
             mNewChallengeMatchFragmentListener.launchContestActivity(ContestsActivity.LaunchedFrom.NEW_CHALLENGE_MATCHES, args);
         }

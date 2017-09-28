@@ -37,8 +37,10 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
+import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
+import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
@@ -152,6 +154,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                         for (InPlayContestDto contestDto : inplay.getContestList()) {
 
                             contestDto.setChallengeId(inplay.getChallengeId());     // To identify every contest that which challenge it belongs
+                            contestDto.setChallengeName(inplay.getChallengeName());
 
                             listItem = new InPlayListItem();
                             listItem.setItemData(contestDto);
@@ -213,49 +216,47 @@ public class InPlayViewPagerFragment extends BaseFragment {
             }
 
             @Override
-            public void onJoinedContestMoreContestButtonClicked(Bundle args) {
-
+            public void onJoinedContestPrizesClicked(Bundle args) {
+                goToNewMatchesTimeline(args);
             }
 
             @Override
-            public void onJoinedContestWinningsClicked(Bundle args) {
-
-            }
-
-            @Override
-            public void onCompletedCardClicked(Bundle args) {
-
-            }
-
-            @Override
-            public void onCompletedWinningClicked(Bundle args) {
-
+            public void onJoinedContestCurrentRankClicked(Bundle args) {
+                goToNewMatchesTimeline(args);
             }
 
             @Override
             public void onHeadLessContestCardClicked(Bundle args) {
-
-            }
-
-            @Override
-            public void onHeadLessJoinButtonClicked(Bundle args) {
-
+                launchHeadLessMatchesScreen(args);
             }
         };
     }
 
+    private void launchHeadLessMatchesScreen(Bundle args) {
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            if (Nostragamus.getInstance().hasNetworkConnection()) {
+                Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
+                intent.putExtras(args);
+                getActivity().startActivity(intent);
+            } else {
+                AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
+            }
+        }
+    }
+
     private void gotoContestScreen(Bundle args) {
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
-            if (getActivity() != null && !getActivity().isFinishing()) {
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            if (Nostragamus.getInstance().hasNetworkConnection()) {
+
                 Intent intent = new Intent(getActivity(), ContestsActivity.class);
                 if (args != null) {
                     intent.putExtras(args);
                 }
-
                 getActivity().startActivity(intent);
+
+            } else {
+                AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
             }
-        } else {
-            AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
         }
     }
 

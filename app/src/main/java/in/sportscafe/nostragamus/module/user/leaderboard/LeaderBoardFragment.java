@@ -105,67 +105,68 @@ public class LeaderBoardFragment extends BaseFragment implements LeaderBoardView
 
     @Override
     public void setUserLeaderBoardView(UserLeaderBoard userLeaderBoard) {
-        RelativeLayout userPoints = (RelativeLayout) findViewById(R.id.points_user_rl);
-        View gradientView = findViewById(R.id.gradient_view);
+        if (getView() != null && getActivity() != null) {
+            RelativeLayout userPoints = (RelativeLayout) getView().findViewById(R.id.points_user_rl);
+            View gradientView = findViewById(R.id.gradient_view);
 
-        if (null == userLeaderBoard) {
-            userPoints.setVisibility(View.GONE);
-            gradientView.setVisibility(View.GONE);
-            return;
-        }
+            if (null == userLeaderBoard) {
+                userPoints.setVisibility(View.GONE);
+                gradientView.setVisibility(View.GONE);
+                return;
+            }
 
-        userPoints.setVisibility(View.VISIBLE);
-        gradientView.setVisibility(View.VISIBLE);
+            userPoints.setVisibility(View.VISIBLE);
+            gradientView.setVisibility(View.VISIBLE);
 
-        ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_iv_status);
-        TextView mTvRank = (TextView) findViewById(R.id.leaderboard_tv_rank);
-        HmImageView mIvUser = (HmImageView) findViewById(R.id.leaderboard_iv_user_img);
-        TextView mTvName = (TextView) findViewById(R.id.leaderboard_tv_user_name);
-        TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_tv_points);
-        TextView mTvPlayed = (TextView) findViewById(R.id.leaderboard_tv_played);
-        TextView mTvAccuracy = (TextView) findViewById(R.id.leaderboard_tv_accuracy);
-        TextView mTvMatchPoints = (TextView) findViewById(R.id.leaderboard_tv_match_points);
+            ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_iv_status);
+            TextView mTvRank = (TextView) findViewById(R.id.leaderboard_tv_rank);
+            HmImageView mIvUser = (HmImageView) findViewById(R.id.leaderboard_iv_user_img);
+            TextView mTvName = (TextView) findViewById(R.id.leaderboard_tv_user_name);
+            TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_tv_points);
+            TextView mTvPlayed = (TextView) findViewById(R.id.leaderboard_tv_played);
+            TextView mTvAccuracy = (TextView) findViewById(R.id.leaderboard_tv_accuracy);
+            TextView mTvMatchPoints = (TextView) findViewById(R.id.leaderboard_tv_match_points);
 
-        if (null == userLeaderBoard.getRank()) {
-            mTvRank.setText("-");
-        } else {
-            mTvRank.setText(userLeaderBoard.getRank().toString());
-        }
-
-        //set PowerUps if Match Points is null
-        if (null == userLeaderBoard.getMatchPoints()) {
-            mTvMatchPoints.setText(userLeaderBoard.getUserPowerUps().toString());
-        } else {
-            mTvMatchPoints.setText(String.valueOf(userLeaderBoard.getMatchPoints()));
-            mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_white_icon, 0, 0, 0);
-        }
-
-
-        mTvName.setText(userLeaderBoard.getUserName());
-        mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
-
-        if (null != userLeaderBoard.getRankChange()) {
-            if (userLeaderBoard.getRankChange() < 0) {
-                mIvStatus.setImageResource(R.drawable.status_arrow_down);
+            if (null == userLeaderBoard.getRank()) {
+                mTvRank.setText("-");
             } else {
-                mIvStatus.setImageResource(R.drawable.status_arrow_up);
+                mTvRank.setText(userLeaderBoard.getRank().toString());
+            }
+
+            //set PowerUps if Match Points is null
+            if (null == userLeaderBoard.getMatchPoints()) {
+                mTvMatchPoints.setText(userLeaderBoard.getUserPowerUps().toString());
+            } else {
+                mTvMatchPoints.setText(String.valueOf(userLeaderBoard.getMatchPoints()));
+                mTvMatchPoints.setCompoundDrawablesWithIntrinsicBounds(R.drawable.match_points_white_icon, 0, 0, 0);
+            }
+
+
+            mTvName.setText(userLeaderBoard.getUserName());
+            mTvPoints.setText(String.valueOf(userLeaderBoard.getPoints()));
+
+            if (null != userLeaderBoard.getRankChange()) {
+                if (userLeaderBoard.getRankChange() < 0) {
+                    mIvStatus.setImageResource(R.drawable.status_arrow_down);
+                } else {
+                    mIvStatus.setImageResource(R.drawable.status_arrow_up);
+                }
+            }
+
+            mIvUser.setImageUrl(
+                    userLeaderBoard.getUserPhoto()
+            );
+
+            if (userLeaderBoard.getCountPlayed() == 1 || userLeaderBoard.getCountPlayed() == 0) {
+                mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed()) + " Match");
+            } else {
+                mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed()) + " Matches");
+            }
+
+            if (userLeaderBoard.getAccuracy() != null) {
+                mTvAccuracy.setText(userLeaderBoard.getAccuracy() + "%");
             }
         }
-
-        mIvUser.setImageUrl(
-                userLeaderBoard.getUserPhoto()
-        );
-
-        if (userLeaderBoard.getCountPlayed() == 1 || userLeaderBoard.getCountPlayed() == 0) {
-            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed()) + " Match");
-        } else {
-            mTvPlayed.setText(String.valueOf(userLeaderBoard.getCountPlayed()) + " Matches");
-        }
-
-        if (userLeaderBoard.getAccuracy() != null) {
-            mTvAccuracy.setText(userLeaderBoard.getAccuracy() + "%");
-        }
-
     }
 
     @Override

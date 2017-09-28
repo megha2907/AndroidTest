@@ -29,6 +29,7 @@ import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlay;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
@@ -82,7 +83,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             showLoadingContent();
             InPlayMatchesDataProvider dataProvider = new InPlayMatchesDataProvider();
             dataProvider.getInPlayMatches(mInPlayContest.getRoomId(),
-                    /*mInPlayContest.getChallengeId()*/ 482 /* TODO: remove hardcoded value */,
+                    mInPlayContest.getChallengeId(),
                     new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
                 @Override
                 public void onData(int status, @Nullable InPlayMatchesResponse responses) {
@@ -246,6 +247,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             } else {
                 Log.e(TAG, "No Contest in Bundle to launch Results screen");
                 handleError(-1);
+
             }
         }
     }

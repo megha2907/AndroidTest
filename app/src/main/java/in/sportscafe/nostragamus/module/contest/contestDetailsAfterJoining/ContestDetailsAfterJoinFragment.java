@@ -18,6 +18,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
@@ -31,16 +32,13 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
 
     private static final String TAG = ContestDetailsAfterJoinFragment.class.getSimpleName();
 
-    private ContestDetailsAJFragmentListener mContestDetailsAJFragmentListener;
-
     public ContestDetailsAfterJoinFragment() {
     }
 
-    TextView mTvTBarHeading;
-    TextView mTvTBarSubHeading;
-    TextView mTvTBarWalletMoney;
-    String challengeName;
-
+    private ContestDetailsAJFragmentListener mContestDetailsAJFragmentListener;
+    private TextView mTvTBarHeading;
+    private TextView mTvTBarSubHeading;
+    private ViewPager mViewPager;
     private ContestDetailsAfterJoinViewPagerAdapter mViewPagerAdapter;
 
     @Override
@@ -66,7 +64,8 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
     private void initView(View rootView) {
         mTvTBarHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
         mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
-        //mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
+        mViewPager = (ViewPager) rootView.findViewById(R.id.contest_details_viewPager);
+
         rootView.findViewById(R.id.contest_details_back_btn).setOnClickListener(this);
     }
 
@@ -96,12 +95,33 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
             InPlayContestDto inplayContest = Parcels.unwrap(arguments.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
             createAdapter(inplayContest);
             setInfo(inplayContest);
+
+            showRequestedTabScreen();
+        }
+    }
+
+    private void showRequestedTabScreen() {
+        Bundle args = getArguments();
+        if (args != null && mViewPager != null) {
+            if (args.containsKey(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST)) {
+
+                int launchScreen = args.getInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST);
+                switch (launchScreen) {
+
+                    case DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN:
+                        mViewPager.setCurrentItem(1);   // Second TAB is Leader board
+                        break;
+
+                    case DetailScreensLaunchRequest.MATCHES_REWARDS_SCREEN:
+                        mViewPager.setCurrentItem(2);   // Third TAB is rewards
+                        break;
+                }
+            }
         }
     }
 
     private void createAdapter(InPlayContestDto contestDto) {
-        if (getView() != null && contestDto != null) {
-            ViewPager mViewPager = (ViewPager) getView().findViewById(R.id.contest_details_viewPager);
+        if (getView() != null && contestDto != null && mViewPager != null) {
             mViewPagerAdapter = new ContestDetailsAfterJoinViewPagerAdapter(getChildFragmentManager(), getContext());
 
             InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();

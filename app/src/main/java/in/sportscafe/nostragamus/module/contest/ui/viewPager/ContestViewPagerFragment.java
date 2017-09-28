@@ -2,13 +2,10 @@ package in.sportscafe.nostragamus.module.contest.ui.viewPager;
 
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +34,7 @@ import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
@@ -96,12 +94,17 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         return new ContestAdapterListener() {
             @Override
             public void onContestClicked(Bundle args) {
-                goToContestDetails(args);
+                goToContestDetails(args, DetailScreensLaunchRequest.CONTESTS_DEFAULT_SCREEN);
             }
 
             @Override
             public void onJoinContestClicked(Bundle args) {
                 performJoinContest(args);
+            }
+
+            @Override
+            public void onPrizesClicked(Bundle args) {
+                goToContestDetails(args, DetailScreensLaunchRequest.CONTESTS_REWARDS_SCREEN);
             }
         };
     }
@@ -205,11 +208,11 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
     private void launchLowBalanceActivity(JoinContestData joinContestData) {
         if (getActivity() != null && !getActivity().isFinishing()) {
-        Bundle args = new Bundle();
-        args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinContestData));
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinContestData));
 
-        Intent intent = new Intent(getActivity(), AddMoneyOnLowBalanceActivity.class);
-        intent.putExtras(args);
+            Intent intent = new Intent(getActivity(), AddMoneyOnLowBalanceActivity.class);
+            intent.putExtras(args);
             getActivity().startActivityForResult(intent, ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE);
         }
     }
@@ -242,8 +245,12 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         }
     }
 
-    private void goToContestDetails(Bundle args) {
+    private void goToContestDetails(Bundle args, int screenLaunchRequest) {
         if (getActivity() != null && !getActivity().isFinishing()) {
+            if (args == null) {
+                args = new Bundle();
+            }
+            args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, screenLaunchRequest);
             Intent intent = new Intent(getActivity(), ContestDetailsBeforeJoinedActivity.class);
             intent.putExtras(args);
             getActivity().startActivity(intent);

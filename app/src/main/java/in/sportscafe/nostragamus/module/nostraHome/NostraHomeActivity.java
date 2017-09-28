@@ -278,25 +278,15 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
     private void onInternetConnected() {
         if (!this.isFinishing()) {
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-            dialogBuilder.setTitle("Internet Connected");
-            dialogBuilder.setMessage("Reload data");
-            dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-
-                    if (fragment != null) {
-                        if (fragment instanceof NewChallengesFragment) {
-                            ((NewChallengesFragment) fragment).onInternetConnected();
-                        }
-                        if (fragment instanceof InPlayFragment) {
-                            ((InPlayFragment) fragment).onInternetConnected();
-                        }
-                    }
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            if (fragment != null) {
+                if (fragment instanceof NewChallengesFragment) {
+                    ((NewChallengesFragment) fragment).onInternetConnected();
                 }
-            });
-            dialogBuilder.show();
+                if (fragment instanceof InPlayFragment) {
+                    ((InPlayFragment) fragment).onInternetConnected();
+                }
+            }
         }
     }
 

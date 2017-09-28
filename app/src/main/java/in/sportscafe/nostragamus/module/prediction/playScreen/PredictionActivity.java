@@ -1,9 +1,11 @@
 package in.sportscafe.nostragamus.module.prediction.playScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class PredictionActivity extends NostraBaseActivity implements PredictionFragmentListener  {
@@ -37,6 +39,13 @@ public class PredictionActivity extends NostraBaseActivity implements Prediction
     @Override
     public void onBackClicked() {
         onBackPressed();
+    }
+
+    @Override
+    public void onMatchCompleted(Bundle args) {
+        Intent intent = new Intent(this, MyResultsActivity.class);
+        intent.putExtras(args);
+        startActivity(intent);
     }
 
 }
