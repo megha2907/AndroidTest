@@ -498,7 +498,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     if (mInPlayAdapterListener != null) {
                         Bundle args = getHeadLessContestDataBundle();
 
-                        mInPlayAdapterListener.onHeadLessContestCardClicked(args);
+                        mInPlayAdapterListener.onHeadLessContestCardClicked(args, getHeadLessContest());
                     }
                     break;
             }
@@ -513,6 +513,16 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(contestDto));
             }
             return args;
+        }
+
+        @NonNull
+        private InPlayContestDto getHeadLessContest() {
+            InPlayContestDto inPlayContestDto = null;
+            InPlayListItem listItem = mItemsList.get(getAdapterPosition());
+            if (listItem != null && listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.HEADLESS_CONTEST) {
+                 inPlayContestDto = (InPlayContestDto) listItem.getItemData();
+            }
+            return inPlayContestDto;
         }
     }
 

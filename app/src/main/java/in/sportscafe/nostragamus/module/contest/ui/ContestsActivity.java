@@ -16,6 +16,7 @@ public class ContestsActivity extends NostraBaseActivity {
         int NEW_CHALLENGE_MATCHES = 211;
         int IN_PLAY_MATCHES = 212;
         int IN_PLAY_HEAD_LESS_MATCHES = 213;
+        int PLAY_SCREEN_HEAD_LESS = 214;
     }
 
     private ContestFragment mContestFragment;

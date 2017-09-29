@@ -3,8 +3,10 @@ package in.sportscafe.nostragamus.module.prediction.playScreen;
 import android.content.Intent;
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
@@ -48,4 +50,20 @@ public class PredictionActivity extends NostraBaseActivity implements Prediction
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            Bundle args = getIntent().getExtras();
+            boolean isPlayingPseudoGame = args.getBoolean(Constants.BundleKeys.IS_PLAYING_PSEUDO_GAME, false);
+
+            if (isPlayingPseudoGame) {
+                Intent clearTaskIntent = new Intent(this, NostraHomeActivity.class);
+                clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY);
+                clearTaskIntent.putExtras(args);
+                clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(clearTaskIntent);
+            }
+        }
+        super.onBackPressed();
+    }
 }

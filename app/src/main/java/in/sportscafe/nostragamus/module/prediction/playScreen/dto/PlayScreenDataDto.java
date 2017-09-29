@@ -14,6 +14,7 @@ public class PlayScreenDataDto {
     private String matchPartyTitle1;
     private String matchPartyTitle2;
     private String subTitle;
+    private String challengeName;
     private PowerUp powerUp;
 
     public int getChallengeId() {
@@ -62,6 +63,14 @@ public class PlayScreenDataDto {
 
     public void setSubTitle(String subTitle) {
         this.subTitle = subTitle;
+    }
+
+    public String getChallengeName() {
+        return challengeName;
+    }
+
+    public void setChallengeName(String challengeName) {
+        this.challengeName = challengeName;
     }
 
     public PowerUp getPowerUp() {

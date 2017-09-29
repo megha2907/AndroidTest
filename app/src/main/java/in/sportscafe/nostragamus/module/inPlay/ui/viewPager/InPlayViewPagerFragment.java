@@ -37,6 +37,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
+import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
@@ -226,15 +227,25 @@ public class InPlayViewPagerFragment extends BaseFragment {
             }
 
             @Override
-            public void onHeadLessContestCardClicked(Bundle args) {
-                launchHeadLessMatchesScreen(args);
+            public void onHeadLessContestCardClicked(Bundle args, InPlayContestDto inPlayContestDto) {
+                launchHeadLessMatchesScreen(args, inPlayContestDto);
             }
         };
     }
 
-    private void launchHeadLessMatchesScreen(Bundle args) {
-        if (getActivity() != null && !getActivity().isFinishing()) {
+    private void launchHeadLessMatchesScreen(Bundle args, InPlayContestDto inPlayContestDto) {
+        if (getActivity() != null && !getActivity().isFinishing() && inPlayContestDto != null) {
             if (Nostragamus.getInstance().hasNetworkConnection()) {
+
+                HeadLessMatchScreenData data = new HeadLessMatchScreenData();
+                data.setChallengeName(inPlayContestDto.getChallengeName());
+                data.setChallengeId(inPlayContestDto.getChallengeId());
+                data.setPowerUp(inPlayContestDto.getPowerUp());
+                data.setContestName(inPlayContestDto.getContestName());
+                data.setRoomId(inPlayContestDto.getRoomId());
+
+                args.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
+
                 Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
                 intent.putExtras(args);
                 getActivity().startActivity(intent);

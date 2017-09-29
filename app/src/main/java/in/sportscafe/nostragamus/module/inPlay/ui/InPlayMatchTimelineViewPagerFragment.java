@@ -252,7 +252,6 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
         }
     }
 
-
     private void launchPlayScreen(Bundle matchArgs) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
 
@@ -298,7 +297,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
-                dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(1).getPartyName());
+                dataDto.setMatchPartyTitle2(inPlayMatch.getMatchParties().get(1).getPartyName());
             }
         }
 
@@ -312,13 +311,14 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             dataDto = new ResultsScreenDataDto();
 
             dataDto.setChallengeId(contestDto.getChallengeId());
-            dataDto.setMatchId(1826);
+            dataDto.setMatchId(inPlayMatch.getMatchId());
             dataDto.setRoomId(contestDto.getRoomId());
             dataDto.setSubTitle(contestDto.getContestName());
+            dataDto.setChallengeName(contestDto.getChallengeName());
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
-                dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(1).getPartyName());
+                dataDto.setMatchPartyTitle2(inPlayMatch.getMatchParties().get(1).getPartyName());
             }
         }
 
