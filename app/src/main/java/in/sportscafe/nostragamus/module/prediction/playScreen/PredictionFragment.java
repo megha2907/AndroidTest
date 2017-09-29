@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.ads.conversiontracking.AdWordsConversionReporter;
 import com.sportscafe.nostracardstack.cardstack.CardDirection;
 import com.sportscafe.nostracardstack.cardstack.CardStack;
 
@@ -704,12 +705,18 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
      * On success full completion of choice for all the answers
      */
     private void onMatchCompleted() {
+        /* AdWords conversion Report, on match completed */
+        AdWordsConversionReporter.reportWithConversionId(getContext().getApplicationContext(),
+                "934797470", "tIBCCIK8pHEQnsHfvQM", "1.00", true);
+
         Log.d(TAG, "Match Completed");
+
         ResultsScreenDataDto data = new ResultsScreenDataDto();
         if (mPlayScreenData != null) {
             data.setRoomId(mPlayScreenData.getRoomId());
             data.setChallengeId(mPlayScreenData.getChallengeId());
             data.setMatchId(mPlayScreenData.getMatchId());
+            data.setChallengeName(mPlayScreenData.getChallengeName());
         }
 
         Bundle args = getArguments();

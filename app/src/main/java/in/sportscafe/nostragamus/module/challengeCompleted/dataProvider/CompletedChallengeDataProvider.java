@@ -17,8 +17,6 @@ import in.sportscafe.nostragamus.db.NostragamusDatabase;
 import in.sportscafe.nostragamus.db.tableDto.ApiCacheDbDto;
 import in.sportscafe.nostragamus.db.tables.ApiCacheDbTable;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
-import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.webservice.ApiCallBack;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import retrofit2.Call;
@@ -35,31 +33,33 @@ public class CompletedChallengeDataProvider {
     public CompletedChallengeDataProvider() {
     }
 
-    public void getCompletedChallenges(Context appContext, CompletedChallengeDataProvider.CompletedChallengeDataProviderListener listener) {
+    public void getCompletedChallenges(Context appContext, int skip, int limit,
+                                       CompletedChallengeDataProviderListener listener) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            loadCompletedChallengeDataFromServer(appContext, listener);
+            loadCompletedChallengeDataFromServer(appContext, skip, limit, listener);
         } else {
             Log.d(TAG, "No Network connection");
-            loadInPlayFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET, appContext, listener);
+            loadCompletedDataFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET, appContext, listener);
         }
     }
 
-    private void loadCompletedChallengeDataFromServer(final Context appContext, final CompletedChallengeDataProvider.CompletedChallengeDataProviderListener listener) {
+    private void loadCompletedChallengeDataFromServer(final Context appContext, int skip, int limit,
+                                                      final CompletedChallengeDataProviderListener listener) {
 
-        MyWebService.getInstance().getCompletedChallenges().enqueue(new ApiCallBack<List<CompletedResponse>>() {
+        MyWebService.getInstance().getCompletedChallenges(skip, limit).enqueue(new ApiCallBack<List<CompletedResponse>>() {
             @Override
             public void onResponse(Call<List<CompletedResponse>> call, Response<List<CompletedResponse>> response) {
                 super.onResponse(call, response);
 
                 if (response.isSuccessful() && response.body() != null && response.body() != null) {
                     Log.d(TAG, "Server response success");
-                    insertInPlayResponseIntoDatabase(appContext, response.body(), listener);
+                    insertCompletedResponseIntoDatabase(appContext, response.body(), listener);
                     if (listener != null) {
                         listener.onData(Constants.DataStatus.FROM_SERVER_API_SUCCESS, response.body());
                     }
                 } else {
                     Log.d(TAG, "Server response null");
-                    loadInPlayFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
+                    loadCompletedDataFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
                 }
             }
 
@@ -67,17 +67,17 @@ public class CompletedChallengeDataProvider {
             public void onFailure(Call<List<CompletedResponse>> call, Throwable t) {
                 super.onFailure(call, t);
                 Log.d(TAG, "Server response Failed");
-                loadInPlayFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
+                loadCompletedDataFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
             }
         });
     }
 
-    private void insertInPlayResponseIntoDatabase(final Context appContext,
-                                                  final List<CompletedResponse> completedResponses,
-                                                  final CompletedChallengeDataProvider.CompletedChallengeDataProviderListener listener) {
+    private void insertCompletedResponseIntoDatabase(final Context appContext,
+                                                     final List<CompletedResponse> completedResponses,
+                                                     final CompletedChallengeDataProvider.CompletedChallengeDataProviderListener listener) {
 
         final ApiCacheDbDto dbDto = new ApiCacheDbDto();
-        dbDto.setApiCacheType(ApiCacheType.IN_PLAY_API);
+        dbDto.setApiCacheType(ApiCacheType.COMPLETED_CHALLENGE_API);
         dbDto.setTimeStamp(System.currentTimeMillis());
         dbDto.setApiContent(MyWebService.getInstance().getJsonStringFromObject(completedResponses));
 
@@ -85,8 +85,7 @@ public class CompletedChallengeDataProvider {
 
             @Override
             protected Void doInBackground(Void... params) {
-                long insertCount = NostragamusDatabase.getInstance(appContext).insert(DbConstants.TableIds.API_CACHE_TABLE, dbDto);
-                Log.d(TAG, "Records inserted : " + insertCount);
+                NostragamusDatabase.getInstance(appContext).insert(DbConstants.TableIds.API_CACHE_TABLE, dbDto);
                 return null;
             }
 
@@ -97,8 +96,8 @@ public class CompletedChallengeDataProvider {
         }.execute();
     }
 
-    private void loadInPlayFromDatabase(final int status, final Context appContext, final CompletedChallengeDataProvider.CompletedChallengeDataProviderListener listener) {
-        int apiType = ApiCacheType.IN_PLAY_API;
+    private void loadCompletedDataFromDatabase(final int status, final Context appContext, final CompletedChallengeDataProvider.CompletedChallengeDataProviderListener listener) {
+        int apiType = ApiCacheType.COMPLETED_CHALLENGE_API;
 
         final String whereClause = ApiCacheDbTable.TableFields.API_TYPE + "=?";
         final String[] whereArgs = { String.valueOf(apiType) };
@@ -118,7 +117,9 @@ public class CompletedChallengeDataProvider {
                                 (apiContentStr, new TypeReference<List<CompletedResponse>>() {});
                     }
 
-                } catch (Exception ex) {}
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
                 return null;
             }
 

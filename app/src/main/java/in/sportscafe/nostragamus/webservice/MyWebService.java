@@ -482,8 +482,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.verifyJoinContest(request);
     }
 
-    public Call<List<CompletedResponse>> getCompletedChallenges() {
-        return mNostragamusService.getCompletedChallenges();
+    public Call<List<CompletedResponse>> getCompletedChallenges(int skip, int limit) {
+        return mNostragamusService.getCompletedChallenges(skip, limit);
     }
 
     public Call<CompletedMatchesResponse> getCompletedChallengeMatches(int roomId, int challengeId) {

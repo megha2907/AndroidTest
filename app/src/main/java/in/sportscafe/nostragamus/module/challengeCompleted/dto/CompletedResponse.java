@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
-
 /**
  * Created by deepanshi on 9/27/17.
  */
@@ -30,14 +28,14 @@ public class CompletedResponse {
     @SerializedName("status")
     private String status = "ongoing";
 
-    @SerializedName("sports_id")
-    private int sportsId;
+    @SerializedName("sports_id_arr")
+    private int[] sportsIdArray;
 
     @SerializedName("is_daily_challenge")
     private boolean isDailyChallenge;
 
     @SerializedName("contests")
-    private List<InPlayContestDto> contestList;
+    private List<CompletedContestDto> contestList;
 
     @SerializedName("challenge_tournaments_short_names")
     private List<String> tournaments = null;
@@ -75,12 +73,12 @@ public class CompletedResponse {
         this.status = status;
     }
 
-    public int getSportsId() {
-        return sportsId;
+    public int[] getSportIdArray() {
+        return sportsIdArray;
     }
 
-    public void setSportsId(int sportsId) {
-        this.sportsId = sportsId;
+    public void setSportsIdArray(int[] sportsIdArray) {
+        this.sportsIdArray = sportsIdArray;
     }
 
     public boolean isDailyChallenge() {
@@ -91,11 +89,11 @@ public class CompletedResponse {
         isDailyChallenge = dailyChallenge;
     }
 
-    public List<InPlayContestDto> getContestList() {
+    public List<CompletedContestDto> getContestList() {
         return contestList;
     }
 
-    public void setContestList(List<InPlayContestDto> contestList) {
+    public void setContestList(List<CompletedContestDto> contestList) {
         this.contestList = contestList;
     }
 
